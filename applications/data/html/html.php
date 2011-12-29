@@ -491,10 +491,9 @@ abstract class MolajoHtml
             // If inclusion is required
         else
         {
-            $document = MolajoFactory::getDocument();
             foreach ($includes as $include)
             {
-                $document->addStylesheet($include, 'text/css', null, $attribs);
+                MolajoFactory::getApplication()->addStylesheet($include, 'text/css', null, $attribs);
             }
         }
     }
@@ -549,10 +548,9 @@ abstract class MolajoHtml
             // If inclusion is required
         else
         {
-            $document = MolajoFactory::getDocument();
             foreach ($includes as $include)
             {
-                $document->addScript($include);
+                MolajoFactory::getApplication()->addScript($include);
             }
         }
     }
@@ -575,8 +573,7 @@ abstract class MolajoHtml
 
         $uncompressed = $debug ? '-uncompressed' : '';
 
-        $document = MolajoFactory::getDocument();
-        $document->addScript(JURI::root(true) . '/media/system/js/core' . $uncompressed . '.js');
+        MolajoFactory::getApplication()->addScript(JURI::root(true) . '/media/system/js/core' . $uncompressed . '.js');
     }
 
     /**
@@ -772,8 +769,7 @@ abstract class MolajoHtml
 
             // Only display the triggers once for each control.
             if (!in_array($id, $done)) {
-                $document = MolajoFactory::getDocument();
-                $document
+                MolajoFactory::getApplication()
                         ->addScriptDeclaration(
                     'window.addEvent(\'domready\', function() {Calendar.setup({
 				// Id of the input field

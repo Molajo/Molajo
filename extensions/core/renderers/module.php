@@ -191,7 +191,6 @@ class MolajoModuleRenderer
             }
 
             $application = MolajoFactory::getApplication();
-            $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
             $this->parameters = new JRegistry;
@@ -213,9 +212,6 @@ class MolajoModuleRenderer
 
             /** 1. Application */
             $view->app = $application;
-
-            /** 2. Document */
-            $view->document = $document;
 
             /** 3. User */
             $view->user = $user;

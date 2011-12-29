@@ -34,12 +34,9 @@ class InstallerController extends JController
     {
         require_once JPATH_COMPONENT . '/helpers/installer.php';
 
-        // Get the document object.
-        $document = MolajoFactory::getDocument();
-
         // Set the default view name and format from the Request.
         $vName = JRequest::getCmd('view', 'install');
-        $vFormat = $document->getType();
+        $vFormat = MolajoFactory::getApplication()->getType();
         $lName = JRequest::getCmd('layout', 'default');
 
         // Get and render the view.
@@ -54,8 +51,6 @@ class InstallerController extends JController
             $view->setModel($model, true);
             $view->setLayout($lName);
 
-            // Push document object into the view.
-            $view->assignRef('document', $document);
             // Load the submenu.
             InstallerHelper::addSubmenu($vName);
             $view->display();

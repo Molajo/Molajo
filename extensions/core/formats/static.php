@@ -201,11 +201,11 @@ $template_page_include = $template_path . '/pages/default/index.php';
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-                    if (MolajoFactory::getDocument()->direction == 'rtl') {
-                        MolajoFactory::getDocument()->addStyleSheet($urlPath . '/css/' . $file);
+                    if (MolajoFactory::getApplication()->direction == 'rtl') {
+                        MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
                     }
                 } else {
-                    MolajoFactory::getDocument()->addStyleSheet($urlPath . '/css/' . $file);
+                    MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
                 }
             }
         }
@@ -231,7 +231,7 @@ $template_page_include = $template_path . '/pages/default/index.php';
 
         if (count($files) > 0) {
             foreach ($files as $file) {
-                MolajoFactory::getDocument()->addScript($urlPath . '/js/' . $file);
+                MolajoFactory::getApplication()->addScript($urlPath . '/js/' . $file);
             }
         }
     }

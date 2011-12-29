@@ -26,7 +26,7 @@ $output[] = '<span class="logout">' . ($hideLinks ? ''
         : '<a href="' . $logoutLink . '">') . MolajoTextHelper::_('JLOGOUT') . ($hideLinks ? '' : '</a>') . '</span>';
 
 /** rtl support */
-if ($document->direction == "rtl") :
+if (MolajoFactory::getApplication()->direction == "rtl") :
     $output = array_reverse($output);
 endif;
 

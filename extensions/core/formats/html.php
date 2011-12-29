@@ -16,9 +16,8 @@ defined('MOLAJO') or die;
  */
 class MolajoHtmlFormat
 {
-
     /**
-     *  Sequence in which renderers should be processed
+     *  Sequence in which renderers are to be processed
      *
      * @var array
      * @since 1.0
@@ -98,19 +97,11 @@ class MolajoHtmlFormat
     protected $_renderers = array();
 
     /**
-     * Array of buffered output by renderer
-     *
-     * @var    mixed
-     */
-    protected $_buffer = null;
-
-    /**
      * __construct
      *
      * Class constructor.
      *
-     * @param   null    $request
-     * @param   null    $page
+     * @param   null    $config from MolajoExtensions
      *
      * @return boolean
      *
@@ -179,9 +170,9 @@ class MolajoHtmlFormat
             $template_name = 'system';
         }
 
-        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template;
+        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name;
 
-        $template_page_include = $template_path . '/pages/default/index.php';
+        $template_page_include = $template_path . '/pages/'.$this->page.'/index.php';
 
         $this->parameters = array(
             'template' => $template_name,
@@ -301,29 +292,33 @@ class MolajoHtmlFormat
         foreach ($this->rendererProcessingSequence as $nextRenderer) {
 
             /** load renderer class */
-            $class = 'Molajo' . ucfirst($nextRenderer).'Renderer';
-            if (class_exists($class)) {
-                $extension = new $class ($nextRenderer, $this->config);
-                echo $class .'<br />';
+            $class = 'Molajo' . ucfirst($nextRenderer) . 'Renderer';
+            if ($class == 'MolajoHeadRenderer') {
+            } elseif (class_exists($class)) {
+                $rendererClass = new $class ($nextRenderer, $this->config);
+                echo $class . '<br />';
             } else {
-                echo 'failed renderer = '.$class.'<br />';
+                echo 'failed renderer = ' . $class . '<br />';
                 // ERROR
             }
 
-            foreach ($this->_renderers as $index => $rendererArray) {
+            if ($class == 'MolajoHeadRenderer') {
+            } else {
+                foreach ($this->_renderers as $index => $rendererArray) {
 
-                if ($nextRenderer == $rendererArray['name']) {
+                    if ($nextRenderer == $rendererArray['name']) {
 
-                    $renderer = $rendererArray['name'];
+                        $renderer = $rendererArray['name'];
 
-                    if (isset($rendererArray['attributes'])) {
-                        $attributes = $rendererArray['attributes'];
-                    } else {
-                        $attributes = array();
+                        if (isset($rendererArray['attributes'])) {
+                            $attributes = $rendererArray['attributes'];
+                        } else {
+                            $attributes = array();
+                        }
+
+                        $replace[] = "<include:" . $rendererArray['replace'] . "/>";
+                        $with[] = $rendererClass->render($attributes);
                     }
-
-                    $replace[] = "<include:".$rendererArray['replace']."/>";
-                    $with[] = $extension->render($attributes);
                 }
             }
         }

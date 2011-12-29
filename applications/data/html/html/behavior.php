@@ -109,7 +109,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/caption' . $uncompressed . '.js', true, true);
 
         // Attach caption to document
-        MolajoFactory::getDocument()->addScriptDeclaration(
+        MolajoFactory::getApplication()->addScriptDeclaration(
             "window.addEvent('load', function() {
 				new JCaption('" . $selector . "');
 			});"
@@ -181,7 +181,7 @@ abstract class MolajoHtmlBehavior
 				}
 			});";
 
-        MolajoFactory::getDocument()->addScriptDeclaration($script);
+        MolajoFactory::getApplication()->addScriptDeclaration($script);
         $loaded = true;
     }
 
@@ -276,7 +276,7 @@ abstract class MolajoHtmlBehavior
         $options = MolajoHTMLBehavior::_getJSObject($opt);
 
         // Attach tooltips to document
-        MolajoFactory::getDocument()->addScriptDeclaration(
+        MolajoFactory::getApplication()->addScriptDeclaration(
             "window.addEvent('domready', function() {
 			$$('$selector').each(function(el) {
 				var title = el.get('title');
@@ -321,8 +321,6 @@ abstract class MolajoHtmlBehavior
     {
         static $modals;
         static $included;
-
-        $document = MolajoFactory::getDocument();
 
         // Load the necessary files if they haven't yet been loaded
         if (!isset($included)) {
@@ -417,7 +415,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/multiselect.js', true, true);
 
         // Attach multiselect to document
-        MolajoFactory::getDocument()->addScriptDeclaration(
+        MolajoFactory::getApplication()->addScriptDeclaration(
             "window.addEvent('domready', function() {
 				new Joomla.JMultiSelect('" . $id . "');
 			});"
@@ -448,8 +446,6 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/swf' . $uncompressed . '.js', true, true);
         MolajoHTML::_('script', 'system/progressbar' . $uncompressed . '.js', true, true);
         MolajoHTML::_('script', 'system/uploader' . $uncompressed . '.js', true, true);
-
-        $document = MolajoFactory::getDocument();
 
         static $uploaders;
 
@@ -597,7 +593,7 @@ abstract class MolajoHtmlBehavior
         $uploaderInit = 'window.addEvent(\'domready\', function(){
 				var Uploader = new FancyUpload2(document.id(\'' . $id . '\'), document.id(\'' . $upload_queue . '\'), ' . $options . ' );
 				});';
-        $document->addScriptDeclaration($uploaderInit);
+        MolajoFactory::getApplication()->addScriptDeclaration($uploaderInit);
 
         // Set static array
         $uploaders[$id] = true;
@@ -667,8 +663,7 @@ abstract class MolajoHtmlBehavior
 			tree' . $treeName . '.adopt(\'' . $id . '\');})';
 
         // Attach tooltips to document
-        $document = MolajoFactory::getDocument();
-        $document->addScriptDeclaration($js);
+        MolajoFactory::getApplication()->addScriptDeclaration($js);
 
         // Set static array
         $trees[$id] = true;
@@ -692,7 +687,6 @@ abstract class MolajoHtmlBehavior
             return;
         }
 
-        $document = MolajoFactory::getDocument();
         $tag = MolajoFactory::getLanguage()->getTag();
 
         //Add uncompressed versions when debug is enabled
@@ -703,7 +697,7 @@ abstract class MolajoHtmlBehavior
 
         $translation = MolajoHTMLBehavior::_calendartranslation();
         if ($translation) {
-            $document->addScriptDeclaration($translation);
+            MolajoFactory::getApplication()->addScriptDeclaration($translation);
         }
         $loaded = true;
     }
@@ -732,7 +726,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('stylesheet', 'system/mooRainbow.css', array('media' => 'all'), true);
         MolajoHTML::_('script', 'system/mooRainbow.js', false, true);
 
-        MolajoFactory::getDocument()
+        MolajoFactory::getApplication()
                 ->addScriptDeclaration(
             "window.addEvent('domready', function(){
 				var nativeColorUi = false;
@@ -791,7 +785,6 @@ abstract class MolajoHtmlBehavior
             $refreshTime = 3600000;
         }
 
-        $document = MolajoFactory::getDocument();
         $script = '';
         $script .= 'function keepAlive() {';
         $script .= '	var myAjax = new Request({method: "get", url: "index.php"}).send();';
@@ -800,7 +793,7 @@ abstract class MolajoHtmlBehavior
         $script .= '{ keepAlive.periodical(' . $refreshTime . '); }';
         $script .= ');';
 
-        $document->addScriptDeclaration($script);
+        MolajoFactory::getApplication()->addScriptDeclaration($script);
         $loaded = true;
 
         return;
@@ -829,9 +822,9 @@ abstract class MolajoHtmlBehavior
 
         $js = "window.addEvent('domready', function () {if (top == self) {document.documentElement.style.display = 'block'; }" .
               " else {top.location = self.location; }});";
-        $document = MolajoFactory::getDocument();
-        $document->addStyleDeclaration('html { display:none }');
-        $document->addScriptDeclaration($js);
+
+        MolajoFactory::getApplication()->addStyleDeclaration('html { display:none }');
+        MolajoFactory::getApplication()->addScriptDeclaration($js);
 
         MolajoFactory::getApplication()->setHeader('X-Frames-Options', 'SAME-ORIGIN');
 

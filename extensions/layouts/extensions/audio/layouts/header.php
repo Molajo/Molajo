@@ -47,7 +47,7 @@ $js .= ' text: "' . $this->systemParameters->def('audio_text', "333333") . '" ' 
 /** swf player end **/
 $js .= ' });' . "\n";
 $js .= ' });' . "\n";
-$document->addScriptDeclaration($js);
+MolajoFactory::getApplication()->addScriptDeclaration($js);
 
 /** head for individual mp3 **/
 $this->audio_file_loader = "window.addEvent('domready', function() { " . "\n";

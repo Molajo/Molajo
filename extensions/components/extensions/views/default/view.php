@@ -72,7 +72,6 @@ class InstallerViewDefault extends JView
         }
 
         // Document
-        $document = MolajoFactory::getDocument();
-        $document->setTitle(MolajoTextHelper::_('INSTALLER_TITLE_' . $this->getName()));
+        MolajoFactory::getApplication()->setTitle(MolajoTextHelper::_('INSTALLER_TITLE_' . $this->getName()));
     }
 }

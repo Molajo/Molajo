@@ -20,6 +20,6 @@ if (MolajoFactory::getApplication()->get('html5', true) === true): ?>
     <include:head />
 </head>
 <body>
-<?php include dirname(__FILE__) . '/pages/' . MolajoFactory::getDocument()->page; ?>
+<?php include dirname(__FILE__) . '/pages/' . MolajoFactory::getApplication()->page; ?>
 </body>
 </html>

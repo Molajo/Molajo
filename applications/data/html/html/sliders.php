@@ -81,8 +81,6 @@ abstract class MolajoHtmlSliders
             // Include mootools framework.
             MolajoHTML::_('behavior.framework', true);
 
-            $document = MolajoFactory::getDocument();
-
             $display = (isset($parameters['startOffset']) && isset($parameters['startTransition']) && $parameters['startTransition'])
                     ? (int)$parameters['startOffset'] : null;
             $show = (isset($parameters['startOffset']) && !(isset($parameters['startTransition']) && $parameters['startTransition']))
@@ -120,7 +118,7 @@ abstract class MolajoHtmlSliders
                   . ".pane-sliders > .panel > h3.pane-toggler'), $$('div#" . $group . ".pane-sliders > .panel > div.pane-slider'), " . $options
                   . "); });";
 
-            $document->addScriptDeclaration($js);
+            MolajoFactory::getApplication()->addScriptDeclaration($js);
         }
     }
 }

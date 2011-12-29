@@ -185,6 +185,14 @@ define('MOLAJO_STATUS_DRAFT', -5);
 define('MOLAJO_STATUS_VERSION', -10);
 
 /**
+ *  MESSAGE TYPES
+ */
+define('MOLAJO_MESSAGE_TYPE_MESSAGE', 'message');
+define('MOLAJO_MESSAGE_TYPE_NOTICE', 'notice');
+define('MOLAJO_MESSAGE_TYPE_WARNING', 'warning');
+define('MOLAJO_MESSAGE_TYPE_ERROR', 'error');
+
+/**
  *  EXTENSION OPTIONS
  */
 define('MOLAJO_EXTENSION_OPTION_ID_TABLE', 100);

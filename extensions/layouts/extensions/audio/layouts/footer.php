@@ -6,6 +6,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-$document =& MolajoFactory::getDocument();
+
 $this->audio_file_loader .= ' });';
-$document->addScriptDeclaration($this->audio_file_loader); ?>
+MolajoFactory::getApplication()->addScriptDeclaration($this->audio_file_loader);

@@ -348,22 +348,22 @@ class MolajoApplication
 
             /** Document */
             $document = MolajoFactory::getDocument();
-            switch ($document->getType()) {
+            switch (MolajoFactory::getApplication()->getType()) {
                 case 'html':
-                    $document->setMetaData('keywords', $this->get('MetaKeys'));
+                    MolajoFactory::getApplication()->setMetaData('keywords', $this->get('MetaKeys'));
                     break;
 
                 default:
                     break;
             }
-            $document->setTitle($this->get('sitename'));
-            $document->setDescription($this->get('MetaDesc'));
+            MolajoFactory::getApplication()->setTitle($this->get('sitename'));
+            MolajoFactory::getApplication()->setDescription($this->get('MetaDesc'));
 
             /** Render */
             $contents = MolajoComponent::renderComponent($request);
 
             /** Buffer */
-            $document->setBuffer($contents, 'component');
+            MolajoFactory::getApplication()->setBuffer($contents, 'component');
 
             /** Events */
             MolajoPluginHelper::importPlugin('system');
@@ -606,20 +606,19 @@ class MolajoApplication
             echo "<script>document.location.href='$url';</script>\n";
 
         } else {
-            $document = MolajoFactory::getDocument();
             $navigator = JBrowser::getInstance();
             if ($navigator->isBrowser('msie')) {
                 // MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
-                echo '<html><head><meta http-equiv="content-type" content="text/html; charset=' . $document->getCharset() . '" /><script>document.location.href=\'' . $url . '\';</script></head><body></body></html>';
+                echo '<html><head><meta http-equiv="content-type" content="text/html; charset=' . MolajoFactory::getApplication()->getCharset() . '" /><script>document.location.href=\'' . $url . '\';</script></head><body></body></html>';
 
             } elseif (!$moved and $navigator->isBrowser('konqueror')) {
                 // WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
-                echo '<html><head><meta http-equiv="refresh" content="0; url=' . $url . '" /><meta http-equiv="content-type" content="text/html; charset=' . $document->getCharset() . '" /></head><body></body></html>';
+                echo '<html><head><meta http-equiv="refresh" content="0; url=' . $url . '" /><meta http-equiv="content-type" content="text/html; charset=' . MolajoFactory::getApplication()->getCharset() . '" /></head><body></body></html>';
             } else {
                 // All other browsers, use the more efficient HTTP header method
                 header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 header('Location: ' . $url);
-                header('Content-Type: text/html; charset=' . $document->getCharset());
+                header('Content-Type: text/html; charset=' . MolajoFactory::getApplication()->getCharset());
             }
         }
 

@@ -140,11 +140,11 @@ class MolajoAuthentication extends JObservable
         // Get plugins
         $plugins = MolajoPluginHelper::getPlugin('authentication');
 
-        // Create authencication response
+        // Create authentication response
         $response = new MolajoAuthenticationResponse;
 
         /*
-           * Loop through the plugins and check of the creditials can be used to authenticate
+           * Loop through the plugins and check of the credentials can be used to authenticate
            * the user
            *
            * Any errors raised in the plugin should be returned via the MolajoAuthenticationResponse

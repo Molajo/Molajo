@@ -101,8 +101,7 @@ class MolajoEditor extends JObservable
             }
         }
 
-        $document = MolajoFactory::getDocument();
-        $document->addCustomTag($return);
+        MolajoFactory::MolajoApplication()->addCustomTag($return);
     }
 
     /**

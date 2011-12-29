@@ -228,8 +228,6 @@ class MolajoPaneTabs extends MolajoPane
         // Include mootools framework
         MolajoHTML::_('behavior.framework', true);
 
-        $document = MolajoFactory::getDocument();
-
         $options = '{';
         $opt['onActive'] = (isset($parameters['onActive'])) ? $parameters['onActive'] : null;
         $opt['onBackground'] = (isset($parameters['onBackground'])) ? $parameters['onBackground'] : null;
@@ -247,7 +245,7 @@ class MolajoPaneTabs extends MolajoPane
 
         $js = '	window.addEvent(\'domready\', function(){ $$(\'dl.tabs\').each(function(tabs){ new JTabs(tabs, ' . $options . '); }); });';
 
-        $document->addScriptDeclaration($js);
+        MolajoFactory::getApplication()->addScriptDeclaration($js);
         MolajoHTML::_('script', 'system/tabs.js', false, true);
     }
 }
@@ -380,8 +378,6 @@ class MolajoPaneSliders extends MolajoPane
         // Include mootools framework.
         MolajoHTML::_('behavior.framework', true);
 
-        $document = MolajoFactory::getDocument();
-
         $options = '{';
         $opt['onActive'] = 'function(toggler, i) { toggler.addClass(\'pane-toggler-down\');' .
                            ' toggler.removeClass(\'pane-toggler\');i.addClass(\'pane-down\');i.removeClass(\'pane-hide\'); }';
@@ -412,6 +408,6 @@ class MolajoPaneSliders extends MolajoPane
         $js = '	window.addEvent(\'domready\', function(){ new Fx.Accordion($$(\'.panel h3.pane-toggler\'), $$(\'.panel div.pane-slider\'), '
               . $options . '); });';
 
-        $document->addScriptDeclaration($js);
+        MolajoFactory::getApplication()->addScriptDeclaration($js);
     }
 }

@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-$renderer = MolajoFactory::getDocument()->loadRenderer('module');
+$renderer = MolajoFactory::getApplication()->loadRenderer('module');
 $module = MolajoModule::getModule('layout');
 $module->parameters = "wrap=section\nlayout=dashboard";
 $capture = $renderer->render($module);

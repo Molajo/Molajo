@@ -6,7 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
+// addCustomTag
 /**
  * Molajo Application Class
  *
@@ -109,6 +109,13 @@ class MolajoApplication
      * @since  1.0
      */
     public $generator;
+
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $format;
 
     /**
      * @var    array
@@ -316,9 +323,9 @@ class MolajoApplication
         /** response */
         $this->respond();
 
-        echo '<pre>';
-        var_dump($extension);
-        '</pre>';
+        //        echo '<pre>';
+        //        var_dump($extension);
+        //        '</pre>';
     }
 
     /**
@@ -538,6 +545,31 @@ class MolajoApplication
         return $this;
     }
 
+    /**
+     * setFormat
+     *
+     * Sets the format of the response
+     *
+     * @param   string    $title
+     *
+     * @return  void
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * getFormat
+     *
+     * Return the format of the response.
+     *
+     * @return  string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
 
     /**
      * setTitle
@@ -1139,14 +1171,14 @@ class MolajoApplication
 
         /** $type */
         $type = strtolower($type);
-        if ($type == 'notice'
-            || $type == 'warning'
-            || $type == 'error'
+        if ($type == MOLAJO_MESSAGE_TYPE_NOTICE
+            || $type == MOLAJO_MESSAGE_TYPE_WARNING
+            || $type == MOLAJO_MESSAGE_TYPE_ERROR
         ) {
         } else {
-            $type = 'message';
+            $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
         }
-
+        /** todo: amy - see if sessionMessages are actually set anywhere or where this should be done */
         /** load session messages into application messages array */
         $this->_sessionMessages();
 
@@ -1214,6 +1246,7 @@ class MolajoApplication
      */
     public function redirect($asset_id, $code = 303)
     {
+        /** todo: remove asset_id - should not be known in the application layer */
         /** retrieve url */
         $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . MolajoAsset::getRedirectURL((int)$asset_id);
 

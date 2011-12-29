@@ -695,11 +695,11 @@ abstract class MolajoError
             $template = MolajoFactory::getApplication()->getTemplate();
 
             // Push the error object into the document
-            $document->setError($error);
+            MolajoFactory::getApplication()->setError($error);
 
             @ob_end_clean();
-            $document->setTitle(MolajoTextHelper::_('Error') . ': ' . $error->get('code'));
-            $data = $document->render(false, array('template' => $template, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
+            MolajoFactory::getApplication()->setTitle(MolajoTextHelper::_('Error') . ': ' . $error->get('code'));
+            $data = MolajoFactory::getApplication()->render(false, array('template' => $template, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
 
             // Failsafe to get the error displayed.
             if (empty($data)) {

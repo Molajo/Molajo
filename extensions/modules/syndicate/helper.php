@@ -14,9 +14,7 @@ class modSyndicateHelper
 {
     static function getLink(&$parameters)
     {
-        $document = MolajoFactory::getDocument();
-
-        foreach ($document->_links as $link)
+        foreach (MolajoFactory::getApplication()->_links as $link)
         {
             if (strpos($link, 'application/' . $parameters->get('format') . '+xml')) {
                 preg_match("#href=\"(.*?)\"#s", $link, $matches);
@@ -26,3 +24,4 @@ class modSyndicateHelper
 
     }
 }
+

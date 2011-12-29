@@ -68,11 +68,10 @@ class plgSystemDebug extends MolajoPluginHelper
             return;
         }
 
-        $document = MolajoFactory::getDocument();
-        $doctype = $document->getType();
+        $format = MolajoFactory::getApplication()->getFormat();
 
         // Only render for HTML output
-        if ($doctype !== 'html') {
+        if ($format !== 'html') {
             echo $contents;
             return;
         }
