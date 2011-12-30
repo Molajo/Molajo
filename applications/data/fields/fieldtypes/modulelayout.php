@@ -8,13 +8,13 @@
  */
 defined('MOLAJO') or die;
 /**
- * Form Field to display a list of the layouts for a module view from the module or template overrides.
+ * Form Field to display a list of the views for a module view from the module or template overrides.
  *
  * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
-class MolajoFormFieldModuleLayout extends MolajoFormField
+class MolajoFormFieldModuleView extends MolajoFormField
 {
     /**
      * The form field type.
@@ -22,7 +22,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
      * @var    string
      * @since  1.0
      */
-    protected $type = 'ModuleLayout';
+    protected $type = 'ModuleView';
 
     /**
      * Method to get the field calendar.
@@ -106,28 +106,28 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
                 MolajoError::raiseWarning(500, $db->getErrorMsg());
             }
 
-            // Build the search paths for module layouts.
-            $module_path = JPath::clean($application->path . '/modules/' . $module . '/layouts');
+            // Build the search paths for module views.
+            $module_path = JPath::clean($application->path . '/modules/' . $module . '/views');
 
-            // Prepare array of component layouts
-            $module_layouts = array();
+            // Prepare array of component views
+            $module_views = array();
 
             // Prepare the grouped list
             $groups = array();
 
-            // Add the layout options from the module path.
-            if (is_dir($module_path) && ($module_layouts = JFolder::files($module_path, '^[^_]*\.php$'))) {
+            // Add the view options from the module path.
+            if (is_dir($module_path) && ($module_views = JFolder::files($module_path, '^[^_]*\.php$'))) {
                 // Create the group for the module
                 $groups['_'] = array();
                 $groups['_']['id'] = $this->id . '__';
                 $groups['_']['text'] = MolajoTextHelper::sprintf('JOPTION_FROM_MODULE');
                 $groups['_']['items'] = array();
 
-                foreach ($module_layouts as $file)
+                foreach ($module_views as $file)
                 {
                     // Add an option to the module group
                     $value = JFile::stripExt($file);
-                    $text = $lang->hasKey($key = strtoupper($module . '_LAYOUT_' . $value)) ? MolajoTextHelper::_($key)
+                    $text = $lang->hasKey($key = strtoupper($module . '_VIEW_' . $value)) ? MolajoTextHelper::_($key)
                             : $value;
                     $groups['_']['items'][] = MolajoHTML::_('select.option', '_:' . $value, $text);
                 }
@@ -145,12 +145,12 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 
                     $template_path = JPath::clean($application->path . '/templates/' . $template->element . '/html/' . $module);
 
-                    // Add the layout options from the template path.
+                    // Add the view options from the template path.
                     if (is_dir($template_path) && ($files = JFolder::files($template_path, '^[^_]*\.php$'))) {
                         foreach ($files as $i => $file)
                         {
-                            // Remove layout that already exist in component ones
-                            if (in_array($file, $module_layouts)) {
+                            // Remove view that already exist in component ones
+                            if (in_array($file, $module_views)) {
                                 unset($files[$i]);
                             }
                         }
@@ -166,7 +166,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
                             {
                                 // Add an option to the template group
                                 $value = JFile::stripExt($file);
-                                $text = $lang->hasKey($key = strtoupper('TPL_' . $template->element . '_' . $module . '_LAYOUT_' . $value))
+                                $text = $lang->hasKey($key = strtoupper('TPL_' . $template->element . '_' . $module . '_VIEW_' . $value))
                                         ? MolajoTextHelper::_($key) : $value;
                                 $groups[$template->element]['items'][] = MolajoHTML::_('select.option', $template->element . ':' . $value, $text);
                             }

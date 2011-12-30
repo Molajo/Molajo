@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * File Helper
  *
  * @package     Molajo
- * @subpackage  File Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoFileHelper

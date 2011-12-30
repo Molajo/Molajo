@@ -11,7 +11,7 @@
 defined('MOLAJO') or die;
 ?>
 
-<div class="breadcrumbs<?php echo $parameters->get('layout_class_suffix'); ?>">
+<div class="breadcrumbs<?php echo $parameters->get('view_class_suffix'); ?>">
     <?php if ($parameters->get('showHere', 1)) {
     echo MolajoTextHelper::_('BREADCRUMBS_HERE');
 }

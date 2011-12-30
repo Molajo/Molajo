@@ -439,7 +439,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 2101, '', '', 0),
 (1, 2101, 'display', 'display', 1);
 
-/* VIEW LAYOUTS */
+/* VIEW VIEWS */
 
 /* 3000 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -671,7 +671,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (2559, 2101, '', '', 0),
 (2559, 2101, 'display', 'display', 1);
 
-/* VIEW LAYOUTS */
+/* VIEW VIEWS */
 
 /* 3000 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES

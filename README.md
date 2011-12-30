@@ -6,7 +6,7 @@
 
 Molajo is a web application development environment for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.
 
-Molajo's primary user focus is frontend developers and designers with a clear goal of making it easier to *plug in* professionally designed layouts and customize data collection processes without writing code.
+Molajo's primary user focus is frontend developers and designers with a goal of making it easier to *plug in* professionally designed layouts and customize data collection processes without writing code.
 
 There are many ways to learn more about Molajo, you can:
 
@@ -25,7 +25,7 @@ System requirements and instructions for how to install Molajo are located in th
 There is more information about [**about extensions**](https://github.com/Molajo/Molajo/blob/core/extensions/README.md),
  [**Components**](https://github.com/Molajo/Molajo/blob/core/extensions/components/README.md),
  [**Languages**](https://github.com/Molajo/Molajo/blob/core/extensions/languages/README.md),
- [**Layouts**](https://github.com/Molajo/Molajo/blob/core/extensions/layouts/README.md),
+ [**Views**](https://github.com/Molajo/Molajo/blob/core/extensions/views/README.md),
  [**Modules**](https://github.com/Molajo/Molajo/blob/core/extensions/modules/README.md),
  [**Plugins**](https://github.com/Molajo/Molajo/blob/core/extensions/plugins/README.md),
  and [**Templates**](https://github.com/Molajo/Molajo/blob/core/extensions/templates/README.md).

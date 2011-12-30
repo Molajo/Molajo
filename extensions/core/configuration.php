@@ -8,7 +8,7 @@ class MolajoExtensionConfiguration
     public $site;
     public $application;
     public $template;
-    public $template_layout;
+    public $template_view;
     public $user;
 
     public $title;
@@ -30,10 +30,10 @@ class MolajoExtensionConfiguration
     public $page_extension_acl;
     public $page_extension_table;
     public $page_extension_path;
-    public $page_extension_layout;
-    public $page_extension_layout_wrap;
-    public $page_extension_layout_wrap_id;
-    public $page_extension_layout_wrap_class;
+    public $page_extension_view;
+    public $page_extension_view_wrap;
+    public $page_extension_view_wrap_id;
+    public $page_extension_view_wrap_class;
 
     public $page_extension_menu_item;
     public $page_extension_plugin_type;

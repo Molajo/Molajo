@@ -153,11 +153,11 @@ class MolajoController extends JObject
         /** 5. Page */
         $this->view->page = $this->request['page'];
 
-        /** 6. Layout Type */
-        $this->view->layout_type = $this->request['layout_type'];
+        /** 6. View Type */
+        $this->view->view_type = $this->request['view_type'];
 
-        /** 7. Layout */
-        $this->view->layout = $this->request['layout'];
+        /** 7. View */
+        $this->view->view = $this->request['view'];
 
         /** 8. Wrap */
         $this->view->wrap = $this->request['wrap'];
@@ -229,7 +229,7 @@ class MolajoController extends JObject
             /** view format */
             $this->view = $this->getView($this->request['view']);
 //DELETE            $this->view->setModel($this->model, true);
-//DELETE            $this->view->setLayout($this->request['layout']);
+//DELETE            $this->view->setView($this->request['view']);
         }
 
         /** load table */

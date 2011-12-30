@@ -20,4 +20,4 @@ $count = count($list);
 // Set the default separator
 $separator = modBreadCrumbsHelper::setSeparator($parameters->get('separator'));
 
-require MolajoModule::getLayoutPath('breadcrumbs', $parameters->get('layout', 'default'));
+require MolajoModule::getViewPath('breadcrumbs', $parameters->get('view', 'default'));

@@ -207,7 +207,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         }
 
         /** context **/
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task;
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task;
 
         /** ids **/
         $idArray = JRequest::getVar('cid', array(), '', 'array');

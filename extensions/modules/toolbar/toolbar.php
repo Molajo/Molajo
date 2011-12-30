@@ -28,14 +28,14 @@ $permissions = $acl->getUserPermissions($session->get('page.option'), $session->
 
 /** Build the Toolbar
 $toolbar = new MolajoToolbarHelper ();
-$toolbar->addButtonsDisplayLayout ($session->get('page.option'), $permissions);
+$toolbar->addButtonsDisplayView ($session->get('page.option'), $permissions);
  */
 /**
 $toolbar = MolajoToolbar::getInstance('toolbar')->render('toolbar');
-require MolajoModule::getLayoutPath('toolbar', $parameters->get('layout', 'default'));
+require MolajoModule::getViewPath('toolbar', $parameters->get('view', 'default'));
  */
 // wrap div == cf
 $request['wrap'] = $module->style;
 $request['position'] = $module->position;
-$request['layout'] = 'admintitle';
-$request['layout_type'] = 'extension';
+$request['view'] = 'admintitle';
+$request['view_type'] = 'extension';

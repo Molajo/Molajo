@@ -9,7 +9,7 @@ dashboard
 extensions
 groups
 installer
-layouts
+views
 login
 maintain
 menuitems

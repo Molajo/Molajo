@@ -10,11 +10,11 @@
     <creationDate>January 2012</creationDate>
     <description>FILES_MOLAJO_XML_DESCRIPTION</description>
 
-    <scriptfile>layouts/manifests/distribution/script.php</scriptfile>
+    <scriptfile>views/manifests/distribution/script.php</scriptfile>
 
     <update>
         <schemas>
-            <schemapath type="updates">layouts/manifests/distribution/sql</schemapath>
+            <schemapath type="updates">views/manifests/distribution/sql</schemapath>
         </schemas>
     </update>
 

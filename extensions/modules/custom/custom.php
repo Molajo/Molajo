@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $parameters->def('layout', 'custom');
+$view = $parameters->def('view', 'custom');
 $wrap = $parameters->def('wrap', 'div');
 
 if ($parameters->def('prepare_content', 1)) {

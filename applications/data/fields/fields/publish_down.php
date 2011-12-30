@@ -108,14 +108,14 @@ class MolajoFieldPublish_down extends MolajoField
      *
      * sets formatting and content parameters
      *
-     * @param  $layout
+     * @param  $view
      * @param  $item
      * @param  $itemCount
      * @return array
      */
-    public function render($layout, $item, $itemCount)
+    public function render($view, $item, $itemCount)
     {
-        if ($layout == 'admin') {
+        if ($view == 'admin') {
             $render = array();
             $render['link_value'] = false;
             $render['class'] = 'nowrap';

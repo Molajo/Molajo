@@ -1239,7 +1239,7 @@
             focusinBubbles: false,
             deleteExpando: true,
             noCloneEvent: true,
-            inlineBlockNeedsLayout: false,
+            inlineBlockNeedsView: false,
             shrinkWrapBlocks: false,
             reliableMarginRight: true
         };
@@ -1324,13 +1324,13 @@
         if ("zoom" in div.style) {
             // Check if natively block-level elements act like inline-block
             // elements when setting their display to 'inline' and giving
-            // them layout
+            // them view
             // (IE < 8 does this)
             div.style.display = "inline";
             div.style.zoom = 1;
-            support.inlineBlockNeedsLayout = ( div.offsetWidth === 2 );
+            support.inlineBlockNeedsView = ( div.offsetWidth === 2 );
 
-            // Check if elements with layout shrink-wrap their children
+            // Check if elements with view shrink-wrap their children
             // (IE 6 does this)
             div.style.display = "";
             div.innerHTML = "<div style='width:4px;'></div>";
@@ -6469,7 +6469,7 @@
                 var style = elem.style,
                     currentStyle = elem.currentStyle;
 
-                // IE has trouble with opacity if it does not have layout
+                // IE has trouble with opacity if it does not have view
                 // Force it by setting the zoom level
                 style.zoom = 1;
 
@@ -8165,14 +8165,14 @@
                         // animated
                         if (jQuery.css(this, "display") === "inline" &&
                             jQuery.css(this, "float") === "none") {
-                            if (!jQuery.support.inlineBlockNeedsLayout) {
+                            if (!jQuery.support.inlineBlockNeedsView) {
                                 this.style.display = "inline-block";
 
                             } else {
                                 display = defaultDisplay(this.nodeName);
 
                                 // inline-level elements accept inline-block;
-                                // block-level elements need to be inline with layout
+                                // block-level elements need to be inline with view
                                 if (display === "inline") {
                                     this.style.display = "inline-block";
 

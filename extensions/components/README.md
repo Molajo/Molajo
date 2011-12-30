@@ -13,7 +13,7 @@
 * Component Data
 * Tasks
 * Views - List, Item, and Edit Displays
-* Layouts
+* Views
 * Application and Menu Item specification
 * URLs
 * Access Control

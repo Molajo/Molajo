@@ -22,8 +22,8 @@ if (is_null($link)) {
     return;
 }
 
-$layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
+$view_class_suffix = htmlspecialchars($parameters->get('view_class_suffix'));
 
 $text = htmlspecialchars($parameters->get('text'));
 
-require MolajoModule::getLayoutPath('syndicate', $parameters->get('layout', 'default'));
+require MolajoModule::getViewPath('syndicate', $parameters->get('view', 'default'));

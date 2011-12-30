@@ -117,7 +117,7 @@ class MolajoModelDisplay extends MolajoModel
      */
     protected function populateState()
     {
-        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['layout'];
+        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['view'];
 
         $this->parameters = $this->request['parameters'];
 
@@ -241,7 +241,7 @@ class MolajoModelDisplay extends MolajoModel
 
     /**
      * populateItemState
-     * Method to populate state values needed for Item Layout
+     * Method to populate state values needed for Item View
      *
      * @return    void
      * @since    1.0
@@ -407,7 +407,7 @@ class MolajoModelDisplay extends MolajoModel
                 $items[$i]->fulltext = $fulltext;
 
                 /** some content plugins expect column named text */
-                if ($this->parameters->get('layout_show_intro', '1') == '1') {
+                if ($this->parameters->get('view_show_intro', '1') == '1') {
                     $items[$i]->text = $items[$i]->introtext . ' ' . $items[$i]->fulltext;
                 } else if ($items[$i]->fulltext) {
                     $items[$i]->text = $items[$i]->fulltext;
@@ -416,7 +416,7 @@ class MolajoModelDisplay extends MolajoModel
                 }
 
                 /** text snippet */
-                $items[$i]->snippet = substr($items[$i]->text, 0, $this->parameters->get('layout_text_snippet_length', 200));
+                $items[$i]->snippet = substr($items[$i]->text, 0, $this->parameters->get('view_text_snippet_length', 200));
 
                 if ($items[$i]->created_by_alias == '') {
                     $items[$i]->display_author_name = $items[$i]->author_name;
@@ -749,7 +749,7 @@ class MolajoModelDisplay extends MolajoModel
 //            }
 //        }
 
-        $id .= ':' . $this->getState('filter.layout');
+        $id .= ':' . $this->getState('filter.view');
 
         $id .= ':' . $this->getState('list.start');
         $id .= ':' . $this->getState('list.limit');
@@ -1080,7 +1080,7 @@ class MolajoModelDisplay extends MolajoModel
      *
      * Not using this right now, may choose to later
      *
-     * This code restricts the select list to a required list, those items specified for the filter and for the specific layout
+     * This code restricts the select list to a required list, those items specified for the filter and for the specific view
      *
      * Could help with speed (a bit)
      *

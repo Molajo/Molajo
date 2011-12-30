@@ -19,4 +19,4 @@ $type = modLoginHelper::getType();
 $return = modLoginHelper::getReturnURL($parameters, $type);
 $user = MolajoFactory::getUser();
 
-require MolajoModule::getLayoutPath('login', $parameters->get('layout', 'default'));
+require MolajoModule::getViewPath('login', $parameters->get('view', 'default'));

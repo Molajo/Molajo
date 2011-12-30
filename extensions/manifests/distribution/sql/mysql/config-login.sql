@@ -40,7 +40,7 @@ INSERT INTO `molajo_extension_options` (`extension_instance_id`, `application_id
 (13, 2100, '', '', 0),
 (13, 2100, 'display', 'display', 1);
 
-# VIEW LAYOUTS
+# VIEW VIEWS
 
 # 3000 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`) VALUES

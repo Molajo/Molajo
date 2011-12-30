@@ -64,7 +64,7 @@ class modMenuHelper
         if ($items) {
             foreach ($items as $i => $item) {
 
-                /** save for the layout */
+                /** save for the view */
                 $item->active_id = $active_id;
                 $item->path = $path;
 

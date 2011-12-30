@@ -51,7 +51,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
 
         // Setup variables for display.
         $html = array();
-        $link = 'index.php?option=' . $this->element['extension'] . '&amp;view=' . $this->element['view'] . '&amp;layout=modal&amp;layout=component&amp;function=jSelectItem_' . $this->id;
+        $link = 'index.php?option=' . $this->element['extension'] . '&amp;view=' . $this->element['view'] . '&amp;view=modal&amp;view=component&amp;function=jSelectItem_' . $this->id;
 
         $db = MolajoFactory::getDbo();
         $db->setQuery(

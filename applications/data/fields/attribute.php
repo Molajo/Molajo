@@ -35,7 +35,7 @@ class MolajoAttribute
     /**
      * $_rowset
      *
-     * Results returned to the Layout
+     * Results returned to the View
      *
      * @var string
      */

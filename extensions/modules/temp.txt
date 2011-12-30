@@ -15,7 +15,7 @@ grid
 gridbatch
 header
 iconbutton
-layout
+view
 login
 logout
 members

@@ -785,10 +785,10 @@
     }
     var bg = "[.\\d]";
     (function() {
-        var v = h.Layout = {};
+        var v = h.View = {};
         U += "*{boxSizing:content-box}";
         v.boxSizing = function(a) {
-            if (!a.currentStyle.hasLayout) {
+            if (!a.currentStyle.hasView) {
                 a.style.height = "0cm";
                 if (a.currentStyle.verticalAlign === "auto")a.runtimeStyle.verticalAlign = "top";
                 Z(a)
@@ -806,10 +806,10 @@
             if (!g.runtimeStyle[f]) {
                 var d = g.parentElement;
                 var c = f === "marginTop";
-                if (d && d.currentStyle.hasLayout && !h._1(g, c ? "previous" : "next"))return;
+                if (d && d.currentStyle.hasView && !h._1(g, c ? "previous" : "next"))return;
                 var a = g[c ? "firstChild" : "lastChild"];
                 if (a && a.nodeName < "@")a = h._1(a, c ? "next" : "previous");
-                if (a && a.currentStyle.styleFloat === "none" && a.currentStyle.hasLayout) {
+                if (a && a.currentStyle.styleFloat === "none" && a.currentStyle.hasView) {
                     S(a, f);
                     margin = ba(g, g.currentStyle[f]);
                     childMargin = ba(a, a.currentStyle[f]);
@@ -851,7 +851,7 @@
             function s(c) {
                 if (!bq(c)) {
                     var a = c.offsetParent;
-                    while (a && !a.currentStyle.hasLayout)a = a.offsetParent
+                    while (a && !a.currentStyle.hasView)a = a.offsetParent
                 }
                 return(a || x).clientWidth
             }
@@ -890,7 +890,7 @@
                     l(a)
                 }
             };
-            eval("IE7.Layout.maxWidth=" + String(v.minWidth).replace(/min/g, "max"));
+            eval("IE7.View.maxWidth=" + String(v.minWidth).replace(/min/g, "max"));
             function l(d) {
                 if (d == p.body) {
                     var c = d.clientWidth
@@ -1114,7 +1114,7 @@
                 Y(a, "left", a.currentStyle.left);
                 Y(a, "top", a.currentStyle.top);
                 w();
-                h.Layout.fixRight(a);
+                h.View.fixRight(a);
                 k(a)
             }
         }
@@ -1238,8 +1238,8 @@
         h.CSS.addRecalc("overflow", "visible", function(d) {
             if (d.currentStyle.position === "absolute")return;
             if (d.parentNode.ie7_wrapped)return;
-            if (h.Layout && d.currentStyle["max-height"] !== "auto") {
-                h.Layout.maxHeight(d)
+            if (h.View && d.currentStyle["max-height"] !== "auto") {
+                h.View.maxHeight(d)
             }
             if (d.currentStyle.marginLeft === "auto")d.style.marginLeft = 0;
             if (d.currentStyle.marginRight === "auto")d.style.marginRight = 0;
@@ -1510,8 +1510,8 @@
                 a.cellSpacing = C(a, a.currentStyle["ie7-border-spacing"].split(" ")[0])
             }
         });
-        h.CSS.addRecalc("box-sizing", "content-box", h.Layout.boxSizing);
-        h.CSS.addRecalc("box-sizing", "border-box", h.Layout.borderBox)
+        h.CSS.addRecalc("box-sizing", "content-box", h.View.boxSizing);
+        h.CSS.addRecalc("box-sizing", "border-box", h.View.borderBox)
     }
     if (t < 8) {
         var dk = /^image/i;

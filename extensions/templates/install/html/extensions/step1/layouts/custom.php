@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Layouts
+ * @subpackage  Views
  * @copyright   Copyright (C) 2012 Chris Rault. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -50,9 +50,9 @@ var_dump($this->setup);
             </li>
         </ul>
         <div id="actions">
-            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&layout=step2" class="btn-primary"><strong>Ready?</strong> Lets get started! &raquo;</a
+            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&view=step2" class="btn-primary"><strong>Ready?</strong> Lets get started! &raquo;</a
             -->
-            <button type="submit" class="btn-primary" name="layout"
+            <button type="submit" class="btn-primary" name="view"
                     value="step2"><?php echo MolajoTextHelper::_('Ready? Lets get started! &raquo;') ?></button>
         </div>
     </form>

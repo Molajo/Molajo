@@ -157,7 +157,7 @@ class MolajoModelEdit extends MolajoModel
         if ((int)$datakey > 0) {
             $data = MolajoFactory::getUser()->getUserState($datakey, array());
         }
-        $formName = JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey');
+        $formName = JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey');
 
         $form = $this->loadForm($formName, JRequest::getCmd('view'), array('control' => 'jform', 'load_data' => $loadData));
         if (empty($form)) {

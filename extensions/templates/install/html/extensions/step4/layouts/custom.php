@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Layouts
+ * @subpackage  Views
  * @copyright   Copyright (C) 2012 Chris Rault. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -44,11 +44,11 @@ var_dump($this->setup);
         <input type="hidden" name="sample_data" value="<?php echo $this->setup['sample_data'] ?>">
 
         <div id="actions">
-            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&layout=step3" class="btn-secondary">&laquo; <strong>P</strong>revious</a
+            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&view=step3" class="btn-secondary">&laquo; <strong>P</strong>revious</a
             -->
             <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&task=install" class="btn-primary alt">Install &raquo;</a
             -->
-            <button type="submit" class="btn-secondary" name="layout"
+            <button type="submit" class="btn-secondary" name="view"
                     value="step3"><?php echo MolajoTextHelper::_('Previous') ?></button>
             <button type="submit" class="btn-primary" name="task"
                     value="install"><?php echo MolajoTextHelper::_('Install') ?></button>

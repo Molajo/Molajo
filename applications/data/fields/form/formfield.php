@@ -493,11 +493,11 @@ abstract class MolajoFormField
             $this->rowset[0]['label'] = '';
         }
 
-        /** layout */
-        if (isset($this->layout)) {
-            $this->rowset[0]['layout'] = trim($this->layout);
+        /** view */
+        if (isset($this->view)) {
+            $this->rowset[0]['view'] = trim($this->view);
         } else {
-            $this->rowset[0]['layout'] = 'text';
+            $this->rowset[0]['view'] = 'text';
         }
 
         /** maxlength */
@@ -599,7 +599,7 @@ abstract class MolajoFormField
     /**
      * getInputPostFieldTypeProcessing
      *
-     * Output Form Field to Layout
+     * Output Form Field to View
      *
      * @return  array
      * @since   1.0

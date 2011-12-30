@@ -1,26 +1,19 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Language
- *
+ * @package     Molajo
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-
 defined('MOLAJO') or die;
 
 /**
- * @package     Joomla.Platform
- * @subpackage  Language
- * @since   1.0
- */
-
-/**
- * Class to transliterate strings
+ * Transliterate Helper
  *
- * @package     Joomla.Platform
- * @subpackage  Language
- * @since       11.1
+ * @package     Molajo
+ * @subpackage  Helper
+ * @since       1.0
  */
 class MolajoTransliterateHelper
 {

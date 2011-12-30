@@ -39,7 +39,7 @@ foreach ($files as $file) {
 $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/model.php', 'MolajoModel');
 $files = JFolder::files(PLATFORM_MOLAJO_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'layout.php') {
+    if ($file == 'view.php') {
     } else {
         $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
@@ -49,7 +49,7 @@ foreach ($files as $file) {
 $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/views/view.php', 'MolajoView');
 $files = JFolder::files(PLATFORM_MOLAJO_MVC . '/views', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'layout.php' || $file == 'view.php') {
+    if ($file == 'view.php' || $file == 'view.php') {
     } else {
         $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }

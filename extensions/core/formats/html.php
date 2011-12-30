@@ -57,15 +57,15 @@ class MolajoHtmlFormat
     protected $page = null;
 
     /**
-     *  Layout include file
+     *  View include file
      *
      * @var string
      * @since 1.0
      */
-    protected $layout = null;
+    protected $view = null;
 
     /**
-     *  Wrap for Layout
+     *  Wrap for View
      *
      * @var string
      * @since 1.0
@@ -127,7 +127,7 @@ class MolajoHtmlFormat
         $this->message = $config->message;
         $this->template = $config->template;
         $this->page = $config->page;
-        $this->layout = $config->layout;
+        $this->view = $config->view;
         $this->wrap = $config->wrap;
 
         /** Request */

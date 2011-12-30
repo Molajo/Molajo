@@ -190,7 +190,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="single_item_parameter2"
@@ -203,7 +203,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="single_item_parameter3"
@@ -216,7 +216,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="single_item_parameter4"
@@ -229,7 +229,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="single_item_parameter5"
@@ -242,22 +242,22 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
     </fieldset>
 
     <fieldset
-            name="config_layouts"
-            label="LAYOUT_LABEL"
+            name="config_views"
+            label="VIEW_LABEL"
             >
 
         <field
-                name="config_layouts"
+                name="config_views"
                 type="spacer"
                 class="spacer"
                 hr="false"
-                label="LAYOUT_LABEL"
-                description="LAYOUT_DESC"
+                label="VIEW_LABEL"
+                description="VIEW_DESC"
                 />
 
         <field
@@ -279,7 +279,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_editor_parameter2"
@@ -292,7 +292,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_editor_parameter3"
@@ -305,7 +305,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_editor_parameter4"
@@ -318,7 +318,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_editor_parameter5"
@@ -331,7 +331,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field
@@ -339,13 +339,13 @@
                 type="spacer"
                 class="spacer"
                 hr="false"
-                label="ITEM_DEFAULT_LAYOUT_LABEL"
-                description="ITEM_DEFAULT_LAYOUT_DESC"
+                label="ITEM_DEFAULT_VIEW_LABEL"
+                description="ITEM_DEFAULT_VIEW_DESC"
                 />
 
         <field name="comment_default_parameter1"
-               label="ITEM_DEFAULT_LAYOUT_PARAMETER1_LABEL"
-               description="ITEM_DEFAULT_LAYOUT_PARAMETER1_DESC"
+               label="ITEM_DEFAULT_VIEW_PARAMETER1_LABEL"
+               description="ITEM_DEFAULT_VIEW_PARAMETER1_DESC"
                type="sql"
                translate="true"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
@@ -353,12 +353,12 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_default_parameter2"
-               label="ITEM_DEFAULT_LAYOUT_PARAMETER2_LABEL"
-               description="ITEM_DEFAULT_LAYOUT_PARAMETER2_DESC"
+               label="ITEM_DEFAULT_VIEW_PARAMETER2_LABEL"
+               description="ITEM_DEFAULT_VIEW_PARAMETER2_DESC"
                type="sql"
                translate="true"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
@@ -366,12 +366,12 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_default_parameter3"
-               label="ITEM_DEFAULT_LAYOUT_PARAMETER3_LABEL"
-               description="ITEM_DEFAULT_LAYOUT_PARAMETER3_DESC"
+               label="ITEM_DEFAULT_VIEW_PARAMETER3_LABEL"
+               description="ITEM_DEFAULT_VIEW_PARAMETER3_DESC"
                type="sql"
                translate="true"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
@@ -379,12 +379,12 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_default_parameter4"
-               label="ITEM_DEFAULT_LAYOUT_PARAMETER4_LABEL"
-               description="ITEM_DEFAULT_LAYOUT_PARAMETER4_DESC"
+               label="ITEM_DEFAULT_VIEW_PARAMETER4_LABEL"
+               description="ITEM_DEFAULT_VIEW_PARAMETER4_DESC"
                type="sql"
                translate="true"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
@@ -392,12 +392,12 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comment_default_parameter5"
-               label="ITEM_DEFAULT_LAYOUT_PARAMETER5_LABEL"
-               description="ITEM_DEFAULT_LAYOUT_PARAMETER5_DESC"
+               label="ITEM_DEFAULT_VIEW_PARAMETER5_LABEL"
+               description="ITEM_DEFAULT_VIEW_PARAMETER5_DESC"
                type="sql"
                translate="true"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
@@ -405,7 +405,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field
@@ -427,7 +427,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_blog_parameter2"
@@ -440,7 +440,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_blog_parameter3"
@@ -453,7 +453,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_blog_parameter4"
@@ -466,7 +466,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_blog_parameter5"
@@ -479,7 +479,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field
@@ -501,7 +501,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_default_parameter2"
@@ -514,7 +514,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_default_parameter3"
@@ -527,7 +527,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_default_parameter4"
@@ -540,7 +540,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
 
         <field name="comments_default_parameter5"
@@ -553,7 +553,7 @@
                value_field="option_value_literal"
                default="0"
                 >
-            <option value="0">LAYOUT_NONE</option>
+            <option value="0">VIEW_NONE</option>
         </field>
     </fieldset>
 

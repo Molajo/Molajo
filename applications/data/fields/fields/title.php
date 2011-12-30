@@ -104,10 +104,10 @@ class MolajoFieldTitle extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render($layout, $item, $itemCount)
+    public function render($view, $item, $itemCount)
     {
 
-        if ($layout == 'admin') {
+        if ($view == 'admin') {
             $render = array();
             $render['class'] = 'nowrap';
             $render['valign'] = 'top';

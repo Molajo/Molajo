@@ -11,12 +11,11 @@ defined('MOLAJO') or die;
  * Date Helper
  *
  * @package     Molajo
- * @subpackage  Date Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoDateHelper
 {
-
     /**
      * convertCCYYMMDD
      *
@@ -164,7 +163,7 @@ class MolajoDateHelper
     /**
      * buildCalendar
      *
-     * Amy - redo to generate a set of dates, combine with other data, pass to a layout for rendering
+     * Amy - redo to generate a set of dates, combine with other data, pass to a view for rendering
      *
      * @param string $month
      * @param string $year

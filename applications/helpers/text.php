@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Text Helper
  *
  * @package     Molajo
- * @subpackage  Text Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoTextHelper

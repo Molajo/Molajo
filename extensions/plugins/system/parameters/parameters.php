@@ -81,7 +81,7 @@ class plgSystemParameters extends MolajoPluginHelper
                 return true;
             }
 
-        } else if ($form->getName() == JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey')) {
+        } else if ($form->getName() == JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey')) {
             $loadParameterSetsArray = $this->getDetailItemParameterSets($data);
             if ($loadParameterSetsArray === false || count($loadParameterSetsArray) == 0) {
                 return true;
@@ -108,21 +108,21 @@ class plgSystemParameters extends MolajoPluginHelper
     /**
      * getComponentParameterSets
      *
-     * Retrieve the set of Layouts for which Parameter sets are needed
+     * Retrieve the set of Views for which Parameter sets are needed
      *
      * @return object
      */
     function getComponentParameterSets()
     {
         $parameters = JComponentHelper::getParameters(JRequest::getVar('component'));
-        $layoutParameters = $this->getSiteLayouts(JRequest::getVar('component'));
-        return $this->getLayoutParameterOptions($layoutParameters, $parameters);
+        $viewParameters = $this->getSiteViews(JRequest::getVar('component'));
+        return $this->getViewParameterOptions($viewParameters, $parameters);
     }
 
     /**
      * getMenuItemParameterSets
      *
-     * Retrieve the set of Layouts for which Parameter sets are needed
+     * Retrieve the set of Views for which Parameter sets are needed
      * @param $parameters
      * @param $data
      * @return object
@@ -130,13 +130,13 @@ class plgSystemParameters extends MolajoPluginHelper
     function getDetailItemParameterSets($data)
     {
         $parameters = JComponentHelper::getParameters(JRequest::getVar('option'));
-        return $this->getLayoutParameterOptions(array('single_item_parameter'), $parameters);
+        return $this->getViewParameterOptions(array('single_item_parameter'), $parameters);
     }
 
     /**
      * getMenuItemParameterSets
      *
-     * Retrieve the set of Layouts for which Parameter sets are needed
+     * Retrieve the set of Views for which Parameter sets are needed
      * @param $parameters
      * @param $data
      * @return object
@@ -145,45 +145,45 @@ class plgSystemParameters extends MolajoPluginHelper
     {
         $option = '';
         $view = '';
-        $layout = 'default';
+        $view = 'default';
         foreach ($data['request'] as $name => $value) {
             if ($name == 'option') {
                 $option = $value;
             } else if ($name == 'view') {
                 $view = $value;
-            } else if ($name == 'layout') {
-                $layout = $value;
+            } else if ($name == 'view') {
+                $view = $value;
             }
         }
         if ($option == '') {
             return true;
         }
-        $this->getSiteLayouts($option);
+        $this->getSiteViews($option);
 
-        $typeArray = array('' . $view . '_' . $layout . '_parameter');
+        $typeArray = array('' . $view . '_' . $view . '_parameter');
         $parameters = JComponentHelper::getParameters($option);
 
-        return $this->getLayoutParameterOptions($typeArray, $parameters);
+        return $this->getViewParameterOptions($typeArray, $parameters);
     }
 
     /**
-     * getLayoutParameterOptions
+     * getViewParameterOptions
      *
      * Given values specified in $typeArray, retrieve the parameter form object file names
      * @param  $typeArray
      * @return
      */
-    function getLayoutParameterOptions($typeArray, $parameters)
+    function getViewParameterOptions($typeArray, $parameters)
     {
         $loadParameterSetsArray = array();
 
-        /** loop through layout parameter types */
-        foreach ($typeArray as $layoutParameterType) {
+        /** loop through view parameter types */
+        foreach ($typeArray as $viewParameterType) {
 
             /** loop thru ParameterSet options **/
             for ($i = 1; $i < 1000; $i++) {
 
-                $parameterSetName = $parameters->def($layoutParameterType . $i);
+                $parameterSetName = $parameters->def($viewParameterType . $i);
 
                 /** encountered end of ParameterSets **/
                 if ($parameterSetName == null) {
@@ -267,11 +267,11 @@ class plgSystemParameters extends MolajoPluginHelper
     }
 
     /**
-     * getSiteLayouts
+     * getSiteViews
      * @param  $option
      * @return void
      */
-    function getSiteLayouts($option)
+    function getSiteViews($option)
     {
         /** component view location */
         $path = MOLAJO_BASE_FOLDER . '/components/' . $option . '/views';
@@ -280,24 +280,24 @@ class plgSystemParameters extends MolajoPluginHelper
         $folders = JFolder::folders($path, $filter = '', $recurse = true, $fullpath = true, $exclude = array('.svn', 'CVS'));
 
         $view = '';
-        $layout = '';
-        $viewLayout = array();
+        $view = '';
+        $viewView = array();
         /** process files in each folder **/
         foreach ($folders as $folder) {
 
             /** rename files that do not fit the pattern **/
-            if (basename($folder) == 'layout') {
+            if (basename($folder) == 'view') {
                 $files = JFolder::files($folder, $filter = '.php', $recurse = false, $full = false, $exclude = array(), $excludefilter = array('^\..*', '.*~', '*_*.php'));
 
                 /** process each file **/
                 foreach ($files as $file) {
-                    $layout = substr($file, 0, strlen($file) - 4);
-                    $viewLayout[] = '' . $view . '_' . $layout . '_parameter';
+                    $view = substr($file, 0, strlen($file) - 4);
+                    $viewView[] = '' . $view . '_' . $view . '_parameter';
                 }
             } else {
                 $view = basename($folder);
             }
         }
-        return array_unique($viewLayout);
+        return array_unique($viewView);
     }
 }

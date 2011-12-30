@@ -29,18 +29,18 @@ class InstallerController extends MolajoController
 
         /** check for configuration.php file - if exists redirect to error */
         if (JFile::exists(MOLAJO_BASE_FOLDER . '/configuration.php')) {
-            //            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=error', false));
+            //            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&view=error', false));
             //            $this->redirect();
         }
         else if (!$this->getModel('display')->can_install) {
-            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=error', false));
+            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&view=error', false));
             $this->redirect();
         }
 
         if (JRequest::getCmd('next_step', '', 'post')) {
-            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=' . JRequest::getCmd('next_step', 'post'), false));
+            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&view=' . JRequest::getCmd('next_step', 'post'), false));
             $this->redirect();
-            //            $this->getView('display')->setLayout('step2');
+            //            $this->getView('display')->setView('step2');
         }
 
         parent::display($cachable, $urlparameters);

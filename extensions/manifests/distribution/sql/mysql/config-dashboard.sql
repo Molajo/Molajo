@@ -19,7 +19,7 @@ INSERT INTO `molajo_extension_options`
     VALUES
       (@id, 0, 200, 'template', 'molajito', 50),
       (@id, 0, 200, 'page', 'default', 50),
-      (@id, 0, 200, 'layout', 'dashboard', 50),
+      (@id, 0, 200, 'view', 'dashboard', 50),
       (@id, 0, 200, 'wrap', 'div', 50);
 
 # VIEWS
@@ -38,7 +38,7 @@ INSERT INTO `molajo_extension_options`
       (@id, 0, 2100, '', '', 0),
       (@id, 0, 2100, 'display', 'display', 1);
 
-# LAYOUTS
+# VIEWS
 
 # 3000 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY
 INSERT INTO `molajo_extension_options`

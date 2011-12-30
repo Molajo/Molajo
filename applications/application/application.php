@@ -24,7 +24,7 @@ class MolajoApplication
      * @var    object  The application configuration object.
      * @since  1.0
      */
-    public $config;
+    public $config = null;
 
     /**
      * @var    Client  The application client object.
@@ -289,7 +289,7 @@ class MolajoApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            self::$instance = new MolajoApplication();
+            self::$instance = new MolajoApplication($config);
         }
 
         return self::$instance;
@@ -339,8 +339,10 @@ class MolajoApplication
      */
     public function getConfig()
     {
-        $configClass = new MolajoConfiguration();
-        $this->config = $configClass->getConfig();
+        if ($this->config == null) {
+            $configClass = new MolajoConfiguration();
+            $this->config = $configClass->getConfig();
+        }
 
         return $this->config;
     }
@@ -516,8 +518,6 @@ class MolajoApplication
     {
         $href = str_replace('\\', '/', $href);
         $this->addHeadLink($href, $relation, 'rel', array('type' => $type));
-
-        return $this;
     }
 
     /**
@@ -541,8 +541,6 @@ class MolajoApplication
         $this->links[$href]['relation'] = $relation;
         $this->links[$href]['relType'] = $relType;
         $this->links[$href]['attribs'] = $attribs;
-
-        return $this;
     }
 
     /**
@@ -962,7 +960,6 @@ class MolajoApplication
     {
         if (isset($this->script[strtolower($format)])) {
             $this->script[strtolower($format)] .= chr(13) . $content;
-
         } else {
             $this->script[strtolower($format)] = $content;
         }
@@ -1228,7 +1225,7 @@ class MolajoApplication
      * MOLAJO_BASE_URL - protocol, host and path + / (ex. http://localhost/molajo/)
      * MOLAJO_APPLICATION_URL_PATH - slug for application (ex. administrator or '' for site)
      * .'/'.
-     * MOLAJO_PAGE_REQUEST - remaining (ex. index.php?option=articles&view=article&layout=default or articles)
+     * MOLAJO_PAGE_REQUEST - remaining (ex. index.php?option=articles&view=display or edit)
      *
      * If the headers have not been sent the redirect will be accomplished using a "301 Moved Permanently"
      * or "303 See Other" code in the header pointing to the new location. If the headers have already been

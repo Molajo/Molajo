@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $parameters->def('layout', 'default');
+$view = $parameters->def('view', 'default');
 $wrap = $parameters->def('wrap', 'none');
 
 require_once dirname(__FILE__) . '/helper.php';

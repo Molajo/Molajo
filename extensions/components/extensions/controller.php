@@ -37,7 +37,7 @@ class InstallerController extends JController
         // Set the default view name and format from the Request.
         $vName = JRequest::getCmd('view', 'install');
         $vFormat = MolajoFactory::getApplication()->getType();
-        $lName = JRequest::getCmd('layout', 'default');
+        $lName = JRequest::getCmd('view', 'default');
 
         // Get and render the view.
         if ($view = $this->getView($vName, $vFormat)) {
@@ -49,7 +49,7 @@ class InstallerController extends JController
 
             // Push the model into the view (as default).
             $view->setModel($model, true);
-            $view->setLayout($lName);
+            $view->setView($lName);
 
             // Load the submenu.
             InstallerHelper::addSubmenu($vName);

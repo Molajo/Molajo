@@ -183,7 +183,7 @@ class MolajoMessageRenderer
             $state = array();
             $rowset = array();
             $pagination = array();
-            $layout = 'default';
+            $view = 'default';
             if (isset($this->parameters->wrap)) {
                 $wrap = $this->parameters->wrap;
             } else {
@@ -231,11 +231,11 @@ class MolajoMessageRenderer
             /** 8. Pagination */
             $view->pagination = $pagination;
 
-            /** 9. Layout Type */
-            $view->layout_type = 'extensions';
+            /** 9. View Type */
+            $view->view_type = 'extensions';
 
-            /** 10. Layout */
-            $view->layout = $layout;
+            /** 10. View */
+            $view->view = $view;
 
             /** 11. Wrap */
             $view->wrap = $wrap;

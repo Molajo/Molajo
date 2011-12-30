@@ -20,7 +20,7 @@ class MolajoMenuFORCOMPONENT
     /**
      * Defines the valid request variables for the reverse lookup.
      */
-    protected static $_filter = array('option', 'view', 'layout');
+    protected static $_filter = array('option', 'view', 'view');
 
     /**
      * Configure the Linkbar.
@@ -76,7 +76,7 @@ class MolajoMenuFORCOMPONENT
      *
      * @param    mixed    A link string or array of request variables.
      *
-     * @return    mixed    A link in standard option-view-layout form, or false if the supplied response is invalid.
+     * @return    mixed    A link in standard option-view-view form, or false if the supplied response is invalid.
      */
     public static function getLinkKey($request)
     {
@@ -96,7 +96,7 @@ class MolajoMenuFORCOMPONENT
             $request = $args;
         }
 
-        // Only take the option, view and layout parts.
+        // Only take the option, view and view parts.
         foreach ($request as $name => $value)
         {
             if (!in_array($name, self::$_filter)) {

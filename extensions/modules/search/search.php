@@ -24,9 +24,9 @@ $width = intval($parameters->get('width', 20));
 $maxlength = $upper_limit;
 $text = htmlspecialchars($parameters->get('text', MolajoTextHelper::_('SEARCH_SEARCHBOX_TEXT')));
 $label = htmlspecialchars($parameters->get('label', MolajoTextHelper::_('SEARCH_LABEL_TEXT')));
-$layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
+$view_class_suffix = htmlspecialchars($parameters->get('view_class_suffix'));
 
 if ($imagebutton) {
     $img = modSearchHelper::getSearchImage($button_text);
 }
-require MolajoModule::getLayoutPath('search', $parameters->get('layout', 'default'));
+require MolajoModule::getViewPath('search', $parameters->get('view', 'default'));

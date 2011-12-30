@@ -77,7 +77,7 @@ class MolajoModelDummy extends MolajoModel
      */
     protected function populateState()
     {
-        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['layout'];
+        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['view'];
     }
 
     /**

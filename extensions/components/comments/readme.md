@@ -12,19 +12,19 @@ Assumptions for Administrator Component:
 1. Deploying Row Level ACL
 2. Update only one Table which has a primary key named id
 3. Two Views: display and edit
-4. Two Layouts: manager and edit (for editing and creating content)
+4. Two Views: manager and edit (for editing and creating content)
 5. Uses categories
 6. Configuration file
 
 IF YOU WANT TO:
 
 0. featured
-1. add elements, "Select Comment for Comment Layout"
+1. add elements, "Select Comment for Comment View"
 1. add tasks - "Mark as Audited" -> configuration and method
 2. add record types ... "Car Component - Makes of Cars" (responses)
 3. add views ...
 4. add or remove fields in the table (Configuration Option)
-5. change the layout (Admin - it's a configuration option/Frontend likely a Layout Override or Alternative Layout)
+5. change the view (Admin - it's a configuration option/Frontend likely a View Override or Alternative View)
 6. adapt the level of acl coverage (Modify the access.xml file)
 7. add fields like comments or tags... (Do it)
 8. translations (Instructions)

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Layouts
+ * @subpackage  Views
  * @copyright   Copyright (C) 2012 Chris Rault. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -88,13 +88,13 @@ var_dump($this->setup);
         </ol>
 
         <div id="actions">
-            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&layout=step1" class="btn-secondary">&laquo; <strong>P</strong>revious</a
+            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&view=step1" class="btn-secondary">&laquo; <strong>P</strong>revious</a
             -->
-            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&layout=step3" class="btn-primary"><strong>N</strong>ext &raquo;</a
+            <!--a href="<?php echo JURI::base(); ?>index.php?option=installer&view=display&view=step3" class="btn-primary"><strong>N</strong>ext &raquo;</a
             -->
-            <button type="submit" class="btn-secondary" name="layout"
+            <button type="submit" class="btn-secondary" name="view"
                     value="step1"><?php echo MolajoTextHelper::_('Previous') ?></button>
-            <button type="submit" class="btn-primary" name="layout"
+            <button type="submit" class="btn-primary" name="view"
                     value="step3"><?php echo MolajoTextHelper::_('Next') ?></button>
         </div>
 

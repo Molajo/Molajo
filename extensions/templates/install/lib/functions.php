@@ -22,17 +22,17 @@ if ($lcbrowser == 'internetexplorer') {
     include_once dirname(__FILE__) . '/PIE.php';
 }
 
-$layout = JRequest::getCmd('layout', 'step1');
-if ($layout == 'step1') {
+$view = JRequest::getCmd('view', 'step1');
+if ($view == 'step1') {
     $stepNumber = 1;
 
-} elseif ($layout == 'step2') {
+} elseif ($view == 'step2') {
     $stepNumber = 2;
 
-} elseif ($layout == 'step3') {
+} elseif ($view == 'step3') {
     $stepNumber = 3;
 
-} elseif ($layout == 'step4') {
+} elseif ($view == 'step4') {
     $stepNumber = 4;
 }
 

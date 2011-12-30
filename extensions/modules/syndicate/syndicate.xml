@@ -15,7 +15,7 @@
     <description>SYNDICATE_DESCRIPTION</description>
     <files>
         <filename module="syndicate">syndicate.php</filename>
-        <folder>layouts</folder>
+        <folder>views</folder>
         <filename>helper.php</filename>
         <filename>index.html</filename>
         <filename>syndicate.xml</filename>
@@ -51,12 +51,12 @@
             <fieldset
                     name="advanced">
                 <field
-                        name="layout"
-                        type="modulelayout"
-                        label="JFIELD_ALT_LAYOUT_LABEL"
-                        description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                        name="view"
+                        type="moduleview"
+                        label="JFIELD_ALT_VIEW_LABEL"
+                        description="JFIELD_ALT_MODULE_VIEW_DESC"/>
                 <field
-                        name="layout_class_suffix"
+                        name="view_class_suffix"
                         type="text"
                         label="MODULES_FIELD_MODULECLASS_SFX_LABEL"
                         description="MODULES_FIELD_MODULECLASS_SFX_DESC"/>

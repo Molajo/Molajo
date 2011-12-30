@@ -57,13 +57,13 @@ class MolajoConfig
     public $default_format = 'html';
     public $default_template = 'molajito';
     public $default_page = 'full';
-    public $default_layout_static = 'dashboard';
+    public $default_view_static = 'dashboard';
     public $default_wrap_static = 'div';
-    public $default_layout_items = 'items';
+    public $default_view_items = 'items';
     public $default_wrap_items = 'section';
-    public $default_layout_item = 'item';
+    public $default_view_item = 'item';
     public $default_wrap_item = 'article';
-    public $default_layout_edit = 'edit';
+    public $default_view_edit = 'edit';
     public $default_wrap_edit = 'div';
 
     /* Offline */
@@ -72,7 +72,7 @@ class MolajoConfig
     public $offline_format = 'static';
     public $offline_template = 'system';
     public $offline_page = 'full';
-    public $offline_layout = 'offline';
+    public $offline_view = 'offline';
     public $offline_wrap = 'div';
     public $offline_asset_id = '0';
 
@@ -80,7 +80,7 @@ class MolajoConfig
     public $error_format = 'static';
     public $error_template = 'system';
     public $error_page = 'full';
-    public $error_layout = 'error';
+    public $error_view = 'error';
     public $error_wrap = 'div';
     public $error_asset_id = '0';
 
@@ -88,7 +88,7 @@ class MolajoConfig
     public $feed_format = 'feed';
     public $feed_template = 'system';
     public $feed_page = 'full';
-    public $feed_layout = 'feed';
+    public $feed_view = 'feed';
     public $feed_wrap = 'div';
     public $feed_asset_id = '0';
     public $feed_limit = 10;

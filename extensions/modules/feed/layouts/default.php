@@ -18,7 +18,7 @@ if ($feed != false) {
     $iTitle = isset($feed->image->title) ? $feed->image->title : null;
     ?>
 <div style="direction: <?php echo $rssrtl ? 'rtl' : 'ltr'; ?>; text-align: <?php echo $rssrtl ? 'right'
-        : 'left'; ?> ! important" class="feed<?php echo $layout_class_suffix; ?>">
+        : 'left'; ?> ! important" class="feed<?php echo $view_class_suffix; ?>">
     <?php
         // feed description
     if (!is_null($feed->title) && $parameters->get('rsstitle', 1)) {
@@ -61,7 +61,7 @@ if ($feed != false) {
     }
     ?>
 
-    <ul class="newsfeed<?php echo $parameters->get('layout_class_suffix'); ?>">
+    <ul class="newsfeed<?php echo $parameters->get('view_class_suffix'); ?>">
     <?php
                 $words = $parameters->def('word_count', 0);
         for ($j = 0; $j < $totalItems; $j++)

@@ -8,8 +8,8 @@
 defined('MOLAJO') or die;
 
 $renderer = MolajoFactory::getApplication()->loadRenderer('module');
-$module = MolajoModule::getModule('layout');
-$module->parameters = "wrap=section\nlayout=dashboard";
+$module = MolajoModule::getModule('view');
+$module->parameters = "wrap=section\nview=dashboard";
 $capture = $renderer->render($module);
 echo $capture;
 

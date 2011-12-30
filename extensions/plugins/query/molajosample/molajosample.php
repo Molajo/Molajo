@@ -54,13 +54,13 @@ class plgQueryMolajosample extends MolajoPluginHelper
      * @param    object    $state               Array of request variables, filters, list objects
      * @param    object    $parameters              Array of parameters
      *
-     *  echo $state->get('request.layout');
+     *  echo $state->get('request.view');
      *
      *  foreach ($request_variables as $name => $value) {
      *      echo $value.'<br />';
      *  }
      *
-     *  $state->set('request.layout', 'manager');
+     *  $state->set('request.view', 'manager');
      *
      * @since    1.0
      *
@@ -115,7 +115,7 @@ class plgQueryMolajosample extends MolajoPluginHelper
      * @param    string    $state      Array of request variables, filters, list objects
      * @param    object    $item       Single resultset item
      * @param    object    $parameters     The content parameters
-     * @param    boolean    $keep       Will the row be returned to the layout?
+     * @param    boolean    $keep       Will the row be returned to the view?
      *
      * @since    1.6
      */
@@ -135,7 +135,7 @@ class plgQueryMolajosample extends MolajoPluginHelper
      * @param    string    $state      Array of request variables, filters, list objects
      * @param    object    $item       Single resultset item
      * @param    object    $parameters     The content parameters
-     * @param    boolean    $keep       Will the row be returned to the layout?
+     * @param    boolean    $keep       Will the row be returned to the view?
      *
      * @since    1.6
      */

@@ -89,9 +89,9 @@ class MolajoFieldCatid extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render($layout, $item, $itemCount)
+    public function render($view, $item, $itemCount)
     {
-        if ($layout == 'admin') {
+        if ($view == 'admin') {
             $render = array();
             if ($item->canEdit === true) {
                 $render['link_value'] = 'index.php?option=categories&extension=' . JRequest::getVar('option') . '&task=category.edit&id=' . $item->category_id;

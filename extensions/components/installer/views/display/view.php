@@ -36,21 +36,21 @@ class InstallerViewDisplay extends MolajoView
     {
         $helper = $this->loadHelper('installer');
 
-        /** check layout */
-        $layout = JRequest::getCmd('next_step', 'step1');
+        /** check view */
+        $view = JRequest::getCmd('next_step', 'step1');
 
-        if ($layout == 'step1') {
+        if ($view == 'step1') {
         }
-        else if ($layout == 'step2') {
-
-        }
-        else if ($layout == 'step3') {
+        else if ($view == 'step2') {
 
         }
-        else if ($layout == 'step4') {
+        else if ($view == 'step3') {
+
+        }
+        else if ($view == 'step4') {
         }
 
-        // We want to enable single page (or however many steps) so we need to assign these to any layout
+        // We want to enable single page (or however many steps) so we need to assign these to any view
         $this->assign('setup', $this->getModel()->getSetup());
         $this->assign('languages', $this->getModel()->getLanguageList());
         $this->assign('db_types', $this->getModel()->getDBTypes());
@@ -58,7 +58,7 @@ class InstallerViewDisplay extends MolajoView
 
         /** load unused fields into hidden form fields for display */
 
-        parent::display($layout);
+        parent::display($view);
     }
 
 }

@@ -242,7 +242,7 @@ class MolajoControllerEdit extends MolajoController
 
         /** Preparation: Save form or version data **/
         MolajoFactory::getUser()->setUserState(JRequest::getInt('datakey'), $data);
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task . '.' . JRequest::getInt('datakey');
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
         if ((int)$this->id) {
@@ -255,7 +255,7 @@ class MolajoControllerEdit extends MolajoController
         /** Model: Get Form **/
         /** Model Trigger_Event: onContentPrepareData **/
         /** Model Trigger_Event: onContentPrepareForm **/
-        /** Molajo_Note: Forms are named with the concatenated values of option, EditView, layout, task, id, datakey separated by '.' **/
+        /** Molajo_Note: Forms are named with the concatenated values of option, EditView, view, task, id, datakey separated by '.' **/
         $form = $this->model->getForm($data, false);
         if ($form === false) {
             return $this->redirectClass->setSuccessIndicator(false);
@@ -394,7 +394,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Preparation: Save form or version data **/
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . 'delete';
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
         if ($this->table->state == MOLAJO_STATUS_TRASHED || $this->table->state == MOLAJO_STATUS_VERSION) {

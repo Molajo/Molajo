@@ -38,12 +38,12 @@ abstract class MolajoToolbarHelper
     }
 
     /**
-     * addButtonsDisplayLayout
+     * addButtonsDisplayView
      *
      * @param    string    The name of the active view.
      * @since    1.0
      */
-    public function addButtonsDisplayLayout($state, $userToolbarButtonPermissions)
+    public function addButtonsDisplayView($state, $userToolbarButtonPermissions)
     {
         $parameters = MolajoComponent::getParameters(JRequest::getCmd('option'));
 
@@ -60,12 +60,12 @@ abstract class MolajoToolbarHelper
     }
 
     /**
-     * addButtonsEditLayout
+     * addButtonsEditView
      *
      * @param    string    The name of the active view.
      * @since    1.0
      */
-    public function addButtonsEditLayout($state, $userToolbarButtonPermissions, $id, $item = null)
+    public function addButtonsEditView($state, $userToolbarButtonPermissions, $id, $item = null)
     {
         JRequest::setVar('hidemainmenu', true);
 
@@ -168,7 +168,7 @@ abstract class MolajoToolbarHelper
     }
 
     /**
-     * LIST LAYOUT BUTTONS
+     * LIST VIEW BUTTONS
      */
 
     /**
@@ -301,7 +301,7 @@ abstract class MolajoToolbarHelper
     }
 
     /**
-     * EDIT LAYOUT BUTTONS
+     * EDIT VIEW BUTTONS
      */
 
     /**

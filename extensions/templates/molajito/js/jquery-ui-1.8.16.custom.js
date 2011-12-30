@@ -238,7 +238,7 @@
         $.support.minHeight = div.offsetHeight === 100;
         $.support.selectstart = "onselectstart" in div;
 
-        // set display to none to avoid a layout bug in IE
+        // set display to none to avoid a view bug in IE
         // http://dev.jquery.com/ticket/4014
         body.removeChild(div).style.display = "none";
     });

@@ -11,25 +11,25 @@ defined('MOLAJO') or die;
 abstract class MolajoPluginHelper
 {
     /**
-     * Get the path to a layout for a plugin
+     * Get the path to a view for a plugin
      *
      * @static
      * @param    array    $widget    An array containing the type and name of the plugin
-     * @param    string    $layout    The name of the module layout. If alternative layout, in the form template:filename.
-     * @return    string    The path to the module layout
+     * @param    string    $view    The name of the module view. If alternative view, in the form template:filename.
+     * @return    string    The path to the module view
      * @since    1.5
      */
-    public static function getLayoutPath($widget = array(), $layout = 'default')
+    public static function getViewPath($widget = array(), $view = 'default')
     {
         /** current template **/
         $template = MolajoFactory::getApplication()->getTemplate();
-        $defaultLayout = $layout;
+        $defaultView = $view;
 
-        /** template and base path for the layout **/
-        $tPath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template . '/html/' . $widget['type'] . '/' . $widget['name'] . '/' . $layout . '.php';
-        $bPath = MOLAJO_WIDGETS . '/' . $widget['type'] . '/' . $widget['name'] . '/layouts/' . $defaultLayout . '.php';
+        /** template and base path for the view **/
+        $tPath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template . '/html/' . $widget['type'] . '/' . $widget['name'] . '/' . $view . '.php';
+        $bPath = MOLAJO_WIDGETS . '/' . $widget['type'] . '/' . $widget['name'] . '/views/' . $defaultView . '.php';
 
-        /** use layout overrides, if available **/
+        /** use view overrides, if available **/
         if (file_exists($tPath)) {
             return $tPath;
         } else {
@@ -38,17 +38,17 @@ abstract class MolajoPluginHelper
     }
 
     /**
-     * generateLayout
+     * generateView
      *
      * @static
-     * @param    string    $layout    The name of the plugin layout.
-     * @return    string    $renderedLayout rendered output
+     * @param    string    $view    The name of the plugin view.
+     * @return    string    $renderedView rendered output
      * @since    1.5
      */
-    function generateLayout($layoutPath)
+    function generateView($viewPath)
     {
         ob_start();
-        require $layoutPath;
+        require $viewPath;
         $contents = ob_get_contents();
         ob_end_clean();
         return $contents;

@@ -1412,8 +1412,8 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
                     $request[] = 'view=' . $child->attributes()->view;
                 }
 
-                if ((string)$child->attributes()->layout) {
-                    $request[] = 'layout=' . $child->attributes()->layout;
+                if ((string)$child->attributes()->view) {
+                    $request[] = 'view=' . $child->attributes()->view;
                 }
 
                 if ((string)$child->attributes()->sub) {

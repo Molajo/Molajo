@@ -1,18 +1,17 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Component
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @subpackage  Renderers
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Component
+ * Component Renderer
  *
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Renderers
  * @since       1.0
  */
 class MolajoComponentRenderer
@@ -58,15 +57,15 @@ class MolajoComponentRenderer
     protected $page = null;
 
     /**
-     *  Layout include file - extracted from config
+     *  View include file - extracted from config
      *
      * @var string
      * @since 1.0
      */
-    protected $layout = null;
+    protected $view = null;
 
     /**
-     *  Wrap for Layout - extracted from config
+     *  Wrap for View - extracted from config
      *
      * @var string
      * @since 1.0
@@ -112,7 +111,7 @@ class MolajoComponentRenderer
         $this->option = $config->option;
         $this->template = $config->template;
         $this->page = $config->page;
-        $this->layout = $config->layout;
+        $this->view = $config->view;
         $this->wrap = $config->wrap;
     }
 
@@ -132,9 +131,9 @@ class MolajoComponentRenderer
         /** set up request for MVC */
         $request = $this->request();
 
-        /** Events */
-        MolajoPluginHelper::importPlugin('system');
-        MolajoFactory::getApplication()->triggerEvent('onBeforeComponentRender');
+        /** Before Rendering */
+        MolajoFactory::getApplication()->registerEvent ('onBeforeRender', 'system');
+        MolajoFactory::getApplication()->triggerEvent ('onBeforeRender', $this);
 
         /** path */
         $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option . '/' . $this->option . '.php';
@@ -144,27 +143,23 @@ class MolajoComponentRenderer
             && file_exists($path)
         ) {
 
-            /** language */
+        /** language */
         } elseif (file_exists($path)) {
-            //            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
+            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
 
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
-/**
-        echo '<pre>';
-        var_dump($request);
-        '</pre>';
-*/
-        /** execute the component */
+
+        /** component => MVC */
         ob_start();
         require_once $path;
         $output = ob_get_contents();
         ob_end_clean();
 
-        /** Events */
-        MolajoPluginHelper::importPlugin('system');
-        MolajoFactory::getApplication()->triggerEvent('onAfterComponentRender');
+        /** After Rendering */
+        MolajoFactory::getApplication()->registerEvent ('onAfterRender', 'system');
+        MolajoFactory::getApplication()->triggerEvent ('onAfterRender', array($this, $output));
 
         /** Return output */
         return $output;

@@ -35,7 +35,7 @@ class MolajoViewEdit extends MolajoView
 
     /** common */
 //    public $parameters;
-//    public $layoutHelper;
+//    public $viewHelper;
 //    public $print;
 //    public $user;
 //    public $pageclass_suffix;
@@ -90,10 +90,10 @@ class MolajoViewEdit extends MolajoView
         $this->permissions = $acl->getUserPermissionTaskset(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
 
         /** page heading, toolbar buttons and submenu **/
-        if (($this->getLayout() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
+        if (($this->getView() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
             //        } else if (MolajoFactory::getApplication()->getName() == 'site') {
         } else {
-            MolajoToolbarHelper::addButtonsEditLayout($this->item->state, $this->permissions, $this->item->id, $this->item);
+            MolajoToolbarHelper::addButtonsEditView($this->item->state, $this->permissions, $this->item->id, $this->item);
         }
 
         //Escape strings for HTML output
@@ -104,7 +104,7 @@ class MolajoViewEdit extends MolajoView
             $documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
         }
 
-        /** layout **/
+        /** view **/
         parent::display($tpl);
     }
 }

@@ -1,13 +1,13 @@
 <fieldset
-        name="layout_options"
-        label="MENU_LAYOUT_OPTIONS_LABEL"
+        name="view_options"
+        label="MENU_VIEW_OPTIONS_LABEL"
         >
 
     <field
-            name="layout"
+            name="view"
             type="text"
-            label="LAYOUT_LABEL"
-            description="LAYOUT_DESC"
+            label="VIEW_LABEL"
+            description="VIEW_DESC"
             />
 
     <field
@@ -18,10 +18,10 @@
             />
 
     <field
-            name="layout_class_suffix"
+            name="view_class_suffix"
             type="text"
-            label="LAYOUT_CLASS_LABEL"
-            description="LAYOUT_CLASS_DESC"
+            label="VIEW_CLASS_LABEL"
+            description="VIEW_CLASS_DESC"
             />
 
 </fieldset>

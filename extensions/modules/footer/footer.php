@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 /** initialise  */
 $tmpobj = new JObject();
-$layout = $parameters->def('layout', 'footer');
+$view = $parameters->def('view', 'footer');
 $wrap = $parameters->def('wrap', 'footer');
 
 /**
