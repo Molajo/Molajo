@@ -966,9 +966,9 @@ class MolajoExtension
                 $results = false;
             } else {
                 if ($view == 'edit') {
-                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT, $layout);
+                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT, $layout);
                 } else {
-                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY, $layout);
+                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY, $layout);
                 }
             }
 
@@ -978,17 +978,17 @@ class MolajoExtension
                 $results = false;
             } else {
                 if ($view == 'edit') {
-                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT, $layout);
+                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT, $layout);
                 } else {
-                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY, $layout);
+                    $results = $model->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY, $layout);
                 }
             }
 
             if ($results === false) {
                 if ($view == 'edit') {
-                    $layout = $model->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT);
+                    $layout = $model->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_DEFAULT);
                 } else {
-                    $layout = $model->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT);
+                    $layout = $model->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY_DEFAULT);
                 }
                 if ($layout === false) {
                     MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');

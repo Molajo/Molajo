@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="view" group="formfield" method="upgrade">
+    <name>VIEW_FORMFIELD_TEXTAREA_NAME</name>
+    <author>Molajo Contributors</author>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>VIEW_FORMFIELD_TEXTAREA_DESCRIPTION</description>
+    <files>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>views</folder>
+        <folder>parameters</folder>
+        <file>view.xml</file>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.views_textarea.ini</language>
+        <language tag="language/en-GB">en-GB.views_textarea.sys.ini</language>
+    </languages>
+</extension>

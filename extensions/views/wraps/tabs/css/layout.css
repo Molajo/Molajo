@@ -1,0 +1,54 @@
+/*
+@version     $id: site.css
+@package     Molajo
+@subpackage  Sitewide CSS - for implemented site to use - is included in every view
+@copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+
+dl {
+    position: relative;
+    float: left;
+    width: 500px;
+}
+
+dl.enhance {
+    border: solid #333;
+    border-width: 0 0 1px 1px;
+}
+
+dl.enhance dt {
+    width: 150px;
+    line-height: 2;
+    text-align: center;
+    float: left;
+    background: #CCC;
+    border: solid #333;
+    border-width: 1px 1px 0 0;
+}
+
+dl.enhance dt a {
+    height: 30px;
+    display: block;
+}
+
+dl.enhance dd {
+    position: absolute;
+    top: 30px;
+    margin: 0;
+    padding: 0 10px;
+    border: solid #333;
+    border-width: 1px 1px 0 0;
+    background: #FFF;
+}
+
+dl.enhance dt.current {
+    background: #FFF;
+    border-bottom: 1px solid #FFF;
+    position: relative;
+    z-index: 2;
+}
+
+dl.enhance dt.current a {
+    height: 29px;
+}

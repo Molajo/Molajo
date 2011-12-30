@@ -42,12 +42,12 @@ INSERT INTO `molajo_extension_options` (`extension_instance_id`, `application_id
 
 # VIEW LAYOUTS
 
-# 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY
+# 3000 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 3000, '', '', 0),
 (13, 3000, 'login', 'login', 1);
 
-# 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT
+# 3100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY_DEFAULT
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 3100, '', '', 0),
 (13, 3100, 'login', 'login', 1);

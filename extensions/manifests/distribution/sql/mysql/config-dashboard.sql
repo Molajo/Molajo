@@ -40,40 +40,40 @@ INSERT INTO `molajo_extension_options`
 
 # LAYOUTS
 
-# 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY
+# 3000 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (@id, 0, 3000, '', '', 0),
       (@id, 0, 3000, 'dashboard', 'dashboard', 1);
 
-# 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT
+# 3100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (@id, 0, 3100, '', '', 0),
       (@id, 0, 3100, 'dashboard', 'dashboard', 1);
 
-# 3150 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT_WRAP
+# 3150 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DISPLAY_DEFAULT_WRAP
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (@id, 0, 3150, '', '', 0),
       (@id, 0, 3150, 'div', 'div', 1);
 
-# 3200 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT
+# 3200 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (@id, 0, 3200, '', '', 0);
 
-# 3300 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT
+# 3300 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (@id, 0, 3300, '', '', 0);
 
-# 3350 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT_WRAP
+# 3350 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_DEFAULT_WRAP
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
