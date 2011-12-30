@@ -324,7 +324,7 @@ class MolajoExtension
 
         /** Home */
         if ($this->query_request == ''
-            && $this->asset_id == 0
+            && (int) $this->asset_id == 0
         ) {
             $this->asset_id = MolajoFactory::getApplication()->get('home_asset_id', 0);
             $this->home = true;
@@ -482,7 +482,6 @@ class MolajoExtension
 
         $db->setQuery($query->__toString());
         $results = $db->loadObjectList();
-//echo '<pre>';var_dump($db);echo '</pre>';
 
         if ($db->getErrorNum() == 0) {
         } else {
@@ -922,7 +921,7 @@ class MolajoExtension
         $acl_implementation = '';
 
         /** array from template <include:value attributes=xyz /> */
-        $attributes = array;
+        $attributes = array();
 
         /** from request */
         $id = 0;

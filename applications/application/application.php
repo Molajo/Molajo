@@ -233,7 +233,9 @@ class MolajoApplication
         }
 
         $this->getConfig();
-
+        echo '<pre>';
+        var_dump($this->config);
+        '</pre>';
         /** now */
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());
@@ -252,7 +254,7 @@ class MolajoApplication
         $this->response->headers = array();
         $this->response->body = array();
 
-        //echo '<pre>';var_dump($this);'</pre>';
+        //echo '<pre>';var_dump($this->config);'</pre>';
     }
 
     /**
@@ -266,7 +268,7 @@ class MolajoApplication
      *
      * @since   1.0
      */
-    public static function getInstance($id = null, $config = array(), $prefix = 'Molajo')
+    public static function getInstance($id = null, $config = null, $prefix = 'Molajo')
     {
         if ($id == null) {
             $id = MOLAJO_APPLICATION;
@@ -289,7 +291,7 @@ class MolajoApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            self::$instance = new MolajoApplication($config);
+            self::$instance = new MolajoApplication();
         }
 
         return self::$instance;
@@ -339,10 +341,8 @@ class MolajoApplication
      */
     public function getConfig()
     {
-        if ($this->config == null) {
-            $configClass = new MolajoConfiguration();
-            $this->config = $configClass->getConfig();
-        }
+        $configClass = new MolajoConfiguration();
+        $this->config = $configClass->getConfig();
 
         return $this->config;
     }
