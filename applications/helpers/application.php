@@ -210,13 +210,4 @@ class MolajoApplicationHelper
 
         return $data;
     }
-
-    /**
-     * getComponentName - called by JView
-     * @deprecated
-     */
-    public static function getComponentName($default = NULL)
-    {
-        return;
-    }
 }
