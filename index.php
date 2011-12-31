@@ -152,30 +152,7 @@ require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/overrides.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
-/**
- *  Get the Site
- */
-$site = MolajoFactory::getSite(MOLAJO_SITE_ID);
-JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
-
-/**
- *  Load the Site
- */
-$site->load();
-JDEBUG ? $_PROFILER->mark('afterSiteLoad') : null;
-
-/**
- *  Get the Application
- */
-$app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
-JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
-
-/**
- *  Load the Application
- */
-$app->load();
-JDEBUG ? $_PROFILER->mark('afterApplicationLoad') : null;
-
+new MolajoController();
 
 
 
