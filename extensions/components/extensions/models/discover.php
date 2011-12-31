@@ -35,10 +35,10 @@ class InstallerModelDiscover extends InstallerModel
     protected function populateState($ordering = null, $direction = null)
     {
 
-        $this->setState('message', MolajoFactory::getUser()->getUserState('installer.message'));
-        $this->setState('extension_message', MolajoFactory::getUser()->getUserState('installer.extension_message'));
-        MolajoFactory::getUser()->setUserState('installer.message', '');
-        MolajoFactory::getUser()->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoController::getUser()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoController::getUser()->getUserState('installer.extension_message'));
+        MolajoController::getUser()->setUserState('installer.message', '');
+        MolajoController::getUser()->setUserState('installer.extension_message', '');
         parent::populateState('name', 'asc');
     }
 
@@ -50,7 +50,7 @@ class InstallerModelDiscover extends InstallerModel
      */
     protected function getListQuery()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
         $query->select('*');
         $query->from('#__extensions');
@@ -72,7 +72,7 @@ class InstallerModelDiscover extends InstallerModel
 
         // Get all templates, including discovered ones
         $query = 'SELECT extension_id, element, folder, application_id, type FROM #__extensions';
-        $dbo = MolajoFactory::getDbo();
+        $dbo = MolajoController::getDbo();
         $dbo->setQuery($query);
         $installedtmp = $dbo->loadObjectList();
         $extensions = Array();
@@ -115,18 +115,18 @@ class InstallerModelDiscover extends InstallerModel
                 $result = $installer->discover_install($id);
                 if (!$result) {
                     $failed = true;
-                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLFAILED') . ': ' . $id);
+                    MolajoController::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLFAILED') . ': ' . $id);
                 }
             }
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
-            MolajoFactory::getUser()->setUserState('installer.message', $installer->message);
-            MolajoFactory::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
+            MolajoController::getUser()->setUserState('installer.message', $installer->message);
+            MolajoController::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
             if (!$failed) {
-                MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
+                MolajoController::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
             }
         } else {
-            MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
+            MolajoController::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
         }
     }
 
@@ -137,7 +137,7 @@ class InstallerModelDiscover extends InstallerModel
      */
     function purge()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
         $query->delete();
         $query->from('#__extensions');

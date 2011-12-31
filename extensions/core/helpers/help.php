@@ -43,12 +43,12 @@ class MolajoHelpHelper
         }
         else {
             // Get the user help URL.
-            $user = MolajoFactory::getUser();
+            $user = MolajoController::getUser();
             $url = $user->getParam('helpsite');
 
             // If user hasn't specified a help URL, then get the global one.
             if ($url == '') {
-                $url = MolajoFactory::getApplication()->get('helpurl');
+                $url = MolajoController::getApplication()->get('helpurl');
             }
 
             // Component help URL overrides user and global.
@@ -80,7 +80,7 @@ class MolajoHelpHelper
         /*
            *  Replace substitution codes in the URL.
            */
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         $version = new MolajoVersion;
         $jver = explode('.', $version->getShortVersion());
         $jlang = explode('-', $lang->getTag());
@@ -103,7 +103,7 @@ class MolajoHelpHelper
         );
 
         $replace = array(
-            MolajoFactory::getApplication()->getName(), // {app}
+            MolajoController::getApplication()->getName(), // {app}
             $component, // {component}
             $keyref, // {keyref}
             $lang->getTag(), // {language}
@@ -148,7 +148,7 @@ class MolajoHelpHelper
         $xml = false;
 
         if (!empty($pathToXml)) {
-            $xml = MolajoFactory::getXML($pathToXml);
+            $xml = MolajoController::getXML($pathToXml);
         }
 
         if (!$xml) {

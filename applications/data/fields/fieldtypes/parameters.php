@@ -35,7 +35,7 @@ class MolajoFormFieldParameters extends MolajoFormField
     protected function getInput()
     {
         /** language **/
-        MolajoFactory::getLanguage()->load('plg_system_create_molajosamples', MOLAJO_BASE_FOLDER . '/media/plg_system_create/components/', MolajoFactory::getLanguage()->getDefault(), true, true);
+        MolajoController::getLanguage()->load('plg_system_create_molajosamples', MOLAJO_BASE_FOLDER . '/media/plg_system_create/components/', MolajoController::getLanguage()->getDefault(), true, true);
 
         /** $parameter_type **/
         $parameter_type = (string)$this->element['parameter_type'];

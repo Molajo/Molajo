@@ -596,7 +596,7 @@ class MolajoForm
 
         // Attempt to load the XML if a string.
         if (is_string($data)) {
-            $data = MolajoFactory::getXML($data, false);
+            $data = MolajoController::getXML($data, false);
 
             // Make sure the XML loaded correctly.
             if (!$data) {
@@ -707,7 +707,7 @@ class MolajoForm
         }
 
         // Attempt to load the XML file.
-        $xml = MolajoFactory::getXML($file, true);
+        $xml = MolajoController::getXML($file, true);
 
         return $this->load($xml, $reset, $xpath);
     }
@@ -1123,10 +1123,10 @@ class MolajoForm
             case 'SERVER_UTC':
                 if (intval($value) > 0) {
                     // Get the server timezone setting.
-                    $offset = MolajoFactory::getApplication()->get('offset');
+                    $offset = MolajoController::getApplication()->get('offset');
 
                     // Return a MySQL formatted datetime string in UTC.
-                    $return = MolajoFactory::getDate($value, $offset)->toMySQL();
+                    $return = MolajoController::getDate($value, $offset)->toMySQL();
                 }
                 else {
                     $return = '';
@@ -1137,10 +1137,10 @@ class MolajoForm
             case 'USER_UTC':
                 if (intval($value) > 0) {
                     // Get the user timezone setting defaulting to the server timezone setting.
-                    $offset = MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getApplication()->get('offset'));
+                    $offset = MolajoController::getUser()->getParam('timezone', MolajoController::getApplication()->get('offset'));
 
                     // Return a MySQL formatted datetime string in UTC.
-                    $return = MolajoFactory::getDate($value, $offset)->toMySQL();
+                    $return = MolajoController::getDate($value, $offset)->toMySQL();
                 }
                 else {
                     $return = '';
@@ -1521,7 +1521,7 @@ class MolajoForm
         if ($value === null) {
             $default = (string)$element['default'];
             if (($translate = $element['translate_default']) && ((string)$translate == 'true' || (string)$translate == '1')) {
-                $lang = MolajoFactory::getLanguage();
+                $lang = MolajoController::getLanguage();
                 if ($lang->hasKey($default)) {
                     $debug = $lang->setDebug(false);
                     $default = MolajoTextHelper::_($default);

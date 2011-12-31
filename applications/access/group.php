@@ -103,7 +103,7 @@ class MolajoGroup
 
         $results = $table->load($id);
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
         $columns = $db->getTableColumns('#__users', true);

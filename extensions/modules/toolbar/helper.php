@@ -32,7 +32,7 @@ abstract class MolajoToolbarHelper
     public function getList($parameters)
     {
         $object = new JObject();
-        $object->set('site_title', MolajoFactory::getApplication()->get('site_title', 'Molajo'));
+        $object->set('site_title', MolajoController::getApplication()->get('site_title', 'Molajo'));
         $data[] = $object;
         return $data;
     }

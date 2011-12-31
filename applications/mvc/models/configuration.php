@@ -63,7 +63,7 @@ class MolajoModelConfiguration
      */
     public function getOptionValue($option_id)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         /** option or core **/
@@ -80,7 +80,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -106,7 +106,7 @@ class MolajoModelConfiguration
     public function getOptionLiteralValue($option_id, $option_value)
     {
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         /** option or core **/
@@ -126,7 +126,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -151,7 +151,7 @@ class MolajoModelConfiguration
     public function getOptionList($option_id)
     {
         /** check for overrides **/
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         /** option or core **/
@@ -172,7 +172,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
         return $results;
@@ -213,7 +213,7 @@ class MolajoModelConfiguration
      */
     private function setOverridesArray()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         /** retrieve all option_id values **/
@@ -227,7 +227,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -271,7 +271,7 @@ class MolajoModelConfiguration
      */
     private function retrieveExtensionInstanceID()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT a.' . $db->namequote('id') . ' AS extension_instance_id ');
@@ -284,7 +284,7 @@ class MolajoModelConfiguration
 
         if ($this->extension_instance_id = $db->loadResult()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 

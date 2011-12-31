@@ -34,7 +34,7 @@ abstract class MolajoHtmlMolajoComponent
     public function options()
     {
         $options = array();
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT component_option as value, option_value_literal as text');

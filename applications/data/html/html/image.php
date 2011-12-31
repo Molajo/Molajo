@@ -55,7 +55,7 @@ abstract class MolajoHtmlImage
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        $cur_template = MolajoFactory::getApplication()->getTemplate();
+        $cur_template = MolajoController::getApplication()->getTemplate();
 
         // Strip HTML.
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');
@@ -130,7 +130,7 @@ abstract class MolajoHtmlImage
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        $cur_template = MolajoFactory::getApplication()->getTemplate();
+        $cur_template = MolajoController::getApplication()->getTemplate();
 
         // Strip HTML.
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');

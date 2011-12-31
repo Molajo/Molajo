@@ -55,7 +55,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
     public function read($id)
     {
         // Get the database connection object and verify its connected.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         if (!$db->connected()) {
             return false;
         }
@@ -81,7 +81,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
     public function write($id, $data)
     {
         // Get the database connection object and verify its connected.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
 //        if ($db->connected()) {
 //        } else {
@@ -132,7 +132,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
     public function destroy($id)
     {
         // Get the database connection object and verify its connected.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         if (!$db->connected()) {
             return false;
         }
@@ -155,7 +155,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
     function gc($lifetime = 1440)
     {
         // Get the database connection object and verify its connected.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         if (!$db->connected()) {
             return false;
         }

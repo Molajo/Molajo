@@ -41,7 +41,7 @@ class MolajoSimplecrypt extends JObject
         }
         else
         {
-            $conf = &MolajoFactory::getApplication()->get();
+            $conf = &MolajoController::getApplication()->get();
             $this->_key = md5($conf->get('secret'));
         }
     }

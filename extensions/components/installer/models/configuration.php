@@ -171,7 +171,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 			// Use FTP write buffer to file
 			if (!$ftp->write($file, $buffer)) {
 				// Set the config string to the session.
-				$session = MolajoFactory::getSession();
+				$session = MolajoController::getSession();
 				$session->set('setup.config', $buffer);
 			}
 
@@ -179,11 +179,11 @@ class InstallerModelConfiguration extends MolajoModelDummy
 		} else {
 			if ($canWrite) {
 				file_put_contents($path, $buffer);
-				$session = MolajoFactory::getSession();
+				$session = MolajoController::getSession();
 				$session->set('setup.config', null);
 			} else {
 				// Set the config string to the session.
-				$session = MolajoFactory::getSession();
+				$session = MolajoController::getSession();
 				$session->set('setup.config', $buffer);
 			}
 		}

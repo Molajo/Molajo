@@ -40,7 +40,7 @@ class MolajoTextHelper
      */
     public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         if (is_array($jsSafe)) {
             if (array_key_exists('interpretBackSlashes', $jsSafe)) {
                 $interpretBackSlashes = (boolean)$jsSafe['interpretBackSlashes'];
@@ -84,7 +84,7 @@ class MolajoTextHelper
      */
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         if ($lang->hasKey($string . '_' . $alt)) {
             return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
         }
@@ -115,7 +115,7 @@ class MolajoTextHelper
 
     public static function plural($string, $n)
     {
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         $args = func_get_args();
         $count = count($args);
 
@@ -174,7 +174,7 @@ class MolajoTextHelper
      */
     public static function sprintf($string)
     {
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
@@ -207,7 +207,7 @@ class MolajoTextHelper
      */
     public static function printf($string)
     {
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
@@ -248,7 +248,7 @@ class MolajoTextHelper
         // Add the string to the array if not null.
         if ($string !== null) {
             // Normalize the key and translate the string.
-            self::$strings[strtoupper($string)] = MolajoFactory::getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
+            self::$strings[strtoupper($string)] = MolajoController::getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
         }
 
         return self::$strings;
@@ -271,9 +271,9 @@ class MolajoTextHelper
      */
     function replaceBuffer($change_from, $change_to)
     {
-        $buffer = MolajoFactory::getApplication()->getBody();
+        $buffer = MolajoController::getApplication()->getBody();
         $buffer = preg_replace($change_from, $change_to, $buffer);
-        MolajoFactory::getApplication()->setBody($buffer);
+        MolajoController::getApplication()->setBody($buffer);
     }
 
     /**

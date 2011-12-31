@@ -55,7 +55,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
      */
     private function addUpdateSite($name, $type, $location, $enabled)
     {
-        $dbo = MolajoFactory::getDbo();
+        $dbo = MolajoController::getDbo();
         // look if the location is used already; doesn't matter what type
         // you can't have two types at the same address, doesn't make sense
         $query = $dbo->getQuery(true);
@@ -128,7 +128,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
     {
         if ($eid) {
             // wipe out any extension_sites_extensions links
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
             $query->delete()->from('#__extension_sites_extensions')->where('extension_id = ' . $eid);
             $db->setQuery($query);

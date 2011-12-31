@@ -142,7 +142,7 @@ class MolajoControllerRedirect extends MolajoControllerExtension
 
         /** cancel **/
         if ($this->request['task'] == 'cancel') {
-            if (MolajoFactory::getApplication()->getName() == 'site') {
+            if (MolajoController::getApplication()->getName() == 'site') {
                 if ($this->request['id'] == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
@@ -322,6 +322,6 @@ class MolajoControllerRedirect extends MolajoControllerExtension
         }
 
         /** redirect **/
-        MolajoFactory::getApplication()->redirect(MolajoRouteHelper::_($link, false), $this->redirectMessage, $this->redirectMessageType);
+        MolajoController::getApplication()->redirect(MolajoRouteHelper::_($link, false), $this->redirectMessage, $this->redirectMessageType);
     }
 }

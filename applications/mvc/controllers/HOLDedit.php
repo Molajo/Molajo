@@ -60,14 +60,14 @@ class MolajoControllerEdit extends MolajoControllerDisplay
         }
 
         /** parameters */
-        if (MolajoFactory::getApplication()->getName() == 'site') {
-            $this->parameters = MolajoFactory::getApplication()->getParameters();
+        if (MolajoController::getApplication()->getName() == 'site') {
+            $this->parameters = MolajoController::getApplication()->getParameters();
             //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
             $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         }
 
-        $this->user = MolajoFactory::getUser();
+        $this->user = MolajoController::getUser();
 
         /** id */
         if ($this->item->id == null) {
@@ -91,7 +91,7 @@ class MolajoControllerEdit extends MolajoControllerDisplay
 
         /** page heading, toolbar buttons and submenu **/
         if (($this->getView() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
-            //        } else if (MolajoFactory::getApplication()->getName() == 'site') {
+            //        } else if (MolajoController::getApplication()->getName() == 'site') {
         } else {
             MolajoToolbarHelper::addButtonsEditView($this->item->state, $this->permissions, $this->item->id, $this->item);
         }
@@ -99,7 +99,7 @@ class MolajoControllerEdit extends MolajoControllerDisplay
         //Escape strings for HTML output
         $this->state->get('page_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
 
-        if (MolajoFactory::getApplication()->getName() == 'site') {
+        if (MolajoController::getApplication()->getName() == 'site') {
             $documentHelper = new MolajoDocumentHelper ();
             $documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
         }

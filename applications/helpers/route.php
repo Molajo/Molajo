@@ -31,7 +31,7 @@ class MolajoRouteHelper
     {
         // Get the router.
 
-        $router = MolajoFactory::getApplication()->getRouter();
+        $router = MolajoController::getApplication()->getRouter();
 
         // Make sure that we have our router
         if (!$router) {

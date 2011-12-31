@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-abstract class JFactory extends MolajoFactory
+abstract class JFactory extends MolajoController
 {
 }
 

@@ -53,7 +53,7 @@ class MolajoApplicationHelper
 
             } else {
 
-                $db = MolajoFactory::getDbo();
+                $db = MolajoController::getDbo();
 
                 $query = $db->getQuery(true);
 
@@ -66,7 +66,7 @@ class MolajoApplicationHelper
 
                 if ($results = $db->loadObjectList()) {
                 } else {
-                    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+                    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
                     return false;
                 }
 
@@ -120,7 +120,7 @@ class MolajoApplicationHelper
      */
     public static function parseXMLInstallFile($path)
     {
-        if ($xml = MolajoFactory::getXML($path)) {
+        if ($xml = MolajoController::getXML($path)) {
         } else {
             return false;
         }
@@ -148,7 +148,7 @@ class MolajoApplicationHelper
      */
     public static function parseXMLLangMetaFile($path)
     {
-        if ($xml = MolajoFactory::getXML($path)) {
+        if ($xml = MolajoController::getXML($path)) {
         } else {
             return false;
         }

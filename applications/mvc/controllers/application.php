@@ -1214,7 +1214,7 @@ class MolajoControllerApplication
      */
     private function _sessionMessages()
     {
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
         $sessionMessages = $session->get('application.messages');
 
         if (count($sessionMessages) > 0) {
@@ -1560,7 +1560,7 @@ class MolajoControllerApplication
      */
     protected function loadLanguage()
     {
-        $this->language = MolajoFactory::getLanguage();
+        $this->language = MolajoController::getLanguage();
     }
 
     /**

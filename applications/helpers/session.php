@@ -52,7 +52,7 @@ class MolajoSessionHelper extends JObject
         }
 
         /** retrieve session */
-        $this->_session = MolajoFactory::getSession($options);
+        $this->_session = MolajoController::getSession($options);
 
         /** unlock */
 
@@ -77,7 +77,7 @@ class MolajoSessionHelper extends JObject
      */
     protected function _removeExpiredSessions()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
@@ -99,9 +99,9 @@ class MolajoSessionHelper extends JObject
      */
     protected function _checkSession()
     {
-        $db = MolajoFactory::getDbo();
-        $session = MolajoFactory::getSession();
-        $user = MolajoFactory::getUser();
+        $db = MolajoController::getDbo();
+        $session = MolajoController::getSession();
+        $user = MolajoController::getUser();
 
         $db->setQuery(
             'SELECT `session_id`' .
@@ -157,6 +157,6 @@ class MolajoSessionHelper extends JObject
      */
     protected function _getConfig($varname, $default = null)
     {
-        return MolajoFactory::getApplication()->get('' . $varname, $default);
+        return MolajoController::getApplication()->get('' . $varname, $default);
     }
 }

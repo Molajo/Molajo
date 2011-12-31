@@ -237,8 +237,8 @@ class MolajoDateHelper
     function getUTCDate($input_date, $server_or_user_UTC = 'user')
     {
 
-        $config = MolajoFactory::getApplication()->get();
-        $user = MolajoFactory::getUser();
+        $config = MolajoController::getApplication()->get();
+        $user = MolajoController::getUser();
 
         // If a known filter is given use it.
         switch (strtoupper((string)$server_or_user_UTC))
@@ -247,7 +247,7 @@ class MolajoDateHelper
                 // Convert a date to UTC based on the server timezone.
                 if (intval($input_date)) {
                     // Get a date object based on the correct timezone.
-                    $date = MolajoFactory::getDate($input_date, 'UTC');
+                    $date = MolajoController::getDate($input_date, 'UTC');
                     $date->setTimezone(new DateTimeZone($config->get('offset')));
 
                     // Transform the date string.
@@ -259,7 +259,7 @@ class MolajoDateHelper
                 // Convert a date to UTC based on the user timezone.
                 if (intval($input_date)) {
                     // Get a date object based on the correct timezone.
-                    $date = MolajoFactory::getDate($input_date, 'UTC');
+                    $date = MolajoController::getDate($input_date, 'UTC');
                     $date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
 
                     // Transform the date string.

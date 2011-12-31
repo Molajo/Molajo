@@ -37,7 +37,7 @@ abstract class MolajoHtmlCategory
 
         if (!isset(self::$items[$hash])) {
             $config = (array)$config;
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
 
             $query->select('a.id, a.title, a.level, a.extension');
@@ -64,7 +64,7 @@ abstract class MolajoHtmlCategory
             $db->setQuery($query);
             $results = $db->loadObjectList();
 
-            $lang = MolajoFactory::getLanguage();
+            $lang = MolajoController::getLanguage();
             self::$items[$hash] = array();
 
             $categoryExtension = '';
@@ -109,7 +109,7 @@ abstract class MolajoHtmlCategory
 
         if (!isset(self::$items[$hash])) {
             $config = (array)$config;
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
 
             $query->select('a.id, a.title, a.level, a.parent_id');

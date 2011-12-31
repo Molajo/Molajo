@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__) . '/helper.php';
 
-$lang = MolajoFactory::getLanguage();
+$lang = MolajoController::getLanguage();
 $upper_limit = $lang->getUpperLimitSearchWord();
 
 $button = $parameters->get('button', '');

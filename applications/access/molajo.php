@@ -263,7 +263,7 @@ class MolajoACL
             }
 
             /** Component Option */
-            $session = MolajoFactory::getSession();
+            $session = MolajoController::getSession();
             if ($session->get('page.option') == $option) {
                 $acl_implementation = $session->get('page.acl_implementation');
             } else {

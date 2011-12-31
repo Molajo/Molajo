@@ -44,7 +44,7 @@ abstract class MolajoHtmlMenu
     public static function menus()
     {
         if (empty(self::$menus)) {
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
             $query->select('menutype AS value, title AS text');
             $query->from($db->quoteName('#__menu_types'));
@@ -66,7 +66,7 @@ abstract class MolajoHtmlMenu
     public static function menuitems($config = array())
     {
         if (empty(self::$items)) {
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
             $query->select('menutype AS value, title AS text');
             $query->from($db->quoteName('#__menu_types'));
@@ -173,7 +173,7 @@ abstract class MolajoHtmlMenu
      */
     public static function ordering(&$row, $id)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         if ($id) {
@@ -209,7 +209,7 @@ abstract class MolajoHtmlMenu
      */
     public static function linkoptions($all = false, $unassigned = false)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         // get a list of the menu items

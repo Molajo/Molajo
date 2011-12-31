@@ -40,9 +40,9 @@ abstract class MolajoExtensionHelper
      */
     static public function get($asset_type_id, $extension = null)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
-        $date = MolajoFactory::getDate();
+        $date = MolajoController::getDate();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
         $acl = new MolajoACL ();

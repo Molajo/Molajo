@@ -97,7 +97,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
             }
 
             if ($extension) {
-                $lang = MolajoFactory::getLanguage();
+                $lang = MolajoController::getLanguage();
                 $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                         : MOLAJO_BASE_FOLDER) . '/modules/' . $extension;
                 $folder = (string)$element->attributes()->folder;

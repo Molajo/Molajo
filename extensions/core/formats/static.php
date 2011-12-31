@@ -147,7 +147,7 @@ $template_page_include = $template_path . '/pages/default/index.php';
         );
 
         /** Before Event */
-        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
+        MolajoController::getApplication()->triggerEvent('onBeforeRender');
         
         /** Media */
 
@@ -164,7 +164,7 @@ $template_page_include = $template_path . '/pages/default/index.php';
         self::_loadMediaJS($filePath, $urlPath);
 
         /** Language */
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         $lang->load($template_name, MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name, $lang->getDefault(), false, false);
 
         ob_start();
@@ -172,10 +172,10 @@ $template_page_include = $template_path . '/pages/default/index.php';
         $body = ob_get_contents();
         ob_end_clean();
 
-        MolajoFactory::getApplication()->setBody($body);
+        MolajoController::getApplication()->setBody($body);
 
         /** After Event */
-        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
+        MolajoController::getApplication()->triggerEvent('onAfterRender');
 
         return;
     }
@@ -201,11 +201,11 @@ $template_page_include = $template_path . '/pages/default/index.php';
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-                    if (MolajoFactory::getApplication()->direction == 'rtl') {
-                        MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
+                    if (MolajoController::getApplication()->direction == 'rtl') {
+                        MolajoController::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
                     }
                 } else {
-                    MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
+                    MolajoController::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
                 }
             }
         }
@@ -231,7 +231,7 @@ $template_page_include = $template_path . '/pages/default/index.php';
 
         if (count($files) > 0) {
             foreach ($files as $file) {
-                MolajoFactory::getApplication()->addScript($urlPath . '/js/' . $file);
+                MolajoController::getApplication()->addScript($urlPath . '/js/' . $file);
             }
         }
     }

@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /** format */
-$session = MolajoFactory::getSession();
+$session = MolajoController::getSession();
 if ($session->get('page.format') == 'html') {
 } else {
     return;

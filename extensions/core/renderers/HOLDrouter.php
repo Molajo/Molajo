@@ -112,16 +112,16 @@ class MolajoRouter extends JObject
         // Get the application
 
 
-        if (MolajoFactory::getApplication()->get('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
+        if (MolajoController::getApplication()->get('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
             //forward to https
             $uri->setScheme('https');
-            MolajoFactory::getApplication()->redirect((string)$uri);
+            MolajoController::getApplication()->redirect((string)$uri);
         }
 
         // Get the path
         $path = $uri->getPath();
 
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
     
             $query->select('id');

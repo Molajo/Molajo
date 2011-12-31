@@ -61,7 +61,7 @@ class InstallerHelper
      */
     public static function getActions()
     {
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         $result = new JObject;
 
         $assetName = 'installer';

@@ -50,7 +50,7 @@ class plgContentLoadmodule extends MolajoPluginHelper
     {
         if (!isset(self::$modules[$position])) {
             self::$modules[$position] = '';
-            $renderer = MolajoFactory::getApplication()->loadRenderer('module');
+            $renderer = MolajoController::getApplication()->loadRenderer('module');
             $modules = JModuleHelper::getModules($position);
             $parameters = array('style' => $style);
             ob_start();

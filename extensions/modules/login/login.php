@@ -17,6 +17,6 @@ $parameters->def('greeting', 1);
 
 $type = modLoginHelper::getType();
 $return = modLoginHelper::getReturnURL($parameters, $type);
-$user = MolajoFactory::getUser();
+$user = MolajoController::getUser();
 
 require MolajoModule::getViewPath('login', $parameters->get('view', 'default'));

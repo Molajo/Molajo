@@ -15,7 +15,7 @@ class modLoginHelper
     static function getReturnURL($parameters, $type)
     {
 
-        $router = MolajoFactory::getApplication()->getRouter();
+        $router = MolajoController::getApplication()->getRouter();
         $url = null;
 
         return base64_encode($url);
@@ -23,7 +23,7 @@ class modLoginHelper
 
     static function getType()
     {
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         return (!$user->get('guest')) ? 'logout' : 'login';
     }
 }

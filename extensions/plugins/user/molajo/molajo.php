@@ -34,13 +34,13 @@ class plgUserMolajo extends MolajoPluginHelper
     {
         // Initialise variables.
 
-        $config = MolajoFactory::getApplication()->get();
+        $config = MolajoController::getApplication()->get();
 
         if ($isnew) {
             // TODO: Suck in the frontend registration emails here as well. Job for a rainy day.
 
             // Load user_molajo plugin language (not done automatically).
-            $lang = MolajoFactory::getLanguage();
+            $lang = MolajoController::getLanguage();
             $lang->load('plg_user_molajo', JPATH_ADMINISTRATOR);
 
             // Compute the mail subject.
@@ -61,7 +61,7 @@ class plgUserMolajo extends MolajoPluginHelper
             );
 
             // Assemble the email data...the sexy way!
-            $mail = MolajoFactory::getMailer()
+            $mail = MolajoController::getMailer()
                     ->setSender(
                 array(
                      $config->get('mailfrom'),
@@ -103,12 +103,12 @@ class plgUserMolajo extends MolajoPluginHelper
         }
 
         // Register the needed session variables
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
         $session->set('user', $instance);
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
-        MolajoFactory::getApplication()->checkSession();
+        MolajoController::getApplication()->checkSession();
 
         // Update the user related fields for the Joomla sessions table.
         $db->setQuery(
@@ -135,8 +135,8 @@ class plgUserMolajo extends MolajoPluginHelper
      */
     public function onUserLogout($user, $options = array())
     {
-        $my = MolajoFactory::getUser();
-        $session = MolajoFactory::getSession();
+        $my = MolajoController::getUser();
+        $session = MolajoController::getSession();
 
 
         // Make sure we're a valid user first
@@ -156,7 +156,7 @@ class plgUserMolajo extends MolajoPluginHelper
         }
 
         // Force logout all users with that user_id
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `user_id` = ' . (int)$user['id'] .
@@ -192,7 +192,7 @@ class plgUserMolajo extends MolajoPluginHelper
         // Default to Registered.
         $defaultUserGroup = $config->get('new_user_group', 2);
 
-        $acl = MolajoFactory::getACL();
+        $acl = MolajoController::getACL();
 
         $instance->set('id', 0);
         $instance->set('name', $user['fullname']);
@@ -236,7 +236,7 @@ class plgUserMolajo extends MolajoPluginHelper
             return false;
         }
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `user_id` = ' . (int)$user['id']

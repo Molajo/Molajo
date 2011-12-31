@@ -22,7 +22,7 @@ abstract class MolajoPluginHelper
     public static function getViewPath($widget = array(), $view = 'default')
     {
         /** current template **/
-        $template = MolajoFactory::getApplication()->getTemplate();
+        $template = MolajoController::getApplication()->getTemplate();
         $defaultView = $view;
 
         /** template and base path for the view **/

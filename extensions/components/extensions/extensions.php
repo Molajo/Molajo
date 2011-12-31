@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 // Access check.
-if (!MolajoFactory::getUser()->authorise('core.manage', 'installer')) {
+if (!MolajoController::getUser()->authorise('core.manage', 'installer')) {
     return MolajoError::raiseWarning(404, MolajoTextHelper::_('JERROR_ALERTNOAUTHOR'));
 }
 

@@ -75,7 +75,7 @@ class MolajoLanguageHelper
 
         /** 2. user option for user */
         if (empty($options['language'])) {
-            $language = MolajoFactory::getUser()->getParameter('language');
+            $language = MolajoController::getUser()->getParameter('language');
             if ($language && MolajoLanguage::exists($language)) {
                 $options['language'] = $language;
             }

@@ -31,7 +31,7 @@ class plgSystemDebug extends MolajoPluginHelper
 
         // Only if debugging is enabled
         if (JDEBUG) {
-            $config = MolajoFactory::getApplication()->get();
+            $config = MolajoController::getApplication()->get();
             $config->set('gzip', 0);
             ob_start();
             ob_implicit_flush(false);
@@ -68,7 +68,7 @@ class plgSystemDebug extends MolajoPluginHelper
             return;
         }
 
-        $format = MolajoFactory::getApplication()->getFormat();
+        $format = MolajoController::getApplication()->getFormat();
 
         // Only render for HTML output
         if ($format !== 'html') {
@@ -79,7 +79,7 @@ class plgSystemDebug extends MolajoPluginHelper
         // If the user is not allowed to view the output then end here
         $filterGroups = (array)$this->parameters->get('filter_groups', null);
         if (!empty($filterGroups)) {
-            $userGroups = MolajoFactory::getUser()->get('groups');
+            $userGroups = MolajoController::getUser()->get('groups');
             if (!array_intersect($filterGroups, array_keys($userGroups))) {
                 echo $contents;
                 return;
@@ -120,7 +120,7 @@ class plgSystemDebug extends MolajoPluginHelper
         if ($this->parameters->get('queries', 1)) {
             $newlineKeywords = '#\b(FROM|LEFT|INNER|OUTER|WHERE|SET|VALUES|ORDER|GROUP|HAVING|LIMIT|ON|AND)\b#i';
 
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
 
             echo '<h4>' . MolajoTextHelper::sprintf('PLG_DEBUG_QUERIES_LOGGED', $db->getTicker()) . '</h4>';
 
@@ -210,8 +210,8 @@ class plgSystemDebug extends MolajoPluginHelper
         }
 
         // Show language debug only if enabled
-        if (MolajoFactory::getApplication()->get('debug_language')) {
-            $lang = MolajoFactory::getLanguage();
+        if (MolajoController::getApplication()->get('debug_language')) {
+            $lang = MolajoController::getLanguage();
 
             if ($this->parameters->get('language_errorfiles', 1)) {
                 echo '<h4>' . MolajoTextHelper::_('PLG_DEBUG_LANGUAGE_FILES_IN_ERROR') . '</h4>';
@@ -325,7 +325,7 @@ class plgSystemDebug extends MolajoPluginHelper
 
         $debug = ob_get_clean();
 
-        $body = MolajoFactory::getApplication()->getBody();
+        $body = MolajoController::getApplication()->getBody();
         $body = str_replace('</body>', $debug . '</body>', $body);
         echo str_replace('</body>', $debug . '</body>', $contents);
     }

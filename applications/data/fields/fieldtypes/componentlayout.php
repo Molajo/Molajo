@@ -73,14 +73,14 @@ class MolajoFormFieldComponentview extends MolajoFormField
         if ($extn && $view && $application) {
 
             // Load language file
-            $lang = MolajoFactory::getLanguage();
+            $lang = MolajoController::getLanguage();
             $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
             || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $extn, null, false, false)
             || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
             || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $extn, $lang->getDefault(), false, false);
 
             // Get the database object and a new query object.
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
 
             // Build the query.

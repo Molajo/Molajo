@@ -32,12 +32,12 @@ class plgContentPagenavigation extends JPlugin
 
         if ($parameters->get('show_item_navigation') && ($context == 'articles.article') && ($view == 'article')) {
             $html = '';
-            $db = MolajoFactory::getDbo();
-            $user = MolajoFactory::getUser();
+            $db = MolajoController::getDbo();
+            $user = MolajoController::getUser();
             $nullDate = $db->getNullDate();
 
-            $date = MolajoFactory::getDate();
-            $config = MolajoFactory::getApplication()->get();
+            $date = MolajoController::getDate();
+            $config = MolajoController::getApplication()->get();
             $now = $date->toMySQL();
 
             $uid = $row->id;

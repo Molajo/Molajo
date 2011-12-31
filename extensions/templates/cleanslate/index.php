@@ -7,19 +7,19 @@
  */
 defined('MOLAJO') or die;
 
-if (MolajoFactory::getApplication()->get('html5', true) === true): ?>
+if (MolajoController::getApplication()->get('html5', true) === true): ?>
 <!DOCTYPE html>
     <?php else: ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>"
-      lang="<?php echo MolajoFactory::getLanguage()->language; ?>"
-      dir="<?php echo MolajoFactory::getLanguage()->direction; ?>">
+      lang="<?php echo MolajoController::getLanguage()->language; ?>"
+      dir="<?php echo MolajoController::getLanguage()->direction; ?>">
 <head>
     <include:head />
 </head>
 <body>
-<?php include dirname(__FILE__) . '/pages/' . MolajoFactory::getApplication()->page; ?>
+<?php include dirname(__FILE__) . '/pages/' . MolajoController::getApplication()->page; ?>
 </body>
 </html>

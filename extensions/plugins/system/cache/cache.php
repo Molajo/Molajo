@@ -33,7 +33,7 @@ class plgSystemCache extends MolajoPluginHelper
         parent::__construct($subject, $config);
 
         //Set the language in the class
-        $config = MolajoFactory::getApplication()->get();
+        $config = MolajoController::getApplication()->get();
         $options = array(
             'defaultgroup' => 'page',
             'browsercache' => $this->parameters->get('browsercache', false),
@@ -52,7 +52,7 @@ class plgSystemCache extends MolajoPluginHelper
     {
         global $_PROFILER;
 
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
 
         if (JDEBUG) {
             return;
@@ -65,16 +65,16 @@ class plgSystemCache extends MolajoPluginHelper
         $data = $this->_cache->get();
 
         if ($data !== false) {
-            MolajoFactory::getApplication()->setBody($data);
+            MolajoController::getApplication()->setBody($data);
 
-            echo MolajoFactory::getApplication()->toString(MolajoFactory::getApplication()->get('gzip'));
+            echo MolajoController::getApplication()->toString(MolajoController::getApplication()->get('gzip'));
 
             if (JDEBUG) {
                 $_PROFILER->mark('afterCache');
                 echo implode('', $_PROFILER->getBuffer());
             }
 
-            MolajoFactory::getApplication()->close();
+            MolajoController::getApplication()->close();
         }
     }
 
@@ -86,7 +86,7 @@ class plgSystemCache extends MolajoPluginHelper
             return;
         }
 
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         if ((int)$user->get('user_id') == 0) {
             //We need to check again here, because auto-login plugins have not been fired before the first aid check
             $this->_cache->store();

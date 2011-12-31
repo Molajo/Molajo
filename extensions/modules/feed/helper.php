@@ -27,7 +27,7 @@ class modFeedHelper
             $options['cache_time'] = null;
         }
 
-        $rssDoc = MolajoFactory::getXMLParser('RSS', $options);
+        $rssDoc = MolajoController::getXMLParser('RSS', $options);
 
         $feed = new stdclass();
 

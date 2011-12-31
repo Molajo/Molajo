@@ -32,7 +32,7 @@ class MolajoTableMenu extends MolajoTable
      */
     function check()
     {
-        $this->menu_id = MolajoFactory::getApplication()->stringURLSafe($this->menu_id);
+        $this->menu_id = MolajoController::getApplication()->stringURLSafe($this->menu_id);
         if (empty($this->menu_id)) {
             $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MENU_EMPTY'));
             return false;
@@ -76,7 +76,7 @@ class MolajoTableMenu extends MolajoTable
     {
         if ($this->id) {
             // Get the user id
-            $userId = MolajoFactory::getUser()->id;
+            $userId = MolajoController::getUser()->id;
 
             // Get the old value of the table
             $table = MolajoTable::getInstance('Menu', 'MolajoTable');
@@ -153,7 +153,7 @@ class MolajoTableMenu extends MolajoTable
         // If no primary key is given, return false.
         if ($pk !== null) {
             // Get the user id
-            $userId = MolajoFactory::getUser()->id;
+            $userId = MolajoController::getUser()->id;
 
             // Get the old value of the table
             $table = MolajoTable::getInstance('Menu', 'MolajoTable');

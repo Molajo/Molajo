@@ -32,7 +32,7 @@ class plgSystemLogout extends MolajoPluginHelper
         parent::__construct($subject, $config);
 
         $hash = MolajoUtility::getHash('plgSystemLogout');
-        $conf = MolajoFactory::getApplication()->get();
+        $conf = MolajoController::getApplication()->get();
         $cookie_domain = $conf->get('config.cookie_domain', '');
         $cookie_path = $conf->get('config.cookie_path', '/');
         setcookie($hash, false, time() - 86400, $cookie_path, $cookie_domain);
@@ -54,7 +54,7 @@ class plgSystemLogout extends MolajoPluginHelper
     {
         // Create the cookie
         $hash = MolajoUtility::getHash('plgSystemLogout');
-        $conf = MolajoFactory::getApplication()->get();
+        $conf = MolajoController::getApplication()->get();
         $cookie_domain = $conf->get('config.cookie_domain', '');
         $cookie_path = $conf->get('config.cookie_path', '/');
         setcookie($hash, true, time() + 86400, $cookie_path, $cookie_domain);
@@ -70,7 +70,7 @@ class plgSystemLogout extends MolajoPluginHelper
         if ($error->getCode() == 403) {
             // Redirect to the home page
             //			$this->loadLanguage();
-            MolajoFactory::getApplication()->redirect('index.php', MolajoTextHelper::_('PLG_SYSTEM_LOGOUT_REDIRECT'), null, true, false);
+            MolajoController::getApplication()->redirect('index.php', MolajoTextHelper::_('PLG_SYSTEM_LOGOUT_REDIRECT'), null, true, false);
         }
         else {
             // Render the error page.

@@ -243,7 +243,7 @@ class MolajoACLCore extends MolajoACL
                 $authorised = $this->authorise($option_value_literal . '.own', $option . '.' . $entity . '.' . $id);
 
                 if ($authorised === true) {
-                    if ($item->created_by == MolajoFactory::getUser()->get('id')) {
+                    if ($item->created_by == MolajoController::getUser()->get('id')) {
                         $authorised = true;
                     }
                 }
@@ -441,7 +441,7 @@ class MolajoACLCore extends MolajoACL
         $query->where('a.state in ('.MOLAJO_STATUS_ARCHIVED.','.MOLAJO_STATUS_PUBLISHED.')');
 
         $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
-        $nowDate = $this->getDbo()->Quote(MolajoFactory::getDate()->toMySQL());
+        $nowDate = $this->getDbo()->Quote(MolajoController::getDate()->toMySQL());
 
         $query->where('(a.start_publishing_datetime = '.$nullDate.' OR a.start_publishing_datetime <= '.$nowDate.')');
         $query->where('(a.stop_publishing_datetime = '.$nullDate.' OR a.stop_publishing_datetime >= '.$nowDate.')');
@@ -506,7 +506,7 @@ class MolajoACLCore extends MolajoACL
      *  getUsergroupsList
      *  getUsergroupingsList
      *
-     * MolajoFactory::getUser()->
+     * MolajoController::getUser()->
      *
      * @param string $id
      * @param string $option
@@ -569,7 +569,7 @@ class MolajoACLCore extends MolajoACL
         echo 'Finish getCategoriesList';
         die();
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT a.id, a.title');
@@ -607,7 +607,7 @@ class MolajoACLCore extends MolajoACL
      */
     public function getGroupsList($id, $option, $task, $parameters = array())
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT g.id as value');
@@ -634,15 +634,15 @@ class MolajoACLCore extends MolajoACL
     public function getUsergroupsList($user_id, $option, $action, $parameters = array())
     {
         $acl = new MolajoACL();
-        $cache = MolajoFactory::getCache('coreacl.getUsergroupsList', '');
+        $cache = MolajoController::getCache('coreacl.getUsergroupsList', '');
 
         /** $key */
         if ((int)$user_id == 0) {
-            $user_id = MolajoFactory::getUser()->get('id');
+            $user_id = MolajoController::getUser()->get('id');
         }
 
         /** query  */
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT b.view_group_id as id');
@@ -757,7 +757,7 @@ class MolajoACLCore extends MolajoACL
     public function checkUserPermissions($user_id, $action, $asset = '', $access = '')
     {
         if ((int)$user_id == 0) {
-            $user_id = MolajoFactory::getUser()->id;
+            $user_id = MolajoController::getUser()->id;
         }
 
         if ($action == 'login') {
@@ -772,7 +772,7 @@ class MolajoACLCore extends MolajoACL
         $userGroups = $acl->getList('Usergroups', $user_id, '', $action);
 
         /** query  */
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         /** view access */
@@ -836,7 +836,7 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkUserPermissionsLogin($user_id)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
@@ -912,6 +912,6 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkComponentTaskAuthorisation($option, $option_value_literal)
     {
-        return MolajoFactory::getUser()->getAuthorisedCategories($option, $option_value_literal);
+        return MolajoController::getUser()->getAuthorisedCategories($option, $option_value_literal);
     }
 }

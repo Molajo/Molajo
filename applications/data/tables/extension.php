@@ -75,7 +75,7 @@ class MolajoTableExtension extends MolajoTable
 
     function find($options = array())
     {
-        $dbo = MolajoFactory::getDbo();
+        $dbo = MolajoController::getDbo();
         $where = Array();
         foreach ($options as $col => $val) {
             $where[] = $col . ' = ' . $dbo->Quote($val);

@@ -74,7 +74,7 @@ for ($i = 1; $i < 1000; $i++) {
         if (class_exists($nameClassName)) {
             $fcn = new $nameClassName ();
         } else {
-            MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+            MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 

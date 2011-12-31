@@ -172,7 +172,7 @@ class MolajoModuleRenderer
         // Load the module
         if (file_exists($path)) {
 
-            $lang = MolajoFactory::getLanguage();
+            $lang = MolajoController::getLanguage();
             $lang->load($module->extension_name, MOLAJO_EXTENSIONS_MODULES . '/' . $module->extension_name, $lang->getDefault(), false, false);
 
             /** view */
@@ -190,8 +190,8 @@ class MolajoModuleRenderer
                 $wrap = 'none';
             }
 
-            $application = MolajoFactory::getApplication();
-            $user = MolajoFactory::getUser();
+            $application = MolajoController::getApplication();
+            $user = MolajoController::getUser();
 
             $this->parameters = new JRegistry;
             $this->parameters->loadString($module->parameters);
@@ -259,7 +259,7 @@ class MolajoModuleRenderer
      */
     protected function getRequest($module, $parameters, $wrap)
     {
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
 
         /** 1. Request */
         $request = array();

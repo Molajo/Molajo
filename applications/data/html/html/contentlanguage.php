@@ -42,7 +42,7 @@ abstract class MolajoHtmlContentLanguage
     {
         if (empty(self::$items)) {
             // Get the database object and a new query object.
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
 
             // Build the query.

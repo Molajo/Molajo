@@ -78,7 +78,7 @@ class MolajoTableUser extends MolajoTable
 
         $this->reset();
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.*');
@@ -107,7 +107,7 @@ class MolajoTableUser extends MolajoTable
         if ($return == false) {
         } else {
 
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
 
             /** guest */
             $this->guest = 0;
@@ -245,7 +245,7 @@ class MolajoTableUser extends MolajoTable
 
         // Set the registration timestamp
         if ($this->register_datetime == null || $this->register_datetime == $this->_database->getNullDate()) {
-            $this->register_datetime = MolajoFactory::getDate()->toMySQL();
+            $this->register_datetime = MolajoController::getDate()->toMySQL();
         }
 
 
@@ -430,7 +430,7 @@ class MolajoTableUser extends MolajoTable
         }
 
         // If no timestamp value is passed to functon, than current time is used.
-        $date = MolajoFactory::getDate($timeStamp);
+        $date = MolajoController::getDate($timeStamp);
 
         // Update the database row for the user.
         // 			' SET '.$this->_database->quoteName('last_visit_datetime').' = '.$this->_database->Quote($this->_database->toSQLDate($date)) .

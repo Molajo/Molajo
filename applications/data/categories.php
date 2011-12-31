@@ -192,9 +192,9 @@ class MolajoCategories
      */
     protected function _load($id)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         $extension = $this->_extension;
 
         // Record that has this $id has been checked
@@ -712,10 +712,10 @@ class MolajoCategoryNode extends JObject
     function getAuthor($modified_user = false)
     {
         if ($modified_user) {
-            return MolajoFactory::getUser($this->modified_user_id);
+            return MolajoController::getUser($this->modified_user_id);
         }
 
-        return MolajoFactory::getUser($this->created_user_id);
+        return MolajoController::getUser($this->created_user_id);
     }
 
     function setAllLoaded()

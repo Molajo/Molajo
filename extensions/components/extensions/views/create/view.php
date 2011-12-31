@@ -29,7 +29,7 @@ class InstallerViewDefault extends JView
 
         parent::__construct($config);
         $this->_addPath('template', $this->_basePath . '/views/default/views');
-        $this->_addPath('template', JPATH_THEMES . '/' . MolajoFactory::getApplication()->getTemplate() . '/html/installer/default');
+        $this->_addPath('template', JPATH_THEMES . '/' . MolajoController::getApplication()->getTemplate() . '/html/installer/default');
     }
 
     /**
@@ -71,6 +71,6 @@ class InstallerViewDefault extends JView
             MolajoToolbarHelper::divider();
         }
 
-        MolajoFactory::getApplication()->setTitle(MolajoTextHelper::_('INSTALLER_TITLE_' . $this->getName()));
+        MolajoController::getApplication()->setTitle(MolajoTextHelper::_('INSTALLER_TITLE_' . $this->getName()));
     }
 }

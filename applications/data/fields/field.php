@@ -129,7 +129,7 @@ class MolajoField
 
         /** retain value from previous page load if current request is null **/
         if ($this->value == null) {
-            $this->value = MolajoFactory::getUser()->getUserState('filter.' . $this->name);
+            $this->value = MolajoController::getUser()->getUserState('filter.' . $this->name);
         }
     }
 
@@ -193,7 +193,7 @@ class MolajoField
 
             } else {
                 if ($reportError === true) {
-                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($name) . ' ' . $nameClassFile, 'error');
+                    MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($name) . ' ' . $nameClassFile, 'error');
                     return false;
                 }
             }

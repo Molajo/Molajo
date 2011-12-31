@@ -172,7 +172,7 @@ class MolajoMessageRenderer
         // Load the message
         if (file_exists($path)) {
 
-            $lang = MolajoFactory::getLanguage();
+            $lang = MolajoController::getLanguage();
             $lang->load($message->extension_name, MOLAJO_EXTENSIONS_MODULES . '/' . $message->extension_name, $lang->getDefault(), false, false);
 
             /** view */
@@ -190,8 +190,8 @@ class MolajoMessageRenderer
                 $wrap = 'none';
             }
 
-            $application = MolajoFactory::getApplication();
-            $user = MolajoFactory::getUser();
+            $application = MolajoController::getApplication();
+            $user = MolajoController::getUser();
 
             $this->parameters = new JRegistry;
             $this->parameters->loadString($message->parameters);

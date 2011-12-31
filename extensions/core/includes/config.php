@@ -14,9 +14,9 @@ if (class_exists('MolajoVersion')) {
 } else {
     require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/version.php';
 }
-if (class_exists('MolajoFactory')) {
+if (class_exists('MolajoController')) {
 } else {
-    require_once MOLAJO_APPLICATIONS_CORE . '/factory.php';
+    require_once MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php';
 }
 
 /**
@@ -34,7 +34,7 @@ if (MOLAJO_APPLICATION == 'installation') {
     }
     require_once MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
 
-    $CONFIG = new MolajoControllerSiteConfiguration();
+    $CONFIG = new MolajoSiteConfiguration();
 
     if (@$CONFIG->error_reporting === 0) {
         error_reporting(0);

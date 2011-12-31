@@ -51,7 +51,7 @@ class MenusHelper
      */
     public static function getActions($parentId = 0)
     {
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         $result = new JObject;
 
         if (empty($parentId)) {
@@ -118,7 +118,7 @@ class MenusHelper
      */
     public static function getMenuTypes()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $db->setQuery('SELECT a.menu_id FROM #__menus AS a');
         return $db->loadResultArray();
     }
@@ -133,7 +133,7 @@ class MenusHelper
      */
     public static function getMenuLinks($menuType = null, $parentId = 0, $mode = 0, $published = array())
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.id AS value, a.title AS text, a.lvl, a.menu_id, a.type, a.template_id, a.checked_out');

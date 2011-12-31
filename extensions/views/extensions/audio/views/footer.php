@@ -8,4 +8,4 @@
 defined('MOLAJO') or die;
 
 $this->audio_file_loader .= ' });';
-MolajoFactory::getApplication()->addScriptDeclaration($this->audio_file_loader);
+MolajoController::getApplication()->addScriptDeclaration($this->audio_file_loader);

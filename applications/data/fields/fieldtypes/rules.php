@@ -256,7 +256,7 @@ class MolajoFormFieldRules extends MolajoFormField
 
         $js = "window.addEvent('domready', function(){ new Fx.Accordion($$('div#permissions-sliders.pane-sliders .panel h3.pane-toggler'), $$('div#permissions-sliders.pane-sliders .panel div.pane-slider'), {onActive: function(toggler, i) {toggler.addClass('pane-toggler-down');toggler.removeClass('pane-toggler');i.addClass('pane-down');i.removeClass('pane-hide');Cookie.write('jpanesliders_permissions-sliders" . $component . "',$$('div#permissions-sliders.pane-sliders .panel h3').indexOf(toggler));},onBackground: function(toggler, i) {toggler.addClass('pane-toggler');toggler.removeClass('pane-toggler-down');i.addClass('pane-hide');i.removeClass('pane-down');},duration: 300,display: " . JRequest::getInt('jpanesliders_permissions-sliders' . $component, 0, 'cookie') . ",show: " . JRequest::getInt('jpanesliders_permissions-sliders' . $component, 0, 'cookie') . ", alwaysHide:true, opacity: false}); });";
 
-        MolajoFactory::getApplication()->addScriptDeclaration($js);
+        MolajoController::getApplication()->addScriptDeclaration($js);
 
         return implode("\n", $html);
     }

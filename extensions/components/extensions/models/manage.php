@@ -58,17 +58,17 @@ class InstallerModelManage extends InstallerModel
 
         $filters = JRequest::getVar('filters');
         if (empty($filters)) {
-            $data = MolajoFactory::getUser()->getUserState($this->context . '.data');
+            $data = MolajoController::getUser()->getUserState($this->context . '.data');
             $filters = $data['filters'];
         }
         else {
-            MolajoFactory::getUser()->setUserState($this->context . '.data', array('filters' => $filters));
+            MolajoController::getUser()->setUserState($this->context . '.data', array('filters' => $filters));
         }
 
-        $this->setState('message', MolajoFactory::getUser()->getUserState('installer.message'));
-        $this->setState('extension_message', MolajoFactory::getUser()->getUserState('installer.extension_message'));
-        MolajoFactory::getUser()->setUserState('installer.message', '');
-        MolajoFactory::getUser()->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoController::getUser()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoController::getUser()->getUserState('installer.extension_message'));
+        MolajoController::getUser()->setUserState('installer.message', '');
+        MolajoController::getUser()->setUserState('installer.extension_message', '');
 
         $this->setState('filter.search', isset($filters['search']) ? $filters['search'] : '');
         $this->setState('filter.hideprotected', isset($filters['hideprotected']) ? $filters['hideprotected'] : 0);
@@ -88,7 +88,7 @@ class InstallerModelManage extends InstallerModel
     function publish(&$eid = array(), $value = 1)
     {
         // Initialise variables.
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         if ($user->authorise('core.edit.state', 'installer')) {
             $result = true;
 
@@ -101,7 +101,7 @@ class InstallerModelManage extends InstallerModel
             }
 
             // Get a database connector
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
 
             // Get a table object for the extension type
             $table = JTable::getInstance('Extension');
@@ -144,7 +144,7 @@ class InstallerModelManage extends InstallerModel
         }
 
         // Get a database connector
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         // Get an installer object for the extension type
         jimport('joomla.installer.installer');
@@ -169,7 +169,7 @@ class InstallerModelManage extends InstallerModel
     function remove($eid = array())
     {
         // Initialise variables.
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         if ($user->authorise('core.delete', 'installer')) {
 
             // Initialise variables.
@@ -184,7 +184,7 @@ class InstallerModelManage extends InstallerModel
             }
 
             // Get a database connector
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
 
             // Get an installer object for the extension type
             jimport('joomla.installer.installer');
@@ -226,11 +226,11 @@ class InstallerModelManage extends InstallerModel
                 $result = true;
             }
 
-            MolajoFactory::getApplication()->setMessage($msg);
+            MolajoController::getApplication()->setMessage($msg);
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
-            MolajoFactory::getUser()->setUserState('installer.message', $installer->message);
-            MolajoFactory::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
+            MolajoController::getUser()->setUserState('installer.message', $installer->message);
+            MolajoController::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
             return $result;
         } else {
             $result = false;
@@ -251,7 +251,7 @@ class InstallerModelManage extends InstallerModel
         $application = $this->getState('filter.application_id');
         $group = $this->getState('filter.group');
         $hideprotected = $this->getState('filter.hideprotected');
-        $query = MolajoFactory::getDbo()->getQuery(true);
+        $query = MolajoController::getDbo()->getQuery(true);
         $query->select('*');
         $query->from('#__extensions');
         $query->where('state=0');
@@ -323,7 +323,7 @@ class InstallerModelManage extends InstallerModel
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = MolajoFactory::getUser()->getUserState('installer.manage.data', array());
+        $data = MolajoController::getUser()->getUserState('installer.manage.data', array());
 
         return $data;
     }

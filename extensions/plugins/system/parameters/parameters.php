@@ -240,12 +240,12 @@ class plgSystemParameters extends MolajoPluginHelper
     function getParameterSetPath($parameterSet)
     {
         /** Amy_TODO: figure this out. site template parameters */
-        $path = MOLAJO_BASE_FOLDER . '/templates/' . MolajoFactory::getApplication('site')->getTemplate() . '/' . 'parameters/' . $parameterSet . '.xml';
+        $path = MOLAJO_BASE_FOLDER . '/templates/' . MolajoController::getApplication('site')->getTemplate() . '/' . 'parameters/' . $parameterSet . '.xml';
         if (is_file($path)) {
             return $path;
         }
         /** admin template parameters */
-        $path = MOLAJO_BASE_FOLDER . '/templates/' . MolajoFactory::getApplication('administrator')->getTemplate() . '/' . 'parameters/' . $parameterSet . '.xml';
+        $path = MOLAJO_BASE_FOLDER . '/templates/' . MolajoController::getApplication('administrator')->getTemplate() . '/' . 'parameters/' . $parameterSet . '.xml';
         if (is_file($path)) {
             return $path;
         }

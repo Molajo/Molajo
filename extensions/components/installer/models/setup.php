@@ -27,7 +27,7 @@ class MolajoInstallationModelSetup extends JModel
      */
     public function getOptions()
     {
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
         $options = $session->get('setup.options', array());
 
         return $options;
@@ -46,7 +46,7 @@ class MolajoInstallationModelSetup extends JModel
     public function storeOptions($options)
     {
         // Get the current setup options from the session.
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
         $old = $session->get('setup.options', array());
 
         // Merge the new setup options into the current ones and store in the session.
@@ -56,7 +56,7 @@ class MolajoInstallationModelSetup extends JModel
         // If the setup language is set in the options, set it separately in the session and JLanguage.
         if (!empty($options['language'])) {
             $session->set('setup.language', $options['language']);
-            MolajoFactory::getLanguage()->setLanguage($options['language']);
+            MolajoController::getLanguage()->setLanguage($options['language']);
         }
 
         return $options;
@@ -170,7 +170,7 @@ class MolajoInstallationModelSetup extends JModel
         }
 
         // Get a forced language if it exists.
-        $forced = MolajoFactory::getApplication()->getLocalise();
+        $forced = MolajoController::getApplication()->getLocalise();
 
         if (!empty($forced['language'])) {
             $native = $forced['language'];

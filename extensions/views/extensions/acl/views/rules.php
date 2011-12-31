@@ -136,7 +136,7 @@ abstract class MolajoHTMLRules
     protected static function _getParentAssetId($assetId)
     {
         // Get a database object.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         // Get the user groups from the database.
         $db->setQuery(

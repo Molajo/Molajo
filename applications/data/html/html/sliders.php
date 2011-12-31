@@ -118,7 +118,7 @@ abstract class MolajoHtmlSliders
                   . ".pane-sliders > .panel > h3.pane-toggler'), $$('div#" . $group . ".pane-sliders > .panel > div.pane-slider'), " . $options
                   . "); });";
 
-            MolajoFactory::getApplication()->addScriptDeclaration($js);
+            MolajoController::getApplication()->addScriptDeclaration($js);
         }
     }
 }

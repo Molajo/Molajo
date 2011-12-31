@@ -35,7 +35,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
     {
         // Initialize variables.
         $groups = array();
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
 
         // Get the application and application_id.
         $applicationName = $this->element['application'] ? (string)$this->element['application'] : 'site';
@@ -45,7 +45,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
         $template = (string)$this->element['template'];
 
         // Get the database object and a new query object.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         // Build the query.

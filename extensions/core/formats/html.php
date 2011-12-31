@@ -183,24 +183,24 @@ class MolajoHtmlFormat
         );
 
         /** Before Event */
-        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
+        MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
         /** Media */
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
         $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
-        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name;
         $urlPath = JURI::root() . 'extensions/templates/' . $template_name;
-        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Language */
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         $lang->load($template_name, MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name, $lang->getDefault(), false, false);
 
         ob_start();
@@ -212,10 +212,10 @@ class MolajoHtmlFormat
 
         $body = $this->_renderTemplate();
 
-        MolajoFactory::getApplication()->setBody($body);
+        MolajoController::getApplication()->setBody($body);
 
         /** After Event */
-        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
+        MolajoController::getApplication()->triggerEvent('onAfterRender');
 
         return;
     }
@@ -337,7 +337,7 @@ class MolajoHtmlFormat
 
         if (file_exists($path . 'favicon.ico')) {
             $urlPath = JURI::root() . 'extensions/templates/' . $this->template . '/images/favicon.ico';
-            MolajoFactory::getApplication()->addFavicon($urlPath);
+            MolajoController::getApplication()->addFavicon($urlPath);
             return true;
         }
 

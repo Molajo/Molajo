@@ -132,8 +132,8 @@ class MolajoComponentRenderer
         $request = $this->request();
 
         /** Before Rendering */
-        MolajoFactory::getApplication()->registerEvent ('onBeforeRender', 'system');
-        MolajoFactory::getApplication()->triggerEvent ('onBeforeRender', $this);
+        MolajoController::getApplication()->registerEvent ('onBeforeRender', 'system');
+        MolajoController::getApplication()->triggerEvent ('onBeforeRender', $this);
 
         /** path */
         $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option . '/' . $this->option . '.php';
@@ -145,7 +145,7 @@ class MolajoComponentRenderer
 
         /** language */
         } elseif (file_exists($path)) {
-            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
+            MolajoController::getLanguage()->load($this->option, $path, MolajoController::getLanguage()->getDefault(), false, false);
 
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
@@ -158,8 +158,8 @@ class MolajoComponentRenderer
         ob_end_clean();
 
         /** After Rendering */
-        MolajoFactory::getApplication()->registerEvent ('onAfterRender', 'system');
-        MolajoFactory::getApplication()->triggerEvent ('onAfterRender', array($this, $output));
+        MolajoController::getApplication()->registerEvent ('onAfterRender', 'system');
+        MolajoController::getApplication()->triggerEvent ('onAfterRender', array($this, $output));
 
         /** Return output */
         return $output;

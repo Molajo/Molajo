@@ -35,7 +35,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
     {
         // Initialize variables.
         $options = array();
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         // Build the query.
@@ -58,7 +58,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
         $options = $db->loadObjectList();
 
         // Set the query and load the options.
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
         foreach ($options as $i => $option) {
             $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
             $options[$i]->text = MolajoTextHelper::_($option->text);

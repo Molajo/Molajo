@@ -141,11 +141,11 @@ class MolajoControllerLogin extends MolajoControllerApplication
             'application_id' => ($user_id) ? 0 : 1
         );
 
-        $result = MolajoFactory::getApplication()->logout($user_id, $options);
+        $result = MolajoController::getApplication()->logout($user_id, $options);
         if (!MolajoError::isError($result)) {
             $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
-            MolajoFactory::getApplication()->redirect($return);
+            MolajoController::getApplication()->redirect($return);
         }
 
         parent::display();
@@ -191,7 +191,7 @@ class MolajoControllerLogin extends MolajoControllerApplication
         $retval = false;
 
         // Get a user object from the MolajoControllerApplication.
-        $user = MolajoFactory::getUser($user_id);
+        $user = MolajoController::getUser($user_id);
 
         // Build the credentials array.
         $parameters['username'] = $user->get('username');
@@ -206,7 +206,7 @@ class MolajoControllerLogin extends MolajoControllerApplication
         MolajoPluginHelper::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
-        $results = MolajoFactory::getApplication()->triggerEvent('onUserLogout', array($parameters, $options));
+        $results = MolajoController::getApplication()->triggerEvent('onUserLogout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
@@ -221,7 +221,7 @@ class MolajoControllerLogin extends MolajoControllerApplication
         }
 
         // Trigger onUserLoginFailure Event.
-        MolajoFactory::getApplication()->triggerEvent('onUserLogoutFailure', array($parameters));
+        MolajoController::getApplication()->triggerEvent('onUserLogoutFailure', array($parameters));
 
         return false;
     }

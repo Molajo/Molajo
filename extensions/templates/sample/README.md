@@ -52,7 +52,7 @@ File containing html and **doc statements** that define content requirements in 
 
 The following line in the index.php file retrieves the page parameter and uses it to include the required view file.
 
-    <?php include dirname(__FILE__).'/'.MolajoFactory::getApplication()->page; ?>
+    <?php include dirname(__FILE__).'/'.MolajoController::getApplication()->page; ?>
 
 ### 3. css folder ###
 

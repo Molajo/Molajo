@@ -369,7 +369,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     protected function loadLanguage($view, $view_type)
     {
-        MolajoFactory::getLanguage()->load($view, $this->view_path, MolajoFactory::getLanguage()->getDefault(), false, false);
+        MolajoController::getLanguage()->load($view, $this->view_path, MolajoController::getLanguage()->getDefault(), false, false);
     }
 
     /**
@@ -392,20 +392,20 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request['option'] . '/views';
         $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . $this->request['option'] . '/views';
-        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
         /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request['asset_id'];
         $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
-        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
          */
         /** View specific CSS and JS in path identified in getPath */
         $filePath = $this->view_path . '/views';
         $urlPath = $this->view_path_url . '/views';
-        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
     }
 
     /**

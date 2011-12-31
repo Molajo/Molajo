@@ -22,13 +22,13 @@ class plgSystemSef extends MolajoPluginHelper
      */
     public function onAfterRender()
     {
-        if (MolajoFactory::getApplication()->getName() != 'site' || MolajoFactory::getApplication()->get('sef') == '0') {
+        if (MolajoController::getApplication()->getName() != 'site' || MolajoController::getApplication()->get('sef') == '0') {
             return true;
         }
 
         //Replace src links
         $base = JURI::base(true) . '/';
-        $buffer = MolajoFactory::getApplication()->getBody();
+        $buffer = MolajoController::getApplication()->getBody();
 
         $regex = '#href="index.php\?([^"]*)#m';
         $buffer = preg_replace_callback($regex, array('plgSystemSef', 'route'), $buffer);
@@ -67,7 +67,7 @@ class plgSystemSef extends MolajoPluginHelper
         $buffer = preg_replace($regex, '$1data="' . $base . '$2"$3', $buffer);
         $this->checkBuffer($buffer);
 
-        MolajoFactory::getApplication()->setBody($buffer);
+        MolajoController::getApplication()->setBody($buffer);
         return true;
     }
 

@@ -140,7 +140,7 @@ abstract class MolajoTable extends JObject
             }
         }
 
-        $database = isset($config['databaseo']) ? $config['databaseo'] : MolajoFactory::getDbo();
+        $database = isset($config['databaseo']) ? $config['databaseo'] : MolajoController::getDbo();
 
         return new $tableClass($database);
     }
@@ -644,7 +644,7 @@ abstract class MolajoTable extends JObject
         }
 
         // Get the current time in MySQL format.
-        $time = MolajoFactory::getDate()->toMysql();
+        $time = MolajoController::getDate()->toMysql();
 
         // Check the row out by primary key.
         $query = $this->_database->getQuery(true);
@@ -749,7 +749,7 @@ abstract class MolajoTable extends JObject
             return false;
         }
 
-        $database = MolajoFactory::getDbo();
+        $database = MolajoController::getDbo();
         $database->setQuery(
             'SELECT COUNT(user_id)' .
             ' FROM ' . $database->quoteName('#__sessions') .

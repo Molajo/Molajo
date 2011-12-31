@@ -41,13 +41,13 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
         }
 
         // Get a forced language if it exists.
-        $forced = MolajoFactory::getApplication()->getLocalise();
+        $forced = MolajoController::getApplication()->getLocalise();
         if (!empty($forced['language'])) {
             $native = $forced['language'];
         }
 
         // If a language is already set in the session, use this instead
-        $session = MolajoFactory::getSession()->get('setup.options', array());
+        $session = MolajoController::getSession()->get('setup.options', array());
         if (!empty($session['language'])) {
             $native = $session['language'];
         }

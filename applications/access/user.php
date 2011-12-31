@@ -252,7 +252,7 @@ class MolajoUser extends JObject
 
         $results = $table->load($id);
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
         $columns = $db->getTableColumns('#__users', true);
@@ -432,7 +432,7 @@ class MolajoUser extends JObject
      */
     public function getUserState($key, $default = null)
     {
-        $registry = MolajoFactory::getSession()->get('registry');
+        $registry = MolajoController::getSession()->get('registry');
         if (is_null($registry)) {
         } else {
             return $registry->get($key, $default);
@@ -454,7 +454,7 @@ class MolajoUser extends JObject
      */
     public function setUserState($key, $value)
     {
-        $registry = MolajoFactory::getSession()->get('registry');
+        $registry = MolajoController::getSession()->get('registry');
         if (is_null($registry)) {
         } else {
             return $registry->set($key, $value);
@@ -524,7 +524,7 @@ class save_user_crud
             $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
             $array['password'] = $crypt . ':' . $salt;
 
-            $this->set('register_datetime', MolajoFactory::getDate()->toMySQL());
+            $this->set('register_datetime', MolajoController::getDate()->toMySQL());
 
             $username = $this->get('username');
             if (strlen($username) > 250) {
@@ -589,7 +589,7 @@ class save_user_crud
             //
             // @todo ACL - this needs to be acl checked
             //
-            $my = MolajoFactory::getUser();
+            $my = MolajoController::getUser();
 
             //are we creating a new user
             $isNew = empty($this->id);

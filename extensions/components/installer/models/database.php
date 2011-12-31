@@ -23,7 +23,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
     {
         parent::__construct($properties);
 
-        $this->db = MolajoFactory::getDDbo();
+        $this->db = MolajoController::getDDbo();
     }
 
     function initialise($options)
@@ -32,7 +32,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
         $options = JArrayHelper::toObject($options, 'JObject');
 
         // Load the back-end language files so that the DB error messages work
-        $jlang = MolajoFactory::getLanguage();
+        $jlang = MolajoController::getLanguage();
         // Pre-load en-GB in case the chosen language files do not exist
         $jlang->load('joomla', MOLAJO_EXTENSIONS, 'en-GB', true);
         // Load the selected language
@@ -195,7 +195,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
                 $this->setError($db->getErrorMsg());
                 $return = false;
             }
-            MolajoFactory::$database = $db;
+            MolajoController::$database = $db;
             $installer = JInstaller::getInstance();
             //			foreach ($extensions as $extension) {
             //				if (!$installer->refreshManifestCache($extension->extension_id)) {
@@ -215,7 +215,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 
             // Handle default backend language setting. This feature is available for localized versions of Joomla 1.5.
 
-            $languages = MolajoFactory::getApplication()->getLocaliseAdmin($db);
+            $languages = MolajoController::getApplication()->getLocaliseAdmin($db);
             if (in_array($options->language, $languages)) {
                 // Build the language parameters for the language manager.
                 $parameters = array();
@@ -351,7 +351,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
      */
     public function backupTables()
     {
-        $conf = MolajoFactory::getApplication()->get();
+        $conf = MolajoController::getApplication()->get();
 
         $prefix = $conf->get('dbprefix');
         $database = $conf->get('db');
@@ -452,7 +452,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
         // Initialise variables.
         $return = true;
 
-        $conf = MolajoFactory::getApplication()->get();
+        $conf = MolajoController::getApplication()->get();
 
         $prefix = $conf->get('dbprefix');
         $database = $conf->get('db');
@@ -540,7 +540,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
      */
     public function setDatabaseCharset()
     {
-        $conf = MolajoFactory::getApplication()->get();
+        $conf = MolajoController::getApplication()->get();
 
         $database = $conf->get('db');
 

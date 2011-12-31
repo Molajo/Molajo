@@ -63,8 +63,8 @@ class MolajoFormFieldCalendar extends MolajoFormField
         }
 
         // Get some system objects.
-        $config = MolajoFactory::getApplication()->get();
-        $user = MolajoFactory::getUser();
+        $config = MolajoController::getApplication()->get();
+        $user = MolajoController::getUser();
 
         // If a known filter is given use it.
         switch (strtoupper((string)$this->element['filter']))
@@ -73,7 +73,7 @@ class MolajoFormFieldCalendar extends MolajoFormField
                 // Convert a date to UTC based on the server timezone.
                 if (intval($this->value)) {
                     // Get a date object based on the correct timezone.
-                    $date = MolajoFactory::getDate($this->value, 'UTC');
+                    $date = MolajoController::getDate($this->value, 'UTC');
                     $date->setTimezone(new DateTimeZone($config->get('offset')));
 
                     // Transform the date string.
@@ -85,7 +85,7 @@ class MolajoFormFieldCalendar extends MolajoFormField
                 // Convert a date to UTC based on the user timezone.
                 if (intval($this->value)) {
                     // Get a date object based on the correct timezone.
-                    $date = MolajoFactory::getDate($this->value, 'UTC');
+                    $date = MolajoController::getDate($this->value, 'UTC');
                     $date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
 
                     // Transform the date string.

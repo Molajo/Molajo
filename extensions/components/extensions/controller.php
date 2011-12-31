@@ -36,7 +36,7 @@ class InstallerController extends JController
 
         // Set the default view name and format from the Request.
         $vName = JRequest::getCmd('view', 'install');
-        $vFormat = MolajoFactory::getApplication()->getType();
+        $vFormat = MolajoController::getApplication()->getType();
         $lName = JRequest::getCmd('view', 'default');
 
         // Get and render the view.

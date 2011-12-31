@@ -1230,7 +1230,7 @@ class MolajoLanguage
      */
     public static function parseXMLLanguageFile($path)
     {
-        if ($xml = MolajoFactory::getXML($path)) {
+        if ($xml = MolajoController::getXML($path)) {
         } else {
             return null;
         }

@@ -35,7 +35,7 @@ class MolajoFileHelper
         if (file_exists($file)) {
             JLoader::register($class, $file);
         } else {
-            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoFactory')) {
+            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoController')) {
                 MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
                 return false;
             } else {
@@ -47,7 +47,7 @@ class MolajoFileHelper
         if (class_exists($class)) {
             return true;
         } else {
-            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoFactory')) {
+            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoController')) {
                 MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
                 return false;
             } else {

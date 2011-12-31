@@ -16,7 +16,7 @@ class modBreadCrumbsHelper
     {
         // Get the PathWay object from the application
 
-        $pathway = MolajoFactory::getApplication()->getPathway();
+        $pathway = MolajoController::getApplication()->getPathway();
         $items = $pathway->getPathWay();
 
         $count = count($items);
@@ -29,7 +29,7 @@ class modBreadCrumbsHelper
         if ($parameters->get('showHome', 1)) {
             $item = new stdClass();
             $item->name = $parameters->get('homeText', MolajoTextHelper::_('BREADCRUMBS_HOME'));
-            $item->link = MolajoRouteHelper::_('index.php?Itemid=' . MolajoFactory::getApplication()->getMenu()->getDefault()->id);
+            $item->link = MolajoRouteHelper::_('index.php?Itemid=' . MolajoController::getApplication()->getMenu()->getDefault()->id);
             array_unshift($items, $item);
         }
 
@@ -46,7 +46,7 @@ class modBreadCrumbsHelper
      */
     public static function setSeparator($custom = null)
     {
-        $lang = MolajoFactory::getLanguage();
+        $lang = MolajoController::getLanguage();
 
         // If a custom separator has not been provided we try to load a template
         // specific one first, and if that is not present we load the default separator

@@ -27,7 +27,7 @@ class MolajoTableModule extends MolajoTable
     {
         parent::__construct('#__modules', 'id', $db);
 
-        $this->access = (int)MolajoFactory::getApplication()->get('access');
+        $this->access = (int)MolajoController::getApplication()->get('access');
     }
 
     /**

@@ -39,7 +39,7 @@ class plgAuthenticationMolajo extends MolajoPluginHelper
 
         /** retrieve user from database */
         $conditions = '';
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('id, password');

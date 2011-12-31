@@ -334,7 +334,7 @@ class MolajoExtension
             || $this->query_request == 'index.php?'
             || $this->query_request == '/index.php/'
         ) {
-            MolajoFactory::getApplication()->redirect(MolajoFactory::getApplication()->get('home_asset_id'), 301);
+            MolajoController::getApplication()->redirect(MolajoController::getApplication()->get('home_asset_id'), 301);
             return;
         }
 
@@ -342,31 +342,31 @@ class MolajoExtension
         if ($this->query_request == ''
             && (int)$this->asset_id == 0
         ) {
-            $this->asset_id = MolajoFactory::getApplication()->get('home_asset_id', 0);
+            $this->asset_id = MolajoController::getApplication()->get('home_asset_id', 0);
             $this->home = true;
         }
 
         /** Site offline */
-        if (MolajoFactory::getApplication()->get('offline', 0) == 1) {
-            MolajoFactory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', 'true');
-            $this->asset_id = MolajoFactory::getApplication()->get('asset_id', 0);
-            $this->template = MolajoFactory::getApplication()->get('offline_template', 'system');
-            $this->page = MolajoFactory::getApplication()->get('offline_page', 'full');
-            $this->view = MolajoFactory::getApplication()->get('offline_view', 'offline');
-            $this->wrap = MolajoFactory::getApplication()->get('offline_wrap', 'div');
-            $this->format = MolajoFactory::getApplication()->get('offline_format', 'static');
-            $this->message = MolajoFactory::getApplication()->get('offline_message', 'This site is not available.<br /> Please check back again soon.');
+        if (MolajoController::getApplication()->get('offline', 0) == 1) {
+            MolajoController::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+            $this->asset_id = MolajoController::getApplication()->get('asset_id', 0);
+            $this->template = MolajoController::getApplication()->get('offline_template', 'system');
+            $this->page = MolajoController::getApplication()->get('offline_page', 'full');
+            $this->view = MolajoController::getApplication()->get('offline_view', 'offline');
+            $this->wrap = MolajoController::getApplication()->get('offline_wrap', 'div');
+            $this->format = MolajoController::getApplication()->get('offline_format', 'static');
+            $this->message = MolajoController::getApplication()->get('offline_message', 'This site is not available.<br /> Please check back again soon.');
         }
 
         /** Get Asset Information */
         $this->_getAsset();
 
         /** Logged on Requirement */
-        if (MolajoFactory::getApplication()->get('logon_requirement', 0) > 0
-            && MolajoFactory::getUser()->get('guest', true) === true
-            && $this->asset_id <> MolajoFactory::getApplication()->get('logon_requirement', 0)
+        if (MolajoController::getApplication()->get('logon_requirement', 0) > 0
+            && MolajoController::getUser()->get('guest', true) === true
+            && $this->asset_id <> MolajoController::getApplication()->get('logon_requirement', 0)
         ) {
-            MolajoFactory::getApplication()->redirect(MolajoFactory::getApplication()->get('logon_requirement', 0), 303);
+            MolajoController::getApplication()->redirect(MolajoController::getApplication()->get('logon_requirement', 0), 303);
             return;
         }
 
@@ -375,17 +375,17 @@ class MolajoExtension
 
         /** 404 Not Found */
         if ($this->found === false) {
-            MolajoFactory::getApplication()->setHeader('Status', '404 Not Found', 'true');
-            $this->template = MolajoFactory::getApplication()->get('error_template', 'system');
-            $this->page = MolajoFactory::getApplication()->get('error_page', 'print');
-            $this->view = MolajoFactory::getApplication()->get('error_view', 'error');
-            $this->wrap = MolajoFactory::getApplication()->get('error_wrap', 'none');
+            MolajoController::getApplication()->setHeader('Status', '404 Not Found', 'true');
+            $this->template = MolajoController::getApplication()->get('error_template', 'system');
+            $this->page = MolajoController::getApplication()->get('error_page', 'print');
+            $this->view = MolajoController::getApplication()->get('error_view', 'error');
+            $this->wrap = MolajoController::getApplication()->get('error_wrap', 'none');
         }
 
         /** act on redirect_to_id */
         if ($this->redirect_to_id == 0) {
         } else {
-            MolajoFactory::getApplication()->redirect($this->redirect_to_id, 301);
+            MolajoController::getApplication()->redirect($this->redirect_to_id, 301);
             return;
         }
 
@@ -394,11 +394,11 @@ class MolajoExtension
 
         /** 403 Not Found */
         if ($this->found === false) {
-            MolajoFactory::getApplication()->setHeader('Status', '403 Not Authorised', 'true');
-            $this->template = MolajoFactory::getApplication()->get('error_template', 'system');
-            $this->page = MolajoFactory::getApplication()->get('error_page', 'print');
-            $this->view = MolajoFactory::getApplication()->get('error_view', 'error');
-            $this->wrap = MolajoFactory::getApplication()->get('error_wrap', 'none');
+            MolajoController::getApplication()->setHeader('Status', '403 Not Authorised', 'true');
+            $this->template = MolajoController::getApplication()->get('error_template', 'system');
+            $this->page = MolajoController::getApplication()->get('error_page', 'print');
+            $this->view = MolajoController::getApplication()->get('error_view', 'error');
+            $this->wrap = MolajoController::getApplication()->get('error_wrap', 'none');
         }
 
         /** retrieve metadata and parameters */
@@ -425,11 +425,11 @@ class MolajoExtension
     protected function _getSEFOptions($request = null)
     {
         /** Application SEF Options */
-        $sef = MolajoFactory::getApplication()->get('sef', 1);
-        $sef_rewrite = MolajoFactory::getApplication()->get('sef_rewrite', 0);
-        $sef_suffix = MolajoFactory::getApplication()->get('sef_suffix', 0);
-        $unicodeslugs = MolajoFactory::getApplication()->get('unicodeslugs', 0);
-        $force_ssl = MolajoFactory::getApplication()->get('force_ssl', 0);
+        $sef = MolajoController::getApplication()->get('sef', 1);
+        $sef_rewrite = MolajoController::getApplication()->get('sef_rewrite', 0);
+        $sef_suffix = MolajoController::getApplication()->get('sef_suffix', 0);
+        $unicodeslugs = MolajoController::getApplication()->get('unicodeslugs', 0);
+        $force_ssl = MolajoController::getApplication()->get('force_ssl', 0);
 
         /** Path ex. index.php?option=login or access/groups */
         if ($request == null) {
@@ -463,7 +463,7 @@ class MolajoExtension
      */
     protected function _getAsset()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->nameQuote('id') . ' as asset_id');
@@ -488,7 +488,7 @@ class MolajoExtension
         $query->where('a.' . $db->nameQuote('asset_type_id') . ' = b.' . $db->nameQuote('id'));
 
         if ((int)$this->asset_id == 0) {
-            if (MolajoFactory::getApplication()->get('sef', 1) == 1) {
+            if (MolajoController::getApplication()->get('sef', 1) == 1) {
                 $query->where('a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($this->query_request));
             } else {
                 $query->where('a.' . $db->nameQuote('request') . ' = ' . $db->Quote($this->query_request));
@@ -502,7 +502,7 @@ class MolajoExtension
 
         if ($db->getErrorNum() == 0) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
             return false;
         }
 
@@ -513,7 +513,7 @@ class MolajoExtension
             $this->found = true;
             foreach ($results as $result) {
 
-                if ($this->asset_id == MolajoFactory::getApplication()->get('home_asset_id')) {
+                if ($this->asset_id == MolajoController::getApplication()->get('home_asset_id')) {
                     $this->home = true;
                 } else {
                     $this->home = false;
@@ -546,23 +546,32 @@ class MolajoExtension
                     $pair = explode('=', $parameter);
 
                     if ($pair[0] == 'task') {
-                        $this->option = $pair[1];
-                    } elseif ($pair[0] == 'format') {
                         $this->task = $pair[1];
-                    } elseif ($pair[0] == 'option') {
-                        $this->view = $pair[1];
-                    } elseif ($pair[0] == 'view') {
+
+                    } elseif ($pair[0] == 'format') {
                         $this->format = $pair[1];
+
+                    } elseif ($pair[0] == 'option') {
+                        $this->option = $pair[1];
+
+                    } elseif ($pair[0] == 'view') {
+                        $this->view = $pair[1];
+
                     } elseif ($pair[0] == 'wrap') {
                         $this->wrap = $pair[1];
+
                     } elseif ($pair[0] == 'template') {
                         $this->template = $pair[1];
+
                     } elseif ($pair[0] == 'page') {
-                        $this->template = $pair[1];
+                        $this->page = $pair[1];
+
                     } elseif ($pair[0] == 'static') {
                         $this->static = $pair[1];
+
                     } elseif ($pair[0] == 'ids') {
                         $this->ids = $pair[1];
+                        
                     } elseif ($pair[0] == 'id') {
                         $this->id = $pair[1];
                     }
@@ -580,7 +589,7 @@ class MolajoExtension
      */
     protected function _getTemplate($template_id)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->nameQuote('title'));
@@ -621,17 +630,17 @@ class MolajoExtension
         $this->_getComponent();
 
         /** Priority 7: Application (static, items, item, edit) */
-        $this->application_template = MolajoFactory::getApplication()->get('default_template');
-        $this->application_page = MolajoFactory::getApplication()->get('default_page');
-        $this->default_view_items = MolajoFactory::getApplication()->get('default_view_items');
-        $this->default_wrap_items = MolajoFactory::getApplication()->get('default_wrap_items');
+        $this->application_template = MolajoController::getApplication()->get('default_template');
+        $this->application_page = MolajoController::getApplication()->get('default_page');
+        $this->default_view_items = MolajoController::getApplication()->get('default_view_items');
+        $this->default_wrap_items = MolajoController::getApplication()->get('default_wrap_items');
 
         /** Priority 8: System-defined */
         if ($this->template == null) {
-            $this->template = MolajoFactory::getApplication()->get('default_template');
+            $this->template = MolajoController::getApplication()->get('default_template');
         }
         if ($this->page == null) {
-            $this->page = MolajoFactory::getApplication()->get('default_page');
+            $this->page = MolajoController::getApplication()->get('default_page');
         }
     }
 
@@ -671,7 +680,7 @@ class MolajoExtension
      */
     protected function _getSourceData()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->nameQuote('extension_instance_id'));
@@ -695,7 +704,7 @@ class MolajoExtension
             }
         }
         //    echo '<pre>';var_dump($this->source_parameters);'</pre>';
-        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -709,7 +718,7 @@ class MolajoExtension
      */
     protected function getPrimaryCategory()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->nameQuote('parameters'));
@@ -726,7 +735,7 @@ class MolajoExtension
             }
         }
 
-        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -740,7 +749,7 @@ class MolajoExtension
      */
     protected function _getComponent()
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->nameQuote('parameters'));
@@ -759,7 +768,7 @@ class MolajoExtension
                 $this->component_parameters = $parameters;
             }
         }
-        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -822,14 +831,14 @@ class MolajoExtension
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
-        if ((int)$asset_id == MolajoFactory::getApplication()->get('home_asset_id', 0)) {
+        if ((int)$asset_id == MolajoController::getApplication()->get('home_asset_id', 0)) {
             return '';
         }
 
-        if (MolajoFactory::getApplication()->get('sef', 1) == 0) {
+        if (MolajoController::getApplication()->get('sef', 1) == 0) {
             $query->select('a.' . $db->nameQuote('sef_request'));
         } else {
             $query->select('a.' . $db->nameQuote('request'));
@@ -842,7 +851,7 @@ class MolajoExtension
 
         return $db->loadResult();
 
-        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -853,12 +862,12 @@ class MolajoExtension
      */
     protected function _setMetaData()
     {
-        MolajoFactory::getApplication()->setTitle($this->meta_title);
-        MolajoFactory::getApplication()->setDescription($this->meta_description);
-        MolajoFactory::getApplication()->setMetaData('meta_keywords', $this->meta_keywords);
-        MolajoFactory::getApplication()->setMetaData('meta_author', $this->meta_author);
-        MolajoFactory::getApplication()->setMetaData('meta_content_rights', $this->meta_content_rights);
-        MolajoFactory::getApplication()->setMetaData('meta_robots', $this->meta_robots);
+        MolajoController::getApplication()->setTitle($this->meta_title);
+        MolajoController::getApplication()->setDescription($this->meta_description);
+        MolajoController::getApplication()->setMetaData('meta_keywords', $this->meta_keywords);
+        MolajoController::getApplication()->setMetaData('meta_author', $this->meta_author);
+        MolajoController::getApplication()->setMetaData('meta_content_rights', $this->meta_content_rights);
+        MolajoController::getApplication()->setMetaData('meta_robots', $this->meta_robots);
     }
 
     /**
@@ -877,7 +886,7 @@ class MolajoExtension
     private function _route()
     {
         MolajoPluginHelper::importPlugin('system');
-        MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
+        MolajoController::getApplication()->triggerEvent('onAfterRoute');
     }
 
     /**
@@ -889,7 +898,7 @@ class MolajoExtension
      */
     protected function _authorise()
     {
-        if (in_array($this->view_group_id, MolajoFactory::getUser()->view_groups)) {
+        if (in_array($this->view_group_id, MolajoController::getUser()->view_groups)) {
             return true;
         } else {
             return false;
@@ -1014,7 +1023,7 @@ class MolajoExtension
             if ($results === false) {
                 $format = $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT);
                 if ($format === false) {
-                    $format = MolajoFactory::getApplication()->get('default_format', 'html');
+                    $format = MolajoController::getApplication()->get('default_format', 'html');
                 }
             }
 
@@ -1045,7 +1054,7 @@ class MolajoExtension
             if ($results === false) {
                 $view = $configModel->getOptionValue($option);
                 if ($view === false) {
-                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
+                    MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
                     return false;
                 }
             }

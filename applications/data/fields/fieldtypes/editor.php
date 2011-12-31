@@ -95,7 +95,7 @@ class MolajoFormFieldEditor extends MolajoFormField
                 $types = explode('|', $type);
 
                 // Get the database object.
-                $db = MolajoFactory::getDbo();
+                $db = MolajoController::getDbo();
 
                 // Iterate over teh types looking for an existing editor.
                 foreach ($types as $element)
@@ -120,7 +120,7 @@ class MolajoFormFieldEditor extends MolajoFormField
             }
 
             // Create the MolajoEditor intance based on the given editor.
-            $this->editor = MolajoFactory::getEditor($editor ? $editor : null);
+            $this->editor = MolajoController::getEditor($editor ? $editor : null);
         }
 
         return $this->editor;

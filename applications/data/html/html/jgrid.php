@@ -157,15 +157,15 @@ abstract class MolajoHtmlJGrid
 
         // Special state for dates
         if ($start_publishing_datetime || $stop_publishing_datetime) {
-            $nullDate = MolajoFactory::getDbo()->getNullDate();
-            $nowDate = MolajoFactory::getDate()->toUnix();
+            $nullDate = MolajoController::getDbo()->getNullDate();
+            $nowDate = MolajoController::getDate()->toUnix();
 
-            $tz = new DateTimeZone(MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getApplication()->get('offset')));
+            $tz = new DateTimeZone(MolajoController::getUser()->getParam('timezone', MolajoController::getApplication()->get('offset')));
 
             $start_publishing_datetime = ($start_publishing_datetime != $nullDate)
-                    ? MolajoFactory::getDate($start_publishing_datetime, 'UTC')->setTimeZone($tz) : false;
+                    ? MolajoController::getDate($start_publishing_datetime, 'UTC')->setTimeZone($tz) : false;
             $stop_publishing_datetime = ($stop_publishing_datetime != $nullDate)
-                    ? MolajoFactory::getDate($stop_publishing_datetime, 'UTC')->setTimeZone($tz) : false;
+                    ? MolajoController::getDate($stop_publishing_datetime, 'UTC')->setTimeZone($tz) : false;
 
             // Create tip text, only we have publish up or down settings
             $tips = array();

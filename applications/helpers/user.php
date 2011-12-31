@@ -33,7 +33,7 @@ abstract class MolajoUserHelper
      */
     public static function getUserId($username)
     {
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
         $db->setQuery($query);
 
@@ -68,10 +68,10 @@ abstract class MolajoUserHelper
     function getProfile($user_id = 0)
     {
         if ($user_id == 0) {
-            $user = MolajoFactory::getUser();
+            $user = MolajoController::getUser();
             $user_id = $user->id;
         } else {
-            $user = MolajoFactory::getUser((int)$user_id);
+            $user = MolajoController::getUser((int)$user_id);
         }
 
         $dispatcher = JDispatcher::getInstance();
@@ -100,7 +100,7 @@ abstract class MolajoUserHelper
         if (in_array($group_id, $user->groups)) {
         } else {
 
-            $db = MolajoFactory::getDbo();
+            $db = MolajoController::getDbo();
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__content`' .
@@ -152,11 +152,11 @@ abstract class MolajoUserHelper
         }
 
         // Set the group data for any preloaded user objects.
-        $temp = MolajoFactory::getUser((int)$user_id);
+        $temp = MolajoController::getUser((int)$user_id);
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = MolajoFactory::getUser();
+        $temp = MolajoController::getUser();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -183,7 +183,7 @@ abstract class MolajoUserHelper
         $user->groups = $groups;
 
         // Get the titles for the user groups.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $db->setQuery(
             'SELECT `id`, `title`' .
             ' FROM `#__content`' .
@@ -207,11 +207,11 @@ abstract class MolajoUserHelper
         }
 
         // Set the group data for any preloaded user objects.
-        $temp = MolajoFactory::getUser((int)$user_id);
+        $temp = MolajoController::getUser((int)$user_id);
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = MolajoFactory::getUser();
+        $temp = MolajoController::getUser();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -230,7 +230,7 @@ abstract class MolajoUserHelper
     public static function activateUser($activation)
     {
         // Initialize some variables.
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'

@@ -26,11 +26,11 @@ class modMenuHelper
     static function getList(&$parameters)
     {
         $rowset = array();
-        $db = MolajoFactory::getDbo();
-        $user = MolajoFactory::getUser();
+        $db = MolajoController::getDbo();
+        $user = MolajoController::getUser();
 
 
-        $menu = MolajoFactory::getApplication()->getMenu();
+        $menu = MolajoController::getApplication()->getMenu();
 
         $active = $menu->getActive();
         if (isset($active)) {

@@ -16,12 +16,12 @@ $wrap = $parameters->def('wrap', 'footer');
  *  Line 1
  */
 if (JString::strpos(MolajoTextHelper :: _('FOOTER_LINE1'), '%date%')) {
-    $line1 = str_replace('%date%', MolajoFactory::getDate()->format('Y'), MolajoTextHelper :: _('FOOTER_LINE1'));
+    $line1 = str_replace('%date%', MolajoController::getDate()->format('Y'), MolajoTextHelper :: _('FOOTER_LINE1'));
 } else {
     $line1 = MolajoTextHelper :: _('FOOTER_LINE1');
 }
 if (JString::strpos($line1, '%sitename%')) {
-    $line1 = str_replace('%sitename%', MolajoFactory::getApplication()->get('sitename', 'Molajo'), $line1);
+    $line1 = str_replace('%sitename%', MolajoController::getApplication()->get('sitename', 'Molajo'), $line1);
 }
 $tmpobj->set('line1', $line1);
 

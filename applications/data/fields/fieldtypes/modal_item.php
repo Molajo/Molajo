@@ -47,13 +47,13 @@ class MolajoFormFieldModal_item extends MolajoFormField
         $script[] = '	}';
 
         // Add the script to the document head.
-        MolajoFactory::getApplication()->addScriptDeclaration(implode("\n", $script));
+        MolajoController::getApplication()->addScriptDeclaration(implode("\n", $script));
 
         // Setup variables for display.
         $html = array();
         $link = 'index.php?option=' . $this->element['extension'] . '&amp;view=' . $this->element['view'] . '&amp;view=modal&amp;view=component&amp;function=jSelectItem_' . $this->id;
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $db->setQuery(
             'SELECT title' .
             ' FROM ' . $this->element['table'] .

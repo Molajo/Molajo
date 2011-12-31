@@ -128,7 +128,7 @@ class MolajoModelEdit extends MolajoModel
             $this->setError($table->getError());
             return false;
         }
-        if ($table->checked_out == MolajoFactory::getUser()->get('id')) {
+        if ($table->checked_out == MolajoController::getUser()->get('id')) {
             return true;
         } else {
             $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_ROW_NOT_CHECKED_OUT_FOR_EDIT'));
@@ -155,7 +155,7 @@ class MolajoModelEdit extends MolajoModel
     {
         $datakey = JRequest::getInt('datakey');
         if ((int)$datakey > 0) {
-            $data = MolajoFactory::getUser()->getUserState($datakey, array());
+            $data = MolajoController::getUser()->getUserState($datakey, array());
         }
         $formName = JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey');
 
@@ -223,13 +223,13 @@ class MolajoModelEdit extends MolajoModel
     {
         $datakey = JRequest::getInt('datakey');
         if ((int)$datakey > 0) {
-            $data = MolajoFactory::getUser()->getUserState($datakey, array());
+            $data = MolajoController::getUser()->getUserState($datakey, array());
         }
 
         if (empty($data)) {
             $data = $this->getItem();
         } else {
-            MolajoFactory::getUser()->setUserState($datakey, null);
+            MolajoController::getUser()->setUserState($datakey, null);
             JRequest::setVar('datakey', null);
         }
         return $data;
@@ -300,7 +300,7 @@ class MolajoModelEdit extends MolajoModel
     {
         /** publish up defaults to now **/
         if ($table->state == 1 && intval($table->start_publishing_datetime) == 0) {
-            $table->start_publishing_datetime = MolajoFactory::getDate()->toMySQL();
+            $table->start_publishing_datetime = MolajoController::getDate()->toMySQL();
         }
 
         /** version **/
@@ -405,10 +405,10 @@ class MolajoModelEdit extends MolajoModel
                     $toTable->$column_name = 1;
 
                 } else if ($column_name == 'modified') {
-                    $toTable->$column_name = MolajoFactory::getDate()->toMySQL();
+                    $toTable->$column_name = MolajoController::getDate()->toMySQL();
 
                 } else if ($column_name == 'modified_by') {
-                    $toTable->$column_name = MolajoFactory::getUser()->get('id');
+                    $toTable->$column_name = MolajoController::getUser()->get('id');
 
                 } else {
                     $toTable->$column_name = $column_value;
@@ -522,10 +522,10 @@ class MolajoModelEdit extends MolajoModel
                     $column_name = MOLAJO_STATUS_VERSION . ' as ' . $db->namequote('state');
 
                 } else if ($column_name == 'modified') {
-                    $column_name = '"' . MolajoFactory::getDate()->toMySQL() . '" as ' . $db->namequote('modified');
+                    $column_name = '"' . MolajoController::getDate()->toMySQL() . '" as ' . $db->namequote('modified');
 
                 } else if ($column_name == 'modified_by') {
-                    $column_name = MolajoFactory::getUser()->get('id') . ' as ' . $db->namequote('modified_by');
+                    $column_name = MolajoController::getUser()->get('id') . ' as ' . $db->namequote('modified_by');
 
                 } else if ($column_name == 'ordering') {
                     $column_name = $db->namequote('version') . ' as ' . $db->namequote('ordering');
@@ -542,7 +542,7 @@ class MolajoModelEdit extends MolajoModel
         $db->setQuery($insertQuery);
         if ($db->query()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -613,10 +613,10 @@ class MolajoModelEdit extends MolajoModel
                     $toTable->$column_name = 0;
 
                 } else if ($column_name == 'modified') {
-                    $toTable->$column_name = MolajoFactory::getDate()->toMySQL();
+                    $toTable->$column_name = MolajoController::getDate()->toMySQL();
 
                 } else if ($column_name == 'modified_by') {
-                    $toTable->$column_name = MolajoFactory::getUser()->get('id');
+                    $toTable->$column_name = MolajoController::getUser()->get('id');
 
                 } else {
                     $toTable->$column_name = $fromTable->$column_name;
@@ -667,7 +667,7 @@ class MolajoModelEdit extends MolajoModel
         $db->setQuery($deleteQuery);
         if ($db->query()) {
         } else {
-            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -855,13 +855,13 @@ class MolajoModelEdit extends MolajoModel
         }
 
         if ($table->checked_out == 0) {
-            if ($table->checkout(MolajoFactory::getUser()->get('id'), $id)) {
+            if ($table->checkout(MolajoController::getUser()->get('id'), $id)) {
             } else {
                 $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_CHECKOUT_TASK'));
                 return false;
             }
         } else {
-            if ($table->checked_out == MolajoFactory::getUser()->get('id')) {
+            if ($table->checked_out == MolajoController::getUser()->get('id')) {
             } else {
                 $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_DATA_ALREADY_CHECKED_OUT_TO_SOMEONE_ELSE'));
                 return false;
@@ -888,7 +888,7 @@ class MolajoModelEdit extends MolajoModel
      */
     public function reorder($ids, $delta = 0)
     {
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
         $table = $this->getTable();
         $ids = (array)$ids;
         $result = true;
@@ -965,7 +965,7 @@ class MolajoModelEdit extends MolajoModel
     {
         $table = $this->getTable();
         $conditions = array();
-        $user = MolajoFactory::getUser();
+        $user = MolajoController::getUser();
 
         if (empty($ids)) {
             return MolajoError::raiseWarning(500, 'MOLAJO_ERROR_NO_ITEMS_SELECTED');

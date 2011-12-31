@@ -52,15 +52,15 @@ class InstallerModelInstall extends JModel
     protected function populateState()
     {
         // Initialise variables.
-        $app = MolajoFactory::getApplication('administrator');
+        $app = MolajoController::getApplication('administrator');
 
-        $this->setState('message', MolajoFactory::getUser()->getUserState('installer.message'));
-        $this->setState('extension_message', MolajoFactory::getUser()->getUserState('installer.extension_message'));
-        MolajoFactory::getUser()->setUserState('installer.message', '');
-        MolajoFactory::getUser()->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoController::getUser()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoController::getUser()->getUserState('installer.extension_message'));
+        MolajoController::getUser()->setUserState('installer.message', '');
+        MolajoController::getUser()->setUserState('installer.extension_message', '');
 
         // Recall the 'Install from Directory' path.
-        $path = MolajoFactory::getUser()->getUserStateFromRequest($this->_context . '.install_directory', 'install_directory', MolajoFactory::getApplication()->get('temp_path'));
+        $path = MolajoController::getUser()->getUserStateFromRequest($this->_context . '.install_directory', 'install_directory', MolajoController::getApplication()->get('temp_path'));
         $this->setState('install.directory', $path);
         parent::populateState();
     }
@@ -82,7 +82,7 @@ class InstallerModelInstall extends JModel
         switch (JRequest::getWord('installtype')) {
             case 'folder':
                 // Remember the 'Install from Directory' path.
-                MolajoFactory::getUser()->getUserStateFromRequest($this->_context . '.install_directory', 'install_directory');
+                MolajoController::getUser()->getUserStateFromRequest($this->_context . '.install_directory', 'install_directory');
                 $package = $this->_getPackageFromFolder();
                 break;
 
@@ -95,14 +95,14 @@ class InstallerModelInstall extends JModel
                 break;
 
             default:
-                MolajoFactory::getUser()->setUserState('installer.message', MolajoTextHelper::_('INSTALLER_NO_INSTALL_TYPE_FOUND'));
+                MolajoController::getUser()->setUserState('installer.message', MolajoTextHelper::_('INSTALLER_NO_INSTALL_TYPE_FOUND'));
                 return false;
                 break;
         }
 
         // Was the package unpacked?
         if (!$package) {
-            MolajoFactory::getUser()->setUserState('installer.message', MolajoTextHelper::_('INSTALLER_UNABLE_TO_FIND_INSTALL_PACKAGE'));
+            MolajoController::getUser()->setUserState('installer.message', MolajoTextHelper::_('INSTALLER_UNABLE_TO_FIND_INSTALL_PACKAGE'));
             return false;
         }
 
@@ -122,16 +122,16 @@ class InstallerModelInstall extends JModel
 
         // Set some model state values
 
-        MolajoFactory::getApplication()->setMessage($msg);
+        MolajoController::getApplication()->setMessage($msg);
         $this->setState('name', $installer->get('name'));
         $this->setState('result', $result);
-        MolajoFactory::getUser()->setUserState('installer.message', $installer->message);
-        MolajoFactory::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
-        MolajoFactory::getUser()->setUserState('installer.redirect_url', $installer->get('redirect_url'));
+        MolajoController::getUser()->setUserState('installer.message', $installer->message);
+        MolajoController::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
+        MolajoController::getUser()->setUserState('installer.redirect_url', $installer->get('redirect_url'));
 
         // Cleanup the install files
         if (!is_file($package['packagefile'])) {
-            $config = MolajoFactory::getApplication()->get();
+            $config = MolajoController::getApplication()->get();
             $package['packagefile'] = $config->get('temp_path') . '/' . $package['packagefile'];
         }
 
@@ -176,7 +176,7 @@ class InstallerModelInstall extends JModel
         }
 
         // Build the appropriate paths
-        $config = MolajoFactory::getApplication()->get();
+        $config = MolajoController::getApplication()->get();
         $tmp_dest = $config->get('temp_path') . '/' . $userfile['name'];
         $tmp_src = $userfile['tmp_name'];
 
@@ -234,7 +234,7 @@ class InstallerModelInstall extends JModel
     protected function _getPackageFromUrl()
     {
         // Get a database connector
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         // Get the URL of the package to install
         $url = JRequest::getString('install_url');
@@ -254,7 +254,7 @@ class InstallerModelInstall extends JModel
             return false;
         }
 
-        $config = MolajoFactory::getApplication()->get();
+        $config = MolajoController::getApplication()->get();
         $tmp_dest = $config->get('temp_path');
 
         // Unpack the downloaded package file

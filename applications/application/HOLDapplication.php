@@ -167,11 +167,11 @@ class MolajoControllerApplication
         MolajoLanguageHelper::getLanguage($options);
         $this->set('language', $options['language']);
 
-        $language = MolajoFactory::getLanguage();
+        $language = MolajoController::getLanguage();
         $results = $language->load('base', MOLAJO_EXTENSIONS_LANGUAGES);
 
         /** Editor */
-        $editor = MolajoFactory::getUser()->getParameter('editor', $this->get('editor', 'none'));
+        $editor = MolajoController::getUser()->getParameter('editor', $this->get('editor', 'none'));
         if (MolajoPluginHelper::isEnabled('editors', $editor)) {
 
         } else {
@@ -194,7 +194,7 @@ class MolajoControllerApplication
 
         /** Event */
         MolajoPluginHelper::importPlugin('system');
-        MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
+        MolajoController::getApplication()->triggerEvent('onAfterInitialise');
     }
 
     /**
@@ -232,7 +232,7 @@ class MolajoControllerApplication
 
         /** trigger onAfterRoute Event */
         MolajoPluginHelper::importPlugin('system');
-        MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
+        MolajoController::getApplication()->triggerEvent('onAfterRoute');
     }
 
     /**
@@ -256,8 +256,8 @@ class MolajoControllerApplication
         }
 
         /** Not authorized */
-        if (MolajoFactory::getUser()->get('guest')) {
-            $uri = MolajoFactory::getURI();
+        if (MolajoController::getUser()->get('guest')) {
+            $uri = MolajoController::getURI();
             $return = (string)$uri;
             $url = 'index.php?option=users&view=login&return=' . $return;
             $url = MolajoRouteHelper::_($url, false);
@@ -347,27 +347,27 @@ class MolajoControllerApplication
             //echo '<pre>';var_dump($request);'</pre>';
 
             /** Document */
-            $document = MolajoFactory::getDocument();
-            switch (MolajoFactory::getApplication()->getType()) {
+            $document = MolajoController::getDocument();
+            switch (MolajoController::getApplication()->getType()) {
                 case 'html':
-                    MolajoFactory::getApplication()->setMetaData('keywords', $this->get('MetaKeys'));
+                    MolajoController::getApplication()->setMetaData('keywords', $this->get('MetaKeys'));
                     break;
 
                 default:
                     break;
             }
-            MolajoFactory::getApplication()->setTitle($this->get('sitename'));
-            MolajoFactory::getApplication()->setDescription($this->get('MetaDesc'));
+            MolajoController::getApplication()->setTitle($this->get('sitename'));
+            MolajoController::getApplication()->setDescription($this->get('MetaDesc'));
 
             /** Render */
             $contents = MolajoComponent::renderComponent($request);
 
             /** Buffer */
-            MolajoFactory::getApplication()->setBuffer($contents, 'component');
+            MolajoController::getApplication()->setBuffer($contents, 'component');
 
             /** Events */
             MolajoPluginHelper::importPlugin('system');
-            MolajoFactory::getApplication()->triggerEvent('onAfterDispatch');
+            MolajoController::getApplication()->triggerEvent('onAfterDispatch');
         }
 
         catch (Exception $e)
@@ -420,7 +420,7 @@ class MolajoControllerApplication
      */
     public function getUserState($key, $default = null)
     {
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
 
         $registry = $session->get('registry');
 
@@ -446,7 +446,7 @@ class MolajoControllerApplication
      */
     public function setUserState($key, $value)
     {
-        $session = MolajoFactory::getSession();
+        $session = MolajoController::getSession();
         $registry = $session->get('registry');
 
         if (is_null($registry)) {
@@ -554,7 +554,7 @@ class MolajoControllerApplication
      *
      * @return  void  Calls exit().
      *
-     * @see     MolajoFactory::getApplication()->setMessage()
+     * @see     MolajoController::getApplication()->setMessage()
      * @since  1.0
      */
     public function redirect($url, $msg = '', $msgType = 'message', $moved = false)
@@ -596,7 +596,7 @@ class MolajoControllerApplication
 
         // Persist messages if they exist.
         if (count($this->_messageQueue)) {
-            $session = MolajoFactory::getSession();
+            $session = MolajoController::getSession();
             $session->set('application.messages', $this->_messageQueue);
         }
 
@@ -609,16 +609,16 @@ class MolajoControllerApplication
             $navigator = JBrowser::getInstance();
             if ($navigator->isBrowser('msie')) {
                 // MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
-                echo '<html><head><meta http-equiv="content-type" content="text/html; charset=' . MolajoFactory::getApplication()->getCharset() . '" /><script>document.location.href=\'' . $url . '\';</script></head><body></body></html>';
+                echo '<html><head><meta http-equiv="content-type" content="text/html; charset=' . MolajoController::getApplication()->getCharset() . '" /><script>document.location.href=\'' . $url . '\';</script></head><body></body></html>';
 
             } elseif (!$moved and $navigator->isBrowser('konqueror')) {
                 // WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
-                echo '<html><head><meta http-equiv="refresh" content="0; url=' . $url . '" /><meta http-equiv="content-type" content="text/html; charset=' . MolajoFactory::getApplication()->getCharset() . '" /></head><body></body></html>';
+                echo '<html><head><meta http-equiv="refresh" content="0; url=' . $url . '" /><meta http-equiv="content-type" content="text/html; charset=' . MolajoController::getApplication()->getCharset() . '" /></head><body></body></html>';
             } else {
                 // All other browsers, use the more efficient HTTP header method
                 header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 header('Location: ' . $url);
-                header('Content-Type: text/html; charset=' . MolajoFactory::getApplication()->getCharset());
+                header('Content-Type: text/html; charset=' . MolajoController::getApplication()->getCharset());
             }
         }
 
@@ -810,6 +810,6 @@ class MolajoControllerApplication
      */
     public function __toString()
     {
-        return MolajoFactory::getApplication()->toString($this->get('gzip', false));
+        return MolajoController::getApplication()->toString($this->get('gzip', false));
     }
 }

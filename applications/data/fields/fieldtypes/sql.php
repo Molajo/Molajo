@@ -35,7 +35,7 @@ class MolajoFormFieldSql extends MolajoFormFieldList
     {
         /** initialization **/
         $options = array();
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
 
         /** process field attributes **/
         $key = $this->element['key_field'] ? (string)$this->element['key_field'] : 'value';

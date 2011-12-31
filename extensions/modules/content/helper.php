@@ -26,10 +26,10 @@ class modContentHelper
     {
         //todo: change to use MolajoModelDisplay
 
-        $db = MolajoFactory::getDbo();
+        $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
-        $date = MolajoFactory::getDate();
+        $date = MolajoController::getDate();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
@@ -51,7 +51,7 @@ class modContentHelper
         $acl = new MolajoACL ();
         $acl->getQueryInformation('', &$query, 'viewaccess', array('table_prefix' => 'a'));
 
-        $lang = MolajoFactory::getLanguage()->getTag();
+        $lang = MolajoController::getLanguage()->getTag();
         $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
 
         /** category filter */

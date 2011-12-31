@@ -95,7 +95,7 @@ class MolajoModel extends JObject
         if (array_key_exists('dbo', $config)) {
             $this->db = $config['dbo'];
         } else {
-            $this->db = MolajoFactory::getDbo();
+            $this->db = MolajoController::getDbo();
         }
     }
 
