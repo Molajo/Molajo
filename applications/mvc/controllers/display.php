@@ -49,7 +49,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->model->parameters = $this->parameters;
 
         if ($this->request['task'] == 'edit') {
-            $results = parent::checkOutItem();
+            $results = parent::checkoutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
             }

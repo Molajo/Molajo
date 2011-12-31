@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoControllerExtension extends JObject
+class MolajoControllerExtension
 {
     /**
      * @var object $request
@@ -160,13 +160,13 @@ class MolajoControllerExtension extends JObject
     }
 
     /**
-     * checkInItem
+     * checkinItem
      *
      * Used to check in item if it is already checked out
      *
      * @return bool
      */
-    public function checkInItem()
+    public function checkinItem()
     {
         if ($this->request['id'] == 0) {
             return true;
@@ -189,13 +189,13 @@ class MolajoControllerExtension extends JObject
     }
 
     /**
-     * verifyCheckOut
+     * verifyCheckout
      *
      * method to verify that the current user is recorded in the checked_out column of the item
      *
      * @return    boolean
      */
-    public function verifyCheckOut()
+    public function verifyCheckout()
     {
         if ($this->request['id'] == 0) {
             return true;
@@ -217,14 +217,14 @@ class MolajoControllerExtension extends JObject
     }
 
     /**
-     * checkOutItem
+     * checkoutItem
      *
      * method to set the checkout_time and checked_out values of the item
      *
      * @return    boolean
      * @since    1.0
      */
-    public function checkOutItem()
+    public function checkoutItem()
     {
         if ($this->request['id'] == 0) {
             return true;

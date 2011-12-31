@@ -92,7 +92,10 @@ if (defined('MOLAJO_SITE')) {
 /*  APPLICATIONS LAYER                          */
 /*                                              */
 
-/** $_SERVER["REQUEST_URI"] everything following host ex. /molajo/administrator/index.php?option=login */
+/**
+ * $_SERVER["REQUEST_URI"] everything following host
+ *  ex. /molajo/administrator/index.php?option=login
+ */
 $requestURI = strtolower($_SERVER["REQUEST_URI"]);
 /** remove path ex. /molajo/ */
 $requestURI = substr($requestURI, strlen($folder), strlen($requestURI) - strlen($folder));

@@ -66,7 +66,7 @@ class MolajoControllerUpdate extends MolajoControllerExtension
         /** Check In Item **/
         if ($this->request['id'] == 0) {
         } else {
-            $results = parent::checkInItem();
+            $results = parent::checkinItem();
         }
 
         /** success message **/
@@ -306,7 +306,7 @@ class MolajoControllerUpdate extends MolajoControllerExtension
          */
 
         /** Check In Item **/
-        $results = parent::checkInItem();
+        $results = parent::checkinItem();
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }

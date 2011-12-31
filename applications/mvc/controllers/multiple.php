@@ -264,7 +264,7 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
                 /** Check In Item **/
                 if ($task == 'copy' || $task == 'checkin') {
                 } else {
-                    $results = $this->checkOutItem();
+                    $results = $this->checkoutItem();
                     if ($results === false) {
                         $errorFoundForItem = true;
                     }
@@ -287,7 +287,7 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
                 /** Check In Item **/
                 if ($task == 'copy' || $task == 'checkin') {
                 } else {
-                    $results = $this->checkInItem();
+                    $results = $this->checkinItem();
                     if ($results === false) {
                         $errorFoundForItem = true;
                     }
@@ -337,7 +337,7 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
 
             /** checking */
         } else if ($task == 'checkin') {
-            $results = parent::checkInItem();
+            $results = parent::checkinItem();
             if ($results === false) {
                 return false;
             }
