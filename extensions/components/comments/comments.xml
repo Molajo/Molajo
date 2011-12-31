@@ -12,7 +12,6 @@
 
     <files>
         <filename>comments.php</filename>
-        <filename>config.xml</filename>
         <filename>readme.md</filename>
         <folder>language</folder>
         <folder>sql</folder>

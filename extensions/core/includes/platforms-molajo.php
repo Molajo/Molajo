@@ -22,40 +22,6 @@ $fileHelper = new MolajoFileHelper();
 $fileHelper->requireClassFile(PLATFORM_MOLAJO . '/language/languagetransliterate.php', 'MolajoTransliterateHelper');
 
 /**
- *  MVC
- */
-
-/** Controller */
-$fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/controllers/controller.php', 'MolajoController');
-$files = JFolder::files(PLATFORM_MOLAJO_MVC . '/controllers', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'controller.php') {
-    } else {
-        $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/controllers/' . $file, 'MolajoController' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
-
-/** Models */
-$fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/model.php', 'MolajoModel');
-$files = JFolder::files(PLATFORM_MOLAJO_MVC . '/models', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'view.php') {
-    } else {
-        $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
-
-/** Views */
-$fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/views/view.php', 'MolajoView');
-$files = JFolder::files(PLATFORM_MOLAJO_MVC . '/views', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'view.php' || $file == 'view.php') {
-    } else {
-        $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
-
-/**
  *  Session
  */
 $fileHelper->requireClassFile(PLATFORM_MOLAJO . '/session/session.php', 'MolajoSession');

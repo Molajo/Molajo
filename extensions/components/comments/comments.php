@@ -7,44 +7,32 @@
  */
 defined('MOLAJO') or die;
 $current_folder = basename(dirname(__FILE__));
-require_once PLATFORM_MOLAJO_MVC . '/entry.php';
+require_once MOLAJO_APPLICATIONS_MVC . '/entry.php';
 
-class CommentsController extends MolajoController
+class CommentsController extends MolajoControllerDisplay
 {
 }
-
 class CommentsControllerEdit extends MolajoControllerEdit
 {
 }
-
 class CommentsControllerMultiple extends MolajoControllerMultiple
 {
 }
-
-class CommentsViewDisplay extends MolajoView
-{
-}
-
-class CommentsViewEdit extends MolajoViewEdit
-{
-}
-
 class CommentsTableComment extends MolajoTableContent
 {
 }
-
 class CommentsModelDisplay extends MolajoModelDisplay
 {
 }
-
+class CommentsModelDummy extends MolajoModelDummy
+{
+}
 class CommentsModelEdit extends MolajoModelEdit
 {
 }
-
 class CommentsMolajoACL extends MolajoACL
 {
 }
-
 class CommentsHelper
 {
 }

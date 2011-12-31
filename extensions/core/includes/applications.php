@@ -124,7 +124,42 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/installer/adapter
 foreach ($files as $file) {
     $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
- /*
+
+
+/**
+ *  MVC
+ */
+/** Controller */
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
+$files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/controllers', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'controller.php') {
+    } else {
+        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/' . $file, 'MolajoController' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+}
+
+/** Models */
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/model.php', 'MolajoModel');
+$files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'view.php') {
+    } else {
+        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+}
+
+/** Views */
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/views/view.php', 'MolajoView');
+$files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/views', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'view.php' || $file == 'view.php') {
+    } else {
+        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+}
+
+
 /** updater  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/updater', '\.php$', false, false);
 foreach ($files as $file) {

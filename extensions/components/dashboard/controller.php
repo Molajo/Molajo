@@ -14,6 +14,6 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class DashboardController extends MolajoDisplayController
+class DashboardController extends MolajoControllerDisplay
 {
 }

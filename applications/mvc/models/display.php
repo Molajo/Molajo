@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  * @subpackage    Model
  * @since 1.0
  */
-//class MolajoModelDisplay extends JModel
 class MolajoModelDisplay extends MolajoModel
 {
     /**

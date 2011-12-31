@@ -8,15 +8,14 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoModelDummy
+ * Dummy
  *
- * Component Model for Dummy Views
+ * Does not process data
  *
- * @package        Molajo
- * @subpackage    Model
- * @since 1.0
+ * @package     Molajo
+ * @subpackage  Model
+ * @since       1.0
  */
-//class MolajoModelDummy extends JModel
 class MolajoModelDummy extends MolajoModel
 {
     /**

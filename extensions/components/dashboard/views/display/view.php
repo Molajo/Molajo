@@ -1,19 +1,19 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  View
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Display View
+ * Display
  *
- * @package        Molajo
- * @subpackage    View
- * @since        1.0
+ * @package     Molajo
+ * @subpackage  Controller
+ * @since       1.0
  */
-class DashboardViewDisplay extends MolajoView
+class DashboardControllerDisplay extends MolajoControllerDisplay
 {
 }
