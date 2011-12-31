@@ -89,7 +89,7 @@ abstract class MolajoFactory
     {
         if (self::$site) {
         } else {
-            self::$site = MolajoSite::getInstance($id, $config, $prefix);
+            self::$site = MolajoControllerSite::getInstance($id, $config, $prefix);
         }
 
         return self::$site;
@@ -108,7 +108,7 @@ abstract class MolajoFactory
     {
         if (self::$application) {
         } else {
-            self::$application = MolajoApplication::getInstance($id = null, $config = array(), $prefix);
+            self::$application = MolajoControllerApplication::getInstance($id = null, $config = array(), $prefix);
         }
 
         return self::$application;

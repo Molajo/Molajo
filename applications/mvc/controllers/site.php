@@ -8,11 +8,11 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoSite
+ * MolajoControllerSite
  *
  * Acts as a Factory class for site specific functions and API options
  */
-class MolajoSite extends JObject
+class MolajoControllerSite extends JObject
 {
     /**
      * Configuration for Site
@@ -80,7 +80,7 @@ class MolajoSite extends JObject
                 return false;
             }
 
-            $instance = new MolajoSite();
+            $instance = new MolajoControllerSite();
             $instances[MOLAJO_SITE] = &$instance;
         }
 

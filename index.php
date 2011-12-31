@@ -62,11 +62,11 @@ define('MOLAJO_BASE_URL', strtolower($protocol.$siteName));
 /*                                              */
 if (defined('MOLAJO_SITES')) {
 } else {
-    define('MOLAJO_SITES', MOLAJO_BASE_FOLDER . '/sites/');
+    define('MOLAJO_SITES', MOLAJO_BASE_FOLDER . '/sites');
 }
-if (defined('MOLAJO_SITE_CORE')) {
+if (defined('MOLAJO_SHARED_MEDIA')) {
 } else {
-    define('MOLAJO_SITE_CORE', MOLAJO_SITES . '/core');
+    define('MOLAJO_SHARED_MEDIA', MOLAJO_SITES . '/media');
 }
 
 if (defined('MOLAJO_SITE')) {
@@ -143,7 +143,6 @@ require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-joomla.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/config.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/applications.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/extensions.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/sites.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-molajo.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-twig.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-mustache.php';

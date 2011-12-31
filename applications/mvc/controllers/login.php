@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Login Controller
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -12,11 +12,11 @@ defined('MOLAJO') or die;
  *
  * Handles Login and Logout Methods
  *
- * @package        Molajo
- * @subpackage    Controller
+ * @package      Molajo
+ * @subpackage   Controller
  * @since        1.0
  */
-class MolajoControllerLogin extends MolajoController
+class MolajoControllerLogin extends MolajoControllerApplication
 {
     /**
      * login
@@ -190,7 +190,7 @@ class MolajoControllerLogin extends MolajoController
         // Initialise variables.
         $retval = false;
 
-        // Get a user object from the MolajoApplication.
+        // Get a user object from the MolajoControllerApplication.
         $user = MolajoFactory::getUser($user_id);
 
         // Build the credentials array.

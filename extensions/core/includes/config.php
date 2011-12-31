@@ -34,7 +34,7 @@ if (MOLAJO_APPLICATION == 'installation') {
     }
     require_once MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
 
-    $CONFIG = new MolajoSiteConfiguration();
+    $CONFIG = new MolajoControllerSiteConfiguration();
 
     if (@$CONFIG->error_reporting === 0) {
         error_reporting(0);

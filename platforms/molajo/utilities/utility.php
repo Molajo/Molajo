@@ -77,7 +77,7 @@ class MolajoUtility
      * @return  string
      *
      * @deprecated  1.6
-     * @see            MolajoApplication:getHash()
+     * @see            MolajoControllerApplication:getHash()
      */
     public static function getHash($seed)
     {
@@ -91,7 +91,7 @@ class MolajoUtility
      *
      * @since       11.1
      * @deprecated  1.6
-     * @see            MolajoApplication:getHash()
+     * @see            MolajoControllerApplication:getHash()
      */
     public static function getToken($forceNew = false)
     {

@@ -1,15 +1,14 @@
 <?php
 /**
- * @version     id: single.php
  * @package     Molajo
- * @subpackage  Single Controller
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Edit Controller
+ * Update Controller
  *
  * Handles the standard single-item save, delete, and cancel tasks
  *
@@ -23,7 +22,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class MolajoControllerEdit extends MolajoController
+class MolajoControllerUpdate extends MolajoControllerExtension
 {
     /**
      * __construct

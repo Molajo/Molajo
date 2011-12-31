@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoControllerDisplay extends MolajoController
+class MolajoControllerDisplay extends MolajoControllerExtension
 {
     /**
      * __construct

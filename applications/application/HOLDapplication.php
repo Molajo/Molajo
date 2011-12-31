@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * Base class
  */
-class MolajoApplication
+class MolajoControllerApplication
 {
     /**
      * Application configuration object.
@@ -186,7 +186,7 @@ class MolajoApplication
         /** todo: amy get the user's template */
 
         /** Site authorisation */
-        $site = new MolajoSite ();
+        $site = new MolajoControllerSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
         if ($authorise === false) {
             return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
@@ -382,7 +382,7 @@ class MolajoApplication
      *
      * Rendering is the process of pushing the document buffers into the template
      * placeholders, retrieving data from the document and pushing it into
-     * the MolajoApplication buffer.
+     * the MolajoControllerApplication buffer.
      *
      * @return  void;
      * @since  1.0

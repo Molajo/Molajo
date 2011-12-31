@@ -8,13 +8,13 @@
 defined('MOLAJO') or die;
 
 /**
- * Controller
+ * Extension Controller
  *
  * @package      Molajo
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoController extends JObject
+class MolajoControllerExtension extends JObject
 {
     /**
      * @var object $request

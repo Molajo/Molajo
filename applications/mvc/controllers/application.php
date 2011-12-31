@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * Base class
  */
-class MolajoApplication
+class MolajoControllerApplication
 {
     /**
      * @var    object  The application static instance.
@@ -291,7 +291,7 @@ class MolajoApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            self::$instance = new MolajoApplication();
+            self::$instance = new MolajoControllerApplication();
         }
 
         return self::$instance;
@@ -307,7 +307,7 @@ class MolajoApplication
     public function load()
     {
         /** Site authorisation */
-        $site = new MolajoSite ();
+        $site = new MolajoControllerSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
         if ($authorise === false) {
             return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
