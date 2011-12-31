@@ -30,8 +30,8 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 200, 'home', 'MOLAJO_FIELD_HOME_LABEL', 10),
       (1, 0, 200, 'id', 'MOLAJO_FIELD_ID_LABEL', 11),
       (1, 0, 200, 'language', 'MOLAJO_FIELD_LANGUAGE_LABEL', 12),
-      (1, 0, 200, 'lft', 'MOLAJO_FIELD_LFT_LABEL', 13),
-      (1, 0, 200, 'lvl', 'MOLAJO_FIELD_LVL_LABEL', 14),
+      (1, 0, 200, 'left', 'MOLAJO_FIELD_LEFT_LABEL', 13),
+      (1, 0, 200, 'level', 'MOLAJO_FIELD_LEVEL_LABEL', 14),
       (1, 0, 200, 'modified_by', 'MOLAJO_FIELD_MODIFIED_BY_LABEL', 15),
       (1, 0, 200, 'modified_datetime', 'MOLAJO_FIELD_MODIFIED_DATETIME_LABEL', 16),
       (1, 0, 200, 'ordering', 'MOLAJO_FIELD_ORDERING_LABEL', 17),
@@ -39,7 +39,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 200, 'path', 'MOLAJO_FIELD_PATH_LABEL', 19),
       (1, 0, 200, 'position', 'MOLAJO_FIELD_POSITION_LABEL', 20),
       (1, 0, 200, 'protected', 'MOLAJO_FIELD_PROTECTED_LABEL', 21),
-      (1, 0, 200, 'rgt', 'MOLAJO_FIELD_RGT_LABEL', 22),
+      (1, 0, 200, 'right', 'MOLAJO_FIELD_RIGHT_LABEL', 22),
       (1, 0, 200, 'root', 'MOLAJO_FIELD_ROOT_LABEL', 23),
       (1, 0, 200, 'start_publishing_datetime', 'MOLAJO_FIELD_START_PUBLISHING_DATETIME_LABEL', 24),
       (1, 0, 200, 'status_prior_to_version', 'MOLAJO_FIELD_STATUS_PRIOR_TO_VERSION_LABEL', 25),
@@ -87,9 +87,9 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 200, 'template', 'molajito', 50),
-      (1, 0, 200, 'page', 'default', 50),
-      (1, 0, 200, 'view', 'list', 50),
-      (1, 0, 200, 'wrap', 'div', 50);
+      (1, 0, 200, 'page', 'default', 51),
+      (1, 0, 200, 'view', 'list', 52),
+      (1, 0, 200, 'wrap', 'div', 53);
 
 # 200 Categories
 INSERT INTO `molajo_extension_options`
@@ -124,7 +124,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 205, 'assets_request', 'MOLAJO_FIELD_ASSETS_REQUEST', 68),
       (1, 0, 205, 'assets_primary_category_id', 'MOLAJO_FIELD_ASSETS_PRIMARY_CATEGORY_ID', 69),
       (1, 0, 205, 'assets_template_id', 'MOLAJO_FIELD_ASSETS_TEMPLATE_ID', 70),
-      (1, 0, 205, 'assets_page', 'MOLAJO_FIELD_ASSETS_TEMPLATE_PAGE', 71),
+      (1, 0, 205, 'assets_template_page', 'MOLAJO_FIELD_ASSETS_TEMPLATE_PAGE', 71),
       (1, 0, 205, 'assets_language', 'MOLAJO_FIELD_ASSETS_LANGUAGE', 72),
       (1, 0, 205, 'assets_translation_of_id', 'MOLAJO_FIELD_TRANSLATION_OF_ID', 73),
       (1, 0, 205, 'assets_redirect_to_id', 'MOLAJO_FIELD_ASSETS_REDIRECT_TO_ID', 74),
@@ -207,12 +207,13 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 310, '', '', 0),
-      (1, 0, 310, 'default', 'MANAGER_SUBMENU_DEFAULT', 1),
-      (1, 0, 310, 'drafts', 'MANAGER_SUBMENU_DRAFTS', 2),
-      (1, 0, 310, 'featured', 'MANAGER_SUBMENU_FEATURED', 3),
-      (1, 0, 310, 'versions', 'MANAGER_SUBMENU_VERSIONS', 4),
-      (1, 0, 310, 'stickied', 'MANAGER_SUBMENU_STICKIED', 5),
-      (1, 0, 310, 'unpublished', 'MANAGER_SUBMENU_UNPUBLISHED', 6);
+      (1, 0, 310, 'default', 'MOLAJO_SUBMENU_DEFAULT', 1),
+      (1, 0, 310, 'drafts', 'MOLAJO_SUBMENU_DRAFTS', 2),
+      (1, 0, 310, 'featured', 'MOLAJO_SUBMENU_FEATURED', 3),
+      (1, 0, 310, 'versions', 'MOLAJO_SUBMENU_VERSIONS', 4),
+      (1, 0, 310, 'stickied', 'MOLAJO_SUBMENU_STICKIED', 5),
+      (1, 0, 310, 'published', 'MOLAJO_SUBMENU_STICKIED', 6),
+      (1, 0, 310, 'unpublished', 'MOLAJO_SUBMENU_UNPUBLISHED', 7);
 
 # 320 MOLAJO_EXTENSION_OPTION_ID_FILTERS_LIST
 INSERT INTO `molajo_extension_options`

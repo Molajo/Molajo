@@ -143,13 +143,13 @@ class MolajoControllerRedirect extends MolajoController
         /** cancel **/
         if ($this->request['task'] == 'cancel') {
             if (MolajoFactory::getApplication()->getName() == 'site') {
-                if ($this->id == 0) {
+                if ($this->request['id'] == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display&id=' . $this->id . $extension . $component_specific;
+                    $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display&id=' . $this->request['id'] . $extension . $component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=edit&id=' . $this->id . $extension . $component_specific;
+                $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=edit&id=' . $this->request['id'] . $extension . $component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;

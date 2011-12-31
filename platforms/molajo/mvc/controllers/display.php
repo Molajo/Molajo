@@ -8,115 +8,98 @@
 defined('MOLAJO') or die;
 
 /**
- * Molajo Controller
+ * Display
  *
  * @package      Molajo
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoDisplayController extends MolajoController
+class MolajoControllerDisplay extends MolajoController
 {
     /**
-     * @var object $request
-     * @since 1.0
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param    array   $request    An optional associative array of configuration settings.
+     *
+     * @since    1.0
      */
-    public $request;
-
-    /**
-     * @var object $state
-     * @since 1.0
-     */
-    public $state;
-
-    /**
-     * @var object $parameters
-     * @since 1.0
-     */
-    public $parameters;
-
-    /**
-     * @var object $template
-     * @since 1.0
-     */
-    public $template;
-
-    /**
-     * @var object $page
-     * @since 1.0
-     */
-    public $page;
-
-    /**
-     * @var object $view_type
-     * @since 1.0
-     */
-    public $view_type;
-
-    /**
-     * @var object $view
-     * @since 1.0
-     */
-    public $view;
-
-    /**
-     * @var object $wrap
-     * @since 1.0
-     */
-    public $wrap;
-
-    /**
-     * @var object $wrap_id
-     * @since 1.0
-     */
-    public $wrap_id;
-
-    /**
-     * @var object $wrap_class
-     * @since 1.0
-     */
-    public $wrap_class;
-
-    /**
-     * @var object $rowset
-     * @since 1.0
-     */
-    public $rowset;
-
-    /**
-     * @var object $row
-     * @since 1.0
-     */
-    public $row;
-
-    /**
-     * @var object $pagination
-     * @since 1.0
-     */
-    public $pagination;
-
-    /**
-     * @var object $view_path
-     * @since 1.0
-     */
-    public $view_path;
-
-    /**
-     * @var object $view_path_url
-     * @since 1.0
-     */
-    public $view_path_url;
+    public function __construct($request = array())
+    {
+        parent::__construct($request);
+    }
 
     /**
      * display
      *
-     * Controller for Display Controller that uses no forms
+     * Display task is used to render view output
      *
-     * @param null $tpl
+     * @param    boolean  $cachable         If true, the view output will be cached
+     * @param    array    $urlparameters    An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
      *
-     * @return bool
+     * @return   object   Rendered output
+     *
+     * @since    1.0
      */
-    public function display($tpl = null)
+    public function display($cachable = false, $urlparameters = false)
     {
+        $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['option'] . 'Model'), array());
+        $this->model->request = $this->request;
+        $this->model->parameters = $this->parameters;
+
+        if ($this->request['task'] == 'edit') {
+            $results = parent::checkOutItem();
+            if ($results === false) {
+                return $this->redirectClass->setSuccessIndicator(false);
+            }
+        }
+
+        /** initialize view */
+
+        /** 1. Request */
+        $this->view->request = $this->request;
+
+        /** 2. State */
+        $state = '';
+        $this->view->state = $state;
+
+        /** 3. Parameters */
+        $this->view->parameters = $this->parameters;
+
+        /** 4. Template */
+        $this->view->template = $this->request['template'];
+
+        /** 5. Page */
+        $this->view->page = $this->request['page'];
+
+        /** 6. View Type */
+        $this->view->view_type = $this->request['view_type'];
+
+        /** 7. View */
+        $this->view->view = $this->request['view'];
+
+        /** 8. Wrap */
+        $this->view->wrap = $this->request['wrap'];
+
+        /** 9. Wrap ID */
+        $this->view->wrap_id = $this->request['wrap_id'];
+
+        /** 10. Wrap Class */
+        $this->view->wrap_class = $this->request['wrap_class'];
+
+        /** retrieve query results */
+
+        /** 1. Query Results */
+        $this->rowset = $this->model->get('Items');
+
+        /** 2. Pagination */
+        $this->pagination = $this->model->get('Pagination');
+
+        echo '<pre>';
+        var_dump($this->request);
+        echo '</pre>';
+
         /** no results */
         if (count($this->parameters) > 0
             && $this->parameters->def('suppress_no_results', false) === true
@@ -126,35 +109,35 @@ class MolajoDisplayController extends MolajoController
         }
 
         /** Render View */
-        $this->findPath($this->view, $this->view_type);
+        $this->findPath($this->request['view'], $this->request['view_type']);
         if ($this->view_path === false) {
             // load an error view
             return;
         }
 
-        $renderedOutput = $this->renderView($this->view, $this->view_type);
+        $renderedOutput = $this->renderView($this->request['view'], $this->request['view_type']);
 
         /** Wrap Rendered Output */
-        if ($this->wrap == 'horz') {
-            $this->wrap = 'horizontal';
+        if ($this->request['wrap'] == 'horz') {
+            $this->request['wrap'] = 'horizontal';
         }
-        if ($this->wrap == 'xhtml') {
-            $this->wrap = 'div';
+        if ($this->request['wrap'] == 'xhtml') {
+            $this->request['wrap'] = 'div';
         }
-        if ($this->wrap == 'rounded') {
-            $this->wrap = 'div';
+        if ($this->request['wrap'] == 'rounded') {
+            $this->request['wrap'] = 'div';
         }
-        if ($this->wrap == 'raw') {
-            $this->wrap = 'none';
+        if ($this->request['wrap'] == 'raw') {
+            $this->request['wrap'] = 'none';
         }
-        if ($this->wrap == '') {
-            $this->wrap = 'none';
+        if ($this->request['wrap'] == '') {
+            $this->request['wrap'] = 'none';
         }
-        if ($this->wrap == null) {
-            $this->wrap = 'none';
+        if ($this->request['wrap'] == null) {
+            $this->request['wrap'] = 'none';
         }
 
-        $this->findPath($this->wrap, 'wraps');
+        $this->findPath($this->request['wrap'], 'wraps');
         if ($this->view_path === false) {
             echo $renderedOutput;
             return;
@@ -169,7 +152,7 @@ class MolajoDisplayController extends MolajoController
 
         $this->rowset[] = $tmpobj;
 
-        $wrappedOutput = $this->renderView($this->wrap, 'wraps');
+        $wrappedOutput = $this->renderView($this->request['wrap'], 'wraps');
 
         echo $wrappedOutput;
 
@@ -193,11 +176,11 @@ class MolajoDisplayController extends MolajoController
     {
         /** initialise view */
         $this->view_path = false;
-        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template;
+        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request['template'];
 
         /** 1. @var $templateViewPath [template]/views/[view-type]/[view-folder] */
         $templateViewPath = $template . '/views/' . $view_type . '/' . $view;
-        $templateViewPathURL = JURI::root() . 'extensions/views/templates/' . $this->template . '/views/' . $view_type . '/' . $view;
+        $templateViewPathURL = JURI::root() . 'extensions/views/templates/' . $this->request['template'] . '/views/' . $view_type . '/' . $view;
 
         /** 2. @var $extensionPath [extension_type]/[extension-name]/views/[view-type]/[view-folder] */
         $extensionPath = '';
@@ -232,13 +215,13 @@ class MolajoDisplayController extends MolajoController
             $this->view_path_url = $templateViewPathURL;
             return;
 
-        /** 2. Extension **/
+            /** 2. Extension **/
         } else if (is_dir($extensionPath)) {
             $this->view_path = $extensionPath;
             $this->view_path_url = $extensionPathURL;
             return;
 
-        /** 3. Core **/
+            /** 3. Core **/
         } else if (is_dir($corePath)) {
             $this->view_path = $corePath;
             $this->view_path_url = $corePathURL;
@@ -445,59 +428,6 @@ class MolajoDisplayController extends MolajoController
 
         return call_user_func($this->_escape, $var);
     }
-
-    /**
-     * Method to add a model to the controller.  We support a multiple model single
-     * controller system by which models are referenced by classname.  A caveat to the
-     * classname referencing is that any classname prepended by JModel will be
-     * referenced by the name without JModel, eg. JModelCategory is just
-     * Category.
-     *
-     * @param   object   $model   The model to add to the controller.
-     * @param   boolean  $default  Is this the default model?
-     *
-     * @return  object   The added model.
-     *
-     * @since   1.0
-
-    public function DELETEsetModel($model, $default = false)
-    {
-        $name = strtolower($model->getName());
-        $this->_models[$name] = &$model;
-
-        if ($default) {
-            $this->_defaultModel = $name;
-        }
-        return $model;
-    }
-     */
-    /**
-     * Sets the view name to use
-     *
-     * @param   string  $view  The view name or a string in format <template>:<view file>
-     *
-     * @return  string  Previous value.
-     *
-     * @since   1.0
-
-    public function DELETEsetView($view)
-    {
-        $previous = $this->view;
-        if (strpos($view, ':') === false) {
-            $this->view = $view;
-        }
-        else
-        {
-            // Convert parameter to array based on :
-            $temp = explode(':', $view);
-            $this->view = $temp[1];
-            // Set view template
-            //            $this->viewTemplate = $temp[0];
-        }
-
-        return $previous;
-    }
-     */
 }
 
 /** 7. Optional data (put this into a model parent?) */

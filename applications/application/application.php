@@ -786,24 +786,27 @@ class MolajoApplication
      *
      * Sets or alters a meta tag.
      *
-     * @param   string   $name        Value of name or http-equiv tag
-     * @param   string   $content     Value of the content tag
-     * @param   bool     $http_equiv  META type "http-equiv" defaults to null
-     * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
+     * @param   string   $name     Value of name or http-equiv tag
+     * @param   string   $content  Value of the content tag
+     * @param   string   $context  true - http-equiv; false - standard; otherwise provided
+     * @param   bool     $sync     Should http-equiv="content-type" by synced with HTTP-header?
      *
      * @return  void
      * @since   1.0
      */
-    public function setMetaData($name, $content, $http_equiv = false, $sync = true)
+    public function setMetaData($name, $content, $context = false, $sync = true)
     {
         $name = strtolower($name);
 
-        if ($http_equiv === true) {
+        if (is_bool($context) && ($context === true)) {
             $this->metadata['http-equiv'][$name] = $content;
 
             if ($sync && strtolower($name) == 'content-type') {
                 $this->setMimeEncoding($content, false);
             }
+
+        } else if (is_string($context)) {
+            $result = $this->metaTags[$context][$name];
 
         } else {
             $this->metadata['standard'][$name] = $content;
@@ -815,18 +818,22 @@ class MolajoApplication
      *
      * Gets a metadata tag.
      *
-     * @param   string  $name        Value of name or http-equiv tag
-     * @param   bool    $http_equiv  META type "http-equiv" defaults to null
-     *
+     * @param   string  $name     Value of name or http-equiv tag
+     * @param   bool    $context  true - http-equiv; false - standard; otherwise provided
+     * https://github.com/bigbangireland/joomla-platform/commit/7a89d3dfd78047d53cdbd5ccbfeeb5cc44d599d7#L0R395
      * @return  string
      * @since   1.0
      */
-    public function getMetaData($name, $http_equiv = false)
+    public function getMetaData($name, $context = false)
     {
         $name = strtolower($name);
 
-        if ($http_equiv === true) {
+        if (is_bool($context) && ($context == true)) {
             $result = $this->metadata['http-equiv'][$name];
+
+        } else if (is_string($context)) {
+            $result = $this->metaTags[$context][$name];
+
         } else {
             $result = $this->metadata['standard'][$name];
         }

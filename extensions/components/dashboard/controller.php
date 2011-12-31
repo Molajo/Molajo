@@ -10,10 +10,10 @@ defined('MOLAJO') or die;
 /**
  * Display Controller
  *
- * @package        Molajo
- * @subpackage    Controller
+ * @package      Molajo
+ * @subpackage   Controller
  * @since        1.0
  */
-class DashboardController extends MolajoController
+class DashboardController extends MolajoDisplayController
 {
 }

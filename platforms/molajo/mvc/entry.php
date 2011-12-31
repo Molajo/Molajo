@@ -19,7 +19,8 @@ if ($request['option'] == $current_folder) {
 }
 
 /** controller **/
-$defaultController = ucfirst($request['option']);
-$controller = JController::getInstance($defaultController);
-$controller->initialise($request);
+//$defaultController = ucfirst($request['option']);
+//$controller = JController::getInstance($defaultController);
+$controller = new $request['controller'] ($request);
+//$controller->initialise($request);
 $controller->$request['task']();

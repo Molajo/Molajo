@@ -400,7 +400,8 @@ class MolajoExtension
     /**
      * _getSEFOptions
      *
-     * Request is already stripped of Host, Folder, and Application
+     * Request is stripped of Host, Folder, and Application
+     *  Path ex. index.php?option=login or access/groups
      *
      * @param null $request
      * @return mixed
@@ -412,7 +413,7 @@ class MolajoExtension
         $sef_rewrite = MolajoFactory::getApplication()->get('sef_rewrite', 0);
         $sef_suffix = MolajoFactory::getApplication()->get('sef_suffix', 0);
         $unicodeslugs = MolajoFactory::getApplication()->get('unicodeslugs', 0);
-        $force_ssl = MolajoFactory::getApplication()->get('force_ssl' . 0);
+        $force_ssl = MolajoFactory::getApplication()->get('force_ssl', 0);
 
         /** Path ex. index.php?option=login or access/groups */
         if ($request == null) {
@@ -421,7 +422,7 @@ class MolajoExtension
             $path = $request;
         }
 
-        /** duplicate content: URL's without the .html */
+        /** duplicate content: URLs without the .html */
         $sef_suffix = 1;
         if ($sef_suffix == 1 && substr($path, -11) == '/index.html') {
             $path = substr($path, 0, (strlen($path) - 11));
@@ -528,22 +529,26 @@ class MolajoExtension
 
                     $pair = explode('=', $parameter);
 
-                    if ($pair[0] == 'option') {
+                    if ($pair[0] == 'task') {
                         $this->option = $pair[1];
-                    } elseif ($pair[0] == 'task') {
-                        $this->task = $pair[1];
-                    } elseif ($pair[0] == 'view') {
-                        $this->view = $pair[1];
                     } elseif ($pair[0] == 'format') {
+                        $this->task = $pair[1];
+                    } elseif ($pair[0] == 'option') {
+                        $this->view = $pair[1];
+                    } elseif ($pair[0] == 'view') {
                         $this->format = $pair[1];
                     } elseif ($pair[0] == 'wrap') {
                         $this->wrap = $pair[1];
+                    } elseif ($pair[0] == 'template') {
+                        $this->template = $pair[1];
+                    } elseif ($pair[0] == 'page') {
+                        $this->template = $pair[1];
+                    } elseif ($pair[0] == 'category_id') {
+                        $this->category_id = $pair[1];
+                    } elseif ($pair[0] == 'ids') {
+                        $this->ids = $pair[1];
                     } elseif ($pair[0] == 'id') {
                         $this->id = $pair[1];
-                    } elseif ($pair[0] == 'cid') {
-                        $this->cid = $pair[1];
-                    } elseif ($pair[0] == 'category_id') {
-                        $this->cid = $pair[1];
                     }
                 }
 
