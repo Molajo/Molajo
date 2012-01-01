@@ -107,12 +107,17 @@ class MolajoComponentRenderer
         /** set class properties */
         $this->name = $name;
 
+        /** set class properties */
         $this->config = $config;
-        $this->option = $config->option;
-        $this->template = $config->template;
-        $this->page = $config->page;
-        $this->view = $config->view;
-        $this->wrap = $config->wrap;
+        if (isset($config['message'])) {
+            $this->message = $config['message'];
+        } else {
+            $this->message ='';
+        }
+        $this->template = $config['template_name'];
+        $this->page = $config['page'];
+        $this->view = $config['view'];
+        $this->wrap = $config['wrap'];
     }
 
     /**

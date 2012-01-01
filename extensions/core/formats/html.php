@@ -109,9 +109,10 @@ class MolajoHtmlFormat
      */
     public function __construct($config = array())
     {
-        //        echo '<pre>';
-        //        var_dump($config);
-        //        '</pre>';
+                echo '<pre>';
+                var_dump($config);
+                '</pre>';
+
         $sequence = simplexml_load_file(MOLAJO_EXTENSIONS_CORE . '/core/formats/sequence.xml', 'SimpleXMLElement');
         foreach ($sequence->format as $format) {
             if ($format->name == 'html') {
@@ -124,11 +125,15 @@ class MolajoHtmlFormat
 
         /** set class properties */
         $this->config = $config;
-        $this->message = $config->message;
-        $this->template = $config->template;
-        $this->page = $config->page;
-        $this->view = $config->view;
-        $this->wrap = $config->wrap;
+        if (isset($config['message'])) {
+            $this->message = $config['message'];
+        } else {
+            $this->message ='';
+        }
+        $this->template = $config['template_name'];
+        $this->page = $config['page'];
+        $this->view = $config['view'];
+        $this->wrap = $config['wrap'];
 
         /** Request */
         $this->_render();
