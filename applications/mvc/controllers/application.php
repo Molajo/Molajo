@@ -233,9 +233,7 @@ class MolajoControllerApplication
         }
 
         $this->getConfig();
-        echo '<pre>';
-        var_dump($this->config);
-        '</pre>';
+
         /** now */
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());

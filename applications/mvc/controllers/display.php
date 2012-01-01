@@ -95,11 +95,11 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         /** 2. Pagination */
         $this->pagination = $this->model->get('Pagination');
-
+/*
         echo '<pre>';
         var_dump($this->request);
         echo '</pre>';
-
+*/
         /** no results */
         if (count($this->parameters) > 0
             && $this->parameters->def('suppress_no_results', false) === true
