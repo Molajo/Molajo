@@ -32,7 +32,7 @@ class MolajoLanguageHelper
     public static function createLanguageList($actualLanguage, $basePath = MOLAJO_BASE_FOLDER, $caching = false, $installed = false)
     {
         $list = array();
-        $langs = MolajoLanguage::getKnownLanguages($basePath);
+        $langs = MolajoLanguageHelper::getKnownLanguages($basePath);
 
         if (MOLAJO_APPLICATION_ID == 0) {
             $installed == false;
@@ -68,7 +68,7 @@ class MolajoLanguageHelper
         /** 1. request */
         if (empty($options['language'])) {
             $language = JRequest::getString('language', null);
-            if ($language && MolajoLanguage::exists($language)) {
+            if ($language && MolajoLanguageHelper::exists($language)) {
                 $options['language'] = $language;
             }
         }
@@ -76,7 +76,7 @@ class MolajoLanguageHelper
         /** 2. user option for user */
         if (empty($options['language'])) {
             $language = MolajoController::getUser()->getParameter('language');
-            if ($language && MolajoLanguage::exists($language)) {
+            if ($language && MolajoLanguageHelper::exists($language)) {
                 $options['language'] = $language;
             }
         }
@@ -85,7 +85,7 @@ class MolajoLanguageHelper
         if (empty($options['language'])) {
             if ($detect_browser && empty($options['language'])) {
                 $language = MolajoLanguageHelper::detectLanguage();
-                if ($language && MolajoLanguage::exists($language)) {
+                if ($language && MolajoLanguageHelper::exists($language)) {
                     $options['language'] = $language;
                 }
             }
@@ -94,13 +94,13 @@ class MolajoLanguageHelper
         /** 4. site default for application */
         if (empty($options['language'])) {
             $language = $config->get('language', 'en-GB');
-            if ($language && MolajoLanguage::exists($language)) {
+            if ($language && MolajoLanguageHelper::exists($language)) {
                 $options['language'] = $language;
             }
         }
 
         /** 5. default */
-        if (MolajoLanguage::exists($options['language'])) {
+        if (MolajoLanguageHelper::exists($options['language'])) {
         } else {
             $options['language'] = 'en-GB';
         }
@@ -168,7 +168,7 @@ class MolajoLanguageHelper
             // Installation uses available languages
             if (MOLAJO_APPLICATION_ID == 0) {
                 $languages[$key] = array();
-                $knownLangs = MolajoLanguage::getKnownLanguages(MOLAJO_BASE_FOLDER);
+                $knownLangs = MolajoLanguageHelper::getKnownLanguages(MOLAJO_BASE_FOLDER);
                 foreach ($knownLangs as $metadata)
                 {
                     // take off 3 letters iso code languages as they can't match browsers' languages and default them to en

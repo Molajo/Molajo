@@ -535,16 +535,16 @@ class MolajoController
     /**
      * Create a language object
      *
-     * @see MolajoLanguage
+     * @see MolajoLanguageHelper
      *
-     * @return MolajoLanguage object
+     * @return MolajoLanguageHelper object
      * @since   1.0
      */
     protected static function _createLanguage()
     {
         $locale = self::get('language', '', 'site');
         $debug = self::get('debug_language', '', 'site');
-        $lang = MolajoLanguage::getInstance($locale, $debug);
+        $lang = MolajoLanguageHelper::getInstance($locale, $debug);
 
         return $lang;
     }
@@ -610,7 +610,7 @@ class MolajoController
         if (self::$siteConfig) {
         } else {
             self::$siteConfig = new JRegistry;
-            $config = new MolajoConfiguration ();
+            $config = new MolajoConfigurationHelper ();
             $data = $config->site();
 
             if (is_array($data)) {
@@ -637,7 +637,7 @@ class MolajoController
         if (self::$config) {
         } else {
             self::$config = new JRegistry;
-            $configInstance = new MolajoConfiguration ();
+            $configInstance = new MolajoConfigurationHelper ();
             $data = $configInstance->getConfig();
 
             if (is_array($data)) {

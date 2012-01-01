@@ -75,6 +75,10 @@ if (defined('JPATH_COMPONENT')) {
 /**
  * File Subsystem
  */
+$fileHelper = new MolajoFileHelper();
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/configuration.php', 'MolajoConfigurationHelper');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
+
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/helpers/text.php';
@@ -85,8 +89,6 @@ if (class_exists('JText')) {
     }
 }
 require_once JOOMLA_LIBRARY . '/registry/registry.php';
-
-$fileHelper = new MolajoFileHelper();
 
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/path.php', 'JPath');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/file.php', 'JFile');
@@ -103,16 +105,12 @@ foreach ($files as $file) {
         $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/language.php', 'MolajoLanguage');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/language.php', 'MolajoLanguageHelper');
 
 /**
  *  Application
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/component/controller.php', 'JController');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/component/model.php', 'JModel');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/component/view.php', 'JView');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input.php', 'JInput');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/cli.php', 'JInputCli');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/cookie.php', 'JInputCookie');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/files.php', 'JInputFiles');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/web/webclient.php', 'JWebClient');
@@ -166,14 +164,6 @@ JLoader::register('JDatabaseInterface', JOOMLA_LIBRARY . '/database/database.php
 JLoader::register('JDatabase', JOOMLA_LIBRARY . '/database/database.php');
 JLoader::register('JDatabaseQueryElement', JOOMLA_LIBRARY . '/database/databasequery.php');
 JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY . '/database/databasequery.php');
-
-/**
- *  Environment
- */
-$files = JFolder::files(JOOMLA_LIBRARY . '/environment', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/environment/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
 
 /**
  *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved
@@ -261,13 +251,3 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/utilities/date.php', 'JDate');
  *  PHPMailer
  */
 $fileHelper->requireClassFile(PLATFORMS . '/jplatform/phpmailer/phpmailer.php', 'PHPMailer');
-
-/**
- *  JRequest Clean
- */
-if (isset($_SERVER['HTTP_HOST'])) {
-    if (defined('_JREQUEST_NO_CLEAN')) {
-    } else {
-        JRequest::clean();
-    }
-}

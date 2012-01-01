@@ -201,7 +201,7 @@ class MolajoControllerSite extends JObject
      */
     public function siteConfig()
     {
-        $siteConfig = new MolajoConfiguration ();
+        $siteConfig = new MolajoConfigurationHelper ();
         $data = $siteConfig->site();
 
         if (is_array($data)) {

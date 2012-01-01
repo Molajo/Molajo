@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Configuration
  * @since       1.0
  */
-class MolajoConfiguration
+class MolajoConfigurationHelper
 {
     /**
      * Combined Site and Application Configuration Object

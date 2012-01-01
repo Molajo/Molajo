@@ -339,7 +339,7 @@ class MolajoControllerApplication
      */
     public function getConfig()
     {
-        $configClass = new MolajoConfiguration();
+        $configClass = new MolajoConfigurationHelper();
         $this->config = $configClass->getConfig();
 
         return $this->config;

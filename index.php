@@ -91,7 +91,16 @@ if (defined('MOLAJO_SITE')) {
 /*                                              */
 /*  APPLICATIONS LAYER                          */
 /*                                              */
+/**
+ *  REPLACE JRequest Clean
 
+if (isset($_SERVER['HTTP_HOST'])) {
+    if (defined('_JREQUEST_NO_CLEAN')) {
+    } else {
+        JRequest::clean();
+    }
+}
+ */
 /**
  * $_SERVER["REQUEST_URI"] everything following host
  *  ex. /molajo/administrator/index.php?option=login
@@ -139,6 +148,9 @@ if (defined('MOLAJO_EXTENSIONS_CORE')) {
     define('MOLAJO_EXTENSIONS_CORE', MOLAJO_BASE_FOLDER . '/extensions');
 }
 
+/**
+ *  Configuration Helper
+ */
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/phpversion.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/defines.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/installcheck.php';

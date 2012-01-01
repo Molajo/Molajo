@@ -14,10 +14,6 @@ if (class_exists('MolajoVersion')) {
 } else {
     require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/version.php';
 }
-if (class_exists('MolajoController')) {
-} else {
-    require_once MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php';
-}
 
 /**
  *  Configuration File and Error Reporting

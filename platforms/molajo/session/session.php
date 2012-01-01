@@ -125,7 +125,8 @@ class MolajoSession extends JObject
     {
         static $instance;
 
-        if (!is_object($instance)) {
+        if (is_object($instance)) {
+        } else {
             $instance = new MolajoSession($handler, $options);
         }
 
@@ -393,15 +394,14 @@ class MolajoSession extends JObject
      */
     protected function _start()
     {
-
         // Start session if not started
         if ($this->_state == 'restart') {
             session_id($this->_createId());
         } else {
             $session_name = session_name();
-            if (!JRequest::getVar($session_name, false, 'COOKIE')) {
-                if (JRequest::getVar($session_name)) {
-                    session_id(JRequest::getVar($session_name));
+            if (JInput::get($session_name, false, 'COOKIE')) {
+                if (JInput::get($session_name)) {
+                    session_id(JInput::get($session_name));
                     setcookie($session_name, '', time() - 3600);
                 }
             }

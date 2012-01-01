@@ -20,7 +20,7 @@ define('_QQ_', '"');
  * @subpackage  Language
  * @since       11.1
  */
-class MolajoLanguage
+class MolajoLanguageHelper
 {
     /**
      * $languages
@@ -162,7 +162,7 @@ class MolajoLanguage
      * @param   string   $lang   The language to use.
      * @param   boolean  $debug  The debug mode.
      *
-     * @return  MolajoLanguage  The Language object.
+     * @return  MolajoLanguageHelper  The Language object.
      *
      * @since   1.0
      */
@@ -170,7 +170,7 @@ class MolajoLanguage
     {
         if (isset(self::$languages[$lang . $debug])) {
         } else {
-            self::$languages[$lang . $debug] = new MolajoLanguage($lang, $debug);
+            self::$languages[$lang . $debug] = new MolajoLanguageHelper($lang, $debug);
         }
         return self::$languages[$lang . $debug];
     }
@@ -181,7 +181,7 @@ class MolajoLanguage
      * @param   string   $lang   The language
      * @param   boolean  $debug  Indicates if language debugging is enabled.
      *
-     * @return  MolajoLanguage
+     * @return  MolajoLanguageHelper
      *
      * @since   1.0
      */
@@ -683,7 +683,7 @@ class MolajoLanguage
      *
      * @return  boolean  True if new strings have been added to the language
      *
-     * @see     MolajoLanguage::load()
+     * @see     MolajoLanguageHelper::load()
      * @since   1.0
      */
     protected function loadLanguage($filename, $extension = 'unknown', $overwrite = true)
@@ -830,7 +830,7 @@ class MolajoLanguage
     }
 
     /**
-     * Determine who called MolajoLanguage or MolajoTextHelper.
+     * Determine who called MolajoLanguageHelper or MolajoTextHelper.
      *
      * @return  array  Caller information.
      *
@@ -855,7 +855,7 @@ class MolajoLanguage
             $class = @ $step['class'];
 
             // We're looking for something outside of language.php
-            if ($class == 'MolajoLanguage' || $class == 'MolajoTextHelper') {
+            if ($class == 'MolajoLanguageHelper' || $class == 'MolajoTextHelper') {
             } else {
                 $info['function'] = @ $step['function'];
                 $info['class'] = $class;
@@ -1111,7 +1111,7 @@ class MolajoLanguage
     /**
      * Set the language attributes to the given language.
      *
-     * Once called, the language still needs to be loaded using MolajoLanguage::load().
+     * Once called, the language still needs to be loaded using MolajoLanguageHelper::load().
      *
      * @param   string  $lang  Language code.
      *

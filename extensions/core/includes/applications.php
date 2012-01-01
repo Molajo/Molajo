@@ -22,22 +22,14 @@ $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/user.php', 'Mo
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/group.php', 'MolajoGroup');
 
 /**
- *  Application
- */
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/application', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
-
-/**
  *  Data
  */
 
 /** Data: Entity */
-//$files = JFolder::files(MOLAJO_APPLICATIONS_CORE_DATA . '/Entity', '\.php$', false, false);
+//$files = JFolder::files(MOLAJO_APPLICATIONS_CORE_DATA . '/entities', '\.php$', false, false);
 //foreach ($files as $file) {
 //    echo $file.'<br />';
-//    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/Entity/' . $file, ucfirst(substr($file, 0, strpos($file, '.'))));
+//    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/entities/' . $file, ucfirst(substr($file, 0, strpos($file, '.'))));
 //}
 
 /** Data: Fields */
@@ -104,7 +96,10 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/helpers', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
+    if ($file == 'configuration.php') {
+    } else {
+        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
+    }
 }
 
 /**
@@ -130,7 +125,6 @@ foreach ($files as $file) {
  */
 
 /** Controller */
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/extension.php', 'MolajoControllerExtension');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/update.php', 'MolajoControllerUpdate');
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/controllers', '\.php$', false, false);
