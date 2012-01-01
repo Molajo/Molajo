@@ -44,6 +44,13 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display($cachable = false, $urlparameters = false)
     {
+
+$this->request['view_type'] = 'extensions';
+$this->request['extension_type'] = 'component';
+$this->request['view'] = 'dashboard';
+$this->request['wrap_id'] = '';
+$this->request['wrap_class'] = '';
+
         $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['option'] . 'Model'), array());
         $this->model->request = $this->request;
         $this->model->parameters = $this->parameters;
@@ -54,39 +61,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                 return $this->redirectClass->setSuccessIndicator(false);
             }
         }
-
-        /** initialize view */
-
-        /** 1. Request */
-        $this->view->request = $this->request;
-
-        /** 2. State */
-        $state = '';
-        $this->view->state = $state;
-
-        /** 3. Parameters */
-        $this->view->parameters = $this->parameters;
-
-        /** 4. Template */
-        $this->view->template = $this->request['template'];
-
-        /** 5. Page */
-        $this->view->page = $this->request['page'];
-
-        /** 6. View Type */
-        $this->view->view_type = $this->request['view_type'];
-
-        /** 7. View */
-        $this->view->view = $this->request['view'];
-
-        /** 8. Wrap */
-        $this->view->wrap = $this->request['wrap'];
-
-        /** 9. Wrap ID */
-        $this->view->wrap_id = $this->request['wrap_id'];
-
-        /** 10. Wrap Class */
-        $this->view->wrap_class = $this->request['wrap_class'];
 
         /** retrieve query results */
 
@@ -110,6 +84,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         /** Render View */
         $this->findPath($this->request['view'], $this->request['view_type']);
+
         if ($this->view_path === false) {
             // load an error view
             return;
@@ -176,11 +151,11 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     {
         /** initialise view */
         $this->view_path = false;
-        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request['template'];
+        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request['template_name'];
 
         /** 1. @var $templateViewPath [template]/views/[view-type]/[view-folder] */
         $templateViewPath = $template . '/views/' . $view_type . '/' . $view;
-        $templateViewPathURL = JURI::root() . 'extensions/views/templates/' . $this->request['template'] . '/views/' . $view_type . '/' . $view;
+        $templateViewPathURL = JURI::root() . 'extensions/views/templates/' . $this->request['template_name'] . '/views/' . $view_type . '/' . $view;
 
         /** 2. @var $extensionPath [extension_type]/[extension-name]/views/[view-type]/[view-folder] */
         $extensionPath = '';

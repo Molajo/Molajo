@@ -109,10 +109,11 @@ class MolajoHtmlFormat
      */
     public function __construct($config = array())
     {
+/*
                 echo '<pre>';
                 var_dump($config);
                 '</pre>';
-
+*/
         $sequence = simplexml_load_file(MOLAJO_EXTENSIONS_CORE . '/core/formats/sequence.xml', 'SimpleXMLElement');
         foreach ($sequence->format as $format) {
             if ($format->name == 'html') {

@@ -114,10 +114,13 @@ class MolajoComponentRenderer
         } else {
             $this->message ='';
         }
+        $this->option = $config['option'];
         $this->template = $config['template_name'];
         $this->page = $config['page'];
         $this->view = $config['view'];
         $this->wrap = $config['wrap'];
+
+        $this->import();
     }
 
     /**
@@ -133,12 +136,9 @@ class MolajoComponentRenderer
         /** renderer $attributes from template */
         $this->attributes = $attributes;
 
-        /** set up request for MVC */
-        $request = $this->request();
-
         /** Before Rendering */
-        MolajoController::getApplication()->registerEvent ('onBeforeRender', 'system');
-        MolajoController::getApplication()->triggerEvent ('onBeforeRender', $this);
+//        MolajoController::getApplication()->registerEvent ('onBeforeRender', 'system');
+//        MolajoController::getApplication()->triggerEvent ('onBeforeRender', $this);
 
         /** path */
         $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option . '/' . $this->option . '.php';
@@ -157,6 +157,7 @@ class MolajoComponentRenderer
         }
 
         /** component => MVC */
+        $request = $this->config;
         ob_start();
         require_once $path;
         $output = ob_get_contents();
@@ -169,4 +170,63 @@ class MolajoComponentRenderer
         /** Return output */
         return $output;
     }
+    
+    /**
+     * import
+     * 
+     * import component folders and files
+     * 
+     */
+    public function import ()
+    {
+        $fileHelper = new MolajoFileHelper();
+        
+        /** Controllers */
+        if (file_exists($this->config['component_path'] . '/controller.php')) {
+            $fileHelper->requireClassFile($this->config['component_path'] . '/controller.php', ucfirst($this->config['option']) . 'Controller');
+        }
+        $files = JFolder::files($this->config['component_path'] . '/controllers', '\.php$', false, false);
+        if ($files) {
+            foreach ($files as $file) {
+                echo $file . '<br />';
+                $fileHelper->requireClassFile($this->config['component_path'] . '/controllers/' . $file, ucfirst($this->config['option']) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
+            }
+        }
+        /** Helpers */
+        $files = JFolder::files($this->config['component_path'] . '/helpers', '\.php$', false, false);
+        if ($files) {
+            foreach ($files as $file) {
+                $fileHelper->requireClassFile($this->config['component_path'] . '/helpers/' . $file, ucfirst($this->config['option']) . ucfirst(substr($file, 0, strpos($file, '.'))));
+            }
+        }
+        
+        /** Models */
+        $files = JFolder::files($this->config['component_path'] . '/models', '\.php$', false, false);
+        if ($files) {
+            foreach ($files as $file) {
+                $fileHelper->requireClassFile($this->config['component_path'] . '/models/' . $file, ucfirst($this->config['option']) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
+            }
+        }
+        
+        /** Tables */
+        $files = JFolder::files($this->config['component_path'] . '/tables', '\.php$', false, false);
+        if ($files) {
+            foreach ($files as $file) {
+                $fileHelper->requireClassFile($this->config['component_path'] . '/tables/' . $file, ucfirst($this->config['option']) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
+            }
+        }
+        
+        /** Views */
+        $folders = JFolder::folders($this->config['component_path'] . '/views', false, false);
+        if ($folders) {
+            foreach ($folders as $folder) {
+                $files = JFolder::files($this->config['component_path'] . '/views/' . $folder, false, false);
+                if ($files) {
+                    foreach ($files as $file) {
+                        $fileHelper->requireClassFile($this->config['component_path'] . '/views/' . $folder . '/' . $file, ucfirst($this->config['option']) . 'View' . ucfirst($folder));
+                    }
+                }
+            }
+        }        
+    }        
 }

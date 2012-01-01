@@ -8,8 +8,6 @@
 defined('MOLAJO') or die;
 //echo '<pre>';var_dump($request);'</pre>';
 
-/** component includes **/
-require_once dirname(__FILE__) . '/import.php';
 
 /** validate option **/
 if ($request['option'] == $current_folder) {
@@ -21,6 +19,7 @@ if ($request['option'] == $current_folder) {
 /** controller **/
 //$defaultController = ucfirst($request['option']);
 //$controller = JController::getInstance($defaultController);
-$controller = new $request['controller'] ($request);
+$controllerClass = 'MolajoController'.$request['controller'];
+$controller = new $controllerClass ($request);
 //$controller->initialise($request);
 $controller->$request['task']();

@@ -14,7 +14,8 @@ defined('MOLAJO') or die;
  * @subpackage    Controller
  * @since    1.0
  */
-class MolajoControllerRedirect extends MolajoControllerExtension
+//class MolajoControllerRedirect extends MolajoControllerExtension
+class MolajoControllerRedirect
 {
     /**
      * $redirect

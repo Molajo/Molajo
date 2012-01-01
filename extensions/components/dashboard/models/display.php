@@ -10,12 +10,12 @@ defined('MOLAJO') or die;
 /**
  * Dummy Model
  *
- * DashboardModelDummy extends MolajoModelDummy extends JObject
+ * DashboardModelDisplay extends MolajoModelDummy extends JObject
  *
  * @package        Molajo
  * @subpackage    Model
  * @since       1.0
  */
-class DashboardModelDummy extends MolajoModelDummy
+class DashboardModelDisplay extends MolajoModelDummy
 {
 }
