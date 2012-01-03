@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage    Controller
  * @since    1.0
  */
-//class MolajoControllerRedirect extends MolajoControllerExtension
+
 class MolajoControllerRedirect
 {
     /**
@@ -81,11 +81,25 @@ class MolajoControllerRedirect
     protected $return_page = null;
 
     /**
-     * $request
+     * $request Array
      *
      * @var object
      */
-    public $request = null;
+    public $requestArray = null;
+
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param    array   $requestArray    An optional associative array of configuration settings.
+     *
+     * @since    1.0
+     */
+    public function __construct($requestArray = array())
+    {
+        $this->requestArray = $requestArray;
+    }
 
     /**
      * initialise
@@ -97,10 +111,9 @@ class MolajoControllerRedirect
      */
     public function initialise()
     {
-        /** no redirect: */
 
         /** 1. ajax and non-html output **/
-        $format = $this->request['format'];
+        $format = $this->requestArray['format'];
         if ($format == 'html' || $format == null || $format == '') {
             $format = 'html';
         } else {
@@ -109,9 +122,9 @@ class MolajoControllerRedirect
         }
 
         /** 2. display, add, edit tasks **/
-        if ($this->request['task'] == 'display'
-            || $this->request['task'] == 'add'
-            || $this->request['task'] == 'edit'
+        if ($this->requestArray['task'] == 'display'
+            || $this->requestArray['task'] == 'add'
+            || $this->requestArray['task'] == 'edit'
         ) {
             $this->setRedirectAction(false);
             return;
@@ -121,7 +134,7 @@ class MolajoControllerRedirect
         $this->redirectAction = true;
 
         /** extension: category uses this parameter **/
-        $extension = $this->request['extension'];
+        $extension = $this->requestArray['extension'];
         if ($extension == ''
             || $extension == null
         ) {
@@ -131,7 +144,7 @@ class MolajoControllerRedirect
         }
 
         /** component_specific: to add parameter pairs needed in addition to standard **/
-        $component_specific = $this->request['component_specific'];
+        $component_specific = $this->requestArray['component_specific'];
         if ($component_specific == ''
             || $component_specific == null
         ) {
@@ -142,35 +155,35 @@ class MolajoControllerRedirect
         }
 
         /** cancel **/
-        if ($this->request['task'] == 'cancel') {
+        if ($this->requestArray['task'] == 'cancel') {
             if (MolajoController::getApplication()->getName() == 'site') {
-                if ($this->request['id'] == 0) {
+                if ($this->requestArray['id'] == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display&id=' . $this->request['id'] . $extension . $component_specific;
+                    $this->redirectSuccess = 'index.php?option=' . $this->requestArray['option'] . '&view=display&id=' . $this->requestArray['id'] . $extension . $component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=edit&id=' . $this->request['id'] . $extension . $component_specific;
+                $this->redirectSuccess = 'index.php?option=' . $this->requestArray['option'] . '&view=edit&id=' . $this->requestArray['id'] . $extension . $component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
         }
 
-        if ($this->request['task'] == 'login') {
+        if ($this->requestArray['task'] == 'login') {
             $this->redirectSuccess = 'index.php?option=dashboard&view=display';
             $this->redirectReturn = 'index.php?option=login';
 
-        } elseif ($this->request['task'] == 'logout') {
+        } elseif ($this->requestArray['task'] == 'logout') {
             $this->redirectSuccess = 'index.php';
-            $this->redirectReturn = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->requestArray['option'] . '&view=display' . $extension . $component_specific;
 
-        } elseif ($this->request['task'] == 'display') {
-            $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
+        } elseif ($this->requestArray['task'] == 'display') {
+            $this->redirectSuccess = 'index.php?option=' . $this->requestArray['option'] . '&view=display' . $extension . $component_specific;
             $this->redirectReturn = $this->redirectSuccess;
 
         } else {
-            $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
-            $this->redirectReturn = 'index.php?option=' . $this->request['option'] . '&view=edit' . $extension . $component_specific;
+            $this->redirectSuccess = 'index.php?option=' . $this->requestArray['option'] . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->requestArray['option'] . '&view=edit' . $extension . $component_specific;
         }
 
         return;
@@ -187,7 +200,7 @@ class MolajoControllerRedirect
      */
     protected function setDatakey()
     {
-        $this->request['datakey'] = mt_rand();
+        $this->requestArray['datakey'] = mt_rand();
         return;
     }
 
@@ -289,20 +302,20 @@ class MolajoControllerRedirect
         }
 
         /** list **/
-        if ($this->request['controller'] == $this->request['DefaultView']) {
+        if ($this->requestArray['controller'] == $this->requestArray['DefaultView']) {
             $link = $this->redirectSuccess;
 
             /** failure **/
         } else if ($this->successIndicator === false || $task == 'apply' || $task == 'saveandnew') {
             $link = $this->redirectReturn;
-            if ($this->request['EditView'] == '') {
+            if ($this->requestArray['EditView'] == '') {
             } else {
                 $id = $this->data['id'];
                 if ((int)$id == 0 || $task == 'saveandnew') {
-                    $link .= '&task=' . $this->request['EditView'] . '.add' . '&datakey=' . $this->datakey;
+                    $link .= '&task=' . $this->requestArray['EditView'] . '.add' . '&datakey=' . $this->datakey;
 
                 } else {
-                    $link .= '&task=' . $this->request['EditView'] . '.edit&id=' . (int)$id . '&datakey=' . $this->datakey;
+                    $link .= '&task=' . $this->requestArray['EditView'] . '.edit&id=' . (int)$id . '&datakey=' . $this->datakey;
                 }
             }
 

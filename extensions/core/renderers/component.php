@@ -25,63 +25,15 @@ class MolajoComponentRenderer
     protected $name = null;
 
     /**
-     * Config - from MolajoExtension
+     * Request Array - from MolajoExtension
      *
      * @var    array
      * @since  1.0
      */
-    protected $config = array();
+    protected $requestArray = array();
 
     /**
-     * Option - extracted from config
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $option = null;
-
-    /**
-     *  Template folder name - extracted from config
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $template = null;
-
-    /**
-     *  Page include file - extracted from config
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $page = null;
-
-    /**
-     *  View include file - extracted from config
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $view = null;
-
-    /**
-     *  Wrap for View - extracted from config
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $wrap = null;
-
-    /**
-     *  Template Parameters - extracted from config
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $parameters = null;
-
-    /**
-     * Attributes - from the Molajo Format Class <include:component statement>
+     * Attributes - from Template/Page <include:component statement>
      *
      * @var    array
      * @since  1.0
@@ -97,28 +49,16 @@ class MolajoComponentRenderer
      * @param array $config
      * @since 1.0
      */
-    public function __construct($name = null, $config = array())
+    public function __construct($name = null, $requestArray = array())
     {
         /**
         echo '<pre>';
-        var_dump($config);
+        var_dump($requestArray);
         '</pre>';
          **/
-        /** set class properties */
         $this->name = $name;
 
-        /** set class properties */
-        $this->config = $config;
-        if (isset($config['message'])) {
-            $this->message = $config['message'];
-        } else {
-            $this->message ='';
-        }
-        $this->option = $config['option'];
-        $this->template = $config['template_name'];
-        $this->page = $config['page'];
-        $this->view = $config['view'];
-        $this->wrap = $config['wrap'];
+        $this->requestArray = $requestArray;
 
         $this->import();
     }
@@ -141,7 +81,7 @@ class MolajoComponentRenderer
 //        MolajoController::getApplication()->triggerEvent ('onBeforeRender', $this);
 
         /** path */
-        $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option . '/' . $this->option . '.php';
+        $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->requestArray['option'] . '/' . $this->requestArray['option'] . '.php';
 
         /** installation */
         if (MOLAJO_APPLICATION_ID == 0
@@ -150,19 +90,25 @@ class MolajoComponentRenderer
 
         /** language */
         } elseif (file_exists($path)) {
-            MolajoController::getLanguage()->load($this->option, $path, MolajoController::getLanguage()->getDefault(), false, false);
+            MolajoController::getLanguage()->load($this->requestArray['option'], $path, MolajoController::getLanguage()->getDefault(), false, false);
 
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
 
         /** component => MVC */
-        $request = $this->config;
+
+        $controllerClass = 'MolajoController'.ucfirst($this->requestArray['controller']);
+        $controller = new $controllerClass ($this->requestArray);
+        $task = $this->requestArray['task'];
+        $output = $controller->$task();
+/**
+$request = $this->requestArray;
         ob_start();
         require_once $path;
         $output = ob_get_contents();
         ob_end_clean();
-
+*/
         /** After Rendering */
         MolajoController::getApplication()->registerEvent ('onAfterRender', 'system');
         MolajoController::getApplication()->triggerEvent ('onAfterRender', array($this, $output));
@@ -182,48 +128,48 @@ class MolajoComponentRenderer
         $fileHelper = new MolajoFileHelper();
         
         /** Controllers */
-        if (file_exists($this->config['extension_path'] . '/controller.php')) {
-            $fileHelper->requireClassFile($this->config['extension_path'] . '/controller.php', ucfirst($this->config['option']) . 'Controller');
+        if (file_exists($this->requestArray['extension_path'] . '/controller.php')) {
+            $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/controller.php', ucfirst($this->requestArray['option']) . 'Controller');
         }
-        $files = JFolder::files($this->config['extension_path'] . '/controllers', '\.php$', false, false);
+        $files = JFolder::files($this->requestArray['extension_path'] . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 echo $file . '<br />';
-                $fileHelper->requireClassFile($this->config['extension_path'] . '/controllers/' . $file, ucfirst($this->config['option']) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/controllers/' . $file, ucfirst($this->requestArray['option']) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         /** Helpers */
-        $files = JFolder::files($this->config['extension_path'] . '/helpers', '\.php$', false, false);
+        $files = JFolder::files($this->requestArray['extension_path'] . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->config['extension_path'] . '/helpers/' . $file, ucfirst($this->config['option']) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/helpers/' . $file, ucfirst($this->requestArray['option']) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         
         /** Models */
-        $files = JFolder::files($this->config['extension_path'] . '/models', '\.php$', false, false);
+        $files = JFolder::files($this->requestArray['extension_path'] . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->config['extension_path'] . '/models/' . $file, ucfirst($this->config['option']) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/models/' . $file, ucfirst($this->requestArray['option']) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         
         /** Tables */
-        $files = JFolder::files($this->config['extension_path'] . '/tables', '\.php$', false, false);
+        $files = JFolder::files($this->requestArray['extension_path'] . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->config['extension_path'] . '/tables/' . $file, ucfirst($this->config['option']) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/tables/' . $file, ucfirst($this->requestArray['option']) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         
         /** Views */
-        $folders = JFolder::folders($this->config['extension_path'] . '/views', false, false);
+        $folders = JFolder::folders($this->requestArray['extension_path'] . '/views', false, false);
         if ($folders) {
             foreach ($folders as $folder) {
-                $files = JFolder::files($this->config['extension_path'] . '/views/' . $folder, false, false);
+                $files = JFolder::files($this->requestArray['extension_path'] . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
-                        $fileHelper->requireClassFile($this->config['extension_path'] . '/views/' . $folder . '/' . $file, ucfirst($this->config['option']) . 'View' . ucfirst($folder));
+                        $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/views/' . $folder . '/' . $file, ucfirst($this->requestArray['option']) . 'View' . ucfirst($folder));
                     }
                 }
             }

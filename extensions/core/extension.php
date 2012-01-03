@@ -214,6 +214,7 @@ class MolajoExtension
         $this->requestArray['format'] = '';
         $this->requestArray['task'] = '';
         $this->requestArray['view'] = '';
+        $this->requestArray['view_type'] = 'extensions';
         $this->requestArray['wrap'] = '';
         $this->requestArray['wrap_id'] = '';
         $this->requestArray['wrap_class'] = '';
@@ -257,6 +258,7 @@ class MolajoExtension
         $this->requestArray['extension_instances_id'] = 0;
         $this->requestArray['extension_parameters'] = array();
         $this->requestArray['extension_path'] = '';
+        $this->requestArray['extension_type'] = 'component';
     }
 
     /**

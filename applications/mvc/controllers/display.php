@@ -44,18 +44,11 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display($cachable = false, $urlparameters = false)
     {
-
-$this->request['view_type'] = 'extensions';
-$this->request['extension_type'] = 'component';
-$this->request['view'] = 'dashboard';
-$this->request['wrap_id'] = '';
-$this->request['wrap_class'] = '';
-
-        $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['option'] . 'Model'), array());
-        $this->model->request = $this->request;
+        $this->model = $this->getModel(ucfirst($this->requestArray['model']), ucfirst($this->requestArray['option'] . 'Model'), array());
+        $this->model->requestArray = $this->requestArray;
         $this->model->parameters = $this->parameters;
 
-        if ($this->request['task'] == 'edit') {
+        if ($this->requestArray['task'] == 'edit') {
             $results = parent::checkoutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -71,7 +64,7 @@ $this->request['wrap_class'] = '';
         $this->pagination = $this->model->get('Pagination');
 /*
         echo '<pre>';
-        var_dump($this->request);
+        var_dump($this->requestArray);
         echo '</pre>';
 */
         /** no results */
@@ -83,36 +76,37 @@ $this->request['wrap_class'] = '';
         }
 
         /** Render View */
-        $this->findPath($this->request['view'], $this->request['view_type']);
+        $this->findPath($this->requestArray['view'], $this->requestArray['view_type']);
 
         if ($this->view_path === false) {
             // load an error view
             return;
         }
 
-        $renderedOutput = $this->renderView($this->request['view'], $this->request['view_type']);
+        $renderedOutput = $this->renderView($this->requestArray['view'], $this->requestArray['view_type']);
 
         /** Wrap Rendered Output */
-        if ($this->request['wrap'] == 'horz') {
-            $this->request['wrap'] = 'horizontal';
+        if ($this->requestArray['wrap'] == 'horz') {
+            $this->requestArray['wrap'] = 'horizontal';
         }
-        if ($this->request['wrap'] == 'xhtml') {
-            $this->request['wrap'] = 'div';
+        if ($this->requestArray['wrap'] == 'xhtml') {
+            $this->requestArray['wrap'] = 'div';
         }
-        if ($this->request['wrap'] == 'rounded') {
-            $this->request['wrap'] = 'div';
+        if ($this->requestArray['wrap'] == 'rounded') {
+            $this->requestArray['wrap'] = 'div';
         }
-        if ($this->request['wrap'] == 'raw') {
-            $this->request['wrap'] = 'none';
+        if ($this->requestArray['wrap'] == 'raw') {
+            $this->requestArray['wrap'] = 'none';
         }
-        if ($this->request['wrap'] == '') {
-            $this->request['wrap'] = 'none';
+        if ($this->requestArray['wrap'] == '') {
+            $this->requestArray['wrap'] = 'none';
         }
-        if ($this->request['wrap'] == null) {
-            $this->request['wrap'] = 'none';
+        if ($this->requestArray['wrap'] == null) {
+            $this->requestArray['wrap'] = 'none';
         }
 
-        $this->findPath($this->request['wrap'], 'wraps');
+        $this->requestArray['wrap'] = 'none';
+        $this->findPath($this->requestArray['wrap'], 'wraps');
         if ($this->view_path === false) {
             echo $renderedOutput;
             return;
@@ -121,13 +115,12 @@ $this->request['wrap_class'] = '';
         $this->rowset = array();
 
         $tmpobj = new JObject();
-        $tmpobj->set('wrap_id', $this->request['wrap_id']);
-        $tmpobj->set('wrap_class', $this->request['wrap_class']);
+        $tmpobj->set('wrap_id', $this->requestArray['wrap_id']);
+        $tmpobj->set('wrap_class', $this->requestArray['wrap_class']);
         $tmpobj->set('content', $renderedOutput);
 
         $this->rowset[] = $tmpobj;
-
-        $wrappedOutput = $this->renderView($this->request['wrap'], 'wraps');
+        $wrappedOutput = $this->renderView($this->requestArray['wrap'], 'wraps');
 
         echo $wrappedOutput;
 
@@ -151,25 +144,25 @@ $this->request['wrap_class'] = '';
     {
         /** initialise view */
         $this->view_path = false;
-        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request['template_name'];
+        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
 
         /** 1. @var $templateViewPath [template]/views/[view-type]/[view-folder] */
         $templateViewPath = $template . '/views/' . $view_type . '/' . $view;
-        $templateViewPathURL = MOLAJO_BASE_URL .  '/extensions/views/templates/' . $this->request['template_name'] . '/views/' . $view_type . '/' . $view;
+        $templateViewPathURL = MOLAJO_BASE_URL .  '/extensions/views/templates/' . $this->requestArray['template_name'] . '/views/' . $view_type . '/' . $view;
 
         /** 2. @var $extensionPath [extension_type]/[extension-name]/views/[view-type]/[view-folder] */
         $extensionPath = '';
-        if ($this->request['extension_type'] == 'plugin') {
-            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/plugins/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
+        if ($this->requestArray['extension_type'] == 'plugin') {
+            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->requestArray['plugin_folder'] . '/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
+            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/plugins/' . $this->requestArray['plugin_folder'] . '/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
 
-        } else if ($this->request['extension_type'] == 'component') {
-            $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request['option'] . '/controllers/' . $this->request['controller'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/components/' . $this->request['option'] . '/controllers/' . $this->request['controller'] . '/views/' . $view_type . '/' . $view;
+        } else if ($this->requestArray['extension_type'] == 'component') {
+            $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->requestArray['option'] . '/controllers/' . $this->requestArray['controller'] . '/views/' . $view_type . '/' . $view;
+            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/components/' . $this->requestArray['option'] . '/controllers/' . $this->requestArray['controller'] . '/views/' . $view_type . '/' . $view;
 
-        } else if ($this->request['extension_type'] == 'module') {
-            $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/modules/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
+        } else if ($this->requestArray['extension_type'] == 'module') {
+            $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
+            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/modules/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
 
         } else {
             $extensionPath = '';
@@ -365,14 +358,14 @@ $this->request['wrap_class'] = '';
     protected function loadMedia()
     {
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request['option'] . '/views';
-        $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->request['option'] . '/views';
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->requestArray['option'] . '/views';
+        $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->requestArray['option'] . '/views';
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request['asset_id'];
-        $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
+        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->requestArray['asset_id'];
+        $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->requestArray['asset_id'];
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
          */

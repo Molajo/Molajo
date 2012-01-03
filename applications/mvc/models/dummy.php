@@ -24,7 +24,7 @@ class MolajoModelDummy extends MolajoModel
      * @var        array
      * @since    1.0
      */
-    public $request = array();
+    public $requestArray = array();
 
     /**
      * $parameters
@@ -76,7 +76,7 @@ class MolajoModelDummy extends MolajoModel
      */
     protected function populateState()
     {
-        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['view'];
+        $this->context = strtolower($this->requestArray['option'] . '.' . $this->getName()) . '.' . $this->requestArray['view'];
     }
 
     /**
@@ -88,7 +88,7 @@ class MolajoModelDummy extends MolajoModel
      */
     public function getRequest()
     {
-        return $this->request;
+        return $this->requestArray;
     }
 
     /**

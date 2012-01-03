@@ -8,13 +8,19 @@
 defined('MOLAJO') or die;
 
 ?>
-<<?php echo $headertype; ?>
-<?php if ($this->rowset[0]->wrap_id == '') :
+<<?php echo $headertype;
+if ($this->rowset[0]->wrap_id == '') :
 else :
     echo ' id="' . $this->rowset[0]->wrap_id . '"';
 endif;
 
-$tmpClass = $this->parameters->get('view_class_suffix') . $this->rowset[0]->wrap_class;
+$tmpClass = '';
+if (isset($this->parameters->view_class_suffix)) {
+    $tmpClass = $this->parameters->view_class_suffix;
+}
+if (isset($this->rowset[0]->wrap_class)) {
+    $tmpClass .= $this->rowset[0]->wrap_class;
+}
 if ($tmpClass == '') :
 else :
     echo ' class="' . $tmpClass . '"';
