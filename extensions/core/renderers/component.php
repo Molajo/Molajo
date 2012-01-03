@@ -182,48 +182,48 @@ class MolajoComponentRenderer
         $fileHelper = new MolajoFileHelper();
         
         /** Controllers */
-        if (file_exists($this->config['component_path'] . '/controller.php')) {
-            $fileHelper->requireClassFile($this->config['component_path'] . '/controller.php', ucfirst($this->config['option']) . 'Controller');
+        if (file_exists($this->config['extension_path'] . '/controller.php')) {
+            $fileHelper->requireClassFile($this->config['extension_path'] . '/controller.php', ucfirst($this->config['option']) . 'Controller');
         }
-        $files = JFolder::files($this->config['component_path'] . '/controllers', '\.php$', false, false);
+        $files = JFolder::files($this->config['extension_path'] . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 echo $file . '<br />';
-                $fileHelper->requireClassFile($this->config['component_path'] . '/controllers/' . $file, ucfirst($this->config['option']) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->config['extension_path'] . '/controllers/' . $file, ucfirst($this->config['option']) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         /** Helpers */
-        $files = JFolder::files($this->config['component_path'] . '/helpers', '\.php$', false, false);
+        $files = JFolder::files($this->config['extension_path'] . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->config['component_path'] . '/helpers/' . $file, ucfirst($this->config['option']) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->config['extension_path'] . '/helpers/' . $file, ucfirst($this->config['option']) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         
         /** Models */
-        $files = JFolder::files($this->config['component_path'] . '/models', '\.php$', false, false);
+        $files = JFolder::files($this->config['extension_path'] . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->config['component_path'] . '/models/' . $file, ucfirst($this->config['option']) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->config['extension_path'] . '/models/' . $file, ucfirst($this->config['option']) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         
         /** Tables */
-        $files = JFolder::files($this->config['component_path'] . '/tables', '\.php$', false, false);
+        $files = JFolder::files($this->config['extension_path'] . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->config['component_path'] . '/tables/' . $file, ucfirst($this->config['option']) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->config['extension_path'] . '/tables/' . $file, ucfirst($this->config['option']) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         
         /** Views */
-        $folders = JFolder::folders($this->config['component_path'] . '/views', false, false);
+        $folders = JFolder::folders($this->config['extension_path'] . '/views', false, false);
         if ($folders) {
             foreach ($folders as $folder) {
-                $files = JFolder::files($this->config['component_path'] . '/views/' . $folder, false, false);
+                $files = JFolder::files($this->config['extension_path'] . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
-                        $fileHelper->requireClassFile($this->config['component_path'] . '/views/' . $folder . '/' . $file, ucfirst($this->config['option']) . 'View' . ucfirst($folder));
+                        $fileHelper->requireClassFile($this->config['extension_path'] . '/views/' . $folder . '/' . $file, ucfirst($this->config['option']) . 'View' . ucfirst($folder));
                     }
                 }
             }

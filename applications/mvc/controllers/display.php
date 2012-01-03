@@ -155,21 +155,21 @@ $this->request['wrap_class'] = '';
 
         /** 1. @var $templateViewPath [template]/views/[view-type]/[view-folder] */
         $templateViewPath = $template . '/views/' . $view_type . '/' . $view;
-        $templateViewPathURL = JURI::root() . 'extensions/views/templates/' . $this->request['template_name'] . '/views/' . $view_type . '/' . $view;
+        $templateViewPathURL = MOLAJO_BASE_URL .  '/extensions/views/templates/' . $this->request['template_name'] . '/views/' . $view_type . '/' . $view;
 
         /** 2. @var $extensionPath [extension_type]/[extension-name]/views/[view-type]/[view-folder] */
         $extensionPath = '';
         if ($this->request['extension_type'] == 'plugin') {
             $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = JURI::root() . 'extensions/views/plugins/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
+            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/plugins/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
 
         } else if ($this->request['extension_type'] == 'component') {
             $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request['option'] . '/controllers/' . $this->request['controller'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = JURI::root() . 'extensions/views/components/' . $this->request['option'] . '/controllers/' . $this->request['controller'] . '/views/' . $view_type . '/' . $view;
+            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/components/' . $this->request['option'] . '/controllers/' . $this->request['controller'] . '/views/' . $view_type . '/' . $view;
 
         } else if ($this->request['extension_type'] == 'module') {
             $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = JURI::root() . 'extensions/views/modules/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
+            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/modules/' . $this->request['option'] . '/views/' . $view_type . '/' . $view;
 
         } else {
             $extensionPath = '';
@@ -178,7 +178,7 @@ $this->request['wrap_class'] = '';
 
         /** 3. $corePath views/[view_type]/[view-folder] */
         $corePath = MOLAJO_EXTENSIONS_VIEWS . '/' . $view_type . '/' . $view;
-        $corePathURL = JURI::root() . 'extensions/views/' . $view_type . '/' . $view;
+        $corePathURL = MOLAJO_BASE_URL . '/extensions/views/' . $view_type . '/' . $view;
 
         /**
          * Determine path in order of priority
@@ -366,13 +366,13 @@ $this->request['wrap_class'] = '';
     {
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request['option'] . '/views';
-        $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . $this->request['option'] . '/views';
+        $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->request['option'] . '/views';
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
         /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request['asset_id'];
-        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
+        $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
          */

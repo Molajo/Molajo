@@ -59,7 +59,6 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function read($id)
     {
-        // Get the database connection object and verify its connected.
         $db = MolajoController::getDbo();
         if ($db->connected()) {
         } else {
@@ -72,6 +71,8 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->select($db->nameQuote('data'));
         $query->from($db->nameQuote('#__sessions'));
         $query->where($db->nameQuote('session_id') . ' = ' . $db->quote($id));
+
+        $db->setQuery($query->__toString());
 
         return (string)$db->loadResult();
     }
@@ -90,7 +91,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $db = MolajoController::getDbo();
         if ($db->connected()) {
         } else {
-            echo 'READ FAILED IN MolajoSessionStorageDatabase::write';
+            echo 'WRITE FAILED IN MolajoSessionStorageDatabase::write';
             die;
         }
 
@@ -99,6 +100,8 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->select($db->nameQuote('session_id'));
         $query->from($db->nameQuote('#__sessions'));
         $query->where($db->nameQuote('session_id') . ' = ' . $db->quote($id));
+
+        $db->setQuery($query->__toString());
 
         $result = $db->query();
 
@@ -134,7 +137,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->set($db->nameQuote('session_time') . ' = ' . (int)time());
         $query->where($db->nameQuote('session_id') . ' = ' . $db->quote($id));
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         return (boolean)$db->query();
     }
@@ -165,7 +168,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->set($db->nameQuote('data') . ' = ' . $db->quote($data));
         $query->set($db->nameQuote('session_time') . ' = ' . (int)time());
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         return (boolean)$db->query();
     }
@@ -193,7 +196,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->delete($db->nameQuote('#__sessions'));
         $query->where($db->nameQuote('session_id') . ' = ' . $db->quote($id));
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         return (boolean)$db->query();
     }
@@ -221,7 +224,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->delete($db->nameQuote('#__sessions'));
         $query->where($db->nameQuote('session_time') . ' = ' . (int)$past);
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         return (boolean)$db->query();
     }

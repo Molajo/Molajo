@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoController
 {
-
     /**
      * @var    Site
      * @since  1.0

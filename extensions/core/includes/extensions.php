@@ -49,3 +49,16 @@ foreach ($files as $file) {
     $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
 }
 
+
+/*                                              */
+/*  Modernizr                                   */
+/*                                              */
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE.'/core/modernizr-server.php', 'Modernizr');
+/*
+ print 'The server knows:';
+foreach($modernizr as $feature=>$value) {
+     echo '<pre>'; echo 'Feature: '.$feature ; echo ':<br />';
+     var_dump($value); echo '</pre>';
+}
+*/
+

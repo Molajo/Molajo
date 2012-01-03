@@ -110,7 +110,6 @@ class MolajoControllerApplication
      */
     public $generator;
 
-
     /**
      * @var    string
      * @since  1.0
@@ -179,19 +178,29 @@ class MolajoControllerApplication
     protected $response = array();
 
     /**
+     * @var    Input  The application input object.
+     * @since  1.0
+     */
+    public $input;
+
+    /**
      * Class constructor.
      *
-     * @param   mixed  $config  An optional argument to provide dependency injection for the application's
-     *                          config object.  If the argument is a JRegistry object that object will become
-     *                          the application's config object, otherwise a default config object is created.
-     * @param   mixed  $client  An optional argument to provide dependency injection for the application's
-     *                          client object.  If the argument is a JWebClient object that object will become
-     *                          the application's client object, otherwise a default client object is created.
+     * @param   mixed  $input
+     * @param   mixed  $config
+     * @param   mixed  $client
+     * @param   mixed  $options
      *
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null, JWebClient $client = null, $options = array())
+    public function __construct(JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
     {
+        if ($input instanceof JInput) {
+            $this->input = $input;
+        } else {
+            $this->input = new JInput;
+        }
+
         if ($config instanceof JRegistry) {
             $this->config = $config;
         } else {
@@ -1246,11 +1255,10 @@ class MolajoControllerApplication
      *
      * @since   1.0
      */
-    public function redirect($asset_id, $code = 303)
+    public function redirect($queryRequest, $code = 303)
     {
-        /** todo: remove asset_id - should not be known in the application layer */
         /** retrieve url */
-        $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . MolajoAsset::getRedirectURL((int)$asset_id);
+        $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $queryRequest;
 
         /** validate code */
         if ($code == 301) {

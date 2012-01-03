@@ -25,52 +25,12 @@ class MolajoHtmlFormat
     protected $rendererProcessingSequence = array();
 
     /**
-     *  Config
+     *  Request Array
      *
      * @var array
      * @since 1.0
      */
-    protected $config = null;
-
-    /**
-     *  Message
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $message = null;
-
-    /**
-     *  Template folder name
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $template = null;
-
-    /**
-     *  Page include file
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $page = null;
-
-    /**
-     *  View include file
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $view = null;
-
-    /**
-     *  Wrap for View
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $wrap = null;
+    protected $requestArray = null;
 
     /**
      *  Template Parameters
@@ -101,17 +61,17 @@ class MolajoHtmlFormat
      *
      * Class constructor.
      *
-     * @param   null    $config from MolajoExtensions
+     * @param   null    $requestArray from MolajoExtensions
      *
      * @return boolean
      *
      * @since  1.0
      */
-    public function __construct($config = array())
+    public function __construct($requestArray = array())
     {
 /*
                 echo '<pre>';
-                var_dump($config);
+                var_dump($requestArray);
                 '</pre>';
 */
         $sequence = simplexml_load_file(MOLAJO_EXTENSIONS_CORE . '/core/formats/sequence.xml', 'SimpleXMLElement');
@@ -125,16 +85,8 @@ class MolajoHtmlFormat
         }
 
         /** set class properties */
-        $this->config = $config;
-        if (isset($config['message'])) {
-            $this->message = $config['message'];
-        } else {
-            $this->message ='';
-        }
-        $this->template = $config['template_name'];
-        $this->page = $config['page'];
-        $this->view = $config['view'];
-        $this->wrap = $config['wrap'];
+        $this->requestArray = $requestArray;
+
 
         /** Request */
         $this->_render();
@@ -148,43 +100,25 @@ class MolajoHtmlFormat
      */
     protected function _render()
     {
-        /** Query */
-        $templates = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $this->template);
-
         /** Initialize */
-        $template_name = '';
         $template_include = '';
-        $template_parameters = '';
 
-        /* Process Query Results */
-        if (count($templates) > 0) {
-            foreach ($templates as $template) {
-
-                $registry = new JRegistry;
-                $registry->loadJSON($template_parameters);
-                $template_parameters = $registry;
-
-                if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template->title . '/' . 'index.php')) {
-                    $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template->title . '/' . 'index.php';
-                    $template_name = $template->title;
-                }
-            }
-        }
-
-        if ($template_name == '') {
+        if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php')) {
+            $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php';
+        } else {
+            $this->requestArray['template_name'] = 'system';
             $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php';
-            $template_name = 'system';
         }
 
-        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name;
-
-        $template_page_include = $template_path . '/pages/'.$this->page.'/index.php';
+        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
+/** todo: amy look for path for page */
+        $template_page_include = $template_path . '/pages/'.$this->requestArray['page'].'/index.php';
 
         $this->parameters = array(
-            'template' => $template_name,
+            'template' => $this->requestArray['template_name'],
             'template_path' => $template_path,
             'page' => $template_page_include,
-            'parameters' => $template_parameters
+            'parameters' => $this->requestArray['template_parameters']
 
         );
 
@@ -195,19 +129,19 @@ class MolajoHtmlFormat
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
-        $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
+        $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH  . '/sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name;
-        $urlPath = JURI::root() . 'extensions/templates/' . $template_name;
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
+        $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH  . '/extensions/templates/' . $this->requestArray['template_name'];
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Language */
         $lang = MolajoController::getLanguage();
-        $lang->load($template_name, MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name, $lang->getDefault(), false, false);
+        $lang->load($this->requestArray['template_name'], MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'], $lang->getDefault(), false, false);
 
         ob_start();
         require $template_include;
@@ -301,7 +235,7 @@ class MolajoHtmlFormat
             $class = 'Molajo' . ucfirst($nextRenderer) . 'Renderer';
             if ($class == 'MolajoHeadRenderer') {
             } elseif (class_exists($class)) {
-                $rendererClass = new $class ($nextRenderer, $this->config);
+                $rendererClass = new $class ($nextRenderer, $this->requestArray);
                 echo $class . '<br />';
             } else {
                 echo 'failed renderer = ' . $class . '<br />';
@@ -339,10 +273,10 @@ class MolajoHtmlFormat
      */
     protected function _loadFavicon()
     {
-        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template . '/images/';
+        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/images/';
 
         if (file_exists($path . 'favicon.ico')) {
-            $urlPath = JURI::root() . 'extensions/templates/' . $this->template . '/images/favicon.ico';
+            $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/extensions/templates/' . $this->requestArray['template_name'] . '/images/favicon.ico';
             MolajoController::getApplication()->addFavicon($urlPath);
             return true;
         }

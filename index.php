@@ -69,6 +69,7 @@ if (defined('MOLAJO_SHARED_MEDIA')) {
     define('MOLAJO_SHARED_MEDIA', MOLAJO_SITES . '/media');
 }
 
+
 if (defined('MOLAJO_SITE')) {
 } else {
     $sites = simplexml_load_file(MOLAJO_BASE_FOLDER . '/sites.xml', 'SimpleXMLElement');
@@ -114,7 +115,6 @@ if (strpos($requestURI, '/')) {
 } else {
     $applicationTest = $requestURI;
 }
-
 if (defined('MOLAJO_APPLICATION')) {
 } else {
     $apps = simplexml_load_file(MOLAJO_BASE_FOLDER . '/applications.xml', 'SimpleXMLElement');

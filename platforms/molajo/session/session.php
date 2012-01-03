@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Component
+ * @subpackage  Session
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -23,35 +23,38 @@ defined('MOLAJO') or die;
 class MolajoSession extends JObject
 {
     /**
-     * Internal state.
+     * Internal state
+     * Values:  active|expired|destroyed|error
      *
-     * @var    string $_state one of 'active'|'expired'|'destroyed|'error'
-     * @see getState()
+     * @var     string $_state
+     * @since   1.0
      */
     protected $_state = 'active';
 
     /**
      * Maximum age of unused session.
      *
-     * @var    string $_expire minutes
+     * @var     string
+     * @since   1.0
      */
     protected $_expire = 15;
 
     /**
      * The session store object.
      *
-     * @var    object A store object
+     * @var     object
+     * @since   1.0
      */
     protected $_store = null;
 
     /**
-     * Security policy.
+     * Security policy
      *
      * Default values:
      *  - fix_browser
      *  - fix_address
      *
-     * @var array $_security list of checks that will be done.
+     * @var array $_security list of checks that will be done
      */
     protected $_security = array('fix_browser');
 
@@ -71,36 +74,30 @@ class MolajoSession extends JObject
      */
     public function __construct($store = 'none', $options = array())
     {
-        // Need to destroy any existing sessions started with session.auto_start
+        /** Destroy session started with session.auto_start */
         if (session_id()) {
             session_unset();
             session_destroy();
         }
 
-        // set default sessios save handler
+        /** php */
         ini_set('session.save_handler', 'files');
-
-        // disable transparent sid support
         ini_set('session.use_trans_sid', '0');
 
-        // create handler
         $this->_store = MolajoSessionStorage::getInstance($store, $options);
 
-        // set options
         $this->_setOptions($options);
 
         $this->_setCookieParams();
 
-        // load the session
         $this->_start();
 
-        // initialise the session
         $this->_setCounter();
+
         $this->_setTimers();
 
         $this->_state = 'active';
 
-        // perform security checks
         $this->_validate();
     }
 
@@ -394,16 +391,19 @@ class MolajoSession extends JObject
      */
     protected function _start()
     {
-        // Start session if not started
         if ($this->_state == 'restart') {
             session_id($this->_createId());
+
         } else {
             $session_name = session_name();
-            if (JInput::get($session_name, false, 'COOKIE')) {
-                if (JInput::get($session_name)) {
-                    session_id(JInput::get($session_name));
-                    setcookie($session_name, '', time() - 3600);
-                }
+
+            $input = MolajoController::getApplication()->input;
+            $cookie = $input->get($session_name, false, 'COOKIE');
+
+            if ($cookie === false) {
+            } else {
+                session_id($cookie);
+                setcookie($cookie, '', time() - 3600);
             }
         }
 
@@ -549,8 +549,7 @@ class MolajoSession extends JObject
             $id .= mt_rand(0, mt_getrandmax());
         }
 
-        $id = md5(uniqid($id, true));
-        return $id;
+        return md5(uniqid($id, true));
     }
 
     /**
@@ -559,18 +558,25 @@ class MolajoSession extends JObject
     protected function _setCookieParams()
     {
         $cookie = session_get_cookie_params();
+
         if ($this->_force_ssl) {
             $cookie['secure'] = true;
         }
 
-        if (MolajoController::getApplication()->get('cookie_domain', '') != '') {
+        if (MolajoController::getApplication()->get('cookie_domain', '') == '') {
+        } else {
             $cookie['domain'] = MolajoController::getApplication()->get('cookie_domain');
         }
 
-        if (MolajoController::getApplication()->get('cookie_path', '') != '') {
+        if (MolajoController::getApplication()->get('cookie_path', '') == '') {
+        } else {
             $cookie['path'] = MolajoController::getApplication()->get('cookie_path');
         }
-        session_set_cookie_params($cookie['lifetime'], $cookie['path'], $cookie['domain'], $cookie['secure']);
+
+        session_set_cookie_params($cookie['lifetime'],
+                                    $cookie['path'],
+                                    $cookie['domain'],
+                                    $cookie['secure']);
     }
 
     /**
@@ -604,6 +610,7 @@ class MolajoSession extends JObject
         ++$counter;
 
         $this->set('session.counter', $counter);
+
         return true;
     }
 
@@ -614,7 +621,8 @@ class MolajoSession extends JObject
      */
     protected function _setTimers()
     {
-        if (!$this->has('session.timer.start')) {
+        if ($this->has('session.timer.start')) {
+        } else {
             $start = time();
 
             $this->set('session.timer.start', $start);
@@ -635,33 +643,24 @@ class MolajoSession extends JObject
      *
      * @return  boolean  true on success
      */
-    protected function _setOptions(&$options)
+    protected function _setOptions($options)
     {
-        // Set name
         if (isset($options['name'])) {
             session_name(md5($options['name']));
         }
-
-        // Set id
         if (isset($options['id'])) {
             session_id($options['id']);
         }
-
-        // Set expire time
         if (isset($options['expire'])) {
             $this->_expire = $options['expire'];
         }
-
-        // Get security options
         if (isset($options['security'])) {
             $this->_security = explode(',', $options['security']);
         }
-
         if (isset($options['force_ssl'])) {
             $this->_force_ssl = (bool)$options['force_ssl'];
         }
 
-        // Sync the session maxlifetime
         ini_set('session.gc_maxlifetime', $this->_expire);
 
         return true;
@@ -671,20 +670,19 @@ class MolajoSession extends JObject
      * Do some checks for security reason
      *
      * - timeout check (expire)
-     * - ip-fixiation
-     * - browser-fixiation
+     * - ip-fixation
+     * - browser-fixation
      *
      * If one check failed, session data has to be cleaned.
      *
      * @param   boolean  reactivate session
      *
      * @return  boolean  true on success
-     * @see        http://shiflett.org/articles/the-truth-about-sessions
+     * @see     http://shiflett.org/articles/the-truth-about-sessions
      */
     protected function _validate($restart = false)
     {
-        // Allow to restart a session
-        if ($restart) {
+        if ($restart === true) {
             $this->_state = 'active';
 
             $this->set('session.client.address', null);
@@ -693,47 +691,48 @@ class MolajoSession extends JObject
             $this->set('session.token', null);
         }
 
-        // Check if session has expired
-        if ($this->_expire) {
+        if ($this->_expire === true) {
             $curTime = $this->get('session.timer.now', 0);
             $maxTime = $this->get('session.timer.last', 0) + $this->_expire;
 
-            // Empty session variables
             if ($maxTime < $curTime) {
                 $this->_state = 'expired';
                 return false;
             }
         }
 
-        // Record proxy forwarded for in the session in case we need it later
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $this->set('session.client.forwarded', $_SERVER['HTTP_X_FORWARDED_FOR']);
         }
 
-        // Check for client adress
-        if (in_array('fix_adress', $this->_security) && isset($_SERVER['REMOTE_ADDR'])) {
+        if (in_array('fix_address', $this->_security)
+            && isset($_SERVER['REMOTE_ADDR'])) {
             $ip = $this->get('session.client.address');
 
             if ($ip === null) {
                 $this->set('session.client.address', $_SERVER['REMOTE_ADDR']);
-            } else if ($_SERVER['REMOTE_ADDR'] !== $ip) {
+
+            } else if ($_SERVER['REMOTE_ADDR'] == $ip) {
+            } else {
                 $this->_state = 'error';
                 return false;
             }
         }
 
-        // Check for clients browser
-        if (in_array('fix_browser', $this->_security) && isset($_SERVER['HTTP_USER_AGENT'])) {
+        if (in_array('fix_browser', $this->_security)
+            && isset($_SERVER['HTTP_USER_AGENT'])) {
             $browser = $this->get('session.client.browser');
 
             if ($browser === null) {
                 $this->set('session.client.browser', $_SERVER['HTTP_USER_AGENT']);
-            } else if ($_SERVER['HTTP_USER_AGENT'] !== $browser) {
-                //				$this->_state	=	'error';
-                //				return false;
+
+            } else if ($_SERVER['HTTP_USER_AGENT'] == $browser) {
+            } else {
+                /** todo: amy why where these two lines removed? */
+                $this->_state	=	'error';
+                return false;
             }
         }
-
         return true;
     }
 }
