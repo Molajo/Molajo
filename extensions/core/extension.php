@@ -7,6 +7,7 @@
  */
 defined('MOLAJO') or die;
 
+// todo: amy add error checking
 /**
  * Extension
  *
@@ -21,14 +22,6 @@ class MolajoExtension
      * @since 1.0
      */
     private $_override_request = null;
-
-    /**
-     *  Found
-     *
-     * @var boolean
-     * @since 1.0
-     */
-    public $found = null;
 
     /**
      *  Request Array
@@ -129,7 +122,7 @@ class MolajoExtension
         //        $this->_route($this);
 
         /** 404 Not Found */
-        if ($this->found === false) {
+        if ($this->requestArray['found'] === false) {
             MolajoController::getApplication()->setHeader('Status', '404 Not Found', 'true');
             $this->requestArray['template_name'] = MolajoController::getApplication()->get('error_template', 'system');
             $this->requestArray['page'] = MolajoController::getApplication()->get('error_page', 'print');
@@ -149,7 +142,7 @@ class MolajoExtension
         $this->_authorise();
 
         /** 403 Not Found */
-        if ($this->found === false) {
+        if ($this->requestArray['found'] === false) {
             MolajoController::getApplication()->setHeader('Status', '403 Not Authorised', 'true');
             $this->requestArray['template_name'] = MolajoController::getApplication()->get('error_template', 'system');
             $this->requestArray['page'] = MolajoController::getApplication()->get('error_page', 'print');
@@ -160,6 +153,7 @@ class MolajoExtension
 
         /**
          *  Determine rendering parameters and page metadata in priority order
+         *
          *  1. Query Parameters
          *  2. Asset (already set in array)
          *  3. Source Data
@@ -180,9 +174,9 @@ class MolajoExtension
         $results = $this->_getSourceData();
         if ($results === false) {
             //error
+        } else {
+            $this->_setPageValues($this->requestArray['source_parameters'], $this->requestArray['source_metadata']);
         }
-
-        $this->_setPageValues($this->requestArray['source_parameters'], $this->requestArray['source_metadata']);
 
         /** 4: Menu Item */
 
@@ -200,50 +194,41 @@ class MolajoExtension
         $results = $this->_getComponent();
         if ($results === false) {
             //error
+        } else {
+            $this->_setPageValues($this->requestArray['category_parameters'], $this->requestArray['category_metadata']);
         }
-        $this->_setPageValues($this->requestArray['category_parameters'], $this->requestArray['category_metadata']);
-
 
         /** 7: Application (static, items, item, edit) */
-        $this->application_template = MolajoController::getApplication()->get('default_template');
-        $this->application_page = MolajoController::getApplication()->get('default_page');
-        $this->default_view_items = MolajoController::getApplication()->get('default_view_items');
-        $this->default_wrap_items = MolajoController::getApplication()->get('default_wrap_items');
+        $results = $this->_getApplication ();
 
-        /** Priority 8: System-defined */
-        if ($this->requestArray['template_name'] == '') {
-            $this->requestArray['template_name'] = $this->application_template;
-        }
-        if ($this->requestArray['page'] == '') {
-            $this->requestArray['page'] = $this->application_page;
-        }
-
-        //        $this->_setPageValues($result->parameters, $result->metadata);
+        /**
+         *  Set Application Meta Data Values
+         */
         $this->_setMetaData();
 
-        /** for MVC */
-        $this->requestArray['format'] = 'html';
+/** todo: Amy fix and remove */
+$this->requestArray['format'] = 'html';
 
-        /** retrieve template id or name and parameters */
+        /** Template values */
         $results = $this->_getTemplate();
         if ($results === false) {
             // error
         }
 
-        /** todo: amy fix and remove */
-        $this->requestArray['format'] = 'html';
-        $this->requestArray['view'] = 'dashboard';
-        $this->requestArray['page'] = 'default';
+/** todo: amy fix and remove */
+$this->requestArray['format'] = 'html';
+$this->requestArray['view'] = 'dashboard';
+$this->requestArray['page'] = 'default';
 
         $this->requestArray = MolajoExtensionHelper::getExtensionOptions($this->requestArray);
         if ($this->requestArray['results'] === false) {
             echo 'failed getExtensionOptions';
         }
 
-        /** todo: amy fix and remove */
-        $this->requestArray['format'] = 'html';
-        $this->requestArray['view'] = 'dashboard';
-        $this->requestArray['page'] = 'default';
+/** todo: amy fix and remove */
+$this->requestArray['format'] = 'html';
+$this->requestArray['view'] = 'dashboard';
+$this->requestArray['page'] = 'default';
 
         /** View Path */
         $this->requestArray['view_type'] = 'extensions';
@@ -260,12 +245,13 @@ class MolajoExtension
         $pageHelper = new MolajoViewHelper($this->requestArray['page'], 'pages', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
         $this->requestArray['page_path'] = $pageHelper->view_path;
         $this->requestArray['page_path_url'] = $pageHelper->view_path_url;
-
+/**
         echo '<pre>';
         var_dump($this->requestArray);
         echo '</pre>';
-
-        $this->_renderDocumentType();
+*/
+        /** Render by Format */
+        $this->_renderFormat();
 
         /** return to application */
         return;
@@ -281,14 +267,12 @@ class MolajoExtension
      */
     protected function _getQueryRequest()
     {
-        /** Application SEF Options */
         $this->requestArray['sef'] = MolajoController::getApplication()->get('sef', 1);
         $this->requestArray['sef_rewrite'] = MolajoController::getApplication()->get('sef_rewrite', 0);
         $this->requestArray['sef_suffix'] = MolajoController::getApplication()->get('sef_suffix', 0);
         $this->requestArray['unicodeslugs'] = MolajoController::getApplication()->get('unicodeslugs', 0);
         $this->requestArray['force_ssl'] = MolajoController::getApplication()->get('force_ssl', 0);
 
-        /** Path ex. index.php?option=login or access/groups */
         if ($this->_override_request == null) {
             $path = MOLAJO_PAGE_REQUEST;
         } else {
@@ -340,20 +324,24 @@ class MolajoExtension
                 $this->requestArray['template_id'] = $result->extension_id;
                 $this->requestArray['template_name'] = $result->title;
             }
+            return true;
         } else {
             return false;
         }
     }
 
     /**
-     *  _getQueryParameters
+     * _getQueryParameters
      *
-     *  Retrieve Parameter overrides from URL
-     *  todo: amy add parameter to turn this off in the template manager
-     *  todo: amy filter input
+     * Retrieve Parameter overrides from URL
+     *
+     * @return bool
+     * @since 1.0
      */
     protected function _getQueryParameters()
     {
+//  todo: amy add parameter to turn this off in the template manager
+//  todo: amy filter input
         $parameterArray = array();
         $temp = substr(MOLAJO_PAGE_REQUEST, 10, (strlen(MOLAJO_PAGE_REQUEST) - 10));
         $parameterArray = explode('&', $temp);
@@ -375,6 +363,7 @@ class MolajoExtension
                 $this->requestArray['page'] = (string)$pair[1];
             }
         }
+        return true;
     }
 
     /**
@@ -382,7 +371,7 @@ class MolajoExtension
      *
      * Retrieve Parameters and MetaData for Source Detail
      *
-     * @return  array
+     * @return  bool
      * @since   1.0
      */
     protected function _getSourceData()
@@ -407,10 +396,10 @@ class MolajoExtension
                 $this->requestArray['source_parameters'] = $result->parameters;
                 $this->requestArray['source_metadata'] = $result->metadata;
             }
+            return true;
         } else {
             return false;
         }
-        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
     }
 
     /**
@@ -418,7 +407,7 @@ class MolajoExtension
      *
      * Retrieve the Menu Item Parameters and Meta Data
      *
-     * @return  array
+     * @return  boolean
      * @since   1.0
      */
     protected function _getPrimaryCategory()
@@ -445,9 +434,6 @@ class MolajoExtension
         } else {
             return false;
         }
-
-        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
-        //    return false;
     }
 
     /**
@@ -460,7 +446,7 @@ class MolajoExtension
      */
     protected function _getComponent()
     {
-// todo: amy fix
+// todo: amy fix and remove
 $this->requestArray['extension_instance_id'] = 9;
         $results = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, (int)$this->requestArray['extension_instance_id'], null);
 
@@ -484,8 +470,27 @@ $this->requestArray['extension_instance_id'] = 9;
                 $this->requestArray['extension_type'] = 'component';
                 $this->requestArray['extension_folder'] = '';
             }
+            return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     *  _getApplication
+     *
+     *  Retrieve Template and Page from the final level of default values, if needed
+     *
+     *  @return bool
+     *  @since 1.0
+     */
+    protected function _getApplication()
+    {
+        if ($this->requestArray['template_name'] == '') {
+            $this->requestArray['template_name'] = MolajoController::getApplication()->get('default_template');
+        }
+        if ($this->requestArray['page'] == '') {
+            $this->requestArray['page'] = MolajoController::getApplication()->get('default_page');
         }
     }
 
@@ -496,6 +501,9 @@ $this->requestArray['extension_instance_id'] = 9;
      *
      * @param null $sourceParameters
      * @param null $sourceMetadata
+     *
+     * @return bool
+     * @since 1.0
      */
     protected function _setPageValues($parameters = null, $metadata = null)
     {
@@ -551,8 +559,7 @@ $this->requestArray['extension_instance_id'] = 9;
         if ($this->requestArray['metadata_robots'] == '') {
             $this->requestArray['metadata_robots'] = $meta->def('metadata_robots', '');
         }
-        //todo: amy figure out how to retrieve and keep all other meta
-        //$this->requestArray['metadata_additional_array'] = $metadataArray;
+//todo: amy figure out how to retrieve and keep all other meta
     }
 
     /**
@@ -560,7 +567,7 @@ $this->requestArray['extension_instance_id'] = 9;
      *
      * Function to retrieve asset information for the Request or Asset ID
      *
-     * @return  boolean
+     * @return  string url
      * @since   1.0
      */
     public static function getRedirectURL($asset_id)
@@ -584,14 +591,15 @@ $this->requestArray['extension_instance_id'] = 9;
         $db->setQuery($query->__toString());
 
         return $db->loadResult();
-
-        //    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
     }
 
     /**
      *  _setMetaData
      *
      * Establish the meta data for this web page
+     *
+     * @return bool
+     * @since 1.0
      */
     protected function _setMetaData()
     {
@@ -601,6 +609,8 @@ $this->requestArray['extension_instance_id'] = 9;
         MolajoController::getApplication()->setMetaData('metadata_author', $this->requestArray['metadata_author']);
         MolajoController::getApplication()->setMetaData('metadata_rights', $this->requestArray['metadata_rights']);
         MolajoController::getApplication()->setMetaData('metadata_robots', $this->requestArray['metadata_robots']);
+//todo: set extra values
+        return true;
     }
 
     /**
@@ -623,10 +633,11 @@ $this->requestArray['extension_instance_id'] = 9;
     }
 
     /**
-     * Execute Extension
+     * _authorise
+     *
+     * Test user is authorised to view page
      *
      * @return  boolean
-     *
      * @since   1.0
      */
     protected function _authorise()
@@ -639,17 +650,17 @@ $this->requestArray['extension_instance_id'] = 9;
     }
 
     /**
-     * _renderDocumentType
+     * _renderFormat
      *
-     * Get Header information for Page
+     * Render output by Format Class
      *
-     * @return  void
+     * @return  object
      *
      * @since   1.0
      */
-    protected function _renderDocumentType()
+    protected function _renderFormat()
     {
         $documentTypeClass = 'Molajo' . ucfirst($this->requestArray['format']) . 'Format';
-        $results = new $documentTypeClass ($this->requestArray);
+        new $documentTypeClass ($this->requestArray);
     }
 }
