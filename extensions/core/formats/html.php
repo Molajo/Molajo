@@ -17,12 +17,12 @@ defined('MOLAJO') or die;
 class MolajoHtmlFormat
 {
     /**
-     *  Sequence in which renderers are to be processed
+     *  Rendering Sequence
      *
      * @var array
      * @since 1.0
      */
-    protected $rendererProcessingSequence = array();
+    protected $sequence = array();
 
     /**
      *  Request Array
@@ -49,7 +49,7 @@ class MolajoHtmlFormat
     protected $_template = array();
 
     /**
-     *  Holds set of renderers defined within the template and associated attributes
+     *  Holds renderer set defined within the template and associated attributes
      *
      * @var string
      * @since 1.0
@@ -78,7 +78,7 @@ class MolajoHtmlFormat
         foreach ($sequence->format as $format) {
             if ($format->name == 'html') {
                 foreach ($format->renderer as $renderer) {
-                    $this->rendererProcessingSequence[] = (string)$renderer[0];
+                    $this->sequence[] = (string)$renderer[0];
                 }
                 break;
             }
@@ -86,7 +86,6 @@ class MolajoHtmlFormat
 
         /** set class properties */
         $this->requestArray = $requestArray;
-
 
         /** Request */
         $this->_render();
@@ -122,7 +121,7 @@ class MolajoHtmlFormat
         );
 
         /** Before Event */
-        MolajoController::getApplication()->triggerEvent('onBeforeRender');
+//        MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
         /** Media */
 
@@ -153,7 +152,7 @@ class MolajoHtmlFormat
 
         MolajoController::getApplication()->setBody($body);
 
-        /** After Event */
+        /** After Rendering */
         MolajoController::getApplication()->triggerEvent('onAfterRender');
 
         return;
@@ -228,14 +227,15 @@ class MolajoHtmlFormat
         $replace = array();
         $with = array();
 
-        foreach ($this->rendererProcessingSequence as $nextRenderer) {
+        foreach ($this->sequence as $nextRenderer) {
 
             /** load renderer class */
             $class = 'Molajo' . ucfirst($nextRenderer) . 'Renderer';
             if ($class == 'MolajoHeadRenderer') {
+
             } elseif (class_exists($class)) {
                 $rendererClass = new $class ($nextRenderer, $this->requestArray);
-                echo $class . '<br />';
+
             } else {
                 echo 'failed renderer = ' . $class . '<br />';
                 // ERROR
@@ -248,7 +248,7 @@ class MolajoHtmlFormat
                     if ($nextRenderer == $rendererArray['name']) {
 
                         $renderer = $rendererArray['name'];
-
+                        echo $renderer . '<br />';
                         if (isset($rendererArray['attributes'])) {
                             $attributes = $rendererArray['attributes'];
                         } else {
@@ -279,7 +279,6 @@ class MolajoHtmlFormat
             MolajoController::getApplication()->addFavicon($urlPath);
             return true;
         }
-
         return false;
     }
 }

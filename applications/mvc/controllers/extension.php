@@ -70,7 +70,7 @@ class MolajoControllerExtension
      *
      * Constructor.
      *
-     * @param    array   $config    An optional associative array of configuration settings.
+     * @param    array   $request
      *
      * @since    1.0
      */
@@ -150,8 +150,6 @@ class MolajoControllerExtension
      *
      * @return bool
      */
-//public function checkTaskAuthorisation($checkTask = null, $checkId = null, $checkCatid = null, $checkTable = null)
-
     public function checkTaskAuthorisation()
     {
         $acl = new MolajoACL ();
@@ -432,7 +430,6 @@ class MolajoControllerExtension
             }
             $this->name = strtolower($r[1]);
         }
-
         return $this->name;
     }
 }
