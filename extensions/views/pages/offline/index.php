@@ -2,7 +2,7 @@
 /**
  * @version        $Id: offline.php 20717 2011-02-15 16:50:33Z infograf768 $
  * @package        Joomla.Site
- * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright    Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 

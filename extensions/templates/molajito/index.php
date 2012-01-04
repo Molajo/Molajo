@@ -7,7 +7,6 @@
  */
 defined('MOLAJO') or die;
 
-$page = 'default';
 $bodyElement = '<body>';
 if (MolajoController::getApplication()->get('html5', true) === true): ?>
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ if (MolajoController::getApplication()->get('html5', true) === true): ?>
 </head>
 <?php
 echo $bodyElement;
-include dirname(__FILE__) . '/pages/' . $page . '/index.php';
+include $this->parameters['page'];
 ?>
 </body>
 </html>

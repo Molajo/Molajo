@@ -21,7 +21,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      *
      * Constructor.
      *
-     * @param    array   $request    An optional associative array of configuration settings.
+     * @param    array   $request    From Extension Level
      *
      * @since    1.0
      */
@@ -35,19 +35,19 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      *
      * Display task is used to render view output
      *
-     * @param    boolean  $cachable         If true, the view output will be cached
-     * @param    array    $urlparameters    An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
-     *
      * @return   object   Rendered output
      *
      * @since    1.0
      */
-    public function display($cachable = false, $urlparameters = false)
+    public function display()
     {
-        $this->model = $this->getModel(ucfirst($this->requestArray['model']), ucfirst($this->requestArray['option'] . 'Model'), array());
+        /** model */
+        $this->model = $this->getModel(ucfirst($this->requestArray['model']),
+                                        ucfirst($this->requestArray['option'] . 'Model'), array());
         $this->model->requestArray = $this->requestArray;
         $this->model->parameters = $this->parameters;
 
+        /** check out */
         if ($this->requestArray['task'] == 'edit') {
             $results = parent::checkoutItem();
             if ($results === false) {
@@ -55,63 +55,25 @@ class MolajoControllerDisplay extends MolajoControllerExtension
             }
         }
 
-        /** retrieve query results */
-
-        /** 1. Query Results */
+        /** Query Results */
         $this->rowset = $this->model->get('Items');
 
-        /** 2. Pagination */
+        /** Pagination */
         $this->pagination = $this->model->get('Pagination');
-/*
-        echo '<pre>';
-        var_dump($this->requestArray);
-        echo '</pre>';
-*/
-        /** no results */
-        if (count($this->parameters) > 0
+
+        /** No results */
+        if (count($this->rowset) == 0
             && $this->parameters->def('suppress_no_results', false) === true
-            && count($this->rowset == 0)
         ) {
             return;
         }
 
         /** Render View */
-        $this->findPath($this->requestArray['view'], $this->requestArray['view_type']);
-
-        if ($this->view_path === false) {
-            // load an error view
-            return;
-        }
-
+        $this->view_path = $this->requestArray['view_path'];
+        $this->view_path_url = $this->requestArray['view_path_url'];
         $renderedOutput = $this->renderView($this->requestArray['view'], $this->requestArray['view_type']);
 
-        /** Wrap Rendered Output */
-        if ($this->requestArray['wrap'] == 'horz') {
-            $this->requestArray['wrap'] = 'horizontal';
-        }
-        if ($this->requestArray['wrap'] == 'xhtml') {
-            $this->requestArray['wrap'] = 'div';
-        }
-        if ($this->requestArray['wrap'] == 'rounded') {
-            $this->requestArray['wrap'] = 'div';
-        }
-        if ($this->requestArray['wrap'] == 'raw') {
-            $this->requestArray['wrap'] = 'none';
-        }
-        if ($this->requestArray['wrap'] == '') {
-            $this->requestArray['wrap'] = 'none';
-        }
-        if ($this->requestArray['wrap'] == null) {
-            $this->requestArray['wrap'] = 'none';
-        }
-
-        $this->requestArray['wrap'] = 'none';
-        $this->findPath($this->requestArray['wrap'], 'wraps');
-        if ($this->view_path === false) {
-            echo $renderedOutput;
-            return;
-        }
-
+        /** Wrap */
         $this->rowset = array();
 
         $tmpobj = new JObject();
@@ -120,84 +82,15 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $tmpobj->set('content', $renderedOutput);
 
         $this->rowset[] = $tmpobj;
+
+        /** Render Wrap */
+        $this->view_path = $this->requestArray['wrap_path'];
+        $this->view_path_url = $this->requestArray['wrap_path_url'];
         $wrappedOutput = $this->renderView($this->requestArray['wrap'], 'wraps');
 
+        /** Wrapped View */
         echo $wrappedOutput;
-
         return;
-    }
-
-    /**
-     * findPath
-     *
-     * Looks for path of Request View as a view folder, in this order:
-     *
-     *  1. [template]/views/[view-type]/[view-folder]
-     *  2. [extension_type]/[extension-name]/views/[view-type]/[view-folder]
-     *      => For plugins, add plugin subfolder following [extension_type]
-     *      => For components, add "controllers" subfolder following [extension-name]
-     *  3. views/[view_type]/[view-folder]
-     *
-     * @return bool|string
-     */
-    protected function findPath($view, $view_type)
-    {
-        /** initialise view */
-        $this->view_path = false;
-        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-
-        /** 1. @var $templateViewPath [template]/views/[view-type]/[view-folder] */
-        $templateViewPath = $template . '/views/' . $view_type . '/' . $view;
-        $templateViewPathURL = MOLAJO_BASE_URL .  '/extensions/views/templates/' . $this->requestArray['template_name'] . '/views/' . $view_type . '/' . $view;
-
-        /** 2. @var $extensionPath [extension_type]/[extension-name]/views/[view-type]/[view-folder] */
-        $extensionPath = '';
-        if ($this->requestArray['extension_type'] == 'plugin') {
-            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->requestArray['plugin_folder'] . '/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/plugins/' . $this->requestArray['plugin_folder'] . '/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
-
-        } else if ($this->requestArray['extension_type'] == 'component') {
-            $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->requestArray['option'] . '/controllers/' . $this->requestArray['controller'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/components/' . $this->requestArray['option'] . '/controllers/' . $this->requestArray['controller'] . '/views/' . $view_type . '/' . $view;
-
-        } else if ($this->requestArray['extension_type'] == 'module') {
-            $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
-            $extensionPathURL = MOLAJO_BASE_URL . '/extensions/views/modules/' . $this->requestArray['option'] . '/views/' . $view_type . '/' . $view;
-
-        } else {
-            $extensionPath = '';
-            $extensionPathURL = '';
-        }
-
-        /** 3. $corePath views/[view_type]/[view-folder] */
-        $corePath = MOLAJO_EXTENSIONS_VIEWS . '/' . $view_type . '/' . $view;
-        $corePathURL = MOLAJO_BASE_URL . '/extensions/views/' . $view_type . '/' . $view;
-
-        /**
-         * Determine path in order of priority
-         */
-
-        /* 1. Template */
-        if (is_dir($templateViewPath)) {
-            $this->view_path = $templateViewPath;
-            $this->view_path_url = $templateViewPathURL;
-            return;
-
-            /** 2. Extension **/
-        } else if (is_dir($extensionPath)) {
-            $this->view_path = $extensionPath;
-            $this->view_path_url = $extensionPathURL;
-            return;
-
-            /** 3. Core **/
-        } else if (is_dir($corePath)) {
-            $this->view_path = $corePath;
-            $this->view_path_url = $corePathURL;
-            return;
-        }
-
-        $this->view_path = false;
-        $this->view_path_url = false;
     }
 
     /**
@@ -223,9 +116,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         /** Media */
         $this->loadMedia();
-
-        /** Language */
-        $this->loadLanguage($view, $view_type);
 
         /** start collecting output */
         ob_start();
@@ -323,21 +213,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-    }
-
-    /**
-     * loadLanguage
-     *
-     * Language
-     *
-     * Automatically includes Language Files (if existing) for views
-     *
-     * @param $this->view_path
-     * @return void
-     */
-    protected function loadLanguage($view, $view_type)
-    {
-        MolajoController::getLanguage()->load($view, $this->view_path, MolajoController::getLanguage()->getDefault(), false, false);
     }
 
     /**
@@ -447,7 +322,7 @@ protected $columns = 1;
 //$this->breadcrumbs
 //$total = $this->getTotal();
 
-//$this->configuration
-//Parameters (Includes Global Options, Menu Item, Item)
-//$this->parameters->get('view_show_page_heading', 1)
-//$this->parameters->get('view_page_class_suffix', '')
+//$this->configuration;
+//Parameters (Includes Global Options, Menu Item, Item);
+//$this->parameters->get('view_show_page_heading', 1);
+//$this->parameters->get('view_page_class_suffix', '');

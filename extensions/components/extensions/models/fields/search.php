@@ -3,7 +3,7 @@
  * @version        $Id: search.php 20266 2011-01-11 02:31:44Z dextercowley $
  * @package        Joomla.Administrator
  * @subpackage    installer
- * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright    Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license        GNU General Public License, see LICENSE.php
  */
 

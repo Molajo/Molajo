@@ -43,8 +43,8 @@ class MolajoExtension
      *
      * Class constructor.
      *
-     * @param   null    $request    An optional argument to provide dependency injection for the asset
-     * @param   null    $asset_id   An optional argument to provide dependency injection for the asset
+     * @param   null    $request
+     * @param   null    $asset_id
      *
      * @return boolean
      *
@@ -55,7 +55,7 @@ class MolajoExtension
         /** MVC Request Variables */
         $this->_initializeRequestArray();
 
-        /** Specific URL path (less host, path and application) */
+        /** Specific URL path (host, path and application removed) */
         if ($request == null) {
         } else {
             $this->requestArray['query_request'] = $request;
@@ -170,11 +170,24 @@ class MolajoExtension
         /** render */
         $this->requestArray['format'] = 'html';
         $this->requestArray['view'] = 'dashboard';
+        $this->requestArray['page'] = 'default';
+
+        /** View Path */
+        $viewHelper = new MolajoViewHelper($this->requestArray['view'], $this->requestArray['view_type'], $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['view_path'] = $viewHelper->view_path;
+        $this->requestArray['view_path_url'] = $viewHelper->view_path_url;
+
+        /** Page Path */
+        $pageHelper = new MolajoViewHelper($this->requestArray['page'], 'pages', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['page_path'] = $pageHelper->view_path;
+        $this->requestArray['page_path_url'] = $pageHelper->view_path_url;
+
 /**
-                echo '<pre>';
-                var_dump($this->requestArray);
-                echo '</pre>';
- */
+        echo '<pre>';
+        var_dump($this->requestArray);
+        echo '</pre>';
+*/
+
         $this->_renderDocumentType();
 
         /** return to application */
@@ -213,12 +226,22 @@ class MolajoExtension
         $this->requestArray['option'] = '';
         $this->requestArray['format'] = '';
         $this->requestArray['task'] = '';
+
         $this->requestArray['view'] = '';
         $this->requestArray['view_type'] = 'extensions';
+        $this->requestArray['view_path'] = '';
+        $this->requestArray['view_path_url'] = '';
+
         $this->requestArray['wrap'] = '';
+        $this->requestArray['wrap_path'] = '';
+        $this->requestArray['wrap_path_url'] = '';
         $this->requestArray['wrap_id'] = '';
         $this->requestArray['wrap_class'] = '';
+
         $this->requestArray['page'] = '';
+        $this->requestArray['page_path'] = '';
+        $this->requestArray['page_path_url'] = '';
+
         $this->requestArray['format'] = '';
         $this->requestArray['id'] = 0;
         $this->requestArray['ids'] = array();
@@ -256,9 +279,11 @@ class MolajoExtension
 
         /** extension */
         $this->requestArray['extension_instances_id'] = 0;
+        $this->requestArray['extension_name'] = '';
         $this->requestArray['extension_parameters'] = array();
         $this->requestArray['extension_path'] = '';
         $this->requestArray['extension_type'] = 'component';
+        $this->requestArray['extension_folder'] = '';
     }
 
     /**
@@ -628,6 +653,7 @@ class MolajoExtension
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 
+        $query->select('a.' . $db->nameQuote('title'));
         $query->select('a.' . $db->nameQuote('parameters'));
         $query->select('a.' . $db->nameQuote('metadata'));
         $query->from($db->nameQuote('#__extension_instances') . ' as a');
@@ -642,6 +668,8 @@ class MolajoExtension
 
                 $parameters = new JRegistry;
                 $parameters->loadString($result->parameters);
+
+                $this->requestArray['extension_name'] = $result->title;
                 $this->requestArray['extension_parameters'] = $parameters;
 
                 if (isset($this->requestArray['extension_parameters']->static)

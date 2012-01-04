@@ -69,11 +69,11 @@ class MolajoHtmlFormat
      */
     public function __construct($requestArray = array())
     {
-/*
-                echo '<pre>';
-                var_dump($requestArray);
-                '</pre>';
-*/
+        /*
+                        echo '<pre>';
+                        var_dump($requestArray);
+                        '</pre>';
+        */
         $sequence = simplexml_load_file(MOLAJO_EXTENSIONS_CORE . '/core/formats/sequence.xml', 'SimpleXMLElement');
         foreach ($sequence->format as $format) {
             if ($format->name == 'html') {
@@ -111,8 +111,7 @@ class MolajoHtmlFormat
         }
 
         $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-/** todo: amy look for path for page */
-        $template_page_include = $template_path . '/pages/'.$this->requestArray['page'].'/index.php';
+        $template_page_include = $this->requestArray['page_path'] . '/index.php';
 
         $this->parameters = array(
             'template' => $this->requestArray['template_name'],
@@ -129,13 +128,13 @@ class MolajoHtmlFormat
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
-        $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH  . '/sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
+        $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH  . '/extensions/templates/' . $this->requestArray['template_name'];
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'];
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
@@ -214,7 +213,7 @@ class MolajoHtmlFormat
             $i++;
         }
 
-        //        echo '<pre>';var_dump($this->_renderers);echo '</pre>';
+/** echo '<pre>';var_dump($this->_renderers);echo '</pre>'; */
     }
 
     /**
@@ -276,7 +275,7 @@ class MolajoHtmlFormat
         $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/images/';
 
         if (file_exists($path . 'favicon.ico')) {
-            $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/extensions/templates/' . $this->requestArray['template_name'] . '/images/favicon.ico';
+            $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'] . '/images/favicon.ico';
             MolajoController::getApplication()->addFavicon($urlPath);
             return true;
         }

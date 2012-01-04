@@ -43,6 +43,10 @@ if (defined('MOLAJO_APPLICATIONS_MVC')) {
 } else {
     define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS_CORE . '/mvc');
 }
+if (defined('MOLAJO_APPLICATIONS_MVC_URL')) {
+} else {
+    define('MOLAJO_APPLICATIONS_MVC_URL', MOLAJO_BASE_URL . 'applications/mvc');
+}
 if (defined('MOLAJO_APPLICATIONS_CORE_DATA')) {
 } else {
     define('MOLAJO_APPLICATIONS_CORE_DATA', MOLAJO_APPLICATIONS_CORE . '/data');
@@ -92,6 +96,26 @@ if (defined('MOLAJO_EXTENSIONS_TEMPLATES')) {
     define('MOLAJO_EXTENSIONS_TEMPLATES', MOLAJO_EXTENSIONS . '/templates');
 }
 
+if (defined('MOLAJO_EXTENSIONS_COMPONENTS_URL')) {
+} else {
+    define('MOLAJO_EXTENSIONS_COMPONENTS_URL', MOLAJO_BASE_URL . 'extensions/components');
+}
+if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
+} else {
+    define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . 'extensions/views');
+}
+if (defined('MOLAJO_EXTENSIONS_MODULES_URL')) {
+} else {
+    define('MOLAJO_EXTENSIONS_MODULES_URL', MOLAJO_BASE_URL . 'extensions/modules');
+}
+if (defined('MOLAJO_EXTENSIONS_PLUGINS_URL')) {
+} else {
+    define('MOLAJO_EXTENSIONS_PLUGINS_URL', MOLAJO_BASE_URL . 'extensions/plugins');
+}
+if (defined('MOLAJO_EXTENSIONS_TEMPLATES_URL')) {
+} else {
+    define('MOLAJO_EXTENSIONS_TEMPLATES_URL', MOLAJO_BASE_URL . 'extensions/templates');
+}
 /**
  *  ACTION TYPES
  */

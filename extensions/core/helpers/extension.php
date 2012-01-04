@@ -13,6 +13,7 @@ defined('MOLAJO') or die;
  * Queries the extension tables for various rendered extension types
  *
  * MOLAJO_ASSET_TYPE_EXTENSION_BEGIN 1000
+ *
  * MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT 1050
  * MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE 1100
  * MOLAJO_ASSET_TYPE_EXTENSION_VIEW 1150
@@ -20,6 +21,7 @@ defined('MOLAJO') or die;
  * MOLAJO_ASSET_TYPE_EXTENSION_MODULE 1350
  * MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN 1450
  * MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE 1500
+ *
  * MOLAJO_ASSET_TYPE_EXTENSION_END 1999
  *
  * @package     Molajo
@@ -38,7 +40,7 @@ abstract class MolajoExtensionHelper
      * @param null $extension
      * @return bool|mixed
      */
-    static public function get($asset_type_id, $extension = null)
+    static public function get($asset_type_id, $extension = null, $extension_type = null)
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
@@ -73,6 +75,10 @@ abstract class MolajoExtensionHelper
         $query->from($db->namequote('#__extensions') . ' as a');
 
         $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
+        if ($extension_type == null) {
+        } else {
+            $query->where('(a.' . $db->namequote('folder') . ' = ' . $db->quote($extension_type) . ')');
+        }
 
         /** Extension Instances */
         $query->select('b.' . $db->namequote('id') . ' as extension_instance_id');
@@ -95,7 +101,7 @@ abstract class MolajoExtensionHelper
         if ($extension == null) {
         } else {
             $query->where('(b.' . $db->namequote('title') . ' = ' . $db->quote($extension) .
-                          ' OR ' . 'b.' . $db->namequote('id') . ' = ' . (int)$extension . ')');
+                ' OR ' . 'b.' . $db->namequote('id') . ' = ' . (int)$extension . ')');
         }
 
         $query->where('a.' . $db->namequote('id') . ' = b.' . $db->namequote('extension_id'));
@@ -183,7 +189,7 @@ abstract class MolajoExtensionHelper
             MolajoError::raiseWarning(500, $error);
             return false;
         }
-//echo '<pre>';var_dump($extensions);'</pre>';
+        //echo '<pre>';var_dump($extensions);'</pre>';
 
         return $extensions;
     }

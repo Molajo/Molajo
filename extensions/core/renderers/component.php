@@ -33,7 +33,7 @@ class MolajoComponentRenderer
     protected $requestArray = array();
 
     /**
-     * Attributes - from Template/Page <include:component statement>
+     * Attributes - from Template/Page <include:component statement attr1=x attr2=y />
      *
      * @var    array
      * @since  1.0
@@ -76,21 +76,39 @@ class MolajoComponentRenderer
         /** renderer $attributes from template */
         $this->attributes = $attributes;
 
+        /** wrap and wrap path */
+        foreach ($this->attributes as $name => $value) {
+            if ($name == 'wrap') {
+                $this->requestArray['wrap'] = $value;
+                break;
+            }
+        }
+
+        if ($this->requestArray['wrap'] == '') {
+            $this->requestArray['wrap'] = 'none';
+        }
+        $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['wrap_path'] = $wrapHelper->view_path;
+        $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
+        /*
+        echo '<pre>';var_dump($this->requestArray);echo '</pre>';
+        **/
+
         /** Before Rendering */
-//        MolajoController::getApplication()->registerEvent ('onBeforeRender', 'system');
-//        MolajoController::getApplication()->triggerEvent ('onBeforeRender', $this);
+        //        MolajoController::getApplication()->registerEvent ('onBeforeRender', 'system');
+        //        MolajoController::getApplication()->triggerEvent ('onBeforeRender', $this);
 
         /** path */
-        $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->requestArray['option'] . '/' . $this->requestArray['option'] . '.php';
+        $path = $this->requestArray['extension_path'] . '/' . $this->requestArray['option'] . '.php';
 
         /** installation */
         if (MOLAJO_APPLICATION_ID == 0
             && file_exists($path)
         ) {
 
-        /** language */
+            /** language */
         } elseif (file_exists($path)) {
-            MolajoController::getLanguage()->load($this->requestArray['option'], $path, MolajoController::getLanguage()->getDefault(), false, false);
+            $this->_loadLanguage();
 
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
@@ -98,35 +116,43 @@ class MolajoComponentRenderer
 
         /** component => MVC */
 
-        $controllerClass = 'MolajoController'.ucfirst($this->requestArray['controller']);
+        $controllerClass = 'MolajoController' . ucfirst($this->requestArray['controller']);
         $controller = new $controllerClass ($this->requestArray);
         $task = $this->requestArray['task'];
         $output = $controller->$task();
-/**
-$request = $this->requestArray;
-        ob_start();
-        require_once $path;
-        $output = ob_get_contents();
-        ob_end_clean();
-*/
+
         /** After Rendering */
-        MolajoController::getApplication()->registerEvent ('onAfterRender', 'system');
-        MolajoController::getApplication()->triggerEvent ('onAfterRender', array($this, $output));
+        MolajoController::getApplication()->registerEvent('onAfterRender', 'system');
+        MolajoController::getApplication()->triggerEvent('onAfterRender', array($this, $output));
 
         /** Return output */
         return $output;
     }
-    
+
+    /**
+     * _loadLanguage
+     *
+     * Loads the view language file
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadLanguage()
+    {
+        MolajoController::getLanguage()->load(strtolower($this->requestArray['option']),
+            $this->requestArray['extension_path'], null, false, false);
+    }
+
     /**
      * import
-     * 
+     *
      * import component folders and files
-     * 
+     *
      */
-    public function import ()
+    public function import()
     {
         $fileHelper = new MolajoFileHelper();
-        
+
         /** Controllers */
         if (file_exists($this->requestArray['extension_path'] . '/controller.php')) {
             $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/controller.php', ucfirst($this->requestArray['option']) . 'Controller');
@@ -145,7 +171,7 @@ $request = $this->requestArray;
                 $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/helpers/' . $file, ucfirst($this->requestArray['option']) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
-        
+
         /** Models */
         $files = JFolder::files($this->requestArray['extension_path'] . '/models', '\.php$', false, false);
         if ($files) {
@@ -153,7 +179,7 @@ $request = $this->requestArray;
                 $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/models/' . $file, ucfirst($this->requestArray['option']) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
-        
+
         /** Tables */
         $files = JFolder::files($this->requestArray['extension_path'] . '/tables', '\.php$', false, false);
         if ($files) {
@@ -161,7 +187,7 @@ $request = $this->requestArray;
                 $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/tables/' . $file, ucfirst($this->requestArray['option']) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
-        
+
         /** Views */
         $folders = JFolder::folders($this->requestArray['extension_path'] . '/views', false, false);
         if ($folders) {
@@ -173,6 +199,6 @@ $request = $this->requestArray;
                     }
                 }
             }
-        }        
-    }        
+        }
+    }
 }

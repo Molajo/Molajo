@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Extension Controller
+ * Extension
  *
  * @package      Molajo
  * @subpackage   Controller
@@ -77,7 +77,22 @@ class MolajoControllerExtension
     public function __construct($request = array())
     {
         $this->requestArray = $request;
+        //echo '<pre>';var_dump($this->requestArray);'</pre>';
 
+        // Get module parameters
+        $this->parameters = new JRegistry;
+        $this->parameters->loadString($this->requestArray['source_parameters']);
+
+        /**
+        if (isset($attribs['params'])) {
+        $template_params = new JRegistry;
+        $template_params->loadString(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
+        $params->merge($template_params);
+        $module = clone $module;
+        $module->params = (string)$params;
+        }
+
+         */
         // todo: amy look at redirect
         $this->redirectClass = new MolajoControllerRedirect($this->requestArray);
 
@@ -141,13 +156,13 @@ class MolajoControllerExtension
     {
         $acl = new MolajoACL ();
         $results = $acl->authoriseTask(
-                            $this->requestArray['option'],
-                            $this->requestArray['controller'],
-                            $this->requestArray['task'],
-                            $this->requestArray['id'],
-                            $this->requestArray['ids'],
-                            $this->requestArray['category'],
-                            $this->table);
+            $this->requestArray['option'],
+            $this->requestArray['controller'],
+            $this->requestArray['task'],
+            $this->requestArray['id'],
+            $this->requestArray['ids'],
+            $this->requestArray['category'],
+            $this->table);
 
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED') . ' ' . $this->requestArray['task']);
@@ -284,9 +299,9 @@ class MolajoControllerExtension
         /** Trigger_Event: onContentCreateVersion
         $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->requestArray['id'], $versionKey));
         if (count($results) && in_array(false, $results, true)) {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
-            $this->redirectClass->setRedirectMessageType('error');
-            return false;
+        $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
+        $this->redirectClass->setRedirectMessageType('error');
+        return false;
         }
          **/
         return true;
