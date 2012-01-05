@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  */
 //class MolajoModelLogin extends JModel
-class MolajoModelLogin extends MolajoModel
+class MolajoModelLogin
 {
     /**
      * Constructor.

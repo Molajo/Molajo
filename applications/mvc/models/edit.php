@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  */
 //class MolajoModelEdit extends JModel
-class MolajoModelEdit extends MolajoModel
+class MolajoModelEdit
 {
     /**
      * @var    object    parameters

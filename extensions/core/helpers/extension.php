@@ -159,6 +159,7 @@ abstract class MolajoExtensionHelper
             $query->select('c_assets.' . $db->namequote('sef_request'));
             $query->select('c_assets.' . $db->namequote('request'));
             $query->select('c_assets.' . $db->namequote('template_id') . ' as menu_item_template_id');
+            $query->select('c_assets.' . $db->namequote('template_page') . ' as menu_item_template_page');
 
             $query->from($db->namequote('#__assets') . ' as c_assets');
             $query->from($db->namequote('#__asset_types') . ' as c_ctype');

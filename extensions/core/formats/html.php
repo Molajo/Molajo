@@ -121,25 +121,18 @@ class MolajoHtmlFormat
         );
 
         /** Before Event */
-//        MolajoController::getApplication()->triggerEvent('onBeforeRender');
+        //        MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
         /** Media */
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
-        $urlPath = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION;
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
-        /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'];
-        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
-
-        /** Language */
-        $lang = MolajoController::getLanguage();
-        $lang->load($this->requestArray['template_name'], MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'], $lang->getDefault(), false, false);
+        /** Load Language Files */
+        $this->_loadLanguageTemplate();
 
         ob_start();
         require $template_include;
@@ -152,10 +145,31 @@ class MolajoHtmlFormat
 
         MolajoController::getApplication()->setBody($body);
 
+        /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'];
+        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
+
         /** After Rendering */
         MolajoController::getApplication()->triggerEvent('onAfterRender');
 
         return;
+    }
+
+    /**
+     * _loadLanguageTemplate
+     *
+     * Loads Language Files
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadLanguageTemplate()
+    {
+        MolajoController::getLanguage()->load($this->requestArray['template_name'],
+            MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'],
+            MolajoController::getLanguage()->getDefault(), false, false);
     }
 
     /**
@@ -212,7 +226,7 @@ class MolajoHtmlFormat
             $i++;
         }
 
-/** echo '<pre>';var_dump($this->_renderers);echo '</pre>'; */
+        /** echo '<pre>';var_dump($this->_renderers);echo '</pre>'; */
     }
 
     /**
@@ -231,7 +245,7 @@ class MolajoHtmlFormat
 
             /** load renderer class */
             $class = 'Molajo' . ucfirst($nextRenderer) . 'Renderer';
-            if ($class == 'MolajoHeadRenderer') {
+            if ($class == 'MolajoHeadRenderer' || $class == 'MolajoMessageRenderer') {
 
             } elseif (class_exists($class)) {
                 $rendererClass = new $class ($nextRenderer, $this->requestArray);

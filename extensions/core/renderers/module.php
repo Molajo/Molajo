@@ -1,328 +1,214 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Renderer
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @subpackage  Renderers
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * MolajoModule
+ * Module
  *
  * @package     Molajo
- * @subpackage  Renderer
+ * @subpackage  Renderers
  * @since       1.0
  */
 class MolajoModuleRenderer
 {
     /**
-     *  Module Output
+     * Name
      *
-     * @var array
+     * @var    string
+     * @since  1.0
+     */
+    protected $name = null;
+
+    /**
+     * Request Array
+     * From Molajo Extension
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $requestArray = array();
+
+    /**
+     * Attributes
+     * Extracted in Format Class from Template/Page
+     * <include:module statement attr1=x attr2=y attrN="and-so-on" />
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $attributes = array();
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @param null $name
+     * @param array $requestArray
      * @since 1.0
      */
-    protected $module_output = null;
-
-    /**
-     *  Parameters
-     *
-     * @var array
-     * @since 1.0
-     */
-    protected $parameters = null;
-
-    /**
-     *  Config
-     *
-     * @var array
-     * @since 1.0
-     */
-    protected $config = null;
-
-    public function __construct($parameters = array(), $config = null)
+    public function __construct($name = null, $requestArray = array())
     {
-        $this->parameters = $this->parameters;
-        $this->config = $config;
+        /**
+        echo '<pre>';
+        var_dump($requestArray);
+        '</pre>';
+         **/
+        $this->name = $name;
+
+        $this->requestArray = $requestArray;
+
     }
 
     /**
-     * getModule
-     *
-     * Get module by name (real, eg 'Breadcrumbs' or folder, eg 'breadcrumbs')
-     *
-     * @param   string  The name of the module
-     * @param   string  The title of the module, optional
-     *
-     * @return  object  The Module object
-     */
-    public static function getModule($name, $title = null)
-    {
-        $result = null;
-        $modules = self::_load();
-
-        $total = count($modules);
-        for ($i = 0; $i < $total; $i++)
-        {
-            // Match the name of the module
-            if ($modules[$i]->title == $name) {
-                // Match the title if we're looking for a specific instance of the module
-                if (!$title || $modules[$i]->title == $title) {
-                    $result = &$modules[$i];
-                    break; // Found it
-                }
-            }
-        }
-
-        // If we didn't find it, and the name is something, create a dummy object
-        if (is_null($result)) {
-            $result = new stdClass;
-            $result->id = 0;
-            $result->title = '';
-            $result->subtitle = '';
-            $result->module = $name;
-            $result->position = '';
-            $result->content = '';
-            $result->showtitle = 0;
-            $result->showsubtitle = 0;
-            $result->control = '';
-            $result->parameters = '';
-            $result->user = 0;
-        }
-
-        return $result;
-    }
-
-    /**
-     * getModules
-     *
-     * Get modules by position
-     *
-     * @param   string  $position    The position of the module
-     *
-     * @return  array  An array of module objects
-     */
-    public static function getModules($position)
-    {
-        $position = strtolower($position);
-        $result = array();
-
-        $modules = self::_load();
-
-        $total = count($modules);
-        for ($i = 0; $i < $total; $i++)
-        {
-            if ($modules[$i]->position == $position) {
-                $result[] = &$modules[$i];
-            }
-        }
-        if (count($result) == 0) {
-
-            if (JRequest::getBool('tp')
-                && MolajoComponent::getParameters('templates')->get('template_positions_display')
-            ) {
-                $result[0] = self::getModule('' . $position);
-                $result[0]->title = $position;
-                $result[0]->content = $position;
-                $result[0]->position = $position;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * isEnabled
-     *
-     * Checks if a module is enabled
-     *
-     * @param   string  The module name
-     *
-     * @return  boolean
-     */
-    public static function isEnabled($module)
-    {
-        $result = self::getModule($module);
-        return (!is_null($result));
-    }
-
-    /**
-     * renderModule
+     * render
      *
      * Render the module.
      *
-     * @param   object  A module object.
-     * @param   array   An array of attributes for the module (probably from the XML).
-     *
-     * @return  string  The HTML content of the module output.
+     * @return  object
+     * @since  1.0
      */
-    public function render($module_object)
+    public function render($attributes)
     {
-        $output = '';
-        $this->module_object = $module_object;
-        $module = $module_object->module;
+        /** renderer $attributes from template */
+        $this->attributes = $attributes;
 
-        //echo '<pre>';var_dump($module);'</pre>';
+        $this->_getModule();
 
-        // Get module path
-        $module->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->title);
-        $path = MOLAJO_EXTENSIONS_MODULES . '/' . $module->extension_name . '/' . $module->extension_name . '.php';
+        $this->_import();
 
-        // Load the module
-        if (file_exists($path)) {
+        $this->requestArray['task'] = 'display';
 
-            $lang = MolajoController::getLanguage();
-            $lang->load($module->extension_name, MOLAJO_EXTENSIONS_MODULES . '/' . $module->extension_name, $lang->getDefault(), false, false);
+        foreach ($this->attributes as $name => $value) {
+            if ($name == 'wrap') {
+                $this->requestArray['wrap'] = $value;
+                $changeWrap = true;
 
-            /** view */
-            $view = new MolajoView ();
+            } else if ($name == 'view') {
+                $this->requestArray['view'] = $value;
+                $changeView = true;
 
-            /** defaults */
-            $request = array();
-            $state = array();
-            $rowset = array();
-            $pagination = array();
-            $view = 'default';
-            if (isset($this->parameters->wrap)) {
-                $wrap = $this->parameters->wrap;
-            } else {
-                $wrap = 'none';
+            } else if ($name == 'id' || $name == 'wrap_id') {
+                $this->requestArray['wrap_id'] = $value;
+
+            } else if ($name == 'class' || $name == 'wrap_class') {
+                $this->requestArray['wrap_class'] = $value;
             }
-
-            $application = MolajoController::getApplication();
-            $user = MolajoController::getUser();
-
-            $this->parameters = new JRegistry;
-            $this->parameters->loadString($module->parameters);
-
-            $request = self::getRequest($module, $this->parameters, $wrap);
-
-            $request['wrap_title'] = $module->title;
-            $request['wrap_subtitle'] = $module->subtitle;
-            $request['wrap_id'] = '';
-            $request['wrap_class'] = '';
-            $request['wrap_date'] = '';
-            $request['wrap_author'] = '';
-            $request['position'] = $module->position;
-            $request['wrap_more_array'] = array();
-
-            /** execute the module */
-            include $path;
-
-            /** 1. Application */
-            $view->app = $application;
-
-            /** 3. User */
-            $view->user = $user;
-
-            /** 4. Request */
-            $view->request = $request;
-
-            /** 5. State */
-            $view->state = $module;
-
-            /** 6. Parameters */
-            $view->parameters = $this->parameters;
-
-            /** 7. Query */
-            $view->rowset = $rowset;
-
-            /** 8. Pagination */
-            $view->pagination = $pagination;
-
-            /** 9. View Type */
-            $view->view_type = 'extensions';
-
-            /** 10. View */
-            $view->view = $view;
-
-            /** 11. Wrap */
-            $view->wrap = $wrap;
-
-            /** display view */
-            ob_start();
-            $view->display();
-            $output = ob_get_contents();
-            ob_end_clean();
+            // $this->requestArray['other_parameters'] = $other_parameters;
         }
 
-        return $output;
+        $this->requestArray = MolajoExtensionHelper::getExtensionOptions($this->requestArray);
+        if ($this->requestArray['results'] === false) {
+            echo 'failed getExtensionOptions';
+        }
+
+        /** View Path */
+        $this->requestArray['view_type'] = 'extensions';
+        $viewHelper = new MolajoViewHelper($this->requestArray['view'], $this->requestArray['view_type'], $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['view_path'] = $viewHelper->view_path;
+        $this->requestArray['view_path_url'] = $viewHelper->view_path_url;
+
+        /** Wrap Path */
+        $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['wrap_path'] = $wrapHelper->view_path;
+        $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
+
+        /** Load Language Files */
+        $this->_loadLanguageModule();
+
+        /** Instantiate Controller */
+        $controllerClass = ucfirst($this->requestArray['extension_name']) . 'ControllerModule';
+        $controller = new $controllerClass ($this->requestArray);
+
+        /** Execute Task  */
+        $task = $this->requestArray['task'];
+        return $controller->$task();
     }
 
     /**
-     * getRequest
+     * _getModule
      *
-     * Gets the Request Object and populates Page Session Variables for Component
+     * Retrieve Module information using the Title
      *
      * @return bool
+     * @since 1.0
      */
-    protected function getRequest($module, $parameters, $wrap)
+    protected function _getModule()
     {
-        $session = MolajoController::getSession();
-
-        /** 1. Request */
-        $request = array();
-        $request['application_id'] = $session->get('page.application_id');
-        $request['current_url'] = $session->get('page.current_url');
-        $request['component_path'] = $session->get('page.component_path');
-        $request['base_url'] = $session->get('page.base_url');
-        $request['item_id'] = $session->get('page.item_id');
-
-        $request['controller'] = 'module';
-        $request['extension_type'] = 'module';
-        $request['option'] = $session->get('page.option');
-        $request['view'] = 'module';
-        $request['model'] = 'module';
-        $request['task'] = 'display';
-        $request['format'] = 'html';
-        $request['plugin_type'] = 'content';
-
-        $request['id'] = $session->get('page.id');
-        $request['cid'] = $session->get('page.cid');
-        $request['category_id'] = $session->get('page.category_id');
-        $request['parameters'] = $this->parameters;
-
-        $request['acl_implementation'] = $session->get('page.acl_implementation');
-        $request['component_table'] = $session->get('page.component_table');
-        $request['filter_name'] = $session->get('page.filter_name');
-        $request['select_name'] = $session->get('page.select_name');
-        $request['title'] = $module->title;
-        $request['subtitle'] = $module->subtitle;
-        $request['metakey'] = $session->get('page.metakey');
-        $request['metadesc'] = $session->get('page.metadesc');
-        $request['metadata'] = $session->get('page.metadata');
-        $request['wrap'] = $wrap;
-        $request['position'] = $module->position;
-
-        return $request;
-    }
-
-    /**
-     * _load
-     *
-     * Load published modules
-     *
-     * @return  array
-     */
-    protected function &_load()
-    {
-        static $modules;
-
-        if (isset($modules)) {
-            return $modules;
+        foreach ($this->attributes as $name => $value) {
+            if ($name == 'name' || $name == 'title') {
+                $this->requestArray['extension_title'] = $value;
+                echo $value;
+            }
         }
 
-        $modules = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
+        $results = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $this->requestArray['extension_title'], null);
 
-        return $modules;
+        if (count($results) > 0) {
+            foreach ($results as $result) {
+                $this->requestArray['extension_id'] = $result->extension_id;
+                $this->requestArray['extension_name'] = $result->extension_name;
+                $this->requestArray['extension_title'] = $result->title;
+
+                $parameters = new JRegistry;
+                $parameters->loadString($result->parameters);
+                $this->requestArray['extension_parameters'] = $parameters;
+                $this->requestArray['extension_metadata'] = $result->metadata;
+
+                if (isset($this->requestArray['extension_parameters']->static)
+                    && $this->requestArray['extension_parameters']->static === true
+                ) {
+                    $this->requestArray['static'] = true;
+                } else {
+                    $this->requestArray['static'] = false;
+                }
+                $this->requestArray['extension_path'] = MOLAJO_EXTENSIONS_MODULES . '/' . $this->requestArray['extension_name'];
+                $this->requestArray['extension_type'] = 'module';
+                $this->requestArray['extension_folder'] = '';
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
-     * Module cache helper
+     * import
+     *
+     * imports module folders and files
+     * @since 1.0
      */
-    public static function moduleCache($module, $moduleparameters, $cacheparameters)
+    protected function _import()
     {
+        $fileHelper = new MolajoFileHelper();
 
+        /** Controller */
+        if (file_exists($this->requestArray['extension_path'] . '/controller.php')) {
+            $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/controller.php', ucfirst($this->requestArray['extension_name']) . 'ControllerModule');
+        }
+        /** Model */
+        if (file_exists($this->requestArray['extension_path'] . '/model.php')) {
+            $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/model.php', ucfirst($this->requestArray['extension_name']) . 'ModelModule');
+        }
+    }
+
+    /**
+     * _loadLanguageModule
+     *
+     * Loads Language Files
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadLanguageModule()
+    {
+        MolajoController::getLanguage()->load($this->requestArray['option'],
+            $this->requestArray['extension_path'],
+            MolajoController::getLanguage()->getDefault(), false, false);
     }
 }

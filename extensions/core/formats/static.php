@@ -64,7 +64,7 @@ class MolajoStaticFormat
      */
     protected $wrap = null;
 
-     /**
+    /**
      *  Template Parameters
      *
      * @var string
@@ -86,7 +86,7 @@ class MolajoStaticFormat
      */
     public function __construct($config = array())
     {
-//        echo '<pre>';var_dump($config);'</pre>';
+        //        echo '<pre>';var_dump($config);'</pre>';
 
         /** set class properties */
         $this->config = $config;
@@ -135,8 +135,8 @@ class MolajoStaticFormat
             $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php';
             $template_name = 'system';
         }
-$template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/system';
-$template_page_include = $template_path . '/pages/default/index.php';
+        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/system';
+        $template_page_include = $template_path . '/pages/default/index.php';
 
         $this->parameters = array(
             'template' => $template_name,
@@ -148,7 +148,7 @@ $template_page_include = $template_path . '/pages/default/index.php';
 
         /** Before Event */
         MolajoController::getApplication()->triggerEvent('onBeforeRender');
-        
+
         /** Media */
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */

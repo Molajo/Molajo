@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage    Model
  * @since 1.0
  */
-class MolajoModel extends JObject
+class MolajoModel
 {
     /**
      * Indicates if the internal state has been set
@@ -59,6 +59,7 @@ class MolajoModel extends JObject
      * @since  11.1
      */
     protected $state;
+
 
     /**
      * Constructor

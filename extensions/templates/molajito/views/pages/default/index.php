@@ -8,9 +8,9 @@
 defined('MOLAJO') or die;
 ?>
 <div class="header">
-    <include:modules position="header" wrap="header"/>
-    <include:modules position="menu" wrap="nav"/>
-    <include:message/>
+    <include:module title=header view=header wrap=header />
+    <include:modules position=menu wrap=nav />
+    <include:message />
 </div>
-<include:component class="section" wrap="div"/>
-<include:modules position="footer" class="footer" wrap="footer"/>
+<include:component class=section wrap=div />
+<include:modules position=footer class=footer wrap=footer />

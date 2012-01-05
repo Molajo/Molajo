@@ -93,9 +93,9 @@ class MolajoTextFormat
      */
     public function __construct($config = array())
     {
-//        echo '<pre>';
-//        var_dump($config);
-//        '</pre>';
+        //        echo '<pre>';
+        //        var_dump($config);
+        //        '</pre>';
 
         /** set class properties */
         $this->config = $config;

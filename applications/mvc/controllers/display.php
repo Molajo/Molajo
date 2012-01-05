@@ -41,9 +41,14 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display()
     {
+//todo amy fix and remove
+//$this->requestArray['model'] = 'dummy';
+
         /** model */
-        $this->model = $this->getModel(ucfirst($this->requestArray['model']),
-                                        ucfirst($this->requestArray['option'] . 'Model'), array());
+        $modelClass = ucfirst($this->requestArray['option']) . 'Model' .ucfirst($this->requestArray['model']);
+        $this->model = new $modelClass();
+
+        /** set model properties */
         $this->model->requestArray = $this->requestArray;
         $this->model->parameters = $this->parameters;
 
@@ -56,10 +61,10 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         }
 
         /** Query Results */
-        $this->rowset = $this->model->get('Items');
+        $this->rowset = $this->model->getItems();
 
         /** Pagination */
-        $this->pagination = $this->model->get('Pagination');
+        $this->pagination = $this->model->getPagination();
 
         /** No results */
         if (count($this->rowset) == 0

@@ -206,9 +206,6 @@ class MolajoExtension
          */
         $this->_setMetaData();
 
-        /** todo: Amy fix and remove */
-        $this->requestArray['format'] = 'html';
-
         /** Template values */
         $results = $this->_getTemplate();
         if ($results === false) {
@@ -216,7 +213,6 @@ class MolajoExtension
         }
 
         /** todo: amy fix and remove */
-        $this->requestArray['format'] = 'html';
         $this->requestArray['view'] = 'dashboard';
         $this->requestArray['page'] = 'default';
 
@@ -452,6 +448,7 @@ class MolajoExtension
 
         if (count($results) > 0) {
             foreach ($results as $result) {
+                $this->requestArray['extension_name'] = $result->extension_name;
                 $this->requestArray['extension_title'] = $result->title;
 
                 $parameters = new JRegistry;
@@ -489,12 +486,15 @@ class MolajoExtension
         if ($this->requestArray['format'] == '') {
             $this->requestArray['format'] = MolajoController::getApplication()->get('default_format');
         }
+
         if ($this->requestArray['template_name'] == '') {
             $this->requestArray['template_name'] = MolajoController::getApplication()->get('default_template');
         }
+
         if ($this->requestArray['page'] == '') {
             $this->requestArray['page'] = MolajoController::getApplication()->get('default_page');
         }
+
         if ($this->requestArray['view'] == '') {
 
             if ($this->requestArray['static'] === true) {
@@ -512,6 +512,7 @@ class MolajoExtension
                 $this->requestArray['view'] = MolajoController::getApplication()->get('default_view_item');
             }
         }
+
         if ($this->requestArray['wrap'] == '') {
 
             if ($this->requestArray['static'] === true) {
@@ -552,18 +553,22 @@ class MolajoExtension
         } else {
             $this->requestArray['template_name'] = $params->def('template', '');
         }
+
         if ((int)$this->requestArray['template_id'] == 0) {
         } else {
             $this->requestArray['template_id'] = $params->def('template_id', 0);
         }
+
         if ($this->requestArray['page'] == '') {
         } else {
             $this->requestArray['page'] = $params->def('page', '');
         }
+
         if ($this->requestArray['view'] == '') {
         } else {
             $this->requestArray['view'] = $params->def('view', '');
         }
+
         if ($this->requestArray['wrap'] == '') {
         } else {
             $this->requestArray['wrap'] = $params->def('wrap', '');

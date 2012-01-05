@@ -172,10 +172,6 @@ class MolajoControllerSite extends JObject
         } else {
             define('MOLAJO_SITE_FOLDER_PATH_CACHE', self::get('cache_path', MOLAJO_SITE_FOLDER_PATH . '/cache'));
         }
-        if (defined('MOLAJO_SITE_FOLDER_PATH_IMAGES')) {
-        } else {
-            define('MOLAJO_SITE_FOLDER_PATH_IMAGES', self::get('images_path', MOLAJO_SITE_FOLDER_PATH . '/images'));
-        }
         if (defined('MOLAJO_SITE_FOLDER_PATH_LOGS')) {
         } else {
             define('MOLAJO_SITE_FOLDER_PATH_LOGS', self::get('logs_path', MOLAJO_SITE_FOLDER_PATH . '/logs'));
@@ -184,9 +180,13 @@ class MolajoControllerSite extends JObject
         } else {
             define('MOLAJO_SITE_FOLDER_PATH_MEDIA', self::get('media_path', MOLAJO_SITE_FOLDER_PATH . '/media'));
         }
+        if (defined('MOLAJO_SITE_FOLDER_PATH_MEDIA_URL')) {
+        } else {
+            define('MOLAJO_SITE_FOLDER_PATH_MEDIA_URL', MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE_ID . '/media');
+        }
         if (defined('MOLAJO_SITE_FOLDER_PATH_TEMP')) {
         } else {
-            define('MOLAJO_SITE_FOLDER_PATH_TEMP', self::get('temp_path', MOLAJO_SITE_FOLDER_PATH . '/tmp'));
+            define('MOLAJO_SITE_FOLDER_PATH_TEMP', self::get('temp_path', MOLAJO_SITE_FOLDER_PATH . '/temp'));
         }
     }
 
@@ -218,10 +218,10 @@ class MolajoControllerSite extends JObject
      * get
      *
      * Returns a value for the Application object
-     * 
-     * @param   string  $key  
-     * @param   mixed   $default 
-     * 
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
      * @since   1.0
      */
     public function get($key, $default = null)
@@ -234,9 +234,9 @@ class MolajoControllerSite extends JObject
      *
      * Set Value for the Application object
      *
-     * @param   string  $key    
+     * @param   string  $key
      * @param   mixed   $value
-     * 
+     *
      * @since   1.0
      */
     public function set($key, $value = null)
