@@ -102,11 +102,6 @@ class MolajoModuleRenderer
             // $this->requestArray['other_parameters'] = $other_parameters;
         }
 
-        $this->requestArray = MolajoExtensionHelper::getExtensionOptions($this->requestArray);
-        if ($this->requestArray['results'] === false) {
-            echo 'failed getExtensionOptions';
-        }
-
         /** View Path */
         $this->requestArray['view_type'] = 'extensions';
         $viewHelper = new MolajoViewHelper($this->requestArray['view'], $this->requestArray['view_type'], $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
@@ -117,13 +112,14 @@ class MolajoModuleRenderer
         $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
         $this->requestArray['wrap_path'] = $wrapHelper->view_path;
         $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
-
+/**
+echo '<pre>';var_dump($this->requestArray);echo '</pre>';
+*/
         /** Load Language Files */
         $this->_loadLanguageModule();
 
         /** Instantiate Controller */
-        $controllerClass = ucfirst($this->requestArray['extension_name']) . 'ControllerModule';
-        $controller = new $controllerClass ($this->requestArray);
+        $controller = new $this->requestArray['controller'] ($this->requestArray);
 
         /** Execute Task  */
         $task = $this->requestArray['task'];
@@ -170,6 +166,9 @@ class MolajoModuleRenderer
                 $this->requestArray['extension_path'] = MOLAJO_EXTENSIONS_MODULES . '/' . $this->requestArray['extension_name'];
                 $this->requestArray['extension_type'] = 'module';
                 $this->requestArray['extension_folder'] = '';
+
+                $this->requestArray['controller'] = ucfirst($this->requestArray['extension_name']) . 'ControllerModule';
+                $this->requestArray['model'] = ucfirst($this->requestArray['extension_name']) . 'ModelModule';
             }
             return true;
         } else {

@@ -45,8 +45,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 //$this->requestArray['model'] = 'dummy';
 
         /** model */
-        $modelClass = ucfirst($this->requestArray['option']) . 'Model' .ucfirst($this->requestArray['model']);
-        $this->model = new $modelClass();
+        $this->model = new $this->requestArray['model']();
 
         /** set model properties */
         $this->model->requestArray = $this->requestArray;

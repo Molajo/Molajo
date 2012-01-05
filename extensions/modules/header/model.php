@@ -112,9 +112,11 @@ class HeaderModelModule extends MolajoModelDisplay
      */
     public function getItems()
     {
+        $rows = array();
         $tmpobj = new JObject();
-        $tmpobj->set('site_title', MolajoController::getApplication()->get('site_title', 'Molajo'));
-        $this->items = $tmpobj;
+        $tmpobj->set('title', MolajoController::getApplication()->get('site_title', 'Molajo'));
+        $rows[] = $tmpobj;
+        $this->items = $rows;
         return $this->items;
     }
 

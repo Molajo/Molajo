@@ -518,15 +518,17 @@ abstract class MolajoExtensionHelper
         }
 
         /** Model */
+        $model = '';
         if ($requestArray['controller'] == 'display') {
             if ($requestArray['static'] === true) {
-                $requestArray['model'] = 'dummy';
+                $model = 'dummy';
             } else {
-                $requestArray['model'] = 'display';
+                $model = 'display';
             }
         } else {
-            $requestArray['model'] = 'edit';
+            $model = 'edit';
         }
+        $requestArray['model'] = ucfirst($requestArray['option']) . 'Model' .ucfirst($model);
 
         if ($requestArray['controller'] == 'display') {
 
