@@ -326,14 +326,14 @@ class MolajoControllerApplication
         $this->loadDispatcher();
 
         /** execute the extension layer */
-        $extension = new MolajoExtension();
-        $extension->load();
+        $request = new MolajoRequest();
+        $request->load();
 
         /** response */
         $this->respond();
 
         //        echo '<pre>';
-        //        var_dump($extension);
+        //        var_dump($request);
         //        '</pre>';
     }
 

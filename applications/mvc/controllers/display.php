@@ -41,8 +41,8 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display()
     {
-//todo amy fix and remove
-//$this->requestArray['model'] = 'dummy';
+        //todo amy fix and remove
+        //$this->requestArray['model'] = 'dummy';
 
         /** model */
         $this->model = new $this->requestArray['model']();
@@ -77,24 +77,36 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->view_path_url = $this->requestArray['view_path_url'];
         $renderedOutput = $this->renderView($this->requestArray['view'], $this->requestArray['view_type']);
 
+        /** Wrap View */
+        return $this->wrapView($this->requestArray['wrap'], 'wraps', $renderedOutput);
+
+    }
+
+    /**
+     * wrapView
+     *
+     * @param $view
+     * @param $view_type
+     * @param $renderedOutput
+     * @return string
+     */
+    public function wrapView($view, $view_type, $renderedOutput)
+    {
         /** Wrap */
         $this->rowset = array();
 
-        $tmpobj = new JObject();
-        $tmpobj->set('wrap_id', $this->requestArray['wrap_id']);
-        $tmpobj->set('wrap_class', $this->requestArray['wrap_class']);
-        $tmpobj->set('content', $renderedOutput);
+        $tempObject = new JObject();
+        $tempObject->set('wrap_id', $this->requestArray['wrap_id']);
+        $tempObject->set('wrap_class', $this->requestArray['wrap_class']);
+        $tempObject->set('content', $renderedOutput);
 
-        $this->rowset[] = $tmpobj;
+        $this->rowset[] = $tempObject;
 
         /** Render Wrap */
         $this->view_path = $this->requestArray['wrap_path'];
         $this->view_path_url = $this->requestArray['wrap_path_url'];
-        $wrappedOutput = $this->renderView($this->requestArray['wrap'], 'wraps');
 
-        /** Wrapped View */
-        echo $wrappedOutput;
-        return;
+        return $this->renderView($this->requestArray['wrap'], 'wraps');
     }
 
     /**

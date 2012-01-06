@@ -6,11 +6,11 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+//     <include:modules position=menu wrap=nav />
 ?>
 <div class="header">
-    <include:module title=header view=header wrap=header />
-    <include:modules position=menu wrap=nav />
-    <include:message />
+    <include:module name=header view=header wrap=header/>
+    <include:message/>
 </div>
-<include:component class=section wrap=div />
-<include:modules position=footer class=footer wrap=footer />
+<include:request/>
+<include:module position=footer view=footer wrap=footer/>

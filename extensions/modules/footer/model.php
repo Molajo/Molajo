@@ -1,20 +1,20 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Header
+ * @subpackage  Footer
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Header
+ * Footer
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class HeaderModelModule extends MolajoModelDisplay
+class FooterModelModule extends MolajoModelDisplay
 {
     /**
      * $request
@@ -25,7 +25,7 @@ class HeaderModelModule extends MolajoModelDisplay
     public $requestArray = array();
 
     /**
-     * $parameters
+     * $this->parameters
      *
      * @var      string
      * @since    1.0
@@ -80,7 +80,7 @@ class HeaderModelModule extends MolajoModelDisplay
     /**
      * getRequest
      *
-     * @return    array    An empty array
+     * @return   array    An empty array
      *
      * @since    1.0
      */
@@ -113,7 +113,34 @@ class HeaderModelModule extends MolajoModelDisplay
         $this->items = array();
 
         $tempObject = new JObject();
-        $tempObject->set('title', MolajoController::getApplication()->get('site_title', 'Molajo'));
+
+        /** footer line 1 */
+        if (JString::strpos(MolajoTextHelper :: _('FOOTER_LINE1'), '%date%')) {
+            $line1 = str_replace('%date%', MolajoController::getDate()->format('Y'), MolajoTextHelper :: _('FOOTER_LINE1'));
+        } else {
+            $line1 = MolajoTextHelper :: _('FOOTER_LINE1');
+        }
+        if (JString::strpos($line1, '%sitename%')) {
+            $line1 = str_replace('%sitename%', MolajoController::getApplication()->get('sitename', 'Molajo'), $line1);
+        }
+        $tempObject->set('line1', $line1);
+
+        /** footer line 2 */
+        $link = $this->parameters->def('link', 'http://molajo.org');
+        $linked_text = $this->parameters->def('linked_text', 'Molajo&#153;');
+        $remaining_text = $this->parameters->def('remaining_text', ' is free software.');
+        $version = $this->parameters->def('version', MolajoTextHelper::_(MOLAJOVERSION));
+        
+        $tempObject->set('link', $link);
+        $tempObject->set('linked_text', $linked_text);
+        $tempObject->set('remaining_text', $remaining_text);
+        $tempObject->set('version', $version);
+        
+        $line2 = '<a href="' . $link . '">' . $linked_text . ' v.' . $version . '</a>';
+        $line2 .= $remaining_text;
+        $tempObject->set('line2', $line2);
+        
+        /** save recordset */
         $this->items[] = $tempObject;
 
         return $this->items;

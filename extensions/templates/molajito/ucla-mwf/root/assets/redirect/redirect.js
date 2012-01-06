@@ -1,1 +1,0 @@
-mwf.redirect=function(a){if(mwf.site.mobile.maxHeight>mwf.screen.getHeight()&&mwf.site.mobile.maxWidth>mwf.screen.getWidth()){window.location=a}};

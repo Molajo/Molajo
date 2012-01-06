@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-if ($this->parameters->get('html5', true) === true) :
+if (MolajoController::getApplication()->get('html5', true) === true) :
     $headertype = 'footer';
 else :
     $headertype = 'div';

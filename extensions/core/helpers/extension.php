@@ -78,7 +78,12 @@ abstract class MolajoExtensionHelper
 
         $query->from($db->namequote('#__extensions') . ' as a');
 
-        $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
+            $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id - 1);
+        } else {
+            $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
+        }
+
         if ($extension_type == null) {
         } else {
             $query->where('(a.' . $db->namequote('folder') . ' = ' . $db->quote($extension_type) . ')');
@@ -110,7 +115,14 @@ abstract class MolajoExtensionHelper
         }
 
         $query->where('a.' . $db->namequote('id') . ' = b.' . $db->namequote('extension_id'));
-        $query->where('b.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
+
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
+            $query->where('b.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id - 1);
+            $query->where('b.' . $db->namequote('position') . ' = ' . $db->quote($extension));
+            $query->order('b.' . $db->namequote('ordering'));
+        } else {
+            $query->where('b.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
+        }
 
         $query->where('b.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(b.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.start_publishing_datetime <= ' . $db->Quote($now) . ')');
@@ -198,114 +210,6 @@ abstract class MolajoExtensionHelper
         //echo '<pre>';var_dump($extensions);'</pre>';
 
         return $extensions;
-    }
-
-    /**
-     * createRequestArray
-     *
-     * Create and Initialize the requestArray
-     *
-     * Array shared between format, rendering and MVC classes
-     *
-     * @static
-     * @return array
-     * @since 1.0
-     */
-    public static function createRequestArray()
-    {
-        /** @var $requestArray */
-        $requestArray = array();
-
-        /** request URL */
-        $requestArray['query_request'] = '';
-        $requestArray['request'] = '';
-        $requestArray['sef_request'] = '';
-        $requestArray['redirect_to_id'] = 0;
-        $requestArray['home'] = 0;
-
-        $requestArray['sef'] = 0;
-        $requestArray['sef_rewrite'] = 0;
-        $requestArray['sef_suffix'] = 0;
-        $requestArray['unicodeslugs'] = 0;
-        $requestArray['force_ssl'] = 0;
-
-        /** render parameters */
-        $requestArray['controller'] = '';
-        $requestArray['static'] = '';
-        $requestArray['model'] = '';
-        $requestArray['option'] = '';
-        $requestArray['format'] = '';
-        $requestArray['task'] = '';
-
-        $requestArray['view'] = '';
-        $requestArray['view_type'] = 'extensions';
-        $requestArray['view_path'] = '';
-        $requestArray['view_path_url'] = '';
-
-        $requestArray['wrap'] = '';
-        $requestArray['wrap_path'] = '';
-        $requestArray['wrap_path_url'] = '';
-        $requestArray['wrap_id'] = '';
-        $requestArray['wrap_class'] = '';
-
-        $requestArray['page'] = '';
-        $requestArray['page_path'] = '';
-        $requestArray['page_path_url'] = '';
-
-        $requestArray['format'] = '';
-        $requestArray['id'] = 0;
-        $requestArray['ids'] = array();
-
-        $requestArray['plugin_type'] = '';
-        $requestArray['acl_implementation'] = '';
-        $requestArray['other_parameters'] = array();
-
-        /** template */
-        $requestArray['template_id'] = 0;
-        $requestArray['template_name'] = '';
-        $requestArray['template_parameters'] = array();
-
-        /** head */
-        $requestArray['metadata_title'] = '';
-        $requestArray['metadata_description'] = '';
-        $requestArray['metadata_keywords'] = '';
-        $requestArray['metadata_author'] = '';
-        $requestArray['metadata_rights'] = '';
-        $requestArray['metadata_robots'] = '';
-        $requestArray['metadata_additional_array'] = array();
-
-        /** asset */
-        $requestArray['asset_id'] = 0;
-        $requestArray['asset_type_id'] = 0;
-        $requestArray['source_language'] = '';
-        $requestArray['translation_of_id'] = 0;
-        $requestArray['view_group_id'] = 0;
-
-        /** source data */
-        $requestArray['source_table'] = '';
-        $requestArray['source_id'] = 0;
-        $requestArray['source_parameters'] = array();
-        $requestArray['source_metadata'] = array();
-
-        /** primary category */
-        $requestArray['category'] = 0;
-        $requestArray['category_title'] = '';
-        $requestArray['category_parameters'] = array();
-        $requestArray['category_metadata'] = array();
-
-        /** extension */
-        $requestArray['extension_instance_id'] = 0;
-        $requestArray['extension_title'] = '';
-        $requestArray['extension_parameters'] = array();
-        $requestArray['extension_metadata'] = array();
-        $requestArray['extension_path'] = '';
-        $requestArray['extension_type'] = '';
-        $requestArray['extension_folder'] = '';
-
-        /** results */
-        $requestArray['results'] = '';
-
-        return $requestArray;
     }
 
     /**

@@ -6,6 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+//echo '<pre>';var_dump($this->row);echo '</pre>';
 ?>
 <h1>
     <?php echo $this->row->title; ?>

@@ -15,15 +15,8 @@ $fileHelper = new MolajoFileHelper();
 /**
  *  Primary Extensions Class
  */
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/extension.php', 'MolajoExtension');
-
-/**
- *  Formats
- */
-$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/formats', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Format');
-}
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/request.php', 'MolajoRequest');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document.php', 'MolajoDocument');
 
 /**
  *  Helpers

@@ -13,8 +13,4 @@
         <folder>views</folder>
         <folder>language</folder>
     </files>
-    <languages>
-        <language tag="language/en-GB">en-GB.view_wrap_article_name.ini</language>
-        <language tag="language/en-GB">en-GB.view_wrap_article_name.sys.ini</language>
-    </languages>
 </extension>

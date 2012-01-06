@@ -1,1 +1,0 @@
-document.write('<link rel="shortcut icon" href="'+mwf.site.root+'/favicon.ico" />');

@@ -166,7 +166,7 @@ JFTP -
 https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f44217a8934644c5a0
  */
 
-class JExtension extends MolajoExtension
+class JExtension extends MolajoRequest
 {
 }
 
