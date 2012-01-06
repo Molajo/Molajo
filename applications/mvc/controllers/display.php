@@ -21,13 +21,13 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      *
      * Constructor.
      *
-     * @param    array   $request    From Extension Level
+     * @param    array   $requestArray
      *
      * @since    1.0
      */
-    public function __construct($request = array())
+    public function __construct($requestArray = array())
     {
-        parent::__construct($request);
+        parent::__construct($requestArray);
     }
 
     /**
@@ -139,7 +139,8 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /**
          *  I. Rowset processed by View
          *
-         *  If the custom.php file exists in viewFolder, view handles $this->rowset processing
+         *  If the custom.php file exists in viewFolder,
+         *      the view handles $this->rowset and event processing
          *
          */
         if (file_exists($this->view_path . '/views/custom.php')) {
@@ -153,33 +154,28 @@ class MolajoControllerDisplay extends MolajoControllerExtension
              * The following viewFolder/views/ files are included, if existing
              *
              * 1. Before any rows and if there is a top.php file:
-             *
-             *       - beforeDisplayContent output is rendered;
-             *
+             *       - beforeRenderView is output
              *       - the top.php file is included.
              *
              * 2. For each row:
-             *
-             *      if there is a header.php file, it is included,
-             *        and the event afterDisplayTitle output is rendered.
-             *
-             *      If there is a body.php file, it is included;
-             *
-             *      If there is a footer.php file, it is included;
+             *      - beforeRenderViewItem Event
+             *      - If there is a header.php file, it is included,
+             *      - If there is a body.php file, it is included;
+             *      - If there is a footer.php file, it is included;
+             *      - afterRenderViewItem Event
              *
              * 3. After all rows and if there is a footer.php file:
-             *      the footer.php file is included;
-             *      afterDisplayContent output is rendered;
-             *
+             *      - the footer.php file is included;
+             *      - beforeRenderViewItem Event
              */
             foreach ($this->rowset as $this->row) {
 
                 /** view: top */
                 if ($rowCount == 1) {
 
-                    /** event: Before Content Display */
-                    if (isset($this->row->event->beforeDisplayContent)) {
-                        echo $this->row->event->beforeDisplayContent;
+                    /** event: Before Render View */
+                    if (isset($this->row->event->beforeRenderView)) {
+                        echo $this->row->event->beforeRenderView;
                     }
 
                     if (file_exists($this->view_path . '/views/top.php')) {
@@ -190,14 +186,14 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                 if ($this->row == null) {
                 } else {
 
+                    /** event: Before Render View Item */
+                    if (isset($this->row->event->beforeRenderViewItem)) {
+                        echo $this->row->event->beforeRenderViewItem;
+                    }
+
                     /** item: header */
                     if (file_exists($this->view_path . '/views/header.php')) {
                         include $this->view_path . '/views/header.php';
-
-                        /** event: After Display of Title */
-                        if (isset($this->row->event->afterDisplayTitle)) {
-                            echo $this->row->event->afterDisplayTitle;
-                        }
                     }
 
                     /** item: body */
@@ -210,6 +206,11 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                         include $this->view_path . '/views/footer.php';
                     }
 
+                    /** event: After Render View Item */
+                    if (isset($this->row->event->afterRenderViewItem)) {
+                        echo $this->row->event->afterRenderViewItem;
+                    }
+
                     $rowCount++;
                 }
 
@@ -217,9 +218,9 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                 if (file_exists($this->view_path . '/views/bottom.php')) {
                     include $this->view_path . '/views/bottom.php';
 
-                    /** event: After View is finished */
-                    if (isset($this->row->event->afterDisplayContent)) {
-                        echo $this->row->event->afterDisplayContent;
+                    /** event: After Render View */
+                    if (isset($this->row->event->afterRenderView)) {
+                        echo $this->row->event->afterRenderView;
                     }
                 }
             }

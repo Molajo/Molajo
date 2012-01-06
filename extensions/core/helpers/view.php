@@ -90,14 +90,8 @@ class MolajoViewHelper
         $this->_extension_type = $extension_type;
         $this->_extension_folder = $extension_folder;
         $this->_template_name = $template_name;
-/*
-        $results = $this->_getView();
-        if ($results === false) {
-            return false;
-        }
-*/
-        $results = $this->_findPath();
 
+        $results = $this->_findPath();
         if ($results === false) {
             return false;
         }

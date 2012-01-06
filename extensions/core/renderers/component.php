@@ -56,7 +56,6 @@ class MolajoComponentRenderer
     public function __construct($name = null, $requestArray = array())
     {
         $this->name = $name;
-
         $this->requestArray = $requestArray;
     }
 

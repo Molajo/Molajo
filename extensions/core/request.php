@@ -78,9 +78,7 @@ class MolajoRequest
         /** @var $requestArray */
         $requestArray = array();
 
-        /** request URL */
-        $requestArray['primary_request'] = true;
-
+        /** request */
         $requestArray['query_request'] = '';
         $requestArray['request'] = '';
         $requestArray['sef_request'] = '';
@@ -101,33 +99,37 @@ class MolajoRequest
         $requestArray['format'] = '';
         $requestArray['task'] = '';
 
-        $requestArray['view'] = '';
-        $requestArray['view_type'] = 'extensions';
-        $requestArray['view_path'] = '';
-        $requestArray['view_path_url'] = '';
-
-        $requestArray['wrap'] = '';
-        $requestArray['wrap_path'] = '';
-        $requestArray['wrap_path_url'] = '';
-        $requestArray['wrap_id'] = '';
-        $requestArray['wrap_class'] = '';
-
-        $requestArray['page'] = '';
-        $requestArray['page_path'] = '';
-        $requestArray['page_path_url'] = '';
-
+        /** format */
         $requestArray['format'] = '';
+        $requestArray['format_include'] = '';
         $requestArray['id'] = 0;
         $requestArray['ids'] = array();
-
-        $requestArray['plugin_type'] = '';
-        $requestArray['acl_implementation'] = '';
-        $requestArray['other_parameters'] = array();
 
         /** template */
         $requestArray['template_id'] = 0;
         $requestArray['template_name'] = '';
         $requestArray['template_parameters'] = array();
+        $requestArray['template_path'] = '';
+        $requestArray['template_include'] = '';
+
+        /** page */
+        $requestArray['template_page_include'] = '';
+        $requestArray['page'] = '';
+        $requestArray['page_path'] = '';
+        $requestArray['page_path_url'] = '';
+
+        /** view */
+        $requestArray['view'] = '';
+        $requestArray['view_type'] = 'extensions';
+        $requestArray['view_path'] = '';
+        $requestArray['view_path_url'] = '';
+
+        /** wrap */
+        $requestArray['wrap'] = '';
+        $requestArray['wrap_path'] = '';
+        $requestArray['wrap_path_url'] = '';
+        $requestArray['wrap_id'] = '';
+        $requestArray['wrap_class'] = '';
 
         /** head */
         $requestArray['metadata_title'] = '';
@@ -138,7 +140,13 @@ class MolajoRequest
         $requestArray['metadata_robots'] = '';
         $requestArray['metadata_additional_array'] = array();
 
+        /** other */
+        $requestArray['plugin_type'] = '';
+        $requestArray['acl_implementation'] = '';
+        $requestArray['other_parameters'] = array();
+
         /** asset */
+        $requestArray['primary_request'] = true;
         $requestArray['asset_id'] = 0;
         $requestArray['asset_type_id'] = 0;
         $requestArray['source_language'] = '';

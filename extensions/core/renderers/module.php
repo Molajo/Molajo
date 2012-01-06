@@ -54,13 +54,7 @@ class MolajoModuleRenderer
      */
     public function __construct($name = null, $requestArray = array())
     {
-        /**
-        echo '<pre>';
-        var_dump($requestArray);
-        '</pre>';
-         **/
         $this->name = $name;
-
         $this->requestArray = $requestArray;
     }
 
@@ -105,9 +99,7 @@ class MolajoModuleRenderer
 
             /** Import MVC Classes for Module */
             $this->_import();
-            /**
-            echo '<pre>';var_dump($this->requestArray);echo '</pre>';
-             */
+
             /** Load Language Files */
             $this->_loadLanguageModule();
 

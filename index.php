@@ -69,7 +69,6 @@ if (defined('MOLAJO_SHARED_MEDIA')) {
     define('MOLAJO_SHARED_MEDIA', MOLAJO_SITES . '/media');
 }
 
-
 if (defined('MOLAJO_SITE')) {
 } else {
     $sites = simplexml_load_file(MOLAJO_BASE_FOLDER . '/sites.xml', 'SimpleXMLElement');
@@ -148,9 +147,9 @@ if (defined('MOLAJO_EXTENSIONS_CORE')) {
     define('MOLAJO_EXTENSIONS_CORE', MOLAJO_BASE_FOLDER . '/extensions');
 }
 
-/**
- *  Configuration Helper
- */
+/*                                              */
+/*  Lazy Load Classes                           */
+/*                                              */
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/phpversion.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/defines.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/installcheck.php';
@@ -186,6 +185,5 @@ $app = MolajoController::getApplication(MOLAJO_APPLICATION);
  *  Load the Application
  */
 $app->load();
-
 
 

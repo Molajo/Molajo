@@ -101,24 +101,23 @@ class MolajoDocument
     protected function _render()
     {
         /** Initialize */
-        $template_include = '';
+        $this->requestArray['template_include'] = '';
 
         if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php')) {
-            $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php';
+            $this->requestArray['template_include'] = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php';
         } else {
             $this->requestArray['template_name'] = 'system';
-            $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php';
+            $this->requestArray['template_include'] = MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php';
         }
 
-        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $template_page_include = $this->requestArray['page_path'] . '/index.php';
+        $this->requestArray['template_path'] = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
+        $this->requestArray['template_page_include'] = $this->requestArray['page_path'] . '/index.php';
 
         $this->parameters = array(
             'template' => $this->requestArray['template_name'],
-            'template_path' => $template_path,
-            'page' => $template_page_include,
+            'template_path' => $this->requestArray['template_path'],
+            'page' => $this->requestArray['template_page_include'],
             'parameters' => $this->requestArray['template_parameters']
-
         );
 
         /** Before Event */
@@ -136,7 +135,7 @@ class MolajoDocument
         $this->_loadLanguageTemplate();
 
         /** process template include, and then all rendered output, for <include statements */
-        $body = $this->_renderLoop($template_include);
+        $body = $this->_renderLoop($this->requestArray['template_include']);
 
         /** set the respond body */
         MolajoController::getApplication()->setBody($body);
@@ -172,11 +171,11 @@ class MolajoDocument
      *  _renderLoop
      *
      */
-    protected function _renderLoop($template_include)
+    protected function _renderLoop()
     {
         /** include the Template and Page */
         ob_start();
-        require $template_include;
+        require $this->requestArray['template_include'];
         $this->_template = ob_get_contents();
         ob_end_clean();
 
