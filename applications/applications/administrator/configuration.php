@@ -31,8 +31,10 @@ class MolajoConfigApplication
     /* Lists */
     public $list_limit = 20;
 
-    /* Media */
+    /* HTML5 */
     public $html5 = '1';
+
+    /* Media */
     public $image_xsmall = '50';
     public $image_small = '75';
     public $image_medium = '150';
