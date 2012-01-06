@@ -7,7 +7,6 @@
  */
 defined('MOLAJO') or die;
 
-// todo: amy add error checking
 /**
  * Processes the Request
  *
@@ -113,7 +112,7 @@ class MolajoRequest
         $requestArray['template_include'] = '';
 
         /** page */
-        $requestArray['template_page_include'] = '';
+        $requestArray['page_include'] = '';
         $requestArray['page'] = '';
         $requestArray['page_path'] = '';
         $requestArray['page_path_url'] = '';

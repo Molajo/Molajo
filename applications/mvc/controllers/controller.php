@@ -2,6 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Controller
+ * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -81,9 +82,12 @@ class MolajoController
      *
      * Get a site object
      *
-     * @param   string  $prefix Site prefix
-     *
-     * @return application    object
+     * @static
+     * @param null $id
+     * @param array $config
+     * @param string $prefix
+     * @return null|Site
+     * @since 1.0
      */
     public static function getSite($id = null, $config = array(), $prefix = 'Molajo')
     {
@@ -100,9 +104,12 @@ class MolajoController
      *
      * Get an Application object
      *
-     * @param   string  $prefix Application prefix
-     *
-     * @return application    object
+     * @static
+     * @param null $id
+     * @param array $config
+     * @param string $prefix
+     * @return Application|null
+     * @since 1.0
      */
     public static function getApplication($id = null, $config = array(), $prefix = 'Molajo')
     {
@@ -119,9 +126,10 @@ class MolajoController
      *
      * Get a Session object
      *
-     * @param   array  $options  An array containing session options
-     *
-     * @return session object
+     * @static
+     * @param array $options
+     * @return null|Session
+     * @since 1.0
      */
     public static function getSession($options = array())
     {
@@ -138,7 +146,9 @@ class MolajoController
      *
      * Get a Language object
      *
-     * @return language object
+     * @static
+     * @return Language|null
+     * @since 1.0
      */
     public static function getLanguage()
     {
@@ -153,14 +163,11 @@ class MolajoController
     /**
      * Get an user object.
      *
-     * Returns the global {@link User} object, only creating it if it doesn't already exist.
+     * Returns the global User object, only creating it if it doesn't already exist.
      *
-     * @param   integer  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-     *
-     * @return  User object
-     *
-     * @see     User
-     * @since   11.1
+     * @static
+     * @param null $id
+     * @return object|User
      */
     public static function getUser($id = null)
     {
@@ -189,13 +196,12 @@ class MolajoController
      *
      * Get a cache object
      *
-     * @param   string  $group    The cache group name
-     * @param   string  $handler  The handler to use
-     * @param   string  $storage  The storage method
-     *
-     * @return  cache object
-     *
-     * @see     JCache
+     * @static
+     * @param string $group
+     * @param string $handler
+     * @param null $storage
+     * @return mixed
+     * @since 1.0
      */
     public static function getCache($group = '', $handler = 'callback', $storage = null)
     {
@@ -225,7 +231,8 @@ class MolajoController
      *
      * Get a database object
      *
-     * @return JDatabase object
+     * @return Database object
+     * @since 1.0
      */
     public static function getDbo()
     {
@@ -244,7 +251,9 @@ class MolajoController
      *
      * Get a mailer object
      *
-     * @return mail object
+     * @static
+     * @return Mailer|null
+     * @since 1.0
      */
     public static function getMailer()
     {
@@ -262,11 +271,11 @@ class MolajoController
      *
      * Get a parsed XML Feed Source
      *
-     * @param   string   $url         url for feed source
-     * @param   integer  $cache_time  time to cache feed for (using internal cache mechanism)
-     *
-     * @return  mixed  SimplePie parsed object on success, false on failure
-     * @since   1.0
+     * @static
+     * @param $url
+     * @param int $cache_time
+     * @return bool|SimplePie
+     * @since 1.0
      */
     public static function getFeedParser($url, $cache_time = 0)
     {
@@ -291,39 +300,6 @@ class MolajoController
         }
 
         return false;
-    }
-
-    /**
-     * Get an XML document
-     *
-     * @param   string  $type     The type of XML parser needed 'DOM', 'RSS' or 'Simple'
-     * @param   array   $options  ['rssUrl'] the rss url to parse when using "RSS", ['cache_time'] with 'RSS' - feed cache time. If not defined defaults to 3600 sec
-     *
-     * @return  object  Parsed XML document object
-     * @deprecated
-     */
-    public static function getXMLParser($type = '', $options = array())
-    {
-        $doc = null;
-
-        switch (strtolower($type))
-        {
-            case 'rss' :
-            case 'atom' :
-                $cache_time = isset($options['cache_time']) ? $options['cache_time'] : 0;
-                $doc = self::getFeedParser($options['rssUrl'], $cache_time);
-                break;
-
-            case 'dom':
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('MOLAJO_UTIL_ERROR_DOMIT'));
-                $doc = null;
-                break;
-
-            default :
-                $doc = null;
-        }
-
-        return $doc;
     }
 
     /**
@@ -383,7 +359,7 @@ class MolajoController
     /**
      * getDate
      *
-     * Return the {@link JDate} object
+     * Return the Date object
      *
      * @param   mixed  $time     The initial time for the JDate object
      * @param   mixed  $tzOffset The timezone offset.

@@ -21,6 +21,6 @@ if (MolajoController::getApplication()->get('html5', true) === true): ?>
     <include:head />
 </head>
 <body>
-<?php include $template_page_include; ?>
+<?php include $page_include; ?>
 </body>
 </html>

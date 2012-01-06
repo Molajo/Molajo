@@ -111,12 +111,12 @@ class MolajoDocument
         }
 
         $this->requestArray['template_path'] = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $this->requestArray['template_page_include'] = $this->requestArray['page_path'] . '/index.php';
+        $this->requestArray['page_include'] = $this->requestArray['page_path'] . '/index.php';
 
         $this->parameters = array(
             'template' => $this->requestArray['template_name'],
             'template_path' => $this->requestArray['template_path'],
-            'page' => $this->requestArray['template_page_include'],
+            'page' => $this->requestArray['page_include'],
             'parameters' => $this->requestArray['template_parameters']
         );
 
@@ -173,7 +173,7 @@ class MolajoDocument
      */
     protected function _renderLoop()
     {
-        /** include the Template and Page */
+        /** include the template and page */
         ob_start();
         require $this->requestArray['template_include'];
         $this->_template = ob_get_contents();

@@ -41,8 +41,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display()
     {
-        //todo amy fix and remove
-        //$this->requestArray['model'] = 'dummy';
 
         /** model */
         $this->model = new $this->requestArray['model']();
@@ -59,27 +57,26 @@ class MolajoControllerDisplay extends MolajoControllerExtension
             }
         }
 
-        /** Query Results */
+        /** query results */
         $this->rowset = $this->model->getItems();
 
-        /** Pagination */
+        /** pagination */
         $this->pagination = $this->model->getPagination();
 
-        /** No results */
+        /** no results */
         if (count($this->rowset) == 0
             && $this->parameters->def('suppress_no_results', false) === true
         ) {
             return;
         }
 
-        /** Render View */
+        /** render view */
         $this->view_path = $this->requestArray['view_path'];
         $this->view_path_url = $this->requestArray['view_path_url'];
         $renderedOutput = $this->renderView($this->requestArray['view'], $this->requestArray['view_type']);
 
-        /** Wrap View */
+        /** wrap view */
         return $this->wrapView($this->requestArray['wrap'], 'wraps', $renderedOutput);
-
     }
 
     /**
@@ -89,6 +86,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * @param $view_type
      * @param $renderedOutput
      * @return string
+     * @since 1.0
      */
     public function wrapView($view, $view_type, $renderedOutput)
     {
@@ -112,18 +110,16 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     /**
      * renderView
      *
-     * Can do one of two things:
+     * Depending on the files within view/view-type/view-name/views/*.*:
      *
-     * 1. Provide the entire set of query results in the $this->rowset object for the view to process
-     *      How? Include a view file named custom.php (and no view file and body.php)
+     * 1. Provide all query results in $this->rowset for the view to process
+     *      How? Include view named custom.php
      *
      * 2. Loop thru the $this->rowset object processing each row, one at a time.
-     *      How? Include top.php, header.php, body.php, footer.php, and/or bottom.php
-     *
-     * Loops through rowset, one row at a time, including top, header, body, footer, and bottom files
+     *      How? Include top.php, header.php, body.php, footer.php, and/or bottom.php views
      *
      * @return string
-     *
+     * @since 1.0
      */
     protected function renderView($view, $view_type)
     {
@@ -136,44 +132,18 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /** start collecting output */
         ob_start();
 
-        /**
-         *  I. Rowset processed by View
-         *
-         *  If the custom.php file exists in viewFolder,
-         *      the view handles $this->rowset and event processing
-         *
-         */
+        /** 1. view handles loop and event processing */
         if (file_exists($this->view_path . '/views/custom.php')) {
             include $this->view_path . '/views/custom.php';
 
         } else {
 
-            /**
-             * II. Loop through each row, one at a time
-             *
-             * The following viewFolder/views/ files are included, if existing
-             *
-             * 1. Before any rows and if there is a top.php file:
-             *       - beforeRenderView is output
-             *       - the top.php file is included.
-             *
-             * 2. For each row:
-             *      - beforeRenderViewItem Event
-             *      - If there is a header.php file, it is included,
-             *      - If there is a body.php file, it is included;
-             *      - If there is a footer.php file, it is included;
-             *      - afterRenderViewItem Event
-             *
-             * 3. After all rows and if there is a footer.php file:
-             *      - the footer.php file is included;
-             *      - beforeRenderViewItem Event
-             */
+            /** 2. controller manages loop and event processing */
             foreach ($this->rowset as $this->row) {
 
-                /** view: top */
+                /** view: before any rows are processed */
                 if ($rowCount == 1) {
 
-                    /** event: Before Render View */
                     if (isset($this->row->event->beforeRenderView)) {
                         echo $this->row->event->beforeRenderView;
                     }
@@ -183,30 +153,26 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                     }
                 }
 
+                /** view: row header, body, and footer */
                 if ($this->row == null) {
                 } else {
 
-                    /** event: Before Render View Item */
                     if (isset($this->row->event->beforeRenderViewItem)) {
                         echo $this->row->event->beforeRenderViewItem;
                     }
 
-                    /** item: header */
                     if (file_exists($this->view_path . '/views/header.php')) {
                         include $this->view_path . '/views/header.php';
                     }
 
-                    /** item: body */
                     if (file_exists($this->view_path . '/views/body.php')) {
                         include $this->view_path . '/views/body.php';
                     }
 
-                    /** item: footer */
                     if (file_exists($this->view_path . '/views/footer.php')) {
                         include $this->view_path . '/views/footer.php';
                     }
 
-                    /** event: After Render View Item */
                     if (isset($this->row->event->afterRenderViewItem)) {
                         echo $this->row->event->afterRenderViewItem;
                     }
@@ -214,11 +180,10 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                     $rowCount++;
                 }
 
-                /** view: bottom */
+                /** view: after all rows are processed */
                 if (file_exists($this->view_path . '/views/bottom.php')) {
                     include $this->view_path . '/views/bottom.php';
 
-                    /** event: After Render View */
                     if (isset($this->row->event->afterRenderView)) {
                         echo $this->row->event->afterRenderView;
                     }
@@ -226,7 +191,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
             }
         }
 
-        /** collect output */
+        /** collect and return rendered output */
         $output = ob_get_contents();
         ob_end_clean();
         return $output;

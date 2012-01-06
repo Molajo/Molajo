@@ -7,6 +7,7 @@
  */
 defined('MOLAJO') or die;
 // addCustomTag
+
 /**
  * Molajo Application Class
  *
