@@ -201,10 +201,10 @@ class MolajoModuleRenderer
             } else if ($name == 'view') {
                 $this->requestArray['view'] = $value;
 
-            } else if ($name == 'id' || $name == 'wrap_id') {
+            } else if ($name == 'wrap_id') {
                 $this->requestArray['wrap_id'] = $value;
 
-            } else if ($name == 'class' || $name == 'wrap_class') {
+            } else if ($name == 'wrap_class') {
                 $this->requestArray['wrap_class'] = $value;
             }
             // $this->requestArray['other_parameters'] = $other_parameters;

@@ -74,7 +74,7 @@ class MolajoDocument
                         var_dump($requestArray);
                         '</pre>';
         */
-        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/formats/'.$requestArray['format'].'.xml';
+        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $requestArray['format'] . '.xml';
         if (JFile::exists($formatXML)) {
         } else {
             //error
@@ -135,15 +135,10 @@ class MolajoDocument
         /** Load Language Files */
         $this->_loadLanguageTemplate();
 
-        ob_start();
-        require $template_include;
-        $this->_template = ob_get_contents();
-        ob_end_clean();
+        /** process template include, and then all rendered output, for <include statements */
+        $body = $this->_renderLoop($template_include);
 
-        $this->_parseTemplate();
-
-        $body = $this->_renderTemplate();
-
+        /** set the respond body */
         MolajoController::getApplication()->setBody($body);
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
@@ -171,6 +166,46 @@ class MolajoDocument
         MolajoController::getLanguage()->load($this->requestArray['template_name'],
             MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'],
             MolajoController::getLanguage()->getDefault(), false, false);
+    }
+
+    /**
+     *  _renderLoop
+     *
+     */
+    protected function _renderLoop($template_include)
+    {
+        /** include the Template and Page */
+        ob_start();
+        require $template_include;
+        $this->_template = ob_get_contents();
+        ob_end_clean();
+
+        /** process all buffered input for include: statements  */
+        $complete = false;
+        $loop = 0;
+        while ($complete === false) {
+
+            /** count looping */
+            $loop++;
+
+            /** parse $this->template for include statements */
+            $this->_parseTemplate();
+
+            /** if no more include statements found, processing is complete */
+            if (count($this->_renderers) == 0) {
+                break;
+            } else {
+                /** invoke renderers for new include statements */
+                $this->_template = $this->_renderTemplate();
+            }
+            if ($loop > MOLAJO_STOP_LOOP) {
+                break;
+            }
+            /** look for new include statements in just rendered output */
+            continue;
+        }
+
+        return $this->_template;
     }
 
     /**
@@ -242,9 +277,10 @@ class MolajoDocument
         $replace = array();
         $with = array();
 
+        /** 1. process every renderer in the format file in defined order */
         foreach ($this->sequence as $nextSequence) {
 
-            /** request:component */
+            /** 2. if necessary, split renderer name from include name (ex. request:component) */
             if (stripos($nextSequence, ':')) {
                 $includeName = substr($nextSequence, 0, strpos($nextSequence, ':'));
                 $rendererName = substr($nextSequence, strpos($nextSequence, ':') + 1, 999);
@@ -253,30 +289,31 @@ class MolajoDocument
                 $rendererName = $nextSequence;
             }
 
-            /** Primary Component <include:request attr1=x /> */
+            /** 3. primary component has requestArray loaded already <include:request attr1=x /> */
             if ($includeName == 'request') {
                 $this->requestArray['primary_request'] = true;
             } else {
                 $this->requestArray['primary_request'] = false;
             }
 
-            for ($i=0; $i < count($this->_renderers); $i++) {
+            /** 4. loop thru all extracted include values to find match */
+            for ($i = 0; $i < count($this->_renderers); $i++) {
 
                 $rendererArray = $this->_renderers[$i];
 
                 if ($includeName == $rendererArray['name']) {
 
-                    /** extract attribute pairs into an array */
+                    /** 5. place attribute pairs into variable */
                     if (isset($rendererArray['attributes'])) {
                         $attributes = $rendererArray['attributes'];
                     } else {
                         $attributes = array();
                     }
 
-                    /** store value for replacement */
+                    /** 6. store the "replace this" value */
                     $replace[] = "<include:" . $rendererArray['replace'] . "/>";
 
-                    /** load renderer class */
+                    /** 7. load the renderer class and send in requestArray */
                     $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
                         $rendererClass = new $class ($rendererName, $this->requestArray);
@@ -284,10 +321,22 @@ class MolajoDocument
                         echo 'failed renderer = ' . $class . '<br />';
                         // ERROR
                     }
+                    /** 8. render output and store results as "replace with" */
                     $with[] = $rendererClass->render($attributes);
                 }
             }
         }
+        /** 9. replace it */
+        $this->_template = str_replace($replace, $with, $this->_template);
+
+        /** 10. make certain all <include:xxx /> literals are removed */
+        $replace = array();
+        $with = array();
+        for ($i = 0; $i < count($this->_renderers); $i++) {
+            $replace[] = "<include:" . $this->_renderers[$i]['replace'] . "/>";
+            $with[] = '';
+        }
+
         return str_replace($replace, $with, $this->_template);
     }
 

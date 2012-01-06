@@ -270,6 +270,11 @@ define('MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION', 10000);
 define('MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS', 10100);
 define('MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS', 10200);
 
+/**
+ *  Rendering
+ */
+define('MOLAJO_STOP_LOOP', 100);
+
 /** Detect the native operating system type */
 $os = strtoupper(substr(PHP_OS, 0, 3));
 if (defined('IS_WIN')) {

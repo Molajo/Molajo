@@ -7,52 +7,18 @@
  */
 
 defined('MOLAJO') or die; ?>
-<div class="demo">
-
-    <div class="column">
-
-        <div class="portlet">
-            <div class="portlet-header">Feeds</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-
-        <div class="portlet">
-            <div class="portlet-header">News</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-
-    </div>
-
-    <div class="column">
-
-        <div class="portlet">
-            <div class="portlet-header">Shopping</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-
-    </div>
-
-    <div class="column">
-
-        <div class="portlet">
-            <div class="portlet-header">Links</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-
-        <div class="portlet">
-            <div class="portlet-header">Images</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-
-    </div>
-
-</div><!-- End demo -->
-
-
-
-<div class="demo-description">
-    <p>
-        Enable portlets (styled divs) as sortables and use the <code>connectWith</code>
-        option to allow sorting between columns.
-    </p>
-</div><!-- End demo-description -->
+<div class="column">
+    <include:module position=portlet1 wrap=div wrap_class=portlet/>
+    <include:module position=portlet2 wrap=div wrap_class=portlet/>
+    <include:module position=portlet3 wrap=div wrap_class=portlet/>
+</div>
+<div class="column">
+    <include:module position=portlet4 wrap=div wrap_class=portlet/>
+    <include:module position=portlet5 wrap=div wrap_class=portlet/>
+    <include:module position=portlet6 wrap=div wrap_class=portlet/>
+</div>
+<div class="column">
+    <include:module position=portlet7 wrap=div wrap_class=portlet/>
+    <include:module position=portlet8 wrap=div wrap_class=portlet/>
+    <include:module position=portlet9 wrap=div wrap_class=portlet/>
+</div>

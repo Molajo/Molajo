@@ -3,4 +3,5 @@
     <renderer>request:component</renderer>
     <renderer>component</renderer>
     <renderer>module</renderer>
+    <renderer>message</renderer>
 </sequence>
