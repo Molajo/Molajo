@@ -8,4 +8,4 @@
 defined('MOLAJO') or die;
 
 $headerType = basename(dirname(__FILE__));
-include MOLAJO_APPLICATIONS_MVC . '/wraps/views/default/header.php';
+include MOLAJO_APPLICATIONS_MVC . '/views/wraps/utility/views/header.php';
