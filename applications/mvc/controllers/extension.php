@@ -74,14 +74,14 @@ class MolajoControllerExtension
      *
      * @since    1.0
      */
-    public function __construct($requestArray = array())
+    public function __construct($requestArray = array(), $parameters = array())
     {
         $this->requestArray = $requestArray;
         //echo '<pre>';var_dump($this->requestArray);'</pre>';
 
         // Get parameters
         $this->parameters = new JRegistry;
-        $this->parameters->loadString($this->requestArray['source_parameters']);
+        $this->parameters->loadArray($parameters);
 
         /**
         if (isset($attribs['params'])) {

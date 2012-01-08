@@ -24,9 +24,6 @@ class CommentsTableComment extends MolajoTableContent
 class CommentsModelDisplay extends MolajoModelDisplay
 {
 }
-class CommentsModelDummy extends MolajoModelDummy
-{
-}
 class CommentsModelEdit extends MolajoModelEdit
 {
 }

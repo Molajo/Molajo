@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoModelDisplay
+class MolajoModelDisplay extends MolajoModel
 {
     /**
      * $request
@@ -66,13 +66,6 @@ class MolajoModelDisplay
      */
     protected $cache = array();
 
-    /**
-     * Context string for the model for uniqueness with caching data structures.
-     *
-     * @var        string
-     * @since    1.0
-     */
-    protected $context = null;
 
     /**
      * Valid filter fields or ordering.
@@ -107,6 +100,20 @@ class MolajoModelDisplay
     protected $molajoField = array();
 
     /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $config
+     * @since  1.0
+     */
+    public function __construct($config = array())
+    {
+        $this->_name = get_class($this);
+        parent::__construct($config = array());
+    }
+
+    /**
      * populateState
      *
      * Method to auto-populate the model state.
@@ -116,7 +123,7 @@ class MolajoModelDisplay
      */
     protected function populateState()
     {
-        $this->context = strtolower($this->requestArray['option'] . '.' . $this->getName()) . '.' . $this->requestArray['view'];
+        $this->context = strtolower($this->requestArray['option'] . '.' . $this->get('name','')) . '.' . $this->requestArray['view'];
 
         $this->parameters = $this->requestArray['parameters'];
 

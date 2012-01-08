@@ -84,7 +84,7 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkTaskAdmin($option, $entity, $item)
     {
-        $molajoConfig = new MolajoModelConfiguration ($option);
+        $molajoConfig = new MolajoModelConfiguration (array('option'=>$option));
         $taskTests = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS, 'administer');
 
         if (is_array($taskTests)) {
@@ -191,7 +191,7 @@ class MolajoACLCore extends MolajoACL
     public function checkTaskUpdate($option, $entity, $item)
     {
         $task = '';
-        $molajoConfig = new MolajoModelConfiguration ($option);
+        $molajoConfig = new MolajoModelConfiguration(array('option' => $option));
         $taskTests = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS, $task);
         if (is_array($taskTests)) {
         } else {
@@ -893,7 +893,7 @@ class MolajoACLCore extends MolajoACL
             return;
         }
 
-        $molajoConfig = new MolajoModelConfiguration ($option);
+        $molajoConfig = new MolajoModelConfiguration(array('option' => $option));
         $namesEditState = $molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_PUBLISH_FIELDS);
         foreach ($namesEditState as $count => $editstateItem) {
             $form->setFieldAttribute($editstateItem->value, 'disabled', 'true');

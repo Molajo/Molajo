@@ -8,173 +8,207 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoModel
+ * Model
  *
- * Component Model for Display Views
+ * Base Molajo Model
  *
- * @package        Molajo
+ * @package       Molajo
  * @subpackage    Model
  * @since 1.0
  */
 class MolajoModel
 {
     /**
-     * Indicates if the internal state has been set
+     * Name
      *
-     * @var    boolean
-     * @since  11.1
+     * @var    string
+     * @since  1.0
      */
-    protected $__state_set = null;
+    protected $_name = 'MolajoModel';
+
+    /**
+     * Configuration
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $_config;
 
     /**
      * Database Connector
      *
      * @var    object
-     * @since  11.1
+     * @since  1.0
      */
-    protected $db;
+    protected $_db;
 
     /**
-     * The model (base) name
+     * Model State
      *
-     * @var    string
-     * @note   Replaces _name variable in 11.1
-     * @since  11.1
+     * @var    object
+     * @since  1.0
      */
-    protected $name;
+    protected $_state;
 
     /**
-     * The URL option for the component.
+     * $request
      *
-     * @var    string
-     * @since  11.1
+     * @var        array
+     * @since    1.0
      */
-    protected $option = null;
+    public $requestArray = array();
 
     /**
-     * A state object
+     * $parameters
      *
-     * @var    string
-     * @note   Replaces _state variable in 11.1
-     * @since  11.1
+     * @var        string
+     * @since    1.0
      */
-    protected $state;
+    public $parameters = array();
 
+    /**
+     * $items
+     *
+     * @var        string
+     * @since    1.0
+     */
+    public $items = array();
+
+    /**
+     * $pagination
+     *
+     * @var        string
+     * @since    1.0
+     */
+    public $pagination = array();
+
+    /**
+     * $context
+     *
+     * @var        string
+     * @since    1.0
+     */
+    public $context = null;
+
+    /**
+     * $task
+     *
+     * @var        string
+     * @since    1.0
+     */
+    public $task = null;
 
     /**
      * Constructor
      *
-     * @param   array  $config  An array of configuration options (name, state, dbo, table_path, ignore_request).
+     * @param   array  $config  An array of configuration options
      *
      * @since   1.0
      */
     public function __construct($config = array())
     {
-        if (empty($this->option)) {
-            $r = null;
-            if (preg_match('/(.*)Model/i', get_class($this), $r)) {
-            } else {
-                MolajoError::raiseError(500, MolajoText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'));
-            }
-            $this->option = strtolower($r[1]);
-        }
+        $this->config = $config;
 
-        if (empty($this->name)) {
-            if (array_key_exists('name', $config)) {
-                $this->name = $config['name'];
-            } else {
-                $this->name = $this->getName();
-            }
-        }
-
-        if (array_key_exists('state', $config)) {
-            $this->state = $config['state'];
+        if (array_key_exists('dbo', $this->config)) {
+            $this->_db = $this->config['dbo'];
         } else {
-            $this->state = new JObject;
-        }
-
-        if (array_key_exists('dbo', $config)) {
-            $this->db = $config['dbo'];
-        } else {
-            $this->db = MolajoController::getDbo();
+            $this->_db = MolajoController::getDbo();
         }
     }
 
     /**
-     * Returns a Model object, always creating it
+     * get
      *
-     * @param   string  $type    The model type to instantiate
-     * @param   string  $prefix  Prefix for the model class name. Optional.
-     * @param   array   $config  Configuration array for model. Optional.
+     * Returns a property of the Model object
+     * or the default value if the property is not set.
      *
-     * @return  mixed   A model object or false on failure
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
      *
      * @since   1.0
      */
-    public static function getInstance($type, $prefix = '', $config = array())
+    public function get($key, $default = null)
     {
-        $modelClass = $prefix . ucfirst($type);
-        return new $modelClass($config);
+        return $this->_state->get($key, $default);
     }
 
     /**
-     * Method to get the model name
+     * set
      *
-     * The model name. By default parsed using the classname or it can be set
-     * by passing a $config['name'] in the class constructor
+     * Modifies a property of the Model object, creating it if it does not already exist.
      *
-     * @return  string  The name of the model
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
      *
      * @since   1.0
      */
-    public function getName()
+    public function set($key, $value = null)
     {
-        if (empty($this->name)) {
-            $r = null;
-            if (!preg_match('/Model(.*)/i', get_class($this), $r)) {
-                MolajoError::raiseError(500, 'JLIB_APPLICATION_ERROR_MODEL_GET_NAME');
-            }
-            $this->name = strtolower($r[1]);
-        }
-
-        return $this->name;
+        $this->_state->set($key, $value);
     }
 
     /**
-     * Method to get model state variables
+     * populateState
      *
-     * @param   string  $property  Optional parameter name
-     * @param   mixed   $default   Optional default value
+     * Method to auto-populate the model state.
      *
-     * @return  object  The property where specified, the state object where omitted
-     *
-     * @since   1.0
+     * @return    void
+     * @since    1.0
      */
-    public function getState($property = null, $default = null)
+    protected function populateState()
     {
-        if ($this->__state_set) {
-        } else {
-            // Protected method to auto-populate the model state.
-            $this->populateState();
 
-            // Set the model state set flag to true.
-            $this->__state_set = true;
-        }
-
-        return $property === null ? $this->state : $this->state->get($property, $default);
     }
 
     /**
-     * Method to set model state variables
+     * getRequest
      *
-     * @param   string  $property    The name of the property
-     * @param   mixed   $value        The value of the property to set
+     * @return    array    An empty array
      *
-     * @return  mixed   The previous value of the property
-     * @since   1.0
+     * @since    1.0
      */
-    public function setState($property, $value = null)
+    public function getRequest()
     {
-        return $this->state->set($property, $value);
+        return $this->requestArray;
+    }
+
+    /**
+     * getParameters
+     *
+     * @return    array    An empty array
+     *
+     * @since    1.0
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * getItems
+     *
+     * @return    array    An empty array
+     *
+     * @since    1.0
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * getPagination
+     *
+     * @return    array    An empty array
+     *
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        return $this->pagination;
     }
 }

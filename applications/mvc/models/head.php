@@ -8,15 +8,15 @@
 defined('MOLAJO') or die;
 
 /**
- * Messages
+ * Head
  *
- * Retrieve Molajo System Messages
+ * Retrieve Molajo System Head
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoModelMessages extends MolajoModel
+class MolajoModelHead extends MolajoModel
 {
     /**
      * __construct
@@ -43,7 +43,19 @@ class MolajoModelMessages extends MolajoModel
     {
         $this->items = array();
 
-        $messages = MolajoController::getApplication()->getMessages();
+        $title = MolajoController::getApplication()->getTitle();
+        $description  = MolajoController::getApplication()->getDescription();
+
+        $base = MolajoController::getApplication()->getBase();
+
+        $metadata = MolajoController::getApplication()->getTitle();
+
+        $links = MolajoController::getApplication()->getTitle();
+        $stylesheets = MolajoController::getApplication()->getTitle();
+        $style = MolajoController::getApplication()->getTitle();
+        $scripts = MolajoController::getApplication()->getTitle();
+        $script = MolajoController::getApplication()->getTitle();
+        $custom = MolajoController::getApplication()->getTitle();
 
         foreach($messages as $message) {
             $tempObject = new JObject();

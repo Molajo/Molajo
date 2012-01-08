@@ -112,7 +112,7 @@ class MolajoAttributeAccept extends MolajoAttribute
     protected function retrieveList($MIME_type_id, $MIME_literal)
     {
         $option = 'dealwiththis';
-        $molajoConfig = new MolajoModelConfiguration ($option);
+        $molajoConfig = new MolajoModelConfiguration(array('option' => $option));
         $MIMEtypes = $molajoConfig->getOptionList($MIME_type_id);
 
         $formattedList = array();

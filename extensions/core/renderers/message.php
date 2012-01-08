@@ -122,5 +122,7 @@ class MolajoMessageRenderer
         $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
         $this->requestArray['wrap_path'] = $wrapHelper->view_path;
         $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
+
+        $this->requestArray['suppress_no_results'] = true;
     }
 }

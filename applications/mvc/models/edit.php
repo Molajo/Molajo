@@ -39,7 +39,8 @@ class MolajoModelEdit
      */
     public function __construct($config = array())
     {
-        parent::__construct($config);
+        $this->_name = get_class($this);
+        parent::__construct($config = array());
         JRequest::setVar('view', JRequest::getCmd('EditView'));
         $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
     }
@@ -549,8 +550,8 @@ class MolajoModelEdit
         /** retrieve new id **/
         $db->setQuery(
             'SELECT MAX(id) as newID ' .
-            ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
-            ' WHERE version_of_id = ' . (int)$id
+                ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+                ' WHERE version_of_id = ' . (int)$id
         );
         $newID = $db->loadResultArray();
 
@@ -643,10 +644,10 @@ class MolajoModelEdit
         $db = $this->getDbo();
         $db->setQuery(
             'SELECT id' .
-            ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
-            ' WHERE version_of_id = ' . (int)$id .
-            ' ORDER BY version DESC ' .
-            ' LIMIT ' . (int)$maintainVersions
+                ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+                ' WHERE version_of_id = ' . (int)$id .
+                ' ORDER BY version DESC ' .
+                ' LIMIT ' . (int)$maintainVersions
         );
         $versionPrimaryKeys = $db->loadResultArray();
 
@@ -662,7 +663,7 @@ class MolajoModelEdit
             return;
         }
         $deleteQuery = 'DELETE FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
-                       ' WHERE version_of_id = ' . (int)$id . ' AND id NOT IN (' . $saveList . ')';
+            ' WHERE version_of_id = ' . (int)$id . ' AND id NOT IN (' . $saveList . ')';
 
         $db->setQuery($deleteQuery);
         if ($db->query()) {

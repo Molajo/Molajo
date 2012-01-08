@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Login Model
+ * @subpackage  Model
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -10,24 +10,25 @@ defined('MOLAJO') or die;
 /**
  * MolajoModelLogin
  *
- * @package        Molajo
- * @subpackage    Login Model
+ * @package     Molajo
+ * @subpackage  Login Model
  * @since       1.0
  */
-//class MolajoModelLogin extends JModel
-class MolajoModelLogin
+class MolajoModelLogin extends MolajoModel
 {
+
     /**
+     * __construct
+     *
      * Constructor.
      *
-     * @param    array    $config    An optional associative array of configuration settings.
-     *
-     * @see    JController
-     * @since    1.0
+     * @param  $config
+     * @since  1.0
      */
     public function __construct($config = array())
     {
-        parent::__construct($config);
+        $this->_name = get_class($this);
+        parent::__construct($config = array());
     }
 
     /**
@@ -63,6 +64,10 @@ class MolajoModelLogin
         $this->setState('return', $return);
     }
 
+    /**
+     * @static
+     * @return mixed
+     */
     public static function getLanguageList()
     {
         $languages = array();

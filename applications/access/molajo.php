@@ -106,7 +106,7 @@ class MolajoACL
      */
     public function getUserItemPermissions($option, $entity, $item)
     {
-        $molajoConfig = new MolajoModelConfiguration ($option);
+        $molajoConfig = new MolajoModelConfiguration(array('option' => $option));
         $tasks = $molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS);
 
         foreach ($tasks as $single) {
@@ -267,7 +267,7 @@ class MolajoACL
             if ($session->get('page.option') == $option) {
                 $acl_implementation = $session->get('page.acl_implementation');
             } else {
-                $molajoConfig = new MolajoModelConfiguration ($option);
+                $molajoConfig = new MolajoModelConfiguration(array('option' => $option));
                 $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION);
             }
 

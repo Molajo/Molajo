@@ -15,11 +15,18 @@ defined('MOLAJO') or die;
  */
 class MolajoControllerApplication
 {
+
     /**
      * @var    object  The application static instance.
      * @since  1.0
      */
     protected static $instance;
+
+    /**
+     * @var    Input  The application input object.
+     * @since  1.0
+     */
+    public $input;
 
     /**
      * @var    object  The application configuration object.
@@ -34,64 +41,16 @@ class MolajoControllerApplication
     public $client;
 
     /**
-     * @var    object  The application dispatcher object.
-     * @since  1.0
-     */
-    public $dispatcher;
-
-    /**
-     * @var    object  The application session object.
-     * @since  1.0
-     */
-    public $session;
-
-    /**
      * @var    string
      * @since  1.0
      */
     public $line_end;
 
     /**
-     * @var    string
+     * @var    string  Character encoding
      * @since  1.0
      */
-    public $tab;
-
-    /**
-     * @var    string
-     * @since  1.0
-     */
-    public $title;
-
-    /**
-     * @var    string
-     * @since  1.0
-     */
-    public $description;
-
-    /**
-     * @var    string
-     * @since  1.0
-     */
-    public $base;
-
-    /**
-     * @var    string
-     * @since  1.0
-     */
-    public $link;
-
-    /**
-     * @var    string
-     * @since  1.0
-     */
-    public $links;
-
-    /**
-     * @var    Date   Response last modified value
-     * @since  1.0
-     */
-    public $last_modified;
+    public $charset = 'utf-8';
 
     /**
      * @var    object  The application language object.
@@ -104,6 +63,38 @@ class MolajoControllerApplication
      * @since  1.0
      */
     public $direction;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $tab;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $link;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $base;
+
+    /**
+     * Callback for escaping.
+     *
+     * @var string
+     */
+    protected $_escapeFunction = 'htmlspecialchars';
+
+
+    /**
+     * @var    Date   Response last modified value
+     * @since  1.0
+     */
+    public $last_modified;
 
     /**
      * @var    string
@@ -129,30 +120,44 @@ class MolajoControllerApplication
      */
     public $mimetype = 'text/html';
 
-    /**
-     * @var    string  Character encoding
-     * @since  1.0
-     */
-    public $charset = 'utf-8';
-
-    /**
-     * Callback for escaping.
-     *
-     * @var string
-     */
-    protected $_escapeFunction = 'htmlspecialchars';
 
     /**
      * @var    array
      * @since  1.0
      */
-    public $scripts = array();
+    public $messages = array();
 
     /**
-     * @var    array
+     * @var    object  The application dispatcher object.
      * @since  1.0
      */
-    public $script = array();
+    public $dispatcher;
+
+    /**
+     * @var    object  The application session object.
+     * @since  1.0
+     */
+    public $session;
+
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $title;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $description;
+
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $links;
 
     /**
      * @var    array
@@ -166,23 +171,25 @@ class MolajoControllerApplication
      */
     public $style = array();
 
+
     /**
      * @var    array
      * @since  1.0
      */
-    public $messages = array();
+    public $scripts = array();
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public $script = array();
+
 
     /**
      * @var    object  The application response object.
      * @since  1.0
      */
     protected $response = array();
-
-    /**
-     * @var    Input  The application input object.
-     * @since  1.0
-     */
-    public $input;
 
     /**
      * Class constructor.
@@ -276,17 +283,33 @@ class MolajoControllerApplication
      *
      * @param   string  $name  The name (optional) of the Application class to instantiate.
      *
-     * @return  Application
-     *
-     * @since   1.0
+     * @static
+     * @param null $id
+     * @return Application
+     * @since 1.0
      */
-    public static function getInstance($id = null, $config = null, $prefix = 'Molajo')
+    public static function getInstance($id = null, JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
     {
         if ($id == null) {
             $id = MOLAJO_APPLICATION;
         }
 
         if (empty(self::$instance)) {
+
+            if ($input instanceof JInput) {
+            } else {
+                $input = new JInput;
+            }
+
+            if ($config instanceof JRegistry) {
+            } else {
+                $config = new JRegistry;
+            }
+
+            if ($client instanceof JWebClient) {
+            } else {
+                $client = new JWebClient;
+            }
 
             $info = MolajoApplicationHelper::getApplicationInfo($id, true);
             if ($info === false) {
@@ -303,7 +326,7 @@ class MolajoControllerApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            self::$instance = new MolajoControllerApplication();
+            self::$instance = new MolajoControllerApplication($input, $config, $client, $options);
         }
 
         return self::$instance;
@@ -330,7 +353,8 @@ class MolajoControllerApplication
         $this->loadLanguage();
         $this->loadDispatcher();
 
-        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
+        //        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
+
         /** execute the extension layer */
         $request = new MolajoRequest();
         $request->load();
@@ -514,6 +538,25 @@ class MolajoControllerApplication
     }
 
     /**
+     * escapeOutput
+     *
+     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
+     *
+     * @param   mixed  $var  The output to escape.
+     *
+     * @return  mixed  The escaped value.
+     * @since   1.0
+     */
+    function escapeOutput($var)
+    {
+        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
+        }
+
+        return call_user_func($this->_escapeFunction, $var);
+    }
+
+    /**
      * Adds a shortcut icon (favicon)
      *
      * This adds a link to the icon shown in the favorites list or on
@@ -562,7 +605,7 @@ class MolajoControllerApplication
      *
      * Sets the format of the response
      *
-     * @param   string    $title
+     * @param   string    $format
      *
      * @return  void
      */
@@ -626,7 +669,7 @@ class MolajoControllerApplication
     /**
      * getDescription
      *
-     * Return the title of the page.
+     * Return the description of the page.
      *
      * @return  string
      */
@@ -659,32 +702,6 @@ class MolajoControllerApplication
     public function getBase()
     {
         return $this->base;
-    }
-
-    /**
-     * setLink
-     *
-     * Sets the document link
-     *
-     * @param  string  $url  A url
-     *
-     * @return  void
-     */
-    public function setLink($url)
-    {
-        $this->link = $url;
-    }
-
-    /**
-     * getLink
-     *
-     * Returns the document base url
-     *
-     * @return string
-     */
-    public function getLink()
-    {
-        return $this->link;
     }
 
     /**
@@ -834,7 +851,6 @@ class MolajoControllerApplication
      *
      * @param   string  $name     Value of name or http-equiv tag
      * @param   bool    $context  true - http-equiv; false - standard; otherwise provided
-     * https://github.com/bigbangireland/joomla-platform/commit/7a89d3dfd78047d53cdbd5ccbfeeb5cc44d599d7#L0R395
      * @return  string
      * @since   1.0
      */
@@ -933,25 +949,6 @@ class MolajoControllerApplication
         if (is_callable($escapeFunction)) {
             $this->_escapeFunction = $escapeFunction;
         }
-    }
-
-    /**
-     * escapeOutput
-     *
-     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
-     *
-     * @param   mixed  $var  The output to escape.
-     *
-     * @return  mixed  The escaped value.
-     * @since   1.0
-     */
-    function escapeOutput($var)
-    {
-        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
-        }
-
-        return call_user_func($this->_escapeFunction, $var);
     }
 
     /**
@@ -1212,14 +1209,14 @@ class MolajoControllerApplication
      * @param   string  $message
      * @param   string  $type      message, notice, warning, and error
      *
-     * @return  void
+     * @return  bool
      * @since   1.0
      */
     public function setMessage($message = null, $type = 'message')
     {
         /** $message */
         if ($message == null) {
-            $message = 'Unknown message';
+            return false;
         }
 
         /** $type */
@@ -1237,6 +1234,8 @@ class MolajoControllerApplication
 
         /** store the latest message */
         $this->messages[] = array('message' => $message, 'type' => $type);
+
+        return true;
     }
 
     /**

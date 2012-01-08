@@ -10,12 +10,12 @@ defined('MOLAJO') or die;
 /**
  * Dummy Model
  *
- * LoginModelDummy extends MolajoModelDummy extends JModel extends JObject
+ * LoginModelDummy extends MolajoModel extends JModel extends JObject
  *
  * @package        Molajo
  * @subpackage    Model
  * @since       1.0
  */
-class LoginModelDummy extends MolajoModelDummy
+class LoginModelDummy extends MolajoModel
 {
 }

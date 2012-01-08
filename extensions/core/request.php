@@ -181,6 +181,7 @@ class MolajoRequest
         $requestArray['menu_item_metadata'] = array();
 
         /** results */
+        $requestArray['suppress_no_results'] = false;
         $requestArray['results'] = '';
 
         return $requestArray;
@@ -781,6 +782,10 @@ class MolajoRequest
         MolajoController::getApplication()->setMetaData('metadata_author', $this->requestArray['metadata_author']);
         MolajoController::getApplication()->setMetaData('metadata_rights', $this->requestArray['metadata_rights']);
         MolajoController::getApplication()->setMetaData('metadata_robots', $this->requestArray['metadata_robots']);
+
+
+        //        $this->setMetaData('Content-Type', 'text/html', true);
+
         //todo: set extra values
         return true;
     }

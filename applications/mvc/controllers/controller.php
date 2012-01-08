@@ -13,7 +13,6 @@ defined('MOLAJO') or die;
  *
  *  Initiates Site and Application Controllers
  *  Acts as the factory class for various application objects
- *
  */
 class MolajoController
 {
@@ -106,16 +105,18 @@ class MolajoController
      *
      * @static
      * @param null $id
-     * @param array $config
-     * @param string $prefix
+     * @param JInput|null $input
+     * @param JRegistry|null $config
+     * @param JWebClient|null $client
+     * @param array $options
      * @return Application|null
      * @since 1.0
      */
-    public static function getApplication($id = null, $config = array(), $prefix = 'Molajo')
+    public static function getApplication($id = null, JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
     {
         if (self::$application) {
         } else {
-            self::$application = MolajoControllerApplication::getInstance($id = null, $config = array(), $prefix);
+            self::$application = MolajoControllerApplication::getInstance($id, $input, $config, $client, $options);
         }
 
         return self::$application;

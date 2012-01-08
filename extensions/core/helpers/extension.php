@@ -432,7 +432,11 @@ abstract class MolajoExtensionHelper
         } else {
             $model = 'edit';
         }
-        $requestArray['model'] = ucfirst($requestArray['option']) . 'Model' .ucfirst($model);
+        if ($model == 'dummy') {
+            $requestArray['model'] = 'MolajoModel';
+        } else {
+            $requestArray['model'] = ucfirst($requestArray['option']) . 'Model' .ucfirst($model);
+        }
 
         if ($requestArray['controller'] == 'display') {
 

@@ -14,41 +14,47 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoModelConfiguration
+class MolajoModelConfiguration extends MolajoModel
 {
     /**
-     * @var string $option
+     * @var string $_option
      *
      * @since 1.0
      */
-    protected $option;
+    protected $_option;
 
     /**
-     * @var int $extension_instance_id
+     * @var int $_id
      *
      * @since 1.0
      */
-    protected $extension_instance_id;
+    protected $_id;
 
     /**
-     * @var array $overrides
+     * @var array $_overrides
      *
      * @since 1.0
      */
-    protected $overrides = array();
+    protected $_overrides = array();
 
     /**
      * __construct
      *
      * Constructor.
      *
-     * @param $option
-     * @since    1.0
+     * @param  $config
+     * @since  1.0
      */
-    public function __construct($option)
+    public function __construct($config = array())
     {
-        $this->option = $option;
-        $this->retrieveExtensionInstanceID();
+        $this->_name = get_class($this);
+
+        parent::__construct($config = array());
+
+        if (array_key_exists('option', $this->config)) {
+            $this->_option = $this->config['option'];
+        }
+        $this->getID();
         $this->setOverridesArray();
     }
 
@@ -57,30 +63,30 @@ class MolajoModelConfiguration
      *
      * Retrieve a Single Configuration Value for Option ID
      *
-     * @param $option_id
-     * @return bool
+     * @param  $option_id
+     * 
+     * @return  bool
      * @since   1.0
      */
     public function getOptionValue($option_id)
     {
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
         /** option or core **/
         $key = $this->getComponentOptionKey($option_id);
 
         /** validation query **/
-        $query->select($db->namequote('option_value'), $db->namequote('option_value_literal'));
-        $query->from($db->namequote('#__extension_options'));
-        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
-        $query->where($db->namequote('extension_instance_id') . ' = ' . (int)$key);
-        $query->where($db->namequote('ordering') . ' > 0 ');
+        $query->select($this->_db->namequote('option_value'), $this->_db->namequote('option_value_literal'));
+        $query->from($this->_db->namequote('#__extension_options'));
+        $query->where($this->_db->namequote('option_id') . ' = ' . (int)$option_id);
+        $query->where($this->_db->namequote('extension_instance_id') . ' = ' . (int)$key);
+        $query->where($this->_db->namequote('ordering') . ' > 0 ');
 
-        $db->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if ($results = $db->loadObjectList()) {
+        if ($results = $this->_db->loadObjectList()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -98,35 +104,33 @@ class MolajoModelConfiguration
      *
      * For a specific option_id and option_value, return the associated option_value_literal
      *
-     * @param $option_id
-     * @param $option_value
-     * @return string or boolean option_value
-     * @since 1.0
+     * @param   $option_id
+     * @param   $option_value
+     * @return  string or boolean option_value
+     * @since   1.0
      */
     public function getOptionLiteralValue($option_id, $option_value)
     {
-
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
         /** option or core **/
         $key = $this->getComponentOptionKey($option_id);
 
         /** retrieve value **/
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
-        $query->select($db->namequote('option_value_literal'));
-        $query->from($db->namequote('#__extension_options'));
-        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
-        $query->where($db->namequote('extension_instance_id') . ' = ' . (int)$key);
-        $query->where($db->namequote('option_value') . ' = ' . $db->quote(trim($option_value)));
-        $query->where($db->namequote('ordering') . ' > 0 ');
+        $query->select($this->_db->namequote('option_value_literal'));
+        $query->from($this->_db->namequote('#__extension_options'));
+        $query->where($this->_db->namequote('option_id') . ' = ' . (int)$option_id);
+        $query->where($this->_db->namequote('extension_instance_id') . ' = ' . (int)$key);
+        $query->where($this->_db->namequote('option_value') . ' = ' . $this->_db->quote(trim($option_value)));
+        $query->where($this->_db->namequote('ordering') . ' > 0 ');
 
-        $db->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if ($results = $db->loadObjectList()) {
+        if ($results = $this->_db->loadObjectList()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -144,35 +148,35 @@ class MolajoModelConfiguration
      *
      * Retrieve Single Configuration Value for this Component and Option
      *
-     * @param string $option
-     * @param int $option_id
+     * @param  string $option
+     * @param  int    $option_id
      * @return string
+     * @since  1.0
      */
     public function getOptionList($option_id)
     {
         /** check for overrides **/
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
         /** option or core **/
         $component_option = $this->getComponentOptionKey($option_id);
 
         /** validation query **/
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
-        $query->select('DISTINCT ' . $db->namequote('option_value') . ' AS value');
-        $query->select($db->namequote('option_value_literal') . ' as text');
-        $query->from($db->namequote('#__extension_options'));
-        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
-        $query->where($db->namequote('extension_instance_id') . ' = ' . (int)$this->extension_instance_id);
-        $query->where($db->namequote('ordering') . ' > 0 ');
-        $query->order($db->namequote('ordering'));
+        $query->select('DISTINCT ' . $this->_db->namequote('option_value') . ' AS value');
+        $query->select($this->_db->namequote('option_value_literal') . ' as text');
+        $query->from($this->_db->namequote('#__extension_options'));
+        $query->where($this->_db->namequote('option_id') . ' = ' . (int)$option_id);
+        $query->where($this->_db->namequote('extension_instance_id') . ' = ' . (int)$this->_id);
+        $query->where($this->_db->namequote('ordering') . ' > 0 ');
+        $query->order($this->_db->namequote('ordering'));
 
-        $db->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if ($results = $db->loadObjectList()) {
+        if ($results = $this->_db->loadObjectList()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
         return $results;
@@ -184,13 +188,14 @@ class MolajoModelConfiguration
      * Retrieve component_option key for option_id
      *
      * @return string option value
-     * @since 1.0
+     * 
+     * @since  1.0
      */
     private function getComponentOptionKey($option_id)
     {
-        foreach ($this->overrides as $configurationOverrides => $override) {
+        foreach ($this->_overrides as $configurationOverrides => $override) {
             if ($configurationOverrides == $option_id) {
-                if ($override == $this->extension_instance_id) {
+                if ($override == $this->_id) {
                     return $override;
                     break;
                 }
@@ -210,24 +215,24 @@ class MolajoModelConfiguration
      * The core is used when there is no override for that option_id set
      *
      * @return string
+     * @since  1.0
      */
     private function setOverridesArray()
     {
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
         /** retrieve all option_id values **/
-        $query->select('DISTINCT ' . $db->namequote('option_id'));
-        $query->from($db->namequote('#__extension_options'));
-        $query->where($db->namequote('ordering') . ' = 0');
-        $query->where($db->namequote('option_id') . ' > 0');
-        $query->order($db->namequote('option_id'));
+        $query->select('DISTINCT ' . $this->_db->namequote('option_id'));
+        $query->from($this->_db->namequote('#__extension_options'));
+        $query->where($this->_db->namequote('ordering') . ' = 0');
+        $query->where($this->_db->namequote('option_id') . ' > 0');
+        $query->order($this->_db->namequote('option_id'));
 
-        $db->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if ($results = $db->loadObjectList()) {
+        if ($results = $this->_db->loadObjectList()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -238,17 +243,17 @@ class MolajoModelConfiguration
             foreach ($results as $count => $item) {
 
                 /** retrieve override component_option, if existing **/
-                $query = $db->getQuery(true);
+                $query = $this->_db->getQuery(true);
 
-                $query->select($db->namequote('extension_instance_id'));
-                $query->from($db->namequote('#__extension_options'));
-                $query->where($db->namequote('ordering') . ' = 0');
-                $query->where($db->namequote('option_id') . ' = ' . (int)$item->option_id);
-                $query->where($db->namequote('extension_instance_id') . ' = ' . (int)$this->extension_instance_id);
+                $query->select($this->_db->namequote('extension_instance_id'));
+                $query->from($this->_db->namequote('#__extension_options'));
+                $query->where($this->_db->namequote('ordering') . ' = 0');
+                $query->where($this->_db->namequote('option_id') . ' = ' . (int)$item->option_id);
+                $query->where($this->_db->namequote('extension_instance_id') . ' = ' . (int)$this->_id);
 
-                $db->setQuery($query->__toString());
+                $this->_db->setQuery($query->__toString());
 
-                if ($extensionResults = $db->loadResult()) {
+                if ($extensionResults = $this->_db->loadResult()) {
                     $optionArray[$item->option_id] = $extensionResults;
                 } else {
                     /** core is 1 */
@@ -257,34 +262,34 @@ class MolajoModelConfiguration
             }
         }
 
-        $this->overrides = $optionArray;
+        $this->_overrides = $optionArray;
 
         return;
     }
 
     /**
-     * retrieveExtensionInstaneID
+     * getID
      *
      * Retrieve the primary key for the extension instance for the $option
      *
      * @return null
+     * @since  1.0
      */
-    private function retrieveExtensionInstanceID()
+    private function getID()
     {
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
-        $query->select('DISTINCT a.' . $db->namequote('id') . ' AS extension_instance_id ');
-        $query->from($db->namequote('#__extension_instances') . ' as a');
-        $query->from($db->namequote('#__extensions') . ' as b');
-        $query->where('a.' . $db->namequote('extension_id') . ' = b.' . $db->namequote('id'));
-        $query->where($db->namequote('name') . ' = ' . $db->quote($this->option));
+        $query->select('DISTINCT a.' . $this->_db->namequote('id') . ' AS extension_instance_id ');
+        $query->from($this->_db->namequote('#__extension_instances') . ' as a');
+        $query->from($this->_db->namequote('#__extensions') . ' as b');
+        $query->where('a.' . $this->_db->namequote('extension_id') . ' = b.' . $this->_db->namequote('id'));
+        $query->where($this->_db->namequote('name') . ' = ' . $this->_db->quote($this->_option));
 
-        $db->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if ($this->extension_instance_id = $db->loadResult()) {
+        if ($this->_id = $this->_db->loadResult()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 
