@@ -12,71 +12,83 @@ defined('MOLAJO') or die;
  * Molajo Application Class
  *
  * Base class
+ *
+ * Combines original code, fork of JWebApplication and JDocument
  */
 class MolajoControllerApplication
 {
-
     /**
-     * @var    object  The application static instance.
+     * The application static instance.
+     * @var    object
      * @since  1.0
      */
     protected static $instance;
 
     /**
-     * @var    Input  The application input object.
+     * The application input object.
+     * @var    object
      * @since  1.0
      */
     public $input;
 
     /**
-     * @var    object  The application configuration object.
+     * The application configuration object.
+     * @var    object
      * @since  1.0
      */
     public $config = null;
 
     /**
-     * @var    Client  The application client object.
+     * The application client object.
+     * @var    object
      * @since  1.0
      */
     public $client;
 
     /**
+     * Line End
      * @var    string
      * @since  1.0
      */
     public $line_end;
 
     /**
-     * @var    string  Character encoding
+     * Character encoding
+     * @var    string
      * @since  1.0
      */
     public $charset = 'utf-8';
 
     /**
-     * @var    object  The application language object.
+     * The application language object.
+     * @var    object
      * @since  1.0
      */
     public $language;
 
     /**
-     * @var    string  Language direction
+     * Language direction
+     * @var    string
      * @since  1.0
      */
     public $direction;
 
     /**
+     * Tab
      * @var    string
      * @since  1.0
      */
     public $tab;
 
     /**
+     * Link
      * @var    string
      * @since  1.0
      */
     public $link;
 
     /**
+     * Base
      * @var    string
      * @since  1.0
      */
@@ -84,209 +96,143 @@ class MolajoControllerApplication
 
     /**
      * Callback for escaping.
-     *
-     * @var string
+     * @var   string
+     * @since 1.0
      */
     protected $_escapeFunction = 'htmlspecialchars';
 
-
     /**
-     * @var    Date   Response last modified value
-     * @since  1.0
-     */
-    public $last_modified;
-
-    /**
-     * @var    string
-     * @since  1.0
-     */
-    public $generator;
-
-    /**
+     * Format
      * @var    string
      * @since  1.0
      */
     public $format;
 
     /**
+     * Metadata
      * @var    array
      * @since  1.0
      */
     public $metadata = array();
 
     /**
-     * @var    string  Response mimetype type.
+     * Response mimetype type.
+     * @var    string
      * @since  1.0
      */
     public $mimetype = 'text/html';
 
+    /**
+     * Custom
+     * @var    array
+     * @since  1.0
+     */
+    public $custom = array();
 
     /**
+     * Response last modified value
+     * @var    Date
+     * @since  1.0
+     */
+    public $last_modified;
+
+    /**
+     * Generator
+     * @var    string
+     * @since  1.0
+     */
+    public $generator;
+
+    /**
+     * Messages
      * @var    array
      * @since  1.0
      */
     public $messages = array();
 
     /**
-     * @var    object  The application dispatcher object.
+     * Dispatcher
+     * @var    object
      * @since  1.0
      */
     public $dispatcher;
 
     /**
-     * @var    object  The application session object.
+     * Session
+     * @var    object
      * @since  1.0
      */
     public $session;
 
-
     /**
+     * Title
      * @var    string
      * @since  1.0
      */
     public $title;
 
     /**
+     * Description
      * @var    string
      * @since  1.0
      */
     public $description;
 
-
     /**
+     * Links
      * @var    string
      * @since  1.0
      */
     public $links;
 
     /**
+     * Stylesheets
      * @var    array
      * @since  1.0
      */
     public $stylesheets = array();
 
     /**
+     * Style
      * @var    array
      * @since  1.0
      */
     public $style = array();
 
-
     /**
+     * Scripts
      * @var    array
      * @since  1.0
      */
     public $scripts = array();
 
     /**
+     * Script
      * @var    array
      * @since  1.0
      */
     public $script = array();
 
-
     /**
-     * @var    object  The application response object.
+     * Response
+     * @var    object
      * @since  1.0
      */
     protected $response = array();
 
     /**
-     * Class constructor.
+     * getInstance
      *
-     * @param   mixed  $input
-     * @param   mixed  $config
-     * @param   mixed  $client
-     * @param   mixed  $options
-     *
-     * @since   1.0
-     */
-    public function __construct(JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
-    {
-        if ($input instanceof JInput) {
-            $this->input = $input;
-        } else {
-            $this->input = new JInput;
-        }
-
-        if ($config instanceof JRegistry) {
-            $this->config = $config;
-        } else {
-            $this->config = new JRegistry;
-        }
-
-        if ($client instanceof JWebClient) {
-            $this->client = $client;
-        } else {
-            $this->client = new JWebClient;
-        }
-
-        if (array_key_exists('line_end', $options)) {
-            $this->setLineEnd($options['line_end']);
-        }
-
-        if (array_key_exists('charset', $options)) {
-            $this->setCharset($options['charset']);
-        }
-
-        if (array_key_exists('language', $options)) {
-            $this->setLanguage($options['language']);
-        }
-
-        if (array_key_exists('direction', $options)) {
-            $this->setDirection($options['direction']);
-        }
-
-        if (array_key_exists('tab', $options)) {
-            $this->setTab($options['tab']);
-        }
-
-        if (array_key_exists('link', $options)) {
-            $this->setLink($options['link']);
-        }
-
-        if (array_key_exists('base', $options)) {
-            $this->setBase($options['base']);
-        }
-
-        if (array_key_exists('escapeFunction', $options)) {
-            $this->setEscape($options['escapeFunction']);
-        }
-
-        $this->getConfig();
-
-        /** now */
-        $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
-        $this->set('execution.timestamp', time());
-
-        /** ssl check for application */
-        if ($this->get('force_ssl') >= 1) {
-            if (isset($_SERVER['HTTPS'])) {
-            } else {
-                $this->redirect((string)'https' . substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
-            }
-        }
-
-        /** response */
-        $this->response = new stdClass;
-        $this->response->cachable = false;
-        $this->response->headers = array();
-        $this->response->body = array();
-
-        //echo '<pre>';var_dump($this->config);'</pre>';
-    }
-
-    /**
      * Returns a reference to the global Application object, only creating it if it doesn't already exist.
      *
-     * This method must be invoked as: $web = Application::getInstance();
-     *
-     * @param   string  $name  The name (optional) of the Application class to instantiate.
-     *
      * @static
-     * @param null $id
-     * @return Application
-     * @since 1.0
+     * @param  null $id
+     * @param  JInput|null $input
+     * @param  JRegistry|null $config
+     * @param  JWebClient|null $client
+     * @param  array $options
+     * @return bool|object
+     * @since  1.0
      */
     public static function getInstance($id = null, JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
     {
@@ -333,39 +279,316 @@ class MolajoControllerApplication
     }
 
     /**
-     * Load the application.
+     * Class constructor.
      *
-     * @return  nothing
+     * @param   mixed  $input
+     * @param   mixed  $config
+     * @param   mixed  $client
+     * @param   mixed  $options
      *
      * @since   1.0
      */
-    public function load()
+    public function __construct(JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
     {
-        /** Site authorisation */
-        $site = new MolajoControllerSite ();
-        $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
-        if ($authorise === false) {
-            return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
+        if ($input instanceof JInput) {
+            $this->input = $input;
+        } else {
+            $this->input = new JInput;
         }
 
-        /** initialise */
-        $this->loadSession();
-        $this->loadLanguage();
-        $this->loadDispatcher();
+        if ($config instanceof JRegistry) {
+            $this->config = $config;
+        } else {
+            $this->config = new JRegistry;
+        }
 
-        //        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
+        if ($client instanceof JWebClient) {
+            $this->client = $client;
+        } else {
+            $this->client = new JWebClient;
+        }
 
-        /** execute the extension layer */
-        $request = new MolajoRequest();
-        $request->load();
+        if (array_key_exists('line_end', $options)) {
+            $this->setLineEnd($options['line_end']);
+        }
+        if (array_key_exists('charset', $options)) {
+            $this->setCharset($options['charset']);
+        }
+        if (array_key_exists('language', $options)) {
+            $this->setLanguage($options['language']);
+        }
+        if (array_key_exists('direction', $options)) {
+            $this->setDirection($options['direction']);
+        }
+        if (array_key_exists('tab', $options)) {
+            $this->setTab($options['tab']);
+        }
+        if (array_key_exists('link', $options)) {
+            $this->setLink($options['link']);
+        }
+        if (array_key_exists('base', $options)) {
+            $this->setBase($options['base']);
+        }
+        if (array_key_exists('escapeFunction', $options)) {
+            $this->setEscape($options['escapeFunction']);
+        }
+
+        $this->getConfig();
+
+        /** now */
+        $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
+        $this->set('execution.timestamp', time());
+
+        /** ssl check for application */
+        if ($this->get('force_ssl') >= 1) {
+            if (isset($_SERVER['HTTPS'])) {
+            } else {
+                $this->redirect((string)'https' . substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
+            }
+        }
 
         /** response */
-        $this->respond();
+        $this->response = new stdClass;
+        $this->response->cachable = false;
+        $this->response->headers = array();
+        $this->response->body = array();
 
-        return;
-        //        echo '<pre>';
-        //        var_dump($request);
-        //        '</pre>';
+        //echo '<pre>';var_dump($this->config);'</pre>';
+    }
+
+    /**
+     * setLineEnd
+     *
+     * Sets the line end style to Windows, Mac, Unix or a custom string.
+     *
+     * @param   string  $style  "win", "mac", "unix" or custom string.
+     *
+     * @return  void
+     */
+    public function setLineEnd($style)
+    {
+        switch ($style)
+        {
+            case 'win':
+                $this->line_end = "\15\12";
+                break;
+            case 'unix':
+                $this->line_end = "\12";
+                break;
+            case 'mac':
+                $this->line_end = "\15";
+                break;
+            default:
+                $this->line_end = $style;
+        }
+    }
+
+    /**
+     * getLineEnd
+     *
+     * Returns the lineEnd
+     *
+     * @return  string
+     */
+    public function getLineEnd()
+    {
+        return $this->line_end;
+    }
+
+    /**
+     * setCharset
+     *
+     * Sets the charset
+     *
+     * @param  string
+     *
+     * @return  void
+     */
+    public function setCharset($charset)
+    {
+        $this->charset = $charset;
+    }
+
+    /**
+     * getCharset
+     *
+     * Returns the charset
+     *
+     * @return string
+     */
+    public function getCharset()
+    {
+        return $this->charset;
+    }
+
+    /**
+     * Sets the global document language declaration. Default is English (en-gb).
+     *
+     * @param   string  $language
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function setLanguage($language = "en-gb")
+    {
+        $this->language = strtolower($language);
+    }
+
+    /**
+     * Returns the document language.
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * setDirection
+     *
+     * Sets the global document direction declaration. Default is left-to-right (ltr).
+     *
+     * @param   string  $lang
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function setDirection($direction = 'ltr')
+    {
+        if (strtolower($direction) == 'rtl') {
+        } else {
+            $direction = 'ltr';
+        }
+        $this->direction = strtolower($direction);
+    }
+
+    /**
+     * getDirection
+     *
+     * Returns the document direction declaration.
+     *
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->direction;
+    }
+
+    /**
+     * setTab
+     *
+     * Sets the string used to indent HTML
+     *
+     * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
+     *
+     * @return  void
+     */
+    public function setTab($string)
+    {
+        $this->tab = $string;
+    }
+
+    /**
+     * getTab
+     *
+     * Returns a string containing the unit for indenting HTML
+     *
+     * @return  string
+     */
+    public function getTab()
+    {
+        return $this->tab;
+    }
+
+    /**
+     * Sets the document link
+     *
+     * @param   string  $url  A url
+     *
+     * @return  JDocument instance of $this to allow chaining
+     *
+     * @since   11.1
+     */
+    public function setLink($url)
+    {
+        $this->link = $url;
+
+        return $this;
+    }
+
+    /**
+     * Returns the document link
+     *
+     * @return string
+     *
+     * @since   11.1
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * setBase
+     *
+     * Sets the base URI of the document
+     *
+     * @param  string  $base
+     *
+     * @return void
+     */
+    public function setBase($base)
+    {
+        $this->base = $base;
+    }
+
+    /**
+     * getBase
+     *
+     * Return the base URI of the document.
+     *
+     * @return  string
+     */
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    /**
+     * setEscape
+     *
+     * Sets the escape method
+     *
+     * @param  string
+     *
+     * @return  void
+     */
+    function setEscape($escapeFunction)
+    {
+        if (is_callable($escapeFunction)) {
+            $this->_escapeFunction = $escapeFunction;
+        }
+    }
+
+    /**
+     * escapeOutput
+     *
+     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
+     *
+     * @param   mixed  $var  The output to escape.
+     *
+     * @return  mixed  The escaped value.
+     * @since   1.0
+     */
+    function escapeOutput($var)
+    {
+        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
+        }
+
+        return call_user_func($this->_escapeFunction, $var);
     }
 
     /**
@@ -421,6 +644,120 @@ class MolajoControllerApplication
     }
 
     /**
+     * Load the application.
+     *
+     * @return  nothing
+     *
+     * @since   1.0
+     */
+    public function load()
+    {
+        /** Site authorisation */
+        $site = new MolajoControllerSite ();
+        $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
+        if ($authorise === false) {
+            return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
+        }
+
+        /** initialise */
+        $this->loadSession();
+
+        $this->loadLanguage();
+
+        $this->loadDispatcher();
+
+        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
+
+        /** request and rendering  */
+        $request = new MolajoRequest();
+        $request->load();
+
+        /** send response */
+        $this->respond();
+
+        return;
+        //        echo '<pre>';
+        //        var_dump($request);
+        //        '</pre>';
+    }
+
+    /**
+     * loadSession
+     *
+     * Method to create a session for the Web application.  The logic and options for creating this
+     * object are adequately generic for default cases but for many applications it will make sense
+     * to override this method and create session objects based on more specific needs.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    protected function loadSession()
+    {
+        // Generate a session name.
+        $name = md5($this->get('secret') . $this->get('session_name', get_class($this)));
+
+        // Calculate the session lifetime.
+        $lifetime = (($this->get('session_lifetime')) ? $this->get('session_lifetime') * 60 : 900);
+
+        // Get the session handler from the configuration.
+        $handler = $this->get('session_handler', 'none');
+
+        // Initialize the options for Session.
+        $options = array(
+            'name' => $name,
+            'expire' => $lifetime,
+            'force_ssl' => $this->get('force_ssl')
+        );
+
+        // Instantiate the session object.
+        $session = MolajoSession::getInstance($handler, $options);
+        if ($session->getState() == 'expired') {
+            $session->restart();
+        }
+
+        // If the session is new, load the user and registry objects.
+        if ($session->isNew()) {
+            $session->set('registry', new JRegistry);
+            $session->set('user', new JUser);
+        }
+
+        // Set the session object.
+        $this->session = $session;
+    }
+
+    /**
+     * getSession
+     *
+     * Method to get the application session object.
+     *
+     * @return  Session  The session object
+     *
+     * @since   1.0
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
+     * Create a language object
+     *
+     * @see MolajoLanguageHelper
+     *
+     * @return MolajoLanguageHelper object
+     * @since   1.0
+     */
+    public function loadLanguage()
+    {
+        $locale = $this->get('language', 'en-gb');
+        $debug = $this->get('debug_language', '');
+        $this->language = MolajoLanguageHelper::getInstance($locale, $debug);
+    }
+
+    /**
+     * loadDispatcher
+     *
      * Method to create an event dispatcher for the Web application.  The logic and options for creating
      * this object are adequately generic for default cases but for many applications it will make sense
      * to override this method and create event dispatchers based on more specific needs.
@@ -435,6 +772,8 @@ class MolajoControllerApplication
     }
 
     /**
+     * registerEvent
+     *
      * Registers a handler to a particular event group.
      *
      * @param   string    $event    The event name.
@@ -454,6 +793,8 @@ class MolajoControllerApplication
     }
 
     /**
+     * triggerEvent
+     *
      * Calls all handlers associated with an event group.
      *
      * @param   string  $event  The event name.
@@ -473,131 +814,73 @@ class MolajoControllerApplication
     }
 
     /**
-     * setLineEnd
+     * setMessage
      *
-     * Sets the line end style to Windows, Mac, Unix or a custom string.
+     * Set the system message.
      *
-     * @param   string  $style  "win", "mac", "unix" or custom string.
+     * @param   string  $message
+     * @param   string  $type      message, notice, warning, and error
      *
-     * @return  void
-     */
-    public function setLineEnd($style)
-    {
-        switch ($style)
-        {
-            case 'win':
-                $this->line_end = "\15\12";
-                break;
-            case 'unix':
-                $this->line_end = "\12";
-                break;
-            case 'mac':
-                $this->line_end = "\15";
-                break;
-            default:
-                $this->line_end = $style;
-        }
-    }
-
-    /**
-     * getLineEnd
-     *
-     * Returns the lineEnd
-     *
-     * @return  string
-     */
-    public function getLineEnd()
-    {
-        return $this->line_end;
-    }
-
-    /**
-     * setTab
-     *
-     * Sets the string used to indent HTML
-     *
-     * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
-     *
-     * @return  void
-     */
-    public function setTab($string)
-    {
-        $this->tab = $string;
-    }
-
-    /**
-     * getTab
-     *
-     * Returns a string containing the unit for indenting HTML
-     *
-     * @return  string
-     */
-    public function getTab()
-    {
-        return $this->tab;
-    }
-
-    /**
-     * escapeOutput
-     *
-     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
-     *
-     * @param   mixed  $var  The output to escape.
-     *
-     * @return  mixed  The escaped value.
+     * @return  bool
      * @since   1.0
      */
-    function escapeOutput($var)
+    public function setMessage($message = null, $type = 'message')
     {
-        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
+        if ($message == null) {
+            return false;
         }
 
-        return call_user_func($this->_escapeFunction, $var);
+        $type = strtolower($type);
+        if ($type == MOLAJO_MESSAGE_TYPE_NOTICE
+            || $type == MOLAJO_MESSAGE_TYPE_WARNING
+            || $type == MOLAJO_MESSAGE_TYPE_ERROR
+        ) {
+        } else {
+            $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
+        }
+        /** todo: amy - see if sessionMessages are actually set anywhere or where this should be done */
+        /** load session messages into application messages array */
+        $this->_sessionMessages();
+
+        /** add new message */
+        $this->messages[] = array('message' => $message, 'type' => $type);
+
+        return true;
     }
 
     /**
-     * Adds a shortcut icon (favicon)
+     * getMessages
      *
-     * This adds a link to the icon shown in the favorites list or on
-     * the left of the url in the address bar. Some browsers display
-     * it on the tab, as well.
+     * Get system messages
      *
-     * @param   string  $href      The link that is being related.
-     * @param   string  $type      File type
-     * @param   string  $relation  Relation of link
-     *
-     * @return  JDocumentHTML instance of $this to allow chaining
-     *
-     * @since   11.1
+     * @return  array  System messages
+     * @since   1.0
      */
-    public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
+    public function getMessages()
     {
-        $href = str_replace('\\', '/', $href);
-        $this->addHeadLink($href, $relation, 'rel', array('type' => $type));
+        $this->_sessionMessages();
+        return $this->messages;
     }
 
     /**
-     * Adds <link> tags to the head of the document
+     *  _sessionMessages
      *
-     * $relType defaults to 'rel' as it is the most common relation type used.
-     * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
-     * Typical tag: <link href="index.php" rel="Start">
+     * Retrieve messages in session and load into Application messages array
      *
-     * @param   string  $href      The link that is being related.
-     * @param   string  $relation  Relation of link.
-     * @param   string  $relType   Relation type attribute.  Either rel or rev (default: 'rel').
-     * @param   array   $attribs   Associative array of remaining attributes.
-     *
-     * @return  JDocumentHTML instance of $this to allow chaining
-     *
-     * @since   11.1
+     * @return  void
+     * @since   1.0
      */
-    public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
+    private function _sessionMessages()
     {
-        $this->links[$href]['relation'] = $relation;
-        $this->links[$href]['relType'] = $relType;
-        $this->links[$href]['attribs'] = $attribs;
+        $session = MolajoController::getApplication()->getSession();
+        $sessionMessages = $session->get('application.messages');
+
+        if (count($sessionMessages) > 0) {
+            foreach ($sessionMessages as $sessionMessage) {
+                $this->messages[] = $sessionMessage;
+            }
+            $session->set('application.messages', null);
+        }
     }
 
     /**
@@ -605,9 +888,10 @@ class MolajoControllerApplication
      *
      * Sets the format of the response
      *
-     * @param   string    $format
+     * @param   string  $format
      *
      * @return  void
+     * @since   1.0
      */
     public function setFormat($format)
     {
@@ -620,6 +904,7 @@ class MolajoControllerApplication
      * Return the format of the response.
      *
      * @return  string
+     * @since   1.0
      */
     public function getFormat()
     {
@@ -634,6 +919,7 @@ class MolajoControllerApplication
      * @param   string    $title
      *
      * @return  void
+     * @since   1.0
      */
     public function setTitle($title)
     {
@@ -646,6 +932,7 @@ class MolajoControllerApplication
      * Return the title of the document.
      *
      * @return  string
+     * @since   1.0
      */
     public function getTitle()
     {
@@ -657,9 +944,10 @@ class MolajoControllerApplication
      *
      * Sets the description of the document
      *
-     * @param  string  $title
+     * @param   string  $description
      *
-     * @return void
+     * @return  void
+     * @since   1.0
      */
     public function setDescription($description)
     {
@@ -672,6 +960,7 @@ class MolajoControllerApplication
      * Return the description of the page.
      *
      * @return  string
+     * @since   1.0
      */
     public function getDescription()
     {
@@ -679,39 +968,14 @@ class MolajoControllerApplication
     }
 
     /**
-     * setBase
-     *
-     * Sets the base URI of the document
-     *
-     * @param  string  $base
-     *
-     * @return void
-     */
-    public function setBase($base)
-    {
-        $this->base = $base;
-    }
-
-    /**
-     * getBase
-     *
-     * Return the base URI of the document.
-     *
-     * @return  string
-     */
-    public function getBase()
-    {
-        return $this->base;
-    }
-
-    /**
      * setLastModified
      *
      * Sets the document modified date
      *
-     * @param  string
+     * @param   string
      *
      * @return  void
+     * @since   1.0
      */
     public function setLastModified($date)
     {
@@ -724,6 +988,7 @@ class MolajoControllerApplication
      * Returns the document modified date
      *
      * @return string
+     * @since  1.0
      */
     public function getLastModified()
     {
@@ -731,69 +996,14 @@ class MolajoControllerApplication
     }
 
     /**
-     * setLanguage
-     *
-     * Sets the global document language declaration. Default is English (en-gb).
-     *
-     * @param   string    $lang
-     *
-     * @return  void
-     */
-    public function setLanguage($language = 'en-gb')
-    {
-        $this->language = strtolower($language);
-    }
-
-    /**
-     * getLanguage
-     *
-     * Returns the document language.
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * setDirection
-     *
-     * Sets the global document direction declaration. Default is left-to-right (ltr).
-     *
-     * @param   string  $lang
-     *
-     * @return  void
-     */
-    public function setDirection($direction = 'ltr')
-    {
-        if (strtolower($direction) == 'rtl') {
-        } else {
-            $direction = 'ltr';
-        }
-        $this->direction = strtolower($direction);
-    }
-
-    /**
-     * getDirection
-     *
-     * Returns the document direction declaration.
-     *
-     * @return string
-     */
-    public function getDirection()
-    {
-        return $this->direction;
-    }
-
-    /**
      * setGenerator
      *
      * Sets the document generator
      *
-     * @param  string
+     * @param   string
      *
      * @return  void
+     * @since   1.0
      */
     public function setGenerator($generator)
     {
@@ -806,6 +1016,7 @@ class MolajoControllerApplication
      * Returns the document generator
      *
      * @return string
+     * @since  1.0
      */
     public function getGenerator()
     {
@@ -837,7 +1048,7 @@ class MolajoControllerApplication
             }
 
         } else if (is_string($context)) {
-            $result = $this->metaTags[$context][$name];
+            $result = $this->metadata[$context][$name];
 
         } else {
             $this->metadata['standard'][$name] = $content;
@@ -862,7 +1073,7 @@ class MolajoControllerApplication
             $result = $this->metadata['http-equiv'][$name];
 
         } else if (is_string($context)) {
-            $result = $this->metaTags[$context][$name];
+            $result = $this->metadata[$context][$name];
 
         } else {
             $result = $this->metadata['standard'][$name];
@@ -886,6 +1097,7 @@ class MolajoControllerApplication
      * @param   bool    $sync  Should the type be synced with HTML?
      *
      * @return  void
+     * @since   1.0
      */
     public function setMimeEncoding($format = 'text/html', $sync = true)
     {
@@ -902,6 +1114,7 @@ class MolajoControllerApplication
      * Return the document MIME encoding that is sent to the browser.
      *
      * @return  string
+     * @since   1.0
      */
     public function getMimeEncoding()
     {
@@ -909,46 +1122,47 @@ class MolajoControllerApplication
     }
 
     /**
-     * setCharset
+     * Adds a shortcut icon (favicon)
      *
-     * Sets the charset
+     * This adds a link to the icon shown in the favorites list or on
+     * the left of the url in the address bar. Some browsers display
+     * it on the tab, as well.
      *
-     * @param  string
+     * @param   string  $href      The link that is being related.
+     * @param   string  $type      File type
+     * @param   string  $relation  Relation of link
      *
-     * @return  void
+     * @return  JDocumentHTML instance of $this to allow chaining
+     *
+     * @since   1.0
      */
-    public function setCharset($charset)
+    public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
     {
-        $this->charset = $charset;
+        $href = str_replace('\\', '/', $href);
+        $this->addHeadLink($href, $relation, 'rel', array('type' => $type));
     }
 
     /**
-     * getCharset
+     * Adds <link> tags to the head of the document
      *
-     * Returns the charset
+     * $relType defaults to 'rel' as it is the most common relation type used.
+     * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
+     * Typical tag: <link href="index.php" rel="Start">
      *
-     * @return string
+     * @param   string  $href      The link that is being related.
+     * @param   string  $relation  Relation of link.
+     * @param   string  $relType   Relation type attribute.  Either rel or rev (default: 'rel').
+     * @param   array   $attribs   Associative array of remaining attributes.
+     *
+     * @return  JDocumentHTML instance of $this to allow chaining
+     *
+     * @since   1.0
      */
-    public function getCharset()
+    public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
     {
-        return $this->charset;
-    }
-
-
-    /**
-     * setEscape
-     *
-     * Sets the escape method
-     *
-     * @param  string
-     *
-     * @return  void
-     */
-    function setEscape($escapeFunction)
-    {
-        if (is_callable($escapeFunction)) {
-            $this->_escapeFunction = $escapeFunction;
-        }
+        $this->links[$href]['relation'] = $relation;
+        $this->links[$href]['relType'] = $relType;
+        $this->links[$href]['attribs'] = $attribs;
     }
 
     /**
@@ -956,9 +1170,10 @@ class MolajoControllerApplication
      *
      * Loads the JS located within the folder specified by the filepath
      *
-     * @param $filePath
-     * @param $urlPath
+     * @param  $filePath
+     * @param  $urlPath
      * @return void
+     * @since  1.0
      */
     public function loadMediaJS($filePath, $urlPath)
     {
@@ -1092,6 +1307,20 @@ class MolajoControllerApplication
     }
 
     /**
+     * addCustomTag
+     * Adds a custom HTML string to the head block
+     *
+     * @param   string  $html  The HTML to add to the head
+     * @return  void
+     * @somce   1.0
+     */
+
+    public function addCustomTag($html)
+    {
+        $this->custom[] = trim($html);
+    }
+
+    /**
      * Method to send the application response to the client.  All headers will be sent prior to the main
      * application output data.
      *
@@ -1198,78 +1427,6 @@ class MolajoControllerApplication
                 // Compression complete, let's break out of the loop.
                 break;
             }
-        }
-    }
-
-    /**
-     * setMessage
-     *
-     * Set the system message.
-     *
-     * @param   string  $message
-     * @param   string  $type      message, notice, warning, and error
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function setMessage($message = null, $type = 'message')
-    {
-        /** $message */
-        if ($message == null) {
-            return false;
-        }
-
-        /** $type */
-        $type = strtolower($type);
-        if ($type == MOLAJO_MESSAGE_TYPE_NOTICE
-            || $type == MOLAJO_MESSAGE_TYPE_WARNING
-            || $type == MOLAJO_MESSAGE_TYPE_ERROR
-        ) {
-        } else {
-            $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
-        }
-        /** todo: amy - see if sessionMessages are actually set anywhere or where this should be done */
-        /** load session messages into application messages array */
-        $this->_sessionMessages();
-
-        /** store the latest message */
-        $this->messages[] = array('message' => $message, 'type' => $type);
-
-        return true;
-    }
-
-    /**
-     * getMessages
-     *
-     * Get system messages
-     *
-     * @return  array  System messages
-     * @since   1.0
-     */
-    public function getMessages()
-    {
-        $this->_sessionMessages();
-        return $this->messages;
-    }
-
-    /**
-     *  _sessionMessages
-     *
-     * Retrieve messages in session and load into Application messages array
-     *
-     * @return  void
-     * @since   1.0
-     */
-    private function _sessionMessages()
-    {
-        $session = MolajoController::getSession();
-        $sessionMessages = $session->get('application.messages');
-
-        if (count($sessionMessages) > 0) {
-            foreach ($sessionMessages as $sessionMessage) {
-                $this->messages[] = $sessionMessage;
-            }
-            $session->set('application.messages', null);
         }
     }
 
@@ -1534,18 +1691,6 @@ class MolajoControllerApplication
     }
 
     /**
-     * Method to get the application session object.
-     *
-     * @return  Session  The session object
-     *
-     * @since   1.0
-     */
-    public function getSession()
-    {
-        return $this->session;
-    }
-
-    /**
      * Method to check the current client connection status to ensure that it is alive.  We are
      * wrapping this to isolate the connection_status() function from our code base for testing reasons.
      *
@@ -1594,65 +1739,6 @@ class MolajoControllerApplication
     protected function header($string, $replace = true, $code = null)
     {
         header($string, $replace, $code);
-    }
-
-    /**
-     * Method to create a language for the Web application.  The logic and options for creating this
-     * object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create language objects based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    protected function loadLanguage()
-    {
-        $this->language = MolajoController::getLanguage();
-    }
-
-    /**
-     * loadSession
-     *
-     * Method to create a session for the Web application.  The logic and options for creating this
-     * object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create session objects based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    protected function loadSession()
-    {
-        // Generate a session name.
-        $name = md5($this->get('secret') . $this->get('session_name', get_class($this)));
-
-        // Calculate the session lifetime.
-        $lifetime = (($this->get('session_lifetime')) ? $this->get('session_lifetime') * 60 : 900);
-
-        // Get the session handler from the configuration.
-        $handler = $this->get('session_handler', 'none');
-
-        // Initialize the options for Session.
-        $options = array(
-            'name' => $name,
-            'expire' => $lifetime,
-            'force_ssl' => $this->get('force_ssl')
-        );
-
-        // Instantiate the session object.
-        $session = MolajoSession::getInstance($handler, $options);
-        if ($session->getState() == 'expired') {
-            $session->restart();
-        }
-
-        // If the session is new, load the user and registry objects.
-        if ($session->isNew()) {
-            $session->set('registry', new JRegistry);
-            $session->set('user', new JUser);
-        }
-
-        // Set the session object.
-        $this->session = $session;
     }
 
     /**

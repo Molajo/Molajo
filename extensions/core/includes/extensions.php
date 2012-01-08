@@ -46,7 +46,7 @@ foreach ($files as $file) {
 /*                                              */
 /*  Modernizr                                   */
 /*                                              */
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE.'/core/modernizr-server.php', 'Modernizr');
+//$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE.'/core/modernizr-server.php', 'Modernizr');
 /*
  print 'The server knows:';
 foreach($modernizr as $feature=>$value) {

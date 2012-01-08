@@ -32,7 +32,7 @@ class MolajoFormFieldSample extends MolajoFormFieldList
     protected function getOptions()
     {
         // Initialize variables.
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         $options = array();
         $type = $this->form instanceof MolajoForm ? $this->form->getValue('db_type') : 'mysql';
         if ($type == 'mysqli') {

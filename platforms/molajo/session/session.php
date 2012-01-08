@@ -206,7 +206,7 @@ class MolajoSession extends JObject
     public static function getFormToken($forceNew = false)
     {
         $user = MolajoController::getUser();
-        $session = MolajoController::getSession();
+        $session = MolajoController::getApplication()->getSession();
         $hash = MolajoController::getApplication()->getHash($user->get('id', 0) . $session->getToken($forceNew));
 
         return $hash;

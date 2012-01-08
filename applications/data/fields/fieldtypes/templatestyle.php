@@ -35,7 +35,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
     {
         // Initialize variables.
         $groups = array();
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
 
         // Get the application and application_id.
         $applicationName = $this->element['application'] ? (string)$this->element['application'] : 'site';

@@ -655,7 +655,7 @@ abstract class MolajoHtml
             $format = MolajoTextHelper::_('DATE_FORMAT_LC1');
         }
             // format is an existing language key
-        elseif (MolajoController::getLanguage()->hasKey($format))
+        elseif (MolajoController::getApplication()->getLanguage()->hasKey($format))
         {
             $format = MolajoTextHelper::_($format);
         }
@@ -781,7 +781,7 @@ abstract class MolajoHtml
 				// Alignment (defaults to "Bl")
 				align: "Tl",
 				singleClick: true,
-				firstDay: ' . MolajoController::getLanguage()->getFirstDay() . '
+				firstDay: ' . MolajoController::getApplication()->getLanguage()->getFirstDay() . '
 				});});'
                 );
                 $done[] = $id;

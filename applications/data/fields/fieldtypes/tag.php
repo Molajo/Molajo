@@ -58,7 +58,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
         $options = $db->loadObjectList();
 
         // Set the query and load the options.
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         foreach ($options as $i => $option) {
             $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
             $options[$i]->text = MolajoTextHelper::_($option->text);

@@ -34,7 +34,7 @@ class MolajoFormFieldExtension extends MolajoFormFieldList
     protected function getOptions()
     {
         // Initialize variables.
-        $session = MolajoController::getSession();
+        $session = MolajoController::getApplication()->getSession();
         $options = array();
 
         // Extension Type
@@ -72,7 +72,7 @@ class MolajoFormFieldExtension extends MolajoFormFieldList
         $options = $db->loadObjectList();
 
         // Set the query and load the options.
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         foreach ($options as $i => $option) {
             $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
             $options[$i]->text = MolajoTextHelper::_($option->text);

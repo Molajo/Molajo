@@ -35,7 +35,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $this->manifest = $this->parent->getManifest();
         $extension = 'lib_' . strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         $name = strtolower((string)$this->manifest->libraryname);
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         $source = $path ? $path : JPATH_PLATFORM . "/$name";
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)

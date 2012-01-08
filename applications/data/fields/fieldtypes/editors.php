@@ -47,7 +47,7 @@ class MolajoFormFieldEditors extends MolajoFormFieldList
         // Set the query and load the options.
         $db->setQuery($query);
         $options = $db->loadObjectList();
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         foreach ($options as $i => $option) {
             $lang->load('plg_editors_' . $option->value, MOLAJO_BASE_FOLDER, null, false, false)
             || $lang->load('plg_editors_' . $option->value, MOLAJO_EXTENSIONS_PLUGINS . '/editors/' . $option->value, null, false, false)

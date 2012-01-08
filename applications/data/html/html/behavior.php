@@ -687,7 +687,7 @@ abstract class MolajoHtmlBehavior
             return;
         }
 
-        $tag = MolajoController::getLanguage()->getTag();
+        $tag = MolajoController::getApplication()->getLanguage()->getTag();
 
         //Add uncompressed versions when debug is enabled
         $uncompressed = MolajoController::getApplication()->get('debug') ? '-uncompressed' : '';

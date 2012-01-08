@@ -40,7 +40,7 @@ class plgUserMolajo extends MolajoPluginHelper
             // TODO: Suck in the frontend registration emails here as well. Job for a rainy day.
 
             // Load user_molajo plugin language (not done automatically).
-            $lang = MolajoController::getLanguage();
+            $lang = MolajoController::getApplication()->getLanguage();
             $lang->load('plg_user_molajo', JPATH_ADMINISTRATOR);
 
             // Compute the mail subject.
@@ -103,7 +103,7 @@ class plgUserMolajo extends MolajoPluginHelper
         }
 
         // Register the needed session variables
-        $session = MolajoController::getSession();
+        $session = MolajoController::getApplication()->getSession();
         $session->set('user', $instance);
 
         $db = MolajoController::getDbo();
@@ -136,7 +136,7 @@ class plgUserMolajo extends MolajoPluginHelper
     public function onUserLogout($user, $options = array())
     {
         $my = MolajoController::getUser();
-        $session = MolajoController::getSession();
+        $session = MolajoController::getApplication()->getSession();
 
 
         // Make sure we're a valid user first

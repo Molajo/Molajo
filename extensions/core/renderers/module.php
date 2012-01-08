@@ -240,8 +240,8 @@ class MolajoModuleRenderer
      */
     protected function _loadLanguageModule()
     {
-        MolajoController::getLanguage()->load($this->requestArray['option'],
+        MolajoController::getApplication()->getLanguage()->load($this->requestArray['option'],
             $this->requestArray['extension_path'],
-            MolajoController::getLanguage()->getDefault(), false, false);
+            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 }

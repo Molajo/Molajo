@@ -64,7 +64,7 @@ abstract class MolajoHtmlCategory
             $db->setQuery($query);
             $results = $db->loadObjectList();
 
-            $lang = MolajoController::getLanguage();
+            $lang = MolajoController::getApplication()->getLanguage();
             self::$items[$hash] = array();
 
             $categoryExtension = '';

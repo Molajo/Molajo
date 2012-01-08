@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-//echo '<pre>';var_dump(MolajoController::getLanguage());echo '</pre>';
+//echo '<pre>';var_dump(MolajoController::getApplication()->getLanguage());echo '</pre>';
 if (MolajoController::getApplication()->get('html5', true) === true): ?>
 <!DOCTYPE html>
     <?php else: ?>
@@ -15,8 +15,8 @@ if (MolajoController::getApplication()->get('html5', true) === true): ?>
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>"
-      lang="<?php echo MolajoController::getLanguage()->language; ?>"
-      dir="<?php echo MolajoController::getLanguage()->direction; ?>">
+      lang="<?php echo MolajoController::getApplication()->getLanguage()->language; ?>"
+      dir="<?php echo MolajoController::getApplication()->getLanguage()->direction; ?>">
 <head>
     <include:head />
 </head>

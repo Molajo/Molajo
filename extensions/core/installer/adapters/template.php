@@ -56,7 +56,7 @@ class MolajoInstallerAdapterTemplate extends MolajoAdapterInstance
         }
 
         $extension = "template_$name";
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                 : MOLAJO_BASE_FOLDER) . '/templates/' . $name;
         $lang->load($extension . '.sys', $source, null, false, false)
@@ -74,7 +74,7 @@ class MolajoInstallerAdapterTemplate extends MolajoAdapterInstance
      */
     public function install()
     {
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         $xml = $this->parent->getManifest();
 
         // Get the client application target

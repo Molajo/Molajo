@@ -47,7 +47,7 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
         }
 
         // If a language is already set in the session, use this instead
-        $session = MolajoController::getSession()->get('setup.options', array());
+        $session = MolajoController::getApplication()->getSession()->get('setup.options', array());
         if (!empty($session['language'])) {
             $native = $session['language'];
         }

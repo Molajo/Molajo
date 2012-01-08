@@ -1521,7 +1521,7 @@ class MolajoForm
         if ($value === null) {
             $default = (string)$element['default'];
             if (($translate = $element['translate_default']) && ((string)$translate == 'true' || (string)$translate == '1')) {
-                $lang = MolajoController::getLanguage();
+                $lang = MolajoController::getApplication()->getLanguage();
                 if ($lang->hasKey($default)) {
                     $debug = $lang->setDebug(false);
                     $default = MolajoTextHelper::_($default);

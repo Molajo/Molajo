@@ -213,7 +213,7 @@ class MolajoViewHelper
      */
     protected function _loadLanguage()
     {
-        MolajoController::getLanguage()->load(strtolower($this->_view),
+        MolajoController::getApplication()->getLanguage()->load(strtolower($this->_view),
             MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view, null, false, false);
     }
 }

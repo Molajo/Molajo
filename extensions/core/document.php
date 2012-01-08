@@ -166,9 +166,9 @@ class MolajoDocument
      */
     protected function _loadLanguageTemplate()
     {
-        MolajoController::getLanguage()->load($this->requestArray['template_name'],
+        MolajoController::getApplication()->getLanguage()->load($this->requestArray['template_name'],
             MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'],
-            MolajoController::getLanguage()->getDefault(), false, false);
+            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 
     /**

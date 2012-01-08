@@ -53,22 +53,10 @@ class MolajoController
     public static $cache = null;
 
     /**
-     * @var    Language
-     * @since  1.0
-     */
-    public static $language = null;
-
-    /**
      * @var    Mailer
      * @since  1.0
      */
     public static $mailer = null;
-
-    /**
-     * @var    Session
-     * @since  1.0
-     */
-    public static $session = null;
 
     /**
      * @var    array
@@ -120,45 +108,6 @@ class MolajoController
         }
 
         return self::$application;
-    }
-
-    /**
-     * getSession
-     *
-     * Get a Session object
-     *
-     * @static
-     * @param array $options
-     * @return null|Session
-     * @since 1.0
-     */
-    public static function getSession($options = array())
-    {
-        if (self::$session) {
-        } else {
-            self::$session = self::createSession($options);
-        }
-
-        return self::$session;
-    }
-
-    /**
-     * getLanguage
-     *
-     * Get a Language object
-     *
-     * @static
-     * @return Language|null
-     * @since 1.0
-     */
-    public static function getLanguage()
-    {
-        if (self::$language) {
-        } else {
-            self::$language = self::_createLanguage();
-        }
-
-        return self::$language;
     }
 
     /**
@@ -378,7 +327,7 @@ class MolajoController
             $instances = array();
         }
 
-        $language = self::getLanguage();
+        $language = self::getApplication()->getLanguage();
         $locale = $language->getTag();
 
         if (!isset($classname) || $locale != $mainLocale) {
@@ -408,7 +357,7 @@ class MolajoController
      *
      * @return object
      * @since   1.0
-     */
+
     protected static function createSession($options = array())
     {
         $handler = self::get('session_handler', 'none', 'site');
@@ -427,7 +376,7 @@ class MolajoController
 
         return $session;
     }
-
+     */
     /**
      * Create an database object
      *
@@ -515,7 +464,7 @@ class MolajoController
      *
      * @return MolajoLanguageHelper object
      * @since   1.0
-     */
+
     protected static function _createLanguage()
     {
         $locale = self::get('language', '', 'site');
@@ -524,7 +473,7 @@ class MolajoController
 
         return $lang;
     }
-
+*/
     /**
      * Creates a new stream object with appropriate prefix
      *

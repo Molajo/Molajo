@@ -40,7 +40,8 @@ class MolajoTextHelper
      */
     public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
+
         if (is_array($jsSafe)) {
             if (array_key_exists('interpretBackSlashes', $jsSafe)) {
                 $interpretBackSlashes = (boolean)$jsSafe['interpretBackSlashes'];
@@ -65,6 +66,8 @@ class MolajoTextHelper
     }
 
     /**
+     * alt
+     *
      * Translates a string into the current language.
      *
      * Examples:
@@ -84,7 +87,7 @@ class MolajoTextHelper
      */
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         if ($lang->hasKey($string . '_' . $alt)) {
             return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
         }
@@ -94,94 +97,33 @@ class MolajoTextHelper
     }
 
     /**
-     * Like MolajoTextHelper::sprintf but tries to pluralise the string.
+     * sprintf
      *
-     * Examples:
-     * <script>alert(Joomla.MolajoTextHelper._('<?php echo MolajoTextHelper::plural("PLUGINS_N_ITEMS_UNPUBLISHED", 1, array("script"=>true));?>'));</script> will generate an alert message containing '1 plugin successfully disabled'
-     * <?php echo MolajoTextHelper::plural("PLUGINS_N_ITEMS_UNPUBLISHED", 1);?> it will generate a '1 plugin successfully disabled' string
-     *
-     * @param   string   The format string.
-     * @param   integer  The number of items
-     * @param   mixed    Mixed number of arguments for the sprintf function. The first should be an integer.
-     * @param   array    optional Array of option array('jsSafe'=>boolean, 'interpretBackSlashes'=>boolean, 'script'=>boolean) where
-     *                    -jsSafe is a boolean to generate a javascript safe string
-     *                    -interpretBackSlashes is a boolean to interpret backslashes \\->\, \n->new line, \t->tabulation
-     *                    -script is a boolean to indicate that the string will be push in the javascript language store
-     *
-     * @return  string  The translated strings or the key if 'script' is true in the array of options
-     *
-     * @since   1.0
-     */
-
-    public static function plural($string, $n)
-    {
-        $lang = MolajoController::getLanguage();
-        $args = func_get_args();
-        $count = count($args);
-
-        if ($count > 1) {
-            // Try the key from the language plural potential suffixes
-            $found = false;
-            $suffixes = $lang->getPluralSuffixes((int)$n);
-            foreach ($suffixes as $suffix) {
-                $key = $string . '_' . $suffix;
-                if ($lang->hasKey($key)) {
-                    $found = true;
-                    break;
-                }
-            }
-            if (!$found) {
-                // Not found so revert to the original.
-                $key = $string;
-            }
-            if (is_array($args[$count - 1])) {
-                $args[0] = $lang->_($key, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
-                                                : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
-                                                ? $args[$count - 1]['interpretBackSlashes'] : true);
-                if (array_key_exists('script', $args[$count - 1]) && $args[$count - 1]['script']) {
-                    self::$strings[$key] = call_user_func_array('sprintf', $args);
-                    return $key;
-                }
-            }
-            else {
-                $args[0] = $lang->_($key);
-            }
-            return call_user_func_array('sprintf', $args);
-        }
-        elseif ($count > 0) {
-
-            // Default to the normal sprintf handling.
-            $args[0] = $lang->_($string);
-            return call_user_func_array('sprintf', $args);
-        }
-
-        return '';
-    }
-
-    /**
      * Passes a string thru a sprintf.
      *
-     * @param   string  The format string.
-     * @param   mixed   Mixed number of arguments for the sprintf function.
-     * @param   array   optional Array of option array('jsSafe'=>boolean, 'interpretBackSlashes'=>boolean, 'script'=>boolean) where
-     *                    -jsSafe is a boolean to generate a javascript safe strings
-     *                    -interpretBackSlashes is a boolean to interpret backslashes \\->\, \n->new line, \t->tabulation
-     *                    -script is a boolean to indicate that the string will be push in the javascript language store
+     * @static
+     * @param  $string
+     * optional Array of option array
+     * ('jsSafe'=>boolean, 'interpretBackSlashes'=>boolean, 'script'=>boolean) where
+     *  -jsSafe is a boolean to generate a javascript safe strings
+     *  -interpretBackSlashes is a boolean to interpret backslashes \\->\, \n->new line, \t->tabulation
+     *  -script is a boolean to indicate that the string will be push in the javascript language store
      *
      * @return  string  The translated strings or the key if 'script' is true in the array of options
      *
-     * @since   1.0
+     * @return mixed|string
+     * @since  1.0
      */
     public static function sprintf($string)
     {
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
             if (is_array($args[$count - 1])) {
                 $args[0] = $lang->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
-                                                   : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
-                                                   ? $args[$count - 1]['interpretBackSlashes'] : true);
+                    : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
+                    ? $args[$count - 1]['interpretBackSlashes'] : true);
                 if (array_key_exists('script', $args[$count - 1]) && $args[$count - 1]['script']) {
                     self::$strings[$string] = call_user_func_array('sprintf', $args);
                     return $string;
@@ -196,25 +138,25 @@ class MolajoTextHelper
     }
 
     /**
+     * printf
+     *
      * Passes a string thru an printf.
      *
-     * @param   format The format string.
-     * @param   mixed Mixed number of arguments for the sprintf function.
-     *
-     * @return  mixed
-     *
-     * @since   1.0
+     * @static
+     * @param  $string
+     * @return mixed|string
+     * @since  1.0
      */
     public static function printf($string)
     {
-        $lang = MolajoController::getLanguage();
+        $lang = MolajoController::getApplication()->getLanguage();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
             if (is_array($args[$count - 1])) {
                 $args[0] = $lang->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
-                                                   : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
-                                                   ? $args[$count - 1]['interpretBackSlashes'] : true);
+                    : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
+                    ? $args[$count - 1]['interpretBackSlashes'] : true);
             }
             else {
                 $args[0] = $lang->_($string);
@@ -225,11 +167,15 @@ class MolajoTextHelper
     }
 
     /**
+     * script
+     *
      * Translate a string into the current language and stores it in the JavaScript language store.
      *
-     * @param   string   The MolajoTextHelper key.
-     *
-     * @since   1.0
+     * @static
+     * @param null $string
+     * @param bool $jsSafe
+     * @param bool $interpretBackSlashes
+     * @return array
      */
     public static function script($string = null, $jsSafe = false, $interpretBackSlashes = true)
     {
@@ -248,16 +194,20 @@ class MolajoTextHelper
         // Add the string to the array if not null.
         if ($string !== null) {
             // Normalize the key and translate the string.
-            self::$strings[strtoupper($string)] = MolajoController::getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
+            self::$strings[strtoupper($string)] = MolajoController::getApplication()->getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
         }
 
         return self::$strings;
     }
 
     /**
-     * addLineBreaks - changes line breaks to br tags
-     * @param string $text
+     * addLineBreaks
+     *
+     * changes line breaks to br tags
+     *
+     * @param  string $text
      * @return string
+     * @since  1.0
      */
     function addLineBreaks($text)
     {
@@ -265,25 +215,31 @@ class MolajoTextHelper
     }
 
     /**
-     * replaceBuffer - change a value in the buffer
-     * @param string $text
+     * replaceBuffer
+     *
+     * Change a value in the buffer
+     *
+     * @param  string $text
      * @return string
+     * @since  1.0
      */
     function replaceBuffer($change_from, $change_to)
     {
-        $buffer = MolajoController::getApplication()->getBody();
-        $buffer = preg_replace($change_from, $change_to, $buffer);
+        $buffer = preg_replace($change_from, $change_to, MolajoController::getApplication()->getBody());
         MolajoController::getApplication()->setBody($buffer);
     }
 
     /**
-     * smilies - change text smiley values into icons - smilie list from WordPress - Thank you, WordPress! :)
-     * @param string $text
+     * smilies
+     *
+     * change text smiley values into icons - smilie list from WordPress
+     *
+     * @param  string $text
      * @return string
+     * @since  1.0
      */
     function smilies($text)
     {
-
         $smile = array(
             ':mrgreen:' => 'mrgreen.gif',
             ':neutral:' => 'neutral.gif',
@@ -330,7 +286,7 @@ class MolajoTextHelper
             ':!:' => 'exclaim.gif',
             ':?:' => 'question.gif',
         );
-
+        //todo amy change media location for smilies
         if (count($smile) > 0) {
             foreach ($smile as $key => $val) {
                 $text = JString::str_ireplace($key, '<span><img src="' . JURI::base() . 'media/images/smiley/' . $val . '" alt="smiley" class="smiley-class" /></span>', $text);
@@ -339,42 +295,29 @@ class MolajoTextHelper
         return $text;
     }
 
+    /**
+     * getPlaceHolderText
+     *
+     * @param   $count
+     * @param   array $options
+     * @return  string
+     * @since   1.0
+     */
+    function getPlaceHolderText($count, $options = array())
+    {
+        $options = array_merge(
+            array(
+                'html' => false,
+                'lorem' => true
+            ),
+            $options
+        );
 
-  function getPlaceHolderImage($width, $height, $options = array()) {
+        $generator = new LoremIpsumGenerator;
 
-    $services_class = array(
-      'placehold' => 'PlaceholdImage',
-      'lorem_pixel' => 'LoremPixelImage'
-    );
+        $html_format = $options['html'] ? 'plain' : 'html';
+        $start_with_lorem_ipsum = $options['lorem'];
 
-    $service = $options['service'];
-    $service = isset($service) ? $service : 'placehold';
-
-    $service_class = $services_class[$service];
-    if (class_exists($service_class)) {
-      $service = new $service_class($width, $height, $options);
-      return $service->url();
-    } else {
-      render_error("No placeholder image service called #{$service} exists!");
+        return ucfirst($generator->getContent($count, $html_format, $start_with_lorem_ipsum));
     }
-  }
-
-
-  function getPlaceHolderText($count, $options = array()) {
-    $options = array_merge(
-      array(
-        'html' => false,
-        'lorem' => true
-      ),
-      $options
-    );
-
-    $generator = new LoremIpsumGenerator;
-
-    $html_format = $options['html'] ? 'plain' : 'html';
-    $start_with_lorem_ipsum = $options['lorem'];
-
-    return ucfirst($generator->getContent($count, $html_format, $start_with_lorem_ipsum));
-  }
-
 }

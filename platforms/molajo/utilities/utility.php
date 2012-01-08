@@ -95,7 +95,7 @@ class MolajoUtility
      */
     public static function getToken($forceNew = false)
     {
-        return MolajoController::getSession()->getFormToken($forceNew);
+        return MolajoController::getApplication()->getSession()->getFormToken($forceNew);
     }
 
     /**

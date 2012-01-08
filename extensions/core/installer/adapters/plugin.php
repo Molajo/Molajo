@@ -95,7 +95,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             }
             if ($name) {
                 $extension = "plg_${group}_${name}";
-                $lang = MolajoController::getLanguage();
+                $lang = MolajoController::getApplication()->getLanguage();
                 $source = $path ? $path : MOLAJO_EXTENSIONS_PLUGINS . "/$group/$name";
                 $folder = (string)$element->attributes()->folder;
                 if ($folder && file_exists("$path/$folder")) {

@@ -45,7 +45,7 @@ class MolajoFieldPrefix extends MolajoField
         $prefix = false;
 
 
-        $session = MolajoController::getSession()->get('setup.options', array());
+        $session = MolajoController::getApplication()->getSession()->get('setup.options', array());
         if (empty($session->db_prefix)) {
         } else {
             $prefix = $session->db_prefix;

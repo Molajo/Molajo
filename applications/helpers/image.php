@@ -449,9 +449,10 @@ class MolajoImageHelper
     /**
      * saveImage
      *
-     * @param $this->fileNameNew
-     * @param string $imageQuality
-     * @return void
+     * @param  string $imageQuality
+     *
+     * @return boolean
+     * @since  1.0
      */
     public function saveImage($imageQuality = "100")
     {
@@ -497,5 +498,35 @@ class MolajoImageHelper
         imagedestroy($this->imageResized);
 
         return $results;
+    }
+
+    /**
+     * getPlaceHolderImage
+     *
+     * @static
+     * @param $width
+     * @param $height
+     * @param array $options
+     * @return mixed
+     * @since 1.0
+     */
+    static public function getPlaceHolderImage($width, $height, $options = array())
+    {
+
+        $services_class = array(
+            'placehold' => 'PlaceholdImage',
+            'lorem_pixel' => 'LoremPixelImage'
+        );
+
+        $service = $options['service'];
+        $service = isset($service) ? $service : 'placehold';
+
+        $service_class = $services_class[$service];
+        if (class_exists($service_class)) {
+            $service = new $service_class($width, $height, $options);
+            return $service->url();
+        } else {
+            render_error("No placeholder image service called #{$service} exists!");
+        }
     }
 }

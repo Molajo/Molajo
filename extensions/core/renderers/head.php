@@ -70,57 +70,6 @@ class MolajoHeadRenderer
     }
 
     /**
-     * getHeadData
-     *
-     * Get the HTML document head data
-     *
-     * @return  array  The document head data in array form
-     */
-    public function getHeadData()
-    {
-        $data = array();
-        $data['title'] = $this->title;
-        $data['description'] = $this->description;
-        $data['link'] = $this->link;
-        $data['metaTags'] = $this->_metaTags;
-        $data['links'] = $this->_links;
-        $data['styleSheets'] = $this->_styleSheets;
-        $data['style'] = $this->_style;
-        $data['scripts'] = $this->_scripts;
-        $data['script'] = $this->_script;
-        $data['custom'] = $this->_custom;
-        return $data;
-    }
-
-    /**
-     * setHeadData
-     *
-     * Set the HTML document head data
-     *
-     * @param   array  $data    The document head data in array form
-     */
-    public function setHeadData($data)
-    {
-        if (empty($data) || !is_array($data)) {
-            return;
-        }
-
-        $this->title = (isset($data['title']) && !empty($data['title'])) ? $data['title'] : $this->title;
-        $this->description = (isset($data['description']) && !empty($data['description'])) ? $data['description']
-                : $this->description;
-        $this->link = (isset($data['link']) && !empty($data['link'])) ? $data['link'] : $this->link;
-        $this->_metaTags = (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags']
-                : $this->_metaTags;
-        $this->_links = (isset($data['links']) && !empty($data['links'])) ? $data['links'] : $this->_links;
-        $this->_styleSheets = (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets']
-                : $this->_styleSheets;
-        $this->_style = (isset($data['style']) && !empty($data['style'])) ? $data['style'] : $this->_style;
-        $this->_scripts = (isset($data['scripts']) && !empty($data['scripts'])) ? $data['scripts'] : $this->_scripts;
-        $this->_script = (isset($data['script']) && !empty($data['script'])) ? $data['script'] : $this->_script;
-        $this->_custom = (isset($data['custom']) && !empty($data['custom'])) ? $data['custom'] : $this->_custom;
-    }
-
-    /**
      * mergeHeadData
      *
      * Merge the HTML document head data
