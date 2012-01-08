@@ -22,7 +22,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * Constructor.
      *
      * @param    array   $requestArray
-     *
      * @since    1.0
      */
     public function __construct($requestArray = array())
@@ -36,12 +35,10 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * Display task is used to render view output
      *
      * @return   object   Rendered output
-     *
      * @since    1.0
      */
     public function display()
     {
-
         /** model */
         $this->model = new $this->requestArray['model']();
 
@@ -85,6 +82,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * @param $view
      * @param $view_type
      * @param $renderedOutput
+     *
      * @return string
      * @since 1.0
      */
@@ -211,6 +209,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * Note: Right-to-left css files should begin with rtl_
      *
      * @return void
+     * @since 1.0
      */
     protected function loadMedia()
     {
@@ -231,27 +230,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $urlPath = $this->view_path_url . '/views';
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
-    }
-
-    /**
-     * Escapes a value for output in a controller script.
-     *
-     * If escaping mechanism is either htmlspecialchars or htmlentities, uses
-     * {@link $_encoding} setting.
-     *
-     * @param   mixed  $var  The output to escape.
-     *
-     * @return  mixed  The escaped value.
-     *
-     * @since   1.0
-     */
-    function escape($var)
-    {
-        if (in_array($this->_escape, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escape, $var, ENT_COMPAT, $this->_charset);
-        }
-
-        return call_user_func($this->_escape, $var);
     }
 }
 

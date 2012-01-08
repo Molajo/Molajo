@@ -6,6 +6,4 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
-$headerType = basename(dirname(__FILE__));
-include MOLAJO_APPLICATIONS_MVC . '/views/wraps/utility/views/header.php';
+include MOLAJO_APPLICATIONS_MVC . '/views/wraps/default/views/header.php';

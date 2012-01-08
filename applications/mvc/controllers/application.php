@@ -140,7 +140,7 @@ class MolajoControllerApplication
      *
      * @var string
      */
-    protected $escape = 'htmlspecialchars';
+    protected $_escapeFunction = 'htmlspecialchars';
 
     /**
      * @var    array
@@ -242,6 +242,10 @@ class MolajoControllerApplication
             $this->setBase($options['base']);
         }
 
+        if (array_key_exists('escapeFunction', $options)) {
+            $this->setEscape($options['escapeFunction']);
+        }
+
         $this->getConfig();
 
         /** now */
@@ -326,6 +330,7 @@ class MolajoControllerApplication
         $this->loadLanguage();
         $this->loadDispatcher();
 
+        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
         /** execute the extension layer */
         $request = new MolajoRequest();
         $request->load();
@@ -333,6 +338,7 @@ class MolajoControllerApplication
         /** response */
         $this->respond();
 
+        return;
         //        echo '<pre>';
         //        var_dump($request);
         //        '</pre>';
@@ -912,6 +918,41 @@ class MolajoControllerApplication
         return $this->charset;
     }
 
+
+    /**
+     * setEscape
+     *
+     * Sets the escape method
+     *
+     * @param  string
+     *
+     * @return  void
+     */
+    function setEscape($escapeFunction)
+    {
+        if (is_callable($escapeFunction)) {
+            $this->_escapeFunction = $escapeFunction;
+        }
+    }
+
+    /**
+     * escapeOutput
+     *
+     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
+     *
+     * @param   mixed  $var  The output to escape.
+     *
+     * @return  mixed  The escaped value.
+     * @since   1.0
+     */
+    function escapeOutput($var)
+    {
+        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
+        }
+
+        return call_user_func($this->_escapeFunction, $var);
+    }
 
     /**
      * loadMediaJS

@@ -69,11 +69,6 @@ class MolajoDocument
      */
     public function __construct($requestArray = array())
     {
-        /*
-                        echo '<pre>';
-                        var_dump($requestArray);
-                        '</pre>';
-        */
         $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $requestArray['format'] . '.xml';
         if (JFile::exists($formatXML)) {
         } else {
@@ -113,12 +108,21 @@ class MolajoDocument
         $this->requestArray['template_path'] = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
         $this->requestArray['page_include'] = $this->requestArray['page_path'] . '/index.php';
 
-        $this->parameters = array(
+        $parameters = array(
             'template' => $this->requestArray['template_name'],
             'template_path' => $this->requestArray['template_path'],
             'page' => $this->requestArray['page_include'],
             'parameters' => $this->requestArray['template_parameters']
         );
+
+        //        $this->parameters = array();
+        //        $this->parameters = $this->requestArray;
+        //        $this->parameters = json_encode($this->requestArray);
+        //echo 'Parameters'.'<pre>';var_dump(json_encode($this->parameters));echo '</pre>';
+        //      die;
+        /** Template Parameters */
+        $this->parameters = new JRegistry;
+        $this->parameters->loadArray($parameters);
 
         /** Before Event */
         //        MolajoController::getApplication()->triggerEvent('onBeforeRender');

@@ -77,6 +77,8 @@ class MolajoRequest
         /** @var $requestArray */
         $requestArray = array();
 
+        $requestArray['parameters'] = '';
+
         /** request */
         $requestArray['query_request'] = '';
         $requestArray['request'] = '';
@@ -90,19 +92,9 @@ class MolajoRequest
         $requestArray['unicodeslugs'] = 0;
         $requestArray['force_ssl'] = 0;
 
-        /** render parameters */
-        $requestArray['controller'] = '';
-        $requestArray['static'] = '';
-        $requestArray['model'] = '';
-        $requestArray['option'] = '';
-        $requestArray['format'] = '';
-        $requestArray['task'] = '';
-
         /** format */
         $requestArray['format'] = '';
         $requestArray['format_include'] = '';
-        $requestArray['id'] = 0;
-        $requestArray['ids'] = array();
 
         /** template */
         $requestArray['template_id'] = 0;
@@ -139,6 +131,16 @@ class MolajoRequest
         $requestArray['metadata_robots'] = '';
         $requestArray['metadata_additional_array'] = array();
 
+        /** render parameters */
+        $requestArray['controller'] = '';
+        $requestArray['model'] = '';
+        $requestArray['static'] = '';
+        $requestArray['option'] = '';
+        $requestArray['format'] = '';
+        $requestArray['task'] = '';
+        $requestArray['id'] = 0;
+        $requestArray['ids'] = array();
+
         /** other */
         $requestArray['plugin_type'] = '';
         $requestArray['acl_implementation'] = '';
@@ -152,6 +154,15 @@ class MolajoRequest
         $requestArray['translation_of_id'] = 0;
         $requestArray['view_group_id'] = 0;
 
+        /** extension */
+        $requestArray['extension_instance_id'] = 0;
+        $requestArray['extension_title'] = '';
+        $requestArray['extension_parameters'] = array();
+        $requestArray['extension_metadata'] = array();
+        $requestArray['extension_path'] = '';
+        $requestArray['extension_type'] = '';
+        $requestArray['extension_folder'] = '';
+
         /** source data */
         $requestArray['source_table'] = '';
         $requestArray['source_id'] = 0;
@@ -164,14 +175,10 @@ class MolajoRequest
         $requestArray['category_parameters'] = array();
         $requestArray['category_metadata'] = array();
 
-        /** extension */
-        $requestArray['extension_instance_id'] = 0;
-        $requestArray['extension_title'] = '';
-        $requestArray['extension_parameters'] = array();
-        $requestArray['extension_metadata'] = array();
-        $requestArray['extension_path'] = '';
-        $requestArray['extension_type'] = '';
-        $requestArray['extension_folder'] = '';
+        /** menu item data */
+        $requestArray['menu_item_id'] = 0;
+        $requestArray['menu_item_parameters'] = array();
+        $requestArray['menu_item_metadata'] = array();
 
         /** results */
         $requestArray['results'] = '';
@@ -363,6 +370,7 @@ class MolajoRequest
         $this->requestArray['page_path'] = $pageHelper->view_path;
         $this->requestArray['page_path_url'] = $pageHelper->view_path_url;
 
+//$this->_mergeParameters();
         /**
         echo '<pre>';
         var_dump($this->requestArray);
@@ -811,5 +819,61 @@ class MolajoRequest
         } else {
             return false;
         }
+    }
+
+    /**
+     *  _mergeParameters
+     */
+    protected function _mergeParameters()
+    {
+        /** initialize */
+        $temp = array();
+        $parameters = array();
+
+        /** load requestArray (without parameter fields) */
+//        $temp = $this->requestArray;
+//        $parameters = $this->_merge($parameters, $temp);
+
+        /** source parameters */
+        $temp = array();
+        $temp = json_decode($this->requestArray['source_parameters']);
+        $parameters = $this->_merge($parameters, $temp);
+
+        /** category parameters */
+        $temp = array();
+        $temp = json_decode($this->requestArray['category_parameters']);
+        $parameters = $this->_merge($parameters, $temp);
+
+        /** extension parameters */
+        $temp = array();
+        $temp = json_decode($this->requestArray['extension_parameters']);
+
+        $this->parameters = $this->_merge($parameters, $temp);
+
+        echo '<pre>';var_dump($this->parameters);'</pre>';
+        die();
+    }
+
+    /**
+     *  _merge
+     */
+    protected function _merge($parameters, $temp)
+    {
+        if (count($temp) == 0) {
+            return $parameters;
+        }
+        foreach ($temp as $name => $value) {
+            if (strpos($name, 'parameter')) {
+            } else {
+                if (isset($parameters->$name)) {
+                    if (trim($parameters->$name) == '') {
+                        $parameters->$name = $value;
+                    }
+                } else {
+                    $parameters->$name = $value;
+                }
+            }
+        }
+        return $parameters;
     }
 }

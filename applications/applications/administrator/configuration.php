@@ -68,6 +68,10 @@ class MolajoConfigApplication
     public $default_view_edit = 'edit';
     public $default_wrap_edit = 'div';
 
+    /* Message */
+    public $message_view = 'messages';
+    public $message_wrap = 'div';
+
     /* Offline */
     public $offline = '0';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';

@@ -31,8 +31,10 @@ class MolajoConfig
     /* Lists */
     public $list_limit = 20;
 
-    /* Media */
+    /* HTML5 */
     public $html5 = '1';
+
+    /* Media */
     public $image_xsmall = '50';
     public $image_small = '75';
     public $image_medium = '150';
@@ -54,10 +56,24 @@ class MolajoConfig
     public $logon_requirement = '267';
 
     /* Template and View Defaults */
+    public $default_format = 'html';
     public $default_template = 'molajito';
+    public $default_page = 'full';
+    public $default_view_static = 'dashboard';
+    public $default_wrap_static = 'div';
+    public $default_view_items = 'items';
+    public $default_wrap_items = 'section';
+    public $default_view_item = 'item';
+    public $default_wrap_item = 'article';
+    public $default_view_edit = 'edit';
+    public $default_wrap_edit = 'div';
+
+    /* Message */
+    public $message_view = 'messages';
+    public $message_wrap = 'div';
 
     /* Offline */
-    public $offline = '1';
+    public $offline = '0';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
     public $offline_format = 'static';
     public $offline_template = 'system';

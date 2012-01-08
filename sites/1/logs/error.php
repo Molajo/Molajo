@@ -1,4 +1,4 @@
-#<?php die('Forbidden.'); ?>
+<?php die; ?>
 #Date: 2011-08-21 20:45:13 UTC
 #Software: Joomla Platform 11.2.0 Dev [ Ember ] 15-Apr-2011 00:00 GMT
 

@@ -7,15 +7,15 @@
  */
 defined('MOLAJO') or die;
 
-if ($this->parameters->get('html5', true) === true
-    && isset($headerType)
-        && ($headerType == 'article'
-            || $headerType == 'aside'
-            || $headerType == 'footer'
-            || $headerType == 'header'
-            || $headerType == 'hgroup'
-            || $headerType == 'nav'
-            || $headerType == 'section') ):
+if ($this->parameters->def('html5', true) === true
+    && ($this->parameters->def('wrap', '') == 'article'
+        || $this->parameters->def('wrap', '') == 'aside'
+        || $this->parameters->def('wrap', '') == 'footer'
+        || $this->parameters->def('wrap', '') == 'header'
+        || $this->parameters->def('wrap', '') == 'hgroup'
+        || $this->parameters->def('wrap', '') == 'nav'
+        || $this->parameters->def('wrap', '') == 'section') ):
+    $headerType = $this->parameters->get('wrap');
 else :
     $headerType = 'div';
 endif;
