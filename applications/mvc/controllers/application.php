@@ -71,7 +71,7 @@ class MolajoControllerApplication
      * @var    string
      * @since  1.0
      */
-    public $direction;
+    public $direction = 'ltr';
 
     /**
      * Tab

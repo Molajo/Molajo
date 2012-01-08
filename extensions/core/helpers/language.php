@@ -56,7 +56,6 @@ class MolajoLanguageHelper
         return $list;
     }
 
-
     /**
      * Tries to detect the language.
      *
