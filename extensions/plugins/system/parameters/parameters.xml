@@ -2,12 +2,12 @@
 <extension version="1.6" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_MOLAJO_NAME</name>
     <author>Molajo Project</author>
-    <creationDate>January 2011</creationDate>
+    <create_date>January 2011</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved. See http://molajo.org/copyright
     </copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
-    <authorEmail>SpecificMaintainerTeam@molajo.org</authorEmail>
-    <authorUrl>molajo.org/MaintainerTeam</authorUrl>
+    <author_email>SpecificMaintainerTeam@molajo.org</author_email>
+    <author_url>molajo.org/MaintainerTeam</author_url>
     <version>1.0</version>
     <description>PLG_SYSTEM_MOLAJO_DESCRIPTION</description>
 

@@ -1526,7 +1526,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         foreach ($site_components as $component)
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('', '', $component) . '.xml')) {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
+                $manifest_details = MolajoInstallHelper::parseManifestXML(
                     MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('', '', $component) . '.xml'
                 );
                 $extension = MolajoTable::getInstance('extension');
@@ -1543,7 +1543,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         foreach ($admin_components as $component)
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('', '', $component) . '.xml')) {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
+                $manifest_details = MolajoInstallHelper::parseManifestXML(
                     MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('', '', $component) . '.xml'
                 );
                 $extension = MolajoTable::getInstance('extension');
@@ -1577,7 +1577,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $this->parent->setPath('source', $client->path . '/components/' . $this->parent->extension->element);
         $this->parent->setPath('extension_root', $this->parent->getPath('source'));
 
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
@@ -1835,7 +1835,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->name = $manifest_details['name'];
 

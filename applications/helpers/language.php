@@ -1235,7 +1235,7 @@ class MolajoLanguageHelper
             return null;
         }
 
-        if ((string)$xml->getName() == 'metafile') {
+        if ((string)$xml->getName() == 'manifest') {
         } else {
             return null;
         }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="view" group="wrap" method="upgrade">
     <name>VIEW_WRAP_ARTICLE_NAME</name>
-    <author>Amy Stephen</author>
-    <creationDate>January 2012</creationDate>
-    <copyright>Copyright (C) Amy Stephen. All rights reserved.</copyright>
-    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>http://molajo.org</authorUrl>
-    <version>1.0</version>
     <description>VIEW_WRAP_ARTICLE_DESCRIPTION</description>
+    <version>1.0</version>
+    <copyright>VIEW_WRAP_ARTICLE_COPYRIGHT</copyright>
+    <license>VIEW_WRAP_ARTICLE_LICENSE</license>
+    <author>Amy Stephen</author>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <create_date>January 2012</create_date>
     <files>
         <folder>views</folder>
         <folder>language</folder>

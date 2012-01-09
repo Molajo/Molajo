@@ -2,12 +2,12 @@
 <extension version="1.0" type="file" method="upgrade">
     <name>Molajo</name>
     <author>Molajo Project</author>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>molajo.org</authorUrl>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>molajo.org</author_url>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved</copyright>
     <license>GNU General Public License version 2 or later</license>
     <version>1.0</version>
-    <creationDate>January 2012</creationDate>
+    <create_date>January 2012</create_date>
     <description>FILES_MOLAJO_XML_DESCRIPTION</description>
 
     <scriptfile>views/manifests/distribution/script.php</scriptfile>

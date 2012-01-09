@@ -2,11 +2,11 @@
 <extension version="1.0" type="plugin" group="extension">
     <name>plg_extension_joomla</name>
     <author>Molajo Project</author>
-    <creationDate>May 2010</creationDate>
+    <create_date>May 2010</create_date>
     <copyright>Copyright (C) 2005 - 2012 Open Source Matters. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>molajo.org</authorUrl>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>molajo.org</author_url>
     <version>1.0</version>
     <description>PLG_EXTENSION_JOOMLA_DESCRIPTION</description>
     <files>

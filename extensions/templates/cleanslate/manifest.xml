@@ -4,11 +4,11 @@
 
     <name>TEMPLATE_SAMPLE_NAME</name>
     <author>Molajo Contributors</author>
-    <creationDate>November 2011</creationDate>
+    <create_date>November 2011</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>http://molajo.org</authorUrl>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>TEMPLATE_SAMPLE_DESCRIPTION</description>
 

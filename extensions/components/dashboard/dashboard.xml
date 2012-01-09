@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.0.0" method="upgrade">
-    <name>DASHBOARD</name>
-    <author>Molajo Contributors</author>
-    <creationDate>January 2012</creationDate>
-    <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
+<extension type="component" version="1.0" method="upgrade">
+    <name>COMPONENT_DASHBOARD_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2012</create_date>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>http://molajo.org</authorUrl>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>DASHBOARD_DESCRIPTION</description>
-
-    <media destination="dashboard" folder="media">
-        <folder>css</folder>
-        <folder>images</folder>
-        <folder>js</folder>
-    </media>
-
-    <administration>
-
-        <files folder="admin">
-            <filename>access.xml</filename>
-            <filename>config.xml</filename>
-            <filename>controller.php</filename>
-            <filename>dashboard.php</filename>
-            <folder>helpers</folder>
-            <folder>language</folder>
-            <folder>models</folder>
-            <folder>views</folder>
-        </files>
-
-    </administration>
-
+    <description>COMPONENT_DASHBOARD_DESCRIPTION</description>
+    <files>
+        <filename>access.xml</filename>
+        <filename>config.xml</filename>
+        <filename>controller.php</filename>
+        <folder>language</folder>
+        <folder>models</folder>
+    </files>
 </extension>

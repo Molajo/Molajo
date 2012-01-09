@@ -1778,7 +1778,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function generateManifestCache()
     {
-        return json_encode(MolajoApplicationHelper::parseXMLInstallFile($this->getPath('manifest')));
+        return json_encode(MolajoInstallHelper::parseManifestXML($this->getPath('manifest')));
     }
 
     /**

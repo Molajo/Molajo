@@ -2,11 +2,11 @@
 <extension version="1.0" type="plugin" group="system">
     <name>plg_system_logout</name>
     <author>Molajo Project</author>
-    <creationDate>April 2009</creationDate>
+    <create_date>April 2009</create_date>
     <copyright>Copyright (C) 2005 - 2012 Open Source Matters. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>molajo.org</authorUrl>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>molajo.org</author_url>
     <version>1.0</version>
     <description>PLG_SYSTEM_LOGOUT_DESCRIPTION</description>
     <files>

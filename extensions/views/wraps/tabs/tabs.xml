@@ -2,11 +2,11 @@
 <extension version="1.0" type="view" method="upgrade">
     <name>VIEW_TABS_NAME</name>
     <author>Molajo Contributors</author>
-    <creationDate>June 2011</creationDate>
+    <create_date>June 2011</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
-    <authorEmail>AmyStephen@molajo.org</authorEmail>
-    <authorUrl>http://molajo.org</authorUrl>
+    <author_email>AmyStephen@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TABS_DESCRIPTION</description>
     <files>

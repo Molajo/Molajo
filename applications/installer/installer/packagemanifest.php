@@ -109,9 +109,9 @@ class MolajoInstallerPackagemanifest extends JObject
             $this->name = (string)$xml->name;
             $this->packagename = (string)$xml->packagename;
             $this->update = (string)$xml->update;
-            $this->authorurl = (string)$xml->authorUrl;
+            $this->authorurl = (string)$xml->author_url;
             $this->author = (string)$xml->author;
-            $this->authoremail = (string)$xml->authorEmail;
+            $this->authoremail = (string)$xml->author_email;
             $this->description = (string)$xml->description;
             $this->packager = (string)$xml->packager;
             $this->packagerurl = (string)$xml->packagerurl;

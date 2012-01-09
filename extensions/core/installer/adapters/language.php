@@ -532,7 +532,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         foreach ($site_languages as $language)
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml')) {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml');
+                $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml');
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'language');
                 $extension->set('application_id', 0);
@@ -546,7 +546,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         foreach ($admin_languages as $language)
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml')) {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml');
+                $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml');
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'language');
                 $extension->set('application_id', 1);
@@ -578,7 +578,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         $this->parent->setPath('manifest', $manifestPath);
         $this->parent->setPath('source', $client->path . '/language/' . $short_element);
         $this->parent->setPath('extension_root', $this->parent->getPath('source'));
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
@@ -609,7 +609,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         $manifestPath = $client->path . '/language/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->name = $manifest_details['name'];
 

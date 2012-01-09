@@ -2,10 +2,10 @@
 <extension version="1.0" type="plugin" group="editors">
     <name>plg_editors_none</name>
     <version>1.0</version>
-    <creationDate>August 2004</creationDate>
+    <create_date>August 2004</create_date>
     <author></author>
-    <authorEmail>N/A</authorEmail>
-    <authorUrl></authorUrl>
+    <author_email>N/A</author_email>
+    <author_url></author_url>
     <copyright></copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <description>PLG_NONE_DESCRIPTION</description>

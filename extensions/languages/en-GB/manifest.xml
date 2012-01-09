@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<metafile version="1.0">
+<manifest version="1.0">
     <name>English (United Kingdom)</name>
-    <version>1.6.2</version>
-    <creationDate>2008-03-15</creationDate>
+    <version>1.0</version>
+    <create_date>January 2012</create_date>
     <author>Molajo Project</author>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>molajo.org</authorUrl>
-    <copyright>Copyright (C) 2005 - 2012 Open Source Matters. All rights reserved.</copyright>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org/</author_url>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <description>en-GB administrator language</description>
+    <description>en-GB language</description>
     <files>
-        <filename>en-GB.admin.ini</filename>
-        <filename>en-GB.admin.sys.ini</filename>
+        <filename>en-GB.ini</filename>
     </files>
     <metadata>
         <name>English (United Kingdom)</name>
@@ -23,4 +22,4 @@
         <firstDay>0</firstDay>
     </metadata>
     <parameters/>
-</metafile>
+</manifest>

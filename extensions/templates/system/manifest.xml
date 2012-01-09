@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install PUBLIC "-//Molajo 1.0//DTD template 1.0//EN" "http://molajo.org/xml/dtd/1.0/template-install.dtd">
 <extension type="template" version="1.0" method="upgrade">
-
     <name>TEMPLATE_SYSTEM_NAME</name>
     <author>Molajo Contributors</author>
-    <creationDate>January 2012</creationDate>
+    <create_date>January 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <authorEmail>collaborate@molajo.org</authorEmail>
-    <authorUrl>http://molajo.org</authorUrl>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>TEMPLATE_SYSTEM_DESCRIPTION</description>
-
     <files>
         <filename>index.php</filename>
         <folder>css</folder>
         <folder>images</folder>
         <folder>language</folder>
-        <folder>pages</folder>
+        <folder>views</folder>
     </files>
-
 </extension>

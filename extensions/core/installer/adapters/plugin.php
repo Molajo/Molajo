@@ -669,7 +669,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             $file_list = JFolder::files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder, '\.xml$');
             foreach ($file_list as $file)
             {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $file);
+                $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $file);
                 $file = JFile::stripExt($file);
                 // Ignore example plugins
                 if ($file == 'example') {
@@ -692,7 +692,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 $file_list = JFolder::files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder, '\.xml$');
                 foreach ($file_list as $file)
                 {
-                    $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
+                    $manifest_details = MolajoInstallHelper::parseManifestXML(
                         MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder . '/' . $file
                     );
                     $file = JFile::stripExt($file);
@@ -748,7 +748,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             $this->parent->set('message', '');
         }
         $this->parent->setPath('manifest', $manifestPath);
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($manifestPath);
+        $manifest_details = MolajoInstallHelper::parseManifestXML($manifestPath);
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
@@ -781,7 +781,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                         . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
 
         $this->parent->extension->name = $manifest_details['name'];

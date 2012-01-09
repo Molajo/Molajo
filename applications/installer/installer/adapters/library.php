@@ -299,7 +299,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $file_list = JFolder::files(MOLAJO_SITE_MANIFESTS . '/libraries', '\.xml$');
         foreach ($file_list as $file)
         {
-            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_SITE_MANIFESTS . '/libraries/' . $file);
+            $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_SITE_MANIFESTS . '/libraries/' . $file);
             $file = JFile::stripExt($file);
             $extension = MolajoTable::getInstance('extension');
             $extension->set('type', 'library');
@@ -336,7 +336,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $manifestPath = MOLAJO_SITE_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
@@ -366,7 +366,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 
-        $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
+        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->name = $manifest_details['name'];
 

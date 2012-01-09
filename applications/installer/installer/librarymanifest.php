@@ -38,9 +38,9 @@ class MolajoInstallerLibrarymanifest extends JObject
     var $description = '';
 
     /**
-     * @var date creationDate Creation Date of the extension
+     * @var date create_date Creation Date of the extension
      */
-    var $creationDate = '';
+    var $create_date = '';
 
     /**
      * @var string copyright Copyright notice for the extension
@@ -134,8 +134,8 @@ class MolajoInstallerLibrarymanifest extends JObject
             $this->description = (string)$xml->description;
             $this->creationdate = (string)$xml->creationdate;
             $this->author = (string)$xml->author;
-            $this->authoremail = (string)$xml->authorEmail;
-            $this->authorurl = (string)$xml->authorUrl;
+            $this->authoremail = (string)$xml->author_email;
+            $this->authorurl = (string)$xml->author_url;
             $this->packager = (string)$xml->packager;
             $this->packagerurl = (string)$xml->packagerurl;
             $this->update = (string)$xml->update;
