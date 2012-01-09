@@ -2,6 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Application
+ * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -88,25 +89,11 @@ class MolajoControllerApplication
     public $link;
 
     /**
-     * Base
-     * @var    string
-     * @since  1.0
-     */
-    public $base;
-
-    /**
      * Callback for escaping.
      * @var   string
      * @since 1.0
      */
     protected $_escapeFunction = 'htmlspecialchars';
-
-    /**
-     * Format
-     * @var    string
-     * @since  1.0
-     */
-    public $format;
 
     /**
      * Metadata
@@ -130,20 +117,6 @@ class MolajoControllerApplication
     public $custom = array();
 
     /**
-     * Response last modified value
-     * @var    Date
-     * @since  1.0
-     */
-    public $last_modified;
-
-    /**
-     * Generator
-     * @var    string
-     * @since  1.0
-     */
-    public $generator;
-
-    /**
      * Messages
      * @var    array
      * @since  1.0
@@ -163,20 +136,6 @@ class MolajoControllerApplication
      * @since  1.0
      */
     public $session;
-
-    /**
-     * Title
-     * @var    string
-     * @since  1.0
-     */
-    public $title;
-
-    /**
-     * Description
-     * @var    string
-     * @since  1.0
-     */
-    public $description;
 
     /**
      * Links
@@ -325,9 +284,6 @@ class MolajoControllerApplication
         }
         if (array_key_exists('link', $options)) {
             $this->setLink($options['link']);
-        }
-        if (array_key_exists('base', $options)) {
-            $this->setBase($options['base']);
         }
         if (array_key_exists('escapeFunction', $options)) {
             $this->setEscape($options['escapeFunction']);
@@ -528,32 +484,6 @@ class MolajoControllerApplication
     public function getLink()
     {
         return $this->link;
-    }
-
-    /**
-     * setBase
-     *
-     * Sets the base URI of the document
-     *
-     * @param  string  $base
-     *
-     * @return void
-     */
-    public function setBase($base)
-    {
-        $this->base = $base;
-    }
-
-    /**
-     * getBase
-     *
-     * Return the base URI of the document.
-     *
-     * @return  string
-     */
-    public function getBase()
-    {
-        return $this->base;
     }
 
     /**
@@ -884,146 +814,6 @@ class MolajoControllerApplication
     }
 
     /**
-     * setFormat
-     *
-     * Sets the format of the response
-     *
-     * @param   string  $format
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-    }
-
-    /**
-     * getFormat
-     *
-     * Return the format of the response.
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * setTitle
-     *
-     * Sets the title of the document
-     *
-     * @param   string    $title
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * getTitle
-     *
-     * Return the title of the document.
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * setDescription
-     *
-     * Sets the description of the document
-     *
-     * @param   string  $description
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * getDescription
-     *
-     * Return the description of the page.
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * setLastModified
-     *
-     * Sets the document modified date
-     *
-     * @param   string
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setLastModified($date)
-    {
-        $this->last_modified = $date;
-    }
-
-    /**
-     * getLastModified
-     *
-     * Returns the document modified date
-     *
-     * @return string
-     * @since  1.0
-     */
-    public function getLastModified()
-    {
-        return $this->last_modified;
-    }
-
-    /**
-     * setGenerator
-     *
-     * Sets the document generator
-     *
-     * @param   string
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setGenerator($generator)
-    {
-        $this->generator = $generator;
-    }
-
-    /**
-     * getGenerator
-     *
-     * Returns the document generator
-     *
-     * @return string
-     * @since  1.0
-     */
-    public function getGenerator()
-    {
-        return $this->generator;
-    }
-
-    /**
      * setMetaData
      *
      * Sets or alters a meta tag.
@@ -1065,21 +855,25 @@ class MolajoControllerApplication
      * @return  string
      * @since   1.0
      */
-    public function getMetaData($name, $context = false)
+//    public function getMetaData($name, $context = false)
+    public function getMetaData()
     {
+        return $this->metadata;
+        /**
         $name = strtolower($name);
 
         if (is_bool($context) && ($context == true)) {
-            $result = $this->metadata['http-equiv'][$name];
+        $result = $this->metadata['http-equiv'][$name];
 
         } else if (is_string($context)) {
-            $result = $this->metadata[$context][$name];
+        $result = $this->metadata[$context][$name];
 
         } else {
-            $result = $this->metadata['standard'][$name];
+        $result = $this->metadata['standard'][$name];
         }
 
         return $result;
+         */
     }
 
     /**
@@ -1119,27 +913,6 @@ class MolajoControllerApplication
     public function getMimeEncoding()
     {
         return $this->mimetype;
-    }
-
-    /**
-     * Adds a shortcut icon (favicon)
-     *
-     * This adds a link to the icon shown in the favorites list or on
-     * the left of the url in the address bar. Some browsers display
-     * it on the tab, as well.
-     *
-     * @param   string  $href      The link that is being related.
-     * @param   string  $type      File type
-     * @param   string  $relation  Relation of link
-     *
-     * @return  JDocumentHTML instance of $this to allow chaining
-     *
-     * @since   1.0
-     */
-    public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
-    {
-        $href = str_replace('\\', '/', $href);
-        $this->addHeadLink($href, $relation, 'rel', array('type' => $type));
     }
 
     /**

@@ -80,6 +80,7 @@ class MolajoRequest
         $requestArray['parameters'] = '';
 
         /** request */
+        $requestArray['base'] = MOLAJO_BASE_URL;
         $requestArray['query_request'] = '';
         $requestArray['request'] = '';
         $requestArray['sef_request'] = '';
@@ -102,6 +103,7 @@ class MolajoRequest
         $requestArray['template_parameters'] = array();
         $requestArray['template_path'] = '';
         $requestArray['template_include'] = '';
+        $requestArray['template_favicon'] = '';
 
         /** page */
         $requestArray['page_include'] = '';
@@ -331,11 +333,6 @@ class MolajoRequest
 
         /** 8: Application (static, items, item, edit) */
         $results = $this->_getApplicationDefaults();
-
-        /**
-         *  Set Application Meta Data Values
-         */
-        $this->_setMetaData();
 
         /** Template values */
         $results = $this->_getTemplate();
@@ -766,48 +763,6 @@ class MolajoRequest
         $db->setQuery($query->__toString());
 
         return $db->loadResult();
-    }
-
-    /**
-     *  _setMetaData
-     *
-     * Establish the meta data for this web page
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function _setMetaData()
-    {
-//change to setResponse(title, value, etc) ???
-        MolajoController::getApplication()->setFormat($this->requestArray['format']);
-        MolajoController::getApplication()->setTitle($this->requestArray['metadata_title']);
-        //$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
-        MolajoController::getApplication()->setDescription($this->requestArray['metadata_description']);
-        MolajoController::getApplication()->setLastModified($this->requestArray['source_last_modified']);
-        MolajoController::getApplication()->setGenerator($this->requestArray['generator']);
-
-        MolajoController::getApplication()->setMetaData('keywords', $this->requestArray['metadata_keywords']);
-        MolajoController::getApplication()->setMetaData('author', $this->requestArray['metadata_author']);
-        MolajoController::getApplication()->setMetaData('content_rights', $this->requestArray['metadata_rights']);
-        MolajoController::getApplication()->setMetaData('robots', $this->requestArray['metadata_robots']);
-/**
-        $mdata = $this->item->metadata->toArray();
-        foreach ($mdata as $k => $v)
-        {
-            if ($v)
-            {
-                $this->document->setMetadata($k, $v);
-            }
-        }
-if ($this->print)
-{
-	$this->document->setMetaData('robots', 'noindex, nofollow');
-}
- *
- *
-*/
-        //        $this->setMetaData('Content-Type', 'text/html', true);
-        return true;
     }
 
     /**

@@ -1,182 +1,128 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Renderer
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @subpackage  Renderers
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Head Renderer Class
- *
- * Renders the HTML Head
+ * Head
  *
  * @package     Molajo
- * @subpackage  Head
- * @since       11.1
+ * @subpackage  Renderers
+ * @since       1.0
  */
 class MolajoHeadRenderer
 {
     /**
-     * Array of Header <link> tags
+     * Name
+     *
+     * From Molajo Extension
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $name = null;
+
+    /**
+     * Request Array
+     *
+     * From Molajo Extension
      *
      * @var    array
+     * @since  1.0
      */
-    public $_links = array();
+    protected $requestArray = array();
 
     /**
-     * Array of custom tags
+     * Attributes
+     *
+     * Extracted in Format Class from Template/Page
+     * <include:message statement attr1=x attr2=y attrN="and-so-on" />
      *
      * @var    array
+     * @since  1.0
      */
-    public $_custom = array();
-
-    /**
-     * @var null
-     */
-    public $template = null;
-    public $baseurl = null;
-    public $parameters = null;
-    public $_file = null;
-
-    /**
-     * String holding parsed template
-     */
-    protected $_template = '';
-
-    /**
-     * Array of parsed template doc tags
-     */
-    protected $_template_tags = array();
-
-    /**
-     * Integer with caching setting
-     */
-    protected $_caching = null;
+    protected $attributes = array();
 
     /**
      * __construct
      *
-     * Class constructor
+     * Class constructor.
      *
-     * @param   array  $options Associative array of options
+     * @param null $name
+     * @param array $requestArray
+     * @since 1.0
      */
-    public function __construct($options = array())
+    public function __construct($name = null, $requestArray = array())
     {
-        parent::__construct($options);
-
+        $this->name = $name;
+        $this->requestArray = $requestArray;
     }
 
     /**
-     * mergeHeadData
+     * render
      *
-     * Merge the HTML document head data
+     * Render the message.
      *
-     * @param   array  $data    The document head data in array form
+     * @param $attributes
+     * @return mixed
      */
-    public function mergeHeadData($data)
+    public function render($attributes)
     {
-        if (empty($data) || !is_array($data)) {
-            return;
-        }
+        /** @var $attributes  */
+        $this->attributes = $attributes;
 
-        $this->title = (isset($data['title']) && !empty($data['title']) && !stristr($this->title, $data['title']))
-                ? $this->title . $data['title'] : $this->title;
-        $this->description = (isset($data['description']) && !empty($data['description']) && !stristr($this->description, $data['description']))
-                ? $this->description . $data['description'] : $this->description;
-        $this->link = (isset($data['link'])) ? $data['link'] : $this->link;
+        /** retrieve parameters */
+        $this->_getRequest();
 
-        if (isset($data['metaTags'])) {
-            foreach ($data['metaTags'] AS $type1 => $data1)
-            {
-                $booldog = $type1 == 'http-equiv' ? true : false;
-                foreach ($data1 AS $name2 => $data2)
-                {
-                    $this->setMetaData($name2, $data2, $booldog);
-                }
+        /** Instantiate Controller */
+        $controller = new MolajoControllerDisplay ($this->requestArray);
+        return $controller->Display();
+    }
+
+    /**
+     * _getRequest
+     *
+     *  From <include:message attr=1 attr=2 etc />
+     */
+    protected function _getRequest()
+    {
+        $this->requestArray['view'] = MolajoController::getApplication()->get('head_view', 'head');
+        $this->requestArray['wrap'] = MolajoController::getApplication()->get('head_wrap', 'none');
+
+        foreach ($this->attributes as $name => $value) {
+
+            if ($name == 'wrap') {
+                $this->requestArray['wrap'] = $value;
+
+            } else if ($name == 'view') {
+                $this->requestArray['view'] = $value;
+
+            } else if ($name == 'id' || $name == 'wrap_id') {
+                $this->requestArray['wrap_id'] = $value;
+
+            } else if ($name == 'class' || $name == 'wrap_class') {
+                $this->requestArray['wrap_class'] = $value;
             }
         }
 
-        $this->_links = (isset($data['links']) && !empty($data['links']) && is_array($data['links']))
-                ? array_unique(array_merge($this->_links, $data['links'])) : $this->_links;
-        $this->_styleSheets = (isset($data['styleSheets']) && !empty($data['styleSheets']) && is_array($data['styleSheets']))
-                ? array_merge($this->_styleSheets, $data['styleSheets']) : $this->_styleSheets;
+        /** Model */
+        $this->requestArray['model'] = 'MolajoModelHead';
 
-        if (isset($data['style'])) {
-            foreach ($data['style'] AS $type => $stdata)
-            {
-                if (!isset($this->_style[strtolower($type)]) || !stristr($this->_style[strtolower($type)], $stdata)) {
-                    $this->addStyleDeclaration($stdata, $type);
-                }
-            }
-        }
+        /** View Path */
+        $this->requestArray['view_type'] = 'extensions';
+        $viewHelper = new MolajoViewHelper($this->requestArray['view'], $this->requestArray['view_type'], $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['view_path'] = $viewHelper->view_path;
+        $this->requestArray['view_path_url'] = $viewHelper->view_path_url;
 
-        $this->_scripts = (isset($data['scripts']) && !empty($data['scripts']) && is_array($data['scripts']))
-                ? array_merge($this->_scripts, $data['scripts']) : $this->_scripts;
+        /** Wrap Path */
+        $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
+        $this->requestArray['wrap_path'] = $wrapHelper->view_path;
+        $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
 
-
-        if (isset($data['script'])) {
-            foreach ($data['script'] AS $type => $sdata)
-            {
-                if (!isset($this->_script[strtolower($type)]) || !stristr($this->_script[strtolower($type)], $sdata)) {
-                    $this->addScriptDeclaration($sdata, $type);
-                }
-            }
-        }
-
-        $this->_custom = (isset($data['custom']) && !empty($data['custom']) && is_array($data['custom']))
-                ? array_unique(array_merge($this->_custom, $data['custom'])) : $this->_custom;
-    }
-
-    /**
-     * Adds <link> tags to the head of the document
-     *
-     * $relType defaults to 'rel' as it is the most common relation type used.
-     * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
-     * Typical tag: <link href="index.php" rel="Start">
-     *
-     * @param   string  $href        The link that is being related.
-     * @param   string  $relation    Relation of link.
-     * @param   string  $relType    Relation type attribute.  Either rel or rev (default: 'rel').
-     * @param   array   $attributes Associative array of remaining attributes.
-     *
-     * @return  void
-     */
-    public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
-    {
-        $attribs = JArrayHelper::toString($attribs);
-        $generatedTag = '<link href="' . $href . '" ' . $relType . '="' . $relation . '" ' . $attribs;
-        $this->_links[] = $generatedTag;
-    }
-
-    /**
-     * Adds a shortcut icon (favicon)
-     *
-     * This adds a link to the icon shown in the favorites list or on
-     * the left of the url in the address bar. Some browsers display
-     * it on the tab, as well.
-     *
-     * @param   string  $href        The link that is being related.
-     * @param   string  $type        File type
-     * @param   string  $relation    Relation of link
-     */
-    public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
-    {
-        $href = str_replace('\\', '/', $href);
-        $this->_links[] = '<link href="' . $href . '" rel="' . $relation . '" type="' . $type . '"';
-    }
-
-    /**
-     * Adds a custom HTML string to the head block
-     *
-     * @param   string  $html  The HTML to add to the head
-     * @return  void
-     */
-
-    public function addCustomTag($html)
-    {
-        $this->_custom[] = trim($html);
+        $this->requestArray['suppress_no_results'] = true;
     }
 }

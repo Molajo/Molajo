@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="view" group="document" method="upgrade">
-    <name>VIEW_DOCUMENT_MESSAGES_NAME</name>
+    <name>VIEW_DOCUMENT_HEAD_NAME</name>
     <author>Molajo Contributors</author>
     <creationDate>January 2012</creationDate>
     <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
-    <description>VIEW_DOCUMENT_MESSAGES_XML_DESCRIPTION</description>
+    <description>VIEW_DOCUMENT_HEAD_XML_DESCRIPTION</description>
     <files>
         <folder>css</folder>
         <folder>images</folder>

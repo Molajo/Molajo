@@ -137,6 +137,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         } else {
 
             /** 2. controller manages loop and event processing */
+            $totalRows = count($this->rowset);
             foreach ($this->rowset as $this->row) {
 
                 /** view: before any rows are processed */
@@ -179,11 +180,13 @@ class MolajoControllerDisplay extends MolajoControllerExtension
                 }
 
                 /** view: after all rows are processed */
-                if (file_exists($this->view_path . '/views/bottom.php')) {
-                    include $this->view_path . '/views/bottom.php';
+                if ($rowCount > $totalRows) {
+                    if (file_exists($this->view_path . '/views/bottom.php')) {
+                        include $this->view_path . '/views/bottom.php';
 
-                    if (isset($this->row->event->afterRenderView)) {
-                        echo $this->row->event->afterRenderView;
+                        if (isset($this->row->event->afterRenderView)) {
+                            echo $this->row->event->afterRenderView;
+                        }
                     }
                 }
             }

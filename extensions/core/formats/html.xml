@@ -4,4 +4,5 @@
     <renderer>component</renderer>
     <renderer>module</renderer>
     <renderer>message</renderer>
+    <renderer>head</renderer>
 </sequence>

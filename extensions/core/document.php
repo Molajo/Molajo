@@ -137,18 +137,13 @@ class MolajoDocument
 
         /** Load Language Files */
         $this->_loadLanguageTemplate();
-
+        /** Favicon */
+        $this->_loadFavicon();
         /** process template include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop($this->requestArray['template_include']);
 
         /** set the respond body */
         MolajoController::getApplication()->setBody($body);
-
-        /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'];
-        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** After Rendering */
         MolajoController::getApplication()->triggerEvent('onAfterRender');
@@ -353,8 +348,7 @@ class MolajoDocument
         $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/images/';
 
         if (file_exists($path . 'favicon.ico')) {
-            $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'] . '/images/favicon.ico';
-            MolajoController::getApplication()->addFavicon($urlPath);
+            $this->requestArray['template_favicon'] = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'] . '/images/favicon.ico';
             return true;
         }
         return false;
