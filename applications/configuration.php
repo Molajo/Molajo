@@ -2,7 +2,6 @@
 class MolajoConfig
 {
     /* Application Settings */
-
     public $applicationname = 'Molajo';
 
     /* Meta */
@@ -67,6 +66,10 @@ class MolajoConfig
     public $default_wrap_item = 'article';
     public $default_view_edit = 'edit';
     public $default_wrap_edit = 'div';
+
+    /* Head */
+    public $head_view = 'head';
+    public $head_wrap = 'none';
 
     /* Message */
     public $message_view = 'messages';
