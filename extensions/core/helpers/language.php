@@ -57,6 +57,8 @@ class MolajoLanguageHelper
     }
 
     /**
+     * getLanguage
+     *
      * Tries to detect the language.
      *
      * @return  string  locale or null if not found
