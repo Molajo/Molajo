@@ -218,11 +218,11 @@ abstract class MolajoExtensionHelper
      * Function to retrieve asset information for the Request or Asset ID
      *
      * @static
-     * @param $requestArray
+     * @param $request
      * @return bool
      * @since 1.0
      */
-    public static function getAsset($requestArray)
+    public static function getAsset(JObject $request)
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
@@ -248,14 +248,14 @@ abstract class MolajoExtensionHelper
 
         $query->where('a.' . $db->nameQuote('asset_type_id') . ' = b.' . $db->nameQuote('id'));
 
-        if ((int)$requestArray['asset_id'] == 0) {
+        if ((int)$request->get('asset_id', 0) == 0) {
             if (MolajoController::getApplication()->get('sef', 1) == 1) {
-                $query->where('a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($requestArray['query_request']));
+                $query->where('a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($request->get('query_request')));
             } else {
-                $query->where('a.' . $db->nameQuote('request') . ' = ' . $db->Quote($requestArray['query_request']));
+                $query->where('a.' . $db->nameQuote('request') . ' = ' . $db->Quote($request->get('query_request')));
             }
         } else {
-            $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$requestArray['asset_id']);
+            $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$request->get('asset_id'));
         }
 
         $db->setQuery($query->__toString());
@@ -275,29 +275,31 @@ abstract class MolajoExtensionHelper
 
             foreach ($results as $result) {
 
-                if ($requestArray['asset_id'] == MolajoController::getApplication()->get('home_asset_id')) {
-                    $requestArray['home'] = true;
+                if ((int) $request->get('asset_id', 0)
+                        == MolajoController::getApplication()->get('home_asset_id')) {
+                    $request->set('home', true);
                 } else {
-                    $requestArray['home'] = false;
+                    $request->set('home', false);
                 }
-                $requestArray['option'] = $result->option;
-                $requestArray['template_id'] = $result->template_id;
-                $requestArray['page'] = $result->template_page;
-                $requestArray['asset_id'] = $result->asset_id;
-                $requestArray['asset_type_id'] = $result->asset_type_id;
-                $requestArray['source_table'] = $result->source_table;
-                $requestArray['source_id'] = $result->source_id;
-                $requestArray['source_language'] = $result->language;
-                $requestArray['translation_of_id'] = $result->translation_of_id;
-                $requestArray['view_group_id'] = $result->view_group_id;
-                $requestArray['category'] = $result->primary_category_id;
-                $requestArray['redirect_to_id'] = $result->redirect_to_id;
 
-                $requestArray['request'] = $result->request;
-                $requestArray['sef_request'] = $result->sef_request;
+                $request->set('option', $result->option);
+                $request->set('template_id', $result->template_id);
+                $request->set('page', $result->template_page);
+                $request->set('asset_id', $result->asset_id);
+                $request->set('asset_type_id', $result->asset_type_id);
+                $request->set('source_table', $result->source_table);
+                $request->set('source_id', $result->source_id);
+                $request->set('source_language', $result->language);
+                $request->set('translation_of_id', $result->translation_of_id);
+                $request->set('view_group_id', $result->view_group_id);
+                $request->set('category', $result->primary_category_id);
+                $request->set('redirect_to_id', $result->redirect_to_id);
+
+                $request->set('request', $result->request);
+                $request->set('sef_request', $result->sef_request);
 
                 $parameterArray = array();
-                $temp = substr($requestArray['request'], 10, (strlen($requestArray['request']) - 10));
+                $temp = substr($request->get('request'), 10, (strlen($request->get('request')) - 10));
                 $parameterArray = explode('&', $temp);
                 $other_parameters = array();
 
@@ -306,44 +308,45 @@ abstract class MolajoExtensionHelper
                     $pair = explode('=', $parameter);
 
                     if ($pair[0] == 'task') {
-                        $requestArray['task'] = $pair[1];
+                        $request->get('task', $pair[1]);
 
                     } elseif ($pair[0] == 'format') {
-                        $requestArray['format'] = $pair[1];
+                        $request->get('format', $pair[1]);
 
                     } elseif ($pair[0] == 'option') {
-                        $requestArray['option'] = $pair[1];
+                        $request->get('option', $pair[1]);
 
                     } elseif ($pair[0] == 'view') {
-                        $requestArray['view'] = $pair[1];
+                        $request->get('view', $pair[1]);
 
                     } elseif ($pair[0] == 'wrap') {
-                        $requestArray['wrap'] = $pair[1];
+                        $request->get('wrap', $pair[1]);
 
                     } elseif ($pair[0] == 'template') {
-                        $requestArray['template_name'] = $pair[1];
+                        $request->get('template_name', $pair[1]);
 
                     } elseif ($pair[0] == 'page') {
-                        $requestArray['page'] = $pair[1];
+                        $request->get('page', $pair[1]);
 
                     } elseif ($pair[0] == 'static') {
-                        $requestArray['wrap'] = $pair[1];
+                        $request->get('wrap', $pair[1]);
 
                     } elseif ($pair[0] == 'ids') {
-                        $requestArray['ids'] = $pair[1];
+                        $request->get('ids', $pair[1]);
 
                     } elseif ($pair[0] == 'id') {
-                        $requestArray['id'] = $pair[1];
+                        $request->get('id', $pair[1]);
 
                     } else {
+
                         $other_parameters[] = $pair[0]->$pair[1];
                     }
                 }
-                $requestArray['other_parameters'] = $other_parameters;
+                $request->set('other_parameters', $other_parameters);
             }
         }
-        $requestArray['found'] = $found;
-        return $requestArray;
+        $request->set('found', $found);
+        return $request;
     }
 
     /**
@@ -353,78 +356,80 @@ abstract class MolajoExtensionHelper
      *
      * @return bool
      */
-    public static function getExtensionOptions($requestArray)
+    public static function getExtensionOptions(JObject $request)
     {
-        $requestArray['controller'] = '';
-        $requestArray['model'] = '';
-        $requestArray['plugin_type'] = '';
-        $requestArray['acl_implementation'] = '';
-        $requestArray['component_table'] = '';
+        $request->set('controller', '');
+        $request->set('model', '');
+        $request->set('plugin_type', '');
+        $request->set('acl_implementation', '');
+        $request->set('component_table', '');
 
         /** Configuration model */
-        $configModel = new MolajoModelConfiguration ($requestArray['option']);
+        $configModel = new MolajoModelConfiguration ($request->get('option'));
 
         /** Task */
-        if (isset($requestArray['task']) && ($requestArray['task'] != '')) {
-        } else {
-            $requestArray['task'] = 'display';
+        if ($request->get('task', '') == '') {
+            $request->get('task', 'display');
         }
 
         /** Controller (while validating Task) */
-        $requestArray['controller'] = $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER, $requestArray['task']);
-        if ($requestArray['controller'] === false) {
-            MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_INVALID_TASK_CONTROLLER') . ' ' . $requestArray['task']);
-            $requestArray['results'] = false;
-            return $requestArray;
+        $request->get('controller', $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER, $request->get('task')));
+        if ($request->get('controller') === false) {
+            MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_INVALID_TASK_CONTROLLER') . ' ' . $request->get('task'));
+            $request->set('results', false);
+            return $request;
         }
 
         /** IDs */
-        if (isset($requestArray['id'])) {
-        } else {
-            $requestArray['id'] = 0;
+        if ((int)$request->get('id', 0) == 0) {
+            $request->set('id', 0);
         }
-        if (isset($requestArray['ids'])) {
+        if (is_array($request->get('ids'))) {
         } else {
-            $requestArray['ids'] = array();
+            $request->get('ids', array());
         }
-        if (isset($requestArray['category'])) {
-        } else {
-            $requestArray['category'] = 0;
+        if ((int)$request->get('category', 0) == 0) {
+            $request->set('category', 0);
         }
 
-        if ($requestArray['task'] == 'add') {
+        if ($request->get('task') == 'add') {
 
-            if ((int)$requestArray['id'] == 0 && count($requestArray['ids']) == 0) {
+            if ((int)$request->get('id') == 0
+                && count($request->get('ids')) == 0) {
             } else {
                 MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_ADD_TASK_MUST_NOT_HAVE_ID'));
-                $requestArray['results'] = false;
-                return $requestArray;
+                $request->set('results', false);
+                return $request;
             }
 
-        } else if ($requestArray['task'] == 'edit' || $requestArray['task'] == 'restore') {
+        } else if ($request->get('task') == 'edit'
+            || $request->get('task') == 'restore') {
 
-            if ($requestArray['id'] > 0 && count($requestArray['ids']) == 0) {
+            if ($request->get('id') > 0
+                && count($request->get('ids')) == 0) {
 
-            } else if ((int)$requestArray['id'] == 0 && count($requestArray['ids']) == 1) {
-                $requestArray['id'] = $requestArray['ids'][0];
-                $requestArray['ids'] = array();
+            } else if ((int)$request->get('id') == 0
+                        && count($request->get('ids')) == 1) {
+                $request->get('id', (int) $request->get('ids'));
+                $request->get('ids', array());
 
-            } else if ((int)$requestArray['id'] == 0 && count($requestArray['ids']) == 0) {
+            } else if ((int)$request->get('id') == 0
+                        && count($request->get('ids')) == 0) {
                 MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_EDIT_TASK_MUST_HAVE_ID'));
-                $requestArray['results'] = false;
-                return $requestArray;
+                $request->set('results', false);
+                return $request;
 
-            } else if (count($requestArray['ids']) > 1) {
+            } else if (count($request->get('ids')) > 1) {
                 MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_IDS'));
-                $requestArray['results'] = false;
-                return $requestArray;
+                $request->set('results', false);
+                return $request;
             }
         }
 
         /** Model */
         $model = '';
-        if ($requestArray['controller'] == 'display') {
-            if ($requestArray['static'] === true) {
+        if ($request->get('controller') == 'display') {
+            if ($request->get('static') === true) {
                 $model = 'dummy';
             } else {
                 $model = 'display';
@@ -433,34 +438,34 @@ abstract class MolajoExtensionHelper
             $model = 'edit';
         }
         if ($model == 'dummy') {
-            $requestArray['model'] = 'MolajoModel';
+            $request->set('model', 'MolajoModel');
         } else {
-            $requestArray['model'] = ucfirst($requestArray['option']) . 'Model' .ucfirst($model);
+            $request->set('model', ucfirst($request->get('option')) . 'Model' .ucfirst($model));
         }
 
-        if ($requestArray['controller'] == 'display') {
+        if ($request->get('controller') == 'display') {
 
             /** 6. Format */
-            if ($requestArray['format'] == '') {
+            if ($request->get('format') == '') {
                 $results = false;
             } else {
-                $results = $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS, $requestArray['format']);
+                $results = $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS, $request->get('format'));
             }
 
             /** get default format */
             if ($results === false) {
-                $requestArray['format'] = $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT);
-                if ($requestArray['format'] === false) {
-                    $requestArray['format'] = MolajoController::getApplication()->get('default_format', 'html');
+                $request->get('format', $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT));
+                if ($request->get('format') === false) {
+                    $request->get('format', MolajoController::getApplication()->get('default_format', 'html'));
                 }
             }
 
             /** View **/
-            if ($requestArray['static'] === true) {
+            if ($request->get('static') === true) {
                 $option = 3300;
 
-            } else if ($requestArray['id'] > 0) {
-                if ($requestArray['task'] == 'display') {
+            } else if ($request->get('id') > 0) {
+                if ($request->get('task') == 'display') {
                     /** item */
                     $option = 3110;
                 } else {
@@ -472,75 +477,70 @@ abstract class MolajoExtensionHelper
                 $option = 3210;
             }
 
-            if ($requestArray['view'] == '') {
+            if ($request->get('view') == '') {
                 $results = false;
             } else {
-                $results = $configModel->getOptionLiteralValue($option, $requestArray['view']);
+                $results = $configModel->getOptionLiteralValue($option, $request->get('view'));
             }
 
             $option = $option + 10;
 /* todo: amy fix/remove if ($results === false) {
-                $requestArray['view'] = $configModel->getOptionValue($option);
-                if ($requestArray['view'] === false) {
+                $request->get('view', $configModel->getOptionValue($option);
+                if ($request->get('view') === false) {
                     MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
-                    $requestArray['results'] = false;
-                    return $requestArray;
+                    $request->get('results', false;
+                    return $request;
                 }
             }
 **/
             /** Wrap **/
             $option = $option + 10;
-            if ($requestArray['wrap'] == null) {
+            if ($request->get('wrap', '') == '') {
                 $results = false;
             } else {
-                $results = $configModel->getOptionLiteralValue($option, $requestArray['wrap']);
+                $results = $configModel->getOptionLiteralValue($option, $request->get('wrap'));
             }
 
             $option = $option + 10;
             if ($results === false) {
-                $requestArray['wrap'] = $configModel->getOptionValue($option);
-                if ($requestArray['wrap'] === false) {
-                    $requestArray['wrap'] = 'none';
+                $request->set('wrap', $configModel->getOptionValue($option));
+                if ($request->get('wrap', '') == '') {
+                    $request->set('wrap', 'none');
                 }
             }
 
             /** Page **/
             $option = $option + 10;
-            if ($requestArray['page'] == null) {
+            if ($request->get('page', '') == '') {
                 $results = false;
             } else {
-                $results = $configModel->getOptionLiteralValue($option, $requestArray['page']);
+                $results = $configModel->getOptionLiteralValue($option, $request->get('page'));
             }
 
             $option = $option + 10;
             if ($results === false) {
-                $requestArray['page'] = $configModel->getOptionValue($option);
-                if ($requestArray['page'] === false) {
-                    $requestArray['page'] = 'full';
+                $request->set('page', $configModel->getOptionValue($option));
+                if ($request->get('page', '') == '') {
+                    $request->set('page', 'default');
                 }
             }
         }
         /** todo: amy: come back and get redirect */
 
-        /** ACL implementation */
-        $requestArray['acl_implementation'] = $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION);
-        if ($requestArray['acl_implementation'] === false) {
-            $requestArray['acl_implementation'] = 'core';
-        }
-
         /** Component table */
-        $requestArray['component_table'] = $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_TABLE);
-        if ($requestArray['component_table'] === false) {
-            $requestArray['component_table'] = '__content';
+        $request->set('component_table', $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_TABLE));
+        if ($request->get('component_table', '') == '') {
+            $request->set('component_table', '__content');
         }
 
         /** Plugin helper */
-        $requestArray['plugin_type'] = $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE);
-        if ($requestArray['plugin_type'] === false) {
-            $requestArray['plugin_type'] = 'content';
+        $request->set('plugin_type', $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE));
+        if ($request->get('plugin_type', '') == '') {
+            $request->set('plugin_type', 'content');
         }
 
-        $requestArray['results'] = true;
-        return $requestArray;
+        $request->get('results', true);
+
+        return $request;
     }
 }

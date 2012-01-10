@@ -37,7 +37,7 @@ class MolajoControllerApplication
      * @var    object
      * @since  1.0
      */
-    public $config = null;
+    public static $config = null;
 
     /**
      * The application client object.
@@ -173,12 +173,19 @@ class MolajoControllerApplication
     public $script = array();
 
     /**
+     * Request
+     * @var    object
+     * @since  1.0
+     */
+    protected $_request = null;
+
+    /**
      * Response
      * @var    object
      * @since  1.0
      */
-    protected $response = array();
-
+    protected $_response = array();
+    
     /**
      * getInstance
      *
@@ -289,6 +296,7 @@ class MolajoControllerApplication
             $this->setEscape($options['escapeFunction']);
         }
 
+        /** get configuration */
         $this->getConfig();
 
         /** now */
@@ -304,10 +312,10 @@ class MolajoControllerApplication
         }
 
         /** response */
-        $this->response = new stdClass;
-        $this->response->cachable = false;
-        $this->response->headers = array();
-        $this->response->body = array();
+        $this->_response = new stdClass;
+        $this->_response->cachable = false;
+        $this->_response->headers = array();
+        $this->_response->body = array();
 
         //echo '<pre>';var_dump($this->config);'</pre>';
     }
@@ -517,7 +525,6 @@ class MolajoControllerApplication
         if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
             return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
         }
-
         return call_user_func($this->_escapeFunction, $var);
     }
 
@@ -534,7 +541,6 @@ class MolajoControllerApplication
     {
         $configClass = new MolajoConfigurationHelper();
         $this->config = $configClass->getConfig();
-
         return $this->config;
     }
 
@@ -574,10 +580,11 @@ class MolajoControllerApplication
     }
 
     /**
+     * load
+     * 
      * Load the application.
      *
-     * @return  nothing
-     *
+     * @return  mixed
      * @since   1.0
      */
     public function load()
@@ -599,13 +606,13 @@ class MolajoControllerApplication
         $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
 
         /** request and rendering  */
-        $request = new MolajoRequest();
-        $request->load();
+        $requestClass = new MolajoRequest();
+        $this->_request = $requestClass->load();
 
         /** send response */
         $this->respond();
 
-        return;
+        return true;
         //        echo '<pre>';
         //        var_dump($request);
         //        '</pre>';
@@ -1117,7 +1124,7 @@ class MolajoControllerApplication
         // Send the content-type header.
         $this->setHeader('Content-Type', $this->mimetype . '; charset=' . $this->charset);
 
-        if ($this->response->cachable === true) {
+        if ($this->_response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
             if ($this->last_modified instanceof JDate) {
                 $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
@@ -1204,7 +1211,7 @@ class MolajoControllerApplication
     }
 
     /**
-     * Redirect to the URL for a specified asset ID
+     * Redirect to the URL for a specified pageRequest value
      *
      * URL PHP Constants set in root index.php =>
      * MOLAJO_BASE_URL - protocol, host and path + / (ex. http://localhost/molajo/)
@@ -1226,10 +1233,10 @@ class MolajoControllerApplication
      *
      * @since   1.0
      */
-    public function redirect($queryRequest, $code = 303)
+    public function redirect($pageRequest, $code = 303)
     {
         /** retrieve url */
-        $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $queryRequest;
+        $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $pageRequest;
 
         /** validate code */
         if ($code == 301) {
@@ -1304,10 +1311,10 @@ class MolajoControllerApplication
     public function allowCache($allow = null)
     {
         if ($allow !== null) {
-            $this->response->cachable = (bool)$allow;
+            $this->_response->cachable = (bool)$allow;
         }
 
-        return $this->response->cachable;
+        return $this->_response->cachable;
     }
 
     /**
@@ -1330,19 +1337,19 @@ class MolajoControllerApplication
 
         // If the replace flag is set, unset all known headers with the given name.
         if ($replace) {
-            foreach ($this->response->headers as $key => $header)
+            foreach ($this->_response->headers as $key => $header)
             {
                 if ($name == $header['name']) {
-                    unset($this->response->headers[$key]);
+                    unset($this->_response->headers[$key]);
                 }
             }
 
             // Clean up the array as unsetting nested arrays leaves some junk.
-            $this->response->headers = array_values($this->response->headers);
+            $this->_response->headers = array_values($this->_response->headers);
         }
 
         // Add the header to the internal array.
-        $this->response->headers[] = array('name' => $name, 'value' => $value);
+        $this->_response->headers[] = array('name' => $name, 'value' => $value);
 
         return $this;
     }
@@ -1357,7 +1364,7 @@ class MolajoControllerApplication
      */
     public function getHeaders()
     {
-        return $this->response->headers;
+        return $this->_response->headers;
     }
 
     /**
@@ -1369,7 +1376,7 @@ class MolajoControllerApplication
      */
     public function clearHeaders()
     {
-        $this->response->headers = array();
+        $this->_response->headers = array();
 
         return $this;
     }
@@ -1385,7 +1392,7 @@ class MolajoControllerApplication
     {
         if ($this->checkHeadersSent()) {
         } else {
-            foreach ($this->response->headers as $header) {
+            foreach ($this->_response->headers as $header) {
                 if ('status' == strtolower($header['name'])) {
                     // 'status' headers indicate an HTTP status, and need to be handled slightly differently
                     $this->header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int)$header['value']);
@@ -1408,7 +1415,7 @@ class MolajoControllerApplication
      */
     public function setBody($content)
     {
-        $this->response->body = array((string)$content);
+        $this->_response->body = array((string)$content);
 
         return $this;
     }
@@ -1424,7 +1431,7 @@ class MolajoControllerApplication
      */
     public function prependBody($content)
     {
-        array_unshift($this->response->body, (string)$content);
+        array_unshift($this->_response->body, (string)$content);
 
         return $this;
     }
@@ -1440,7 +1447,7 @@ class MolajoControllerApplication
      */
     public function appendBody($content)
     {
-        array_push($this->response->body, (string)$content);
+        array_push($this->_response->body, (string)$content);
 
         return $this;
     }
@@ -1457,9 +1464,9 @@ class MolajoControllerApplication
     public function getBody($asArray = false)
     {
         if ($asArray === true) {
-            return $this->response->body;
+            return $this->_response->body;
         } else {
-            return implode('', $this->response->body);
+            return implode('', $this->_response->body);
         }
     }
 

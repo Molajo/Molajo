@@ -2,7 +2,6 @@
 class MolajoConfigApplication
 {
     /* Application Settings */
-
     public $applicationname = 'Molajo';
 
     /* Meta */
@@ -59,6 +58,7 @@ class MolajoConfigApplication
     public $default_format = 'html';
     public $default_template = 'molajito';
     public $default_page = 'full';
+
     public $default_view_static = 'dashboard';
     public $default_wrap_static = 'div';
     public $default_view_items = 'items';
@@ -77,30 +77,21 @@ class MolajoConfigApplication
     public $message_wrap = 'div';
 
     /* Offline */
-    public $offline = '0';
+    public $offline = '1';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_format = 'static';
+    public $offline_format = 'system';
     public $offline_template = 'system';
-    public $offline_page = 'full';
-    public $offline_view = 'offline';
-    public $offline_wrap = 'div';
-    public $offline_asset_id = '0';
+    public $offline_page = 'offline';
 
     /* Error */
-    public $error_format = 'static';
+    public $error_format = 'system';
     public $error_template = 'system';
-    public $error_page = 'full';
-    public $error_view = 'error';
-    public $error_wrap = 'div';
-    public $error_asset_id = '0';
+    public $error_page = 'error';
 
     /* Feed */
     public $feed_format = 'feed';
-    public $feed_template = 'system';
-    public $feed_page = 'full';
-    public $feed_view = 'feed';
-    public $feed_wrap = 'div';
-    public $feed_asset_id = '0';
+    public $feed_template = 'feed';
+    public $feed_page = 'feed';
     public $feed_limit = 10;
     public $feed_email = 'author';
 }
