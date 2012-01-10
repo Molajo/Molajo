@@ -25,12 +25,12 @@ class MolajoDocument
     protected $sequence = array();
 
     /**
-     * Request Array
+     * Request
      *
-     * @var array
+     * @var object
      * @since 1.0
      */
-    protected $requestArray = null;
+    protected $request = null;
 
     /**
      * Template Parameters
@@ -67,9 +67,12 @@ class MolajoDocument
      *
      * @since  1.0
      */
-    public function __construct($requestArray = array())
+    public function __construct($request = array())
     {
-        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $requestArray['format'] . '.xml';
+        /** Set Class Properties */
+        $this->request = $request;
+
+        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $this->request->get('format') . '.xml';
         if (JFile::exists($formatXML)) {
         } else {
             //error
@@ -79,10 +82,6 @@ class MolajoDocument
         foreach ($sequence->renderer as $next) {
             $this->sequence[] = (string)$next;
         }
-
-        /** Set Class Properties */
-        $this->requestArray = $requestArray;
-
         /** Request */
         $this->_render();
     }
@@ -96,29 +95,30 @@ class MolajoDocument
     protected function _render()
     {
         /** Initialize */
-        $this->requestArray['template_include'] = '';
+        $this->request->set('template_include', '');
 
-        if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php')) {
-            $this->requestArray['template_include'] = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/' . 'index.php';
+        if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/' . 'index.php')) {
+            $this->request->set('template_include', MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/' . 'index.php');
         } else {
-            $this->requestArray['template_name'] = 'system';
-            $this->requestArray['template_include'] = MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php';
+            $this->request->set('template_name', 'system');
+            $this->request->set('template_include', MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php');
         }
 
-        $this->requestArray['template_path'] = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $this->requestArray['page_include'] = $this->requestArray['page_path'] . '/index.php';
+        $this->request->set('template_path', MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'));
+        $this->request->set('page_include', $this->request->get('page_path') . '/index.php');
 
         $parameters = array(
-            'template' => $this->requestArray['template_name'],
-            'template_path' => $this->requestArray['template_path'],
-            'page' => $this->requestArray['page_include'],
-            'parameters' => $this->requestArray['template_parameters']
+            'template' => $this->request->get('template_name'),
+            'template_path' => $this->request->get('template_path'),
+            'page' => $this->request->get('page_include'),
+            'parameters' => $this->request->get('template_parameters')
         );
 
         //        $this->parameters = array();
-        //        $this->parameters = $this->requestArray;
-        //        $this->parameters = json_encode($this->requestArray);
+        //        $this->parameters = $this->request->get;
+        //        $this->parameters = json_encode($this->request->get);
         //echo 'Parameters'.'<pre>';var_dump(json_encode($this->parameters));echo '</pre>';
+        // die;
         //      die;
         /** Template Parameters */
         $this->parameters = new JRegistry;
@@ -137,10 +137,12 @@ class MolajoDocument
 
         /** Load Language Files */
         $this->_loadLanguageTemplate();
+
         /** Favicon */
         $this->_loadFavicon();
+
         /** process template include, and then all rendered output, for <include statements */
-        $body = $this->_renderLoop($this->requestArray['template_include']);
+        $body = $this->_renderLoop($this->request->get('template_include'));
 
         /** set the respond body */
         MolajoController::getApplication()->setBody($body);
@@ -161,8 +163,8 @@ class MolajoDocument
      */
     protected function _loadLanguageTemplate()
     {
-        MolajoController::getApplication()->getLanguage()->load($this->requestArray['template_name'],
-            MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'],
+        MolajoController::getApplication()->getLanguage()->load($this->request->get('template_name'),
+            MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'),
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 
@@ -174,7 +176,7 @@ class MolajoDocument
     {
         /** include the template and page */
         ob_start();
-        require $this->requestArray['template_include'];
+        require $this->request->get('template_include');
         $this->_template = ob_get_contents();
         ob_end_clean();
 
@@ -289,9 +291,9 @@ class MolajoDocument
 
             /** 3. primary component has requestArray loaded already <include:request attr1=x /> */
             if ($includeName == 'request') {
-                $this->requestArray['primary_request'] = true;
+                $this->request->get('primary_request', true);
             } else {
-                $this->requestArray['primary_request'] = false;
+                $this->request->get('primary_request', false);
             }
 
             /** 4. loop thru all extracted include values to find match */
@@ -299,7 +301,7 @@ class MolajoDocument
 
                 $rendererArray = $this->_renderers[$i];
 
-                if ($includeName == $rendererArray['name']) {
+                if ($includeName == $rendererArray('name')) {
 
                     /** 5. place attribute pairs into variable */
                     if (isset($rendererArray['attributes'])) {
@@ -309,12 +311,12 @@ class MolajoDocument
                     }
 
                     /** 6. store the "replace this" value */
-                    $replace[] = "<include:" . $rendererArray['replace'] . "/>";
+                    $replace[] = "<include:" . $rendererArray('replace') . "/>";
 
                     /** 7. load the renderer class and send in requestArray */
                     $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
-                        $rendererClass = new $class ($rendererName, $this->requestArray);
+                        $rendererClass = new $class ($rendererName, $this->request->get);
                     } else {
                         echo 'failed renderer = ' . $class . '<br />';
                         // ERROR
@@ -331,7 +333,7 @@ class MolajoDocument
         $replace = array();
         $with = array();
         for ($i = 0; $i < count($this->_renderers); $i++) {
-            $replace[] = "<include:" . $this->_renderers[$i]['replace'] . "/>";
+            $replace[] = "<include:" . $this->_renderers[$i]('replace') . "/>";
             $with[] = '';
         }
 
@@ -345,10 +347,10 @@ class MolajoDocument
      */
     protected function _loadFavicon()
     {
-        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'] . '/images/';
+        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/images/';
 
         if (file_exists($path . 'favicon.ico')) {
-            $this->requestArray['template_favicon'] = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'] . '/images/favicon.ico';
+            $this->request->set('template_favicon', MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name') . '/images/favicon.ico');
             return true;
         }
         return false;

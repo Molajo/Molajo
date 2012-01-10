@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension version="1.0" type="file" method="upgrade">
     <name>Molajo</name>
-    <author>Molajo Project</author>
+    <author>Amy Stephen</author>
     <author_email>collaborate@molajo.org</author_email>
     <author_url>molajo.org</author_url>
-    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved</copyright>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved</copyright>
     <license>GNU General Public License version 2 or later</license>
     <version>1.0</version>
     <create_date>January 2012</create_date>
     <description>FILES_MOLAJO_XML_DESCRIPTION</description>
 
-    <scriptfile>views/manifests/distribution/script.php</scriptfile>
+    <scriptfile>extensions/distribution/script.php</scriptfile>
 
     <update>
         <schemas>
-            <schemapath type="updates">views/manifests/distribution/sql</schemapath>
+            <schemapath type="updates">extensions/distribution/sql</schemapath>
         </schemas>
     </update>
 
@@ -22,7 +22,7 @@
         <files>
             <folder>applications</folder>
             <folder>extensions</folder>
-            <folder>platform</folder>
+            <folder>platforms</folder>
             <folder>sites</folder>
             <file>htaccess.txt</file>
             <file>index.php</file>

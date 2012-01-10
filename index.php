@@ -71,7 +71,7 @@ if (defined('MOLAJO_SHARED_MEDIA')) {
 
 if (defined('MOLAJO_SITE')) {
 } else {
-    $sites = simplexml_load_file(MOLAJO_BASE_FOLDER . '/sites.xml', 'SimpleXMLElement');
+    $sites = simplexml_load_file(MOLAJO_SITES . '/sites.xml', 'SimpleXMLElement');
     foreach ($sites->site as $single) {
         if ($single->name == $siteName) {
             define('MOLAJO_SITE', $single->name);
@@ -114,9 +114,13 @@ if (strpos($requestURI, '/')) {
 } else {
     $applicationTest = $requestURI;
 }
+if (defined('MOLAJO_APPLICATIONS_CORE')) {
+} else {
+    define('MOLAJO_APPLICATIONS_CORE', MOLAJO_BASE_FOLDER . '/applications');
+}
 if (defined('MOLAJO_APPLICATION')) {
 } else {
-    $apps = simplexml_load_file(MOLAJO_BASE_FOLDER . '/applications.xml', 'SimpleXMLElement');
+    $apps = simplexml_load_file(MOLAJO_APPLICATIONS_CORE . '/applications.xml', 'SimpleXMLElement');
     foreach ($apps->application as $app) {
         if ($app->name == $applicationTest) {
             define('MOLAJO_APPLICATION', $app->name);
@@ -133,11 +137,6 @@ if (defined('MOLAJO_APPLICATION')) {
     }
 }
 define('MOLAJO_PAGE_REQUEST', $pageRequest);
-
-if (defined('MOLAJO_APPLICATIONS_CORE')) {
-} else {
-    define('MOLAJO_APPLICATIONS_CORE', MOLAJO_BASE_FOLDER . '/applications');
-}
 
 /*                                              */
 /*  EXTENSIONS LAYER                            */
@@ -167,23 +166,14 @@ require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/overrides.php';
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
- *  Get the Site
+ *  Site
  */
 $site = MolajoController::getSite(MOLAJO_SITE_ID);
-
-/**
- *  Load the Site
- */
 $site->load();
 
 /**
- *  Get the Application
+ *  Application
  */
 $app = MolajoController::getApplication(MOLAJO_APPLICATION);
-
-/**
- *  Load the Application
- */
 $app->load();
-
 
