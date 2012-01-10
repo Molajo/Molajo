@@ -230,17 +230,17 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
 
         /** loop through ids **/
         $errorFoundForBatch = false;
-        foreach ($idArray as $this->requestArray['id']) {
+        foreach ($idArray as $this->request['id']) {
 
             /** ok indicator **/
             $errorFoundForItem = false;
 
             /** set request object */
-            JRequest::setVar('id', $this->requestArray['id']);
+            JRequest::setVar('id', $this->request['id']);
 
             /** load row **/
             $this->table->reset();
-            $this->table->load($this->requestArray['id']);
+            $this->table->load($this->request['id']);
 
             /** edit: valid id **/
             if ((int)$this->table->id == 0) {
@@ -296,7 +296,7 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
 
             /** failed **/
             if ($errorFoundForItem === true) {
-                unset($idArray[$this->requestArray['id']]);
+                unset($idArray[$this->request['id']]);
                 $errorFoundForBatch = true;
             }
         }
@@ -345,7 +345,7 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
         } else {
             /** single column value change (state, featured, sticky) **/
             $previous = $this->model->$task;
-            $newValue = $this->model->$task($this->requestArray['id']);
+            $newValue = $this->model->$task($this->request['id']);
             if ($newValue === false) {
                 return false;
             }
@@ -355,13 +355,13 @@ class MolajoControllerMultiple extends MolajoControllerUpdate
         if ($previous == $newValue || $this->isNew) {
         } else {
             /** Event: onContentChangeState **/
-            $this->dispatcher->trigger('onContentChangeState', array($context, $this->requestArray['id'], $validData->state));
+            $this->dispatcher->trigger('onContentChangeState', array($context, $this->request['id'], $validData->state));
         }
 
         if ($column == 'state') {
             if ($newValue) {
                 $event = 'onContentChange' . ucfirst(strtolower($column));
-                $this->dispatcher->trigger($event, array($context, $this->requestArray['id'], $newValue));
+                $this->dispatcher->trigger($event, array($context, $this->request['id'], $newValue));
             }
         }
 

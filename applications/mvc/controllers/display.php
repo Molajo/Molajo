@@ -21,12 +21,12 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      *
      * Constructor.
      *
-     * @param    array   $requestArray
+     * @param    array   $request
      * @since    1.0
      */
-    public function __construct($requestArray = array())
+    public function __construct(JObject $request)
     {
-        parent::__construct($requestArray);
+        parent::__construct($request);
     }
 
     /**
@@ -40,14 +40,15 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     public function display()
     {
         /** model */
-        $this->model = new $this->requestArray['model']();
+        $modelClass = $this->request->get('model');
+        $this->model = new $modelClass();
 
         /** set model properties */
-        $this->model->requestArray = $this->requestArray;
+        $this->model->request = $this->request;
         $this->model->parameters = $this->parameters;
 
         /** check out */
-        if ($this->requestArray['task'] == 'edit') {
+        if ($this->request->get('task') == 'edit') {
             $results = parent::checkoutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -68,12 +69,12 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         }
 
         /** render view */
-        $this->view_path = $this->requestArray['view_path'];
-        $this->view_path_url = $this->requestArray['view_path_url'];
-        $renderedOutput = $this->renderView($this->requestArray['view'], $this->requestArray['view_type']);
+        $this->view_path = $this->request->get('view_path');
+        $this->view_path_url = $this->request->get('view_path_url');
+        $renderedOutput = $this->renderView($this->request->get('view'), $this->request->get('view_type'));
 
         /** wrap view */
-        return $this->wrapView($this->requestArray['wrap'], 'wraps', $renderedOutput);
+        return $this->wrapView($this->request->get('wrap'), 'wraps', $renderedOutput);
     }
 
     /**
@@ -92,17 +93,17 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->rowset = array();
 
         $tempObject = new JObject();
-        $tempObject->set('wrap_id', $this->requestArray['wrap_id']);
-        $tempObject->set('wrap_class', $this->requestArray['wrap_class']);
+        $tempObject->set('wrap_id', $this->request->get('wrap_id'));
+        $tempObject->set('wrap_class', $this->request->get('wrap_class'));
         $tempObject->set('content', $renderedOutput);
 
         $this->rowset[] = $tempObject;
 
         /** Render Wrap */
-        $this->view_path = $this->requestArray['wrap_path'];
-        $this->view_path_url = $this->requestArray['wrap_path_url'];
+        $this->view_path = $this->request->get('wrap_path');
+        $this->view_path_url = $this->request->get('wrap_path_url');
 
-        return $this->renderView($this->requestArray['wrap'], 'wraps');
+        return $this->renderView($this->request->get('wrap'), 'wraps');
     }
 
     /**
@@ -217,14 +218,14 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     protected function loadMedia()
     {
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->requestArray['option'] . '/views';
-        $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->requestArray['option'] . '/views';
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request->get('option') . '/views';
+        $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->request->get('option') . '/views';
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->requestArray['asset_id'];
-        $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->requestArray['asset_id'];
+        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request->get('asset_id');
+        $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->request->get('asset_id');
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
          */

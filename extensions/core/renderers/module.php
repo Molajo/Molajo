@@ -25,17 +25,16 @@ class MolajoModuleRenderer
     protected $name = null;
 
     /**
-     * Request Array
-     * From Molajo Extension
+     * Request Object
      *
-     * @var    array
+     * @var    object
      * @since  1.0
      */
-    protected $requestArray = array();
+    protected $request;
 
     /**
      * Attributes
-     * Extracted in Format Class from Template/Page
+     * Extracted in Document Class from Template/Page
      * <include:module statement attr1=x attr2=y attrN="and-so-on" />
      *
      * @var    array
@@ -48,14 +47,14 @@ class MolajoModuleRenderer
      *
      * Class constructor.
      *
-     * @param null $name
-     * @param array $requestArray
+     * @param string $name
+     * @param object $request
      * @since 1.0
      */
-    public function __construct($name = null, $requestArray = array())
+    public function __construct($name = null, JObject $request)
     {
         $this->name = $name;
-        $this->requestArray = $requestArray;
+        $this->request = $request;
     }
 
     /**
@@ -63,8 +62,9 @@ class MolajoModuleRenderer
      *
      * Render the module.
      *
+     * @param   array
      * @return  object
-     * @since  1.0
+     * @since   1.0
      */
     public function render($attributes)
     {
@@ -76,7 +76,7 @@ class MolajoModuleRenderer
 
         foreach ($this->attributes as $name => $value) {
             if ($name == 'name' || $name == 'title') {
-                $this->requestArray['extension_title'] = $value;
+                $this->request->set('extension_title', $value);
                 break;
 
             } else if ($name == 'position') {
@@ -94,7 +94,7 @@ class MolajoModuleRenderer
 
         foreach ($modules as $module) {
 
-            /** Populate $requestArray */
+            /** Populate $request */
             $this->_getRequest($module);
 
             /** Import MVC Classes for Module */
@@ -106,19 +106,25 @@ class MolajoModuleRenderer
             /** For Position, wrap after all Modules are rendered */
             if ($position == '') {
             } else {
-                $holdWrap = $this->requestArray['wrap'];
-                $this->requestArray['wrap'] = 'none';
+                $holdWrap = $this->request->get('wrap');
+                $this->request->set('wrap', 'none');
             }
-            $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
-            $this->requestArray['wrap_path'] = $wrapHelper->view_path;
-            $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
+            $viewHelper = new MolajoViewHelper($this->request->get('wrap'),
+                'wraps',
+                $this->request->get('option'),
+                $this->request->get('extension_type'),
+                ' ',
+                $this->request->get('template_name'));
+            $this->request->set('wrap_path', $viewHelper->view_path);
+            $this->request->set('wrap_path_url', $viewHelper->view_path_url);
 
             /** Instantiate Controller */
-            $this->requestArray['task'] = 'display';
-            $controller = new $this->requestArray['controller'] ($this->requestArray);
+            $this->request->set('task', 'display');
+            $controllerName = $this->request->get('controller').'ControllerModule';
+            $controller = new MolajoControllerDisplay ($this->request);
 
             /** Execute Task  */
-            $task = $this->requestArray['task'];
+            $task = $this->request->get('task');
             $renderedOutput .= $controller->$task();
         }
 
@@ -127,13 +133,18 @@ class MolajoModuleRenderer
             return $renderedOutput;
 
         } else {
-            $this->requestArray['wrap'] = $holdWrap;
-            $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
-            $this->requestArray['wrap_path'] = $wrapHelper->view_path;
-            $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
+            $this->request->set('wrap', $holdWrap);
+            $viewHelper = new MolajoViewHelper($this->request->get('wrap'),
+                'wraps',
+                $this->request->get('option'),
+                $this->request->get('extension_type'),
+                ' ',
+                $this->request->get('template_name'));
+            $this->request->set('wrap_path', $viewHelper->view_path);
+            $this->request->set('wrap_path_url', $viewHelper->view_path_url);
 
-            $wrapIt = new MolajoControllerDisplay ($this->requestArray);
-            return $wrapIt->wrapView($this->requestArray['wrap'], 'wraps', $renderedOutput);
+            $wrapIt = new MolajoControllerDisplay ($this->request);
+            return $wrapIt->wrapView($this->request->get('wrap'), 'wraps', $renderedOutput);
         }
     }
 
@@ -146,7 +157,7 @@ class MolajoModuleRenderer
     protected function _getModules($position)
     {
         if ($position == '') {
-            return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $this->requestArray['extension_title'], null);
+            return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $this->request->get('extension_title'), null);
         } else {
             return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_POSITION, $position, null);
         }
@@ -159,55 +170,60 @@ class MolajoModuleRenderer
      */
     private function _getRequest($module)
     {
-        $this->requestArray['extension_id'] = $module->extension_id;
-        $this->requestArray['extension_name'] = $module->extension_name;
-        $this->requestArray['option'] = $module->extension_name;
-        $this->requestArray['extension_title'] = $module->title;
+        $this->request->set('extension_id', $module->extension_id);
+        $this->request->set('extension_name', $module->extension_name);
+        $this->request->set('option', $module->extension_name);
+        $this->request->set('extension_title', $module->title);
 
         $parameters = new JRegistry;
         $parameters->loadString($module->parameters);
-        $this->requestArray['extension_parameters'] = $parameters;
-        $this->requestArray['extension_metadata'] = $module->metadata;
+        $this->request->set('extension_parameters', $parameters);
+        $this->request->set('extension_metadata', $module->metadata);
 
-        if (isset($this->requestArray['extension_parameters']->static)
-            && $this->requestArray['extension_parameters']->static === true
+        if (isset($this->request->set('extension_parameters')->static)
+            && $this->request->set('extension_parameters')->static === true
         ) {
-            $this->requestArray['static'] = true;
+            $this->request->set('static', true);
         } else {
-            $this->requestArray['static'] = false;
+            $this->request->set('static', false);
         }
-        $this->requestArray['extension_path'] = MOLAJO_EXTENSIONS_MODULES . '/' . $this->requestArray['extension_name'];
-        $this->requestArray['extension_type'] = 'module';
-        $this->requestArray['extension_folder'] = '';
+        $this->request->set('extension_path', MOLAJO_EXTENSIONS_MODULES . '/' . $this->request->set('extension_name'));
+        $this->request->set('extension_type', 'module');
+        $this->request->set('extension_folder', '');
 
-        $this->requestArray['controller'] = ucfirst($this->requestArray['extension_name']) . 'ControllerModule';
-        $this->requestArray['model'] = ucfirst($this->requestArray['extension_name']) . 'ModelModule';
-
-        $this->requestArray['task'] = 'display';
+        $this->request->set('controller', ucfirst($this->request->get('extension_name')) . 'ControllerModule');
+        $this->request->set('model', ucfirst($module->extension_name) . 'ModelModule');
+        $this->request->set('task', 'display');
 
         foreach ($this->attributes as $name => $value) {
 
             if ($name == 'wrap') {
-                $this->requestArray['wrap'] = $value;
+                $this->request->set('wrap', $value);
 
             } else if ($name == 'view') {
-                $this->requestArray['view'] = $value;
+                $this->request->set('view', $value);
 
             } else if ($name == 'wrap_id') {
-                $this->requestArray['wrap_id'] = $value;
+                $this->request->set('wrap_id', $value);
 
             } else if ($name == 'wrap_class') {
-                $this->requestArray['wrap_class'] = $value;
+                $this->request->set('wrap_class', $value);
             }
-            // $this->requestArray['other_parameters'] = $other_parameters;
+            // $this->request->set('other_parameters', $other_parameters);
         }
 
         /** View Path */
-        $this->requestArray['view_type'] = 'extensions';
+        $this->request->set('view_type', 'extensions');
 
-        $viewHelper = new MolajoViewHelper($this->requestArray['view'], $this->requestArray['view_type'], $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
-        $this->requestArray['view_path'] = $viewHelper->view_path;
-        $this->requestArray['view_path_url'] = $viewHelper->view_path_url;
+        $viewHelper = new MolajoViewHelper($this->request->get('view'),
+            $this->request->get('view_type'),
+            $this->request->get('option'),
+            $this->request->get('extension_type'),
+            ' ',
+            $this->request->get('template_name')
+        );
+        $this->request->set('view_path', $viewHelper->view_path);
+        $this->request->set('view_path_url', $viewHelper->view_path_url);
     }
 
     /**
@@ -221,12 +237,12 @@ class MolajoModuleRenderer
         $fileHelper = new MolajoFileHelper();
 
         /** Controller */
-        if (file_exists($this->requestArray['extension_path'] . '/controller.php')) {
-            $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/controller.php', ucfirst($this->requestArray['extension_name']) . 'ControllerModule');
+        if (file_exists($this->request->get('extension_path') . '/controller.php')) {
+            $fileHelper->requireClassFile($this->request->get('extension_path') . '/controller.php', ucfirst($this->request->get('extension_name')) . 'ControllerModule');
         }
         /** Model */
-        if (file_exists($this->requestArray['extension_path'] . '/model.php')) {
-            $fileHelper->requireClassFile($this->requestArray['extension_path'] . '/model.php', ucfirst($this->requestArray['extension_name']) . 'ModelModule');
+        if (file_exists($this->request->get('extension_path') . '/model.php')) {
+            $fileHelper->requireClassFile($this->request->get('extension_path') . '/model.php', ucfirst($this->request->get('extension_name')) . 'ModelModule');
         }
     }
 
@@ -240,8 +256,8 @@ class MolajoModuleRenderer
      */
     protected function _loadLanguageModule()
     {
-        MolajoController::getApplication()->getLanguage()->load($this->requestArray['option'],
-            $this->requestArray['extension_path'],
+        MolajoController::getApplication()->getLanguage()->load($this->request->get('option'),
+            $this->request->get('extension_path'),
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 }
