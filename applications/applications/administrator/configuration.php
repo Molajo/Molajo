@@ -79,12 +79,12 @@ class MolajoConfigApplication
     /* Offline */
     public $offline = '1';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_format = 'system';
+    public $offline_format = 'html';
     public $offline_template = 'system';
     public $offline_page = 'offline';
 
     /* Error */
-    public $error_format = 'system';
+    public $error_format = 'html';
     public $error_template = 'system';
     public $error_page = 'error';
 

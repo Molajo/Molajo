@@ -301,7 +301,7 @@ class MolajoDocument
 
                 $rendererArray = $this->_renderers[$i];
 
-                if ($includeName == $rendererArray('name')) {
+                if ($includeName == $rendererArray['name']) {
 
                     /** 5. place attribute pairs into variable */
                     if (isset($rendererArray['attributes'])) {
@@ -311,12 +311,12 @@ class MolajoDocument
                     }
 
                     /** 6. store the "replace this" value */
-                    $replace[] = "<include:" . $rendererArray('replace') . "/>";
+                    $replace[] = "<include:" . $rendererArray['replace'] . "/>";
 
                     /** 7. load the renderer class and send in requestArray */
                     $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
-                        $rendererClass = new $class ($rendererName, $this->request->get);
+                        $rendererClass = new $class ($rendererName, $this->request);
                     } else {
                         echo 'failed renderer = ' . $class . '<br />';
                         // ERROR
@@ -333,7 +333,7 @@ class MolajoDocument
         $replace = array();
         $with = array();
         for ($i = 0; $i < count($this->_renderers); $i++) {
-            $replace[] = "<include:" . $this->_renderers[$i]('replace') . "/>";
+            $replace[] = "<include:" . $this->_renderers[$i]['replace'] . "/>";
             $with[] = '';
         }
 
