@@ -6,7 +6,7 @@
 #
 
 User-agent: *
-Disallow: /application/
+Disallow: /applications/
 Disallow: /extensions/
 Disallow: /platforms/
 Disallow: /sites/
