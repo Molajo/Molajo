@@ -19,22 +19,18 @@ class MolajoHeadRenderer
     /**
      * Name
      *
-     * From Molajo Extension
-     *
      * @var    string
      * @since  1.0
      */
     protected $name = null;
 
     /**
-     * Request Array
+     * Request  
      *
-     * From Molajo Extension
-     *
-     * @var    array
+     * @var    object
      * @since  1.0
      */
-    protected $requestArray = array();
+    protected $request;
 
     /**
      * Attributes
@@ -53,13 +49,13 @@ class MolajoHeadRenderer
      * Class constructor.
      *
      * @param null $name
-     * @param array $requestArray
+     * @param array $request
      * @since 1.0
      */
-    public function __construct($name = null, $requestArray = array())
+    public function __construct($name = null, $request = array())
     {
         $this->name = $name;
-        $this->requestArray = $requestArray;
+        $this->request = $request;
     }
 
     /**
@@ -72,14 +68,14 @@ class MolajoHeadRenderer
      */
     public function render($attributes)
     {
-        /** @var $attributes  */
+        /** @var $attributes from template */
         $this->attributes = $attributes;
 
         /** retrieve parameters */
         $this->_getRequest();
 
         /** Instantiate Controller */
-        $controller = new MolajoControllerDisplay ($this->requestArray);
+        $controller = new MolajoControllerDisplay ($this->request);
         return $controller->Display();
     }
 
@@ -90,39 +86,51 @@ class MolajoHeadRenderer
      */
     protected function _getRequest()
     {
-        $this->requestArray['view'] = MolajoController::getApplication()->get('head_view', 'head');
-        $this->requestArray['wrap'] = MolajoController::getApplication()->get('head_wrap', 'none');
+        $this->request->set('view', MolajoController::getApplication()->get('head_view', 'head'));
+        $this->request->set('wrap', MolajoController::getApplication()->get('head_wrap', 'none'));
 
         foreach ($this->attributes as $name => $value) {
 
             if ($name == 'wrap') {
-                $this->requestArray['wrap'] = $value;
+                $this->request->set('wrap', $value);
 
             } else if ($name == 'view') {
-                $this->requestArray['view'] = $value;
+                $this->request->set('view', $value);
 
             } else if ($name == 'id' || $name == 'wrap_id') {
-                $this->requestArray['wrap_id'] = $value;
+                $this->request->set('wrap_id', $value);
 
             } else if ($name == 'class' || $name == 'wrap_class') {
-                $this->requestArray['wrap_class'] = $value;
+                $this->request->set('wrap_class', $value);
             }
         }
 
         /** Model */
-        $this->requestArray['model'] = 'MolajoModelHead';
+        $this->request->set('model', 'MolajoModelHead');
 
         /** View Path */
-        $this->requestArray['view_type'] = 'extensions';
-        $viewHelper = new MolajoViewHelper($this->requestArray['view'], $this->requestArray['view_type'], $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
-        $this->requestArray['view_path'] = $viewHelper->view_path;
-        $this->requestArray['view_path_url'] = $viewHelper->view_path_url;
+        $this->request->set('view_type', 'extensions');
+        $viewHelper = new MolajoViewHelper($this->request->get('view'),
+                                            $this->request->get('view_type'),
+                                            $this->request->get('option'),
+                                            $this->request->get('extension_type'),
+                                            ' ',
+                                            $this->request->get('template_name')
+                        );
+        $this->request->set('view_path', $viewHelper->view_path);
+        $this->request->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
-        $wrapHelper = new MolajoViewHelper($this->requestArray['wrap'], 'wraps', $this->requestArray['option'], $this->requestArray['extension_type'], ' ', $this->requestArray['template_name']);
-        $this->requestArray['wrap_path'] = $wrapHelper->view_path;
-        $this->requestArray['wrap_path_url'] = $wrapHelper->view_path_url;
+        $wrapHelper = new MolajoViewHelper($this->request->get('wrap'),
+                                            'wraps',
+                                            $this->request->get('option'),
+                                            $this->request->get('extension_type'),
+                                            ' ',
+                                            $this->request->get('template_name')
+                        );
+        $this->request->set('wrap_path', $wrapHelper->view_path);
+        $this->request->set('wrap_path_url', $wrapHelper->view_path_url);
 
-        $this->requestArray['suppress_no_results'] = true;
+        $this->request->set('suppress_no_results', true);
     }
 }

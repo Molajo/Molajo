@@ -25,8 +25,8 @@ class MolajoMessageRenderer
     protected $name = null;
 
     /**
-     * Request 
-     * 
+     * Request
+     *
      * @var    object
      * @since  1.0
      */
@@ -86,7 +86,7 @@ class MolajoMessageRenderer
      */
     protected function _getRequest()
     {
-        $this->request->set('view',  MolajoController::getApplication()->get('message_view', 'messages'));
+        $this->request->set('view', MolajoController::getApplication()->get('message_view', 'messages'));
         $this->request->set('wrap', MolajoController::getApplication()->get('message_wrap', 'div'));
 
         foreach ($this->attributes as $name => $value) {
@@ -112,23 +112,23 @@ class MolajoMessageRenderer
         $this->request->get('view_type', 'extensions');
 
         $viewHelper = new MolajoViewHelper($this->request->get('view'),
-                                            $this->request->get('view_type'),
-                                            $this->request->get('option'),
-                                            $this->request->get('extension_type'),
-                                            ' ',
-                                            $this->request->get('template_name')
-                                            );
+            $this->request->get('view_type'),
+            $this->request->get('option'),
+            $this->request->get('extension_type'),
+            ' ',
+            $this->request->get('template_name')
+        );
         $this->request->set('view_path', $viewHelper->view_path);
         $this->request->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
         $wrapHelper = new MolajoViewHelper($this->request->get('wrap'),
-                                            'wraps',
-                                            $this->request->get('option'),
-                                            $this->request->get('extension_type'),
-                                            ' ',
-                                            $this->request->get('template_name')
-                                        );
+            'wraps',
+            $this->request->get('option'),
+            $this->request->get('extension_type'),
+            ' ',
+            $this->request->get('template_name')
+        );
         $this->request->set('wrap_path', $wrapHelper->view_path);
         $this->request->set('wrap_path_url', $wrapHelper->view_path_url);
 
