@@ -57,23 +57,23 @@ if ($this->print)
 */
 //        $metadata = MolajoController::getApplication()->getMetaData();
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->requestArray['template_name'];
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->requestArray['template_name'];
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request['template_name'];
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request['template_name'];
         MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
         MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
 
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
-        $tempObject->set('title', $this->requestArray['metadata_title']);
-        $tempObject->set('base', $this->requestArray['base']);
-        $tempObject->set('last_modified', $this->requestArray['source_last_modified']);
-        $tempObject->set('description', $this->requestArray['metadata_description']);
-        $tempObject->set('generator', $this->requestArray['generator']);
-        $tempObject->set('favicon', $this->requestArray['template_favicon']);
-        $tempObject->set('keywords', $this->requestArray['metadata_keywords']);
-        $tempObject->set('author', $this->requestArray['metadata_author']);
-        $tempObject->set('content_rights', $this->requestArray['metadata_rights']);
-        $tempObject->set('robots', $this->requestArray['metadata_robots']);
+        $tempObject->set('title', $this->request['metadata_title']);
+        $tempObject->set('base', $this->request['base']);
+        $tempObject->set('last_modified', $this->request['source_last_modified']);
+        $tempObject->set('description', $this->request['metadata_description']);
+        $tempObject->set('generator', $this->request['generator']);
+        $tempObject->set('favicon', $this->request['template_favicon']);
+        $tempObject->set('keywords', $this->request['metadata_keywords']);
+        $tempObject->set('author', $this->request['metadata_author']);
+        $tempObject->set('content_rights', $this->request['metadata_rights']);
+        $tempObject->set('robots', $this->request['metadata_robots']);
 
         $this->items[] = $tempObject;
 

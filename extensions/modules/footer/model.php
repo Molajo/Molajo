@@ -17,6 +17,20 @@ defined('MOLAJO') or die;
 class FooterModelModule extends MolajoModel
 {
     /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $config
+     * @since  1.0
+     */
+    public function __construct($config = array())
+    {
+        $this->_name = get_class($this);
+        parent::__construct($config = array());
+    }
+
+    /**
      * getItems
      *
      * @return    array    An empty array

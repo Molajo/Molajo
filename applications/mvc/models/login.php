@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoModelLogin
+ * Login
  *
  * @package     Molajo
  * @subpackage  Login Model

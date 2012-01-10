@@ -53,48 +53,48 @@ class MolajoModel
     /**
      * $request
      *
-     * @var        array
-     * @since    1.0
+     * @var    object
+     * @since  1.0
      */
-    public $requestArray = array();
+    public $request;
 
     /**
      * $parameters
      *
-     * @var        string
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     public $parameters = array();
 
     /**
      * $items
      *
-     * @var        string
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     public $items = array();
 
     /**
      * $pagination
      *
-     * @var        string
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     public $pagination = array();
 
     /**
      * $context
      *
-     * @var        string
-     * @since    1.0
+     * @var    string
+     * @since  1.0
      */
     public $context = null;
 
     /**
      * $task
      *
-     * @var        string
-     * @since    1.0
+     * @var    string
+     * @since  1.0
      */
     public $task = null;
 
@@ -173,7 +173,7 @@ class MolajoModel
      */
     public function getRequest()
     {
-        return $this->requestArray;
+        return $this->request;
     }
 
     /**
