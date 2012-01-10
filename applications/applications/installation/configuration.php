@@ -57,11 +57,11 @@ class MolajoConfigApplication
     public $default_format = 'html';
     public $default_template = 'cleanslate';
     public $default_page = 'full';
-    public $default_view_static = 'dashboard';
-    public $default_wrap_static = 'div';
-    public $default_view_items = 'items';
-    public $default_wrap_items = 'section';
-    public $default_view_item = 'item';
+    public $default_static_view = 'dashboard';
+    public $default_static_wrap = 'div';
+    public $default_items_view = 'items';
+    public $default_items_wrap = 'section';
+    public $default_item_view = 'item';
     public $default_wrap_item = 'article';
     public $default_view_edit = 'edit';
     public $default_wrap_edit = 'div';

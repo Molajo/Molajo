@@ -92,24 +92,24 @@ class MolajoMessageRenderer
         foreach ($this->attributes as $name => $value) {
 
             if ($name == 'wrap') {
-                $this->request->get('wrap', $value);
+                $this->request->set('wrap', $value);
 
             } else if ($name == 'view') {
-                $this->request->get('view', $value);
+                $this->request->set('view', $value);
 
             } else if ($name == 'id' || $name == 'wrap_id') {
-                $this->request->get('wrap_id', $value);
+                $this->request->set('wrap_id', $value);
 
             } else if ($name == 'class' || $name == 'wrap_class') {
-                $this->request->get('wrap_class', $value);
+                $this->request->set('wrap_class', $value);
             }
         }
 
         /** Model */
-        $this->request->get('model', 'MolajoModelMessages');
+        $this->request->set('model', 'MolajoModelMessages');
 
         /** View Path */
-        $this->request->get('view_type', 'extensions');
+        $this->request->set('view_type', 'extensions');
 
         $viewHelper = new MolajoViewHelper($this->request->get('view'),
             $this->request->get('view_type'),

@@ -603,7 +603,7 @@ class MolajoControllerApplication
 
         $this->loadDispatcher();
 
-        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
+/**        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
 
         /** request and rendering  */
         $requestClass = new MolajoRequest();

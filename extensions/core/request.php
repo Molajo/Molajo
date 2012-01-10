@@ -230,10 +230,10 @@ class MolajoRequest
             $this->request->set('extension_instance_id', 0);
             $this->request->set('category', 0);
             MolajoController::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+            $message = MolajoController::getApplication()->get('offline_message', 'This site is not available.<br /> Please check back again soon.');
+            MolajoController::getApplication()->setMessage($message, MOLAJO_MESSAGE_TYPE_WARNING);
             $this->request->set('template_name', MolajoController::getApplication()->get('offline_template', 'system'));
             $this->request->set('page', MolajoController::getApplication()->get('offline_page', 'offline'));
-            $this->request->set('format', MolajoController::getApplication()->get('offline_format', 'error'));
-            $this->request->set('message', MolajoController::getApplication()->get('offline_message', 'This site is not available.<br /> Please check back again soon.'));
         } else {
 
             /** Get Asset Information */
@@ -260,7 +260,6 @@ class MolajoRequest
             MolajoController::getApplication()->setHeader('Status', '404 Not Found', 'true');
             $this->request->set('template_name', MolajoController::getApplication()->get('error_template', 'system'));
             $this->request->set('page', MolajoController::getApplication()->get('error_page', 'error'));
-            $this->request->set('format', MolajoController::getApplication()->get('error_format', 'error'));
         }
 
         /** act on redirect_to_id */
@@ -654,7 +653,7 @@ class MolajoRequest
         if ($this->request->get('view', '') == '') {
 
             if ($this->request->get('static', true)) {
-                $this->request->set('view', MolajoController::getApplication()->get('default_view_static', ''));
+                $this->request->set('view', MolajoController::getApplication()->get('default_static_view', ''));
 
             } else if ($this->request->get('task', '') == 'add'
                 || $this->request->get('task', '') == 'edit'
@@ -662,17 +661,17 @@ class MolajoRequest
                 $this->request->set('task', MolajoController::getApplication()->get('default_view_edit', ''));
 
             } else if ((int)$this->request->get('id', 0) == 0) {
-                $this->request->set('view', MolajoController::getApplication()->get('default_view_items', ''));
+                $this->request->set('view', MolajoController::getApplication()->get('default_items_view', ''));
 
             } else {
-                $this->request->set('view', MolajoController::getApplication()->get('default_view_item', ''));
+                $this->request->set('view', MolajoController::getApplication()->get('default_item_view', ''));
             }
         }
 
         if ($this->request->get('wrap', '') == '') {
 
             if ($this->request->get('static', false) === true) {
-                $this->request->set('wrap', MolajoController::getApplication()->get('default_wrap_static', ''));
+                $this->request->set('wrap', MolajoController::getApplication()->get('default_static_wrap', ''));
 
             } elseif ($this->request->get('task', '') == 'add'
                 || $this->request->get('task', '') == 'edit'
@@ -680,7 +679,7 @@ class MolajoRequest
                 $this->request->set('task', MolajoController::getApplication()->get('default_wrap_edit', ''));
 
             } else if ((int)$this->request->get('id', 0) == 0) {
-                $this->request->set('wrap', MolajoController::getApplication()->get('default_wrap_items', ''));
+                $this->request->set('wrap', MolajoController::getApplication()->get('default_items_wrap', ''));
 
             } else {
                 $this->request->set('wrap', MolajoController::getApplication()->get('default_wrap_item', ''));

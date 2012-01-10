@@ -59,11 +59,11 @@ class MolajoConfigApplication
     public $default_template = 'molajito';
     public $default_page = 'full';
 
-    public $default_view_static = 'dashboard';
-    public $default_wrap_static = 'div';
-    public $default_view_items = 'items';
-    public $default_wrap_items = 'section';
-    public $default_view_item = 'item';
+    public $default_static_view = 'dashboard';
+    public $default_static_wrap = 'div';
+    public $default_items_view = 'items';
+    public $default_items_wrap = 'section';
+    public $default_item_view = 'item';
     public $default_wrap_item = 'article';
     public $default_view_edit = 'edit';
     public $default_wrap_edit = 'div';
@@ -79,13 +79,11 @@ class MolajoConfigApplication
     /* Offline */
     public $offline = '1';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_format = 'html';
     public $offline_template = 'system';
     public $offline_page = 'offline';
 
     /* Error */
     public $error_format = 'html';
-    public $error_template = 'system';
     public $error_page = 'error';
 
     /* Feed */
