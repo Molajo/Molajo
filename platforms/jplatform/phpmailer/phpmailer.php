@@ -92,7 +92,7 @@ class PHPMailer
 
     /**
      * Sets the Sender email (Return-Path) of the message.  If not empty,
-     * will be sent via -f to sendmail or as 'MAIL FROM' in smtp mode.
+     * will be sent via -f to send_mail or as 'MAIL FROM' in smtp mode.
      * @var string
      */
     public $Sender = '';
@@ -127,16 +127,16 @@ class PHPMailer
     public $WordWrap = 0;
 
     /**
-     * Method to send mail: ("mail", "sendmail", or "smtp").
+     * Method to send mail: ("mail", "send_mail", or "smtp").
      * @var string
      */
     public $Mailer = 'mail';
 
     /**
-     * Sets the path of the sendmail program.
+     * Sets the path of the send_mail program.
      * @var string
      */
-    public $Sendmail = '/usr/sbin/sendmail';
+    public $Sendmail = '/usr/sbin/send_mail';
 
     /**
      * Path to PHPMailer plugins.  Useful if the SMTP class
@@ -383,10 +383,10 @@ class PHPMailer
      */
     public function IsSendmail()
     {
-        if (!stristr(ini_get('sendmail_path'), 'sendmail')) {
-            $this->Sendmail = '/var/qmail/bin/sendmail';
+        if (!stristr(ini_get('send_mail_path'), 'send_mail')) {
+            $this->Sendmail = '/var/qmail/bin/send_mail';
         }
-        $this->Mailer = 'sendmail';
+        $this->Mailer = 'send_mail';
     }
 
     /**
@@ -395,10 +395,10 @@ class PHPMailer
      */
     public function IsQmail()
     {
-        if (stristr(ini_get('sendmail_path'), 'qmail')) {
-            $this->Sendmail = '/var/qmail/bin/sendmail';
+        if (stristr(ini_get('send_mail_path'), 'qmail')) {
+            $this->Sendmail = '/var/qmail/bin/send_mail';
         }
-        $this->Mailer = 'sendmail';
+        $this->Mailer = 'send_mail';
     }
 
     /////////////////////////////////////////////////
@@ -585,7 +585,7 @@ class PHPMailer
 
             // Choose the mailer and send through it
             switch ($this->Mailer) {
-                case 'sendmail':
+                case 'send_mail':
                     return $this->SendmailSend($header, $body);
                 case 'smtp':
                     return $this->SmtpSend($header, $body);
@@ -613,13 +613,13 @@ class PHPMailer
     protected function SendmailSend($header, $body)
     {
         if ($this->Sender != '') {
-            $sendmail = sprintf("%s -oi -f %s -t", escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+            $send_mail = sprintf("%s -oi -f %s -t", escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
         } else {
-            $sendmail = sprintf("%s -oi -t", escapeshellcmd($this->Sendmail));
+            $send_mail = sprintf("%s -oi -t", escapeshellcmd($this->Sendmail));
         }
         if ($this->SingleTo === true) {
             foreach ($this->SingleToArray as $key => $val) {
-                if (!@$mail = popen($sendmail, 'w')) {
+                if (!@$mail = popen($send_mail, 'w')) {
                     throw new phpmailerException($this->Lang('execute') . $this->Sendmail, self::STOP_CRITICAL);
                 }
                 fputs($mail, "To: " . $val . "\n");
@@ -634,7 +634,7 @@ class PHPMailer
                 }
             }
         } else {
-            if (!@$mail = popen($sendmail, 'w')) {
+            if (!@$mail = popen($send_mail, 'w')) {
                 throw new phpmailerException($this->Lang('execute') . $this->Sendmail, self::STOP_CRITICAL);
             }
             fputs($mail, $header);
@@ -667,8 +667,8 @@ class PHPMailer
 
         $params = sprintf("-oi -f %s", $this->Sender);
         if ($this->Sender != '' && strlen(ini_get('safe_mode')) < 1) {
-            $old_from = ini_get('sendmail_from');
-            ini_set('sendmail_from', $this->Sender);
+            $old_from = ini_get('send_mail_from');
+            ini_set('send_mail_from', $this->Sender);
             if ($this->SingleTo === true && count($toArr) > 1) {
                 foreach ($toArr as $key => $val) {
                     $rt = @mail($val, $this->EncodeHeader($this->SecureHeader($this->Subject)), $body, $header, $params);
@@ -698,7 +698,7 @@ class PHPMailer
             }
         }
         if (isset($old_from)) {
-            ini_set('sendmail_from', $old_from);
+            ini_set('send_mail_from', $old_from);
         }
         if (!$rt) {
             throw new phpmailerException($this->Lang('instantiate'), self::STOP_CRITICAL);
@@ -1133,13 +1133,13 @@ class PHPMailer
         $from[0][1] = $this->FromName;
         $result .= $this->AddrAppend('From', $from);
 
-        // sendmail and mail() extract Cc from the header before sending
+        // send_mail and mail() extract Cc from the header before sending
         if (count($this->cc) > 0) {
             $result .= $this->AddrAppend('Cc', $this->cc);
         }
 
-        // sendmail and mail() extract Bcc from the header before sending
-        if ((($this->Mailer == 'sendmail') || ($this->Mailer == 'mail')) && (count($this->bcc) > 0)) {
+        // send_mail and mail() extract Bcc from the header before sending
+        if ((($this->Mailer == 'send_mail') || ($this->Mailer == 'mail')) && (count($this->bcc) > 0)) {
             $result .= $this->AddrAppend('Bcc', $this->bcc);
         }
 

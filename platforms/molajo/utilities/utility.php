@@ -22,7 +22,7 @@ class MolajoUtility
      * Mail function (uses phpMailer)
      *
      * @param   string   $from        From email address
-     * @param   string   $fromname    From name
+     * @param   string   $from_name    From name
      * @param   mixed    $recipient    Recipient email address(es)
      * @param   string   $subject    Email subject
      * @param   string   $body        Message body
@@ -39,10 +39,10 @@ class MolajoUtility
      * @deprecated  1.6
      * @see            MolajoMail::sendMail()
      */
-    public static function sendMail($from, $fromname, $recipient, $subject, $body, $mode = 0, $cc = null, $bcc = null, $attachment = null, $replyto = null, $replytoname = null)
+    public static function sendMail($from, $from_name, $recipient, $subject, $body, $mode = 0, $cc = null, $bcc = null, $attachment = null, $replyto = null, $replytoname = null)
     {
         MolajoController::getMailer()->sendMail(
-            $from, $fromname, $recipient, $subject, $body, $mode, $cc,
+            $from, $from_name, $recipient, $subject, $body, $mode, $cc,
             $bcc, $attachment, $replyto, $replytoname
         );
     }

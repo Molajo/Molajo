@@ -283,15 +283,15 @@ class MolajoMail extends PHPMailer
     }
 
     /**
-     * Use sendmail for sending the email
+     * Use send_mail for sending the email
      *
-     * @param   string   $sendmail    Path to sendmail [optional]
+     * @param   string   $send_mail    Path to send_mail [optional]
      * @return  boolean  True on success
      * @since   1.0
      */
-    public function useSendmail($sendmail = null)
+    public function useSendmail($send_mail = null)
     {
-        $this->Sendmail = $sendmail;
+        $this->Sendmail = $send_mail;
 
         if (!empty ($this->Sendmail)) {
             $this->IsSendmail();

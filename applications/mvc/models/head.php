@@ -40,7 +40,7 @@ class MolajoModelHead extends MolajoModel
     public function getItems()
     {
         $this->items = array();
-        //$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
+        //$document->setTitle($this->getCfg('site_name'). ' - ' .JText::_('JADMINISTRATION'));
 /**
         $mdata = $this->item->metadata->toArray();
         foreach ($mdata as $k => $v)
@@ -72,7 +72,7 @@ if ($this->print)
         $tempObject->set('favicon', $this->request->get('template_favicon'));
         $tempObject->set('keywords', $this->request->get('metadata_keywords'));
         $tempObject->set('author', $this->request->get('metadata_author'));
-        $tempObject->set('content_rights', $this->request->get('metadata_rights'));
+        $tempObject->set('content_rights', $this->request->get('metadata_content_rights'));
         $tempObject->set('robots', $this->request->get('metadata_robots'));
 
         $this->items[] = $tempObject;

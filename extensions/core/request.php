@@ -91,7 +91,7 @@ class MolajoRequest
         $request->set('sef', 0);
         $request->set('sef_rewrite', 0);
         $request->set('sef_suffix', 0);
-        $request->set('unicodeslugs', 0);
+        $request->set('unicode_slugs', 0);
         $request->set('force_ssl', 0);
 
         /** format */
@@ -131,7 +131,7 @@ class MolajoRequest
         $request->set('generator', MolajoController::getApplication()->get('generator', 'Molajo'));
         $request->set('metadata_keywords', '');
         $request->set('metadata_author', '');
-        $request->set('metadata_rights', '');
+        $request->set('metadata_content_rights', '');
         $request->set('metadata_robots', '');
         $request->set('metadata_additional_array', array());
 
@@ -303,7 +303,7 @@ class MolajoRequest
         /** 2: Asset (already set in array) */
 
         /** 3: Source Table ID */
-        if ((int) $this->request->get('source_id') == 0) {
+        if ((int)$this->request->get('source_id') == 0) {
         } else {
             $results = $this->_getSourceData();
             if ($results === false) {
@@ -315,7 +315,7 @@ class MolajoRequest
         }
 
         /** 4: Component */
-        if ((int) $this->request->get('extension_instance_id') == 0) {
+        if ((int)$this->request->get('extension_instance_id') == 0) {
         } else {
             $results = $this->_getComponent();
             if ($results === false) {
@@ -351,7 +351,7 @@ class MolajoRequest
         }
 
         /** 10. Extension Request Verification and Defaults  */
-        if ((int) $this->request->get('extension_instance_id') == 0) {
+        if ((int)$this->request->get('extension_instance_id') == 0) {
         } else {
             $this->request = MolajoExtensionHelper::getExtensionOptions($this->request);
             if ($this->request->set('results', false)) {
@@ -397,8 +397,8 @@ class MolajoRequest
         var_dump($temp);
         echo '</pre>';
         die;
+         */
 
-        */
 
         /** Render Page by Format */
         new MolajoDocument ($this->request);
@@ -420,7 +420,7 @@ class MolajoRequest
         $this->request->set('sef', MolajoController::getApplication()->get('sef', 1));
         $this->request->set('sef_rewrite', MolajoController::getApplication()->get('sef_rewrite', 0));
         $this->request->set('sef_suffix', MolajoController::getApplication()->get('sef_suffix', 0));
-        $this->request->set('unicodeslugs', MolajoController::getApplication()->get('unicodeslugs', 0));
+        $this->request->set('unicode_slugs', MolajoController::getApplication()->get('unicode_slugs', 0));
         $this->request->set('force_ssl', MolajoController::getApplication()->get('force_ssl', 0));
 
         if ($this->_override_request == null) {
@@ -638,18 +638,19 @@ class MolajoRequest
      */
     protected function _getApplicationDefaults()
     {
+        /** format */
         if ($this->request->get('format', '') == '') {
             $this->request->set('format', MolajoController::getApplication()->get('default_format', ''));
         }
-
+        /** template/page */
         if ($this->request->get('template_name', '') == '') {
             $this->request->set('template_name', MolajoController::getApplication()->get('default_template', ''));
         }
-
         if ($this->request->get('page', '') == '') {
             $this->request->set('page', MolajoController::getApplication()->get('default_page', ''));
         }
 
+        /** view */
         if ($this->request->get('view', '') == '') {
 
             if ($this->request->get('static', true)) {
@@ -658,7 +659,7 @@ class MolajoRequest
             } else if ($this->request->get('task', '') == 'add'
                 || $this->request->get('task', '') == 'edit'
             ) {
-                $this->request->set('task', MolajoController::getApplication()->get('default_view_edit', ''));
+                $this->request->set('task', MolajoController::getApplication()->get('default_edit_view', ''));
 
             } else if ((int)$this->request->get('id', 0) == 0) {
                 $this->request->set('view', MolajoController::getApplication()->get('default_items_view', ''));
@@ -668,6 +669,7 @@ class MolajoRequest
             }
         }
 
+        /** wrap */
         if ($this->request->get('wrap', '') == '') {
 
             if ($this->request->get('static', false) === true) {
@@ -676,14 +678,47 @@ class MolajoRequest
             } elseif ($this->request->get('task', '') == 'add'
                 || $this->request->get('task', '') == 'edit'
             ) {
-                $this->request->set('task', MolajoController::getApplication()->get('default_wrap_edit', ''));
+                $this->request->set('task', MolajoController::getApplication()->get('default_edit_wrap', ''));
 
             } else if ((int)$this->request->get('id', 0) == 0) {
                 $this->request->set('wrap', MolajoController::getApplication()->get('default_items_wrap', ''));
 
             } else {
-                $this->request->set('wrap', MolajoController::getApplication()->get('default_wrap_item', ''));
+                $this->request->set('wrap', MolajoController::getApplication()->get('default_item_wrap', ''));
             }
+        }
+
+        /** metadata  */
+
+        if ($this->request->get('metadata_title', '') == '') {
+            $appname = MolajoController::getApplication()->get('application_name', '');
+            $sitename = MolajoController::getApplication()->get('site_name', '');
+            if (trim($appname) == trim($sitename)) {
+                $temp = $appname;
+            } else {
+                $temp = $appname . ' - ' . $sitename;
+            }
+            $this->request->set('metadata_title', $temp);
+        }
+
+        if ($this->request->get('metadata_description', '') == '') {
+            $this->request->set('metadata_description', MolajoController::getApplication()->get('metadata_description', ''));
+        }
+
+        if ($this->request->get('metadata_keywords', '') == '') {
+            $this->request->set('metadata_keywords', MolajoController::getApplication()->get('metadata_keywords', ''));
+        }
+
+        if ($this->request->get('metadata_author', '') == '') {
+            $this->request->set('metadata_author', MolajoController::getApplication()->get('metadata_author', ''));
+        }
+
+        if ($this->request->get('metadata_content_rights', '') == '') {
+            $this->request->set('metadata_content_rights', MolajoController::getApplication()->get('metadata_content_rights', ''));
+        }
+
+        if ($this->request->get('metadata_robots', '') == '') {
+            $this->request->set('metadata_robots', MolajoController::getApplication()->get('metadata_robots', ''));
         }
     }
 
@@ -749,8 +784,8 @@ class MolajoRequest
             $this->request->set('metadata_author', $meta->def('metadata_author', ''));
         }
 
-        if ($this->request->get('metadata_rights', '') == '') {
-            $this->request->set('metadata_rights', $meta->def('metadata_rights', ''));
+        if ($this->request->get('metadata_content_rights', '') == '') {
+            $this->request->set('metadata_content_rights', $meta->def('metadata_content_rights', ''));
         }
 
         if ($this->request->get('metadata_robots', '') == '') {

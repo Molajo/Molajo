@@ -43,7 +43,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 200, 'metadesc', 'MOLAJO_FIELD_METADESC_LABEL', 29),
 (1, 200, 'metakey', 'MOLAJO_FIELD_METAKEY_LABEL', 30),
 (1, 200, 'metadata_author', 'MOLAJO_FIELD_metadata_AUTHOR_LABEL', 31),
-(1, 200, 'metadata_rights', 'MOLAJO_FIELD_metadata_RIGHTS_LABEL', 32),
+(1, 200, 'metadata_content_rights', 'MOLAJO_FIELD_metadata_RIGHTS_LABEL', 32),
 (1, 200, 'metadata_robots', 'MOLAJO_FIELD_metadata_ROBOTS_LABEL', 33),
 (1, 200, 'modified', 'MOLAJO_FIELD_MODIFIED_LABEL', 34),
 (1, 200, 'modified_by', 'MOLAJO_FIELD_MODIFIED_BY_LABEL', 35),

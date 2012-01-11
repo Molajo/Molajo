@@ -2,7 +2,7 @@
 class MolajoSiteConfiguration
 {
     /* Site Settings */
-    public $sitename = 'Molajo';
+    public $site_name = 'Molajo';
 
     /* Database Settings */
     public $dbtype = 'mysqli';
@@ -36,9 +36,9 @@ class MolajoSiteConfiguration
 
     /* Mail Settings */
     public $mailer = 'mail';
-    public $mailfrom = '';
-    public $fromname = '';
-    public $sendmail = '/usr/sbin/sendmail';
+    public $mail_from = '';
+    public $from_name = '';
+    public $send_mail = '/usr/sbin/send_mail';
     public $smtpauth = '0';
     public $smtpuser = '';
     public $smtppass = '';

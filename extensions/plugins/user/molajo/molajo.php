@@ -47,14 +47,14 @@ class plgUserMolajo extends MolajoPluginHelper
             $emailSubject = MolajoTextHelper::sprintf(
                 'PLG_USER_JOOMLA_NEW_USER_EMAIL_SUBJECT',
                 $user['name'],
-                $config->get('sitename')
+                $config->get('site_name')
             );
 
             // Compute the mail body.
             $emailBody = MolajoTextHelper::sprintf(
                 'PLG_USER_JOOMLA_NEW_USER_EMAIL_BODY',
                 $user['name'],
-                $config->get('sitename'),
+                $config->get('site_name'),
                 JUri::root(),
                 $user['username'],
                 $user['password_clear']
@@ -64,8 +64,8 @@ class plgUserMolajo extends MolajoPluginHelper
             $mail = MolajoController::getMailer()
                     ->setSender(
                 array(
-                     $config->get('mailfrom'),
-                     $config->get('fromname')
+                     $config->get('mail_from'),
+                     $config->get('from_name')
                 )
             )
                     ->addRecipient($user['email'])

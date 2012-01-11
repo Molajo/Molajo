@@ -1536,7 +1536,7 @@ class MolajoControllerApplication
      */
     static public function stringURLSafe($string)
     {
-        if (self::get('unicodeslugs') == 1) {
+        if (self::get('unicode_slugs') == 1) {
             $output = JFilterOutput::stringURLUnicodeSlug($string);
 
         } else {

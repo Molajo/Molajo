@@ -476,7 +476,7 @@ INSERT INTO `molajo_extension_instances`
 
 # Extension Metadata
 UPDATE `molajo_extension_instances`
-  SET `metadata` = '{"metadata_description":"","metadata_keywords":"","metadata_robots":"","metadata_author":"","metadata_rights":""}';
+  SET `metadata` = '{"metadata_description":"","metadata_keywords":"","metadata_robots":"","metadata_author":"","metadata_content_rights":""}';
 
 #
 # SITES
@@ -1304,7 +1304,7 @@ UPDATE `MOLAJO_APPLICATIONS_CORE`
 */
 # Menu Item Metadata
 UPDATE `molajo_content`
-  SET `metadata` = '{"metadata_description":"","metadata_keywords":"","metadata_robots":"","metadata_author":"","metadata_rights":""}';
+  SET `metadata` = '{"metadata_description":"","metadata_keywords":"","metadata_robots":"","metadata_author":"","metadata_content_rights":""}';
 
 #
 # ASSETS

@@ -425,19 +425,19 @@ class MolajoController
      */
     protected static function _createMailer()
     {
-        $sendmail = self::get('sendmail', '', 'site');
+        $send_mail = self::get('send_mail', '', 'site');
         $smtpauth = (self::get('smtpauth', '', 'site') == 0) ? null : 1;
         $smtpuser = self::get('smtpuser', '', 'site');
         $smtppass = self::get('smtppass', '', 'site');
         $smtphost = self::get('smtphost', '', 'site');
         $smtpsecure = self::get('smtpsecure', '', 'site');
         $smtpport = self::get('smtpport', '', 'site');
-        $mailfrom = self::get('mailfrom', '', 'site');
-        $fromname = self::get('fromname', '', 'site');
+        $mail_from = self::get('mail_from', '', 'site');
+        $from_name = self::get('from_name', '', 'site');
         $mailer = self::get('mailer', '', 'site');
 
         $mail = MolajoMail::getInstance();
-        $mail->setSender(array($mailfrom, $fromname));
+        $mail->setSender(array($mail_from, $from_name));
 
         switch ($mailer)
         {
@@ -445,7 +445,7 @@ class MolajoController
                 $mail->useSMTP($smtpauth, $smtphost, $smtpuser, $smtppass, $smtpsecure, $smtpport);
                 break;
 
-            case 'sendmail' :
+            case 'send_mail' :
                 $mail->IsSendmail();
                 break;
 

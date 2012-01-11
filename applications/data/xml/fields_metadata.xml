@@ -44,7 +44,7 @@
                 />
 
         <field
-                name="metadata_rights"
+                name="metadata_content_rights"
                 type="textarea"
                 label="METADATA_RIGHTS_LABEL"
                 description="METADATA_RIGHTS_DESC"

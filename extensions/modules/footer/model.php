@@ -49,8 +49,8 @@ class FooterModelModule extends MolajoModel
         } else {
             $line1 = MolajoTextHelper :: _('FOOTER_LINE1');
         }
-        if (JString::strpos($line1, '%sitename%')) {
-            $line1 = str_replace('%sitename%', MolajoController::getApplication()->get('sitename', 'Molajo'), $line1);
+        if (JString::strpos($line1, '%site_name%')) {
+            $line1 = str_replace('%site_name%', MolajoController::getApplication()->get('site_name', 'Molajo'), $line1);
         }
         $tempObject->set('line1', $line1);
 

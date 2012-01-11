@@ -2,30 +2,32 @@
 class MolajoConfigApplication
 {
     /* Application Settings */
-    public $applicationname = 'Molajo';
+    public $application_name = 'Molajo';
 
     /* Meta */
-    public $MetaDesc = 'Molajo - the Cats Meow';
-    public $MetaKeys = 'molajo, Molajo';
-    public $MetaAuthor = '1';
+    public $metadata_description = 'Molajo - the Cats Meow';
+    public $metadata_keywords = 'molajo, Molajo';
+    public $metadata_author = '1';
+    public $metadata_content_rights = 'This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.';
+    public $metadata_robots = 'follow, index';
 
     /* Cache */
     public $caching = '0';
-    public $cachetime = '15';
+    public $cache_time = '15';
     public $cache_handler = 'file';
 
     /* SEO */
     public $sef = '1';
     public $sef_rewrite = '0';
     public $sef_suffix = '0';
-    public $unicodeslugs = '0';
+    public $unicode_slugs = '0';
     public $force_ssl = '0';
 
     /* Locale */
     public $language = 'en-GB';
     public $offset = 'UTC';
     public $offset_user = 'UTC';
-    public $multi_lingual = '0';
+    public $multilingual = '0';
 
     /* Lists */
     public $list_limit = 20;
@@ -64,9 +66,9 @@ class MolajoConfigApplication
     public $default_items_view = 'items';
     public $default_items_wrap = 'section';
     public $default_item_view = 'item';
-    public $default_wrap_item = 'article';
-    public $default_view_edit = 'edit';
-    public $default_wrap_edit = 'div';
+    public $default_item_wrap = 'article';
+    public $default_edit_view = 'edit';
+    public $default_edit_wrap = 'div';
 
     /* Head */
     public $head_view = 'head';
