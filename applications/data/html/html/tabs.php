@@ -107,7 +107,7 @@ abstract class MolajoHtmlTabs
 						});
 					});';
 
-            MolajoController::getApplication()->addScriptDeclaration($js);
+            MolajoController::getApplication()->addJavascriptDeclaration($js);
             MolajoHTML::_('script', 'system/tabs.js', false, true);
 
             $loaded[$group] = true;

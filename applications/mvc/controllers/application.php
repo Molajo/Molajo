@@ -7,7 +7,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-// addCustomTag
+// addCustomHTML
 
 /**
  * Molajo Application Class
@@ -47,13 +47,6 @@ class MolajoControllerApplication
     public $client;
 
     /**
-     * Line End
-     * @var    string
-     * @since  1.0
-     */
-    public $line_end;
-
-    /**
      * Character encoding
      * @var    string
      * @since  1.0
@@ -75,20 +68,6 @@ class MolajoControllerApplication
     public $direction = 'ltr';
 
     /**
-     * Tab
-     * @var    string
-     * @since  1.0
-     */
-    public $tab;
-
-    /**
-     * Link
-     * @var    string
-     * @since  1.0
-     */
-    public $link;
-
-    /**
      * Callback for escaping.
      * @var   string
      * @since 1.0
@@ -96,25 +75,11 @@ class MolajoControllerApplication
     protected $_escapeFunction = 'htmlspecialchars';
 
     /**
-     * Metadata
-     * @var    array
-     * @since  1.0
-     */
-    public $metadata = array();
-
-    /**
      * Response mimetype type.
      * @var    string
      * @since  1.0
      */
     public $mimetype = 'text/html';
-
-    /**
-     * Custom
-     * @var    array
-     * @since  1.0
-     */
-    public $custom = array();
 
     /**
      * Messages
@@ -138,6 +103,13 @@ class MolajoControllerApplication
     public $session;
 
     /**
+     * Metadata
+     * @var    array
+     * @since  1.0
+     */
+    public $metadata = array();
+
+    /**
      * Links
      * @var    string
      * @since  1.0
@@ -145,32 +117,39 @@ class MolajoControllerApplication
     public $links;
 
     /**
-     * Stylesheets
+     * stylesheet_links
      * @var    array
      * @since  1.0
      */
-    public $stylesheets = array();
+    public $stylesheet_links = array();
 
     /**
      * Style
      * @var    array
      * @since  1.0
      */
-    public $style = array();
+    public $stylesheet_declarations = array();
 
     /**
-     * Scripts
+     * Script Links
+     * @var    string
+     * @since  1.0
+     */
+    public $script_links;
+
+    /**
+     * Script Declarations
      * @var    array
      * @since  1.0
      */
-    public $scripts = array();
+    public $script_declarations = array();
 
     /**
-     * Script
+     * Custom
      * @var    array
      * @since  1.0
      */
-    public $script = array();
+    public $custom_html = array();
 
     /**
      * Request
@@ -185,7 +164,7 @@ class MolajoControllerApplication
      * @since  1.0
      */
     protected $_response = array();
-    
+
     /**
      * getInstance
      *
@@ -274,28 +253,6 @@ class MolajoControllerApplication
             $this->client = new JWebClient;
         }
 
-        if (array_key_exists('line_end', $options)) {
-            $this->setLineEnd($options['line_end']);
-        }
-        if (array_key_exists('charset', $options)) {
-            $this->setCharset($options['charset']);
-        }
-        if (array_key_exists('language', $options)) {
-            $this->setLanguage($options['language']);
-        }
-        if (array_key_exists('direction', $options)) {
-            $this->setDirection($options['direction']);
-        }
-        if (array_key_exists('tab', $options)) {
-            $this->setTab($options['tab']);
-        }
-        if (array_key_exists('link', $options)) {
-            $this->setLink($options['link']);
-        }
-        if (array_key_exists('escapeFunction', $options)) {
-            $this->setEscape($options['escapeFunction']);
-        }
-
         /** get configuration */
         $this->getConfig();
 
@@ -318,152 +275,6 @@ class MolajoControllerApplication
         $this->_response->body = array();
 
         //echo '<pre>';var_dump($this->config);'</pre>';
-    }
-
-    /**
-     * setLineEnd
-     *
-     * Sets the line end style to Windows, Mac, Unix or a custom string.
-     *
-     * @param   string  $style  "win", "mac", "unix" or custom string.
-     *
-     * @return  void
-     */
-    public function setLineEnd($style)
-    {
-        switch ($style)
-        {
-            case 'win':
-                $this->line_end = "\15\12";
-                break;
-            case 'unix':
-                $this->line_end = "\12";
-                break;
-            case 'mac':
-                $this->line_end = "\15";
-                break;
-            default:
-                $this->line_end = $style;
-        }
-    }
-
-    /**
-     * getLineEnd
-     *
-     * Returns the lineEnd
-     *
-     * @return  string
-     */
-    public function getLineEnd()
-    {
-        return $this->line_end;
-    }
-
-    /**
-     * setCharset
-     *
-     * Sets the charset
-     *
-     * @param  string
-     *
-     * @return  void
-     */
-    public function setCharset($charset)
-    {
-        $this->charset = $charset;
-    }
-
-    /**
-     * getCharset
-     *
-     * Returns the charset
-     *
-     * @return string
-     */
-    public function getCharset()
-    {
-        return $this->charset;
-    }
-
-    /**
-     * Sets the global document language declaration. Default is English (en-gb).
-     *
-     * @param   string  $language
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setLanguage($language = "en-gb")
-    {
-        $this->language = strtolower($language);
-    }
-
-    /**
-     * Returns the document language.
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * setDirection
-     *
-     * Sets the global document direction declaration. Default is left-to-right (ltr).
-     *
-     * @param   string  $lang
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setDirection($direction = 'ltr')
-    {
-        if (strtolower($direction) == 'rtl') {
-        } else {
-            $direction = 'ltr';
-        }
-        $this->direction = strtolower($direction);
-    }
-
-    /**
-     * getDirection
-     *
-     * Returns the document direction declaration.
-     *
-     * @return string
-     */
-    public function getDirection()
-    {
-        return $this->direction;
-    }
-
-    /**
-     * setTab
-     *
-     * Sets the string used to indent HTML
-     *
-     * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
-     *
-     * @return  void
-     */
-    public function setTab($string)
-    {
-        $this->tab = $string;
-    }
-
-    /**
-     * getTab
-     *
-     * Returns a string containing the unit for indenting HTML
-     *
-     * @return  string
-     */
-    public function getTab()
-    {
-        return $this->tab;
     }
 
     /**
@@ -581,7 +392,7 @@ class MolajoControllerApplication
 
     /**
      * load
-     * 
+     *
      * Load the application.
      *
      * @return  mixed
@@ -603,7 +414,7 @@ class MolajoControllerApplication
 
         $this->loadDispatcher();
 
-/**        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
+        /**        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
 
         /** request and rendering  */
         $requestClass = new MolajoRequest();
@@ -690,6 +501,61 @@ class MolajoControllerApplication
         $locale = $this->get('language', 'en-gb');
         $debug = $this->get('debug_language', '');
         $this->language = MolajoLanguageHelper::getInstance($locale, $debug);
+    }
+
+    /**
+     * Sets the global document language declaration. Default is English (en-gb).
+     *
+     * @param   string  $language
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function setLanguage($language = "en-gb")
+    {
+        $this->language = strtolower($language);
+    }
+
+    /**
+     * Returns the document language.
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * setDirection
+     *
+     * Sets the global document direction declaration. Default is left-to-right (ltr).
+     *
+     * @param   string  $lang
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function setDirection($direction = 'ltr')
+    {
+        if (strtolower($direction) == 'rtl') {
+        } else {
+            $direction = 'ltr';
+        }
+        $this->direction = strtolower($direction);
+    }
+
+    /**
+     * getDirection
+     *
+     * Returns the document direction declaration.
+     *
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->direction;
     }
 
     /**
@@ -809,7 +675,7 @@ class MolajoControllerApplication
      */
     private function _sessionMessages()
     {
-        $session = MolajoController::getApplication()->getSession();
+        $session = $this->getSession();
         $sessionMessages = $session->get('application.messages');
 
         if (count($sessionMessages) > 0) {
@@ -862,25 +728,9 @@ class MolajoControllerApplication
      * @return  string
      * @since   1.0
      */
-//    public function getMetaData($name, $context = false)
     public function getMetaData()
     {
         return $this->metadata;
-        /**
-        $name = strtolower($name);
-
-        if (is_bool($context) && ($context == true)) {
-        $result = $this->metadata['http-equiv'][$name];
-
-        } else if (is_string($context)) {
-        $result = $this->metadata[$context][$name];
-
-        } else {
-        $result = $this->metadata['standard'][$name];
-        }
-
-        return $result;
-         */
     }
 
     /**
@@ -925,96 +775,75 @@ class MolajoControllerApplication
     /**
      * Adds <link> tags to the head of the document
      *
-     * $relType defaults to 'rel' as it is the most common relation type used.
+     * $relation_type defaults to 'rel' as it is the most common relation type used.
      * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
      * Typical tag: <link href="index.php" rel="Start">
      *
-     * @param   string  $href      The link that is being related.
-     * @param   string  $relation  Relation of link.
-     * @param   string  $relType   Relation type attribute.  Either rel or rev (default: 'rel').
-     * @param   array   $attribs   Associative array of remaining attributes.
+     * @param   string  $url           The link that is being related.
+     * @param   string  $relation      Relation of link.
+     * @param   string  $relation_type Relation type attribute. Either rel or rev (default: 'rel').
+     * @param   array   $attributes    Associative array of remaining attributes.
      *
-     * @return  JDocumentHTML instance of $this to allow chaining
-     *
-     * @since   1.0
+     * @param $url
+     * @param $relation
+     * @param string $relation_type
+     * @param array $attributes
+     * @return mixed
      */
-    public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
+    public function addHeadLink($url, $relation, $relation_type = 'rel', $attributes = array())
     {
-        $this->links[$href]['relation'] = $relation;
-        $this->links[$href]['relType'] = $relType;
-        $this->links[$href]['attribs'] = $attribs;
-    }
-
-    /**
-     * loadMediaJS
-     *
-     * Loads the JS located within the folder specified by the filepath
-     *
-     * @param  $filePath
-     * @param  $urlPath
-     * @return void
-     * @since  1.0
-     */
-    public function loadMediaJS($filePath, $urlPath)
-    {
-        if (JFolder::exists($filePath . '/js')) {
-        } else {
-            return;
-        }
-        //todo: differentiate between script and scripts
-        $files = JFolder::files($filePath . '/js', '\.js$', false, false);
-
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                $this->addScript($urlPath . '/js/' . $file);
+        $count = count($this->links);
+        if ($count > 0) {
+            foreach ($this->links as $link) {
+                if ($link['url'] == $url) {
+                    return;
+                }
             }
         }
+        $this->links[$count]['url'] = $url;
+        $this->links[$count]['relation'] = $relation;
+        $this->links[$count]['relation_type'] = $relation_type;
+        $this->links[$count]['attributes'] = trim(implode(' ', $attributes));
     }
 
     /**
-     * addScript
+     * getHeadLink
      *
-     * Adds a linked script to the page
+     * @return array
+     */
+    public function getHeadLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * addCustomHTML
      *
-     * @param string $url
-     * @param string $format
-     * @param bool   $defer
-     * @param bool   $async
-     * @param int    $priority
+     * Adds a custom HTML string to the head block
      *
-     * @return
+     * @param   string  $html  The HTML to add to the head
+     * @return  void
      * @since   1.0
      */
-    public function addScript($url, $format = "text/javascript", $defer = false, $async = false, $priority = 500)
+
+    public function addCustomHTML($html)
     {
-        $this->scripts[$url]['mimetype'] = $format;
-        $this->scripts[$url]['defer'] = $defer;
-        $this->scripts[$url]['async'] = $async;
-        $this->scripts[$url]['priority'] = $priority;
+        $this->custom_html[] = trim($html);
     }
 
     /**
-     * addScriptDeclaration
+     * getCustomHTML
      *
-     * Adds a script to the page
-     *
-     * @param   string  $content    Script
-     * @param   string  $format     Scripting mimetype (defaults to 'text/javascript')
-     *
-     * @return  void
-     * @since    1.0
+     * @return array
+     * @since  1.0
      */
-    public function addScriptDeclaration($content, $format = 'text/javascript')
+    public function getCustomHTML()
     {
-        if (isset($this->script[strtolower($format)])) {
-            $this->script[strtolower($format)] .= chr(13) . $content;
-        } else {
-            $this->script[strtolower($format)] = $content;
-        }
+        return $this->custom_html;
     }
 
     /**
-     * loadMediaCSS
+     * addStylesheetLinksFolder
      *
      * Loads the CS located within the folder, as specified by the filepath
      *
@@ -1022,7 +851,7 @@ class MolajoControllerApplication
      * @param $urlPath
      * @return void
      */
-    public function loadMediaCSS($filePath, $urlPath)
+    public function addStylesheetLinksFolder($filePath, $urlPath)
     {
         if (JFolder::exists($filePath . '/css')) {
         } else {
@@ -1034,36 +863,53 @@ class MolajoControllerApplication
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-                    //                    if ($this->direction == 'rtl') {
-                    //                        $this->addStyleSheet($urlPath . '/css/' . $file);
-                    //                    }
+                    if ($this->getDirection() == 'rtl') {
+                        $this->addStylesheetLinks($urlPath . '/css/' . $file);
+                    }
                 } else {
-                    $this->addStyleSheet($urlPath . '/css/' . $file);
+                    $this->addStylesheetLinks($urlPath . '/css/' . $file);
                 }
             }
         }
     }
 
     /**
-     * addStyleSheet
+     * addStylesheetLinks
      *
      * Adds a linked stylesheet to the page
      *
-     * @param string  $url
-     * @param string  $format
-     * @param null    $media
-     * @param array   $attribs
-     * @param int     $priority
-     *
-     * @return  void
-     * @since    1.0
+     * @param $url
+     * @param string $mimetype
+     * @param null $media
+     * @param array $attributes
+     * @param int $priority
+     * @return mixed
      */
-    public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array(), $priority = 500)
+    public function addStylesheetLinks($url, $mimetype = 'text/css', $media = null, $attributes = array(), $priority = 500)
     {
-        $this->stylesheets[$url]['mimetype'] = $format;
-        $this->stylesheets[$url]['media'] = $media;
-        $this->stylesheets[$url]['attribs'] = $attribs;
-        $this->stylesheets[$url]['priority'] = $priority;
+        $count = count($this->stylesheet_links);
+        if ($count > 0) {
+            foreach ($this->stylesheet_links as $stylesheet) {
+                if ($stylesheet['url'] == $url) {
+                    return;
+                }
+            }
+        }
+        $this->stylesheet_links[$count]['url'] = $url;
+        $this->stylesheet_links[$count]['mimetype'] = $mimetype;
+        $this->stylesheet_links[$count]['media'] = $media;
+        $this->stylesheet_links[$count]['attributes'] = trim(implode(' ', $attributes));
+        $this->stylesheet_links[$count]['priority'] = $priority;
+    }
+
+    /**
+     * getStylesheetLinks
+     *
+     * @return array
+     */
+    public function getStylesheetLinks()
+    {
+        return $this->stylesheet_links;
     }
 
     /**
@@ -1078,26 +924,116 @@ class MolajoControllerApplication
      */
     public function addStyleDeclaration($content, $format = 'text/css')
     {
-        if (isset($this->style[strtolower($format)])) {
-            $this->style[strtolower($format)] .= chr(13) . $content;
+        if (isset($this->style_declarations[strtolower($format)])) {
+            $this->style_declarations[strtolower($format)] .= chr(13) . $content;
 
         } else {
-            $this->style[strtolower($format)] = $content;
+            $this->style_declarations[strtolower($format)] = $content;
         }
     }
 
     /**
-     * addCustomTag
-     * Adds a custom HTML string to the head block
+     * getStyleDeclarations
      *
-     * @param   string  $html  The HTML to add to the head
-     * @return  void
-     * @somce   1.0
+     * @return array
      */
-
-    public function addCustomTag($html)
+    public function getStyleDeclarations()
     {
-        $this->custom[] = trim($html);
+        return $this->style_declarations;
+    }
+
+
+    /**
+     * addJavascriptLinksFolder
+     *
+     * Loads the JS Files located within the folder specified by the filepath
+     *
+     * @param  $filePath
+     * @param  $urlPath
+     * @return void
+     * @since  1.0
+     */
+    public function addJavascriptLinksFolder($filePath, $urlPath)
+    {
+        if (JFolder::exists($filePath . '/js')) {
+        } else {
+            return;
+        }
+        $files = JFolder::files($filePath . '/js', '\.js$', false, false);
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                $this->addJavascriptLink($urlPath . '/js/' . $file);
+            }
+        }
+    }
+
+    /**
+     * addJavascriptLink
+     *
+     * Adds a linked script to the page
+     *
+     * @param $url
+     * @param string $mimetype
+     * @param bool $defer
+     * @param bool $async
+     * @param int $priority
+     * @return mixed
+     */
+    public function addJavascriptLink($url, $mimetype = "text/javascript", $defer = false, $async = false, $priority = 500)
+    {
+        $count = count($this->script_links);
+        if ($count > 0) {
+            foreach ($this->script_links as $script) {
+                if ($script['url'] == $url) {
+                    return;
+                }
+            }
+        }
+        $this->script_links[$count]['url'] = $url;
+        $this->script_links[$count]['mimetype'] = $mimetype;
+        $this->script_links[$count]['defer'] = $defer;
+        $this->script_links[$count]['async'] = $async;
+        $this->script_links[$count]['priority'] = $priority;
+    }
+
+    /**
+     * getJavascriptLinks
+     *
+     * @return array
+     */
+    public function getJavascriptLinks()
+    {
+        return $this->script_links;
+    }
+
+    /**
+     * addJavascriptDeclaration
+     *
+     * Adds a script to the page
+     *
+     * @param   string  $content    Script
+     * @param   string  $format     Scripting mimetype (defaults to 'text/javascript')
+     *
+     * @return  void
+     * @since    1.0
+     */
+    public function addJavascriptDeclaration($content, $format = 'text/javascript')
+    {
+        if (isset($this->script_declarations[strtolower($format)])) {
+            $this->script_declarations[strtolower($format)] .= chr(13) . $content;
+        } else {
+            $this->script_declarations[strtolower($format)] = $content;
+        }
+    }
+
+    /**
+     * getJavascriptDeclarations
+     *
+     * @return array
+     */
+    public function getJavascriptDeclarations()
+    {
+        return $this->script_declarations;
     }
 
     /**

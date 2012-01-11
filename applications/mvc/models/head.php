@@ -59,8 +59,8 @@ if ($this->print)
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
         $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
-        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
 
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
@@ -74,31 +74,56 @@ if ($this->print)
         $tempObject->set('author', $this->request->get('metadata_author'));
         $tempObject->set('content_rights', $this->request->get('metadata_content_rights'));
         $tempObject->set('robots', $this->request->get('metadata_robots'));
-
         $this->items[] = $tempObject;
+
+        /** links */
+        $links = MolajoController::getApplication()->getHeadLinks();
+        if (count($links) > 0) {
+            foreach ($links as $link) {
+                $tempObject = new JObject();
+                $tempObject->set('type', 'links');
+                $tempObject->set('url', $link['url']);
+                $tempObject->set('relation', $link['relation']);
+                $tempObject->set('relation_type', $link['relation_type']);
+                $tempObject->set('attributes', $link['attributes']);
+                $this->items[] = $tempObject;
+            }
+        }
+
+        /** stylesheet_links */
+        $stylesheetLinks = MolajoController::getApplication()->getStylesheetLinks();
+        if (count($stylesheetLinks) > 0) {
+            foreach ($stylesheetLinks as $link) {
+                $tempObject = new JObject();
+                $tempObject->set('type', 'stylesheet_links');
+                $tempObject->set('url', $link['url']);
+                $tempObject->set('mimetype', $link['mimetype']);
+                $tempObject->set('media', $link['media']);
+                $tempObject->set('attributes', $link['attributes']);
+                $tempObject->set('priority', $link['priority']);
+                $this->items[] = $tempObject;
+            }
+        }
 
         $tempObject = new JObject();
-        $tempObject->set('type', 'metadata');
+        $tempObject->set('type', 'stylesheet_declarations');
         $this->items[] = $tempObject;
 
-        $tempObject = new JObject();
-        $tempObject->set('type', 'stylesheets');
-        $this->items[] = $tempObject;
-
-        $tempObject = new JObject();
-        $tempObject->set('type', 'styles');
-        $this->items[] = $tempObject;
-
-        $tempObject = new JObject();
-        $tempObject->set('type', 'scripts');
-        $this->items[] = $tempObject;
+        /** javascript_links */
+        $javascriptLinks = MolajoController::getApplication()->getJavascriptLinks();
+        foreach ($javascriptLinks as $link) {
+            $tempObject = new JObject();
+            $tempObject->set('type', 'javascript_links');
+            $tempObject->set('url', $link['url']);
+            $tempObject->set('mimetype', $link['mimetype']);
+            $tempObject->set('defer', $link['defer']);
+            $tempObject->set('async', $link['async']);
+            $tempObject->set('priority', $link['priority']);
+            $this->items[] = $tempObject;
+        }
 
         $tempObject = new JObject();
         $tempObject->set('type', 'script');
-        $this->items[] = $tempObject;
-
-        $tempObject = new JObject();
-        $tempObject->set('type', 'links');
         $this->items[] = $tempObject;
 
         return $this->items;
@@ -114,55 +139,5 @@ if ($this->print)
      */
     public function compressCSS()
     {
-    }
-
-    /**
-     * Adds <link> tags to the head of the document
-     *
-     * $relType defaults to 'rel' as it is the most common relation type used.
-     * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
-     * Typical tag: <link href="index.php" rel="Start">
-     *
-     * @param   string  $href        The link that is being related.
-     * @param   string  $relation    Relation of link.
-     * @param   string  $relType    Relation type attribute.  Either rel or rev (default: 'rel').
-     * @param   array   $attributes Associative array of remaining attributes.
-     *
-     * @return  void
-     */
-    public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
-    {
-        $attribs = JArrayHelper::toString($attribs);
-        $generatedTag = '<link href="' . $href . '" ' . $relType . '="' . $relation . '" ' . $attribs;
-        $this->_links[] = $generatedTag;
-    }
-
-    /**
-     * Adds a shortcut icon (favicon)
-     *
-     * This adds a link to the icon shown in the favorites list or on
-     * the left of the url in the address bar. Some browsers display
-     * it on the tab, as well.
-     *
-     * @param   string  $href        The link that is being related.
-     * @param   string  $type        File type
-     * @param   string  $relation    Relation of link
-     */
-    public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
-    {
-        $href = str_replace('\\', '/', $href);
-        $this->_links[] = '<link href="' . $href . '" rel="' . $relation . '" type="' . $type . '"';
-    }
-
-    /**
-     * Adds a custom HTML string to the head block
-     *
-     * @param   string  $html  The HTML to add to the head
-     * @return  void
-     */
-
-    public function addCustomTag($html)
-    {
-        $this->_custom[] = trim($html);
     }
 }

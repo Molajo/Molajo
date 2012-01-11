@@ -47,7 +47,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
         $script[] = '	}';
 
         // Add the script to the document head.
-        MolajoController::getApplication()->addScriptDeclaration(implode("\n", $script));
+        MolajoController::getApplication()->addJavascriptDeclaration(implode("\n", $script));
 
         // Setup variables for display.
         $html = array();

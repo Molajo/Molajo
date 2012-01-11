@@ -65,7 +65,7 @@ class MolajoFormFieldUser extends MolajoFormField
         $script[] = '	}';
 
         // Add the script to the document head.
-        MolajoController::getApplication()->addScriptDeclaration(implode("\n", $script));
+        MolajoController::getApplication()->addJavascriptDeclaration(implode("\n", $script));
 
         // Load the current username if available.
         $table = MolajoTable::getInstance('user');

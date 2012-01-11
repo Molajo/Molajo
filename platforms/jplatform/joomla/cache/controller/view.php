@@ -95,7 +95,7 @@ class JCacheControllerView extends JCacheController
             /*
                 * For a view we have a special case.  We need to cache not only the output from the view, but the state
                 * of the document head after the view has been rendered.  This will allow us to properly cache any attached
-                * scripts or stylesheets or links or any other modifications that the view has made to the document object
+                * scripts or stylesheet_links or links or any other modifications that the view has made to the document object
                 */
             $cached = array();
 

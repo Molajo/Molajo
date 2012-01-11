@@ -220,20 +220,20 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request->get('option') . '/views';
         $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->request->get('option') . '/views';
-        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
         /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request->get('asset_id');
         $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->request->get('asset_id');
-        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
          */
         /** View specific CSS and JS in path identified in getPath */
         $filePath = $this->view_path . '/views';
         $urlPath = $this->view_path_url . '/views';
-        MolajoController::getApplication()->loadMediaCSS($filePath, $urlPath);
-        MolajoController::getApplication()->loadMediaJS($filePath, $urlPath);
+        MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
     }
 }
 
