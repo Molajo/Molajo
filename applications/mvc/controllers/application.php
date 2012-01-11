@@ -104,6 +104,7 @@ class MolajoControllerApplication
 
     /**
      * Metadata
+     *
      * @var    array
      * @since  1.0
      */
@@ -111,27 +112,31 @@ class MolajoControllerApplication
 
     /**
      * Links
+     *
      * @var    string
      * @since  1.0
      */
     public $links;
 
     /**
-     * stylesheet_links
+     * Stylesheet links
+     *
      * @var    array
      * @since  1.0
      */
     public $stylesheet_links = array();
 
     /**
-     * Style
+     * Style Declarations
+     *
      * @var    array
      * @since  1.0
      */
-    public $stylesheet_declarations = array();
+    public $style_declarations = array();
 
     /**
      * Script Links
+     *
      * @var    string
      * @since  1.0
      */
@@ -139,13 +144,15 @@ class MolajoControllerApplication
 
     /**
      * Script Declarations
+     *
      * @var    array
      * @since  1.0
      */
     public $script_declarations = array();
 
     /**
-     * Custom
+     * Custom HTML
+     *
      * @var    array
      * @since  1.0
      */
@@ -922,14 +929,18 @@ class MolajoControllerApplication
      *
      * @return  void
      */
-    public function addStyleDeclaration($content, $format = 'text/css')
+    public function addStyleDeclaration($content, $mimetype = 'text/css')
     {
-        if (isset($this->style_declarations[strtolower($format)])) {
-            $this->style_declarations[strtolower($format)] .= chr(13) . $content;
-
-        } else {
-            $this->style_declarations[strtolower($format)] = $content;
+        $count = count($this->style_declarations);
+        if ($count > 0) {
+            foreach ($this->style_declarations as $style) {
+                if ($style['content'] == $content) {
+                    return;
+                }
+            }
         }
+        $this->stylesheet_links[$count]['mimetype'] = $mimetype;
+        $this->stylesheet_links[$count]['content'] = $content;
     }
 
     /**
@@ -941,7 +952,6 @@ class MolajoControllerApplication
     {
         return $this->style_declarations;
     }
-
 
     /**
      * addJavascriptLinksFolder

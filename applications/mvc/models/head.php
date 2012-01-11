@@ -40,28 +40,15 @@ class MolajoModelHead extends MolajoModel
     public function getItems()
     {
         $this->items = array();
-        //$document->setTitle($this->getCfg('site_name'). ' - ' .JText::_('JADMINISTRATION'));
-/**
-        $mdata = $this->item->metadata->toArray();
-        foreach ($mdata as $k => $v)
-        {
-            if ($v)
-            {
-                $this->document->setMetadata($k, $v);
-            }
-        }
-if ($this->print)
-{
-	$this->document->setMetaData('robots', 'noindex, nofollow');
-}
-*/
-//        $metadata = MolajoController::getApplication()->getMetaData();
+
+        //        $metadata = MolajoController::getApplication()->getMetaData();
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
         $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
         MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
         MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
 
+        /** type: base */
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
         $tempObject->set('title', $this->request->get('metadata_title'));
@@ -76,49 +63,55 @@ if ($this->print)
         $tempObject->set('robots', $this->request->get('metadata_robots'));
         $this->items[] = $tempObject;
 
-        /** links */
-        $links = MolajoController::getApplication()->getHeadLinks();
-        if (count($links) > 0) {
-            foreach ($links as $link) {
+        /** type: links */
+        $list = MolajoController::getApplication()->getHeadLinks();
+        if (count($list) > 0) {
+            foreach ($list as $item) {
                 $tempObject = new JObject();
                 $tempObject->set('type', 'links');
-                $tempObject->set('url', $link['url']);
-                $tempObject->set('relation', $link['relation']);
-                $tempObject->set('relation_type', $link['relation_type']);
-                $tempObject->set('attributes', $link['attributes']);
+                $tempObject->set('url', $item['url']);
+                $tempObject->set('relation', $item['relation']);
+                $tempObject->set('relation_type', $item['relation_type']);
+                $tempObject->set('attributes', $item['attributes']);
                 $this->items[] = $tempObject;
             }
         }
 
-        /** stylesheet_links */
-        $stylesheetLinks = MolajoController::getApplication()->getStylesheetLinks();
-        if (count($stylesheetLinks) > 0) {
-            foreach ($stylesheetLinks as $link) {
+        /** type: stylesheet_links */
+        $list = MolajoController::getApplication()->getStylesheetLinks();
+        if (count($list) > 0) {
+            foreach ($list as $item) {
                 $tempObject = new JObject();
                 $tempObject->set('type', 'stylesheet_links');
-                $tempObject->set('url', $link['url']);
-                $tempObject->set('mimetype', $link['mimetype']);
-                $tempObject->set('media', $link['media']);
-                $tempObject->set('attributes', $link['attributes']);
-                $tempObject->set('priority', $link['priority']);
+                $tempObject->set('url', $item['url']);
+                $tempObject->set('mimetype', $item['mimetype']);
+                $tempObject->set('media', $item['media']);
+                $tempObject->set('attributes', $item['attributes']);
+                $tempObject->set('priority', $item['priority']);
                 $this->items[] = $tempObject;
             }
         }
 
-        $tempObject = new JObject();
-        $tempObject->set('type', 'stylesheet_declarations');
-        $this->items[] = $tempObject;
+        /** type: stylesheet_declarations */
+        $list = MolajoController::getApplication()->getStyleDeclarations();
+        foreach ($list as $item) {
+            $tempObject = new JObject();
+            $tempObject->set('type', 'stylesheet_declarations');
+            $tempObject->set('mimetype', $item['mimetype']);
+            $tempObject->set('content', $item['content']);
+            $this->items[] = $tempObject;
+        }
 
-        /** javascript_links */
-        $javascriptLinks = MolajoController::getApplication()->getJavascriptLinks();
-        foreach ($javascriptLinks as $link) {
+        /** type: javascript_links */
+        $list = MolajoController::getApplication()->getJavascriptLinks();
+        foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
-            $tempObject->set('url', $link['url']);
-            $tempObject->set('mimetype', $link['mimetype']);
-            $tempObject->set('defer', $link['defer']);
-            $tempObject->set('async', $link['async']);
-            $tempObject->set('priority', $link['priority']);
+            $tempObject->set('url', $item['url']);
+            $tempObject->set('mimetype', $item['mimetype']);
+            $tempObject->set('defer', $item['defer']);
+            $tempObject->set('async', $item['async']);
+            $tempObject->set('priority', $item['priority']);
             $this->items[] = $tempObject;
         }
 
@@ -127,7 +120,7 @@ if ($this->print)
         $this->items[] = $tempObject;
 
         return $this->items;
-/** custom */
+        /** custom */
     }
 
     /**
