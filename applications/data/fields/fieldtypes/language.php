@@ -33,7 +33,6 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
      */
     protected function getOptions()
     {
-
         // Detect the native language.
         $native = MolajoLanguageHelper::detectLanguage();
         if (empty($native)) {

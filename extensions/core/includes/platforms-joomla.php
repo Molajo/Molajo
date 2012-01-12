@@ -105,7 +105,7 @@ foreach ($files as $file) {
         $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/language.php', 'MolajoLanguageHelper');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/language.php', 'MolajoLanguage');
 
 /**
  *  Application

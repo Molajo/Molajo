@@ -8,6 +8,11 @@
 defined('MOLAJO') or die;
 
 /**
+ *  Allows for quoting in language .ini files.
+ */
+define('_QQ_', '"');
+
+/**
  *  Platform
  */
 if (defined('PLATFORMS')) {

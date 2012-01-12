@@ -224,7 +224,7 @@ class MolajoControllerApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            self::$instance = new MolajoControllerApplication($config, $input, $client);
+            self::$instance = new MolajoControllerApplication($config, $input);
         }
 
         return self::$instance;
@@ -235,7 +235,6 @@ class MolajoControllerApplication
      *
      * @param   mixed  $input
      * @param   mixed  $config
-     * @param   mixed  $client
      *
      * @since   1.0
      */
@@ -450,8 +449,7 @@ class MolajoControllerApplication
     public function loadLanguage()
     {
         $locale = $this->get('language', 'en-gb');
-        $debug = $this->get('debug_language', '');
-        $this->_language = MolajoLanguageHelper::getInstance($locale, $debug);
+        $this->_language = MolajoLanguage::getInstance($locale);
     }
 
     /**
@@ -1023,11 +1021,11 @@ class MolajoControllerApplication
     }
 
     /**
-     * Method to send the application response to the client.  All headers will be sent prior to the main
-     * application output data.
+     * respond
+     *
+     * Method to send the application response.  All headers sent before application output.
      *
      * @return  void
-     *
      * @since   1.0
      */
     public function respond()

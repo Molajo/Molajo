@@ -457,23 +457,6 @@ class MolajoController
     }
 
     /**
-     * Create a language object
-     *
-     * @see MolajoLanguageHelper
-     *
-     * @return MolajoLanguageHelper object
-     * @since   1.0
-
-    protected static function _createLanguage()
-    {
-        $locale = self::get('language', '', 'site');
-        $debug = self::get('debug_language', '', 'site');
-        $lang = MolajoLanguageHelper::getInstance($locale, $debug);
-
-        return $lang;
-    }
-*/
-    /**
      * Creates a new stream object with appropriate prefix
      *
      * @param   boolean  $use_prefix    Prefix the connections for writing
