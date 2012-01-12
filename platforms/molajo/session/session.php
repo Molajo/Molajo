@@ -397,7 +397,7 @@ class MolajoSession extends JObject
         } else {
             $session_name = session_name();
 
-            $input = MolajoController::getApplication()->input;
+            $input = MolajoController::getApplication()->getInput();
             $cookie = $input->get($session_name, false, 'COOKIE');
 
             if ($cookie === false) {

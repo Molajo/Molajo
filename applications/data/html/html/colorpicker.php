@@ -25,6 +25,6 @@ abstract class MolajoHtmlColorpicker
      */
     public static function options()
     {
-        MolajoController::getApplication()->addJavascriptLink('../media/js/jscolor.js');
+        MolajoController::getApplication()->addScriptLink('../media/js/jscolor.js');
     }
 }

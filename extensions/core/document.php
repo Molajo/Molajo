@@ -132,8 +132,8 @@ class MolajoDocument
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
         $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION;
-        MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
 
         /** Load Language Files */
         $this->_loadLanguageTemplate();

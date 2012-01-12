@@ -109,7 +109,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/caption' . $uncompressed . '.js', true, true);
 
         // Attach caption to document
-        MolajoController::getApplication()->addJavascriptDeclaration(
+        MolajoController::getApplication()->addScriptDeclaration(
             "window.addEvent('load', function() {
 				new JCaption('" . $selector . "');
 			});"
@@ -181,7 +181,7 @@ abstract class MolajoHtmlBehavior
 				}
 			});";
 
-        MolajoController::getApplication()->addJavascriptDeclaration($script);
+        MolajoController::getApplication()->addScriptDeclaration($script);
         $loaded = true;
     }
 
@@ -276,7 +276,7 @@ abstract class MolajoHtmlBehavior
         $options = MolajoHTMLBehavior::_getJSObject($opt);
 
         // Attach tooltips to document
-        MolajoController::getApplication()->addJavascriptDeclaration(
+        MolajoController::getApplication()->addScriptDeclaration(
             "window.addEvent('domready', function() {
 			$$('$selector').each(function(el) {
 				var title = el.get('title');
@@ -370,7 +370,7 @@ abstract class MolajoHtmlBehavior
 
         // Attach modal behavior to document
         $document
-                ->addJavascriptDeclaration(
+                ->addScriptDeclaration(
             "
 		window.addEvent('domready', function() {
 
@@ -415,7 +415,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/multiselect.js', true, true);
 
         // Attach multiselect to document
-        MolajoController::getApplication()->addJavascriptDeclaration(
+        MolajoController::getApplication()->addScriptDeclaration(
             "window.addEvent('domready', function() {
 				new Joomla.JMultiSelect('" . $id . "');
 			});"
@@ -593,7 +593,7 @@ abstract class MolajoHtmlBehavior
         $uploaderInit = 'window.addEvent(\'domready\', function(){
 				var Uploader = new FancyUpload2(document.id(\'' . $id . '\'), document.id(\'' . $upload_queue . '\'), ' . $options . ' );
 				});';
-        MolajoController::getApplication()->addJavascriptDeclaration($uploaderInit);
+        MolajoController::getApplication()->addScriptDeclaration($uploaderInit);
 
         // Set static array
         $uploaders[$id] = true;
@@ -663,7 +663,7 @@ abstract class MolajoHtmlBehavior
 			tree' . $treeName . '.adopt(\'' . $id . '\');})';
 
         // Attach tooltips to document
-        MolajoController::getApplication()->addJavascriptDeclaration($js);
+        MolajoController::getApplication()->addScriptDeclaration($js);
 
         // Set static array
         $trees[$id] = true;
@@ -697,7 +697,7 @@ abstract class MolajoHtmlBehavior
 
         $translation = MolajoHTMLBehavior::_calendartranslation();
         if ($translation) {
-            MolajoController::getApplication()->addJavascriptDeclaration($translation);
+            MolajoController::getApplication()->addScriptDeclaration($translation);
         }
         $loaded = true;
     }
@@ -727,7 +727,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/mooRainbow.js', false, true);
 
         MolajoController::getApplication()
-                ->addJavascriptDeclaration(
+                ->addScriptDeclaration(
             "window.addEvent('domready', function(){
 				var nativeColorUi = false;
 				if (Browser.opera && (Browser.version >= 11.5)) {
@@ -793,7 +793,7 @@ abstract class MolajoHtmlBehavior
         $script .= '{ keepAlive.periodical(' . $refreshTime . '); }';
         $script .= ');';
 
-        MolajoController::getApplication()->addJavascriptDeclaration($script);
+        MolajoController::getApplication()->addScriptDeclaration($script);
         $loaded = true;
 
         return;
@@ -824,7 +824,7 @@ abstract class MolajoHtmlBehavior
               " else {top.location = self.location; }});";
 
         MolajoController::getApplication()->addStyleDeclaration('html { display:none }');
-        MolajoController::getApplication()->addJavascriptDeclaration($js);
+        MolajoController::getApplication()->addScriptDeclaration($js);
 
         MolajoController::getApplication()->setHeader('X-Frames-Options', 'SAME-ORIGIN');
 

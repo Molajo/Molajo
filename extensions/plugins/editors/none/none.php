@@ -102,7 +102,7 @@ class plgEditorNone extends MolajoPluginHelper
             $js = "\tfunction jInsertEditorText(text, editor) {
 				insertAtCursor(document.getElementById(editor), text);
 			}";
-            $doc->addJavascriptDeclaration($js);
+            $doc->addScriptDeclaration($js);
         }
 
         return true;

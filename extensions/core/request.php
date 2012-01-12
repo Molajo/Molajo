@@ -519,7 +519,7 @@ class MolajoRequest
     /**
      * _getSourceData
      *
-     * Retrieve Parameters and MetaData for Source Detail
+     * Retrieve Parameters and Metadata for Source Detail
      *
      * @return  bool
      * @since   1.0

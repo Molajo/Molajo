@@ -3,7 +3,7 @@
  * @package     Joomla.Platform
  * @subpackage  Application
  *
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -146,10 +146,6 @@ class JWebClient
 		{
 			$this->acceptLanguage = $acceptLanguage;
 		}
-        $this->__get('mobile');
-        $this->__get('engine');
-        $this->__get('browser');
-        $this->__get('languages');
 	}
 
 	/**

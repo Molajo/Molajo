@@ -20,6 +20,7 @@ class MolajoLanguageHelper
     /**
      * Builds a list of the system languages which can be used in a select option
      *
+     *  $_SERVER['HTTP_ACCEPT_LANGUAGE'];
      * @param   string   $actualLanguage  Client key for the area
      * @param   string   $basepath        Base path to use
      * @param   boolean  $caching         True if caching is used

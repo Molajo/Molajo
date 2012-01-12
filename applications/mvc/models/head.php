@@ -41,12 +41,12 @@ class MolajoModelHead extends MolajoModel
     {
         $this->items = array();
 
-        //        $metadata = MolajoController::getApplication()->getMetaData();
+        //        $metadata = MolajoController::getApplication()->getMetadata();
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
         $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
-        MolajoController::getApplication()->addStylesheetLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addJavascriptLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
+        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
 
         /** type: base */
         $tempObject = new JObject();
@@ -78,7 +78,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: stylesheet_links */
-        $list = MolajoController::getApplication()->getStylesheetLinks();
+        $list = MolajoController::getApplication()->getStyleLinks();
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $tempObject = new JObject();
@@ -103,7 +103,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: javascript_links */
-        $list = MolajoController::getApplication()->getJavascriptLinks();
+        $list = MolajoController::getApplication()->getScriptLinks();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
@@ -115,9 +115,15 @@ class MolajoModelHead extends MolajoModel
             $this->items[] = $tempObject;
         }
 
-        $tempObject = new JObject();
-        $tempObject->set('type', 'script');
-        $this->items[] = $tempObject;
+        /** type: javascript_declarations */
+        $list = MolajoController::getApplication()->getScriptDeclarations();
+        foreach ($list as $item) {
+            $tempObject = new JObject();
+            $tempObject->set('type', 'javascript_declarations');
+            $tempObject->set('mimetype', $item['mimetype']);
+            $tempObject->set('content', $item['content']);
+            $this->items[] = $tempObject;
+        }
 
         return $this->items;
         /** custom */

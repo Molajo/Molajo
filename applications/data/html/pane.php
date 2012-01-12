@@ -245,7 +245,7 @@ class MolajoPaneTabs extends MolajoPane
 
         $js = '	window.addEvent(\'domready\', function(){ $$(\'dl.tabs\').each(function(tabs){ new JTabs(tabs, ' . $options . '); }); });';
 
-        MolajoController::getApplication()->addJavascriptDeclaration($js);
+        MolajoController::getApplication()->addScriptDeclaration($js);
         MolajoHTML::_('script', 'system/tabs.js', false, true);
     }
 }
@@ -408,6 +408,6 @@ class MolajoPaneSliders extends MolajoPane
         $js = '	window.addEvent(\'domready\', function(){ new Fx.Accordion($$(\'.panel h3.pane-toggler\'), $$(\'.panel div.pane-slider\'), '
               . $options . '); });';
 
-        MolajoController::getApplication()->addJavascriptDeclaration($js);
+        MolajoController::getApplication()->addScriptDeclaration($js);
     }
 }

@@ -93,18 +93,17 @@ class MolajoController
      *
      * @static
      * @param null $id
-     * @param JInput|null $input
      * @param JRegistry|null $config
-     * @param JWebClient|null $client
-     * @param array $options
+     * @param JInput|null $input
+     *
      * @return Application|null
      * @since 1.0
      */
-    public static function getApplication($id = null, JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
+    public static function getApplication($id = null, JRegistry $config = null, JInput $input = null)
     {
         if (self::$application) {
         } else {
-            self::$application = MolajoControllerApplication::getInstance($id, $input, $config, $client, $options);
+            self::$application = MolajoControllerApplication::getInstance($id, $config, $input);
         }
 
         return self::$application;

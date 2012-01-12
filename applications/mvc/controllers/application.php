@@ -19,96 +19,92 @@ defined('MOLAJO') or die;
 class MolajoControllerApplication
 {
     /**
-     * The application static instance.
+     * Application static instance
+     *
      * @var    object
      * @since  1.0
      */
     protected static $instance;
 
     /**
-     * The application input object.
+     * Configuration
+     *
      * @var    object
      * @since  1.0
      */
-    public $input;
+    protected static $_config = null;
 
     /**
-     * The application configuration object.
+     * Input Object
+     *
      * @var    object
      * @since  1.0
      */
-    public static $config = null;
+    protected $_input;
 
     /**
-     * The application client object.
+     * Client
+     *
      * @var    object
      * @since  1.0
      */
-    public $client;
+    protected $_client;
 
     /**
-     * Character encoding
-     * @var    string
-     * @since  1.0
-     */
-    public $charset = 'utf-8';
-
-    /**
-     * The application language object.
+     * Language
+     *
      * @var    object
      * @since  1.0
      */
-    public $language;
+    protected $_language;
 
     /**
      * Language direction
+     *
      * @var    string
      * @since  1.0
      */
-    public $direction = 'ltr';
+    protected $_direction = 'ltr';
 
     /**
-     * Callback for escaping.
+     * Dispatcher
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $dispatcher;
+
+    /**
+     * Session
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $session;
+
+    /**
+     * Messages
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $_messages = array();
+
+    /**
+     * Callback for escaping
+     *
      * @var   string
      * @since 1.0
      */
     protected $_escapeFunction = 'htmlspecialchars';
 
     /**
-     * Response mimetype type.
+     * Response Mimetype
+     *
      * @var    string
      * @since  1.0
      */
-    public $mimetype = 'text/html';
-
-    /**
-     * Messages
-     * @var    array
-     * @since  1.0
-     */
-    public $messages = array();
-
-    /**
-     * Dispatcher
-     * @var    object
-     * @since  1.0
-     */
-    public $dispatcher;
-
-    /**
-     * Session
-     * @var    object
-     * @since  1.0
-     */
-    public $session;
-
-    /**
-     * Metadata
-     *
-     * @var    array
-     * @since  1.0
-     */
-    public $metadata = array();
+    protected $_mimetype = 'text/html';
 
     /**
      * Links
@@ -116,7 +112,15 @@ class MolajoControllerApplication
      * @var    string
      * @since  1.0
      */
-    public $links;
+    protected $_links;
+
+    /**
+     * Metadata
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $_metadata = array();
 
     /**
      * Stylesheet links
@@ -124,7 +128,7 @@ class MolajoControllerApplication
      * @var    array
      * @since  1.0
      */
-    public $stylesheet_links = array();
+    protected $_style_links = array();
 
     /**
      * Style Declarations
@@ -132,7 +136,7 @@ class MolajoControllerApplication
      * @var    array
      * @since  1.0
      */
-    public $style_declarations = array();
+    protected $_style_declarations = array();
 
     /**
      * Script Links
@@ -140,7 +144,7 @@ class MolajoControllerApplication
      * @var    string
      * @since  1.0
      */
-    public $script_links;
+    protected $_script_links;
 
     /**
      * Script Declarations
@@ -148,7 +152,7 @@ class MolajoControllerApplication
      * @var    array
      * @since  1.0
      */
-    public $script_declarations = array();
+    protected $_script_declarations = array();
 
     /**
      * Custom HTML
@@ -156,10 +160,11 @@ class MolajoControllerApplication
      * @var    array
      * @since  1.0
      */
-    public $custom_html = array();
+    protected $_custom_html = array();
 
     /**
      * Request
+     *
      * @var    object
      * @since  1.0
      */
@@ -167,6 +172,7 @@ class MolajoControllerApplication
 
     /**
      * Response
+     *
      * @var    object
      * @since  1.0
      */
@@ -181,12 +187,11 @@ class MolajoControllerApplication
      * @param  null $id
      * @param  JInput|null $input
      * @param  JRegistry|null $config
-     * @param  JWebClient|null $client
-     * @param  array $options
+     *
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance($id = null, JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
+    public static function getInstance($id = null, JRegistry $config = null, JInput $input = null)
     {
         if ($id == null) {
             $id = MOLAJO_APPLICATION;
@@ -204,11 +209,6 @@ class MolajoControllerApplication
                 $config = new JRegistry;
             }
 
-            if ($client instanceof JWebClient) {
-            } else {
-                $client = new JWebClient;
-            }
-
             $info = MolajoApplicationHelper::getApplicationInfo($id, true);
             if ($info === false) {
                 return false;
@@ -224,7 +224,7 @@ class MolajoControllerApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            self::$instance = new MolajoControllerApplication($input, $config, $client, $options);
+            self::$instance = new MolajoControllerApplication($config, $input, $client);
         }
 
         return self::$instance;
@@ -236,28 +236,21 @@ class MolajoControllerApplication
      * @param   mixed  $input
      * @param   mixed  $config
      * @param   mixed  $client
-     * @param   mixed  $options
      *
      * @since   1.0
      */
-    public function __construct(JInput $input = null, JRegistry $config = null, JWebClient $client = null, $options = array())
+    public function __construct(JRegistry $config = null, JInput $input = null)
     {
         if ($input instanceof JInput) {
-            $this->input = $input;
+            $this->_input = $input;
         } else {
-            $this->input = new JInput;
+            $this->_input = new JInput;
         }
 
         if ($config instanceof JRegistry) {
-            $this->config = $config;
+            $this->_config = $config;
         } else {
-            $this->config = new JRegistry;
-        }
-
-        if ($client instanceof JWebClient) {
-            $this->client = $client;
-        } else {
-            $this->client = new JWebClient;
+            $this->_config = new JRegistry;
         }
 
         /** get configuration */
@@ -280,121 +273,11 @@ class MolajoControllerApplication
         $this->_response->cachable = false;
         $this->_response->headers = array();
         $this->_response->body = array();
-
-        //echo '<pre>';var_dump($this->config);'</pre>';
-    }
-
-    /**
-     * Sets the document link
-     *
-     * @param   string  $url  A url
-     *
-     * @return  JDocument instance of $this to allow chaining
-     *
-     * @since   11.1
-     */
-    public function setLink($url)
-    {
-        $this->link = $url;
-
-        return $this;
-    }
-
-    /**
-     * Returns the document link
-     *
-     * @return string
-     *
-     * @since   11.1
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * setEscape
-     *
-     * Sets the escape method
-     *
-     * @param  string
-     *
-     * @return  void
-     */
-    function setEscape($escapeFunction)
-    {
-        if (is_callable($escapeFunction)) {
-            $this->_escapeFunction = $escapeFunction;
-        }
-    }
-
-    /**
-     * escapeOutput
-     *
-     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
-     *
-     * @param   mixed  $var  The output to escape.
-     *
-     * @return  mixed  The escaped value.
-     * @since   1.0
-     */
-    function escapeOutput($var)
-    {
-        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, $this->charset);
-        }
-        return call_user_func($this->_escapeFunction, $var);
-    }
-
-    /**
-     * getConfig
-     *
-     * Creates the Application configuration object.
-     *
-     * return   object  A config object
-     *
-     * @since  1.0
-     */
-    public function getConfig()
-    {
-        $configClass = new MolajoConfigurationHelper();
-        $this->config = $configClass->getConfig();
-        return $this->config;
-    }
-
-    /**
-     * get
-     *
-     * Returns a property of the Application object
-     * or the default value if the property is not set.
-     *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
-     *
-     * @return  mixed   The value of the configuration.
-     *
-     * @since   1.0
-     */
-    public function get($key, $default = null)
-    {
-        return $this->config->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * Modifies a property of the Application object, creating it if it does not already exist.
-     *
-     * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The value of the property to set (optional).
-     *
-     * @return  mixed   Previous value of the property
-     *
-     * @since   1.0
-     */
-    public function set($key, $value = null)
-    {
-        $this->config->set($key, $value);
+        /*
+                echo '<pre>';
+                var_dump($this->_config);
+                '</pre>';
+        **/
     }
 
     /**
@@ -416,9 +299,7 @@ class MolajoControllerApplication
 
         /** initialise */
         $this->loadSession();
-
         $this->loadLanguage();
-
         $this->loadDispatcher();
 
         /**        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
@@ -427,13 +308,76 @@ class MolajoControllerApplication
         $requestClass = new MolajoRequest();
         $this->_request = $requestClass->load();
 
-        /** send response */
+        /** response */
         $this->respond();
-
         return true;
         //        echo '<pre>';
         //        var_dump($request);
         //        '</pre>';
+    }
+
+    /**
+     * getConfig
+     *
+     * Creates the Application configuration object.
+     *
+     * return   object  A config object
+     *
+     * @since  1.0
+     */
+    public function getConfig()
+    {
+        $configClass = new MolajoConfigurationHelper();
+        $this->_config = $configClass->getConfig();
+        return $this->_config;
+    }
+
+    /**
+     * get
+     *
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->_config->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Application object, creating it if it does not already exist.
+     *
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $this->_config->set($key, $value);
+    }
+
+    /**
+     * getInput
+     *
+     * Returns application Input object
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function getInput()
+    {
+        return $this->_input;
     }
 
     /**
@@ -507,7 +451,7 @@ class MolajoControllerApplication
     {
         $locale = $this->get('language', 'en-gb');
         $debug = $this->get('debug_language', '');
-        $this->language = MolajoLanguageHelper::getInstance($locale, $debug);
+        $this->_language = MolajoLanguageHelper::getInstance($locale, $debug);
     }
 
     /**
@@ -520,7 +464,7 @@ class MolajoControllerApplication
      */
     public function setLanguage($language = "en-gb")
     {
-        $this->language = strtolower($language);
+        $this->_language = strtolower($language);
     }
 
     /**
@@ -531,7 +475,7 @@ class MolajoControllerApplication
      */
     public function getLanguage()
     {
-        return $this->language;
+        return $this->_language;
     }
 
     /**
@@ -550,7 +494,7 @@ class MolajoControllerApplication
         } else {
             $direction = 'ltr';
         }
-        $this->direction = strtolower($direction);
+        $this->_direction = strtolower($direction);
     }
 
     /**
@@ -562,7 +506,7 @@ class MolajoControllerApplication
      */
     public function getDirection()
     {
-        return $this->direction;
+        return $this->_direction;
     }
 
     /**
@@ -653,7 +597,7 @@ class MolajoControllerApplication
         $this->_sessionMessages();
 
         /** add new message */
-        $this->messages[] = array('message' => $message, 'type' => $type);
+        $this->_messages[] = array('message' => $message, 'type' => $type);
 
         return true;
     }
@@ -669,7 +613,7 @@ class MolajoControllerApplication
     public function getMessages()
     {
         $this->_sessionMessages();
-        return $this->messages;
+        return $this->_messages;
     }
 
     /**
@@ -687,46 +631,78 @@ class MolajoControllerApplication
 
         if (count($sessionMessages) > 0) {
             foreach ($sessionMessages as $sessionMessage) {
-                $this->messages[] = $sessionMessage;
+                $this->_messages[] = $sessionMessage;
             }
             $session->set('application.messages', null);
         }
     }
 
     /**
-     * setMetaData
+     * setEscape
      *
-     * Sets or alters a meta tag.
+     * Sets the escape method
      *
-     * @param   string   $name     Value of name or http-equiv tag
-     * @param   string   $content  Value of the content tag
-     * @param   string   $context  true - http-equiv; false - standard; otherwise provided
-     * @param   bool     $sync     Should http-equiv="content-type" by synced with HTTP-header?
+     * @param  string
+     *
+     * @return  void
+     */
+    function setEscape($escapeFunction)
+    {
+        if (is_callable($escapeFunction)) {
+            $this->_escapeFunction = $escapeFunction;
+        }
+    }
+
+    /**
+     * escapeOutput
+     *
+     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
+     *
+     * @param   mixed  $var  The output to escape.
+     *
+     * @return  mixed  The escaped value.
+     * @since   1.0
+     */
+    function escapeOutput($var)
+    {
+        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, 'utf-8');
+        }
+        return call_user_func($this->_escapeFunction, $var);
+    }
+
+    /**
+     * setMetadata
+     *
+     * @param   string  $name
+     * @param   string  $content  Value of the content tag
+     * @param   string  $context  True: http-equiv; False: standard; Otherise, provided
+     * @param   bool    $sync     Should http-equiv="content-type" by synced with HTTP-header?
      *
      * @return  void
      * @since   1.0
      */
-    public function setMetaData($name, $content, $context = false, $sync = true)
+    public function setMetadata($name, $content, $context = false, $sync = true)
     {
         $name = strtolower($name);
 
         if (is_bool($context) && ($context === true)) {
-            $this->metadata['http-equiv'][$name] = $content;
+            $this->_metadata['http-equiv'][$name] = $content;
 
             if ($sync && strtolower($name) == 'content-type') {
                 $this->setMimeEncoding($content, false);
             }
 
         } else if (is_string($context)) {
-            $result = $this->metadata[$context][$name];
+            $result = $this->_metadata[$context][$name];
 
         } else {
-            $this->metadata['standard'][$name] = $content;
+            $this->_metadata['standard'][$name] = $content;
         }
     }
 
     /**
-     * getMetaData
+     * getMetadata
      *
      * Gets a metadata tag.
      *
@@ -735,9 +711,9 @@ class MolajoControllerApplication
      * @return  string
      * @since   1.0
      */
-    public function getMetaData()
+    public function getMetadata()
     {
-        return $this->metadata;
+        return $this->_metadata;
     }
 
     /**
@@ -759,10 +735,10 @@ class MolajoControllerApplication
      */
     public function setMimeEncoding($format = 'text/html', $sync = true)
     {
-        $this->mimetype = strtolower($format);
+        $this->_mimetype = strtolower($format);
 
         if ($sync) {
-            $this->setMetaData('content-type', $format, true, false);
+            $this->setMetadata('content-type', $format, true, false);
         }
     }
 
@@ -776,7 +752,7 @@ class MolajoControllerApplication
      */
     public function getMimeEncoding()
     {
-        return $this->mimetype;
+        return $this->_mimetype;
     }
 
     /**
@@ -799,18 +775,18 @@ class MolajoControllerApplication
      */
     public function addHeadLink($url, $relation, $relation_type = 'rel', $attributes = array())
     {
-        $count = count($this->links);
+        $count = count($this->_links);
         if ($count > 0) {
-            foreach ($this->links as $link) {
+            foreach ($this->_links as $link) {
                 if ($link['url'] == $url) {
                     return;
                 }
             }
         }
-        $this->links[$count]['url'] = $url;
-        $this->links[$count]['relation'] = $relation;
-        $this->links[$count]['relation_type'] = $relation_type;
-        $this->links[$count]['attributes'] = trim(implode(' ', $attributes));
+        $this->_links[$count]['url'] = $url;
+        $this->_links[$count]['relation'] = $relation;
+        $this->_links[$count]['relation_type'] = $relation_type;
+        $this->_links[$count]['attributes'] = trim(implode(' ', $attributes));
     }
 
     /**
@@ -820,7 +796,7 @@ class MolajoControllerApplication
      */
     public function getHeadLinks()
     {
-        return $this->links;
+        return $this->_links;
     }
 
     /**
@@ -835,7 +811,7 @@ class MolajoControllerApplication
 
     public function addCustomHTML($html)
     {
-        $this->custom_html[] = trim($html);
+        $this->_custom_html[] = trim($html);
     }
 
     /**
@@ -846,11 +822,11 @@ class MolajoControllerApplication
      */
     public function getCustomHTML()
     {
-        return $this->custom_html;
+        return $this->_custom_html;
     }
 
     /**
-     * addStylesheetLinksFolder
+     * addStyleLinksFolder
      *
      * Loads the CS located within the folder, as specified by the filepath
      *
@@ -858,7 +834,7 @@ class MolajoControllerApplication
      * @param $urlPath
      * @return void
      */
-    public function addStylesheetLinksFolder($filePath, $urlPath)
+    public function addStyleLinksFolder($filePath, $urlPath)
     {
         if (JFolder::exists($filePath . '/css')) {
         } else {
@@ -871,17 +847,17 @@ class MolajoControllerApplication
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
                     if ($this->getDirection() == 'rtl') {
-                        $this->addStylesheetLinks($urlPath . '/css/' . $file);
+                        $this->addStyleLinks($urlPath . '/css/' . $file);
                     }
                 } else {
-                    $this->addStylesheetLinks($urlPath . '/css/' . $file);
+                    $this->addStyleLinks($urlPath . '/css/' . $file);
                 }
             }
         }
     }
 
     /**
-     * addStylesheetLinks
+     * addStyleLinks
      *
      * Adds a linked stylesheet to the page
      *
@@ -892,31 +868,31 @@ class MolajoControllerApplication
      * @param int $priority
      * @return mixed
      */
-    public function addStylesheetLinks($url, $mimetype = 'text/css', $media = null, $attributes = array(), $priority = 500)
+    public function addStyleLinks($url, $mimetype = 'text/css', $media = null, $attributes = array(), $priority = 500)
     {
-        $count = count($this->stylesheet_links);
+        $count = count($this->_style_links);
         if ($count > 0) {
-            foreach ($this->stylesheet_links as $stylesheet) {
+            foreach ($this->_style_links as $stylesheet) {
                 if ($stylesheet['url'] == $url) {
                     return;
                 }
             }
         }
-        $this->stylesheet_links[$count]['url'] = $url;
-        $this->stylesheet_links[$count]['mimetype'] = $mimetype;
-        $this->stylesheet_links[$count]['media'] = $media;
-        $this->stylesheet_links[$count]['attributes'] = trim(implode(' ', $attributes));
-        $this->stylesheet_links[$count]['priority'] = $priority;
+        $this->_style_links[$count]['url'] = $url;
+        $this->_style_links[$count]['mimetype'] = $mimetype;
+        $this->_style_links[$count]['media'] = $media;
+        $this->_style_links[$count]['attributes'] = trim(implode(' ', $attributes));
+        $this->_style_links[$count]['priority'] = $priority;
     }
 
     /**
-     * getStylesheetLinks
+     * getStyleLinks
      *
      * @return array
      */
-    public function getStylesheetLinks()
+    public function getStyleLinks()
     {
-        return $this->stylesheet_links;
+        return $this->_style_links;
     }
 
     /**
@@ -931,16 +907,16 @@ class MolajoControllerApplication
      */
     public function addStyleDeclaration($content, $mimetype = 'text/css')
     {
-        $count = count($this->style_declarations);
+        $count = count($this->_style_declarations);
         if ($count > 0) {
-            foreach ($this->style_declarations as $style) {
+            foreach ($this->_style_declarations as $style) {
                 if ($style['content'] == $content) {
                     return;
                 }
             }
         }
-        $this->stylesheet_links[$count]['mimetype'] = $mimetype;
-        $this->stylesheet_links[$count]['content'] = $content;
+        $this->_style_declarations[$count]['mimetype'] = $mimetype;
+        $this->_style_declarations[$count]['content'] = $content;
     }
 
     /**
@@ -950,11 +926,11 @@ class MolajoControllerApplication
      */
     public function getStyleDeclarations()
     {
-        return $this->style_declarations;
+        return $this->_style_declarations;
     }
 
     /**
-     * addJavascriptLinksFolder
+     * addScriptLinksFolder
      *
      * Loads the JS Files located within the folder specified by the filepath
      *
@@ -963,7 +939,7 @@ class MolajoControllerApplication
      * @return void
      * @since  1.0
      */
-    public function addJavascriptLinksFolder($filePath, $urlPath)
+    public function addScriptLinksFolder($filePath, $urlPath)
     {
         if (JFolder::exists($filePath . '/js')) {
         } else {
@@ -972,13 +948,13 @@ class MolajoControllerApplication
         $files = JFolder::files($filePath . '/js', '\.js$', false, false);
         if (count($files) > 0) {
             foreach ($files as $file) {
-                $this->addJavascriptLink($urlPath . '/js/' . $file);
+                $this->addScriptLink($urlPath . '/js/' . $file);
             }
         }
     }
 
     /**
-     * addJavascriptLink
+     * addScriptLink
      *
      * Adds a linked script to the page
      *
@@ -989,35 +965,35 @@ class MolajoControllerApplication
      * @param int $priority
      * @return mixed
      */
-    public function addJavascriptLink($url, $mimetype = "text/javascript", $defer = false, $async = false, $priority = 500)
+    public function addScriptLink($url, $mimetype = "text/javascript", $defer = false, $async = false, $priority = 500)
     {
-        $count = count($this->script_links);
+        $count = count($this->_script_links);
         if ($count > 0) {
-            foreach ($this->script_links as $script) {
+            foreach ($this->_script_links as $script) {
                 if ($script['url'] == $url) {
                     return;
                 }
             }
         }
-        $this->script_links[$count]['url'] = $url;
-        $this->script_links[$count]['mimetype'] = $mimetype;
-        $this->script_links[$count]['defer'] = $defer;
-        $this->script_links[$count]['async'] = $async;
-        $this->script_links[$count]['priority'] = $priority;
+        $this->_script_links[$count]['url'] = $url;
+        $this->_script_links[$count]['mimetype'] = $mimetype;
+        $this->_script_links[$count]['defer'] = $defer;
+        $this->_script_links[$count]['async'] = $async;
+        $this->_script_links[$count]['priority'] = $priority;
     }
 
     /**
-     * getJavascriptLinks
+     * getScriptLinks
      *
      * @return array
      */
-    public function getJavascriptLinks()
+    public function getScriptLinks()
     {
-        return $this->script_links;
+        return $this->_script_links;
     }
 
     /**
-     * addJavascriptDeclaration
+     * addScriptDeclaration
      *
      * Adds a script to the page
      *
@@ -1027,23 +1003,23 @@ class MolajoControllerApplication
      * @return  void
      * @since    1.0
      */
-    public function addJavascriptDeclaration($content, $format = 'text/javascript')
+    public function addScriptDeclaration($content, $format = 'text/javascript')
     {
-        if (isset($this->script_declarations[strtolower($format)])) {
-            $this->script_declarations[strtolower($format)] .= chr(13) . $content;
+        if (isset($this->_script_declarations[strtolower($format)])) {
+            $this->_script_declarations[strtolower($format)] .= chr(13) . $content;
         } else {
-            $this->script_declarations[strtolower($format)] = $content;
+            $this->_script_declarations[strtolower($format)] = $content;
         }
     }
 
     /**
-     * getJavascriptDeclarations
+     * getScriptDeclarations
      *
      * @return array
      */
-    public function getJavascriptDeclarations()
+    public function getScriptDeclarations()
     {
-        return $this->script_declarations;
+        return $this->_script_declarations;
     }
 
     /**
@@ -1068,7 +1044,7 @@ class MolajoControllerApplication
         }
 
         // Send the content-type header.
-        $this->setHeader('Content-Type', $this->mimetype . '; charset=' . $this->charset);
+        $this->setHeader('Content-Type', $this->_mimetype . '; charset=utf-8');
 
         if ($this->_response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
@@ -1108,7 +1084,7 @@ class MolajoControllerApplication
         );
 
         // Get the supported encoding.
-        $encodings = array_intersect($this->client->encodings, array_keys($supported));
+        $encodings = array_intersect($this->_client->encodings, array_keys($supported));
 
         // If no supported encoding is detected do nothing and return.
         if (empty($encodings)) {
@@ -1191,14 +1167,28 @@ class MolajoControllerApplication
         }
 
         // If the headers have already been sent we need to send the redirect statement via JavaScript.
+        /** exceptions */
+        $exception = false;
+        /** IE */
+        if (stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
+            || stripos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false)
+        {
+            $exception = 'trident';
+        }
+        if (stripos($_SERVER['HTTP_USER_AGENT'], 'AppleWebKit') !== false
+            || stripos($_SERVER['HTTP_USER_AGENT'], 'blackberry') !== false)
+        {
+            $exception = 'webkit';
+        }
+
         if ($this->checkHeadersSent()) {
             echo "<script>document.location.href='$url';</script>\n";
         } else {
 
             // We have to use a JavaScript redirect here because MSIE doesn't play nice with utf-8 URLs.
-            if (($this->client->engine == JWebClient::TRIDENT) && !utf8_is_ascii($url)) {
+            if (($exception == 'trident') && !utf8_is_ascii($url)) {
                 $html = '<html><head>';
-                $html .= '<meta http-equiv="content-type" content="text/html; charset=' . $this->charset . '" />';
+                $html .= '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
                 $html .= '<script>document.location.href=\'' . $url . '\';</script>';
                 $html .= '</head><body></body></html>';
 
@@ -1208,11 +1198,11 @@ class MolajoControllerApplication
              * For WebKit based browsers do not send a 303, as it causes subresource reloading.  You can view the
              * bug report at: https://bugs.webkit.org/show_bug.cgi?id=38690
              */
-            elseif ($code == 303 and ($this->client->engine == JWebClient::WEBKIT))
+            elseif ($exception == 'webkit' && $code == 303)
             {
                 $html = '<html><head>';
                 $html .= '<meta http-equiv="refresh" content="0; url=' . $url . '" />';
-                $html .= '<meta http-equiv="content-type" content="text/html; charset=' . $this->charset . '" />';
+                $html .= '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
                 $html .= '</head><body></body></html>';
 
                 echo $html;
@@ -1221,7 +1211,7 @@ class MolajoControllerApplication
                 // All other cases use the more efficient HTTP header for redirection.
                 $this->header($code ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 $this->header('Location: ' . $url);
-                $this->header('Content-Type: text/html; charset=' . $this->charset);
+                $this->header('Content-Type: text/html; charset=utf-8');
             }
         }
 
