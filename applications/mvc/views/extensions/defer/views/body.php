@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
 /** javascript_links */
 if ($this->row->type == 'javascript_links'):
 ?>
-    <script src="<?php echo $this->row->url; ?>" <?php if ($this->parameters->get('html5', true) === false): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if (trim($this->row->head) != ''): ?>head="head" <?php endif; ?>/><?php if (trim($this->row->async) != ''): ?>async="async" <?php endif; ?>/></script>
+    <script src="<?php echo $this->row->url; ?>" <?php if ($this->parameters->get('html5', true) === false): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if (trim($this->row->head) != ''): ?>head="head" <?php endif; ?><?php if (trim($this->row->async) != ''): ?>async="async" <?php endif; ?>/></script>
     <?php
 
     /** stylesheet_declarations */

@@ -163,7 +163,11 @@ class MolajoLanguage
     public function _($string)
     {
         $key = strtoupper($string);
-        $string = $this->strings[$key];
+        if (isset($this->strings[$key])) {
+            $string = $this->strings[$key];
+        } else {
+
+        }
         return $string;
     }
 

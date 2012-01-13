@@ -72,7 +72,7 @@ class MolajoDocument
         /** Set Class Properties */
         $this->request = $request;
 
-        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $this->request->get('format') . '.xml';
+        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
         if (JFile::exists($formatXML)) {
         } else {
             //error
