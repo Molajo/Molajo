@@ -937,7 +937,7 @@ class MolajoControllerApplication
      * @return void
      * @since  1.0
      */
-    public function addScriptLinksFolder($filePath, $urlPath)
+    public function addScriptLinksFolder($filePath, $urlPath, $defer = false)
     {
         if (JFolder::exists($filePath . '/js')) {
         } else {
@@ -946,7 +946,7 @@ class MolajoControllerApplication
         $files = JFolder::files($filePath . '/js', '\.js$', false, false);
         if (count($files) > 0) {
             foreach ($files as $file) {
-                $this->addScriptLink($urlPath . '/js/' . $file);
+                $this->addScriptLink($urlPath . '/js/' . $file, 'text/javascript', $defer);
             }
         }
     }
@@ -985,9 +985,18 @@ class MolajoControllerApplication
      *
      * @return array
      */
-    public function getScriptLinks()
+    public function getScriptLinks($defer = false)
     {
-        return $this->_script_links;
+        $results = array();
+        $count = count($this->_script_links);
+        if ($count > 0) {
+            foreach ($this->_script_links as $script) {
+                if ($script['defer'] === $defer) {
+                    $results[] = $script;
+                }
+            }
+        }
+        return $results;
     }
 
     /**
@@ -995,29 +1004,46 @@ class MolajoControllerApplication
      *
      * Adds a script to the page
      *
-     * @param   string  $content    Script
-     * @param   string  $format     Scripting mimetype (defaults to 'text/javascript')
+     * @param  string  $content    Script
+     * @param  string  $format     Scripting mimetype (defaults to 'text/javascript')
+     * @param  string  $defer
      *
      * @return  void
      * @since    1.0
      */
-    public function addScriptDeclaration($content, $format = 'text/javascript')
+    public function addScriptDeclaration($content, $mimetype = 'text/javascript', $defer = false)
     {
-        if (isset($this->_script_declarations[strtolower($format)])) {
-            $this->_script_declarations[strtolower($format)] .= chr(13) . $content;
-        } else {
-            $this->_script_declarations[strtolower($format)] = $content;
+        $count = count($this->_script_declarations);
+        if ($count > 0) {
+            foreach ($this->_script_declarations as $script) {
+                if ($script['content'] == $script) {
+                    return;
+                }
+            }
         }
+        $this->_script_declarations[$count]['mimetype'] = $mimetype;
+        $this->_script_declarations[$count]['content'] = $content;
+        $this->_script_declarations[$count]['defer'] = $defer;
     }
 
     /**
      * getScriptDeclarations
      *
+     * @param bool $defer
      * @return array
      */
-    public function getScriptDeclarations()
+    public function getScriptDeclarations($defer = false)
     {
-        return $this->_script_declarations;
+        $results = array();
+        $count = count($this->_script_declarations);
+        if ($count > 0) {
+            foreach ($this->_script_declarations as $script) {
+                if ($script['defer'] === $defer) {
+                    $results[] = $script;
+                }
+            }
+        }
+        return $results;
     }
 
     /**

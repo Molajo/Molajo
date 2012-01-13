@@ -31,7 +31,7 @@ elseif ($this->row->type == 'links'):
 <?php
 
 /** stylesheet_declarations */
-elseif ($this->row->type == 'styles'):
+elseif ($this->row->type == 'stylesheet_declarations'):
 ?>
     <style<?php if ($this->parameters->get('html5', true) === false): ?> type="<?php echo $this->row->mimetype; ?>" <?php endif; ?>>
     <?php
@@ -52,10 +52,25 @@ elseif ($this->row->type == 'styles'):
 /** javascript_links */
 elseif ($this->row->type == 'javascript_links'):
 ?>
-    <script src="<?php echo $this->row->url; ?>" <?php if ($this->parameters->get('html5', true) === false): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if (trim($this->row->async) != ''): ?>async="async" <?php endif; ?>/></script>
+    <script src="<?php echo $this->row->url; ?>" <?php if ($this->parameters->get('html5', true) === false): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if (trim($this->row->defer) != ''): ?>defer="defer" <?php endif; ?>/><?php if (trim($this->row->async) != ''): ?>async="async" <?php endif; ?>/></script>
 <?php
 
-/** javascript declarations */
-elseif ($this->row->type == 'script'):
+/** stylesheet_declarations */
+elseif ($this->row->type == 'script_declarations'):
 ?>
-<?php endif; ?>
+    <script<?php if ($this->parameters->get('html5', true) === false): ?> type="<?php echo $this->row->mimetype; ?>" <?php endif; ?>>
+    <?php
+        if ($this->row->mimetype == 'text/html') :
+        else : ?>
+        <![CDATA[
+    <?php
+        endif;
+        echo $this->row->content;
+        if ($this->row->mimetype == 'text/html') :
+        else : ?>
+        ]]>
+    <?php
+        endif; ?>
+    </script>
+<?php
+endif;

@@ -5,4 +5,5 @@
     <renderer>module</renderer>
     <renderer>message</renderer>
     <renderer>head</renderer>
+    <renderer>defer</renderer>
 </sequence>

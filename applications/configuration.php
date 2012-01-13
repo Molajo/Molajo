@@ -2,7 +2,7 @@
 class MolajoConfig
 {
     /* Application Settings */
-    public $application_name = 'Administrator';
+    public $application_name = 'Molajo';
 
     /* Meta */
     public $metadata_description = 'Molajo - the Cats Meow';
@@ -56,22 +56,11 @@ class MolajoConfig
     /* Logon Requirement */
     public $logon_requirement = '267';
 
-    /* Template and Page Defaults */
+    /* Template and View Defaults */
     public $default_format = 'html';
     public $default_template = 'molajito';
     public $default_page = 'full';
 
-    /* Offline */
-    public $offline = '1';
-    public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_template = 'system';
-    public $offline_page = 'offline';
-
-    /* Error */
-    public $error_template = 'system';
-    public $error_page = 'error';
-
-    /** Views and Wraps */
     public $default_static_view = 'dashboard';
     public $default_static_wrap = 'div';
     public $default_items_view = 'items';
@@ -84,10 +73,22 @@ class MolajoConfig
     /* Head */
     public $head_view = 'head';
     public $head_wrap = 'none';
+    public $defer_view = 'defer';
+    public $defer_wrap = 'none';
 
     /* Message */
     public $message_view = 'messages';
     public $message_wrap = 'div';
+
+    /* Offline */
+    public $offline = '1';
+    public $offline_message = 'This site is not available.<br /> Please check back again soon.';
+    public $offline_template = 'system';
+    public $offline_page = 'offline';
+
+    /* Error */
+    public $error_format = 'html';
+    public $error_page = 'error';
 
     /* Feed */
     public $feed_format = 'feed';

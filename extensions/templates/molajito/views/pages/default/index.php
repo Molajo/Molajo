@@ -13,3 +13,4 @@ defined('MOLAJO') or die;
 <include:message view=messages wrap=div />
 <include:request/>
 <include:module position=footer view=footer wrap=footer/>
+<include:defer/>

@@ -65,6 +65,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         if (count($this->rowset) == 0
             && $this->parameters->def('suppress_no_results', false) === true
         ) {
+            echo 'return';
             return;
         }
 
@@ -179,15 +180,15 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
                     $rowCount++;
                 }
+            }
 
-                /** view: after all rows are processed */
-                if ($rowCount > $totalRows) {
-                    if (file_exists($this->view_path . '/views/bottom.php')) {
-                        include $this->view_path . '/views/bottom.php';
+            /** view: after all rows are processed */
+            if ($rowCount > $totalRows) {
+                if (file_exists($this->view_path . '/views/bottom.php')) {
+                    include $this->view_path . '/views/bottom.php';
 
-                        if (isset($this->row->event->afterRenderView)) {
-                            echo $this->row->event->afterRenderView;
-                        }
+                    if (isset($this->row->event->afterRenderView)) {
+                        echo $this->row->event->afterRenderView;
                     }
                 }
             }

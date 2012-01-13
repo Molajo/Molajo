@@ -103,7 +103,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: javascript_links */
-        $list = MolajoController::getApplication()->getScriptLinks();
+        $list = MolajoController::getApplication()->getScriptLinks(false);
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
@@ -116,7 +116,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: javascript_declarations */
-        $list = MolajoController::getApplication()->getScriptDeclarations();
+        $list = MolajoController::getApplication()->getScriptDeclarations(false);
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');

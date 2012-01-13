@@ -73,6 +73,8 @@ class MolajoConfigApplication
     /* Head */
     public $head_view = 'head';
     public $head_wrap = 'none';
+    public $defer_view = 'defer';
+    public $defer_wrap = 'none';
 
     /* Message */
     public $message_view = 'messages';
