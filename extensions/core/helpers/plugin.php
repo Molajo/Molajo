@@ -299,9 +299,8 @@ abstract class MolajoPluginHelper extends JEvent
      */
     public function loadLanguage($extension = '', $basePath = MOLAJO_EXTENSIONS_PLUGINS)
     {
-        if (empty($extension)) {
-            $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
-        }
-        MolajoController::getApplication()->getLanguage()->load(strtolower($extension), MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
+        MolajoController::getApplication()->getLanguage()->load(
+            MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension,
+            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 }

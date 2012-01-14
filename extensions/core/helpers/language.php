@@ -30,10 +30,10 @@ class MolajoLanguageHelper
      *
      * @since   1.0
      */
-    public static function createLanguageList($actualLanguage, $basePath = MOLAJO_BASE_FOLDER, $caching = false, $installed = false)
+    public static function createLanguageList($actualLanguage, $basePath = MOLAJO_EXTENSIONS_LANGUAGES, $caching = false, $installed = false)
     {
         $list = array();
-        $langs = MolajoLanguageHelper::getKnownLanguages($basePath);
+        $languages = MolajoLanguage::getKnownLanguages($basePath);
 
         if (MOLAJO_APPLICATION_ID == 0) {
             $installed == false;
@@ -42,13 +42,13 @@ class MolajoLanguageHelper
             $installed_languages = MolajoExtensionHelper::get(2);
         }
 
-        foreach ($langs as $lang => $metadata)
+        foreach ($languages as $language => $metadata)
         {
             $option = array();
 
             $option['text'] = $metadata['name'];
-            $option['value'] = $lang;
-            if ($lang == $actualLanguage) {
+            $option['value'] = $language;
+            if ($language == $actualLanguage) {
                 $option['selected'] = 'selected="selected"';
             }
             $list[] = $option;

@@ -182,7 +182,7 @@ class MolajoControllerSite extends JObject
         }
         if (defined('MOLAJO_SITE_FOLDER_PATH_MEDIA_URL')) {
         } else {
-            define('MOLAJO_SITE_FOLDER_PATH_MEDIA_URL', MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE_ID . '/media');
+            define('MOLAJO_SITE_FOLDER_PATH_MEDIA_URL', MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media');
         }
         if (defined('MOLAJO_SITE_FOLDER_PATH_TEMP')) {
         } else {

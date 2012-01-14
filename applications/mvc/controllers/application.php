@@ -439,11 +439,11 @@ class MolajoControllerApplication
     }
 
     /**
-     * Create a language object
+     * loadLanguage
      *
-     * @see MolajoLanguageHelper
+     * Load the core language files, set defaults, etc
      *
-     * @return MolajoLanguageHelper object
+     * @return  Language object
      * @since   1.0
      */
     public function loadLanguage()
@@ -832,7 +832,7 @@ class MolajoControllerApplication
      * @param $urlPath
      * @return void
      */
-    public function addStyleLinksFolder($filePath, $urlPath)
+    public function addStyleLinksFolder($filePath, $urlPath, $priority = 500)
     {
         if (JFolder::exists($filePath . '/css')) {
         } else {
@@ -845,10 +845,10 @@ class MolajoControllerApplication
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
                     if ($this->getDirection() == 'rtl') {
-                        $this->addStyleLinks($urlPath . '/css/' . $file);
+                        $this->addStyleLinks($urlPath . '/css/' . $file, $priority);
                     }
                 } else {
-                    $this->addStyleLinks($urlPath . '/css/' . $file);
+                    $this->addStyleLinks($urlPath . '/css/' . $file, $priority);
                 }
             }
         }
@@ -860,13 +860,13 @@ class MolajoControllerApplication
      * Adds a linked stylesheet to the page
      *
      * @param $url
+     * @param int $priority
      * @param string $mimetype
      * @param null $media
      * @param array $attributes
-     * @param int $priority
      * @return mixed
      */
-    public function addStyleLinks($url, $mimetype = 'text/css', $media = null, $attributes = array(), $priority = 500)
+    public function addStyleLinks($url, $priority = 500, $mimetype = 'text/css', $media = null, $attributes = array())
     {
         $count = count($this->_style_links);
         if ($count > 0) {
@@ -937,16 +937,21 @@ class MolajoControllerApplication
      * @return void
      * @since  1.0
      */
-    public function addScriptLinksFolder($filePath, $urlPath, $defer = false)
+    public function addScriptLinksFolder($filePath, $urlPath, $priority = 500, $defer = false)
     {
-        if (JFolder::exists($filePath . '/js')) {
+        if ($defer === true) {
+            $extra = '/js/defer';
+        } else {
+            $extra = '/js';
+        }
+        if (JFolder::exists($filePath . $extra)) {
         } else {
             return;
         }
-        $files = JFolder::files($filePath . '/js', '\.js$', false, false);
+        $files = JFolder::files($filePath . $extra, '\.js$', false, false);
         if (count($files) > 0) {
             foreach ($files as $file) {
-                $this->addScriptLink($urlPath . '/js/' . $file, 'text/javascript', $defer);
+                $this->addScriptLink($urlPath . $extra . '/' . $file, $priority, $defer, 'text/javascript');
             }
         }
     }
@@ -956,14 +961,16 @@ class MolajoControllerApplication
      *
      * Adds a linked script to the page
      *
-     * @param $url
-     * @param string $mimetype
-     * @param bool $defer
-     * @param bool $async
-     * @param int $priority
+     * @param  $url
+     * @param  int $priority
+     * @param  string $mimetype
+     * @param  bool $defer
+     * @param  bool $async
+     *
      * @return mixed
+     * @since  1.0
      */
-    public function addScriptLink($url, $mimetype = "text/javascript", $defer = false, $async = false, $priority = 500)
+    public function addScriptLink($url, $priority = 500, $defer = false, $mimetype = "text/javascript", $async = false)
     {
         $count = count($this->_script_links);
         if ($count > 0) {
@@ -1195,13 +1202,13 @@ class MolajoControllerApplication
         $exception = false;
         /** IE */
         if (stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
-            || stripos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false)
-        {
+            || stripos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false
+        ) {
             $exception = 'trident';
         }
         if (stripos($_SERVER['HTTP_USER_AGENT'], 'AppleWebKit') !== false
-            || stripos($_SERVER['HTTP_USER_AGENT'], 'blackberry') !== false)
-        {
+            || stripos($_SERVER['HTTP_USER_AGENT'], 'blackberry') !== false
+        ) {
             $exception = 'webkit';
         }
 

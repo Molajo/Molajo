@@ -9,7 +9,8 @@ define('MOLAJO', 'Long Live Molajo!');
 
 /** php directives */
 @ini_set('magic_quotes_runtime', 0);
-@ini_set('zend.ze1_compatibility_mode', '0');
+@ini_set('zend.ze1_compatibility_mode', 0);
+@ini_set('short_open_tag', 1);
 
 /** See if this is still needed before release */
 define('DS', DIRECTORY_SEPARATOR);
@@ -67,6 +68,10 @@ if (defined('MOLAJO_SITES')) {
 if (defined('MOLAJO_SHARED_MEDIA')) {
 } else {
     define('MOLAJO_SHARED_MEDIA', MOLAJO_SITES . '/media');
+}
+if (defined('MOLAJO_SHARED_MEDIA_URL')) {
+} else {
+    define('MOLAJO_SHARED_MEDIA_URL', MOLAJO_BASE_URL . 'sites/media');
 }
 
 if (defined('MOLAJO_SITE')) {

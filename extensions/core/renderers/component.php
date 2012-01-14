@@ -25,7 +25,7 @@ class MolajoComponentRenderer
     protected $name = null;
 
     /**
-     * Request  
+     * Request
      *
      * @var    object
      * @since  1.0
@@ -79,7 +79,7 @@ class MolajoComponentRenderer
         $this->import();
 
         /** Load Language Files */
-        $this->_loadLanguageComponent();
+        $this->_loadLanguage();
 
         /** Instantiate Controller */
         $controllerClass = ucfirst($this->request->get('option')) . 'Controller';
@@ -131,22 +131,22 @@ class MolajoComponentRenderer
         /** View Path */
         $this->request->set('view_type', 'extensions');
         $viewHelper = new MolajoViewHelper($this->request->get('view'),
-                                            $this->request->get('view_type'),
-                                            $this->request->get('option'),
-                                            $this->request->get('extension_type'),
-                                            ' ',
-                                            $this->request->get('template_name')
-                                            );
+            $this->request->get('view_type'),
+            $this->request->get('option'),
+            $this->request->get('extension_type'),
+            ' ',
+            $this->request->get('template_name')
+        );
         $this->request->set('view_path', $viewHelper->view_path);
         $this->request->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
         $wrapHelper = new MolajoViewHelper($this->request->get('wrap'),
-                                            'wraps',
-                                            $this->request->get('option'),
-                                            $this->request->get('extension_type'),
-                                            ' ',
-                                            $this->request->get('template_name')
+            'wraps',
+            $this->request->get('option'),
+            $this->request->get('extension_type'),
+            ' ',
+            $this->request->get('template_name')
         );
         $this->request->set('wrap_path', $wrapHelper->view_path);
         $this->request->set('wrap_path_url', $wrapHelper->view_path_url);
@@ -211,18 +211,108 @@ class MolajoComponentRenderer
     }
 
     /**
-     * _loadLanguageComponent
+     * _loadLanguage
      *
      * Loads Language Files
      *
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0
      */
-    protected function _loadLanguageComponent()
+    protected function _loadLanguage()
     {
         MolajoController::getApplication()->getLanguage()->load
-            ($this->request->get('option'),
-                $this->request->get('extension_path'),
-                MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
+        ($this->request->get('extension_path'),
+            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
+    }
+
+    /**
+     * _loadMedia
+     *
+     * Loads Media Files for Site, Application, User, and Template
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadMedia()
+    {
+        /**  Primary Category */
+        $this->_loadMediaPlus('/category' . $this->request->get('primary_category'),
+            MolajoController::getApplication()->get('media_priority_primary_category', 700));
+
+        /** Menu Item */
+        $this->_loadMediaPlus('/menuitem' . $this->request->get('menu_item'),
+            MolajoController::getApplication()->get('media_priority_menu_item', 800));
+
+        /** Source */
+        $this->_loadMediaPlus('/source' . $this->request->get('source_id'),
+            MolajoController::getApplication()->get('media_priority_source_data', 900));
+
+        /** Component */
+        $this->_loadMediaPlus('/component' . $this->request->get('option'),
+            MolajoController::getApplication()->get('media_priority_source_data', 900));
+    }
+
+    /**
+     * _loadMediaPlus
+     *
+     * Loads Media Files for Site, Application, User, and Template
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadMediaPlus($plus = '', $priority = 500)
+    {
+        /** Template */
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** Site Specific: Application */
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** Site Specific: Site-wide */
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** All Sites: Application */
+        $filePath = MOLAJO_SHARED_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SHARED_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** All Sites: Site Wide */
+        $filePath = MOLAJO_SHARED_MEDIA . $plus;
+        $urlPath = MOLAJO_SHARED_MEDIA_URL . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** nothing was loaded */
+        return false;
     }
 }

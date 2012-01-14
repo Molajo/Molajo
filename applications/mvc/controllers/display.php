@@ -126,9 +126,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /** @var $rowCount */
         $rowCount = 1;
 
-        /** Media */
-        $this->loadMedia();
-
         /** start collecting output */
         ob_start();
 
@@ -198,43 +195,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-    }
-
-    /**
-     * loadMedia
-     *
-     * Automatically includes the following files (if existing)
-     *
-     * 1. Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js]
-     * 2. Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js]
-     * 3. Asset ID specific CSS and JS in => media/[asset_id]/css[js]/XYZ.css[js]
-     *
-     * 4. View Path determined earlier (Template, Extension, Core precedence)
-     *
-     * Note: Right-to-left css files should begin with rtl_
-     *
-     * @return void
-     * @since 1.0
-     */
-    protected function loadMedia()
-    {
-        /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request->get('option') . '/views';
-        $urlPath = MOLAJO_BASE_URL . '/sites/' . MOLAJO_SITE . '/media/' . $this->request->get('option') . '/views';
-        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
-
-        /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request->get('asset_id');
-        $urlPath = MOLAJO_BASE_URL . '/sites/'.MOLAJO_SITE.'/media/'.$this->request->get('asset_id');
-        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
-         */
-        /** View specific CSS and JS in path identified in getPath */
-        $filePath = $this->view_path . '/views';
-        $urlPath = $this->view_path_url . '/views';
-        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
     }
 }
 

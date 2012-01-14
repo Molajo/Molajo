@@ -97,6 +97,18 @@ class MolajoConfig
     public $feed_limit = 10;
     public $feed_email = 'author';
 
+    /* Priority */
+    public $media_priority_site = 100;
+    public $media_priority_application = 200;
+    public $media_priority_user = 300;
+    public $media_priority_module = 400;
+    public $media_priority_plugin = 400;
+    public $media_priority_component = 500;
+    public $media_priority_template = 600;
+    public $media_priority_primary_category = 700;
+    public $media_priority_menu_item = 800;
+    public $media_priority_source_data = 900;
+
     /**
      *  Site Configuration Settings
      */

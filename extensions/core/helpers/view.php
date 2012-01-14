@@ -206,14 +206,15 @@ class MolajoViewHelper
     /**
      * _loadLanguage
      *
-     * Loads the view language file
+     * Loads Language Files
      *
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0
      */
     protected function _loadLanguage()
     {
-        MolajoController::getApplication()->getLanguage()->load(strtolower($this->_view),
-            MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view, null, false, false);
+        MolajoController::getApplication()->getLanguage()->load(
+            MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view,
+            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 }

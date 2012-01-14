@@ -38,7 +38,7 @@ class MolajoDocument
      * @var string
      * @since 1.0
      */
-    protected $parameters = null;
+    public $parameters = null;
 
     /**
      * Template
@@ -64,12 +64,10 @@ class MolajoDocument
      * @param   null    $requestArray from MolajoRequests
      *
      * @return boolean
-     *
      * @since  1.0
      */
     public function __construct($request = array())
     {
-        /** Set Class Properties */
         $this->request = $request;
 
         $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
@@ -127,50 +125,34 @@ class MolajoDocument
         /** Before Event */
         //        MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
-        /** Media */
-
-        /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
-        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION;
-        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
-
-        /** Load Language Files */
-        $this->_loadLanguageTemplate();
-
-        /** Favicon */
+        /** Load Media */
         $this->_loadFavicon();
+        $this->_loadLanguage();
+        $this->_loadMedia();
 
         /** process template include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop($this->request->get('template_include'));
 
-        /** set the respond body */
+        /** set response body */
         MolajoController::getApplication()->setBody($body);
 
-        /** After Rendering */
+        /** after rendering */
         MolajoController::getApplication()->triggerEvent('onAfterRender');
 
         return;
     }
 
     /**
-     * _loadLanguageTemplate
-     *
-     * Loads Language Files
-     *
-     * @return  boolean  True, if the file has successfully loaded.
-     * @since   1.0
-     */
-    protected function _loadLanguageTemplate()
-    {
-        MolajoController::getApplication()->getLanguage()->load($this->request->get('template_name'),
-            MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'),
-            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
-    }
-
-    /**
      *  _renderLoop
      *
+     * Extension Views can contain <include:xyz statements in the same manner that the
+     *  template include files use these statements. For that reason, this method parses
+     *  thru the initial template include, renders the output for the <include:xyz statements
+     *  found, and then parses that output, over and over, until no more <include:xyz statements
+     *  are located.
+     *
+     * @return string  Rendered output for the Response Head and Body
+     * @since  1.0
      */
     protected function _renderLoop()
     {
@@ -214,6 +196,7 @@ class MolajoDocument
      * Parse the template and extract renderers and associated attributes
      *
      * @return  The parsed contents of the template
+     * @since   1.0
      */
     protected function _parseTemplate()
     {
@@ -261,8 +244,6 @@ class MolajoDocument
             }
             $i++;
         }
-
-        /** echo '<pre>';var_dump($this->_renderers);echo '</pre>'; */
     }
 
     /**
@@ -270,7 +251,8 @@ class MolajoDocument
      *
      * Render pre-parsed template
      *
-     * @return string rendered template
+     * @return  string rendered template
+     * @since   1.0
      */
     protected function _renderTemplate()
     {
@@ -341,18 +323,134 @@ class MolajoDocument
     }
 
     /**
-     * Load a Favicon
+     * _loadFavicon
      *
-     * @return bool
+     * Locate and load Favicon
+     *
+     * Can be located in:
+     *  - Templates/images/ folder (priority 1)
+     *  - Root of the website (priority 2)
+     *
+     * @return  bool
+     * @since   1.0
      */
     protected function _loadFavicon()
     {
+        /** template images */
         $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/images/';
-
         if (file_exists($path . 'favicon.ico')) {
             $this->request->set('template_favicon', MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name') . '/images/favicon.ico');
             return true;
         }
+
+        /** root */
+        $path = MOLAJO_BASE_FOLDER;
+        if (file_exists($path . 'favicon.ico')) {
+            $this->request->set('template_favicon', MOLAJO_BASE_URL . '/' . $this->request->get('template_name') . '/images/favicon.ico');
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * _loadLanguage
+     *
+     * Loads Language Files
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadLanguage()
+    {
+        MolajoController::getApplication()->getLanguage()->load(
+            MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'),
+            MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
+    }
+
+    /**
+     * _loadMedia
+     *
+     * Loads Media Files for Site, Application, User, and Template
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadMedia()
+    {
+        /**  Site */
+        $this->_loadMediaPlus('',
+            MolajoController::getApplication()->get('media_priority_site', 100));
+
+        /** Application */
+        $this->_loadMediaPlus('/application' . MOLAJO_APPLICATION,
+            MolajoController::getApplication()->get('media_priority_application', 200));
+
+        /** User */
+        $this->_loadMediaPlus('/user' . MolajoController::getUser()->get('id'),
+            MolajoController::getApplication()->get('media_priority_user', 300));
+
+        /** Template */
+        $priority = MolajoController::getApplication()->get('media_priority_template', 600);
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+    }
+
+    /**
+     * _loadMediaPlus
+     *
+     * Loads Media Files for Site, Application, User, and Template
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadMediaPlus($plus = '', $priority = 500)
+    {
+
+        /** Site Specific: Application */
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** Site Specific: Site-wide */
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** All Sites: Application */
+        $filePath = MOLAJO_SHARED_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SHARED_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** All Sites: Site Wide */
+        $filePath = MOLAJO_SHARED_MEDIA . $plus;
+        $urlPath = MOLAJO_SHARED_MEDIA_URL . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** nothing was loaded */
         return false;
     }
 }
