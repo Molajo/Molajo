@@ -37,7 +37,7 @@ class Twig_Node implements Twig_NodeInterface
     public function __construct(array $nodes = array(), array $attributes = array(), $lineno = 0, $tag = null)
     {
         $this->nodes = $nodes;
-        $this->attributes = $attributes;
+        $this->_attributes = $attributes;
         $this->lineno = $lineno;
         $this->tag = $tag;
     }
@@ -45,7 +45,7 @@ class Twig_Node implements Twig_NodeInterface
     public function __toString()
     {
         $attributes = array();
-        foreach ($this->attributes as $name => $value) {
+        foreach ($this->_attributes as $name => $value) {
             $attributes[] = sprintf('%s: %s', $name, str_replace("\n", '', var_export($value, true)));
         }
 
@@ -79,7 +79,7 @@ class Twig_Node implements Twig_NodeInterface
         $xml->appendChild($node = $dom->createElement('node'));
         $node->setAttribute('class', get_class($this));
 
-        foreach ($this->attributes as $name => $value) {
+        foreach ($this->_attributes as $name => $value) {
             $node->appendChild($attribute = $dom->createElement('attribute'));
             $attribute->setAttribute('name', $name);
             $attribute->appendChild($dom->createTextNode($value));
@@ -126,7 +126,7 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function hasAttribute($name)
     {
-        return array_key_exists($name, $this->attributes);
+        return array_key_exists($name, $this->_attributes);
     }
 
     /**
@@ -138,11 +138,11 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function getAttribute($name)
     {
-        if (!array_key_exists($name, $this->attributes)) {
+        if (!array_key_exists($name, $this->_attributes)) {
             throw new Twig_Error_Runtime(sprintf('Attribute "%s" does not exist for Node "%s".', $name, get_class($this)));
         }
 
-        return $this->attributes[$name];
+        return $this->_attributes[$name];
     }
 
     /**
@@ -153,7 +153,7 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function setAttribute($name, $value)
     {
-        $this->attributes[$name] = $value;
+        $this->_attributes[$name] = $value;
     }
 
     /**
@@ -163,7 +163,7 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function removeAttribute($name)
     {
-        unset($this->attributes[$name]);
+        unset($this->_attributes[$name]);
     }
 
     /**

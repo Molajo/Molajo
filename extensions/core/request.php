@@ -92,7 +92,6 @@ class MolajoRequest
         $this->request->set('sef_request', '');
         $this->request->set('redirect_to_id', 0);
         $this->request->set('home', 0);
-
         $this->request->set('sef', 0);
         $this->request->set('sef_rewrite', 0);
         $this->request->set('sef_suffix', 0);
@@ -101,7 +100,6 @@ class MolajoRequest
 
         /** format */
         $this->request->set('format', '');
-        $this->request->set('format_include', '');
 
         /** template */
         $this->request->set('template_id', 0);
@@ -110,12 +108,32 @@ class MolajoRequest
         $this->request->set('template_path', '');
         $this->request->set('template_include', '');
         $this->request->set('template_favicon', '');
+        $this->request->set('template_asset_id', '');
 
         /** page */
-        $this->request->set('page_include', '');
-        $this->request->set('page', '');
+        $this->request->set('page_name', '');
         $this->request->set('page_path', '');
         $this->request->set('page_path_url', '');
+        $this->request->set('page_template_include_statement', '');
+
+        /** head */
+        $this->request->set('metadata_title', '');
+        $this->request->set('metadata_description', '');
+        $this->request->set('metadata_generator', MolajoController::getApplication()->get('generator', 'Molajo'));
+        $this->request->set('metadata_keywords', '');
+        $this->request->set('metadata_author', '');
+        $this->request->set('metadata_content_rights', '');
+        $this->request->set('metadata_robots', '');
+        $this->request->set('metadata_additional_array', array());
+
+        /** render parameters */
+        $this->request->set('controller', '');
+        $this->request->set('model', '');
+        $this->request->set('static', '');
+        $this->request->set('option', '');
+        $this->request->set('task', '');
+        $this->request->set('id', 0);
+        $this->request->set('ids', array());
 
         /** view */
         $this->request->set('view', '');
@@ -130,33 +148,12 @@ class MolajoRequest
         $this->request->set('wrap_id', '');
         $this->request->set('wrap_class', '');
 
-        /** head */
-        $this->request->set('metadata_title', '');
-        $this->request->set('metadata_description', '');
-        $this->request->set('generator', MolajoController::getApplication()->get('generator', 'Molajo'));
-        $this->request->set('metadata_keywords', '');
-        $this->request->set('metadata_author', '');
-        $this->request->set('metadata_content_rights', '');
-        $this->request->set('metadata_robots', '');
-        $this->request->set('metadata_additional_array', array());
-
-        /** render parameters */
-        $this->request->set('controller', '');
-        $this->request->set('model', '');
-        $this->request->set('static', '');
-        $this->request->set('option', '');
-        $this->request->set('format', '');
-        $this->request->set('task', '');
-        $this->request->set('id', 0);
-        $this->request->set('ids', array());
-
         /** other */
         $this->request->set('plugin_type', '');
         $this->request->set('acl_implementation', '');
         $this->request->set('other_parameters', array());
 
         /** asset */
-        $this->request->set('primary_request', true);
         $this->request->set('asset_id', 0);
         $this->request->set('asset_type_id', 0);
         $this->request->set('source_language', '');
@@ -172,13 +169,6 @@ class MolajoRequest
         $this->request->set('extension_type', '');
         $this->request->set('extension_folder', '');
 
-        /** source data */
-        $this->request->set('source_table', '');
-        $this->request->set('source_id', 0);
-        $this->request->set('source_last_modified', getDate());
-        $this->request->set('source_parameters', array());
-        $this->request->set('source_metadata', array());
-
         /** primary category */
         $this->request->set('category', 0);
         $this->request->set('category_title', '');
@@ -189,6 +179,13 @@ class MolajoRequest
         $this->request->set('menu_item_id', 0);
         $this->request->set('menu_item_parameters', array());
         $this->request->set('menu_item_metadata', array());
+
+        /** source data */
+        $this->request->set('source_table', '');
+        $this->request->set('source_id', 0);
+        $this->request->set('source_last_modified', getDate());
+        $this->request->set('source_parameters', array());
+        $this->request->set('source_metadata', array());
 
         /** results */
         $this->request->set('suppress_no_results', false);
@@ -237,7 +234,7 @@ class MolajoRequest
             $message = MolajoController::getApplication()->get('offline_message', 'This site is not available.<br /> Please check back again soon.');
             MolajoController::getApplication()->setMessage($message, MOLAJO_MESSAGE_TYPE_WARNING);
             $this->request->set('template_name', MolajoController::getApplication()->get('offline_template', 'system'));
-            $this->request->set('page', MolajoController::getApplication()->get('offline_page', 'offline'));
+            $this->request->set('page_name', MolajoController::getApplication()->get('offline_page', 'offline'));
             return $this->_render();
         }
 
@@ -264,7 +261,7 @@ class MolajoRequest
             $message = MolajoController::getApplication()->get('error_404_message', 'Page not found.');
             MolajoController::getApplication()->setMessage($message, MOLAJO_MESSAGE_TYPE_ERROR, 404);
             $this->request->set('template_name', MolajoController::getApplication()->get('error_template', 'system'));
-            $this->request->set('page', MolajoController::getApplication()->get('error_page', 'error'));
+            $this->request->set('page_name', MolajoController::getApplication()->get('error_page', 'error'));
             $this->request->set('view', MolajoController::getApplication()->get('error_view', 'error'));
             $this->request->set('wrap', MolajoController::getApplication()->get('error_wrap', 'none'));
             return $this->_render();
@@ -283,12 +280,19 @@ class MolajoRequest
             $this->request->set('error', true);
             MolajoController::getApplication()->setHeader('Status', '403 Not Authorised', 'true');
             $this->request->set('template_name', MolajoController::getApplication()->get('error_template', 'system'));
-            $this->request->set('page', MolajoController::getApplication()->get('error_page', 'error'));
+            $this->request->set('page_name', MolajoController::getApplication()->get('error_page', 'error'));
             $this->request->set('format', MolajoController::getApplication()->get('error_format', 'error'));
             return $this->_render();
         }
 
-        return $this->_render();
+        if ($this->request->get('task') == 'add'
+            || $this->request->get('task') == 'edit'
+            || $this->request->get('task') == 'display'
+        ) {
+            return $this->_render();
+        } else {
+            return $this->_task();
+        }
     }
 
     /**
@@ -305,6 +309,17 @@ class MolajoRequest
 
         new MolajoDocument ($this->request);
         return $this->request;
+    }
+
+    /**
+     *  _task
+     *
+     * @return
+     * @since  1.0
+     */
+    protected function _task()
+    {
+
     }
 
     /**
@@ -505,6 +520,7 @@ class MolajoRequest
                 $this->request->set('template_parameters', $parameters);
                 $this->request->set('template_id', $result->extension_id);
                 $this->request->set('template_name', $result->title);
+                $this->request->set('template_asset_id', $result->extension_instance_asset_id);
             }
             return true;
         } else {
@@ -542,7 +558,7 @@ class MolajoRequest
                 $this->request->set('template_name', (string)$pair[1]);
 
             } elseif ($pair[0] == 'page') {
-                $this->request->set('page', (string)$pair[1]);
+                $this->request->set('page_name', (string)$pair[1]);
             }
         }
         return true;
@@ -679,7 +695,7 @@ class MolajoRequest
             $this->request->set('template_name', MolajoController::getApplication()->get('default_template', ''));
         }
         if ($this->request->get('page', '') == '') {
-            $this->request->set('page', MolajoController::getApplication()->get('default_page', ''));
+            $this->request->set('page_name', MolajoController::getApplication()->get('default_page', ''));
         }
 
         /** view */
@@ -783,7 +799,7 @@ class MolajoRequest
 
         if ($this->request->get('page', '') == '') {
         } else {
-            $this->request->set('page', $params->def('page', ''));
+            $this->request->set('page_name', $params->def('page', ''));
         }
 
         if ($this->request->get('view', '') == '') {

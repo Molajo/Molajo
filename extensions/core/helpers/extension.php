@@ -70,7 +70,9 @@ abstract class MolajoExtensionHelper
             $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
         }
 
-        /** Extensions */
+        /**
+         *  Extensions Table
+         */
         $query->select('a.' . $db->namequote('id') . ' as extension_id');
         $query->select('a.' . $db->namequote('name') . ' as extension_name');
         $query->select('a.' . $db->namequote('element'));
@@ -83,13 +85,13 @@ abstract class MolajoExtensionHelper
         } else {
             $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
         }
-
+        /** plugins and views have folders */
         if ($extension_type == null) {
         } else {
             $query->where('(a.' . $db->namequote('folder') . ' = ' . $db->quote($extension_type) . ')');
         }
 
-        /** Extension Instances */
+        /** Extension Instances Table */
         $query->select('b.' . $db->namequote('id') . ' as extension_instance_id');
         $query->select('b.' . $db->namequote('title'));
         $query->select('b.' . $db->namequote('subtitle'));
@@ -128,6 +130,7 @@ abstract class MolajoExtensionHelper
         $query->where('(b.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(b.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
+        $query->select('b_assets.' . $db->namequote('id') . ' as extension_instance_asset_id');
         $query->from($db->namequote('#__assets') . ' as b_assets');
         $query->from($db->namequote('#__asset_types') . ' as b_ctype');
         $query->where('b_assets.asset_type_id = b_ctype.id');
@@ -275,8 +278,9 @@ abstract class MolajoExtensionHelper
 
             foreach ($results as $result) {
 
-                if ((int) $request->get('asset_id', 0)
-                        == MolajoController::getApplication()->get('home_asset_id')) {
+                if ((int)$request->get('asset_id', 0)
+                    == MolajoController::getApplication()->get('home_asset_id')
+                ) {
                     $request->set('home', true);
                 } else {
                     $request->set('home', false);
@@ -395,7 +399,8 @@ abstract class MolajoExtensionHelper
         if ($request->get('task') == 'add') {
 
             if ((int)$request->get('id') == 0
-                && count($request->get('ids')) == 0) {
+                && count($request->get('ids')) == 0
+            ) {
             } else {
                 MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_ADD_TASK_MUST_NOT_HAVE_ID'));
                 $request->set('results', false);
@@ -403,18 +408,22 @@ abstract class MolajoExtensionHelper
             }
 
         } else if ($request->get('task') == 'edit'
-            || $request->get('task') == 'restore') {
+            || $request->get('task') == 'restore'
+        ) {
 
             if ($request->get('id') > 0
-                && count($request->get('ids')) == 0) {
+                && count($request->get('ids')) == 0
+            ) {
 
             } else if ((int)$request->get('id') == 0
-                        && count($request->get('ids')) == 1) {
-                $request->get('id', (int) $request->get('ids'));
+                && count($request->get('ids')) == 1
+            ) {
+                $request->get('id', (int)$request->get('ids'));
                 $request->get('ids', array());
 
             } else if ((int)$request->get('id') == 0
-                        && count($request->get('ids')) == 0) {
+                && count($request->get('ids')) == 0
+            ) {
                 MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_EDIT_TASK_MUST_HAVE_ID'));
                 $request->set('results', false);
                 return $request;
@@ -440,7 +449,7 @@ abstract class MolajoExtensionHelper
         if ($model == 'dummy') {
             $request->set('model', 'MolajoModel');
         } else {
-            $request->set('model', ucfirst($request->get('option')) . 'Model' .ucfirst($model));
+            $request->set('model', ucfirst($request->get('option')) . 'Model' . ucfirst($model));
         }
 
         if ($request->get('controller') == 'display') {
@@ -484,15 +493,15 @@ abstract class MolajoExtensionHelper
             }
 
             $option = $option + 10;
-/* todo: amy fix/remove if ($results === false) {
-                $request->get('view', $configModel->getOptionValue($option);
-                if ($request->get('view') === false) {
-                    MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
-                    $request->get('results', false;
-                    return $request;
-                }
-            }
-**/
+            /* todo: amy fix/remove if ($results === false) {
+                            $request->get('view', $configModel->getOptionValue($option);
+                            if ($request->get('view') === false) {
+                                MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
+                                $request->get('results', false;
+                                return $request;
+                            }
+                        }
+            **/
             /** Wrap **/
             $option = $option + 10;
             if ($request->get('wrap', '') == '') {

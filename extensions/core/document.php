@@ -103,7 +103,7 @@ class MolajoDocument
         }
 
         $this->request->set('template_path', MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'));
-        $this->request->set('page_include', $this->request->get('page_path') . '/index.php');
+        $this->request->set('page_template_include_statement', $this->request->get('page_path') . '/index.php');
 
         $parameters = array(
             'template' => $this->request->get('template_name'),
@@ -269,13 +269,6 @@ class MolajoDocument
             } else {
                 $includeName = $nextSequence;
                 $rendererName = $nextSequence;
-            }
-
-            /** 3. primary component has requestArray loaded already <include:request attr1=x /> */
-            if ($includeName == 'request') {
-                $this->request->get('primary_request', true);
-            } else {
-                $this->request->get('primary_request', false);
             }
 
             /** 4. loop thru all extracted include values to find match */
