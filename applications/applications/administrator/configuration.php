@@ -81,13 +81,15 @@ class MolajoConfigApplication
     public $message_wrap = 'div';
 
     /* Offline */
-    public $offline = '1';
+    public $offline = '0';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
     public $offline_template = 'system';
     public $offline_page = 'offline';
 
     /* Error */
-    public $error_format = 'html';
+    public $error_404_message = 'Page not found';
+    public $error_403_message = 'Not authorised';
+    public $error_template = 'system';
     public $error_page = 'error';
 
     /* Feed */

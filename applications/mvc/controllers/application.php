@@ -305,7 +305,7 @@ class MolajoControllerApplication
 
         /** request and rendering  */
         $requestClass = new MolajoRequest();
-        $this->_request = $requestClass->load();
+        $this->_request = $requestClass->process();
 
         /** response */
         $this->respond();
@@ -576,9 +576,10 @@ class MolajoControllerApplication
      * @return  bool
      * @since   1.0
      */
-    public function setMessage($message = null, $type = 'message')
+    public function setMessage($message = null, $type = 'message', $code = null)
     {
-        if ($message == null) {
+        if ($message == null
+            && $code == null) {
             return false;
         }
 
@@ -590,12 +591,16 @@ class MolajoControllerApplication
         } else {
             $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
         }
-        /** todo: amy - see if sessionMessages are actually set anywhere or where this should be done */
+
         /** load session messages into application messages array */
         $this->_sessionMessages();
 
         /** add new message */
-        $this->_messages[] = array('message' => $message, 'type' => $type);
+        $count = count($this->_messages);
+
+        $this->_messages[$count]['message'] = $message;
+        $this->_messages[$count]['type'] = $type;
+        $this->_messages[$count]['code'] = $code;
 
         return true;
     }
@@ -628,8 +633,10 @@ class MolajoControllerApplication
         $sessionMessages = $session->get('application.messages');
 
         if (count($sessionMessages) > 0) {
+            $count = count($this->_messages);
             foreach ($sessionMessages as $sessionMessage) {
-                $this->_messages[] = $sessionMessage;
+                $this->_messages[$count] = $sessionMessage;
+                $count++;
             }
             $session->set('application.messages', null);
         }

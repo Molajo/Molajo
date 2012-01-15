@@ -50,6 +50,7 @@ class MolajoModelMessages extends MolajoModel
             $tempObject->set('title', $message['type']);
             $tempObject->set('type', $message['type']);
             $tempObject->set('content_text', $message['message']);
+            $tempObject->set('code', $message['code']);
             $this->items[] = $tempObject;
         }
 

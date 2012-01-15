@@ -261,83 +261,82 @@ class MolajoModuleRenderer
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 
-        /**
-         * _loadMedia
-         *
-         * Loads Media Files for Site, Application, User, and Template
-         *
-         * @return  boolean  True, if the file has successfully loaded.
-         * @since   1.0
-         */
-        protected function _loadMedia()
-        {
-            /** Module */
-            $this->_loadMediaPlus('/module' . $this->request->get('option'),
-                MolajoController::getApplication()->get('$media_priority_module', 400));
+    /**
+     * _loadMedia
+     *
+     * Loads Media Files for Site, Application, User, and Template
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadMedia()
+    {
+        /** Module */
+        $this->_loadMediaPlus('/module' . $this->request->get('option'),
+            MolajoController::getApplication()->get('$media_priority_module', 400));
+    }
+
+    /**
+     * _loadMediaPlus
+     *
+     * Loads Media Files for Site, Application, User, and Template
+     *
+     * @return  boolean  True, if the file has successfully loaded.
+     * @since   1.0
+     */
+    protected function _loadMediaPlus($plus = '', $priority = 500)
+    {
+        /** Template */
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
         }
 
-        /**
-         * _loadMediaPlus
-         *
-         * Loads Media Files for Site, Application, User, and Template
-         *
-         * @return  boolean  True, if the file has successfully loaded.
-         * @since   1.0
-         */
-        protected function _loadMediaPlus($plus = '', $priority = 500)
-        {
-            /** Template */
-            $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
-            $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
-            $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-            $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-            $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
-            if ($css === true || $js === true || $defer === true) {
-                return true;
-            }
-
-            /** Site Specific: Application */
-            $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
-            $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-            $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-            $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-            $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
-            if ($css === true || $js === true || $defer === true) {
-                return true;
-            }
-
-            /** Site Specific: Site-wide */
-            $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . $plus;
-            $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . $plus;
-            $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-            $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
-            $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
-            if ($css === true || $js === true || $defer === true) {
-                return true;
-            }
-
-            /** All Sites: Application */
-            $filePath = MOLAJO_SHARED_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
-            $urlPath = MOLAJO_SHARED_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-            $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-            $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-            $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
-            if ($css === true || $js === true || $defer === true) {
-                return true;
-            }
-
-            /** All Sites: Site Wide */
-            $filePath = MOLAJO_SHARED_MEDIA . $plus;
-            $urlPath = MOLAJO_SHARED_MEDIA_URL . $plus;
-            $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-            $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-            $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
-            if ($css === true || $js === true || $defer === true) {
-                return true;
-            }
-
-            /** nothing was loaded */
-            return false;
+        /** Site Specific: Application */
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
         }
 
+        /** Site Specific: Site-wide */
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** All Sites: Application */
+        $filePath = MOLAJO_SHARED_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SHARED_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** All Sites: Site Wide */
+        $filePath = MOLAJO_SHARED_MEDIA . $plus;
+        $urlPath = MOLAJO_SHARED_MEDIA_URL . $plus;
+        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        if ($css === true || $js === true || $defer === true) {
+            return true;
+        }
+
+        /** nothing was loaded */
+        return false;
+    }
 }

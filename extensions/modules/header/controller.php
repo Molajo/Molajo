@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Display Controller
+ * Controller
  *
  * @package      Molajo
  * @subpackage   Controller

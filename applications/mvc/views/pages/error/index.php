@@ -8,8 +8,8 @@
  * <include:module name=logon view=logon wrap=div/>
  */
 defined('MOLAJO') or die; ?>
-offline page
 <include:head/>
 <include:module name=header view=header wrap=header/>
-<include:message/>
+<include:message view=error />
 <include:module position=footer view=footer wrap=footer/>
+<include:defer/>

@@ -411,8 +411,8 @@ class MolajoDocument
     {
 
         /** Site Specific: Application */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . $plus;
+        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
