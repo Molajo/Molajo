@@ -23,7 +23,7 @@ define('MOLAJO_BASE_FOLDER', strtolower(dirname(__FILE__)));
  *  - applications - define MOLAJO_APPLICATIONS_CORE
  *  - extensions - define MOLAJO_EXTENSIONS_CORE
  *  - platforms - define PLATFORMS
- *  - sites - define MOLAJO_SITES _and_ update the sites.xml file folderpath value
+ *  - sites - define MOLAJO_SITES_BASE_FOLDER _and_ update the sites.xml file folderpath value
  */
 if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
     include_once MOLAJO_BASE_FOLDER . '/defines.php';
@@ -33,18 +33,18 @@ if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
 /*  Server Super Globals                        */
 /*                                              */
 $protocol = 'http';
-$siteName = '';
+$siteBase = '';
 if (isset($_SERVER['HTTPS'])) {
     $protocol .= 's';
 }
 $protocol .= '://';
 if (isset($_SERVER['SERVER_NAME'])) {
-    $siteName = $_SERVER['SERVER_NAME'];
+    $siteBase = $_SERVER['SERVER_NAME'];
 }
 if (isset($_SERVER['SERVER_PORT'])) {
     if ($_SERVER['SERVER_PORT'] == '80') {
     } else {
-        $siteName .= ":" . $_SERVER['SERVER_PORT'];
+        $siteBase .= ":" . $_SERVER['SERVER_PORT'];
     }
 }
 if ($_SERVER['PHP_SELF'] == '/index.php') {
@@ -53,42 +53,50 @@ if ($_SERVER['PHP_SELF'] == '/index.php') {
     $folder = substr($_SERVER['PHP_SELF'], 1, strlen($_SERVER['PHP_SELF']));
     $folder = '/'.substr($folder, 0, strpos($folder, '/')).'/';
 }
-$siteName .= $folder;
+$siteBase .= $folder;
 
 /** base url for this site ex. http://localhost/molajo/ */
-define('MOLAJO_BASE_URL', strtolower($protocol.$siteName));
+define('MOLAJO_BASE_URL', strtolower($protocol.$siteBase));
 
 /*                                              */
 /*  SITES LAYER                                 */
 /*                                              */
-if (defined('MOLAJO_SITES')) {
+if (defined('MOLAJO_SITES_BASE_FOLDER')) {
 } else {
-    define('MOLAJO_SITES', MOLAJO_BASE_FOLDER . '/sites');
+    define('MOLAJO_SITES_BASE_FOLDER', MOLAJO_BASE_FOLDER . '/sites');
 }
-if (defined('MOLAJO_SHARED_MEDIA')) {
+if (defined('MOLAJO_SITES_MEDIA_FOLDER')) {
 } else {
-    define('MOLAJO_SHARED_MEDIA', MOLAJO_SITES . '/media');
+    define('MOLAJO_SITES_MEDIA_FOLDER', MOLAJO_SITES_BASE_FOLDER . '/media');
 }
-if (defined('MOLAJO_SHARED_MEDIA_URL')) {
+if (defined('MOLAJO_SITES_MEDIA_URL')) {
 } else {
-    define('MOLAJO_SHARED_MEDIA_URL', MOLAJO_BASE_URL . 'sites/media');
+    define('MOLAJO_SITES_MEDIA_URL', MOLAJO_BASE_URL . 'sites/media');
+}
+if (defined('MOLAJO_SITES_TEMP_FOLDER')) {
+} else {
+    define('MOLAJO_SITES_TEMP_FOLDER', MOLAJO_SITES_BASE_FOLDER . '/temp');
+}
+if (defined('MOLAJO_SITES_TEMP_URL')) {
+} else {
+    define('MOLAJO_SITES_TEMP_URL', MOLAJO_BASE_URL . 'sites/temp');
 }
 
-if (defined('MOLAJO_SITE')) {
+if (defined('MOLAJO_SITE_BASE_URL')) {
 } else {
-    $sites = simplexml_load_file(MOLAJO_SITES . '/sites.xml', 'SimpleXMLElement');
+    $sites = simplexml_load_file(MOLAJO_SITES_BASE_FOLDER . '/sites.xml', 'SimpleXMLElement');
     foreach ($sites->site as $single) {
-        if ($single->name == $siteName) {
-            define('MOLAJO_SITE', $single->name);
+        if ($single->base == $siteBase) {
+            define('MOLAJO_SITE_BASE_URL', $single->base);
             define('MOLAJO_SITE_FOLDER_PATH', $single->folderpath);
             define('MOLAJO_SITE_APPEND_TO_BASE_URL', $single->appendtobaseurl);
             define('MOLAJO_SITE_ID', $single->id);
             break;
         }
     }
-    if (defined('MOLAJO_SITE')) {
+    if (defined('MOLAJO_SITE_BASE_URL')) {
     } else {
-        echo 'Fatal Error: Cannot identify site for: '.$siteName;
+        echo 'Fatal Error: Cannot identify site for: '.$siteBase;
         die;
     }
 }

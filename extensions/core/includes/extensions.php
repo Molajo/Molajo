@@ -13,10 +13,11 @@ defined('MOLAJO') or die;
 $fileHelper = new MolajoFileHelper();
 
 /**
- *  Primary Extensions Class
+ *  Primary Extensions Classes
  */
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/request.php', 'MolajoRequest');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document.php', 'MolajoDocument');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderer.php', 'MolajoRenderer');
 
 /**
  *  Helpers

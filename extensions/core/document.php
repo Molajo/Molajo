@@ -404,8 +404,8 @@ class MolajoDocument
     {
 
         /** Site Specific: Application */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . $plus;
-        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . '/' . $plus;
+        $filePath = MOLAJO_SITE_MEDIA_FOLDER . '/' . $plus;
+        $urlPath = MOLAJO_SITE_MEDIA_URL . '/' . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
@@ -414,8 +414,8 @@ class MolajoDocument
         }
 
         /** Site Specific: Site-wide */
-        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . $plus;
-        $urlPath = MOLAJO_SITE_FOLDER_PATH_MEDIA_URL . $plus;
+        $filePath = MOLAJO_SITE_MEDIA_FOLDER . $plus;
+        $urlPath = MOLAJO_SITE_MEDIA_URL . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
@@ -424,8 +424,8 @@ class MolajoDocument
         }
 
         /** All Sites: Application */
-        $filePath = MOLAJO_SHARED_MEDIA . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = MOLAJO_SHARED_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $filePath = MOLAJO_SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = MOLAJO_SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
@@ -434,8 +434,8 @@ class MolajoDocument
         }
 
         /** All Sites: Site Wide */
-        $filePath = MOLAJO_SHARED_MEDIA . $plus;
-        $urlPath = MOLAJO_SHARED_MEDIA_URL . $plus;
+        $filePath = MOLAJO_SITES_MEDIA_FOLDER . $plus;
+        $urlPath = MOLAJO_SITES_MEDIA_URL . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);

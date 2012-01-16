@@ -26,7 +26,9 @@ class MolajoSiteConfiguration
     public $cache_path = 'cache';
     public $logs_path = 'logs';
     public $temp_path = 'temp';
+    public $temp_url = 'temp';
     public $media_path = 'media';
+    public $media_url = 'media';
 
     /* Session settings */
     public $lifetime = '15';

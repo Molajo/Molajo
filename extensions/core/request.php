@@ -78,6 +78,42 @@ class MolajoRequest
         $this->request = new JObject();
         $this->request->set('type', 'base');
 
+        /**  site information */
+        $this->request->set('site_id', MOLAJO_SITE_ID);
+        $this->request->set('site_name', MOLAJO_SITE_NAME);
+        $this->request->set('site_asset_type_id', MOLAJO_ASSET_TYPE_BASE_SITE);
+        $this->request->set('site_asset_id',
+            MolajoAssetHelper::getAssetID($this->request->get('site_asset_type_id'),
+                MOLAJO_SITE_ID));
+
+        /**  application information */
+        $this->request->set('application_id', MOLAJO_APPLICATION_ID);
+        $this->request->set('application_name', MolajoController::getApplication()->get('application_name', MOLAJO_APPLICATION));
+        $this->request->set('application_asset_type_id', MOLAJO_ASSET_TYPE_BASE_APPLICATION);
+        $this->request->set('application_asset_id',
+            MolajoAssetHelper::getAssetID($this->request->get('application_asset_type_id'),
+                MOLAJO_APPLICATION_ID));
+
+        /**  user information */
+        $this->request->set('user_id', MolajoController::getUser()->get('id'), 0);
+        $this->request->set('user_name', MolajoController::getUser()->get('username'), 'guest');
+        $this->request->set('user_asset_type_id', MOLAJO_ASSET_TYPE_USER);
+        $this->request->set('user_asset_id',
+            MolajoAssetHelper::getAssetID($this->request->get('user_asset_type_id'),
+                $this->request->get('user_id')));
+        $this->request->set('user_groups_login', '');
+        $this->request->set('user_groups_create', '');
+        $this->request->set('user_groups_view', '');
+        $this->request->set('user_groups_edit', '');
+        $this->request->set('user_groups_publish', '');
+        $this->request->set('user_groups_delete', '');
+        $this->request->set('user_groups_admin', '');
+
+        /** status */
+        $this->request->set('error', false);
+        $this->request->set('authorised', false);
+        $this->request->set('found', false);
+
         $this->request->set('parameters', '');
 
         /** status */
@@ -168,17 +204,23 @@ class MolajoRequest
         $this->request->set('extension_path', '');
         $this->request->set('extension_type', '');
         $this->request->set('extension_folder', '');
+        $this->request->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_USER);
+        $this->request->set('extension_asset_id', '');
 
         /** primary category */
         $this->request->set('category', 0);
         $this->request->set('category_title', '');
         $this->request->set('category_parameters', array());
         $this->request->set('category_metadata', array());
+        $this->request->set('category_asset_type_id', MOLAJO_ASSET_TYPE_CATEGORY_LIST);
+        $this->request->set('category_asset_id', '');
 
         /** menu item data */
         $this->request->set('menu_item_id', 0);
         $this->request->set('menu_item_parameters', array());
         $this->request->set('menu_item_metadata', array());
+        $this->request->set('menu_item_asset_type_id', MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT);
+        $this->request->set('menu_item_asset_id', '');
 
         /** source data */
         $this->request->set('source_table', '');
@@ -186,6 +228,8 @@ class MolajoRequest
         $this->request->set('source_last_modified', getDate());
         $this->request->set('source_parameters', array());
         $this->request->set('source_metadata', array());
+        $this->request->set('source_asset_type_id', MOLAJO_ASSET_TYPE_USER);
+        $this->request->set('source_asset_id', '');
 
         /** results */
         $this->request->set('suppress_no_results', false);
@@ -239,7 +283,7 @@ class MolajoRequest
         }
 
         /** Get Asset Information */
-        $this->request = MolajoExtensionHelper::getAsset($this->request);
+        $this->_getAsset();
 
         /** Must be Logged on Requirement */
         if (MolajoController::getApplication()->get('logon_requirement', 0) > 0
@@ -319,7 +363,6 @@ class MolajoRequest
      */
     protected function _task()
     {
-
     }
 
     /**
@@ -402,13 +445,13 @@ class MolajoRequest
         }
 
         //$this->_mergeParameters();
-        /**
+
         $temp = (array)$this->request;
         echo '<pre>';
         var_dump($temp);
         echo '</pre>';
         die;
-         */
+
     }
 
     /**
@@ -493,6 +536,101 @@ class MolajoRequest
         $this->request->set('query_request', $path);
 
         return;
+    }
+
+    /**
+     * _getAsset
+     *
+     * Retrieve Asset and Asset Type data for a specific asset id or query request
+     *
+     * @results  null
+     * @since    1.0
+     */
+    protected function _getAsset()
+    {
+        $results = MolajoAssetHelper::getAsset($this->request->get('asset_id'),
+            $this->request->get('query_request'));
+
+        if (count($results) == 0) {
+            $found = false;
+
+        } else {
+            $found = true;
+
+            foreach ($results as $result) {
+
+                if ((int)$this->request->get('asset_id', 0)
+                    == MolajoController::getApplication()->get('home_extension_id')
+                ) {
+                    $this->request->set('home', true);
+                } else {
+                    $this->request->set('home', false);
+                }
+
+                $this->request->set('option', $result->option);
+                $this->request->set('template_id', $result->template_id);
+                $this->request->set('page', $result->template_page);
+                $this->request->set('asset_id', $result->asset_id);
+                $this->request->set('asset_type_id', $result->asset_type_id);
+                $this->request->set('source_table', $result->source_table);
+                $this->request->set('source_id', $result->source_id);
+                $this->request->set('source_language', $result->language);
+                $this->request->set('translation_of_id', $result->translation_of_id);
+                $this->request->set('view_group_id', $result->view_group_id);
+                $this->request->set('category', $result->primary_category_id);
+                $this->request->set('redirect_to_id', $result->redirect_to_id);
+
+                $this->request->set('request', $result->request);
+                $this->request->set('sef_request', $result->sef_request);
+
+                $parameterArray = array();
+                $temp = substr($this->request->get('request'), 10, (strlen($this->request->get('request')) - 10));
+                $parameterArray = explode('&', $temp);
+                $other_parameters = array();
+
+                foreach ($parameterArray as $parameter) {
+
+                    $pair = explode('=', $parameter);
+
+                    if ($pair[0] == 'task') {
+                        $this->request->get('task', $pair[1]);
+
+                    } elseif ($pair[0] == 'format') {
+                        $this->request->get('format', $pair[1]);
+
+                    } elseif ($pair[0] == 'option') {
+                        $this->request->get('option', $pair[1]);
+
+                    } elseif ($pair[0] == 'view') {
+                        $this->request->get('view', $pair[1]);
+
+                    } elseif ($pair[0] == 'wrap') {
+                        $this->request->get('wrap', $pair[1]);
+
+                    } elseif ($pair[0] == 'template') {
+                        $this->request->get('template_name', $pair[1]);
+
+                    } elseif ($pair[0] == 'page') {
+                        $this->request->get('page', $pair[1]);
+
+                    } elseif ($pair[0] == 'static') {
+                        $this->request->get('wrap', $pair[1]);
+
+                    } elseif ($pair[0] == 'ids') {
+                        $this->request->get('ids', $pair[1]);
+
+                    } elseif ($pair[0] == 'id') {
+                        $this->request->get('id', $pair[1]);
+
+                    } else {
+
+                        $other_parameters[] = $pair[0]->$pair[1];
+                    }
+                }
+                $this->request->set('other_parameters', $other_parameters);
+            }
+        }
+        $this->request->set('found', $found);
     }
 
     /**
