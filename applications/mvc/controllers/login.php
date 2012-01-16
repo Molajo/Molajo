@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoControllerLogin extends MolajoControllerApplication
+class MolajoControllerLogin
 {
     /**
      * login

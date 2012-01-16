@@ -52,7 +52,7 @@ class MolajoModelHead extends MolajoModel
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
         $tempObject->set('title', $this->request->get('metadata_title'));
-        $tempObject->set('base', $this->request->get('base'));
+        $tempObject->set('base', $this->request->get('url_base'));
         $tempObject->set('last_modified', $this->request->get('source_last_modified'));
         $tempObject->set('description', $this->request->get('metadata_description'));
         $tempObject->set('generator', $this->request->get('metadata_generator'));

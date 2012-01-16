@@ -123,7 +123,7 @@ class MolajoModelDisplay extends MolajoModel
      */
     protected function populateState()
     {
-        $this->context = strtolower($this->request['option'] . '.' . $this->get('name','')) . '.' . $this->request['view'];
+        $this->context = $this->_name;
 
         $this->parameters = $this->request['parameters'];
 

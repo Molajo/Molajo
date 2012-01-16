@@ -227,7 +227,6 @@ abstract class MolajoExtensionHelper
         $request->set('controller', '');
         $request->set('model', '');
         $request->set('plugin_type', '');
-        $request->set('acl_implementation', '');
         $request->set('component_table', '');
 
         /** Configuration model */

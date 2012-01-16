@@ -121,9 +121,9 @@ class MolajoControllerRedirect
         }
 
         /** 2. display, add, edit tasks **/
-        if ($this->request->get('task') == 'display'
-            || $this->request->get('task') == 'add'
-            || $this->request->get('task') == 'edit'
+        if ($this->request->get('mvc_task') == 'display'
+            || $this->request->get('mvc_task') == 'add'
+            || $this->request->get('mvc_task') == 'edit'
         ) {
             $this->setRedirectAction(false);
             return;
@@ -154,35 +154,35 @@ class MolajoControllerRedirect
         }
 
         /** cancel **/
-        if ($this->request->get('task') == 'cancel') {
+        if ($this->request->get('mvc_task') == 'cancel') {
             if (MolajoController::getApplication()->getName() == 'site') {
-                if ($this->request->get('id') == 0) {
+                if ($this->request->get('mvc_id') == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option=' . $this->request->get('option') . '&view=display&id=' . $this->request->get('id') . $extension . $component_specific;
+                    $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=display&id=' . $this->request->get('mvc_id') . $extension . $component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option=' . $this->request->get('option') . '&view=edit&id=' . $this->request->get('id') . $extension . $component_specific;
+                $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=edit&id=' . $this->request->get('mvc_id') . $extension . $component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
         }
 
-        if ($this->request->get('task') == 'login') {
+        if ($this->request->get('mvc_task') == 'login') {
             $this->redirectSuccess = 'index.php?option=dashboard&view=display';
             $this->redirectReturn = 'index.php?option=login';
 
-        } elseif ($this->request->get('task') == 'logout') {
+        } elseif ($this->request->get('mvc_task') == 'logout') {
             $this->redirectSuccess = 'index.php';
-            $this->redirectReturn = 'index.php?option=' . $this->request->get('option') . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->request->get('extension_title') . '&view=display' . $extension . $component_specific;
 
-        } elseif ($this->request->get('task') == 'display') {
-            $this->redirectSuccess = 'index.php?option=' . $this->request->get('option') . '&view=display' . $extension . $component_specific;
+        } elseif ($this->request->get('mvc_task') == 'display') {
+            $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=display' . $extension . $component_specific;
             $this->redirectReturn = $this->redirectSuccess;
 
         } else {
-            $this->redirectSuccess = 'index.php?option=' . $this->request->get('option') . '&view=display' . $extension . $component_specific;
-            $this->redirectReturn = 'index.php?option=' . $this->request->get('option') . '&view=edit' . $extension . $component_specific;
+            $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->request->get('extension_title') . '&view=edit' . $extension . $component_specific;
         }
 
         return;
@@ -301,7 +301,7 @@ class MolajoControllerRedirect
         }
 
         /** list **/
-        if ($this->request->get('controller') == $this->request->get('DefaultView')) {
+        if ($this->request->get('mvc_controller') == $this->request->get('DefaultView')) {
             $link = $this->redirectSuccess;
 
             /** failure **/

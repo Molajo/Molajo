@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * Acts as a Factory class for site specific functions and API options
  */
-class MolajoControllerSite extends JObject
+class MolajoControllerSite
 {
     /**
      * Configuration for Site

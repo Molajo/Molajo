@@ -40,7 +40,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     public function display()
     {
         /** model */
-        $modelClass = $this->request->get('model');
+        $modelClass = $this->request->get('mvc_model');
         $this->model = new $modelClass();
 
         /** set model properties */
@@ -48,7 +48,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->model->parameters = $this->parameters;
 
         /** check out */
-        if ($this->request->get('task') == 'edit') {
+        if ($this->request->get('mvc_task') == 'edit') {
             $results = parent::checkoutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -72,10 +72,10 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /** render view */
         $this->view_path = $this->request->get('view_path');
         $this->view_path_url = $this->request->get('view_path_url');
-        $renderedOutput = $this->renderView($this->request->get('view'), $this->request->get('view_type'));
+        $renderedOutput = $this->renderView($this->request->get('view_name'), $this->request->get('view_type'));
 
         /** wrap view */
-        return $this->wrapView($this->request->get('wrap'), 'wraps', $renderedOutput);
+        return $this->wrapView($this->request->get('wrap_name'), 'wraps', $renderedOutput);
     }
 
     /**
@@ -104,7 +104,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->view_path = $this->request->get('wrap_path');
         $this->view_path_url = $this->request->get('wrap_path_url');
 
-        return $this->renderView($this->request->get('wrap'), 'wraps');
+        return $this->renderView($this->request->get('wrap_name'), 'wraps');
     }
 
     /**
