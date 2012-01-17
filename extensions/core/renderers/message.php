@@ -132,6 +132,6 @@ class MolajoMessageRenderer
         $this->_request->set('wrap_path', $wrapHelper->view_path);
         $this->_request->set('wrap_path_url', $wrapHelper->view_path_url);
 
-        $this->_request->set('suppress_no_results', true);
+        $this->_request->set('extension_suppress_no_results', true);
     }
 }

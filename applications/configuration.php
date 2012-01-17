@@ -112,7 +112,7 @@ class MolajoConfig
     /** Template and View Defaults */
     public $default_format = 'html';
     public $default_template = 'molajito';
-    public $default_page = 'full';
+    public $default_page = 'default';
 
     public $default_static_view = 'dashboard';
     public $default_static_wrap = 'div';

@@ -63,7 +63,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         /** no results */
         if (count($this->rowset) == 0
-            && $this->parameters->def('suppress_no_results', false) === true
+            && $this->parameters->def('extension_suppress_no_results', false) === true
         ) {
             echo 'return';
             return;

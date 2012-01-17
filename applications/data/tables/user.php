@@ -27,7 +27,7 @@ class MolajoTableUser extends MolajoTable
     public $applications = array();
 
     /**
-     * Associative array of user => group ids
+     * Associative arrays of user => group ids
      *
      * @since  1.0
      * @var    array
@@ -35,7 +35,7 @@ class MolajoTableUser extends MolajoTable
     public $groups = array();
 
     /**
-     * Associative array of user => view group ids
+     * Associative arrays of user => view group ids
      *
      * @since  1.0
      * @var    array
@@ -151,7 +151,6 @@ class MolajoTableUser extends MolajoTable
             /** view groups */
             $query = $db->getQuery(true);
             $query->select('a.' . $db->nameQuote('id'));
-            $query->select('a.' . $db->nameQuote('view_group_name_list') . ' as title');
             $query->from($db->nameQuote('#__view_groups') . ' as a');
             $query->from($db->nameQuote('#__user_view_groups') . ' as b');
             $query->where('a.' . $db->nameQuote('id') . ' = b.' . $db->nameQuote('view_group_id'));
@@ -159,13 +158,12 @@ class MolajoTableUser extends MolajoTable
 
             $db->setQuery($query->__toString());
 
-            $this->view_groups = $this->_database->loadAssocList('title', 'id');
+            $this->view_groups = $this->_database->loadResultArray();
 
             if ($this->_database->getErrorNum()) {
                 $this->setError($this->_database->getErrorMsg());
                 return false;
             }
-
         }
 
         return $return;

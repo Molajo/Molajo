@@ -92,19 +92,6 @@ class MolajoDocument
      */
     protected function _render()
     {
-        /** Initialize */
-        $this->request->set('template_include', '');
-
-        if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/' . 'index.php')) {
-            $this->request->set('template_include', MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/' . 'index.php');
-        } else {
-            $this->request->set('template_name', 'system');
-            $this->request->set('template_include', MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php');
-        }
-
-        $this->request->set('template_path', MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'));
-        $this->request->set('page_template_include_statement', $this->request->get('page_path') . '/index.php');
-
         $parameters = array(
             'template' => $this->request->get('template_name'),
             'template_path' => $this->request->get('template_path'),
@@ -126,9 +113,9 @@ class MolajoDocument
         //        MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
         /** Load Media */
-        $this->_loadFavicon();
-        $this->_loadLanguage();
-        $this->_loadMedia();
+//        MolajoTemplateHelper::loadFavicon();
+//        MolajoTemplateHelper::loadLanguage();
+//        $this->_loadMedia();
 
         /** process template include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop($this->request->get('template_include'));
