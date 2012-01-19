@@ -104,13 +104,12 @@ class MolajoConfig
     public $view_access = '1';
 
     /** Home */
-    public $home_asset_id = '267';
+    public $home_asset_id = '139';
 
     /** Logon Requirement */
-    public $logon_requirement = '267';
+    public $logon_requirement = '139';
 
     /** Template and View Defaults */
-    public $default_format = 'html';
     public $default_template = 'molajito';
     public $default_page = 'default';
 
@@ -146,7 +145,6 @@ class MolajoConfig
     public $error_page = 'error';
 
     /** Feed */
-    public $feed_format = 'feed';
     public $feed_template = 'feed';
     public $feed_page = 'feed';
     public $feed_limit = 10;
@@ -158,7 +156,7 @@ class MolajoConfig
     public $media_priority_user = 300;
     public $media_priority_module = 400;
     public $media_priority_plugin = 400;
-    public $media_priority_component = 500;
+    public $media_priority_request_extension = 500;
     public $media_priority_template = 600;
     public $media_priority_primary_category = 700;
     public $media_priority_menu_item = 800;

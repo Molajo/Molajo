@@ -262,21 +262,6 @@ class MolajoACL
                 }
             }
 
-            /** Component Option */
-            $session = MolajoController::getApplication()->getSession();
-            if ($session->get('page.option') == $option) {
-                $acl_implementation = $session->get('page.acl_implementation');
-            } else {
-                $molajoConfig = new MolajoModelConfiguration(array('option' => $option));
-                $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION);
-            }
-
-            $implementedClass = 'MolajoACL' . ucfirst($acl_implementation);
-            if (class_exists($implementedClass)) {
-                if (method_exists($implementedClass, $method)) {
-                    return $implementedClass;
-                }
-            }
         }
 
         $default_class = 'MolajoACLCore';

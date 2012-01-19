@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Multiple Controller
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -19,11 +19,11 @@ defined('MOLAJO') or die;
  * - Feature: feature and unfeature
  * - State: archive, publish, unpublish, spam, trash (Note: version is automatic with save and delete)
  *
- * @package        Molajo
- * @subpackage    Controller
- * @since        1.0
+ * @package     Molajo
+ * @subpackage  Controller
+ * @since       1.0
  */
-class MolajoControllerMultiple extends MolajoControllerUpdate
+class MolajoControllerUpdatelist extends MolajoControllerUpdate
 {
     /**
      * Tasks: reorder, orderup, orderdown, saveorder

@@ -27,8 +27,8 @@
             <fieldset name="fieldset_molajo">
                 <field
                         name="intro"
-                        label="PLG_SYSTEM_MOLAJO_FIELD_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELD_DESC"
+                        label="PLG_SYSTEM_FIELD_LABEL"
+                        description="PLG_SYSTEM_FIELD_DESC"
                         type="spacer"
                         hr="false"
                         />
@@ -661,8 +661,8 @@
                         name="section_audio_options"
                         type="spacer"
                         hr="true"
-                        label="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_OPTIONS_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_OPTIONS_DESC"
+                        label="PLG_SYSTEM_FIELDSET_AUDIO_OPTIONS_LABEL"
+                        description="PLG_SYSTEM_FIELDSET_AUDIO_OPTIONS_DESC"
                         />
 
                 <field
@@ -800,8 +800,8 @@
                         name="section_audio_flash"
                         type="spacer"
                         hr="true"
-                        label="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_FLASH_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_FLASH_DESC"
+                        label="PLG_SYSTEM_FIELDSET_AUDIO_FLASH_LABEL"
+                        description="PLG_SYSTEM_FIELDSET_AUDIO_FLASH_DESC"
                         />
 
                 <field
@@ -841,8 +841,8 @@
                         name="section_audio_color"
                         type="spacer"
                         hr="true"
-                        label="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_COLOR_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_COLOR_DESC"
+                        label="PLG_SYSTEM_FIELDSET_AUDIO_COLOR_LABEL"
+                        description="PLG_SYSTEM_FIELDSET_AUDIO_COLOR_DESC"
                         />
 
                 <field
@@ -1452,8 +1452,8 @@
                         name="spacer"
                         type="spacer"
                         hr="false"
-                        label="PLG_SYSTEM_MOLAJO_FIELD_SPACER_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELD_SPACER_DESC"
+                        label="PLG_SYSTEM_FIELD_SPACER_LABEL"
+                        description="PLG_SYSTEM_FIELD_SPACER_DESC"
                         />
 
                 <field
@@ -1461,8 +1461,8 @@
                         type="category"
                         multiple="true"
                         size="10"
-                        label="PLG_SYSTEM_MOLAJO_FIELD_CATEGORY_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELD_CATEGORY_DESC"
+                        label="PLG_SYSTEM_FIELD_CATEGORY_LABEL"
+                        description="PLG_SYSTEM_FIELD_CATEGORY_DESC"
                         >
                 </field>
 
@@ -1471,8 +1471,8 @@
                         type="extension"
                         multiple="true"
                         size="10"
-                        label="PLG_SYSTEM_MOLAJO_FIELD_EXTENSION_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELD_EXTENSION_DESC"
+                        label="PLG_SYSTEM_FIELD_EXTENSION_LABEL"
+                        description="PLG_SYSTEM_FIELD_EXTENSION_DESC"
                         >
                 </field>
 
@@ -1481,8 +1481,8 @@
                         type="tag"
                         multiple="true"
                         size="10"
-                        label="PLG_SYSTEM_MOLAJO_FIELD_TAG_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_FIELD_TAG_DESC"
+                        label="PLG_SYSTEM_FIELD_TAG_LABEL"
+                        description="PLG_SYSTEM_FIELD_TAG_DESC"
                         >
                 </field>
             </fieldset>

@@ -17,9 +17,16 @@
             />
 
     <field
-            name="page_class_suffix"
+            name="page_css_class"
             type="text"
-            label="PAGE_CLASS_LABEL"
-            description="PAGE_CLASS_DESC"
+            label="PAGE_CSS_CLASS_LABEL"
+            description="PAGE_CSS_CLASS_DESC"
+            />
+
+    <field
+            name="page_css_id"
+            type="text"
+            label="PAGE_CSS_CLASS_LABEL"
+            description="PAGE_CSS_CLASS_DESC"
             />
 </fieldset>

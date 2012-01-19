@@ -22,11 +22,11 @@ abstract class MolajoAssetHelper
      * getAssetID
      *
      * Retrieves Asset ID
-     * 
+     *
      * @param  null $asset_type_id
-     * 
+     *
      * @param  null $source_id
-     * 
+     *
      * @return bool|mixed
      * @since  1.0
      */
@@ -46,7 +46,7 @@ abstract class MolajoAssetHelper
         $query->from($db->namequote('#__assets') . ' as a');
         $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
         $query->where('a.' . $db->namequote('source_id') . ' = ' . (int)$source_id);
-        
+
         /** Asset Instance ACL */
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
 
@@ -85,7 +85,7 @@ abstract class MolajoAssetHelper
         $query->select('a.' . $db->nameQuote('request'));
         $query->select('a.' . $db->nameQuote('primary_category_id'));
         $query->select('a.' . $db->nameQuote('template_id'));
-        $query->select('a.' . $db->nameQuote('template_page'));
+        $query->select('a.' . $db->nameQuote('page_id'));
         $query->select('a.' . $db->nameQuote('language'));
         $query->select('a.' . $db->nameQuote('translation_of_id'));
         $query->select('a.' . $db->nameQuote('redirect_to_id'));
@@ -110,14 +110,17 @@ abstract class MolajoAssetHelper
         }
 
         $db->setQuery($query->__toString());
-        $results = $db->loadObjectList();
+        $rows = $db->loadObjectList();
 
         if ($db->getErrorNum() == 0) {
+
         } else {
             MolajoController::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
             return false;
         }
 
-        return $results;
+        foreach ($rows as $row) {
+        }
+        return $row;
     }
 }

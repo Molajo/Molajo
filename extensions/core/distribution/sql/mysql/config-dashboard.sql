@@ -81,20 +81,6 @@ INSERT INTO `molajo_extension_options`
 
 # FORMATS
 
-# 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (@id, 0, 4000, '', '', 0),
-      (@id, 0, 4000, 'html', 'html', 1);
-
-# 4100 MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (@id, 0, 4100, '', '', 0),
-      (@id, 0, 4100, 'html', 'html', 1);
-
 # 6000 MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)

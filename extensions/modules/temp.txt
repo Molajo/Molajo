@@ -24,9 +24,8 @@ pagination
 plugins
 quicklinks
 search
+syndicate
 submenu
 textbox
 title
 toolbar
-search
-syndicate

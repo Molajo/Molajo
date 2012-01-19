@@ -13,7 +13,7 @@ class CommentsController extends MolajoControllerDisplay
 class CommentsControllerEdit extends MolajoControllerEdit
 {
 }
-class CommentsControllerMultiple extends MolajoControllerMultiple
+class CommentsControllerMultiple extends MolajoControllerUpdatelist
 {
 }
 class CommentsTableComment extends MolajoTableContent

@@ -112,7 +112,7 @@ class MolajoControllerRedirect
     public function initialise()
     {
         /** 1. ajax and non-html output **/
-        $format = $this->request->get('format');
+        $format = $this->request->get('mvc_format');
         if ($format == 'html' || $format == null || $format == '') {
             $format = 'html';
         } else {

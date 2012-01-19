@@ -53,30 +53,12 @@ abstract class MolajoExtensionHelper
         $nullDate = $db->getNullDate();
         $acl = new MolajoACL ();
 
-        /** fix and remove */
-        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN) {
-
-            $query->where('a.' . $db->namequote('name') . ' != "sef"');
-            $query->where('a.' . $db->namequote('name') . ' != "joomla"');
-            $query->where('a.' . $db->namequote('name') . ' != "example"');
-            $query->where('a.' . $db->namequote('name') . ' != "system"');
-            $query->where('a.' . $db->namequote('name') . ' != "webservices"');
-            $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
-            $query->where('a.' . $db->namequote('name') . ' != "content"');
-            $query->where('a.' . $db->namequote('name') . ' != "links"');
-            $query->where('a.' . $db->namequote('name') . ' != "media"');
-            $query->where('a.' . $db->namequote('name') . ' != "protect"');
-            $query->where('a.' . $db->namequote('name') . ' != "responses"');
-            $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
-        }
-
         /**
          *  Extensions Table
          */
         $query->select('a.' . $db->namequote('id') . ' as extension_id');
         $query->select('a.' . $db->namequote('name') . ' as extension_name');
-        $query->select('a.' . $db->namequote('element'));
-        $query->select('a.' . $db->namequote('folder'));
+        $query->select('a.' . $db->namequote('subtype') );
 
         $query->from($db->namequote('#__extensions') . ' as a');
 
@@ -85,10 +67,10 @@ abstract class MolajoExtensionHelper
         } else {
             $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
         }
-        /** plugins and views have folders */
+        /** plugins and views have subtypes */
         if ($extension_type == null) {
         } else {
-            $query->where('(a.' . $db->namequote('folder') . ' = ' . $db->quote($extension_type) . ')');
+            $query->where('(a.' . $db->namequote('subtype') . ' = ' . $db->quote($extension_type) . ')');
         }
 
         /** Extension Instances Table */
@@ -174,7 +156,7 @@ abstract class MolajoExtensionHelper
             $query->select('c_assets.' . $db->namequote('sef_request'));
             $query->select('c_assets.' . $db->namequote('request'));
             $query->select('c_assets.' . $db->namequote('template_id') . ' as menu_item_template_id');
-            $query->select('c_assets.' . $db->namequote('template_page') . ' as menu_item_template_page');
+            $query->select('c_assets.' . $db->namequote('page_id') . ' as menu_item_page_id');
 
             $query->from($db->namequote('#__assets') . ' as c_assets');
             $query->from($db->namequote('#__asset_types') . ' as c_ctype');
@@ -199,8 +181,7 @@ abstract class MolajoExtensionHelper
         $query->where('e.' . $db->namequote('site_id') . ' = ' . MOLAJO_SITE_ID);
 
         $db->setQuery($query->__toString());
-echo $query->__toString();
-        die;
+
         $extensions = $db->loadObjectList();
 
         if ($error = $db->getErrorMsg()) {
@@ -211,6 +192,51 @@ echo $query->__toString();
 
         return $extensions;
     }
+
+    /**
+     * getExtensionInstanceName
+     *
+     * Retrieves Extension Name, given the extension_instance_id
+     *
+     * @static
+     * @param   $extension_instance_id
+     *
+     * @return  bool|mixed
+     * @since   1.0
+     */
+    public static function getExtensionInstanceName($extension_instance_id)
+    {
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+        $date = MolajoController::getDate();
+        $now = $date->toMySQL();
+        $nullDate = $db->getNullDate();
+        $acl = new MolajoACL ();
+
+        $query->select('a.' . $db->namequote('title'));
+        $query->from($db->namequote('#__extension_instances') . ' as a');
+        $query->where('a.' . $db->namequote('id') . ' = ' . (int)$extension_instance_id);
+
+        $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
+        $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
+        $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
+
+        /** assets */
+        $query->from($db->namequote('#__assets') . ' as b_assets');
+        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
+
+        $db->setQuery($query->__toString());
+        $name = $db->loadResult();
+
+        if ($error = $db->getErrorMsg()) {
+            MolajoError::raiseWarning(500, $error);
+            return false;
+        }
+
+        return $name;
+    }
+
+
     /**
      * getExtensions
      *
@@ -265,7 +291,7 @@ echo $query->__toString();
 
         /** assets */
         $query->from($db->namequote('#__assets') . ' as b_assets');
-        $query->where('b_assets.asset_type_id BETWEEN '.MOLAJO_ASSET_TYPE_MENU_ITEM_BEGIN.' AND '.MOLAJO_ASSET_TYPE_MENU_ITEM_END);
+        $query->where('b_assets.asset_type_id BETWEEN ' . MOLAJO_ASSET_TYPE_MENU_ITEM_BEGIN . ' AND ' . MOLAJO_ASSET_TYPE_MENU_ITEM_END);
         $query->where('b_assets.source_id = a.' . $db->namequote('id'));
 
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
@@ -380,21 +406,6 @@ echo $query->__toString();
         }
 
         if ($request->get('controller') == 'display') {
-
-            /** 6. Format */
-            if ($request->get('format') == '') {
-                $results = false;
-            } else {
-                $results = $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS, $request->get('format'));
-            }
-
-            /** get default format */
-            if ($results === false) {
-                $request->get('format', $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT));
-                if ($request->get('format') === false) {
-                    $request->get('format', MolajoController::getApplication()->get('default_format', 'html'));
-                }
-            }
 
             /** View **/
             if ($request->get('static') === true) {
