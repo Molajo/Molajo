@@ -16,7 +16,7 @@ define('MOLAJO', 'Long Live Molajo!');
 define('DS', DIRECTORY_SEPARATOR);
 
 /** Base Folder and URL */
-define('MOLAJO_BASE_FOLDER', strtolower(dirname(__FILE__)));
+define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
 
 /**
  *  OVERRIDE PATHS TO PRIMARY FOLDERS USING THE FOLLOWING DEFINES.PHP FILES

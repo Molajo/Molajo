@@ -27,7 +27,7 @@ class MolajoUpdater extends MolajoAdapter
     public function __construct()
     {
         // Adapter base path, class prefix
-        parent::__construct(dirname(__FILE__), 'MolajoUpdater');
+        parent::__construct(__DIR__, 'MolajoUpdater');
     }
 
     /**

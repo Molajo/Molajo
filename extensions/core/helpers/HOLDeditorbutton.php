@@ -94,7 +94,7 @@ class MolajoEditorbuttonHelper extends MolajoPluginHelper
 
                 /** build button if criteria met **/
                 if ($categoryFound === true) {
-                    require_once dirname(__FILE__) . '/' . $buttonName . '/driver.php';
+                    require_once __DIR__ . '/' . $buttonName . '/driver.php';
                     $className = 'MolajoEditorButton' . ucfirst($buttonName);
                     $buttonClass = new $className ();
                     $editorButtonsArray[] = $buttonClass->buildButton($name);

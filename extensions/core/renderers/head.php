@@ -86,8 +86,8 @@ class MolajoHeadRenderer
      */
     protected function _setRequest()
     {
-        $this->_request->set('view', MolajoController::getApplication()->get('head_view', 'head'));
-        $this->_request->set('wrap', MolajoController::getApplication()->get('head_wrap', 'none'));
+        $this->_request->set('view', MolajoController::getApplication()->get('head_view_id', 'head'));
+        $this->_request->set('wrap', MolajoController::getApplication()->get('head_wrap_id', 'none'));
 
         foreach ($this->_attributes as $name => $value) {
 

@@ -57,38 +57,39 @@ class MolajoConfig
     /**             */
     public $application_name = 'Molajo';
 
-    /** Meta */
+    /* Metadata */
+    public $metadata_title = 'Administrator';
     public $metadata_description = 'Molajo - the Cats Meow';
     public $metadata_keywords = 'molajo, Molajo';
-    public $metadata_author = 'Person Name';
+    public $metadata_author = 'Amy Stephen';
     public $metadata_content_rights = 'Creative Commons Attribution-ShareAlike 3.0 Unported License';
     public $metadata_robots = 'follow, index';
 
-    /** Cache */
+    /* Cache */
     public $caching = '0';
     public $cache_time = '15';
     public $cache_handler = 'file';
 
-    /** SEO */
+    /* SEO */
     public $sef = '1';
     public $sef_rewrite = '0';
     public $sef_suffix = '0';
     public $unicode_slugs = '0';
     public $force_ssl = '0';
 
-    /** Locale */
+    /* Locale */
     public $language = 'en-GB';
     public $offset = 'UTC';
     public $offset_user = 'UTC';
     public $multilingual = '0';
 
-    /** Lists */
+    /* Lists */
     public $list_limit = 20;
 
-    /** HTML5 */
+    /* HTML5 */
     public $html5 = '1';
 
-    /** Media */
+    /* Media */
     public $image_xsmall = '50';
     public $image_small = '75';
     public $image_medium = '150';
@@ -97,65 +98,64 @@ class MolajoConfig
     public $image_folder = 'images';
     public $thumb_folder = 'thumbs';
 
-    /** User Defaults */
+    /* User Defaults */
     public $editor = 'none';
 
-    /** ACL */
+    /* ACL */
     public $view_access = '1';
 
-    /** Home */
+    /* Home */
     public $home_asset_id = '139';
 
-    /** Logon Requirement */
+    /* Logon Requirement */
     public $logon_requirement = '139';
 
-    /** Template and View Defaults */
-    public $default_template = 'molajito';
-    public $default_page = 'default';
+    /* Template and View Defaults */
+    public $default_template_id = 82;
+    public $default_page_id = 69;
 
-    public $default_static_view = 'dashboard';
-    public $default_static_wrap = 'div';
-    public $default_items_view = 'items';
-    public $default_items_wrap = 'section';
-    public $default_item_view = 'item';
-    public $default_item_wrap = 'article';
-    public $default_edit_view = 'edit';
-    public $default_edit_wrap = 'div';
+    public $default_static_view_id = 33;
+    public $default_static_wrap_id = 81;
+    public $default_items_view_id = 47;
+    public $default_items_wrap_id = 81;
+    public $default_item_view_id = 35;
+    public $default_item_wrap_id = 72;
+    public $default_edit_view_id = 39;
+    public $default_edit_wrap_id = 81;
 
-    /** Head */
-    public $head_view = 'head';
-    public $head_wrap = 'none';
-    public $defer_view = 'defer';
-    public $defer_wrap = 'none';
+    /* Head */
+    public $head_view_id = 37;
+    public $head_wrap_id = 80;
+    public $defer_view_id = 37;
+    public $defer_wrap_id = 80;
 
-    /** Message */
-    public $message_view = 'messages';
-    public $message_wrap = 'div';
+    /* Message */
+    public $message_view_id = 58;
+    public $message_wrap_id = 81;
 
-    /** Offline */
+    /* Offline */
     public $offline = '0';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_template = 'system';
-    public $offline_page = 'offline';
+    public $offline_template_id = 113;
+    public $offline_page_id = 81;
 
-    /** Error */
+    /* Error */
     public $error_404_message = 'Page not found';
     public $error_403_message = 'Not authorised';
-    public $error_template = 'system';
-    public $error_page = 'error';
+    public $error_template_id = 113;
+    public $error_page_id = 81;
 
-    /** Feed */
-    public $feed_template = 'feed';
-    public $feed_page = 'feed';
+    /* Feed */
+    public $feed_template_id = 113;
+    public $feed_page_id = 81;
     public $feed_limit = 10;
     public $feed_email = 'author';
 
-    /** Priority */
+    /* Priority */
     public $media_priority_site = 100;
     public $media_priority_application = 200;
     public $media_priority_user = 300;
-    public $media_priority_module = 400;
-    public $media_priority_plugin = 400;
+    public $media_priority_other_extension = 400;
     public $media_priority_request_extension = 500;
     public $media_priority_template = 600;
     public $media_priority_primary_category = 700;

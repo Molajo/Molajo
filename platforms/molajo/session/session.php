@@ -247,7 +247,7 @@ class MolajoSession extends JObject
      */
     public static function getStores()
     {
-        $handlers = JFolder::files(dirname(__FILE__) . DS . 'storage', '.php$');
+        $handlers = JFolder::files(__DIR__ . DS . 'storage', '.php$');
 
         $names = array();
         foreach ($handlers as $handler) {
@@ -258,7 +258,7 @@ class MolajoSession extends JObject
             //Load the class only if needed
             if (class_exists($class)) {
             } else {
-                require_once dirname(__FILE__) . DS . 'storage' . DS . $name . '.php';
+                require_once __DIR__ . DS . 'storage' . DS . $name . '.php';
             }
 
             if (call_user_func_array(array(trim($class), 'test'), array())) {

@@ -86,8 +86,8 @@ class MolajoMessageRenderer
      */
     protected function _setRequest()
     {
-        $this->_request->set('view', MolajoController::getApplication()->get('message_view', 'messages'));
-        $this->_request->set('wrap', MolajoController::getApplication()->get('message_wrap', 'div'));
+        $this->_request->set('view', MolajoController::getApplication()->get('message_view_id', 'messages'));
+        $this->_request->set('wrap', MolajoController::getApplication()->get('message_wrap_id', 'div'));
 
         foreach ($this->_attributes as $name => $value) {
 

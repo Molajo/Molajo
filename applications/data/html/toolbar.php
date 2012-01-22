@@ -56,7 +56,7 @@ class MolajoToolbar extends JObject
         $this->_name = $name;
 
         // Set base path to find buttons.
-        $this->_buttonPath[] = dirname(__FILE__) . '/' . 'toolbar' . '/' . 'button';
+        $this->_buttonPath[] = __DIR__ . '/' . 'toolbar' . '/' . 'button';
 
     }
 

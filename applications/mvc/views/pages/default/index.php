@@ -8,8 +8,8 @@
 defined('MOLAJO') or die; ?>
 <include:head/>
 <include:module name=header view=header wrap=header/>
-<include:module name=menu wrap=nav/>
 <include:message/>
+<include:module name=menu wrap=nav/>
 <include:request/>
 <include:module position=footer view=footer wrap=footer/>
 <include:defer/>

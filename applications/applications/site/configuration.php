@@ -55,39 +55,39 @@ class MolajoConfigApplication
 
     /* Template and View Defaults */
     public $default_format = 'html';
-    public $default_template = 'molajito';
-    public $default_page = 'full';
-    public $default_static_view = 'dashboard';
-    public $default_static_wrap = 'div';
-    public $default_items_view = 'items';
-    public $default_items_wrap = 'section';
-    public $default_item_view = 'item';
-    public $default_item_wrap = 'article';
-    public $default_edit_view = 'edit';
-    public $default_edit_wrap = 'div';
+    public $default_template_id = 'molajito';
+    public $default_page_id = 'full';
+    public $default_static_view_id = 'dashboard';
+    public $default_static_wrap_id = 'div';
+    public $default_items_view_id = 'items';
+    public $default_items_wrap_id = 'section';
+    public $default_item_view_id = 'item';
+    public $default_item_wrap_id = 'article';
+    public $default_edit_view_id = 'edit';
+    public $default_edit_wrap_id = 'div';
 
     /* Offline */
     public $offline = '0';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
     public $offline_format = 'static';
-    public $offline_template = 'system';
-    public $offline_page = 'full';
+    public $offline_template_id = 'system';
+    public $offline_page_id = 'full';
     public $offline_view = 'offline';
     public $offline_wrap = 'div';
     public $offline_asset_id = '0';
 
     /* Error */
     public $error_format = 'static';
-    public $error_template = 'system';
-    public $error_page = 'full';
+    public $error_template_id = 'system';
+    public $error_page_id = 'full';
     public $error_view = 'error';
     public $error_wrap = 'div';
     public $error_asset_id = '0';
 
     /* Feed */
     public $feed_format = 'feed';
-    public $feed_template = 'system';
-    public $feed_page = 'full';
+    public $feed_template_id = 'system';
+    public $feed_page_id = 'full';
     public $feed_view = 'feed';
     public $feed_wrap = 'div';
     public $feed_asset_id = '0';

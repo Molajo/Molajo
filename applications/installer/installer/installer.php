@@ -106,7 +106,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function __construct()
     {
-        parent::__construct(dirname(__FILE__), 'MolajoInstaller');
+        parent::__construct(__DIR__, 'MolajoInstaller');
     }
 
     /**

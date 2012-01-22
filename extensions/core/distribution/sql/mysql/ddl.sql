@@ -101,7 +101,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_assets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 7011
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `sef_request` ON `molajo_assets` (`sef_request` ASC) ;

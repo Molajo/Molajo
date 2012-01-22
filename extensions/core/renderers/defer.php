@@ -86,8 +86,8 @@ class MolajoDeferRenderer
      */
     protected function _setRequest()
     {
-        $this->_request->set('view', MolajoController::getApplication()->get('defer_view', 'defer'));
-        $this->_request->set('wrap', MolajoController::getApplication()->get('defer_wrap', 'none'));
+        $this->_request->set('view', MolajoController::getApplication()->get('defer_view_id', 'defer'));
+        $this->_request->set('wrap', MolajoController::getApplication()->get('defer_wrap_id', 'none'));
 
         foreach ($this->_attributes as $name => $value) {
 
