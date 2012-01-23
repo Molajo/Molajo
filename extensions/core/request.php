@@ -8,6 +8,8 @@
 defined('MOLAJO') or die;
 
 /**
+ * MolajoRequest
+ *
  * Processes the Request
  *
  * Base class
@@ -27,23 +29,23 @@ class MolajoRequest
      *
      * Class constructor.
      *
-     * @param   null    $override_url_request
+     * @param   null    $override_request_url
      * @param   null    $asset_id
      *
      * @return boolean
      *
      * @since  1.0
      */
-    public function __construct($override_url_request = null, $asset_id = null)
+    public function __construct($override_request_url = null, $asset_id = null)
     {
-        /** Request Variables: Passed to Document, Renderers and MVC */
+        /** Request Object: Passed to Document, Renderers and MVC */
         $this->_initializeRequest();
 
         /** Specific asset */
         if ((int)$asset_id == 0) {
-            $this->request->set('asset_id', 0);
+            $this->request->set('request_asset_id', 0);
         } else {
-            $this->request->set('asset_id', $asset_id);
+            $this->request->set('request_asset_id', $asset_id);
         }
 
         /**
@@ -51,10 +53,10 @@ class MolajoRequest
          *  Request is stripped of Host, Folder, and Application
          *  Path ex. index.php?option=login or access/groups
          */
-        if ($override_url_request == null) {
+        if ($override_request_url == null) {
             $path = MOLAJO_PAGE_REQUEST;
         } else {
-            $path = $override_url_request;
+            $path = $override_request_url;
         }
 
         /** duplicate content: URLs without the .html */
@@ -70,24 +72,24 @@ class MolajoRequest
         }
 
         /** populate value used in query  */
-        $this->request->set('url_query_request', $path);
+        $this->request->set('request_url_query', $path);
 
         /** home: duplicate content - redirect */
-        if ($this->request->get('url_query_request', '') == 'index.php'
-            || $this->request->get('url_query_request', '') == 'index.php/'
-            || $this->request->get('url_query_request', '') == 'index.php?'
-            || $this->request->get('url_query_request', '') == '/index.php/'
+        if ($this->request->get('request_url_query', '') == 'index.php'
+            || $this->request->get('request_url_query', '') == 'index.php/'
+            || $this->request->get('request_url_query', '') == 'index.php?'
+            || $this->request->get('request_url_query', '') == '/index.php/'
         ) {
             MolajoController::getApplication()->redirect('', 301);
             return $this->request;
         }
 
         /** Home */
-        if ($this->request->get('url_query_request', '') == ''
-            && (int)$this->request->get('asset_id', 0) == 0
+        if ($this->request->get('request_url_query', '') == ''
+            && (int)$this->request->get('request_asset_id', 0) == 0
         ) {
-            $this->request->set('asset_id', MolajoController::getApplication()->get('home_asset_id', 0));
-            $this->request->set('url_home', true);
+            $this->request->set('request_asset_id', MolajoController::getApplication()->get('home_asset_id', 0));
+            $this->request->set('request_url_home', true);
         }
 
         return;
@@ -184,7 +186,21 @@ class MolajoRequest
         $this->request->set('user_view_groups', MolajoController::getUser()->view_groups);
         $this->request->set('user_guest', (boolean)MolajoController::getUser()->get('guest'), true);
 
-        /** request component */
+        /** request */
+        $this->request->set('request_url_base', MOLAJO_BASE_URL);
+        $this->request->set('request_url_query', '');
+        $this->request->set('request_url', '');
+        $this->request->set('request_url_sef', '');
+        $this->request->set('request_url_redirect_to_id', 0);
+        $this->request->set('request_url_home', 0);
+
+        $this->request->set('request_mvc_option', '');
+        $this->request->set('request_mvc_model', '');
+        $this->request->set('request_mvc_task', '');
+        $this->request->set('request_mvc_controller', '');
+        $this->request->set('request_mvc_id', 0);
+        $this->request->set('request_mvc_category_id', 0);
+
         $this->request->set('request_extension_instance_id', '');
         $this->request->set('request_extension_instance_name', '');
         $this->request->set('request_custom_fields', array());
@@ -193,6 +209,7 @@ class MolajoRequest
         $this->request->set('request_path', '');
         $this->request->set('request_type', '');
         $this->request->set('request_folder', '');
+        $this->request->set('request_plugin_type', '');
         $this->request->set('request_asset_type_id', 0);
         $this->request->set('request_asset_id', 0);
         $this->request->set('request_view_group_id', 0);
@@ -210,6 +227,20 @@ class MolajoRequest
         $this->request->set('menu_item_language', '');
         $this->request->set('menu_item_translation_of_id', 0);
 
+        /** source data */
+        $this->request->set('source_id', 0);
+        $this->request->set('source_title', '');
+        $this->request->set('source_custom_fields', array());
+        $this->request->set('source_parameters', array());
+        $this->request->set('source_metadata', array());
+        $this->request->set('source_asset_type_id', 0);
+        $this->request->set('source_asset_id', 0);
+        $this->request->set('source_view_group_id', 0);
+        $this->request->set('source_language', '');
+        $this->request->set('source_translation_of_id', 0);
+        $this->request->set('source_table', '');
+        $this->request->set('source_last_modified', getDate());
+
         /** primary category */
         $this->request->set('category_id', 0);
         $this->request->set('category_title', '');
@@ -221,31 +252,6 @@ class MolajoRequest
         $this->request->set('category_view_group_id', 0);
         $this->request->set('category_language', '');
         $this->request->set('category_translation_of_id', 0);
-
-        /** source data */
-        $this->request->set('source_id', 0);
-        $this->request->set('source_title', '');
-        $this->request->set('source_custom_fields', array());
-        $this->request->set('source_metadata', array());
-        $this->request->set('source_parameters', array());
-        $this->request->set('source_asset_type_id', 0);
-        $this->request->set('source_asset_id', 0);
-        $this->request->set('source_view_group_id', 0);
-        $this->request->set('source_language', '');
-        $this->request->set('source_translation_of_id', 0);
-        $this->request->set('source_table', '');
-        $this->request->set('source_last_modified', getDate());
-
-        /** request */
-        $this->request->set('url_base', MOLAJO_BASE_URL);
-        $this->request->set('url_query_request', '');
-        $this->request->set('url_request', '');
-        $this->request->set('url_request_option', 0);
-        $this->request->set('url_request_model', 0);
-        $this->request->set('url_request_id', 0);
-        $this->request->set('url_sef_request', '');
-        $this->request->set('url_redirect_to_id', 0);
-        $this->request->set('url_home', 0);
 
         /** merged */
         $this->request->set('parameters', array());
@@ -354,6 +360,7 @@ class MolajoRequest
      *  execute document renders and MVC
      *
      * @return bool|null
+     * @since  1.0
      */
     public function process()
     {
@@ -363,29 +370,37 @@ class MolajoRequest
             MolajoController::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', 'true');
             $message = MolajoController::getApplication()->get('offline_message', 'This site is not available.<br /> Please check back again soon.');
             MolajoController::getApplication()->setMessage($message, MOLAJO_MESSAGE_TYPE_WARNING . 503);
-            $this->request->set('template_name', MolajoController::getApplication()->get('offline_template_id', 'system'));
-            $this->request->set('page_name', MolajoController::getApplication()->get('offline_page_id', 'offline'));
+            $this->request->set('template_id', MolajoController::getApplication()->get('offline_template_id', 'system'));
+            $this->request->set('page_id', MolajoController::getApplication()->get('offline_page_id', 'offline'));
 
         } else {
+
+            /** Retrieve the Asset Record for the Request */
             $results = $this->_getAsset();
+
             if ((int)$this->request->get('menu_item_id') > 0
                 && (int)$this->request->get('source_asset_id') > 0
             ) {
                 // AMY //
             }
             $this->_routeRequest();
+
             $this->_authoriseTask();
         }
 
+        /** Display Controller */
         if ($this->request->get('mvc_task') == 'add'
             || $this->request->get('mvc_task') == 'edit'
             || $this->request->get('mvc_task') == 'display'
         ) {
             return $this->_renderDocument();
+
+            /** Action Controller */
         } else {
             return $this->_processTask();
         }
 
+        /** Return to Application */
         return;
     }
 
@@ -399,64 +414,51 @@ class MolajoRequest
      */
     protected function _getAsset()
     {
-        $row = MolajoAssetHelper::getAsset($this->request->get('asset_id'),
-            $this->request->get('url_query_request'));
+        $row = MolajoAssetHelper::getAsset($this->request->get('request_asset_id'),
+            $this->request->get('request_url_query'));
+
+        echo '<pre>';
+        var_dump($row);
+        echo '</pre>';
 
         /** Not found: exit */
         if (count($row) == 0) {
             return $this->request->set('status_found', false);
         }
-
-        $this->request->set('status_found', true);
-        $this->request->set('template_id', $row->template_id);
-        $this->request->set('page_id', $row->page_id);
-
-        if ($row->asset_type_id == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT) {
-            $this->request->set('menu_item_id', $row->source_id);
-            $this->request->set('menu_item_title', $row->title);
-            $this->request->set('menu_item_parameters', array());
-            $this->request->set('menu_item_metadata', array());
-            $this->request->set('menu_item_asset_type_id', $row->asset_type_id);
-            $this->request->set('menu_item_asset_id', $row->asset_id);
-            $this->request->set('menu_item_language', $row->language);
-            $this->request->set('menu_item_translation_of_id', $row->translation_of_id);
-            $this->request->set('menu_item_view_group_id', $row->view_group_id);
-
-            $this->_getMenuItemParameters();
-
-        } else {
-            $this->request->set('source_table', $row->source_table);
-            $this->request->set('source_id', $row->source_id);
-            $this->request->set('source_asset_id', $row->asset_id);
-            $this->request->set('source_asset_type_id', $row->asset_type_id);
-            $this->request->set('source_title', $row->title);
-            $this->request->set('source_parameters', array());
-            $this->request->set('source_metadata', array());
-            $this->request->set('source_asset_type_id', $row->asset_type_id);
-            $this->request->set('source_asset_id', $row->asset_id);
-            $this->request->set('source_language', $row->language);
-            $this->request->set('source_translation_of_id', $row->translation_of_id);
-            $this->request->set('source_view_group_id', $row->view_group_id);
-
-            $this->_getSourceParameters();
+        if ((int)$row->routable == 0) {
+            return $this->request->set('status_found', false);
         }
 
-        /** process asset */
-        if ((int)$this->request->get('asset_id', 0)
+        /** match found */
+        $this->request->set('status_found', true);
+
+        /** request url */
+        $this->request->set('request_url', $row->request);
+        $this->request->set('request_url_sef', $row->sef_request);
+        $this->request->set('request_url_redirect_to_id', $row->redirect_to_id);
+
+        /** home */
+        if ((int)$this->request->get('request_asset_id', 0)
             == MolajoController::getApplication()->get('home_extension_id')
         ) {
-            $this->request->set('url_home', true);
+            $this->request->set('request_url_home', true);
         } else {
-            $this->request->set('url_home', false);
+            $this->request->set('request_url_home', false);
         }
 
-        $this->request->set('url_request', $row->request);
-        $this->request->set('url_sef_request', $row->sef_request);
-        $this->request->set('url_redirect_to_id', $row->redirect_to_id);
+        /** mvc options and url parameters */
+        $this->request->set('request_mvc_option', $row->request_option);
+        $this->request->set('request_mvc_model', $row->request_model);
+
+        if ($row->asset_type_id == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT) {
+            $this->request->set('request_mvc_id', 0);
+        } else {
+            $this->request->set('request_mvc_id', (int)$row->request_id);
+        }
 
         $parameterArray = array();
-        $temp = substr($this->request->get('url_request'),
-            10, (strlen($this->request->get('url_request')) - 10));
+        $temp = substr($this->request->get('request_url'),
+            10, (strlen($this->request->get('request_url')) - 10));
         $parameterArray = explode('&', $temp);
         $url_parameters = array();
 
@@ -466,101 +468,295 @@ class MolajoRequest
                 $pair = explode('=', $q);
 
                 if ($pair[0] == 'task') {
-                    $this->request->set('mvc_task', $pair[1]);
+                    $this->request->set('request_mvc_task', $pair[1]);
 
-                } elseif ($pair[0] == 'option') {
-                    $this->request->set('extension_title', $pair[1]);
-
-                } elseif ($pair[0] == 'view_id') {
+                } elseif ($pair[0] == 'view') {
                     $this->request->set('view_id', $pair[1]);
 
-                } elseif ($pair[0] == 'wrap_id') {
+                } elseif ($pair[0] == 'wrap') {
                     $this->request->set('wrap_id', $pair[1]);
 
-                } elseif ($pair[0] == 'template_id') {
+                } elseif ($pair[0] == 'template') {
                     $this->request->set('template_id', $pair[1]);
 
-                } elseif ($pair[0] == 'page_id') {
+                } elseif ($pair[0] == 'page') {
                     $this->request->set('page_id', $pair[1]);
 
-                } elseif ($pair[0] == 'static') {
-                    $this->request->set('mvc_model_no_data', (boolean)$pair[1]);
-
-                } elseif ($pair[0] == 'category_id') {
+                } elseif ($pair[0] == 'category') {
                     $this->request->set('mvc_category_id', $pair[1]);
 
-                } elseif ($pair[0] == 'extension_instance_id') {
-                    $this->request->set('extension_instance_id', $pair[1]);
-
-                } elseif ($pair[0] == 'id') {
-                    $this->request->set('mvc_id', $pair[1]);
                 }
+
                 $url_parameters[$pair[0]] = $pair[1];
             }
         }
         $this->request->set('mvc_url_parameters', $url_parameters);
 
+        /** Menu Item: Aggregate Component */
+        if ($row->asset_type_id == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT) {
+            $this->request->set('menu_item_id', $row->source_id);
+            $this->request->set('menu_item_asset_type_id', $row->asset_type_id);
+            $this->request->set('menu_item_asset_id', $row->asset_id);
+            $this->request->set('menu_item_view_group_id', $row->view_group_id);
+
+            $this->_getMenuItem();
+
+        } else {
+            /** Source Data */
+            $this->request->set('source_table', $row->source_table);
+            $this->request->set('source_id', $row->source_id);
+            $this->request->set('source_asset_type_id', $row->asset_type_id);
+            $this->request->set('source_asset_id', $row->asset_id);
+            $this->request->set('source_view_group_id', $row->view_group_id);
+
+            $this->_getSource();
+        }
+
+        $this->request->set('request_asset_type_id', $row->asset_type_id);
+        $this->request->set('request_asset_id', $row->asset_id);
+        $this->request->set('request_view_group_id', $row->view_group_id);
+
+        $this->_getPrimaryCategory();
+        $this->_getExtension;
+
         return;
     }
 
     /**
-     * _getMenuItemParameters
+     * _getMenuItem
+     *
+     * Retrieve the Menu Item Data
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function _getMenuItem()
+    {
+        $row = MolajoExtensionHelper::getMenuItem((int)$this->request->get('menu_item_id'));
+
+        /** todo: amy 500 error */
+        if (count($row) > 0) {
+        } else {
+            return;
+        }
+
+        /** todo: amy 500 error */
+        /** Not found: exit */
+        if (count($row) == 0) {
+            return $this->request->set('status_found', false);
+        }
+
+        $this->request->set('menu_item_title', $row->menu_item_title);
+
+        $parameters = new JRegistry;
+        $parameters->loadString($row->menu_item_parameters);
+        $this->request->set('menu_item_parameters', $parameters);
+
+        $this->request->set('menu_item_custom_fields', $row->menu_item_custom_fields);
+        $this->request->set('menu_item_metadata', $row->menu_item_metadata);
+        $this->request->set('menu_item_language', $row->menu_item_language);
+        $this->request->set('menu_item_translation_of_id', $row->menu_item_translation_of_id);
+
+        $this->request->set('request_mvc_model', $parameters->def('model', ''));
+        $this->request->set('request_mvc_task', $parameters->def('task', 'display'));
+        $this->request->set('request_mvc_controller', $parameters->def('model', 'display'));
+        $this->request->set('request_mvc_category_id', $parameters->def('category', 0));
+
+        $this->request->set('request_extension_instance_id', $parameters->def('extension_instance_id', 0));
+
+        $table = $parameters->def('extension_source_table', '__content');
+        $this->request->set('request_extension_source_table', $table);
+
+        $this->request->set('request_path', MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request->get('extension_title'));
+        $this->request->set('request_type', 'component');
+        $this->request->set('request_folder', '');
+
+        $this->request->set('request_suppress_no_results', $parameters->def('suppress_no_results', 0));
+
+        $this->_setPageValues($this->request->get('menu_item_parameters',
+            $this->request->get('menu_item_metadata')));
+
+        //$this->request->set('request_extension_instance_id', '');
+        $this->request->set('request_extension_instance_name', '');
+        //$this->request->set('request_custom_fields', array());
+        //$this->request->set('request_metadata', array());
+        //$this->request->set('request_parameters', array());
+        //$this->request->set('request_path', '');
+        //$this->request->set('request_type', '');
+        //$this->request->set('request_folder', '');
+        $this->request->set('request_plugin_type', '');
+        //$this->request->set('request_asset_type_id', 0);
+        //$this->request->set('request_asset_id', 0);
+        //$this->request->set('request_view_group_id', 0);
+        //$this->request->set('request_suppress_no_results', false);     
+
+        return;
+    }
+
+    /**
+     * _getSource
+     *
+     * Retrieve Parameters and Metadata for Source Detail
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function _getSource()
+    {
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('a.' . $db->nameQuote('extension_instance_id'));
+        $query->select('a.' . $db->nameQuote('title'));
+        $query->select('a.' . $db->nameQuote('custom_fields'));
+        $query->select('a.' . $db->nameQuote('metadata'));
+        $query->select('a.' . $db->nameQuote('parameters'));
+        $query->select('a.' . $db->nameQuote('language'));
+        $query->select('a.' . $db->nameQuote('translation_of_id'));
+        $query->select('a.' . $db->nameQuote('modified_datetime'));
+
+        $query->from($db->nameQuote('#' . $this->request->get('source_table')) . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->request->get('source_id'));
+
+        $db->setQuery($query->__toString());
+        $rows = $db->loadObjectList();
+
+        /** todo: amy 500 error */
+        if (count($rows) == 0) {
+            return $this->request->set('status_found', false);
+        } else {
+            /** retrieve single row */
+            foreach ($rows as $row)
+            {
+            }
+        }
+
+        $this->request->set('extension_instance_id', $row->extension_instance_id);
+        $this->request->set('source_title', $row->title);
+        $this->request->set('source_custom_fields', $row->custom_fields);
+        $this->request->set('source_metadata', $row->metadata);
+
+        $parameters = new JRegistry;
+        $parameters->loadString($row->menu_item_parameters);
+        $this->request->set('source_parameters', $parameters);
+
+        $this->request->set('source_language', $row->language);
+        $this->request->set('source_translation_of_id', $row->translation_of_id);
+        $this->request->set('source_last_modified', $row->modified_datetime);
+
+        if ($this->request->get('request_mvc_model', '') == '') {
+            $this->request->set('request_mvc_model', $parameters->def('model', ''));
+        }
+        if ($this->request->get('request_mvc_task', '') == '') {
+            $this->request->set('request_mvc_task', $parameters->def('task', ''));
+        }
+        if ($this->request->get('request_mvc_controller', '') == '') {
+            $this->request->set('request_mvc_controller', $parameters->def('controller', ''));
+        }
+        if ($this->request->get('request_mvc_category_id', '') == '') {
+            $this->request->set('request_mvc_category_id', $parameters->def('primary_category', ''));
+        }
+
+        $this->request->set('request_extension_instance_id', $row->extension_instance_id);
+        $this->request->set('request_extension_source_table', $this->request->get('source_table'));
+        $this->request->set('request_suppress_no_results', $parameters->def('suppress_no_results', 0));
+
+        $this->_setPageValues($this->request->get('source_parameters',
+            $this->request->get('source_metadata')));
+
+        return;
+    }
+
+    /**
+     * _getPrimaryCategory
      *
      * Retrieve the Menu Item Parameters and Meta Data
      *
      * @return  boolean
      * @since   1.0
      */
-    protected function _getMenuItemParameters()
+    protected function _getPrimaryCategory()
     {
-        $results = MolajoExtensionHelper::getMenuItem((int)$this->request->get('menu_item_id'));
-        if (count($results) > 0) {
+        if ((int)$this->request->get('category_id', 0) == 0) {
+            return;
+        }
+
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('a.' . $db->nameQuote('title'));
+        $query->select('a.' . $db->nameQuote('parameters'));
+        $query->select('a.' . $db->nameQuote('metadata'));
+        $query->from($db->nameQuote('#__content') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->request->get('category_id'));
+
+        $db->setQuery($query->__toString());
+
+        $row = $db->loadObjectList();
+        if (count($row) > 0) {
         } else {
             return;
         }
 
-        foreach ($results as $result) {
-            // $result populated: only a single row returned
+        foreach ($row as $result) {
+            $this->request->set('category_title', $result->title);
+            $this->request->set('category_parameters', $result->parameters);
+            $this->request->set('category_metadata', $result->metadata);
         }
 
-        $this->request->set('menu_item_title', $result->menu_item_title);
+        $this->_setPageValues($this->request->get('category_parameters',
+            $this->request->get('category_metadata')));
 
-        $parameters = new JRegistry;
-        $parameters->loadString($result->menu_item_parameters);
-        $this->request->set('menu_item_parameters', $parameters);
+        return;
+    }
 
-        $this->request->set('menu_item_metadata', $result->menu_item_metadata);
-        $this->request->set('menu_item_custom_fields', $result->menu_item_custom_fields);
+    /**
+     * _getExtension
+     *
+     * Retrieve Component information using either the ID
+     *
+     * @return bool
+     * @since 1.0
+     */
+    protected function _getExtension()
+    {
+        //todo: amy 500 error
+        if ((int)$this->request->get('request_extension_instance_id') == 0) {
+            return;
+        }
 
-        if (isset($parameters->static)
-            && $parameters->static === true
-        ) {
-            $this->request->set('mvc_model_no_data', true);
+        $row = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, (int)$this->request->get('request_extension_instance_id'));
+        //todo: amy 500 error
+        if (count($row) > 0) {
         } else {
-            $this->request->set('mvc_model_no_data', false);
+            return;
         }
 
-        $id = $parameters->def('id', 0);
-        if (is_array($id)) {
-        } else if ((int)$id == 0) {
-            $this->request->set('source_id', $id);
-        } else {
-            $this->request->set('source_id', $id);
+        foreach ($row as $result) {
+            $this->request->set('extension_name', $result->extension_name);
+            $this->request->set('extension_title', $result->title);
+
+            $parameters = new JRegistry;
+            $parameters->loadString($result->parameters);
+            $this->request->set('extension_parameters', $parameters);
+            $this->request->set('extension_metadata', $result->metadata);
+            $this->request->set('custom_fields', $result->metadata);
+
+            if (isset($parameters->static)
+                && $parameters->static === true
+            ) {
+                $this->request->set('mvc_model_no_data', true);
+            } else {
+                $this->request->set('mvc_model_no_data', false);
+            }
+            $this->request->set('extension_path', MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request->set('extension_title'));
+            $this->request->set('extension_type', 'component');
+            $this->request->set('extension_folder', '');
         }
 
-        $table = $parameters->def('source_table', '__content');
-        $this->request->set('source_table', $table);
 
-        $this->request->set('mvc_id', $id);
-        $this->request->set('mvc_category_id', $parameters->def('category_id', 0));
-
-        $this->request->set('extension_path', MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request->set('extension_title'));
-        $this->request->set('extension_type', 'component');
-        $this->request->set('extension_folder', '');
-
-
-        $this->_setPageValues($this->request->get('menu_item_parameters',
-            $this->request->get('menu_item_metadata')));
+        $this->_setPageValues($this->request->get('extension_parameters',
+            $this->request->get('extension_metadata')));
 
         return;
     }
@@ -595,15 +791,15 @@ class MolajoRequest
         }
 
         /** redirect_to_id */
-        if ($this->request->get('url_redirect_to_id', 0) == 0) {
+        if ($this->request->get('request_url_redirect_to_id', 0) == 0) {
         } else {
-            MolajoController::getApplication()->redirect(MolajoAssetHelper::getURL($this->request->get('url_redirect_to_id')), 301);
+            MolajoController::getApplication()->redirect(MolajoAssetHelper::getURL($this->request->get('request_url_redirect_to_id')), 301);
         }
 
         /** Must be Logged on Requirement */
         if (MolajoController::getApplication()->get('logon_requirement', 0) > 0
             && MolajoController::getUser()->get('guest', true) === true
-            && $this->request->get('asset_id') <> MolajoController::getApplication()->get('logon_requirement', 0)
+            && $this->request->get('request_asset_id') <> MolajoController::getApplication()->get('logon_requirement', 0)
         ) {
             $this->request->set('status_error', true);
             $this->request->set('mvc_task', 'display');
@@ -653,9 +849,9 @@ class MolajoRequest
     {
         if ($this->request->get('status_error') === true) {
         } else {
-            $this->_getSourceParameters();
-            $this->_getCategoryParameters();
-            $this->_getComponentParameters();
+            $this->_getSource();
+            $this->_getPrimaryCategory();
+            $this->_getExtension();
             $this->request = MolajoExtensionHelper::getExtensionOptions($this->request);
         }
 
@@ -689,143 +885,6 @@ class MolajoRequest
      */
     protected function _processTask()
     {
-    }
-
-    /**
-     * _getSourceParameters
-     *
-     * Retrieve Parameters and Metadata for Source Detail
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function _getSourceParameters()
-    {
-        if ((int)$this->request->get('source_id') == 0) {
-            return;
-        }
-
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('a.' . $db->nameQuote('extension_instance_id'));
-        $query->select('a.' . $db->nameQuote('title'));
-        $query->select('a.' . $db->nameQuote('parameters'));
-        $query->select('a.' . $db->nameQuote('metadata'));
-        $query->from($db->nameQuote('#' . $this->request->get('source_table')) . ' as a');
-        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->request->get('source_id'));
-
-        $db->setQuery($query->__toString());
-        $results = $db->loadObjectList();
-
-        if (count($results) > 0) {
-        } else {
-            return;
-        }
-
-        foreach ($results as $result) {
-            $this->request->set('extension_instance_id', $result->extension_instance_id);
-            $this->request->set('source_title', $result->title);
-            $this->request->set('source_parameters', $result->parameters);
-            $this->request->set('source_metadata', $result->metadata);
-        }
-
-        $this->_setPageValues($this->request->get('source_parameters',
-            $this->request->get('source_metadata')));
-
-        return;
-    }
-
-    /**
-     * _getCategoryParameters
-     *
-     * Retrieve the Menu Item Parameters and Meta Data
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function _getCategoryParameters()
-    {
-        if ((int)$this->request->get('category_id', 0) == 0) {
-            return;
-        }
-
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('a.' . $db->nameQuote('title'));
-        $query->select('a.' . $db->nameQuote('parameters'));
-        $query->select('a.' . $db->nameQuote('metadata'));
-        $query->from($db->nameQuote('#__content') . ' as a');
-        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->request->get('category_id'));
-
-        $db->setQuery($query->__toString());
-
-        $results = $db->loadObjectList();
-        if (count($results) > 0) {
-        } else {
-            return;
-        }
-
-        foreach ($results as $result) {
-            $this->request->set('category_title', $result->title);
-            $this->request->set('category_parameters', $result->parameters);
-            $this->request->set('category_metadata', $result->metadata);
-        }
-
-        $this->_setPageValues($this->request->get('category_parameters',
-            $this->request->get('category_metadata')));
-
-        return;
-    }
-
-    /**
-     * _getComponentParameters
-     *
-     * Retrieve Component information using either the ID
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function _getComponentParameters()
-    {
-        if ((int)$this->request->get('extension_instance_id') == 0) {
-            return;
-        }
-
-        $results = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, (int)$this->request->get('extension_instance_id'));
-
-        if (count($results) > 0) {
-        } else {
-            return;
-        }
-
-        foreach ($results as $result) {
-            $this->request->set('extension_name', $result->extension_name);
-            $this->request->set('extension_title', $result->title);
-
-            $parameters = new JRegistry;
-            $parameters->loadString($result->parameters);
-            $this->request->set('extension_parameters', $parameters);
-            $this->request->set('extension_metadata', $result->metadata);
-            $this->request->set('custom_fields', $result->metadata);
-
-            if (isset($parameters->static)
-                && $parameters->static === true
-            ) {
-                $this->request->set('mvc_model_no_data', true);
-            } else {
-                $this->request->set('mvc_model_no_data', false);
-            }
-            $this->request->set('extension_path', MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request->set('extension_title'));
-            $this->request->set('extension_type', 'component');
-            $this->request->set('extension_folder', '');
-        }
-
-        $this->_setPageValues($this->request->get('extension_parameters',
-            $this->request->get('extension_metadata')));
-
-        return;
     }
 
     /**
@@ -931,21 +990,21 @@ class MolajoRequest
             $template = $this->request->get('template_id');
         }
 
-        $results = MolajoTemplateHelper::getTemplate($template);
+        $row = MolajoTemplateHelper::getTemplate($template);
 
-        if (count($results) > 0) {
+        if (count($row) > 0) {
             if ($this->request->get('template_name') == 'system') {
                 // error
             } else {
                 $this->request->set('template_name', 'system');
-                $results = MolajoTemplateHelper::getTemplate('system');
-                if (count($results) > 0) {
+                $row = MolajoTemplateHelper::getTemplate('system');
+                if (count($row) > 0) {
                     // error
                 }
             }
         }
 
-        foreach ($results as $result) {
+        foreach ($row as $result) {
             $parameters = new JRegistry;
             $parameters->loadString($result->parameters);
             $this->request->set('template_id', $result->extension_id);

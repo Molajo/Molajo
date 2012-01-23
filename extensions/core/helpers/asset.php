@@ -82,8 +82,6 @@ abstract class MolajoAssetHelper
         $query->select('a.' . $db->nameQuote('redirect_to_id'));
         $query->select('a.' . $db->nameQuote('view_group_id'));
         $query->select('a.' . $db->nameQuote('primary_category_id'));
-
-        $query->select('b.' . $db->nameQuote('component_option') . ' as ' . $db->nameQuote('option'));
         $query->select('b.' . $db->nameQuote('source_table'));
 
         $query->from($db->nameQuote('#__assets') . ' as a');

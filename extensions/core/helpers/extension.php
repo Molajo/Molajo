@@ -281,6 +281,7 @@ abstract class MolajoExtensionHelper
         $query->select('a.' . $db->namequote('lvl') . ' as menu_item_lvl');
         $query->select('a.' . $db->namequote('metadata') . ' as menu_item_metadata');
         $query->select('a.' . $db->namequote('language') . ' as menu_item_language');
+        $query->select('a.' . $db->namequote('translation_of_id') . ' as translation_of_id');
 
         $query->from($db->namequote('#__content') . ' as a');
         $query->where('a.' . $db->namequote('id') . ' = ' . (int)$menu_item_id);
@@ -297,14 +298,22 @@ abstract class MolajoExtensionHelper
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
 
         $db->setQuery($query->__toString());
-        $extensions = $db->loadObjectList();
+        $rows = $db->loadObjectList();
 
-        if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
+        if ($db->getErrorNum() == 0) {
+
+        } else {
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
             return false;
         }
 
-        return $extensions;
+        if (count($rows) == 0) {
+            return array();
+        }
+
+        foreach ($rows as $row) { }
+
+        return $row;
     }
 
     /**
