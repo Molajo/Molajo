@@ -34,20 +34,13 @@ abstract class MolajoAssetHelper
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
-        $date = MolajoController::getDate();
-        $now = $date->toMySQL();
-        $nullDate = $db->getNullDate();
         $acl = new MolajoACL ();
 
-        /**
-         *  Assets Table
-         */
         $query->select('a.' . $db->namequote('id') . ' as asset_id');
         $query->from($db->namequote('#__assets') . ' as a');
         $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
         $query->where('a.' . $db->namequote('source_id') . ' = ' . (int)$source_id);
 
-        /** Asset Instance ACL */
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
 
         $db->setQuery($query->__toString());
@@ -80,16 +73,15 @@ abstract class MolajoAssetHelper
         $query->select('a.' . $db->nameQuote('id') . ' as asset_id');
         $query->select('a.' . $db->nameQuote('asset_type_id'));
         $query->select('a.' . $db->nameQuote('source_id'));
-        $query->select('a.' . $db->nameQuote('title'));
+        $query->select('a.' . $db->nameQuote('routable'));
         $query->select('a.' . $db->nameQuote('sef_request'));
         $query->select('a.' . $db->nameQuote('request'));
-        $query->select('a.' . $db->nameQuote('primary_category_id'));
-        $query->select('a.' . $db->nameQuote('template_id'));
-        $query->select('a.' . $db->nameQuote('page_id'));
-        $query->select('a.' . $db->nameQuote('language'));
-        $query->select('a.' . $db->nameQuote('translation_of_id'));
+        $query->select('a.' . $db->nameQuote('request_option'));
+        $query->select('a.' . $db->nameQuote('request_model'));
+        $query->select('a.' . $db->nameQuote('request_id'));
         $query->select('a.' . $db->nameQuote('redirect_to_id'));
         $query->select('a.' . $db->nameQuote('view_group_id'));
+        $query->select('a.' . $db->nameQuote('primary_category_id'));
 
         $query->select('b.' . $db->nameQuote('component_option') . ' as ' . $db->nameQuote('option'));
         $query->select('b.' . $db->nameQuote('source_table'));
@@ -100,11 +92,8 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->nameQuote('asset_type_id') . ' = b.' . $db->nameQuote('id'));
 
         if ((int)$asset_id == 0) {
-            if (MolajoController::getApplication()->get('sef', 1) == 1) {
-                $query->where('a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($query_request));
-            } else {
-                $query->where('a.' . $db->nameQuote('request') . ' = ' . $db->Quote($query_request));
-            }
+            $query->where('(a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($query_request).
+                ' OR a.' . $db->nameQuote('request') . ' = ' . $db->Quote($query_request).')');
         } else {
             $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
         }
@@ -119,8 +108,81 @@ abstract class MolajoAssetHelper
             return false;
         }
 
-        foreach ($rows as $row) {
+        if (count($rows) == 0) {
+            return array();
         }
+
+        foreach ($rows as $row) {
+
+            if ((int)$asset_id == 0) {
+
+                if (MolajoController::getApplication()->get('sef', 1) == 1) {
+                    if ($row->sef_request == $query_request) {
+
+                    } else {
+                        $row->redirect_to_id = (int) $row->asset_id;
+                    }
+
+                } else {
+                    if ($row->request == $query_request) {
+
+                    } else {
+                        $row->redirect_to_id = (int) $row->asset_id;
+                    }
+                }
+
+                /** Home */
+                if ($row->asset_id == MolajoController::getApplication()->get('home_asset_id', 0)) {
+                    if ($query_request == '') {
+                    } else {
+                        $row->redirect_to_id = MolajoController::getApplication()->get('home_asset_id', 0);
+                    }
+                }
+            }
+        }
+
         return $row;
+    }
+    /**
+     * getURL
+     *
+     * Retrieves URL based on Asset ID
+     *
+     * @param  null $asset_id
+     *
+     * @return string
+     * @since  1.0
+     */
+    public static function getURL($asset_id)
+    {
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+        $acl = new MolajoACL ();
+
+        /** home */
+        if ($asset_id == MolajoController::getApplication()->get('home_asset_id', 0)) {
+            return '';
+        }
+
+        /** retrieve id if not home */
+        if (MolajoController::getApplication()->get('sef', 1) == 1) {
+            $query->select('a.'.$db->namequote('sef_request'));
+        } else {
+            $query->select('a.'.$db->namequote('request'));
+        }
+        $query->from($db->namequote('#__assets') . ' as a');
+        $query->where('a.' . $db->namequote('id') . ' = ' . (int)$asset_id);
+
+        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
+
+        $db->setQuery($query->__toString());
+        $url = $db->loadResult();
+
+        if ($error = $db->getErrorMsg()) {
+            MolajoError::raiseWarning(500, $error);
+            return false;
+        }
+
+        return $url;
     }
 }

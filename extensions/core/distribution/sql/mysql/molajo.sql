@@ -1149,33 +1149,39 @@ INSERT INTO `molajo_assets`
 
 # Groups
 INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `request_id`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
-SELECT a.`asset_type_id`, `id`,
+  (`asset_type_id`, `source_id`, `routable`,
+  `sef_request`, `request`, `request_option`, `request_model`, `request_id`,
+  `redirect_to_id`, `view_group_id`, `primary_category_id`)
+SELECT a.`asset_type_id`, a.`id`, true,
     CONCAT('group/', a.`id`),
     CONCAT('index.php?option=groups&model=group&id=', a.`id`),
     'groups', 'group', a.`id`,
-    1, 0
+    0, 1, 0
     FROM `molajo_content` a,
         `molajo_asset_types` b
     WHERE a.`asset_type_id` = b.`id`
       AND a.`asset_type_id` BETWEEN 100 AND 120 ;
-
+/*
 # Extension Instances
 INSERT INTO `molajo_assets`
   (`asset_type_id`, `source_id`, `sef_request`, `request`, `request_option`, `request_model`, `request_id`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
-SELECT a.`asset_type_id`, a.`id`, a.`title`,
+SELECT a.`asset_type_id`, a.`id`, true,
     CONCAT(SUBSTRING(b.`component_option`, 5, 99), '/', LOWER(b.`title`), '/', a.`id`),
-    CONCAT('index.php?option=', b.`component_option`, '&view=', SUBSTRING(b.`component_option`, 5, 99), '&id=', a.`id`),
+    CONCAT('index.php?option=extension', '&model=', SUBSTRING(b.`component_option`, 5, 99), '&id=', a.`id`),
     10, 0, 'en-GB', 0, 0, 1
     FROM `molajo_extension_instances` a,
         `molajo_asset_types` b
     WHERE a.`asset_type_id` = b.`id`;
-
+*/
 # Menu Items
 INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `title`, `request`, `sef_request`, `primary_category_id`, `language`,  `translation_of_id`, `redirect_to_id`, `view_group_id`)
+  (`asset_type_id`, `source_id`, `routable`,
+  `sef_request`, `request`, `request_option`, `request_model`, `request_id`,
+  `redirect_to_id`, `view_group_id`, `primary_category_id`)
   VALUES
-  (2000, 102, 'Content', 'index.php?option=dashboard&view=content', 'content', 1, 'en-GB', 0, 0, 3),
+  (2000, 102, true, 'content', 'index.php?option=dashboard&model=static', 'dashboard', 'static', 0, 0, 1, 3),
+  (2000, 130, true, 'content/articles', 'index.php?option=articles&model=articles', 'articles', 'articles', 0, 0, 1, 3);
+
   (2000, 103, 'Articles', 'index.php?option=articles', 'content/articles', 1, 'en-GB', 0, 0, 3),
   (2000, 104, 'Contacts', 'index.php?option=contacts', 'content/contacts', 1, 'en-GB', 0, 0, 3),
   (2000, 105, 'Comments', 'index.php?option=comments', 'content/comments', 1, 'en-GB', 0, 0, 3),

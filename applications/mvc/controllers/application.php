@@ -579,7 +579,8 @@ class MolajoControllerApplication
     public function setMessage($message = null, $type = 'message', $code = null)
     {
         if ($message == null
-            && $code == null) {
+            && $code == null
+        ) {
             return false;
         }
 
@@ -659,7 +660,7 @@ class MolajoControllerApplication
     }
 
     /**
-     * escapeOutput
+     * escape
      *
      * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
      *
@@ -668,7 +669,7 @@ class MolajoControllerApplication
      * @return  mixed  The escaped value.
      * @since   1.0
      */
-    function escapeOutput($var)
+    function escape($var)
     {
         if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
             return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, 'utf-8');
@@ -866,12 +867,14 @@ class MolajoControllerApplication
      *
      * Adds a linked stylesheet to the page
      *
-     * @param $url
-     * @param int $priority
-     * @param string $mimetype
-     * @param null $media
-     * @param array $attributes
+     * @param  string $url
+     * @param  int    $priority
+     * @param  string $mimetype
+     * @param  null   $media
+     * @param  array  $attributes
+     *
      * @return mixed
+     * @since  1.0
      */
     public function addStyleLinks($url, $priority = 500, $mimetype = 'text/css', $media = null, $attributes = array())
     {
@@ -894,6 +897,7 @@ class MolajoControllerApplication
      * getStyleLinks
      *
      * @return array
+     * @since  1.0
      */
     public function getStyleLinks()
     {
@@ -909,6 +913,7 @@ class MolajoControllerApplication
      * @param   string  $format   Type of stylesheet (defaults to 'text/css')
      *
      * @return  void
+     * @since   1.0
      */
     public function addStyleDeclaration($content, $mimetype = 'text/css')
     {
@@ -928,6 +933,7 @@ class MolajoControllerApplication
      * getStyleDeclarations
      *
      * @return array
+     * @since  1.0
      */
     public function getStyleDeclarations()
     {
@@ -1195,8 +1201,18 @@ class MolajoControllerApplication
      */
     public function redirect($pageRequest, $code = 303)
     {
-        /** retrieve url */
-        $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $pageRequest;
+        /** sef url options */
+        if ($this->get('sef', 1) == 1) {
+            if ($this->get('sef_rewrite', 0) == 0) {
+                $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . 'index.php/' . $pageRequest;
+            } else {
+                $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $pageRequest;
+            }
+
+            if ((int) $this->get('sef_suffix', 0) == 1) {
+                $url .= '.html';
+            }
+        }
 
         /** validate code */
         if ($code == 301) {
@@ -1204,9 +1220,8 @@ class MolajoControllerApplication
             $code = 303;
         }
 
-        // If the headers have already been sent we need to send the redirect statement via JavaScript.
-        /** exceptions */
         $exception = false;
+
         /** IE */
         if (stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
             || stripos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false
@@ -1223,7 +1238,7 @@ class MolajoControllerApplication
             echo "<script>document.location.href='$url';</script>\n";
         } else {
 
-            // We have to use a JavaScript redirect here because MSIE doesn't play nice with utf-8 URLs.
+            /** IE and UTF8 URLs */
             if (($exception == 'trident') && !utf8_is_ascii($url)) {
                 $html = '<html><head>';
                 $html .= '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
@@ -1246,14 +1261,15 @@ class MolajoControllerApplication
                 echo $html;
 
             } else {
-                // All other cases use the more efficient HTTP header for redirection.
+
+                /** normal */
                 $this->header($code ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 $this->header('Location: ' . $url);
                 $this->header('Content-Type: text/html; charset=utf-8');
             }
         }
 
-        // Close the application after the redirect.
+        /** close after redirect */
         $this->close();
     }
 

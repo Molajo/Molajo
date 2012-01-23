@@ -58,12 +58,12 @@ class MolajoRequest
         }
 
         /** duplicate content: URLs without the .html */
-        if ($this->request->get('application_sef_suffix') == 'html'
+        if ((int)$this->request->get('application_sef_suffix') == 1
             && substr($path, -11) == '/index.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 11));
         }
-        if ($this->request->get('application_sef_suffix') == 'html'
+        if ((int)$this->request->get('application_sef_suffix') == 1
             && substr($path, -5) == '.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 5));
@@ -125,10 +125,10 @@ class MolajoRequest
             MOLAJO_APPLICATION_ID));
 
         $this->request->set('application_sef', MolajoController::getApplication()->get('sef', 1));
-        $this->request->set('application_sef_rewrite', MolajoController::getApplication()->get('sef_rewrite', 0));
-        $this->request->set('application_sef_suffix', MolajoController::getApplication()->get('sef_suffix', 'html'));
-        $this->request->set('application_unicode_slugs', MolajoController::getApplication()->get('unicode_slugs', 0));
-        $this->request->set('application_force_ssl', MolajoController::getApplication()->get('force_ssl', 0));
+        $this->request->set('application_sef_rewrite', (int)MolajoController::getApplication()->get('sef_rewrite', 0));
+        $this->request->set('application_sef_suffix', (int)MolajoController::getApplication()->get('sef_suffix', 0));
+        $this->request->set('application_unicode_slugs', (int)MolajoController::getApplication()->get('unicode_slugs', 0));
+        $this->request->set('application_force_ssl', (int)MolajoController::getApplication()->get('force_ssl', 0));
 
         $this->request->set('application_media_priority_site', (int)
         MolajoController::getApplication()->get('media_priority_site', 100));
@@ -597,7 +597,7 @@ class MolajoRequest
         /** redirect_to_id */
         if ($this->request->get('url_redirect_to_id', 0) == 0) {
         } else {
-            MolajoController::getApplication()->redirect($this->request->set('url_redirect_to_id', 301));
+            MolajoController::getApplication()->redirect(MolajoAssetHelper::getURL($this->request->get('url_redirect_to_id')), 301);
         }
 
         /** Must be Logged on Requirement */
