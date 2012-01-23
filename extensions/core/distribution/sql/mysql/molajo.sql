@@ -602,7 +602,6 @@ INSERT INTO `molajo_site_extension_instances`
 ##
 
 ## ## Admin: Root
-
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
     `extension_instance_id`, `asset_type_id`,
@@ -622,7 +621,6 @@ INSERT INTO `molajo_content`
     WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## Admin: Content
-
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
     `extension_instance_id`, `asset_type_id`,
@@ -641,7 +639,7 @@ INSERT INTO `molajo_content`
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
-
+/**
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
     `extension_instance_id`, `asset_type_id`,
@@ -1105,7 +1103,7 @@ INSERT INTO `molajo_content`
 UPDATE `molajo_content`
    SET `protected` = 1,
         `home` = 0;
-
+*/
 # Site Home
 /*
 todo: amy update configuration file
@@ -1137,51 +1135,56 @@ UPDATE `molajo_content`
 
 # Sites
 INSERT INTO `molajo_assets`
- (`asset_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `request_id`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
-  SELECT `asset_type_id`, `id`, false, `path`, '', '', '', 0, 0, 1, 0
-    FROM  molajo_sites;
+ (`asset_type_id`, `source_id`, `routable`, `sef_request`,
+ `request`, `request_option`, `request_model`, `redirect_to_id`,
+ `view_group_id`, `primary_category_id`)
+  SELECT `asset_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
+    FROM `molajo_sites`;
 
 # Application
 INSERT INTO `molajo_assets`
- (`asset_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `request_id`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
-  SELECT `asset_type_id`, `id`, false, `path`, '', '', '', 0, 0, 1, 0
+ (`asset_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
+  SELECT `asset_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
     FROM  molajo_applications;
 
 # Groups
 INSERT INTO `molajo_assets`
   (`asset_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`, `request_id`,
+  `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
 SELECT a.`asset_type_id`, a.`id`, true,
     CONCAT('group/', a.`id`),
     CONCAT('index.php?option=groups&model=group&id=', a.`id`),
-    'groups', 'group', a.`id`,
+    'groups', 'group',
     0, 1, 0
     FROM `molajo_content` a,
         `molajo_asset_types` b
     WHERE a.`asset_type_id` = b.`id`
       AND a.`asset_type_id` BETWEEN 100 AND 120 ;
-/*
+
 # Extension Instances
 INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `sef_request`, `request`, `request_option`, `request_model`, `request_id`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
+  (`asset_type_id`, `source_id`, `routable`,
+  `sef_request`, `request`, `request_option`, `request_model`,
+  `redirect_to_id`, `view_group_id`, `primary_category_id`)
 SELECT a.`asset_type_id`, a.`id`, true,
     CONCAT(SUBSTRING(b.`component_option`, 5, 99), '/', LOWER(b.`title`), '/', a.`id`),
-    CONCAT('index.php?option=extension', '&model=', SUBSTRING(b.`component_option`, 5, 99), '&id=', a.`id`),
-    10, 0, 'en-GB', 0, 0, 1
+    CONCAT('index.php?option=extension', '&model=', lower(b.`title`), '&id=', a.`id`),
+    `extension`, b.`title`, 0, 1, 0
     FROM `molajo_extension_instances` a,
         `molajo_asset_types` b
     WHERE a.`asset_type_id` = b.`id`;
-*/
+
 # Menu Items
 INSERT INTO `molajo_assets`
   (`asset_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`, `request_id`,
+  `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   VALUES
-  (2000, 102, true, 'content', 'index.php?option=dashboard&model=static', 'dashboard', 'static', 0, 0, 1, 3),
-  (2000, 130, true, 'content/articles', 'index.php?option=articles&model=articles', 'articles', 'articles', 0, 0, 1, 3);
+  (2000, 102, true, 'content', 'index.php?option=dashboard&model=static', 'dashboard', 'static', 0, 1, 3),
+  (10000, 130, true, 'content/articles', 'index.php?option=articles&model=articles', 'articles', 'articles', 0, 1, 3);
 
+/**
   (2000, 103, 'Articles', 'index.php?option=articles', 'content/articles', 1, 'en-GB', 0, 0, 3),
   (2000, 104, 'Contacts', 'index.php?option=contacts', 'content/contacts', 1, 'en-GB', 0, 0, 3),
   (2000, 105, 'Comments', 'index.php?option=comments', 'content/comments', 1, 'en-GB', 0, 0, 3),
@@ -1217,7 +1220,7 @@ INSERT INTO `molajo_assets`
   (2000, 130, 'Search', 'index.php?option=search', 'search', 1, 'en-GB', 0, 0, 3),
 
   (2000, 131, 'Home', 'index.php?option=views', 'home', 1, 'en-GB', 0, 0, 1);
-
+**/
 # Asset Categories
 
 INSERT INTO `molajo_asset_categories`

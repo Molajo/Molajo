@@ -77,7 +77,6 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-
 -- -----------------------------------------------------
 -- Table 04 `molajo_assets`
 -- -----------------------------------------------------
@@ -90,7 +89,6 @@ CREATE  TABLE IF NOT EXISTS `molajo_assets` (
   `request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.' ,
   `request_option` VARCHAR(45) NOT NULL ,
   `request_model` VARCHAR(45) NOT NULL ,
-  `request_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `redirect_to_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `view_group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the molajo_groupings table' ,
   `primary_category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
@@ -110,7 +108,7 @@ CREATE INDEX `request` ON `molajo_assets` (`request` ASC) ;
 
 CREATE INDEX `index_assets_asset_types` ON `molajo_assets` (`asset_type_id` ASC) ;
 
-CREATE INDEX `parameters` ON `molajo_assets` (`request_option` ASC, `request_model` ASC, `request_id` ASC) ;
+CREATE INDEX `parameters` ON `molajo_assets` (`request_option` ASC, `request_model` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 05 `molajo_extensions`
