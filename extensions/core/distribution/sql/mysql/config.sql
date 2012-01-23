@@ -120,15 +120,14 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 205, 'assets_id', 'FIELD_ASSETS_ID', 63),
       (1, 0, 205, 'assets_asset_type_id', 'FIELD_ASSET_TYPE_ID', 64),
       (1, 0, 205, 'assets_source_id', 'FIELD_ASSETS_SOURCE_ID', 65),
+      (1, 0, 205, 'assets_routable', 'FIELD_ASSETS_ROUTABLE', 66),
       (1, 0, 205, 'assets_sef_request', 'FIELD_ASSETS_SEF_REQUEST', 67),
       (1, 0, 205, 'assets_request', 'FIELD_ASSETS_REQUEST', 68),
-      (1, 0, 205, 'assets_request_option', 'FIELD_ASSETS_OPTION', 68),
-      (1, 0, 205, 'assets_request_model', 'FIELD_ASSETS_PRIMARY_CATEGORY_ID', 69),
-      (1, 0, 205, 'assets_request_id', 'FIELD_ASSETS_TEMPLATE_ID', 70),
-      (1, 0, 205, 'assets_translation_of_id', 'FIELD_TRANSLATION_OF_ID', 73),
-      (1, 0, 205, 'assets_redirect_to_id', 'FIELD_ASSETS_REDIRECT_TO_ID', 74),
-      (1, 0, 205, 'assets_primary_category_id', 'FIELD_ASSETS_VIEW_GROUP_ID', 75),
-      (1, 0, 205, 'assets_view_group_id', 'FIELD_ASSETS_VIEW_GROUP_ID', 75);
+      (1, 0, 205, 'assets_request_option', 'FIELD_ASSETS_OPTION', 69),
+      (1, 0, 205, 'assets_request_model', 'FIELD_ASSETS_MODEL', 70),
+      (1, 0, 205, 'assets_redirect_to_id', 'FIELD_ASSETS_REDIRECT_TO_ID', 71),
+      (1, 0, 205, 'assets_view_group_id', 'FIELD_ASSETS_VIEW_GROUP_ID', 72),
+      (1, 0, 205, 'assets_primary_category_id', 'FIELD_ASSETS_PRIMARY_CATEGORY_ID', 73);
 
 # 205 Asset Types
 INSERT INTO `molajo_extension_options`
@@ -489,123 +488,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 1100, 'login', 'login', 28),
       (1, 0, 1100, 'logout', 'login', 29);
 
-# VIEWS
-
-# 3020 MOLAJO_EXTENSION_OPTION_ID_VIEWS_STATIC_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3020, '', '', 0),
-      (1, 0, 3020, 'dashboard', 'dashboard', 1);
-
-# 3040 MOLAJO_EXTENSION_OPTION_ID_VIEWS_STATIC_WRAP_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3040, '', '', 0),
-      (1, 0, 3040, 'div', 'div', 1);
-
-# 3060 MOLAJO_EXTENSION_OPTION_ID_VIEWS_STATIC_PAGE_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3060, '', '', 0),
-      (1, 0, 3060, 'full', 'full', 1);
-
-# ITEM
-
-# 3120 MOLAJO_EXTENSION_OPTION_ID_VIEWS_ITEM_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3120, '', '', 0),
-      (1, 0, 3120, 'item', 'item', 1);
-
-# 3140 MOLAJO_EXTENSION_OPTION_ID_VIEWS_ITEM_WRAP_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3140, '', '', 0),
-      (1, 0, 3140, 'div', 'div', 1);
-
-# 3160 MOLAJO_EXTENSION_OPTION_ID_VIEWS_ITEM_PAGE_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3160, '', '', 0),
-      (1, 0, 3160, 'full', 'full', 1);
-
-# ITEMS
-
-# 3220 MOLAJO_EXTENSION_OPTION_ID_VIEWS_ITEMS_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3220, '', '', 0),
-      (1, 0, 3220, 'dashboard', 'dashboard', 1);
-
-# 3240 MOLAJO_EXTENSION_OPTION_ID_VIEWS_ITEMS_WRAP_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3240, '', '', 0),
-      (1, 0, 3240, 'div', 'div', 1);
-
-# 3260 MOLAJO_EXTENSION_OPTION_ID_VIEWS_ITEMS_PAGE_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3260, '', '', 0),
-      (1, 0, 3260, 'full', 'full', 1);
-
-# EDIT
-
-# 3320 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3320, '', '', 0),
-      (1, 0, 3320, 'edit', 'edit', 1);
-
-# 3340 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_WRAP_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3340, '', '', 0),
-      (1, 0, 3340, 'div', 'div', 1);
-
-# 3360 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_PAGE_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 3360, '', '', 0),
-      (1, 0, 3360, 'left-sidebar', 'left-sidebar', 1);
-
-# PLUGINS
-
-# 6000 MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 6000, '', '', 0),
-      (1, 0, 6000, 'acl', 'acl', 1),
-      (1, 0, 6000, 'authentication', 'authentication', 2),
-      (1, 0, 6000, 'content', 'content', 3),
-      (1, 0, 6000, 'editors', 'editors', 4),
-      (1, 0, 6000, 'extensions', 'extensions', 5),
-      (1, 0, 6000, 'query', 'query', 6),
-      (1, 0, 6000, 'sef', 'sef', 7),
-      (1, 0, 6000, 'system', 'system', 8),
-      (1, 0, 6000, 'user', 'user', 9);
-
 # ACL Component Information
-
-# 10000 MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 0, 10000, '', '', 0),
-      (1, 0, 10000, 1, 'Core ACL Implementation', 1);
 
 # 10100 MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS
 INSERT INTO `molajo_extension_options`

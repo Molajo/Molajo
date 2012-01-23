@@ -258,20 +258,12 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_options` (
     FOREIGN KEY (`extension_instance_id` )
     REFERENCES `molajo_extension_instances` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_extension_options_applications`
-    FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_extension_options_extension_instances_index` ON `molajo_extension_options` (`extension_instance_id` ASC) ;
-
-CREATE INDEX `fk_extension_options_applications_index` ON `molajo_extension_options` (`application_id` ASC) ;
-
-CREATE UNIQUE INDEX `application_extension_id` ON `molajo_extension_options` (`application_id` ASC, `extension_instance_id` ASC, `option_id` ASC, `option_value` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 11 `molajo_content`

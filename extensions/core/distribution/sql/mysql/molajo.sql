@@ -52,8 +52,9 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
   (10000, 'Articles', 0, '__content', 'articles'),
   (20000, 'Contacts', 0, '__content', 'contacts'),
   (30000, 'Comments', 0, '__content', 'comments'),
-  (40000, 'Media', 0, '__content', 'media'),
-  (50000, 'Views', 0, '__content', 'views');
+  (40000, 'Dashboard', 0, '__dummy', 'dashboard'),
+  (50000, 'Media', 0, '__content', 'media'),
+  (60000, 'Views', 0, '__content', 'views');
 
 #
 # EXTENSION SITES
@@ -90,8 +91,16 @@ INSERT INTO `molajo_extensions`
     (16, 1, 'site', '', 1050),
     (17, 1, 'redirects', '', 1050);
 
+INSERT INTO `molajo_extensions`
+  (`id`,  `extension_site_id`,  `name`, `subtype`, `asset_type_id`)
+  VALUES
+    (0, 1, 'core', '', 1050);
+UPDATE `molajo_extensions`
+  SET `id` = 0
+  WHERE `name` = 'core';
+
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`id`, ``extension_id`, `asset_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -99,7 +108,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `id`, `asset_type_id`,
         `name`, `subtype`, '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -109,6 +118,9 @@ INSERT INTO `molajo_extension_instances`
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
     WHERE `asset_type_id` = 1050;
+UPDATE `molajo_extension_instances`
+  SET `id` = 0
+  WHERE `title` = 'core';
 
 # LANGUAGES
 INSERT INTO `molajo_extensions`
@@ -1125,9 +1137,6 @@ UPDATE `molajo_applications`
   SET `home_menu_id` = @id
   WHERE `id` = 2;
 */
-# Menu Item Metadata
-UPDATE `molajo_content`
-  SET `metadata` = '{"metadata_description":"","metadata_keywords":"","metadata_robots":"","metadata_author":"","metadata_content_rights":""}';
 
 #
 # ASSETS
@@ -1170,7 +1179,7 @@ INSERT INTO `molajo_assets`
 SELECT a.`asset_type_id`, a.`id`, true,
     CONCAT(SUBSTRING(b.`component_option`, 5, 99), '/', LOWER(b.`title`), '/', a.`id`),
     CONCAT('index.php?option=extension', '&model=', lower(b.`title`), '&id=', a.`id`),
-    `extension`, b.`title`, 0, 1, 0
+    'extension', b.`title`, 0, 1, 0
     FROM `molajo_extension_instances` a,
         `molajo_asset_types` b
     WHERE a.`asset_type_id` = b.`id`;
