@@ -48,7 +48,7 @@ if (isset($_SERVER['SERVER_PORT'])) {
     }
 }
 if (strripos($_SERVER['PHP_SELF'], '/index.php')) {
-    $folder = substr($_SERVER['PHP_SELF'], 0, strripos($_SERVER['PHP_SELF'], '/index.php'));
+    $folder = substr($_SERVER['PHP_SELF'], 0, strripos($_SERVER['PHP_SELF'], '/index.php')).'/';
 } else {
     $folder = '/';
 }
