@@ -61,14 +61,14 @@ class MolajoConfigApplication
     public $default_template_id = 98;
     public $default_page_id = 55;
 
-    public $default_static_view_id = 33;
-    public $default_static_wrap_id = 81;
-    public $default_items_view_id = 47;
-    public $default_items_wrap_id = 81;
-    public $default_item_view_id = 35;
-    public $default_item_wrap_id = 72;
-    public $default_edit_view_id = 39;
-    public $default_edit_wrap_id = 81;
+    public $default_static_view_id = 19;
+    public $default_static_wrap_id = 61;
+    public $default_items_view_id = 21;
+    public $default_items_wrap_id = 61;
+    public $default_item_view_id = 21;
+    public $default_item_wrap_id = 61;
+    public $default_edit_view_id = 19;
+    public $default_edit_wrap_id = 61;
 
     /* Head */
     public $head_view_id = 37;

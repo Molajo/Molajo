@@ -71,7 +71,6 @@ class MolajoTemplateHelper
         return false;
     }
 
-
     /**
      * loadFavicon
      *
