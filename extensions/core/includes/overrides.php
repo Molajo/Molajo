@@ -39,11 +39,11 @@ abstract class JSessionStorage extends MolajoSessionStorage
 {
 }
 
-abstract class JModuleHelper extends MolajoModuleRenderer
+abstract class JModuleHelper extends MolajoRendererModule
 {
 }
 
-class JComponentHelper extends MolajoComponentRenderer
+class JComponentHelper extends MolajoRendererComponent
 {
 }
 
@@ -211,4 +211,4 @@ class JUpdater extends MolajoUpdater
 //class JUpdaterCollection extends MolajoUpdaterCollection {}
 //class JUpdaterExtension extends MolajoUpdaterExtension {}
 
- 
+

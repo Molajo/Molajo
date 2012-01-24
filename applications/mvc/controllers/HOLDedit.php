@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage    Single View
  * @since    1.0
  */
-class MolajoControllerEdit extends MolajoControllerDisplay
+class MolajoControllerUpdate extends MolajoControllerDisplay
 {
     /** data */
     public $state;

@@ -41,6 +41,14 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     {
         /** model */
         $modelClass = $this->request->get('mvc_model');
+        $modelClass = ucfirst($this->request->get('mvc_option'))
+            . 'Model'
+            . ucfirst($this->request->get('mvc_model'));
+        if (class_exists($modelClass)) {
+        } else {
+            $modelClass = 'MolajoModel'
+                . ucfirst($this->request->get('mvc_model'));
+        }
         $this->model = new $modelClass();
 
         /** set model properties */
@@ -65,13 +73,13 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         if (count($this->rowset) == 0
             && $this->parameters->def('extension_suppress_no_results', false) === true
         ) {
-            echo 'return';
             return;
         }
 
         /** render view */
         $this->view_path = $this->request->get('view_path');
         $this->view_path_url = $this->request->get('view_path_url');
+
         $renderedOutput = $this->renderView($this->request->get('view_name'), $this->request->get('view_type'));
 
         /** wrap view */
@@ -94,8 +102,8 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->rowset = array();
 
         $tempObject = new JObject();
-        $tempObject->set('wrap_id', $this->request->get('wrap_id'));
-        $tempObject->set('wrap_class', $this->request->get('wrap_class'));
+        $tempObject->set('wrap_css_id', $this->request->get('wrap_css_id'));
+        $tempObject->set('wrap_css_class', $this->request->get('wrap_css_class'));
         $tempObject->set('content', $renderedOutput);
 
         $this->rowset[] = $tempObject;

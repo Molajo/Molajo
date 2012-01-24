@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoMenuRenderer
+class MolajoRendererMenu extends MolajoRenderer
 {
     /**
      * Name
@@ -112,7 +112,7 @@ class MolajoMenuRenderer
         $this->_request->set('view_type', 'extensions');
         $viewHelper = new MolajoViewHelper($this->_request->get('view'),
             $this->_request->get('view_type'),
-            $this->_request->get('option'),
+            $this->_request->get('mvc_option'),
             $this->_request->get('extension_type'),
             ' ',
             $this->_request->get('template_name')
@@ -123,7 +123,7 @@ class MolajoMenuRenderer
         /** Wrap Path */
         $wrapHelper = new MolajoViewHelper($this->_request->get('wrap'),
             'wraps',
-            $this->_request->get('option'),
+            $this->_request->get('mvc_option'),
             $this->_request->get('extension_type'),
             ' ',
             $this->_request->get('template_name')

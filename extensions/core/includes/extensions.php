@@ -17,7 +17,7 @@ $fileHelper = new MolajoFileHelper();
  */
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/request.php', 'MolajoRequest');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document.php', 'MolajoDocument');
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderer.php', 'MolajoRenderer');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderers/renderer.php', 'MolajoRenderer');
 
 /**
  *  Helpers
@@ -40,7 +40,10 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/renderers', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
+    if ($file == 'renderer.php') {
+    } else {
+        $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderers/' . $file, 'MolajoRenderer' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 
 

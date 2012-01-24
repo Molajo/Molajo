@@ -238,6 +238,8 @@ abstract class MolajoExtensionHelper
     }
 
     /**
+     * NOT USED
+     *
      * getOptions
      *
      * Construct the Request Array for the MVC
@@ -252,7 +254,7 @@ abstract class MolajoExtensionHelper
         $request->set('component_table', '');
 
         /** Configuration model */
-        $configModel = new MolajoModelConfiguration ($request->get('option'));
+        $configModel = new MolajoModelConfiguration ($request->get('mvc_option'));
 
         /** Task */
         if ($request->get('task', '') == '') {
@@ -333,7 +335,7 @@ abstract class MolajoExtensionHelper
         if ($model == 'dummy') {
             $request->set('model', 'MolajoModel');
         } else {
-            $request->set('model', ucfirst($request->get('option')) . 'Model' . ucfirst($model));
+            $request->set('model', ucfirst($request->get('mvc_option')) . 'Model' . ucfirst($model));
         }
 
         if ($request->get('controller') == 'display') {

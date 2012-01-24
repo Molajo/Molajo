@@ -90,15 +90,15 @@ class MolajoRenderer
         $this->_loadMedia();
 
         /** instantiate controller */
-        $controllerClass = ucfirst($this->_request->get('extension_title')) . 'Controller';
-        if (ucfirst($this->_request->get('controller')) == 'Display') {
+        $controllerClass = ucfirst($this->_request->get('mvc_extension_instance_name')) . 'Controller';
+        if (ucfirst($this->_request->get('mvc_controller')) == 'Display') {
         } else {
-            $controllerClass .= $this->_request->get('controller');
+            $controllerClass .= $this->_request->get('mvc_controller');
         }
         $controller = new $controllerClass ($this->_request);
 
         /** execute task: display, edit, or add  */
-        $task = (string)$this->_request->get('task');
+        $task = (string)$this->_request->get('mvc_task');
         return $controller->$task();
     }
 
@@ -123,15 +123,27 @@ class MolajoRenderer
             } else if ($name == 'view') {
                 $this->_request->set('view', $value);
 
-            } else if ($name == 'id' || $name == 'wrap_id') {
-                $this->_request->set('wrap_id', $value);
+            } else if ($name == 'view_css_id' || $name == 'view_id') {
+                $this->_request->set('view_css_id', $value);
 
-            } else if ($name == 'class' || $name == 'wrap_class') {
-                $this->_request->set('wrap_class', $value);
+            } else if ($name == 'view_css_class' || $name == 'view_class') {
+                $this->_request->set('view_css_class', $value);
+
+            } else if ($name == 'wrap') {
+                $this->_request->set('wrap', $value);
+
+            } else if ($name == 'wrap_css_id' || $name == 'wrap_id') {
+                $this->_request->set('wrap_css_id', $value);
+
+            } else if ($name == 'wrap_css_class' || $name == 'wrap_class') {
+                $this->_request->set('wrap_css_class', $value);
             }
             // $this->_request->set('other_parameters') = $other_parameters;
         }
 
+        return;
+
+        //NOT USED
         $this->_request = MolajoExtensionHelper::getOptions($this->_request);
         if ($this->_request->get('results') === false) {
             echo 'failed getOptions';
@@ -148,26 +160,30 @@ class MolajoRenderer
      */
     protected function _setPaths()
     {
-        /** View Path */
         $this->_request->set('view_type', 'extensions');
-        $viewHelper = new MolajoViewHelper($this->_request->get('view'),
+
+        $this->_request->set('view_name',
+            MolajoExtensionHelper::getInstanceTitle($this->_request->get('view_id')));
+
+        $viewHelper = new MolajoViewHelper($this->_request->get('view_name'),
             $this->_request->get('view_type'),
-            $this->_request->get('option'),
+            $this->_request->get('extension_title'),
             $this->_request->get('extension_type'),
             ' ',
-            $this->_request->get('template_name')
-        );
+            $this->_request->get('template_name'));
         $this->_request->set('view_path', $viewHelper->view_path);
         $this->_request->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
-        $wrapHelper = new MolajoViewHelper($this->_request->get('wrap'),
+        $this->_request->set('wrap_name',
+            MolajoExtensionHelper::getInstanceTitle($this->_request->get('wrap_id')));
+
+        $wrapHelper = new MolajoViewHelper($this->_request->get('wrap_name'),
             'wraps',
-            $this->_request->get('option'),
+            $this->_request->get('extension_title'),
             $this->_request->get('extension_type'),
             ' ',
-            $this->_request->get('template_name')
-        );
+            $this->_request->get('template_name'));
         $this->_request->set('wrap_path', $wrapHelper->view_path);
         $this->_request->set('wrap_path_url', $wrapHelper->view_path_url);
     }
@@ -195,7 +211,7 @@ class MolajoRenderer
     protected function _loadLanguage()
     {
         MolajoController::getApplication()->getLanguage()->load
-        ($this->_request->get('extension_path'),
+        ($this->_request->get('mvc_extension_path'),
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 

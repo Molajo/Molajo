@@ -10,10 +10,10 @@ defined('MOLAJO') or die;
 class CommentsController extends MolajoControllerDisplay
 {
 }
-class CommentsControllerEdit extends MolajoControllerEdit
+class CommentsControllerUpdate extends MolajoControllerUpdate
 {
 }
-class CommentsControllerMultiple extends MolajoControllerUpdatelist
+class CommentsControllerUpdatelist extends MolajoControllerUpdatelist
 {
 }
 class CommentsTableComment extends MolajoTableContent

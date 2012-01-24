@@ -643,7 +643,7 @@ INSERT INTO `molajo_content`
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
   SELECT 102, 102, 'Content', '', 'content', 101, 101, 1, 12, 1,
         `id`, 2000,
-        CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","template_id":"","page_id":"","page_css_id":"","page_css_class":"","view_id":"33","view_css_id":"","view_css_class":"","wrap_id":"75","wrap_css_id":"","wrap_css_class":"","cache":"1","cache_time":"900"}'),
+        CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","template_id":"","page_id":"","page_css_id":"","page_css_class":"","view_id":"19","view_css_id":"","view_css_class":"","wrap_id":"67","wrap_css_id":"","wrap_css_class":"","cache":"1","cache_time":"900"}'),
         '{"metadata_title":"Content", "metadata_description":"Dashboard", "metadata_keywords":"dashboard", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}',
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
