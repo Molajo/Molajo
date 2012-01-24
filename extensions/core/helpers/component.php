@@ -33,7 +33,8 @@ abstract class MolajoComponentHelper
             return array();
         }
 
-        foreach ($rows as $row) { }
+        foreach ($rows as $row) {
+        }
 
         return $row;
     }
@@ -48,9 +49,6 @@ abstract class MolajoComponentHelper
      */
     static public function getPath($component_name)
     {
-        if (file_exists(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component_name)) {
-            return MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component_name;
-        }
-        return false;
+        return MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component_name;
     }
 }

@@ -303,37 +303,6 @@ class MolajoDocument
     }
 
     /**
-     * _loadFavicon
-     *
-     * Locate and load Favicon
-     *
-     * Can be located in:
-     *  - Templates/images/ folder (priority 1)
-     *  - Root of the website (priority 2)
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function _loadFavicon()
-    {
-        /** template images */
-        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name') . '/images/';
-        if (file_exists($path . 'favicon.ico')) {
-            $this->request->set('template_favicon', MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name') . '/images/favicon.ico');
-            return true;
-        }
-
-        /** root */
-        $path = MOLAJO_BASE_FOLDER;
-        if (file_exists($path . 'favicon.ico')) {
-            $this->request->set('template_favicon', MOLAJO_BASE_URL . '/' . $this->request->get('template_name') . '/images/favicon.ico');
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * _loadLanguage
      *
      * Loads Language Files

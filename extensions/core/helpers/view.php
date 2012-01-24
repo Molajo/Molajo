@@ -84,19 +84,19 @@ class MolajoViewHelper
     public function __construct($view, $view_type, $extension_name,
                                 $extension_type, $extension_folder, $template_name)
     {
-        $this->_view = $view;
-        $this->_view_type = $view_type;
-        $this->_extension_name = $extension_name;
-        $this->_extension_type = $extension_type;
-        $this->_extension_folder = $extension_folder;
-        $this->_template_name = $template_name;
+        $this->_view = strtolower($view);
+        $this->_view_type = strtolower($view_type);
+        $this->_extension_name = strtolower($extension_name);
+        $this->_extension_type = strtolower($extension_type);
+        $this->_extension_folder = strtolower($extension_folder);
+        $this->_template_name = strtolower($template_name);
 
         $results = $this->_findPath();
         if ($results === false) {
             return false;
         }
 
-        $this->_loadLanguage();
+        //$this->_loadLanguage();
 
         return array($this->view_path, $this->view_path_url);
     }

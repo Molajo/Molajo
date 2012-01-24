@@ -31,7 +31,7 @@ defined('MOLAJO') or die;
 abstract class MolajoExtensionHelper
 {
     /**
-     * getExtensions
+     * get
      *
      * Retrieves Extension data from the extension and extension instances
      * In the case of menu items, joins to content table
@@ -195,7 +195,7 @@ abstract class MolajoExtensionHelper
     }
 
     /**
-     * getExtensionInstanceName
+     * getInstanceTitle
      *
      * Retrieves Extension Name, given the extension_instance_id
      *
@@ -205,7 +205,7 @@ abstract class MolajoExtensionHelper
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function getExtensionInstanceName($extension_instance_id)
+    public static function getInstanceTitle($extension_instance_id)
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
@@ -238,13 +238,13 @@ abstract class MolajoExtensionHelper
     }
 
     /**
-     * getExtensionOptions
+     * getOptions
      *
      * Construct the Request Array for the MVC
      *
      * @return bool
      */
-    public static function getExtensionOptions(JObject $request)
+    public static function getOptions(JObject $request)
     {
         $request->set('controller', '');
         $request->set('model', '');
@@ -261,6 +261,7 @@ abstract class MolajoExtensionHelper
 
         /** Controller (while validating Task) */
         $request->get('controller', $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER, $request->get('task')));
+
         if ($request->get('controller') === false) {
             MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_INVALID_TASK_CONTROLLER') . ' ' . $request->get('task'));
             $request->set('results', false);

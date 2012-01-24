@@ -132,9 +132,9 @@ class MolajoRenderer
             // $this->_request->set('other_parameters') = $other_parameters;
         }
 
-        $this->_request = MolajoExtensionHelper::getExtensionOptions($this->_request);
+        $this->_request = MolajoExtensionHelper::getOptions($this->_request);
         if ($this->_request->get('results') === false) {
-            echo 'failed getExtensionOptions';
+            echo 'failed getOptions';
         }
     }
 

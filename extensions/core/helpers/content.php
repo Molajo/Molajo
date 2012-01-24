@@ -82,7 +82,6 @@ abstract class MolajoContentHelper
         $query->select('b_assets.' . $db->namequote('id') . ' as asset_id');
         $query->select('b_assets.' . $db->namequote('view_group_id') . ' as view_group_id');
         $query->from($db->namequote('#__assets') . ' as b_assets');
-        $query->where('b_assets.asset_type_id BETWEEN ' . MOLAJO_ASSET_TYPE_MENU_ITEM_BEGIN . ' AND ' . MOLAJO_ASSET_TYPE_MENU_ITEM_END);
         $query->where('b_assets.source_id = a.' . $db->namequote('id'));
 
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));

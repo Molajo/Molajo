@@ -58,8 +58,8 @@ class MolajoConfigApplication
     public $logon_requirement = 139;
 
     /* Template and View Defaults */
-    public $default_template_id = 82;
-    public $default_page_id = 69;
+    public $default_template_id = 98;
+    public $default_page_id = 55;
 
     public $default_static_view_id = 33;
     public $default_static_wrap_id = 81;
@@ -81,19 +81,19 @@ class MolajoConfigApplication
     public $message_wrap_id = 81;
 
     /* Offline */
-    public $offline = '0';
+    public $offline = 0;
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_template_id = 113;
+    public $offline_template_id = 99;
     public $offline_page_id = 81;
 
     /* Error */
     public $error_404_message = 'Page not found';
     public $error_403_message = 'Not authorised';
-    public $error_template_id = 113;
+    public $error_template_id = 99;
     public $error_page_id = 81;
 
     /* Feed */
-    public $feed_template_id = 113;
+    public $feed_template_id = 99;
     public $feed_page_id = 81;
     public $feed_limit = 10;
     public $feed_email = 'author';

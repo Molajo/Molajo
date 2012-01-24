@@ -19,42 +19,6 @@ defined('MOLAJO') or die;
 abstract class MolajoAssetHelper
 {
     /**
-     * getAssetID
-     *
-     * Retrieves Asset ID
-     *
-     * @param  null $asset_type_id
-     *
-     * @param  null $source_id
-     *
-     * @return bool|mixed
-     * @since  1.0
-     */
-    public static function getAssetID($asset_type_id, $source_id)
-    {
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
-        $acl = new MolajoACL ();
-
-        $query->select('a.' . $db->namequote('id') . ' as asset_id');
-        $query->from($db->namequote('#__assets') . ' as a');
-        $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
-        $query->where('a.' . $db->namequote('source_id') . ' = ' . (int)$source_id);
-
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
-
-        $db->setQuery($query->__toString());
-        $asset_id = $db->loadResult();
-
-        if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
-            return false;
-        }
-
-        return $asset_id;
-    }
-
-    /**
      * getAsset
      *
      * Retrieve Asset and Asset Type data for a specific asset id or query request
@@ -65,7 +29,7 @@ abstract class MolajoAssetHelper
      * @results  object
      * @since    1.0
      */
-    public static function getAsset($asset_id = 0, $query_request = null)
+    public static function get($asset_id = 0, $query_request = null)
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
@@ -140,6 +104,44 @@ abstract class MolajoAssetHelper
 
         return $row;
     }
+
+    /**
+     * getID
+     *
+     * Retrieves Asset ID
+     *
+     * @param  null $asset_type_id
+     *
+     * @param  null $source_id
+     *
+     * @return bool|mixed
+     * @since  1.0
+     */
+    public static function getID($asset_type_id, $source_id)
+    {
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+        $acl = new MolajoACL ();
+
+        $query->select('a.' . $db->namequote('id') . ' as asset_id');
+        $query->from($db->namequote('#__assets') . ' as a');
+        $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
+        $query->where('a.' . $db->namequote('source_id') . ' = ' . (int)$source_id);
+
+        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
+
+        $db->setQuery($query->__toString());
+        $asset_id = $db->loadResult();
+
+        if ($error = $db->getErrorMsg()) {
+            MolajoError::raiseWarning(500, $error);
+            return false;
+        }
+
+        return $asset_id;
+    }
+
+
     /**
      * getURL
      *
