@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoComponentRenderer extends MolajoRenderer
 {
-
     /**
      * import
      *

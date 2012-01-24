@@ -113,6 +113,7 @@ abstract class MolajoExtensionHelper
         $query->where('(b.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
         $query->select('b_assets.' . $db->namequote('id') . ' as extension_instance_asset_id');
+        $query->select('b_assets.' . $db->namequote('view_group_id') . ' as extension_instance_view_group_id');
         $query->from($db->namequote('#__assets') . ' as b_assets');
         $query->from($db->namequote('#__asset_types') . ' as b_ctype');
         $query->where('b_assets.asset_type_id = b_ctype.id');
@@ -234,86 +235,6 @@ abstract class MolajoExtensionHelper
         }
 
         return $name;
-    }
-
-
-    /**
-     * getExtensions
-     *
-     * Retrieves Extension data from the extension and extension instances
-     * In the case of menu items, joins to content table
-     * Adds ACL View Access data to query
-     * Adds verification for site and application access
-     *
-     * @static
-     * @param $asset_type_id
-     * @param null $extension
-     * @param null $extension_type
-     * @return bool|mixed
-     */
-    public static function getMenuItem($menu_item_id)
-    {
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
-        $date = MolajoController::getDate();
-        $now = $date->toMySQL();
-        $nullDate = $db->getNullDate();
-        $acl = new MolajoACL ();
-
-        $query->select('a.' . $db->namequote('id') . ' as id');
-        $query->select('a.' . $db->namequote('extension_instance_id') . ' as extension_instance_id');
-        $query->select('a.' . $db->namequote('asset_type_id') . ' as asset_type_id');
-        $query->select('a.' . $db->namequote('title') . ' as menu_item_title');
-        $query->select('a.' . $db->namequote('subtitle') . ' as menu_item_subtitle');
-        $query->select('a.' . $db->namequote('alias') . ' as menu_item_alias');
-        $query->select('a.' . $db->namequote('content_text') . ' as menu_item_content_text');
-        $query->select('a.' . $db->namequote('protected') . ' as menu_item_protected');
-        $query->select('a.' . $db->namequote('featured') . ' as menu_item_featured');
-        $query->select('a.' . $db->namequote('stickied') . ' as menu_item_stickied');
-        $query->select('a.' . $db->namequote('status') . ' as menu_item_status');
-        $query->select('a.' . $db->namequote('custom_fields') . ' as menu_item_custom_fields');
-        $query->select('a.' . $db->namequote('parameters') . ' as menu_item_parameters');
-        $query->select('a.' . $db->namequote('ordering') . ' as menu_item_ordering');
-        $query->select('a.' . $db->namequote('home') . ' as menu_item_home');
-        $query->select('a.' . $db->namequote('parent_id') . ' as menu_item_parent_id');
-        $query->select('a.' . $db->namequote('lft') . ' as menu_item_lft');
-        $query->select('a.' . $db->namequote('rgt') . ' as menu_item_rgt');
-        $query->select('a.' . $db->namequote('lvl') . ' as menu_item_lvl');
-        $query->select('a.' . $db->namequote('metadata') . ' as menu_item_metadata');
-        $query->select('a.' . $db->namequote('language') . ' as menu_item_language');
-        $query->select('a.' . $db->namequote('translation_of_id') . ' as translation_of_id');
-
-        $query->from($db->namequote('#__content') . ' as a');
-        $query->where('a.' . $db->namequote('id') . ' = ' . (int)$menu_item_id);
-
-        $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
-        $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
-        $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
-
-        /** assets */
-        $query->from($db->namequote('#__assets') . ' as b_assets');
-        $query->where('b_assets.asset_type_id BETWEEN ' . MOLAJO_ASSET_TYPE_MENU_ITEM_BEGIN . ' AND ' . MOLAJO_ASSET_TYPE_MENU_ITEM_END);
-        $query->where('b_assets.source_id = a.' . $db->namequote('id'));
-
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
-
-        $db->setQuery($query->__toString());
-        $rows = $db->loadObjectList();
-
-        if ($db->getErrorNum() == 0) {
-
-        } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
-            return false;
-        }
-
-        if (count($rows) == 0) {
-            return array();
-        }
-
-        foreach ($rows as $row) { }
-
-        return $row;
     }
 
     /**

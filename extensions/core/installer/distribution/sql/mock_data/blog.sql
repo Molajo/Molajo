@@ -14,16 +14,21 @@
 #
 INSERT INTO `molajo_content`
     (`title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `asset_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
-  VALUES
-    ('Content', '', 'content', '<p>Category for Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 3000, 0, 0, 0, 0, 0, 'en-GB', 1);
+ VALUES
+   ('Content', '', 'content', '<p>Category for Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 3000, 0, 0, 0, 0, 0, 'en-GB', 1);
 
+# Asset records for Assets
 INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`,  `template_id`, `language`,  `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT 3000, `id`, `title`, CONCAT('categories/', `id`), 
-    CONCAT('index.php?option=categories&id=', `id`), 10, 0, 'en-GB', 0, 0, 1
-    FROM  molajo_content
-    WHERE `title` = 'Content'
-      AND asset_type_id = 3000;
+  (`asset_type_id`, `source_id`, `routable`,
+  `sef_request`, `request`, `request_option`, `request_model`,
+  `redirect_to_id`, `view_group_id`, `primary_category_id`)
+  SELECT 3000, `id`, true,
+    CONCAT('category', '/', `alias`),
+    CONCAT('index.php?option=categories&id=', `id`),
+    'categories', 'category',
+    0, 3, 0
+    FROM `molajo_content`
+        WHERE `asset_type_id` = 3000;
 
 # ARTICLES
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'articles' AND `asset_type_id` = 1050);
@@ -42,7 +47,16 @@ INSERT INTO `molajo_content`
     ('Article 9', '', 'article-9', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', @id, 10000, 0, 0, 0, 0, 0, 'en-GB', 9),
     ('Article 10', '', 'article-10', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', @id, 10000, 0, 0, 0, 0, 0, 'en-GB', 10);
 
-INSERT INTO `molajo_assets` (`title`, `asset_type_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
-  SELECT `title`, `asset_type_id`, `id`, CONCAT(`path`, '/', `alias`), CONCAT('index.php?option=articles&view=article&id=', `id`), 1, 'en-GB'
+# Asset records for Assets
+SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 3000);
+INSERT INTO `molajo_assets`
+  (`asset_type_id`, `source_id`, `routable`,
+  `sef_request`, `request`, `request_option`, `request_model`,
+  `redirect_to_id`, `view_group_id`, `primary_category_id`)
+  SELECT 10000, `id`, true,
+    CONCAT(`path`, '/', `alias`),
+    CONCAT('index.php?option=articles&model=article&id=', `id`),
+    'articles', 'article',
+    0, 3, @category_id
     FROM `molajo_content`
-    WHERE `asset_type_id` = 10000;
+        WHERE `asset_type_id` = 10000;

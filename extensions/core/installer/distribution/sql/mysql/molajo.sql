@@ -21,9 +21,9 @@ INSERT INTO `molajo_action_types` (`id` , `title` , `protected`)
 INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `component_option`)
   VALUES
   (1, 'System', 1, '', ''),
-  
+
   (10, 'Sites', 1, '__sites', 'sites'),
-  
+
   (50, 'Applications', 1, '__applications', 'applications'),
 
   (100, 'System', 1, '__content', 'groups'),
@@ -100,7 +100,7 @@ UPDATE `molajo_extensions`
   WHERE `name` = 'core';
 
 INSERT INTO `molajo_extension_instances`
-  (`id`, ``extension_id`, `asset_type_id`,
+  (`id`, `extension_id`, `asset_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -386,7 +386,7 @@ INSERT INTO `molajo_applications`
   VALUES
     (1, 50, 'site', '', 'Primary application for site visitors', '{}', '{}'),
     (2, 50, 'administrator', 'administrator', 'Administrative site area for site construction', '{}', '{}');
-    
+
 #
 # CONTENT ROOT ID
 #
@@ -1177,8 +1177,8 @@ INSERT INTO `molajo_assets`
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
 SELECT a.`asset_type_id`, a.`id`, true,
-    CONCAT(SUBSTRING(b.`component_option`, 5, 99), '/', LOWER(b.`title`), '/', a.`id`),
-    CONCAT('index.php?option=extension', '&model=', lower(b.`title`), '&id=', a.`id`),
+    CONCAT(b.`component_option`, '/', LOWER(b.`title`), '/', a.`id`),
+    CONCAT('index.php?option=extensions', '&model=', lower(b.`title`), '&id=', a.`id`),
     'extension', b.`title`, 0, 1, 0
     FROM `molajo_extension_instances` a,
         `molajo_asset_types` b
@@ -1190,7 +1190,7 @@ INSERT INTO `molajo_assets`
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   VALUES
-  (2000, 102, true, 'content', 'index.php?option=dashboard&model=static', 'dashboard', 'static', 0, 1, 3),
+  (2000, 102, true, 'content', 'index.php?option=dashboard&model=dummy', 'dashboard', 'static', 0, 1, 3),
   (10000, 130, true, 'content/articles', 'index.php?option=articles&model=articles', 'articles', 'articles', 0, 1, 3);
 
 /**

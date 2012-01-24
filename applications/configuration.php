@@ -55,6 +55,8 @@ class MolajoConfig
     /**             */
     /** Application */
     /**             */
+
+    /* Application Settings */
     public $application_name = 'Molajo';
 
     /* Metadata */
@@ -72,7 +74,7 @@ class MolajoConfig
 
     /* SEO */
     public $sef = '1';
-    public $sef_rewrite = '0';
+    public $sef_rewrite = '1';
     public $sef_suffix = '0';
     public $unicode_slugs = '0';
     public $force_ssl = '0';
@@ -105,10 +107,10 @@ class MolajoConfig
     public $view_access = '1';
 
     /* Home */
-    public $home_asset_id = 7022;
+    public $home_asset_id = 139;
 
     /* Logon Requirement */
-    public $logon_requirement = 7022;
+    public $logon_requirement = 139;
 
     /* Template and View Defaults */
     public $default_template_id = 82;
