@@ -393,7 +393,11 @@ class MolajoRequest
             $this->_processTask();
         }
 
-        return true;
+        return $this->request;
+
+        echo '<pre>';
+        var_dump($this->request);
+        echo '</pre>';
     }
 
     /**
@@ -627,7 +631,6 @@ class MolajoRequest
      */
     protected function _getPrimaryCategory()
     {
-
         $row = MolajoContentHelper::get(
             (int)$this->request->get('category_id'),
             '__content');
@@ -847,7 +850,6 @@ class MolajoRequest
      */
     protected function _authoriseTask()
     {
-
         $this->request->set('status_authorised', true);
         return;
         if (in_array($this->request->get('asset_view_group_id'),
@@ -900,14 +902,9 @@ class MolajoRequest
 
         $this->_mergeParameters();
 
-        echo '<pre>';
-        var_dump($this->request);
-        echo '</pre>';
-        die;
-
         /** Render Document */
         new MolajoDocument ($this->request);
-        return $this->request;
+        return true;
     }
 
     /**
@@ -1185,6 +1182,7 @@ class MolajoRequest
      */
     protected function _processTask()
     {
+        return;
     }
 
     /**
