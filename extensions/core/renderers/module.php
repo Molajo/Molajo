@@ -33,12 +33,12 @@ class MolajoRendererModule extends MolajoRenderer
         } else {
             return false;
         }
-
+echo 'sdfasdfs';
         foreach ($modules as $module) {
 
             /** Populate $request */
             $this->_setRequest($module);
-
+echo 'dafdszf'.strtolower($module->extension_name);
             /** lazy load paths for extension files */
             $this->_setPaths();
 
@@ -119,6 +119,7 @@ class MolajoRendererModule extends MolajoRenderer
     {
         $this->request->set('mvc_extension_instance_id', $module->extension_id);
         $this->request->set('mvc_extension_instance_name', strtolower($module->extension_name));
+        $this->request->set('mvc_option', strtolower($module->extension_name));
         $this->request->set('mvc_extension_path',
             MOLAJO_EXTENSIONS_MODULES . '/' . strtolower($module->extension_name));
         $this->request->set('mvc_view_type', 'extension');

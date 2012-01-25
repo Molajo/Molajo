@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class FooterModuleModelDisplay extends MolajoModelDisplay
+class FooterModuleModelDisplay extends MolajoModel
 {
     /**
      * __construct
@@ -40,7 +40,8 @@ class FooterModuleModelDisplay extends MolajoModelDisplay
     public function getItems()
     {
         $this->items = array();
-
+echo 'in getItems';
+        die;
         $tempObject = new JObject();
 
         /** footer line 1 */
