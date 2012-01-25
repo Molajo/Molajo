@@ -30,7 +30,7 @@ class MolajoRendererDefer extends MolajoRenderer
      * @var    object
      * @since  1.0
      */
-    protected $_request;
+    public $request;
 
     /**
      * Attributes
@@ -55,7 +55,7 @@ class MolajoRendererDefer extends MolajoRenderer
     public function __construct($name = null, $request = array())
     {
         $this->_name = $name;
-        $this->_request = $request;
+        $this->request = $request;
     }
 
     /**
@@ -75,7 +75,7 @@ class MolajoRendererDefer extends MolajoRenderer
         $this->_setParameters();
 
         /** Instantiate Controller */
-        $controller = new MolajoControllerDisplay ($this->_request);
+        $controller = new MolajoControllerDisplay ($this->request);
         return $controller->Display();
     }
 
@@ -86,51 +86,51 @@ class MolajoRendererDefer extends MolajoRenderer
      */
     protected function _setRequest()
     {
-        $this->_request->set('view', MolajoController::getApplication()->get('defer_view_id', 'defer'));
-        $this->_request->set('wrap', MolajoController::getApplication()->get('defer_wrap_id', 'none'));
+        $this->request->set('view', MolajoController::getApplication()->get('defer_view_id', 'defer'));
+        $this->request->set('wrap', MolajoController::getApplication()->get('defer_wrap_id', 'none'));
 
         foreach ($this->_attributes as $name => $value) {
 
             if ($name == 'wrap') {
-                $this->_request->set('wrap', $value);
+                $this->request->set('wrap', $value);
 
             } else if ($name == 'view') {
-                $this->_request->set('view', $value);
+                $this->request->set('view', $value);
 
             } else if ($name == 'id' || $name == 'wrap_id') {
-                $this->_request->set('wrap_id', $value);
+                $this->request->set('wrap_id', $value);
 
             } else if ($name == 'class' || $name == 'wrap_class') {
-                $this->_request->set('wrap_class', $value);
+                $this->request->set('wrap_class', $value);
             }
         }
 
         /** Model */
-        $this->_request->set('model', 'MolajoModelDefer');
+        $this->request->set('model', 'MolajoModelDefer');
 
         /** View Path */
-        $this->_request->set('view_type', 'extensions');
-        $viewHelper = new MolajoViewHelper($this->_request->get('view'),
-            $this->_request->get('view_type'),
-            $this->_request->get('mvc_option'),
-            $this->_request->get('extension_type'),
+        $this->request->set('view_type', 'extensions');
+        $viewHelper = new MolajoViewHelper($this->request->get('view'),
+            $this->request->get('view_type'),
+            $this->request->get('mvc_option'),
+            $this->request->get('extension_type'),
             ' ',
-            $this->_request->get('template_name')
+            $this->request->get('template_name')
         );
-        $this->_request->set('view_path', $viewHelper->view_path);
-        $this->_request->set('view_path_url', $viewHelper->view_path_url);
+        $this->request->set('view_path', $viewHelper->view_path);
+        $this->request->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
-        $wrapHelper = new MolajoViewHelper($this->_request->get('wrap'),
+        $wrapHelper = new MolajoViewHelper($this->request->get('wrap'),
             'wraps',
-            $this->_request->get('mvc_option'),
-            $this->_request->get('extension_type'),
+            $this->request->get('mvc_option'),
+            $this->request->get('extension_type'),
             ' ',
-            $this->_request->get('template_name')
+            $this->request->get('template_name')
         );
-        $this->_request->set('wrap_path', $wrapHelper->view_path);
-        $this->_request->set('wrap_path_url', $wrapHelper->view_path_url);
+        $this->request->set('wrap_path', $wrapHelper->view_path);
+        $this->request->set('wrap_path_url', $wrapHelper->view_path_url);
 
-        $this->_request->set('extension_suppress_no_results', true);
+        $this->request->set('extension_suppress_no_results', true);
     }
 }

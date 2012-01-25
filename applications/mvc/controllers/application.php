@@ -168,7 +168,7 @@ class MolajoControllerApplication
      * @var    object
      * @since  1.0
      */
-    protected $_request = null;
+    public $request = null;
 
     /**
      * Response
@@ -272,11 +272,6 @@ class MolajoControllerApplication
         $this->_response->cachable = false;
         $this->_response->headers = array();
         $this->_response->body = array();
-        /*
-                echo '<pre>';
-                var_dump($this->_config);
-                '</pre>';
-        **/
     }
 
     /**
@@ -305,14 +300,11 @@ class MolajoControllerApplication
 
         /** request and rendering  */
         $requestClass = new MolajoRequest();
-        $this->_request = $requestClass->process();
+        $this->request = $requestClass->process();
 
         /** response */
         $this->respond();
         return true;
-        //        echo '<pre>';
-        //        var_dump($request);
-        //        '</pre>';
     }
 
     /**

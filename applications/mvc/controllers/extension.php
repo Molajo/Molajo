@@ -77,10 +77,7 @@ class MolajoControllerExtension
     public function __construct(JObject $request, $parameters = array())
     {
         $this->request = $request;
-        //$temp = (array) $this->request;
-        //echo '<pre>';var_dump($temp);'</pre>';
 
-        // Get parameters
         $this->parameters = new JRegistry;
         $this->parameters->loadArray($parameters);
 

@@ -27,6 +27,6 @@ class MolajoRendererMessage extends MolajoRenderer
         parent::_setParameters();
 
         /** Model */
-        $this->_request->set('mvc_model', 'MolajoModelMessages');
+        $this->request->set('mvc_model', 'MolajoModelMessages');
     }
 }

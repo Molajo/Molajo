@@ -394,10 +394,6 @@ class MolajoRequest
         }
 
         return $this->request;
-
-        echo '<pre>';
-        var_dump($this->request);
-        echo '</pre>';
     }
 
     /**
@@ -901,7 +897,9 @@ class MolajoRequest
         $this->_getWrap();
 
         $this->_mergeParameters();
-
+echo '<pre>';
+var_dump($this->request);
+echo '</pre>';
         /** Render Document */
         new MolajoDocument ($this->request);
         return true;

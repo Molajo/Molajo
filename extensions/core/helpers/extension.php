@@ -189,7 +189,6 @@ abstract class MolajoExtensionHelper
             MolajoError::raiseWarning(500, $error);
             return false;
         }
-        //echo '<pre>';var_dump($extensions);'</pre>';
 
         return $extensions;
     }
