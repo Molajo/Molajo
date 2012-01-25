@@ -10,7 +10,7 @@
 defined('MOLAJO') or die;
 ?>
 <include:head/>
-<include:module name=header view=header wrap=header/>
+<include:module position=header view=page-header wrap=div/>
 <include:request/>
-<include:module position=footer view=footer wrap=footer/>
+<include:module position=footer view=page-footer wrap=div/>
 <include:defer/>

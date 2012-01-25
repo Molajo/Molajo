@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class HeaderModelDisplay extends MolajoModelDisplay
+class HeaderModuleModelDisplay extends MolajoModelDisplay
 {
     /**
      * __construct
@@ -44,7 +44,10 @@ class HeaderModelDisplay extends MolajoModelDisplay
         $tempObject = new JObject();
         $tempObject->set('title', MolajoController::getApplication()->get('site_title', 'Molajo'));
         $this->items[] = $tempObject;
-
+echo '<pre>';
+var_dump($this->items);
+echo '</pre>';
+        die;
         return $this->items;
     }
 }

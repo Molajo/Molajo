@@ -52,21 +52,22 @@ abstract class MolajoExtensionHelper
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
         $acl = new MolajoACL ();
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
+            $queryAssetTypeID = MOLAJO_ASSET_TYPE_EXTENSION_MODULE;
+        } else {
+            $queryAssetTypeID = $asset_type_id;
+        }
 
         /**
          *  Extensions Table
          */
         $query->select('a.' . $db->namequote('id') . ' as extension_id');
         $query->select('a.' . $db->namequote('name') . ' as extension_name');
-        $query->select('a.' . $db->namequote('subtype') );
+        $query->select('a.' . $db->namequote('subtype'));
 
         $query->from($db->namequote('#__extensions') . ' as a');
+        $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$queryAssetTypeID);
 
-        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
-            $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id - 1);
-        } else {
-            $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
-        }
         /** plugins and views have subtypes */
         if ($extension_type == null) {
         } else {
@@ -92,20 +93,16 @@ abstract class MolajoExtensionHelper
 
         $query->from($db->namequote('#__extension_instances') . ' as b');
 
-        if ($extension == null) {
+        $query->where('a.' . $db->namequote('id') . ' = b.' . $db->namequote('extension_id'));
+        $query->where('b.' . $db->namequote('asset_type_id') . ' = ' . (int)$queryAssetTypeID);
+
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
+            $query->where('b.' . $db->namequote('position') . ' = ' . $db->quote($extension));
+            $query->order('b.' . $db->namequote('ordering'));
+        } else if ($extension == null) {
         } else {
             $query->where('(b.' . $db->namequote('title') . ' = ' . $db->quote($extension) .
                 ' OR ' . 'b.' . $db->namequote('id') . ' = ' . (int)$extension . ')');
-        }
-
-        $query->where('a.' . $db->namequote('id') . ' = b.' . $db->namequote('extension_id'));
-
-        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
-            $query->where('b.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id - 1);
-            $query->where('b.' . $db->namequote('position') . ' = ' . $db->quote($extension));
-            $query->order('b.' . $db->namequote('ordering'));
-        } else {
-            $query->where('b.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
         }
 
         $query->where('b.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
@@ -182,7 +179,13 @@ abstract class MolajoExtensionHelper
         $query->where('e.' . $db->namequote('site_id') . ' = ' . MOLAJO_SITE_ID);
 
         $db->setQuery($query->__toString());
-
+/**
+if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
+    if ($extension == 'footer') {
+        echo $query->__toString();
+    }
+}
+*/
         $extensions = $db->loadObjectList();
 
         if ($error = $db->getErrorMsg()) {

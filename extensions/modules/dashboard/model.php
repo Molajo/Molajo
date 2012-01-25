@@ -14,37 +14,6 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class DashboardModelDisplay extends MolajoModelDisplay
+class DashboardModuleModelDisplay extends MolajoModel
 {
-    /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param  $config
-     * @since  1.0
-     */
-    public function __construct($config = array())
-    {
-        $this->_name = get_class($this);
-        parent::__construct($config = array());
-    }
-
-    /**
-     * getItems
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getItems()
-    {
-        $this->items = array();
-
-        $tempObject = new JObject();
-        $tempObject->set('title', MolajoController::getApplication()->get('site_title', 'Molajo'));
-        $this->items[] = $tempObject;
-
-        return $this->items;
-    }
 }
