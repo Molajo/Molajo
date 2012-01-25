@@ -122,6 +122,10 @@ class MolajoDocument
     }
 
     /**
+     * Do it like _renderLoop, Andrew Eddie:
+     * https://groups.google.com/d/msg/joomla-dev-general/FeveA7hYyeg/WMxSky8YAccJ
+     * Molajo supports <input:xyz statements in templates and extension layouts. =)
+     *
      *  _renderLoop
      *
      * Extension Views can contain <include:xyz statements in the same manner that the
