@@ -28,6 +28,10 @@ class MolajoRendererModule extends MolajoRenderer
     {
         /** Retrieve single Module or all Modules for a Position */
         $modules = $this->_getModules($this->_position);
+        echo '<pre>';
+        var_dump($modules);
+        echo '</pre>';
+
         if (count($modules) > 0) {
         } else {
             return false;
@@ -106,7 +110,7 @@ class MolajoRendererModule extends MolajoRenderer
     protected function _getModules($position)
     {
         if ($this->_position == '') {
-            return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $this->request->get('extension_title'), null);
+            return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $this->request->get('mvc_extension_instance_name'), null);
         } else {
             return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_POSITION, $this->_position, null);
         }
@@ -120,20 +124,22 @@ class MolajoRendererModule extends MolajoRenderer
     private function _setRequest($module)
     {
         $this->request->set('mvc_extension_instance_id', $module->extension_id);
-        $this->request->set('mvc_extension_instance_name', $module->extension_name);
-        $this->request->set('mvc_option', $module->extension_name);
+        $this->request->set('mvc_extension_instance_name', strtolower($module->extension_name));
+        $this->request->set('mvc_view_type', 'extension');
+        $this->request->set('mvc_extension_type', 'module');
 
         $parameters = new JRegistry;
         $parameters->loadString($module->parameters);
-        $this->request->set('request_request_extension_parameters', $parameters);
+        $this->request->set('request_extension_parameters', $parameters);
         $this->request->set('request_extension_metadata', $module->metadata);
 
-        $this->request->set('extension_path', MOLAJO_EXTENSIONS_MODULES . '/' . $this->request->set('extension_name'));
+        $this->request->set('extension_path',
+            MOLAJO_EXTENSIONS_MODULES . '/' . strtolower($module->extension_name));
         $this->request->set('extension_type', 'module');
         $this->request->set('extension_folder', '');
 
-        $this->request->set('mvc_controller', ucfirst($this->request->get('extension_name')) . 'ControllerModule');
-        $this->request->set('mvc_model', ucfirst($module->extension_name) . 'ModelModule');
+        $this->request->set('mvc_controller', 'display');
+        $this->request->set('mvc_model', 'display');
         $this->request->set('mvc_task', 'display');
 
         /** View Path */
@@ -151,10 +157,12 @@ class MolajoRendererModule extends MolajoRenderer
     }
 
     /**
-     * import
+     * _import
      *
      * imports module folders and files
-     * @since 1.0
+     *
+     * @return  null
+     * @since   1.0
      */
     protected function _import()
     {
@@ -162,26 +170,27 @@ class MolajoRendererModule extends MolajoRenderer
 
         /** Controller */
         if (file_exists($this->request->get('mvc_extension_path') . '/controller.php')) {
-            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/controller.php', ucfirst($this->request->get('extension_name')) . 'ControllerModule');
+            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/controller.php', ucfirst($this->request->get('extension_name')) . 'ControllerDisplay');
         }
+        echo $this->request->get('mvc_extension_path') . '/model.php'.'<br />';
         /** Model */
         if (file_exists($this->request->get('mvc_extension_path') . '/model.php')) {
-            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/model.php', ucfirst($this->request->get('extension_name')) . 'ModelModule');
+            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/model.php', ucfirst($this->request->get('extension_name')) . 'ModelDisplay');
         }
     }
 
     /**
-     * _loadMedia
+     *  _loadMedia
      *
-     * Loads Media Files for Site, Application, User, and Template
+     * Load CSS, JS, and Deferred JS for Extension
      *
-     * @return  boolean  True, if the file has successfully loaded.
-     * @since   1.0
+     * @return  null
+     * @since  1.0
      */
     protected function _loadMedia()
     {
-        /** Module */
-        $this->_loadMediaPlus('/module' . $this->request->get('mvc_option'),
+        parent::_loadMedia(MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->request->get('mvc_extension_instance_name'),
+            MOLAJO_SITE_MEDIA_URL . '/' . $this->request->get('mvc_extension_instance_name'),
             MolajoController::getApplication()->get('$media_priority_module', 400));
     }
 }

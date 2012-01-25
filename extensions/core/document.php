@@ -106,9 +106,6 @@ class MolajoDocument
         /** Before Event */
         //        MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
-        /** Load Media */
-//        $this->_loadMedia();
-
         /** process template include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop();
 

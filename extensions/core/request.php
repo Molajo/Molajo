@@ -88,7 +88,8 @@ class MolajoRequest
         if ($this->request->get('request_url_query', '') == ''
             && (int)$this->request->get('request_asset_id', 0) == 0
         ) {
-            $this->request->set('request_asset_id', MolajoController::getApplication()->get('home_asset_id', 0));
+            $this->request->set('request_asset_id',
+                MolajoController::getApplication()->get('home_asset_id', 0));
             $this->request->set('request_url_home', true);
         }
 
@@ -260,7 +261,8 @@ class MolajoRequest
 
         $this->request->set('metadata_title', '');
         $this->request->set('metadata_description', '');
-        $this->request->set('metadata_generator', MolajoController::getApplication()->get('generator', 'Molajo'));
+        $this->request->set('metadata_generator',
+            MolajoController::getApplication()->get('generator', 'Molajo'));
         $this->request->set('metadata_keywords', '');
         $this->request->set('metadata_author', '');
         $this->request->set('metadata_content_rights', '');
@@ -897,9 +899,7 @@ class MolajoRequest
         $this->_getWrap();
 
         $this->_mergeParameters();
-echo '<pre>';
-var_dump($this->request);
-echo '</pre>';
+
         /** Render Document */
         new MolajoDocument ($this->request);
         return true;
