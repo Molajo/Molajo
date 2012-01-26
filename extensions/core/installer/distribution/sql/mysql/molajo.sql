@@ -52,7 +52,7 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
   (10000, 'Articles', 0, '__content', 'articles'),
   (20000, 'Contacts', 0, '__content', 'contacts'),
   (30000, 'Comments', 0, '__content', 'comments'),
-  (40000, 'Dashboard', 0, '__dummy', 'dashboard'),
+  (40000, 'Dashboard', 0, 'static', 'dashboard'),
   (50000, 'Media', 0, '__content', 'media'),
   (60000, 'Views', 0, '__content', 'views');
 
@@ -160,7 +160,7 @@ INSERT INTO `molajo_extensions`
     ('document-defer', 1150, 'extensions', 1),
     ('document-head', 1150, 'extensions', 1),
 
-    ('dummy', 1150, 'extensions', 1),
+    ('static', 1150, 'extensions', 1),
     ('edit', 1150, 'extensions', 1),
     ('edit-editor', 1150, 'extensions', 1),
     ('edit-access-control', 1150, 'extensions', 1),
@@ -341,7 +341,7 @@ INSERT INTO `molajo_extensions`
     ('default', 1350, 1),
     ('document-defer', 1350, 1),
     ('document-head', 1350, 1),
-    ('dummy', 1350, 1),
+    ('static', 1350, 1),
     ('page-header', 1350, 1),
     ('page-footer', 1350, 1),
     ('system-errors', 1350, 1),
@@ -1190,7 +1190,7 @@ INSERT INTO `molajo_assets`
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   VALUES
-  (2000, 102, true, 'content', 'index.php?option=dashboard&model=dummy', 'dashboard', 'static', 0, 1, 3),
+  (2000, 102, true, 'content', 'index.php?option=dashboard&model=static', 'dashboard', 'static', 0, 1, 3),
   (10000, 130, true, 'content/articles', 'index.php?option=articles&model=articles', 'articles', 'articles', 0, 1, 3);
 
 /**

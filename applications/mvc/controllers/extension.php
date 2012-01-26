@@ -17,51 +17,58 @@ defined('MOLAJO') or die;
 class MolajoControllerExtension
 {
     /**
-     * @var object $request
+     * $request
      *
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $request;
 
     /**
-     * @var object $parameters
+     * $parameters
      *
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $parameters = array();
 
     /**
-     * @var object $table
+     * $table
      *
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $table = null;
 
     /**
-     * @var object $model
+     * $model
      *
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $model = null;
 
     /**
-     * @var object $isNew
+     * $isNew
      *
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $isNew = null;
 
     /**
-     * @var object $existing_status
+     * $existing_status
      *
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $existing_status = null;
 
     /**
      * $redirectClass
      *
-     * @var string
+     * @var    string
+     * @since  1.0
      */
     public $redirectClass = null;
 
@@ -71,34 +78,27 @@ class MolajoControllerExtension
      * Constructor.
      *
      * @param    array   $request
-     *
      * @since    1.0
      */
-    public function __construct(JObject $request, $parameters = array())
+    public function __construct($request, $parameters = array())
     {
-        $this->request = $request;
+        if (is_object($request)) {
+            $this->request = $request;
+        } else {
+            //errror
+        }
 
         $this->parameters = new JRegistry;
         $this->parameters->loadArray($parameters);
 
-        /**
-        if (isset($attribs['params'))) {
-        $template_params = new JRegistry;
-        $template_params->loadString(html_entity_decode($attribs['params'), ENT_COMPAT, 'UTF-8'));
-        $params->merge($template_params);
-        $module = clone $module;
-        $module->params = (string)$params;
-        }
-
-         */
         // todo: amy look at redirect
-        $this->redirectClass = new MolajoControllerRedirect($this->request);
+//        $this->redirectClass = new MolajoControllerRedirect($this->request);
 
         /** load table */
         if ($this->request->get('mvc_task') == 'display'
             || $this->request->get('mvc_task') == 'add'
             || $this->request->get('mvc_task') == 'login'
-            || $this->request->get('component_table') == '__dummy'
+            || $this->request->get('mvc_model') == 'static'
         ) {
             $this->isNew = false;
 
@@ -125,6 +125,7 @@ class MolajoControllerExtension
         MolajoPluginHelper::importPlugin($this->request->get('mvc_plugin_type'));
         }
          */
+
         /** check authorisation **/
         if (MOLAJO_APPLICATION == 'installation') {
         } else {
@@ -135,7 +136,7 @@ class MolajoControllerExtension
         }
 
         /** set redirects **/
-        $this->redirectClass->initialise();
+// $this->redirectClass->initialise();
 
         /** success **/
         return true;
@@ -150,18 +151,6 @@ class MolajoControllerExtension
      */
     public function checkTaskAuthorisation()
     {
-        return true;
-        $acl = new MolajoACL ();
-        $results = $acl->authoriseTask(
-            $this->request,
-            $this->table);
-
-        if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED') . ' ' . $this->request->get('mvc_task'));
-            $this->redirectClass->setRedirectMessageType('warning');
-            return false;
-        }
-
         return true;
     }
 
@@ -199,7 +188,8 @@ class MolajoControllerExtension
      *
      * method to verify that the current user is recorded in the checked_out column of the item
      *
-     * @return    boolean
+     * @return  boolean
+     * @since   1.0
      */
     public function verifyCheckout()
     {
@@ -253,10 +243,10 @@ class MolajoControllerExtension
     /**
      * createVersion
      *
-     * Components have authomatic version management save and restore processes
+     * Automatic version management save and restore processes for components
      *
-     * @return    boolean
-     * @since    1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function createVersion($context)
     {
@@ -351,7 +341,7 @@ class MolajoControllerExtension
      */
     public function cleanCache()
     {
-        $cache = MolajoController::getCache($this->request->get('extension_name'));
+        $cache = MolajoController::getCache($this->request->get('mvc_extension_instance_name'));
         $cache->clean();
     }
 }

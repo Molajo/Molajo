@@ -620,7 +620,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 /* 100 MOLAJO_EXTENSION_OPTION_ID_TABLE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 100, '', '', 0),
-(2559, 100, '__dummy', '__dummy', 1);
+(2559, 100, 'static', 'static', 1);
 
 /** MVC */
 
@@ -701,12 +701,12 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 /* 5000 MOLAJO_EXTENSION_OPTION_ID_MODEL +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 5000, '', '', 0),
-(2559, 5000, 'dummy', 'dummy', 1);
+(2559, 5000, 'static', 'static', 1);
 
 /* 5000 MOLAJO_EXTENSION_OPTION_ID_MODEL +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 5001, '', '', 0),
-(2559, 5001, 'dummy', 'dummy', 1);
+(2559, 5001, 'static', 'static', 1);
 
 /* 6000 MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES

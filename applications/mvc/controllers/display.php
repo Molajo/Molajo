@@ -40,7 +40,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     public function display()
     {
         /** model */
-        $modelClass = ucfirst($this->request->get('mvc_option'));
+        $modelClass = ucfirst($this->request->get('mvc_extension_instance_name'));
         if ($this->request->get('mvc_extension_type') == 'modules') {
             $modelClass .= 'Module';
         }
@@ -49,12 +49,12 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 echo $modelClass.'<br />';
         if (class_exists($modelClass)) {
         } else {
-            echo ucfirst($this->request->get('mvc_option'));
+            echo ucfirst($this->request->get('mvc_extension_instance_name'));
             $modelClass = 'MolajoModel' . ucfirst($this->request->get('mvc_model'));
         }
 
         $this->model = new $modelClass();
-        if ($this->request->get('mvc_option') == 'header') {
+        if ($this->request->get('mvc_extension_instance_name') == 'header') {
             echo '<pre>';
             var_dump($this->model);
             echo '</pre>';

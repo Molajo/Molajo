@@ -256,7 +256,7 @@ if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
         $request->set('component_table', '');
 
         /** Configuration model */
-        $configModel = new MolajoModelConfiguration ($request->get('mvc_option'));
+        $configModel = new MolajoModelConfiguration ($request->get('mvc_extension_instance_name'));
 
         /** Task */
         if ($request->get('task', '') == '') {
@@ -327,17 +327,17 @@ if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
         $model = '';
         if ($request->get('controller') == 'display') {
             if ($request->get('static') === true) {
-                $model = 'dummy';
+                $model = 'static';
             } else {
                 $model = 'display';
             }
         } else {
             $model = 'edit';
         }
-        if ($model == 'dummy') {
+        if ($model == 'static') {
             $request->set('model', 'MolajoModel');
         } else {
-            $request->set('model', ucfirst($request->get('mvc_option')) . 'Model' . ucfirst($model));
+            $request->set('model', ucfirst($request->get('mvc_extension_instance_name')) . 'Model' . ucfirst($model));
         }
 
         if ($request->get('controller') == 'display') {

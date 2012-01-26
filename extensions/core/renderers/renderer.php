@@ -81,6 +81,10 @@ class MolajoRenderer
      */
     public function render($attributes)
     {
+        echo '<pre>';
+        var_dump($this->request);
+        echo '</pre>';
+
         /** attributes come from <include:xyz statement */
         $this->_attributes = $attributes;
 
@@ -194,7 +198,7 @@ class MolajoRenderer
         $viewHelper = new MolajoViewHelper($this->request->get('view_name'),
             $this->request->get('view_type'),
             $this->request->get('extension_title'),
-            $this->request->get('extension_type'),
+            $this->request->get('mvc_extension_instance_name'),
             ' ',
             $this->request->get('template_name'));
         $this->request->set('view_path', $viewHelper->view_path);
@@ -207,7 +211,7 @@ class MolajoRenderer
         $wrapHelper = new MolajoViewHelper($this->request->get('wrap_name'),
             'wraps',
             $this->request->get('extension_title'),
-            $this->request->get('extension_type'),
+            $this->request->get('mvc_extension_instance_name'),
             ' ',
             $this->request->get('template_name'));
         $this->request->set('wrap_path', $wrapHelper->view_path);

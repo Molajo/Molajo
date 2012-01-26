@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
 class MolajoControllerSite
 {
     /**
-     * Configuration for Site
+     * $config
      *
      * @var    integer
      * @since  1.0
@@ -23,7 +23,7 @@ class MolajoControllerSite
     static public $config = null;
 
     /**
-     * The base url
+     * $base_url
      *
      * @var    string
      * @since  1.0
@@ -31,6 +31,8 @@ class MolajoControllerSite
     static public $base_url = null;
 
     /**
+     * $applications
+     *
      * Applications the site is authorized to access
      *
      * @var    string
@@ -39,7 +41,7 @@ class MolajoControllerSite
     static public $applications = null;
 
     /**
-     * Parameters
+     * $parameters
      *
      * @var    date
      * @since  1.0
@@ -47,7 +49,7 @@ class MolajoControllerSite
     static public $parameters = null;
 
     /**
-     * Custom Fields
+     * $custom_fields
      *
      * @var    date
      * @since  1.0

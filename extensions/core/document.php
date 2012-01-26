@@ -30,7 +30,7 @@ class MolajoDocument
      * @var object
      * @since 1.0
      */
-    protected $request = null;
+    public $request = null;
 
     /**
      * Template Parameters
@@ -104,7 +104,7 @@ class MolajoDocument
         $this->parameters->loadArray($parameters);
 
         /** Before Event */
-        //        MolajoController::getApplication()->triggerEvent('onBeforeRender');
+        // MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
         /** process template include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop();

@@ -33,16 +33,16 @@ class MolajoRendererModule extends MolajoRenderer
         } else {
             return false;
         }
-echo 'sdfasdfs';
+
         foreach ($modules as $module) {
 
             /** Populate $request */
             $this->_setRequest($module);
-echo 'dafdszf'.strtolower($module->extension_name);
+
             /** lazy load paths for extension files */
             $this->_setPaths();
 
-            /** import files and classes for extension */
+            /** lazy load of standard files and classes for extension */
             $this->_import();
 
             /** load language files for extension */
@@ -60,10 +60,10 @@ echo 'dafdszf'.strtolower($module->extension_name);
             }
 
             $controllerClass = ucfirst($this->request->get('mvc_extension_instance_name')) .
-                    'ModuleController'.ucfirst($this->request->get('mvc_controller'));
+                'ModuleController' . ucfirst($this->request->get('mvc_controller'));
             if (class_exists($controllerClass)) {
             } else {
-                $controllerClass = 'ModuleController'.ucfirst($this->request->get('mvc_controller'));
+                $controllerClass = 'ModuleController' . ucfirst($this->request->get('mvc_controller'));
             }
             $controller = new $controllerClass ($this->request);
 
@@ -82,8 +82,8 @@ echo 'dafdszf'.strtolower($module->extension_name);
 
                 $viewHelper = new MolajoViewHelper($this->request->get('wrap'),
                     'wraps',
-                    $this->request->get('mvc_option'),
-                    $this->request->get('extension_type'),
+                    $this->request->get('mvc_extension_instance_name'),
+                    $this->request->get('mvc_extension_instance_name'),
                     ' ',
                     $this->request->get('template_name'));
                 $this->request->set('wrap_path', $viewHelper->view_path);
@@ -106,7 +106,7 @@ echo 'dafdszf'.strtolower($module->extension_name);
         if ($this->_position == '') {
             return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $this->request->get('mvc_extension_instance_name'), null);
         } else {
-            $results = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_POSITION, $this->_position, null);
+            return MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_POSITION, $this->_position, null);
         }
     }
 
@@ -119,7 +119,7 @@ echo 'dafdszf'.strtolower($module->extension_name);
     {
         $this->request->set('mvc_extension_instance_id', $module->extension_id);
         $this->request->set('mvc_extension_instance_name', strtolower($module->extension_name));
-        $this->request->set('mvc_option', strtolower($module->extension_name));
+        $this->request->set('mvc_extension_instance_name', strtolower($module->extension_name));
         $this->request->set('mvc_extension_path',
             MOLAJO_EXTENSIONS_MODULES . '/' . strtolower($module->extension_name));
         $this->request->set('mvc_view_type', 'extension');
@@ -141,7 +141,7 @@ echo 'dafdszf'.strtolower($module->extension_name);
 
         $viewHelper = new MolajoViewHelper($this->request->get('mvc_view'),
             $this->request->get('mvc_view_type'),
-            $this->request->get('mvc_option'),
+            $this->request->get('mvc_extension_instance_name'),
             $this->request->get('mvc_extension_type'),
             ' ',
             $this->request->get('template_name')
@@ -164,11 +164,18 @@ echo 'dafdszf'.strtolower($module->extension_name);
 
         /** Controller */
         if (file_exists($this->request->get('mvc_extension_path') . '/controller.php')) {
-            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/controller.php', ucfirst($this->request->get('extension_name')) . 'ModuleControllerDisplay');
+            $fileHelper->requireClassFile(
+                $this->request->get('mvc_extension_path') .
+                    '/controller.php',
+                ucfirst($this->request->get('mvc_extension_instance_name')) .
+                    'ModuleControllerDisplay');
         }
         /** Model */
         if (file_exists($this->request->get('mvc_extension_path') . '/model.php')) {
-            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/model.php', ucfirst($this->request->get('extension_name')) . 'ModuleModelDisplay');
+            $fileHelper->requireClassFile($this->request->get('mvc_extension_path')
+                    . '/model.php',
+                ucfirst($this->request->get('mvc_extension_instance_name'))
+                    . 'ModuleModelDisplay');
         }
     }
 

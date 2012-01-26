@@ -2302,7 +2302,7 @@ abstract class AbstractPlatform
     }
 
     /**
-     * This is for test reasons, many vendors have special requirements for dummy statements.
+     * This is for test reasons, many vendors have special requirements for static statements.
      *
      * @return string
      */
