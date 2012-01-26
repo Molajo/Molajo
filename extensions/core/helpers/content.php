@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoContentHelper
 {
-
     /**
      * get
      *

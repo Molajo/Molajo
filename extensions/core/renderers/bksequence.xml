@@ -4,6 +4,7 @@
     <renderer>request:component</renderer>
     <renderer>menu</renderer>
     <renderer>component</renderer>
+    <renderer>module</renderer>
     <renderer>message</renderer>
     <renderer>head</renderer>
     <renderer>defer</renderer>

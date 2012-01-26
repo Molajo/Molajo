@@ -85,7 +85,7 @@ class MolajoControllerExtension
         if (is_object($request)) {
             $this->request = $request;
         } else {
-            //errror
+            //error
         }
 
         $this->parameters = new JRegistry;
@@ -341,7 +341,7 @@ class MolajoControllerExtension
      */
     public function cleanCache()
     {
-        $cache = MolajoController::getCache($this->request->get('mvc_extension_instance_name'));
+        $cache = MolajoController::getCache($this->request->get('extension_instance_name'));
         $cache->clean();
     }
 }

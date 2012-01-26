@@ -197,6 +197,49 @@ if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
     }
 
     /**
+     * getInstanceID
+     *
+     * Retrieves Extension ID, given title
+     *
+     * @static
+     * @param   $title
+     *
+     * @return  bool|mixed
+     * @since   1.0
+     */
+    public static function getInstanceID($title)
+    {
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+        $date = MolajoController::getDate();
+        $now = $date->toMySQL();
+        $nullDate = $db->getNullDate();
+        $acl = new MolajoACL ();
+
+        $query->select('a.' . $db->namequote('id'));
+        $query->from($db->namequote('#__extension_instances') . ' as a');
+        $query->where('a.' . $db->namequote('title') . ' = ' . $db->quote('title'));
+
+        $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
+        $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
+        $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
+
+        /** assets */
+        $query->from($db->namequote('#__assets') . ' as b_assets');
+        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
+
+        $db->setQuery($query->__toString());
+        $id = $db->loadResult();
+
+        if ($error = $db->getErrorMsg()) {
+            MolajoError::raiseWarning(500, $error);
+            return false;
+        }
+
+        return $id;
+    }
+
+    /**
      * getInstanceTitle
      *
      * Retrieves Extension Name, given the extension_instance_id
@@ -256,7 +299,7 @@ if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
         $request->set('component_table', '');
 
         /** Configuration model */
-        $configModel = new MolajoModelConfiguration ($request->get('mvc_extension_instance_name'));
+        $configModel = new MolajoModelConfiguration ($request->get('extension_instance_name'));
 
         /** Task */
         if ($request->get('task', '') == '') {
@@ -337,7 +380,7 @@ if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
         if ($model == 'static') {
             $request->set('model', 'MolajoModel');
         } else {
-            $request->set('model', ucfirst($request->get('mvc_extension_instance_name')) . 'Model' . ucfirst($model));
+            $request->set('model', ucfirst($request->get('extension_instance_name')) . 'Model' . ucfirst($model));
         }
 
         if ($request->get('controller') == 'display') {

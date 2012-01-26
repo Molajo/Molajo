@@ -112,8 +112,8 @@ class MolajoRendererHead extends MolajoRenderer
         $this->request->set('view_type', 'extensions');
         $viewHelper = new MolajoViewHelper($this->request->get('view'),
             $this->request->get('view_type'),
-            $this->request->get('mvc_extension_instance_name'),
-            $this->request->get('mvc_extension_instance_name'),
+            $this->request->get('extension_instance_name'),
+            $this->request->get('extension_instance_name'),
             ' ',
             $this->request->get('template_name')
         );
@@ -123,8 +123,8 @@ class MolajoRendererHead extends MolajoRenderer
         /** Wrap Path */
         $wrapHelper = new MolajoViewHelper($this->request->get('wrap'),
             'wraps',
-            $this->request->get('mvc_extension_instance_name'),
-            $this->request->get('mvc_extension_instance_name'),
+            $this->request->get('extension_instance_name'),
+            $this->request->get('extension_instance_name'),
             ' ',
             $this->request->get('template_name')
         );

@@ -69,7 +69,11 @@ class MolajoDocument
     public function __construct($request = array())
     {
         $this->request = $request;
-
+/**
+echo '<pre>';
+var_dump($this->request);
+echo '</pre>';
+**/
         $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
         if (JFile::exists($formatXML)) {
         } else {
@@ -119,17 +123,13 @@ class MolajoDocument
     }
 
     /**
-     * Do it like _renderLoop, Andrew Eddie:
-     * https://groups.google.com/d/msg/joomla-dev-general/FeveA7hYyeg/WMxSky8YAccJ
-     * Molajo supports <input:xyz statements in templates and extension layouts. =)
-     *
      *  _renderLoop
      *
-     * Extension Views can contain <include:xyz statements in the same manner that the
-     *  template include files use these statements. For that reason, this method parses
-     *  thru the initial template include, renders the output for the <include:xyz statements
-     *  found, and then parses that output, over and over, until no more <include:xyz statements
-     *  are located.
+     * Template Views can contain <include:renderer statements in the same manner that the
+     *  Theme include files use these statements. For that reason, this method parses
+     *  the initial template include, renders the output for the <include:renderer statements
+     *  found, and then parses that output again, over and over, until no more <include:renderer
+     *  statements are found. Potential endless loop stopped by MOLAJO_STOP_LOOP value.
      *
      * @return string  Rendered output for the Response Head and Body
      * @since  1.0
@@ -160,6 +160,7 @@ class MolajoDocument
                 /** invoke renderers for new include statements */
                 $this->_template = $this->_renderTemplate();
             }
+
             if ($loop > MOLAJO_STOP_LOOP) {
                 break;
             }
@@ -271,7 +272,7 @@ class MolajoDocument
                     /** 7. load the renderer class and send in requestArray */
                     $class = 'Molajo' . 'Renderer'.ucfirst($rendererName);
                     if (class_exists($class)) {
-                        $rendererClass = new $class ($rendererName, $this->request);
+                        $rendererClass = new $class ($rendererName, $this->request, $includeName);
                     } else {
                         echo 'failed renderer = ' . $class . '<br />';
                         // ERROR

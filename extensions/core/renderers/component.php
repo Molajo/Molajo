@@ -16,6 +16,26 @@ defined('MOLAJO') or die;
  */
 class MolajoRendererComponent extends MolajoRenderer
 {
+
+    /**
+     * render
+     *
+     * Render the component and returns results back to the document
+     *
+     * @param   $attributes <include:renderer attr1=x attr2=y attr3=z ... />
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function render($attributes)
+    {
+        if ($this->_type == 'request') {
+            $this->_initialize = false;
+        }
+        return parent::render($attributes);
+    }
+
+
     /**
      * import
      *
@@ -27,47 +47,47 @@ class MolajoRendererComponent extends MolajoRenderer
         $fileHelper = new MolajoFileHelper();
 
         /** Controllers */
-        if (file_exists($this->request->get('mvc_extension_path') . '/controller.php')) {
-            $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/controller.php', ucfirst($this->request->get('mvc_extension_instance_name')) . 'Controller');
+        if (file_exists($this->request->get('extension_path') . '/controller.php')) {
+            $fileHelper->requireClassFile($this->request->get('extension_path') . '/controller.php', ucfirst($this->request->get('extension_instance_name')) . 'Controller');
         }
-        $files = JFolder::files($this->request->get('mvc_extension_path') . '/controllers', '\.php$', false, false);
+        $files = JFolder::files($this->request->get('extension_path') . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/controllers/' . $file, ucfirst($this->request->get('mvc_extension_instance_name')) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->request->get('extension_path') . '/controllers/' . $file, ucfirst($this->request->get('extension_instance_name')) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
         /** Helpers */
-        $files = JFolder::files($this->request->get('mvc_extension_path') . '/helpers', '\.php$', false, false);
+        $files = JFolder::files($this->request->get('extension_path') . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/helpers/' . $file, ucfirst($this->request->get('mvc_extension_instance_name')) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->request->get('extension_path') . '/helpers/' . $file, ucfirst($this->request->get('extension_instance_name')) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
         /** Models */
-        $files = JFolder::files($this->request->get('mvc_extension_path') . '/models', '\.php$', false, false);
+        $files = JFolder::files($this->request->get('extension_path') . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/models/' . $file, ucfirst($this->request->get('mvc_extension_instance_name')) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->request->get('extension_path') . '/models/' . $file, ucfirst($this->request->get('extension_instance_name')) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
         /** Tables */
-        $files = JFolder::files($this->request->get('mvc_extension_path') . '/tables', '\.php$', false, false);
+        $files = JFolder::files($this->request->get('extension_path') . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/tables/' . $file, ucfirst($this->request->get('mvc_extension_instance_name')) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->request->get('extension_path') . '/tables/' . $file, ucfirst($this->request->get('extension_instance_name')) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
         /** Views */
-        $folders = JFolder::folders($this->request->get('mvc_extension_path') . '/views', false, false);
+        $folders = JFolder::folders($this->request->get('extension_path') . '/views', false, false);
         if ($folders) {
             foreach ($folders as $folder) {
-                $files = JFolder::files($this->request->get('mvc_extension_path') . '/views/' . $folder, false, false);
+                $files = JFolder::files($this->request->get('extension_path') . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
-                        $fileHelper->requireClassFile($this->request->get('mvc_extension_path') . '/views/' . $folder . '/' . $file, ucfirst($this->request->get('mvc_extension_instance_name')) . 'View' . ucfirst($folder));
+                        $fileHelper->requireClassFile($this->request->get('extension_path') . '/views/' . $folder . '/' . $file, ucfirst($this->request->get('extension_instance_name')) . 'View' . ucfirst($folder));
                     }
                 }
             }
@@ -97,7 +117,7 @@ class MolajoRendererComponent extends MolajoRenderer
             MolajoController::getApplication()->get('media_priority_source_data', 900));
 
         /** Component */
-        $this->_loadMediaPlus('/component' . $this->request->get('mvc_extension_instance_name'),
+        $this->_loadMediaPlus('/component' . $this->request->get('extension_instance_name'),
             MolajoController::getApplication()->get('media_priority_source_data', 900));
     }
 
