@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  ACL
+ * @subpackage  Access
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -15,14 +15,13 @@ class MolajoAccess
      * @param  string  $task
      * @param  string  $model
      * @param  string  $asset_id
-     * @param  string  $row
      *
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTask($task='login', $model=null, $asset_id=0, $row=array())
+    static public function authoriseTask($task='login', $model=null, $asset_id=0)
     {
-
+        return true;
     }
 
     /**
@@ -36,33 +35,8 @@ class MolajoAccess
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTaskList ($tasklist=array, $model=null, $asset_id=0, $row=array())
+    static public function authoriseTaskList ($tasklist=array(), $model=null, $asset_id=0, $row=array())
     {
-        $parameters = MolajoModel::getParameters($model);
-
-        /** loop thru configuration options for task set **/
-        $count = 0;
-        $processedOptionArray = array();
-        $userPermissions = array();
-
-        for ($i = 1; $i < 99; $i++) {
-
-            $optionValue = $parameters->def($task_set . $i, null);
-
-            if ($optionValue == null) {
-                break;
-            }
-            if ($optionValue == '0') {
-
-            } else if (in_array($optionValue, $processedOptionArray)) {
-
-            } else {
-                $processedOptionArray[] = $optionValue;
-                $aclResults = $this->authoriseTask($option, $entity, $optionValue, 0, 0, array());
-                $userPermissions[$optionValue] = $aclResults;
-            }
-        }
-        return $userPermissions;
     }
 
     /**
@@ -86,13 +60,7 @@ class MolajoAccess
      */
     static public function getQueryInformation($option = '', $query = array(), $type = '', $parameters = array())
     {
-        $method = 'get' . ucfirst(strtolower($type)) . 'QueryInformation';
-        $aclClass = $this->getMethodClass($method, $option);
-        if ($aclClass == false) {
-            return false;
-        }
-        $acl = new $aclClass;
-        $acl->$method ($query, $option, $parameters);
+
     }
 
     /**
@@ -119,13 +87,7 @@ class MolajoAccess
      */
     public function getList($type, $id = '', $option = '', $task = '', $parameters = array())
     {
-        $method = 'get' . ucfirst(strtolower($type)) . 'List';
-        $aclClass = $this->getMethodClass($method, $option);
-        if ($aclClass == false) {
-            return false;
-        }
-        $acl = new $aclClass;
-        return $acl->$method ($id, $option, $task, $parameters);
+
     }
 
     /**
@@ -145,13 +107,7 @@ class MolajoAccess
      */
     public function checkPermissions($type, $key = '', $action = '', $asset = '', $access = '')
     {
-        $method = 'check' . ucfirst(strtolower($type)) . 'Permissions';
-        $aclClass = $this->getMethodClass($method, '');
-        if ($aclClass == false) {
-            return false;
-        }
-        $acl = new $aclClass;
-        return $acl->$method ($key, $action, $asset, $access);
+
     }
 
     /**
@@ -171,18 +127,6 @@ class MolajoAccess
      */
     public function getFormAuthorisations($option, $entity, $task, $id, $form, $item)
     {
-        $method = 'checkFormAuthorisations';
-        $class = $this->getMethodClass($method, $option);
-        if ($class == false) {
-            return false;
-        }
 
-        $aclClass = new $class();
-        if (method_exists($aclClass, $method)) {
-            $aclClass->$method ($option, $entity, $task, $id, $form, $item);
-        } else {
-            MolajoError::raiseError(403, MolajoTextHelper::_('MOLAJO_ACL_CLASS_METHOD_FORM_AUTH_NOT_FOUND') . ' ' . $aclClass . '::' . $method);
-            return false;
-        }
     }
 }

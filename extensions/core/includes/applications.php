@@ -16,6 +16,7 @@ $fileHelper = new MolajoFileHelper();
  *  Access
  */
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/authentication.php', 'MolajoAuthentication');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/access.php', 'MolajoAccess');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/molajo.php', 'MolajoACL');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/core.php', 'MolajoACLCore');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/user.php', 'MolajoUser');

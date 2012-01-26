@@ -10,8 +10,12 @@
  *
 <include:head/>
  <include:module position=footer view=page-footer wrap=div/>
+<include:module position=header view=page-header wrap=div />
  <include:defer/>
+ *
+ *
  */
 defined('MOLAJO') or die;
 ?>
-<include:module position=header view=page-header wrap=div />
+
+<include:request/>

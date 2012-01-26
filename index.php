@@ -148,7 +148,14 @@ if (defined('MOLAJO_APPLICATION')) {
         $pageRequest = $requestURI;
     }
 }
-define('MOLAJO_PAGE_REQUEST', $pageRequest);
+
+if (defined('MOLAJO_PAGE_REQUEST')) {
+} else {
+    if (strripos($pageRequest, '/')) {
+        $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/'));
+    }
+    define('MOLAJO_PAGE_REQUEST', $pageRequest);
+}
 
 /*                                              */
 /*  EXTENSIONS LAYER                            */
