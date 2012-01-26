@@ -1,4 +1,5 @@
 .idea
 .DS_Store
 .sass-cache
-/configuration.php
+/sites/1/configuration.php
+/sites/sites.xml
