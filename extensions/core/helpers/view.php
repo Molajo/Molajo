@@ -217,4 +217,48 @@ class MolajoViewHelper
             MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view,
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
+
+
+    /**
+     * getViewDefaults
+     *
+     *  Retrieve application defaults for views and wraps
+     *
+     * @return bool
+     * @since 1.0
+     */
+    static public function getViewDefaults($type='view', $model=null, $task=null, $id=0)
+    {
+        if ($type = 'view') {
+
+            if ($model == 'static') {
+                $view_id = MolajoController::getApplication()->get('default_static_view_id', '');
+
+            } else if ($task == 'add' || $task == 'edit') {
+                $view_id = MolajoController::getApplication()->get('default_edit_view_id', '');
+
+            } else if ((int)$id == 0) {
+                $view_id = MolajoController::getApplication()->get('default_items_view_id', '');
+
+            } else {
+                $view_id = MolajoController::getApplication()->get('default_item_view_id', '');
+            }
+        }
+
+        if ($type == 'wrap') {
+
+            if ($model == 'static') {
+                $wrap_id = MolajoController::getApplication()->get('default_static_wrap_id', '');
+
+            } else if ($task == 'add' || $task == 'edit') {
+                $wrap_id = MolajoController::getApplication()->get('default_edit_wrap_id', '');
+
+            } else if ((int)$id == 0) {
+                $wrap_id = MolajoController::getApplication()->get('default_items_wrap_id', '');
+
+            } else {
+                $wrap_id = MolajoController::getApplication()->get('default_item_wrap_id', '');
+            }
+        }
+    }
 }

@@ -179,13 +179,13 @@ abstract class MolajoExtensionHelper
         $query->where('e.' . $db->namequote('site_id') . ' = ' . MOLAJO_SITE_ID);
 
         $db->setQuery($query->__toString());
-/**
-if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
-    if ($extension == 'footer') {
+        /**
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
+        if ($extension == 'footer') {
         echo $query->__toString();
-    }
-}
-*/
+        }
+        }
+         */
         $extensions = $db->loadObjectList();
 
         if ($error = $db->getErrorMsg()) {
@@ -280,6 +280,76 @@ if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
         }
 
         return $name;
+    }
+
+
+    /**
+     * _getExtension
+     *
+     * Retrieve Component information using either the ID
+     *
+     * @return bool
+     * @since 1.0
+     */
+    static public function getExtensionRequestObject($request)
+    {
+        $row = MolajoComponentHelper::get((int)$request->get('extension_instance_id'));
+        if (count($row) == 0) {
+            return false;
+        }
+
+        $request->set('extension_instance_name', $row->title);
+        $request->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT);
+        $request->set('extension_asset_id', $row->extension_instance_asset_id);
+        $request->set('extension_view_group_id', $row->extension_instance_view_group_id);
+        $request->set('extension_path', MolajoComponentHelper::getPath(strtolower($row->title)));
+        $request->set('extension_type', 'component');
+
+        $custom_fields = new JRegistry;
+        $custom_fields->loadString($row->custom_fields);
+        $request->set('category_custom_fields', $custom_fields);
+
+        $metadata = new JRegistry;
+        $metadata->loadString($row->metadata);
+        $request->set('category_metadata', $metadata);
+
+        $parameters = new JRegistry;
+        $parameters->loadString($row->parameters);
+        $request->set('extension_parameters', $parameters);
+
+        /** mvc */
+        if ($request->get('mvc_controller', '') == '') {
+            $request->set('mvc_controller', $parameters->def('controller', 'display'));
+        }
+        if ($request->get('mvc_task', '') == '') {
+            $request->set('mvc_task', $parameters->def('task', 'display'));
+        }
+        if ($request->get('extension_instance_name', '') == '') {
+            $request->set('extension_instance_name', $parameters->def('option', 0));
+        }
+        if ($request->get('mvc_model', '') == '') {
+            $request->set('mvc_model', $parameters->def('model', 'display'));
+        }
+        if ((int)$request->get('mvc_id', 0) == 0) {
+            $request->set('mvc_id', $parameters->def('id', 0));
+        }
+        if ((int)$request->get('mvc_category_id', 0) == 0) {
+            $request->set('mvc_category_id', $parameters->def('category_id', 0));
+        }
+        if ((int)$request->get('mvc_suppress_no_results', 0) == 0) {
+            $request->set('mvc_suppress_no_results', $parameters->def('suppress_no_results', 0));
+        }
+
+        $request->set('extension_event_type', $parameters->def('plugin_type', array('content')));
+
+        if ($request->get('request_suppress_no_results', '') == '') {
+            $request->set('request_suppress_no_results', $parameters->def('suppress_no_results'));
+        }
+
+        $request->set('extension_folder',
+            MolajoComponentHelper::getPath($request->get('extension_instance_name')));
+
+        return $request;
     }
 
     /**

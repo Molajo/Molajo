@@ -2,6 +2,8 @@
 <sequence>
     <renderer>form</renderer>
     <renderer>request:component</renderer>
+    <renderer>module</renderer>
+    <renderer>tag</renderer>
     <renderer>menu</renderer>
     <renderer>component</renderer>
     <renderer>message</renderer>

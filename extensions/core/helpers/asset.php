@@ -53,8 +53,8 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->nameQuote('asset_type_id') . ' = b.' . $db->nameQuote('id'));
 
         if ((int)$asset_id == 0) {
-            $query->where('(a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($query_request).
-                ' OR a.' . $db->nameQuote('request') . ' = ' . $db->Quote($query_request).')');
+            $query->where('(a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($query_request) .
+                ' OR a.' . $db->nameQuote('request') . ' = ' . $db->Quote($query_request) . ')');
         } else {
             $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
         }
@@ -81,14 +81,14 @@ abstract class MolajoAssetHelper
                     if ($row->sef_request == $query_request) {
 
                     } else {
-                        $row->redirect_to_id = (int) $row->asset_id;
+                        $row->redirect_to_id = (int)$row->asset_id;
                     }
 
                 } else {
                     if ($row->request == $query_request) {
 
                     } else {
-                        $row->redirect_to_id = (int) $row->asset_id;
+                        $row->redirect_to_id = (int)$row->asset_id;
                     }
                 }
 
@@ -103,6 +103,99 @@ abstract class MolajoAssetHelper
         }
 
         return $row;
+    }
+
+    /**
+     * getAssetRequestObject
+     *
+     * retrieves asset information for a specific url query or asset id
+     *  and updates the request object for results
+     *
+     * @static
+     * @param   $request
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public static function getAssetRequestObject($request)
+    {
+        $row = MolajoAssetHelper::get((int)$request->get('request_asset_id'),
+            $request->get('request_url_query'));
+
+        /** not found: exit */
+        if (count($row) == 0) {
+            return $request->set('status_found', false);
+        }
+        if ((int)$row->routable == 0) {
+            return $request->set('status_found', false);
+        }
+
+        /** request url */
+        $request->set('request_asset_id', (int)$row->asset_id);
+        $request->set('request_asset_type_id', (int)$row->asset_type_id);
+        $request->set('request_url', $row->request);
+        $request->set('request_url_sef', $row->sef_request);
+        $request->set('request_url_redirect_to_id', (int)$row->redirect_to_id);
+
+        /** home */
+        if ((int)$request->get('request_asset_id', 0)
+            == MolajoController::getApplication()->get('home_asset_id', null)
+        ) {
+            $request->set('request_url_home', true);
+        } else {
+            $request->set('request_url_home', false);
+        }
+
+        $request->set('source_table', $row->source_table);
+        $request->set('category_id', (int)$row->primary_category_id);
+
+        /** mvc options and url parameters */
+        $request->set('extension_instance_name', $row->request_option);
+        $request->set('mvc_model', $row->request_model);
+        $request->set('mvc_id', (int)$row->source_id);
+
+        $parameterArray = array();
+        $temp = substr($request->get('request_url'),
+            10, (strlen($request->get('request_url')) - 10));
+        $parameterArray = explode('&', $temp);
+        $url_parameters = array();
+
+        if (count($parameterArray) > 0) {
+            foreach ($parameterArray as $q) {
+
+                $pair = explode('=', $q);
+
+                if ($pair[0] == 'task') {
+                    $request->set('mvc_task', $pair[1]);
+
+                } elseif ($pair[0] == 'view') {
+                    $request->set('view_id', $pair[1]);
+
+                } elseif ($pair[0] == 'wrap') {
+                    $request->set('wrap_id', $pair[1]);
+
+                } elseif ($pair[0] == 'template') {
+                    $request->set('template_id', $pair[1]);
+
+                } elseif ($pair[0] == 'page') {
+                    $request->set('page_id', $pair[1]);
+
+                }
+
+                $url_parameters[$pair[0]] = $pair[1];
+            }
+        }
+        $request->set('mvc_url_parameters', $url_parameters);
+
+        if ($request->get('request_asset_type_id')
+            == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT
+        ) {
+            $request->set('menu_item_id', $row->source_id);
+        } else {
+            $request->set('source_id', $row->source_id);
+        }
+
+        return $request;
     }
 
     /**
@@ -165,9 +258,9 @@ abstract class MolajoAssetHelper
 
         /** retrieve id if not home */
         if (MolajoController::getApplication()->get('sef', 1) == 1) {
-            $query->select('a.'.$db->namequote('sef_request'));
+            $query->select('a.' . $db->namequote('sef_request'));
         } else {
-            $query->select('a.'.$db->namequote('request'));
+            $query->select('a.' . $db->namequote('request'));
         }
         $query->from($db->namequote('#__assets') . ' as a');
         $query->where('a.' . $db->namequote('id') . ' = ' . (int)$asset_id);

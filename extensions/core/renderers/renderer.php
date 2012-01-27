@@ -110,10 +110,20 @@ class MolajoRenderer
             $this->_initializeMVC();
 
             /** get extension values */
-            $this->_getExtension();
+            $this->_getAsset();
+
+            /** extension */
+            if ($this->request->get('extension_instance_id', 0) == 0) {
+                return $this->request->set('status_found', false);
+            } else {
+                $this->_getExtension();
+            }
 
             /** establish values needed for MVC */
             $this->_setParameters();
+
+            /** retrieves MVC defaults for application */
+            $this->_getApplicationDefaults();
 
             /** lazy load paths for view files */
             $this->_setPaths();
@@ -142,6 +152,20 @@ class MolajoRenderer
      */
     protected function _initializeMVC()
     {
+        /** extension */
+        $this->request->set('extension_instance_id', 0);
+        $this->request->set('extension_instance_name', '');
+        $this->request->set('extension_asset_type_id', 0);
+        $this->request->set('extension_asset_id', 0);
+        $this->request->set('extension_view_group_id', 0);
+        $this->request->set('extension_custom_fields', array());
+        $this->request->set('extension_metadata', array());
+        $this->request->set('extension_parameters', array());
+        $this->request->set('extension_path', '');
+        $this->request->set('extension_type', '');
+        $this->request->set('extension_folder', '');
+        $this->request->set('extension_event_type', '');
+
         /** view */
         $this->request->set('view_id', 0);
         $this->request->set('view_name', '');
@@ -171,19 +195,6 @@ class MolajoRenderer
         $this->request->set('mvc_suppress_no_results', false);
 
         return;
-    }
-
-    /**
-     * _getExtension
-     *
-     * Retrieve Extension information using either the ID or Instance Name
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function _getExtension()
-    {
-
     }
 
     /**
@@ -238,6 +249,83 @@ class MolajoRenderer
         if ($this->request->get('results') === false) {
             echo 'failed getOptions';
         }
+    }
+
+    /**
+     * _getAsset
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function _getAsset()
+    {
+        $results = MolajoAssetHelper::getAssetRequestObject($this->request);
+
+        /** not found: exit */
+        if ($results === false) {
+            return $this->request->set('status_found', false);
+        }
+        $this->request = $results;
+    }
+
+    /**
+     * _getExtension
+     *
+     * Retrieve Extension information using either the ID or Instance Name
+     *
+     * @return bool
+     * @since 1.0
+     */
+    protected function _getExtension()
+    {
+
+    }
+
+    /**
+     *  _getApplicationDefaults
+     *
+     *  Retrieve default values, if not provided by extension
+     *
+     * @return bool
+     * @since 1.0
+     */
+    protected function _getApplicationDefaults()
+    {
+
+        if ((int)$this->request->get('view_id', 0) == '') {
+            $this->request->set('view_id',
+                MolajoViewHelper::getViewDefaults('view',
+                    $this->request->get('mvc_model'),
+                    $this->request->get('mvc_task', ''),
+                    (int)$this->request->get('mvc_id', 0))
+            );
+        }
+
+        /** wrap */
+        if ((int)$this->request->get('wrap_id', 0) == '') {
+            $this->request->set('wrap_id',
+                MolajoViewHelper::getViewDefaults('wrap',
+                    $this->request->get('mvc_model'),
+                    $this->request->get('mvc_task', ''),
+                    (int)$this->request->get('mvc_id', 0))
+            );
+        }
+
+        /** controller */
+        if ($this->request->get('mvc_task', '') == 'add'
+            || $this->request->get('mvc_task', '') == 'edit'
+            || $this->request->get('mvc_task', '') == 'display'
+        ) {
+            $this->request->set('mvc_controller', 'display');
+
+        } else if ((int)$this->request->get('mvc_task') == 'login') {
+            $this->request->set('mvc_controller', 'login');
+
+        } else {
+            $this->request->set('mvc_controller', 'update');
+        }
+
+        return;
     }
 
     /**
