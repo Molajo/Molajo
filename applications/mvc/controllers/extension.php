@@ -83,7 +83,7 @@ class MolajoControllerExtension
     public function __construct($request, $parameters = array())
     {
         if (is_object($request)) {
-            $this->request = $request;
+            $this->mvc = $request;
         } else {
             //error
         }
@@ -92,22 +92,22 @@ class MolajoControllerExtension
         $this->parameters->loadArray($parameters);
 
         // todo: amy look at redirect
-//        $this->redirectClass = new MolajoControllerRedirect($this->request);
+//        $this->redirectClass = new MolajoControllerRedirect($this->mvc);
 
         /** load table */
-        if ($this->request->get('mvc_task') == 'display'
-            || $this->request->get('mvc_task') == 'add'
-            || $this->request->get('mvc_task') == 'login'
-            || $this->request->get('mvc_model') == 'static'
+        if ($this->mvc->get('mvc_task') == 'display'
+            || $this->mvc->get('mvc_task') == 'add'
+            || $this->mvc->get('mvc_task') == 'login'
+            || $this->mvc->get('mvc_model') == 'static'
         ) {
             $this->isNew = false;
 
         } else {
             $this->table = $this->model->getTable();
             $this->table->reset();
-            $this->table->load((int)$this->request->get('mvc_id'));
+            $this->table->load((int)$this->mvc->get('mvc_id'));
 
-            if ($this->request->get('mvc_id') == 0) {
+            if ($this->mvc->get('mvc_id') == 0) {
                 $this->isNew = true;
                 $this->existing_status = 0;
             } else {
@@ -118,11 +118,11 @@ class MolajoControllerExtension
 
         /** dispatch events
         if ($this->dispatcher
-        || $this->request->get('mvc_plugin_type') == ''
+        || $this->mvc->get('mvc_plugin_type') == ''
         ) {
         } else {
         $this->dispatcher = JDispatcher::getInstance();
-        MolajoPluginHelper::importPlugin($this->request->get('mvc_plugin_type'));
+        MolajoPluginHelper::importPlugin($this->mvc->get('mvc_plugin_type'));
         }
          */
 
@@ -163,7 +163,7 @@ class MolajoControllerExtension
      */
     public function checkinItem()
     {
-        if ($this->request->get('mvc_id') == 0) {
+        if ($this->mvc->get('mvc_id') == 0) {
             return true;
         }
 
@@ -172,7 +172,7 @@ class MolajoControllerExtension
             return true;
         }
 
-        $results = $this->model->checkin($this->request->get('mvc_id'));
+        $results = $this->model->checkin($this->mvc->get('mvc_id'));
 
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_CHECK_IN_FAILED'));
@@ -193,7 +193,7 @@ class MolajoControllerExtension
      */
     public function verifyCheckout()
     {
-        if ($this->request->get('mvc_id') == 0) {
+        if ($this->mvc->get('mvc_id') == 0) {
             return true;
         }
 
@@ -222,7 +222,7 @@ class MolajoControllerExtension
      */
     public function checkoutItem()
     {
-        if ($this->request->get('mvc_id') == 0) {
+        if ($this->mvc->get('mvc_id') == 0) {
             return true;
         }
 
@@ -231,7 +231,7 @@ class MolajoControllerExtension
             return true;
         }
 
-        $results = $this->model->checkout($this->request->get('mvc_id'));
+        $results = $this->model->checkout($this->mvc->get('mvc_id'));
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
@@ -256,19 +256,19 @@ class MolajoControllerExtension
         }
 
         /** create **/
-        if ((int)$this->request->get('mvc_id') == 0) {
+        if ((int)$this->mvc->get('mvc_id') == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
-        if ($this->request->get('mvc_task') == 'delete'
+        if ($this->mvc->get('mvc_task') == 'delete'
             && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             return true;
         }
 
         /** create version **/
-        $versionKey = $this->model->createVersion($this->request->get('mvc_id'));
+        $versionKey = $this->model->createVersion($this->mvc->get('mvc_id'));
 
         /** error processing **/
         if ($versionKey === false) {
@@ -278,7 +278,7 @@ class MolajoControllerExtension
         }
 
         /** Trigger_Event: onContentCreateVersion
-        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->request->get('mvc_id'), $versionKey));
+        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->mvc->get('mvc_id'), $versionKey));
         if (count($results) && in_array(false, $results, true)) {
         $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
         $this->redirectClass->setRedirectMessageType('error');
@@ -305,12 +305,12 @@ class MolajoControllerExtension
         }
 
         /** no versions to delete for create **/
-        if ((int)$this->request->get('mvc_id') == 0) {
+        if ((int)$this->mvc->get('mvc_id') == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
-        if ($this->request->get('mvc_task') == 'delete'
+        if ($this->mvc->get('mvc_task') == 'delete'
             && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             $maintainVersions = 0;
@@ -320,7 +320,7 @@ class MolajoControllerExtension
         }
 
         /** delete extra versions **/
-        $results = $this->model->maintainVersionCount($this->request->get('mvc_id'), $maintainVersions);
+        $results = $this->model->maintainVersionCount($this->mvc->get('mvc_id'), $maintainVersions);
 
         /** version delete failed **/
         if ($results === false) {
@@ -330,7 +330,7 @@ class MolajoControllerExtension
         }
 
         /** Trigger_Event: onContentMaintainVersions
-        return $this->dispatcher->trigger('onContentMaintainVersions', array($context, $this->request->get('mvc_id'), $maintainVersions));
+        return $this->dispatcher->trigger('onContentMaintainVersions', array($context, $this->mvc->get('mvc_id'), $maintainVersions));
          **/
     }
 
@@ -341,7 +341,7 @@ class MolajoControllerExtension
      */
     public function cleanCache()
     {
-        $cache = MolajoController::getCache($this->request->get('extension_instance_name'));
+        $cache = MolajoController::getCache($this->mvc->get('extension_instance_name'));
         $cache->clean();
     }
 }

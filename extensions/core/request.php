@@ -38,7 +38,7 @@ class MolajoRequest
      */
     public function __construct($override_request_url = null, $asset_id = null)
     {
-        $this->_initializeRequest();
+        $this->_setRequest();
 
         /** Specific asset */
         if ((int)$asset_id == 0) {
@@ -96,7 +96,7 @@ class MolajoRequest
     }
 
     /**
-     * _initializeRequest
+     * _setRequest
      *
      * Create and Initialize the request
      *
@@ -106,7 +106,7 @@ class MolajoRequest
      * @return array
      * @since 1.0
      */
-    private function _initializeRequest()
+    private function _setRequest()
     {
         $this->request = new JObject();
 
@@ -280,7 +280,7 @@ class MolajoRequest
         ) {
             $this->_renderDocument();
 
-            /** action */
+        /** action */
         } else {
             $this->_processTask();
         }
@@ -527,7 +527,7 @@ class MolajoRequest
     /**
      * _getExtension
      *
-     * Retrieve Component information using either the ID
+     * Retrieve extension information using either the ID or the name
      *
      * @return bool
      * @since 1.0

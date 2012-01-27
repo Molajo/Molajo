@@ -173,7 +173,7 @@ class MolajoModel
      */
     public function getRequest()
     {
-        return $this->request;
+        return $this->mvc;
     }
 
     /**

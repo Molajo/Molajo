@@ -55,7 +55,7 @@ class MolajoRendererMenu extends MolajoRenderer
     public function __construct($name = null, $request = array())
     {
         $this->_name = $name;
-        $this->request = $request;
+        $this->mvc = $request;
     }
 
     /**
@@ -75,7 +75,7 @@ class MolajoRendererMenu extends MolajoRenderer
         $this->_setParameters();
 
         /** Instantiate Controller */
-        $controller = new MolajoControllerDisplay ($this->request);
+        $controller = new MolajoControllerDisplay ($this->mvc);
         return $controller->Display();
     }
 
@@ -86,51 +86,51 @@ class MolajoRendererMenu extends MolajoRenderer
      */
     protected function _setRequest()
     {
-        $this->request->set('view', MolajoController::getApplication()->get('menu_view_id', 'menu'));
-        $this->request->set('wrap', MolajoController::getApplication()->get('menu_wrap_id', 'none'));
+        $this->mvc->set('view', MolajoController::getApplication()->get('menu_view_id', 'menu'));
+        $this->mvc->set('wrap', MolajoController::getApplication()->get('menu_wrap_id', 'none'));
 
         foreach ($this->_attributes as $name => $value) {
 
             if ($name == 'wrap') {
-                $this->request->set('wrap', $value);
+                $this->mvc->set('wrap', $value);
 
             } else if ($name == 'view') {
-                $this->request->set('view', $value);
+                $this->mvc->set('view', $value);
 
             } else if ($name == 'id' || $name == 'wrap_id') {
-                $this->request->set('wrap_id', $value);
+                $this->mvc->set('wrap_id', $value);
 
             } else if ($name == 'class' || $name == 'wrap_class') {
-                $this->request->set('wrap_class', $value);
+                $this->mvc->set('wrap_class', $value);
             }
         }
 
         /** Model */
-        $this->request->set('model', 'MolajoModelMenu');
+        $this->mvc->set('model', 'MolajoModelMenu');
 
         /** View Path */
-        $this->request->set('view_type', 'extensions');
-        $viewHelper = new MolajoViewHelper($this->request->get('view'),
-            $this->request->get('view_type'),
-            $this->request->get('extension_instance_name'),
-            $this->request->get('extension_instance_name'),
+        $this->mvc->set('view_type', 'extensions');
+        $viewHelper = new MolajoViewHelper($this->mvc->get('view'),
+            $this->mvc->get('view_type'),
+            $this->mvc->get('extension_instance_name'),
+            $this->mvc->get('extension_instance_name'),
             ' ',
-            $this->request->get('template_name')
+            $this->mvc->get('template_name')
         );
-        $this->request->set('view_path', $viewHelper->view_path);
-        $this->request->set('view_path_url', $viewHelper->view_path_url);
+        $this->mvc->set('view_path', $viewHelper->view_path);
+        $this->mvc->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
-        $wrapHelper = new MolajoViewHelper($this->request->get('wrap'),
+        $wrapHelper = new MolajoViewHelper($this->mvc->get('wrap'),
             'wraps',
-            $this->request->get('extension_instance_name'),
-            $this->request->get('extension_instance_name'),
+            $this->mvc->get('extension_instance_name'),
+            $this->mvc->get('extension_instance_name'),
             ' ',
-            $this->request->get('template_name')
+            $this->mvc->get('template_name')
         );
-        $this->request->set('wrap_path', $wrapHelper->view_path);
-        $this->request->set('wrap_path_url', $wrapHelper->view_path_url);
+        $this->mvc->set('wrap_path', $wrapHelper->view_path);
+        $this->mvc->set('wrap_path_url', $wrapHelper->view_path_url);
 
-        $this->request->set('extension_suppress_no_results', true);
+        $this->mvc->set('extension_suppress_no_results', true);
     }
 }

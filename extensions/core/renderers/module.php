@@ -22,23 +22,23 @@ class MolajoRendererModule extends MolajoRenderer
      * imports component folders and files
      * @since 1.0
      */
-    protected function _import()
+    protected function _importClasses()
     {
         $fileHelper = new MolajoFileHelper();
 
         /** Controller */
-        if (file_exists($this->request->get('extension_path') . '/controller.php')) {
+        if (file_exists($this->mvc->get('extension_path') . '/controller.php')) {
           $fileHelper->requireClassFile(
-              $this->request->get('extension_path') .
+              $this->mvc->get('extension_path') .
                   '/controller.php',
-              ucfirst($this->request->get('extension_instance_name')) .
+              ucfirst($this->mvc->get('extension_instance_name')) .
                   'ModuleControllerDisplay');
         }
         /** Model */
-        if (file_exists($this->request->get('extension_path') . '/model.php')) {
-          $fileHelper->requireClassFile($this->request->get('extension_path')
+        if (file_exists($this->mvc->get('extension_path') . '/model.php')) {
+          $fileHelper->requireClassFile($this->mvc->get('extension_path')
                   . '/model.php',
-              ucfirst($this->request->get('extension_instance_name'))
+              ucfirst($this->mvc->get('extension_instance_name'))
                   . 'ModuleModelDisplay');
         }
     }
@@ -53,8 +53,8 @@ class MolajoRendererModule extends MolajoRenderer
      */
     protected function _loadMedia()
     {
-        parent::_loadMedia(MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->request->get('extension_instance_name'),
-            MOLAJO_SITE_MEDIA_URL . '/' . $this->request->get('extension_instance_name'),
+        parent::_loadMedia(MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->mvc->get('extension_instance_name'),
+            MOLAJO_SITE_MEDIA_URL . '/' . $this->mvc->get('extension_instance_name'),
             MolajoController::getApplication()->get('media_priority_module', 400));
     }
 }

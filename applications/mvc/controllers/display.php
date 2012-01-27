@@ -40,25 +40,25 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     public function display()
     {
         /** model */
-        $modelClass = ucfirst($this->request->get('extension_instance_name'));
-        if ($this->request->get('extension_type') == 'modules') {
+        $modelClass = ucfirst($this->mvc->get('extension_instance_name'));
+        if ($this->mvc->get('extension_type') == 'modules') {
             $modelClass .= 'Module';
         }
         $modelClass .= 'Model';
-        $modelClass .= ucfirst($this->request->get('mvc_model'));
+        $modelClass .= ucfirst($this->mvc->get('mvc_model'));
 
         if (class_exists($modelClass)) {
         } else {
-            $modelClass = 'MolajoModel' . ucfirst($this->request->get('mvc_model'));
+            $modelClass = 'MolajoModel' . ucfirst($this->mvc->get('mvc_model'));
         }
         $this->model = new $modelClass();
 
         /** set model properties */
-        $this->model->request = $this->request;
+        $this->model->request = $this->mvc;
         $this->model->parameters = $this->parameters;
 
         /** check out */
-        if ($this->request->get('mvc_task') == 'edit') {
+        if ($this->mvc->get('mvc_task') == 'edit') {
             $results = parent::checkoutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -79,13 +79,13 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         }
 
         /** render view */
-        $this->view_path = $this->request->get('view_path');
-        $this->view_path_url = $this->request->get('view_path_url');
+        $this->view_path = $this->mvc->get('view_path');
+        $this->view_path_url = $this->mvc->get('view_path_url');
 
-        $renderedOutput = $this->renderView($this->request->get('view_name'), $this->request->get('view_type'));
+        $renderedOutput = $this->renderView($this->mvc->get('view_name'), $this->mvc->get('view_type'));
 
         /** wrap view */
-        return $this->wrapView($this->request->get('wrap_name'), 'wraps', $renderedOutput);
+        return $this->wrapView($this->mvc->get('wrap_name'), 'wraps', $renderedOutput);
     }
 
     /**
@@ -104,17 +104,17 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->rowset = array();
 
         $tempObject = new JObject();
-        $tempObject->set('wrap_css_id', $this->request->get('wrap_css_id'));
-        $tempObject->set('wrap_css_class', $this->request->get('wrap_css_class'));
+        $tempObject->set('wrap_css_id', $this->mvc->get('wrap_css_id'));
+        $tempObject->set('wrap_css_class', $this->mvc->get('wrap_css_class'));
         $tempObject->set('content', $renderedOutput);
 
         $this->rowset[] = $tempObject;
 
         /** Render Wrap */
-        $this->view_path = $this->request->get('wrap_path');
-        $this->view_path_url = $this->request->get('wrap_path_url');
+        $this->view_path = $this->mvc->get('wrap_path');
+        $this->view_path_url = $this->mvc->get('wrap_path_url');
 
-        return $this->renderView($this->request->get('wrap_name'), 'wraps');
+        return $this->renderView($this->mvc->get('wrap_name'), 'wraps');
     }
 
     /**

@@ -81,7 +81,7 @@ class MolajoControllerRedirect
     protected $return_page = null;
 
     /**
-     * $request 
+     * $request
      *
      * @var object
      */
@@ -98,7 +98,7 @@ class MolajoControllerRedirect
      */
     public function __construct($request = array())
     {
-        $this->request = $request;
+        $this->mvc = $request;
     }
 
     /**
@@ -112,7 +112,7 @@ class MolajoControllerRedirect
     public function initialise()
     {
         /** 1. ajax and non-html output **/
-        $format = $this->request->get('mvc_format');
+        $format = $this->mvc->get('mvc_format');
         if ($format == 'html' || $format == null || $format == '') {
             $format = 'html';
         } else {
@@ -121,9 +121,9 @@ class MolajoControllerRedirect
         }
 
         /** 2. display, add, edit tasks **/
-        if ($this->request->get('mvc_task') == 'display'
-            || $this->request->get('mvc_task') == 'add'
-            || $this->request->get('mvc_task') == 'edit'
+        if ($this->mvc->get('mvc_task') == 'display'
+            || $this->mvc->get('mvc_task') == 'add'
+            || $this->mvc->get('mvc_task') == 'edit'
         ) {
             $this->setRedirectAction(false);
             return;
@@ -133,7 +133,7 @@ class MolajoControllerRedirect
         $this->redirectAction = true;
 
         /** extension: category uses this parameter **/
-        $extension = $this->request->get('extension');
+        $extension = $this->mvc->get('extension');
         if ($extension == ''
             || $extension == null
         ) {
@@ -143,7 +143,7 @@ class MolajoControllerRedirect
         }
 
         /** component_specific: to add parameter pairs needed in addition to standard **/
-        $component_specific = $this->request->get('component_specific');
+        $component_specific = $this->mvc->get('component_specific');
         if ($component_specific == ''
             || $component_specific == null
         ) {
@@ -154,35 +154,35 @@ class MolajoControllerRedirect
         }
 
         /** cancel **/
-        if ($this->request->get('mvc_task') == 'cancel') {
+        if ($this->mvc->get('mvc_task') == 'cancel') {
             if (MolajoController::getApplication()->getName() == 'site') {
-                if ($this->request->get('mvc_id') == 0) {
+                if ($this->mvc->get('mvc_id') == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=display&id=' . $this->request->get('mvc_id') . $extension . $component_specific;
+                    $this->redirectSuccess = 'index.php?option=' . $this->mvc->get('extension_title') . '&view=display&id=' . $this->mvc->get('mvc_id') . $extension . $component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=edit&id=' . $this->request->get('mvc_id') . $extension . $component_specific;
+                $this->redirectSuccess = 'index.php?option=' . $this->mvc->get('extension_title') . '&view=edit&id=' . $this->mvc->get('mvc_id') . $extension . $component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
         }
 
-        if ($this->request->get('mvc_task') == 'login') {
+        if ($this->mvc->get('mvc_task') == 'login') {
             $this->redirectSuccess = 'index.php?option=dashboard&view=display';
             $this->redirectReturn = 'index.php?option=login';
 
-        } elseif ($this->request->get('mvc_task') == 'logout') {
+        } elseif ($this->mvc->get('mvc_task') == 'logout') {
             $this->redirectSuccess = 'index.php';
-            $this->redirectReturn = 'index.php?option=' . $this->request->get('extension_title') . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->mvc->get('extension_title') . '&view=display' . $extension . $component_specific;
 
-        } elseif ($this->request->get('mvc_task') == 'display') {
-            $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=display' . $extension . $component_specific;
+        } elseif ($this->mvc->get('mvc_task') == 'display') {
+            $this->redirectSuccess = 'index.php?option=' . $this->mvc->get('extension_title') . '&view=display' . $extension . $component_specific;
             $this->redirectReturn = $this->redirectSuccess;
 
         } else {
-            $this->redirectSuccess = 'index.php?option=' . $this->request->get('extension_title') . '&view=display' . $extension . $component_specific;
-            $this->redirectReturn = 'index.php?option=' . $this->request->get('extension_title') . '&view=edit' . $extension . $component_specific;
+            $this->redirectSuccess = 'index.php?option=' . $this->mvc->get('extension_title') . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->mvc->get('extension_title') . '&view=edit' . $extension . $component_specific;
         }
 
         return;
@@ -199,7 +199,7 @@ class MolajoControllerRedirect
      */
     protected function setDatakey()
     {
-        $this->request->set('datakey', mt_rand());
+        $this->mvc->set('datakey', mt_rand());
         return;
     }
 
@@ -301,20 +301,20 @@ class MolajoControllerRedirect
         }
 
         /** list **/
-        if ($this->request->get('mvc_controller') == $this->request->get('DefaultView')) {
+        if ($this->mvc->get('mvc_controller') == $this->mvc->get('DefaultView')) {
             $link = $this->redirectSuccess;
 
             /** failure **/
         } else if ($this->successIndicator === false || $task == 'apply' || $task == 'saveandnew') {
             $link = $this->redirectReturn;
-            if ($this->request->get('EditView') == '') {
+            if ($this->mvc->get('EditView') == '') {
             } else {
                 $id = $this->data['id'];
                 if ((int)$id == 0 || $task == 'saveandnew') {
-                    $link .= '&task=' . $this->request->get('EditView') . '.add' . '&datakey=' . $this->datakey;
+                    $link .= '&task=' . $this->mvc->get('EditView') . '.add' . '&datakey=' . $this->datakey;
 
                 } else {
-                    $link .= '&task=' . $this->request->get('EditView') . '.edit&id=' . (int)$id . '&datakey=' . $this->datakey;
+                    $link .= '&task=' . $this->mvc->get('EditView') . '.edit&id=' . (int)$id . '&datakey=' . $this->datakey;
                 }
             }
 
