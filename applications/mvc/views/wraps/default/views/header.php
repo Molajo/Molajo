@@ -7,26 +7,26 @@
  */
 defined('MOLAJO') or die;
 
-if ($this->parameters->def('html5', true) === true
-    && ($this->parameters->def('wrap', '') == 'article'
-        || $this->parameters->def('wrap', '') == 'aside'
-        || $this->parameters->def('wrap', '') == 'footer'
-        || $this->parameters->def('wrap', '') == 'header'
-        || $this->parameters->def('wrap', '') == 'hgroup'
-        || $this->parameters->def('wrap', '') == 'nav'
-        || $this->parameters->def('wrap', '') == 'section') ):
-    $headerType = $this->parameters->get('wrap');
+if ((int)MolajoController::getApplication()->get('html5', 1) == 1
+    && ($this->mvc->get('wrap_name') == 'article'
+        || $this->mvc->get('wrap_name') == 'aside'
+        || $this->mvc->get('wrap_name') == 'footer'
+        || $this->mvc->get('wrap_name') == 'header'
+        || $this->mvc->get('wrap_name') == 'hgroup'
+        || $this->mvc->get('wrap_name') == 'nav'
+        || $this->mvc->get('wrap_name') == 'section') ):
+    $headerType = $this->mvc->get('wrap_name');
 else :
     $headerType = 'div';
 endif;
 
-$headerId = trim($this->parameters->get('wrap_id', ''));
+$headerId = trim($this->parameters->get('wrap_css_id', ''));
 if ($headerId == '') :
 else :
     $headerId = ' id="' . $headerId . '"';
 endif;
 
-$headerClass = trim($this->parameters->get('wrap_class', ''));
+$headerClass = trim($this->parameters->get('wrap_css_class', ''));
 if ($headerClass == '') :
 else :
     $headerClass = ' class="' . $headerClass . '"';
@@ -35,8 +35,7 @@ endif;
 <<?php echo trim($headerType.$headerId.$headerClass);?>>
 <?php
 $headingLevel = $this->parameters->get('wrap_header_level', 3);
-
-if ($this->parameters->get('html5', true) === true) :
+if ((int)MolajoController::getApplication()->get('html5', 1) == 1):
     if ($this->parameters->get('wrap_show_title', false) === true
         && $this->parameters->get('wrap_show_subtitle', false) === true
     ) : ?>
@@ -58,7 +57,7 @@ if ($this->parameters->get('wrap_show_subtitle', false) === true) :  ?>
     <?php
     endif;
 
-if ($this->parameters->get('html5', true) === true) :
+if ((int)MolajoController::getApplication()->get('html5', 1) == 1) :
     if ($this->parameters->get('wrap_show_title', false) === true
         && $this->parameters->get('wrap_show_subtitle', false) === true
     ) : ?>

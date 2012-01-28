@@ -88,7 +88,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function wrapView($view, $view_type, $renderedOutput)
     {
-        /** Wrap */
+        /** create rowset */
         $this->rowset = array();
 
         $tempObject = new JObject();
@@ -98,10 +98,11 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         $this->rowset[] = $tempObject;
 
-        /** Render Wrap */
+        /** paths */
         $this->view_path = $this->mvc->get('wrap_path');
         $this->view_path_url = $this->mvc->get('wrap_path_url');
 
+        /** render wrap */
         return $this->renderView($this->mvc->get('wrap_name'), 'wraps');
     }
 

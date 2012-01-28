@@ -16,6 +16,6 @@
 defined('MOLAJO') or die;
 ?>
 <include:message view=messages wrap=div />
-<include:module name=page-header view=page-header wrap=section />
+<include:module name=page-header view=page-header wrap=header />
 <include:request wrap=section />
-<include:module name=page-footer view=page-footer wrap=div />
+<include:module name=page-footer view=page-footer wrap=footer />

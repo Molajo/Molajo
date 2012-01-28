@@ -246,8 +246,36 @@ class MolajoRenderer
             } else if ($name == 'wrap_css_class' || $name == 'wrap_class') {
                 $this->mvc->set('wrap_css_class', $value);
             }
-//todo: amy merge other parameters into $this->parameters $this->mvc->set('other_parameters') = $other_parameters;
+            //todo: amy merge other parameters into $this->parameters $this->mvc->set('other_parameters') = $other_parameters;
         }
+
+        /** view */
+        if ((int)$this->mvc->get('view_id', 0) == 0) {
+            if (trim($this->mvc->get('view_name')) == '') {
+            } else {
+                $this->mvc->set('view_id',
+                    (int)MolajoExtensionHelper::getInstanceID(
+                        MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
+                        $this->mvc->get('wrap_name'),
+                        'extensions')
+                );
+            }
+        }
+
+        /** wrap */
+        if ((int)$this->mvc->get('wrap_id', 0) == 0) {
+            if (trim($this->mvc->get('wrap_name')) == '') {
+            } else {
+                $this->mvc->set('wrap_id',
+                    (int)MolajoExtensionHelper::getInstanceID(
+                        MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
+                        $this->mvc->get('wrap_name'),
+                        'wraps')
+                );
+            }
+        }
+
+//        echo 'wrap ' .  $this->mvc->get('extension_instance_name').$this->mvc->get('wrap_id') . $this->mvc->get('wrap_name') . '<br />';
 
         return true;
     }
@@ -282,7 +310,7 @@ class MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
-        if ((int)$this->mvc->get('view_id', 0) == '') {
+        if ((int)$this->mvc->get('view_id', 0) == 0) {
             $this->mvc->set('view_id',
                 MolajoViewHelper::getViewDefaults('view',
                     $this->mvc->get('mvc_model'),
@@ -292,7 +320,7 @@ class MolajoRenderer
         }
 
         /** wrap */
-        if ((int)$this->mvc->get('wrap_id', 0) == '') {
+        if ((int)$this->mvc->get('wrap_id', 0) == 0) {
             $this->mvc->set('wrap_id',
                 MolajoViewHelper::getViewDefaults('wrap',
                     $this->mvc->get('mvc_model'),
@@ -428,7 +456,7 @@ class MolajoRenderer
     {
         /** Model */
         $modelClass = ucfirst($this->mvc->get('extension_instance_name'));
-        $modelClass = str_replace (array('-', '_'), '', $modelClass);
+        $modelClass = str_replace(array('-', '_'), '', $modelClass);
         if ($this->mvc->get('extension_type') == 'module') {
             $modelClass .= 'Module';
         }
@@ -443,7 +471,7 @@ class MolajoRenderer
 
         /** Controller */
         $controllerClass = ucfirst($this->mvc->get('extension_instance_name'));
-        $controllerClass = str_replace (array('-', '_'), '', $controllerClass);
+        $controllerClass = str_replace(array('-', '_'), '', $controllerClass);
 
         if ($this->_name == 'module') {
             $controllerClass .= 'Module';
@@ -463,7 +491,7 @@ class MolajoRenderer
                 $controllerClass = 'MolajoController' . ucfirst($this->mvc->get('mvc_controller'));
             }
         }
-        $controllerClass = (string) $controllerClass;
+        $controllerClass = (string)$controllerClass;
         $this->mvc->set('mvc_controller', $controllerClass);
         $controller = new $controllerClass($this->mvc);
 
