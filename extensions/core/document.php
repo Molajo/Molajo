@@ -69,11 +69,7 @@ class MolajoDocument
     public function __construct($request = array())
     {
         $this->request = $request;
-/**
-echo '<pre>';
-var_dump($this->request);
-echo '</pre>';
-**/
+
         $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
         if (JFile::exists($formatXML)) {
         } else {

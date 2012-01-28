@@ -14,6 +14,6 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class HeaderModuleControllerDisplay extends MolajoControllerDisplay
+class PageheaderModuleControllerDisplay extends MolajoControllerDisplay
 {
 }

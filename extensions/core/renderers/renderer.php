@@ -100,6 +100,7 @@ class MolajoRenderer
 
         /** initializes and populates the MVC request */
         $this->_setRequest();
+
         if ($this->mvc->get('extension_instance_id', 0) == 0) {
             return $this->mvc->set('status_found', false);
         }
@@ -224,7 +225,7 @@ class MolajoRenderer
             if ($name == 'name' || $name == 'title') {
                 $this->mvc->set('extension_instance_name', $value);
 
-            } else if ($name == 'position') {
+            } else if ($name == 'tag') {
                 $this->_tag = $value;
 
             } else if ($name == 'view') {
@@ -245,7 +246,7 @@ class MolajoRenderer
             } else if ($name == 'wrap_css_class' || $name == 'wrap_class') {
                 $this->mvc->set('wrap_css_class', $value);
             }
-            // $this->mvc->set('other_parameters') = $other_parameters;
+//todo: amy merge other parameters into $this->parameters $this->mvc->set('other_parameters') = $other_parameters;
         }
 
         return true;
@@ -261,25 +262,14 @@ class MolajoRenderer
      */
     protected function _getExtension()
     {
-        if ((int)$this->mvc->get('extension_instance_id', 0) == 0) {
-            $this->mvc->set('extension_instance_id',
-                MolajoExtensionHelper::getInstanceID(
-                    $this->mvc->get('extension_asset_type_id'),
-                    $this->mvc->get('extension_instance_name'),
-                    $this->mvc->get('extension_subtype')
-                ));
-        }
-        if ((int)$this->mvc->get('extension_instance_id', 0) == 0) {
-            return false;
-        }
-
         $results = MolajoExtensionHelper::getExtensionRequestObject($this->mvc);
+
         if ($results === false) {
             return false;
         }
-        $this->mvc = $results;
 
-        return true;
+        $this->mvc = $results;
+        return $this->mvc->set('status_found', true);
     }
 
     /**
@@ -436,8 +426,25 @@ class MolajoRenderer
      */
     protected function _invokeMVC()
     {
-        /** ex. ExampleControllerDisplay or ExampleControllerModuleClass */
+        /** Model */
+        $modelClass = ucfirst($this->mvc->get('extension_instance_name'));
+        $modelClass = str_replace (array('-', '_'), '', $modelClass);
+        if ($this->mvc->get('extension_type') == 'module') {
+            $modelClass .= 'Module';
+        }
+        $modelClass .= 'Model';
+        $modelClass .= ucfirst($this->mvc->get('mvc_model'));
+
+        if (class_exists($modelClass)) {
+        } else {
+            $modelClass = 'MolajoModel' . ucfirst($this->mvc->get('mvc_model'));
+        }
+        $this->mvc->set('mvc_model', $modelClass);
+
+        /** Controller */
         $controllerClass = ucfirst($this->mvc->get('extension_instance_name'));
+        $controllerClass = str_replace (array('-', '_'), '', $controllerClass);
+
         if ($this->_name == 'module') {
             $controllerClass .= 'Module';
         }
@@ -450,14 +457,15 @@ class MolajoRenderer
             $controllerClass = ucfirst($this->mvc->get('extension_instance_name')) .
                 'Controller';
             if (class_exists($controllerClass)) {
-
             } else {
 
                 /** ex. MolajoControllerDisplay */
                 $controllerClass = 'MolajoController' . ucfirst($this->mvc->get('mvc_controller'));
             }
         }
-        $controller = new $controllerClass ($this->mvc);
+        $controllerClass = (string) $controllerClass;
+        $this->mvc->set('mvc_controller', $controllerClass);
+        $controller = new $controllerClass($this->mvc);
 
         /** task: display, edit, or add  */
         $task = (string)$this->mvc->get('mvc_task', 'display');

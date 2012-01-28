@@ -280,7 +280,7 @@ class MolajoRequest
         ) {
             $this->_renderDocument();
 
-        /** action */
+            /** action */
         } else {
             $this->_processTask();
         }
@@ -527,18 +527,28 @@ class MolajoRequest
     /**
      * _getExtension
      *
-     * Retrieve extension information using either the ID or the name
+     * Retrieve extension information for Component Request
      *
      * @return bool
      * @since 1.0
      */
     protected function _getExtension()
     {
+        $this->request->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT);
         $results = MolajoExtensionHelper::getExtensionRequestObject($this->request);
+
         if ($results === false) {
             return $this->request->set('status_found', false);
         }
         $this->request = $results;
+
+        $this->request->set('extension_path',
+            MolajoComponentHelper::getPath(
+                strtolower($this->request->get('extension_instance_name'))));
+
+        $this->request->set('extension_folder',
+            MolajoComponentHelper::getPath($this->request->get('extension_instance_name')));
+        $this->request->set('extension_type', 'component');
 
         $this->_setPageValues($this->request->get('extension_parameters',
             $this->request->get('extension_metadata')));
@@ -746,7 +756,7 @@ class MolajoRequest
         }
 
         /** view */
-        if ((int) $this->request->get('view_id', 0) == '') {
+        if ((int)$this->request->get('view_id', 0) == '') {
             $this->request->set('view_id',
                 MolajoViewHelper::getViewDefaults('view',
                     $this->request->get('mvc_model'),
@@ -756,7 +766,7 @@ class MolajoRequest
         }
 
         /** wrap */
-        if ((int) $this->request->get('wrap_id', 0) == '') {
+        if ((int)$this->request->get('wrap_id', 0) == '') {
             $this->request->set('wrap_id',
                 MolajoViewHelper::getViewDefaults('wrap',
                     $this->request->get('mvc_model'),
@@ -884,7 +894,7 @@ class MolajoRequest
         /** Get Name */
         $this->request->set('page_name',
             MolajoExtensionHelper::getInstanceTitle($this->request->get('page_id'),
-            MOLAJO_ASSET_TYPE_EXTENSION_VIEW, 'pages'));
+                MOLAJO_ASSET_TYPE_EXTENSION_VIEW, 'pages'));
 
         /** Page Path */
         $viewHelper = new MolajoViewHelper($this->request->get('page_name'),

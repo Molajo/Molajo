@@ -40,20 +40,8 @@ class MolajoControllerDisplay extends MolajoControllerExtension
     public function display()
     {
         /** model */
-        $modelClass = ucfirst($this->mvc->get('extension_instance_name'));
-        if ($this->mvc->get('extension_type') == 'modules') {
-            $modelClass .= 'Module';
-        }
-        $modelClass .= 'Model';
-        $modelClass .= ucfirst($this->mvc->get('mvc_model'));
-
-        if (class_exists($modelClass)) {
-        } else {
-            $modelClass = 'MolajoModel' . ucfirst($this->mvc->get('mvc_model'));
-        }
+        $modelClass = (string) $this->mvc->get('mvc_model');
         $this->model = new $modelClass();
-
-        /** set model properties */
         $this->model->request = $this->mvc;
         $this->model->parameters = $this->parameters;
 

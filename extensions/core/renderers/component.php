@@ -54,8 +54,7 @@ class MolajoRendererComponent extends MolajoRenderer
             $this->request->get('extension_path'));
         $this->mvc->set('extension_type',
             $this->request->get('extension_type'));
-        $this->mvc->set('extension_folder',
-            $this->request->get('extension_subtype'));
+        $this->mvc->set('extension_folder','');
         $this->mvc->set('extension_event_type',
             $this->request->get('extension_event_type'));
 
@@ -113,23 +112,54 @@ class MolajoRendererComponent extends MolajoRenderer
     }
 
     /**
+     * _getExtension
+     *
+     * Retrieve extension information using either the ID or the name
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function _getExtension()
+    {
+        $this->mvc->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT);
+
+        $results = parent::_getExtension();
+        if ($results === false) {
+            return false;
+        }
+
+        $this->mvc->set('extension_path',
+            MolajoComponentHelper::getPath(
+                strtolower($this->mvc->get('extension_instance_name'))));
+
+        $this->mvc->set('extension_type', 'component');
+
+        return true;
+    }
+
+    /**
      * import
      *
      * imports component folders and files
-     * @since 1.0
+     *
+     * @return  true
+     * @since   1.0
      */
     protected function _importClasses()
     {
         $fileHelper = new MolajoFileHelper();
 
+        $name = ucfirst($this->mvc->get('extension_instance_name'));
+        $name = str_replace (array('-', '_'), '', $name);
+
         /** Controllers */
         if (file_exists($this->mvc->get('extension_path') . '/controller.php')) {
-            $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/controller.php', ucfirst($this->mvc->get('extension_instance_name')) . 'Controller');
+            $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/controller.php', $name . 'Controller');
         }
         $files = JFolder::files($this->mvc->get('extension_path') . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/controllers/' . $file, ucfirst($this->mvc->get('extension_instance_name')) . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/controllers/' . $file, $name . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
@@ -137,7 +167,7 @@ class MolajoRendererComponent extends MolajoRenderer
         $files = JFolder::files($this->mvc->get('extension_path') . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/helpers/' . $file, ucfirst($this->mvc->get('extension_instance_name')) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/helpers/' . $file, $name . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
@@ -145,7 +175,7 @@ class MolajoRendererComponent extends MolajoRenderer
         $files = JFolder::files($this->mvc->get('extension_path') . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/models/' . $file, ucfirst($this->mvc->get('extension_instance_name')) . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/models/' . $file, $name . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
@@ -153,7 +183,7 @@ class MolajoRendererComponent extends MolajoRenderer
         $files = JFolder::files($this->mvc->get('extension_path') . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/tables/' . $file, ucfirst($this->mvc->get('extension_instance_name')) . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/tables/' . $file, $name . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
 
@@ -164,7 +194,7 @@ class MolajoRendererComponent extends MolajoRenderer
                 $files = JFolder::files($this->mvc->get('extension_path') . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
-                        $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/views/' . $folder . '/' . $file, ucfirst($this->mvc->get('extension_instance_name')) . 'View' . ucfirst($folder));
+                        $fileHelper->requireClassFile($this->mvc->get('extension_path') . '/views/' . $folder . '/' . $file, $name . 'View' . ucfirst($folder));
                     }
                 }
             }
@@ -176,7 +206,7 @@ class MolajoRendererComponent extends MolajoRenderer
      *
      * Loads Media Files for Site, Application, User, and Template
      *
-     * @return  boolean  True, if the file has successfully loaded.
+     * @return  bool
      * @since   1.0
      */
     protected function _loadMedia()
@@ -196,6 +226,8 @@ class MolajoRendererComponent extends MolajoRenderer
         /** Component */
         $this->_loadMediaPlus('/component' . $this->mvc->get('extension_instance_name'),
             MolajoController::getApplication()->get('media_priority_source_data', 900));
+
+        return true;
     }
 
     /**
@@ -203,7 +235,7 @@ class MolajoRendererComponent extends MolajoRenderer
      *
      * Loads Media Files for Site, Application, User, and Template
      *
-     * @return  boolean  True, if the file has successfully loaded.
+     * @return  bool
      * @since   1.0
      */
     protected function _loadMediaPlus($plus = '', $priority = 500)
@@ -259,6 +291,6 @@ class MolajoRendererComponent extends MolajoRenderer
         }
 
         /** nothing was loaded */
-        return false;
+        return true;
     }
 }

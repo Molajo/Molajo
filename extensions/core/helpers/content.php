@@ -62,7 +62,6 @@ abstract class MolajoContentHelper
         $query->select('a.' . $db->namequote('rgt'));
         $query->select('a.' . $db->namequote('lvl'));
         $query->select('a.' . $db->namequote('home'));
-        $query->select('a.' . $db->namequote('position'));
         $query->select('a.' . $db->namequote('custom_fields'));
         $query->select('a.' . $db->namequote('parameters'));
         $query->select('a.' . $db->namequote('metadata'));

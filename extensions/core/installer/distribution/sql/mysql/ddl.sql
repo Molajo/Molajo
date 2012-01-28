@@ -3,7 +3,7 @@
 -- http://www.box.net/shared/rjsgbzgmal6ymedheb7t
 --
 -- Primary Keys: PK, NN, UN, and AI
--- Foreign Keys: NN, UN 
+-- Foreign Keys: NN, UN
 --
 -- Build using the "Database" - "Forward Engineer" Menu Item
 --
@@ -18,7 +18,7 @@
 -- SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 -- CREATE SCHEMA IF NOT EXISTS `molajo` DEFAULT CHARACTER SET utf8 ;
 -- USE `molajo` ;
--- 
+--
 -- Remove this line from bottom of script:
 -- SET SQL_MODE=@OLD_SQL_MODE;
 --
@@ -131,8 +131,6 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `extensions_extension_sites_index` ON `molajo_extensions` (`extension_site_id` ASC) ;
 
-
-
 -- -----------------------------------------------------
 -- Table 06 `molajo_extension_instances`
 -- -----------------------------------------------------
@@ -159,7 +157,6 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   `modified_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Modified By User ID' ,
   `checked_out_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Checked out Date and Time' ,
   `checked_out_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Checked out by User Id' ,
-  `position` VARCHAR(45) NOT NULL DEFAULT ' ',
   `custom_fields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
   `metadata` MEDIUMTEXT NULL ,
@@ -176,7 +173,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_extension_instances_extensions_index` ON `molajo_extension_instances` (`extension_id` ASC) ;
-
 
 -- -----------------------------------------------------
 -- Table 07 `molajo_sites`
@@ -217,56 +213,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_applications_asset_types_index` ON `molajo_applications` (`asset_type_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 09 `molajo_asset_extensions`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_asset_extensions` (
-  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Actions Primary Key' ,
-  `extension_instance_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  PRIMARY KEY (`asset_id`, `extension_instance_id`) ,
-  CONSTRAINT `fk_asset_modules_assets`
-    FOREIGN KEY (`asset_id` )
-    REFERENCES `molajo_assets` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_asset_extension_extension_instances`
-    FOREIGN KEY (`extension_instance_id` )
-    REFERENCES `molajo_extension_instances` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `fk_asset_extensions_assets_index` ON `molajo_asset_extensions` (`asset_id` ASC) ;
-
-CREATE INDEX `fk_asset_extensions_extension_instances_index` ON `molajo_asset_extensions` (`extension_instance_id` ASC) ;
-
--- -----------------------------------------------------
--- Table 10 `molajo_extension_options`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_extension_options` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
-  `extension_instance_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `application_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `protected` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
-  `option_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `option_value_literal` VARCHAR(255) NOT NULL DEFAULT ' ',
-  `option_value` VARCHAR(80) NOT NULL DEFAULT ' ',
-  `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering' ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_component_options_extension_instances`
-    FOREIGN KEY (`extension_instance_id` )
-    REFERENCES `molajo_extension_instances` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `fk_extension_options_extension_instances_index` ON `molajo_extension_options` (`extension_instance_id` ASC) ;
-
--- -----------------------------------------------------
--- Table 11 `molajo_content`
+-- Table 09 `molajo_content`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_content` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
@@ -298,7 +245,6 @@ CREATE  TABLE IF NOT EXISTS `molajo_content` (
   `rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `lvl` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `home` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
-  `position` VARCHAR(45) NOT NULL DEFAULT ' ',
   `custom_fields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
   `metadata` MEDIUMTEXT NULL ,
@@ -317,7 +263,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_content_extension_instances_index` ON `molajo_content` (`extension_instance_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 12 `molajo_users`
+-- Table 10 `molajo_users`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_users` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -347,7 +293,7 @@ CREATE UNIQUE INDEX `username` ON `molajo_users` (`username` ASC) ;
 CREATE UNIQUE INDEX `email` ON `molajo_users` (`email` ASC) ;
 
 -- -----------------------------------------------------
--- Table 13 `molajo_site_applications`
+-- Table 11 `molajo_site_applications`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_site_applications` (
   `site_id` INT(11) UNSIGNED NOT NULL ,
@@ -370,7 +316,7 @@ CREATE INDEX `fk_site_applications_sites_index` ON `molajo_site_applications` (`
 CREATE INDEX `fk_site_applications_applications_index` ON `molajo_site_applications` (`application_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 14 `molajo_site_extension_instances`
+-- Table 12 `molajo_site_extension_instances`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_site_extension_instances` (
   `site_id` INT(11) UNSIGNED NOT NULL ,
@@ -393,7 +339,7 @@ CREATE INDEX `fk_site_extension_instances_sites_index` ON `molajo_site_extension
 CREATE INDEX `fk_site_extension_instances_extension_instances_index` ON `molajo_site_extension_instances` (`extension_instance_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 15 `molajo_application_extension_instances`
+-- Table 13 `molajo_application_extension_instances`
 -- -----------------------------------------------------
 
 CREATE  TABLE IF NOT EXISTS `molajo_application_extension_instances` (
@@ -417,7 +363,7 @@ CREATE INDEX `fk_application_extensions_applications_index` ON `molajo_applicati
 CREATE INDEX `fk_application_extension_instances_extension_instances_index` ON `molajo_application_extension_instances` (`extension_instance_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 16 `molajo_sessions`
+-- Table 14 `molajo_sessions`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_sessions` (
   `session_id` VARCHAR(32) NOT NULL ,
@@ -437,7 +383,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_sessions_applications_index` ON `molajo_sessions` (`application_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 17 `molajo_user_applications`
+-- Table 15 `molajo_user_applications`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_applications` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_users.id' ,
@@ -461,7 +407,7 @@ CREATE INDEX `fk_user_applications_users_index` ON `molajo_user_applications` (`
 CREATE INDEX `fk_user_applications_applications_index` ON `molajo_user_applications` (`application_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 18 `molajo_user_groups`
+-- Table 16 `molajo_user_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_users.id' ,
@@ -485,7 +431,7 @@ CREATE INDEX `fk_molajo_user_groups_molajo_users_index` ON `molajo_user_groups` 
 CREATE INDEX `fk_molajo_user_groups_molajo_groups_index` ON `molajo_user_groups` (`group_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 19 `molajo_view_groups`
+-- Table 17 `molajo_view_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_view_groups` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -497,7 +443,7 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table 20 `molajo_group_view_groups`
+-- Table 18 `molajo_group_view_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_group_view_groups` (
   `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'FK to the molajo_group table.' ,
@@ -522,7 +468,7 @@ CREATE INDEX `fk_group_view_groups_view_groups_index` ON `molajo_group_view_grou
 CREATE INDEX `fk_group_view_groups_groups_index` ON `molajo_group_view_groups` (`group_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 21 `molajo_user_view_groups`
+-- Table 19 `molajo_user_view_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_view_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_users.id' ,
@@ -546,7 +492,7 @@ CREATE INDEX `fk_user_groups_users_index` ON `molajo_user_view_groups` (`user_id
 CREATE INDEX `fk_user_view_groups_view_groups_index` ON `molajo_user_view_groups` (`view_group_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 22 `molajo_view_group_permissions`
+-- Table 20 `molajo_view_group_permissions`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_view_group_permissions` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -579,7 +525,7 @@ CREATE INDEX `fk_view_group_permissions_actions_index` ON `molajo_view_group_per
 CREATE INDEX `fk_view_group_permissions_assets_index` ON `molajo_view_group_permissions` (`asset_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 23 `molajo_group_permissions`
+-- Table 21 `molajo_group_permissions`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_group_permissions` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -612,7 +558,7 @@ CREATE INDEX `fk_group_permissions_content_index` ON `molajo_group_permissions` 
 CREATE INDEX `fk_group_permissions_assets_index` ON `molajo_group_permissions` (`asset_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 24 `molajo_asset_categories`
+-- Table 22 `molajo_asset_categories`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_asset_categories` (
   `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
@@ -638,7 +584,7 @@ CREATE INDEX `fk_asset_categories_categories_index` ON `molajo_asset_categories`
 
 
 -- -----------------------------------------------------
--- Table 25 `molajo_asset_activity`
+-- Table 23 `molajo_asset_activity`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_asset_activity` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -661,7 +607,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `asset_activity_assets_index` ON `molajo_asset_activity` (`asset_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 26 `molajo_user_activity`
+-- Table 24 `molajo_user_activity`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_activity` (
   `id` INT(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,

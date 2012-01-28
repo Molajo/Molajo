@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS `molajo_site_applications` ;
 DROP TABLE IF EXISTS `molajo_user_activity` ;
 DROP TABLE IF EXISTS `molajo_users` ;
 DROP TABLE IF EXISTS `molajo_content` ;
-DROP TABLE IF EXISTS `molajo_asset_extensions` ;
 DROP TABLE IF EXISTS `molajo_sites` ;
 DROP TABLE IF EXISTS `molajo_asset_activity` ;
 DROP TABLE IF EXISTS `molajo_assets` ;
