@@ -7,18 +7,6 @@
  */
 
 defined('MOLAJO') or die; ?>
-<div class="column">
-    <include:module name=portlet1 wrap=div wrap_class=portlet/>
-    <include:module name=portlet2 wrap=div wrap_class=portlet/>
-    <include:module name=portlet3 wrap=div wrap_class=portlet/>
-</div>
-<div class="column">
-    <include:module name=portlet4 wrap=div wrap_class=portlet/>
-    <include:module name=portlet5 wrap=div wrap_class=portlet/>
-    <include:module name=portlet6 wrap=div wrap_class=portlet/>
-</div>
-<div class="column">
-    <include:module name=portlet7 wrap=div wrap_class=portlet/>
-    <include:module name=portlet8 wrap=div wrap_class=portlet/>
-    <include:module name=portlet9 wrap=div wrap_class=portlet/>
-</div>
+<div class="column"><include:module name=portlet1 wrap=div wrap_class=portlet /></div>
+<div class="column"><include:module name=portlet4 wrap=div wrap_class=portlet /></div>
+<div class="column"><include:module name=portlet7 wrap=div wrap_class=portlet /></div>
