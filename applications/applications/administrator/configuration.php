@@ -71,10 +71,10 @@ class MolajoConfigApplication
     public $default_edit_wrap_id = 61;
 
     /* Head */
-    public $head_view_id = 37;
-    public $head_wrap_id = 80;
-    public $defer_view_id = 37;
-    public $defer_wrap_id = 80;
+    public $head_view_id = 23;
+    public $head_wrap_id = 66;
+    public $defer_view_id = 23;
+    public $defer_wrap_id = 66;
 
     /* Message */
     public $message_view_id = 58;

@@ -19,10 +19,22 @@ class MolajoControllerExtension
     /**
      * $request
      *
+     * Values used to generate the primary content on the page
+     *
      * @var    object
      * @since  1.0
      */
     public $request;
+
+    /**
+     * $mvc
+     *
+     * Values to use for generating content for this specific request
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $mvc;
 
     /**
      * $parameters
@@ -80,10 +92,15 @@ class MolajoControllerExtension
      * @param    array   $request
      * @since    1.0
      */
-    public function __construct($request, $parameters = array())
+    public function __construct($mvc, $request, $parameters = array())
     {
+        if (is_object($mvc)) {
+            $this->mvc = $mvc;
+        } else {
+            //error
+        }
         if (is_object($request)) {
-            $this->mvc = $request;
+            $this->request = $request;
         } else {
             //error
         }

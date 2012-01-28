@@ -43,24 +43,24 @@ class MolajoModelHead extends MolajoModel
 
         //        $metadata = MolajoController::getApplication()->getMetadata();
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->mvc->get('template_name');
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->mvc->get('template_name');
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
+        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
         MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
         MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
 
         /** type: base */
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
-        $tempObject->set('title', $this->mvc->get('metadata_title'));
-        $tempObject->set('base', $this->mvc->get('url_base'));
-        $tempObject->set('last_modified', $this->mvc->get('source_last_modified'));
-        $tempObject->set('description', $this->mvc->get('metadata_description'));
-        $tempObject->set('generator', $this->mvc->get('metadata_generator'));
-        $tempObject->set('favicon', $this->mvc->get('template_favicon'));
-        $tempObject->set('keywords', $this->mvc->get('metadata_keywords'));
-        $tempObject->set('author', $this->mvc->get('metadata_author'));
-        $tempObject->set('content_rights', $this->mvc->get('metadata_content_rights'));
-        $tempObject->set('robots', $this->mvc->get('metadata_robots'));
+        $tempObject->set('title', $this->request->get('metadata_title'));
+        $tempObject->set('base', $this->request->get('url_base'));
+        $tempObject->set('last_modified', $this->request->get('source_last_modified'));
+        $tempObject->set('description', $this->request->get('metadata_description'));
+        $tempObject->set('generator', $this->request->get('metadata_generator'));
+        $tempObject->set('favicon', $this->request->get('template_favicon'));
+        $tempObject->set('keywords', $this->request->get('metadata_keywords'));
+        $tempObject->set('author', $this->request->get('metadata_author'));
+        $tempObject->set('content_rights', $this->request->get('metadata_content_rights'));
+        $tempObject->set('robots', $this->request->get('metadata_robots'));
         $this->items[] = $tempObject;
 
         /** type: links */

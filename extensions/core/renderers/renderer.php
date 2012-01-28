@@ -72,6 +72,16 @@ class MolajoRenderer
     public $mvc;
 
     /**
+     * $parameters
+     *
+     * Parameters which have been retrieved using default sequence to be used for rendering output
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $parameters;
+
+    /**
      * __construct
      *
      * Class constructor.
@@ -514,7 +524,7 @@ class MolajoRenderer
         }
         $controllerClass = (string)$controllerClass;
         $this->mvc->set('mvc_controller', $controllerClass);
-        $controller = new $controllerClass($this->mvc);
+        $controller = new $controllerClass($this->mvc, $this->request, $this->parameters);
 
         /** task: display, edit, or add  */
         $task = (string)$this->mvc->get('mvc_task', 'display');

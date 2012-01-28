@@ -53,10 +53,22 @@ class MolajoModel
     /**
      * $request
      *
+     * Values used to generate the primary content on the page
+     *
      * @var    object
      * @since  1.0
      */
     public $request;
+
+    /**
+     * $mvc
+     *
+     * Values to use for generating content for this specific request
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $mvc;
 
     /**
      * $parameters
@@ -165,6 +177,18 @@ class MolajoModel
     }
 
     /**
+     * getMVC
+     *
+     * @return    array    An empty array
+     *
+     * @since    1.0
+     */
+    public function getMVC()
+    {
+        return $this->mvc;
+    }
+
+    /**
      * getRequest
      *
      * @return    array    An empty array
@@ -173,7 +197,7 @@ class MolajoModel
      */
     public function getRequest()
     {
-        return $this->mvc;
+        return $this->request;
     }
 
     /**
