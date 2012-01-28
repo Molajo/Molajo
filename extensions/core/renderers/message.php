@@ -16,17 +16,37 @@ defined('MOLAJO') or die;
  */
 class MolajoRendererMessage extends MolajoRenderer
 {
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @param  null $name
+     * @param  array $request
+     *
+     * @return  null
+     * @since   1.0
+     */
+    public function __construct($name = null, $request = array(), $type = null)
+    {
+        $this->_extension_required = false;
+        parent::__construct($name, $request, $type);
+    }
 
     /**
-     * _getAttributes
+     * _getExtension
      *
-     *  From <include:message attr=1 attr=2 etc />
+     * Retrieve extension information using either the ID or the name
+     *
+     * @return bool
+     * @since 1.0
      */
-    protected function _getAttributes()
+    protected function _getExtension()
     {
-        parent::_getAttributes();
-
-        /** Model */
         $this->mvc->set('mvc_model', 'MolajoModelMessages');
+        $this->mvc->set('mvc_controller', 'MolajoControllerDisplay');
+        $this->mvc->set('mvc_task', 'display');
+        return true;
     }
 }
+
