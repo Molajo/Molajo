@@ -99,7 +99,7 @@ class MolajoRendererTag extends MolajoRenderer
             $this->_getExtension();
 
             /** establish values needed for MVC */
-            $this->_setParameters();
+            $this->_getAttributes();
 
             /** retrieves MVC defaults for application */
             $this->_getApplicationDefaults();

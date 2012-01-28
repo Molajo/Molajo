@@ -72,7 +72,7 @@ class MolajoRendererHead extends MolajoRenderer
         $this->_attributes = $attributes;
 
         /** retrieve parameters */
-        $this->_setParameters();
+        $this->_getAttributes();
 
         /** Instantiate Controller */
         $controller = new MolajoControllerDisplay ($this->mvc);

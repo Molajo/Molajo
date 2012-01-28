@@ -883,14 +883,15 @@ class MolajoRequest
     {
         /** Get Name */
         $this->request->set('page_name',
-            MolajoExtensionHelper::getInstanceTitle($this->request->get('page_id')));
+            MolajoExtensionHelper::getInstanceTitle($this->request->get('page_id'),
+            MOLAJO_ASSET_TYPE_EXTENSION_VIEW, 'pages'));
 
         /** Page Path */
         $viewHelper = new MolajoViewHelper($this->request->get('page_name'),
             'pages',
             $this->request->get('extension_instance_name'),
             $this->request->get('extension_type'),
-            $this->request->get('extension_folder'),
+            $this->request->get('extension_subtype'),
             $this->request->get('template_name')
         );
         $this->request->set('page_path', $viewHelper->view_path);

@@ -39,12 +39,14 @@ abstract class MolajoExtensionHelper
      * Adds verification for site and application access
      *
      * @static
-     * @param $asset_type_id
-     * @param null $extension
-     * @param null $extension_type
-     * @return bool|mixed
+     * @param   $asset_type_id
+     * @param   $extension
+     * @param   $subtype
+     *
+     * @return  bool|mixed
+     * @since   1.0
      */
-    public static function get($asset_type_id, $extension = null, $extension_type = null)
+    public static function get($asset_type_id, $extension = null, $subtype = null)
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
@@ -69,9 +71,9 @@ abstract class MolajoExtensionHelper
         $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$queryAssetTypeID);
 
         /** plugins and views have subtypes */
-        if ($extension_type == null) {
+        if ($subtype == null) {
         } else {
-            $query->where('(a.' . $db->namequote('subtype') . ' = ' . $db->quote($extension_type) . ')');
+            $query->where('(a.' . $db->namequote('subtype') . ' = ' . $db->quote($subtype) . ')');
         }
 
         /** Extension Instances Table */
@@ -202,12 +204,14 @@ abstract class MolajoExtensionHelper
      * Retrieves Extension ID, given title
      *
      * @static
-     * @param   $title
+     * @param  $title
+     * @param  $asset_type_id
+     * @param  $subtype
      *
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function getInstanceID($title)
+    public static function getInstanceID($asset_type_id, $title, $subtype=null)
     {
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
@@ -218,11 +222,18 @@ abstract class MolajoExtensionHelper
 
         $query->select('a.' . $db->namequote('id'));
         $query->from($db->namequote('#__extension_instances') . ' as a');
-        $query->where('a.' . $db->namequote('title') . ' = ' . $db->quote('title'));
+        $query->where('a.' . $db->namequote('title') . ' = ' . $db->quote($title));
+        $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$asset_type_id);
 
         $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
+
+        /** plugins and views have subtypes */
+        if ($subtype == null) {
+        } else {
+            $query->where('(a.' . $db->namequote('subtype') . ' = ' . $db->quote($subtype) . ')');
+        }
 
         /** assets */
         $query->from($db->namequote('#__assets') . ' as b_assets');

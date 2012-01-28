@@ -100,6 +100,9 @@ class MolajoRenderer
 
         /** initializes and populates the MVC request */
         $this->_setRequest();
+        if ($this->mvc->get('extension_instance_id', 0) == 0) {
+            return $this->mvc->set('status_found', false);
+        }
 
         /** extension MVC classes are loaded */
         $this->_importClasses();
@@ -128,14 +131,14 @@ class MolajoRenderer
         /** creates mvc object and initializes settings */
         $this->_initializeRequest();
 
+        /** establish values needed for MVC */
+        $this->_getAttributes();
+
         /** retrieves extension and populates related mvc object values */
         $this->_getExtension();
         if ($this->mvc->get('extension_instance_id', 0) == 0) {
             return $this->mvc->set('status_found', false);
         }
-
-        /** establish values needed for MVC */
-        $this->_setParameters();
 
         /** retrieves MVC defaults for application */
         $this->_getApplicationDefaults();
@@ -168,7 +171,7 @@ class MolajoRenderer
         $this->mvc->set('extension_metadata', array());
         $this->mvc->set('extension_parameters', array());
         $this->mvc->set('extension_path', '');
-        $this->mvc->set('extension_type', '');
+        $this->mvc->set('extension_type', $this->_name);
         $this->mvc->set('extension_folder', '');
         $this->mvc->set('extension_event_type', '');
 
@@ -205,45 +208,21 @@ class MolajoRenderer
         return;
     }
 
-    /**
-     * _getExtension
-     *
-     * Retrieve extension information using either the ID or the name
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function _getExtension()
-    {
-        $results = MolajoExtensionHelper::getExtensionRequestObject($this->mvc);
-        if ($results === false) {
-            return false;
-        }
-        $this->mvc = $results;
-
-        return true;
-    }
 
     /**
-     * _setParameters
+     * _getAttributes
      *
      *  Retrieve request information needed to execute extension
      *
      * @return  bool
      * @since   1.0
      */
-    protected function _setParameters()
+    protected function _getAttributes()
     {
         foreach ($this->_attributes as $name => $value) {
 
             if ($name == 'name' || $name == 'title') {
-                $this->mvc->set('extension_title', $value);
-
-            } else if ($name == 'view') {
-                $this->mvc->set('view_name', $value);
-
-            } else if ($name == 'wrap') {
-                $this->mvc->set('wrap_name', $value);
+                $this->mvc->set('extension_instance_name', $value);
 
             } else if ($name == 'position') {
                 $this->_tag = $value;
@@ -268,6 +247,37 @@ class MolajoRenderer
             }
             // $this->mvc->set('other_parameters') = $other_parameters;
         }
+
+        return true;
+    }
+
+    /**
+     * _getExtension
+     *
+     * Retrieve extension information using either the ID or the name
+     *
+     * @return bool
+     * @since 1.0
+     */
+    protected function _getExtension()
+    {
+        if ((int)$this->mvc->get('extension_instance_id', 0) == 0) {
+            $this->mvc->set('extension_instance_id',
+                MolajoExtensionHelper::getInstanceID(
+                    $this->mvc->get('extension_asset_type_id'),
+                    $this->mvc->get('extension_instance_name'),
+                    $this->mvc->get('extension_subtype')
+                ));
+        }
+        if ((int)$this->mvc->get('extension_instance_id', 0) == 0) {
+            return false;
+        }
+
+        $results = MolajoExtensionHelper::getExtensionRequestObject($this->mvc);
+        if ($results === false) {
+            return false;
+        }
+        $this->mvc = $results;
 
         return true;
     }
@@ -332,7 +342,11 @@ class MolajoRenderer
 
         if ((int)$this->mvc->get('view_id', 0) == 0) {
             $this->mvc->set('view_id',
-                MolajoExtensionHelper::getInstanceID($this->mvc->get('view_name')));
+                MolajoExtensionHelper::getInstanceID(
+                    MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
+                    $this->mvc->get('view_name'),
+                    'extensions'
+                ));
         } else {
             $this->mvc->set('view_name',
                 MolajoExtensionHelper::getInstanceTitle($this->mvc->get('view_id')));
@@ -340,8 +354,8 @@ class MolajoRenderer
 
         $viewHelper = new MolajoViewHelper($this->mvc->get('view_name'),
             $this->mvc->get('view_type'),
-            $this->mvc->get('extension_title'),
             $this->mvc->get('extension_instance_name'),
+            $this->mvc->get('extension_type'),
             ' ',
             $this->mvc->get('template_name'));
         $this->mvc->set('view_path', $viewHelper->view_path);
@@ -350,7 +364,11 @@ class MolajoRenderer
         /** Wrap Path */
         if ((int)$this->mvc->get('wrap_id', 0) == 0) {
             $this->mvc->set('wrap_id',
-                MolajoExtensionHelper::getInstanceID($this->mvc->get('wrap_name')));
+                MolajoExtensionHelper::getInstanceID(
+                    MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
+                    $this->mvc->get('wrap_name'),
+                    'wraps'
+                ));
         } else {
             $this->mvc->set('wrap_name',
                 MolajoExtensionHelper::getInstanceTitle($this->mvc->get('wrap_id')));
@@ -358,8 +376,8 @@ class MolajoRenderer
 
         $wrapHelper = new MolajoViewHelper($this->mvc->get('wrap_name'),
             'wraps',
-            $this->mvc->get('extension_title'),
             $this->mvc->get('extension_instance_name'),
+            $this->mvc->get('extension_type'),
             ' ',
             $this->mvc->get('template_name'));
         $this->mvc->set('wrap_path', $wrapHelper->view_path);
@@ -439,8 +457,6 @@ class MolajoRenderer
                 $controllerClass = 'MolajoController' . ucfirst($this->mvc->get('mvc_controller'));
             }
         }
-echo $controllerClass.'<br />';
-
         $controller = new $controllerClass ($this->mvc);
 
         /** task: display, edit, or add  */

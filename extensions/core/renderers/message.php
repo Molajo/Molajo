@@ -18,13 +18,13 @@ class MolajoRendererMessage extends MolajoRenderer
 {
 
     /**
-     * _setParameters
+     * _getAttributes
      *
      *  From <include:message attr=1 attr=2 etc />
      */
-    protected function _setParameters()
+    protected function _getAttributes()
     {
-        parent::_setParameters();
+        parent::_getAttributes();
 
         /** Model */
         $this->mvc->set('mvc_model', 'MolajoModelMessages');

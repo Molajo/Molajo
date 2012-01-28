@@ -55,7 +55,7 @@ class MolajoRendererComponent extends MolajoRenderer
         $this->mvc->set('extension_type',
             $this->request->get('extension_type'));
         $this->mvc->set('extension_folder',
-            $this->request->get('extension_folder'));
+            $this->request->get('extension_subtype'));
         $this->mvc->set('extension_event_type',
             $this->request->get('extension_event_type'));
 

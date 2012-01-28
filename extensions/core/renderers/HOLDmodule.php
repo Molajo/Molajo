@@ -45,7 +45,7 @@ class MolajoRendererModule extends MolajoRenderer
             $this->_setRequest();
 
             /** establish values needed for MVC */
-            $this->_setParameters($module);
+            $this->_getAttributes($module);
 
             /** retrieves MVC defaults for application */
             $this->_getApplicationDefaults();
@@ -117,7 +117,7 @@ class MolajoRendererModule extends MolajoRenderer
      *
      * @param $module
      */
-    protected function _setParameters($module)
+    protected function _getAttributes($module)
     {
         $this->mvc->set('extension_instance_id', $module->extension_id);
         $this->mvc->set('extension_instance_name', strtolower($module->extension_name));
