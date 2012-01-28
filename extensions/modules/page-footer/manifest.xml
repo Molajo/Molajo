@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.0" method="upgrade">
-    <name>MODULE_FOOTER_NAME</name>
+    <name>MODULE_PAGE_FOOTER_NAME</name>
     <author>Amy Stephen</author>
     <create_date>January 2012</create_date>
     <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>MODULE_FOOTER_DESCRIPTION</description>
+    <description>MODULE_PAGE_FOOTER_DESCRIPTION</description>
     <files>
         <filename>controller.php</filename>
         <filename>model.php</filename>

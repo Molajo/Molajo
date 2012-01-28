@@ -6,9 +6,5 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-<p>
-    <?php echo $this->row->line1; ?>
-</p>
-<p>
-    <?php echo $this->row->line2; ?>
-</p>
+<p><?php echo $this->row->line1; ?></p>
+<p><?php echo $this->row->line2; ?></p>

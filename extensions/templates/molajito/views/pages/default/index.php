@@ -18,5 +18,4 @@
 defined('MOLAJO') or die;
 ?>
 <include:module name=page-header view=page-header wrap=div />
-
-
+<include:module name=page-footer view=page-footer wrap=div />

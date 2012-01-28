@@ -8,12 +8,12 @@
 defined('MOLAJO') or die;
 
 /**
- * Display Controller
+ * Controller
  *
  * @package      Molajo
  * @subpackage   Controller
  * @since        1.0
  */
-class FooterModuleControllerDisplay extends MolajoControllerDisplay
+class PagefooterModuleControllerDisplay extends MolajoControllerDisplay
 {
 }
