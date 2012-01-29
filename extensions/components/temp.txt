@@ -17,7 +17,7 @@ redirects
 search
 sites
 users
-
+echo MolajoController::getApplication()->get('custom_field1', '', 'custom');
 
 MENU ITEMS and Components
 

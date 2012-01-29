@@ -20,7 +20,15 @@ class MolajoControllerSite
      * @var    integer
      * @since  1.0
      */
-    static public $config = null;
+    static protected $_config = null;
+
+    /**
+     * $dbinfo
+     *
+     * @var    object
+     * @since  1.0
+     */
+    static protected $_dbinfo = null;
 
     /**
      * $base_url
@@ -54,7 +62,7 @@ class MolajoControllerSite
      * @var    date
      * @since  1.0
      */
-    static public $custom_fields = null;
+    static protected $_custom_fields = null;
 
     /**
      * getInstance
@@ -82,7 +90,7 @@ class MolajoControllerSite
                 return false;
             }
 
-            $instance = new MolajoControllerSite();
+            $instance = new MolajoControllerSite($info);
             $instances[$id] = &$instance;
             self::siteConfig();
         }
@@ -95,17 +103,14 @@ class MolajoControllerSite
      *
      * Class constructor.
      *
-     * @param   array  $config  A configuration array
+     * @param  object $dbinfo
      *
      * @since  1.0
      */
-    public function __construct($config = null)
+    public function __construct($dbinfo = null)
     {
-        if ($config) {
-            self::$config = $config;
-        } else {
-            self::$config = new JRegistry;
-        }
+        self::$_config = new JRegistry;
+        self::$_dbinfo = $dbinfo;
     }
 
     /**
@@ -119,16 +124,18 @@ class MolajoControllerSite
      */
     public function load()
     {
-        $info = MolajoSiteHelper::getSiteInfo();
-        if ($info === false) {
-            return false;
-        }
+        $this->_custom_fields = new JRegistry;
+        $this->_custom_fields->loadString(self::$_dbinfo->custom_fields);
 
-        self::$parameters = $info->parameters;
-        self::$custom_fields = $info->custom_fields;
-        self::$base_url = $info->base_url;
+        $this->_parameters = new JRegistry;
+        $this->_parameters->loadString(self::$_dbinfo->parameters);
 
-        self::SetPaths();
+        $this->_metadata = new JRegistry;
+        $this->_metadata->loadString(self::$_dbinfo->metadata);
+
+        self::$base_url = self::$_dbinfo->base_url;
+
+        self::_setPaths();
     }
 
     /**
@@ -161,15 +168,14 @@ class MolajoControllerSite
     }
 
     /**
-     * setPaths
+     * _setPaths
      *
-     * Retrieves the configuration information and sets paths for site file locations
+     * Retrieves site configuration information and sets paths for site file locations
      *
-     * @param    array
-     *
-     * @since 1.0
+     * @results  null
+     * @since    1.0
      */
-    public function setPaths()
+    public function _setPaths()
     {
         if (defined('MOLAJO_SITE_NAME')) {
         } else {
@@ -201,6 +207,8 @@ class MolajoControllerSite
         } else {
             define('MOLAJO_SITE_TEMP_URL', MOLAJO_BASE_URL . self::get('temp_url', MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/temp'));
         }
+
+        return;
     }
 
     /**
@@ -208,8 +216,7 @@ class MolajoControllerSite
      *
      * Creates the Site Configuration object.
      *
-     * return   object  A config object
-     *
+     * return  null
      * @since  1.0
      */
     public function siteConfig()
@@ -218,42 +225,59 @@ class MolajoControllerSite
         $data = $siteConfig->site();
 
         if (is_array($data)) {
-            self::$config->loadArray($data);
+            self::$_config->loadArray($data);
 
         } elseif (is_object($data)) {
-            self::$config->loadObject($data);
+            self::$_config->loadObject($data);
         }
 
-        return self::$config;
+        return;
     }
 
     /**
      * get
      *
-     * Returns a value for the Application object
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
      *
-     * @param   string  $key
-     * @param   mixed   $default
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
      *
      * @since   1.0
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $type = 'config')
     {
-        return self::$config->get($key, $default);
+        if ($type == 'custom') {
+            return $this->_custom_fields->get($key, $default);
+        } else if ($type == 'metadata') {
+            return $this->_metadata->get($key, $default);
+        } else {
+            return self::$_config->get($key, $default);
+        }
     }
 
     /**
      * set
      *
-     * Set Value for the Application object
+     * Modifies a property of the Application object, creating it if it does not already exist.
      *
-     * @param   string  $key
-     * @param   mixed   $value
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
      *
      * @since   1.0
      */
-    public function set($key, $value = null)
+    public function set($key, $value = null, $type = 'config')
     {
-        self::$config->set($key, $value);
+        if ($type == 'custom') {
+            return $this->_custom_fields->set($key, $value);
+        } else if ($type == 'metadata') {
+            return $this->_metadata->get($key, $value);
+        } else {
+            return self::$_config->get($key, $value);
+        }
     }
 }

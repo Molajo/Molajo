@@ -785,39 +785,33 @@ class MolajoRequest
 
         /** metadata  */
         if ($this->request->get('metadata_title', '') == '') {
-            $appname = MolajoController::getApplication()->get('application_name', '');
-            $sitename = MolajoController::getApplication()->get('site_name', '');
-            if (trim($appname) == trim($sitename)) {
-                $temp = $appname;
-            } else {
-                $temp = $appname . ' - ' . $sitename;
-            }
-            $this->request->set('metadata_title', $temp);
+            $this->request->set('metadata_title',
+                MolajoController::getApplication()->get('metadata_title', '', 'metadata'));
         }
 
         if ($this->request->get('metadata_description', '') == '') {
             $this->request->set('metadata_description',
-                MolajoController::getApplication()->get('metadata_description', ''));
+                MolajoController::getApplication()->get('metadata_description', '', 'metadata'));
         }
 
         if ($this->request->get('metadata_keywords', '') == '') {
             $this->request->set('metadata_keywords',
-                MolajoController::getApplication()->get('metadata_keywords', ''));
+                MolajoController::getApplication()->get('metadata_keywords', '', 'metadata'));
         }
 
         if ($this->request->get('metadata_author', '') == '') {
             $this->request->set('metadata_author',
-                MolajoController::getApplication()->get('metadata_author', ''));
+                MolajoController::getApplication()->get('metadata_author', '', 'metadata'));
         }
 
         if ($this->request->get('metadata_content_rights', '') == '') {
             $this->request->set('metadata_content_rights',
-                MolajoController::getApplication()->get('metadata_content_rights', ''));
+                MolajoController::getApplication()->get('metadata_content_rights', '', 'metadata'));
         }
 
         if ($this->request->get('metadata_robots', '') == '') {
             $this->request->set('metadata_robots',
-                MolajoController::getApplication()->get('metadata_robots', ''));
+                MolajoController::getApplication()->get('metadata_robots', '', 'metadata'));
         }
 
         return;

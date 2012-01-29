@@ -57,6 +57,7 @@ class MolajoSiteHelper
             $query->select('path');
             $query->select('parameters');
             $query->select('custom_fields');
+            $query->select('metadata');
             $query->select('base_url');
             $query->from($db->namequote('#__sites'));
 
@@ -75,6 +76,7 @@ class MolajoSiteHelper
                 $obj->description = $result->description;
                 $obj->path = $result->path;
                 $obj->parameters = $result->parameters;
+                $obj->metadata = $result->metadata;
                 $obj->custom_fields = $result->custom_fields;
                 $obj->base_url = $result->base_url;
 

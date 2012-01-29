@@ -51,6 +51,14 @@ class MolajoControllerApplication
     protected static $_custom_fields = null;
 
     /**
+     * Metadata
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $_metadata = array();
+
+    /**
      * Input Object
      *
      * @var    object
@@ -136,7 +144,7 @@ class MolajoControllerApplication
      * @var    array
      * @since  1.0
      */
-    protected $_metadata = array();
+    protected $_page_metadata = array();
 
     /**
      * Stylesheet links
@@ -293,6 +301,8 @@ class MolajoControllerApplication
         $this->_response->cachable = false;
         $this->_response->headers = array();
         $this->_response->body = array();
+
+        return;
     }
 
     /**
@@ -325,7 +335,8 @@ class MolajoControllerApplication
 
         /** response */
         $this->respond();
-        return true;
+
+        return;
     }
 
     /**
@@ -341,24 +352,13 @@ class MolajoControllerApplication
         $configClass = new MolajoConfigurationHelper();
         $this->_config = $configClass->getConfig();
 
-        $metadata = new JRegistry;
-        $metadata->loadString($this->_appdb->metadata);
-
-        $this->_config->set('metadata_title',
-            $metadata->get('metadata_title'));
-        $this->_config->set('metadata_description',
-            $metadata->get('metadata_description'));
-        $this->_config->set('metadata_keywords',
-            $metadata->get('metadata_keywords'));
-        $this->_config->set('metadata_robots',
-            $metadata->get('metadata_robots'));
-        $this->_config->set('metadata_author',
-            $metadata->get('metadata_author'));
-        $this->_config->set('metadata_content_rights',
-            $metadata->get('metadata_content_rights'));
+        $this->_metadata = new JRegistry;
+        $this->_metadata->loadString($this->_appdb->metadata);
 
         $this->_custom_fields = new JRegistry;
         $this->_custom_fields->loadString($this->_appdb->custom_fields);
+
+        return;
     }
 
     /**
@@ -378,6 +378,8 @@ class MolajoControllerApplication
     {
         if ($type == 'custom') {
             return $this->_custom_fields->get($key, $default);
+        } else if ($type == 'metadata') {
+            return $this->_metadata->get($key, $default);
         } else {
             return $this->_config->get($key, $default);
         }
@@ -395,9 +397,15 @@ class MolajoControllerApplication
      *
      * @since   1.0
      */
-    public function set($key, $value = null)
+    public function set($key, $value = null, $type='config')
     {
-        $this->_config->set($key, $value);
+        if ($type == 'custom') {
+            return $this->_custom_fields->set($key, $value);
+        } else if ($type == 'metadata') {
+            return $this->_metadata->set($key, $value);
+        } else {
+            return $this->_config->get($key, $value);
+        }
     }
 
     /**
@@ -727,17 +735,17 @@ class MolajoControllerApplication
         $name = strtolower($name);
 
         if (is_bool($context) && ($context === true)) {
-            $this->_metadata['http-equiv'][$name] = $content;
+            $this->_page_metadata['http-equiv'][$name] = $content;
 
             if ($sync && strtolower($name) == 'content-type') {
                 $this->setMimeEncoding($content, false);
             }
 
         } else if (is_string($context)) {
-            $result = $this->_metadata[$context][$name];
+            $result = $this->_page_metadata[$context][$name];
 
         } else {
-            $this->_metadata['standard'][$name] = $content;
+            $this->_page_metadata['standard'][$name] = $content;
         }
     }
 
@@ -753,7 +761,7 @@ class MolajoControllerApplication
      */
     public function getMetadata()
     {
-        return $this->_metadata;
+        return $this->_page_metadata;
     }
 
     /**
