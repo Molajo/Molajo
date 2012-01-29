@@ -61,8 +61,6 @@ class MolajoConfigApplication
     public $default_template_id = 98;
     public $default_page_id = 55;
 
-    public $default_static_view_id = 19;
-    public $default_static_wrap_id = 61;
     public $default_items_view_id = 21;
     public $default_items_wrap_id = 61;
     public $default_item_view_id = 21;
@@ -73,7 +71,7 @@ class MolajoConfigApplication
     /* Head */
     public $head_view_id = 23;
     public $head_wrap_id = 66;
-    public $defer_view_id = 23;
+    public $defer_view_id = 22;
     public $defer_wrap_id = 66;
 
     /* Message */

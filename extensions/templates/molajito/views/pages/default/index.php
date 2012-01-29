@@ -7,7 +7,7 @@
  *
 <include:module name=mainmenu wrap=nav />
 <include:tag name=sidebar view=sidebar wrap=div/>
-<include:defer/>
+<include:component name=sidebar view=sidebar wrap=div/>
  *
  *
  *
@@ -15,7 +15,8 @@
 defined('MOLAJO') or die;
 ?>
 <include:head/>
-<include:message view=messages wrap=div />
+<include:message />
 <include:module name=page-header view=page-header wrap=header />
-<include:request wrap=section />
+<include:request />
 <include:module name=page-footer view=page-footer wrap=footer />
+<include:defer />

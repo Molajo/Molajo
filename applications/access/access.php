@@ -19,7 +19,7 @@ class MolajoAccess
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTask($task='login', $model=null, $asset_id=0)
+    static public function authoriseTask($task='login', $asset_id=0)
     {
         return true;
     }
@@ -28,14 +28,13 @@ class MolajoAccess
      *  authoriseTaskList
      *
      * @param  string  $task
-     * @param  string  $model
      * @param  string  $asset_id
      * @param  string  $row
      *
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTaskList ($tasklist=array(), $model=null, $asset_id=0, $row=array())
+    static public function authoriseTaskList ($tasklist=array(), $asset_id=0, $row=array())
     {
     }
 

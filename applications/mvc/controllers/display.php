@@ -24,7 +24,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * @param    array   $request
      * @since    1.0
      */
-    public function __construct($mvc, $request, $parameters = array())
+    public function __construct($mvc, $request, $parameters)
     {
         parent::__construct($mvc, $request, $parameters);
     }
@@ -59,11 +59,13 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         /** pagination */
         $this->pagination = $this->model->getPagination();
-
+echo 'count '.count($this->rowset).'<br />';
+echo 'suppress '.$this->parameters->get('extension_suppress_no_results') .'<br />';
         /** no results */
         if (count($this->rowset) == 0
-            && $this->parameters->def('extension_suppress_no_results', false) === true
+            && $this->parameters->get('extension_suppress_no_results') == 1
         ) {
+            echo 'yes';
             return;
         }
 

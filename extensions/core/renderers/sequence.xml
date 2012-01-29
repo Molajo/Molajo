@@ -7,5 +7,5 @@
     <renderer>component</renderer>
     <renderer>message</renderer>
     <renderer>head</renderer>
-    <renderer>defer</renderer>
+    <renderer>defer:head</renderer>
 </sequence>

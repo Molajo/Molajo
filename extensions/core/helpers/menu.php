@@ -368,7 +368,7 @@ abstract class MolajoMenuHelper
             $request->set('Menu_instance_name', $parameters->def('option', 0));
         }
         if ($request->get('mvc_model', '') == '') {
-            $request->set('mvc_model', $parameters->def('model', 'display'));
+            $request->set('mvc_model', $parameters->def('model', ''));
         }
         if ((int)$request->get('mvc_id', 0) == 0) {
             $request->set('mvc_id', $parameters->def('id', 0));

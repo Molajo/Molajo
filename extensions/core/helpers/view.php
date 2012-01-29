@@ -218,7 +218,6 @@ class MolajoViewHelper
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 
-
     /**
      * getViewDefaults
      *
@@ -227,14 +226,11 @@ class MolajoViewHelper
      * @return bool
      * @since 1.0
      */
-    static public function getViewDefaults($type='view', $model=null, $task=null, $id=0)
+    static public function getViewDefaults($type='view', $task=null, $id=0)
     {
         if ($type = 'view') {
 
-            if ($model == 'static') {
-                $view_id = MolajoController::getApplication()->get('default_static_view_id', '');
-
-            } else if ($task == 'add' || $task == 'edit') {
+            if ($task == 'add' || $task == 'edit') {
                 $view_id = MolajoController::getApplication()->get('default_edit_view_id', '');
 
             } else if ((int)$id == 0) {
@@ -247,10 +243,7 @@ class MolajoViewHelper
 
         if ($type == 'wrap') {
 
-            if ($model == 'static') {
-                $wrap_id = MolajoController::getApplication()->get('default_static_wrap_id', '');
-
-            } else if ($task == 'add' || $task == 'edit') {
+            if ($task == 'add' || $task == 'edit') {
                 $wrap_id = MolajoController::getApplication()->get('default_edit_wrap_id', '');
 
             } else if ((int)$id == 0) {

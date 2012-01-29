@@ -389,7 +389,7 @@ class MolajoRequest
             $this->request->set('extension_instance_name', $parameters->def('option', 0));
         }
         if ($this->request->get('mvc_model', '') == '') {
-            $this->request->set('mvc_model', $parameters->def('model', 'display'));
+            $this->request->set('mvc_model', $parameters->def('model', ''));
         }
         if ((int)$this->request->get('mvc_id', 0) == 0) {
             $this->request->set('mvc_id', $parameters->def('id', 0));
@@ -463,7 +463,7 @@ class MolajoRequest
             $this->request->set('extension_instance_name', $parameters->def('option', 0));
         }
         if ($this->request->get('mvc_model', '') == '') {
-            $this->request->set('mvc_model', $parameters->def('model', 'display'));
+            $this->request->set('mvc_model', $parameters->def('model', ''));
         }
         if ((int)$this->request->get('mvc_id', 0) == 0) {
             $this->request->set('mvc_id', $parameters->def('id', 0));
@@ -668,7 +668,6 @@ class MolajoRequest
         $this->request->set('status_authorised',
             MolajoAccess::authoriseTask(
                 $this->request->get('mvc_task'),
-                $this->request->get('mvc_model'),
                 $this->request->get('mvc_asset_id')));
 
         if ($this->request->get('status_authorised') === true) {
@@ -755,27 +754,22 @@ class MolajoRequest
                 MolajoController::getApplication()->get('default_page_id', ''));
         }
 
-        /** view */
         if ((int)$this->request->get('view_id', 0) == '') {
             $this->request->set('view_id',
                 MolajoViewHelper::getViewDefaults('view',
-                    $this->request->get('mvc_model'),
                     $this->request->get('mvc_task', ''),
                     (int)$this->request->get('mvc_id', 0))
             );
         }
 
-        /** wrap */
         if ((int)$this->request->get('wrap_id', 0) == '') {
             $this->request->set('wrap_id',
                 MolajoViewHelper::getViewDefaults('wrap',
-                    $this->request->get('mvc_model'),
                     $this->request->get('mvc_task', ''),
                     (int)$this->request->get('mvc_id', 0))
             );
         }
 
-        /** controller */
         if ($this->request->get('mvc_task', '') == 'add'
             || $this->request->get('mvc_task', '') == 'edit'
             || $this->request->get('mvc_task', '') == 'display'

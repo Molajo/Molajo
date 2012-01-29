@@ -92,7 +92,7 @@ class MolajoControllerExtension
      * @param    array   $request
      * @since    1.0
      */
-    public function __construct($mvc, $request, $parameters = array())
+    public function __construct($mvc, $request, $parameters)
     {
         if (is_object($mvc)) {
             $this->mvc = $mvc;

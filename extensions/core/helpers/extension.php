@@ -320,7 +320,7 @@ abstract class MolajoExtensionHelper
             $request->set('mvc_task', $parameters->def('task', 'display'));
         }
         if ($request->get('mvc_model', '') == '') {
-            $request->set('mvc_model', $parameters->def('model', 'display'));
+            $request->set('mvc_model', $parameters->def('model', ''));
         }
         if ((int)$request->get('mvc_id', 0) == 0) {
             $request->set('mvc_id', $parameters->def('id', 0));

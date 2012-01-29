@@ -116,8 +116,6 @@ class MolajoConfig
     public $default_template_id = 82;
     public $default_page_id = 69;
 
-    public $default_static_view_id = 33;
-    public $default_static_wrap_id = 81;
     public $default_items_view_id = 47;
     public $default_items_wrap_id = 81;
     public $default_item_view_id = 35;
