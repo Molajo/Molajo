@@ -82,13 +82,10 @@ class MolajoThemeHelper
      */
     static public function getFavicon($theme_name)
     {
-        /** theme images */
         $path = MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/images/';
         if (file_exists($path . 'favicon.ico')) {
             return MOLAJO_EXTENSIONS_THEMES_URL . '/' . $theme_name . '/images/favicon.ico';
         }
-
-        /** root */
         $path = MOLAJO_BASE_FOLDER;
         if (file_exists($path . 'favicon.ico')) {
             return MOLAJO_BASE_URL . '/' . $theme_name . '/images/favicon.ico';

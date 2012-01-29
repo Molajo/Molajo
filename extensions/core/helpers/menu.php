@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Menu
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -39,9 +39,10 @@ abstract class MolajoMenuHelper
         $date = MolajoController::getDate();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
+
         $acl = new MolajoACL ();
-        if ($asset_type_id == MOLAJO_ASSET_TYPE_Menu_POSITION) {
-            $queryAssetTypeID = MOLAJO_ASSET_TYPE_Menu_MODULE;
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_MENU_POSITION) {
+            $queryAssetTypeID = MOLAJO_ASSET_TYPE_MENU_MODULE;
         } else {
             $queryAssetTypeID = $asset_type_id;
         }
@@ -50,11 +51,11 @@ abstract class MolajoMenuHelper
          *  a. Menus Table
          *      Plugins and Views have folders which are defined in the subtype of an Menu
          */
-        $query->select('a.' . $db->namequote('id') . ' as Menu_id');
-        $query->select('a.' . $db->namequote('name') . ' as Menu_name');
+        $query->select('a.' . $db->namequote('id') . ' as menu_id');
+        $query->select('a.' . $db->namequote('name') . ' as menu_name');
         $query->select('a.' . $db->namequote('subtype'));
 
-        $query->from($db->namequote('#__Menus') . ' as a');
+        $query->from($db->namequote('#__content') . ' as a');
         $query->where('a.' . $db->namequote('asset_type_id') . ' = ' . (int)$queryAssetTypeID);
 
         /** plugins and views have subtypes */

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Extension
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -140,13 +140,6 @@ abstract class MolajoExtensionHelper
         $query->where('d.' . $db->namequote('site_id') . ' = ' . MOLAJO_SITE_ID);
 
         $db->setQuery($query->__toString());
-        /**
-        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_POSITION) {
-        if ($extension == 'footer') {
-        echo $query->__toString();
-        }
-        }
-         */
         $extensions = $db->loadObjectList();
 
         if ($error = $db->getErrorMsg()) {
@@ -163,8 +156,9 @@ abstract class MolajoExtensionHelper
      * Retrieves Extension ID, given title
      *
      * @static
-     * @param  $title
+     *
      * @param  $asset_type_id
+     * @param  $title
      * @param  $subtype
      *
      * @return  bool|mixed
@@ -256,7 +250,6 @@ abstract class MolajoExtensionHelper
         return $name;
     }
 
-
     /**
      * _getExtension
      *
@@ -337,193 +330,6 @@ abstract class MolajoExtensionHelper
         if ($request->get('request_suppress_no_results', '') == '') {
             $request->set('request_suppress_no_results', $parameters->def('suppress_no_results'));
         }
-
-        return $request;
-    }
-
-    /**
-     * NOT USED
-     *
-     * getOptions
-     *
-     * Construct the Request Array for the MVC
-     *
-     * @return bool
-     */
-    public static function getOptions(JObject $request)
-    {
-        $request->set('controller', '');
-        $request->set('model', '');
-        $request->set('plugin_type', '');
-        $request->set('component_table', '');
-
-        /** Configuration model */
-        $configModel = new MolajoModelConfiguration ($request->get('extension_instance_name'));
-
-        /** Task */
-        if ($request->get('task', '') == '') {
-            $request->get('task', 'display');
-        }
-
-        /** Controller (while validating Task) */
-        $request->get('controller', $configModel->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER, $request->get('task')));
-
-        if ($request->get('controller') === false) {
-            MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_INVALID_TASK_CONTROLLER') . ' ' . $request->get('task'));
-            $request->set('results', false);
-            return $request;
-        }
-
-        /** IDs */
-        if ((int)$request->get('id', 0) == 0) {
-            $request->set('id', 0);
-        }
-        if (is_array($request->get('ids'))) {
-        } else {
-            $request->get('ids', array());
-        }
-        if ((int)$request->get('category', 0) == 0) {
-            $request->set('category', 0);
-        }
-
-        if ($request->get('task') == 'add') {
-
-            if ((int)$request->get('id') == 0
-                && count($request->get('ids')) == 0
-            ) {
-            } else {
-                MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_ADD_TASK_MUST_NOT_HAVE_ID'));
-                $request->set('results', false);
-                return $request;
-            }
-
-        } else if ($request->get('task') == 'edit'
-            || $request->get('task') == 'restore'
-        ) {
-
-            if ($request->get('id') > 0
-                && count($request->get('ids')) == 0
-            ) {
-
-            } else if ((int)$request->get('id') == 0
-                && count($request->get('ids')) == 1
-            ) {
-                $request->get('id', (int)$request->get('ids'));
-                $request->get('ids', array());
-
-            } else if ((int)$request->get('id') == 0
-                && count($request->get('ids')) == 0
-            ) {
-                MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_EDIT_TASK_MUST_HAVE_ID'));
-                $request->set('results', false);
-                return $request;
-
-            } else if (count($request->get('ids')) > 1) {
-                MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_IDS'));
-                $request->set('results', false);
-                return $request;
-            }
-        }
-
-        /** Model */
-        $model = '';
-        if ($request->get('controller') == 'display') {
-            if ($request->get('static') === true) {
-                $model = 'static';
-            } else {
-                $model = 'display';
-            }
-        } else {
-            $model = 'edit';
-        }
-        if ($model == 'static') {
-            $request->set('model', 'MolajoModel');
-        } else {
-            $request->set('model', ucfirst($request->get('extension_instance_name')) . 'Model' . ucfirst($model));
-        }
-
-        if ($request->get('controller') == 'display') {
-
-            /** View **/
-            if ($request->get('static') === true) {
-                $option = 3300;
-
-            } else if ($request->get('id') > 0) {
-                if ($request->get('task') == 'display') {
-                    /** item */
-                    $option = 3110;
-                } else {
-                    /** edit */
-                    $option = 3310;
-                }
-            } else {
-                /** items */
-                $option = 3210;
-            }
-
-            if ($request->get('template') == '') {
-                $results = false;
-            } else {
-                $results = $configModel->getOptionLiteralValue($option, $request->get('view'));
-            }
-
-            $option = $option + 10;
-            /* todo: amy fix/remove if ($results === false) {
-                            $request->get('view', $configModel->getOptionValue($option);
-                            if ($request->get('view') === false) {
-                                MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
-                                $request->get('results', false;
-                                return $request;
-                            }
-                        }
-            **/
-            /** Wrap **/
-            $option = $option + 10;
-            if ($request->get('wrap', '') == '') {
-                $results = false;
-            } else {
-                $results = $configModel->getOptionLiteralValue($option, $request->get('wrap'));
-            }
-
-            $option = $option + 10;
-            if ($results === false) {
-                $request->set('wrap', $configModel->getOptionValue($option));
-                if ($request->get('wrap', '') == '') {
-                    $request->set('wrap', 'none');
-                }
-            }
-
-            /** Page **/
-            $option = $option + 10;
-            if ($request->get('page', '') == '') {
-                $results = false;
-            } else {
-                $results = $configModel->getOptionLiteralValue($option, $request->get('page'));
-            }
-
-            $option = $option + 10;
-            if ($results === false) {
-                $request->set('page', $configModel->getOptionValue($option));
-                if ($request->get('page', '') == '') {
-                    $request->set('page', 'default');
-                }
-            }
-        }
-        /** todo: amy: come back and get redirect */
-
-        /** Component table */
-        $request->set('component_table', $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_TABLE));
-        if ($request->get('component_table', '') == '') {
-            $request->set('component_table', '__content');
-        }
-
-        /** Plugin helper */
-        $request->set('plugin_type', $configModel->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE));
-        if ($request->get('plugin_type', '') == '') {
-            $request->set('plugin_type', 'content');
-        }
-
-        $request->get('results', true);
 
         return $request;
     }

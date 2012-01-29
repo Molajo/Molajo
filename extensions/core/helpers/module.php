@@ -20,8 +20,7 @@ abstract class MolajoModuleHelper
     /**
      * get
      *
-     * Get the module data of a specific type if no specific module is specified
-     * otherwise only the specific module data is returned.
+     * Retrieve module data
      *
      * @return  mixed    An array of module data objects, or a module data object.
      * @since   1.0

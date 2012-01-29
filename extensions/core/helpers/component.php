@@ -16,14 +16,13 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoComponentHelper
 {
-
     /**
      * get
      *
      * Get the component data of a specific type if no specific component is specified
      * otherwise only the specific component data is returned.
      *
-     * @return  mixed    An array of component data objects, or a component data object.
+     * @return  mixed  An array of component data objects, or a component data object.
      * @since   1.0
      */
     static public function get($component_name)

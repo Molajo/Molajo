@@ -10,7 +10,10 @@ defined('MOLAJO') or die;
 /**
  *  Allows for quoting in language .ini files.
  */
-define('_QQ_', '"');
+if (defined('_QQ_')) {
+} else {
+    define('_QQ_', '"');
+}
 
 /**
  *  Platform
@@ -124,13 +127,34 @@ if (defined('MOLAJO_EXTENSIONS_THEMES_URL')) {
 /**
  *  ACTION TYPES
  */
-define('MOLAO_ACTION_TYPE_LOGIN', 'login');
-define('MOLAO_ACTION_TYPE_CREATE', 'create');
-define('MOLAO_ACTION_TYPE_VIEW', 'view');
-define('MOLAO_ACTION_TYPE_EDIT', 'edit');
-define('MOLAO_ACTION_TYPE_PUBLISH', 'publish');
-define('MOLAO_ACTION_TYPE_DELETE', 'delete');
-define('MOLAO_ACTION_TYPE_ADMIN', 'administer');
+if (defined('MOLAO_ACTION_TYPE_LOGIN')) {
+} else {
+    define('MOLAO_ACTION_TYPE_LOGIN', 'login');
+}
+if (defined('MOLAO_ACTION_TYPE_CREATE')) {
+} else {
+    define('MOLAO_ACTION_TYPE_CREATE', 'create');
+}
+if (defined('MOLAO_ACTION_TYPE_VIEW')) {
+} else {
+    define('MOLAO_ACTION_TYPE_VIEW', 'view');
+}
+if (defined('MOLAO_ACTION_TYPE_EDIT')) {
+} else {
+    define('MOLAO_ACTION_TYPE_EDIT', 'edit');
+}
+if (defined('MOLAO_ACTION_TYPE_PUBLISH')) {
+} else {
+    define('MOLAO_ACTION_TYPE_PUBLISH', 'publish');
+}
+if (defined('MOLAO_ACTION_TYPE_DELETE')) {
+} else {
+    define('MOLAO_ACTION_TYPE_DELETE', 'delete');
+}
+if (defined('MOLAO_ACTION_TYPE_ADMIN')) {
+} else {
+    define('MOLAO_ACTION_TYPE_ADMIN', 'administer');
+}
 
 /**
  *  ASSET TYPES
@@ -252,7 +276,10 @@ define('MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS', 10200);
 /**
  *  Rendering
  */
-define('MOLAJO_STOP_LOOP', 100);
+if (defined('MOLAJO_STOP_LOOP')) {
+} else {
+    define('MOLAJO_STOP_LOOP', 100);
+}
 
 /** Detect the native operating system type */
 $os = strtoupper(substr(PHP_OS, 0, 3));

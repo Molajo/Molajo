@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Asset
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -168,18 +168,17 @@ abstract class MolajoAssetHelper
                 if ($pair[0] == 'task') {
                     $request->set('mvc_task', $pair[1]);
 
-                } elseif ($pair[0] == 'view') {
-                    $request->set('template_id', $pair[1]);
-
-                } elseif ($pair[0] == 'wrap') {
-                    $request->set('view_wrap_id', $pair[1]);
-
                 } elseif ($pair[0] == 'theme') {
                     $request->set('theme_id', $pair[1]);
 
                 } elseif ($pair[0] == 'page') {
                     $request->set('view_page_id', $pair[1]);
 
+                } elseif ($pair[0] == 'template') {
+                    $request->set('view_template_id', $pair[1]);
+
+                } elseif ($pair[0] == 'wrap') {
+                    $request->set('view_wrap_id', $pair[1]);
                 }
 
                 $url_parameters[$pair[0]] = $pair[1];
@@ -204,7 +203,6 @@ abstract class MolajoAssetHelper
      * Retrieves Asset ID
      *
      * @param  null $asset_type_id
-     *
      * @param  null $source_id
      *
      * @return bool|mixed

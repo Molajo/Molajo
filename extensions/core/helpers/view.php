@@ -75,10 +75,14 @@ class MolajoViewHelper
     /**
      * Constructor
      *
-     * @param   string  $view
+     * @param  $view - name or id of the view
+     * @param  $view_type - type of view (page, template, wrap)
+     * @param  $extension_name - name of component, module, theme, or listener
+     * @param  $extension_type - type of extension
+     * @param  $extension_folder - subtype, or folder, for view and listener extensions
+     * @param  $theme_name - name of theme
      *
-     * @param   string  $view_type
-     *
+     * @return  array
      * @since   1.0
      */
     public function __construct($view, $view_type, $extension_name,
@@ -204,7 +208,7 @@ class MolajoViewHelper
             $this->view_path = false;
             $this->view_path_url = false;
         }
-
+/**
 if (trim($this->_view) == '') {
     echo 'view path: '.$this->view_path.'<br />';
     echo 'view path url: '.$this->view_path_url.'<br />';
@@ -214,7 +218,7 @@ if (trim($this->_view) == '') {
     echo '</pre>';
     echo '<br /><br />';
 }
-
+*/
         return $found;
     }
 
@@ -243,31 +247,31 @@ if (trim($this->_view) == '') {
      * @return bool
      * @since 1.0
      */
-    static public function getViewDefaults($type='view', $task=null, $id=0)
+    static public function getViewDefaults($type='template', $task=null, $id=0)
     {
-        if ($type = 'view') {
+        if ($type = 'template') {
 
             if ($task == 'add' || $task == 'edit') {
-                $view_template_id = MolajoController::getApplication()->get('default_edit_view_template_id', '');
+                $view_template_id = (int)MolajoController::getApplication()->get('default_edit_view_template_id', 0);
 
             } else if ((int)$id == 0) {
-                $view_template_id = MolajoController::getApplication()->get('default_items_view_template_id', '');
+                $view_template_id = (int)MolajoController::getApplication()->get('default_items_view_template_id', 0);
 
             } else {
-                $view_template_id = MolajoController::getApplication()->get('default_item_view_template_id', '');
+                $view_template_id = (int)MolajoController::getApplication()->get('default_item_view_template_id', 0);
             }
         }
 
         if ($type == 'wrap') {
 
             if ($task == 'add' || $task == 'edit') {
-                $view_wrap_id = MolajoController::getApplication()->get('default_edit_view_wrap_id', '');
+                $view_wrap_id = (int)MolajoController::getApplication()->get('default_edit_view_wrap_id', 0);
 
             } else if ((int)$id == 0) {
-                $view_wrap_id = MolajoController::getApplication()->get('default_items_view_wrap_id', '');
+                $view_wrap_id = (int)MolajoController::getApplication()->get('default_items_view_wrap_id', 0);
 
             } else {
-                $view_wrap_id = MolajoController::getApplication()->get('default_item_view_wrap_id', '');
+                $view_wrap_id = (int)MolajoController::getApplication()->get('default_item_view_wrap_id', 0);
             }
         }
     }
