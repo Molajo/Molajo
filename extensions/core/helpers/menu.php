@@ -138,7 +138,7 @@ abstract class MolajoMenuHelper
             $query->select('c_assets.' . $db->namequote('sef_request'));
             $query->select('c_assets.' . $db->namequote('request'));
             $query->select('c_assets.' . $db->namequote('theme_id') . ' as menu_item_theme_id');
-            $query->select('c_assets.' . $db->namequote('page_id') . ' as menu_item_page_id');
+            $query->select('c_assets.' . $db->namequote('view_page_id') . ' as menu_item_view_page_id');
 
             $query->from($db->namequote('#__assets') . ' as c_assets');
             $query->from($db->namequote('#__asset_types') . ' as c_ctype');

@@ -86,8 +86,8 @@ class MolajoRendererMenu extends MolajoRenderer
      */
     protected function _setRequest()
     {
-        $this->mvc->set('view', MolajoController::getApplication()->get('menu_view_id', 'menu'));
-        $this->mvc->set('wrap', MolajoController::getApplication()->get('menu_wrap_id', 'none'));
+        $this->mvc->set('view', MolajoController::getApplication()->get('menu_view_template_id', 'menu'));
+        $this->mvc->set('wrap', MolajoController::getApplication()->get('menu_view_wrap_id', 'none'));
 
         foreach ($this->_attributes as $name => $value) {
 
@@ -97,11 +97,11 @@ class MolajoRendererMenu extends MolajoRenderer
             } else if ($name == 'view') {
                 $this->mvc->set('view', $value);
 
-            } else if ($name == 'id' || $name == 'wrap_id') {
-                $this->mvc->set('wrap_id', $value);
+            } else if ($name == 'id' || $name == 'view_wrap_id') {
+                $this->mvc->set('view_wrap_id', $value);
 
-            } else if ($name == 'class' || $name == 'wrap_class') {
-                $this->mvc->set('wrap_class', $value);
+            } else if ($name == 'class' || $name == 'view_wrap_class') {
+                $this->mvc->set('view_wrap_class', $value);
             }
         }
 
@@ -109,7 +109,7 @@ class MolajoRendererMenu extends MolajoRenderer
         $this->mvc->set('model', 'MolajoModelMenu');
 
         /** View Path */
-        $this->mvc->set('view_type', 'templates');
+        $this->mvc->set('view_type', 'views');
         $viewHelper = new MolajoViewHelper($this->mvc->get('view'),
             $this->mvc->get('view_type'),
             $this->mvc->get('extension_instance_name'),
@@ -128,8 +128,8 @@ class MolajoRendererMenu extends MolajoRenderer
             ' ',
             $this->mvc->get('theme_name')
         );
-        $this->mvc->set('wrap_path', $wrapHelper->view_path);
-        $this->mvc->set('wrap_path_url', $wrapHelper->view_path_url);
+        $this->mvc->set('view_wrap_path', $wrapHelper->view_path);
+        $this->mvc->set('view_wrap_path_url', $wrapHelper->view_path_url);
 
         $this->mvc->set('extension_suppress_no_results', true);
     }

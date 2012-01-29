@@ -84,11 +84,20 @@ class MolajoImageHelper
         /** initialise  */
         $this->id = (int)$id;
         $this->size = (int)$this->size;
-        if ($this->size == 1 || $this->size == 2 || $this->size == 3 || $this->size == 4 || $this->size == 5) {
+        if ($this->size == 1
+            || $this->size == 2
+            || $this->size == 3
+            || $this->size == 4
+            || $this->size == 5
+        ) {
         } else {
             $this->size = 0;
         }
-        if ($this->type = 'exact' || $this->type = 'portrait' || $this->type = 'landscape' || $this->type = 'auto') {
+        if ($this->type = 'exact'
+            || $this->type = 'portrait'
+            || $this->type = 'landscape'
+            || $this->type = 'auto'
+        ) {
         } else {
             $this->type = 'crop';
         }
@@ -137,11 +146,13 @@ class MolajoImageHelper
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
-        $query->select('content_file');
-        $query->from('#__media a');
-        $query->where('a.published = 1');
-        $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
-        $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
+        $query->select($db->nameQuote('path'));
+        $query->from($db->nameQuote('#__content').'as a');
+        $query->where('a.'.$db->nameQuote('status').' = 1');
+        $query->where('(a.'.$db->nameQuote('start_publishing_datetime').' = ' . $db->Quote($nullDate) .
+            ' OR a.'.$db->nameQuote('start_publishing_datetime').' <= ' . $db->Quote($now) . ')');
+        $query->where('(a.'.$db->nameQuote('stop_publishing_datetime').' = ' . $db->Quote($nullDate) .
+            ' OR a.'.$db->nameQuote('stop_publishing_datetime').' >= ' . $db->Quote($now) . ')');
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
@@ -155,16 +166,16 @@ class MolajoImageHelper
         }
 
         /** retrieve image folder for original images */
-        $images = MolajoController::getApplication()->get('image_folder', '/images');
+        $images = MolajoController::getApplication()->get('media_path', 'media/images');
 
         /** folders */
-        if (JFolder::exists(MOLAJO_BASE_FOLDER . '/' . $images)) {
+        if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            JFolder::create(MOLAJO_BASE_FOLDER . '/' . $images);
+            JFolder::create(MOLAJO_SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** make certain original image exists */
-        $this->fileNameOriginal = MOLAJO_BASE_FOLDER . '/' . $images . '/' . $this->filename;
+        $this->fileNameOriginal = MOLAJO_SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
         if (JFile::exists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
@@ -180,16 +191,16 @@ class MolajoImageHelper
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = MolajoController::getApplication()->get('thumb_folder', '/images/thumbs');
+        $images = MolajoController::getApplication()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
-        if (JFolder::exists(MOLAJO_BASE_FOLDER . '/' . $images)) {
+        if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            JFolder::create(MOLAJO_BASE_FOLDER . '/' . $images);
+            JFolder::create(MOLAJO_SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** if resized image already exists, return it */
-        $this->fileNameNew = MOLAJO_BASE_FOLDER . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
+        $this->fileNameNew = MOLAJO_SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
         if (JFile::exists($this->fileNameNew)) {
             return true;
         }
@@ -219,17 +230,17 @@ class MolajoImageHelper
             $dimensions = 100;
         }
 
-        /** open the original file */
+        /** 1. open the original file */
         $this->createImageObject();
 
-        /** set existing dimensions */
+        /** 2. set existing dimensions */
         $this->width = imagesx($this->image);
         $this->height = imagesy($this->image);
 
-        /** resize Image */
+        /** 3. resize Image */
         $this->resizeImage($dimensions);
 
-        /** 3) Save image */
+        /** 4. Save image */
         return $this->saveImage(100);
     }
 
@@ -368,30 +379,31 @@ class MolajoImageHelper
      */
     protected function getSizeByAuto($newWidth, $newHeight)
     {
-        if ($this->height < $this->width
-        ) // *** Image to be resized is wider (landscape)
-        {
+        if ($this->height < $this->width) {
+
+        // *** Image to be resized is wider (landscape)
             $optimalWidth = $newWidth;
             $optimalHeight = $this->getSizeByFixedWidth($newWidth);
-        }
-        elseif ($this->height > $this->width
-        )
-            // *** Image to be resized is taller (portrait)
-        {
+
+        } elseif ($this->height > $this->width) {
+
+        // *** Image to be resized is taller (portrait)
             $optimalWidth = $this->getSizeByFixedHeight($newHeight);
             $optimalHeight = $newHeight;
-        }
-        else
-            // *** Image to be resizerd is a square
-        {
+
+        } else {
+
+        // *** Image to be resized is a square
             if ($newHeight < $newWidth) {
                 $optimalWidth = $newWidth;
                 $optimalHeight = $this->getSizeByFixedWidth($newWidth);
+
             } else if ($newHeight > $newWidth) {
                 $optimalWidth = $this->getSizeByFixedHeight($newHeight);
                 $optimalHeight = $newHeight;
+
             } else {
-                // *** Sqaure being resized to a square
+                // *** Square resized to a square
                 $optimalWidth = $newWidth;
                 $optimalHeight = $newHeight;
             }

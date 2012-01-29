@@ -461,7 +461,7 @@ abstract class MolajoExtensionHelper
                 $option = 3210;
             }
 
-            if ($request->get('view') == '') {
+            if ($request->get('template') == '') {
                 $results = false;
             } else {
                 $results = $configModel->getOptionLiteralValue($option, $request->get('view'));

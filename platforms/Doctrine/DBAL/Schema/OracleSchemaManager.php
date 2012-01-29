@@ -37,7 +37,7 @@ class OracleSchemaManager extends AbstractSchemaManager
     {
         $view = \array_change_key_case($view, CASE_LOWER);
 
-        return new View($view['view_name'], $view['text']);
+        return new View($view['view_template_name'], $view['text']);
     }
 
     protected function _getPortableUserDefinition($user)

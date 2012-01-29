@@ -51,40 +51,40 @@ class MolajoConfigApplication
 
     /* Theme and View Defaults */
     public $default_theme_id = 98;
-    public $default_page_id = 55;
+    public $default_view_page_id = 55;
 
-    public $default_items_view_id = 21;
-    public $default_items_wrap_id = 61;
-    public $default_item_view_id = 21;
-    public $default_item_wrap_id = 61;
-    public $default_edit_view_id = 19;
-    public $default_edit_wrap_id = 61;
+    public $default_items_view_template_id = 21;
+    public $default_items_view_wrap_id = 61;
+    public $default_item_view_template_id = 21;
+    public $default_item_view_wrap_id = 61;
+    public $default_edit_view_template_id = 19;
+    public $default_edit_view_wrap_id = 61;
 
     /* Head */
-    public $head_view_id = 23;
-    public $head_wrap_id = 66;
-    public $defer_view_id = 22;
-    public $defer_wrap_id = 66;
+    public $head_view_template_id = 23;
+    public $head_view_wrap_id = 66;
+    public $defer_view_template_id = 22;
+    public $defer_view_wrap_id = 66;
 
     /* Message */
-    public $message_view_id = 58;
-    public $message_wrap_id = 81;
+    public $message_view_template_id = 58;
+    public $message_view_wrap_id = 81;
 
     /* Offline */
     public $offline = 0;
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
     public $offline_theme_id = 99;
-    public $offline_page_id = 81;
+    public $offline_view_page_id = 81;
 
     /* Error */
     public $error_404_message = 'Page not found';
     public $error_403_message = 'Not authorised';
     public $error_theme_id = 99;
-    public $error_page_id = 81;
+    public $error_view_page_id = 81;
 
     /* Feed */
     public $feed_theme_id = 99;
-    public $feed_page_id = 81;
+    public $feed_view_page_id = 81;
     public $feed_limit = 10;
     public $feed_email = 'author';
 

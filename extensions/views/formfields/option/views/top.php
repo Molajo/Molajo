@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 <?php if ($this->row->grouped === true) { ?>
-<ul class="<?php //echo $this->parameters->get('page_class_suffix', ''); ?>">
+<ul class="<?php //echo $this->parameters->get('view_page_class_suffix', ''); ?>">
 <?php }

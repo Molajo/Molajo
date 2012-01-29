@@ -66,8 +66,8 @@ class MolajoRendererModule extends MolajoRenderer
             } else {
                 $holdWrap = $this->mvc->get('mvc_wrap');
                 $this->mvc->set('mvc_wrap', 'none');
-                $holdWrapCssId = $this->mvc->get('mvc_wrap_css_id');
-                $holdWrapCssClass = $this->mvc->get('mvc_wrap_css_class');
+                $holdWrapCssId = $this->mvc->get('mvc_view_wrap_css_id');
+                $holdWrapCssClass = $this->mvc->get('mvc_view_wrap_css_class');
             }
 
             /** Render Module Output */
@@ -79,8 +79,8 @@ class MolajoRendererModule extends MolajoRenderer
 
             } else {
                 $this->mvc->set('mvc_wrap', $holdWrap);
-                $this->mvc->set('mvc_wrap_css_id', $holdWrapCssId);
-                $this->mvc->set('mvc_wrap_css_class', $holdWrapCssClass);
+                $this->mvc->set('mvc_view_wrap_css_id', $holdWrapCssId);
+                $this->mvc->set('mvc_view_wrap_css_class', $holdWrapCssClass);
 
                 $viewHelper = new MolajoViewHelper($this->mvc->get('wrap'),
                     'wraps',
@@ -88,8 +88,8 @@ class MolajoRendererModule extends MolajoRenderer
                     $this->mvc->get('extension_instance_name'),
                     ' ',
                     $this->mvc->get('theme_name'));
-                $this->mvc->set('wrap_path', $viewHelper->view_path);
-                $this->mvc->set('wrap_path_url', $viewHelper->view_path_url);
+                $this->mvc->set('view_wrap_path', $viewHelper->view_path);
+                $this->mvc->set('view_wrap_path_url', $viewHelper->view_path_url);
 
                 $wrapIt = new MolajoControllerDisplay ($this->mvc);
                 return $wrapIt->wrapView($this->mvc->get('wrap'), 'wraps', $renderedOutput);

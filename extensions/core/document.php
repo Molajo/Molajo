@@ -95,7 +95,7 @@ class MolajoDocument
         $parameters = array(
             'theme' => $this->request->get('theme_name'),
             'theme_path' => $this->request->get('theme_path'),
-            'page' => $this->request->get('page_include'),
+            'page' => $this->request->get('view_page_include'),
             'parameters' => $this->request->get('theme_parameters')
         );
 

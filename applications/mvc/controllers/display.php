@@ -72,10 +72,10 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->view_path = $this->mvc->get('view_path');
         $this->view_path_url = $this->mvc->get('view_path_url');
 
-        $renderedOutput = $this->renderView($this->mvc->get('view_name'), $this->mvc->get('view_type'));
+        $renderedOutput = $this->renderView($this->mvc->get('view_template_name'), $this->mvc->get('view_type'));
 
         /** wrap view */
-        return $this->wrapView($this->mvc->get('wrap_name'), 'wraps', $renderedOutput);
+        return $this->wrapView($this->mvc->get('view_wrap_name'), 'wraps', $renderedOutput);
     }
 
     /**
@@ -94,18 +94,18 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         $this->rowset = array();
 
         $tempObject = new JObject();
-        $tempObject->set('wrap_css_id', $this->mvc->get('wrap_css_id'));
-        $tempObject->set('wrap_css_class', $this->mvc->get('wrap_css_class'));
+        $tempObject->set('view_wrap_css_id', $this->mvc->get('view_wrap_css_id'));
+        $tempObject->set('view_wrap_css_class', $this->mvc->get('view_wrap_css_class'));
         $tempObject->set('content', $renderedOutput);
 
         $this->rowset[] = $tempObject;
 
         /** paths */
-        $this->view_path = $this->mvc->get('wrap_path');
-        $this->view_path_url = $this->mvc->get('wrap_path_url');
+        $this->view_path = $this->mvc->get('view_wrap_path');
+        $this->view_path_url = $this->mvc->get('view_wrap_path_url');
 
         /** render wrap */
-        return $this->renderView($this->mvc->get('wrap_name'), 'wraps');
+        return $this->renderView($this->mvc->get('view_wrap_name'), 'wraps');
     }
 
     /**
@@ -250,5 +250,5 @@ protected $columns = 1;
 
 //$this->configuration;
 //Parameters (Includes Global Options, Menu Item, Item);
-//$this->parameters->get('view_show_page_heading', 1);
-//$this->parameters->get('view_page_class_suffix', '');
+//$this->parameters->get('view_show_view_page_heading', 1);
+//$this->parameters->get('view_view_page_class_suffix', '');

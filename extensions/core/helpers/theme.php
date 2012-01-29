@@ -19,20 +19,17 @@ class MolajoThemeHelper
     /**
      * get
      *
-     * Get the theme data of a specific type if no specific theme is specified
-     * otherwise only the specific theme data is returned.
+     * Get requested theme data
      *
-     * @return  mixed    An array of theme data objects, or a theme data object.
+     * @return  array
      * @since   1.0
      */
     public function get($theme)
     {
         $rows = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_THEME, $theme);
-
         if (count($rows) == 0) {
             return array();
         }
-
         foreach ($rows as $row) {
         }
 
@@ -72,18 +69,18 @@ class MolajoThemeHelper
     }
 
     /**
-     * loadFavicon
+     * getFavicon
      *
-     * Define Favicon Path
+     * Retrieve Favicon Path
      *
      * Can be located in:
      *  - Themes/images/ folder (priority 1)
      *  - Root of the website (priority 2)
      *
-     * @return  bool
+     * @return  mixed
      * @since   1.0
      */
-    static public function loadFavicon($theme_name)
+    static public function getFavicon($theme_name)
     {
         /** theme images */
         $path = MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/images/';

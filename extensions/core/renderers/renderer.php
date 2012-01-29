@@ -201,8 +201,8 @@ class MolajoRenderer
         $this->mvc->set('extension_event_type', '');
 
         /** view */
-        $this->mvc->set('view_id', 0);
-        $this->mvc->set('view_name', '');
+        $this->mvc->set('view_template_id', 0);
+        $this->mvc->set('view_template_name', '');
         $this->mvc->set('view_css_id', '');
         $this->mvc->set('view_css_class', '');
         $this->mvc->set('view_asset_type_id',
@@ -212,15 +212,15 @@ class MolajoRenderer
         $this->mvc->set('view_path_url', '');
 
         /** wrap */
-        $this->mvc->set('wrap_id', 0);
-        $this->mvc->set('wrap_name', '');
-        $this->mvc->set('wrap_css_id', '');
-        $this->mvc->set('wrap_css_class', '');
-        $this->mvc->set('wrap_asset_type_id',
+        $this->mvc->set('view_wrap_id', 0);
+        $this->mvc->set('view_wrap_name', '');
+        $this->mvc->set('view_wrap_css_id', '');
+        $this->mvc->set('view_wrap_css_class', '');
+        $this->mvc->set('view_wrap_asset_type_id',
             MOLAJO_ASSET_TYPE_EXTENSION_VIEW);
-        $this->mvc->set('wrap_asset_id', 0);
-        $this->mvc->set('wrap_path', '');
-        $this->mvc->set('wrap_path_url', '');
+        $this->mvc->set('view_wrap_asset_id', 0);
+        $this->mvc->set('view_wrap_path', '');
+        $this->mvc->set('view_wrap_path_url', '');
 
         /** mvc parameters */
         $this->mvc->set('mvc_controller', '');
@@ -253,22 +253,22 @@ class MolajoRenderer
                 $this->_tag = $value;
 
             } else if ($name == 'view') {
-                $this->mvc->set('view_name', $value);
+                $this->mvc->set('view_template_name', $value);
 
-            } else if ($name == 'view_css_id' || $name == 'view_id') {
+            } else if ($name == 'view_css_id' || $name == 'view_template_id') {
                 $this->mvc->set('view_css_id', $value);
 
             } else if ($name == 'view_css_class' || $name == 'view_class') {
                 $this->mvc->set('view_css_class', $value);
 
             } else if ($name == 'wrap') {
-                $this->mvc->set('wrap_name', $value);
+                $this->mvc->set('view_wrap_name', $value);
 
-            } else if ($name == 'wrap_css_id' || $name == 'wrap_id') {
-                $this->mvc->set('wrap_css_id', $value);
+            } else if ($name == 'view_wrap_css_id' || $name == 'view_wrap_id') {
+                $this->mvc->set('view_wrap_css_id', $value);
 
-            } else if ($name == 'wrap_css_class' || $name == 'wrap_class') {
-                $this->mvc->set('wrap_css_class', $value);
+            } else if ($name == 'view_wrap_css_class' || $name == 'view_wrap_class') {
+                $this->mvc->set('view_wrap_css_class', $value);
             }
             //todo: amy merge other parameters into $this->parameters $this->mvc->set('other_parameters') = $other_parameters;
         }
@@ -306,8 +306,8 @@ class MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
-        if ((int)$this->mvc->get('view_id', 0) == 0) {
-            $this->mvc->set('view_id',
+        if ((int)$this->mvc->get('view_template_id', 0) == 0) {
+            $this->mvc->set('view_template_id',
                 MolajoViewHelper::getViewDefaults('view',
                     $this->mvc->get('mvc_model'),
                     $this->mvc->get('mvc_task', ''),
@@ -316,8 +316,8 @@ class MolajoRenderer
         }
 
         /** wrap */
-        if ((int)$this->mvc->get('wrap_id', 0) == 0) {
-            $this->mvc->set('wrap_id',
+        if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
+            $this->mvc->set('view_wrap_id',
                 MolajoViewHelper::getViewDefaults('wrap',
                     $this->mvc->get('mvc_model'),
                     $this->mvc->get('mvc_task', ''),
@@ -339,19 +339,19 @@ class MolajoRenderer
     {
         $this->mvc->set('view_type', 'templates');
 
-        if ((int)$this->mvc->get('view_id', 0) == 0) {
-            $this->mvc->set('view_id',
+        if ((int)$this->mvc->get('view_template_id', 0) == 0) {
+            $this->mvc->set('view_template_id',
                 MolajoExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
-                    $this->mvc->get('view_name'),
+                    $this->mvc->get('view_template_name'),
                     'templates'
                 ));
         } else {
-            $this->mvc->set('view_name',
-                MolajoExtensionHelper::getInstanceTitle($this->mvc->get('view_id')));
+            $this->mvc->set('view_template_name',
+                MolajoExtensionHelper::getInstanceTitle($this->mvc->get('view_template_id')));
         }
 
-        $viewHelper = new MolajoViewHelper($this->mvc->get('view_name'),
+        $viewHelper = new MolajoViewHelper($this->mvc->get('view_template_name'),
             $this->mvc->get('view_type'),
             $this->mvc->get('extension_instance_name'),
             $this->mvc->get('extension_type'),
@@ -361,26 +361,26 @@ class MolajoRenderer
         $this->mvc->set('view_path_url', $viewHelper->view_path_url);
 
         /** Wrap Path */
-        if ((int)$this->mvc->get('wrap_id', 0) == 0) {
-            $this->mvc->set('wrap_id',
+        if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
+            $this->mvc->set('view_wrap_id',
                 MolajoExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
-                    $this->mvc->get('wrap_name'),
+                    $this->mvc->get('view_wrap_name'),
                     'wraps'
                 ));
         } else {
-            $this->mvc->set('wrap_name',
-                MolajoExtensionHelper::getInstanceTitle($this->mvc->get('wrap_id')));
+            $this->mvc->set('view_wrap_name',
+                MolajoExtensionHelper::getInstanceTitle($this->mvc->get('view_wrap_id')));
         }
 
-        $wrapHelper = new MolajoViewHelper($this->mvc->get('wrap_name'),
+        $wrapHelper = new MolajoViewHelper($this->mvc->get('view_wrap_name'),
             'wraps',
             $this->mvc->get('extension_instance_name'),
             $this->mvc->get('extension_type'),
             ' ',
             $this->mvc->get('theme_name'));
-        $this->mvc->set('wrap_path', $wrapHelper->view_path);
-        $this->mvc->set('wrap_path_url', $wrapHelper->view_path_url);
+        $this->mvc->set('view_wrap_path', $wrapHelper->view_path);
+        $this->mvc->set('view_wrap_path_url', $wrapHelper->view_path_url);
 
         return true;
     }

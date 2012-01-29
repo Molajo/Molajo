@@ -51,5 +51,25 @@ class MolajoRendererMessage extends MolajoRenderer
 
         return true;
     }
+
+    /**
+     *  _getApplicationDefaults
+     *
+     *  Retrieve default values, if not provided by extension
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function _getApplicationDefaults()
+    {
+        if ((int)$this->mvc->get('view_template_id', 0) == 0) {
+            $this->mvc->set('view_template_id', MolajoController::getApplication()->get('message_view_template_id'));
+        }
+        if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
+            $this->mvc->set('view_wrap_id', MolajoController::getApplication()->get('message_view_wrap_id'));
+        }
+
+        return true;
+    }
 }
 

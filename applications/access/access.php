@@ -13,7 +13,6 @@ class MolajoAccess
      *  authoriseTask
      *
      * @param  string  $task
-     * @param  string  $model
      * @param  string  $asset_id
      *
      * @return  boolean
@@ -27,7 +26,7 @@ class MolajoAccess
     /**
      *  authoriseTaskList
      *
-     * @param  string  $task
+     * @param  array  $tasklist
      * @param  string  $asset_id
      * @param  string  $row
      *

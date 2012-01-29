@@ -97,7 +97,7 @@ class MolajoControllerUpdate extends MolajoControllerDisplay
         }
 
         //Escape strings for HTML output
-        $this->state->get('page_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
+        $this->state->get('view_page_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
 
         if (MolajoController::getApplication()->getName() == 'site') {
             $documentHelper = new MolajoDocumentHelper ();

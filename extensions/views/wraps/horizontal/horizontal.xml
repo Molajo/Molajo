@@ -14,7 +14,7 @@
         <folder>language</folder>
     </files>
     <languages>
-        <language tag="language/en-GB">en-GB.view_wrap_horizontal_name.ini</language>
-        <language tag="language/en-GB">en-GB.view_wrap_horizontal_name.sys.ini</language>
+        <language tag="language/en-GB">en-GB.view_view_wrap_horizontal_name.ini</language>
+        <language tag="language/en-GB">en-GB.view_view_wrap_horizontal_name.sys.ini</language>
     </languages>
 </extension>

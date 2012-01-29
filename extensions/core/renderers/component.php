@@ -59,10 +59,10 @@ class MolajoRendererComponent extends MolajoRenderer
             $this->request->get('extension_event_type'));
 
         /** view */
-        $this->mvc->set('view_id',
-            (int) $this->request->get('view_id'));
-        $this->mvc->set('view_name',
-            $this->request->get('view_name'));
+        $this->mvc->set('view_template_id',
+            (int) $this->request->get('view_template_id'));
+        $this->mvc->set('view_template_name',
+            $this->request->get('view_template_name'));
         $this->mvc->set('view_css_id',
             $this->request->get('view_css_id'));
         $this->mvc->set('view_css_class',
@@ -77,22 +77,22 @@ class MolajoRendererComponent extends MolajoRenderer
             $this->request->get('view_path_url'));
 
         /** wrap */
-        $this->mvc->set('wrap_id',
-            (int) $this->request->get('wrap_id'));
-        $this->mvc->set('wrap_name',
-            $this->request->get('wrap_name'));
-        $this->mvc->set('wrap_css_id',
-            $this->request->get('wrap_css_id'));
-        $this->mvc->set('wrap_css_class',
-            $this->request->get('wrap_css_class'));
-        $this->mvc->set('wrap_asset_type_id',
-            $this->request->get('wrap_asset_type_id'));
-        $this->mvc->set('wrap_asset_id',
-            (int) $this->request->get('wrap_asset_id'));
-        $this->mvc->set('wrap_path',
-            $this->request->get('wrap_path'));
-        $this->mvc->set('wrap_path_url',
-            $this->request->get('wrap_path_url'));
+        $this->mvc->set('view_wrap_id',
+            (int) $this->request->get('view_wrap_id'));
+        $this->mvc->set('view_wrap_name',
+            $this->request->get('view_wrap_name'));
+        $this->mvc->set('view_wrap_css_id',
+            $this->request->get('view_wrap_css_id'));
+        $this->mvc->set('view_wrap_css_class',
+            $this->request->get('view_wrap_css_class'));
+        $this->mvc->set('view_wrap_asset_type_id',
+            $this->request->get('view_wrap_asset_type_id'));
+        $this->mvc->set('view_wrap_asset_id',
+            (int) $this->request->get('view_wrap_asset_id'));
+        $this->mvc->set('view_wrap_path',
+            $this->request->get('view_wrap_path'));
+        $this->mvc->set('view_wrap_path_url',
+            $this->request->get('view_wrap_path_url'));
 
         /** mvc parameters */
         $this->mvc->set('mvc_controller',
