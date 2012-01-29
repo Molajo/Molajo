@@ -185,27 +185,27 @@ class MolajoRequest
         $this->request->set('metadata_robots', '');
         $this->request->set('metadata_additional_array', array());
 
-        /** template */
-        $this->request->set('template_id', 0);
-        $this->request->set('template_name', '');
-        $this->request->set('template_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE);
-        $this->request->set('template_asset_id', 0);
-        $this->request->set('template_view_group_id', 0);
-        $this->request->set('template_custom_fields', array());
-        $this->request->set('template_metadata', array());
-        $this->request->set('template_parameters', array());
-        $this->request->set('template_path', '');
-        $this->request->set('template_path_url', '');
-        $this->request->set('template_include', '');
-        $this->request->set('template_favicon', '');
+        /** theme */
+        $this->request->set('theme_id', 0);
+        $this->request->set('theme_name', '');
+        $this->request->set('theme_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_THEME);
+        $this->request->set('theme_asset_id', 0);
+        $this->request->set('theme_view_group_id', 0);
+        $this->request->set('theme_custom_fields', array());
+        $this->request->set('theme_metadata', array());
+        $this->request->set('theme_parameters', array());
+        $this->request->set('theme_path', '');
+        $this->request->set('theme_path_url', '');
+        $this->request->set('theme_include', '');
+        $this->request->set('theme_favicon', '');
 
         /** page */
         $this->request->set('page_id', 0);
         $this->request->set('page_name', '');
         $this->request->set('page_css_id', '');
         $this->request->set('page_css_class', '');
-        $this->request->set('page_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE);
+        $this->request->set('page_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_THEME);
         $this->request->set('page_asset_id', 0);
         $this->request->set('page_path', '');
         $this->request->set('page_path_url', '');
@@ -557,7 +557,7 @@ class MolajoRequest
     /**
      * _setPageValues
      *
-     * Set the values needed to generate the page (template, page, view, wrap, and various metadata)
+     * Set the values needed to generate the page (theme, page, view, wrap, and various metadata)
      *
      * @param null $sourceParameters
      * @param null $sourceMetadata
@@ -571,8 +571,8 @@ class MolajoRequest
         $params = new JRegistry;
         $params->loadString($parameters);
 
-        if ((int)$this->request->get('template_id', 0) == 0) {
-            $this->request->set('template_id', $params->def('template_id', 0));
+        if ((int)$this->request->get('theme_id', 0) == 0) {
+            $this->request->set('theme_id', $params->def('theme_id', 0));
         }
 
         if ((int)$this->request->get('page_id', 0) == 0) {
@@ -694,7 +694,7 @@ class MolajoRequest
 
         $this->_getApplicationDefaults();
 
-        $this->_getTemplate();
+        $this->_getTheme();
 
         $this->_getPage();
 
@@ -712,7 +712,7 @@ class MolajoRequest
     /**
      * _getUser
      *
-     * Get Template Name using either the Template ID or the Template Name
+     * Get Theme Name using either the Theme ID or the Theme Name
      *
      * @return bool
      * @since 1.0
@@ -722,8 +722,8 @@ class MolajoRequest
         $parameters = new JRegistry;
         $parameters->loadString(MolajoController::getUser()->parameters);
 
-        if ($this->request->get('template_id', 0) == 0) {
-            $this->request->set('template_id', $parameters->def('user_template_id', 0));
+        if ($this->request->get('theme_id', 0) == 0) {
+            $this->request->set('theme_id', $parameters->def('user_theme_id', 0));
         }
         if ($this->request->get('page_id', 0) == 0) {
             $this->request->set('page_id', $parameters->def('user_page_id', 0));
@@ -735,16 +735,16 @@ class MolajoRequest
     /**
      *  _getApplicationDefaults
      *
-     *  Retrieve Template and Page from the final level of default values, if needed
+     *  Retrieve Theme and Page from the final level of default values, if needed
      *
      * @return bool
      * @since 1.0
      */
     protected function _getApplicationDefaults()
     {
-        if ($this->request->get('template_id', 0) == 0) {
-            $this->request->set('template_id',
-                MolajoController::getApplication()->get('default_template_id', ''));
+        if ($this->request->get('theme_id', 0) == 0) {
+            $this->request->set('theme_id',
+                MolajoController::getApplication()->get('default_theme_id', ''));
         }
 
         if ($this->request->get('page_id', 0) == 0) {
@@ -816,53 +816,53 @@ class MolajoRequest
     }
 
     /**
-     * _getTemplate
+     * _getTheme
      *
-     * Get Template Name using either the Template ID or the Template Name
+     * Get Theme Name using either the Theme ID or the Theme Name
      *
      * @return bool
      * @since 1.0
      */
-    protected function _getTemplate()
+    protected function _getTheme()
     {
-        $row = MolajoTemplateHelper::get($this->request->get('template_id'));
+        $row = MolajoThemeHelper::get($this->request->get('theme_id'));
 
         if (count($row) == 0) {
-            if ($this->request->set('template_name') == 'system') {
+            if ($this->request->set('theme_name') == 'system') {
                 // error
             } else {
-                $this->request->set('template_name', 'system');
-                $row = MolajoTemplateHelper::get($this->request->get('template_name'));
+                $this->request->set('theme_name', 'system');
+                $row = MolajoThemeHelper::get($this->request->get('theme_name'));
                 if (count($row) > 0) {
                     // error
                 }
             }
         }
-        $this->request->set('template_name', $row->title);
-        $this->request->set('template_id', $row->extension_id);
+        $this->request->set('theme_name', $row->title);
+        $this->request->set('theme_id', $row->extension_id);
 
-        $this->request->set('template_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE);
-        $this->request->set('template_asset_id', $row->extension_instance_asset_id);
-        $this->request->set('template_view_group_id', $row->extension_instance_view_group_id);
-        $this->request->set('template_language', $row->language);
+        $this->request->set('theme_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_THEME);
+        $this->request->set('theme_asset_id', $row->extension_instance_asset_id);
+        $this->request->set('theme_view_group_id', $row->extension_instance_view_group_id);
+        $this->request->set('theme_language', $row->language);
 
-        $this->request->set('template_custom_fields', $row->custom_fields);
-        $this->request->set('template_metadata', $row->metadata);
+        $this->request->set('theme_custom_fields', $row->custom_fields);
+        $this->request->set('theme_metadata', $row->metadata);
 
         $parameters = new JRegistry;
         $parameters->loadString($row->parameters);
-        $this->request->set('template_parameters', $parameters);
+        $this->request->set('theme_parameters', $parameters);
 
         if ($this->request->get('page_id', 0) == 0) {
             $this->request->set('page_id', $parameters->get('page_id', 0));
         }
 
-        $this->request->set('template_path',
-            MolajoTemplateHelper::getPath($this->request->get('template_name')));
-        $this->request->set('template_path_url',
-            MolajoTemplateHelper::getPathURL($this->request->get('template_name')));
-        $this->request->set('template_favicon',
-            MolajoTemplateHelper::loadFavicon($this->request->get('template_name')));
+        $this->request->set('theme_path',
+            MolajoThemeHelper::getPath($this->request->get('theme_name')));
+        $this->request->set('theme_path_url',
+            MolajoThemeHelper::getPathURL($this->request->get('theme_name')));
+        $this->request->set('theme_favicon',
+            MolajoThemeHelper::loadFavicon($this->request->get('theme_name')));
 
         return;
     }
@@ -888,7 +888,7 @@ class MolajoRequest
             $this->request->get('extension_instance_name'),
             $this->request->get('extension_type'),
             $this->request->get('extension_subtype'),
-            $this->request->get('template_name')
+            $this->request->get('theme_name')
         );
         $this->request->set('page_path', $viewHelper->view_path);
         $this->request->set('page_path_url', $viewHelper->view_path_url);
@@ -917,7 +917,7 @@ class MolajoRequest
             $this->request->get('extension_title'),
             $this->request->get('extension_instance_name'),
             ' ',
-            $this->request->get('template_name'));
+            $this->request->get('theme_name'));
         $this->request->set('view_path', $viewHelper->view_path);
         $this->request->set('view_path_url', $viewHelper->view_path_url);
 
@@ -942,7 +942,7 @@ class MolajoRequest
             $this->request->get('extension_title'),
             $this->request->get('extension_instance_name'),
             ' ',
-            $this->request->get('template_name'));
+            $this->request->get('theme_name'));
         $this->request->set('wrap_path', $wrapHelper->view_path);
         $this->request->set('wrap_path_url', $wrapHelper->view_path_url);
 
@@ -1067,13 +1067,13 @@ class MolajoRequest
         $this->request->set('status_error', true);
         $this->request->set('mvc_task', 'display');
 
-        /** default error template and page */
-        $this->request->set('template_id',
-            MolajoController::getApplication()->get('error_template_id', 'system'));
+        /** default error theme and page */
+        $this->request->set('theme_id',
+            MolajoController::getApplication()->get('error_theme_id', 'system'));
         $this->request->set('page_id',
             MolajoController::getApplication()->get('error_page_id', 'error'));
 
-        /** set header status, message and override template/page, if needed */
+        /** set header status, message and override theme/page, if needed */
         if ($code == 503) {
             MolajoController::getApplication()->setHeader('Status',
                 '503 Service Temporarily Unavailable',
@@ -1083,8 +1083,8 @@ class MolajoRequest
                     'This site is not available.<br /> Please check back again soon.'),
                 MOLAJO_MESSAGE_TYPE_WARNING,
                 503);
-            $this->request->set('template_id',
-                MolajoController::getApplication()->get('offline_template_id', 'system'));
+            $this->request->set('theme_id',
+                MolajoController::getApplication()->get('offline_theme_id', 'system'));
             $this->request->set('page_id',
                 MolajoController::getApplication()->get('offline_page_id', 'offline'));
 

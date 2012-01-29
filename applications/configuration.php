@@ -104,8 +104,8 @@ class MolajoConfig
     /* Logon Requirement */
     public $logon_requirement = 139;
 
-    /* Template and View Defaults */
-    public $default_template_id = 98;
+    /* Theme and View Defaults */
+    public $default_theme_id = 98;
     public $default_page_id = 55;
 
     public $default_items_view_id = 21;
@@ -128,17 +128,17 @@ class MolajoConfig
     /* Offline */
     public $offline = 0;
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_template_id = 99;
+    public $offline_theme_id = 99;
     public $offline_page_id = 81;
 
     /* Error */
     public $error_404_message = 'Page not found';
     public $error_403_message = 'Not authorised';
-    public $error_template_id = 99;
+    public $error_theme_id = 99;
     public $error_page_id = 81;
 
     /* Feed */
-    public $feed_template_id = 99;
+    public $feed_theme_id = 99;
     public $feed_page_id = 81;
     public $feed_limit = 10;
     public $feed_email = 'author';
@@ -149,7 +149,7 @@ class MolajoConfig
     public $media_priority_user = 300;
     public $media_priority_other_extension = 400;
     public $media_priority_request_extension = 500;
-    public $media_priority_template = 600;
+    public $media_priority_theme = 600;
     public $media_priority_primary_category = 700;
     public $media_priority_menu_item = 800;
     public $media_priority_source_data = 900;

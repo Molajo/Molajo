@@ -174,8 +174,8 @@ abstract class MolajoAssetHelper
                 } elseif ($pair[0] == 'wrap') {
                     $request->set('wrap_id', $pair[1]);
 
-                } elseif ($pair[0] == 'template') {
-                    $request->set('template_id', $pair[1]);
+                } elseif ($pair[0] == 'theme') {
+                    $request->set('theme_id', $pair[1]);
 
                 } elseif ($pair[0] == 'page') {
                     $request->set('page_id', $pair[1]);

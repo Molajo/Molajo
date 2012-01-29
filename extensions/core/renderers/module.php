@@ -71,7 +71,7 @@ class MolajoRendererModule extends MolajoRenderer
     /**
      * _loadMedia
      *
-     * Loads Media Files for Site, Application, User, and Template
+     * Loads Media Files for Site, Application, User, and Theme
      *
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0

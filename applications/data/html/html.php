@@ -295,11 +295,11 @@ abstract class MolajoHtml
                 $potential = array($file);
             }
 
-            // If relative search in template directory or media directory
+            // If relative search in theme directory or media directory
             if ($relative) {
 
-                // Get the template
-                $template = MolajoController::getApplication()->getTemplate();
+                // Get the theme
+                $theme = MolajoController::getApplication()->getTheme();
 
                 // Prepare array of files
                 $includes = array();
@@ -307,9 +307,9 @@ abstract class MolajoHtml
                 // For each potential files
                 foreach ($potential as $file)
                 {
-                    // If the file is in the template folder
-                    if (file_exists(JPATH_THEMES . "/$template/$folder/$file")) {
-                        $includes[] = JURI::base(true) . "/templates/$template/$folder/$file";
+                    // If the file is in the theme folder
+                    if (file_exists(JPATH_THEMES . "/$theme/$folder/$file")) {
+                        $includes[] = JURI::base(true) . "/themes/$theme/$folder/$file";
                     }
                     else
                     {
@@ -332,10 +332,10 @@ abstract class MolajoHtml
                                 {
                                     $includes[] = JURI::root(true) . "/media/$extension/$folder/$element/$file";
                                 }
-                                    // Try to deal with system files in the template folder
-                                elseif (file_exists(JPATH_THEMES . "/$template/$folder/system/$element/$file"))
+                                    // Try to deal with system files in the theme folder
+                                elseif (file_exists(JPATH_THEMES . "/$theme/$folder/system/$element/$file"))
                                 {
-                                    $includes[] = JURI::root(true) . "/templates/$template/$folder/system/$element/$file";
+                                    $includes[] = JURI::root(true) . "/themes/$theme/$folder/system/$element/$file";
                                 }
                                     // Try to deal with system files in the media folder
                                 elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$element/$file"))
@@ -348,10 +348,10 @@ abstract class MolajoHtml
                             {
                                 $includes[] = JURI::root(true) . "/media/$extension/$folder/$file";
                             }
-                                // Try to deal with system files in the template folder
-                            elseif (file_exists(JPATH_THEMES . "/$template/$folder/system/$file"))
+                                // Try to deal with system files in the theme folder
+                            elseif (file_exists(JPATH_THEMES . "/$theme/$folder/system/$file"))
                             {
-                                $includes[] = JURI::root(true) . "/templates/$template/$folder/system/$file";
+                                $includes[] = JURI::root(true) . "/themes/$theme/$folder/system/$file";
                             }
                                 // Try to deal with system files in the media folder
                             elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$file"))
@@ -389,7 +389,7 @@ abstract class MolajoHtml
      * @param   string   $alt        The alt text.
      * @param   string   $attribs    The target attribute to use
      * @param   array    $relative   An associative array of attributes to add
-     * @param   boolean  $path_only  If set to true, it tries to find an override for the file in the template
+     * @param   boolean  $path_only  If set to true, it tries to find an override for the file in the theme
      *
      * @return  string
      *

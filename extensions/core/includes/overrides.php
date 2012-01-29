@@ -187,7 +187,7 @@ class JInstaller extends MolajoInstaller
 //class JInstallerModule extends MolajoInstallerAdapterModule {}
 //class JInstallerPackage extends MolajoInstallerAdapterPackage {}
 //class JInstallerPlugin extends MolajoInstallerAdapterPlugin {}
-//class JInstallerTemplate extends MolajoInstallerAdapterTemplate {}
+//class JInstallerTheme extends MolajoInstallerAdapterTheme {}
 
 class JLibraryManifest extends MolajoInstallerLibrarymanifest
 {

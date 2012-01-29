@@ -691,15 +691,15 @@ abstract class MolajoError
         if ($document) {
             $config = MolajoController::getApplication()->get();
 
-            // Get the current template from the application
-            $template = MolajoController::getApplication()->getTemplate();
+            // Get the current theme from the application
+            $theme = MolajoController::getApplication()->getTheme();
 
             // Push the error object into the document
             MolajoController::getApplication()->setError($error);
 
             @ob_end_clean();
             MolajoController::getApplication()->setTitle(MolajoTextHelper::_('Error') . ': ' . $error->get('code'));
-            $data = MolajoController::getApplication()->render(false, array('template' => $template, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
+            $data = MolajoController::getApplication()->render(false, array('theme' => $theme, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
 
             // Failsafe to get the error displayed.
             if (empty($data)) {

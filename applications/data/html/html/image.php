@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
 abstract class MolajoHtmlImage
 {
     /**
-     * Checks to see if an image exists in the current templates image directory.
+     * Checks to see if an image exists in the current themes image directory.
      * If it does it loads this image. Otherwise the default image is loaded.
      * Also can be used in conjunction with the menulist param to create the chosen image
      * load the default or use no image.
@@ -55,7 +55,7 @@ abstract class MolajoHtmlImage
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        $cur_template = MolajoController::getApplication()->getTemplate();
+        $cur_theme = MolajoController::getApplication()->getTheme();
 
         // Strip HTML.
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');
@@ -69,10 +69,10 @@ abstract class MolajoHtmlImage
         }
         else
         {
-            $path = JPATH_SITE . '/templates/' . $cur_template . '/images/' . $file;
+            $path = JPATH_SITE . '/themes/' . $cur_theme . '/images/' . $file;
             if (!isset($paths[$path])) {
-                if (file_exists(JPATH_SITE . '/templates/' . $cur_template . '/images/' . $file)) {
-                    $paths[$path] = 'templates/' . $cur_template . '/images/' . $file;
+                if (file_exists(JPATH_SITE . '/themes/' . $cur_theme . '/images/' . $file)) {
+                    $paths[$path] = 'themes/' . $cur_theme . '/images/' . $file;
                 }
                 else
                 {
@@ -99,7 +99,7 @@ abstract class MolajoHtmlImage
     }
 
     /**
-     * Checks to see if an image exists in the current templates image directory
+     * Checks to see if an image exists in the current themes image directory
      * if it does it loads this image.  Otherwise the default image is loaded.
      * Also can be used in conjunction with the menulist param to create the chosen image
      * load the default or use no image
@@ -130,7 +130,7 @@ abstract class MolajoHtmlImage
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        $cur_template = MolajoController::getApplication()->getTemplate();
+        $cur_theme = MolajoController::getApplication()->getTheme();
 
         // Strip HTML.
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');
@@ -144,8 +144,8 @@ abstract class MolajoHtmlImage
         }
         else
         {
-            if (file_exists(JPATH_ADMINISTRATOR . '/templates/' . $cur_template . '/images/' . $file)) {
-                $image = 'templates/' . $cur_template . '/images/' . $file;
+            if (file_exists(JPATH_ADMINISTRATOR . '/themes/' . $cur_theme . '/images/' . $file)) {
+                $image = 'themes/' . $cur_theme . '/images/' . $file;
             }
             else
             {

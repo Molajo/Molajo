@@ -39,7 +39,7 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
   (1300, 'Menus', 1, '__extension_instances', 'extensions'),
   (1350, 'Modules', 1, '__extension_instances', 'extensions'),
   (1450, 'Plugins', 1, '__extension_instances', 'extensions'),
-  (1500, 'Templates', 1, '__extension_instances', 'extensions'),
+  (1500, 'Themes', 1, '__extension_instances', 'extensions'),
 
   (2000, 'Component', 1, '__content', 'menuitems'),
   (2100, 'Link', 1, '__content', 'menuitems'),
@@ -271,7 +271,7 @@ INSERT INTO `molajo_extension_instances`
     FROM `molajo_extensions`
     WHERE `asset_type_id` = 1450;
 
-# TEMPLATES
+# THEMES
 INSERT INTO `molajo_extensions`
     (`name`, `asset_type_id`, `extension_site_id`)
   VALUES
@@ -583,7 +583,7 @@ INSERT INTO `molajo_application_extension_instances`
      `molajo_applications` b
     WHERE a.asset_type_id = 1450;
 
-##  9. templates
+##  9. themes
 INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
@@ -643,7 +643,7 @@ INSERT INTO `molajo_content`
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
   SELECT 102, 102, 'Content', '', 'content', 101, 101, 1, 12, 1,
         `id`, 2000,
-        CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","template_id":"","page_id":"","page_css_id":"","page_css_class":"","view_id":"19","view_css_id":"","view_css_class":"","wrap_id":"67","wrap_css_id":"","wrap_css_class":"","cache":"1","cache_time":"900"}'),
+        CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","theme_id":"","page_id":"","page_css_id":"","page_css_class":"","view_id":"19","view_css_id":"","view_css_class":"","wrap_id":"67","wrap_css_id":"","wrap_css_class":"","cache":"1","cache_time":"900"}'),
         '{"metadata_title":"Content", "metadata_description":"Dashboard", "metadata_keywords":"dashboard", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}',
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -662,7 +662,7 @@ INSERT INTO `molajo_content`
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
   SELECT 103, 103, 'Articles', 'content', 'articles', 101, 2, 2, 3, 2,
         `id`, 2000,
-        CONCAT ('{"extension_instance_id":"2","id":"","category_id":"","template_id":"","page_id":"","page_css_id":"","page_css_class":"","view_id":"128","view_css_id":"","view_css_class":"","wrap_id":"33","wrap_css_id":"","wrap_css_class":"","cache":"1","cache_time":"900"}'),
+        CONCAT ('{"extension_instance_id":"2","id":"","category_id":"","theme_id":"","page_id":"","page_css_id":"","page_css_class":"","view_id":"128","view_css_id":"","view_css_class":"","wrap_id":"33","wrap_css_id":"","wrap_css_class":"","cache":"1","cache_time":"900"}'),
         '{"metadata_title":"Content", "metadata_description":"Dashboard", "metadata_keywords":"dashboard", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}',
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -889,7 +889,7 @@ INSERT INTO `molajo_content`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
-  SELECT 118, 118, 'Templates', 'build', 'templates', 101, 13, 32, 33, 2,
+  SELECT 118, 118, 'Themes', 'build', 'themes', 101, 13, 32, 33, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_title":"","page_id":"","page_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -1211,7 +1211,7 @@ INSERT INTO `molajo_assets`
   (2000, 115, 'Menus', 'index.php?option=extensions&view=menus', 'build/menus', 1, 'en-GB', 0, 0, 3),
   (2000, 116, 'Menu Items', 'index.php?option=extensions&view=menuitems', 'build/menuitems', 1, 'en-GB', 0, 0, 3),
   (2000, 117, 'Modules', 'index.php?option=extensions&view=modules', 'build/modules', 1, 'en-GB', 0, 0, 3),
-  (2000, 118, 'Templates', 'index.php?option=extensions&view=templates', 'build/templates', 1, 'en-GB', 0, 0, 3),
+  (2000, 118, 'Themes', 'index.php?option=extensions&view=themes', 'build/themes', 1, 'en-GB', 0, 0, 3),
 
   (2000, 119, 'Configure', 'index.php?option=dashboard&view=configure', 'configure', 1, 'en-GB', 0, 0, 3),
   (2000, 120, 'Site', 'index.php?option=extensions&view=sites', 'configure/sites', 1, 'en-GB', 0, 0, 3),

@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Form Field to display a list of the views for a component view from the extension or template overrides.
+ * Form Field to display a list of the views for a component view from the extension or theme overrides.
  *
  * @package    Molajo
  * @subpackage  Form
@@ -54,22 +54,22 @@ class MolajoFormFieldComponentview extends MolajoFormField
 
         $extn = preg_replace('#\W#', '', $extn);
 
-        // Get the template.
-        $template = (string)$this->element['template'];
-        $template = preg_replace('#\W#', '', $template);
+        // Get the theme.
+        $theme = (string)$this->element['theme'];
+        $theme = preg_replace('#\W#', '', $theme);
 
         // Get the style.
         if ($this->form instanceof MolajoForm) {
-            $template_id = $this->form->getValue('template_id');
+            $theme_id = $this->form->getValue('theme_id');
         }
 
-        $template_id = preg_replace('#\W#', '', $template_id);
+        $theme_id = preg_replace('#\W#', '', $theme_id);
 
         // Get the view.
         $view = (string)$this->element['view'];
         $view = preg_replace('#\W#', '', $view);
 
-        // If a template, extension and view are present build the options.
+        // If a theme, extension and view are present build the options.
         if ($extn && $view && $application) {
 
             // Load language file
@@ -87,21 +87,21 @@ class MolajoFormFieldComponentview extends MolajoFormField
             $query->select('e.element, e.name');
             $query->from('#__extensions as e');
             $query->where('e.application_id = ' . (int)$application_id);
-            $query->where('e.type = ' . $db->quote('template'));
+            $query->where('e.type = ' . $db->quote('theme'));
             $query->where('e.enabled = 1');
 
-            if ($template) {
-                $query->where('e.element = ' . $db->quote($template));
+            if ($theme) {
+                $query->where('e.element = ' . $db->quote($theme));
             }
 
-            if ($template_id) {
-                $query->join('LEFT', '#__template_styles as s on s.template=e.element');
-                $query->where('s.id=' . (int)$template_id);
+            if ($theme_id) {
+                $query->join('LEFT', '#__theme_styles as s on s.theme=e.element');
+                $query->where('s.id=' . (int)$theme_id);
             }
 
-            // Set the query and load the templates.
+            // Set the query and load the themes.
             $db->setQuery($query);
-            $templates = $db->loadObjectList('element');
+            $themes = $db->loadObjectList('element');
 
             // Check for a database error.
             if ($db->getErrorNum()) {
@@ -157,23 +157,23 @@ class MolajoFormFieldComponentview extends MolajoFormField
                 }
             }
 
-            // Loop on all templates
-            if ($templates) {
-                foreach ($templates as $template)
+            // Loop on all themes
+            if ($themes) {
+                foreach ($themes as $theme)
                 {
                     // Load language file
-                    $lang->load('template_' . $template->element . '.sys', $application->path, null, false, false)
-                    || $lang->load('template_' . $template->element . '.sys', $application->path . '/templates/' . $template->element, null, false, false)
-                    || $lang->load('template_' . $template->element . '.sys', $application->path, $lang->getDefault(), false, false)
-                    || $lang->load('template_' . $template->element . '.sys', $application->path . '/templates/' . $template->element, $lang->getDefault(), false, false);
+                    $lang->load('theme_' . $theme->element . '.sys', $application->path, null, false, false)
+                    || $lang->load('theme_' . $theme->element . '.sys', $application->path . '/themes/' . $theme->element, null, false, false)
+                    || $lang->load('theme_' . $theme->element . '.sys', $application->path, $lang->getDefault(), false, false)
+                    || $lang->load('theme_' . $theme->element . '.sys', $application->path . '/themes/' . $theme->element, $lang->getDefault(), false, false);
 
-                    $template_path = JPath::clean($application->path . '/templates/' . $template->element . '/html/' . $extn . '/' . $view);
+                    $theme_path = JPath::clean($application->path . '/themes/' . $theme->element . '/html/' . $extn . '/' . $view);
 
-                    // Add the view options from the template path.
-                    if (is_dir($template_path) && ($files = JFolder::files($template_path, '^[^_]*\.php$', false, true))) {
+                    // Add the view options from the theme path.
+                    if (is_dir($theme_path) && ($files = JFolder::files($theme_path, '^[^_]*\.php$', false, true))) {
                         // Files with corresponding xml files are alternate menu items, not alternate view files
                         // so we need to exclude these files from the list.
-                        $xml_files = JFolder::files($template_path, '^[^_]*\.xml$', false, true);
+                        $xml_files = JFolder::files($theme_path, '^[^_]*\.xml$', false, true);
                         for ($j = 0, $count = count($xml_files); $j < $count; $j++)
                         {
                             $xml_files[$j] = JFile::stripext(JFile::getName($xml_files[$j]));
@@ -188,19 +188,19 @@ class MolajoFormFieldComponentview extends MolajoFormField
                             }
                         }
                         if (count($files)) {
-                            // Create the group for the template
-                            $groups[$template->name] = array();
-                            $groups[$template->name]['id'] = $this->id . '_' . $template->element;
-                            $groups[$template->name]['text'] = MolajoTextHelper::sprintf('JOPTION_FROM_TEMPLATE', $template->name);
-                            $groups[$template->name]['items'] = array();
+                            // Create the group for the theme
+                            $groups[$theme->name] = array();
+                            $groups[$theme->name]['id'] = $this->id . '_' . $theme->element;
+                            $groups[$theme->name]['text'] = MolajoTextHelper::sprintf('JOPTION_FROM_THEME', $theme->name);
+                            $groups[$theme->name]['items'] = array();
 
                             foreach ($files as $file)
                             {
-                                // Add an option to the template group
+                                // Add an option to the theme group
                                 $value = JFile::stripext(JFile::getName($file));
-                                $text = $lang->hasKey($key = strtoupper('TPL_' . $template->name . '_' . $extn . '_' . $view . '_VIEW_' . $value))
+                                $text = $lang->hasKey($key = strtoupper('TPL_' . $theme->name . '_' . $extn . '_' . $view . '_VIEW_' . $value))
                                         ? MolajoTextHelper::_($key) : $value;
-                                $groups[$template->name]['items'][] = MolajoHTML::_('select.option', $template->element . ':' . $value, $text);
+                                $groups[$theme->name]['items'][] = MolajoHTML::_('select.option', $theme->element . ':' . $value, $text);
                             }
                         }
                     }

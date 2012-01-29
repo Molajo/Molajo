@@ -6,7 +6,7 @@
  * {@link http://defunkt.github.com/mustache}
  *
  * Mustache is a framework-agnostic logic-less templating language. It enforces separation of view
- * logic from template files. In fact, it is not even possible to embed logic in the template.
+ * logic from theme files. In fact, it is not even possible to embed logic in the theme.
  *
  * This is very, very rad.
  *
@@ -46,7 +46,7 @@ class Mustache {
 	 * Mustache tags. That is, once this pragma is activated the {{normal}} tag will not be
 	 * escaped while the {{{unescaped}}} tag will be escaped.
 	 *
-	 * Pragmas apply only to the current template. Partials, even those included after the
+	 * Pragmas apply only to the current theme. Partials, even those included after the
 	 * {{%UNESCAPED}} call, will need their own pragma declaration.
 	 *
 	 * This may be useful in non-HTML Mustache situations.
@@ -64,7 +64,7 @@ class Mustache {
 
 	protected $_tagRegEx;
 
-	protected $_template = '';
+	protected $_theme = '';
 	protected $_context  = array();
 	protected $_partials = array();
 	protected $_pragmas  = array();
@@ -78,7 +78,7 @@ class Mustache {
 	/**
 	 * Mustache class constructor.
 	 *
-	 * This method accepts a $template string and a $view object. Optionally, pass an associative
+	 * This method accepts a $theme string and a $view object. Optionally, pass an associative
 	 * array of partials as well.
 	 *
 	 * Passing an $options array allows overriding certain Mustache options during instantiation:
@@ -97,14 +97,14 @@ class Mustache {
 	 *     );
 	 *
 	 * @access public
-	 * @param string $template (default: null)
+	 * @param string $theme (default: null)
 	 * @param mixed $view (default: null)
 	 * @param array $partials (default: null)
 	 * @param array $options (default: array())
 	 * @return void
 	 */
-	public function __construct($template = null, $view = null, $partials = null, array $options = null) {
-		if ($template !== null) $this->_template = $template;
+	public function __construct($theme = null, $view = null, $partials = null, array $options = null) {
+		if ($theme !== null) $this->_theme = $theme;
 		if ($partials !== null) $this->_partials = $partials;
 		if ($view !== null)     $this->_context = array($view);
 		if ($options !== null)  $this->_setOptions($options);
@@ -164,19 +164,19 @@ class Mustache {
 	}
 
 	/**
-	 * Render the given template and view object.
+	 * Render the given theme and view object.
 	 *
-	 * Defaults to the template and view passed to the class constructor unless a new one is provided.
+	 * Defaults to the theme and view passed to the class constructor unless a new one is provided.
 	 * Optionally, pass an associative array of partials as well.
 	 *
 	 * @access public
-	 * @param string $template (default: null)
+	 * @param string $theme (default: null)
 	 * @param mixed $view (default: null)
 	 * @param array $partials (default: null)
-	 * @return string Rendered Mustache template.
+	 * @return string Rendered Mustache theme.
 	 */
-	public function render($template = null, $view = null, $partials = null) {
-		if ($template === null) $template = $this->_template;
+	public function render($theme = null, $view = null, $partials = null) {
+		if ($theme === null) $theme = $this->_theme;
 		if ($partials !== null) $this->_partials = $partials;
 
 		$otag_orig = $this->_otag;
@@ -188,13 +188,13 @@ class Mustache {
 			$this->_context = array($this);
 		}
 
-		$template = $this->_renderPragmas($template);
-		$template = $this->_renderTemplate($template, $this->_context);
+		$theme = $this->_renderPragmas($theme);
+		$theme = $this->_renderTheme($theme, $this->_context);
 
 		$this->_otag = $otag_orig;
 		$this->_ctag = $ctag_orig;
 
-		return $template;
+		return $theme;
 	}
 
 	/**
@@ -218,11 +218,11 @@ class Mustache {
 	 * Internal render function, used for recursive calls.
 	 *
 	 * @access protected
-	 * @param string $template
-	 * @return string Rendered Mustache template.
+	 * @param string $theme
+	 * @return string Rendered Mustache theme.
 	 */
-	protected function _renderTemplate($template) {
-		if ($section = $this->_findSection($template)) {
+	protected function _renderTheme($theme) {
+		if ($section = $this->_findSection($theme)) {
 			list($before, $type, $tag_name, $content, $after) = $section;
 
 			$rendered_before = $this->_renderTags($before);
@@ -233,7 +233,7 @@ class Mustache {
 				// inverted section
 				case '^':
 					if (empty($val)) {
-						$rendered_content = $this->_renderTemplate($content);
+						$rendered_content = $this->_renderTheme($content);
 					}
 					break;
 
@@ -241,29 +241,29 @@ class Mustache {
 				case '#':
 					// higher order sections
 					if ($this->_varIsCallable($val)) {
-						$rendered_content = $this->_renderTemplate(call_user_func($val, $content));
+						$rendered_content = $this->_renderTheme(call_user_func($val, $content));
 					} else if ($this->_varIsIterable($val)) {
 						foreach ($val as $local_context) {
 							$this->_pushContext($local_context);
-							$rendered_content .= $this->_renderTemplate($content);
+							$rendered_content .= $this->_renderTheme($content);
 							$this->_popContext();
 						}
 					} else if ($val) {
 						if (is_array($val) || is_object($val)) {
 							$this->_pushContext($val);
-							$rendered_content = $this->_renderTemplate($content);
+							$rendered_content = $this->_renderTheme($content);
 							$this->_popContext();
 						} else {
-							$rendered_content = $this->_renderTemplate($content);
+							$rendered_content = $this->_renderTheme($content);
 						}
 					}
 					break;
 			}
 
-			return $rendered_before . $rendered_content . $this->_renderTemplate($after);
+			return $rendered_before . $rendered_content . $this->_renderTheme($after);
 		}
 
-		return $this->_renderTags($template);
+		return $this->_renderTags($theme);
 	}
 
 	/**
@@ -284,13 +284,13 @@ class Mustache {
 	}
 
 	/**
-	 * Extract the first section from $template.
+	 * Extract the first section from $theme.
 	 *
 	 * @access protected
-	 * @param string $template
+	 * @param string $theme
 	 * @return array $before, $type, $tag_name, $content and $after
 	 */
-	protected function _findSection($template) {
+	protected function _findSection($theme) {
 		$regEx = $this->_prepareSectionRegEx($this->_otag, $this->_ctag);
 
 		$section_start = null;
@@ -301,7 +301,7 @@ class Mustache {
 
 		$section_stack = array();
 		$matches = array();
-		while (preg_match($regEx, $template, $matches, PREG_OFFSET_CAPTURE, $search_offset)) {
+		while (preg_match($regEx, $theme, $matches, PREG_OFFSET_CAPTURE, $search_offset)) {
 			if (isset($matches['delims'][0])) {
 				list($otag, $ctag) = explode(' ', $matches['delims'][0]);
 				$regEx = $this->_prepareSectionRegEx($otag, $ctag);
@@ -336,11 +336,11 @@ class Mustache {
 					if (empty($section_stack)) {
 						// $before, $type, $tag_name, $content, $after
 						return array(
-							substr($template, 0, $section_start),
+							substr($theme, 0, $section_start),
 							$section_type,
 							$tag_name,
-							substr($template, $content_start, $offset - $content_start),
-							substr($template, $search_offset),
+							substr($theme, $content_start, $offset - $content_start),
+							substr($theme, $search_offset),
 						);
 					}
 					break;
@@ -374,19 +374,19 @@ class Mustache {
 	 * Initialize pragmas and remove all pragma tags.
 	 *
 	 * @access protected
-	 * @param string $template
+	 * @param string $theme
 	 * @return string
 	 */
-	protected function _renderPragmas($template) {
+	protected function _renderPragmas($theme) {
 		$this->_localPragmas = $this->_pragmas;
 
 		// no pragmas
-		if (strpos($template, $this->_otag . '%') === false) {
-			return $template;
+		if (strpos($theme, $this->_otag . '%') === false) {
+			return $theme;
 		}
 
 		$regEx = $this->_preparePragmaRegEx($this->_otag, $this->_ctag);
-		return preg_replace_callback($regEx, array($this, '_renderPragma'), $template);
+		return preg_replace_callback($regEx, array($this, '_renderPragma'), $theme);
 	}
 
 	/**
@@ -489,12 +489,12 @@ class Mustache {
 	 * Loop through and render individual Mustache tags.
 	 *
 	 * @access protected
-	 * @param string $template
+	 * @param string $theme
 	 * @return void
 	 */
-	protected function _renderTags($template) {
-		if (strpos($template, $this->_otag) === false) {
-			return $template;
+	protected function _renderTags($theme) {
+		if (strpos($theme, $this->_otag) === false) {
+			return $theme;
 		}
 
 		$first = true;
@@ -502,7 +502,7 @@ class Mustache {
 
 		$html = '';
 		$matches = array();
-		while (preg_match($this->_tagRegEx, $template, $matches, PREG_OFFSET_CAPTURE)) {
+		while (preg_match($this->_tagRegEx, $theme, $matches, PREG_OFFSET_CAPTURE)) {
 			$tag      = $matches[0][0];
 			$offset   = $matches[0][1];
 			$modifier = $matches['type'][0];
@@ -520,13 +520,13 @@ class Mustache {
 				$trailing = null;
 			}
 
-			$html .= substr($template, 0, $offset);
+			$html .= substr($theme, 0, $offset);
 
 			$next_offset = $offset + strlen($tag);
-			if ((substr($html, -1) == "\n") && (substr($template, $next_offset, 1) == "\n")) {
+			if ((substr($html, -1) == "\n") && (substr($theme, $next_offset, 1) == "\n")) {
 				$next_offset++;
 			}
-			$template = substr($template, $next_offset);
+			$theme = substr($theme, $next_offset);
 
 			$html .= $this->_renderTag($modifier, $tag_name, $leading, $trailing);
 
@@ -536,7 +536,7 @@ class Mustache {
 			}
 		}
 
-		return $html . $template;
+		return $html . $theme;
 	}
 
 	/**
@@ -655,7 +655,7 @@ class Mustache {
 		$val = $this->_getVariable($tag_name);
 
 		if ($this->_varIsCallable($val)) {
-			$val = $this->_renderTemplate(call_user_func($val));
+			$val = $this->_renderTheme(call_user_func($val));
 		}
 
 		return $leading . $val . $trailing;

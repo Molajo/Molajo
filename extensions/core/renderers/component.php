@@ -204,7 +204,7 @@ class MolajoRendererComponent extends MolajoRenderer
     /**
      * _loadMedia
      *
-     * Loads Media Files for Site, Application, User, and Template
+     * Loads Media Files for Site, Application, User, and Theme
      *
      * @return  bool
      * @since   1.0
@@ -233,16 +233,16 @@ class MolajoRendererComponent extends MolajoRenderer
     /**
      * _loadMediaPlus
      *
-     * Loads Media Files for Site, Application, User, and Template
+     * Loads Media Files for Site, Application, User, and Theme
      *
      * @return  bool
      * @since   1.0
      */
     protected function _loadMediaPlus($plus = '', $priority = 500)
     {
-        /** Template */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->mvc->get('template_name');
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->mvc->get('template_name');
+        /** Theme */
+        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->mvc->get('theme_name');
+        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->mvc->get('theme_name');
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);

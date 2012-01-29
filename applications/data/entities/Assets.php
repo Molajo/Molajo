@@ -57,11 +57,11 @@ class Assets
     private $primaryCategoryId;
 
     /**
-     * @var integer $templateId
+     * @var integer $themeId
      *
-     * @ORM\Column(name="template_id", type="integer", nullable=false)
+     * @ORM\Column(name="theme_id", type="integer", nullable=false)
      */
-    private $templateId;
+    private $themeId;
 
     /**
      * @var string $language
@@ -249,23 +249,23 @@ class Assets
     }
 
     /**
-     * Set templateId
+     * Set themeId
      *
-     * @param integer $templateId
+     * @param integer $themeId
      */
-    public function setTemplateId($templateId)
+    public function setThemeId($themeId)
     {
-        $this->templateId = $templateId;
+        $this->themeId = $themeId;
     }
 
     /**
-     * Get templateId
+     * Get themeId
      *
      * @return integer
      */
-    public function getTemplateId()
+    public function getThemeId()
     {
-        return $this->templateId;
+        return $this->themeId;
     }
 
     /**

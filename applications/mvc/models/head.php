@@ -42,9 +42,9 @@ class MolajoModelHead extends MolajoModel
         $this->items = array();
 
         //        $metadata = MolajoController::getApplication()->getMetadata();
-        /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
+        /** Theme-specific CSS and JS in => theme/[theme-name]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->request->get('theme_name');
+        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->request->get('theme_name');
         MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
         MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
 
@@ -55,7 +55,7 @@ class MolajoModelHead extends MolajoModel
         $tempObject->set('base', $this->request->get('url_base'));
         $tempObject->set('last_modified', $this->request->get('source_last_modified'));
         $tempObject->set('description', $this->request->get('metadata_description'));
-        $tempObject->set('favicon', $this->request->get('template_favicon'));
+        $tempObject->set('favicon', $this->request->get('theme_favicon'));
         $tempObject->set('keywords', $this->request->get('metadata_keywords'));
         $tempObject->set('author', $this->request->get('metadata_author'));
         $tempObject->set('content_rights', $this->request->get('metadata_content_rights'));

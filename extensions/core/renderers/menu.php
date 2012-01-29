@@ -35,7 +35,7 @@ class MolajoRendererMenu extends MolajoRenderer
     /**
      * Attributes
      *
-     * Extracted in Format Class from Template/Page
+     * Extracted in Format Class from Theme/Page
      * <include:menu statement attr1=x attr2=y attrN="and-so-on" />
      *
      * @var    array
@@ -68,7 +68,7 @@ class MolajoRendererMenu extends MolajoRenderer
      */
     public function render($attributes)
     {
-        /** @var $attributes from template */
+        /** @var $attributes from theme */
         $this->_attributes = $attributes;
 
         /** retrieve parameters */
@@ -115,7 +115,7 @@ class MolajoRendererMenu extends MolajoRenderer
             $this->mvc->get('extension_instance_name'),
             $this->mvc->get('extension_instance_name'),
             ' ',
-            $this->mvc->get('template_name')
+            $this->mvc->get('theme_name')
         );
         $this->mvc->set('view_path', $viewHelper->view_path);
         $this->mvc->set('view_path_url', $viewHelper->view_path_url);
@@ -126,7 +126,7 @@ class MolajoRendererMenu extends MolajoRenderer
             $this->mvc->get('extension_instance_name'),
             $this->mvc->get('extension_instance_name'),
             ' ',
-            $this->mvc->get('template_name')
+            $this->mvc->get('theme_name')
         );
         $this->mvc->set('wrap_path', $wrapHelper->view_path);
         $this->mvc->set('wrap_path_url', $wrapHelper->view_path_url);

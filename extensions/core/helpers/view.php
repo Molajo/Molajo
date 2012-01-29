@@ -52,11 +52,11 @@ class MolajoViewHelper
     protected $_extension_folder = null;
 
     /**
-     * Template Name
+     * Theme Name
      *
      * @var    string
      */
-    protected $_template_name = null;
+    protected $_theme_name = null;
 
     /**
      * Path
@@ -82,14 +82,14 @@ class MolajoViewHelper
      * @since   1.0
      */
     public function __construct($view, $view_type, $extension_name,
-                                $extension_type, $extension_folder, $template_name)
+                                $extension_type, $extension_folder, $theme_name)
     {
         $this->_view = strtolower($view);
         $this->_view_type = strtolower($view_type);
         $this->_extension_name = strtolower($extension_name);
         $this->_extension_type = strtolower($extension_type);
         $this->_extension_folder = strtolower($extension_folder);
-        $this->_template_name = strtolower($template_name);
+        $this->_theme_name = strtolower($theme_name);
 
         $results = $this->_findPath();
         if ($results === false) {
@@ -120,7 +120,7 @@ class MolajoViewHelper
      *
      * Looks for path of View, in this order:
      *
-     *  1. Template - [template]/views/[view-type]/[view-folder]
+     *  1. Theme - [theme]/views/[view-type]/[view-folder]
      *  2. Extension - [extension_type]/[extension-name]/views/[view-type]/[view-folder]
      *  3. Views - extensions/views/[view_type]/[view-folder]
      *  4. MVC - applications/mvc/views/[view_type]/[view-folder]
@@ -132,12 +132,12 @@ class MolajoViewHelper
         /** initialise */
         $this->view_path = false;
 
-        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->_template_name;
+        $theme = MOLAJO_EXTENSIONS_THEMES . '/' . $this->_theme_name;
         $end = '/views/' . $this->_view_type . '/' . $this->_view;
 
-        /** 1. Template */
-        $templateViewPath = $template . $end;
-        $templateViewPathURL = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->_template_name . $end;
+        /** 1. Theme */
+        $themeViewPath = $theme . $end;
+        $themeViewPathURL = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->_theme_name . $end;
 
         /** 2. Extension */
         $extensionPath = '';
@@ -170,11 +170,11 @@ class MolajoViewHelper
          * Determine path in order of priority
          */
 
-        /* 1. Template */
-        if (is_dir($templateViewPath)) {
+        /* 1. Theme */
+        if (is_dir($themeViewPath)) {
             $found = true;
-            $this->view_path = $templateViewPath;
-            $this->view_path_url = $templateViewPathURL;
+            $this->view_path = $themeViewPath;
+            $this->view_path_url = $themeViewPathURL;
 
             /** 2. Extension **/
         } else if (is_dir($extensionPath)) {

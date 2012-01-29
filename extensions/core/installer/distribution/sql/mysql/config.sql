@@ -2,7 +2,7 @@
 # File contains default configuration and overrides for core components
 #
 
-# DEFAULT 
+# DEFAULT
 
 # 100 MOLAJO_EXTENSION_OPTION_ID_TABLE
 INSERT INTO `molajo_extension_options`
@@ -87,7 +87,7 @@ INSERT INTO `molajo_extension_options`
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
-      (1, 0, 200, 'template_id', '', 50),
+      (1, 0, 200, 'theme_id', '', 50),
       (1, 0, 200, 'page_id', '', 51),
       (1, 0, 200, 'view_id', '', 52),
       (1, 0, 200, 'wrap_id', '', 53);

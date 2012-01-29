@@ -45,7 +45,7 @@ Build
 - Menu Items (Menus - 8)
 - Components (Extensions - 8)
 - Modules (Extensions - 8)
-- Templates (Extensions - 8)
+- Themes (Extensions - 8)
 - Views (Extensions - 8)
 - Listeners (Extensions - 8)
 

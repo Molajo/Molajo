@@ -472,40 +472,40 @@
                 </field>
 
                 <field
-                        name="syntax_highlighter_template"
+                        name="syntax_highlighter_theme"
                         type="list"
-                        label="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_LABEL"
-                        description="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_DESC"
+                        label="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_DESC"
                         default="shThemeDefault.css">
                     <option
                             value="shThemeDefault.css">
-                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTIONS_DEFAULT
+                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTIONS_DEFAULT
                     </option>
                     <option
                             value="shThemeDjango.css">
-                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_DJANGO
+                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_DJANGO
                     </option>
                     <option
                             value="shThemeEclipse.css">
-                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_ECLIPSE
+                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_ECLIPSE
                     </option>
                     <option
-                            value="shThemeEmacs.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_EMACS
+                            value="shThemeEmacs.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_EMACS
                     </option>
                     <option
                             value="shThemeFadeToGrey.css">
-                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_FADE_TO_GREY
+                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_FADE_TO_GREY
                     </option>
                     <option
                             value="shThemeMDUltra.css">
-                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_MDULTRA
+                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_MDULTRA
                     </option>
                     <option
                             value="shThemeMidnight.css">
-                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_MIDNIGHT
+                        PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_MIDNIGHT
                     </option>
                     <option
-                            value="shThemeRDark.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_RDARK
+                            value="shThemeRDark.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_THEME_OPTION_RDARK
                     </option>
                 </field>
             </fieldset>

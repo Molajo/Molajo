@@ -578,7 +578,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      */
     function discover_install()
     {
-        // Modules are like templates, and are one of the easiest
+        // Modules are like themes, and are one of the easiest
         // If its not in the extensions table we just add it
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';

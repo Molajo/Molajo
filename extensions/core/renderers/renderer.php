@@ -45,7 +45,7 @@ class MolajoRenderer
     /**
      * $_attributes
      *
-     * Extracted in Document Class from Template/Page
+     * Extracted in Document Class from Theme/Page
      * <include:component statement attr1=x attr2=y attrN="and-so-on" />
      *
      * @var    array
@@ -356,7 +356,7 @@ class MolajoRenderer
             $this->mvc->get('extension_instance_name'),
             $this->mvc->get('extension_type'),
             ' ',
-            $this->mvc->get('template_name'));
+            $this->mvc->get('theme_name'));
         $this->mvc->set('view_path', $viewHelper->view_path);
         $this->mvc->set('view_path_url', $viewHelper->view_path_url);
 
@@ -378,7 +378,7 @@ class MolajoRenderer
             $this->mvc->get('extension_instance_name'),
             $this->mvc->get('extension_type'),
             ' ',
-            $this->mvc->get('template_name'));
+            $this->mvc->get('theme_name'));
         $this->mvc->set('wrap_path', $wrapHelper->view_path);
         $this->mvc->set('wrap_path_url', $wrapHelper->view_path_url);
 

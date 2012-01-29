@@ -333,8 +333,8 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
 
             case 'language':
             case 'module':
-            case 'template':
-                // Languages, modules and templates have a client but not a folder
+            case 'theme':
+                // Languages, modules and themes have a client but not a folder
                 $client = MolajoApplicationHelper::getApplicationInfo($client, true);
                 $query->where('application_id = ' . (int)$client->id);
                 break;
@@ -343,7 +343,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
         $db->setQuery($query);
         $result = $db->loadResult();
 
-        // Note: For templates, libraries and packages their unique name is their key.
+        // Note: For themes, libraries and packages their unique name is their key.
         // This means they come out the same way they came in.
         return $result;
     }

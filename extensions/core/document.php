@@ -33,7 +33,7 @@ class MolajoDocument
     public $request = null;
 
     /**
-     * Template Parameters
+     * Theme Parameters
      *
      * @var string
      * @since 1.0
@@ -41,15 +41,15 @@ class MolajoDocument
     public $parameters = null;
 
     /**
-     * Template
+     * Theme
      *
      * @var string
      * @since 1.0
      */
-    protected $_template = array();
+    protected $_theme = array();
 
     /**
-     * Holds renderer set defined within the template and associated attributes
+     * Holds renderer set defined within the theme and associated attributes
      *
      * @var string
      * @since 1.0
@@ -85,7 +85,7 @@ class MolajoDocument
     }
 
     /**
-     * Render the Template
+     * Render the Theme
      *
      * @return  object
      * @since  1.0
@@ -93,20 +93,20 @@ class MolajoDocument
     protected function _render()
     {
         $parameters = array(
-            'template' => $this->request->get('template_name'),
-            'template_path' => $this->request->get('template_path'),
+            'theme' => $this->request->get('theme_name'),
+            'theme_path' => $this->request->get('theme_path'),
             'page' => $this->request->get('page_include'),
-            'parameters' => $this->request->get('template_parameters')
+            'parameters' => $this->request->get('theme_parameters')
         );
 
-        /** Template Parameters */
+        /** Theme Parameters */
         $this->parameters = new JRegistry;
         $this->parameters->loadArray($parameters);
 
         /** Before Event */
         // MolajoController::getApplication()->triggerEvent('onBeforeRender');
 
-        /** process template include, and then all rendered output, for <include statements */
+        /** process theme include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop();
 
         /** set response body */
@@ -121,9 +121,9 @@ class MolajoDocument
     /**
      *  _renderLoop
      *
-     * Template Views can contain <include:renderer statements in the same manner that the
+     * Theme Views can contain <include:renderer statements in the same manner that the
      *  Theme include files use these statements. For that reason, this method parses
-     *  the initial template include, renders the output for the <include:renderer statements
+     *  the initial theme include, renders the output for the <include:renderer statements
      *  found, and then parses that output again, over and over, until no more <include:renderer
      *  statements are found. Potential endless loop stopped by MOLAJO_STOP_LOOP value.
      *
@@ -132,10 +132,10 @@ class MolajoDocument
      */
     protected function _renderLoop()
     {
-        /** include the template and page */
+        /** include the theme and page */
         ob_start();
-        require $this->request->get('template_path');
-        $this->_template = ob_get_contents();
+        require $this->request->get('theme_path');
+        $this->_theme = ob_get_contents();
         ob_end_clean();
 
         /** process all buffered input for include: statements  */
@@ -146,15 +146,15 @@ class MolajoDocument
             /** count looping */
             $loop++;
 
-            /** parse $this->template for include statements */
-            $this->_parseTemplate();
+            /** parse $this->theme for include statements */
+            $this->_parseTheme();
 
             /** if no more include statements found, processing is complete */
             if (count($this->_renderers) == 0) {
                 break;
             } else {
                 /** invoke renderers for new include statements */
-                $this->_template = $this->_renderTemplate();
+                $this->_theme = $this->_renderTheme();
             }
 
             if ($loop > MOLAJO_STOP_LOOP) {
@@ -164,26 +164,26 @@ class MolajoDocument
             continue;
         }
 
-        return $this->_template;
+        return $this->_theme;
     }
 
     /**
-     * _parseTemplate
+     * _parseTheme
      *
-     * Parse the template and extract renderers and associated attributes
+     * Parse the theme and extract renderers and associated attributes
      *
-     * @return  The parsed contents of the template
+     * @return  The parsed contents of the theme
      * @since   1.0
      */
-    protected function _parseTemplate()
+    protected function _parseTheme()
     {
         /** initialise */
         $matches = array();
         $this->_renderers = array();
         $i = 0;
 
-        /** parse template for renderers */
-        preg_match_all('#<include:(.*)\/>#iU', $this->_template, $matches);
+        /** parse theme for renderers */
+        preg_match_all('#<include:(.*)\/>#iU', $this->_theme, $matches);
 
         if (count($matches) == 0) {
             return;
@@ -224,14 +224,14 @@ class MolajoDocument
     }
 
     /**
-     * _renderTemplate
+     * _renderTheme
      *
-     * Render pre-parsed template
+     * Render pre-parsed theme
      *
-     * @return  string rendered template
+     * @return  string rendered theme
      * @since   1.0
      */
-    protected function _renderTemplate()
+    protected function _renderTheme()
     {
         $replace = array();
         $with = array();
@@ -279,7 +279,7 @@ class MolajoDocument
             }
         }
         /** 9. replace it */
-        $this->_template = str_replace($replace, $with, $this->_template);
+        $this->_theme = str_replace($replace, $with, $this->_theme);
 
         /** 10. make certain all <include:xxx /> literals are removed */
         $replace = array();
@@ -289,7 +289,7 @@ class MolajoDocument
             $with[] = '';
         }
 
-        return str_replace($replace, $with, $this->_template);
+        return str_replace($replace, $with, $this->_theme);
     }
 
     /**
@@ -303,14 +303,14 @@ class MolajoDocument
     protected function _loadLanguage()
     {
         MolajoController::getApplication()->getLanguage()->load(
-            MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name'),
+            MOLAJO_EXTENSIONS_THEMES . '/' . $this->request->get('theme_name'),
             MolajoController::getApplication()->getLanguage()->getDefault(), false, false);
     }
 
     /**
      * _loadMedia
      *
-     * Loads Media Files for Site, Application, User, and Template
+     * Loads Media Files for Site, Application, User, and Theme
      *
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0
@@ -329,10 +329,10 @@ class MolajoDocument
         $this->_loadMediaPlus('/user' . MolajoController::getUser()->get('id'),
             MolajoController::getApplication()->get('media_priority_user', 300));
 
-        /** Template */
-        $priority = MolajoController::getApplication()->get('media_priority_template', 600);
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->request->get('template_name');
-        $urlPath = MOLAJO_EXTENSIONS_TEMPLATES_URL . '/' . $this->request->get('template_name');
+        /** Theme */
+        $priority = MolajoController::getApplication()->get('media_priority_theme', 600);
+        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->request->get('theme_name');
+        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->request->get('theme_name');
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
         $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
@@ -341,7 +341,7 @@ class MolajoDocument
     /**
      * _loadMediaPlus
      *
-     * Loads Media Files for Site, Application, User, and Template
+     * Loads Media Files for Site, Application, User, and Theme
      *
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0

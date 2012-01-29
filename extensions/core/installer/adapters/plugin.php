@@ -727,7 +727,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
     public function discover_install()
     {
         // Plugins use the extensions table as their primary store
-        // Similar to modules and templates, rather easy
+        // Similar to modules and themes, rather easy
         // If it's not in the extensions table we just add it
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         if (is_dir($client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element)) {
@@ -774,7 +774,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Plugins use the extensions table as their primary store
-        // Similar to modules and templates, rather easy
+        // Similar to modules and themes, rather easy
         // If it's not in the extensions table we just add it
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'

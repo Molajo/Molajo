@@ -26,7 +26,7 @@ The following links contain information designed to help you learn how to create
 
 5. [**Plugins**](https://github.com/Molajo/Molajo/blob/core/extensions/plugins/README.md)
 
-6. [**Templates**](https://github.com/Molajo/Molajo/blob/core/extensions/templates/README.md)
+6. [**Themes**](https://github.com/Molajo/Molajo/blob/core/extensions/themes/README.md)
 
 ---
 

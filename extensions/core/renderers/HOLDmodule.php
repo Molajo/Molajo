@@ -87,7 +87,7 @@ class MolajoRendererModule extends MolajoRenderer
                     $this->mvc->get('extension_instance_name'),
                     $this->mvc->get('extension_instance_name'),
                     ' ',
-                    $this->mvc->get('template_name'));
+                    $this->mvc->get('theme_name'));
                 $this->mvc->set('wrap_path', $viewHelper->view_path);
                 $this->mvc->set('wrap_path_url', $viewHelper->view_path_url);
 

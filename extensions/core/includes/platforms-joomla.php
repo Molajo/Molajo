@@ -65,7 +65,7 @@ if (defined('JPATH_MANIFESTS')) {
 }
 if (defined('JPATH_THEMES')) {
 } else {
-    define('JPATH_THEMES', MOLAJO_EXTENSIONS_TEMPLATES);
+    define('JPATH_THEMES', MOLAJO_EXTENSIONS_THEMES);
 }
 if (defined('JPATH_COMPONENT')) {
 } else {

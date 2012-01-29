@@ -105,10 +105,10 @@
         </field>
 
         <field
-                name="template_id"
-                type="template"
-                label="TEMPLATE_LABEL"
-                description="TEMPLATE_DESC"
+                name="theme_id"
+                type="theme"
+                label="THEME_LABEL"
+                description="THEME_DESC"
                 filter="int"
                 class="inputbox">
             <option value="0">JOPTION_USE_DEFAULT</option>

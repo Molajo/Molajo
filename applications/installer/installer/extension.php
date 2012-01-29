@@ -50,7 +50,7 @@ class MolajoInstallerExtension extends JObject
     var $published = false;
 
     /**
-     * String representation of application. Valid for modules, templates and languages.
+     * String representation of application. Valid for modules, themes and languages.
      * Set by default to site.
      *
      * @var    string
@@ -104,7 +104,7 @@ class MolajoInstallerExtension extends JObject
                     break;
 
                 case 'module':
-                case 'template':
+                case 'theme':
                 case 'language':
                     $this->application = (string)$element->attributes()->application;
                     $tmp_application_id = MolajoApplicationHelper::getApplicationInfo($this->application, 1);
