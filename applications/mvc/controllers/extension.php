@@ -104,9 +104,8 @@ class MolajoControllerExtension
         } else {
             //error
         }
-
         $this->parameters = new JRegistry;
-        $this->parameters->loadArray($parameters);
+        $this->parameters->loadJSON($parameters);
 
         // todo: amy look at redirect
 //        $this->redirectClass = new MolajoControllerRedirect($this->mvc);

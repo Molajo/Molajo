@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Messages
  *
- * Retrieve Molajo System Messages
+ * Retrieve System Messages
  *
  * @package     Molajo
  * @subpackage  Model
@@ -44,6 +44,10 @@ class MolajoModelMessages extends MolajoModel
         $this->items = array();
 
         $messages = MolajoController::getApplication()->getMessages();
+
+        if (count($messages) == 0) {
+            return array();
+        }
 
         foreach($messages as $message) {
             $tempObject = new JObject();

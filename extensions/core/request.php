@@ -179,8 +179,6 @@ class MolajoRequest
 
         $this->request->set('metadata_title', '');
         $this->request->set('metadata_description', '');
-        $this->request->set('metadata_generator',
-            MolajoController::getApplication()->get('generator', 'Molajo'));
         $this->request->set('metadata_keywords', '');
         $this->request->set('metadata_author', '');
         $this->request->set('metadata_content_rights', '');

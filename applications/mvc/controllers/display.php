@@ -39,6 +39,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display()
     {
+
         /** model */
         $modelClass = (string) $this->mvc->get('mvc_model');
         $this->model = new $modelClass();
@@ -59,14 +60,12 @@ class MolajoControllerDisplay extends MolajoControllerExtension
 
         /** pagination */
         $this->pagination = $this->model->getPagination();
-echo 'count '.count($this->rowset).'<br />';
-echo 'suppress '.$this->parameters->get('extension_suppress_no_results') .'<br />';
+
         /** no results */
         if (count($this->rowset) == 0
             && $this->parameters->get('extension_suppress_no_results') == 1
         ) {
-            echo 'yes';
-            return;
+            return '';
         }
 
         /** render view */

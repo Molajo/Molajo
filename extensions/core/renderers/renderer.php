@@ -137,8 +137,7 @@ class MolajoRenderer
         $this->_loadMedia();
 
         /** instantiate MVC and render output */
-        $renderedOutput = $this->_invokeMVC();
-        return $renderedOutput;
+        return $this->_invokeMVC();
     }
 
     /**
@@ -274,34 +273,6 @@ class MolajoRenderer
             //todo: amy merge other parameters into $this->parameters $this->mvc->set('other_parameters') = $other_parameters;
         }
 
-        /** lookup view id for name */
-        if ((int)$this->mvc->get('view_id', 0) == 0) {
-            if (trim($this->mvc->get('view_name')) == '') {
-            } else {
-                $this->mvc->set('view_id',
-                    (int)MolajoExtensionHelper::getInstanceID(
-                        MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
-                        $this->mvc->get('wrap_name'),
-                        'extensions')
-                );
-            }
-        }
-
-        /** lookup wrap id for name */
-        if ((int)$this->mvc->get('wrap_id', 0) == 0) {
-            if (trim($this->mvc->get('wrap_name')) == '') {
-            } else {
-                $this->mvc->set('wrap_id',
-                    (int)MolajoExtensionHelper::getInstanceID(
-                        MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
-                        $this->mvc->get('wrap_name'),
-                        'wraps')
-                );
-            }
-        }
-
-        //        echo 'wrap ' .  $this->mvc->get('extension_instance_name').$this->mvc->get('wrap_id') . $this->mvc->get('wrap_name') . '<br />';
-
         return true;
     }
 
@@ -353,21 +324,6 @@ class MolajoRenderer
                     (int)$this->mvc->get('mvc_id', 0))
             );
         }
-
-        /** controller */
-        if ($this->mvc->get('mvc_task', '') == 'add'
-            || $this->mvc->get('mvc_task', '') == 'edit'
-            || $this->mvc->get('mvc_task', '') == 'display'
-        ) {
-            $this->mvc->set('mvc_controller', 'display');
-
-        } else if ((int)$this->mvc->get('mvc_task') == 'login') {
-            $this->mvc->set('mvc_controller', 'login');
-
-        } else {
-            $this->mvc->set('mvc_controller', 'update');
-        }
-
         return true;
     }
 
@@ -492,6 +448,7 @@ class MolajoRenderer
         $task = (string)$this->mvc->get('mvc_task', 'display');
         return $controller->$task();
     }
+
     /**
       * _setModel
       *
