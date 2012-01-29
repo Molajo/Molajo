@@ -55,7 +55,6 @@ class MolajoModelHead extends MolajoModel
         $tempObject->set('base', $this->request->get('url_base'));
         $tempObject->set('last_modified', $this->request->get('source_last_modified'));
         $tempObject->set('description', $this->request->get('metadata_description'));
-        $tempObject->set('generator', $this->request->get('metadata_generator'));
         $tempObject->set('favicon', $this->request->get('template_favicon'));
         $tempObject->set('keywords', $this->request->get('metadata_keywords'));
         $tempObject->set('author', $this->request->get('metadata_author'));
