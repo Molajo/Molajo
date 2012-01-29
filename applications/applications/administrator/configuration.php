@@ -4,14 +4,6 @@ class MolajoConfigApplication
     /* Application Settings */
     public $application_name = 'Molajo';
 
-    /* Metadata */
-    public $metadata_title = 'Administrator';
-    public $metadata_description = 'Molajo - the Cats Meow';
-    public $metadata_keywords = 'molajo, Molajo';
-    public $metadata_author = 'Amy Stephen';
-    public $metadata_content_rights = 'Creative Commons Attribution-ShareAlike 3.0 Unported License';
-    public $metadata_robots = 'follow, index';
-
     /* Cache */
     public $caching = '0';
     public $cache_time = '15';

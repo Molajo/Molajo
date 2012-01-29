@@ -12,8 +12,6 @@
     <files>
         <filename>access.xml</filename>
         <filename>config.xml</filename>
-        <filename>controller.php</filename>
         <folder>language</folder>
-        <folder>models</folder>
     </files>
 </extension>

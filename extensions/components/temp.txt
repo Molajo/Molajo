@@ -1,4 +1,4 @@
-COMPONENTS
+COMPONENTS - 1050
 
 applications
 articles
@@ -6,7 +6,7 @@ assets
 categories
 comments
 contacts
-dashboard
+dashboards
 extensions
 groups
 installer
@@ -15,7 +15,7 @@ media
 profile
 redirects
 search
-site
+sites
 users
 
 
@@ -29,33 +29,31 @@ Content
 - Contacts - 6
 - Comments - 5
 - Media - 12
-- Content Plugins
-- Image Plugins
+- Content Listeners
 
 Access
 - Profile - 13
 - Users - 15
 - Groups - 9
 - Assets - 3
-- ACL Plugins
-- User Plugins
-- Groups Plugins
+- Access Listeners
 
 Build
 - Categories - 4 (List and Tags)
-- Menus (Extensions - 8)
-- Menu Items (Extensions - 8)
+- Menus (Menus - 8)
+- Menu Items (Menus - 8)
+- Components (Extensions - 8)
 - Modules (Extensions - 8)
 - Templates (Extensions - 8)
 - Views (Extensions - 8)
-- Rendering Plugins (Extensions - 8)
+- Listeners (Extensions - 8)
 
 Configure
 - Site - 16
-- Application - 1
+- Applications - 1
 - Checkin - 1
 - Clean Cache - 1
-- Redirects - 17
+- Redirects - 17 (Should this just be in assets?) (Table 404's?)
 - Plugins (Extensions - 8)
 
 Extend
@@ -65,5 +63,6 @@ Extend
 
 Search - 14
 
+Not accessible via the admin menu (part of the UI)
 Dashboard - 7
 Login - 11

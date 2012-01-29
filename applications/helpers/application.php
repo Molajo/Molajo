@@ -2,7 +2,6 @@
 /**
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -28,26 +27,29 @@ class MolajoApplicationHelper
      * getApplicationInfo
      *
      * Retrieves Application info from database
+
+     * @param  $application
      *
-     * This method will return a application information array if called
-     * with no arguments which can be used to add custom application information.
-     *
-     * @param   integer  $id        A application identifier, can be ID or Name
-     * @param   boolean  $byName    If True, find the application by its name
-     *
-     * @return  boolean  True if the information is added. False on error
+     * @return  boolean
      * @since   1.0
      */
-    public static function getApplicationInfo($id = null, $byName = false)
+    public static function getApplicationInfo($name)
     {
+        $id = null;
         if (self::$_applications === null) {
 
             $obj = new stdClass();
 
-            if ($id == 'installation') {
+            if ($name == 'installation') {
+                $id = 0;
                 $obj->id = 0;
                 $obj->name = 'installation';
                 $obj->path = 'installation';
+                $obj->asset_type_id = MOLAJO_ASSET_TYPE_BASE_APPLICATION;
+                $obj->description = '';
+                $obj->custom_fields = '';
+                $obj->parameters = '';
+                $obj->metadata = '';
 
                 self::$_applications[0] = clone $obj;
 
@@ -57,53 +59,51 @@ class MolajoApplicationHelper
 
                 $query = $db->getQuery(true);
 
-                $query->select('id');
-                $query->select('name');
-                $query->select('path');
+                $query->select($db->namequote('id'));
+                $query->select($db->namequote('asset_type_id'));
+                $query->select($db->namequote('name'));
+                $query->select($db->namequote('path'));
+                $query->select($db->namequote('description'));
+                $query->select($db->namequote('custom_fields'));
+                $query->select($db->namequote('parameters'));
+                $query->select($db->namequote('metadata'));
+
                 $query->from($db->namequote('#__applications'));
 
                 $db->setQuery($query->__toString());
 
-                if ($results = $db->loadObjectList()) {
-                } else {
-                    MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
-                    return false;
-                }
+                $query->where($db->namequote('name').' = '.$db->quote($name));
 
+                $results = $db->loadObjectList();
                 if ($db->getErrorNum()) {
                     return new MolajoException($db->getErrorMsg());
                 }
+                if (count($results) == 0) {
+                    //amy error;
+                }
 
                 foreach ($results as $result) {
+
                     $obj->id = $result->id;
+                    $id = $result->id;
                     $obj->name = $result->name;
                     $obj->path = $result->path;
+                    $obj->asset_type_id = $result->asset_type_id;
+                    $obj->description = $result->description;
+                    $obj->custom_fields = $result->custom_fields;
+                    $obj->parameters = $result->parameters;
+                    $obj->metadata = $result->metadata;
 
-                    self::$_applications[$result->id] = clone $obj;
+                    self::$_applications[$id] = clone $obj;
                 }
             }
         }
 
-        /** All applications requested */
-        if (is_null($id)) {
-            return self::$_applications;
+        if (isset(self::$_applications[$id])) {
+            return self::$_applications[$id];
         }
 
-        /** Name lookup */
-        if ($byName) {
-            foreach (self::$_applications as $application) {
-                if ($application->name == strtolower($id)) {
-                    return $application;
-                }
-            }
-
-        } else {
-            if (isset(self::$_applications[$id])) {
-                return self::$_applications[$id];
-            }
-        }
-
-        /** Name and or ID lookup unsuccessful */
+        /** unsuccessful */
         return null;
     }
 }

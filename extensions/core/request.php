@@ -19,20 +19,20 @@ class MolajoRequest
     /**
      *  Request
      *
-     * @var object
-     * @since 1.0
+     * @var    object
+     * @since  1.0
      */
     public $request;
 
     /**
      * __construct
      *
-     * Class constructor.
+     * Class constructor
      *
-     * @param   null    $override_request_url
-     * @param   null    $asset_id
+     * @param   null  $override_request_url
+     * @param   null  $asset_id
      *
-     * @return boolean
+     * @return  object
      *
      * @since  1.0
      */
@@ -92,7 +92,7 @@ class MolajoRequest
             $this->request->set('request_url_home', true);
         }
 
-        return;
+        return $this->request;
     }
 
     /**

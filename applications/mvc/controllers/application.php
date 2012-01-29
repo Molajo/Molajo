@@ -35,6 +35,22 @@ class MolajoControllerApplication
     protected static $_config = null;
 
     /**
+     * Application static database results
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $_appdb = null;
+
+    /**
+     * Application custom fields
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $_custom_fields = null;
+
+    /**
      * Input Object
      *
      * @var    object
@@ -209,22 +225,22 @@ class MolajoControllerApplication
                 $config = new JRegistry;
             }
 
-            $info = MolajoApplicationHelper::getApplicationInfo($id, true);
-            if ($info === false) {
+            $appdb = MolajoApplicationHelper::getApplicationInfo($id);
+            if ($appdb === false) {
                 return false;
             }
 
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
-                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_CORE . '/applications/' . $info->path);
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_CORE . '/applications/' . $appdb->path);
             }
 
             if (defined('MOLAJO_APPLICATION_ID')) {
             } else {
-                define('MOLAJO_APPLICATION_ID', $info->id);
+                define('MOLAJO_APPLICATION_ID', $appdb->id);
             }
 
-            self::$instance = new MolajoControllerApplication($config, $input);
+            self::$instance = new MolajoControllerApplication($config, $input, $appdb);
         }
 
         return self::$instance;
@@ -233,12 +249,14 @@ class MolajoControllerApplication
     /**
      * Class constructor.
      *
-     * @param   mixed  $input
-     * @param   mixed  $config
+     * @param  mixed   $input
+     * @param  mixed   $config
+     * @param  object  $appdb
      *
+     * @return  null
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null, JInput $input = null)
+    public function __construct(JRegistry $config = null, JInput $input = null, $appdb = null)
     {
         if ($input instanceof JInput) {
             $this->_input = $input;
@@ -251,6 +269,9 @@ class MolajoControllerApplication
         } else {
             $this->_config = new JRegistry;
         }
+
+        /** $_appdb database results from application helpers */
+        $this->_appdb = $appdb;
 
         /** get configuration */
         $this->getConfig();
@@ -312,15 +333,32 @@ class MolajoControllerApplication
      *
      * Creates the Application configuration object.
      *
-     * return   object  A config object
-     *
-     * @since  1.0
+     * @return  null
+     * @since   1.0
      */
     public function getConfig()
     {
         $configClass = new MolajoConfigurationHelper();
         $this->_config = $configClass->getConfig();
-        return $this->_config;
+
+        $metadata = new JRegistry;
+        $metadata->loadString($this->_appdb->metadata);
+
+        $this->_config->set('metadata_title',
+            $metadata->get('metadata_title'));
+        $this->_config->set('metadata_description',
+            $metadata->get('metadata_description'));
+        $this->_config->set('metadata_keywords',
+            $metadata->get('metadata_keywords'));
+        $this->_config->set('metadata_robots',
+            $metadata->get('metadata_robots'));
+        $this->_config->set('metadata_author',
+            $metadata->get('metadata_author'));
+        $this->_config->set('metadata_content_rights',
+            $metadata->get('metadata_content_rights'));
+
+        $this->_custom_fields = new JRegistry;
+        $this->_custom_fields->loadString($this->_appdb->custom_fields);
     }
 
     /**
@@ -336,9 +374,13 @@ class MolajoControllerApplication
      *
      * @since   1.0
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $type='config')
     {
-        return $this->_config->get($key, $default);
+        if ($type == 'custom') {
+            return $this->_custom_fields->get($key, $default);
+        } else {
+            return $this->_config->get($key, $default);
+        }
     }
 
     /**
@@ -1201,7 +1243,7 @@ class MolajoControllerApplication
                 $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $pageRequest;
             }
 
-            if ((int) $this->get('sef_suffix', 0) == 1) {
+            if ((int)$this->get('sef_suffix', 0) == 1) {
                 $url .= '.html';
             }
         }

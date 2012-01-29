@@ -59,14 +59,6 @@ class MolajoConfig
     /* Application Settings */
     public $application_name = 'Molajo';
 
-    /* Metadata */
-    public $metadata_title = 'Administrator';
-    public $metadata_description = 'Molajo - the Cats Meow';
-    public $metadata_keywords = 'molajo, Molajo';
-    public $metadata_author = 'Amy Stephen';
-    public $metadata_content_rights = 'Creative Commons Attribution-ShareAlike 3.0 Unported License';
-    public $metadata_robots = 'follow, index';
-
     /* Cache */
     public $caching = '0';
     public $cache_time = '15';
@@ -113,40 +105,40 @@ class MolajoConfig
     public $logon_requirement = 139;
 
     /* Template and View Defaults */
-    public $default_template_id = 82;
-    public $default_page_id = 69;
+    public $default_template_id = 98;
+    public $default_page_id = 55;
 
-    public $default_items_view_id = 47;
-    public $default_items_wrap_id = 81;
-    public $default_item_view_id = 35;
-    public $default_item_wrap_id = 72;
-    public $default_edit_view_id = 39;
-    public $default_edit_wrap_id = 81;
+    public $default_items_view_id = 21;
+    public $default_items_wrap_id = 61;
+    public $default_item_view_id = 21;
+    public $default_item_wrap_id = 61;
+    public $default_edit_view_id = 19;
+    public $default_edit_wrap_id = 61;
 
     /* Head */
-    public $head_view_id = 37;
-    public $head_wrap_id = 80;
-    public $defer_view_id = 37;
-    public $defer_wrap_id = 80;
+    public $head_view_id = 23;
+    public $head_wrap_id = 66;
+    public $defer_view_id = 22;
+    public $defer_wrap_id = 66;
 
     /* Message */
     public $message_view_id = 58;
     public $message_wrap_id = 81;
 
     /* Offline */
-    public $offline = '0';
+    public $offline = 0;
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $offline_template_id = 113;
+    public $offline_template_id = 99;
     public $offline_page_id = 81;
 
     /* Error */
     public $error_404_message = 'Page not found';
     public $error_403_message = 'Not authorised';
-    public $error_template_id = 113;
+    public $error_template_id = 99;
     public $error_page_id = 81;
 
     /* Feed */
-    public $feed_template_id = 113;
+    public $feed_template_id = 99;
     public $feed_page_id = 81;
     public $feed_limit = 10;
     public $feed_email = 'author';
@@ -162,3 +154,4 @@ class MolajoConfig
     public $media_priority_menu_item = 800;
     public $media_priority_source_data = 900;
 }
+

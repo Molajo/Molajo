@@ -11,7 +11,6 @@
     <description>COMPONENT_COMMENTS_DESCRIPTION</description>
     <files>
         <filename>access.xml</filename>
-        <filename>comments.php</filename>
         <filename>config.xml</filename>
         <folder>language</folder>
         <folder>sql</folder>
