@@ -109,7 +109,7 @@ class MolajoRendererMenu extends MolajoRenderer
         $this->mvc->set('model', 'MolajoModelMenu');
 
         /** View Path */
-        $this->mvc->set('view_type', 'extensions');
+        $this->mvc->set('view_type', 'templates');
         $viewHelper = new MolajoViewHelper($this->mvc->get('view'),
             $this->mvc->get('view_type'),
             $this->mvc->get('extension_instance_name'),

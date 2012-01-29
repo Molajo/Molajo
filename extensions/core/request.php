@@ -907,7 +907,7 @@ class MolajoRequest
      */
     protected function _getView()
     {
-        $this->request->set('view_type', 'extensions');
+        $this->request->set('view_type', 'templates');
 
         $this->request->set('view_name',
             MolajoExtensionHelper::getInstanceTitle($this->request->get('view_id')));

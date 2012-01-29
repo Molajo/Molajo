@@ -337,14 +337,14 @@ class MolajoRenderer
      */
     protected function _setPaths()
     {
-        $this->mvc->set('view_type', 'extensions');
+        $this->mvc->set('view_type', 'templates');
 
         if ((int)$this->mvc->get('view_id', 0) == 0) {
             $this->mvc->set('view_id',
                 MolajoExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
                     $this->mvc->get('view_name'),
-                    'extensions'
+                    'templates'
                 ));
         } else {
             $this->mvc->set('view_name',
