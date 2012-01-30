@@ -7,12 +7,11 @@
  *
 <include:module name=mainmenu wrap=nav />
  */
-defined('MOLAJO') or die;
-?>
+defined('MOLAJO') or die; ?>
 <include:head/>
 <include:message />
-<include:module name=page-header view=page-header wrap=header />
-<include:tag name=sidebar view=sidebar wrap=div/>
+<include:module name=page-header template=page-header wrap=header />
+<include:tag name=sidebar template=sidebar wrap=div/>
 <include:request />
-<include:module name=page-footer view=page-footer wrap=footer />
+<include:module name=page-footer template=page-footer wrap=footer />
 <include:defer />

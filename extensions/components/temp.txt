@@ -2,21 +2,19 @@ COMPONENTS - 1050
 
 applications
 articles
-assets
-categories
+assets (redirects)
+categories (tags and lists)
 comments
 contacts
-dashboards
+dashboard
 extensions
 groups
 installer
 login
 media
-profile
-redirects
 search
 sites
-users
+users (profiles)
 
 echo MolajoController::getApplication()->get('custom_field1', '', 'custom');
 

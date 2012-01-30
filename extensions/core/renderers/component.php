@@ -63,18 +63,18 @@ class MolajoRendererComponent extends MolajoRenderer
             (int) $this->request->get('view_template_id'));
         $this->mvc->set('view_template_name',
             $this->request->get('view_template_name'));
-        $this->mvc->set('view_css_id',
-            $this->request->get('view_css_id'));
-        $this->mvc->set('view_css_class',
-            $this->request->get('view_css_class'));
-        $this->mvc->set('view_asset_type_id',
-            $this->request->get('view_asset_type_id'));
-        $this->mvc->set('view_asset_id',
-            (int) $this->request->get('view_asset_id'));
-        $this->mvc->set('view_path',
-            $this->request->get('view_path'));
-        $this->mvc->set('view_path_url',
-            $this->request->get('view_path_url'));
+        $this->mvc->set('view_template_css_id',
+            $this->request->get('view_template_css_id'));
+        $this->mvc->set('view_template_css_class',
+            $this->request->get('view_template_css_class'));
+        $this->mvc->set('view_template_asset_type_id',
+            $this->request->get('view_template_asset_type_id'));
+        $this->mvc->set('view_template_asset_id',
+            (int) $this->request->get('view_template_asset_id'));
+        $this->mvc->set('view_template_path',
+            $this->request->get('view_template_path'));
+        $this->mvc->set('view_template_path_url',
+            $this->request->get('view_template_path_url'));
 
         /** wrap */
         $this->mvc->set('view_wrap_id',

@@ -49,8 +49,8 @@ class MolajoRendererHead extends MolajoRenderer
         } else {
             $this->mvc->set('mvc_model', 'MolajoModelHead');
         }
-$this->mvc->set('mvc_controller', 'MolajoControllerDisplay');
-$this->mvc->set('mvc_task', 'display');
+        $this->mvc->set('mvc_task', 'display');
+        
         return true;
     }
 

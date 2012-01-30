@@ -149,9 +149,9 @@ class plgSystemParameters extends MolajoPluginHelper
         foreach ($data['request'] as $name => $value) {
             if ($name == 'option') {
                 $option = $value;
-            } else if ($name == 'view') {
+            } else if ($name == 'template') {
                 $view = $value;
-            } else if ($name == 'view') {
+            } else if ($name == 'template') {
                 $view = $value;
             }
         }

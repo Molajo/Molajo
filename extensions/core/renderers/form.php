@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Menu
+ * Tag
  *
  * @package     Molajo
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoRendererMenu extends MolajoRenderer {}
+class MolajoRendererForm extends MolajoRenderer {}

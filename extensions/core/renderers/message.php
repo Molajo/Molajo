@@ -44,9 +44,7 @@ class MolajoRendererMessage extends MolajoRenderer
     protected function _getExtension()
     {
         $this->mvc->set('mvc_model', 'MolajoModelMessages');
-        $this->mvc->set('mvc_controller', 'MolajoControllerDisplay');
         $this->mvc->set('mvc_task', 'display');
-
         $this->parameters->set('extension_suppress_no_results', 1);
 
         return true;
@@ -68,7 +66,6 @@ class MolajoRendererMessage extends MolajoRenderer
         if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
             $this->mvc->set('view_wrap_id', MolajoController::getApplication()->get('message_view_wrap_id'));
         }
-
         return true;
     }
 }

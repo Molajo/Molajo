@@ -205,28 +205,31 @@ class MolajoRequest
         $this->request->set('view_page_name', '');
         $this->request->set('view_page_css_id', '');
         $this->request->set('view_page_css_class', '');
-        $this->request->set('view_page_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_THEME);
+        $this->request->set('view_page_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE);
         $this->request->set('view_page_asset_id', 0);
         $this->request->set('view_page_path', '');
         $this->request->set('view_page_path_url', '');
         $this->request->set('view_page_include', '');
 
-        /** view */
+        /** template */
         $this->request->set('view_template_id', 0);
         $this->request->set('view_template_name', '');
-        $this->request->set('view_css_id', '');
-        $this->request->set('view_css_class', '');
-        $this->request->set('view_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_VIEW);
-        $this->request->set('view_asset_id', 0);
-        $this->request->set('view_path', '');
-        $this->request->set('view_path_url', '');
+        $this->request->set('view_template_css_id', '');
+        $this->request->set('view_template_css_class', '');
+        $this->request->set('view_template_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_VIEW_TEMPLATE);
+        $this->request->set('view_template_asset_id', 0);
+        $this->request->set('view_template_path', '');
+        $this->request->set('view_template_path_url', '');
 
         /** wrap */
         $this->request->set('view_wrap_id', 0);
         $this->request->set('view_wrap_name', '');
         $this->request->set('view_wrap_css_id', '');
         $this->request->set('view_wrap_css_class', '');
-        $this->request->set('view_wrap_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_VIEW);
+        $this->request->set('view_wrap_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_VIEW_WRAP);
         $this->request->set('view_wrap_asset_id', 0);
         $this->request->set('view_wrap_path', '');
         $this->request->set('view_wrap_path_url', '');
@@ -378,13 +381,13 @@ class MolajoRequest
 
         /** mvc */
         if ($this->request->get('mvc_controller', '') == '') {
-            $this->request->set('mvc_controller', $parameters->def('controller', 'display'));
+            $this->request->set('mvc_controller', $parameters->def('controller', ''));
         }
         if ($this->request->get('mvc_task', '') == '') {
-            $this->request->set('mvc_task', $parameters->def('task', 'display'));
+            $this->request->set('mvc_task', $parameters->def('task', ''));
         }
         if ($this->request->get('extension_instance_name', '') == '') {
-            $this->request->set('extension_instance_name', $parameters->def('option', 0));
+            $this->request->set('extension_instance_name', $parameters->def('option', ''));
         }
         if ($this->request->get('mvc_model', '') == '') {
             $this->request->set('mvc_model', $parameters->def('model', ''));
@@ -452,13 +455,13 @@ class MolajoRequest
 
         /** mvc */
         if ($this->request->get('mvc_controller', '') == '') {
-            $this->request->set('mvc_controller', $parameters->def('controller', 'display'));
+            $this->request->set('mvc_controller', $parameters->def('controller', ''));
         }
         if ($this->request->get('mvc_task', '') == '') {
-            $this->request->set('mvc_task', $parameters->def('task', 'display'));
+            $this->request->set('mvc_task', $parameters->def('task', ''));
         }
         if ($this->request->get('extension_instance_name', '') == '') {
-            $this->request->set('extension_instance_name', $parameters->def('option', 0));
+            $this->request->set('extension_instance_name', $parameters->def('option', ''));
         }
         if ($this->request->get('mvc_model', '') == '') {
             $this->request->set('mvc_model', $parameters->def('model', ''));
@@ -663,7 +666,8 @@ class MolajoRequest
         $this->request->set('status_authorised',
             MolajoAccess::authoriseTask(
                 $this->request->get('mvc_task'),
-                $this->request->get('mvc_asset_id')));
+                $this->request->get('mvc_asset_id'))
+        );
 
         if ($this->request->get('status_authorised') === true) {
         } else {
@@ -691,8 +695,8 @@ class MolajoRequest
         $this->_getApplicationDefaults();
         $this->_getTheme();
         $this->_getPage();
-        $this->_getView();
-        $this->_getWrap();
+        $this->_getTemplateView();
+        $this->_getWrapView();
         $this->_mergeParameters();
 
         /** Render Document */
@@ -785,7 +789,6 @@ class MolajoRequest
             $this->request->set('metadata_robots',
                 MolajoController::getApplication()->get('metadata_robots', '', 'metadata'));
         }
-
         return;
     }
 
@@ -853,11 +856,16 @@ class MolajoRequest
     {
         /** Get Name */
         $this->request->set('view_page_name',
-            MolajoExtensionHelper::getInstanceTitle($this->request->get('view_page_id'),
-                MOLAJO_ASSET_TYPE_EXTENSION_VIEW, 'pages'));
+            MolajoExtensionHelper::getInstanceTitle(
+                $this->request->get('view_page_id'),
+                MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE,
+                'pages'
+            )
+        );
 
         /** Page Path */
-        $viewHelper = new MolajoViewHelper($this->request->get('view_page_name'),
+        $viewHelper = new MolajoViewHelper(
+            $this->request->get('view_page_name'),
             'pages',
             $this->request->get('extension_instance_name'),
             $this->request->get('extension_type'),
@@ -872,51 +880,61 @@ class MolajoRequest
     }
 
     /**
-     * _getView
+     * _getTemplateView
      *
-     * Get View Paths
+     * Get Template View Paths
      *
      * @return bool
      * @since 1.0
      */
-    protected function _getView()
+    protected function _getTemplateView()
     {
-        $this->request->set('view_type', 'templates');
+        $this->request->set(
+            'view_template_name',
+            MolajoExtensionHelper::getInstanceTitle(
+                $this->request->get('view_template_id')
+            )
+        );
 
-        $this->request->set('view_template_name',
-            MolajoExtensionHelper::getInstanceTitle($this->request->get('view_template_id')));
-
-        $viewHelper = new MolajoViewHelper($this->request->get('view_template_name'),
+        $viewHelper = new MolajoViewHelper(
+            $this->request->get('view_template_name'),
             $this->request->get('view_type'),
             $this->request->get('extension_title'),
             $this->request->get('extension_instance_name'),
             ' ',
-            $this->request->get('theme_name'));
-        $this->request->set('view_path', $viewHelper->view_path);
-        $this->request->set('view_path_url', $viewHelper->view_path_url);
+            $this->request->get('theme_name')
+        );
+        $this->request->set('view_template_path', $viewHelper->view_path);
+        $this->request->set('view_template_path_url', $viewHelper->view_path_url);
 
         return;
     }
 
     /**
-     * _getWrap
+     * _getWrapView
      *
      * Get View Paths
      *
      * @return bool
      * @since 1.0
      */
-    protected function _getWrap()
+    protected function _getWrapView()
     {
-        $this->request->set('view_wrap_name',
-            MolajoExtensionHelper::getInstanceTitle($this->request->get('view_wrap_id')));
+        $this->request->set(
+            'view_wrap_name',
+            MolajoExtensionHelper::getInstanceTitle(
+                $this->request->get('view_wrap_id')
+            )
+        );
 
-        $wrapHelper = new MolajoViewHelper($this->request->get('view_wrap_name'),
+        $wrapHelper = new MolajoViewHelper(
+            $this->request->get('view_wrap_name'),
             'wraps',
             $this->request->get('extension_title'),
             $this->request->get('extension_instance_name'),
             ' ',
-            $this->request->get('theme_name'));
+            $this->request->get('theme_name')
+        );
         $this->request->set('view_wrap_path', $wrapHelper->view_path);
         $this->request->set('view_wrap_path_url', $wrapHelper->view_path_url);
 
@@ -1042,54 +1060,94 @@ class MolajoRequest
         $this->request->set('mvc_task', 'display');
 
         /** default error theme and page */
-        $this->request->set('theme_id',
-            MolajoController::getApplication()->get('error_theme_id', 'system'));
-        $this->request->set('view_page_id',
-            MolajoController::getApplication()->get('error_view_page_id', 'error'));
+        $this->request->set(
+            'theme_id',
+            MolajoController::getApplication()->get(
+                'error_theme_id',
+                'system'
+            )
+        );
+        $this->request->set(
+            'view_page_id',
+            MolajoController::getApplication()->get(
+                'error_view_page_id',
+                'error'
+            )
+        );
 
         /** set header status, message and override theme/page, if needed */
         if ($code == 503) {
-            MolajoController::getApplication()->setHeader('Status',
+            MolajoController::getApplication()->setHeader(
+                'Status',
                 '503 Service Temporarily Unavailable',
-                'true');
+                'true'
+            );
             MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get('offline_message',
-                    'This site is not available.<br /> Please check back again soon.'),
+                MolajoController::getApplication()->get(
+                    'offline_message',
+                    'This site is not available.<br /> Please check back again soon.'
+                ),
                 MOLAJO_MESSAGE_TYPE_WARNING,
-                503);
+                503
+            );
             $this->request->set('theme_id',
-                MolajoController::getApplication()->get('offline_theme_id', 'system'));
+                MolajoController::getApplication()->get(
+                    'offline_theme_id',
+                    'system'
+                )
+            );
             $this->request->set('view_page_id',
-                MolajoController::getApplication()->get('offline_view_page_id', 'offline'));
+                MolajoController::getApplication()->get(
+                    'offline_view_page_id',
+                    'offline'
+                )
+            );
 
         } else if ($code == 403) {
-            MolajoController::getApplication()->setHeader('Status',
+            MolajoController::getApplication()->setHeader(
+                'Status',
                 '403 Not Authorised',
-                'true');
+                'true'
+            );
             MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get('error_403_message', 'Not Authorised.'),
+                MolajoController::getApplication()->get(
+                    'error_403_message',
+                    'Not Authorised.'
+                ),
                 MOLAJO_MESSAGE_TYPE_ERROR,
-                403);
+                403
+            );
 
         } else if ($code = 404) {
-            MolajoController::getApplication()->setHeader('Status',
+            MolajoController::getApplication()->setHeader(
+                'Status',
                 '404 Not Found',
-                'true');
+                'true'
+            );
             MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get('error_404_message', 'Page not found.'),
+                MolajoController::getApplication()->get(
+                    'error_404_message',
+                    'Page not found.'
+                ),
                 MOLAJO_MESSAGE_TYPE_ERROR,
-                404);
+                404
+            );
 
         } else {
-            MolajoController::getApplication()->setHeader('Status',
+            MolajoController::getApplication()->setHeader(
+                'Status',
                 '500 Not Found',
-                'true');
+                'true'
+            );
             MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get('error_500_message', 'Pass the specific error in.'),
+                MolajoController::getApplication()->get(
+                    'error_500_message',
+                    'Pass the specific error in.'
+                ),
                 MOLAJO_MESSAGE_TYPE_ERROR,
-                500);
+                500
+            );
         }
-
         return;
     }
 }

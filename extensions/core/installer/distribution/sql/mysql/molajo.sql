@@ -35,7 +35,9 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
 
   (1050, 'Components', 1, '__extension_instances', 'extensions'),
   (1100, 'Languages', 1, '__extension_instances', 'extensions'),
-  (1150, 'Views', 1, '__extension_instances', 'extensions'),
+  (1150, 'Page View', 1, '__extension_instances', 'extensions'),
+  (1200, 'Template View', 1, '__extension_instances', 'extensions'),
+  (1250, 'Wrap View', 1, '__extension_instances', 'extensions'),
   (1300, 'Menus', 1, '__extension_instances', 'extensions'),
   (1350, 'Modules', 1, '__extension_instances', 'extensions'),
   (1450, 'Plugins', 1, '__extension_instances', 'extensions'),
@@ -50,11 +52,11 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
   (3500, 'Tags', 0, '__content', 'categories'),
 
   (10000, 'Articles', 0, '__content', 'articles'),
-  (20000, 'Contacts', 0, '__content', 'contacts'),
   (30000, 'Comments', 0, '__content', 'comments'),
-  (40000, 'Dashboard', 0, 'static', 'dashboard'),
+  (20000, 'Contacts', 0, '__content', 'contacts'),
+  (40000, 'Dashboard', 0, '', 'dashboard'),
   (50000, 'Media', 0, '__content', 'media'),
-  (60000, 'Views', 0, '__content', 'views');
+
 
 #
 # EXTENSION SITES
@@ -643,7 +645,7 @@ INSERT INTO `molajo_content`
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
   SELECT 102, 102, 'Content', '', 'content', 101, 101, 1, 12, 1,
         `id`, 2000,
-        CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","theme_id":"","view_page_id":"","view_page_css_id":"","view_page_css_class":"","view_template_id":"19","view_css_id":"","view_css_class":"","view_wrap_id":"67","view_wrap_css_id":"","view_wrap_css_class":"","cache":"1","cache_time":"900"}'),
+        CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","theme_id":"","view_page_id":"","view_page_css_id":"","view_page_css_class":"","view_template_id":"19","view_template_css_id":"","view_template_css_class":"","view_wrap_id":"67","view_wrap_css_id":"","view_wrap_css_class":"","cache":"1","cache_time":"900"}'),
         '{"metadata_title":"Content", "metadata_description":"Dashboard", "metadata_keywords":"dashboard", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}',
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -662,7 +664,7 @@ INSERT INTO `molajo_content`
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
   SELECT 103, 103, 'Articles', 'content', 'articles', 101, 2, 2, 3, 2,
         `id`, 2000,
-        CONCAT ('{"extension_instance_id":"2","id":"","category_id":"","theme_id":"","view_page_id":"","view_page_css_id":"","view_page_css_class":"","view_template_id":"128","view_css_id":"","view_css_class":"","view_wrap_id":"33","view_wrap_css_id":"","view_wrap_css_class":"","cache":"1","cache_time":"900"}'),
+        CONCAT ('{"extension_instance_id":"2","id":"","category_id":"","theme_id":"","view_page_id":"","view_page_css_id":"","view_page_css_class":"","view_template_id":"128","view_template_css_id":"","view_template_css_class":"","view_wrap_id":"33","view_wrap_css_id":"","view_wrap_css_class":"","cache":"1","cache_time":"900"}'),
         '{"metadata_title":"Content", "metadata_description":"Dashboard", "metadata_keywords":"dashboard", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}',
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',

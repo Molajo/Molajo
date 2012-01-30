@@ -278,6 +278,7 @@ class MolajoDocument
                 }
             }
         }
+
         /** 9. replace it */
         $this->_theme = str_replace($replace, $with, $this->_theme);
 

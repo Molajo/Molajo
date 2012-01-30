@@ -116,9 +116,8 @@ class MolajoViewHelper
     protected function _getView()
     {
         return MolajoExtensionHelper::get(
-            MOLAJO_ASSET_TYPE_EXTENSION_VIEW,
-            $this->_view,
-            $this->_view_type);
+            $this->_view_asset_type_id,
+            $this->_view);
     }
 
     /**

@@ -360,7 +360,7 @@ abstract class MolajoMenuHelper
 
         /** mvc */
         if ($request->get('mvc_controller', '') == '') {
-            $request->set('mvc_controller', $parameters->def('controller', 'display'));
+            $request->set('mvc_controller', $parameters->def('controller', ''));
         }
         if ($request->get('mvc_task', '') == '') {
             $request->set('mvc_task', $parameters->def('task', 'display'));

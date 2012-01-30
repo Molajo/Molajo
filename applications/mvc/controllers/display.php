@@ -39,7 +39,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      */
     public function display()
     {
-
         /** model */
         $modelClass = (string) $this->mvc->get('mvc_model');
         $this->model = new $modelClass();
@@ -68,27 +67,25 @@ class MolajoControllerDisplay extends MolajoControllerExtension
             return '';
         }
 
-        /** render view */
-        $this->view_path = $this->mvc->get('view_path');
-        $this->view_path_url = $this->mvc->get('view_path_url');
+        /** render template view */
+        $this->view_path = $this->mvc->get('view_template_path');
+        $this->view_path_url = $this->mvc->get('view_template_path_url');
+        $renderedOutput = $this->renderView($this->mvc->get('view_template_name'));
 
-        $renderedOutput = $this->renderView($this->mvc->get('view_template_name'), $this->mvc->get('view_type'));
-
-        /** wrap view */
-        return $this->wrapView($this->mvc->get('view_wrap_name'), 'wraps', $renderedOutput);
+        /** render wrap view around template view results */
+        return $this->wrapView($this->mvc->get('view_wrap_name'), $renderedOutput);
     }
 
     /**
      * wrapView
      *
      * @param $view
-     * @param $view_type
      * @param $renderedOutput
      *
      * @return string
      * @since 1.0
      */
-    public function wrapView($view, $view_type, $renderedOutput)
+    public function wrapView($view, $renderedOutput)
     {
         /** create rowset */
         $this->rowset = array();
@@ -122,7 +119,7 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * @return string
      * @since 1.0
      */
-    protected function renderView($view, $view_type)
+    protected function renderView($view)
     {
         /** @var $rowCount */
         $rowCount = 1;
