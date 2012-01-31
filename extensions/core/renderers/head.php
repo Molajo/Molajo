@@ -50,7 +50,7 @@ class MolajoRendererHead extends MolajoRenderer
             $this->mvc->set('mvc_model', 'MolajoModelHead');
         }
         $this->mvc->set('mvc_task', 'display');
-        
+
         return true;
     }
 
@@ -65,18 +65,18 @@ class MolajoRendererHead extends MolajoRenderer
     protected function _getApplicationDefaults()
     {
         if ($this->_type == 'defer') {
-            if ((int)$this->mvc->get('view_template_id', 0) == 0) {
-                $this->mvc->set('view_template_id', MolajoController::getApplication()->get('defer_view_template_id', 'document-defer'));
+            if ((int)$this->mvc->get('template_view_id', 0) == 0) {
+                $this->mvc->set('template_view_id', MolajoController::getApplication()->get('defer_template_view_id', 'document-defer'));
             }
-            if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
-                $this->mvc->set('view_wrap_id', MolajoController::getApplication()->get('defer_view_wrap_id', 'none'));
+            if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
+                $this->mvc->set('wrap_view_id', MolajoController::getApplication()->get('defer_wrap_view_id', 'none'));
             }
         } else {
-            if ((int)$this->mvc->get('view_template_id', 0) == 0) {
-                $this->mvc->set('view_template_id', MolajoController::getApplication()->get('head_view_template_id', 'document-head'));
+            if ((int)$this->mvc->get('template_view_id', 0) == 0) {
+                $this->mvc->set('template_view_id', MolajoController::getApplication()->get('head_template_view_id', 'document-head'));
             }
-            if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
-                $this->mvc->set('view_wrap_id', MolajoController::getApplication()->get('head_view_wrap_id', 'none'));
+            if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
+                $this->mvc->set('wrap_view_id', MolajoController::getApplication()->get('head_wrap_view_id', 'none'));
             }
         }
 

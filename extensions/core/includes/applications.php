@@ -73,13 +73,13 @@ foreach ($files as $file) {
     $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/fields/' . $file, 'MolajoField' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
-/** Data: Fields: Form */
+/** Data: Fields: Form
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/form/formfield.php', 'MolajoFormField');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/form/formrule.php', 'MolajoFormRule');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/form/helper.php', 'MolajoFormHelper');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/form/form.php', 'MolajoForm');
-
-/** Data: Fields: FieldTypes - must follow form */
+ */
+/** Data: Fields: FieldTypes - must follow form
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/fieldtypes/list.php', 'MolajoFormFieldList');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/fieldtypes/filelist.php', 'MolajoFormFieldFileList');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/fieldtypes/groupedlist.php', 'MolajoFormFieldGroupedList');
@@ -92,8 +92,8 @@ foreach ($files as $file) {
         $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/fieldtypes/' . $file, 'MolajoFormField' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-
-/** Data: HTML */
+*/
+/** Data: HTML
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/html/editor.php', 'MolajoEditor');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/html/grid.php', 'MolajoGrid');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/html/html.php', 'MolajoHtml');
@@ -104,7 +104,7 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE_DATA . '/html/html', '\.php$', 
 foreach ($files as $file) {
     $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/html/html/' . $file, 'MolajoHtml' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-
+*/
 /** Data: Tables */
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/tables/table.php', 'MolajoTable');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/tables/tablenested.php', 'MolajoTableNested');

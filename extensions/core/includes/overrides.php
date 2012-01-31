@@ -98,7 +98,7 @@ class JTableUser extends MolajoTableUser
 class JTableUsergroup extends MolajoTableGroup
 {
 }
-
+/**
 class JForm extends MolajoForm
 {
 }
@@ -114,12 +114,12 @@ class JFormRule extends MolajoFormRule
 class JFormHelper extends MolajoFormHelper
 {
 }
-
+**/
 //abstract class MolajoToolbarHelper extends MolajoRenderToolbarHelper {}
 
-class JHelp extends MolajoApplicationHelper
-{
-}
+//class JHelp extends MolajoApplicationHelper
+//{
+//}
 
 class JLanguageHelper extends MolajoLanguageHelper
 {
@@ -153,9 +153,9 @@ class JUser extends MolajoUser
 {
 }
 
-class JRoute extends MolajoRouteHelper
-{
-}
+//class JRoute extends MolajoRouteHelper
+//{
+//}
 
 class JUtility extends MolajoUtility
 {
@@ -166,9 +166,9 @@ JFTP -
 https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f44217a8934644c5a0
  */
 
-class JExtension extends MolajoRequest
-{
-}
+//class JExtension extends MolajoRequest
+//{
+//}
 
 abstract class JInstallerHelper extends MolajoInstallerHelper
 {

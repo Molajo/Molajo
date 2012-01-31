@@ -144,7 +144,7 @@ class MolajoControllerApplication
      * @var    array
      * @since  1.0
      */
-    protected $_view_page_metadata = array();
+    protected $_page_view_metadata = array();
 
     /**
      * Stylesheet links
@@ -735,17 +735,17 @@ class MolajoControllerApplication
         $name = strtolower($name);
 
         if (is_bool($context) && ($context === true)) {
-            $this->_view_page_metadata['http-equiv'][$name] = $content;
+            $this->_page_view_metadata['http-equiv'][$name] = $content;
 
             if ($sync && strtolower($name) == 'content-type') {
                 $this->setMimeEncoding($content, false);
             }
 
         } else if (is_string($context)) {
-            $result = $this->_view_page_metadata[$context][$name];
+            $result = $this->_page_view_metadata[$context][$name];
 
         } else {
-            $this->_view_page_metadata['standard'][$name] = $content;
+            $this->_page_view_metadata['standard'][$name] = $content;
         }
     }
 
@@ -761,7 +761,7 @@ class MolajoControllerApplication
      */
     public function getMetadata()
     {
-        return $this->_view_page_metadata;
+        return $this->_page_view_metadata;
     }
 
     /**

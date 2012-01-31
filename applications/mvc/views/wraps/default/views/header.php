@@ -8,25 +8,25 @@
 defined('MOLAJO') or die;
 
 if ((int)MolajoController::getApplication()->get('html5', 1) == 1
-    && ($this->mvc->get('view_wrap_name') == 'article'
-        || $this->mvc->get('view_wrap_name') == 'aside'
-        || $this->mvc->get('view_wrap_name') == 'footer'
-        || $this->mvc->get('view_wrap_name') == 'header'
-        || $this->mvc->get('view_wrap_name') == 'hgroup'
-        || $this->mvc->get('view_wrap_name') == 'nav'
-        || $this->mvc->get('view_wrap_name') == 'section') ):
-    $headerType = $this->mvc->get('view_wrap_name');
+    && ($this->mvc->get('wrap_view_name') == 'article'
+        || $this->mvc->get('wrap_view_name') == 'aside'
+        || $this->mvc->get('wrap_view_name') == 'footer'
+        || $this->mvc->get('wrap_view_name') == 'header'
+        || $this->mvc->get('wrap_view_name') == 'hgroup'
+        || $this->mvc->get('wrap_view_name') == 'nav'
+        || $this->mvc->get('wrap_view_name') == 'section') ):
+    $headerType = $this->mvc->get('wrap_view_name');
 else :
     $headerType = 'div';
 endif;
 
-$headerId = trim($this->parameters->get('view_wrap_css_id', ''));
+$headerId = trim($this->parameters->get('wrap_view_css_id', ''));
 if ($headerId == '') :
 else :
     $headerId = ' id="' . $headerId . '"';
 endif;
 
-$headerClass = trim($this->parameters->get('view_wrap_css_class', ''));
+$headerClass = trim($this->parameters->get('wrap_view_css_class', ''));
 if ($headerClass == '') :
 else :
     $headerClass = ' class="' . $headerClass . '"';
@@ -34,23 +34,23 @@ endif;
 ?>
 <<?php echo trim($headerType.$headerId.$headerClass);?>>
 <?php
-$headingLevel = $this->parameters->get('view_wrap_header_level', 3);
+$headingLevel = $this->parameters->get('wrap_view_header_level', 3);
 if ((int)MolajoController::getApplication()->get('html5', 1) == 1):
-    if ($this->parameters->get('view_wrap_show_title', false) === true
-        && $this->parameters->get('view_wrap_show_subtitle', false) === true
+    if ($this->parameters->get('wrap_view_show_title', false) === true
+        && $this->parameters->get('wrap_view_show_subtitle', false) === true
     ) : ?>
 	<hgroup>
 <?php endif;
 endif;
 
-if ($this->parameters->get('view_wrap_show_title', false) === true) :  ?>
+if ($this->parameters->get('wrap_view_show_title', false) === true) :  ?>
     <h<?php echo $headingLevel; ?>>
         <?php echo $this->row->title; ?>
     </h<?php echo $headingLevel++; ?>>
     <?php
     endif;
 
-if ($this->parameters->get('view_wrap_show_subtitle', false) === true) :  ?>
+if ($this->parameters->get('wrap_view_show_subtitle', false) === true) :  ?>
     <h<?php echo $headingLevel; ?>>
         <?php echo $this->row->subtitle; ?>
     </h<?php echo $headingLevel++; ?>>
@@ -58,8 +58,8 @@ if ($this->parameters->get('view_wrap_show_subtitle', false) === true) :  ?>
     endif;
 
 if ((int)MolajoController::getApplication()->get('html5', 1) == 1) :
-    if ($this->parameters->get('view_wrap_show_title', false) === true
-        && $this->parameters->get('view_wrap_show_subtitle', false) === true
+    if ($this->parameters->get('wrap_view_show_title', false) === true
+        && $this->parameters->get('wrap_view_show_subtitle', false) === true
     ) : ?>
 	</hgroup>
 <?php endif;

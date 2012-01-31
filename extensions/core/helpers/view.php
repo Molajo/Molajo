@@ -251,26 +251,26 @@ if (trim($this->_view) == '') {
         if ($type = 'template') {
 
             if ($task == 'add' || $task == 'edit') {
-                $view_template_id = (int)MolajoController::getApplication()->get('default_edit_view_template_id', 0);
+                $template_view_id = (int)MolajoController::getApplication()->get('default_edit_template_view_id', 0);
 
             } else if ((int)$id == 0) {
-                $view_template_id = (int)MolajoController::getApplication()->get('default_items_view_template_id', 0);
+                $template_view_id = (int)MolajoController::getApplication()->get('default_items_template_view_id', 0);
 
             } else {
-                $view_template_id = (int)MolajoController::getApplication()->get('default_item_view_template_id', 0);
+                $template_view_id = (int)MolajoController::getApplication()->get('default_item_template_view_id', 0);
             }
         }
 
         if ($type == 'wrap') {
 
             if ($task == 'add' || $task == 'edit') {
-                $view_wrap_id = (int)MolajoController::getApplication()->get('default_edit_view_wrap_id', 0);
+                $wrap_view_id = (int)MolajoController::getApplication()->get('default_edit_wrap_view_id', 0);
 
             } else if ((int)$id == 0) {
-                $view_wrap_id = (int)MolajoController::getApplication()->get('default_items_view_wrap_id', 0);
+                $wrap_view_id = (int)MolajoController::getApplication()->get('default_items_wrap_view_id', 0);
 
             } else {
-                $view_wrap_id = (int)MolajoController::getApplication()->get('default_item_view_wrap_id', 0);
+                $wrap_view_id = (int)MolajoController::getApplication()->get('default_item_wrap_view_id', 0);
             }
         }
     }

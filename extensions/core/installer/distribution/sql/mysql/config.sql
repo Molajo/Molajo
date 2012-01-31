@@ -88,9 +88,9 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 200, 'theme_id', '', 50),
-      (1, 0, 200, 'view_page_id', '', 51),
-      (1, 0, 200, 'view_template_id', '', 52),
-      (1, 0, 200, 'view_wrap_id', '', 53);
+      (1, 0, 200, 'page_view_id', '', 51),
+      (1, 0, 200, 'template_view_id', '', 52),
+      (1, 0, 200, 'wrap_view_id', '', 53);
 
 # 200 Categories
 INSERT INTO `molajo_extension_options`

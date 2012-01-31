@@ -87,13 +87,13 @@ if (defined('MOLAJO_EXTENSIONS_COMPONENTS')) {
 } else {
     define('MOLAJO_EXTENSIONS_COMPONENTS', MOLAJO_EXTENSIONS . '/components');
 }
+if (defined('MOLAJO_EXTENSIONS_FORMFIELDS')) {
+} else {
+    define('MOLAJO_EXTENSIONS_FORMFIELDS', MOLAJO_EXTENSIONS . '/formfields');
+}
 if (defined('MOLAJO_EXTENSIONS_LANGUAGES')) {
 } else {
     define('MOLAJO_EXTENSIONS_LANGUAGES', MOLAJO_EXTENSIONS . '/languages');
-}
-if (defined('MOLAJO_EXTENSIONS_VIEWS')) {
-} else {
-    define('MOLAJO_EXTENSIONS_VIEWS', MOLAJO_EXTENSIONS . '/views');
 }
 if (defined('MOLAJO_EXTENSIONS_MANIFESTS')) {
 } else {
@@ -111,14 +111,18 @@ if (defined('MOLAJO_EXTENSIONS_THEMES')) {
 } else {
     define('MOLAJO_EXTENSIONS_THEMES', MOLAJO_EXTENSIONS . '/themes');
 }
+if (defined('MOLAJO_EXTENSIONS_VIEWS')) {
+} else {
+    define('MOLAJO_EXTENSIONS_VIEWS', MOLAJO_EXTENSIONS . '/views');
+}
 
 if (defined('MOLAJO_EXTENSIONS_COMPONENTS_URL')) {
 } else {
     define('MOLAJO_EXTENSIONS_COMPONENTS_URL', MOLAJO_BASE_URL . 'extensions/components');
 }
-if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
+if (defined('MOLAJO_EXTENSIONS_FORMFIELDS_URL')) {
 } else {
-    define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . 'extensions/views');
+    define('MOLAJO_EXTENSIONS_FORMFIELDS_URL', MOLAJO_BASE_URL . 'extensions/formfields');
 }
 if (defined('MOLAJO_EXTENSIONS_MODULES_URL')) {
 } else {
@@ -131,6 +135,10 @@ if (defined('MOLAJO_EXTENSIONS_PLUGINS_URL')) {
 if (defined('MOLAJO_EXTENSIONS_THEMES_URL')) {
 } else {
     define('MOLAJO_EXTENSIONS_THEMES_URL', MOLAJO_BASE_URL . 'extensions/themes');
+}
+if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
+} else {
+    define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . 'extensions/views');
 }
 /**
  *  ACTION TYPES
@@ -242,17 +250,17 @@ if (defined('MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE')) {
 } else {
     define('MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE', 1100);
 }
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE')) {
+if (defined('MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW')) {
 } else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE', 1150);
+    define('MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW', 1150);
 }
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_VIEW_TEMPLATE')) {
+if (defined('MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW')) {
 } else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_VIEW_TEMPLATE', 1200);
+    define('MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW', 1200);
 }
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_VIEW_WRAP')) {
+if (defined('MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW')) {
 } else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_VIEW_WRAP', 1250);
+    define('MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW', 1250);
 }
 if (defined('MOLAJO_ASSET_TYPE_EXTENSION_MENU')) {
 } else {

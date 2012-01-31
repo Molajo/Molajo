@@ -201,38 +201,38 @@ class MolajoRequest
         $this->request->set('theme_favicon', '');
 
         /** page */
-        $this->request->set('view_page_id', 0);
-        $this->request->set('view_page_name', '');
-        $this->request->set('view_page_css_id', '');
-        $this->request->set('view_page_css_class', '');
-        $this->request->set('view_page_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE);
-        $this->request->set('view_page_asset_id', 0);
-        $this->request->set('view_page_path', '');
-        $this->request->set('view_page_path_url', '');
-        $this->request->set('view_page_include', '');
+        $this->request->set('page_view_id', 0);
+        $this->request->set('page_view_name', '');
+        $this->request->set('page_view_css_id', '');
+        $this->request->set('page_view_css_class', '');
+        $this->request->set('page_view_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW);
+        $this->request->set('page_view_asset_id', 0);
+        $this->request->set('page_view_path', '');
+        $this->request->set('page_view_path_url', '');
+        $this->request->set('page_view_include', '');
 
         /** template */
-        $this->request->set('view_template_id', 0);
-        $this->request->set('view_template_name', '');
-        $this->request->set('view_template_css_id', '');
-        $this->request->set('view_template_css_class', '');
-        $this->request->set('view_template_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_VIEW_TEMPLATE);
-        $this->request->set('view_template_asset_id', 0);
-        $this->request->set('view_template_path', '');
-        $this->request->set('view_template_path_url', '');
+        $this->request->set('template_view_id', 0);
+        $this->request->set('template_view_name', '');
+        $this->request->set('template_view_css_id', '');
+        $this->request->set('template_view_css_class', '');
+        $this->request->set('template_view_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
+        $this->request->set('template_view_asset_id', 0);
+        $this->request->set('template_view_path', '');
+        $this->request->set('template_view_path_url', '');
 
         /** wrap */
-        $this->request->set('view_wrap_id', 0);
-        $this->request->set('view_wrap_name', '');
-        $this->request->set('view_wrap_css_id', '');
-        $this->request->set('view_wrap_css_class', '');
-        $this->request->set('view_wrap_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_VIEW_WRAP);
-        $this->request->set('view_wrap_asset_id', 0);
-        $this->request->set('view_wrap_path', '');
-        $this->request->set('view_wrap_path_url', '');
+        $this->request->set('wrap_view_id', 0);
+        $this->request->set('wrap_view_name', '');
+        $this->request->set('wrap_view_css_id', '');
+        $this->request->set('wrap_view_css_class', '');
+        $this->request->set('wrap_view_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW);
+        $this->request->set('wrap_view_asset_id', 0);
+        $this->request->set('wrap_view_path', '');
+        $this->request->set('wrap_view_path_url', '');
 
         /** mvc parameters */
         $this->request->set('mvc_controller', '');
@@ -577,14 +577,14 @@ class MolajoRequest
         if ((int)$this->request->get('theme_id', 0) == 0) {
             $this->request->set('theme_id', $params->def('theme_id', 0));
         }
-        if ((int)$this->request->get('view_page_id', 0) == 0) {
-            $this->request->set('view_page_id', $params->def('view_page_id', 0));
+        if ((int)$this->request->get('page_view_id', 0) == 0) {
+            $this->request->set('page_view_id', $params->def('page_view_id', 0));
         }
-        if ((int)$this->request->get('view_template_id', 0) == 0) {
-            $this->request->set('view_template_id', $params->def('view_template_id', 0));
+        if ((int)$this->request->get('template_view_id', 0) == 0) {
+            $this->request->set('template_view_id', $params->def('template_view_id', 0));
         }
-        if ((int)$this->request->get('view_wrap_id', 0) == 0) {
-            $this->request->set('view_wrap_id', $params->def('view_wrap_id', 0));
+        if ((int)$this->request->get('wrap_view_id', 0) == 0) {
+            $this->request->set('wrap_view_id', $params->def('wrap_view_id', 0));
         }
 
         /** merge meta data */
@@ -721,8 +721,8 @@ class MolajoRequest
         if ($this->request->get('theme_id', 0) == 0) {
             $this->request->set('theme_id', $parameters->def('user_theme_id', 0));
         }
-        if ($this->request->get('view_page_id', 0) == 0) {
-            $this->request->set('view_page_id', $parameters->def('user_view_page_id', 0));
+        if ($this->request->get('page_view_id', 0) == 0) {
+            $this->request->set('page_view_id', $parameters->def('user_page_view_id', 0));
         }
 
         return;
@@ -743,21 +743,21 @@ class MolajoRequest
                 MolajoController::getApplication()->get('default_theme_id', ''));
         }
 
-        if ($this->request->get('view_page_id', 0) == 0) {
-            $this->request->set('view_page_id',
-                MolajoController::getApplication()->get('default_view_page_id', ''));
+        if ($this->request->get('page_view_id', 0) == 0) {
+            $this->request->set('page_view_id',
+                MolajoController::getApplication()->get('default_page_view_id', ''));
         }
 
-        if ((int)$this->request->get('view_template_id', 0) == '') {
-            $this->request->set('view_template_id',
+        if ((int)$this->request->get('template_view_id', 0) == '') {
+            $this->request->set('template_view_id',
                 MolajoViewHelper::getViewDefaults('view',
                     $this->request->get('mvc_task', ''),
                     (int)$this->request->get('mvc_id', 0))
             );
         }
 
-        if ((int)$this->request->get('view_wrap_id', 0) == '') {
-            $this->request->set('view_wrap_id',
+        if ((int)$this->request->get('wrap_view_id', 0) == '') {
+            $this->request->set('wrap_view_id',
                 MolajoViewHelper::getViewDefaults('wrap',
                     $this->request->get('mvc_task', ''),
                     (int)$this->request->get('mvc_id', 0))
@@ -830,8 +830,8 @@ class MolajoRequest
         $parameters->loadString($row->parameters);
         $this->request->set('theme_parameters', $parameters);
 
-        if ($this->request->get('view_page_id', 0) == 0) {
-            $this->request->set('view_page_id', $parameters->get('view_page_id', 0));
+        if ($this->request->get('page_view_id', 0) == 0) {
+            $this->request->set('page_view_id', $parameters->get('page_view_id', 0));
         }
 
         $this->request->set('theme_path',
@@ -855,26 +855,26 @@ class MolajoRequest
     protected function _getPage()
     {
         /** Get Name */
-        $this->request->set('view_page_name',
+        $this->request->set('page_view_name',
             MolajoExtensionHelper::getInstanceTitle(
-                $this->request->get('view_page_id'),
-                MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE,
+                $this->request->get('page_view_id'),
+                MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW,
                 'pages'
             )
         );
 
         /** Page Path */
         $viewHelper = new MolajoViewHelper(
-            $this->request->get('view_page_name'),
+            $this->request->get('page_view_name'),
             'pages',
             $this->request->get('extension_instance_name'),
             $this->request->get('extension_type'),
             $this->request->get('extension_subtype'),
             $this->request->get('theme_name')
         );
-        $this->request->set('view_page_path', $viewHelper->view_path);
-        $this->request->set('view_page_path_url', $viewHelper->view_path_url);
-        $this->request->set('view_page_include', $viewHelper->view_path . '/index.php');
+        $this->request->set('page_view_path', $viewHelper->view_path);
+        $this->request->set('page_view_path_url', $viewHelper->view_path_url);
+        $this->request->set('page_view_include', $viewHelper->view_path . '/index.php');
 
         return;
     }
@@ -890,22 +890,22 @@ class MolajoRequest
     protected function _getTemplateView()
     {
         $this->request->set(
-            'view_template_name',
+            'template_view_name',
             MolajoExtensionHelper::getInstanceTitle(
-                $this->request->get('view_template_id')
+                $this->request->get('template_view_id')
             )
         );
 
         $viewHelper = new MolajoViewHelper(
-            $this->request->get('view_template_name'),
+            $this->request->get('template_view_name'),
             $this->request->get('view_type'),
             $this->request->get('extension_title'),
             $this->request->get('extension_instance_name'),
             ' ',
             $this->request->get('theme_name')
         );
-        $this->request->set('view_template_path', $viewHelper->view_path);
-        $this->request->set('view_template_path_url', $viewHelper->view_path_url);
+        $this->request->set('template_view_path', $viewHelper->view_path);
+        $this->request->set('template_view_path_url', $viewHelper->view_path_url);
 
         return;
     }
@@ -921,22 +921,22 @@ class MolajoRequest
     protected function _getWrapView()
     {
         $this->request->set(
-            'view_wrap_name',
+            'wrap_view_name',
             MolajoExtensionHelper::getInstanceTitle(
-                $this->request->get('view_wrap_id')
+                $this->request->get('wrap_view_id')
             )
         );
 
         $wrapHelper = new MolajoViewHelper(
-            $this->request->get('view_wrap_name'),
+            $this->request->get('wrap_view_name'),
             'wraps',
             $this->request->get('extension_title'),
             $this->request->get('extension_instance_name'),
             ' ',
             $this->request->get('theme_name')
         );
-        $this->request->set('view_wrap_path', $wrapHelper->view_path);
-        $this->request->set('view_wrap_path_url', $wrapHelper->view_path_url);
+        $this->request->set('wrap_view_path', $wrapHelper->view_path);
+        $this->request->set('wrap_view_path_url', $wrapHelper->view_path_url);
 
         return;
     }
@@ -1068,9 +1068,9 @@ class MolajoRequest
             )
         );
         $this->request->set(
-            'view_page_id',
+            'page_view_id',
             MolajoController::getApplication()->get(
-                'error_view_page_id',
+                'error_page_view_id',
                 'error'
             )
         );
@@ -1096,9 +1096,9 @@ class MolajoRequest
                     'system'
                 )
             );
-            $this->request->set('view_page_id',
+            $this->request->set('page_view_id',
                 MolajoController::getApplication()->get(
-                    'offline_view_page_id',
+                    'offline_page_view_id',
                     'offline'
                 )
             );

@@ -59,40 +59,40 @@ class MolajoRendererComponent extends MolajoRenderer
             $this->request->get('extension_event_type'));
 
         /** view */
-        $this->mvc->set('view_template_id',
-            (int) $this->request->get('view_template_id'));
-        $this->mvc->set('view_template_name',
-            $this->request->get('view_template_name'));
-        $this->mvc->set('view_template_css_id',
-            $this->request->get('view_template_css_id'));
-        $this->mvc->set('view_template_css_class',
-            $this->request->get('view_template_css_class'));
-        $this->mvc->set('view_template_asset_type_id',
-            $this->request->get('view_template_asset_type_id'));
-        $this->mvc->set('view_template_asset_id',
-            (int) $this->request->get('view_template_asset_id'));
-        $this->mvc->set('view_template_path',
-            $this->request->get('view_template_path'));
-        $this->mvc->set('view_template_path_url',
-            $this->request->get('view_template_path_url'));
+        $this->mvc->set('template_view_id',
+            (int) $this->request->get('template_view_id'));
+        $this->mvc->set('template_view_name',
+            $this->request->get('template_view_name'));
+        $this->mvc->set('template_view_css_id',
+            $this->request->get('template_view_css_id'));
+        $this->mvc->set('template_view_css_class',
+            $this->request->get('template_view_css_class'));
+        $this->mvc->set('template_view_asset_type_id',
+            $this->request->get('template_view_asset_type_id'));
+        $this->mvc->set('template_view_asset_id',
+            (int) $this->request->get('template_view_asset_id'));
+        $this->mvc->set('template_view_path',
+            $this->request->get('template_view_path'));
+        $this->mvc->set('template_view_path_url',
+            $this->request->get('template_view_path_url'));
 
         /** wrap */
-        $this->mvc->set('view_wrap_id',
-            (int) $this->request->get('view_wrap_id'));
-        $this->mvc->set('view_wrap_name',
-            $this->request->get('view_wrap_name'));
-        $this->mvc->set('view_wrap_css_id',
-            $this->request->get('view_wrap_css_id'));
-        $this->mvc->set('view_wrap_css_class',
-            $this->request->get('view_wrap_css_class'));
-        $this->mvc->set('view_wrap_asset_type_id',
-            $this->request->get('view_wrap_asset_type_id'));
-        $this->mvc->set('view_wrap_asset_id',
-            (int) $this->request->get('view_wrap_asset_id'));
-        $this->mvc->set('view_wrap_path',
-            $this->request->get('view_wrap_path'));
-        $this->mvc->set('view_wrap_path_url',
-            $this->request->get('view_wrap_path_url'));
+        $this->mvc->set('wrap_view_id',
+            (int) $this->request->get('wrap_view_id'));
+        $this->mvc->set('wrap_view_name',
+            $this->request->get('wrap_view_name'));
+        $this->mvc->set('wrap_view_css_id',
+            $this->request->get('wrap_view_css_id'));
+        $this->mvc->set('wrap_view_css_class',
+            $this->request->get('wrap_view_css_class'));
+        $this->mvc->set('wrap_view_asset_type_id',
+            $this->request->get('wrap_view_asset_type_id'));
+        $this->mvc->set('wrap_view_asset_id',
+            (int) $this->request->get('wrap_view_asset_id'));
+        $this->mvc->set('wrap_view_path',
+            $this->request->get('wrap_view_path'));
+        $this->mvc->set('wrap_view_path_url',
+            $this->request->get('wrap_view_path_url'));
 
         /** mvc parameters */
         $this->mvc->set('mvc_controller',

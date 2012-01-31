@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="plugin" group="extension">
+<extension version="1.0" type="plugin" group="template">
     <name>plg_extension_joomla</name>
     <author>Molajo Project</author>
     <create_date>May 2010</create_date>

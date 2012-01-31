@@ -79,7 +79,7 @@ abstract class AbstractSchemaManager
      * instance and will return false if it does not work or is not supported.
      *
      * <code>
-     * $result = $sm->tryMethod('dropView', 'view_template_name');
+     * $result = $sm->tryMethod('dropView', 'template_view_name');
      * </code>
      *
      * @return mixed

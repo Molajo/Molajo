@@ -60,11 +60,11 @@ class MolajoRendererMessage extends MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
-        if ((int)$this->mvc->get('view_template_id', 0) == 0) {
-            $this->mvc->set('view_template_id', MolajoController::getApplication()->get('message_view_template_id'));
+        if ((int)$this->mvc->get('template_view_id', 0) == 0) {
+            $this->mvc->set('template_view_id', MolajoController::getApplication()->get('message_template_view_id'));
         }
-        if ((int)$this->mvc->get('view_wrap_id', 0) == 0) {
-            $this->mvc->set('view_wrap_id', MolajoController::getApplication()->get('message_view_wrap_id'));
+        if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
+            $this->mvc->set('wrap_view_id', MolajoController::getApplication()->get('message_wrap_view_id'));
         }
         return true;
     }

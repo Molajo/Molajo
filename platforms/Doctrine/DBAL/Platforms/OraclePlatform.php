@@ -360,7 +360,7 @@ class OraclePlatform extends AbstractPlatform
 
     public function getListViewsSQL($database)
     {
-        return 'SELECT view_template_name, text FROM sys.user_views';
+        return 'SELECT template_view_name, text FROM sys.user_views';
     }
 
     public function getCreateViewSQL($name, $sql)

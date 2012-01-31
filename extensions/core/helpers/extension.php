@@ -12,20 +12,6 @@ defined('MOLAJO') or die;
  *
  * Various queries for extension support
  *
- * MOLAJO_ASSET_TYPE_EXTENSION_BEGIN 1000
- *
- * MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT 1050
- * MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE 1100
- * MOLAJO_ASSET_TYPE_EXTENSION_VIEW_PAGE 1150
- * MOLAJO_ASSET_TYPE_EXTENSION_VIEW_TEMPLATE 1200
- * MOLAJO_ASSET_TYPE_EXTENSION_VIEW_WRAP 1250
- * MOLAJO_ASSET_TYPE_EXTENSION_MENU 1300
- * MOLAJO_ASSET_TYPE_EXTENSION_MODULE 1350
- * MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN 1450
- * MOLAJO_ASSET_TYPE_EXTENSION_THEME 1500
- *
- * MOLAJO_ASSET_TYPE_EXTENSION_END 1999
- *
  * @package     Molajo
  * @subpackage  Extensions
  * @since       1.0
@@ -38,7 +24,6 @@ abstract class MolajoExtensionHelper
      * Retrieves Extension data from the extension and extension instances
      * Verifies access for user, application and site
      *
-     * @static
      * @param   $asset_type_id
      * @param   $extension
      *
@@ -95,11 +80,13 @@ abstract class MolajoExtensionHelper
         $query->where('(b.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(b.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
+        /** b_assets. Assets Table  */
         $query->select('b_assets.' . $db->namequote('id') . ' as extension_instance_asset_id');
         $query->select('b_assets.' . $db->namequote('view_group_id') . ' as extension_instance_view_group_id');
         $query->from($db->namequote('#__assets') . ' as b_assets');
         $query->where('b_assets.source_id = b.id');
 
+        /** b_asset_types. Asset Types Table  */
         $query->from($db->namequote('#__asset_types') . ' as b_asset_types');
         $query->where('b_assets.asset_type_id = b_asset_types.id');
         $query->where('b_asset_types.' . $db->namequote('component_option') . ' = ' . $db->quote('extensions'));
@@ -115,9 +102,6 @@ abstract class MolajoExtensionHelper
         $query->where('c.' . $db->namequote('extension_instance_id') . ' = b.' . $db->namequote('id'));
         $query->where('c.' . $db->namequote('application_id') . ' = ' . MOLAJO_APPLICATION_ID);
 
-        /** Application ACL */
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'c'));
-
         /**
          *  d. Site Table
          *      Extension Instances must be enabled for the Site
@@ -125,9 +109,6 @@ abstract class MolajoExtensionHelper
         $query->from($db->namequote('#__site_extension_instances') . ' as d');
         $query->where('d.' . $db->namequote('extension_instance_id') . ' = b.' . $db->namequote('id'));
         $query->where('d.' . $db->namequote('site_id') . ' = ' . MOLAJO_SITE_ID);
-
-        /** Site ACL */
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'd'));
 
         /**
          *  Run Query

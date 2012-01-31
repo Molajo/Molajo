@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="view" group="wrap" method="upgrade">
-    <name>VIEW_WRAP_ARTICLE_NAME</name>
-    <description>VIEW_WRAP_ARTICLE_DESCRIPTION</description>
+<extension version="1.0" type="view" group="wrap">
+    <name>WRAP_VIEW_ARTICLE_NAME</name>
+    <description>WRAP_VIEW_ARTICLE_DESCRIPTION</description>
     <version>1.0</version>
-    <copyright>VIEW_WRAP_ARTICLE_COPYRIGHT</copyright>
-    <license>VIEW_WRAP_ARTICLE_LICENSE</license>
+    <copyright>WRAP_VIEW_ARTICLE_COPYRIGHT</copyright>
+    <license>WRAP_VIEW_ARTICLE_LICENSE</license>
     <author>Amy Stephen</author>
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>

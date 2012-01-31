@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="view" group="wrap" method="upgrade">
-    <name>VIEW_WRAP_DIV_NAME</name>
+<extension version="1.0" type="view" group="wrap">
+    <name>WRAP_VIEW_DIV_NAME</name>
     <author>Amy Stephen</author>
     <create_date>January 2012</create_date>
     <copyright>Copyright (C) Amy Stephen. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>VIEW_WRAP_DIV_DESCRIPTION</description>
+    <description>WRAP_VIEW_DIV_DESCRIPTION</description>
     <files>
         <folder>views</folder>
         <folder>language</folder>

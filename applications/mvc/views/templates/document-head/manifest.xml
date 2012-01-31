@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="view" group="extension" method="upgrade">
-    <name>VIEW_EXTENSION_DOCUMENT_HEAD_NAME</name>
+<extension version="1.0" type="view" group="template">
+    <name>VIEW_TEMPLATE_DOCUMENT_HEAD_NAME</name>
     <author>Amy Stephen</author>
     <create_date>January 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>VIEW_EXTENSION_DOCUMENT_HEAD_DESCRIPTION</description>
+    <description>VIEW_TEMPLATE_DOCUMENT_HEAD_DESCRIPTION</description>
     <files>
         <folder>language</folder>
         <folder>views</folder>

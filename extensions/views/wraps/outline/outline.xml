@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="view" group="wrap" method="upgrade">
-    <name>VIEW_WRAP_OUTLINE_NAME</name>
+<extension version="1.0" type="view" group="wrap">
+    <name>WRAP_VIEW_OUTLINE_NAME</name>
     <author>Molajo Contributors</author>
     <create_date>June 2011</create_date>
     <copyright>Copyright (C) Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,13 +8,13 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>VIEW_WRAP_OUTLINE_DESCRIPTION</description>
+    <description>WRAP_VIEW_OUTLINE_DESCRIPTION</description>
     <files>
         <folder>views</folder>
         <folder>language</folder>
     </files>
     <languages>
-        <language tag="language/en-GB">en-GB.view_view_wrap_table_name.ini</language>
-        <language tag="language/en-GB">en-GB.view_view_wrap_table_name.sys.ini</language>
+        <language tag="language/en-GB">en-GB.view_wrap_view_table_name.ini</language>
+        <language tag="language/en-GB">en-GB.view_wrap_view_table_name.sys.ini</language>
     </languages>
 </extension>

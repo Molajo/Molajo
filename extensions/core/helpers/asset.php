@@ -172,13 +172,13 @@ abstract class MolajoAssetHelper
                     $request->set('theme_id', $pair[1]);
 
                 } elseif ($pair[0] == 'page') {
-                    $request->set('view_page_id', $pair[1]);
+                    $request->set('page_view_id', $pair[1]);
 
                 } elseif ($pair[0] == 'template') {
-                    $request->set('view_template_id', $pair[1]);
+                    $request->set('template_view_id', $pair[1]);
 
                 } elseif ($pair[0] == 'wrap') {
-                    $request->set('view_wrap_id', $pair[1]);
+                    $request->set('wrap_view_id', $pair[1]);
                 }
 
                 $url_parameters[$pair[0]] = $pair[1];
