@@ -2,31 +2,31 @@
 /**
  * @package     Molajo
  * @subpackage  Table
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Update Table Class
+ * Extension Sites
  *
  * @package     Molajo
  * @subpackage  Table
  * @since       1.0
  * @link
  */
-class MolajoTableUpdate extends MolajoTable
+class MolajoTableExtensionSites extends MolajoTable
 {
     /**
      * Contructor
      *
      * @param database A database connector object
      */
-    function __construct(&$db)
+    function __construct($db)
     {
-        parent::__construct('#__updates', 'update_id', $db);
+        parent::__construct('#__extension_sites', 'id', $db);
     }
+
 
     /**
      * Overloaded check function
@@ -79,7 +79,7 @@ class MolajoTableUpdate extends MolajoTable
         foreach ($options as $col => $val) {
             $where[] = $col . ' = ' . $dbo->Quote($val);
         }
-        $query = 'SELECT update_id FROM #__updates WHERE ' . implode(' AND ', $where);
+        $query = 'SELECT update_id FROM #__extension_sites WHERE ' . implode(' AND ', $where);
         $dbo->setQuery($query);
         return $dbo->loadResult();
     }

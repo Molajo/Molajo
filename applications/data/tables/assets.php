@@ -9,14 +9,14 @@
 defined('MOLAJO') or die;
 
 /**
- * Asset Table Class
+ * Assets
  *
  * @package     Molajo
  * @subpackage  Table
  * @since       1.0
  * @link
  */
-class MolajoTableAsset extends MolajoTable
+class MolajoTableAssets extends MolajoTable
 {
 
     /**
@@ -36,7 +36,7 @@ class MolajoTableAsset extends MolajoTable
     /**
      * @param database A database connector object
      */
-    public function __construct(&$db)
+    public function __construct($db)
     {
         parent::__construct('#__assets', 'id', $db);
     }

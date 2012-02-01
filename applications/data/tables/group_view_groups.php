@@ -2,20 +2,20 @@
 /**
  * @package     Molajo
  * @subpackage  Table
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Groupings table class.
+ * Group View Groups
  *
- * @package     Joomla.Platform
- * @subpackage  Database
- * @version        1.0
+ * @package     Molajo
+ * @subpackage  Table
+ * @since       1.0
+ * @link
  */
-class MolajoTableGrouping extends MolajoTable
+class MolajoTableGroupViewGroups extends MolajoTable
 {
     /**
      * Constructor
@@ -26,9 +26,9 @@ class MolajoTableGrouping extends MolajoTable
      *
      * @since   1.0
      */
-    public function __construct(&$db)
+    public function __construct($db)
     {
-        parent::__construct('#__view_groups', 'id', $db);
+        parent::__construct('#__group_view_groups', 'id', $db);
     }
 
     /**

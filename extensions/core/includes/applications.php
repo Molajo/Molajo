@@ -96,8 +96,6 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/installer/adapter
 foreach ($files as $file) {
     $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-
-
 /** updater  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/updater', '\.php$', false, false);
 foreach ($files as $file) {

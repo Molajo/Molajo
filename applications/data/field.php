@@ -187,7 +187,7 @@ class MolajoField
         if (class_exists('MolajoField' . ucfirst($name))) {
         } else {
 
-            $nameClassFile = MOLAJO_APPLICATIONS_CORE_DATA . '/fields/fields/' . $name . '.php';
+            $nameClassFile = MOLAJO_APPLICATIONS_CORE_DATA . '/fields/' . $name . '.php';
             if (JFile::exists($nameClassFile)) {
                 require_once $nameClassFile;
 

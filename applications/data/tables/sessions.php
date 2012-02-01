@@ -2,27 +2,26 @@
 /**
  * @package     Molajo
  * @subpackage  Table
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Session Table Class
+ * Extension Instances
  *
  * @package     Molajo
  * @subpackage  Table
  * @since       1.0
  * @link
  */
-class MolajoTableSession extends MolajoTable
+class MolajoTableSessions extends MolajoTable
 {
     /**
      * Constructor
      * @param database A database connector object
      */
-    function __construct(&$db)
+    function __construct($db)
     {
         parent::__construct('#__sessions', 'session_id', $db);
 
@@ -32,6 +31,7 @@ class MolajoTableSession extends MolajoTable
     function insert($sessionId, $application_id)
     {
         $this->session_id = $sessionId;
+
         $this->application_id = $application_id;
 
         $this->session_time = time();

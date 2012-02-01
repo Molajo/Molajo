@@ -2,30 +2,27 @@
 /**
  * @package     Molajo
  * @subpackage  Table
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Category Table Class
+ * Asset Categories
  *
  * @package     Molajo
  * @subpackage  Table
  * @since       1.0
  * @link
  */
-class MolajoTableCategory extends MolajoTableNested
+class MolajoTableAssetCategories extends MolajoTable
 {
     /**
      * @param database A database connector object
      */
-    public function __construct(&$db)
+    public function __construct($db)
     {
-        parent::__construct('#__categories', 'id', $db);
-
-        $this->access = (int)MolajoController::getApplication()->get('access');
+        parent::__construct('#__asset_categories', 'id', $db);
     }
 
     /**
@@ -185,7 +182,7 @@ class MolajoTableCategory extends MolajoTableNested
             $this->created_user_id = $user->get('id');
         }
         // Verify that the alias is unique
-        $table = MolajoTable::getInstance('Category', 'MolajoTable');
+        $table = MolajoTable::getInstance('Assetcategory', 'MolajoTable');
         if ($table->load(array('alias' => $this->alias,
                               'parent_id' => $this->parent_id,
                               'extension' => $this->extension))

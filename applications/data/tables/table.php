@@ -50,6 +50,40 @@ abstract class MolajoTable extends JObject
     protected $_locked = false;
 
     /**
+     * getInstance
+     *
+     * Static method to get an instance of a MolajoTable class if it can be found in
+     * the table include paths.  To add include paths for searching for MolajoTable
+     * classes @see MolajoTable::addIncludePath().
+     *
+     * @param   string   The type (name) of the MolajoTable class to get an instance of.
+     * @param   string   An optional prefix for the table class name.
+     * @param   array    An optional array of configuration values for the MolajoTable object.
+     * @return  mixed    A MolajoTable object if found or boolean false if one could not be found.
+     * @since   1.0
+     */
+    public static function getInstance($type, $prefix = 'MolajoTable', $config = array())
+    {
+        $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
+        $tableClass = $prefix . ucfirst($type);
+
+        if (class_exists($tableClass)) {
+
+        } else {
+                MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
+                return false;
+        }
+
+        if (isset($config['databaseo'])) {
+        } else {
+            $database = MolajoController::getDbo();
+        }
+        $database = $config['databaseo'];
+
+        return new $tableClass($database);
+    }
+
+    /**
      * __construct
      *
      * Object constructor to set table and key fields.  In most cases this will
@@ -62,11 +96,11 @@ abstract class MolajoTable extends JObject
      *
      * @since  1.0
      */
-    function __construct($table, $key, &$database)
+    function __construct($table, $key, $database)
     {
         $this->_table = $table;
         $this->_primary_key = $key;
-        $this->_database = &$database;
+        $this->_database = $database;
 
         if ($names = $this->getFields()) {
             foreach ($names as $name => $v) {
@@ -106,78 +140,6 @@ abstract class MolajoTable extends JObject
     }
 
     /**
-     * getInstance
-     *
-     * Static method to get an instance of a MolajoTable class if it can be found in
-     * the table include paths.  To add include paths for searching for MolajoTable
-     * classes @see MolajoTable::addIncludePath().
-     *
-     * @param   string   The type (name) of the MolajoTable class to get an instance of.
-     * @param   string   An optional prefix for the table class name.
-     * @param   array    An optional array of configuration values for the MolajoTable object.
-     * @return  mixed    A MolajoTable object if found or boolean false if one could not be found.
-     * @since   1.0
-     */
-    public static function getInstance($type, $prefix = 'MolajoTable', $config = array())
-    {
-        $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-        $tableClass = $prefix . ucfirst($type);
-
-        if (class_exists($tableClass)) {
-
-        } else {
-            if ($path = JPath::find(MolajoTable::addIncludePath(), strtolower($type) . '.php')) {
-                require_once $path;
-
-                if (class_exists($tableClass)) {
-                } else {
-                    MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_NOT_FOUND_IN_FILE', $tableClass));
-                    return false;
-                }
-            } else {
-                MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
-                return false;
-            }
-        }
-
-        $database = isset($config['databaseo']) ? $config['databaseo'] : MolajoController::getDbo();
-
-        return new $tableClass($database);
-    }
-
-    /**
-     * addIncludePath
-     *
-     * Add a filesystem path where MolajoTable should search for table class files.
-     * You may either pass a string or an array of paths.
-     *
-     * @param   mixed  A filesystem path or array of filesystem paths to add.
-     * @return  array  An array of filesystem paths to find MolajoTable classes in.
-     * @since   1.0
-     */
-    public static function addIncludePath($path = null)
-    {
-        static $_paths;
-
-        if (isset($_paths)) {
-        } else {
-            $_paths = array(__DIR__ . '/table');
-        }
-
-        settype($path, 'array');
-
-        if (empty($path) || in_array($path, $_paths)) {
-        } else {
-            foreach ($path as $dir) {
-                $dir = trim($dir);
-                array_unshift($_paths, $dir);
-            }
-        }
-
-        return $_paths;
-    }
-
-    /**
      * getTableName
      *
      * Method to get the database table name for the class.
@@ -208,7 +170,7 @@ abstract class MolajoTable extends JObject
      *
      * Method to get the JDatabase connector object.
      *
-     * @return  object  The internal database connector object.
+     * @return  object
      */
     public function getDbo()
     {
@@ -224,79 +186,14 @@ abstract class MolajoTable extends JObject
      * @return  boolean  True on success.
      * @link    http://docs.molajo.org/MolajoTable/setDbo
      */
-    public function setDbo(&$database)
+    public function setDbo($database)
     {
         if ($database instanceof JDatabase) {
         } else {
             return false;
         }
 
-        $this->_database = &$database;
-
-        return true;
-    }
-
-    /**
-     * reset
-     *
-     * Method to reset class properties to the defaults set in the class
-     * definition.  It will ignore the primary key as well as any private class
-     * properties.
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function reset()
-    {
-        foreach ($this->getFields() as $k => $v)
-        {
-            if ($k != $this->_primary_key && (strpos($k, '_') !== 0)) {
-                $this->$k = $v->Default;
-            }
-        }
-    }
-
-    /**
-     * bind
-     *
-     * Method to bind an associative array or object to the MolajoTable instance. This
-     * method only binds properties that are publicly accessible and optionally
-     * takes an array of properties to ignore when binding.
-     *
-     * @param   mixed  An associative array or object to bind to the MolajoTable instance.
-     * @param   mixed  An optional array or space separated list of properties
-     *                to ignore while binding.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   1.0
-     */
-    public function bind($source, $ignore = array())
-    {
-        if (is_object($source) || is_array($source)) {
-        } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
-            $this->setError($e);
-            return false;
-        }
-
-        if (is_object($source)) {
-            $source = get_object_vars($source);
-        }
-
-        if (is_array($ignore)) {
-        } else {
-            $ignore = explode(' ', $ignore);
-        }
-
-        foreach ($this->getProperties() as $k => $v) {
-            if (in_array($k, $ignore)) {
-            } else {
-                if (isset($source[$k])) {
-                    $this->$k = $source[$k];
-                }
-            }
-        }
+        $this->_database = $database;
 
         return true;
     }
@@ -371,133 +268,30 @@ abstract class MolajoTable extends JObject
     }
 
     /**
-     * check
+     * reset
      *
-     * Method to perform sanity checks on the MolajoTable instance properties to ensure
-     * they are safe to store in the database.  Child classes should override this
-     * method to make sure the data they are storing in the database is safe and
-     * as expected before storage.
+     * Method to reset class properties to the defaults set in the class
+     * Ignores primary key and private class properties
      *
-     * @return  boolean  True if the instance is sane and able to be stored in the database.
+     * @return  void
      * @since   1.0
      */
-    public function check()
+    public function reset()
     {
-        return true;
-    }
-
-    /**
-     * Method to store a row in the database from the MolajoTable instance properties.
-     * If a primary key value is set the row with that primary key value will be
-     * updated with the instance property values.  If no primary key value is set
-     * a new row will be inserted into the database with the properties from the
-     * MolajoTable instance.
-     *
-     * @param   boolean True to update fields even if they are null.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   1.0
-     */
-    public function store($updateNulls = false)
-    {
-        $k = $this->_primary_key;
-
-        if ($this->$k) {
-            $stored = $this->_database->updateObject($this->_table, $this, $this->_primary_key, $updateNulls);
-        } else {
-            $stored = $this->_database->insertObject($this->_table, $this, $this->_primary_key);
-        }
-
-        if ($stored) {
-        } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_database->getErrorMsg()));
-            $this->setError($e);
-            return false;
-        }
-
-        if ($this->_locked) {
-            $this->_unlock();
-        }
-
-        /** Asset tracking */
-        if (isset($this->_table->asset_type_id)) {
-            $this->_storeAsset();
-        }
-
-        return true;
-    }
-
-    private function _storeAsset()
-    {
-        $asset = MolajoTable::getInstance('Asset');
-
-        $asset->asset_type_id = $this->_table->asset_type_id;
-        $this->asset_id = $asset->save();
-
-        $asset->load();
-
-        if ($asset->getError()) {
-            $this->setError($asset->getError());
-            return false;
-        }
-
-        if ((int)$this->asset_id == 0) {
-            $query = $this->_database->getQuery(true);
-            $query->update($this->_database->quoteName($this->_table));
-            $query->set('asset_id = ' . (int)$this->asset_id);
-            $query->where($this->_database->quoteName($k) . ' = ' . (int)$this->$k);
-            $this->_database->setQuery($query);
-
-            if (!$this->_database->query()) {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_database->getErrorMsg()));
-                $this->setError($e);
-                return false;
+        foreach ($this->getFields() as $k => $v)
+        {
+            if ($k == $this->_primary_key
+                || (strpos($k, '_') == 0)) {
+            } else {
+                $this->$k = $v->Default;
             }
         }
-
-        //
-        // View Access
-        //
-        //		$grouping = MolajoTable::getInstance('Grouping');
-
-        //       if ((int) $this->access == 0) {
-        //            $asset->content_table = $this->_table;
-        //            $this->asset_id = $asset->save();
-        //        } else {
-        //            $asset->load();
-        //        }
-
-        //        if ($asset->getError()) {
-        //            $this->setError($asset->getError());
-        //            return false;
-        //       }
-
-        //        if ((int) $this->asset_id == 0) {
-        //			$query = $this->_database->getQuery(true);
-        //			$query->update($this->_database->quoteName($this->_table));
-        //			$query->set('asset_id = '.(int) $this->asset_id);
-        //			$query->where($this->_database->quoteName($k).' = '.(int) $this->$k);
-        //			$this->_database->setQuery($query);
-
-        //			if ($this->_database->query()) {
-        //            } else {
-        //				$e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_database->getErrorMsg()));
-        //				$this->setError($e);
-        //				return false;
-        //			}
-        //        }
     }
 
     /**
      * save
      *
-     * Method to provide a shortcut to binding, checking and storing a MolajoTable
-     * instance to the database table.  The method will check a row in once the
-     * data has been stored and if an ordering filter is present will attempt to
-     * reorder the table rows based on the filter.  The ordering filter is an instance
-     * property name.  The rows that will be reordered are those whose value matches
-     * the MolajoTable instance for the property specified.
+     * Method to provide a shortcut to binding, checking and storing data
      *
      * @param   mixed   An associative array or object to bind to the MolajoTable instance.
      * @param   string  Filter for the order updating
@@ -547,6 +341,164 @@ abstract class MolajoTable extends JObject
         $this->setError('');
 
         return true;
+    }
+
+    /**
+     * bind
+     *
+     * Method to bind an associative array or object to the MolajoTable instance. This
+     * method only binds properties that are publicly accessible and optionally
+     * takes an array of properties to ignore when binding.
+     *
+     * @param   mixed  Data to bind to the table
+     * @param   mixed  Properties to not bind (optional)
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   1.0
+     */
+    public function bind($source, $ignore = array())
+    {
+        if (is_object($source)
+            || is_array($source)) {
+        } else {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
+            $this->setError($e);
+            return false;
+        }
+
+        if (is_object($source)) {
+            $source = get_object_vars($source);
+        }
+
+        if (is_array($ignore)) {
+        } else {
+            $ignore = explode(' ', $ignore);
+        }
+
+        foreach ($this->getProperties() as $k => $v) {
+            if (in_array($k, $ignore)) {
+            } else {
+                if (isset($source[$k])) {
+                    $this->$k = $source[$k];
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * check
+     *
+     * Method to perform sanity checks on the MolajoTable instance properties to ensure
+     * they are safe to store in the database.  Child classes should override this
+     * method to make sure the data they are storing in the database is safe and
+     * as expected before storage.
+     *
+     * @return  boolean  True if the instance is sane and able to be stored in the database.
+     * @since   1.0
+     */
+    public function check()
+    {
+        return true;
+    }
+
+    /**
+     * store
+     *
+     * Method to store a row (insert: no PK; update: PK) in the database.
+     *
+     * @param   boolean True to update fields even if they are null.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   1.0
+     */
+    public function store($updateNulls = false)
+    {
+        $k = $this->_primary_key;
+
+        if ($this->$k) {
+            $stored = $this->_database->updateObject($this->_table, $this, $this->_primary_key, $updateNulls);
+        } else {
+            $stored = $this->_database->insertObject($this->_table, $this, $this->_primary_key);
+        }
+
+        if ($stored) {
+        } else {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            $this->setError($e);
+            return false;
+        }
+
+        if ($this->_locked) {
+            $this->_unlock();
+        }
+
+        /** Asset tracking */
+        if (isset($this->_table->asset_type_id)) {
+            $this->_storeAsset();
+        }
+
+        return true;
+    }
+
+    /**
+     * _storeAsset
+     *
+     * Method to store a row (insert: no PK; update: PK) in the assets table
+     *
+     * @return  boolean  True on success.
+     *
+     * @return bool
+     * @since   1.0
+     */
+    private function _storeAsset()
+    {
+        $asset = MolajoTable::getInstance('Asset');
+
+        $asset->asset_type_id = $this->_table->asset_type_id;
+
+        $this->asset_id = $asset->save();
+
+        $asset->load();
+        if ($asset->getError()) {
+            $this->setError($asset->getError());
+            return false;
+        }
+
+        //
+        // View Access
+        //
+        //		$grouping = MolajoTable::getInstance('Grouping');
+
+        //       if ((int) $this->access == 0) {
+        //            $asset->content_table = $this->_table;
+        //            $this->asset_id = $asset->save();
+        //        } else {
+        //            $asset->load();
+        //        }
+
+        //        if ($asset->getError()) {
+        //            $this->setError($asset->getError());
+        //            return false;
+        //       }
+
+        //        if ((int) $this->asset_id == 0) {
+        //			$query = $this->_database->getQuery(true);
+        //			$query->update($this->_database->quoteName($this->_table));
+        //			$query->set('asset_id = '.(int) $this->asset_id);
+        //			$query->where($this->_database->quoteName($k).' = '.(int) $this->$k);
+        //			$this->_database->setQuery($query);
+
+        //			if ($this->_database->query()) {
+        //            } else {
+        //				$e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_database->getErrorMsg()));
+        //				$this->setError($e);
+        //				return false;
+        //			}
+        //        }
     }
 
     /**
@@ -1162,43 +1114,6 @@ abstract class MolajoTable extends JObject
         }
 
         return true;
-    }
-
-    /**
-     * toXML
-     *
-     * Method to export the MolajoTable instance properties to an XML string.
-     *
-     * @deprecated
-     * @param   boolean  True to map foreign keys to text values.
-     * @return  string   XML string representation of the instance.
-     * @since   1.0
-     */
-    public function toXML($mapKeysToText = false)
-    {
-        // Initialise variables.
-        $xml = array();
-        $map = $mapKeysToText ? ' mapkeystotext="true"' : '';
-
-        // Open root node.
-        $xml[] = '<record table="' . $this->_table . '"' . $map . '>';
-
-        // Get the publicly accessible instance properties.
-        foreach (get_object_vars($this) as $k => $v)
-        {
-            // If the value is null or non-scalar, or the field is internal ignore it.
-            if (!is_scalar($v) || ($v === null) || ($k[0] == '_')) {
-                continue;
-            }
-
-            $xml[] = '	<' . $k . '><![CDATA[' . $v . ']]></' . $k . '>';
-        }
-
-        // Close root node.
-        $xml[] = '</record>';
-
-        // Return the XML array imploded over new lines.
-        return implode("\n", $xml);
     }
 
     /**
