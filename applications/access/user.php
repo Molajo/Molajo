@@ -264,7 +264,7 @@ class MolajoUser extends JObject
         $this->name = trim($this->first_name.' '.$this->last_name);
 
         $this->_loadCustomFields($table->custom_fields);
-        
+
         $this->_loadParameters($table->parameters);
 
         $this->applications = $table->applications;
@@ -297,7 +297,7 @@ class MolajoUser extends JObject
 
         if (isset($tabletype)) {
         } else {
-            $tabletype['name'] = 'User';
+            $tabletype['name'] = 'Users';
             $tabletype['prefix'] = 'MolajoTable';
         }
 
@@ -370,7 +370,7 @@ class MolajoUser extends JObject
         $this->custom_fields = new JRegistry;
         $this->custom_fields->loadString($custom_fields, 'JSON');
         $this->custom_fields->toArray();
-    }    
+    }
 
     /**
      * getParameter

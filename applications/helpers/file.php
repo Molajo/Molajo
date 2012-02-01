@@ -32,7 +32,19 @@ class MolajoFileHelper
         if (class_exists($class)) {
             return true;
         }
+
+        /** Populate Configuration with Application Parameters from Database */
+        if (strpos($class, '_') === false) {
+        } else {
+            $classArray = explode('_', $class);
+            $class = '';
+            foreach ($classArray as $item) {
+                $class .= ucfirst($item);
+            }
+        }
+
         if (file_exists($file)) {
+//echo 'Class '.$class.'<br />';
             JLoader::register($class, $file);
         } else {
             if (MolajoController::$application == null) {

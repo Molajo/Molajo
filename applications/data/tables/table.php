@@ -75,10 +75,10 @@ abstract class MolajoTable extends JObject
         }
 
         if (isset($config['databaseo'])) {
+            $database = $config['databaseo'];
         } else {
             $database = MolajoController::getDbo();
         }
-        $database = $config['databaseo'];
 
         return new $tableClass($database);
     }

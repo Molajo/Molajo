@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage Filter
  * @since      1.6
  */
-class MolajoFieldChecked_out extends MolajoField
+class MolajoFieldCheckedOut extends MolajoField
 {
     /**
      *  __construct

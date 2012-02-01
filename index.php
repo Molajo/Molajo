@@ -180,8 +180,10 @@ require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-twig.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-mustache.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-doctrine.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-simple-pie.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/overrides.php';
-
+//require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/overrides.php';
+abstract class JFactory extends MolajoController
+{
+}
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**

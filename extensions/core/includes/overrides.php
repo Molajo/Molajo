@@ -31,6 +31,7 @@ class JApplicationHelper extends MolajoApplicationHelper
 //{
 //}
 
+
 class JSession extends MolajoSession
 {
 }
@@ -47,35 +48,35 @@ class JComponentHelper extends MolajoRendererComponent
 {
 }
 
-class JTableAsset extends MolajoTableAsset
+class JTableAsset extends MolajoTableAssets
 {
 }
 
-class JTableCategory extends MolajoTableCategory
+class JTableCategory extends MolajoTableAssetCategories
 {
 }
 
-class JTableExtension extends MolajoTableExtension
+class JTableExtension extends MolajoTableExtensions
 {
 }
 
-class JTableLanguage extends MolajoTableLanguage
-{
-}
+//class JTableLanguage extends MolajoTableLanguage
+//{
+//}
 
-class JTableMenu extends MolajoTableMenuitem
-{
-}
+//class JTableMenu extends MolajoTableMenuitem
+//{
+//}
 
-class JTableMenuType extends MolajoTableMenu
-{
-}
+//class JTableMenuType extends MolajoTableMenu
+//{
+//}
 
-class JTableModule extends MolajoTableModule
-{
-}
+//class JTableModule extends MolajoTableModule
+//{
+//}
 
-class JTableSession extends MolajoTableSession
+class JTableSession extends MolajoTableSessions
 {
 }
 
@@ -87,17 +88,17 @@ class JTableNested extends MolajoTableNested
 {
 }
 
-class JTableUpdate extends MolajoTableUpdate
+class JTableUpdate extends MolajoTableExtensionSites
 {
 }
 
-class JTableUser extends MolajoTableUser
+class JTableUser extends MolajoTableUsers
 {
 }
 
-class JTableUsergroup extends MolajoTableGroup
-{
-}
+//class JTableUsergroup extends MolajoTableGroups
+//{
+//}
 /**
 class JForm extends MolajoForm
 {
@@ -120,7 +121,7 @@ class JFormHelper extends MolajoFormHelper
 //class JHelp extends MolajoApplicationHelper
 //{
 //}
-
+/**
 class JLanguageHelper extends MolajoLanguageHelper
 {
 }
@@ -144,7 +145,7 @@ class JAuthentication extends MolajoAuthentication
 class JAuthenticationResponse extends MolajoAuthenticationResponse
 {
 }
-
+*/
 abstract class JUserHelper extends MolajoUser
 {
 }
@@ -169,7 +170,7 @@ https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f4421
 //class JExtension extends MolajoRequest
 //{
 //}
-
+/**
 abstract class JInstallerHelper extends MolajoInstallerHelper
 {
 }
@@ -212,3 +213,4 @@ class JUpdater extends MolajoUpdater
 //class JUpdaterExtension extends MolajoUpdaterExtension {}
 
 
+*/
