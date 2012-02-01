@@ -357,7 +357,6 @@ class MolajoControllerApplication
      */
     public function getConfig()
     {
-
         $this->_metadata = new JRegistry;
         $this->_metadata->loadString($this->_appdb->metadata);
 
