@@ -16,7 +16,7 @@ class CommentsControllerUpdate extends MolajoControllerUpdate
 class CommentsControllerUpdatelist extends MolajoControllerUpdatelist
 {
 }
-class CommentsTableComment extends MolajoTableContent
+class CommentsTableComment extends MolajoModelContent
 {
 }
 class CommentsModelDisplay extends MolajoModelDisplay

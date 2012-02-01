@@ -109,7 +109,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
                 }
                 break;
             case 'EXTENSION':
-                $update = MolajoTable::getInstance('update');
+                $update = MolajoModel::getInstance('update');
                 $update->set('extension_site_id', $this->_extension_site_id);
                 foreach ($this->_updatecols as $col)
                 {
@@ -212,7 +212,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
             $query->update('#__extension_sites');
             $query->set('enabled = 0');
             $query->where('extension_site_id = ' . $this->_extension_site_id);
-            $dbo->setQuery($query);
+            $dbo->setQuery($query->__toString());
             $dbo->Query();
 
             JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');

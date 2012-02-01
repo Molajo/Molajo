@@ -142,7 +142,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
 
         // Extension Registration
 
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $eid = $row->find(array('element' => strtolower($this->get('element')), 'type' => 'package'));
         if ($eid) {
             $row->load($eid);
@@ -219,7 +219,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
         $row = null;
         $retval = true;
 
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $row->load($id);
 
         if ($row->protected) {
@@ -340,7 +340,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
                 break;
         }
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $result = $db->loadResult();
 
         // Note: For themes, libraries and packages their unique name is their key.

@@ -60,7 +60,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
         // you can't have two types at the same address, doesn't make sense
         $query = $dbo->getQuery(true);
         $query->select('extension_site_id')->from('#__extension_sites')->where('location = ' . $dbo->Quote($location));
-        $dbo->setQuery($query);
+        $dbo->setQuery($query->__toString());
         $extension_site_id = (int)$dbo->loadResult();
 
         // if it doesn't exist, add it!
@@ -71,7 +71,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
             $query->set('type = ' . $dbo->Quote($type));
             $query->set('location = ' . $dbo->Quote($location));
             $query->set('enabled = ' . (int)$enabled);
-            $dbo->setQuery($query);
+            $dbo->setQuery($query->__toString());
             if ($dbo->query()) {
                 // link up this extension to the update site
                 $extension_site_id = $dbo->insertid();
@@ -84,7 +84,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
             // look for an update site entry that exists
             $query->select('extension_site_id')->from('#__extension_sites_extensions');
             $query->where('extension_site_id = ' . $extension_site_id)->where('extension_id = ' . $this->eid);
-            $dbo->setQuery($query);
+            $dbo->setQuery($query->__toString());
             $tmpid = (int)$dbo->loadResult();
             if (!$tmpid) {
                 // link this extension to the relevant update site
@@ -92,7 +92,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
                 $query->insert('#__extension_sites_extensions');
                 $query->set('extension_site_id = ' . $extension_site_id);
                 $query->set('extension_id = ' . $this->eid);
-                $dbo->setQuery($query);
+                $dbo->setQuery($query->__toString());
                 $dbo->query();
             }
         }
@@ -131,13 +131,13 @@ class plgExtensionMolajo extends MolajoPluginHelper
             $db = MolajoController::getDbo();
             $query = $db->getQuery(true);
             $query->delete()->from('#__extension_sites_extensions')->where('extension_id = ' . $eid);
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             $db->Query();
 
             // delete any unused update sites
             $query->clear();
             $query->select('extension_site_id')->from('#__extension_sites_extensions');
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             $results = $db->loadResultArray();
 
             if (is_array($results)) {
@@ -160,7 +160,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
                     // TODO: investigate alternative of using a query after the delete below with a query and not in like above
                     $query->clear();
                     $query->delete()->from('#__updates')->where('extension_site_id IN (' . implode(',', $extension_sites_pending_delete) . ')');
-                    $db->setQuery($query);
+                    $db->setQuery($query->__toString());
                     $db->query();
                 }
 
@@ -173,7 +173,7 @@ class plgExtensionMolajo extends MolajoPluginHelper
             // last but not least we wipe out any pending updates for the extension
             $query->clear();
             $query->delete()->from('#__updates')->where('extension_id = ' . $eid);
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             $db->query();
         }
     }

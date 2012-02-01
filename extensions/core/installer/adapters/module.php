@@ -201,7 +201,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         $query = $db->getQuery(true);
         $query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
         $query->where($query->qn('element') . ' = ' . $query->q($element))->where($query->qn('application_id') . ' = ' . (int)$clientId);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         try
         {
@@ -361,7 +361,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
         // Database Processing Section
 
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
 
         // Was there a module already installed with the same name?
         if ($id) {
@@ -408,7 +408,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
             // Create unpublished module in jos_modules
             $name = preg_replace('#[\*?]#', '', MolajoTextHelper::_($this->get('name')));
-            $module = MolajoTable::getInstance('module');
+            $module = MolajoModel::getInstance('module');
             $module->set('title', $name);
             $module->set('module', $this->get('element'));
             $module->set('access', '1');
@@ -543,7 +543,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         foreach ($site_list as $module)
         {
             $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . "/modules/$module/$module.xml");
-            $extension = MolajoTable::getInstance('extension');
+            $extension = MolajoModel::getInstance('extension');
             $extension->set('type', 'module');
             $extension->set('application_id', $site_info->id);
             $extension->set('element', $module);
@@ -556,7 +556,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         foreach ($admin_list as $module)
         {
             $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . "/modules/$module/$module.xml");
-            $extension = MolajoTable::getInstance('extension');
+            $extension = MolajoModel::getInstance('extension');
             $extension->set('type', 'module');
             $extension->set('application_id', $admin_info->id);
             $extension->set('element', $module);
@@ -658,7 +658,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
         // First order of business will be to load the module object table from the database.
         // This should give us the necessary information to proceed.
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
 
         if (!$row->load((int)$id) || !strlen($row->element)) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_UNINSTALL_ERRORUNKOWNEXTENSION'));
@@ -755,7 +755,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         // Remove the schema version
         $query = $db->getQuery(true);
         $query->delete()->from('#__schemas')->where('extension_id = ' . $row->extension_id);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $db->Query();
 
         // Remove other files
@@ -767,7 +767,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         $query->select($query->qn('id'))->from($query->qn('#__modules'));
         $query->where($query->qn('module') . ' = ' . $query->q($row->element));
         $query->where($query->qn('application_id') . ' = ' . (int)$row->application_id);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         try
         {
@@ -786,7 +786,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
             // Wipe out any items assigned to menus
             $query = 'DELETE' . ' FROM #__modules_menu' . ' WHERE moduleid IN (' . $modID . ')';
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             try
             {
                 $db->query();
@@ -799,7 +799,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
             // Wipe out any instances in the modules table
             $query = 'DELETE' . ' FROM #__modules' . ' WHERE id IN (' . $modID . ')';
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
 
             try
             {
@@ -815,7 +815,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         // Now we will no longer need the module object, so let's delete it and free up memory
         $row->delete($row->extension_id);
         $query = 'DELETE FROM `#__modules` WHERE module = ' . $db->Quote($row->element) . ' AND application_id = ' . $row->application_id;
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         try
         {
@@ -855,7 +855,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
         // Remove the entry from the #__modules_menu table
         $query = 'DELETE' . ' FROM `#__modules_menu`' . ' WHERE moduleid=' . (int)$arg['id'];
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         try
         {
@@ -884,7 +884,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
         // Remove the entry from the #__modules table
         $query = 'DELETE' . ' FROM `#__modules`' . ' WHERE id=' . (int)$arg['id'];
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         try
         {
             return $db->query();

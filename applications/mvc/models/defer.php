@@ -67,15 +67,4 @@ class MolajoModelDefer extends MolajoModel
         return $this->items;
         /** custom */
     }
-
-    /**
-     * compressJS
-     *
-     * @return    array
-     *
-     * @since    1.0
-     */
-    public function compressJS()
-    {
-    }
 }

@@ -40,7 +40,7 @@ class MolajoControllerApplication
      * @var    object
      * @since  1.0
      */
-    protected static $_appdb = null;
+    protected static $__appQueryResults = null;
 
     /**
      * Application custom fields
@@ -213,7 +213,8 @@ class MolajoControllerApplication
     /**
      * getInstance
      *
-     * Returns a reference to the global Application object, only creating it if it doesn't already exist.
+     * Returns a reference to the global Application object,
+     *  only creating it if it doesn't already exist.
      *
      * @static
      * @param  null $id
@@ -223,7 +224,9 @@ class MolajoControllerApplication
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance($id = null, JRegistry $config = null, JInput $input = null)
+    public static function getInstance($id = null,
+                                       JRegistry $config = null,
+                                       JInput $input = null)
     {
         if ($id == null) {
             $id = MOLAJO_APPLICATION;
@@ -241,22 +244,22 @@ class MolajoControllerApplication
                 $config = new JRegistry;
             }
 
-            $appdb = MolajoApplicationHelper::getApplicationInfo($id);
-            if ($appdb === false) {
+            $_appQueryResults = MolajoApplicationHelper::getApplicationInfo($id);
+            if ($_appQueryResults === false) {
                 return false;
             }
 
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
-                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_CORE . '/applications/' . $appdb->path);
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_CORE . '/applications/' . $_appQueryResults->path);
             }
 
             if (defined('MOLAJO_APPLICATION_ID')) {
             } else {
-                define('MOLAJO_APPLICATION_ID', $appdb->id);
+                define('MOLAJO_APPLICATION_ID', $_appQueryResults->id);
             }
 
-            self::$instance = new MolajoControllerApplication($config, $input, $appdb);
+            self::$instance = new MolajoControllerApplication($config, $input, $_appQueryResults);
         }
 
         return self::$instance;
@@ -267,12 +270,12 @@ class MolajoControllerApplication
      *
      * @param  mixed   $input
      * @param  mixed   $config
-     * @param  object  $appdb
+     * @param  object  $_appQueryResults
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null, JInput $input = null, $appdb = null)
+    public function __construct(JRegistry $config = null, JInput $input = null, $_appQueryResults = null)
     {
         if ($input instanceof JInput) {
             $this->_input = $input;
@@ -286,8 +289,8 @@ class MolajoControllerApplication
             $this->_config = new JRegistry;
         }
 
-        /** $_appdb database results from application helpers */
-        $this->_appdb = $appdb;
+        /** $__appQueryResults database results from application helpers */
+        $this->__appQueryResults = $_appQueryResults;
 
         /** get configuration */
         $this->getConfig();
@@ -358,12 +361,12 @@ class MolajoControllerApplication
     public function getConfig()
     {
         $this->_metadata = new JRegistry;
-        $this->_metadata->loadString($this->_appdb->metadata);
+        $this->_metadata->loadString($this->__appQueryResults->metadata);
 
         $this->_custom_fields = new JRegistry;
-        $this->_custom_fields->loadString($this->_appdb->custom_fields);
+        $this->_custom_fields->loadString($this->__appQueryResults->custom_fields);
 
-        $configClass = new MolajoConfigurationHelper($this->_appdb->parameters);
+        $configClass = new MolajoConfigurationHelper($this->__appQueryResults->parameters);
         $this->_config = $configClass->getConfig();
 
         return;

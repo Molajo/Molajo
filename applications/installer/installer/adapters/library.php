@@ -135,7 +135,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $this->parent->parseMedia($this->manifest->media);
 
         // Extension Registration
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $row->name = $this->get('name');
         $row->type = 'library';
         $row->element = $this->get('element');
@@ -216,7 +216,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
 
         // First order of business will be to load the module object table from the database.
         // This should give us the necessary information to proceed.
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         if (!$row->load((int)$id) || !strlen($row->element)) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('ERRORUNKOWNEXTENSION'));
             return false;
@@ -301,7 +301,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         {
             $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_SITE_MANIFESTS . '/libraries/' . $file);
             $file = JFile::stripExt($file);
-            $extension = MolajoTable::getInstance('extension');
+            $extension = MolajoModel::getInstance('extension');
             $extension->set('type', 'library');
             $extension->set('application_id', 0);
             $extension->set('element', $file);

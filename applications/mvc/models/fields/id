@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<field name="id">
+    <key>1</key>
+    <autoincrement>1</autoincrement>
+    <formfield>
+        <hidden>1</hidden>
+    </formfield>
+</field>

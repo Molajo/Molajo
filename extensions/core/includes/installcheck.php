@@ -19,11 +19,9 @@ if (MOLAJO_APPLICATION == 'installation'
 
 } else {
     if (!file_exists(MOLAJO_SITE_FOLDER_PATH . '/configuration.php')
-        || filesize(MOLAJO_SITE_FOLDER_PATH . '/configuration.php' < 10)
-        || file_exists(MOLAJO_BASE_FOLDER . '/installation/index.php')
-    ) {
+        || filesize(MOLAJO_SITE_FOLDER_PATH . '/configuration.php' < 10)) {
 
-        $redirect = MOLAJO_BASE_URL . '/installation/';
+        $redirect = MOLAJO_BASE_URL . 'installation/';
         header('Location: ' . $redirect);
         exit();
     }

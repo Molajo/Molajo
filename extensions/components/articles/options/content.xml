@@ -2,12 +2,8 @@
 <table name="content">
     <fields>
         <fieldset name="primary">
-            <field name="id">
-                <primary_key>true</primary_key>
-                <autoincrement>true</autoincrement>
-                <formfield>hidden</formfield>
-            </field>
-            <field name="extension_instance_id">
+            <field name="id" />
+            <field name="extension_instance_id" />
                 <foreign_key>extension_instances</foreign_key>
                 <filter>integer</filter>
                 <formfield>select</formfield>

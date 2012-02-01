@@ -183,7 +183,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
                 ->from($query->qn('#__extensions'));
         $query->where($query->qn('type') . ' = ' . $query->q('file'))
                 ->where($query->qn('element') . ' = ' . $query->q($element));
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         try
         {
             $db->Query();
@@ -197,7 +197,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
             return false;
         }
         $id = $db->loadResult();
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
 
         if ($id) {
             // Load the entry and update the manifest_cache
@@ -307,7 +307,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
         }
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(
             array('element' => $this->get('element'), 'type' => 'file', 'application_id' => '', 'folder' => '')
         );
@@ -364,7 +364,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
     public function uninstall($id)
     {
         // Initialise variables.
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         if (!$row->load($id)) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_LOAD_ENTRY'));
             return false;
@@ -458,7 +458,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
             $query->delete()
                     ->from('#__schemas')
                     ->where('extension_id = ' . $row->extension_id);
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             $db->Query();
 
             // Set root folder names
@@ -544,7 +544,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
                 ->from($query->qn('#__extensions'));
         $query->where($query->qn('type') . ' = ' . $query->q('file'))
                 ->where($query->qn('element') . ' = ' . $query->q($extension));
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         try
         {

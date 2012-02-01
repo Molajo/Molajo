@@ -35,7 +35,7 @@ abstract class MolajoUserHelper
     {
         $db = MolajoController::getDbo();
         $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         return $db->loadResult();
     }
@@ -84,7 +84,7 @@ abstract class MolajoUserHelper
 
     /**
      * addUserToGroup
-     * 
+     *
      * Method to add a user to a group.
      *
      * @param   integer  $user_id    The id of the user.
@@ -239,7 +239,7 @@ abstract class MolajoUserHelper
                  . ' AND block = 1'
                  . ' AND last_visit_datetime = ' . $db->Quote('0000-00-00 00:00:00');
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $id = intval($db->loadResult());
 
         // Is it a valid user to activate?

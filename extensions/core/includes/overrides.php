@@ -48,55 +48,55 @@ class JComponentHelper extends MolajoRendererComponent
 {
 }
 
-class JTableAsset extends MolajoTableAssets
+class JTableAsset extends MolajoModelAssets
 {
 }
 
-class JTableCategory extends MolajoTableAssetCategories
+class JTableCategory extends MolajoModelAssetCategories
 {
 }
 
-class JTableExtension extends MolajoTableExtensions
+class JTableExtension extends MolajoModelExtensions
 {
 }
 
-//class JTableLanguage extends MolajoTableLanguage
+//class JTableLanguage extends MolajoModelLanguage
 //{
 //}
 
-//class JTableMenu extends MolajoTableMenuitem
+//class JTableMenu extends MolajoModelMenuitem
 //{
 //}
 
-//class JTableMenuType extends MolajoTableMenu
+//class JTableMenuType extends MolajoModelMenu
 //{
 //}
 
-//class JTableModule extends MolajoTableModule
+//class JTableModule extends MolajoModelModule
 //{
 //}
 
-class JTableSession extends MolajoTableSessions
+class JTableSession extends MolajoModelSessions
 {
 }
 
-abstract class JTable extends MolajoTable
+abstract class JTable extends MolajoModel
 {
 }
 
-class JTableNested extends MolajoTableNested
+class JTableNested extends MolajoModelNested
 {
 }
 
-class JTableUpdate extends MolajoTableExtensionSites
+class JTableUpdate extends MolajoModelExtensionSites
 {
 }
 
-class JTableUser extends MolajoTableUsers
+class JTableUser extends MolajoModelUsers
 {
 }
 
-//class JTableUsergroup extends MolajoTableGroups
+//class JTableUsergroup extends MolajoModelGroups
 //{
 //}
 /**

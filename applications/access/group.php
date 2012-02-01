@@ -99,14 +99,14 @@ class MolajoGroup
      */
     protected function _load($id)
     {
-        $table = $this->_getTable();
+        $table = $this->_getModel();
 
         $results = $table->load($id);
 
         $db = MolajoController::getDbo();
 
         //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
-        $columns = $db->getTableColumns('#__users', true);
+        $columns = $db->getModelColumns('#__users', true);
         foreach ($columns as $name => $value) {
             $this->$name = $table->$name;
         }
@@ -130,7 +130,7 @@ class MolajoGroup
     }
 
     /**
-     * _getTable
+     * _getModel
      *
      * Method to get the user table object
      *
@@ -142,14 +142,14 @@ class MolajoGroup
      * @return  object   The user table object
      * @since   1.0
      */
-    protected function _getTable($type = null, $prefix = 'MolajoTable')
+    protected function _getModel($type = null, $prefix = 'MolajoModel')
     {
         static $tabletype;
 
         if (isset($tabletype)) {
         } else {
             $tabletype['name'] = 'Group';
-            $tabletype['prefix'] = 'MolajoTable';
+            $tabletype['prefix'] = 'MolajoModel';
         }
 
         if (isset($type)) {
@@ -157,7 +157,7 @@ class MolajoGroup
             $tabletype['prefix'] = $prefix;
         }
 
-        return MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
+        return MolajoModel::getInstance($tabletype['name'], $tabletype['prefix']);
     }
 
     public function action()

@@ -60,7 +60,7 @@ class MolajoInstaller extends MolajoAdapter
     /**
      * Extension Table Entry
      *
-     * @var    MolajoTableExtension
+     * @var    MolajoModelExtension
      * @since  11.1
      */
     public $extension = null;
@@ -334,7 +334,7 @@ class MolajoInstaller extends MolajoAdapter
                     // Remove the entry from the #__extensions table
                     $query->delete($db->quoteName('#__extensions'));
                     $query->where($db->quoteName('extension_id') . ' = ' . (int)$step['id']);
-                    $db->setQuery($query);
+                    $db->setQuery($query->__toString());
                     $stepval = $db->query();
 
                     break;
@@ -451,7 +451,7 @@ class MolajoInstaller extends MolajoAdapter
     public function discover_install($eid = null)
     {
         if ($eid) {
-            $this->extension = MolajoTable::getInstance('extension');
+            $this->extension = MolajoModel::getInstance('extension');
 
             if (!$this->extension->load($eid)) {
                 $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
@@ -664,7 +664,7 @@ class MolajoInstaller extends MolajoAdapter
     function refreshManifestCache($eid)
     {
         if ($eid) {
-            $this->extension = MolajoTable::getInstance('extension');
+            $this->extension = MolajoModel::getInstance('extension');
 
             if (!$this->extension->load($eid)) {
                 $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
@@ -859,7 +859,7 @@ class MolajoInstaller extends MolajoAdapter
                     $query = trim($query);
 
                     if ($query != '' && $query{0} != '#') {
-                        $db->setQuery($query);
+                        $db->setQuery($query->__toString());
 
                         if (!$db->query()) {
                             MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
@@ -919,14 +919,14 @@ class MolajoInstaller extends MolajoAdapter
                     $query->delete()
                             ->from('#__schemas')
                             ->where('extension_id = ' . $eid);
-                    $db->setQuery($query);
+                    $db->setQuery($query->__toString());
 
                     if ($db->query()) {
                         $query->clear();
                         $query->insert('#__schemas')
                                 ->set('extension_id = ' . $eid)
                                 ->set('version_id = ' . $db->quote(end($files)));
-                        $db->setQuery($query);
+                        $db->setQuery($query->__toString());
                         $db->query();
                     }
                 }
@@ -983,7 +983,7 @@ class MolajoInstaller extends MolajoAdapter
                     $query->select('version_id')
                             ->from('#__schemas')
                             ->where('extension_id = ' . $eid);
-                    $db->setQuery($query);
+                    $db->setQuery($query->__toString());
                     $version = $db->loadResult();
 
                     if ($version) {
@@ -1014,7 +1014,7 @@ class MolajoInstaller extends MolajoAdapter
                                 {
                                     $query = trim($query);
                                     if ($query != '' && $query{0} != '#') {
-                                        $db->setQuery($query);
+                                        $db->setQuery($query->__toString());
 
                                         if (!$db->query()) {
                                             MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
@@ -1034,14 +1034,14 @@ class MolajoInstaller extends MolajoAdapter
                     $query->delete()
                             ->from('#__schemas')
                             ->where('extension_id = ' . $eid);
-                    $db->setQuery($query);
+                    $db->setQuery($query->__toString());
 
                     if ($db->Query()) {
                         $query->clear();
                         $query->insert('#__schemas')
                                 ->set('extension_id = ' . $eid)
                                 ->set('version_id = ' . $db->quote(end($files)));
-                        $db->setQuery($query);
+                        $db->setQuery($query->__toString());
                         $db->Query();
                     }
                 }

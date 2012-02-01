@@ -248,30 +248,32 @@ class MolajoUser extends JObject
      */
     protected function _load($id)
     {
-        $table = $this->_getTable();
+        /** retrieve data for user */
+        $model = $this->_getModel();
 
-        $results = $table->load($id);
-
+        $data = $model->load($id);
+        echo '<pre>';
+        var_dump($data);
+        echo '</pre>';
+                die;
         $db = MolajoController::getDbo();
-
-        //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
-        $columns = $db->getTableColumns('#__users', true);
+        $columns = $db->getModelColumns('#__users', true);
         foreach ($columns as $name=>$value) {
-            $this->$name = $table->$name;
+            $this->$name = $model->$name;
         }
 
         /** extra fields */
         $this->name = trim($this->first_name.' '.$this->last_name);
 
-        $this->_loadCustomFields($table->custom_fields);
+        $this->_loadCustomFields($model->custom_fields);
 
-        $this->_loadParameters($table->parameters);
+        $this->_loadParameters($model->parameters);
 
-        $this->applications = $table->applications;
+        $this->applications = $model->applications;
 
-        $this->groups = $table->groups;
+        $this->groups = $model->groups;
 
-        $this->view_groups = $table->view_groups;
+        $this->view_groups = $model->view_groups;
 
         $this->guest = 0;
 
@@ -279,40 +281,40 @@ class MolajoUser extends JObject
     }
 
     /**
-     * _getTable
+     * _getModel
      *
-     * Method to get the user table object
+     * Method to get the user model object
      *
-     * This function uses a static variable to store the user table name
+     * @param   string   $name
+     * @param   string   $prefix
      *
-     * @param   string   $type    The user table name to be used
-     * @param   string   $prefix  The user table prefix to be used
-     *
-     * @return  object   The user table object
+     * @return  object   user model
      * @since   1.0
      */
-    protected function _getTable($type = null, $prefix = 'MolajoTable')
+    protected function _getModel($name = 'Users', $prefix = 'MolajoModel')
     {
-        static $tabletype;
+        static $modeltype;
 
-        if (isset($tabletype)) {
+        if (isset($modeltype)) {
+
         } else {
-            $tabletype['name'] = 'Users';
-            $tabletype['prefix'] = 'MolajoTable';
+            $modeltype['name'] = $name;
+            $modeltype['prefix'] = $prefix;
         }
 
-        if (isset($type)) {
-            $tabletype['name'] = $type;
-            $tabletype['prefix'] = $prefix;
-        }
+        $className = $modeltype['prefix'].$modeltype['name'];
 
-        return MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
+        return $className::getInstance(
+            $modeltype['name'],
+            $modeltype['prefix'],
+            array()
+        );
     }
 
     /**
      * setLastVisit
      *
-     * Pass through method to the table for setting the last visit date
+     * Pass through method to the model for setting the last visit date
      *
      * @param   integer  $timestamp    The timestamp, defaults to 'now'.
      *
@@ -321,9 +323,9 @@ class MolajoUser extends JObject
      */
     public function setLastVisit($timestamp = null)
     {
-        $table = $this->getTable();
-        $table->load($this->id);
-        return $table->setLastVisit($timestamp);
+        $model = $this->getModel();
+        $model->load($this->id);
+        return $model->setLastVisit($timestamp);
     }
 
     /**
@@ -571,17 +573,17 @@ class save_user_crud
     {
         // NOTE: $updateOnly is currently only used in the user reset password method.
         // Create the user table object
-        $table = $this->getTable();
+        $model = $this->getModel();
         $this->parameters = (string)$this->parameters;
-        $table->bind($this->getProperties());
+        $model->bind($this->getProperties());
 
         // Allow an exception to be thrown.
         try
         {
             // Check and store the object.
-            if ($table->check()) {
+            if ($model->check()) {
             } else {
-                $this->setError($table->getError());
+                $this->setError($model->getError());
                 return false;
             }
 
@@ -651,18 +653,18 @@ class save_user_crud
             }
 
             // Store the user data in the database
-            if (!($result = $table->store())) {
-                throw new MolajoException($table->getError());
+            if (!($result = $model->store())) {
+                throw new MolajoException($model->getError());
             }
 
             // Set the id for the User object in case we created a new user.
             if (empty($this->id)) {
-                $this->id = $table->get('id');
+                $this->id = $model->get('id');
             }
 
-            if ($my->id == $table->id) {
+            if ($my->id == $model->id) {
                 $registry = new JRegistry;
-                $registry->loadJSON($table->parameters);
+                $registry->loadJSON($model->parameters);
                 $my->setParameters($registry);
             }
 
@@ -692,10 +694,10 @@ class save_user_crud
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onUserBeforeDelete', array($this->getProperties()));
 
-        $table = $this->getTable();
+        $model = $this->getModel();
 
-        $result = $table->delete($this->id);
-        // $this->setError($table->getError());
+        $result = $model->delete($this->id);
+        // $this->setError($model->getError());
 
         // Trigger the onUserAfterDelete event
         $dispatcher->trigger('onUserAfterDelete', array($this->getProperties(), $result, $this->getError()));

@@ -243,7 +243,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         }
 
         // Add an entry to the extension table with a whole heap of defaults
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $row->set('name', $this->get('name'));
         $row->set('type', 'language');
         $row->set('element', $this->get('tag'));
@@ -263,7 +263,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         }
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(array('element' => $this->get('tag'), 'type' => 'language', 'application_id' => '', 'folder' => ''));
         if ($uid) {
             $update->delete($uid);
@@ -364,14 +364,14 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         // Finalization and Cleanup Section
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(array('element' => $this->get('tag'), 'type' => 'language', 'application_id' => $clientId));
         if ($uid) {
             $update->delete($uid);
         }
 
         // Update an entry to the extension table
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $eid = $row->find(array('element' => strtolower($this->get('tag')), 'type' => 'language', 'application_id' => $clientId));
         if ($eid) {
             $row->load($eid);
@@ -424,7 +424,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
     public function uninstall($eid)
     {
         // Load up the extension details
-        $extension = MolajoTable::getInstance('extension');
+        $extension = MolajoModel::getInstance('extension');
         $extension->load($eid);
         // Grab a copy of the client details
         $client = MolajoApplicationHelper::getApplicationInfo($extension->get('application_id'));
@@ -482,7 +482,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         $query = $db->getQuery(true);
         $query->from('#__users');
         $query->select('*');
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $users = $db->loadObjectList();
         if ($client->name == 'administrator') {
             $param_name = 'admin_language';
@@ -503,7 +503,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
                 $query->update('#__users');
                 $query->set('parameters=' . $db->quote($registry));
                 $query->where('id=' . (int)$user->id);
-                $db->setQuery($query);
+                $db->setQuery($query->__toString());
                 $db->query();
                 $count = $count + 1;
             }
@@ -533,7 +533,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml')) {
                 $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml');
-                $extension = MolajoTable::getInstance('extension');
+                $extension = MolajoModel::getInstance('extension');
                 $extension->set('type', 'language');
                 $extension->set('application_id', 0);
                 $extension->set('element', $language);
@@ -547,7 +547,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml')) {
                 $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml');
-                $extension = MolajoTable::getInstance('extension');
+                $extension = MolajoModel::getInstance('extension');
                 $extension->set('type', 'language');
                 $extension->set('application_id', 1);
                 $extension->set('element', $language);

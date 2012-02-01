@@ -127,15 +127,4 @@ class MolajoModelHead extends MolajoModel
         return $this->items;
         /** custom */
     }
-
-    /**
-     * compressCSS
-     *
-     * @return    array
-     *
-     * @since    1.0
-     */
-    public function compressCSS()
-    {
-    }
 }

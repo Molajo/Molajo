@@ -153,11 +153,12 @@ class MolajoImageHelper
             ' OR a.'.$db->nameQuote('start_publishing_datetime').' <= ' . $db->Quote($now) . ')');
         $query->where('(a.'.$db->nameQuote('stop_publishing_datetime').' = ' . $db->Quote($nullDate) .
             ' OR a.'.$db->nameQuote('stop_publishing_datetime').' >= ' . $db->Quote($now) . ')');
-
-        $acl = new MolajoACL ();
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
-
         $query->where('a.id = ' . (int)$this->id);
+
+        $query->from($db->nameQuote('#__assets').'as b');
+        $query->where('b.'.$db->nameQuote('source_id').' = '.$db->nameQuote('id'));
+        $query->where('b.'.$db->nameQuote('asset_type_id').' = '.$db->nameQuote('asset_type_id'));
+
         $db->setQuery($query->__toString());
 
         $this->filename = $db->loadResult();

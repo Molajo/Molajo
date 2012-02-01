@@ -325,7 +325,7 @@ class MolajoModelDisplay extends MolajoModel
     public function getItems()
     {
         /** extract actual column names from table **/
-        $table = $this->getTable();
+        $table = $this->getModel();
         $names = $table->getProperties();
 
         $this->tableFieldList = array();
@@ -609,9 +609,9 @@ class MolajoModelDisplay extends MolajoModel
         /**
         $date = MolajoController::getDate();
         $now = $date->toMySQL();
-        $nullDate = $db->getNullDate();
-        $query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
-        $query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
+        $nullDate = $database->getNullDate();
+        $query->where('(m.start_publishing_datetime = '.$database->Quote($nullDate).' OR m.start_publishing_datetime <= '.$database->Quote($now).')');
+        $query->where('(m.stop_publishing_datetime = '.$database->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$database->Quote($now).')');
          */
         /** set view access criteria for site visitor **/
         $acl = new MolajoACL ();
@@ -1064,7 +1064,7 @@ class MolajoModelDisplay extends MolajoModel
     }
 
     /**
-     * getTable
+     * getModel
      *
      * Returns a Table object, always creating it.
      *
@@ -1072,11 +1072,11 @@ class MolajoModelDisplay extends MolajoModel
      * @param    string    A prefix for the table class name. Optional.
      * @param    array    Configuration array for model. Optional.
      *
-     * @return    MolajoTable    A database object
+     * @return    MolajoModel    A database object
      */
-    public function getTable($type = '', $prefix = '', $config = array())
+    public function getModel($type = '', $prefix = '', $config = array())
     {
-        return MolajoTable::getInstance($type = ucfirst('Article'),
+        return MolajoModel::getInstance($type = ucfirst('Article'),
                                         $prefix = ucfirst($this->mvc['option'] . 'Table'),
                                         $config);
     }

@@ -28,7 +28,7 @@ class MolajoControllerSite
      * @var    object
      * @since  1.0
      */
-    static protected $_dbinfo = null;
+    static protected $_siteQueryResults = null;
 
     /**
      * $base_url
@@ -43,7 +43,7 @@ class MolajoControllerSite
      *
      * Applications the site is authorized to access
      *
-     * @var    string
+     * @var    array
      * @since  1.0
      */
     static public $applications = null;
@@ -51,7 +51,7 @@ class MolajoControllerSite
     /**
      * $parameters
      *
-     * @var    date
+     * @var    array
      * @since  1.0
      */
     static public $parameters = null;
@@ -59,7 +59,7 @@ class MolajoControllerSite
     /**
      * $custom_fields
      *
-     * @var    date
+     * @var    array
      * @since  1.0
      */
     static protected $_custom_fields = null;
@@ -107,10 +107,10 @@ class MolajoControllerSite
      *
      * @since  1.0
      */
-    public function __construct($dbinfo = null)
+    public function __construct($siteQueryResults = null)
     {
         self::$_config = new JRegistry;
-        self::$_dbinfo = $dbinfo;
+        self::$_siteQueryResults = $siteQueryResults;
     }
 
     /**
@@ -125,15 +125,15 @@ class MolajoControllerSite
     public function load()
     {
         $this->_custom_fields = new JRegistry;
-        $this->_custom_fields->loadString(self::$_dbinfo->custom_fields);
+        $this->_custom_fields->loadString(self::$_siteQueryResults->custom_fields);
 
         $this->_parameters = new JRegistry;
-        $this->_parameters->loadString(self::$_dbinfo->parameters);
+        $this->_parameters->loadString(self::$_siteQueryResults->parameters);
 
         $this->_metadata = new JRegistry;
-        $this->_metadata->loadString(self::$_dbinfo->metadata);
+        $this->_metadata->loadString(self::$_siteQueryResults->metadata);
 
-        self::$base_url = self::$_dbinfo->base_url;
+        self::$base_url = self::$_siteQueryResults->base_url;
 
         self::_setPaths();
     }

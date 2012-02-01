@@ -119,7 +119,7 @@ class MolajoControllerExtension
             $this->isNew = false;
 
         } else {
-            $this->table = $this->model->getTable();
+            $this->table = $this->model->getModel();
             $this->table->reset();
             $this->table->load((int)$this->mvc->get('mvc_id'));
 

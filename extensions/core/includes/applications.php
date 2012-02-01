@@ -39,32 +39,12 @@ foreach ($files as $file) {
 
 /** Models */
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/model.php', 'MolajoModel');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/nested.php', 'MolajoModelNested');
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'model.php') {
+    if ($file == 'model.php' || $file == 'nested.php') {
     } else {
         $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
-/**
- *  Data
- */
-
-/** Data: Fields: Fields */
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/field.php', 'MolajoField');
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE_DATA . '/fields', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/fields/' . $file, 'MolajoField' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
-
-/** Data: Tables */
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/tables/table.php', 'MolajoTable');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/tables/tablenested.php', 'MolajoTableNested');
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE_DATA . '/tables', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'table.php' || $file == 'tablenested.php') {
-    } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE_DATA . '/tables/' . $file, 'MolajoTable' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 

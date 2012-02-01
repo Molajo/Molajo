@@ -46,7 +46,7 @@ class plgAuthenticationMolajo extends MolajoPluginHelper
         $query->from('#__users');
         $query->where('username=' . $db->Quote($credentials['username']));
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $result = $db->loadObject();
 
         /** does the user exist? */

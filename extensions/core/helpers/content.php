@@ -31,7 +31,6 @@ abstract class MolajoContentHelper
         $date = MolajoController::getDate();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
-        $acl = new MolajoACL ();
 
         $query->select('a.' . $db->namequote('id'));
         $query->select('a.' . $db->namequote('extension_instance_id'));
@@ -64,8 +63,15 @@ abstract class MolajoContentHelper
         $query->from($db->namequote('#__assets') . ' as b_assets');
         $query->where('b_assets.source_id = a.' . $db->namequote('id'));
 
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
 
+       $list = implode(',', MolajoController::getUser()->viewaccess);
+        echo $list;
+        die;
+       $query->where($prefix . 'view_group_id IN (' . $list . ')');
+
+        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
+        echo 'sdfasdfasfd';
+                       die;
         $db->setQuery($query->__toString());
         $rows = $db->loadObjectList();
 

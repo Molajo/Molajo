@@ -60,7 +60,7 @@ class MolajoModelEdit
      */
     public function getItem($id = null)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if (empty($id)) {
             $id = (int)JRequest::getInt('id');
         }
@@ -117,7 +117,7 @@ class MolajoModelEdit
      */
     public function verifyCheckout($id = null)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if (empty($id)) {
             $id = (int)JRequest::getInt('id');
         }
@@ -260,7 +260,7 @@ class MolajoModelEdit
         }
 
         /** prepare data for save **/
-        $table = $this->getTable();
+        $table = $this->getModel();
         $key = $table->getKeyName();
         $id = $data[$key];
         if ($id > 0) {
@@ -292,7 +292,7 @@ class MolajoModelEdit
      *
      * Prepares table data prior to saving.
      *
-     * @param    MolajoTable    A MolajoTable object.
+     * @param    MolajoModel    A MolajoModel object.
      *
      * @return    void
      * @since    1.0
@@ -346,7 +346,7 @@ class MolajoModelEdit
      */
     public function delete($id)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError($table->getError());
@@ -375,7 +375,7 @@ class MolajoModelEdit
     public function copy($id, $category_id)
     {
         /** load requested copy **/
-        $fromTable = $this->getTable();
+        $fromTable = $this->getModel();
 
         if ($fromTable->load($id)) {
         } else {
@@ -386,7 +386,7 @@ class MolajoModelEdit
         $columns = $fromTable->getProperties();
 
         /** load empty row with requested data **/
-        $toTable = $this->getTable();
+        $toTable = $this->getModel();
 
         foreach ($columns as $column_name => $column_value) {
 
@@ -432,7 +432,7 @@ class MolajoModelEdit
      */
     public function move($id, $category_id)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError($table->getError());
@@ -466,7 +466,7 @@ class MolajoModelEdit
      */
     public function createVersion($id)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_ROW_REQUESTED_IS_NOT_AVAILABLE_TO_SAVE_AS_A_VERSION'));
@@ -479,7 +479,7 @@ class MolajoModelEdit
         }
 
         /** INSERT INTO **/
-        $db = $this->getDbo();
+        $database = $this->getDbo();
         $columns = $table->getProperties();
 
         $columnList = '';
@@ -491,10 +491,10 @@ class MolajoModelEdit
                 } else {
                     $columnList .= ', ';
                 }
-                $columnList .= $db->namequote($column_name);
+                $columnList .= $database->namequote($column_name);
             }
         }
-        $insertQuery = ' INSERT INTO ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) . '(' . $columnList . ')';
+        $insertQuery = ' INSERT INTO ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) . '(' . $columnList . ')';
 
         /** SELECT AND VALUES **/
         $columnList = '';
@@ -511,49 +511,49 @@ class MolajoModelEdit
 
                 /** columns **/
                 if ($column_name == 'title') {
-                    $column_name = 'CONCAT(' . $db->namequote($column_name) . ', " "' . ', "' . MolajoTextHelper::_('MOLAJO_TITLE_VERSION_LITERAL') . '") as title';
+                    $column_name = 'CONCAT(' . $database->namequote($column_name) . ', " "' . ', "' . MolajoTextHelper::_('MOLAJO_TITLE_VERSION_LITERAL') . '") as title';
 
                 } else if ($column_name == 'version_of_id') {
-                    $column_name = $db->namequote('id') . ' as ' . $db->namequote('version_of_id');
+                    $column_name = $database->namequote('id') . ' as ' . $database->namequote('version_of_id');
 
                 } else if ($column_name == 'status_prior_to_version') {
-                    $column_name = $db->namequote('state') . ' as ' . $db->namequote('status_prior_to_version');
+                    $column_name = $database->namequote('state') . ' as ' . $database->namequote('status_prior_to_version');
 
                 } else if ($column_name == 'state') {
-                    $column_name = MOLAJO_STATUS_VERSION . ' as ' . $db->namequote('state');
+                    $column_name = MOLAJO_STATUS_VERSION . ' as ' . $database->namequote('state');
 
                 } else if ($column_name == 'modified') {
-                    $column_name = '"' . MolajoController::getDate()->toMySQL() . '" as ' . $db->namequote('modified');
+                    $column_name = '"' . MolajoController::getDate()->toMySQL() . '" as ' . $database->namequote('modified');
 
                 } else if ($column_name == 'modified_by') {
-                    $column_name = MolajoController::getUser()->get('id') . ' as ' . $db->namequote('modified_by');
+                    $column_name = MolajoController::getUser()->get('id') . ' as ' . $database->namequote('modified_by');
 
                 } else if ($column_name == 'ordering') {
-                    $column_name = $db->namequote('version') . ' as ' . $db->namequote('ordering');
+                    $column_name = $database->namequote('version') . ' as ' . $database->namequote('ordering');
 
                 } else {
-                    $column_name = $db->namequote($column_name);
+                    $column_name = $database->namequote($column_name);
                 }
 
                 $columnList .= $column_name;
             }
         }
-        $insertQuery .= ' SELECT ' . $columnList . ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) . ' WHERE id = ' . (int)$id;
+        $insertQuery .= ' SELECT ' . $columnList . ' FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) . ' WHERE id = ' . (int)$id;
 
-        $db->setQuery($insertQuery);
-        if ($db->query()) {
+        $database->setQuery($insertQuery);
+        if ($database->query()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($database->getErrorMsg(), 'error');
             return false;
         }
 
         /** retrieve new id **/
-        $db->setQuery(
+        $database->setQuery(
             'SELECT MAX(id) as newID ' .
-                ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+                ' FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) .
                 ' WHERE version_of_id = ' . (int)$id
         );
-        $newID = $db->loadResultArray();
+        $newID = $database->loadResultArray();
 
         return $newID[0];
     }
@@ -571,7 +571,7 @@ class MolajoModelEdit
     public function restore($id)
     {
         /** load requested version **/
-        $fromTable = $this->getTable();
+        $fromTable = $this->getModel();
         if ($fromTable->load($id)) {
         } else {
             $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_REQUESTED_VERSION_NOT_AVAILABLE_FOR_RESTORE'));
@@ -587,7 +587,7 @@ class MolajoModelEdit
         }
 
         /** load row to restore or create an empty row with the id **/
-        $toTable = $this->getTable();
+        $toTable = $this->getModel();
         if ($toTable->load($fromTable->version_of_id)) {
         } else {
             $toTable->id = $fromTable->version_of_id;
@@ -641,15 +641,15 @@ class MolajoModelEdit
      */
     public function maintainVersionCount($id, $maintainVersions)
     {
-        $db = $this->getDbo();
-        $db->setQuery(
+        $database = $this->getDbo();
+        $database->setQuery(
             'SELECT id' .
-                ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+                ' FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) .
                 ' WHERE version_of_id = ' . (int)$id .
                 ' ORDER BY version DESC ' .
                 ' LIMIT ' . (int)$maintainVersions
         );
-        $versionPrimaryKeys = $db->loadResultArray();
+        $versionPrimaryKeys = $database->loadResultArray();
 
         $saveList = '';
         foreach ($versionPrimaryKeys as $saveid) {
@@ -662,13 +662,13 @@ class MolajoModelEdit
         if ($saveList == '') {
             return;
         }
-        $deleteQuery = 'DELETE FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+        $deleteQuery = 'DELETE FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) .
             ' WHERE version_of_id = ' . (int)$id . ' AND id NOT IN (' . $saveList . ')';
 
-        $db->setQuery($deleteQuery);
-        if ($db->query()) {
+        $database->setQuery($deleteQuery);
+        if ($database->query()) {
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($database->getErrorMsg(), 'error');
             return false;
         }
 
@@ -725,7 +725,7 @@ class MolajoModelEdit
 
     function manageState($id, $value)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError($table->getError());
@@ -776,7 +776,7 @@ class MolajoModelEdit
 
     public function toggleIndicator($id, $indicator)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError($table->getError());
@@ -811,7 +811,7 @@ class MolajoModelEdit
      */
     public function checkin($id)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_NO_ROW_FOR_CHECKIN_TASK'));
@@ -848,7 +848,7 @@ class MolajoModelEdit
      */
     public function checkout($id)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         if ($table->load($id)) {
         } else {
             $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_NO_ROW_FOR_CHECKIN_TASK'));
@@ -890,7 +890,7 @@ class MolajoModelEdit
     public function reorder($ids, $delta = 0)
     {
         $user = MolajoController::getUser();
-        $table = $this->getTable();
+        $table = $this->getModel();
         $ids = (array)$ids;
         $result = true;
 
@@ -964,7 +964,7 @@ class MolajoModelEdit
      */
     function saveorder($ids = null, $order = null)
     {
-        $table = $this->getTable();
+        $table = $this->getModel();
         $conditions = array();
         $user = MolajoController::getUser();
 
@@ -1018,7 +1018,7 @@ class MolajoModelEdit
     }
 
     /**
-     * getTable
+     * getModel
      *
      * Returns a Table object, always creating it.
      *
@@ -1026,10 +1026,10 @@ class MolajoModelEdit
      * @param    string    A prefix for the table class name. Optional.
      * @param    array    Configuration array for model. Optional.
      *
-     * @return    MolajoTable    A database object
+     * @return    MolajoModel    A database object
      */
-    public function getTable($type = '', $prefix = '', $config = array())
+    public function getModel($type = '', $prefix = '', $config = array())
     {
-        return MolajoTable::getInstance($type = ucfirst(JRequest::getCmd('view')), $prefix = ucfirst(JRequest::getVar('DefaultView') . 'Table'), $config);
+        return MolajoModel::getInstance($type = ucfirst(JRequest::getCmd('view')), $prefix = ucfirst(JRequest::getVar('DefaultView') . 'Table'), $config);
     }
 }

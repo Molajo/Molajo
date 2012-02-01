@@ -176,7 +176,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         $query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
         $query->where($query->qn('folder') . ' = ' . $query->q($group));
         $query->where($query->qn('element') . ' = ' . $query->q($element));
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         try
         {
             $db->Query();
@@ -326,7 +326,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
 
         // Database Processing Section
 
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         // Was there a plugin with the same name already installed?
         if ($id) {
             if (!$this->parent->getOverwrite()) {
@@ -496,7 +496,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
 
         // First order of business will be to load the plugin object table from the database.
         // This should give us the necessary information to proceed.
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         if (!$row->load((int)$id)) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_ERRORUNKOWNEXTENSION'));
             return false;
@@ -633,7 +633,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Remove the schema version
         $query = $db->getQuery(true);
         $query->delete()->from('#__schemas')->where('extension_id = ' . $row->extension_id);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $db->Query();
 
         // Now we will no longer need the plugin object, so let's delete it
@@ -676,7 +676,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                     continue;
                 }
 
-                $extension = MolajoTable::getInstance('extension');
+                $extension = MolajoModel::getInstance('extension');
                 $extension->set('type', 'plugin');
                 $extension->set('application_id', 0);
                 $extension->set('element', $file);
@@ -702,7 +702,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                     }
 
                     // ignore example plugins
-                    $extension = MolajoTable::getInstance('extension');
+                    $extension = MolajoModel::getInstance('extension');
                     $extension->set('type', 'plugin');
                     $extension->set('application_id', 0);
                     $extension->set('element', $file);

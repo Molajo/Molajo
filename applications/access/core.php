@@ -783,7 +783,7 @@ class MolajoACLCore extends MolajoACL
                 $query->from('#__assets a');
                 $query->where('asset_id = ' . (int)$asset);
 
-                $db->setQuery($query);
+                $db->setQuery($query->__toString());
                 $tableName = $db->loadResult();
 
                 if ($db->getErrorNum()) {
@@ -795,7 +795,7 @@ class MolajoACLCore extends MolajoACL
                 $query->select('view_group_id');
                 $query->from($db->_nameQuote($tableName));
                 $query->where('asset_id = ' . (int)$asset);
-                $db->setQuery($query);
+                $db->setQuery($query->__toString());
                 $access = $db->loadResult();
                 if ($db->getErrorNum()) {
                     $this->setError($db->getErrorMsg());
@@ -813,7 +813,7 @@ class MolajoACLCore extends MolajoACL
         $query->where('c.title = ' . $db->_quoted($action));
         $query->where('a.group IN (' . implode(',', $userGroups) . ')');
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $accessResult = $db->loadObjectList();
         if ($db->getErrorNum()) {
             return new DatabaseException($db->getErrorMsg());

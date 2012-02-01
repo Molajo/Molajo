@@ -38,7 +38,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
         switch ($name)
         {
             case 'UPDATE':
-                $this->current_update = MolajoTable::getInstance('update');
+                $this->current_update = MolajoModel::getInstance('update');
                 $this->current_update->extension_site_id = $this->_extension_site_id;
                 $this->current_update->details_url = $this->_url;
                 break;
@@ -150,7 +150,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
             $query->update('#__extension_sites');
             $query->set('enabled = 0');
             $query->where('extension_site_id = ' . $this->_extension_site_id);
-            $dbo->setQuery($query);
+            $dbo->setQuery($query->__toString());
             $dbo->Query();
 
             JLog::add("Error opening url: " . $url, JLog::WARNING, 'updater');

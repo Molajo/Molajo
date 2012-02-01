@@ -51,15 +51,15 @@ class MolajoSiteHelper
 
             $query = $db->getQuery(true);
 
-            $query->select('id');
-            $query->select('name');
-            $query->select('description');
-            $query->select('path');
-            $query->select('parameters');
-            $query->select('custom_fields');
-            $query->select('metadata');
-            $query->select('base_url');
-            $query->from($db->namequote('#__sites'));
+            $query->select($db->quoteName('id'));
+            $query->select($db->quoteName('name'));
+            $query->select($db->quoteName('description'));
+            $query->select($db->quoteName('path'));
+            $query->select($db->quoteName('parameters'));
+            $query->select($db->quoteName('custom_fields'));
+            $query->select($db->quoteName('metadata'));
+            $query->select($db->quoteName('base_url'));
+            $query->from($db->quoteName('#__sites'));
 
             $db->setQuery($query->__toString());
 
@@ -110,9 +110,9 @@ class MolajoSiteHelper
             $id = MOLAJO_SITE_ID;
         }
 
-        $query->select('application_id');
-        $query->from($db->namequote('#__site_applications'));
-        $query->where($db->namequote('site_id') . ' = ' . (int) $id);
+        $query->select($db->quoteName('application_id'));
+        $query->from($db->quoteName('#__site_applications'));
+        $query->where($db->quoteName('site_id') . ' = ' . (int) $id);
 
         $db->setQuery($query->__toString());
 

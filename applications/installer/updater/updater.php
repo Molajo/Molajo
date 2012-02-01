@@ -78,7 +78,7 @@ class MolajoUpdater extends MolajoAdapter
                      ' WHERE extension_site_id IN' .
                      '  (SELECT extension_site_id FROM #__extension_sites_extensions WHERE extension_id IN (' . implode(',', $eid) . '))';
         }
-        $dbo->setQuery($query);
+        $dbo->setQuery($query->__toString());
         $results = $dbo->loadAssocList();
         $result_count = count($results);
         for ($i = 0; $i < $result_count; $i++)
@@ -99,8 +99,8 @@ class MolajoUpdater extends MolajoAdapter
                     for ($k = 0, $count = count($update_result['updates']); $k < $count; $k++)
                     {
                         $current_update = &$update_result['updates'][$k];
-                        $update = MolajoTable::getInstance('update');
-                        $extension = MolajoTable::getInstance('extension');
+                        $update = MolajoModel::getInstance('update');
+                        $extension = MolajoModel::getInstance('extension');
                         $uid = $update
                                 ->find(
                             array(
@@ -186,7 +186,7 @@ class MolajoUpdater extends MolajoAdapter
      */
     public function update($id)
     {
-        $updaterow = MolajoTable::getInstance('update');
+        $updaterow = MolajoModel::getInstance('update');
         $updaterow->load($id);
         $update = new MolajoUpdate;
         if ($update->loadFromXML($updaterow->details_url)) {

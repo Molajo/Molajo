@@ -479,7 +479,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
          */
 
         // Add an entry to the extension table with a whole heap of defaults
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $row->set('name', $this->get('name'));
         $row->set('type', 'component');
         $row->set('element', $this->get('element'));
@@ -500,7 +500,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $eid = $db->insertid();
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
         if ($uid) {
@@ -528,7 +528,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         }
 
         // Register the component container just under root in the assets table.
-        $asset = MolajoTable::getInstance('Asset');
+        $asset = MolajoModel::getInstance('Asset');
         $asset->name = $row->element;
         $asset->parent_id = 1;
         $asset->rules = '{}';
@@ -844,7 +844,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         /*
            * Let's run the update queries for the component
            */
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         $eid = $row->find(array('element' => strtolower($this->get('element')), 'type' => 'component'));
 
         if ($this->manifest->update) {
@@ -930,7 +930,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
          */
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
         if ($uid) {
@@ -1009,7 +1009,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
 
         // First order of business will be to load the component object table from the database.
         // This should give us the necessary information to proceed.
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
         if (!$row->load((int)$id)) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_ERRORUNKOWNEXTENSION'));
             return false;
@@ -1186,11 +1186,11 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         // Remove the schema version
         $query = $db->getQuery(true);
         $query->delete()->from('#__schemas')->where('extension_id = ' . $id);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $db->query();
 
         // Remove the component container in the assets table.
-        $asset = MolajoTable::getInstance('Asset');
+        $asset = MolajoModel::getInstance('Asset');
         if ($asset->loadByName($element)) {
             $asset->delete();
         }
@@ -1199,7 +1199,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $query = $db->getQuery(true);
         $query->delete()->from('#__categories')->where('extension=' . $db->quote($element), 'OR')
                 ->where('extension LIKE ' . $db->quote($element . '.%'));
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $db->query();
         // Check for errors.
         if ($db->getErrorNum()) {
@@ -1209,7 +1209,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         }
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(array('element' => $row->element, 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
         if ($uid) {
@@ -1259,7 +1259,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     {
         // Initialise variables.
         $db = $this->parent->getDbo();
-        $table = MolajoTable::getInstance('menu');
+        $table = MolajoModel::getInstance('menu');
         $option = $this->get('element');
 
         // If a component exists with this option in the table then we don't need to add menus
@@ -1271,7 +1271,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $query->where("m.application_id = 1");
         $query->where('e.element = ' . $db->quote($option));
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         $componentrow = $db->loadObject();
 
@@ -1298,7 +1298,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
             $query->from('#__extensions AS e');
             $query->where('e.element = ' . $db->quote($option));
 
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
 
             $component_id = $db->loadResult(); // TODO Find Some better way to discover the component_id
         }
@@ -1424,7 +1424,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
                 $data['link'] = 'index.php?option=' . $option . $qstring;
             }
 
-            $table = MolajoTable::getInstance('menu');
+            $table = MolajoModel::getInstance('menu');
 
             if (!$table->setLocation($parent_id, 'last-child') || !$table->bind($data) || !$table->check() || !$table->store()) {
                 // Install failed, rollback changes
@@ -1454,7 +1454,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     {
         // Initialise Variables
         $db = $this->parent->getDbo();
-        $table = MolajoTable::getInstance('menu');
+        $table = MolajoModel::getInstance('menu');
         $id = $row->extension_id;
 
         // Get the ids of the menu items
@@ -1464,7 +1464,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $query->where($query->qn('application_id') . ' = 1');
         $query->where($query->qn('component_id') . ' = ' . (int)$id);
 
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         $ids = $db->loadColumn();
 
@@ -1529,7 +1529,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
                 $manifest_details = MolajoInstallHelper::parseManifestXML(
                     MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('', '', $component) . '.xml'
                 );
-                $extension = MolajoTable::getInstance('extension');
+                $extension = MolajoModel::getInstance('extension');
                 $extension->set('type', 'component');
                 $extension->set('application_id', 0);
                 $extension->set('element', $component);
@@ -1546,7 +1546,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
                 $manifest_details = MolajoInstallHelper::parseManifestXML(
                     MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('', '', $component) . '.xml'
                 );
-                $extension = MolajoTable::getInstance('extension');
+                $extension = MolajoModel::getInstance('extension');
                 $extension->set('type', 'component');
                 $extension->set('application_id', 1);
                 $extension->set('element', $component);
@@ -1794,7 +1794,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
          */
 
         // Clobber any possible pending updates
-        $update = MolajoTable::getInstance('update');
+        $update = MolajoModel::getInstance('update');
         $uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
         if ($uid) {

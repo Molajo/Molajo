@@ -232,7 +232,6 @@ abstract class MolajoAssetHelper
         return $asset_id;
     }
 
-
     /**
      * getURL
      *

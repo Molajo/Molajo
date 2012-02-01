@@ -210,7 +210,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         // Extension Registration
 
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
 
         if ($this->route == 'update' && $id) {
             $row->load($id);
@@ -249,7 +249,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             $query->set('title=' . $db->Quote(MolajoTextHelper::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', MolajoTextHelper::_($this->get('name')))));
             $lang->setDebug($debug);
             $query->set('parameters=' . $db->Quote($row->parameters));
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             // There is a chance this could fail but we don't care...
             $db->query();
         }
@@ -285,7 +285,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         // First order of business will be to load the theme object table from the database.
         // This should give us the necessary information to proceed.
-        $row = MolajoTable::getInstance('extension');
+        $row = MolajoModel::getInstance('extension');
 
         if (!$row->load((int)$id) || !strlen($row->element)) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
@@ -312,7 +312,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         // Deny remove default theme
         $db = $this->parent->getDbo();
         $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->Quote($name);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
 
         if ($db->loadResult() != 0) {
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_DEFAULT'));
@@ -363,11 +363,11 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $query = 'UPDATE #__menu INNER JOIN #__theme_styles' . ' ON #__theme_styles.id = #__menu.theme_id'
                  . ' SET #__menu.theme_id = 0' . ' WHERE #__theme_styles.theme = ' . $db->Quote(strtolower($name))
                  . ' AND #__theme_styles.application_id = ' . $db->Quote($clientId);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $db->Query();
 
         $query = 'DELETE FROM #__theme_styles' . ' WHERE theme = ' . $db->Quote($name) . ' AND application_id = ' . $db->Quote($clientId);
-        $db->setQuery($query);
+        $db->setQuery($query->__toString());
         $db->Query();
 
         $row->delete($row->extension_id);
@@ -397,7 +397,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
                 // Ignore special system theme
             }
             $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . "/themes/$theme/themeDetails.xml");
-            $extension = MolajoTable::getInstance('extension');
+            $extension = MolajoModel::getInstance('extension');
             $extension->set('type', 'theme');
             $extension->set('application_id', $site_info->id);
             $extension->set('element', $theme);
@@ -416,7 +416,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             }
 
             $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . "/themes/$theme/themeDetails.xml");
-            $extension = MolajoTable::getInstance('extension');
+            $extension = MolajoModel::getInstance('extension');
             $extension->set('type', 'theme');
             $extension->set('application_id', $admin_info->id);
             $extension->set('element', $theme);
@@ -480,7 +480,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             $query->set('home=0');
             $query->set('title=' . $db->Quote(MolajoTextHelper::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
             $query->set('parameters=' . $db->Quote($this->parent->extension->parameters));
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             $db->query();
 
             return $this->parent->extension->get('extension_id');
