@@ -52,9 +52,7 @@ abstract class MolajoTable extends JObject
     /**
      * getInstance
      *
-     * Static method to get an instance of a MolajoTable class if it can be found in
-     * the table include paths.  To add include paths for searching for MolajoTable
-     * classes @see MolajoTable::addIncludePath().
+     * Static method to get an instance of a MolajoTable class
      *
      * @param   string   The type (name) of the MolajoTable class to get an instance of.
      * @param   string   An optional prefix for the table class name.
@@ -68,14 +66,13 @@ abstract class MolajoTable extends JObject
         $tableClass = $prefix . ucfirst($type);
 
         if (class_exists($tableClass)) {
-
         } else {
                 MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
                 return false;
         }
 
-        if (isset($config['databaseo'])) {
-            $database = $config['databaseo'];
+        if (isset($config['$db'])) {
+            $database = $config['$db'];
         } else {
             $database = MolajoController::getDbo();
         }
@@ -90,11 +87,12 @@ abstract class MolajoTable extends JObject
      * be overridden by child classes to explicitly set the table and key fields
      * for a particular database table.
      *
-     * @param   string Name of the table to model.
-     * @param   string Name of the primary key field in the table.
-     * @param   object JDatabase connector object.
+     * @param   $table
+     * @param   $key
+     * @param   $database
      *
-     * @since  1.0
+     * @return  null
+     * @since   1.0
      */
     function __construct($table, $key, $database)
     {
@@ -115,9 +113,10 @@ abstract class MolajoTable extends JObject
     /**
      * getFields
      *
-     * Get the columns from database table.
+     * Retrieves columns from the database table
      *
-     * @return  mixed  An array of the field names, or false if an error occurs.
+     * @return bool
+     * @since  1.0
      */
     public function getFields()
     {
@@ -126,7 +125,9 @@ abstract class MolajoTable extends JObject
         if ($cache === null) {
             $name = $this->_table;
             $names = $this->_database->getTableFields($name, false);
-
+            echo '<pre>';
+            var_dump($names);
+            echo '</pre>';
             if (isset($names[$name])) {
             } else {
                 $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));

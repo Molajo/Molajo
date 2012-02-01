@@ -148,20 +148,15 @@ foreach ($files as $file) {
 /**
  *  Database
  */
-JLoader::register('JDatabaseQueryMySQL', JOOMLA_LIBRARY . '/database/database/mysqlquery.php');
-JLoader::register('JDatabaseExporterMySQL', JOOMLA_LIBRARY . '/database/database/mysqlexporter.php');
-JLoader::register('JDatabaseImporterMySQL', JOOMLA_LIBRARY . '/database/database/mysqlimporter.php');
 JLoader::register('JDatabaseMySQL', JOOMLA_LIBRARY . '/database/database/mysql.php');
-
-JLoader::register('JDatabaseQueryMySQLi', JOOMLA_LIBRARY . '/database/database/mysqliquery.php');
-JLoader::register('JDatabaseExporterMySQLi', JOOMLA_LIBRARY . '/database/database/mysqlexporter.php');
-JLoader::register('JDatabaseImporterMySQLi', JOOMLA_LIBRARY . '/database/database/mysqliimporter.php');
 JLoader::register('JDatabaseMySQLi', JOOMLA_LIBRARY . '/database/database/mysqli.php');
+JLoader::register('JDatabaseSQLSrv', JOOMLA_LIBRARY . '/database/database/sqlsrv.php');
+JLoader::register('JDatabaseSQLAzure', JOOMLA_LIBRARY . '/database/database/sqlazure.php');
 
 JLoader::register('JDatabaseInterface', JOOMLA_LIBRARY . '/database/database.php');
 JLoader::register('JDatabase', JOOMLA_LIBRARY . '/database/database.php');
-JLoader::register('JDatabaseQueryElement', JOOMLA_LIBRARY . '/database/databasequery.php');
-JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY . '/database/databasequery.php');
+JLoader::register('JDatabaseQueryElement', JOOMLA_LIBRARY . '/database/query.php');
+JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY . '/database/query.php');
 
 /**
  *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved
