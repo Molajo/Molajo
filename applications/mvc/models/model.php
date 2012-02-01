@@ -235,4 +235,15 @@ class MolajoModel
     {
         return $this->pagination;
     }
+
+    /**
+     * compressCSS
+     *
+     * @return    array
+     *
+     * @since    1.0
+     */
+    public function compressCSS()
+    {
+    }
 }

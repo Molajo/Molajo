@@ -25,7 +25,7 @@ class MolajoConfigurationHelper
     public $config;
 
     /**
-     * Site Configuration Object
+     * Site Configuration Object from fine
      *
      * @var    object
      * @since  1.0
@@ -33,7 +33,7 @@ class MolajoConfigurationHelper
     public $siteConfig;
 
     /**
-     * Application Configuration Object
+     * Application Configuration Object from database
      *
      * @var    object
      * @since  1.0
@@ -47,11 +47,11 @@ class MolajoConfigurationHelper
      *
      * @since  1.0
      */
-    public function __construct()
+    public function __construct($appConfig = null)
     {
         $this->config = new JRegistry;
         $this->siteConfig = new JRegistry;
-        $this->appConfig = new JRegistry;
+        $this->appConfig = $appConfig;
     }
 
     /**
@@ -59,28 +59,27 @@ class MolajoConfigurationHelper
      *
      * Retrieves and combines site and application configuration objects
      *
-     * Returns the global configuration object, creating it
-     * if it doesn't already exist.
-     *
-     * @return configuration object
+     * @return object
      * @throws RuntimeException
      * @since  1.0
      */
     public function getConfig()
     {
-        /** Combined */
-        $configData = $this->_createConfig();
-
         /** Site */
-        $siteConfigData = $this->site();
-        foreach ($siteConfigData as $key => $value) {
-            $this->set($key, $value, 'site');
-        }
+        $configData = $this->site();
 
-        /** Application */
-        $appConfigData = $this->_application();
-        foreach ($appConfigData as $key => $value) {
-            $this->set($key, $value, 'application');
+        /** Populate Configuration with Application Parameters from Database */
+        $temp = substr($this->appConfig, 1, strlen($this->appConfig) - 2);
+        $tempArray = array();
+        $tempArray = explode(',', $temp);
+        foreach ($tempArray as $entry) {
+            $pair = explode(':', $entry);
+            $key = substr(trim($pair[0]), 1, strlen(trim($pair[0])) - 2);
+            if (trim($pair[0]) == '') {
+            } else {
+                $value = substr(trim($pair[1]), 1, strlen(trim($pair[1])) - 2);
+                $this->set($key, $value, 'application');
+            }
         }
 
         /** combined populated */
@@ -112,54 +111,6 @@ class MolajoConfigurationHelper
     }
 
     /**
-     * application
-     *
-     * retrieve application configuration object
-     *
-     * @return bool
-     * @throws RuntimeException
-     * @since  1.0
-     */
-    protected function _application()
-    {
-        $appConfigData = array();
-
-        $file = MOLAJO_APPLICATION_PATH . '/configuration.php';
-        if (file_exists($file)) {
-            require_once $file;
-        } else {
-            throw new RuntimeException('Fatal error - Application Configuration File does not exist');
-        }
-
-        $appConfigData = new MolajoConfigApplication();
-        return $appConfigData;
-    }
-
-    /**
-     * _createConfig
-     *
-     * Create an empty configuration object that will store the combined Site and Application objects
-     *
-     * @return bool
-     * @throws RuntimeException
-     * @since   1.0
-     */
-    protected function _createConfig()
-    {
-        $configData = array();
-
-        $file = MOLAJO_APPLICATIONS_CORE . '/configuration.php';
-        if (is_file($file)) {
-            include_once $file;
-        } else {
-            throw new RuntimeException('Fatal error - Configuration File does not exist ' . $file);
-        }
-
-        $configData = new MolajoConfig();
-        return $configData;
-    }
-
-    /**
      * get
      *
      * Returns a property of the Configuration object
@@ -172,11 +123,9 @@ class MolajoConfigurationHelper
      *
      * @since   1.0
      */
-    public function get($key, $default = null, $configFile = null)
+    public function get($key, $default = null, $type = null)
     {
-        if ($configFile == 'application') {
-            return $this->appConfig->get($key, $default);
-        } else if ($configFile == 'site') {
+        if ($type == 'site') {
             return $this->siteConfig->get($key, $default);
         } else {
             return $this->config->get($key, $default);
@@ -186,7 +135,7 @@ class MolajoConfigurationHelper
     /**
      * set
      *
-     * Modifies a property of the configuration object, creating it if it does not already exist.
+     * Modifies a property of the configuration object
      *
      * @param   string  $key    The name of the property.
      * @param   mixed   $value  The value of the property to set (optional).

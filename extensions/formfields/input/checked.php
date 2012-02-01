@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Attributes
  * @since       1.0
  */
-class MolajoAttributeChecked extends MolajoAttribute
+class CheckedControllerFormfield extends InputControllerFormfield
 {
     /**
      * __construct
@@ -64,7 +64,7 @@ class MolajoAttributeChecked extends MolajoAttribute
     /**
      * verifyValue
      *
-     * Method to determine whether or not the checked exists
+     * Method to determine whether or not the Checked exists
      *
      * @return  array   $rowset
      *

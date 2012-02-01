@@ -51,12 +51,20 @@ class MolajoControllerApplication
     protected static $_custom_fields = null;
 
     /**
-     * Metadata
+     * Application Metadata
      *
      * @var    array
      * @since  1.0
      */
     protected $_metadata = array();
+
+    /**
+     * Application Parameters
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $_parameters = array();
 
     /**
      * Input Object
@@ -349,14 +357,15 @@ class MolajoControllerApplication
      */
     public function getConfig()
     {
-        $configClass = new MolajoConfigurationHelper();
-        $this->_config = $configClass->getConfig();
 
         $this->_metadata = new JRegistry;
         $this->_metadata->loadString($this->_appdb->metadata);
 
         $this->_custom_fields = new JRegistry;
         $this->_custom_fields->loadString($this->_appdb->custom_fields);
+
+        $configClass = new MolajoConfigurationHelper($this->_appdb->parameters);
+        $this->_config = $configClass->getConfig();
 
         return;
     }

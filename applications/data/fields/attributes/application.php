@@ -101,7 +101,6 @@ class MolajoAttributeApplication extends MolajoAttribute
         $db->setQuery($query);
 
         $results = $db->loadObjectList();
-
         if ($error = $db->getErrorMsg()) {
             MolajoError::raiseWarning(500, $error);
             return false;
