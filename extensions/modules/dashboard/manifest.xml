@@ -9,11 +9,6 @@
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_DASHBOARD_DESCRIPTION</description>
-    <files>
-        <filename>controller.php</filename>
-        <filename>model.php</filename>
-        <folder>language</folder>
-    </files>
     <config>
         <fields name="parameters">
             <fieldset include="advanced"/>

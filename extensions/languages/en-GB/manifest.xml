@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest version="1.0">
-    <name>English (United Kingdom)</name>
-    <version>1.0</version>
+<extension type="language" version="1.0">
+    <name>LANGUAGE_EN_GB_NAME</name>
+    <author>Amy Stephen</author>
     <create_date>January 2012</create_date>
-    <author>Molajo Project</author>
-    <author_email>collaborate@molajo.org</author_email>
-    <author_url>http://molajo.org/</author_url>
-    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <description>en-GB language</description>
-    <files>
-        <filename>en-GB.ini</filename>
-    </files>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>LANGUAGE_EN_GB_DESCRIPTION</description>
     <metadata>
         <name>English (United Kingdom)</name>
         <tag>en-GB</tag>
@@ -21,5 +18,4 @@
         </locale>
         <firstDay>0</firstDay>
     </metadata>
-    <parameters/>
-</manifest>
+</extension>

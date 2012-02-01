@@ -9,11 +9,4 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_ARTICLES_DESCRIPTION</description>
-    <files>
-        <filename>access.xml</filename>
-        <filename>articles.php</filename>
-        <filename>config.xml</filename>
-        <folder>language</folder>
-        <folder>sql</folder>
-    </files>
 </extension>

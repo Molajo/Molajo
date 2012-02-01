@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install PUBLIC "-//Molajo 1.0//DTD theme 1.0//EN" "http://molajo.org/xml/dtd/1.0/theme-install.dtd">
 <extension type="theme" version="1.0">
-
-    <name>THEME_SAMPLE_NAME</name>
-    <author>Molajo Contributors</author>
-    <create_date>November 2011</create_date>
-    <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
+    <name>THEME_CLEANSLATE_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2012</create_date>
+    <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author_email>collaborate@molajo.org</author_email>
-    <author_url>http://molajo.org</author_url>
+    <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
-    <description>THEME_SAMPLE_DESCRIPTION</description>
-
-    <files>
-        <filename>index.php</filename>
-        <filename>README.md</filename>
-        <folder>css</folder>
-        <folder>images</folder>
-        <folder>js</folder>
-        <folder>language</folder>
-        <folder>pages</folder>
-    </files>
-
+    <description>THEME_CLEANSLATE_DESCRIPTION</description>
     <config>
         <fields name="parameters">
             <fieldset name="basic">

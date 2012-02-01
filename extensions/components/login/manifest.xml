@@ -1,31 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.0.0">
-    <name>LOGIN</name>
-    <author>Molajo Contributors</author>
+<extension type="component" version="1.0">
+    <name>COMPONENT_LOGIN_NAME</name>
+    <author>Amy Stephen</author>
     <create_date>January 2012</create_date>
-    <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>LOGIN_DESCRIPTION</description>
-
-    <administration>
-
-        <files folder="admin">
-            <filename>access.xml</filename>
-            <filename>controller.php</filename>
-            <filename>login.php</filename>
-            <folder>language</folder>
-            <folder>models</folder>
-            <folder>views</folder>
-        </files>
-
-        <languages folder="admin">
-            <language tag="en-GB">login/language/en-GB/en-GB.login.ini</language>
-            <language tag="en-GB">login/language/en-GB/en-GB.login.sys.ini</language>
-        </languages>
-
-    </administration>
-
+    <description>COMPONENT_LOGIN_DESCRIPTION</description>
 </extension>

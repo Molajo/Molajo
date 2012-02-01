@@ -9,10 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_DASHBOARD_DESCRIPTION</description>
-    <files>
-        <folder>css</folder>
-        <folder>js</folder>
-        <folder>language</folder>
-        <folder>views</folder>
-    </files>
 </extension>
+

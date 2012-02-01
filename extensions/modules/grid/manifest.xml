@@ -6,14 +6,9 @@
     <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author_email>collaborate@molajo.org</author_email>
-    <author_url>http://molajo.org</author_url>
+    <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_GRID_DESCRIPTION</description>
-    <files>
-        <filename>controller.php</filename>
-        <filename>model.php</filename>
-        <folder>language</folder>
-    </files>
     <config>
         <fields name="parameters">
             <fieldset include="advanced"/>
