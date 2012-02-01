@@ -1,11 +1,36 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<access component="articles">
-    <section name="component">
-        <action name="create" title="MOLAJO_CREATE" description="MOLAJO_CREATE_DESCRIPTION"/>
-        <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESCRIPTION"/>
-        <action name="edit" title="MOLAJO_EDIT" description="MOLAJO_EDIT_DESCRIPTION"/>
-        <action name="publish" title="MOLAJO_PUBLISH" description="MOLAJO_PUBLISH_DESCRIPTION"/>
-        <action name="delete" title="MOLAJO_DELETE" description="MOLAJO_DELETE_DESCRIPTION"/>
-        <action name="admin" title="MOLAJO_ADMIN" description="MOLAJO_ADMIN_DESCRIPTION"/>
-    </section>
-</access>
+
+<acl name="xyz">
+    <actions>
+        <action name="admin">
+            <task>administer</task>
+            <label>Administer</label>
+            <hint>Permission to administer all functions for this data.</hint>
+        </action>
+        <action name="create">
+            <task>create</task>
+            <label>Create</label>
+            <hint>Permission to create this data.</hint>
+        </action>
+        <action name="view">
+            <task>view</task>
+            <label>View</label>
+            <hint>Permission to view this data</hint>
+        </action>
+        <action name="edit">
+            <task>edit</task>
+            <label>Edit</label>
+            <hint>Permission to edit this data</hint>
+        </action>
+        <action name="publish">
+            <task>publish</task>
+            <label>Publish</label>
+            <hint>Permission to publish this data.</hint>
+        </action>
+        <action name="delete">
+            <task>delete</task>
+            <label>Delete</label>
+            <hint>Permission to delete this data</hint>
+        </action>
+    </actions>
+</acl>
+

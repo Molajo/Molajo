@@ -125,9 +125,6 @@ abstract class MolajoTable extends JObject
         if ($cache === null) {
             $name = $this->_table;
             $names = $this->_database->getTableFields($name, false);
-            echo '<pre>';
-            var_dump($names);
-            echo '</pre>';
             if (isset($names[$name])) {
             } else {
                 $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
@@ -158,7 +155,7 @@ abstract class MolajoTable extends JObject
      *
      * Method to get the primary key field name for the table.
      *
-     * @return  string  The name of the primary key for the table.
+     * @return  string  Primary key for the table
      * @since   1.0
      */
     public function getKeyName()
@@ -172,6 +169,7 @@ abstract class MolajoTable extends JObject
      * Method to get the JDatabase connector object.
      *
      * @return  object
+     * @since   1.0
      */
     public function getDbo()
     {
@@ -183,9 +181,9 @@ abstract class MolajoTable extends JObject
      *
      * Method to set the JDatabase connector object.
      *
-     * @param   object   A JDatabase connector object to be used by the table object.
+     * @param   object   Database connection object
      * @return  boolean  True on success.
-     * @link    http://docs.molajo.org/MolajoTable/setDbo
+     * @since   1.0
      */
     public function setDbo($database)
     {
@@ -202,15 +200,12 @@ abstract class MolajoTable extends JObject
     /**
      * load
      *
-     * Method to load a row from the database by primary key and bind the fields
-     * to the MolajoTable instance properties.
+     * Method to load a row from the database by primary key and bind its fields
      *
-     * @param   mixed  An optional primary key value to load the row by, or an array of fields to match.  If not
-     *                 set the instance property value is used.
+     * @param   mixed  Optional primary key value or array of fields to match
      * @param   bool   True to reset the default values before loading the new row.
      *
-     * @return  bool  True if successful. False if row not found or on error (internal error state set in that case).
-     *
+     * @return  bool  True if successful. False if row not found or on error
      * @since   1.0
      */
     public function load($keys = null, $reset = true)
@@ -294,43 +289,35 @@ abstract class MolajoTable extends JObject
      *
      * Method to provide a shortcut to binding, checking and storing data
      *
-     * @param   mixed   An associative array or object to bind to the MolajoTable instance.
+     * @param   mixed   Array or object to bind to table
      * @param   string  Filter for the order updating
-     * @param   mixed   An optional array or space separated list of properties
-     *                    to ignore while binding.
+     * @param   mixed   An optional array or space separated list of properties to ignore for binding
      *
-     * @return  boolean  True on success.
-     *
-     * @link    http://docs.molajo.org/MolajoTable/save
+     * @return  boolean
      * @since   1.0
      */
     public function save($source, $orderingFilter = '', $ignore = '')
     {
-        // Attempt to bind the source to the instance.
         if ($this->bind($source, $ignore)) {
         } else {
             return false;
         }
 
-        // Run any sanity checks on the instance and verify that it is ready for storage.
         if ($this->check()) {
         } else {
             return false;
         }
 
-        // Attempt to store the properties to the database table.
         if ($this->store()) {
         } else {
             return false;
         }
 
-        // Attempt to check the row in, just in case it was checked out.
         if ($this->checkin()) {
         } else {
             return false;
         }
 
-        // If an ordering filter is set, attempt reorder the rows in the table based on the filter and value.
         if ($orderingFilter) {
             $filterValue = $this->$orderingFilter;
             $this->reorder($orderingFilter
@@ -338,7 +325,6 @@ abstract class MolajoTable extends JObject
                                    : '');
         }
 
-        // Set the error to empty and return true.
         $this->setError('');
 
         return true;
@@ -347,16 +333,15 @@ abstract class MolajoTable extends JObject
     /**
      * bind
      *
-     * Method to bind an associative array or object to the MolajoTable instance. This
+     * Method to bind an associative array or object to the Table instance. This
      * method only binds properties that are publicly accessible and optionally
      * takes an array of properties to ignore when binding.
      *
-     * @param   mixed  Data to bind to the table
-     * @param   mixed  Properties to not bind (optional)
+     * @param  $source
+     * @param  array $ignore
      *
-     * @return  boolean  True on success.
-     *
-     * @since   1.0
+     * @return bool
+     * @since  1.0
      */
     public function bind($source, $ignore = array())
     {
@@ -392,10 +377,8 @@ abstract class MolajoTable extends JObject
     /**
      * check
      *
-     * Method to perform sanity checks on the MolajoTable instance properties to ensure
-     * they are safe to store in the database.  Child classes should override this
-     * method to make sure the data they are storing in the database is safe and
-     * as expected before storage.
+     * Method to perform editing to ensure correctness before storing in database
+     * Child classes should override method to implement specific business rules for table.
      *
      * @return  boolean  True if the instance is sane and able to be stored in the database.
      * @since   1.0
@@ -413,7 +396,6 @@ abstract class MolajoTable extends JObject
      * @param   boolean True to update fields even if they are null.
      *
      * @return  boolean  True on success.
-     *
      * @since   1.0
      */
     public function store($updateNulls = false)
@@ -437,7 +419,6 @@ abstract class MolajoTable extends JObject
             $this->_unlock();
         }
 
-        /** Asset tracking */
         if (isset($this->_table->asset_type_id)) {
             $this->_storeAsset();
         }
@@ -514,11 +495,9 @@ abstract class MolajoTable extends JObject
      */
     public function delete($pk = null)
     {
-        // Initialise variables.
         $k = $this->_primary_key;
         $pk = (is_null($pk)) ? $this->$k : $pk;
 
-        // If no primary key is given, return false.
         if ($pk === null) {
             $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);

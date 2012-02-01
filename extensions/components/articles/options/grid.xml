@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <title>Article Manager</title>
+    <submenu>
+        <item>Articles</item>
+        <item>Category</item>
+        <item>Featured</item>
+        <item>Drafts</item>
+    </submenu>
+    <buttonbar>
+        <list>
+            <button>new</button>
+            <button>edit</button>
+            <button>publish</button>
+            <button>unpublish</button>
+            <button>checkin</button>
+            <button>archive</button>
+            <button>restore</button>
+            <button>delete</button>
+            <button>trash</button>
+            <button>help</button>
+        </list>
+        <batch>
+            <button>save</button>
+            <button>save_and_close</button>
+            <button>save_and_new</button>
+            <button>save_as_copy</button>
+            <button>close</button>
+            <button>help</button>
+        </batch>
+    </buttonbar>
+    <filters>
+        <filter>search</filter>
+        <filter>category_list</filter>
+        <filter>category_tag</filter>
+        <filter>view_group_id</filter>
+        <filter>created_by</filter>
+        <filter>language</filter>
+    </filters>
+    <columns>
+        <column name="title">
+            <sortable>true</sortable>
+            <function>editLink</function>
+        </column>
+        <column name="status">
+            <sortable>true</sortable>
+            <function>statusIcon</function>
+        </column>
+        <column name="featured">
+            <sortable>true</sortable>
+            <function>switchIcon</function>
+        </column>
+        <column name="primary_category">
+            <sortable>true</sortable>
+            <function>lookupCategoryName</function>
+        </column>
+        <column name="ordering">
+            <sortable>true</sortable>
+            <function>orderingField</function>
+        </column>
+        <column name="view_group_id">
+            <sortable>true</sortable>
+            <function>lookupGroupName</function>
+        </column>
+        <column name="created_by">
+            <sortable>true</sortable>
+            <function>lookupUserName</function>
+        </column>
+        <column name="start_publishing_datetime">
+            <sortable>true</sortable>
+            <function>formatDate(mm/dd/ccyy)</function>
+        </column>
+        <column name="visits">
+            <sortable>true</sortable>
+        </column>
+        <column name="language">
+            <sortable>true</sortable>
+            <function>translationOfID</function>
+        </column>
+    </columns>
+</configuration>
+
