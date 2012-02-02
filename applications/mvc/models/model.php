@@ -138,30 +138,6 @@ class MolajoModel extends JObject
     public $task = null;
 
     /**
-     * Associative array of user => applications
-     *
-     * @since  1.0
-     * @var    array
-     */
-    public $applications = array();
-
-    /**
-     * Associative arrays of user => group ids
-     *
-     * @since  1.0
-     * @var    array
-     */
-    public $groups = array();
-
-    /**
-     * Associative arrays of user => view group ids
-     *
-     * @since  1.0
-     * @var    array
-     */
-    public $view_groups = array();
-
-    /**
      * getInstance
      *
      * Static method to get an instance of a MolajoModel class
@@ -179,7 +155,6 @@ class MolajoModel extends JObject
     {
         $name = preg_replace('/[^A-Z0-9_\.-]/i', '', $name);
         $modelClass = $prefix . ucfirst($name);
-
         if (class_exists($modelClass)) {
         } else {
             MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
@@ -204,7 +179,6 @@ class MolajoModel extends JObject
                                 $config = array())
     {
         $this->config = $config;
-
         if (array_key_exists('dbo', $this->config)) {
             $this->_db = $this->config['dbo'];
         } else {

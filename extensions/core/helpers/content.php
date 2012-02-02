@@ -50,28 +50,22 @@ abstract class MolajoContentHelper
         $query->select('a.' . $db->namequote('translation_of_id'));
         $query->select('a.' . $db->namequote('ordering'));
 
-        $query->from($db->namequote('#'.$content_table) . ' as a');
+        $query->from($db->namequote('#' . $content_table) . ' as a');
         $query->where('a.' . $db->namequote('id') . ' = ' . (int)$id);
 
         $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
-        /** assets */
-        $query->select('b_assets.' . $db->namequote('id') . ' as asset_id');
-        $query->select('b_assets.' . $db->namequote('view_group_id') . ' as view_group_id');
-        $query->from($db->namequote('#__assets') . ' as b_assets');
-        $query->where('b_assets.source_id = a.' . $db->namequote('id'));
+        /** Assets and Extension Instance ACL */
+        MolajoAccess::setQueryViewAccess(
+            $query,
+            array('join_to_prefix' => 'a',
+                'join_to_primary_key' => 'id',
+                'asset_prefix' => 'b_assets'
+            )
+        );
 
-
-       $list = implode(',', MolajoController::getUser()->viewaccess);
-        echo $list;
-        die;
-       $query->where($prefix . 'view_group_id IN (' . $list . ')');
-
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
-        echo 'sdfasdfasfd';
-                       die;
         $db->setQuery($query->__toString());
         $rows = $db->loadObjectList();
 
@@ -86,7 +80,8 @@ abstract class MolajoContentHelper
             return array();
         }
 
-        foreach ($rows as $row) { }
+        foreach ($rows as $row) {
+        }
 
         return $row;
     }

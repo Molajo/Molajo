@@ -18,7 +18,7 @@ class MolajoAccess
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTask($task='login', $asset_id=0)
+    static public function authoriseTask($task = 'login', $asset_id = 0)
     {
         return true;
     }
@@ -33,33 +33,51 @@ class MolajoAccess
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTaskList ($tasklist=array(), $asset_id=0, $row=array())
+    static public function authoriseTaskList($tasklist = array(), $asset_id = 0, $row = array())
     {
     }
 
     /**
-     *  Type 2 --> getQueryInformation
+     *  setQueryViewAccess
      *
-     *  Called from Models and Field Filters to prepare query information
+     *  Append criteria needed to implement view access for Query
      *
-     *  ACL Implementations methods needed for:
-     *
-     *  getUserQueryInformation - returns filtering access for the View Action for user
-     *  getFilterQueryInformation - returns filtering access for the ACL Filter Object Access
-     *  getXYZQueryInformation - anything that follows that pattern
-     *
-     * @param string $option 'articles', etc.
-     * @param string $query query object
-     * @param string $type 'user', 'filter', 'xyz'
-     * @param string $filterValue
+     * @param  string  $query
+     * @param  string  $parameters
      *
      * @return     boolean
      * @since      1.0
      */
-    static public function getQueryInformation($option = '', $query = array(), $type = '', $parameters = array())
+    static public function setQueryViewAccess($query = array(),
+                                              $parameters = array())
     {
+        $db = MolajoController::getDbo();
+        $viewgroups = implode(',',MolajoController::getUser()->view_groups);
 
-    }
+        /** assets */
+        $query->select($parameters['asset_prefix'].
+            '.'.$db->namequote('view_group_id'));
+
+        $query->select($parameters['asset_prefix'].
+            '.'.$db->namequote('id').
+            ' as '.$db->namequote('asset_id'));
+
+        $query->select($parameters['asset_prefix'].
+            '.'.$db->namequote('view_group_id').
+            ' as '.$db->namequote('view_group_id'));
+
+        $query->from($db->namequote('#__assets') .
+            ' as '.$parameters['asset_prefix']);
+
+        $query->where($parameters['asset_prefix'].'.source_id = ' .
+            $parameters['join_to_prefix'].
+            '.'.$db->namequote($parameters['join_to_primary_key']));
+
+        $query->where($parameters['asset_prefix'].
+            '.'.$db->namequote('view_group_id').' IN ('.$viewgroups.')');
+
+        return $query;
+     }
 
     /**
      * TYPE 3 --> Retrieve lists for User

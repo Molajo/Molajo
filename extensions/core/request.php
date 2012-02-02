@@ -819,8 +819,8 @@ class MolajoRequest
         $this->request->set('theme_id', $row->extension_id);
 
         $this->request->set('theme_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_THEME);
-        $this->request->set('theme_asset_id', $row->extension_instance_asset_id);
-        $this->request->set('theme_view_group_id', $row->extension_instance_view_group_id);
+        $this->request->set('theme_asset_id', $row->asset_id);
+        $this->request->set('theme_view_group_id', $row->view_group_id);
         $this->request->set('theme_language', $row->language);
 
         $this->request->set('theme_custom_fields', $row->custom_fields);

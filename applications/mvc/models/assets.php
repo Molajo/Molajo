@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class MolajoModelAssets extends MolajoModel
 {
-
     /**
      * The primary key of the asset.
      *
@@ -42,6 +41,8 @@ class MolajoModelAssets extends MolajoModel
     }
 
     /**
+     * Save
+     *
      * Method to provide a shortcut to binding, checking and storing a MolajoModel
      *
      * @param   mixed   An associative array or object to bind to the MolajoModel instance.

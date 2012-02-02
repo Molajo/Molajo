@@ -80,19 +80,19 @@ abstract class MolajoExtensionHelper
         $query->where('(b.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(b.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR b.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
-        /** b_assets. Assets Table  */
-        $query->select('b_assets.' . $db->namequote('id') . ' as extension_instance_asset_id');
-        $query->select('b_assets.' . $db->namequote('view_group_id') . ' as extension_instance_view_group_id');
-        $query->from($db->namequote('#__assets') . ' as b_assets');
-        $query->where('b_assets.source_id = b.id');
+        /** b_assets. Assets and Extension Instance ACL */
+        MolajoAccess::setQueryViewAccess(
+            $query,
+            array('join_to_prefix' => 'a',
+                'join_to_primary_key' => 'id',
+                'asset_prefix' => 'b_assets'
+            )
+        );
 
         /** b_asset_types. Asset Types Table  */
         $query->from($db->namequote('#__asset_types') . ' as b_asset_types');
         $query->where('b_assets.asset_type_id = b_asset_types.id');
         $query->where('b_asset_types.' . $db->namequote('component_option') . ' = ' . $db->quote('extensions'));
-
-        /** Extension Instance ACL */
-        $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
 
         /**
          *  c. Application Table
@@ -265,8 +265,8 @@ abstract class MolajoExtensionHelper
         }
 
         $request->set('extension_instance_name', $row->title);
-        $request->set('extension_asset_id', $row->extension_instance_asset_id);
-        $request->set('extension_view_group_id', $row->extension_instance_view_group_id);
+        $request->set('extension_asset_id', $row->asset_id);
+        $request->set('extension_view_group_id', $row->view_group_id);
 
         $custom_fields = new JRegistry;
         $custom_fields->loadString($row->custom_fields);
