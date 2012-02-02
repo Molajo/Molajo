@@ -7,6 +7,6 @@
         <name>installation</name>
     </application>
     <application>
-        <name>administrator</name>
+        <name>admin</name>
     </application>
 </applications>
