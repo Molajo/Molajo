@@ -357,7 +357,7 @@ class MolajoControllerExtension
      */
     public function cleanCache()
     {
-        $cache = MolajoController::getCache($this->mvc->get('extension_instance_name'));
-        $cache->clean();
+//        $cache = MolajoController::getCache($this->mvc->get('extension_instance_name'));
+//        $cache->clean();
     }
 }

@@ -365,7 +365,7 @@ class MolajoControllerUpdate extends MolajoControllerExtension
         $this->postSaveHook($this->model, $validData);
 
         /** Cache: clear cache **/
-        $results = $this->cleanCache();
+//        $results = $this->cleanCache();
 
         /** success **/
         if ($this->getTask() == 'copy' || $this->getTask() == 'move') {

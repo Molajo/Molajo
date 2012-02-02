@@ -634,7 +634,7 @@ class MolajoACLCore extends MolajoACL
     public function getUsergroupsList($user_id, $option, $action, $parameters = array())
     {
         $acl = new MolajoACL();
-        $cache = MolajoController::getCache('coreacl.getUsergroupsList', '');
+//        $cache = MolajoController::getCache('coreacl.getUsergroupsList', '');
 
         /** $key */
         if ((int)$user_id == 0) {
@@ -673,8 +673,8 @@ class MolajoACLCore extends MolajoACL
         }
 
         /** run query **/
-        $hash = hash('md5', $query->__toString(), false);
-        $authorised = $cache->get($hash);
+//        $hash = hash('md5', $query->__toString(), false);
+//        $authorised = $cache->get($hash);
 
         if ($authorised) {
         } else {
@@ -705,7 +705,7 @@ class MolajoACLCore extends MolajoACL
                 $authorised[] = MOLAJO_SYSTEM_GROUP_REGISTERED;
             }
 
-            $cache->store($authorised, $hash);
+//            $cache->store($authorised, $hash);
         }
 
         return $authorised;

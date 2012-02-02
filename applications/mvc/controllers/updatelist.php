@@ -302,7 +302,7 @@ class MolajoControllerUpdatelist extends MolajoControllerUpdate
         }
 
         /** Cache: clear cache **/
-        $results = $this->cleanCache();
+//        $results = $this->cleanCache();
 
         if ($errorFoundForBatch === false) {
             $this->redirectClass->setRedirectMessage(MolajoTextHelper::plural('MOLAJO_N_ITEMS_' . strtoupper($task), count($idArray)));

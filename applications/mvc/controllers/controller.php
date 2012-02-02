@@ -141,41 +141,6 @@ class MolajoController
     }
 
     /**
-     * getCache
-     *
-     * Get a cache object
-     *
-     * @static
-     * @param string $group
-     * @param string $handler
-     * @param null $storage
-     * @return mixed
-     * @since 1.0
-     */
-    public static function getCache($group = '', $handler = 'callback', $storage = null)
-    {
-        $hash = md5($group . $handler . $storage);
-        if (isset(self::$cache[$hash])) {
-            return self::$cache[$hash];
-        }
-        $handler = ($handler == 'function') ? 'callback' : $handler;
-
-        //        $conf = self::getConfig();
-
-        $options = array('defaultgroup' => $group);
-
-        if (isset($storage)) {
-            $options['storage'] = $storage;
-        }
-
-        $cache = JCache::getInstance($handler, $options);
-
-        self::$cache[$hash] = $cache;
-
-        return self::$cache[$hash];
-    }
-
-    /**
      * getDbo
      *
      * Get a database object
@@ -218,6 +183,8 @@ class MolajoController
     /**
      * getFeedParser
      *
+     * todo: amy Move into MODEL
+     *
      * Get a parsed XML Feed Source
      *
      * @static
@@ -228,19 +195,12 @@ class MolajoController
      */
     public static function getFeedParser($url, $cache_time = 0)
     {
-        $cache = self::getCache('feed_parser', 'callback');
-
-        if ($cache_time > 0) {
-            $cache->setLifeTime($cache_time);
-        }
-
+//cache
         $simplepie = new SimplePie(null, null, 0);
 
         $simplepie->enable_cache(false);
         $simplepie->set_feed_url($url);
         $simplepie->force_feed(true);
-
-        $contents = $cache->get(array($simplepie, 'init'), null, false, false);
 
         if ($contents) {
             return $simplepie;

@@ -115,22 +115,6 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/cookie.php', 
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/files.php', 'JInputFiles');
 
 /**
- *  Cache
- */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/cache/controller.php', 'JCacheController');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/cache/storage.php', 'JCacheStorage');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/cache/cache.php', 'JCache');
-
-$files = JFolder::files(JOOMLA_LIBRARY . '/cache/controller', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/cache/controller/' . $file, 'JCacheController' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
-$files = JFolder::files(JOOMLA_LIBRARY . '/cache/storage', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/cache/storage/' . $file, 'JCacheStorage' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
-
-/**
  *  Client
  *
  */

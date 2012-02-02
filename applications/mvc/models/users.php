@@ -47,14 +47,14 @@ class MolajoModelUsers extends MolajoModel
      * @return  bool    True on success, false on failure.
      * @since   1.0
      */
-    public function load($keys = null, $reset = true)
+    public function load($id = null, $reset = true)
     {
-        $results = parent::load($keys, $reset);
+        parent::load($id, $reset);
 
         echo '<pre>';
-        var_dump($results);
+        var_dump($this);
         echo '<pre>';
-
+die;
         if ($return == false) {
         } else {
 

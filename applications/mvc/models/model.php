@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage    Model
  * @since 1.0
  */
-class MolajoModel
+class MolajoModel extends JObject
 {
     /**
      * Name
@@ -210,7 +210,7 @@ if (count($names) > 0) {
         }
     }
 }
- */
+*/
     }
 
     /**
@@ -387,7 +387,6 @@ if (count($names) > 0) {
         return $this->_database;
     }
 
-
     /**
      * setDbo
      *
@@ -414,67 +413,29 @@ if (count($names) > 0) {
      *
      * Method to load a row from the database by primary key and bind its fields
      *
-     * @param   mixed  Optional primary key value or array of fields to match
-     * @param   bool   True to reset the default values before loading the new row.
+     * @param   string  $id
+     * @param   bool    $reset
      *
-     * @return  bool  True if successful. False if row not found or on error
+     * @return  bool
      * @since   1.0
      */
-    public function load($keys = null, $reset = true)
+    public function load($id = null, $reset = true)
     {
-        if (empty($keys)) {
-            $keyName = $this->_primary_key;
-            $keyValue = $this->$keyName;
-
-            if (empty($keyValue)) {
-                return true;
-            }
-            $keys = array($keyName => $keyValue);
-
-        } else if (is_array($keys)) {
-
-        } else {
-            $keys = array($this->_primary_key => $keys);
-        }
-
-        if ($reset) {
+        /** initialize */
+        if ($reset === true) {
             $this->reset();
         }
 
+        /** load query */
         $query = $this->_database->getQuery(true);
+
         $query->select('*');
-        $query->from($this->_table);
+        $query->from($this->_database->quoteName($this->_table));
+        $query->where($this->_primary_key . ' = ' . $this->_database->quote($id));
 
-//        $names = array_keys($this->getProperties($this->_table));
-        $names = $this->getFields();
-
-        if (count($names) > 0) {
-        } else {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_EMPTY_ROW_RETURNED'));
-            $this->setError($e);
-            return false;
-        }
-
-        /** default to id */
-        if (count($keys) == 0) {
-            $keys = array('id');
-        }
-var_dump($keys);
-        die;
-        /** verify primary key against field names */
-        foreach ($keys as $name => $value) {
-            if (in_array($name, $names)) {
-            } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $name));
-                $this->setError($e);
-                return false;
-            }
-            $query->where($this->_database->quoteName($name) . ' = ' . $this->_database->quote($value));
-        }
-echo $query->__toString();
-        die;
         $this->_database->setQuery($query->__toString());
-        $row = $this->_database->loadAssoc();
+
+        $row = $this->_database->loadAssocArray();
 
         if ($this->_database->getErrorNum()) {
             $e = new MolajoException($this->_database->getErrorMsg());
@@ -487,15 +448,17 @@ echo $query->__toString();
             $this->setError($e);
             return false;
         }
-        var_dump($row);
-        die;
-        return $this->bind($row);
+
+        if ($this->bind($row, array())) {
+        } else {
+            return false;
+        }
     }
 
     /**
      * reset
      *
-     * Method to reset class properties to the defaults set in the class
+     * Method to reset class properties to the defaults
      * Ignores primary key and private class properties
      *
      * @return  void
@@ -503,11 +466,8 @@ echo $query->__toString();
      */
     public function reset()
     {
-        foreach ($this->getFields() as $k => $v)
-        {
-            if ($k == $this->_primary_key
-                || (strpos($k, '_') == 0)
-            ) {
+        foreach ($this->getFields() as $k => $v) {
+            if ($k == $this->_primary_key || (strpos($k, '_') == 0)) {
             } else {
                 $this->$k = $v->Default;
             }
@@ -584,16 +544,16 @@ echo $query->__toString();
             return false;
         }
 
-        if (is_object($source)) {
-            $source = get_object_vars($source);
-        }
-
         if (is_array($ignore)) {
         } else {
             $ignore = explode(' ', $ignore);
         }
 
-        foreach ($this->getProperties() as $k => $v) {
+        if (is_object($source)) {
+            $source = get_object_vars($source);
+        }
+
+        foreach ($source as $k => $v) {
             if (in_array($k, $ignore)) {
             } else {
                 if (isset($source[$k])) {
@@ -1375,38 +1335,5 @@ echo $query->__toString();
         $this->_locked = false;
 
         return true;
-    }
-
-    /**
-     * getProperites
-     *
-     * Returns an associative array of object properties
-     *
-     * @param   $object
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getProperties($object)
-    {
-echo '<pre>';
-var_dump($object);
-echo '</pre>';
-        die;
-        if (is_object($object)) {
-            $vars = get_object_vars($this);
-        } else {
-            $vars = get_object_vars($object);
-        }
-
-        if (count($vars) > 0) {
-            foreach ($vars as $key => $value) {
-                if ('_' == substr($key, 0, 1)) {
-                    unset($vars[$key]);
-                }
-            }
-        }
-
-        return $vars;
     }
 }
