@@ -57,12 +57,13 @@ abstract class MolajoContentHelper
         $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
-        /** Assets and Extension Instance ACL */
+        /** Assets Join and View Access Check */
         MolajoAccess::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets'
+                'asset_prefix' => 'b_assets',
+                'select' => true
             )
         );
 
@@ -72,7 +73,10 @@ abstract class MolajoContentHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
+            MolajoController::getApplication()->setMessage(
+                $db->getErrorMsg(),
+                MOLAJO_MESSAGE_TYPE_ERROR
+            );
             return false;
         }
 

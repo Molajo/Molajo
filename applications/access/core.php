@@ -414,41 +414,6 @@ class MolajoACLCore extends MolajoACL
      * @return boolean
      */
 
-    /**
-     *  TYPE 2 --> MolajoACL::getQueryInformation -> getUserQueryInformation
-     */
-    public function getUserQueryInformation($query, $option, $parameters)
-    {
-        $query->select('a.access');
-        //        $query->select('ag.title AS access_level');
-
-        $aclClass = 'MolajoACL';
-        $acl = new $aclClass();
-        $groupList = $acl->getList('viewaccess');
-
-        $query->where('a.access in (' . $groupList . ')');
-        //$query->join('LEFT', '#__viewlevels AS ag ON a.access = ag.id');
-
-        /** Molajo_note: come back and deal with edit and edit state capabilities
-         * the way this is currently coded in core, users would not be able to update their articles
-         * from a blog or list view unless they have core edit or edit state for all of a component
-         *
-         * Find a better way to restrict published information that only restricts what is needed
-
-        if ($this->authorise('edit.state', 'articles')
-        || $this->authorise('edit', 'articles')) {
-        } else {
-        $query->where('a.state in ('.MOLAJO_STATUS_ARCHIVED.','.MOLAJO_STATUS_PUBLISHED.')');
-
-        $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
-        $nowDate = $this->getDbo()->Quote(MolajoController::getDate()->toMySQL());
-
-        $query->where('(a.start_publishing_datetime = '.$nullDate.' OR a.start_publishing_datetime <= '.$nowDate.')');
-        $query->where('(a.stop_publishing_datetime = '.$nullDate.' OR a.stop_publishing_datetime >= '.$nowDate.')');
-        }
-         */
-        return $query;
-    }
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getFilterQueryInformation
@@ -464,33 +429,6 @@ class MolajoACLCore extends MolajoACL
         } else {
             $query->where('a.access = ' . (int)$filterValue);
         }
-    }
-
-    /**
-     *  TYPE 2 --> MolajoACL::getQueryInformation -> getViewaccessQueryInformation
-     *
-     *  Usage:
-     *  $acl = new MolajoACL ();
-     *  $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m.'));
-     *
-     * @param $query
-     * @param $option
-     * @param $parameters
-     * @return
-     */
-    public function getViewaccessQueryInformation($query, $option, $parameters)
-    {
-        $prefix = $parameters['table_prefix'];
-        if (trim($prefix == '')) {
-        } else {
-            $prefix = $prefix . '.';
-        }
-
-        $acl = new MolajoACL();
-        $list = implode(',', $acl->getList('viewaccess'));
-        $query->where($prefix . 'view_group_id IN (' . $list . ')');
-
-        return;
     }
 
     /**
@@ -826,38 +764,6 @@ class MolajoACLCore extends MolajoACL
         }
     }
 
-    /**
-     * checkUserPermissionsLogin
-     *
-     * @param $key
-     * @param $action
-     * @param null $asset
-     * @return void
-     */
-    public function checkUserPermissionsLogin($user_id)
-    {
-        $db = MolajoController::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('count(*) as count');
-        $query->from('#__user_applications a');
-        $query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
-        $query->where('user_id = ' . (int)$user_id);
-
-        $db->setQuery($query->__toString());
-        $result = $db->loadResult();
-
-        if ($db->getErrorNum()) {
-            $this->setError($db->getErrorMsg());
-            return false;
-        }
-
-        if ($result == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * checkGroupPermissions

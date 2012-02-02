@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoModuleHelper
 {
-
     /**
      * get
      *
@@ -27,7 +26,10 @@ abstract class MolajoModuleHelper
      */
     static public function get($module_name)
     {
-        $rows = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE, $module_name);
+        $rows = MolajoExtensionHelper::get(
+            MOLAJO_ASSET_TYPE_EXTENSION_MODULE,
+            $module_name
+        );
         if (count($rows) == 0) {
             return array();
         }

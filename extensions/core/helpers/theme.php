@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Theme
  *
  * @package     Molajo
- * @subpackage  Theme
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoThemeHelper
@@ -26,7 +26,10 @@ class MolajoThemeHelper
      */
     public function get($theme)
     {
-        $rows = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_THEME, $theme);
+        $rows = MolajoExtensionHelper::get(
+            MOLAJO_ASSET_TYPE_EXTENSION_THEME,
+            $theme
+        );
         if (count($rows) == 0) {
             return array();
         }

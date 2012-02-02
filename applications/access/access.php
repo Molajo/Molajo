@@ -7,7 +7,16 @@
  */
 defined('MOLAJO') or die;
 
-class MolajoAccess
+/**
+ * Access Control
+ *
+ * Various queries for Permission Verification
+ *
+ * @package     Molajo
+ * @subpackage  Access Control
+ * @since       1.0
+ */
+abstract class MolajoAccess
 {
     /**
      *  authoriseTask
@@ -38,6 +47,39 @@ class MolajoAccess
     }
 
     /**
+     * checkUserPermissionsLogin
+     *
+     * @param $key
+     * @param $action
+     * @param null $asset
+     * @return void
+     */
+    public function checkUserPermissionsLogin($user_id)
+    {
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('count(*) as count');
+        $query->from('#__user_applications a');
+        $query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
+        $query->where('user_id = ' . (int)$user_id);
+
+        $db->setQuery($query->__toString());
+        $result = $db->loadResult();
+
+        if ($db->getErrorNum()) {
+            $this->setError($db->getErrorMsg());
+            return false;
+        }
+
+        if ($result == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      *  setQueryViewAccess
      *
      *  Append criteria needed to implement view access for Query
@@ -52,97 +94,61 @@ class MolajoAccess
                                               $parameters = array())
     {
         $db = MolajoController::getDbo();
-        $viewgroups = implode(',',MolajoController::getUser()->view_groups);
 
-        /** assets */
-        $query->select($parameters['asset_prefix'].
-            '.'.$db->namequote('view_group_id'));
+        if ($parameters['select'] === true) {
+            $query->select($parameters['asset_prefix'].
+                '.'.$db->namequote('view_group_id')
+            );
 
-        $query->select($parameters['asset_prefix'].
-            '.'.$db->namequote('id').
-            ' as '.$db->namequote('asset_id'));
-
-        $query->select($parameters['asset_prefix'].
-            '.'.$db->namequote('view_group_id').
-            ' as '.$db->namequote('view_group_id'));
+            $query->select($parameters['asset_prefix'].
+                '.'.$db->namequote('id').
+                ' as '.$db->namequote('asset_id')
+            );
+        }
 
         $query->from($db->namequote('#__assets') .
-            ' as '.$parameters['asset_prefix']);
+            ' as '.$parameters['asset_prefix']
+        );
 
         $query->where($parameters['asset_prefix'].'.source_id = ' .
             $parameters['join_to_prefix'].
-            '.'.$db->namequote($parameters['join_to_primary_key']));
+            '.'.$db->namequote($parameters['join_to_primary_key'])
+        );
 
         $query->where($parameters['asset_prefix'].
-            '.'.$db->namequote('view_group_id').' IN ('.$viewgroups.')');
+            '.'.$db->namequote('view_group_id').
+            ' IN ('.implode(',',MolajoController::getUser()->view_groups).')'
+        );
 
         return $query;
      }
 
-    /**
-     * TYPE 3 --> Retrieve lists for User
-     *
-     * Provides User and Filter View Action Query Select Information
-     *
-     * ACL Implementations methods needed for:
-     *
-     * getActionsList - produces a list of Actions parameter combinations
-     * getAssetsList - produces a list of Assets parameter combinations
-     * getViewaccessList - produces a View Access List parameter combinations
-     * getCategoriesList - produces a list of Categories parameter combinations
-     * getGroupsList - produces a list of Groups parameter combinations
-     * getUsergroupsList - produces a list of Usergroups for parameter combinations
-     * getUsergroupingsList - produces a list of Usergroupings for parameter combinations
-     *
-     * @param $type
-     * @param string $option
-     * @param string $task
-     * @param array $parameters
-     *
-     * @return bool
-     */
-    public function getList($type, $id = '', $option = '', $task = '', $parameters = array())
-    {
-
-    }
 
     /**
-     * TYPE 4 --> Checks specific authorisation for a user or group
-     *
-     * ACL Implementations methods needed for:
-     *
-     * checkUserPermissions - produces a true or false response for specific parameters
-     * checkGroupPermissions - produces a true or false response for specific parameters
-     *
-     * @param $type
-     * @param string $key
-     * @param string $action
-     * @param string $asset
-     * @param string $access
-     * @return bool
+     *  TYPE 3 --> MolajoACL::getList -> getActionsList
      */
-    public function checkPermissions($type, $key = '', $action = '', $asset = '', $access = '')
+    static public function getActionsList($id, $option, $task, $parameters = array())
     {
+        $actions = array();
 
-    }
+        $component = $parameters[0];
+        $section = $parameters[1];
 
-    /**
-     *  Type 5 --> getFormAuthorisations
-     *
-     *  checkFormAuthorisations
-     *
-     *  Evaluates set of form fields for current users's authorisation to hide or disable fields from update, if needed
-     *
-     * @param string $option 'articles', etc.
-     * @param string $entity 'article', or 'comment', etc.
-     * @param string $task 'add', 'delete', 'publish'
-     * @param integer $id - primary key for content
-     * @param object $form - form object fields
-     *
-     * @return boolean
-     */
-    public function getFormAuthorisations($option, $entity, $task, $id, $form, $item)
-    {
+        if (is_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml')) {
+            $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml');
 
+            foreach ($xml->children() as $child)
+            {
+                if ($section == (string)$child['name']) {
+                    foreach ($child->children() as $action) {
+                        $actions[] = (object)array('name' => (string)$action['name'],
+                                                   'title' => (string)$action['title'],
+                                                   'description' => (string)$action['description']);
+                    }
+                    break;
+                }
+            }
+        }
+        return $actions;
     }
 }
