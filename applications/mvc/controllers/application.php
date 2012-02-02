@@ -465,8 +465,7 @@ class MolajoControllerApplication
 
         // Instantiate the session object.
         $session = MolajoSession::getInstance($handler, $options);
-        var_dump($session);
-        die;
+
         if ($session->getState() == 'expired') {
             $session->restart();
         }

@@ -29,7 +29,34 @@ abstract class MolajoAccess
      */
     static public function authoriseTask($task = 'login', $asset_id = 0)
     {
-        return true;
+        /** need task to action mapping in a) site ini or b) application parameters */
+        $action = 'view';
+        $action_id = 3;
+
+        $db = MolajoController::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('count(*)');
+        $query->from($db->nameQuote('#__user_groups').' as a');
+        $query->from($db->nameQuote('#__group_permissions').' as b');
+        $query->where('a.'.$db->nameQuote('user_id').' = ' . (int)MolajoController::getUser()->get('id'));
+        $query->where('b.'.$db->nameQuote('asset_id').' = ' . (int)$asset_id);
+        $query->where('b.'.$db->nameQuote('action_id').' = ' . (int)$action_id);
+        $query->where('a.'.$db->nameQuote('group_id').' = b.'.$db->nameQuote('group_id'));
+
+        $db->setQuery($query->__toString());
+        $count = $db->loadResult();
+
+        if ($db->getErrorNum()) {
+            $this->setError($db->getErrorMsg());
+            return false;
+        }
+
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -96,32 +123,32 @@ abstract class MolajoAccess
         $db = MolajoController::getDbo();
 
         if ($parameters['select'] === true) {
-            $query->select($parameters['asset_prefix'].
-                '.'.$db->namequote('view_group_id')
+            $query->select($parameters['asset_prefix'] .
+                    '.' . $db->namequote('view_group_id')
             );
 
-            $query->select($parameters['asset_prefix'].
-                '.'.$db->namequote('id').
-                ' as '.$db->namequote('asset_id')
+            $query->select($parameters['asset_prefix'] .
+                    '.' . $db->namequote('id') .
+                    ' as ' . $db->namequote('asset_id')
             );
         }
 
         $query->from($db->namequote('#__assets') .
-            ' as '.$parameters['asset_prefix']
+                ' as ' . $parameters['asset_prefix']
         );
 
-        $query->where($parameters['asset_prefix'].'.source_id = ' .
-            $parameters['join_to_prefix'].
-            '.'.$db->namequote($parameters['join_to_primary_key'])
+        $query->where($parameters['asset_prefix'] . '.source_id = ' .
+                $parameters['join_to_prefix'] .
+                '.' . $db->namequote($parameters['join_to_primary_key'])
         );
 
-        $query->where($parameters['asset_prefix'].
-            '.'.$db->namequote('view_group_id').
-            ' IN ('.implode(',',MolajoController::getUser()->view_groups).')'
+        $query->where($parameters['asset_prefix'] .
+                '.' . $db->namequote('view_group_id') .
+                ' IN (' . implode(',', MolajoController::getUser()->view_groups) . ')'
         );
 
         return $query;
-     }
+    }
 
 
     /**
@@ -142,8 +169,8 @@ abstract class MolajoAccess
                 if ($section == (string)$child['name']) {
                     foreach ($child->children() as $action) {
                         $actions[] = (object)array('name' => (string)$action['name'],
-                                                   'title' => (string)$action['title'],
-                                                   'description' => (string)$action['description']);
+                            'title' => (string)$action['title'],
+                            'description' => (string)$action['description']);
                     }
                     break;
                 }

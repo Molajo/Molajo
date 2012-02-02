@@ -32,7 +32,7 @@ class MolajoSiteConfiguration
 
     /* Session settings */
     public $lifetime = '15';
-    public $session_handler = 'none';
+    public $session_handler = 'database';
     public $cookie_domain = '';
     public $cookie_path = '';
 

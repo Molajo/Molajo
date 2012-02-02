@@ -663,11 +663,16 @@ class MolajoRequest
      */
     protected function _authoriseTask()
     {
-        $this->request->set('status_authorised',
-            MolajoAccess::authoriseTask(
-                $this->request->get('mvc_task'),
-                $this->request->get('mvc_asset_id'))
-        );
+        if ($this->request->get('status_error', false) === true) {
+            $this->request->set('status_authorised', true);
+
+        } else {
+            $this->request->set('status_authorised',
+                MolajoAccess::authoriseTask(
+                    $this->request->get('mvc_task'),
+                    $this->request->get('request_asset_id'))
+            );
+        }
 
         if ($this->request->get('status_authorised') === true) {
         } else {
