@@ -1018,11 +1018,11 @@ class MolajoRequest
         $temp = json_decode($this->request->get('extension_parameters'));
 
         $this->parameters = $this->_merge($parameters, $temp);
-
+/**
         echo '<pre>';
         var_dump($this->parameters);
         echo '</pre>';
-
+*/
         die();
     }
 

@@ -76,7 +76,7 @@ class MolajoViewHelper
      * Constructor
      *
      * @param  $view - name or id of the view
-     * @param  $view_type - type of view (page, template, wrap)
+     * @param  $view_type - type of view (pages, templates, wraps)
      * @param  $extension_name - name of component, module, theme, or listener
      * @param  $extension_type - type of extension
      * @param  $extension_folder - subtype, or folder, for view and listener extensions
@@ -89,6 +89,11 @@ class MolajoViewHelper
                                 $extension_type, $extension_folder, $theme_name)
     {
         $this->_view = strtolower($view);
+        if (strtolower($view_type) == 'pages'
+            || strtolower($view_type) == 'wraps') {
+        } else {
+            $view_type = 'templates';
+        }
         $this->_view_type = strtolower($view_type);
         $this->_extension_name = strtolower($extension_name);
         $this->_extension_type = strtolower($extension_type);
@@ -193,17 +198,7 @@ class MolajoViewHelper
             $this->view_path = false;
             $this->view_path_url = false;
         }
-/**
-if (trim($this->_view) == '') {
-    echo 'view path: '.$this->view_path.'<br />';
-    echo 'view path url: '.$this->view_path_url.'<br />';
-    echo 'view '. $this->_view;
-    echo '<pre>';
-    var_dump($this);
-    echo '</pre>';
-    echo '<br /><br />';
-}
-*/
+
         return $found;
     }
 

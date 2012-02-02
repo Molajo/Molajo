@@ -37,12 +37,11 @@ abstract class MolajoAccess
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
-        $query->from($db->nameQuote('#__user_groups').' as a');
-        $query->from($db->nameQuote('#__group_permissions').' as b');
-        $query->where('a.'.$db->nameQuote('user_id').' = ' . (int)MolajoController::getUser()->get('id'));
-        $query->where('b.'.$db->nameQuote('asset_id').' = ' . (int)$asset_id);
-        $query->where('b.'.$db->nameQuote('action_id').' = ' . (int)$action_id);
-        $query->where('a.'.$db->nameQuote('group_id').' = b.'.$db->nameQuote('group_id'));
+        $query->from($db->nameQuote('#__group_permissions') . ' as a');
+        $query->where('a.' . $db->nameQuote('asset_id') . ' = ' . (int)$asset_id);
+        $query->where('a.' . $db->nameQuote('action_id') . ' = ' . (int)$action_id);
+        $query->where('a.' . $db->nameQuote('group_id') .
+            ' IN (' . implode(',', MolajoController::getUser()->groups) . ')');
 
         $db->setQuery($query->__toString());
         $count = $db->loadResult();

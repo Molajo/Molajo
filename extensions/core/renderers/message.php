@@ -66,6 +66,7 @@ class MolajoRendererMessage extends MolajoRenderer
         if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
             $this->mvc->set('wrap_view_id', MolajoController::getApplication()->get('message_wrap_view_id'));
         }
+
         return true;
     }
 }
