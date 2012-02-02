@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Events</title>
+        <link href="../../shared/styles/examples.css" rel="stylesheet"/>
+        <link href="../../shared/styles/examples-offline.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.common.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.default.css" rel="stylesheet"/>
+        <script src="../../../source/js/jquery.min.js"></script>
+        <script src="../../../source/js/kendo.core.js"></script>
+        <script src="../../../source/js/kendo.fx.js"></script>
+        <script src="../../../source/js/kendo.popup.js"></script>
+        <script src="../../../source/js/kendo.data.js"></script>
+        <script src="../../../source/js/kendo.list.js"></script>
+        <script src="../../../source/js/kendo.combobox.js"></script>
+        <script src="../../shared/js/console.js"></script>
+    </head>
+    <body>
+        <a href="../index.html">Back</a>
+        <div class="description">Events</div>
+        <div id="example" class="k-content">
+            <input id="input"/>
+            <script>
+                $(document).ready(function() {
+                    function onOpen() {
+                        if ("kendoConsole" in window) {
+                            kendoConsole.log("event: open");
+                        }
+                    }
+
+                    function onClose() {
+                        if ("kendoConsole" in window) {
+                            kendoConsole.log("event: close");
+                        }
+                    }
+
+                    function onChange() {
+                        if ("kendoConsole" in window) {
+                            kendoConsole.log("event: change");
+                        }
+                    }
+
+                    var data = [
+                        { text: "Item 1", value:"1" },
+                        { text: "Item 2", value:"2" },
+                        { text: "Item 3", value:"3" }
+                    ];
+
+                    $("#input").kendoComboBox({
+                        dataSource: data,
+                        change: onChange,
+                        close: onClose,
+                        open: onOpen
+                    });
+                });
+            </script>
+        </div>
+        <div class="console"></div>
+    </body>
+</html>

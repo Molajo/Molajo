@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Basic usage</title>
+        <link href="../../shared/styles/examples.css" rel="stylesheet"/>
+        <link href="../../shared/styles/examples-offline.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.common.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.default.css" rel="stylesheet"/>
+        <script src="../../../source/js/jquery.min.js"></script>
+        <script src="../../../source/js/kendo.core.js"></script>
+        <script src="../../../source/js/kendo.fx.js"></script>
+        <script src="../../../source/js/kendo.popup.js"></script>
+        <script src="../../../source/js/kendo.timepicker.js"></script>
+    </head>
+    <body>
+        <a href="../index.html">Back</a>
+        <div class="description">Basic usage</div>
+        <div id="example" class="k-content">
+            <h3>Creating a TimePicker from <code>&lt;input /&gt;</code></h3>
+            <div class="code-sample">
+                <h4 class="code-title">Source:</h4>
+                <pre class="prettyprint">
+&lt;input id="timepicker" value="10:00 AM"/&gt;
+
+&lt;script&gt;
+    $("#timepicker").kendoTimePicker();
+&lt;/script&gt;
+</pre>
+            </div>
+            <div class="code-sample output">
+                <h4 class="code-title">Output:</h4>
+                <div class="prettyprint">
+                    <input id="timepicker" value="10:00 AM" />
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    // create TimePicker from input HTML element
+                    $("#timepicker").kendoTimePicker();
+                });
+            </script>
+
+            <style scoped>
+                #example h3 {
+                    clear: both;
+                }
+
+                #example .code-sample {
+                    width: 60%;
+                    float:left;
+                    margin-bottom: 20px;
+                }
+
+                #example .output {
+                    width: 24%;
+                    margin-left: 4%;
+                    float:left;
+                }
+            </style>
+        </div>
+    </body>
+</html>

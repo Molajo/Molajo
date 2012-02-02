@@ -446,10 +446,12 @@ class MolajoControllerApplication
     protected function loadSession()
     {
         // Generate a session name.
-        $name = md5($this->get('secret') . $this->get('session_name', get_class($this)));
+        $name = md5($this->get('secret') .
+            $this->get('session_name', get_class($this)));
 
         // Calculate the session lifetime.
-        $lifetime = (($this->get('session_lifetime')) ? $this->get('session_lifetime') * 60 : 900);
+        $lifetime = (($this->get('session_lifetime'))
+            ? $this->get('session_lifetime') * 60 : 900);
 
         // Get the session handler from the configuration.
         $handler = $this->get('session_handler', 'none');
@@ -463,6 +465,8 @@ class MolajoControllerApplication
 
         // Instantiate the session object.
         $session = MolajoSession::getInstance($handler, $options);
+        var_dump($session);
+        die;
         if ($session->getState() == 'expired') {
             $session->restart();
         }
@@ -470,7 +474,7 @@ class MolajoControllerApplication
         // If the session is new, load the user and registry objects.
         if ($session->isNew()) {
             $session->set('registry', new JRegistry);
-            $session->set('user', new JUser);
+            $session->set('user', new MolajoUser);
         }
 
         // Set the session object.

@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+    <head>
+        <title>API</title>
+        <link href="../../shared/styles/examples.css" rel="stylesheet"/>
+        <link href="../../shared/styles/examples-offline.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.common.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.default.css" rel="stylesheet"/>
+        <script src="../../../source/js/jquery.min.js"></script>
+        <script src="../../../source/js/kendo.core.js"></script>
+        <script src="../../../source/js/kendo.fx.js"></script>
+        <script src="../../../source/js/kendo.popup.js"></script>
+        <script src="../../../source/js/kendo.calendar.js"></script>
+        <script src="../../../source/js/kendo.datepicker.js"></script>
+    </head>
+    <body>
+        <a href="../index.html">Back</a>
+        <div class="description">API</div>
+        <div id="example" class="k-content">
+            <input id="datepicker" />
+
+            <script>
+                $(document).ready(function() {
+                    $("#datepicker").kendoDatePicker()
+                                  .closest(".k-widget")
+                                  .attr("id", "datepicker_wrapper");
+
+                    var datepicker = $("#datepicker").data("kendoDatePicker");
+
+                    var setValue = function () {
+                        datepicker.value($("#value").val());
+                    };
+
+                    $("#enable").click(function() {
+                        datepicker.enable();
+                    });
+
+                    $("#disable").click(function() {
+                        datepicker.enable(false);
+                    });
+
+                    $("#open").click(function() {
+                        datepicker.open();
+                    });
+
+                    $("#close").click(function() {
+                        datepicker.close();
+                    });
+
+                    $("#value").kendoDatePicker({
+                        change: setValue
+                    });
+
+                    $("#set").click(setValue);
+
+                    $("#get").click(function() {
+                        alert(datepicker.value());
+                    });
+                });
+           </script>
+            <div class="configuration" style="width: 210px">
+                <span class="configHead">Configuration</span>
+                <span class="configTitle">API Functions</span>
+                <ul class="options">
+                    <li>
+                       <button id="get" class="k-button">Get value</button>
+                   </li>
+                   <li>
+                       <input id="value" value="10/10/2000" style="float:none" />
+                       <button id="set" class="k-button">Set value</button>
+                   </li>
+                    <li>
+                        <button id="enable" class="k-button">Enable</button> or <button id="disable" class="k-button">Disable</button>
+                    </li>
+                    <li>
+                        <button id="open" class="k-button">Open</button> or <button id="close" class="k-button">Close</button> the calendar
+                    </li>
+                </ul>
+           </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Grid virtualization using remote data</title>
+        <link href="../../shared/styles/examples.css" rel="stylesheet"/>
+        <link href="../../shared/styles/examples-offline.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.common.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.default.css" rel="stylesheet"/>
+        <script src="../../../source/js/jquery.min.js"></script>
+        <script src="../../../source/js/kendo.core.js"></script>
+        <script src="../../../source/js/kendo.data.js"></script>
+        <script src="../../../source/js/kendo.data.odata.js"></script>
+        <script src="../../../source/js/kendo.pager.js"></script>
+        <script src="../../../source/js/kendo.sortable.js"></script>
+        <script src="../../../source/js/kendo.draganddrop.js"></script>
+        <script src="../../../source/js/kendo.groupable.js"></script>
+        <script src="../../../source/js/kendo.grid.js"></script>
+        <script src="../../shared/js/people.js"></script>
+    </head>
+    <body>
+        <a href="../index.html">Back</a>
+        <div class="description">Grid virtualization using remote data</div>
+        <div id="example" class="k-content">
+            <div id="grid"> </div>
+            <script>
+                $(document).ready(function() {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            serverPaging: true,
+                            serverSorting: true,
+                            pageSize: 100,
+                            transport: {
+                                read: "http://services.odata.org/Northwind/Northwind.svc/Orders"
+                            }
+                        },
+                        height: 280,
+                        scrollable: {
+                            virtual: true
+                        },
+                        sortable: true,
+                        columns: ["OrderID", "CustomerID", "ShipName", "ShipCity"]
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>

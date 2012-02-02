@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Binding to remote data</title>
+        <link href="../../shared/styles/examples.css" rel="stylesheet"/>
+        <link href="../../shared/styles/examples-offline.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.common.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.default.css" rel="stylesheet"/>
+        <script src="../../../source/js/jquery.min.js"></script>
+        <script src="../../../source/js/kendo.core.js"></script>
+        <script src="../../../source/js/kendo.fx.js"></script>
+        <script src="../../../source/js/kendo.model.js"></script>
+        <script src="../../../source/js/kendo.data.odata.js"></script>
+        <script src="../../../source/js/kendo.data.js"></script>
+        <script src="../../../source/js/kendo.pager.js"></script>
+        <script src="../../../source/js/kendo.sortable.js"></script>
+        <script src="../../../source/js/kendo.popup.js"></script>
+        <script src="../../../source/js/kendo.list.js"></script>
+        <script src="../../../source/js/kendo.dropdownlist.js"></script>
+        <script src="../../../source/js/kendo.calendar.js"></script>
+        <script src="../../../source/js/kendo.datepicker.js"></script>
+        <script src="../../../source/js/kendo.numerictextbox.js"></script>
+        <script src="../../../source/js/kendo.filtermenu.js"></script>
+        <script src="../../../source/js/kendo.grid.js"></script>
+    </head>
+    <body>
+        <a href="../index.html">Back</a>
+        <div class="description">Binding to remote data</div>
+        <div id="example" class="k-content">
+            <div id="grid"></div>
+            <script>
+                var dateRegExp = /^\/Date\((.*?)\)\/$/;
+
+                function toDate(value) {
+                    var date = dateRegExp.exec(value);
+                    return new Date(parseInt(date[1]));
+                }
+
+                $(document).ready(function() {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            transport: {
+                                read: "http://services.odata.org/Northwind/Northwind.svc/Orders"
+                            },
+                            schema: {
+                                model: {
+                                    fields: {
+                                        OrderID: { type: "number" },
+                                        Freight: { type: "number" },
+                                        ShipName: { type: "string" },
+                                        OrderDate: { type: "date" },
+                                        ShipCity: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        height: 250,
+                        filterable: true,
+                        sortable: true,
+                        pageable: true,
+                        columns: [{
+                                field:"OrderID",
+                                filterable: false
+                            },
+                            "Freight", {
+                                field: "OrderDate",
+                                template: '#= kendo.toString(toDate(OrderDate), "MM/dd/yyyy")#'
+                            },
+                            "ShipName",
+                            "ShipCity"
+                        ]
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>
+
+

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Events</title>
+        <link href="../../shared/styles/examples.css" rel="stylesheet"/>
+        <link href="../../shared/styles/examples-offline.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.common.css" rel="stylesheet"/>
+        <link href="../../../source/styles/kendo.default.css" rel="stylesheet"/>
+        <script src="../../../source/js/jquery.min.js"></script>
+        <script src="../../../source/js/kendo.core.js"></script>
+        <script src="../../../source/js/kendo.fx.js"></script>
+        <script src="../../../source/js/kendo.popup.js"></script>
+        <script src="../../../source/js/kendo.timepicker.js"></script>
+        <script src="../../shared/js/console.js"></script>
+    </head>
+    <body>
+        <a href="../index.html">Back</a>
+        <div class="description">Events</div>
+        <div id="example" class="k-content">
+            <input id="timepicker"/>
+            <script>
+                $(document).ready(function() {
+                    function onOpen() {
+                        kendoConsole.log("Open");
+                    }
+
+                    function onClose() {
+                        kendoConsole.log("Close");
+                    }
+
+                    function onChange() {
+                        kendoConsole.log("Change :: " + kendo.toString(this.value(), 't'));
+                    }
+
+                    $("#timepicker").kendoTimePicker({
+                        change: onChange,
+                        close: onClose,
+                        open: onOpen
+                    });
+                });
+            </script>
+        </div>
+        <div class="console"></div>
+    </body>
+</html>

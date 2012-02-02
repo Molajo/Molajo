@@ -1,0 +1,629 @@
+/*
+* Kendo UI v2011.3.1129 (http://kendoui.com)
+* Copyright 2011 Telerik AD. All rights reserved.
+*
+* Kendo UI commercial licenses may be obtained at http://kendoui.com/license.
+* If you do not own a commercial license, this file shall be governed by the
+* GNU General Public License (GPL) version 3. For GPL requirements, please
+* review: http://www.gnu.org/copyleft/gpl.html
+*/
+
+/* Kendo skin */
+
+// Mixins
+
+.box-orient(@direction) {
+    -moz-box-orient: @direction;
+    -webkit-box-orient: @direction;
+    -ms-box-orient: @direction;
+    box-orient: @direction;
+}
+
+.box(@type) {
+    display: ~"-moz-@{type}";
+    display: ~"-webkit-@{type}";
+    display: ~"-ms-@{type}";
+    display: @type;
+}
+
+.box-direction(@direction) {
+    -moz-box-direction: @direction;
+    -webkit-box-direction: @direction;
+    -ms-box-direction: @direction;
+    box-direction: @direction;
+}
+
+.box-flex(@amount) {
+    -moz-box-flex: @amount;
+    -webkit-box-flex: @amount;
+    -ms-box-flex: @amount;
+    box-flex: @amount;
+}
+
+.box-align(@alignment) {
+    -moz-box-align: @alignment;
+    -webkit-box-align: @alignment;
+    -ms-box-align: @alignment;
+    box-align: @alignment;
+}
+
+.box-pack(@pack) {
+    -moz-box-pack: @pack;
+    -webkit-box-pack: @pack;
+    -ms-box-pack: @pack;
+    box-pack: @pack;
+}
+
+.border-radius() {
+    -moz-border-radius: @arguments;
+    -webkit-border-radius: @arguments;
+    border-radius: @arguments;
+}
+
+.box-shadow() {
+    box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
+}
+
+.box-sizing(@type) {
+    -moz-box-sizing: @type;
+    -webkit-box-sizing: @type;
+    box-sizing: @type;
+}
+
+.background-clip(@type) {
+    -moz-background-clip: @type;
+    -webkit-background-clip: @type;
+    background-clip: @type;
+}
+
+.transform() {
+    -webkit-transform: @arguments;
+    -moz-transform: @arguments;
+    -ms-transform: @arguments;
+    -o-transform: @arguments;
+    transform: @arguments;
+}
+
+/* main colors */
+
+.k-widget
+{
+    background-color: @widget-background-color;
+}
+
+.k-widget,
+.k-input,
+.k-textbox,
+.k-group,
+.k-content,
+.k-header,
+.k-editable-area,
+.k-separator,
+.k-colorpicker .k-arrow-down,
+.k-autocomplete,
+.k-dropdown-wrap,
+.k-toolbar,
+.k-grouping-header,
+.k-grid-pager,
+.k-group-footer td,
+.k-grid-footer,
+.k-footer-template td,
+.k-state-default,
+.k-state-default .k-select,
+.k-state-disabled,
+.k-panelbar .k-link,
+.k-grid-header-wrap,
+.k-grid-header,
+.k-grid td,
+.k-grid-footer-wrap,
+.k-grid-pager,
+.k-grouping-header,
+.k-grouping-header .k-group-indicator,
+.k-dropdown-wrap,
+.k-autocomplete,
+.k-panelbar .k-link,
+.k-panelbar .k-group,
+.k-panelbar .k-content,
+.k-calendar th,
+.k-slider-track,
+.k-splitbar,
+.k-dropzone-active,
+.k-upload-files,
+.k-tiles,
+.k-toolbar,
+.k-dropdown-wrap,
+.k-tooltip,
+.k-progress
+{
+    border-color: @widget-border-color;
+}
+
+.k-group,
+.k-toolbar,
+.k-grouping-header,
+.k-grid-pager,
+.k-group-footer td,
+.k-grid-footer,
+.k-footer-template td,
+.k-widget .k-status,
+.k-grouping-row td,
+td.k-group-cell,
+.k-calendar th,
+.k-dropzone-hovered,
+.k-upload-files
+{
+    background-color: @group-background-color;
+}
+
+.k-list-container
+{
+    border-color: @group-border-color;
+    background-color: @select-group-background-color;
+}
+
+.k-content,
+.k-editable-area,
+.k-panelbar li.k-item,
+.k-tiles
+{
+    background-color: @content-background-color;
+}
+
+.k-alt,
+.k-separator
+{
+    background-color: @alt-background-color;
+}
+
+.k-widget .k-dropdown-wrap,
+.k-widget .k-picker-wrap,
+.k-widget .k-numeric-wrap,
+.k-autocomplete.k-header,
+.k-autocomplete.k-state-focused,
+div.k-dropdown-wrap.k-state-active,
+.k-dropdown-wrap.k-state-focused,
+.k-dropdown-wrap.k-state-focused:hover,
+div.k-picker-wrap.k-state-active,
+.k-picker-wrap.k-state-focused,
+.k-picker-wrap.k-state-focused:hover,
+span.k-numeric-wrap.k-state-active,
+.k-numeric-wrap.k-state-focused,
+.k-numeric-wrap.k-state-focused:hover
+{
+    border-color: @widget-border-color;
+    background-color: @select-background-color;
+}
+
+.k-autocomplete .k-input,
+.k-dropdown-wrap .k-input,
+.k-autocomplete.k-state-focused .k-input,
+.k-dropdown-wrap.k-state-focused .k-input,
+.k-picker-wrap.k-state-focused .k-input,
+.k-numeric-wrap.k-state-focused .k-input
+{
+    border-color: @widget-border-color;
+}
+
+.k-input,
+.k-textbox
+{
+    background-color: @input-background-color;
+}
+
+.k-widget,
+.k-input,
+.k-textbox,
+.k-popup,
+.k-content
+{
+    color: @widget-text-color;
+}
+
+.k-combobox .k-input,
+.k-picker-wrap .k-input,
+.k-numeric-wrap .k-input,
+.k-autocomplete .k-input
+{
+    color: @input-text-color;
+}
+
+.k-link:link,
+.k-link:visited
+{
+    color: @link-text-color;
+}
+
+.k-header
+{
+    color: @header-text-color;
+}
+
+.k-header,
+.k-grid-header,
+.k-toolbar,
+.k-dropdown-wrap,
+.k-picker-wrap,
+.k-grouping-header,
+.k-tooltip,
+.k-grid-pager,
+.k-button,
+.k-draghandle,
+.k-tile,
+.k-autocomplete,
+.k-state-hover,
+.k-state-selected,
+.k-state-focused,
+.k-tabstrip-items .k-item
+{
+    background-image: @texture-url;
+}
+
+.k-header,
+.k-grid-header,
+.k-toolbar,
+.k-grouping-header,
+.k-tooltip,
+.k-grid-pager,
+.k-button,
+.k-draghandle
+{
+    background-color: @header-background-color;
+}
+
+/* icons */
+
+.k-icon
+{
+    opacity:.8;
+}
+
+.k-icon:hover,
+.k-state-hover .k-icon,
+.k-state-selected .k-icon,
+.k-state-focused .k-icon
+{
+    opacity:1;
+}
+
+.k-icon,
+.k-tool-icon,
+.k-grouping-dropclue,
+.k-drop-hint,
+.k-callout,
+.k-progress,
+.k-progress-status
+{
+    background-image: url('@{image-folder}/sprite.png');
+}
+
+.k-loading
+{
+    background-image: url('@{image-folder}/loading.gif');
+}
+
+.k-loading-image { background-image: url('@{image-folder}/loading-image.gif'); }
+.k-loading-color { background-color: @loading-panel-color; }
+
+.k-button
+{
+    color: @button-text-color;
+}
+
+.k-button,
+.k-button.k-state-disabled:hover,
+.k-state-disabled .k-button:hover,
+.k-draghandle
+{
+    border-color: @widget-border-color;
+    background-color: @button-background-color;
+}
+
+.k-button:hover,
+.k-draghandle:hover
+{
+    border-color: @hover-border-color;
+    background-color: @hover-background-color;
+}
+
+/* states */
+
+.k-state-active,
+.k-state-active:hover,
+.k-active-filter
+{
+    background-color: @active-background-color;
+    border-color: @active-border-color;
+    color: @active-text-color;
+}
+
+.k-state-selected,
+.k-list>.k-state-selected,
+.k-list>.k-state-focused,
+.k-panelbar .k-state-selected,
+.k-button:active,
+.k-ghost-splitbar-vertical,
+.k-ghost-splitbar-horizontal,
+.k-draghandle.k-state-selected:hover
+{
+    color: @selected-text-color;
+    background-color: @selected-background-color;
+    border-color: @selected-border-color;
+}
+
+.k-state-selected>.k-link
+{
+    color: @selected-text-color;
+}
+
+.k-state-hover,
+.k-state-hover:hover,
+.k-splitbar-horizontal-hover:hover,
+.k-splitbar-vertical-hover:hover,
+.k-list>.k-state-hover,
+.k-state-focused,
+.k-marquee
+{
+    color: @hover-text-color;
+    background-color: @hover-background-color;
+    border-color: @hover-border-color;
+}
+
+.k-state-hover>.k-link,
+.k-other-month.k-state-hover .k-link
+{
+    color: @hover-text-color;
+}
+
+.k-state-focused>.k-link,
+.k-autocomplete.k-state-hover,
+.k-picker-wrap.k-state-hover,
+.k-numeric-wrap.k-state-hover,
+.k-dropdown-wrap.k-state-hover
+{
+    background-color: @select-hover-background-color;
+    border-color: @select-border-color;
+}
+
+.k-dropdown .k-state-hover .k-input
+{
+    color: @hover-text-color;
+}
+
+.k-dropdown .k-state-focused .k-input
+{
+    color: @widget-text-color;
+}
+
+.k-state-error
+{
+    border-color: @error-border-color;
+    background-color: @error-background-color;
+    color: @error-text-color;
+}
+
+.k-state-disabled
+{
+    filter:alpha(opacity=70);
+    opacity:.7;
+}
+
+.k-state-disabled,
+.k-state-disabled .k-link,
+.k-state-disabled .k-button,
+.k-other-month .k-link,
+.k-dropzone em,
+.k-tile-empty strong,
+.k-slider .k-draghandle
+{
+    color: @disabled-text-color;
+}
+
+/* Slider */
+
+.k-slider-track
+{
+    background-color: @header-background-color;
+}
+
+.k-slider-selection
+{
+    background-color: @selected-background-color;
+}
+
+.k-slider-horizontal .k-tick
+{
+    background-image:url('@{image-folder}/slider-h.gif');
+}
+
+.k-slider-vertical .k-tick
+{
+    background-image:url('@{image-folder}/slider-v.gif');
+}
+
+/* Tooltip */
+
+.k-tooltip
+{
+    border-color: @tooltip-border-color;
+    background-color: @tooltip-background-color;
+    color: @tooltip-text-color;
+}
+
+.k-tooltip-validation
+{
+    border-color: @validation-border-color;
+    background-color: @validation-background-color;
+    color: @validation-text-color;
+}
+
+/* Splitter */
+
+.k-splitbar
+{
+    background-color: @splitbar-background-color;
+}
+
+.k-restricted-size-vertical,
+.k-restricted-size-horizontal
+{
+    background-color: @error-text-color;
+}
+
+/* Upload */
+
+.k-progress-status
+{
+    border-color: @hover-border-color transparent;
+}
+
+/* ImageBrowser */
+
+.k-tile
+{
+    border-color: @content-background-color;
+}
+
+.k-tiles li.k-state-hover
+{
+    border-color: @hover-border-color;
+}
+
+.k-tiles li.k-state-selected
+{
+    border-color: @selected-border-color;
+}
+
+.k-tile .k-folder
+{
+    background-image: url('@{image-folder}/imagebrowser.png');
+}
+
+/* Shadows */
+
+.k-popup,
+.k-menu .k-group,
+.k-grid .k-filter-options,
+.k-time-popup,
+.k-datepicker-calendar,
+/*.k-autocomplete.k-state-focused,
+.k-dropdown-wrap.k-state-focused,
+.k-picker-wrap.k-state-focused,*/
+.k-dropdown-wrap.k-state-active,
+.k-picker-wrap.k-state-active,
+.k-imagebrowser .k-image
+{
+    .box-shadow(0 2px 2px 0 @shadow-color);
+}
+
+.k-window
+{
+    border-color: @shadow-color;
+    .box-shadow(1px 1px 7px 1px @shadow-color);
+}
+
+.k-autocomplete .k-input,
+.k-combobox .k-input,
+.k-picker-wrap .k-input
+{
+    .box-shadow(inset 0 0 1px 1px @shadow-inset-color);
+}
+
+/* Border radius */
+
+.k-button,
+.k-textbox,
+.k-drag-clue,
+.k-touch-scrollbar,
+.k-window,
+.k-window-action,
+.k-pager .k-state-active,
+.k-pager .k-state-hover,
+.k-grid .k-filter-options,
+.k-grouping-header .k-group-indicator,
+.k-autocomplete,
+.k-dropdown-wrap,
+.k-picker-wrap,
+.k-numeric-wrap,
+.k-list-container,
+.k-calendar-container,
+.k-calendar td,
+.k-calendar .k-link,
+.k-treeview .k-state-hover,
+.k-treeview .k-state-selected,
+.k-editor-button .k-state-hover,
+.k-editor-button .k-state-active,
+.k-tooltip,
+.k-tile,
+.k-slider-track,
+.k-slider-selection
+{
+    .border-radius(@main-border-radius);
+}
+
+.k-calendar-container.k-state-border-up,
+.k-list-container.k-state-border-up,
+.k-autocomplete.k-state-border-up,
+.k-dropdown-wrap.k-state-border-up,
+.k-picker-wrap.k-state-border-up,
+.k-numeric-wrap.k-state-border-up,
+.k-filter-menu
+{
+    .border-radius(0 0 @main-border-radius @main-border-radius);
+}
+
+.k-window-titlebar,
+.k-tabstrip-items .k-item,
+.k-panelbar .k-tabstrip-items .k-item,
+.k-tabstrip-items .k-link,
+.k-calendar-container.k-state-border-down,
+.k-list-container.k-state-border-down,
+.k-autocomplete.k-state-border-down,
+.k-dropdown-wrap.k-state-border-down,
+.k-picker-wrap.k-state-border-down,
+.k-numeric-wrap.k-state-border-down
+{
+    .border-radius(@main-border-radius @main-border-radius 0 0);
+}
+
+.k-dropdown-wrap .k-select,
+.k-picker-wrap .k-select,
+.k-numeric-wrap .k-select,
+.k-datetimepicker .k-select+.k-select,
+.k-animation-container .k-calendar-container,
+.k-list-container.k-state-border-right
+{
+    .border-radius(0 @main-border-radius @main-border-radius 0);
+}
+
+.k-autocomplete .k-input,
+.k-dropdown-wrap .k-input,
+.k-picker-wrap .k-input,
+.k-numeric-wrap .k-input,
+.k-numeric-wrap .k-link,
+.k-colorpicker .k-selected-color,
+.k-progress,
+.k-progress-status
+{
+    .border-radius(@inner-border-radius);
+}
+
+.k-list .k-state-hover,
+.k-list .k-state-focused,
+.k-list .k-state-selected,
+.k-dropzone,
+.k-upload-files
+{
+    .border-radius(@list-border-radius);
+}
+
+.k-slider .k-button,
+.k-grid .k-slider .k-button
+{
+    .border-radius(@slider-border-radius);
+}
+
+.k-draghandle
+{
+    .border-radius(@draghandle-border-radius);
+}
