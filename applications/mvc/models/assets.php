@@ -36,9 +36,9 @@ class MolajoModelAssets extends MolajoModel
     /**
      * @param database A database connector object
      */
-    public function __construct($database)
+    public function __construct($db)
     {
-        parent::__construct('#__assets', 'id', $database);
+        parent::__construct('#__assets', 'id', $db);
     }
 
     /**

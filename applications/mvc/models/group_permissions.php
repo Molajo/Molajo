@@ -26,9 +26,9 @@ class MolajoModelGroupPermissions extends MolajoModel
      *
      * @since   1.0
      */
-    public function __construct($database)
+    public function __construct($db)
     {
-        parent::__construct('#__group_permissions', 'id', $database);
+        parent::__construct('#__group_permissions', 'id', $db);
     }
 
 }

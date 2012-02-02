@@ -360,7 +360,8 @@ class JDatabaseMySQL extends JDatabase
 		$result = array();
 
 		// Set the query to get the table fields statement.
-		$this->setQuery('SHOW FULL COLUMNS FROM ' . $this->quoteName($this->escape($table)));
+		$this->setQuery('SHOW FULL COLUMNS FROM ' .
+            $this->quoteName($this->escape($table)));
 		$fields = $this->loadObjectList();
 
 		// If we only want the type as the value add just that to the list.

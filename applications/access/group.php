@@ -103,10 +103,9 @@ class MolajoGroup
 
         $results = $table->load($id);
 
-        $db = MolajoController::getDbo();
-
         //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
-        $columns = $db->getModelColumns('#__users', true);
+        $columns = $this->_database->getFields('#__users', true);
+
         foreach ($columns as $name => $value) {
             $this->$name = $table->$name;
         }

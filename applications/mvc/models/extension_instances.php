@@ -18,9 +18,9 @@ defined('MOLAJO') or die;
 class MolajoModelExtensionInstances extends MolajoModel
 {
 
-    public function __construct($database)
+    public function __construct($db)
     {
-        parent::__construct('#__extension_instances', 'id', $database);
+        parent::__construct('#__extension_instances', 'id', $db);
     }
 
 }

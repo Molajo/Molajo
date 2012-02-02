@@ -609,9 +609,9 @@ class MolajoModelDisplay extends MolajoModel
         /**
         $date = MolajoController::getDate();
         $now = $date->toMySQL();
-        $nullDate = $database->getNullDate();
-        $query->where('(m.start_publishing_datetime = '.$database->Quote($nullDate).' OR m.start_publishing_datetime <= '.$database->Quote($now).')');
-        $query->where('(m.stop_publishing_datetime = '.$database->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$database->Quote($now).')');
+        $nullDate = $db->getNullDate();
+        $query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
+        $query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
          */
         /** set view access criteria for site visitor **/
         $acl = new MolajoACL ();

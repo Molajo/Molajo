@@ -22,9 +22,9 @@ class MolajoModelExtensionSites extends MolajoModel
      *
      * @param database A database connector object
      */
-    function __construct($database)
+    function __construct($db)
     {
-        parent::__construct('#__extension_sites', 'id', $database);
+        parent::__construct('#__extension_sites', 'id', $db);
     }
 
 
@@ -39,7 +39,7 @@ class MolajoModelExtensionSites extends MolajoModel
     {
         // check for valid name
         if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
             return false;
         }
         return true;
@@ -74,13 +74,13 @@ class MolajoModelExtensionSites extends MolajoModel
 
     function find($options = Array())
     {
-        $databaseo = MolajoController::getDbo();
+        $dbo = MolajoController::getDbo();
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $databaseo->Quote($val);
+            $where[] = $col . ' = ' . $dbo->Quote($val);
         }
         $query = 'SELECT update_id FROM #__extension_sites WHERE ' . implode(' AND ', $where);
-        $databaseo->setQuery($query->__toString());
-        return $databaseo->loadResult();
+        $dbo->setQuery($query->__toString());
+        return $dbo->loadResult();
     }
 }

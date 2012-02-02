@@ -99,8 +99,8 @@ class MolajoFieldPublishDown extends MolajoField
         if (trim($value) == '') {
             return;
         }
-        $database = $this->getDbo();
-        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $database->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
+        $db = $this->getDbo();
+        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 
     /**

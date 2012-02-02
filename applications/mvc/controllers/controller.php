@@ -44,7 +44,7 @@ class MolajoController
      * @var    Database
      * @since  1.0
      */
-    public static $database = null;
+    public static $db = null;
 
     /**
      * @var    Cache
@@ -150,14 +150,14 @@ class MolajoController
      */
     public static function getDbo()
     {
-        if (self::$database) {
+        if (self::$db) {
         } else {
             $debug = self::get('debug', '', 'site');
-            self::$database = self::_createDbo();
-            self::$database->debug($debug);
+            self::$db = self::_createDbo();
+            self::$db->debug($debug);
         }
 
-        return self::$database;
+        return self::$db;
     }
 
     /**
@@ -350,7 +350,7 @@ class MolajoController
         $host = self::get('host', '', 'site');
         $user = self::get('user', '', 'site');
         $password = self::get('password', '', 'site');
-        $database = self::get('db', '', 'site');
+        $db = self::get('db', '', 'site');
         $prefix = self::get('dbprefix', '', 'site');
         $driver = self::get('dbtype', '', 'site');
         $debug = self::get('debug', '', 'site');
@@ -359,7 +359,7 @@ class MolajoController
             'host' => $host,
             'user' => $user,
             'password' => $password,
-            'database' => $database,
+            'database' => $db,
             'prefix' => $prefix);
 
         $db = JDatabase::getInstance($options);
@@ -370,7 +370,7 @@ class MolajoController
         }
 
         if ($db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
+            MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $db->getErrorNum(), $db->getErrorMsg()));
         }
 
         return $db;

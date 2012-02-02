@@ -21,9 +21,9 @@ class MolajoModelSessions extends MolajoModel
      * Constructor
      * @param database A database connector object
      */
-    function __construct($database)
+    function __construct($db)
     {
-        parent::__construct('#__sessions', 'session_id', $database);
+        parent::__construct('#__sessions', 'session_id', $db);
 
         $this->username = '';
     }
@@ -35,10 +35,10 @@ class MolajoModelSessions extends MolajoModel
         $this->application_id = $application_id;
 
         $this->session_time = time();
-        $ret = $this->_database->insertObject($this->_tbl, $this, 'session_id');
+        $ret = $this->_db->insertObject($this->_tbl, $this, 'session_id');
 
         if (!$ret) {
-            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_database->stderr()));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
             return false;
         } else {
             return true;
@@ -48,10 +48,10 @@ class MolajoModelSessions extends MolajoModel
     function update($updateNulls = false)
     {
         $this->session_time = time();
-        $ret = $this->_database->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
+        $ret = $this->_db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
 
         if (!$ret) {
-            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_database->stderr()));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
             return false;
         } else {
             return true;
@@ -66,13 +66,13 @@ class MolajoModelSessions extends MolajoModel
         $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->_database->Quote($userId)
+                 . ' WHERE user_id = ' . $this->_db->Quote($userId)
                  . ' AND application_id IN (' . $application_ids . ')';
 
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if (!$this->_database->query()) {
-            $this->setError($this->_database->stderr());
+        if (!$this->_db->query()) {
+            $this->setError($this->_db->stderr());
             return false;
         }
 
@@ -90,9 +90,9 @@ class MolajoModelSessions extends MolajoModel
     {
         $past = time() - $maxLifetime;
         $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (session_time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        return $this->_database->query();
+        return $this->_db->query();
     }
 
     /**
@@ -107,12 +107,12 @@ class MolajoModelSessions extends MolajoModel
     function exists($user_id)
     {
         $query = 'SELECT COUNT(user_id) FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->_database->Quote($user_id);
+                 . ' WHERE user_id = ' . $this->_db->Quote($user_id);
 
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if (!$result = $this->_database->loadResult()) {
-            $this->setError($this->_database->stderr());
+        if (!$result = $this->_db->loadResult()) {
+            $this->setError($this->_db->stderr());
             return false;
         }
 
@@ -133,17 +133,17 @@ class MolajoModelSessions extends MolajoModel
             $this->$k = $oid;
         }
 
-        $query = 'DELETE FROM ' . $this->_database->quoteName($this->_tbl) .
-                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->_database->Quote($this->$k);
+        $query = 'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
+                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->_db->Quote($this->$k);
 
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        if ($this->_database->query()) {
+        if ($this->_db->query()) {
             return true;
         }
         else
         {
-            $this->setError($this->_database->getErrorMsg());
+            $this->setError($this->_db->getErrorMsg());
             return false;
         }
     }

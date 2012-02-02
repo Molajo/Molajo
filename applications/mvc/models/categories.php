@@ -192,7 +192,7 @@ class MolajoModelCategories
      */
     protected function _load($id)
     {
-        $database = MolajoController::getDbo();
+        $db = MolajoController::getDbo();
 
         $user = MolajoController::getUser();
         $extension = $this->_extension;
@@ -200,13 +200,13 @@ class MolajoModelCategories
         // Record that has this $id has been checked
         $this->_checkedCategories[$id] = true;
 
-        $query = $database->getQuery(true);
+        $query = $db->getQuery(true);
 
         // Right join with c for category
         $query->select('c.*');
         $query->select('CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(":", c.id, c.alias) ELSE c.id END as slug');
         $query->from('#__categories as c');
-        $query->where('(c.extension=' . $database->Quote($extension) . ' OR c.extension=' . $database->Quote('system') . ')');
+        $query->where('(c.extension=' . $db->Quote($extension) . ' OR c.extension=' . $db->Quote('system') . ')');
 
         if ($this->_options['access']) {
             $acl = new MolajoACL ();
@@ -228,7 +228,7 @@ class MolajoModelCategories
         }
 
         $subQuery = ' (SELECT cat.id as id FROM #__categories AS cat JOIN #__categories AS parent ' .
-                    'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.extension = ' . $database->quote($extension) .
+                    'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.extension = ' . $db->quote($extension) .
                     ' AND parent.published != 1 GROUP BY cat.id) ';
         $query->leftJoin($subQuery . 'AS badcats ON badcats.id = c.id');
         $query->where('badcats.id is null');
@@ -236,21 +236,21 @@ class MolajoModelCategories
         // i for item
         if (isset($this->_options['countItems']) && $this->_options['countItems'] == 1) {
             if ($this->_options['published'] == 1) {
-                $query->leftJoin($database->quoteName($this->_table) . ' AS i ON i.' . $database->quoteName($this->_field) . ' = c.id AND i.' . $this->_statefield . ' = 1');
+                $query->leftJoin($db->quoteName($this->_table) . ' AS i ON i.' . $db->quoteName($this->_field) . ' = c.id AND i.' . $this->_statefield . ' = 1');
             }
             else {
-                $query->leftJoin($database->quoteName($this->_table) . ' AS i ON i.' . $database->quoteName($this->_field) . ' = c.id');
+                $query->leftJoin($db->quoteName($this->_table) . ' AS i ON i.' . $db->quoteName($this->_field) . ' = c.id');
             }
 
-            $query->select('COUNT(i.' . $database->quoteName($this->_key) . ') AS numitems');
+            $query->select('COUNT(i.' . $db->quoteName($this->_key) . ') AS numitems');
         }
 
         // Group by
         $query->group('c.id');
 
         // Get the results
-        $database->setQuery($query->__toString());
-        $results = $database->loadObjectList('id');
+        $db->setQuery($query->__toString());
+        $results = $db->loadObjectList('id');
         $childrenLoaded = false;
 
         if (count($results)) {

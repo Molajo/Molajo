@@ -20,9 +20,9 @@ class MolajoModelAssetCategories extends MolajoModel
     /**
      * @param database A database connector object
      */
-    public function __construct($database)
+    public function __construct($db)
     {
-        parent::__construct('#__asset_categories', 'id', $database);
+        parent::__construct('#__asset_categories', 'id', $db);
     }
 
     /**
@@ -58,33 +58,33 @@ class MolajoModelAssetCategories extends MolajoModel
     {
         // Initialise variables.
         $assetId = null;
-        $database = $this->getDbo();
+        $db = $this->getDbo();
 
         // This is a category under a category.
         if ($this->parent_id > 1) {
             // Build the query to get the asset id for the parent category.
-            $query = $database->getQuery(true);
+            $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
             $query->where('id = ' . (int)$this->parent_id);
 
             // Get the asset id from the database.
-            $database->setQuery($query->__toString());
-            if ($result = $database->loadResult()) {
+            $db->setQuery($query->__toString());
+            if ($result = $db->loadResult()) {
                 $assetId = (int)$result;
             }
         }
             // This is a category that needs to parent with the extension.
         elseif ($assetId === null) {
             // Build the query to get the asset id for the parent category.
-            $query = $database->getQuery(true);
+            $query = $db->getQuery(true);
             $query->select('id');
             $query->from('#__assets');
-            $query->where('name = ' . $database->quote($this->extension));
+            $query->where('name = ' . $db->quote($this->extension));
 
             // Get the asset id from the database.
-            $database->setQuery($query->__toString());
-            if ($result = $database->loadResult()) {
+            $db->setQuery($query->__toString());
+            if ($result = $db->loadResult()) {
                 $assetId = (int)$result;
             }
         }
@@ -109,7 +109,7 @@ class MolajoModelAssetCategories extends MolajoModel
     {
         // Check for a title.
         if (trim($this->title) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
             return false;
         }
         $this->alias = trim($this->alias);
@@ -189,7 +189,7 @@ class MolajoModelAssetCategories extends MolajoModel
             && ($table->id != $this->id || $this->id == 0)
         ) {
 
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_CATEGORY_UNIQUE_ALIAS'));
             return false;
         }
         return parent::store($updateNulls);

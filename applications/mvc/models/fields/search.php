@@ -80,7 +80,7 @@ class MolajoFieldSearch extends MolajoField
      */
     public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
-        $database = MolajoController::getDbo();
+        $db = MolajoController::getDbo();
         if ($value == null || trim($value) == '') {
             return;
         }
@@ -89,12 +89,12 @@ class MolajoFieldSearch extends MolajoField
             $where = 'a.id = ' . (int)substr(trim($value), 3);
 
         } else if (stripos(trim($value), 'author:')) {
-            $authorname = $database->Quote('%' . $database->getEscaped(substr($value, 7), true) . '%');
-            $where = 'author.name LIKE ' . $database->quote(trim($authorname)) . ' OR author.username LIKE ' . $database->quote(trim($authorname));
+            $authorname = $db->Quote('%' . $db->getEscaped(substr($value, 7), true) . '%');
+            $where = 'author.name LIKE ' . $db->quote(trim($authorname)) . ' OR author.username LIKE ' . $db->quote(trim($authorname));
 
         } else {
-            $title = $database->Quote('%' . $database->getEscaped(trim($value)) . '%');
-            $where = 'a.title LIKE ' . $title . ' OR a.alias LIKE ' . $database->quote(trim($title));
+            $title = $db->Quote('%' . $db->getEscaped(trim($value)) . '%');
+            $where = 'a.title LIKE ' . $title . ' OR a.alias LIKE ' . $db->quote(trim($title));
         }
         $query->where($where);
     }

@@ -22,9 +22,9 @@ class MolajoModelExtensions extends MolajoModel
      *
      * @param database A database connector object
      */
-    function __construct($database)
+    function __construct($db)
     {
-        parent::__construct('#__extensions', 'extension_id', $database);
+        parent::__construct('#__extensions', 'extension_id', $db);
     }
 
     /**
@@ -39,7 +39,7 @@ class MolajoModelExtensions extends MolajoModel
     {
         // check for valid name
         if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
             return false;
         }
         return true;
@@ -74,14 +74,14 @@ class MolajoModelExtensions extends MolajoModel
 
     function find($options = array())
     {
-        $databaseo = MolajoController::getDbo();
+        $dbo = MolajoController::getDbo();
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $databaseo->Quote($val);
+            $where[] = $col . ' = ' . $dbo->Quote($val);
         }
         $query = 'SELECT extension_id FROM #__extensions WHERE ' . implode(' AND ', $where);
-        $databaseo->setQuery($query->__toString());
-        return $databaseo->loadResult();
+        $dbo->setQuery($query->__toString());
+        return $dbo->loadResult();
     }
 
     /**
@@ -115,7 +115,7 @@ class MolajoModelExtensions extends MolajoModel
             }
                 // Nothing to set publishing state on, return false.
             else {
-                $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
+                $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }
         }
@@ -132,22 +132,22 @@ class MolajoModelExtensions extends MolajoModel
         }
 
         // Update the publishing state for rows with the given primary keys.
-        $this->_database->setQuery(
-            'UPDATE ' . $this->_database->quoteName($this->_tbl) .
-            ' SET ' . $this->_database->quoteName('enabled') . ' = ' . (int)$state .
+        $this->_db->setQuery(
+            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
+            ' SET ' . $this->_db->quoteName('enabled') . ' = ' . (int)$state .
             ' WHERE (' . $where . ')' .
             $checkin
         );
-        $this->_database->query();
+        $this->_db->query();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $this->setError($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
             return false;
         }
 
         // If checkin is supported and all rows were adjusted, check them in.
-        if ($checkin && (count($pks) == $this->_database->getAffectedRows())) {
+        if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
             // Checkin the rows.
             foreach ($pks as $pk)
             {

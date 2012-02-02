@@ -26,9 +26,9 @@ class MolajoModelGroupViewGroups extends MolajoModel
      *
      * @since   1.0
      */
-    public function __construct($database)
+    public function __construct($db)
     {
-        parent::__construct('#__group_view_groups', 'id', $database);
+        parent::__construct('#__group_view_groups', 'id', $db);
     }
 
     /**
@@ -57,7 +57,7 @@ class MolajoModelGroupViewGroups extends MolajoModel
     {
         // Validate the title.
         if ((trim($this->title)) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_GROUPING'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_GROUPING'));
             return false;
         }
 

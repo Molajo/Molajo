@@ -74,12 +74,28 @@ class MolajoModel extends JObject
     public $parameters = array();
 
     /**
+     * Database connection
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $_db = '';
+
+    /**
      * Name of the database table
      *
      * @var    string
      * @since  1.0
      */
     protected $_table = '';
+
+    /**
+     * Table array
+     *
+     * @var    array
+     * @since  1.0
+     */
+    public $tableQueryResults = '';
 
     /**
      * Name of the primary key field in the table.
@@ -95,7 +111,7 @@ class MolajoModel extends JObject
      * @var    string
      * @since  1.0
      */
-    protected $id = 0;
+    public $id = 0;
 
     /**
      * $items
@@ -166,14 +182,8 @@ class MolajoModel extends JObject
 
         if (class_exists($modelClass)) {
         } else {
-            MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
+            MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
             return false;
-        }
-
-        if (isset($config['$database'])) {
-            $database = $config['$database'];
-        } else {
-            $database = MolajoController::getDbo();
         }
 
         return new $modelClass($name, $prefix, $config);
@@ -196,21 +206,10 @@ class MolajoModel extends JObject
         $this->config = $config;
 
         if (array_key_exists('dbo', $this->config)) {
-            $this->_database = $this->config['dbo'];
+            $this->_db = $this->config['dbo'];
         } else {
-            $this->_database = MolajoController::getDbo();
+            $this->_db = MolajoController::getDbo();
         }
-/**
-$names = $this->getFields();
-if (count($names) > 0) {
-    foreach ($names as $name => $v) {
-        if (property_exists($this, $name)) {
-        } else {
-            $this->$name = null;
-        }
-    }
-}
-*/
     }
 
     /**
@@ -331,21 +330,16 @@ if (count($names) > 0) {
      */
     public function getFields()
     {
-        static $cache = null;
+        $name = $this->_table;
+        $fields = $this->_db->getTableColumns($name, false);
 
-        if ($cache === null) {
-            $name = $this->_table;
-            $names = $this->_database->getTableFields($name, false);
-            if (isset($names[$name])) {
-            } else {
-                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
-                $this->setError($e);
-                return false;
-            }
-            $cache = $names[$name];
+        if (empty($fields)) {
+            $e = new JException(JText::_('JLIB_DB_ERROR_COLUMNS_NOT_FOUND'));
+            $this->setError($e);
+            return false;
         }
 
-        return $cache;
+        return $fields;
     }
 
     /**
@@ -384,7 +378,7 @@ if (count($names) > 0) {
      */
     public function getDbo()
     {
-        return $this->_database;
+        return $this->_db;
     }
 
     /**
@@ -396,14 +390,14 @@ if (count($names) > 0) {
      * @return  boolean  True on success.
      * @since   1.0
      */
-    public function setDbo($database)
+    public function setDbo($db)
     {
-        if ($database instanceof JDatabase) {
+        if ($db instanceof JDatabase) {
         } else {
             return false;
         }
 
-        $this->_database = $database;
+        $this->_db = $db;
 
         return true;
     }
@@ -421,38 +415,75 @@ if (count($names) > 0) {
      */
     public function load($id = null, $reset = true)
     {
+        $this->id = $id;
+
         /** initialize */
         if ($reset === true) {
             $this->reset();
         }
 
+        $row = $this->_query($this->id, $reset);
+
+        return $this->bind($row, array());
+    }
+
+    /**
+     * _query
+     *
+     * @param   null  $id
+     * @param   bool  $reset
+     * @return  array|bool
+     */
+    protected function _query($id = null, $reset = true)
+    {
         /** load query */
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
         $query->select('*');
-        $query->from($this->_database->quoteName($this->_table));
-        $query->where($this->_primary_key . ' = ' . $this->_database->quote($id));
+        $query->from($this->_db->quoteName($this->_table));
+        $query->where($this->_primary_key . ' = ' . $this->_db->quote($this->id));
 
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $row = $this->_database->loadAssocArray();
+        $row = $this->_db->loadAssocList();
 
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException($this->_db->getErrorMsg());
             $this->setError($e);
             return false;
         }
 
         if (empty($row)) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_EMPTY_ROW_RETURNED'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_EMPTY_ROW_RETURNED'));
             $this->setError($e);
             return false;
         }
 
-        if ($this->bind($row, array())) {
-        } else {
-            return false;
+        if (key_exists('custom_fields', $row)
+            && is_array($row['custom_fields'])
+        ) {
+            $registry = new JRegistry();
+            $registry->loadArray($row['custom_fields']);
+            $row['custom_fields'] = (string)$registry;
         }
+
+        if (key_exists('parameters', $row)
+            && is_array($row['parameters'])
+        ) {
+            $registry = new JRegistry();
+            $registry->loadArray($row['parameters']);
+            $row['parameters'] = (string)$registry;
+        }
+
+        if (key_exists('metadata', $row)
+            && is_array($row['metadata'])
+        ) {
+            $registry = new JRegistry();
+            $registry->loadArray($row['metadata']);
+            $row['metadata'] = (string)$registry;
+        }
+
+        return $row;
     }
 
     /**
@@ -511,7 +542,7 @@ if (count($names) > 0) {
         if ($orderingFilter) {
             $filterValue = $this->$orderingFilter;
             $this->reorder($orderingFilter
-                ? $this->_database->quoteName($orderingFilter) . ' = ' . $this->_database->Quote($filterValue)
+                ? $this->_db->quoteName($orderingFilter) . ' = ' . $this->_db->Quote($filterValue)
                 : '');
         }
 
@@ -539,7 +570,7 @@ if (count($names) > 0) {
             || is_array($source)
         ) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -553,16 +584,15 @@ if (count($names) > 0) {
             $source = get_object_vars($source);
         }
 
-        foreach ($source as $k => $v) {
-            if (in_array($k, $ignore)) {
+        /** populate temporary table  */
+        foreach ($source as $key=>$value) {
+            if (in_array($key, $ignore)) {
             } else {
-                if (isset($source[$k])) {
-                    $this->$k = $source[$k];
-                }
+                $this->tableQueryResults[$key] = $value;
             }
         }
 
-        return true;
+        return $this->tableQueryResults;
     }
 
     /**
@@ -594,14 +624,14 @@ if (count($names) > 0) {
         $k = $this->_primary_key;
 
         if ($this->$k) {
-            $stored = $this->_database->updateObject($this->_table, $this, $this->_primary_key, $updateNulls);
+            $stored = $this->_db->updateObject($this->_table, $this, $this->_primary_key, $updateNulls);
         } else {
-            $stored = $this->_database->insertObject($this->_table, $this, $this->_primary_key);
+            $stored = $this->_db->insertObject($this->_table, $this, $this->_primary_key);
         }
 
         if ($stored) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -659,15 +689,15 @@ if (count($names) > 0) {
         //       }
 
         //        if ((int) $this->asset_id == 0) {
-        //			$query = $this->_database->getQuery(true);
-        //			$query->update($this->_database->quoteName($this->_table));
+        //			$query = $this->_db->getQuery(true);
+        //			$query->update($this->_db->quoteName($this->_table));
         //			$query->set('asset_id = '.(int) $this->asset_id);
-        //			$query->where($this->_database->quoteName($k).' = '.(int) $this->$k);
-        //			$this->_database->setQuery($query->__toString());
+        //			$query->where($this->_db->quoteName($k).' = '.(int) $this->$k);
+        //			$this->_db->setQuery($query->__toString());
 
-        //			if ($this->_database->query()) {
+        //			if ($this->_db->query()) {
         //            } else {
-        //				$e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_database->getErrorMsg()));
+        //				$e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
         //				$this->setError($e);
         //				return false;
         //			}
@@ -690,7 +720,7 @@ if (count($names) > 0) {
         $pk = (is_null($pk)) ? $this->$k : $pk;
 
         if ($pk === null) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -715,15 +745,15 @@ if (count($names) > 0) {
         }
 
         // Delete the row by primary key.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->delete();
         $query->from($this->_table);
-        $query->where($this->_primary_key . ' = ' . $this->_database->quote($pk));
-        $this->_database->setQuery($query->__toString());
+        $query->where($this->_primary_key . ' = ' . $this->_db->quote($pk));
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -761,7 +791,7 @@ if (count($names) > 0) {
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -770,16 +800,16 @@ if (count($names) > 0) {
         $time = MolajoController::getDate()->toMysql();
 
         // Check the row out by primary key.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_table);
-        $query->set($this->_database->quoteName('checked_out') . ' = ' . (int)$userId);
-        $query->set($this->_database->quoteName('checked_out_time') . ' = ' . $this->_database->quote($time));
-        $query->where($this->_primary_key . ' = ' . $this->_database->quote($pk));
-        $this->_database->setQuery($query->__toString());
+        $query->set($this->_db->quoteName('checked_out') . ' = ' . (int)$userId);
+        $query->set($this->_db->quoteName('checked_out_time') . ' = ' . $this->_db->quote($time));
+        $query->where($this->_primary_key . ' = ' . $this->_db->quote($pk));
+        $this->_db->setQuery($query->__toString());
 
-        if ($this->_database->query()) {
+        if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CHECKOUT_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CHECKOUT_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -816,23 +846,23 @@ if (count($names) > 0) {
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
 
         // Check the row in by primary key.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_table);
-        $query->set($this->_database->quoteName('checked_out') . ' = 0');
-        $query->set($this->_database->quoteName('checked_out_time') . ' = ' . $this->_database->quote($this->_database->getNullDate()));
-        $query->where($this->_primary_key . ' = ' . $this->_database->quote($pk));
-        $this->_database->setQuery($query->__toString());
+        $query->set($this->_db->quoteName('checked_out') . ' = 0');
+        $query->set($this->_db->quoteName('checked_out_time') . ' = ' . $this->_db->quote($this->_db->getNullDate()));
+        $query->where($this->_primary_key . ' = ' . $this->_db->quote($pk));
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if ($this->_database->query()) {
+        if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CHECKIN_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CHECKIN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -872,13 +902,13 @@ if (count($names) > 0) {
             return false;
         }
 
-        $database = MolajoController::getDbo();
-        $database->setQuery(
+        $db = MolajoController::getDbo();
+        $db->setQuery(
             'SELECT COUNT(user_id)' .
-                ' FROM ' . $database->quoteName('#__sessions') .
-                ' WHERE ' . $database->quoteName('user_id') . ' = ' . (int)$against
+                ' FROM ' . $db->quoteName('#__sessions') .
+                ' WHERE ' . $db->quoteName('user_id') . ' = ' . (int)$against
         );
-        $checkedOut = (boolean)$database->loadResult();
+        $checkedOut = (boolean)$db->loadResult();
 
         // If a session exists for the user then it is checked out.
         return $checkedOut;
@@ -899,13 +929,13 @@ if (count($names) > 0) {
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
 
         // Get the largest ordering value for a given where clause.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select('MAX(ordering)');
         $query->from($this->_table);
 
@@ -913,13 +943,13 @@ if (count($names) > 0) {
             $query->where($where);
         }
 
-        $this->_database->setQuery($query->__toString());
-        $max = (int)$this->_database->loadResult();
+        $this->_db->setQuery($query->__toString());
+        $max = (int)$this->_db->loadResult();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
+        if ($this->_db->getErrorNum()) {
             $e = new MolajoException(
-                MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GET_NEXT_ORDER_FAILED', get_class($this), $this->_database->getErrorMsg())
+                MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GET_NEXT_ORDER_FAILED', get_class($this), $this->_db->getErrorMsg())
             );
             $this->setError($e);
 
@@ -947,7 +977,7 @@ if (count($names) > 0) {
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -956,7 +986,7 @@ if (count($names) > 0) {
         $k = $this->_primary_key;
 
         // Get the primary keys and ordering values for the selection.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($this->_primary_key . ', ordering');
         $query->from($this->_table);
         $query->where('ordering >= 0');
@@ -967,12 +997,12 @@ if (count($names) > 0) {
             $query->where($where);
         }
 
-        $this->_database->setQuery($query->__toString());
-        $rows = $this->_database->loadObjectList();
+        $this->_db->setQuery($query->__toString());
+        $rows = $this->_db->loadObjectList();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -985,18 +1015,18 @@ if (count($names) > 0) {
                 if ($row->ordering == $i + 1) {
                 } else {
                     // Update the row ordering field.
-                    $query = $this->_database->getQuery(true);
+                    $query = $this->_db->getQuery(true);
                     $query->update($this->_table);
                     $query->set('ordering = ' . ($i + 1));
-                    $query->where($this->_primary_key . ' = ' . $this->_database->quote($row->$k));
-                    $this->_database->setQuery($query->__toString());
+                    $query->where($this->_primary_key . ' = ' . $this->_db->quote($row->$k));
+                    $this->_db->setQuery($query->__toString());
 
                     // Check for a database error.
-                    if ($this->_database->query()) {
+                    if ($this->_db->query()) {
                     } else {
                         $e = new MolajoException(
                             MolajoTextHelper::sprintf(
-                                'MOLAJO_DATABASE_ERROR_REORDER_UPDATE_ROW_FAILED', get_class($this), $i, $this->_database->getErrorMsg()
+                                'MOLAJO_DB_ERROR_REORDER_UPDATE_ROW_FAILED', get_class($this), $i, $this->_db->getErrorMsg()
                             )
                         );
                         $this->setError($e);
@@ -1028,7 +1058,7 @@ if (count($names) > 0) {
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -1041,7 +1071,7 @@ if (count($names) > 0) {
         // Initialise variables.
         $k = $this->_primary_key;
         $row = null;
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
 
         // Select the primary key and ordering values from the table.
         $query->select($this->_primary_key . ', ordering');
@@ -1064,23 +1094,23 @@ if (count($names) > 0) {
         }
 
         // Select the first row with the criteria.
-        $this->_database->setQuery($query, 0, 1);
-        $row = $this->_database->loadObject();
+        $this->_db->setQuery($query, 0, 1);
+        $row = $this->_db->loadObject();
 
         // If a row is found, move the item.
         if (empty($row)) {
 
             // Update the ordering field for this instance.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_table);
             $query->set('ordering = ' . (int)$this->ordering);
-            $query->where($this->_primary_key . ' = ' . $this->_database->quote($this->$k));
-            $this->_database->setQuery($query->__toString());
+            $query->where($this->_primary_key . ' = ' . $this->_db->quote($this->$k));
+            $this->_db->setQuery($query->__toString());
 
             // Check for a database error.
-            if ($this->_database->query()) {
+            if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -1088,32 +1118,32 @@ if (count($names) > 0) {
 
         } else {
             // Update the ordering field for this instance to the row's ordering value.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_table);
             $query->set('ordering = ' . (int)$row->ordering);
-            $query->where($this->_primary_key . ' = ' . $this->_database->quote($this->$k));
-            $this->_database->setQuery($query->__toString());
+            $query->where($this->_primary_key . ' = ' . $this->_db->quote($this->$k));
+            $this->_db->setQuery($query->__toString());
 
             // Check for a database error.
-            if ($this->_database->query()) {
+            if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
             }
 
             // Update the ordering field for the row to this instance's ordering value.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_table);
             $query->set('ordering = ' . (int)$this->ordering);
-            $query->where($this->_primary_key . ' = ' . $this->_database->quote($row->$k));
-            $this->_database->setQuery($query->__toString());
+            $query->where($this->_primary_key . ' = ' . $this->_db->quote($row->$k));
+            $this->_db->setQuery($query->__toString());
 
             // Check for a database error.
-            if ($this->_database->query()) {
+            if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -1157,7 +1187,7 @@ if (count($names) > 0) {
             }
             // Nothing to set publishing state on, return false.
             else {
-                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
+                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 $this->setError($e);
 
                 return false;
@@ -1165,7 +1195,7 @@ if (count($names) > 0) {
         }
 
         // Update the publishing state for rows with the given primary keys.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_table);
         $query->set('published = ' . (int)$state);
 
@@ -1181,18 +1211,18 @@ if (count($names) > 0) {
         // Build the WHERE clause for the primary keys.
         $query->where($k . ' = ' . implode(' OR ' . $k . ' = ', $pks));
 
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if ($this->_database->query()) {
+        if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
 
         // If checkin is supported and all rows were adjusted, check them in.
-        if ($checkin && (count($pks) == $this->_database->getAffectedRows())) {
+        if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
             // Checkin the rows.
             foreach ($pks as $pk)
             {
@@ -1237,13 +1267,13 @@ if (count($names) > 0) {
 
         if (is_array($joins)) {
             // Get a query object.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
 
             // Setup the basic query.
-            $query->select($this->_database->quoteName($this->_primary_key));
-            $query->from($this->_database->quoteName($this->_table));
-            $query->where($this->_database->quoteName($this->_primary_key) . ' = ' . $this->_database->quote($this->$k));
-            $query->group($this->_database->quoteName($this->_primary_key));
+            $query->select($this->_db->quoteName($this->_primary_key));
+            $query->from($this->_db->quoteName($this->_table));
+            $query->where($this->_db->quoteName($this->_primary_key) . ' = ' . $this->_db->quote($this->$k));
+            $query->group($this->_db->quoteName($this->_primary_key));
 
             // For each join add the select and join clauses to the query object.
             foreach ($joins as $table) {
@@ -1252,12 +1282,12 @@ if (count($names) > 0) {
             }
 
             // Get the row object from the query.
-            $this->_database->setQuery((string)$query, 0, 1);
-            $row = $this->_database->loadObject();
+            $this->_db->setQuery((string)$query, 0, 1);
+            $row = $this->_db->loadObject();
 
             // Check for a database error.
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
+            if ($this->_db->getErrorNum()) {
+                $this->setError($this->_db->getErrorMsg());
 
                 return false;
             }
@@ -1296,12 +1326,12 @@ if (count($names) > 0) {
     protected function _lock()
     {
         // Lock the table for writing.
-        $this->_database->setQuery('LOCK TABLES ' . $this->_database->quoteName($this->_table) . ' WRITE');
-        $this->_database->query();
+        $this->_db->setQuery('LOCK TABLES ' . $this->_db->quoteName($this->_table) . ' WRITE');
+        $this->_db->query();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $this->setError($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
 
             return false;
         }
@@ -1322,12 +1352,12 @@ if (count($names) > 0) {
     protected function _unlock()
     {
         // Unlock the table.
-        $this->_database->setQuery('UNLOCK TABLES');
-        $this->_database->query();
+        $this->_db->setQuery('UNLOCK TABLES');
+        $this->_db->query();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $this->setError($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
 
             return false;
         }

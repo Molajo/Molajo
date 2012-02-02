@@ -479,7 +479,7 @@ class MolajoModelEdit
         }
 
         /** INSERT INTO **/
-        $database = $this->getDbo();
+        $db = $this->getDbo();
         $columns = $table->getProperties();
 
         $columnList = '';
@@ -491,10 +491,10 @@ class MolajoModelEdit
                 } else {
                     $columnList .= ', ';
                 }
-                $columnList .= $database->namequote($column_name);
+                $columnList .= $db->namequote($column_name);
             }
         }
-        $insertQuery = ' INSERT INTO ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) . '(' . $columnList . ')';
+        $insertQuery = ' INSERT INTO ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) . '(' . $columnList . ')';
 
         /** SELECT AND VALUES **/
         $columnList = '';
@@ -511,49 +511,49 @@ class MolajoModelEdit
 
                 /** columns **/
                 if ($column_name == 'title') {
-                    $column_name = 'CONCAT(' . $database->namequote($column_name) . ', " "' . ', "' . MolajoTextHelper::_('MOLAJO_TITLE_VERSION_LITERAL') . '") as title';
+                    $column_name = 'CONCAT(' . $db->namequote($column_name) . ', " "' . ', "' . MolajoTextHelper::_('MOLAJO_TITLE_VERSION_LITERAL') . '") as title';
 
                 } else if ($column_name == 'version_of_id') {
-                    $column_name = $database->namequote('id') . ' as ' . $database->namequote('version_of_id');
+                    $column_name = $db->namequote('id') . ' as ' . $db->namequote('version_of_id');
 
                 } else if ($column_name == 'status_prior_to_version') {
-                    $column_name = $database->namequote('state') . ' as ' . $database->namequote('status_prior_to_version');
+                    $column_name = $db->namequote('state') . ' as ' . $db->namequote('status_prior_to_version');
 
                 } else if ($column_name == 'state') {
-                    $column_name = MOLAJO_STATUS_VERSION . ' as ' . $database->namequote('state');
+                    $column_name = MOLAJO_STATUS_VERSION . ' as ' . $db->namequote('state');
 
                 } else if ($column_name == 'modified') {
-                    $column_name = '"' . MolajoController::getDate()->toMySQL() . '" as ' . $database->namequote('modified');
+                    $column_name = '"' . MolajoController::getDate()->toMySQL() . '" as ' . $db->namequote('modified');
 
                 } else if ($column_name == 'modified_by') {
-                    $column_name = MolajoController::getUser()->get('id') . ' as ' . $database->namequote('modified_by');
+                    $column_name = MolajoController::getUser()->get('id') . ' as ' . $db->namequote('modified_by');
 
                 } else if ($column_name == 'ordering') {
-                    $column_name = $database->namequote('version') . ' as ' . $database->namequote('ordering');
+                    $column_name = $db->namequote('version') . ' as ' . $db->namequote('ordering');
 
                 } else {
-                    $column_name = $database->namequote($column_name);
+                    $column_name = $db->namequote($column_name);
                 }
 
                 $columnList .= $column_name;
             }
         }
-        $insertQuery .= ' SELECT ' . $columnList . ' FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) . ' WHERE id = ' . (int)$id;
+        $insertQuery .= ' SELECT ' . $columnList . ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) . ' WHERE id = ' . (int)$id;
 
-        $database->setQuery($insertQuery);
-        if ($database->query()) {
+        $db->setQuery($insertQuery);
+        if ($db->query()) {
         } else {
-            MolajoController::getApplication()->setMessage($database->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
         /** retrieve new id **/
-        $database->setQuery(
+        $db->setQuery(
             'SELECT MAX(id) as newID ' .
-                ' FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) .
+                ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
                 ' WHERE version_of_id = ' . (int)$id
         );
-        $newID = $database->loadResultArray();
+        $newID = $db->loadResultArray();
 
         return $newID[0];
     }
@@ -641,15 +641,15 @@ class MolajoModelEdit
      */
     public function maintainVersionCount($id, $maintainVersions)
     {
-        $database = $this->getDbo();
-        $database->setQuery(
+        $db = $this->getDbo();
+        $db->setQuery(
             'SELECT id' .
-                ' FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) .
+                ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
                 ' WHERE version_of_id = ' . (int)$id .
                 ' ORDER BY version DESC ' .
                 ' LIMIT ' . (int)$maintainVersions
         );
-        $versionPrimaryKeys = $database->loadResultArray();
+        $versionPrimaryKeys = $db->loadResultArray();
 
         $saveList = '';
         foreach ($versionPrimaryKeys as $saveid) {
@@ -662,13 +662,13 @@ class MolajoModelEdit
         if ($saveList == '') {
             return;
         }
-        $deleteQuery = 'DELETE FROM ' . $database->namequote('#' . JRequest::getVar('ComponentTable')) .
+        $deleteQuery = 'DELETE FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
             ' WHERE version_of_id = ' . (int)$id . ' AND id NOT IN (' . $saveList . ')';
 
-        $database->setQuery($deleteQuery);
-        if ($database->query()) {
+        $db->setQuery($deleteQuery);
+        if ($db->query()) {
         } else {
-            MolajoController::getApplication()->setMessage($database->getErrorMsg(), 'error');
+            MolajoController::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 

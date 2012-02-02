@@ -39,150 +39,110 @@ class MolajoModelUsers extends MolajoModel
     /**
      * load
      *
-     * Method to load a user, applications, groups, view groups, and any other data
-     * from the database to be bound to the user object.
+     * Method to load a user
      *
-     * @param   integer  $id   An optional user id.
+     * @param  integer  $id
+     * @param  bool     $reset
      *
      * @return  bool    True on success, false on failure.
      * @since   1.0
      */
     public function load($id = null, $reset = true)
     {
-        parent::load($id, $reset);
+        $this->id = $id;
 
-        echo '<pre>';
-        var_dump($this);
-        echo '<pre>';
-die;
-        if ($return == false) {
-        } else {
-
-            $database = MolajoController::getDbo();
-
-            /** guest */
-            $this->guest = 0;
-
-            /** applications */
-            $query = $database->getQuery(true);
-            $query->select('a.' . $database->nameQuote('id'));
-            $query->select('a.' . $database->nameQuote('name') . ' as title');
-            $query->from($database->nameQuote('#__applications') . ' as a');
-            $query->from($database->nameQuote('#__user_applications') . ' as b');
-            $query->where('a.' . $database->nameQuote('id') . ' = b.' . $database->nameQuote('application_id'));
-            $query->where('b.' . $database->nameQuote('user_id') . ' = ' . (int)$id);
-
-            $database->setQuery($query->__toString());
-
-            $this->applications = $this->_database->loadAssocList('title', 'id');
-
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
-                return false;
-            }
-
-            /** groups */
-            $query = $database->getQuery(true);
-            $query->select('a.' . $database->nameQuote('id'));
-            $query->select('a.' . $database->nameQuote('title') . ' as title');
-            $query->from($database->nameQuote('#__content') . ' as a');
-            $query->from($database->nameQuote('#__user_groups') . ' as b');
-            $query->where('a.' . $database->nameQuote('id') . ' = b.' . $database->nameQuote('group_id'));
-            $query->where('b.' . $database->nameQuote('user_id') . ' = ' . (int)$id);
-
-            $database->setQuery($query->__toString());
-
-            $this->groups = $this->_database->loadAssocList('title', 'id');
-
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
-                return false;
-            }
-
-            /** view groups */
-            $query = $database->getQuery(true);
-            $query->select('a.' . $database->nameQuote('id'));
-            $query->from($database->nameQuote('#__view_groups') . ' as a');
-            $query->from($database->nameQuote('#__user_view_groups') . ' as b');
-            $query->where('a.' . $database->nameQuote('id') . ' = b.' . $database->nameQuote('view_group_id'));
-            $query->where('b.' . $database->nameQuote('user_id') . ' = ' . (int)$id);
-
-            $database->setQuery($query->__toString());
-
-            $this->view_groups = $this->_database->loadResultArray();
-
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
-                return false;
-            }
-        }
-
-        return $return;
+        $row = $this->_query($this->id, $reset);
+        foreach ($row as $item) {}
+        return $this->bind($item, $ignore=array());
     }
 
     /**
-     * bind
+     * _query
      *
-     * Method to bind the user, user groups, and any other necessary data.
+     * Method to query the database for the data requested
      *
-     * @param   array  $dataArray
-     * @param   mixed  $ignore
+     * @param null $id
+     * @param bool $reset
      *
-     * @return  boolean
-     * @since   1.0
+     * @return bool
+     * @since  1.0
      */
-    function bind($dataArray, $ignore = '')
+    protected function _query($id = null, $reset = true)
     {
+        $row = parent::_query($this->id, $reset);
 
-        if (key_exists('custom_fields', $dataArray)
-            && is_array($dataArray['custom_fields'])) {
-            $registry = new JRegistry();
-            $registry->loadArray($dataArray['custom_fields']);
-            $dataArray['custom_fields'] = (string)$registry;
-        }
+        /**
+         * append additional data elements needed for user to the
+         *   $_tableQueryResults object beyond the standard results
+         *   provided by the parent query
+         */
 
-        if (key_exists('parameters', $dataArray)
-            && is_array($dataArray['parameters'])) {
-            $registry = new JRegistry();
-            $registry->loadArray($dataArray['parameters']);
-            $dataArray['parameters'] = (string)$registry;
-        }
+        /** guest */
+        $row[0]['guest'] = 0;
 
-        if (key_exists('metadata', $dataArray)
-            && is_array($dataArray['metadata'])) {
-            $registry = new JRegistry();
-            $registry->loadArray($dataArray['metadata']);
-            $dataArray['metadata'] = (string)$registry;
-        }
+        /** name */
+        $row[0]['name'] = $row[0]['first_name'] . ' ' . $row[0]['last_name'];
 
-        // Attempt to bind the data.
-        $return = parent::bind($dataArray, $ignore);
-        if ($return === false) {
+        /** applications */
+        $query = $this->_db->getQuery(true);
+
+        $query->select('a.' . $this->_db->nameQuote('id'));
+        $query->select('a.' . $this->_db->nameQuote('name') . ' as title');
+        $query->from($this->_db->nameQuote('#__applications') . ' as a');
+        $query->from($this->_db->nameQuote('#__user_applications') . ' as b');
+        $query->where('a.' . $this->_db->nameQuote('id') .
+            ' = b.' . $this->_db->nameQuote('application_id'));
+        $query->where('b.' . $this->_db->nameQuote('user_id') .
+            ' = ' . (int)$this->id);
+
+        $this->_db->setQuery($query->__toString());
+
+        $row[0]['applications'] = $this->_db->loadAssocList('title', 'id');
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
             return false;
         }
 
-        // Load the real group data based on the bound ids.
-        if (count($this->groups > 0)) {
-            // Set the group ids.
-            JArrayHelper::toInteger($this->groups);
+        /** groups */
+        $query = $this->_db->getQuery(true);
 
-            // Get the titles for the user groups.
-            $this->_database->setQuery(
-                'SELECT ' . $this->_database->quoteName('id') . ', ' . $this->_database->quoteName('title') .
-                    ' FROM ' . $this->_database->quoteName('#__content') .
-                    ' WHERE ' . $this->_database->quoteName('id') . ' = ' . implode(' OR ' . $this->_database->quoteName('id') . ' = ', $this->groups)
-            );
-            // Set the titles for the user groups.
-            $this->groups = $this->_database->loadAssocList('title', 'id');
+        $query->select('a.' . $this->_db->nameQuote('id'));
+        $query->select('a.' . $this->_db->nameQuote('title') . ' as title');
+        $query->from($this->_db->nameQuote('#__content') . ' as a');
+        $query->from($this->_db->nameQuote('#__user_groups') . ' as b');
+        $query->where('a.' . $this->_db->nameQuote('id') .
+            ' = b.' . $this->_db->nameQuote('group_id'));
+        $query->where('b.' . $this->_db->nameQuote('user_id') .
+            ' = ' . (int)$this->id);
 
-            // Check for a database error.
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
-                return false;
-            }
+        $this->_db->setQuery($query->__toString());
+
+        $row[0]['groups'] = $this->_db->loadAssocList('title', 'id');
+
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
+            return false;
         }
 
-        return $return;
+        /** view groups */
+        $query = $this->_db->getQuery(true);
+
+        $query->select('a.' . $this->_db->nameQuote('id'));
+        $query->from($this->_db->nameQuote('#__view_groups') . ' as a');
+        $query->from($this->_db->nameQuote('#__user_view_groups') . ' as b');
+        $query->where('a.' . $this->_db->nameQuote('id') . ' = b.' . $this->_db->nameQuote('view_group_id'));
+        $query->where('b.' . $this->_db->nameQuote('user_id') . ' = ' . (int)$this->id);
+
+        $this->_db->setQuery($query->__toString());
+
+        $row[0]['view_groups'] = $this->_db->loadResultArray();
+
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
+            return false;
+        }
+
+        return $row;
     }
 
     /**
@@ -193,27 +153,27 @@ die;
     function check()
     {
         if (trim($this->name) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_PLEASE_ENTER_YOUR_NAME'));
             return false;
         }
 
         if (trim($this->username) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_PLEASE_ENTER_A_USER_NAME'));
             return false;
         }
 
         if (preg_match("#[<>\"'%;()&]#i", $this->username) || strlen(utf8_decode($this->username)) < 2) {
-            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_VALID_AZ09', 2));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_VALID_AZ09', 2));
             return false;
         }
 
         if ((trim($this->email) == "") || !MolajoMailHelper::isEmailAddress($this->email)) {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_VALID_MAIL'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_VALID_MAIL'));
             return false;
         }
 
         // Set the registration timestamp
-        if ($this->register_datetime == null || $this->register_datetime == $this->_database->getNullDate()) {
+        if ($this->register_datetime == null || $this->register_datetime == $this->_db->getNullDate()) {
             $this->register_datetime = MolajoController::getDate()->toMySQL();
         }
 
@@ -221,39 +181,39 @@ die;
         // check for existing username
         $query = 'SELECT id'
             . ' FROM #__users '
-            . ' WHERE username = ' . $this->_database->Quote($this->username)
+            . ' WHERE username = ' . $this->_db->Quote($this->username)
             . ' AND id != ' . (int)$this->id;
         ;
-        $this->_database->setQuery($query->__toString());
-        $xid = intval($this->_database->loadResult());
+        $this->_db->setQuery($query->__toString());
+        $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_USERNAME_INUSE'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_USERNAME_INUSE'));
             return false;
         }
 
         // check for existing email
         $query = 'SELECT id'
             . ' FROM #__users '
-            . ' WHERE email = ' . $this->_database->Quote($this->email)
+            . ' WHERE email = ' . $this->_db->Quote($this->email)
             . ' AND id != ' . (int)$this->id;
-        $this->_database->setQuery($query->__toString());
-        $xid = intval($this->_database->loadResult());
+        $this->_db->setQuery($query->__toString());
+        $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_EMAIL_INUSE'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_EMAIL_INUSE'));
             return false;
         }
 
         // Molajo - change this for a check for LAST Administrator in a Group on Delete
         // remove root user
 
-        //			$query = $this->_database->getQuery(true);
+        //			$query = $this->_db->getQuery(true);
         //			$query->select('id');
         //			$query->from($this->_table);
-        //			$query->where('username = '.$this->_database->quote($rootUser));
-        //			$this->_database->setQuery($query->__toString());
-        //			$xid = intval($this->_database->loadResult());
+        //			$query->where('username = '.$this->_db->quote($rootUser));
+        //			$this->_db->setQuery($query->__toString());
+        //			$xid = intval($this->_db->loadResult());
         //			if ($rootUser==$this->username && (!$xid || $xid && $xid != intval($this->id))  || $xid && $xid == intval($this->id) && $rootUser!=$this->username) {
-        //				$this->setError( MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_USERNAME_CANNOT_CHANGE'));
+        //				$this->setError( MolajoTextHelper::_('MOLAJO_DB_ERROR_USERNAME_CANNOT_CHANGE'));
         //				return false;
         //			}
 
@@ -280,17 +240,17 @@ die;
         // Insert or update the object based on presence of a key value.
         if ($key) {
             // Already have a table key, update the row.
-            $return = $this->_database->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
+            $return = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
         }
         else {
             // Don't have a table key, insert the row.
-            $return = $this->_database->insertObject($this->_tbl, $this, $this->_tbl_key);
+            $return = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
         }
 
         // Handle error if it exists.
         if ($return) {
         } else {
-            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_database->getErrorMsg()));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
             return false;
         }
 
@@ -301,28 +261,28 @@ die;
         // Store the group data if the user data was saved.
         if ($return && is_array($this->groups) && count($this->groups)) {
             // Delete the old user group maps.
-            $this->_database->setQuery(
-                'DELETE FROM ' . $this->_database->quoteName('#__user_groups') .
-                    ' WHERE ' . $this->_database->quoteName('user_id') . ' = ' . (int)$this->id
+            $this->_db->setQuery(
+                'DELETE FROM ' . $this->_db->quoteName('#__user_groups') .
+                    ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->id
             );
-            $this->_database->query();
+            $this->_db->query();
 
             // Check for a database error.
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
+            if ($this->_db->getErrorNum()) {
+                $this->setError($this->_db->getErrorMsg());
                 return false;
             }
 
             // Set the new user group maps.
-            $this->_database->setQuery(
-                'INSERT INTO ' . $this->_database->quoteName('#__user_groups') . ' (' . $this->_database->quoteName('user_id') . ', ' . $this->_database->quoteName('group_id') . ')' .
+            $this->_db->setQuery(
+                'INSERT INTO ' . $this->_db->quoteName('#__user_groups') . ' (' . $this->_db->quoteName('user_id') . ', ' . $this->_db->quoteName('group_id') . ')' .
                     ' VALUES (' . $this->id . ', ' . implode('), (' . $this->id . ', ', $this->groups) . ')'
             );
-            $this->_database->query();
+            $this->_db->query();
 
             // Check for a database error.
-            if ($this->_database->getErrorNum()) {
-                $this->setError($this->_database->getErrorMsg());
+            if ($this->_db->getErrorNum()) {
+                $this->setError($this->_db->getErrorMsg());
                 return false;
             }
         }
@@ -349,28 +309,28 @@ die;
         }
 
         // Delete the user.
-        $this->_database->setQuery(
-            'DELETE FROM ' . $this->_database->quoteName($this->_tbl) .
-                ' WHERE ' . $this->_database->quoteName($this->_tbl_key) . ' = ' . (int)$this->$k
+        $this->_db->setQuery(
+            'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
+                ' WHERE ' . $this->_db->quoteName($this->_tbl_key) . ' = ' . (int)$this->$k
         );
-        $this->_database->query();
+        $this->_db->query();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $this->setError($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
             return false;
         }
 
         // Delete the user group maps.
-        $this->_database->setQuery(
-            'DELETE FROM ' . $this->_database->quoteName('#__user_groups') .
-                ' WHERE ' . $this->_database->quoteName('user_id') . ' = ' . (int)$this->$k
+        $this->_db->setQuery(
+            'DELETE FROM ' . $this->_db->quoteName('#__user_groups') .
+                ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->$k
         );
-        $this->_database->query();
+        $this->_db->query();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $this->setError($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
             return false;
         }
 
@@ -394,7 +354,7 @@ die;
                 $id = $this->id;
             } else {
                 // do not translate
-                jexit(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_SETLASTVISIT'));
+                jexit(MolajoTextHelper::_('MOLAJO_DB_ERROR_SETLASTVISIT'));
             }
         }
 
@@ -402,17 +362,17 @@ die;
         $date = MolajoController::getDate($timeStamp);
 
         // Update the database row for the user.
-        // 			' SET '.$this->_database->quoteName('last_visit_datetime').' = '.$this->_database->Quote($this->_database->toSQLDate($date)) .
-        $this->_database->setQuery(
-            'UPDATE ' . $this->_database->quoteName($this->_tbl) .
-                ' SET ' . $this->_database->quoteName('last_visit_datetime') . ' = ' . $this->_database->Quote($date) .
-                ' WHERE ' . $this->_database->quoteName('id') . ' = ' . (int)$id
+        // 			' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
+        $this->_db->setQuery(
+            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
+                ' SET ' . $this->_db->quoteName('last_visit_datetime') . ' = ' . $this->_db->Quote($date) .
+                ' WHERE ' . $this->_db->quoteName('id') . ' = ' . (int)$id
         );
-        $this->_database->query();
+        $this->_db->query();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $this->setError($this->_database->getErrorMsg());
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
             return false;
         }
 

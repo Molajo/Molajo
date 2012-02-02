@@ -24,10 +24,10 @@ class MolajoModelContent extends MolajoModel
      *
      * @since 1.0
      */
-    function __construct($database)
+    function __construct($db)
     {
-     //   parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $database);
-        parent::__construct('#__content', 'id', $database);
+     //   parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
+        parent::__construct('#__content', 'id', $db);
     }
 
     /**
@@ -55,17 +55,17 @@ class MolajoModelContent extends MolajoModel
     {
         /** initialise **/
         $assetId = null;
-        $database = $this->getDbo();
+        $db = $this->getDbo();
 
         /** retrieve parent category asset **/
         if ($this->category_id) {
-            $query = $database->getQuery(true);
+            $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
             $query->where('id = ' . (int)$this->category_id);
 
-            $this->_database->setQuery($query->__toString());
-            if ($result = $this->_database->loadResult()) {
+            $this->_db->setQuery($query->__toString());
+            if ($result = $this->_db->loadResult()) {
                 $assetId = (int)$result;
             }
         }
@@ -222,7 +222,7 @@ class MolajoModelContent extends MolajoModel
     {
         /** initialise **/
         $aliasFound = false;
-        $database = $this->getDbo();
+        $db = $this->getDbo();
 
         /** alias **/
         if (trim($this->alias) == '') {
@@ -240,17 +240,17 @@ class MolajoModelContent extends MolajoModel
         $tempAlias = $this->alias;
 
         do {
-            $query = $database->getQuery(true);
+            $query = $db->getQuery(true);
 
-            $query->select($database->namequote('alias'));
-            $query->from($database->namequote('#' . JRequest::getCmd('ComponentTable')));
-            $query->where($database->namequote('alias') . ' = ' . $database->quote($this->alias));
-            $query->where($database->namequote('id') . ' <> ' . (int)$this->id);
-            $query->where($database->namequote('state') . ' <> ' . (int)MOLAJO_STATUS_VERSION);
+            $query->select($db->namequote('alias'));
+            $query->from($db->namequote('#' . JRequest::getCmd('ComponentTable')));
+            $query->where($db->namequote('alias') . ' = ' . $db->quote($this->alias));
+            $query->where($db->namequote('id') . ' <> ' . (int)$this->id);
+            $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATUS_VERSION);
 
-            $this->_database->setQuery($query->__toString());
+            $this->_db->setQuery($query->__toString());
 
-            if ($result = $this->_database->loadResult()) {
+            if ($result = $this->_db->loadResult()) {
                 $aliasFound = false;
             } else {
                 $aliasFound = true;

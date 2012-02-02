@@ -180,7 +180,7 @@ class MolajoUser extends JObject
      *
      * Returns Global User object, creating it if it doesn't already exist.
      *
-     * @param   strjng $identifier  Requested User (id or username)
+     * @param   string $identifier  Requested User (id or username)
      *
      * @return  object  User
      * @since   1.0
@@ -243,41 +243,39 @@ class MolajoUser extends JObject
      *
      * @param   mixed  $id  The user id of the user to load
      *
-     * @return  boolean  True on success
+     * @return  boolean
      * @since   1.0
      */
     protected function _load($id)
     {
         /** retrieve data for user */
         $model = $this->_getModel();
-
-        $data = $model->load($id);
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
-                die;
-        $db = MolajoController::getDbo();
-        $columns = $db->getModelColumns('#__users', true);
-        foreach ($columns as $name=>$value) {
-            $this->$name = $model->$name;
+        $results = $model->load($id);
+        $columns = $model->getFields('#__users', true);
+        foreach ($results as $name => $value) {
+            $this->$name = $results[$name];
         }
 
         /** extra fields */
-        $this->name = trim($this->first_name.' '.$this->last_name);
+        $this->_loadCustomFields($this->custom_fields);
 
-        $this->_loadCustomFields($model->custom_fields);
-
-        $this->_loadParameters($model->parameters);
-
-        $this->applications = $model->applications;
-
-        $this->groups = $model->groups;
-
-        $this->view_groups = $model->view_groups;
-
-        $this->guest = 0;
+        $this->_loadParameters($this->parameters);
 
         return true;
+    }
+
+    /**
+     * query
+     *
+     * @param null $id
+     * @param bool $reset
+     */
+    public function query($id = null, $reset = true)
+    {
+        parent::query($this->id, $reset);
+
+        /** guest */
+        $this->guest = 0;
     }
 
     /**
@@ -302,7 +300,7 @@ class MolajoUser extends JObject
             $modeltype['prefix'] = $prefix;
         }
 
-        $className = $modeltype['prefix'].$modeltype['name'];
+        $className = $modeltype['prefix'] . $modeltype['name'];
 
         return $className::getInstance(
             $modeltype['name'],

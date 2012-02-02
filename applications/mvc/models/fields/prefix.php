@@ -124,8 +124,8 @@ class MolajoFieldPrefix extends MolajoField
         if (trim($value) == '') {
             return;
         }
-        $database = $this->getDbo();
-        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $database->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
+        $db = $this->getDbo();
+        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 
     /**
@@ -170,8 +170,8 @@ class MolajoFieldPrefix extends MolajoField
     protected function getPrefix($size = 10, $count = 100)
     {
         // For an existing table, retrieve all table names
-        $database = MolajoController::getApplication()->get('db');
-        if ($database) {
+        $db = MolajoController::getApplication()->get('db');
+        if ($db) {
             $tables = MolajoController::getDbo()->getModelList();
         } else {
             $tables = array();

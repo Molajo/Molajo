@@ -107,7 +107,7 @@ class MolajoModelNested extends MolajoModel
         $pk = (is_null($pk)) ? $this->$k : $pk;
 
         // Get the path from the node to the root.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $select = ($diagnostic) ? 'p.' . $k . ', p.parent_id, p.level, p.lft, p.rgt' : 'p.*';
         $query->select($select);
         $query->from($this->_tbl . ' AS n, ' . $this->_tbl . ' AS p');
@@ -115,12 +115,12 @@ class MolajoModelNested extends MolajoModel
         $query->where('n.' . $k . ' = ' . (int)$pk);
         $query->order('p.lft');
 
-        $this->_database->setQuery($query->__toString());
-        $path = $this->_database->loadObjectList();
+        $this->_db->setQuery($query->__toString());
+        $path = $this->_db->loadObjectList();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GET_PATH_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GET_PATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -144,19 +144,19 @@ class MolajoModelNested extends MolajoModel
         $pk = (is_null($pk)) ? $this->$k : $pk;
 
         // Get the node and children as a tree.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $select = ($diagnostic) ? 'n.' . $k . ', n.parent_id, n.level, n.lft, n.rgt' : 'n.*';
         $query->select($select);
         $query->from($this->_tbl . ' AS n, ' . $this->_tbl . ' AS p');
         $query->where('n.lft BETWEEN p.lft AND p.rgt');
         $query->where('p.' . $k . ' = ' . (int)$pk);
         $query->order('n.lft');
-        $this->_database->setQuery($query->__toString());
-        $tree = $this->_database->loadObjectList();
+        $this->_db->setQuery($query->__toString());
+        $tree = $this->_db->loadObjectList();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GET_TREE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GET_TREE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -205,7 +205,7 @@ class MolajoModelNested extends MolajoModel
         if (($position != 'before') && ($position != 'after') &&
             ($position != 'first-child') && ($position != 'last-child')
         ) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_INVALID_LOCATION', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_INVALID_LOCATION', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -234,7 +234,7 @@ class MolajoModelNested extends MolajoModel
         $k = $this->_tbl_key;
         $pk = $this->$k;
 
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($k);
         $query->from($this->_tbl);
         $query->where('parent_id = ' . $this->parent_id);
@@ -252,8 +252,8 @@ class MolajoModelNested extends MolajoModel
             $position = 'before';
         }
 
-        $this->_database->setQuery($query->__toString());
-        $referenceId = $this->_database->loadResult();
+        $this->_db->setQuery($query->__toString());
+        $referenceId = $this->_db->loadResult();
 
         if ($referenceId) {
             return $this->moveByReference($referenceId, $position, $pk);
@@ -291,16 +291,16 @@ class MolajoModelNested extends MolajoModel
         }
 
         // Get the ids of child nodes.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($k);
         $query->from($this->_tbl);
         $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
-        $children = $this->_database->loadColumn();
+        $this->_db->setQuery($query->__toString());
+        $children = $this->_db->loadColumn();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -310,7 +310,7 @@ class MolajoModelNested extends MolajoModel
 
         // Cannot move the node to be a child of itself.
         if (in_array($referenceId, $children)) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_INVALID_NODE_RECURSION', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_INVALID_NODE_RECURSION', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -323,34 +323,34 @@ class MolajoModelNested extends MolajoModel
         /*
            * Move the sub-tree out of the nested sets by negating its left and right values.
           */
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft * (-1), rgt = rgt * (-1)');
         $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+        $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
 
         /*
            * Close the hole in the tree that was opened by removing the sub-tree from the nested sets.
            */
         // Compress the left values.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft - ' . (int)$node->width);
         $query->where('lft > ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+        $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
 
         // Compress the right values.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('rgt = rgt - ' . (int)$node->width);
         $query->where('rgt > ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+        $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
 
         // We are moving the tree relative to a reference node.
         if ($referenceId) {
@@ -373,17 +373,17 @@ class MolajoModelNested extends MolajoModel
         else
         {
             // Get the last root node as the reference node.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->select($this->_tbl_key . ', parent_id, level, lft, rgt');
             $query->from($this->_tbl);
             $query->where('parent_id = 0');
             $query->order('lft DESC');
-            $this->_database->setQuery($query, 0, 1);
-            $reference = $this->_database->loadObject();
+            $this->_db->setQuery($query, 0, 1);
+            $reference = $this->_db->loadObject();
 
             // Check for a database error.
-            if ($this->_database->getErrorNum()) {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            if ($this->_db->getErrorNum()) {
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
                 $this->_unlock();
                 return false;
@@ -404,22 +404,22 @@ class MolajoModelNested extends MolajoModel
            * Create space in the nested sets at the new location for the moved sub-tree.
            */
         // Shift left values.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft + ' . (int)$node->width);
         $query->where($repositionData->left_where);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+        $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
 
         // Shift right values.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('rgt = rgt + ' . (int)$node->width);
         $query->where($repositionData->right_where);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+        $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
 
         /*
            * Calculate the offset between where the node used to be in the tree and
@@ -429,34 +429,34 @@ class MolajoModelNested extends MolajoModel
         $levelOffset = $repositionData->new_level - $node->level;
 
         // Move the nodes back into position in the tree using the calculated offsets.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('rgt = ' . (int)$offset . ' - rgt');
         $query->set('lft = ' . (int)$offset . ' - lft');
         $query->set('level = level + ' . (int)$levelOffset);
         $query->where('lft < 0');
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+        $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
 
         // Set the correct parent id for the moved node if required.
         if ($node->parent_id != $repositionData->new_parent_id) {
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
 
             // Update the title and alias fields if they exist for the table.
             if (property_exists($this, 'title') && $this->title !== null) {
-                $query->set('title = ' . $this->_database->Quote($this->title));
+                $query->set('title = ' . $this->_db->Quote($this->title));
             }
             if (property_exists($this, 'alias') && $this->alias !== null) {
-                $query->set('alias = ' . $this->_database->Quote($this->alias));
+                $query->set('alias = ' . $this->_db->Quote($this->alias));
             }
 
             $query->set('parent_id = ' . (int)$repositionData->new_parent_id);
             $query->where($this->_tbl_key . ' = ' . (int)$node->$k);
-            $this->_database->setQuery($query->__toString());
+            $this->_db->setQuery($query->__toString());
 
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_MOVE_FAILED');
         }
 
         // Unlock the table for writing.
@@ -529,66 +529,66 @@ class MolajoModelNested extends MolajoModel
         // Should we delete all children along with the node?
         if ($children) {
             // Delete the node and all of its children.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->delete();
             $query->from($this->_tbl);
             $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
 
             // Compress the left values.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('lft = lft - ' . (int)$node->width);
             $query->where('lft > ' . (int)$node->rgt);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
 
             // Compress the right values.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('rgt = rgt - ' . (int)$node->width);
             $query->where('rgt > ' . (int)$node->rgt);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
         }
 
             // Leave the children and move them up a level.
         else
         {
             // Delete the node.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->delete();
             $query->from($this->_tbl);
             $query->where('lft = ' . (int)$node->lft);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
 
             // Shift all node's children up a level.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('lft = lft - 1');
             $query->set('rgt = rgt - 1');
             $query->set('level = level - 1');
             $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
 
             // Adjust all the parent values for direct children of the deleted node.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('parent_id = ' . (int)$node->parent_id);
             $query->where('parent_id = ' . (int)$node->$k);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
 
             // Shift all of the left values that are right of the node.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('lft = lft - 2');
             $query->where('lft > ' . (int)$node->rgt);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
 
             // Shift all of the right values that are right of the node.
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('rgt = rgt - 2');
             $query->where('rgt > ' . (int)$node->rgt);
-            $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
+            $this->_runQuery($query, 'MOLAJO_DB_ERROR_DELETE_FAILED');
         }
 
         // Unlock the table for writing.
@@ -608,31 +608,31 @@ class MolajoModelNested extends MolajoModel
     {
         $this->parent_id = (int)$this->parent_id;
         if ($this->parent_id > 0) {
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->select('COUNT(' . $this->_tbl_key . ')');
             $query->from($this->_tbl);
             $query->where($this->_tbl_key . ' = ' . $this->parent_id);
-            $this->_database->setQuery($query->__toString());
+            $this->_db->setQuery($query->__toString());
 
-            if ($this->_database->loadResult()) {
+            if ($this->_db->loadResult()) {
                 return true;
             }
             else
             {
-                if ($this->_database->getErrorNum()) {
-                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CHECK_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                if ($this->_db->getErrorNum()) {
+                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CHECK_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                 }
                 else
                 {
-                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID', get_class($this)));
+                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_INVALID_PARENT_ID', get_class($this)));
                     $this->setError($e);
                 }
             }
         }
         else
         {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_INVALID_PARENT_ID', get_class($this)));
             $this->setError($e);
         }
 
@@ -676,17 +676,17 @@ class MolajoModelNested extends MolajoModel
                 // We are inserting a node relative to the last root node.
                 if ($this->_location_id == 0) {
                     // Get the last root node as the reference node.
-                    $query = $this->_database->getQuery(true);
+                    $query = $this->_db->getQuery(true);
                     $query->select($this->_tbl_key . ', parent_id, level, lft, rgt');
                     $query->from($this->_tbl);
                     $query->where('parent_id = 0');
                     $query->order('lft DESC');
-                    $this->_database->setQuery($query, 0, 1);
-                    $reference = $this->_database->loadObject();
+                    $this->_db->setQuery($query, 0, 1);
+                    $reference = $this->_db->loadObject();
 
                     // Check for a database error.
-                    if ($this->_database->getErrorNum()) {
-                        $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                    if ($this->_db->getErrorNum()) {
+                        $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                         $this->setError($e);
                         $this->_unlock();
                         return false;
@@ -715,18 +715,18 @@ class MolajoModelNested extends MolajoModel
                 }
 
                 // Create space in the tree at the new location for the new node in left ids.
-                $query = $this->_database->getQuery(true);
+                $query = $this->_db->getQuery(true);
                 $query->update($this->_tbl);
                 $query->set('lft = lft + 2');
                 $query->where($repositionData->left_where);
-                $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_STORE_FAILED');
+                $this->_runQuery($query, 'MOLAJO_DB_ERROR_STORE_FAILED');
 
                 // Create space in the tree at the new location for the new node in right ids.
-                $query = $this->_database->getQuery(true);
+                $query = $this->_db->getQuery(true);
                 $query->update($this->_tbl);
                 $query->set('rgt = rgt + 2');
                 $query->where($repositionData->right_where);
-                $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_STORE_FAILED');
+                $this->_runQuery($query, 'MOLAJO_DB_ERROR_STORE_FAILED');
 
                 // Set the object values.
                 $this->parent_id = $repositionData->new_parent_id;
@@ -737,7 +737,7 @@ class MolajoModelNested extends MolajoModel
             else
             {
                 // Negative parent ids are invalid
-                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID'));
+                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_INVALID_PARENT_ID'));
                 $this->setError($e);
                 return false;
             }
@@ -816,7 +816,7 @@ class MolajoModelNested extends MolajoModel
                 // Nothing to set publishing state on, return false.
             else
             {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED', get_class($this)));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_NO_ROWS_SELECTED', get_class($this)));
                 $this->setError($e);
                 return false;
             }
@@ -837,16 +837,16 @@ class MolajoModelNested extends MolajoModel
             // If the table has checkout support, verify no children are checked out.
             if ($checkoutSupport) {
                 // Ensure that children are not checked out.
-                $query = $this->_database->getQuery(true);
+                $query = $this->_db->getQuery(true);
                 $query->select('COUNT(' . $k . ')');
                 $query->from($this->_tbl);
                 $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
                 $query->where('(checked_out <> 0 AND checked_out <> ' . (int)$userId . ')');
-                $this->_database->setQuery($query->__toString());
+                $this->_db->setQuery($query->__toString());
 
                 // Check for checked out children.
-                if ($this->_database->loadResult()) {
-                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CHILD_ROWS_CHECKED_OUT', get_class($this)));
+                if ($this->_db->loadResult()) {
+                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CHILD_ROWS_CHECKED_OUT', get_class($this)));
                     $this->setError($e);
                     return false;
                 }
@@ -855,29 +855,29 @@ class MolajoModelNested extends MolajoModel
             // If any parent nodes have lower published state values, we cannot continue.
             if ($node->parent_id) {
                 // Get any ancestor nodes that have a lower publishing state.
-                $query = $this->_database->getQuery(true)
+                $query = $this->_db->getQuery(true)
                         ->select('n.' . $k)
-                        ->from($this->_database->quoteName($this->_tbl) . ' AS n')
+                        ->from($this->_db->quoteName($this->_tbl) . ' AS n')
                         ->where('n.lft < ' . (int)$node->lft)
                         ->where('n.rgt > ' . (int)$node->rgt)
                         ->where('n.parent_id > 0')
                         ->where('n.published < ' . (int)$compareState);
 
                 // Just fetch one row (one is one too many).
-                $this->_database->setQuery($query, 0, 1);
+                $this->_db->setQuery($query, 0, 1);
 
-                $rows = $this->_database->loadColumn();
+                $rows = $this->_db->loadColumn();
 
                 // Check for a database error.
-                if ($this->_database->getErrorNum()) {
-                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                if ($this->_db->getErrorNum()) {
+                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                     return false;
                 }
 
                 if (!empty($rows)) {
                     $e = new MolajoException(
-                        MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_ANCESTOR_NODES_LOWER_STATUS')
+                        MolajoTextHelper::_('MOLAJO_DB_ERROR_ANCESTOR_NODES_LOWER_STATUS')
                     );
                     $this->setError($e);
                     return false;
@@ -885,18 +885,18 @@ class MolajoModelNested extends MolajoModel
             }
 
             // Update and cascade the publishing state.
-            $query = $this->_database->getQuery(true)
-                    ->update($this->_database->quoteName($this->_tbl) . ' AS n')
+            $query = $this->_db->getQuery(true)
+                    ->update($this->_db->quoteName($this->_tbl) . ' AS n')
                     ->set('n.published = ' . (int)$state)
                     ->where(
                 '(n.lft > ' . (int)$this->lft . ' AND n.rgt < ' . (int)$this->rgt . ')' .
                 ' OR n.' . $k . ' = ' . (int)$pk
             );
-            $this->_database->setQuery($query->__toString());
+            $this->_db->setQuery($query->__toString());
 
             // Check for a database error.
-            if (!$this->_database->query()) {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            if (!$this->_db->query()) {
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
                 return false;
             }
@@ -951,49 +951,49 @@ class MolajoModelNested extends MolajoModel
         }
 
         // Get the primary keys of child nodes.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($this->_tbl_key);
         $query->from($this->_tbl);
         $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
-        $children = $this->_database->loadColumn();
+        $this->_db->setQuery($query->__toString());
+        $children = $this->_db->loadColumn();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
         }
 
         // Shift left and right values for the node and it's children.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft - ' . (int)$sibling->width);
         $query->set('rgt = rgt - ' . (int)$sibling->width);
         $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
         }
 
         // Shift left and right values for the sibling and it's children.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft + ' . (int)$node->width);
         $query->set('rgt = rgt + ' . (int)$node->width);
         $query->where('lft BETWEEN ' . (int)$sibling->lft . ' AND ' . (int)$sibling->rgt);
         $query->where($this->_tbl_key . ' NOT IN (' . implode(',', $children) . ')');
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -1035,55 +1035,55 @@ class MolajoModelNested extends MolajoModel
         // Get the right sibling node.
         if (!$sibling = $this->_getNode($node->rgt + 1, 'left')) {
             // Error message set in getNode method.
-            $query->unlock($this->_database);
+            $query->unlock($this->_db);
             $this->_locked = false;
             return false;
         }
 
         // Get the primary keys of child nodes.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($this->_tbl_key);
         $query->from($this->_tbl);
         $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
-        $children = $this->_database->loadColumn();
+        $this->_db->setQuery($query->__toString());
+        $children = $this->_db->loadColumn();
 
         // Check for a database error.
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
         }
 
         // Shift left and right values for the node and it's children.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft + ' . (int)$sibling->width);
         $query->set('rgt = rgt + ' . (int)$sibling->width);
         $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
         }
 
         // Shift left and right values for the sibling and it's children.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft - ' . (int)$node->width);
         $query->set('rgt = rgt - ' . (int)$node->width);
         $query->where('lft BETWEEN ' . (int)$sibling->lft . ' AND ' . (int)$sibling->rgt);
         $query->where($this->_tbl_key . ' NOT IN (' . implode(',', $children) . ')');
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -1106,16 +1106,16 @@ class MolajoModelNested extends MolajoModel
         $k = $this->_tbl_key;
 
         // Test for a unique record with parent_id = 0
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($k);
         $query->from($this->_tbl);
         $query->where('parent_id = 0');
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $result = $this->_database->loadColumn();
+        $result = $this->_db->loadColumn();
 
-        if ($this->_database->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ($this->_db->getErrorNum()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1126,15 +1126,15 @@ class MolajoModelNested extends MolajoModel
         else
         {
             // Test for a unique record with lft = 0
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->select($k);
             $query->from($this->_tbl);
             $query->where('lft = 0');
-            $this->_database->setQuery($query->__toString());
+            $this->_db->setQuery($query->__toString());
 
-            $result = $this->_database->loadColumn();
-            if ($this->_database->getErrorNum()) {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_database->getErrorMsg()));
+            $result = $this->_db->loadColumn();
+            if ($this->_db->getErrorNum()) {
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
                 return false;
             }
@@ -1145,15 +1145,15 @@ class MolajoModelNested extends MolajoModel
             elseif (property_exists($this, 'alias'))
             {
                 // Test for a unique record alias = root
-                $query = $this->_database->getQuery(true);
+                $query = $this->_db->getQuery(true);
                 $query->select($k);
                 $query->from($this->_tbl);
-                $query->where('alias = ' . $this->_database->quote('root'));
-                $this->_database->setQuery($query->__toString());
+                $query->where('alias = ' . $this->_db->quote('root'));
+                $this->_db->setQuery($query->__toString());
 
-                $result = $this->_database->loadColumn();
-                if ($this->_database->getErrorNum()) {
-                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                $result = $this->_db->loadColumn();
+                if ($this->_db->getErrorNum()) {
+                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                     return false;
                 }
@@ -1163,14 +1163,14 @@ class MolajoModelNested extends MolajoModel
                 }
                 else
                 {
-                    $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_ROOT_NODE_NOT_FOUND'));
+                    $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_ROOT_NODE_NOT_FOUND'));
                     $this->setError($e);
                     return false;
                 }
             }
             else
             {
-                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_ROOT_NODE_NOT_FOUND'));
+                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_ROOT_NODE_NOT_FOUND'));
                 $this->setError($e);
                 return false;
             }
@@ -1202,7 +1202,7 @@ class MolajoModelNested extends MolajoModel
 
         // Build the structure of the recursive query.
         if (!isset($this->_cache['rebuild.sql'])) {
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->select($this->_tbl_key . ', alias');
             $query->from($this->_tbl);
             $query->where('parent_id = %d');
@@ -1219,8 +1219,8 @@ class MolajoModelNested extends MolajoModel
         // Make a shortcut to database object.
 
         // Assemble the query to find all children of this node.
-        $this->_database->setQuery(sprintf($this->_cache['rebuild.sql'], (int)$parentId));
-        $children = $this->_database->loadObjectList();
+        $this->_db->setQuery(sprintf($this->_cache['rebuild.sql'], (int)$parentId));
+        $children = $this->_db->loadObjectList();
 
         // The right value of this node is the left value + 1
         $rightId = $leftId + 1;
@@ -1240,18 +1240,18 @@ class MolajoModelNested extends MolajoModel
 
         // We've got the left value, and now that we've processed
         // the children of this node we also know the right value.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = ' . (int)$leftId);
         $query->set('rgt = ' . (int)$rightId);
         $query->set('level = ' . (int)$level);
-        $query->set('path = ' . $this->_database->quote($path));
+        $query->set('path = ' . $this->_db->quote($path));
         $query->where($this->_tbl_key . ' = ' . (int)$parentId);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // If there is an update failure, return false to break out of the recursion.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_REBUILD_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_REBUILD_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1281,15 +1281,15 @@ class MolajoModelNested extends MolajoModel
         $pk = (is_null($pk)) ? $this->$k : $pk;
 
         // Get the aliases for the path from the node to the root node.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select('p.alias');
         $query->from($this->_tbl . ' AS n, ' . $this->_tbl . ' AS p');
         $query->where('n.lft BETWEEN p.lft AND p.rgt');
         $query->where('n.' . $this->_tbl_key . ' = ' . (int)$pk);
         $query->order('p.lft');
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
-        $segments = $this->_database->loadColumn();
+        $segments = $this->_db->loadColumn();
 
         // Make sure to remove the root path if it exists in the list.
         if ($segments[0] == 'root') {
@@ -1300,15 +1300,15 @@ class MolajoModelNested extends MolajoModel
         $path = trim(implode('/', $segments), ' /\\');
 
         // Update the path field for the node.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('path = ' . $this->_database->quote($path));
+        $query->set('path = ' . $this->_db->quote($path));
         $query->where($this->_tbl_key . ' = ' . (int)$pk);
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_REBUILDPATH_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_REBUILDPATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1335,15 +1335,15 @@ class MolajoModelNested extends MolajoModel
             for ($i = 0, $count = count($idArray); $i < $count; $i++)
             {
                 // Do an update to change the lft values in the table for each id
-                $query = $this->_database->getQuery(true);
+                $query = $this->_db->getQuery(true);
                 $query->update($this->_tbl);
                 $query->where($this->_tbl_key . ' = ' . (int)$idArray[$i]);
                 $query->set('lft = ' . (int)$lft_array[$i]);
-                $this->_database->setQuery($query->__toString());
+                $this->_db->setQuery($query->__toString());
 
                 // Check for a database error.
-                if (!$this->_database->query()) {
-                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_database->getErrorMsg()));
+                if (!$this->_db->query()) {
+                    $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                     $this->_unlock();
                     return false;
@@ -1390,17 +1390,17 @@ class MolajoModelNested extends MolajoModel
         }
 
         // Get the node data.
-        $query = $this->_database->getQuery(true);
+        $query = $this->_db->getQuery(true);
         $query->select($this->_tbl_key . ', parent_id, level, lft, rgt');
         $query->from($this->_tbl);
         $query->where($k . ' = ' . (int)$id);
-        $this->_database->setQuery($query, 0, 1);
+        $this->_db->setQuery($query, 0, 1);
 
-        $row = $this->_database->loadObject();
+        $row = $this->_db->loadObject();
 
         // Check for a database error or no $row returned
-        if ((!$row) || ($this->_database->getErrorNum())) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GETNODE_FAILED', get_class($this), $this->_database->getErrorMsg()));
+        if ((!$row) || ($this->_db->getErrorNum())) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GETNODE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1505,17 +1505,17 @@ class MolajoModelNested extends MolajoModel
         $sep = "\n" . str_pad('', 40, '-');
         $buffer = '';
         if ($showQuery) {
-            $buffer .= "\n" . $this->_database->getQuery() . $sep;
+            $buffer .= "\n" . $this->_db->getQuery() . $sep;
         }
 
         if ($showData) {
-            $query = $this->_database->getQuery(true);
+            $query = $this->_db->getQuery(true);
             $query->select($this->_tbl_key . ', parent_id, lft, rgt, level');
             $query->from($this->_tbl);
             $query->order($this->_tbl_key);
-            $this->_database->setQuery($query->__toString());
+            $this->_db->setQuery($query->__toString());
 
-            $rows = $this->_database->loadRowList();
+            $rows = $this->_db->loadRowList();
             $buffer .= sprintf("\n| %4s | %4s | %4s | %4s |", $this->_tbl_key, 'par', 'lft', 'rgt');
             $buffer .= $sep;
 
@@ -1530,11 +1530,11 @@ class MolajoModelNested extends MolajoModel
     // Run an update query and check for a database error
     protected function _runQuery($query, $errorMessage)
     {
-        $this->_database->setQuery($query->__toString());
+        $this->_db->setQuery($query->__toString());
 
         // Check for a database error.
-        if (!$this->_database->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('$errorMessage', get_class($this), $this->_database->getErrorMsg()));
+        if (!$this->_db->query()) {
+            $e = new MolajoException(MolajoTextHelper::sprintf('$errorMessage', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
