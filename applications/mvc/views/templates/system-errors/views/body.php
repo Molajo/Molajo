@@ -7,6 +7,6 @@
  */
 defined('MOLAJO') or die; ?>
 <li>
-    <?php echo 'hello'.$this->row->content_text; ?>
+    <?php echo '<strong>'.$this->row->code.' '.$this->row->title.':</strong> '.$this->row->content_text; ?>
 </li>
 

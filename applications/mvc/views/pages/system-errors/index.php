@@ -9,5 +9,7 @@
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:message template=system-errors />
-<include:defer/>
+<include:module name=page-header template=page-header wrap=header />
+<include:message />
+<include:module name=page-footer template=page-footer wrap=footer />
+<include:defer />
