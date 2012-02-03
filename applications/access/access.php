@@ -10,11 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Access Control
  *
- * Various queries for Permission Verification
- *
- *  authoriseTask => translates tasks to actions and verifies permission for asset id
- *  setQueryViewAccess => augments query with ACL-related criteria and select values
- *  getList => retrieves list of ACL-related data
+ * Various methods for Asset permissioning verification
  *
  * @package     Molajo
  * @subpackage  Access Control
@@ -22,6 +18,30 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoAccess
 {
+    /**
+     *  authoriseTaskList
+     *
+     * @param  array   $tasklist
+     * @param  string  $asset_id
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    static public function authoriseTaskList($tasklist = array(), $asset_id = 0)
+    {
+        if (count($tasklist) == 0) {
+            return;
+        }
+        if ($asset_id == 0) {
+            return;
+        }
+
+        $taskPermissions = array();
+        foreach ($tasklist as $task) {
+            $taskPermissions[$task] = MolajoAccess::authoriseTask($task, $asset_id);
+        }
+    }
+
     /**
      *  authoriseTask
      *
@@ -33,6 +53,10 @@ abstract class MolajoAccess
      */
     static public function authoriseTask($task = 'login', $asset_id = 0)
     {
+        if ($task == 'login') {
+            return MolajoAccess::authoriseLogin($asset_id);
+        }
+
         /** need task to action mapping in a) site ini or b) application parameters */
         $action = 'view';
         $action_id = 3;
@@ -63,29 +87,20 @@ abstract class MolajoAccess
     }
 
     /**
-     *  authoriseTaskList
-     *
-     * @param  array  $tasklist
-     * @param  string  $asset_id
-     * @param  string  $row
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    static public function authoriseTaskList($tasklist = array(), $asset_id = 0, $row = array())
-    {
-    }
-
-    /**
-     * checkUserPermissionsLogin
+     * authoriseLogin
      *
      * @param $key
      * @param $action
+     *
      * @param null $asset
      * @return void
      */
-    public function checkUserPermissionsLogin($user_id)
+    public function authoriseLogin($user_id)
     {
+        if ((int) $user_id == 0) {
+            return false;
+        }
+
         $db = MolajoController::getDbo();
         $query = $db->getQuery(true);
 

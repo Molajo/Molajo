@@ -73,7 +73,7 @@ INSERT INTO `molajo_extension_sites`
 
 # Components
 INSERT INTO `molajo_extensions`
-  (`id`,  `extension_site_id`,  `name`, `subtype`, `asset_type_id`)
+  (`id`,  `extension_site_id`,  `name`, `asset_type_id`)
   VALUES
     (1, 1, 'applications', '', 1050),
     (2, 1, 'articles', '', 1050),

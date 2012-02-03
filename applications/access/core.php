@@ -702,7 +702,7 @@ class MolajoACLCore extends MolajoACL
             if ((int)$user_id == 0) {
                 return false;
             }
-            return $this->checkUserPermissionsLogin($user_id);
+            return $this->authoriseLogin($user_id);
         }
 
         /** user groups */
