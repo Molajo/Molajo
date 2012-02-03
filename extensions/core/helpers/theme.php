@@ -30,6 +30,7 @@ class MolajoThemeHelper
             MOLAJO_ASSET_TYPE_EXTENSION_THEME,
             $theme
         );
+
         if (count($rows) == 0) {
             return array();
         }

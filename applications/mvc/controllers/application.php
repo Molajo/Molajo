@@ -176,7 +176,7 @@ class MolajoControllerApplication
      * @var    string
      * @since  1.0
      */
-    protected $_script_links;
+    protected $_script_links = array();
 
     /**
      * Script Declarations
@@ -1006,18 +1006,20 @@ class MolajoControllerApplication
      * @return void
      * @since  1.0
      */
-    public function addScriptLinksFolder($filePath, $urlPath, $priority = 500, $defer = false)
+    public function addScriptLinksFolder($filePath, $urlPath, $priority = 500, $defer = 0)
     {
-        if ($defer === true) {
+        if ($defer == 1) {
             $extra = '/js/defer';
         } else {
             $extra = '/js';
+            $defer = 0;
         }
         if (JFolder::exists($filePath . $extra)) {
         } else {
             return;
         }
         $files = JFolder::files($filePath . $extra, '\.js$', false, false);
+
         if (count($files) > 0) {
             foreach ($files as $file) {
                 $this->addScriptLink($urlPath . $extra . '/' . $file, $priority, $defer, 'text/javascript');
@@ -1039,9 +1041,15 @@ class MolajoControllerApplication
      * @return mixed
      * @since  1.0
      */
-    public function addScriptLink($url, $priority = 500, $defer = false, $mimetype = "text/javascript", $async = false)
+    public function addScriptLink($url, $priority = 500, $defer = 0, $mimetype = "text/javascript", $async = false)
     {
+        if ($defer == 1) {
+        } else {
+            $defer = 0;
+        }
+
         $count = count($this->_script_links);
+
         if ($count > 0) {
             foreach ($this->_script_links as $script) {
                 if ($script['url'] == $url) {
@@ -1049,6 +1057,7 @@ class MolajoControllerApplication
                 }
             }
         }
+
         $this->_script_links[$count]['url'] = $url;
         $this->_script_links[$count]['mimetype'] = $mimetype;
         $this->_script_links[$count]['defer'] = $defer;
@@ -1061,13 +1070,20 @@ class MolajoControllerApplication
      *
      * @return array
      */
-    public function getScriptLinks($defer = false)
+    public function getScriptLinks($defer = 0)
     {
+        if ($defer == 1) {
+        } else {
+            $defer = 0;
+        }
+
         $results = array();
+
         $count = count($this->_script_links);
+
         if ($count > 0) {
             foreach ($this->_script_links as $script) {
-                if ($script['defer'] === $defer) {
+                if ($script['defer'] == $defer) {
                     $results[] = $script;
                 }
             }
@@ -1087,9 +1103,15 @@ class MolajoControllerApplication
      * @return  void
      * @since    1.0
      */
-    public function addScriptDeclaration($content, $mimetype = 'text/javascript', $defer = false)
+    public function addScriptDeclaration($content, $mimetype = 'text/javascript', $defer = 0)
     {
+        if ($defer == 1) {
+        } else {
+            $defer = 0;
+        }
+
         $count = count($this->_script_declarations);
+
         if ($count > 0) {
             foreach ($this->_script_declarations as $script) {
                 if ($script['content'] == $script) {
@@ -1097,6 +1119,7 @@ class MolajoControllerApplication
                 }
             }
         }
+
         $this->_script_declarations[$count]['mimetype'] = $mimetype;
         $this->_script_declarations[$count]['content'] = $content;
         $this->_script_declarations[$count]['defer'] = $defer;
@@ -1108,13 +1131,20 @@ class MolajoControllerApplication
      * @param bool $defer
      * @return array
      */
-    public function getScriptDeclarations($defer = false)
+    public function getScriptDeclarations($defer = 0)
     {
+        if ($defer == 1) {
+        } else {
+            $defer = 0;
+        }
+
         $results = array();
+
         $count = count($this->_script_declarations);
+
         if ($count > 0) {
             foreach ($this->_script_declarations as $script) {
-                if ($script['defer'] === $defer) {
+                if ($script['defer'] == $defer) {
                     $results[] = $script;
                 }
             }

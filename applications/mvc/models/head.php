@@ -41,13 +41,6 @@ class MolajoModelHead extends MolajoModel
     {
         $this->items = array();
 
-        //        $metadata = MolajoController::getApplication()->getMetadata();
-        /** Theme-specific CSS and JS in => theme/[theme-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->request->get('theme_name');
-        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->request->get('theme_name');
-        MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath);
-        MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath);
-
         /** type: base */
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
@@ -64,6 +57,7 @@ class MolajoModelHead extends MolajoModel
 
         /** type: links */
         $list = MolajoController::getApplication()->getHeadLinks();
+
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $tempObject = new JObject();
@@ -102,20 +96,20 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: javascript_links */
-        $list = MolajoController::getApplication()->getScriptLinks(false);
+        $list = MolajoController::getApplication()->getScriptLinks();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
             $tempObject->set('url', $item['url']);
             $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('defer', $item['defer']);
+            $tempObject->set('defer', 0);
             $tempObject->set('async', $item['async']);
             $tempObject->set('priority', $item['priority']);
             $this->items[] = $tempObject;
         }
 
         /** type: javascript_declarations */
-        $list = MolajoController::getApplication()->getScriptDeclarations(false);
+        $list = MolajoController::getApplication()->getScriptDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');

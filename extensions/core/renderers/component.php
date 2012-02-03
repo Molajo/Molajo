@@ -244,8 +244,8 @@ class MolajoRendererComponent extends MolajoRenderer
         $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->mvc->get('theme_name');
         $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->mvc->get('theme_name');
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -254,8 +254,8 @@ class MolajoRendererComponent extends MolajoRenderer
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $urlPath = MOLAJO_SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -265,7 +265,7 @@ class MolajoRendererComponent extends MolajoRenderer
         $urlPath = MOLAJO_SITE_MEDIA_URL . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -274,8 +274,8 @@ class MolajoRendererComponent extends MolajoRenderer
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $urlPath = MOLAJO_SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -284,8 +284,8 @@ class MolajoRendererComponent extends MolajoRenderer
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . $plus;
         $urlPath = MOLAJO_SITES_MEDIA_URL . $plus;
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, true);
+        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

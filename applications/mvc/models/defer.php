@@ -42,20 +42,20 @@ class MolajoModelDefer extends MolajoModel
         $this->items = array();
 
         /** type: javascript_links */
-        $list = MolajoController::getApplication()->getScriptLinks(true);
+        $list = MolajoController::getApplication()->getScriptLinks(1);
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
             $tempObject->set('url', $item['url']);
             $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('defer', $item['defer']);
+            $tempObject->set('defer', true);
             $tempObject->set('async', $item['async']);
             $tempObject->set('priority', $item['priority']);
             $this->items[] = $tempObject;
         }
 
         /** type: javascript_declarations */
-        $list = MolajoController::getApplication()->getScriptDeclarations(true);
+        $list = MolajoController::getApplication()->getScriptDeclarations(1);
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');
