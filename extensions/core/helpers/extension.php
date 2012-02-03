@@ -249,6 +249,28 @@ abstract class MolajoExtensionHelper
     }
 
     /**
+     * loadLanguage
+     *
+     * Loads Language Files for extension
+     *
+     * @return  null
+     * @since   1.0
+     */
+    public static function loadLanguage($path)
+    {
+        if (JFolder::exists($path)) {
+        } else {
+            return false;
+        }
+        return MolajoController::getApplication()->getLanguage()->load (
+            $path,
+            MolajoController::getApplication()->getLanguage()->getDefault(),
+            false,
+            false
+        );
+    }
+
+    /**
      * getExtensionRequestObject
      *
      * Retrieve Component information using either the ID or the Name

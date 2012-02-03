@@ -8,9 +8,9 @@
 defined('MOLAJO') or die;
 
 /**
- * Multiple Controller
+ * Upadate List Controller
  *
- * Handles the standard save, delete, and cancel tasks
+ * Handles the standard list tasks, typically applied to multiple items
  *
  * Tasks processed:
  * - Order: reorder, orderup, orderdown, saveorder

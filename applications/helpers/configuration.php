@@ -65,7 +65,6 @@ class MolajoConfigurationHelper
      */
     public function getConfig()
     {
-        /** Site */
         $configData = $this->site();
 
         /** Populate Configuration with Application Parameters from Database */

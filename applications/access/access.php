@@ -12,6 +12,10 @@ defined('MOLAJO') or die;
  *
  * Various queries for Permission Verification
  *
+ *  authoriseTask => translates tasks to actions and verifies permission for asset id
+ *  setQueryViewAccess => augments query with ACL-related criteria and select values
+ *  getList => retrieves list of ACL-related data
+ *
  * @package     Molajo
  * @subpackage  Access Control
  * @since       1.0

@@ -233,7 +233,6 @@ class MolajoRenderer
         return;
     }
 
-
     /**
      * _getAttributes
      *
@@ -247,7 +246,8 @@ class MolajoRenderer
         foreach ($this->_attributes as $name => $value) {
 
             if ($name == 'name'
-                || $name == 'title') {
+                || $name == 'title'
+            ) {
                 $this->mvc->set('extension_instance_name', $value);
 
 
@@ -259,11 +259,13 @@ class MolajoRenderer
                 $this->mvc->set('template_view_name', $value);
 
             } else if ($name == 'template_view_css_id'
-                || $name == 'template_view_id') {
+                || $name == 'template_view_id'
+            ) {
                 $this->mvc->set('template_view_css_id', $value);
 
             } else if ($name == 'template_view_css_class'
-                || $name == 'view_class') {
+                || $name == 'view_class'
+            ) {
                 $this->mvc->set('template_view_css_class', $value);
 
 
@@ -271,11 +273,13 @@ class MolajoRenderer
                 $this->mvc->set('wrap_view_name', $value);
 
             } else if ($name == 'wrap_view_css_id'
-                || $name == 'wrap_view_id') {
+                || $name == 'wrap_view_id'
+            ) {
                 $this->mvc->set('wrap_view_css_id', $value);
 
             } else if ($name == 'wrap_view_css_class'
-                || $name == 'wrap_view_class') {
+                || $name == 'wrap_view_class'
+            ) {
                 $this->mvc->set('wrap_view_css_class', $value);
             }
             //todo: amy merge other parameters into $this->parameters $this->mvc->set('other_parameters') = $other_parameters;
@@ -432,11 +436,7 @@ class MolajoRenderer
      */
     protected function _loadLanguage()
     {
-        MolajoController::getApplication()->getLanguage()->load
-        ($this->mvc->get('extension_path'),
-            MolajoController::getApplication()->getLanguage()->getDefault(),
-            false,
-            false);
+        return MolajoExtensionHelper::loadLanguage($this->mvc->get('extension_path'));
     }
 
     /**
@@ -461,11 +461,11 @@ class MolajoRenderer
     protected function _invokeMVC()
     {
         /** model */
-        $model = (string) $this->_setModel();
+        $model = (string)$this->_setModel();
         $this->mvc->set('mvc_model', $model);
 
         /** controller */
-        $controllerClass = (string) $this->_setController();
+        $controllerClass = (string)$this->_setController();
         $this->mvc->set('mvc_controller', $controllerClass);
 
         /** task */
@@ -480,47 +480,47 @@ class MolajoRenderer
     }
 
     /**
-      * _setModel
-      *
-      * Set the name of the Model
-      *
-      * @return  string
-      * @since   1.0
-      */
-     protected function _setModel()
-     {
-         /** 1. Named Model */
-         if ($this->mvc->get('mvc_model', '') == '') {
-         } else {
-             $modelClass = (string)ucfirst($this->mvc->get('mvc_model'));
-             if (class_exists($modelClass)) {
-                 return $modelClass;
-             }
-         }
+     * _setModel
+     *
+     * Set the name of the Model
+     *
+     * @return  string
+     * @since   1.0
+     */
+    protected function _setModel()
+    {
+        /** 1. Named Model */
+        if ($this->mvc->get('mvc_model', '') == '') {
+        } else {
+            $modelClass = (string)ucfirst($this->mvc->get('mvc_model'));
+            if (class_exists($modelClass)) {
+                return $modelClass;
+            }
+        }
 
-         /** 2. Extension Name + Module, if appropriate + Model */
-         $modelClass = (string)ucfirst($this->mvc->get('extension_instance_name'));
-         $modelClass = str_replace(array('-', '_'), '', $modelClass);
-         if ($this->mvc->get('extension_type') == 'module') {
-             $modelClass .= 'Module';
-         }
-         $modelClass .= 'Model';
-         if (class_exists($modelClass)) {
-             return $modelClass;
-         }
+        /** 2. Extension Name + Module, if appropriate + Model */
+        $modelClass = (string)ucfirst($this->mvc->get('extension_instance_name'));
+        $modelClass = str_replace(array('-', '_'), '', $modelClass);
+        if ($this->mvc->get('extension_type') == 'module') {
+            $modelClass .= 'Module';
+        }
+        $modelClass .= 'Model';
+        if (class_exists($modelClass)) {
+            return $modelClass;
+        }
 
-         /** 3. Task-based common model */
-         if ($this->mvc->get('mvc_model', '') == '') {
-         } else {
-             $modelClass = 'MolajoModel' . (string)ucfirst(strtolower($this->mvc->get('mvc_model')));
-             if (class_exists($modelClass)) {
-                 return $modelClass;
-             }
-         }
+        /** 3. Task-based common model */
+        if ($this->mvc->get('mvc_model', '') == '') {
+        } else {
+            $modelClass = 'MolajoModel' . (string)ucfirst(strtolower($this->mvc->get('mvc_model')));
+            if (class_exists($modelClass)) {
+                return $modelClass;
+            }
+        }
 
-         /** 4. Base Class (no query) */
-         return 'MolajoModel';
-     }
+        /** 4. Base Class (no query) */
+        return 'MolajoModel';
+    }
 
     /**
      * _setController

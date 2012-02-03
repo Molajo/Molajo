@@ -2,81 +2,52 @@
 /**
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * MolajoInstallHelper
+ * Install
  *
  * @package     Molajo
- * @subpackage  Install Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class MolajoInstallHelper
 {
-
     /**
      * parseManifestXML
      *
-     * Parses install manifest XML
-     *
-     * @param string $xml
+     * @param string $xml path to the XML file
      *
      * @return array|bool XML metadata.
-     *
      * @since   1.0
      */
-    static public function parseManifestXML($path)
+    public static function parseManifestXML($path)
     {
-        if ($xml = MolajoController::getXML($path)) {
+        if (JFolder::exists($path)) {
         } else {
             return false;
         }
 
-        /** XML Root: install - all extensions except languages which use manifest */
-        if ($xml->getName() == 'install'
-            || $xml->getName() == 'manifest'
-        ) {
-        } else {
+        $xml = MolajoController::getXML($path.'/manifest.xml');
+        if ($xml === false) {
             return false;
         }
 
         $data = array();
 
-        $data['name'] = (string)$xml->name;
-        $data['description'] = (string)$xml->description;
-
-        if ($xml->getName() == 'manifest') {
-            $data['type'] = 'language';
-
-        } else if ($xml->getName() == 'install') {
-            $data['type'] = (string)$xml->attributes()->type;
-
-        } else {
-            return false;
-        }
-        $data['group'] = (string)$xml->group;
-        $data['method'] = (string)$xml->method;
-
-        if ((string)$xml->create_date()) {
-            $data['create_date'] = (string)$xml->create_date();
-        } else {
-            $data['create_date'] = MolajoTextHelper::_('Unknown');
-        }
-        $data['version'] = (string)$xml->version;
-        $data['copyright'] = (string)$xml->copyright;
-        $data['license'] = (string)$xml->license;
-
-        if ((string)$xml->author()) {
-            $data['author'] = (string)$xml->author();
-        } else {
-            $data['author'] = MolajoTextHelper::_('Unknown');
-        }
-        $data['author_email'] = (string)$xml->author_email;
-        $data['author_url'] = (string)$xml->author_url;
+        $data['type']           = (string)$xml->type;
+        $data['name']           = (string)$xml->name;
+        $data['author']         = (string)$xml->author();
+        $data['create_date']    = (string)$xml->create_date();
+        $data['copyright']      = (string)$xml->copyright;
+        $data['license']        = (string)$xml->license;
+        $data['author_email']   = (string)$xml->author_email;
+        $data['author_url']     = (string)$xml->author_url;
+        $data['version']        = (string)$xml->version;
+        $data['description']    = (string)$xml->description;
 
         return $data;
     }

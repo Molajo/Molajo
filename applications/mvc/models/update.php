@@ -1,22 +1,21 @@
 <?php
 /**
- * @version     $id: single.php
  * @package     Molajo
- * @subpackage  Single Model
+ * @subpackage  Model
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * MolajoModelEdit
+ * Model
  *
  * @package        Molajo
  * @subpackage    Single Model
  * @since       1.0
  */
 //class MolajoModelEdit extends JModel
-class MolajoModelEdit
+class MolajoModelUpdate
 {
     /**
      * @var    object    parameters
