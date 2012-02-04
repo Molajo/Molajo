@@ -63,6 +63,10 @@ class MolajoField
      */
     public function __construct()
     {
+        // find xml file (extension, then core)
+        // read xml file, place values into variable
+        parent::setName('access');
+        parent::setFilter('integer');
     }
 
     /**
@@ -134,6 +138,78 @@ class MolajoField
     }
 
     /**
+     *  validateRequestValue
+     *
+     *  Returns Selected Value
+     */
+    public function validateRequestValue()
+    {
+        $validItems = $this->getOptions();
+
+        /** loop thru **/
+        $found = false;
+        foreach ($validItems as $count => $validItem) {
+
+            if ($this->value == $validItem->value) {
+                $found = true;
+                break;
+            }
+
+        }
+        return $found;
+    }
+
+    /**
+     *  getQueryInformation
+     *
+     *  Appends to query object
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
+    {
+        if ((int)$value == 0) {
+            return;
+        }
+        $aclClass = 'MolajoACL' . ucfirst(strtolower(JRequest::getVar('DefaultView')));
+        $aclClass::getQueryInformation(JRequest::getVar('option'), $query, 'filter', $value);
+    }
+
+    /**
+     *  render
+     *
+     *  sets formatting and content parameters
+     */
+    public function render($view, $item, $itemCount)
+    {
+        if ($view == 'admin') {
+            $render = array();
+            $render['link_value'] = false;
+            $render['class'] = 'nowrap';
+            $render['valign'] = 'top';
+            $render['align'] = 'left';
+            $render['sortable'] = true;
+            $render['checkbox'] = false;
+            $render['data_type'] = 'string';
+            $render['column_name'] = 'access';
+            $render['print_value'] = $item->access_level;
+
+            return $render;
+        }
+    }
+
+    /**
+     *  getOptions
+     *
+     *  Returns Option Values
+     */
+    public function getOptions()
+    {
+        return MolajoHTML::_('access.assetgroups');
+
+        $aliasModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        return $aliasModel->getOptionList('alias', 'alias', $showKey = false, $showKeyFirst = false, $table = '');
+    }
+
+    /**
      * setSortable
      *
      * Set sortable property for field
@@ -170,33 +246,5 @@ class MolajoField
     protected function setDisplayType($value = false)
     {
         $this->displayType = $value;
-    }
-
-    /**
-     * getClass
-     *
-     * Loads Field Class file
-     *
-     * @param $name
-     * @param bool $reportError
-     *
-     * @return bool
-     */
-    public function getClass($name, $reportError = true)
-    {
-        if (class_exists('MolajoField' . ucfirst($name))) {
-        } else {
-
-            $nameClassFile = MOLAJO_APPLICATIONS_CORE_DATA . '/fields/' . $name . '.php';
-            if (JFile::exists($nameClassFile)) {
-                require_once $nameClassFile;
-
-            } else {
-                if ($reportError === true) {
-                    MolajoController::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($name) . ' ' . $nameClassFile, 'error');
-                    return false;
-                }
-            }
-        }
     }
 }

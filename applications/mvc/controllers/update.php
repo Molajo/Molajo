@@ -261,8 +261,8 @@ class MolajoControllerUpdate extends MolajoControllerExtension
         }
 
         /** Model: Get Form **/
-        /** Model Trigger_Event: onContentPrepareData **/
-        /** Model Trigger_Event: onContentPrepareForm **/
+        /** Model Trigger_Event: contentPrepareData **/
+        /** Model Trigger_Event: contentPrepareForm **/
         /** Molajo_Note: Forms are named with the concatenated values of option, EditView, view, task, id, datakey separated by '.' **/
         $form = $this->model->getForm($data, false);
         if ($form === false) {

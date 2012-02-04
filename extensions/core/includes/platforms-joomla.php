@@ -108,11 +108,11 @@ foreach ($files as $file) {
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/language.php', 'MolajoLanguage');
 
 /**
- *  Application
+ *  Input
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input.php', 'JInput');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/cookie.php', 'JInputCookie');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/files.php', 'JInputFiles');
+$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/input/input.php', 'JInput');
+$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/input/cookie.php', 'JInputCookie');
+$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/input/files.php', 'JInputFiles');
 
 /**
  *  Client

@@ -78,7 +78,7 @@ abstract class MolajoUserHelper
         MolajoPluginHelper::importPlugin('user');
 
         $data = new JObject;
-        $results = $dispatcher->trigger('onContentPrepareData', array($user_id, &$data));
+        $results = $dispatcher->trigger('contentPrepareData', array($user_id, &$data));
         return $data;
     }
 
@@ -114,7 +114,9 @@ abstract class MolajoUserHelper
 
             if ($title) {
             } else {
-                return new MolajoException(MolajoTextHelper::_('MOLAJO_ERROR_GROUP_INVALID'));
+                return new MolajoException(
+                    MolajoTextHelper::_('MOLAJO_ERROR_GROUP_INVALID')
+                );
             }
 
             $user->groups[$title] = $group_id;

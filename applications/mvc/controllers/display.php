@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Display
  *
- * @package      Molajo
- * @subpackage   Controller
- * @since        1.0
+ * @package     Molajo
+ * @subpackage  Controller
+ * @since       1.0
  */
 class MolajoControllerDisplay extends MolajoControllerExtension
 {
@@ -21,8 +21,8 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      *
      * Constructor.
      *
-     * @param    array   $request
-     * @since    1.0
+     * @param  array   $request
+     * @since  1.0
      */
     public function __construct($mvc, $request, $parameters)
     {
@@ -34,14 +34,15 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      *
      * Display task is used to render view output
      *
-     * @return   object   Rendered output
-     * @since    1.0
+     * @return  object  Rendered output
+     * @since   1.0
      */
     public function display()
     {
-        /** model */
-        $modelClass = (string) $this->mvc->get('mvc_model');
+        /** instantiate model */
+        $modelClass = (string)$this->mvc->get('mvc_model');
         $this->model = new $modelClass();
+
         $this->model->request = $this->request;
         $this->model->mvc = $this->mvc;
         $this->model->parameters = $this->parameters;

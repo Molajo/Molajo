@@ -1371,7 +1371,6 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      * @param   object  &$row  Component table object.
      *
      * @return  boolean  True if successful.
-     *
      * @since   1.0
      */
     protected function _removeAdminMenus(&$row)

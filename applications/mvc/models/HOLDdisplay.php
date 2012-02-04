@@ -21,32 +21,34 @@ class MolajoModelDisplay extends MolajoModel
     /**
      * $request
      *
-     * @var        array
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     public $request = null;
 
     /**
      * $parameters
      *
-     * @var        string
-     * @since    1.0
+     * @var    string
+     * @since  1.0
      */
     public $parameters = null;
 
     /**
      * $query
      *
-     * @var        string
-     * @since    1.0
+     * @var    string
+     * @since  1.0
      */
     protected $query = null;
 
+    protected $_queryStatement = null;
+
     /**
-     * $this->dispatcher
+     * $dispatcher
      *
      * @var    string
-     * @since  1.6
+     * @since  1.0
      */
     protected $dispatcher = null;
 
@@ -59,35 +61,26 @@ class MolajoModelDisplay extends MolajoModel
     protected $filterFieldName = null;
 
     /**
-     * Internal memory based cache array of data.
-     *
-     * @var        array
-     * @since    1.0
-     */
-    protected $cache = array();
-
-
-    /**
      * Valid filter fields or ordering.
      *
-     * @var        array
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     protected $filter_fields = array();
 
     /**
      * Valid fields in table for verifying to select list and ordering values
      *
-     * @var        array
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     protected $tableFieldList = array();
 
     /**
      * Model Object for Molajo configuration
      *
-     * @var        array
-     * @since    1.0
+     * @var    array
+     * @since  1.0
      */
     protected $molajoConfig = array();
 
@@ -127,9 +120,7 @@ class MolajoModelDisplay extends MolajoModel
 
         $this->parameters = $this->mvc['parameters'];
 
-//        $this->filterFieldName = $this->mvc['filterFieldName'];
-
-        $this->molajoConfig = new MolajoModelConfiguration($this->mvc['option']);
+        //        $this->filterFieldName = $this->mvc['filterFieldName'];
 
         $this->molajoField = new MolajoField();
 
@@ -144,7 +135,7 @@ class MolajoModelDisplay extends MolajoModel
             $this->populateItemState();
         }
 
-        $this->dispatcher->trigger('onQueryPopulateState', array(&$this->state, &$this->parameters));
+        $this->dispatcher->trigger('queryGetState', array(&$this->state, &$this->parameters));
     }
 
     /**
@@ -174,34 +165,35 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** selected filters **/
-//        for ($i = 1; $i < 10000; $i++) {
+        //        for ($i = 1; $i < 10000; $i++) {
 
-//            $filterName = $this->parameters->def($this->filterFieldName . $i);
+        //            $filterName = $this->parameters->def($this->filterFieldName . $i);
 
-            /** end of filter processing **/
-//            if ($filterName == null) {
-//                break;
-//            }
+        /** end of filter processing **/
+        //            if ($filterName == null) {
+        //                break;
+        //            }
 
-            /** state already processed **/
-//            if ($filterName == 'state') {
+        /** state already processed **/
+        //            if ($filterName == 'state') {
 
-                /** configuration option not selected **/
-//            } else if ($filterName == '0') {
+        /** configuration option not selected **/
+        //            } else if ($filterName == '0') {
 
-                /** no filter was selected for configuration option **/
-//            } else if (in_array($filterName, $loadFilterArray)) {
+        /** no filter was selected for configuration option **/
+        //            } else if (in_array($filterName, $loadFilterArray)) {
 
-                /** process selected filter **/
-//            } else {
-//                $loadFilterArray[] = $filterName;
-//                $this->processFilter($filterName);
-//            }
-//        }
+        /** process selected filter **/
+        //            } else {
+        //                $loadFilterArray[] = $filterName;
+        //                $this->processFilter($filterName);
+        //            }
+        //        }
 
         /** list limit **/
         $limit = (int)MolajoController::getUser()->getUserStateFromRequest('global.list.limit', 'limit',
-                                                                               MolajoController::getApplication()->get('list_limit'));
+            MolajoController::getApplication()->get('list_limit'));
+
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
@@ -295,26 +287,26 @@ class MolajoModelDisplay extends MolajoModel
      * getItems
      *
      * - set filters (before)
-     *      - triggers onQueryPopulateState event, passing in the full filter set
+     *      - triggers queryGetState event, passing in the full filter set
      *
      * - create query (called from View)
-     *      - triggers onQueryBeforeQuery event, passing in the Query object
+     *      - triggers queryBeforeQuery event, passing in the Query object
      *
      * - run query
-     *      - triggers onQueryAfterQuery event, passing in the full query resultset
+     *      - triggers queryAfterQuery event, passing in the full query resultset
      *
      * - loops through the recordset
      *
-     *      - triggers onQueryBeforeItem event, passing in the new item in the recordset
+     *      - triggers queryBeforeItem event, passing in the new item in the recordset
      *
      *      - creates 'added value' fields, like author, permanent URL, etc.
      *
      *      - remove items due to post query examination
      *
-     *      - triggers onQueryAfterItem event, passing in the current item with added value fields
+     *      - triggers queryAfterItem event, passing in the current item with added value fields
      *
      * - loop complete
-     *      - triggers onQueryComplete event, passing in the resultset, less items removed, with augmented data
+     *      - triggers queryComplete event, passing in the resultset, less items removed, with augmented data
      *
      *      - Returns resultset to the View
      *
@@ -341,10 +333,14 @@ class MolajoModelDisplay extends MolajoModel
             return $this->cache[$store];
         }
 
-        $query = $this->getListQueryCache();
+        $query = $this->getListQuery();
 
         /** run query **/
-        $this->db->setQuery($query, $this->getStart(), $this->getState('list.limit'));
+        $this->db->setQuery(
+            $query,
+            $this->getStart(),
+            $this->getState('list.limit')
+        );
         $items = $this->db->loadObjectList();
 
         /** error handling */
@@ -354,17 +350,21 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** pass query results to event */
-        $this->dispatcher->trigger('onQueryAfterQuery', array(&$this->state, &$items, &$this->parameters));
+        $this->dispatcher->trigger('queryAfterQuery',
+            array(&$this->state,
+                &$items,
+                &$this->parameters)
+        );
 
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
-        $nullDate = $this->db->Quote($this->db->getNullDate());
-        $nowDate = $this->db->Quote(MolajoController::getDate()->toMySQL());
+        $nullDate = $this->db->quote($this->db->getNullDate());
+        $nowDate = $this->db->quote(MolajoController::getDate()->toMySQL());
 
         /** retrieve names of json fields for this type of content **/
         $jsonFields = $this->molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
 
         /** ACL **/
-        $aclClass = ucfirst($this->mvc['option']).'Acl';
+        $aclClass = ucfirst($this->mvc['option']) . 'Acl';
 
         /** process rowset */
         $rowCount = 0;
@@ -375,7 +375,7 @@ class MolajoModelDisplay extends MolajoModel
                 $keep = true;
                 $items[$i]->canCheckin = false;
                 $items[$i]->checked_out = false;
-                $this->dispatcher->trigger('onQueryBeforeItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
+                $this->dispatcher->trigger('queryBeforeItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
 
                 /** category is archived, so item should be too **/
                 if ($items[$i]->minimum_state_category < $items[$i]->state && $items[$i]->state > MOLAJO_STATUS_VERSION) {
@@ -432,7 +432,7 @@ class MolajoModelDisplay extends MolajoModel
 
                 $items[$i]->slug = $items[$i]->alias ? ($items[$i]->id . ':' . $items[$i]->alias) : $items[$i]->id;
                 $items[$i]->catslug = $items[$i]->category_alias
-                        ? ($items[$i]->category_id . ':' . $items[$i]->category_alias) : $items[$i]->category_id;
+                    ? ($items[$i]->category_id . ':' . $items[$i]->category_alias) : $items[$i]->category_id;
                 //                $items[$i]->parent_slug	= $items[$i]->category_alias ? ($items[$i]->parent_id.':'.$items[$i]->parent_alias) : $items[$i]->parent_id;
 
                 $items[$i]->url = '';
@@ -490,25 +490,29 @@ class MolajoModelDisplay extends MolajoModel
                 /** acl-append item-specific task permissions **/
                 $acl = new $aclClass();
                 $results = $acl->getUserItemPermissions($this->mvc['option'],
-                                                        $this->mvc['view'],
-                                                        $items[$i]);
+                    $this->mvc['view'],
+                    $items[$i]);
                 if ($results === false) {
                     $keep = false;
                 }
 
-                $this->dispatcher->trigger('onQueryAfterItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
+                $this->dispatcher->trigger('queryAfterItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
 
                 /** process content plugins */
-                $this->dispatcher->trigger('onContentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+                $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event = new stdClass();
 
-                $results = $this->dispatcher->trigger('onContentAfterTitle', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
-                $items[$i]->event->afterDisplayTitle = trim(implode("\n", $results));
-
-                $results = $this->dispatcher->trigger('onContentBeforeDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+                $results = $this->dispatcher->trigger(
+                    'contentBeforeDisplay',
+                    array($this->context,
+                        &$items[$i],
+                        &$this->parameters,
+                        $this->getState('list.start')
+                    )
+                );
                 $items[$i]->event->beforeDisplayContent = trim(implode("\n", $results));
 
-                $results = $this->dispatcher->trigger('onContentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event->afterDisplayContent = trim(implode("\n", $results));
 
                 /** remove item overridden by category and no longer valid for criteria **/
@@ -521,36 +525,13 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** final event for queryset */
-        $this->dispatcher->trigger('onQueryComplete', array(&$this->state, &$items, &$this->parameters));
+        $this->dispatcher->trigger('queryComplete', array(&$this->state, &$items, &$this->parameters));
 
         /** place query results in cache **/
         $this->cache[$store] = $items;
 
         /** return from cache **/
         return $this->cache[$store];
-    }
-
-    /**
-     * getListQueryCache
-     *
-     * Method to cache the last query constructed.
-     *
-     * This method ensures that the query is constructed only once for a given state of the model.
-     *
-     * @return    JDatabaseQuery
-     * @since    1.0
-     */
-    private function getListQueryCache()
-    {
-        static $lastStoreId;
-        $currentStoreId = $this->getStoreId();
-
-        if ($lastStoreId != $currentStoreId || empty($this->query)) {
-            $lastStoreId = $currentStoreId;
-            $this->query = $this->getListQuery();
-        }
-
-        return $this->query;
     }
 
     /**
@@ -563,7 +544,6 @@ class MolajoModelDisplay extends MolajoModel
      */
     function getListQuery()
     {
-        /** retrieve JDatabaseQuery object */
         $this->query = $this->db->getQuery(true);
 
         /** Process each field that is 1) required 2) selected for display and 3) selected as a filter **/
@@ -579,32 +559,33 @@ class MolajoModelDisplay extends MolajoModel
 
         /** primary table **/
         $this->query->from('#' . $this->mvc['component_table'] . ' AS a');
+        $this->_queryStatement = $this->query;
 
         /** parent category **/
-//        $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
-//        $this->query->join('LEFT', '#__categories AS c ON c.id = a.category_id');
+        //        $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
+        //        $this->query->join('LEFT', '#__categories AS c ON c.id = a.category_id');
 
         /** sins of the parent checking **/
 
         /** spammed or trashed or unpublished ancestor = same for descendents **/
-//        $this->query->select(' minimumState.published AS minimum_state_category');
-//        $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
-//        $subQuery .= ' FROM #__categories AS cat ';
-//        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-//        $subQuery .= ' WHERE parent.extension = ' . $this->db->quote($this->mvc['option']);
-//        $subQuery .= '   AND cat.published > ' . MOLAJO_STATUS_VERSION;
-//        $subQuery .= '   AND parent.published > ' . MOLAJO_STATUS_VERSION;
-//        $subQuery .= ' GROUP BY parent.id ';
-//        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS minimumState ON minimumState.id = c.id ');
+        //        $this->query->select(' minimumState.published AS minimum_state_category');
+        //        $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
+        //        $subQuery .= ' FROM #__categories AS cat ';
+        //        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
+        //        $subQuery .= ' WHERE parent.extension = ' . $this->db->quote($this->mvc['option']);
+        //        $subQuery .= '   AND cat.published > ' . MOLAJO_STATUS_VERSION;
+        //        $subQuery .= '   AND parent.published > ' . MOLAJO_STATUS_VERSION;
+        //        $subQuery .= ' GROUP BY parent.id ';
+        //        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS minimumState ON minimumState.id = c.id ');
 
         /** archived ancestor = archived descendents **/
-//        $this->query->select(' CASE WHEN maximumState.published > ' . MOLAJO_STATUS_PUBLISHED . ' THEN 1 ELSE 0 END AS archived_category');
-//        $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
-//        $subQuery .= ' FROM #__categories AS cat ';
-//        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-//       $subQuery .= ' WHERE parent.extension = ' . $this->db->quote($this->mvc['option']);
-//        $subQuery .= ' GROUP BY parent.id ';
-//        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
+        //        $this->query->select(' CASE WHEN maximumState.published > ' . MOLAJO_STATUS_PUBLISHED . ' THEN 1 ELSE 0 END AS archived_category');
+        //        $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
+        //        $subQuery .= ' FROM #__categories AS cat ';
+        //        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
+        //       $subQuery .= ' WHERE parent.extension = ' . $this->db->quote($this->mvc['option']);
+        //        $subQuery .= ' GROUP BY parent.id ';
+        //        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
 
         /**
         $date = MolajoController::getDate();
@@ -620,13 +601,13 @@ class MolajoModelDisplay extends MolajoModel
         /** set ordering and direction **/
         $orderCol = $this->state->get('list.ordering', 'a.title');
         $orderDirn = $this->state->get('list.direction', 'asc');
-//        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
-//            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
-//        }
+        //        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
+        //            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
+        //        }
         $this->query->order($this->db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
-        $this->dispatcher->trigger('onQueryBeforeQuery', array(&$this->state, &$this->query, &$this->parameters));
+        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->state, &$this->query, &$this->parameters));
 
         return $this->query;
     }
@@ -680,7 +661,7 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** get total of items returned from the last query **/
-        $this->db->setQuery($this->getListQueryCache());
+        $this->db->setQuery($this->queryStatement);
         $this->db->query();
 
         $total = (int)$this->db->getNumRows();
@@ -744,16 +725,16 @@ class MolajoModelDisplay extends MolajoModel
     {
         $id = ':' . $this->getState('filter.search');
 
-//        for ($i = 1; $i < 1000; $i++) {
-//            $temp = $this->parameters->def($this->filterFieldName . $i);
-//            $filterName = substr($temp, 0, stripos($temp, ';'));
-//            $filterDataType = substr($temp, stripos($temp, ';') + 1, 1);
-//            if ($filterName == null) {
-//                break;
-//            } else {
-//                $id .= ':' . $this->getState('filter.' . $filterName);
-//            }
-//        }
+        //        for ($i = 1; $i < 1000; $i++) {
+        //            $temp = $this->parameters->def($this->filterFieldName . $i);
+        //            $filterName = substr($temp, 0, stripos($temp, ';'));
+        //            $filterDataType = substr($temp, stripos($temp, ';') + 1, 1);
+        //            if ($filterName == null) {
+        //                break;
+        //            } else {
+        //                $id .= ':' . $this->getState('filter.' . $filterName);
+        //            }
+        //        }
 
         $id .= ':' . $this->getState('filter.view');
 
@@ -1077,8 +1058,8 @@ class MolajoModelDisplay extends MolajoModel
     public function getModel($type = '', $prefix = '', $config = array())
     {
         return MolajoModel::getInstance($type = ucfirst('Article'),
-                                        $prefix = ucfirst($this->mvc['option'] . 'Table'),
-                                        $config);
+            $prefix = ucfirst($this->mvc['option'] . 'Table'),
+            $config);
     }
 
     /**

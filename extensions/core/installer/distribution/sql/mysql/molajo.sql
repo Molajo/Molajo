@@ -57,7 +57,6 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
   (40000, 'Dashboard', 0, '', 'dashboard'),
   (50000, 'Media', 0, '__content', 'media'),
 
-
 #
 # EXTENSION SITES
 #
@@ -233,25 +232,11 @@ INSERT INTO `molajo_extension_instances`
     FROM `molajo_extensions`
     WHERE `asset_type_id` = 1150;
 
-# PLUGINS
+# LISTENERS
 INSERT INTO `molajo_extensions`
-    (`name`, `asset_type_id`, `subtype`, `extension_site_id`)
+    (`name`, `asset_type_id`, `extension_site_id`)
   VALUES
-    ('example', 1450, 'acl', 1),
-    ('molajo', 1450, 'authentication', 1),
-    ('none', 1450, 'editors', 1),
-
-    ('article', 1450, 'editor-buttons', 1),
-    ('editor', 1450, 'editor-buttons', 1),
-    ('image', 1450, 'editor-buttons', 1),
-    ('pagebreak', 1450, 'editor-buttons', 1),
-    ('readmore', 1450, 'editor-buttons', 1),
-    ('logout', 1450, 'system', 1),
-    ('molajo', 1450, 'system', 1),
-    ('remember', 1450, 'system', 1),
-    ('system', 1450, 'system', 1),
-
-    ('molajo', 1450, 'user', 1);
+    ('example', 1450, 'acl', 1);
 
 INSERT INTO `molajo_extension_instances`
   (`extension_id`, `asset_type_id`,
