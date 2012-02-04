@@ -9,8 +9,4 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>WRAP_VIEW_HGROUP_DESCRIPTION</description>
-    <files>
-        <folder>views</folder>
-        <folder>language</folder>
-    </files>
 </extension>

@@ -9,9 +9,4 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_SYSTEM_MESSAGES_DESCRIPTION</description>
-    <files>
-        <folder>css</folder>
-        <folder>language</folder>
-        <folder>views</folder>
-    </files>
 </extension>
