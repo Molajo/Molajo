@@ -385,7 +385,7 @@ class MolajoControllerApplication
      *
      * @since   1.0
      */
-    public function get($key, $default = null, $type='config')
+    public function get($key, $default = null, $type = 'config')
     {
         if ($type == 'custom') {
             return $this->_custom_fields->get($key, $default);
@@ -408,14 +408,14 @@ class MolajoControllerApplication
      *
      * @since   1.0
      */
-    public function set($key, $value = null, $type='config')
+    public function set($key, $value = null, $type = 'config')
     {
         if ($type == 'custom') {
             return $this->_custom_fields->set($key, $value);
         } else if ($type == 'metadata') {
             return $this->_metadata->set($key, $value);
         } else {
-            return $this->_config->get($key, $value);
+            return $this->_config->set($key, $value);
         }
     }
 
@@ -632,7 +632,11 @@ class MolajoControllerApplication
      * @return  bool
      * @since   1.0
      */
-    public function setMessage($message = null, $type = 'message', $code = null)
+    public function setMessage($message = null,
+                               $type = 'message',
+                               $code = null,
+                               $debug_location = null,
+                               $debug_object = null)
     {
         if ($message == null
             && $code == null
@@ -658,6 +662,8 @@ class MolajoControllerApplication
         $this->_messages[$count]['message'] = $message;
         $this->_messages[$count]['type'] = $type;
         $this->_messages[$count]['code'] = $code;
+        $this->_messages[$count]['debug_location'] = $debug_location;
+        $this->_messages[$count]['debug_object'] = $debug_object;
 
         return true;
     }

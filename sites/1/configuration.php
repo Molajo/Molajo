@@ -47,6 +47,6 @@ class MolajoSiteConfiguration
     public $smtphost = 'localhost';
 
     /* Debug */
-    public $debug = '0';
+    public $debug = '1';
     public $debug_language = '0';
 }

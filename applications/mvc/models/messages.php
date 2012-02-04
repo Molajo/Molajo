@@ -50,10 +50,12 @@ class MolajoModelMessages extends MolajoModel
 
         foreach($messages as $message) {
             $tempObject = new JObject();
-            $tempObject->set('title', $message['type']);
-            $tempObject->set('type', $message['type']);
             $tempObject->set('content_text', $message['message']);
+            $tempObject->set('title', $message['type']);
             $tempObject->set('code', $message['code']);
+            $tempObject->set('debug_location', $message['debug_location']);
+            $tempObject->set('debug_object', $message['debug_object']);
+
             $this->items[] = $tempObject;
         }
 

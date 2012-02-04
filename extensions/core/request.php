@@ -12,7 +12,6 @@ defined('MOLAJO') or die;
  *
  * Processes the Request
  *
- * Base class
  */
 class MolajoRequest
 {
@@ -111,7 +110,8 @@ class MolajoRequest
         $this->request = new JObject();
 
         /** request */
-        $this->request->set('request_url_base', MOLAJO_BASE_URL);
+        $this->request->set('request_url_base',
+            MOLAJO_BASE_URL);
         $this->request->set('request_asset_id', 0);
         $this->request->set('request_asset_type_id', 0);
         $this->request->set('request_url_query', '');
@@ -323,13 +323,22 @@ class MolajoRequest
         /** primary category */
         if ($this->request->get('category_id', 0) == 0) {
         } else {
-            $this->request->set('mvc_category_id', $this->request->get('category_id'));
+            $this->request->set('mvc_category_id',
+                $this->request->get('category_id'));
             $this->_getPrimaryCategory();
         }
 
         /** extension */
-        if ($this->request->get('extension_instance_id', 0) == 0) {
-            return $this->request->set('status_found', false); //todo: amy 500 error
+        if ($this->request->get('extension_instance_id', 0) !== 3.3) {
+            $this->request->set('status_found', false);
+            MolajoController::getApplication()
+                ->setMessage(
+                $message = MolajoTextHelper::_('ERROR_EXTENSION_NOT_FOUND'),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = 'MolajoRequest::_getAsset',
+                $debug_object = $this->request
+            );
         } else {
             $this->_getExtension();
         }

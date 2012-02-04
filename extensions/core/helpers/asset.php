@@ -53,19 +53,19 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->nameQuote('asset_type_id') .
             ' = b.' . $db->nameQuote('id'));
 
-        $query->where('a.'.$db->namequote('view_group_id').
-            ' IN ('.implode(',',MolajoController::getUser()->view_groups).')'
+        $query->where('a.' . $db->namequote('view_group_id') .
+                ' IN (' . implode(',', MolajoController::getUser()->view_groups) . ')'
         );
 
         if ((int)$asset_id == 0) {
             $query->where('(a.' . $db->nameQuote('sef_request') .
-                ' = ' . $db->Quote($query_request) .
-                ' OR a.' . $db->nameQuote('request') . ' = ' .
-                $db->Quote($query_request) . ')'
+                    ' = ' . $db->Quote($query_request) .
+                    ' OR a.' . $db->nameQuote('request') . ' = ' .
+                    $db->Quote($query_request) . ')'
             );
         } else {
             $query->where('a.' . $db->nameQuote('id') . ' = ' .
-                (int)$asset_id
+                    (int)$asset_id + 1
             );
         }
 
@@ -75,7 +75,14 @@ abstract class MolajoAssetHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            MolajoController::getApplication()->setMessage($db->getErrorMsg(), MOLAJO_MESSAGE_TYPE_ERROR);
+            MolajoController::getApplication()
+                ->setMessage(
+                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY'),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = 'MolajoAssetHelper::get',
+                $debug_object = $db
+            );
             return false;
         }
 
@@ -83,6 +90,7 @@ abstract class MolajoAssetHelper
             return array();
         }
 
+        $row = array();
         foreach ($rows as $row) {
 
             if ((int)$asset_id == 0) {
@@ -232,15 +240,22 @@ abstract class MolajoAssetHelper
             ' = ' . (int)$asset_type_id);
         $query->where('a.' . $db->namequote('source_id') .
             ' = ' . (int)$source_id);
-        $query->where('a.'.$db->namequote('view_group_id').
-            ' IN ('.implode(',',MolajoController::getUser()->view_groups).')'
+        $query->where('a.' . $db->namequote('view_group_id') .
+                ' IN (' . implode(',', MolajoController::getUser()->view_groups) . ')'
         );
 
         $db->setQuery($query->__toString());
         $asset_id = $db->loadResult();
 
         if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
+            MolajoController::getApplication()
+                ->setMessage(
+                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = 'MolajoAssetHelper::getID',
+                $debug_object = $db
+            );
             return false;
         }
 
@@ -263,9 +278,7 @@ abstract class MolajoAssetHelper
         $query = $db->getQuery(true);
 
         /** home */
-        if ($asset_id == MolajoController::getApplication()->get(
-            'home_asset_id', 0)
-        ) {
+        if ($asset_id == MolajoController::getApplication()->get('home_asset_id', 0)) {
             return '';
         }
 
@@ -276,17 +289,24 @@ abstract class MolajoAssetHelper
             $query->select('a.' . $db->namequote('request'));
         }
         $query->from($db->namequote('#__assets') . ' as a');
-
-        $query->where('a.' . $db->namequote('id') . ' = ' . (int)$asset_id);
-        $query->where('a.'.$db->namequote('view_group_id').
-            ' IN ('.implode(',',MolajoController::getUser()->view_groups).')'
+        $query->where('a.' . $db->namequote('id') .
+            ' = ' . (int)$asset_id);
+        $query->where('a.' . $db->namequote('view_group_id') .
+                ' IN (' . implode(',', MolajoController::getUser()->view_groups) . ')'
         );
 
         $db->setQuery($query->__toString());
         $url = $db->loadResult();
 
         if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
+            MolajoController::getApplication()
+                ->setMessage(
+                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = 'MolajoAssetHelper::getURL',
+                $debug_object = $db
+            );
             return false;
         }
 

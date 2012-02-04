@@ -10,8 +10,6 @@ defined('MOLAJO') or die;
 /**
  * Display
  *
- * Model for Display Views
- *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
@@ -45,7 +43,7 @@ class MolajoModelDisplay extends MolajoModel
     protected $_queryStatement = null;
 
     /**
-     * $dispatcher
+     * $dispatcher (use application object)
      *
      * @var    string
      * @since  1.0
@@ -69,7 +67,7 @@ class MolajoModelDisplay extends MolajoModel
     protected $filter_fields = array();
 
     /**
-     * Valid fields in table for verifying to select list and ordering values
+     * Table Fields for verifying select list and ordering items
      *
      * @var    array
      * @since  1.0
@@ -77,7 +75,7 @@ class MolajoModelDisplay extends MolajoModel
     protected $tableFieldList = array();
 
     /**
-     * Model Object for Molajo configuration
+     * Model Object for Molajo configuration DELETE
      *
      * @var    array
      * @since  1.0
@@ -90,7 +88,7 @@ class MolajoModelDisplay extends MolajoModel
      * @var        array
      * @since    1.0
      */
-    protected $molajoField = array();
+    protected $fieldClass = array();
 
     /**
      * __construct
@@ -107,7 +105,7 @@ class MolajoModelDisplay extends MolajoModel
     }
 
     /**
-     * populateState
+     * populateState (change)
      *
      * Method to auto-populate the model state.
      *
@@ -122,7 +120,7 @@ class MolajoModelDisplay extends MolajoModel
 
         //        $this->filterFieldName = $this->mvc['filterFieldName'];
 
-        $this->molajoField = new MolajoField();
+        $this->fieldClass = new MolajoField();
 
         $this->dispatcher = JDispatcher::getInstance();
 
@@ -135,13 +133,13 @@ class MolajoModelDisplay extends MolajoModel
             $this->populateItemState();
         }
 
-        $this->dispatcher->trigger('queryGetState', array(&$this->state, &$this->parameters));
+        $this->dispatcher->trigger('queryGetState', array(&$this->status, &$this->parameters));
     }
 
     /**
      * populateStateMultiple
      *
-     * Method to auto-populate the model state.
+     * Method to auto-populate the model status.
      *
      * @return    void
      * @since    1.0
@@ -154,12 +152,12 @@ class MolajoModelDisplay extends MolajoModel
         /** filters **/
         $loadFilterArray = array();
 
-        /** always do state filter **/
-        $loadFilterArray[] = 'state';
-        $this->processFilter('state');
+        /** always do status filter **/
+        $loadFilterArray[] = 'status';
+        $this->processFilter('status');
 
         /** force title filter for restore list **/
-        if ($this->state->get('filter.state') == MOLAJO_STATUS_VERSION) {
+        if ($this->status->get('filter.status') == MOLAJO_STATUS_VERSION) {
             $loadFilterArray[] = 'title';
             $this->processFilter('title');
         }
@@ -174,8 +172,8 @@ class MolajoModelDisplay extends MolajoModel
         //                break;
         //            }
 
-        /** state already processed **/
-        //            if ($filterName == 'state') {
+        /** status already processed **/
+        //            if ($filterName == 'status') {
 
         /** configuration option not selected **/
         //            } else if ($filterName == '0') {
@@ -191,19 +189,30 @@ class MolajoModelDisplay extends MolajoModel
         //        }
 
         /** list limit **/
-        $limit = (int)MolajoController::getUser()->getUserStateFromRequest('global.list.limit', 'limit',
-            MolajoController::getApplication()->get('list_limit'));
+        $limit = (int)MolajoController::getUser()->getUserStateFromRequest(
+            'global.list.limit',
+            'limit',
+            MolajoController::getApplication()->get('list_limit')
+        );
 
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
-        $value = MolajoController::getUser()->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
+        $value = MolajoController::getUser()->getUserStateFromRequest(
+            $this->context . '.limitstart',
+            'limitstart',
+            0
+        );
         $limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
         $this->setState('list.start', (int)$limitstart);
 
         /** ordering by field **/
         $ordering = 'a.title';
-        $value = MolajoController::getUser()->getUserStateFromRequest($this->context . '.ordercol', 'filter_order', $ordering);
+        $value = MolajoController::getUser()->getUserStateFromRequest(
+            $this->context . '.ordercol',
+            'filter_order',
+            $ordering
+        );
         if (strpos($value, 'a.')) {
             $searchValue = substr($value, (strpos($value, 'a.') + 1), strlen($value) - strpos($value, 'a.'));
         } else {
@@ -214,7 +223,10 @@ class MolajoModelDisplay extends MolajoModel
         } else {
             $ordering = 'a.title';
         }
-        MolajoController::getUser()->setUserState($this->context . '.ordercol', $ordering);
+        MolajoController::getUser()->setUserState(
+            $this->context . '.ordercol',
+            $ordering
+        );
 
         $this->setState('list.ordering', $value);
 
@@ -226,11 +238,18 @@ class MolajoModelDisplay extends MolajoModel
 
         /** ordering direction **/
         $direction = 'ASC';
-        $value = MolajoController::getUser()->getUserStateFromRequest($this->context . '.orderdirn', 'filter_order_Dir', $direction);
+        $value = MolajoController::getUser()->getUserStateFromRequest(
+            $this->context . '.orderdirn',
+            'filter_order_Dir',
+            $direction
+        );
         if (in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
         } else {
             $value = $direction;
-            MolajoController::getUser()->setUserState($this->context . '.orderdirn', $value);
+            MolajoController::getUser()->setUserState(
+                $this->context . '.orderdirn',
+                $value
+            );
         }
         $this->setState('list.direction', $value);
 
@@ -239,7 +258,8 @@ class MolajoModelDisplay extends MolajoModel
 
     /**
      * populateItemState
-     * Method to populate state values needed for Item View
+     *
+     * Method to populate status values needed for Item View
      *
      * @return    void
      * @since    1.0
@@ -264,7 +284,7 @@ class MolajoModelDisplay extends MolajoModel
         $nameClassName = 'MolajoField' . ucfirst($filterName);
 
         /** class file **/
-        $this->molajoField->getClass($filterName);
+        $this->fieldClass->getClass($filterName);
 
         /** class instantiation **/
         if (class_exists($nameClassName)) {
@@ -277,7 +297,7 @@ class MolajoModelDisplay extends MolajoModel
         /** retrieve filtered, validated value **/
         $filterValue = $molajoSpecificFieldClass->getValue();
 
-        /** set state **/
+        /** set status **/
         $this->setState('filter.' . $filterName, $filterValue);
 
         return true;
@@ -286,39 +306,37 @@ class MolajoModelDisplay extends MolajoModel
     /**
      * getItems
      *
-     * - set filters (before)
+     * - set filters
      *      - triggers queryGetState event, passing in the full filter set
      *
-     * - create query (called from View)
+     * - create query
      *      - triggers queryBeforeQuery event, passing in the Query object
      *
      * - run query
-     *      - triggers queryAfterQuery event, passing in the full query resultset
+     *      - triggers queryAfterQuery event, passing in the query resultset
      *
      * - loops through the recordset
      *
-     *      - triggers queryBeforeItem event, passing in the new item in the recordset
+     *      - triggers queryBeforeItem event, passing in a single recordset item
      *
      *      - creates 'added value' fields, like author, permanent URL, etc.
      *
-     *      - remove items due to post query examination
+     *      - remove items, due to post-query examination
      *
-     *      - triggers queryAfterItem event, passing in the current item with added value fields
+     *      - triggers queryAfterItem event, passing in the current item
+     *          'with added value' fields and less those removed
      *
      * - loop complete
-     *      - triggers queryComplete event, passing in the resultset, less items removed, with augmented data
+     *      - triggers queryComplete event, passing in the resultset
      *
-     *      - Returns resultset to the View
+     *      - Returns resultset to the Controller
      *
      * @return    mixed    An array of objects on success, false on failure.
-     *
      * @since    1.0
      */
     public function getItems()
     {
-        /** extract actual column names from table **/
-        $table = $this->getModel();
-        $names = $table->getProperties();
+        $names = $this->getModel()->getProperties();
 
         $this->tableFieldList = array();
         foreach ($names as $name => $value) {
@@ -351,7 +369,7 @@ class MolajoModelDisplay extends MolajoModel
 
         /** pass query results to event */
         $this->dispatcher->trigger('queryAfterQuery',
-            array(&$this->state,
+            array(&$this->status,
                 &$items,
                 &$this->parameters)
         );
@@ -375,23 +393,23 @@ class MolajoModelDisplay extends MolajoModel
                 $keep = true;
                 $items[$i]->canCheckin = false;
                 $items[$i]->checked_out = false;
-                $this->dispatcher->trigger('queryBeforeItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
+                $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
 
                 /** category is archived, so item should be too **/
-                if ($items[$i]->minimum_state_category < $items[$i]->state && $items[$i]->state > MOLAJO_STATUS_VERSION) {
-                    $items[$i]->state = $items[$i]->minimum_state_category;
+                if ($items[$i]->minimum_status_category < $items[$i]->status && $items[$i]->status > MOLAJO_STATUS_VERSION) {
+                    $items[$i]->status = $items[$i]->minimum_status_category;
                     /** recheck the new status against query filter **/
-                    if ($this->getState('filter.state') > $items[$i]->state) {
+                    if ($this->getState('filter.status') > $items[$i]->status) {
                         $keep = false;
                     }
                 }
 
                 /** category is unpublished, spammed, or trashed, so item should be too **/
-                if ($items[$i]->archived_category == 1 && $items[$i]->state < MOLAJO_STATUS_ARCHIVED) {
-                    $items[$i]->state = MOLAJO_STATUS_ARCHIVED;
+                if ($items[$i]->archived_category == 1 && $items[$i]->status < MOLAJO_STATUS_ARCHIVED) {
+                    $items[$i]->status = MOLAJO_STATUS_ARCHIVED;
                     /** recheck the new status against query filter **/
-                    if ($this->getState('filter.state') == MOLAJO_STATUS_ARCHIVED
-                        || $this->getState('filter.state') == '*'
+                    if ($this->getState('filter.status') == MOLAJO_STATUS_ARCHIVED
+                        || $this->getState('filter.status') == '*'
                     ) {
                     } else {
                         $keep = false;
@@ -496,7 +514,7 @@ class MolajoModelDisplay extends MolajoModel
                     $keep = false;
                 }
 
-                $this->dispatcher->trigger('queryAfterItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
+                $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
 
                 /** process content plugins */
                 $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
@@ -525,7 +543,7 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** final event for queryset */
-        $this->dispatcher->trigger('queryComplete', array(&$this->state, &$items, &$this->parameters));
+        $this->dispatcher->trigger('queryComplete', array(&$this->status, &$items, &$this->parameters));
 
         /** place query results in cache **/
         $this->cache[$store] = $items;
@@ -537,7 +555,7 @@ class MolajoModelDisplay extends MolajoModel
     /**
      * getListQuery
      *
-     * Build query for retrieving a list of items subject to the model state.
+     * Build query for retrieving a list of items subject to the model status.
      *
      * @return    JDatabaseQuery
      * @since    1.0
@@ -568,7 +586,7 @@ class MolajoModelDisplay extends MolajoModel
         /** sins of the parent checking **/
 
         /** spammed or trashed or unpublished ancestor = same for descendents **/
-        //        $this->query->select(' minimumState.published AS minimum_state_category');
+        //        $this->query->select(' minimumState.published AS minimum_status_category');
         //        $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
         //        $subQuery .= ' FROM #__categories AS cat ';
         //        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
@@ -599,15 +617,15 @@ class MolajoModelDisplay extends MolajoModel
         $results = $acl->getQueryInformation($this->mvc['view'], $this->query, 'user', '', $this->mvc['view']);
 
         /** set ordering and direction **/
-        $orderCol = $this->state->get('list.ordering', 'a.title');
-        $orderDirn = $this->state->get('list.direction', 'asc');
+        $orderCol = $this->status->get('list.ordering', 'a.title');
+        $orderDirn = $this->status->get('list.direction', 'asc');
         //        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
         //            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
         //        }
         $this->query->order($this->db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
-        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->state, &$this->query, &$this->parameters));
+        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->status, &$this->query, &$this->parameters));
 
         return $this->query;
     }
@@ -647,7 +665,7 @@ class MolajoModelDisplay extends MolajoModel
      *
      * Method to get the total number of items for the data set.
      *
-     * @return    integer    The total number of items available in the data set.
+     * @return    integer
      * @since    1.0
      */
     public function getTotal()
@@ -683,7 +701,7 @@ class MolajoModelDisplay extends MolajoModel
      *
      * Method to get the starting number of items for the data set.
      *
-     * @return    integer    The starting number of items available in the data set.
+     * @return    integer
      * @since    1.0
      */
     public function getStart()
@@ -714,7 +732,7 @@ class MolajoModelDisplay extends MolajoModel
     /**
      * getStoreId
      *
-     * Method to get a unique store id based on model configuration state.
+     * Method to get a unique store id based on model configuration status.
      *
      * @param    string        $id    A prefix for the store id.
      *
@@ -758,11 +776,12 @@ class MolajoModelDisplay extends MolajoModel
     {
         $this->query = $this->db->getQuery(true);
 
-        $this->query->select('u.id AS value, u.name AS text');
-        $this->query->from('#__users AS u');
-        $this->query->join('INNER', $this->db->namequote('#' . $this->mvc['component_table']) . ' AS c ON c.created_by = u.id');
-        $this->query->group('u.id');
-        $this->query->order('u.name');
+        $this->query->select('a.id AS value, a.name AS text');
+        $this->query->from('#__users AS a');
+        $this->query->from($this->db->namequote('#' . $this->mvc['component_table']).' AS b');
+        $this->query->where('a.created_by = b.id');
+        $this->query->group('a.id');
+        $this->query->order('a.name');
 
         $this->db->setQuery($this->query->__toString());
 
@@ -941,9 +960,9 @@ class MolajoModelDisplay extends MolajoModel
      */
     public function setQueryInformation($name, $onlyWhereClause = false)
     {
-        $selectedState = $this->getState('filter.state');
+        $selectedState = $this->getState('filter.status');
         $nameClassName = 'MolajoField' . ucfirst($name);
-        $this->molajoField->getClass($name, false);
+        $this->fieldClass->getClass($name, false);
 
         if (class_exists($nameClassName)) {
             $value = $this->getState('filter.' . $name);
@@ -1076,7 +1095,7 @@ class MolajoModelDisplay extends MolajoModel
     {
         /** 1: required fields **/
         $nameArray = array();
-        $requireList = 'id,title,alias,state,category_id,created_by,access,checked_out,checked_out_time,search';
+        $requireList = 'id,title,alias,status,category_id,created_by,access,checked_out,checked_out_time,search';
         $requiredArray = explode(',', $requireList);
 
         foreach ($requiredArray as $required) {

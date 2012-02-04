@@ -65,9 +65,13 @@ class MolajoConfigurationHelper
      */
     public function getConfig()
     {
+        /** Site Configuration: php file */
         $configData = $this->site();
+        foreach ($configData as $key => $value) {
+            $this->set($key, $value);
+        }
 
-        /** Populate Configuration with Application Parameters from Database */
+        /** Application Configuration: DB */
         $temp = substr($this->appConfig, 1, strlen($this->appConfig) - 2);
         $tempArray = array();
         $tempArray = explode(',', $temp);
@@ -77,7 +81,7 @@ class MolajoConfigurationHelper
             if (trim($pair[0]) == '') {
             } else {
                 $value = substr(trim($pair[1]), 1, strlen(trim($pair[1])) - 2);
-                $this->set($key, $value, 'application');
+                $this->set($key, $value);
             }
         }
 
