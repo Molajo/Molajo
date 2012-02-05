@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  *
  * Combines original code, fork of JWebApplication and JDocument
  */
-class MolajoControllerApplication
+class MolajoApplicationController
 {
     /**
      * Application static instance
@@ -251,7 +251,7 @@ class MolajoControllerApplication
                 define('MOLAJO_APPLICATION_ID', $_appQueryResults->id);
             }
 
-            self::$instance = new MolajoControllerApplication($config, $input, $_appQueryResults);
+            self::$instance = new MolajoApplicationController($config, $input, $_appQueryResults);
         }
 
         return self::$instance;
@@ -324,8 +324,8 @@ class MolajoControllerApplication
     public function load()
     {
         /** Site authorisation */
-        $site = new MolajoControllerSite ();
-        $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
+        $sc = new MolajoSiteController ();
+        $authorise = $sc->authorise(MOLAJO_APPLICATION_ID);
         if ($authorise === false) {
             $message = '304: ' . MOLAJO_BASE_URL;
             echo $message;
@@ -338,18 +338,17 @@ class MolajoControllerApplication
         $this->loadDispatcher();
 
         /** request  */
-        $requestClass = Molajo::Request();
-        $requestClass->process();
+        $rc = Molajo::Request();
+        $rc->process();
 
-
-        /** display */
-        if ($requestClass->get('mvc_task') == 'add'
-            || $requestClass->get('mvc_task') == 'edit'
-            || $requestClass->get('mvc_task') == 'display'
+        /** parser and renderer */
+        if ($rc->get('mvc_task') == 'add'
+            || $rc->get('mvc_task') == 'edit'
+            || $rc->get('mvc_task') == 'display'
         ) {
-            $render = new MolajoDocument ();
+            $pc = new MolajoParserController ();
 
-            /** task action */
+            /** action task: insert, update, or delete */
         } else {
             //$this->_processTask();
         }
@@ -376,8 +375,8 @@ class MolajoControllerApplication
         $this->_custom_fields = new JRegistry;
         $this->_custom_fields->loadString($this->_appQueryResults->custom_fields);
 
-        $configClass = new MolajoConfigurationHelper($this->_appQueryResults->parameters);
-        $this->_config = $configClass->getConfig();
+        $cc = new MolajoConfigurationHelper($this->_appQueryResults->parameters);
+        $this->_config = $cc->getConfig();
 
         return;
     }
@@ -432,7 +431,7 @@ class MolajoControllerApplication
     /**
      * getInput
      *
-     * Returns application Input object
+     * Returns Application Input object
      *
      * @return  object
      * @since   1.0
@@ -1178,7 +1177,7 @@ class MolajoControllerApplication
      */
     public function respond()
     {
-        $this->triggerEvent('onBeforeRespond');
+//        $this->triggerEvent('onBeforeRespond');
 
         // If gzip compression is enabled in configuration and the server is compliant, compress the output.
         if ($this->get('gzip')) {
@@ -1209,7 +1208,7 @@ class MolajoControllerApplication
 
         echo $this->getBody();
 
-        $this->triggerEvent('onAfterRespond');
+//        $this->triggerEvent('onAfterRespond');
     }
 
     /**

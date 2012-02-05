@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoHeadRenderer extends MolajoRenderer
+class MolajoHeadRenderer extends MolajoRendererController
 {
     /**
      * __construct

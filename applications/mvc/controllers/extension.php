@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoControllerExtension
+class MolajoExtensionController
 {
     /**
      * $mvc
@@ -96,7 +96,7 @@ class MolajoControllerExtension
         $this->parameters->loadJSON($parameters);
 
         // todo: amy look at redirect
-//        $this->redirectClass = new MolajoControllerRedirect($this->mvc);
+//        $this->redirectClass = new MolajoRedirectController($this->mvc);
 
         /** load table */
         if ($this->mvc->get('mvc_task') == 'display'

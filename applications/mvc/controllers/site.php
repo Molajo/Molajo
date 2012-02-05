@@ -8,11 +8,11 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoControllerSite
+ * MolajoSiteController
  *
  * Acts as a Factory class for site specific functions and API options
  */
-class MolajoControllerSite
+class MolajoSiteController
 {
     /**
      * $config
@@ -90,7 +90,7 @@ class MolajoControllerSite
                 return false;
             }
 
-            $instance = new MolajoControllerSite($info);
+            $instance = new MolajoSiteController($info);
             $instances[$id] = &$instance;
             self::siteConfig();
         }

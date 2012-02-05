@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Request
  * @since       1.0
  */
-class MolajoControllerRequest
+class MolajoRequestController
 {
     /**
      * Application static instance
@@ -51,7 +51,7 @@ class MolajoControllerRequest
                                        $override_asset_id = null)
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoControllerRequest($request, $override_request_url, $override_asset_id);
+            self::$instance = new MolajoRequestController($request, $override_request_url, $override_asset_id);
         }
         return self::$instance;
     }
@@ -372,7 +372,7 @@ class MolajoControllerRequest
                 $message = TextHelper::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoControllerRequest::_getAsset',
+                $debug_location = 'MolajoRequestController::_getAsset',
                 $debug_object = $this->request
             );
 
@@ -405,7 +405,7 @@ class MolajoControllerRequest
                 $message = TextHelper::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoControllerRequest::getMenuItem',
+                $debug_location = 'MolajoRequestController::getMenuItem',
                 $debug_object = $this->request
             );
             return $this->set('status_found', false);
@@ -488,7 +488,7 @@ class MolajoControllerRequest
                 $message = TextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoControllerRequest::_getSource',
+                $debug_location = 'MolajoRequestController::_getSource',
                 $debug_object = $this->request
             );
             return $this->set('status_found', false);
@@ -578,7 +578,7 @@ class MolajoControllerRequest
                 $message = TextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoControllerRequest::_getSource',
+                $debug_location = 'MolajoRequestController::_getSource',
                 $debug_object = $this->request
             );
             return $this->set('status_found', false);

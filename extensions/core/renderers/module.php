@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoModuleRenderer extends MolajoRenderer
+class MolajoModuleRenderer extends MolajoRendererController
 {
     /**
      * _getExtension

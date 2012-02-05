@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoTagRenderer extends MolajoRenderer {}
+class MolajoTagRenderer extends MolajoRendererController {}

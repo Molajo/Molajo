@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoControllerLogin
+class MolajoLoginController
 {
     /**
      * login
@@ -173,7 +173,7 @@ class MolajoControllerLogin
         // Initialise variables.
         $retval = false;
 
-        // Get a user object from the MolajoControllerApplication.
+        // Get a user object from the MolajoApplicationController.
         $user = Molajo::User($user_id);
 
         // Build the credentials array.

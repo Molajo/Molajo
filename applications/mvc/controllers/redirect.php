@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since    1.0
  */
 
-class MolajoControllerRedirect
+class MolajoRedirectController
 {
     /**
      * $redirect

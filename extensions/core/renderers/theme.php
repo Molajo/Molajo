@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoThemeRenderer extends MolajoRenderer
+class MolajoThemeRenderer extends MolajoRendererController
 {
     /**
      * __construct
@@ -47,14 +47,9 @@ class MolajoThemeRenderer extends MolajoRenderer
      * @return  mixed
      * @since   1.0
      */
-    public function render($attributes)
+    public function render($attributes=array())
     {
-        /** attributes from <include:renderer */
-        $this->_attributes = $attributes;
-
         $this->_loadLanguage();
-
-        /** css and js media files for extension and related entities */
         $this->_loadMedia();
 
         return;
@@ -63,14 +58,14 @@ class MolajoThemeRenderer extends MolajoRenderer
     /**
      * _loadLanguage
      *
-     * Loads Language Files for extension
+     * Loads Language Files for Theme
      *
      * @return  null
      * @since   1.0
      */
     protected function _loadLanguage()
     {
-        Molajo::App()->getLanguage()->load
+        return Molajo::App()->getLanguage()->load
         (Molajo::Request()->get('extension_path'),
             Molajo::App()->getLanguage()->getDefault(),
             false,
@@ -107,6 +102,8 @@ class MolajoThemeRenderer extends MolajoRenderer
         $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+
+        return;
     }
 
     /**
@@ -119,16 +116,12 @@ class MolajoThemeRenderer extends MolajoRenderer
      */
     protected function _loadMediaPlus($plus = '', $priority = 500)
     {
-
         /** Site Specific: Application */
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . '/' . $plus;
         $urlPath = MOLAJO_SITE_MEDIA_URL . '/' . $plus;
         $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
-        if ($css === true || $js === true || $defer === true) {
-            return true;
-        }
 
         /** Site Specific: Site-wide */
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . $plus;
@@ -136,9 +129,6 @@ class MolajoThemeRenderer extends MolajoRenderer
         $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
         $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
-        if ($css === true || $js === true || $defer === true) {
-            return true;
-        }
 
         /** All Sites: Application */
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
@@ -146,9 +136,6 @@ class MolajoThemeRenderer extends MolajoRenderer
         $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
-        if ($css === true || $js === true || $defer === true) {
-            return true;
-        }
 
         /** All Sites: Site Wide */
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . $plus;
@@ -156,11 +143,7 @@ class MolajoThemeRenderer extends MolajoRenderer
         $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
-        if ($css === true || $js === true || $defer === true) {
-            return true;
-        }
 
-        /** nothing was loaded */
-        return false;
+        return;
     }
 }

@@ -92,7 +92,7 @@ class MolajoController
     {
         if (self::$site) {
         } else {
-            self::$site = MolajoControllerSite::getInstance($id, $config, $prefix);
+            self::$site = MolajoSiteController::getInstance($id, $config, $prefix);
         }
 
         return self::$site;
@@ -115,7 +115,7 @@ class MolajoController
     {
         if (self::$application) {
         } else {
-            self::$application = MolajoControllerApplication::getInstance($id, $config, $input);
+            self::$application = MolajoApplicationController::getInstance($id, $config, $input);
         }
         return self::$application;
     }
@@ -137,7 +137,7 @@ class MolajoController
     {
         if (self::$request) {
         } else {
-            self::$request = MolajoControllerRequest::getInstance($request, $override_request_url, $override_asset_id);
+            self::$request = MolajoRequestController::getInstance($request, $override_request_url, $override_asset_id);
         }
         return self::$request;
     }

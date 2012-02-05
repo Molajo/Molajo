@@ -7,13 +7,13 @@
  */
 defined('MOLAJO') or die;
 
-class CommentsController extends MolajoControllerDisplay
+class CommentsController extends MolajoDisplayController
 {
 }
-class CommentsControllerUpdate extends MolajoControllerUpdate
+class CommentsControllerUpdate extends MolajoUpdateController
 {
 }
-class CommentsControllerUpdatelist extends MolajoControllerUpdatelist
+class CommentsControllerUpdatelist extends MolajoUpdatelistController
 {
 }
 class CommentsTableComment extends MolajoModelContent

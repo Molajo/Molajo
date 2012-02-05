@@ -1,39 +1,43 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Document
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Document
+ * Parser
  *
  * @package     Molajo
- * @subpackage  Document
+ * @subpackage  Controller
  * @since       1.0
  */
-class MolajoDocument
+class MolajoParserController
 {
     /**
-     * Rendering Sequence
+     * $_sequence
+     *
+     * Renderers Processing Sequence
      *
      * @var array
      * @since 1.0
      */
-    protected $sequence = array();
+    protected $_sequence = array();
 
     /**
-     * Theme Parameters
+     * $parameters
+     *
+     * Parameters used by Theme and Page View
      *
      * @var string
      * @since 1.0
      */
-    public $parameters = null;
+    public $parameters = array();
 
     /**
-     * Theme
+     * $_theme
      *
      * @var string
      * @since 1.0
@@ -41,7 +45,11 @@ class MolajoDocument
     protected $_theme = array();
 
     /**
-     * Holds renderer set defined within the theme and associated attributes
+     * $_renderers
+     *
+     * Parsing process retrieves input:renderer statements from the theme and
+     * rendered output, loading the requests for renderers (and associated attributes)
+     * in this array
      *
      * @var string
      * @since 1.0
@@ -65,32 +73,40 @@ class MolajoDocument
             //error
             return false;
         }
+
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
         foreach ($sequence->renderer as $next) {
-            $this->sequence[] = (string)$next;
+            $this->_sequence[] = (string)$next;
         }
-        /** Request */
-        $this->_render();
+
+        $this->_processTheme();
+
+        return true;
     }
 
     /**
-     * Render the Theme
+     * _processTheme
+     *
+     * Retrieves Theme and begins the process of first parsing the Theme and Page View
+     * for input:renderer statements, looping through the renderers for the statements found,
+     * and then continuing the process by parsing the rendered output for additional input
+     * statements until no more are found.
      *
      * @return  object
      * @since  1.0
      */
-    protected function _render()
+    protected function _processTheme()
     {
-        $parameters = array(
-            'theme' => Molajo::Request()->get('theme_name'),
-            'theme_path' => Molajo::Request()->get('theme_path'),
-            'page' => Molajo::Request()->get('page_view_include'),
-            'parameters' => Molajo::Request()->get('theme_parameters')
-        );
-
         /** Theme Parameters */
         $this->parameters = new JRegistry;
-        $this->parameters->loadArray($parameters);
+        $this->parameters->loadArray(
+            array(
+                'theme' => Molajo::Request()->get('theme_name'),
+                'theme_path' => Molajo::Request()->get('theme_path'),
+                'page' => Molajo::Request()->get('page_view_include'),
+                'parameters' => Molajo::Request()->get('theme_parameters')
+            )
+        );
 
         /** Before Event */
         // Molajo::App()->triggerEvent('onBeforeRender');
@@ -100,9 +116,8 @@ class MolajoDocument
 
         /** theme: load template media and language files, does not renderer template output */
         if (class_exists('MolajoThemeRenderer')) {
-            $tmp = array();
-            $rendererClass = new MolajoThemeRenderer ('theme');
-            $results = $rendererClass->render($tmp);
+            $rc = new MolajoThemeRenderer ('theme');
+            $results = $rc->render();
         } else {
             echo 'failed renderer = ' . 'MolajoThemeRenderer' . '<br />';
             // ERROR
@@ -112,7 +127,7 @@ class MolajoDocument
         Molajo::App()->setBody($body);
 
         /** after rendering */
-        Molajo::App()->triggerEvent('onAfterRender');
+//        Molajo::App()->triggerEvent('onAfterRender');
 
         return;
     }
@@ -171,7 +186,7 @@ class MolajoDocument
      *
      * Parse the theme and extract renderers and associated attributes
      *
-     * @return  The parsed contents of the theme
+     * @return  Parsed contents of the theme
      * @since   1.0
      */
     protected function _parseTheme()
@@ -236,7 +251,7 @@ class MolajoDocument
         $with = array();
 
         /** 1. process every renderer in the format file in defined order */
-        foreach ($this->sequence as $nextSequence) {
+        foreach ($this->_sequence as $nextSequence) {
 
             /** 2. if necessary, split renderer name from include name (ex. request:component) */
             if (stripos($nextSequence, ':')) {
@@ -267,13 +282,13 @@ class MolajoDocument
                     /** 7. load the renderer class */
                     $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
-                        $rendererClass = new $class ($rendererName, $includeName);
+                        $rc = new $class ($rendererName, $includeName);
                     } else {
                         echo 'failed renderer = ' . $class . '<br />';
                         // ERROR
                     }
                     /** 8. render output and store results as "replace with" */
-                    $with[] = $rendererClass->render($attributes);
+                    $with[] = $rc->render($attributes);
                 }
             }
         }

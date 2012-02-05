@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoFormfieldRenderer extends MolajoRenderer {}
+class MolajoFormfieldRenderer extends MolajoRendererController {}

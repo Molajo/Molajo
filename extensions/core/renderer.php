@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoRenderer
+class MolajoRendererController
 {
     /**
      * $_name
@@ -103,7 +103,7 @@ class MolajoRenderer
      * @return  mixed
      * @since   1.0
      */
-    public function render($attributes)
+    public function render($attributes = array())
     {
         /** attributes from <include:renderer */
         $this->_attributes = $attributes;

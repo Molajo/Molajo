@@ -22,7 +22,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class MolajoControllerUpdate extends MolajoControllerExtension
+class MolajoUpdateController extends MolajoExtensionController
 {
     /**
      * __construct
@@ -108,7 +108,7 @@ class MolajoControllerUpdate extends MolajoControllerExtension
     /**
      * saveItemBatch
      *
-     * Called from MolajoControllerUpdatelist::processItem to obtain a current row and prepare data for a new item
+     * Called from MolajoUpdatelistController::processItem to obtain a current row and prepare data for a new item
      *
      * uses saveItem to process save after preparing the data
      *
