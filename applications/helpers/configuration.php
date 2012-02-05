@@ -151,4 +151,39 @@ class MolajoConfigurationHelper
     {
         $this->config->set($key, $value);
     }
+
+    /**
+     * getDB
+     *
+     * Retrieve the Database for MolajoController Static Connection
+     *
+     * @static
+     * @return JDatabase
+     */
+    public static function getDB()
+    {
+        $site = MolajoConfigurationHelper::site();
+
+        $options = array('driver' => $site->dbtype,
+            'host' => $site->host,
+            'user' => $site->user,
+            'password' => $site->password,
+            'database' => $site->db,
+            'prefix' => $site->dbprefix);
+
+        $db = JDatabase::getInstance($options);
+
+        if (MolajoError::isError($db)) {
+            header('HTTP/1.1 500 Internal Server Error');
+            jexit('Database Error: ' . (string)$db);
+        }
+
+        if ($db->getErrorNum() > 0) {
+            MolajoError::raiseError(500, TextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $db->getErrorNum(), $db->getErrorMsg()));
+        }
+
+        $db->debug($site->debug);
+
+        return $db;
+    }
 }

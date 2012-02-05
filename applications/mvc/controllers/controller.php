@@ -87,11 +87,17 @@ class MolajoController
      * @return null|Site
      * @since 1.0
      */
-    public static function getSite($id = null, $config = array(), $prefix = 'Molajo')
+    public static function getSite($id = null,
+                                   $config = array(),
+                                   $prefix = 'Molajo')
     {
         if (self::$site) {
         } else {
-            self::$site = MolajoSiteController::getInstance($id, $config, $prefix);
+            self::$site = MolajoSiteController::getInstance(
+                $id,
+                $config,
+                $prefix
+            );
         }
         return self::$site;
     }
@@ -109,13 +115,17 @@ class MolajoController
      * @return Application|null
      * @since 1.0
      */
-    public static function getApplication($id = null, JRegistry $config = null, JInput $input = null)
+    public static function getApplication($id = null,
+                                          JRegistry $config = null,
+                                          JInput $input = null)
     {
         if (self::$application) {
         } else {
             self::$application =
                 MolajoApplicationController::getInstance(
-                    $id, $config, $input
+                    $id,
+                    $config,
+                    $input
                 );
         }
         return self::$application;
@@ -142,7 +152,9 @@ class MolajoController
         } else {
             self::$request =
                 MolajoRequestController::getInstance(
-                    $request, $override_request_url, $override_asset_id
+                    $request,
+                    $override_request_url,
+                    $override_asset_id
                 );
         }
         return self::$request;
@@ -216,9 +228,7 @@ class MolajoController
     {
         if (self::$db) {
         } else {
-            $debug = self::get('debug', '', 'site');
-            self::$db = self::_createDbo();
-            self::$db->debug($debug);
+            self::$db = MolajoConfigurationHelper::getDB();
         }
         return self::$db;
     }
@@ -336,46 +346,6 @@ class MolajoController
 
         $tmp = new $classname($time, $tzOffset);
         return $tmp;
-    }
-
-    /**
-     * Create an database object
-     *
-     * @see JDatabase
-     *
-     * @return JDatabase object
-     *
-     * @since   1.0
-     */
-    protected static function _createDbo()
-    {
-        $host = self::get('host', '', 'site');
-        $user = self::get('user', '', 'site');
-        $password = self::get('password', '', 'site');
-        $db = self::get('db', '', 'site');
-        $prefix = self::get('dbprefix', '', 'site');
-        $driver = self::get('dbtype', '', 'site');
-        $debug = self::get('debug', '', 'site');
-
-        $options = array('driver' => $driver,
-            'host' => $host,
-            'user' => $user,
-            'password' => $password,
-            'database' => $db,
-            'prefix' => $prefix);
-
-        $db = JDatabase::getInstance($options);
-
-        if (MolajoError::isError($db)) {
-            header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: ' . (string)$db);
-        }
-
-        if ($db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, TextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $db->getErrorNum(), $db->getErrorMsg()));
-        }
-
-        return $db;
     }
 
     /**
