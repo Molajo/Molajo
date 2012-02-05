@@ -675,55 +675,6 @@ abstract class MolajoError
     }
 
     /**
-     * Display a custom error page and exit gracefully
-     *
-     * @param   object  &$error  Exception object
-     *
-     * @return  void
-     *
-     * @deprecated  12.1
-     * @since   1.0
-     */
-    public static function customErrorPage(&$error)
-    {
-
-        $document = Molajo::getInstance('error');
-        if ($document) {
-            $config = Molajo::Application()->get();
-
-            // Get the current theme from the application
-            $theme = Molajo::Application()->getTheme();
-
-            // Push the error object into the document
-            Molajo::Application()->setError($error);
-
-            @ob_end_clean();
-            Molajo::Application()->setTitle(TextHelper::_('Error') . ': ' . $error->get('code'));
-            $data = Molajo::Application()->render(false, array('theme' => $theme, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
-
-            // Failsafe to get the error displayed.
-            if (empty($data)) {
-                self::handleEcho($error, array());
-            }
-            else
-            {
-                // Do not allow cache
-                Molajo::Application()->allowCache(false);
-
-                Molajo::Responder()->setBody($data);
-                echo Molajo::Application()->toString();
-            }
-        }
-        else
-        {
-            // Just echo the error since there is no document
-            // This is a common use case for Command Line Interface applications.
-            self::handleEcho($error, array());
-        }
-        Molajo::Application()->close(0);
-    }
-
-    /**
      * Display a message to the user
      *
      * @param   integer  $level  The error level - use any of PHP's own error levels
