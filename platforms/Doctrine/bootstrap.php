@@ -120,6 +120,9 @@ class DoctrineBootstrapper {
         }
 
         $this->entityManager = EntityManager::create($this->getConnectionOptions(), $config);
+        echo '<pre>';
+        var_dump($this->entityManager);
+        echo '</pre>';
     }
 
     /**

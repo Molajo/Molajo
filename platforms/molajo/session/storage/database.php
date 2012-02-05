@@ -102,8 +102,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
         $query->where($db->nameQuote('session_id') . ' = ' . $db->quote($id));
 
         $db->setQuery($query->__toString());
-
-        $result = $db->query();
+        $result = $db->loadResult();
 
         if ($result == $id) {
             return (boolean)$this->update($id, $data);

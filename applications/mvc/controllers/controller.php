@@ -47,6 +47,12 @@ class MolajoController
     public static $db = null;
 
     /**
+     * @var    Doctrine Entity Manager
+     * @since  1.0
+     */
+    public static $entityManager = null;
+
+    /**
      * @var    Cache
      * @since  1.0
      */
@@ -59,7 +65,7 @@ class MolajoController
     public static $mailer = null;
 
     /**
-     * @var    array
+     * @var    Dates
      * @since  1.0
      */
     public static $dates = array();
@@ -170,7 +176,26 @@ class MolajoController
      */
     public static function getDoctrine()
     {
-        $entityManager = \Doctrine\ORM\EntityManager::create($conn, $config);
+        if (self::$entityManager) {
+        } else {
+            $doctrineProxy = new DoctrineBootstrapper(1);
+            var_dump($doctrineProxy);
+            $doctrineProxy->setEntityLibrary(MOLAJO_DOCTRINE_MODELS . '/models');
+            $doctrineProxy->setProxyLibrary(MOLAJO_DOCTRINE_PROXIES . '/proxies');
+            $doctrineProxy->setProxyNamespace('Proxies');
+            $doctrineProxy->setConnectionOptions(
+                array(
+                    'driver' => 'pdo_mysql',
+                    'path' => 'database.mysql',
+                    'dbname' => MolajoController::getApplication()->get('db'),
+                    'user' => MolajoController::getApplication()->get('user'),
+                    'password' => MolajoController::getApplication()->get('password')
+                )
+            );
+            self::$entityManager = $doctrineProxy->bootstrap();
+        }
+
+        return self::$entityManager;
     }
 
     /**

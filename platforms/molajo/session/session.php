@@ -102,16 +102,6 @@ class MolajoSession extends JObject
     }
 
     /**
-     * Session object destructor
-     *
-     * @since   1.0
-     */
-    public function __destruct()
-    {
-        $this->close();
-    }
-
-    /**
      * Returns the global Session object, only creating it
      * if it doesn't already exist.
      *
@@ -411,6 +401,16 @@ class MolajoSession extends JObject
         session_start();
 
         return true;
+    }
+
+    /**
+     * Session object destructor
+     *
+     * @since   1.0
+     */
+    public function __destruct()
+    {
+        $this->close();
     }
 
     /**
