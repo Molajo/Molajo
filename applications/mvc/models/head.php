@@ -56,7 +56,7 @@ class MolajoHeadModel extends MolajoModel
         $this->items[] = $tempObject;
 
         /** type: links */
-        $list = Molajo::App()->getHeadLinks();
+        $list = Molajo::Application()->getHeadLinks();
 
         if (count($list) > 0) {
             foreach ($list as $item) {
@@ -71,7 +71,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: stylesheet_links */
-        $list = Molajo::App()->getStyleLinks();
+        $list = Molajo::Application()->getStyleLinks();
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $tempObject = new JObject();
@@ -86,7 +86,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: stylesheet_declarations */
-        $list = Molajo::App()->getStyleDeclarations();
+        $list = Molajo::Application()->getStyleDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'stylesheet_declarations');
@@ -96,7 +96,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: javascript_links */
-        $list = Molajo::App()->getScriptLinks();
+        $list = Molajo::Application()->getScriptLinks();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
@@ -109,7 +109,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: javascript_declarations */
-        $list = Molajo::App()->getScriptDeclarations();
+        $list = Molajo::Application()->getScriptDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');

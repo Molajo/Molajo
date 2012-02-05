@@ -50,7 +50,7 @@ class PagefooterModuleModel extends MolajoModel
             $line1 = TextHelper :: _('FOOTER_LINE1');
         }
         if (JString::strpos($line1, '%site_name%')) {
-            $line1 = str_replace('%site_name%', Molajo::App()->get('site_name', 'Molajo'), $line1);
+            $line1 = str_replace('%site_name%', Molajo::Application()->get('site_name', 'Molajo'), $line1);
         }
         $tempObject->set('line1', $line1);
 

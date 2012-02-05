@@ -97,7 +97,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
             }
 
             if ($extension) {
-                $lang = Molajo::App()->getLanguage();
+                $lang = Molajo::Application()->getLanguage();
                 $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                         : MOLAJO_BASE_FOLDER) . '/modules/' . $extension;
                 $folder = (string)$element->attributes()->folder;
@@ -152,7 +152,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         if ($cname = (string)$this->manifest->attributes()->client) {
             // Attempt to map the client to a base path
 
-            $client = AppHelper::getApplicationInfo($cname, true);
+            $client = ApplicationHelper::getApplicationInfo($cname, true);
 
             if ($client === false) {
                 $this->parent
@@ -537,8 +537,8 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         $results = array();
         $site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/modules');
         $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/modules');
-        $site_info = AppHelper::getApplicationInfo('site', true);
-        $admin_info = AppHelper::getApplicationInfo('administrator', true);
+        $site_info = ApplicationHelper::getApplicationInfo('site', true);
+        $admin_info = ApplicationHelper::getApplicationInfo('administrator', true);
 
         foreach ($site_list as $module)
         {
@@ -580,7 +580,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
     {
         // Modules are like themes, and are one of the easiest
         // If its not in the extensions table we just add it
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $description = (string)$this->parent->manifest->description;
@@ -621,7 +621,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      */
     public function refreshManifestCache()
     {
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
@@ -675,7 +675,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         // Get the extension root path
         jimport('joomla.application.helper');
         $element = $row->element;
-        $client = AppHelper::getApplicationInfo($row->application_id);
+        $client = ApplicationHelper::getApplicationInfo($row->application_id);
 
         if ($client === false) {
             $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_UNKNOWN_CLIENT', $row->application_id));

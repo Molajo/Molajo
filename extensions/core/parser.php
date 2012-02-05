@@ -169,7 +169,7 @@ class MolajoParserController
         );
 
         /** Before Event */
-        // Molajo::App()->triggerEvent('onBeforeRender');
+        // Molajo::Application()->triggerEvent('onBeforeRender');
 
         /** process theme include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop();
@@ -184,10 +184,10 @@ class MolajoParserController
         }
 
         /** set response body */
-        Molajo::App()->setBody($body);
+        Molajo::Application()->setBody($body);
 
         /** after rendering */
-//        Molajo::App()->triggerEvent('onAfterRender');
+//        Molajo::Application()->triggerEvent('onAfterRender');
 
         return;
     }

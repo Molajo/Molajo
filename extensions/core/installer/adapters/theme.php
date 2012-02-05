@@ -56,7 +56,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
 
         $extension = "theme_$name";
-        $lang = Molajo::App()->getLanguage();
+        $lang = Molajo::Application()->getLanguage();
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                 : MOLAJO_BASE_FOLDER) . '/themes/' . $name;
         $lang->load($extension . '.sys', $source, null, false, false)
@@ -74,14 +74,14 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
      */
     public function install()
     {
-        $lang = Molajo::App()->getLanguage();
+        $lang = Molajo::Application()->getLanguage();
         $xml = $this->parent->getManifest();
 
         // Get the client application target
         if ($cname = (string)$xml->attributes()->client) {
             // Attempt to map the client to a base path
             jimport('joomla.application.helper');
-            $client = AppHelper::getApplicationInfo($cname, true);
+            $client = ApplicationHelper::getApplicationInfo($cname, true);
             if ($client === false) {
                 $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
                 return false;
@@ -321,7 +321,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
 
         // Get the theme root path
-        $client = AppHelper::getApplicationInfo($clientId);
+        $client = ApplicationHelper::getApplicationInfo($clientId);
 
         if (!$client) {
             MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
@@ -386,8 +386,8 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $results = array();
         $site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/themes');
         $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/themes');
-        $site_info = AppHelper::getApplicationInfo('site', true);
-        $admin_info = AppHelper::getApplicationInfo('administrator', true);
+        $site_info = ApplicationHelper::getApplicationInfo('site', true);
+        $admin_info = ApplicationHelper::getApplicationInfo('administrator', true);
 
         foreach ($site_list as $theme)
         {
@@ -441,7 +441,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
     {
         // Themes are one of the easiest
         // If its not in the extensions table we just add it
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/themes/' . $this->parent->extension->element . '/themeDetails.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $description = (string)$this->parent->manifest->description;
@@ -503,7 +503,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally.
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/themes/' . $this->parent->extension->element . '/themeDetails.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);

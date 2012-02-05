@@ -275,11 +275,11 @@ Includes data about the application configuration, language, and response elemen
 
 To display all of the options available:
 
-    <?php echo '<pre>'; var_dump(Molajo::App()); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Molajo::Application()); echo '</pre>';  ?>
 
 To display one item:
 
-    <?php echo Molajo::App()->get('sef'); ?>
+    <?php echo Molajo::Application()->get('sef'); ?>
 
 ### User ###
 
@@ -293,7 +293,7 @@ To display one item:
 
 ### Input Request ###
 
-    <?php echo '<pre>'; var_dump(Molajo::App()->input); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Molajo::Application()->input); echo '</pre>';  ?>
 
 ### Query Criteria ###
 

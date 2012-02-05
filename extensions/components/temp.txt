@@ -16,7 +16,7 @@ search
 sites
 users (profiles)
 
-echo Molajo::App()->get('custom_field1', '', 'custom');
+echo Molajo::Application()->get('custom_field1', '', 'custom');
 
 MENU ITEMS and Components
 

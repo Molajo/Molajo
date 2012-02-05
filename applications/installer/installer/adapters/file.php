@@ -32,7 +32,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
     {
         $this->manifest = $this->parent->getManifest();
         $extension = 'files_' . str_replace('files_', '', strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd')));
-        $lang = Molajo::App()->getLanguage();
+        $lang = Molajo::Applicationlication()->getLanguage();
         $source = $path;
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)

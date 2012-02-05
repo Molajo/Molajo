@@ -67,20 +67,20 @@ class MolajoHeadRenderer extends MolajoRendererController
         if ($this->_type == 'defer') {
             if ((int)$this->mvc->get('template_view_id', 0) == 0) {
                 $this->mvc->set('template_view_id',
-                    Molajo::App()->get('defer_template_view_id', 'document-defer'));
+                    Molajo::Application()->get('defer_template_view_id', 'document-defer'));
             }
             if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
                 $this->mvc->set('wrap_view_id',
-                    Molajo::App()->get('defer_wrap_view_id', 'none'));
+                    Molajo::Application()->get('defer_wrap_view_id', 'none'));
             }
         } else {
             if ((int)$this->mvc->get('template_view_id', 0) == 0) {
                 $this->mvc->set('template_view_id',
-                    Molajo::App()->get('head_template_view_id', 'document-head'));
+                    Molajo::Application()->get('head_template_view_id', 'document-head'));
             }
             if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
                 $this->mvc->set('wrap_view_id',
-                    Molajo::App()->get('head_wrap_view_id', 'none'));
+                    Molajo::Application()->get('head_wrap_view_id', 'none'));
             }
         }
 

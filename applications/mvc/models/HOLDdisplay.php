@@ -192,7 +192,7 @@ class MolajoDisplayModel extends MolajoModel
         $limit = (int)Molajo::User()->getUserStateFromRequest(
             'global.list.limit',
             'limit',
-            Molajo::App()->get('list_limit')
+            Molajo::Application()->get('list_limit')
         );
 
         $this->setState('list.limit', (int)$limit);
@@ -290,7 +290,7 @@ class MolajoDisplayModel extends MolajoModel
         if (class_exists($nameClassName)) {
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
-            Molajo::App()->setMessage(TextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+            Molajo::Application()->setMessage(TextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -972,7 +972,7 @@ class MolajoDisplayModel extends MolajoModel
 
         } else {
             if ($onlyWhereClause === true) {
-                Molajo::App()->setMessage(TextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                Molajo::Application()->setMessage(TextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);
@@ -1011,7 +1011,7 @@ class MolajoDisplayModel extends MolajoModel
         $this->db->setQuery($this->query->__toString());
 
         if (!$results = $this->db->loadObjectList()) {
-            Molajo::App()->setMessage($this->db->getErrorMsg(), 'error');
+            Molajo::Application()->setMessage($this->db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -1053,7 +1053,7 @@ class MolajoDisplayModel extends MolajoModel
         $this->db->setQuery($this->query->__toString());
 
         if (!$results = $this->db->loadObjectList()) {
-            Molajo::App()->setMessage($this->db->getErrorMsg(), 'error');
+            Molajo::Application()->setMessage($this->db->getErrorMsg(), 'error');
             return false;
         }
 

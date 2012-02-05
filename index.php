@@ -186,6 +186,6 @@ $site->load();
 /**
  *  Application
  */
-$app = Molajo::App(MOLAJO_APPLICATION);
+$app = Molajo::Application(MOLAJO_APPLICATION);
 $app->load();
 

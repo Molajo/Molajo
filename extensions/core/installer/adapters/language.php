@@ -69,7 +69,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         {
             // Attempt to map the client to a base path
             jimport('joomla.application.helper');
-            $client = AppHelper::getApplicationInfo($cname, true);
+            $client = ApplicationHelper::getApplicationInfo($cname, true);
             if ($client === null) {
                 $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT', TextHelper::sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
                 return false;
@@ -289,7 +289,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
 
         // Attempt to map the client to a base path
         jimport('joomla.application.helper');
-        $client = AppHelper::getApplicationInfo($cname, true);
+        $client = ApplicationHelper::getApplicationInfo($cname, true);
         if ($client === null || (empty($cname) && $cname !== 0)) {
             $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT', TextHelper::sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
             return false;
@@ -427,7 +427,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         $extension = MolajoModel::getInstance('extension');
         $extension->load($eid);
         // Grab a copy of the client details
-        $client = AppHelper::getApplicationInfo($extension->get('application_id'));
+        $client = ApplicationHelper::getApplicationInfo($extension->get('application_id'));
 
         // Check the element isn't blank to prevent nuking the languages directory...just in case
         $element = $extension->get('element');
@@ -571,7 +571,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
     public function discover_install()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $short_element = $this->parent->extension->element;
         $manifestPath = $client->path . '/language/' . $short_element . '/' . $short_element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
@@ -605,7 +605,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
      */
     public function refreshManifestCache()
     {
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/language/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);

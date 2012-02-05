@@ -277,9 +277,9 @@ class MolajoUpdateController extends MolajoExtensionController
             $errors = $this->model->getErrors();
             for ($e = 0; $e < count($errors); $e++) {
                 if (MolajoError::isError($errors[$e])) {
-                    Molajo::App()->setMessage($errors[$e]->getMessage(), 'warning');
+                    Molajo::Application()->setMessage($errors[$e]->getMessage(), 'warning');
                 } else {
-                    Molajo::App()->setMessage($errors[$e], 'warning');
+                    Molajo::Application()->setMessage($errors[$e], 'warning');
                 }
             }
             Molajo::User()->setUserState(JRequest::getInt('datakey'), $data);

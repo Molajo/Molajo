@@ -42,7 +42,7 @@ class PageheaderModuleModel extends MolajoModel
         $this->items = array();
 
         $tempObject = new JObject();
-        $tempObject->set('title', Molajo::App()->get('site_title', 'Molajo'));
+        $tempObject->set('title', Molajo::Application()->get('site_title', 'Molajo'));
         $this->items[] = $tempObject;
 
         return $this->items;

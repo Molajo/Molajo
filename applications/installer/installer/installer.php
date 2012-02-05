@@ -364,7 +364,7 @@ class MolajoInstaller extends MolajoAdapter
             $step = array_pop($this->_stepStack);
         }
 
-        $conf = Molajo::App()->get();
+        $conf = Molajo::Applicationlication()->get();
         $debug = $conf->get('debug');
 
         if ($debug) {
@@ -1077,7 +1077,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Get the client info
         jimport('joomla.application.helper');
-        $client = AppHelper::getApplicationInfo($cid);
+        $client = ApplicationHelper::getApplicationInfo($cid);
 
         /*
            * Here we set the folder we are going to remove the files from.
@@ -1190,7 +1190,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Get the client info
         jimport('joomla.application.helper');
-        $client = AppHelper::getApplicationInfo($cid);
+        $client = ApplicationHelper::getApplicationInfo($cid);
 
         // Here we set the folder we are going to copy the files to.
         // 'languages' Files are copied to MOLAJO_BASE_FOLDER/language/ folder
@@ -1230,7 +1230,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 if ((string)$file->attributes()->client != '') {
                     // Override the client
-                    $langclient = AppHelper::getApplicationInfo((string)$file->attributes()->client, true);
+                    $langclient = ApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
                     $path['dest'] = $langclient->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
                 }
                 else
@@ -1295,7 +1295,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Get the client info
         jimport('joomla.application.helper');
-        $client = AppHelper::getApplicationInfo($cid);
+        $client = ApplicationHelper::getApplicationInfo($cid);
 
         // Here we set the folder we are going to copy the files to.
         //	Default 'media' Files are copied to the MOLAJO_BASE_FOLDER/media folder
@@ -1530,7 +1530,7 @@ class MolajoInstaller extends MolajoAdapter
         jimport('joomla.application.helper');
 
         if ($cid > -1) {
-            $client = AppHelper::getApplicationInfo($cid);
+            $client = ApplicationHelper::getApplicationInfo($cid);
         }
         else
         {
@@ -1570,7 +1570,7 @@ class MolajoInstaller extends MolajoAdapter
                 $lang_client = (string)$element->attributes()->client;
 
                 if ($lang_client) {
-                    $client = AppHelper::getApplicationInfo($lang_client, true);
+                    $client = ApplicationHelper::getApplicationInfo($lang_client, true);
                     $source = $client->path . '/language';
                 }
                 else
@@ -1614,7 +1614,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
                 else
                 {
-                    $target_client = AppHelper::getApplicationInfo((string)$file->attributes()->client, true);
+                    $target_client = ApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
                     $path = $target_client->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
                 }
 
@@ -1664,7 +1664,7 @@ class MolajoInstaller extends MolajoAdapter
     {
         // Get the client info
         jimport('joomla.application.helper');
-        $client = AppHelper::getApplicationInfo($cid);
+        $client = ApplicationHelper::getApplicationInfo($cid);
 
         $path['src'] = $this->getPath('manifest');
 

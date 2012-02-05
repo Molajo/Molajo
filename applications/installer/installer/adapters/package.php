@@ -38,7 +38,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
     {
         $this->manifest = $this->parent->getManifest();
         $extension = 'pkg_' . strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->packagename, 'cmd'));
-        $lang = Molajo::App()->getLanguage();
+        $lang = Molajo::Applicationlication()->getLanguage();
         $source = $path;
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
@@ -264,7 +264,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
         {
             $tmpInstaller = new MolajoInstaller;
             $id = $this->_getExtensionID($extension->type, $extension->id, $extension->client, $extension->group);
-            $client = AppHelper::getApplicationInfo($extension->client, true);
+            $client = ApplicationHelper::getApplicationInfo($extension->client, true);
             if ($id) {
                 if (!$tmpInstaller->uninstall($extension->type, $id, $client->id)) {
                     $error = true;
@@ -335,7 +335,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
             case 'module':
             case 'theme':
                 // Languages, modules and themes have a client but not a folder
-                $client = AppHelper::getApplicationInfo($client, true);
+                $client = ApplicationHelper::getApplicationInfo($client, true);
                 $query->where('application_id = ' . (int)$client->id);
                 break;
         }

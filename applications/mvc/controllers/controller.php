@@ -46,6 +46,12 @@ class MolajoController
     public static $parser = null;
 
     /**
+     * @var    Responder
+     * @since  1.0
+     */
+    public static $responder = null;
+
+    /**
      * @var    Database
      * @since  1.0
      */
@@ -185,6 +191,30 @@ class MolajoController
         return self::$parser;
     }
 
+
+    /**
+     * getResponder
+     *
+     * Get the Responder Controller Object
+     *
+     * @static
+     * @param JRegistry|null $config
+     *
+     * @return Responder|null
+     * @since 1.0
+     */
+    public static function getResponder(JRegistry $config = null)
+    {
+        if (self::$responder) {
+        } else {
+            self::$responder =
+                MolajoResponderController::getInstance(
+                    $config
+                );
+        }
+        return self::$responder;
+    }
+
     /**
      * Get an user object.
      *
@@ -254,9 +284,9 @@ class MolajoController
                 array(
                     'driver' => 'pdo_mysql',
                     'path' => 'database.mysql',
-                    'dbname' => Molajo::App()->get('db'),
-                    'user' => Molajo::App()->get('user'),
-                    'password' => Molajo::App()->get('password')
+                    'dbname' => Molajo::Application()->get('db'),
+                    'user' => Molajo::Application()->get('user'),
+                    'password' => Molajo::Application()->get('password')
                 )
             );
             self::$entityManager = $doctrineProxy->bootstrap();
@@ -438,7 +468,7 @@ class MolajoController
 }
 
 /**
- *  Molajo Class for shortcuts
+ *  Molajo Class for shortcuts, ex Molajo::User
  */
 class Molajo extends MolajoController
 {
@@ -447,7 +477,7 @@ class Molajo extends MolajoController
         return MolajoController::getSite($id, $config, $prefix);
     }
 
-    public static function App($id = null, JRegistry $config = null, JInput $input = null)
+    public static function Application($id = null, JRegistry $config = null, JInput $input = null)
     {
         return MolajoController::getApplication($id, $config, $input);
     }
@@ -462,6 +492,11 @@ class Molajo extends MolajoController
         return MolajoController::getParser($config);
     }
 
+    public static function Responder(JRegistry $config = null)
+    {
+        return MolajoController::getResponder($config);
+    }
+
     public static function User($id = null)
     {
         return MolajoController::getUser($id);
@@ -471,8 +506,6 @@ class Molajo extends MolajoController
     {
         return MolajoController::getDbo();
     }
-
-
 
     public static function Mailer()
     {

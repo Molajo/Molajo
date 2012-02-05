@@ -228,7 +228,7 @@ class MolajoContentModel extends MolajoModel
         if (trim($this->alias) == '') {
             $this->alias = $this->title;
         }
-        $this->alias = Molajo::App()->stringURLSafe($this->alias);
+        $this->alias = Molajo::Application()->stringURLSafe($this->alias);
 
         /** do not check alias for version saves  **/
         if ($this->state == MOLAJO_STATUS_VERSION) {

@@ -121,7 +121,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
                         }
                     }
                 }
-                $client = AppHelper::getApplicationInfo($attrs['CLIENT_ID'], 1);
+                $client = ApplicationHelper::getApplicationInfo($attrs['CLIENT_ID'], 1);
                 $attrs['CLIENT_ID'] = $client->id;
                 // Lower case all of the fields
                 foreach ($attrs as $key => $attr)
@@ -217,7 +217,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
 
             JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
 
-            Molajo::App()->setMessage(TextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_OPEN_URL', $url), 'warning');
+            Molajo::Applicationlication()->setMessage(TextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_OPEN_URL', $url), 'warning');
             return false;
         }
 
@@ -230,7 +230,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
             if (!xml_parse($this->xml_parser, $data, feof($fp))) {
                 JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
 
-                Molajo::App()->setMessage(TextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_PARSE_URL', $url), 'warning');
+                Molajo::Applicationlication()->setMessage(TextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_PARSE_URL', $url), 'warning');
                 return false;
             }
         }

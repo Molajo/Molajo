@@ -95,7 +95,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             }
             if ($name) {
                 $extension = "plg_${group}_${name}";
-                $lang = Molajo::App()->getLanguage();
+                $lang = Molajo::Application()->getLanguage();
                 $source = $path ? $path : MOLAJO_EXTENSIONS_PLUGINS . "/$group/$name";
                 $folder = (string)$element->attributes()->folder;
                 if ($folder && file_exists("$path/$folder")) {
@@ -729,7 +729,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Plugins use the extensions table as their primary store
         // Similar to modules and themes, rather easy
         // If it's not in the extensions table we just add it
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         if (is_dir($client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element)) {
             $manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'
                             . $this->parent->extension->element . '.xml';
@@ -776,7 +776,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Plugins use the extensions table as their primary store
         // Similar to modules and themes, rather easy
         // If it's not in the extensions table we just add it
-        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'
                         . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);

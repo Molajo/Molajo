@@ -155,7 +155,7 @@ class MolajoRedirectController
 
         /** cancel **/
         if ($this->mvc->get('mvc_task') == 'cancel') {
-            if (Molajo::App()->getName() == 'site') {
+            if (Molajo::Application()->getName() == 'site') {
                 if ($this->mvc->get('mvc_id') == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
@@ -335,6 +335,6 @@ class MolajoRedirectController
         }
 
         /** redirect **/
-        Molajo::App()->redirect(MolajoRouteHelper::_($link, false), $this->redirectMessage, $this->redirectMessageType);
+        Molajo::Application()->redirect(MolajoRouteHelper::_($link, false), $this->redirectMessage, $this->redirectMessageType);
     }
 }

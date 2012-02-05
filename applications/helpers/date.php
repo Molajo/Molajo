@@ -237,7 +237,7 @@ class MolajoDateHelper
     function getUTCDate($input_date, $server_or_user_UTC = 'user')
     {
 
-        $config = Molajo::App()->get();
+        $config = Molajo::Applicationlication()->get();
         $user = Molajo::User();
 
         // If a known filter is given use it.

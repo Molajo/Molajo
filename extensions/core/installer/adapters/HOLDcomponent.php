@@ -1492,7 +1492,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     public function discover_install()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $client = AppHelper::getApplicationInfo(parent::extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo(parent::extension->application_id);
         $short_element = str_replace('', '', parent::extension->element);
         $manifestPath = $client->path . '/components/' . parent::extension->element . '/' . $short_element . '.xml';
         parent::manifest = parent::isManifest($manifestPath);
@@ -1752,7 +1752,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $client = AppHelper::getApplicationInfo(parent::extension->application_id);
+        $client = ApplicationHelper::getApplicationInfo(parent::extension->application_id);
         $short_element = str_replace('', '', parent::extension->element);
         $manifestPath = $client->path . '/components/' . parent::extension->element . '/' . $short_element . '.xml';
         parent::manifest = parent::isManifest($manifestPath);

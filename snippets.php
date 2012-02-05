@@ -31,9 +31,9 @@
  *  are combined in the Application Controller and can be accessed anywhere in Molajo
  */
 
-Molajo::App()->set('sef', 1);
+Molajo::Application()->set('sef', 1);
 
-echo Molajo::App()->get('sef', 1);
+echo Molajo::Application()->get('sef', 1);
 
 /** List all parameters and values */
 
@@ -60,13 +60,13 @@ Molajo::User()->view_groups;
 ?>
 <?php
 /** Basic Message, for example: "Article saved." or "Title required."  */
-Molajo::App()
+Molajo::Application()
     ->setMessage(
         TextHelper::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
 );
 
-Molajo::App()
+Molajo::Application()
     ->setMessage(
         $message = TextHelper::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,

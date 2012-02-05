@@ -83,7 +83,7 @@ abstract class MolajoContentHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            Molajo::App()
+            Molajo::Application()
                 ->setMessage(
                 $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.
                     $db->getErrorNum().' '.

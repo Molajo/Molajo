@@ -262,9 +262,9 @@ abstract class MolajoExtensionHelper
         } else {
             return false;
         }
-        return Molajo::App()->getLanguage()->load (
+        return Molajo::Application()->getLanguage()->load (
             $path,
-            Molajo::App()->getLanguage()->getDefault(),
+            Molajo::Application()->getLanguage()->getDefault(),
             false,
             false
         );

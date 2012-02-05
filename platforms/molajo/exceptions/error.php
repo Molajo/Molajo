@@ -618,7 +618,7 @@ abstract class MolajoError
      */
     public static function handleMessage(&$error, $options)
     {
-        $appl = Molajo::App();
+        $appl = Molajo::Application();
         $type = ($error->get('level') == E_NOTICE) ? 'notice' : 'error';
         $appl->setMessage($error->get('message'), $type);
 
@@ -689,17 +689,17 @@ abstract class MolajoError
 
         $document = Molajo::getInstance('error');
         if ($document) {
-            $config = Molajo::App()->get();
+            $config = Molajo::Application()->get();
 
             // Get the current theme from the application
-            $theme = Molajo::App()->getTheme();
+            $theme = Molajo::Application()->getTheme();
 
             // Push the error object into the document
-            Molajo::App()->setError($error);
+            Molajo::Application()->setError($error);
 
             @ob_end_clean();
-            Molajo::App()->setTitle(TextHelper::_('Error') . ': ' . $error->get('code'));
-            $data = Molajo::App()->render(false, array('theme' => $theme, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
+            Molajo::Application()->setTitle(TextHelper::_('Error') . ': ' . $error->get('code'));
+            $data = Molajo::Application()->render(false, array('theme' => $theme, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
 
             // Failsafe to get the error displayed.
             if (empty($data)) {
@@ -708,10 +708,10 @@ abstract class MolajoError
             else
             {
                 // Do not allow cache
-                Molajo::App()->allowCache(false);
+                Molajo::Application()->allowCache(false);
 
-                Molajo::App()->setBody($data);
-                echo Molajo::App()->toString();
+                Molajo::Application()->setBody($data);
+                echo Molajo::Application()->toString();
             }
         }
         else
@@ -720,7 +720,7 @@ abstract class MolajoError
             // This is a common use case for Command Line Interface applications.
             self::handleEcho($error, array());
         }
-        Molajo::App()->close(0);
+        Molajo::Application()->close(0);
     }
 
     /**

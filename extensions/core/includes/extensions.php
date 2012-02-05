@@ -15,6 +15,7 @@ $fileHelper = new FileHelper();
 /**
  *  Primary Extensions Classes
  */
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/responder.php', 'MolajoResponderController');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/request.php', 'MolajoRequestController');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/parser.php', 'MolajoParserController');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderer.php', 'MolajoRendererController');
@@ -49,10 +50,10 @@ foreach ($files as $file) {
 /**
  *  Aliases
  */
-Class AppHelper extends MolajoApplicationHelper {}
+Class ApplicationHelper extends MolajoApplicationHelper {}
 Class AssetHelper extends MolajoAssetHelper {}
 Class ComponentHelper extends MolajoComponentHelper {}
-Class ConfigHelper extends MolajoConfigurationHelper {}
+Class ConfigurationHelper extends MolajoConfigurationHelper {}
 Class ContentHelper extends MolajoContentHelper {}
 Class DateHelper extends MolajoDateHelper {}
 Class ExtensionHelper extends MolajoExtensionHelper {}

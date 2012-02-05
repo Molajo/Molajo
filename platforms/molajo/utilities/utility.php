@@ -81,7 +81,7 @@ class MolajoUtility
      */
     public static function getHash($seed)
     {
-        return md5(Molajo::App()->get('secret') . $seed);
+        return md5(Molajo::Application()->get('secret') . $seed);
     }
 
     /**
@@ -95,7 +95,7 @@ class MolajoUtility
      */
     public static function getToken($forceNew = false)
     {
-        return Molajo::App()->getSession()->getFormToken($forceNew);
+        return Molajo::Application()->getSession()->getFormToken($forceNew);
     }
 
     /**
@@ -133,11 +133,11 @@ class MolajoUtility
      *
      * @since       11.1
      * @deprecated  1.6
-     * @see            Molajo::App()->isWinOS()
+     * @see            Molajo::Application()->isWinOS()
      */
     public static function isWinOS()
     {
-        return Molajo::App()->isWinOS();
+        return Molajo::Application()->isWinOS();
     }
 
     /**

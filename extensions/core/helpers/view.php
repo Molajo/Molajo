@@ -212,9 +212,9 @@ class MolajoViewHelper
      */
     protected function _loadLanguage()
     {
-        Molajo::App()->getLanguage()->load(
+        Molajo::Application()->getLanguage()->load(
             MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view,
-            Molajo::App()->getLanguage()->getDefault(),
+            Molajo::Application()->getLanguage()->getDefault(),
             false,
             false);
     }
@@ -235,19 +235,19 @@ class MolajoViewHelper
 
             if ($task == 'add' || $task == 'edit') {
                 $template_view_id =
-                    (int)Molajo::App()->get(
+                    (int)Molajo::Application()->get(
                         'default_edit_template_view_id',
                         0
                     );
             } else if ((int)$id == 0) {
                 $template_view_id =
-                    (int)Molajo::App()->get(
+                    (int)Molajo::Application()->get(
                         'default_items_template_view_id',
                         0
                     );
             } else {
                 $template_view_id =
-                    (int)Molajo::App()->get(
+                    (int)Molajo::Application()->get(
                     'default_item_template_view_id',
                     0
                 );
@@ -257,19 +257,19 @@ class MolajoViewHelper
         if ($type == 'wrap') {
             if ($task == 'add' || $task == 'edit') {
                 $wrap_view_id =
-                    (int)Molajo::App()->get(
+                    (int)Molajo::Application()->get(
                         'default_edit_wrap_view_id',
                         0
                     );
 
             } else if ((int)$id == 0) {
-                $wrap_view_id = (int)Molajo::App()->get(
+                $wrap_view_id = (int)Molajo::Application()->get(
                     'default_items_wrap_view_id',
                     0
                 );
 
             } else {
-                $wrap_view_id = (int)Molajo::App()->get(
+                $wrap_view_id = (int)Molajo::Application()->get(
                     'default_item_wrap_view_id',
                     0
                 );

@@ -9,7 +9,7 @@ defined('MOLAJO') or die; ?>
 <li>
     <?php echo '<strong>'.$this->row->code.' '.$this->row->title.':</strong> '.$this->row->content_text; ?>
 <?php
-if (Molajo::App()->get('debug') == 1) {
+if (Molajo::Application()->get('debug') == 1) {
     if (trim($this->row->debug_location) == '') {
     } else {
         echo 'Location: '.$this->row->debug_location.'<br />';

@@ -65,9 +65,9 @@ class MolajoThemeRenderer extends MolajoRendererController
      */
     protected function _loadLanguage()
     {
-        return Molajo::App()->getLanguage()->load
+        return Molajo::Application()->getLanguage()->load
         (Molajo::Request()->get('extension_path'),
-            Molajo::App()->getLanguage()->getDefault(),
+            Molajo::Application()->getLanguage()->getDefault(),
             false,
             false);
     }
@@ -84,24 +84,24 @@ class MolajoThemeRenderer extends MolajoRendererController
     {
         /**  Site */
         $this->_loadMediaPlus('',
-            Molajo::App()->get('media_priority_site', 100));
+            Molajo::Application()->get('media_priority_site', 100));
 
         /** Application */
         $this->_loadMediaPlus('/application' . MOLAJO_APPLICATION,
-            Molajo::App()->get('media_priority_application', 200));
+            Molajo::Application()->get('media_priority_application', 200));
 
         /** User */
         $this->_loadMediaPlus('/user' . Molajo::User()->get('id'),
-            Molajo::App()->get('media_priority_user', 300));
+            Molajo::Application()->get('media_priority_user', 300));
 
         /** Theme */
-        $priority = Molajo::App()->get('media_priority_theme', 600);
+        $priority = Molajo::Application()->get('media_priority_theme', 600);
         $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . Molajo::Request()->get('theme_name');
         $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . Molajo::Request()->get('theme_name');
 
-        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::Application()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $js = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
 
         return;
     }
@@ -119,30 +119,30 @@ class MolajoThemeRenderer extends MolajoRendererController
         /** Site Specific: Application */
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . '/' . $plus;
         $urlPath = MOLAJO_SITE_MEDIA_URL . '/' . $plus;
-        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::Application()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
 
         /** Site Specific: Site-wide */
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . $plus;
         $urlPath = MOLAJO_SITE_MEDIA_URL . $plus;
-        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
-        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::Application()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
+        $defer = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
 
         /** All Sites: Application */
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $urlPath = MOLAJO_SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::Application()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
 
         /** All Sites: Site Wide */
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . $plus;
         $urlPath = MOLAJO_SITES_MEDIA_URL . $plus;
-        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::Application()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::Application()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
 
         return;
     }
