@@ -642,11 +642,10 @@ class MolajoLanguageController
      */
     private function _parseMetadata($path)
     {
-        if ($xml = Molajo::XML($path)) {
-        } else {
+        $xml = simplexml_load_file($path);
+        if (!$xml) {
             return null;
         }
-
         if ((string)$xml->getName() == 'manifest') {
         } else {
             return null;

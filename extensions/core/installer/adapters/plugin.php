@@ -536,7 +536,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             return false;
         }
 
-        $xml = Molajo::XML($manifestFile);
+        $xml = simplexml_load_file($manifestFile);
 
         $this->manifest = $xml;
 

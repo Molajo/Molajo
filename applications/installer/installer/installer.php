@@ -1748,7 +1748,7 @@ class MolajoInstaller extends MolajoAdapter
     public function isManifest($file)
     {
         // Initialise variables.
-        $xml = Molajo::XML($file);
+        $xml = simplexml_load_file($file);
 
         // If we cannot load the XML file return null
         if (!$xml) {

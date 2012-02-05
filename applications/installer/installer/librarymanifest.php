@@ -121,7 +121,7 @@ class MolajoInstallerLibrarymanifest extends JObject
     {
         $this->manifest_file = JFile::stripExt(basename($xmlfile));
 
-        $xml = Molajo::XML($xmlfile);
+        $xml = simplexml_load_file($xmlfile);
         if (!$xml) {
             $this->_errors[] = TextHelper::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
             return false;

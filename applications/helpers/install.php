@@ -31,7 +31,7 @@ abstract class MolajoInstallHelper
             return false;
         }
 
-        $xml = Molajo::XML($path.'/manifest.xml');
+        $xml = simplexml_load_file($path.'/manifest.xml');
         if ($xml === false) {
             return false;
         }

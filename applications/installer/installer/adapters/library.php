@@ -237,7 +237,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
             // Set the plugin root path
             $this->parent->setPath('extension_root', JPATH_PLATFORM . '/' . $manifest->libraryname);
 
-            $xml = Molajo::XML($manifestFile);
+            $xml = simplexml_load_file($manifestFile);
 
             // If we cannot load the XML file return null
             if (!$xml) {

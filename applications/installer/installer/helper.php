@@ -186,7 +186,8 @@ abstract class MolajoInstallerHelper
 
         foreach ($files as $file)
         {
-            if (!$xml = Molajo::XML($file)) {
+            $xml = simplexml_load_file($file);
+            if (!$xml) {
                 continue;
             }
 

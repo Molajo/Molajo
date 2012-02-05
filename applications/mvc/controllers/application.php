@@ -347,7 +347,7 @@ class MolajoApplicationController
             || $rc->get('mvc_task') == 'display'
         ) {
 
-            /** request  */
+            /** process include statements in theme and views */
             $pc = Molajo::Parser();
             $rc->process();
 
