@@ -1,4 +1,4 @@
-# Working with Molajo Themes #
+# Working with Molajo Plugins #
 
 
 ## Need more information? ##

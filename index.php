@@ -102,16 +102,7 @@ if (defined('MOLAJO_SITE_BASE_URL')) {
 /*                                              */
 /*  APPLICATIONS LAYER                          */
 /*                                              */
-/**
- *  REPLACE JRequest Clean
 
-if (isset($_SERVER['HTTP_HOST'])) {
-    if (defined('_JREQUEST_NO_CLEAN')) {
-    } else {
-        JRequest::clean();
-    }
-}
- */
 /**
  * $_SERVER["REQUEST_URI"] everything following host
  *  ex. /molajo/administrator/index.php?option=login
@@ -178,7 +169,8 @@ require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-molajo.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-twig.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-mustache.php';
 require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-doctrine.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-simple-pie.php';
+require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-simplepie.php';
+require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-sfevent.php';
 
 abstract class JFactory extends MolajoController
 {

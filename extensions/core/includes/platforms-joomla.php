@@ -76,6 +76,7 @@ if (defined('JPATH_COMPONENT')) {
  * File Subsystem
  */
 $fileHelper = new MolajoFileHelper();
+
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/configuration.php', 'MolajoConfigurationHelper');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 
@@ -98,13 +99,6 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolde
  *  Base
  */
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
-$files = JFolder::files(JOOMLA_LIBRARY . '/base', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'object.php') {
-    } else {
-        $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/language.php', 'MolajoLanguage');
 
 /**
@@ -146,14 +140,6 @@ JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY . '/database/query.php');
  *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved
  */
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/error/profiler.php', 'JProfiler');
-
-/**
- *  Event
- */
-$files = JFolder::files(JOOMLA_LIBRARY . '/event', '\.php$', false, false);
-foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/event/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
 
 /**
  *  Filesystem (continued)

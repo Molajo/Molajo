@@ -51,6 +51,10 @@ if (defined('PLATFORM_MUSTACHE')) {
 } else {
     define('PLATFORM_MUSTACHE', PLATFORMS . '/Mustache');
 }
+if (defined('PLATFORM_SYMFONY_EVENT')) {
+} else {
+    define('PLATFORM_SYMFONY_EVENT', PLATFORMS . '/sfEvent');
+}
 
 /**
  *  Applications
