@@ -198,10 +198,10 @@ class MolajoUser extends JObject
             $id = $identifier;
 
         } else {
-            if ($id = MolajoUserHelper::getUserId($identifier)) {
+            if ($id = UserHelper::getUserId($identifier)) {
 
             } else {
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
+                MolajoError::raiseWarning('SOME_ERROR_CODE', TextHelper::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
                 return false;
             }
         }
@@ -511,17 +511,17 @@ class save_user_crud
 
             // Check the password and create the crypted password
             if (empty($array['password'])) {
-                $array['password'] = MolajoUserHelper::genRandomPassword();
+                $array['password'] = UserHelper::genRandomPassword();
                 $array['password2'] = $array['password'];
             }
 
             if (isset($array['password2']) && $array['password'] != $array['password2']) {
-                $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
+                $this->setError(TextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
                 return false;
             }
 
-            $salt = MolajoUserHelper::genRandomPassword(32);
-            $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
+            $salt = UserHelper::genRandomPassword(32);
+            $crypt = UserHelper::getCryptedPassword($array['password'], $salt);
             $array['password'] = $crypt . ':' . $salt;
 
             $this->set('register_datetime', Molajo::Date()->toMySQL());
@@ -545,12 +545,12 @@ class save_user_crud
             } else {
                 if ($array['password'] == $array['password2']) {
                 } else {
-                    $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
+                    $this->setError(TextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
                     return false;
                 }
 
-                $salt = MolajoUserHelper::genRandomPassword(32);
-                $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
+                $salt = UserHelper::genRandomPassword(32);
+                $crypt = UserHelper::getCryptedPassword($array['password'], $salt);
                 $array['password'] = $crypt . ':' . $salt;
             }
         }
@@ -620,20 +620,20 @@ class save_user_crud
                     // Check if the new user is being put into a Super Admin group.
                     foreach ($this->groups as $key => $groupId) {
                         if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
-                            throw new MolajoException(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                            throw new MolajoException(TextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                         }
                     }
                 } else {
                     // I am not a Super Admin, and this one is, so fail.
                     if ($acl->checkPermissions('user', $this->id, 'administer', '', '')) {
-                        throw new MolajoException(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                        throw new MolajoException(TextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                     }
 
                     if ($this->groups != null) {
                         // I am not a Super Admin and I'm trying to make one.
                         foreach ($this->groups as $groupId) {
                             if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
-                                throw new MolajoException(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                                throw new MolajoException(TextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                             }
                         }
                     }
@@ -667,7 +667,7 @@ class save_user_crud
             }
 
             // Fire the onAftereStoreUser event
-            $dispatcher->trigger('onUserAfterSave', array($this->getProperties(), $isNew, $result, $this->getError()));
+//            $dispatcher->trigger('onUserAfterSave', array($this->getProperties(), $isNew, $result, $this->getError()));
         }
         catch (Exception $e)
         {

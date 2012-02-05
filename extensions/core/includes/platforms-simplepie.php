@@ -9,6 +9,6 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new MolajoFileHelper();
+$fileHelper = new FileHelper();
 $fileHelper->requireClassFile(PLATFORMS . '/jplatform/simplepie/simplepie.php', 'SimplePie');
 

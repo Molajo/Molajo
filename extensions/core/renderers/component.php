@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoRendererComponent extends MolajoRenderer
+class MolajoComponentRenderer extends MolajoRenderer
 {
     /**
      * _setRequest
@@ -129,7 +129,7 @@ class MolajoRendererComponent extends MolajoRenderer
         }
 
         $this->mvc->set('extension_path',
-            MolajoComponentHelper::getPath(
+            ComponentHelper::getPath(
                 strtolower($this->mvc->get('extension_instance_name'))));
 
         $this->mvc->set('extension_type', 'component');
@@ -147,7 +147,7 @@ class MolajoRendererComponent extends MolajoRenderer
      */
     protected function _importClasses()
     {
-        $fileHelper = new MolajoFileHelper();
+        $fileHelper = new FileHelper();
 
         $name = ucfirst($this->mvc->get('extension_instance_name'));
         $name = str_replace (array('-', '_'), '', $name);

@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Text Helper
+ * Text
  *
  * @package     Molajo
  * @subpackage  Helper
@@ -25,11 +25,11 @@ class MolajoTextHelper
      * Translates a string into the current language.
      *
      * Examples:
-     * <script>alert(Joomla.MolajoTextHelper._('<?php echo MolajoTextHelper::_("JDEFAULT", array("script"=>true));?>'));</script> will generate an alert message containing 'Default'
-     * <?php echo MolajoTextHelper::_("JDEFAULT");?> it will generate a 'Default' string
+     * <script>alert(Joomla.TextHelper._('<?php echo TextHelper::_("JDEFAULT", array("script"=>true));?>'));</script> will generate an alert message containing 'Default'
+     * <?php echo TextHelper::_("JDEFAULT");?> it will generate a 'Default' string
      *
      * @param   string         The string to translate.
-     * @param   boolean|array  boolean: Make the result javascript safe. array an array of option as described in the MolajoTextHelper::sprintf function
+     * @param   boolean|array  boolean: Make the result javascript safe. array an array of option as described in the TextHelper::sprintf function
      * @param   boolean        To interpret backslashes (\\=\, \n=carriage return, \t=tabulation)
      * @param   boolean        To indicate that the string will be push in the javascript language store
      *
@@ -74,12 +74,12 @@ class MolajoTextHelper
      * Translates a string into the current language.
      *
      * Examples:
-     * <?php echo MolajoTextHelper::alt("JALL","language");?> it will generate a 'All' string in English but a "Toutes" string in French
-     * <?php echo MolajoTextHelper::alt("JALL","module");?> it will generate a 'All' string in English but a "Tous" string in French
+     * <?php echo TextHelper::alt("JALL","language");?> it will generate a 'All' string in English but a "Toutes" string in French
+     * <?php echo TextHelper::alt("JALL","module");?> it will generate a 'All' string in English but a "Tous" string in French
      *
      * @param   string         The string to translate.
      * @param   string         The alternate option for global string
-     * @param   boolean|array  boolean: Make the result javascript safe. array an array of option as described in the MolajoTextHelper::sprintf function
+     * @param   boolean|array  boolean: Make the result javascript safe. array an array of option as described in the TextHelper::sprintf function
      * @param   boolean        To interpret backslashes (\\=\, \n=carriage return, \t=tabulation)
      * @param   boolean        To indicate that the string will be pushed in the javascript language store
      *
@@ -324,3 +324,4 @@ class MolajoTextHelper
         return ucfirst($generator->getContent($count, $html_format, $start_with_lorem_ipsum));
     }
 }
+Class TextHelper extends MolajoTextHelper {}

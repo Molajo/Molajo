@@ -10,10 +10,8 @@ defined('MOLAJO') or die;
 /**
  * Asset
  *
- * Various queries for Asset support
- *
  * @package     Molajo
- * @subpackage  Asset
+ * @subpackage  Component
  * @since       1.0
  */
 abstract class MolajoAssetHelper
@@ -77,10 +75,10 @@ abstract class MolajoAssetHelper
         } else {
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY'),
+                $message = TextHelper::_('ERROR_DATABASE_QUERY'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoAssetHelper::get',
+                $debug_location = 'AssetHelper::get',
                 $debug_object = $db
             );
             return false;
@@ -138,7 +136,7 @@ abstract class MolajoAssetHelper
      */
     public static function getAssetRequestObject($request)
     {
-        $row = MolajoAssetHelper::get(
+        $row = AssetHelper::get(
             (int)$request->get('request_asset_id'),
             $request->get('request_url_query')
         );
@@ -250,10 +248,10 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+                $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoAssetHelper::getID',
+                $debug_location = 'AssetHelper::getID',
                 $debug_object = $db
             );
             return false;
@@ -301,10 +299,10 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+                $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoAssetHelper::getURL',
+                $debug_location = 'AssetHelper::getURL',
                 $debug_object = $db
             );
             return false;

@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Tag
+ * Formfield
  *
  * @package     Molajo
  * @subpackage  Renderer
  * @since       1.0
  */
-class MolajoRendererFormfield extends MolajoRenderer {}
+class MolajoFormfieldRenderer extends MolajoRenderer {}

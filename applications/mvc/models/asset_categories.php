@@ -109,7 +109,7 @@ class MolajoModelAssetCategories extends MolajoModel
     {
         // Check for a title.
         if (trim($this->title) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
             return false;
         }
         $this->alias = trim($this->alias);
@@ -189,7 +189,7 @@ class MolajoModelAssetCategories extends MolajoModel
             && ($table->id != $this->id || $this->id == 0)
         ) {
 
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_CATEGORY_UNIQUE_ALIAS'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_CATEGORY_UNIQUE_ALIAS'));
             return false;
         }
         return parent::store($updateNulls);

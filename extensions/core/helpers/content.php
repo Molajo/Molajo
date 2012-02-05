@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Content
  *
  * @package     Molajo
- * @subpackage  Content
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class MolajoContentHelper
@@ -85,12 +85,12 @@ abstract class MolajoContentHelper
         } else {
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.
+                $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.
                     $db->getErrorNum().' '.
                     $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoContentHelper::_get',
+                $debug_location = 'ContentHelper::_get',
                 $debug_object = $db
             );
             return $this->request->set('status_found', false);

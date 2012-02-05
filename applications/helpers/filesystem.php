@@ -9,10 +9,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Application Helper
+ * Configuration
  *
  * @package     Molajo
- * @subpackage  File System Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoFilesystemHelper
@@ -201,7 +201,7 @@ class MolajoFilesystemHelper
         if (!$streams) {
             $streams = array_merge(
                 stream_get_wrappers(),
-                MolajoFilesystemHelper::getJStreams()
+                FilesystemHelper::getJStreams()
             );
         }
 
@@ -265,7 +265,7 @@ class MolajoFilesystemHelper
     {
         return in_array(
             $streamname,
-            MolajoFilesystemHelper::getJStreams()
+            FilesystemHelper::getJStreams()
         );
     }
 }

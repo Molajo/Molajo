@@ -1,23 +1,19 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Mail
- *
+ * @package     Molajo
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-
 defined('MOLAJO') or die;
 
 /**
- * Email helper class, provides static methods to perform various tasks relevant
- * to the Joomla email routines.
+ * Mail
  *
- * TODO: Test these methods as the regex work is first run and not tested thoroughly
- *
- * @package     Joomla.Platform
- * @subpackage  Mail
- * @since       11.1
+ * @package     Molajo
+ * @subpackage  Helper
+ * @since       1.0
  */
 abstract class MolajoMailHelper
 {

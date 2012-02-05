@@ -157,7 +157,7 @@ class MolajoModel extends JObject
         $modelClass = $prefix . ucfirst($name);
         if (class_exists($modelClass)) {
         } else {
-            MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
+            MolajoError::raiseWarning(0, TextHelper::sprintf('MOLAJO_DB_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
             return false;
         }
 
@@ -428,7 +428,7 @@ class MolajoModel extends JObject
         }
 
         if (empty($row)) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_EMPTY_ROW_RETURNED'));
+            $e = new MolajoException(TextHelper::_('MOLAJO_DB_ERROR_EMPTY_ROW_RETURNED'));
             $this->setError($e);
             return false;
         }
@@ -544,7 +544,7 @@ class MolajoModel extends JObject
             || is_array($source)
         ) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -605,7 +605,7 @@ class MolajoModel extends JObject
 
         if ($stored) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -671,7 +671,7 @@ class MolajoModel extends JObject
 
         //			if ($this->_db->query()) {
         //            } else {
-        //				$e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
+        //				$e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
         //				$this->setError($e);
         //				return false;
         //			}
@@ -694,7 +694,7 @@ class MolajoModel extends JObject
         $pk = (is_null($pk)) ? $this->$k : $pk;
 
         if ($pk === null) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(TextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -727,7 +727,7 @@ class MolajoModel extends JObject
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -765,7 +765,7 @@ class MolajoModel extends JObject
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(TextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -783,7 +783,7 @@ class MolajoModel extends JObject
 
         if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CHECKOUT_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_CHECKOUT_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -820,7 +820,7 @@ class MolajoModel extends JObject
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(TextHelper::_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -836,7 +836,7 @@ class MolajoModel extends JObject
         // Check for a database error.
         if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CHECKIN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_CHECKIN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -903,7 +903,7 @@ class MolajoModel extends JObject
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -923,7 +923,7 @@ class MolajoModel extends JObject
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
             $e = new MolajoException(
-                MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_GET_NEXT_ORDER_FAILED', get_class($this), $this->_db->getErrorMsg())
+                TextHelper::sprintf('MOLAJO_DB_ERROR_GET_NEXT_ORDER_FAILED', get_class($this), $this->_db->getErrorMsg())
             );
             $this->setError($e);
 
@@ -951,7 +951,7 @@ class MolajoModel extends JObject
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -976,7 +976,7 @@ class MolajoModel extends JObject
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -999,7 +999,7 @@ class MolajoModel extends JObject
                     if ($this->_db->query()) {
                     } else {
                         $e = new MolajoException(
-                            MolajoTextHelper::sprintf(
+                            TextHelper::sprintf(
                                 'MOLAJO_DB_ERROR_REORDER_UPDATE_ROW_FAILED', get_class($this), $i, $this->_db->getErrorMsg()
                             )
                         );
@@ -1032,7 +1032,7 @@ class MolajoModel extends JObject
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -1084,7 +1084,7 @@ class MolajoModel extends JObject
             // Check for a database error.
             if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -1101,7 +1101,7 @@ class MolajoModel extends JObject
             // Check for a database error.
             if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -1117,7 +1117,7 @@ class MolajoModel extends JObject
             // Check for a database error.
             if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -1161,7 +1161,7 @@ class MolajoModel extends JObject
             }
             // Nothing to set publishing state on, return false.
             else {
-                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
+                $e = new MolajoException(TextHelper::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 $this->setError($e);
 
                 return false;
@@ -1190,7 +1190,7 @@ class MolajoModel extends JObject
         // Check for a database error.
         if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1272,7 +1272,7 @@ class MolajoModel extends JObject
             foreach ($joins as $table) {
                 $k = $table['idfield'] . $i;
                 if ($row->$k) {
-                    $msg[] = MolajoTextHelper::_($table['label']);
+                    $msg[] = TextHelper::_($table['label']);
                 }
 
                 $i++;

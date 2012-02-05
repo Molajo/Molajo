@@ -236,7 +236,7 @@ class MolajoControllerApplication
                 $config = new JRegistry;
             }
 
-            $_appQueryResults = MolajoApplicationHelper::getApplicationInfo($id);
+            $_appQueryResults = AppHelper::getApplicationInfo($id);
             if ($_appQueryResults === false) {
                 return false;
             }

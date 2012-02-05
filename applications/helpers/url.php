@@ -9,10 +9,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * URL
  *
  * @package     Molajo
- * @subpackage  URL Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoUrlHelper

@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * View
+ * Content
  *
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  View
  * @since       1.0
  */
 class MolajoViewHelper

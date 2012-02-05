@@ -62,16 +62,16 @@ Molajo::User()->view_groups;
 /** Basic Message, for example: "Article saved." or "Title required."  */
 Molajo::App()
     ->setMessage(
-        MolajoTextHelper::_('Title required for article.'),
+        TextHelper::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
 );
 
 Molajo::App()
     ->setMessage(
-        $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY'),
+        $message = TextHelper::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
         $code = null,
-        $debug_location = 'MolajoAssetHelper::get',
+        $debug_location = 'AssetHelper::get',
         $debug_object = $query->__toString()
 );
 

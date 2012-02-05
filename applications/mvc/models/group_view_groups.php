@@ -57,7 +57,7 @@ class MolajoModelGroupViewGroups extends MolajoModel
     {
         // Validate the title.
         if ((trim($this->title)) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_GROUPING'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_GROUPING'));
             return false;
         }
 

@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Transliterate Helper
+ * Transliterate
  *
  * @package     Molajo
  * @subpackage  Helper

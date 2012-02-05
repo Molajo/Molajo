@@ -43,8 +43,8 @@ class MolajoFieldFeatured extends MolajoField
     public function getOptions()
     {
         $options = array();
-        $options[] = MolajoHTML::_('select.option', '0', MolajoTextHelper::_('MOLAJO_OPTION_UNFEATURED'));
-        $options[] = MolajoHTML::_('select.option', '1', MolajoTextHelper::_('MOLAJO_OPTION_FEATURED'));
+        $options[] = MolajoHTML::_('select.option', '0', TextHelper::_('MOLAJO_OPTION_UNFEATURED'));
+        $options[] = MolajoHTML::_('select.option', '1', TextHelper::_('MOLAJO_OPTION_FEATURED'));
         return $options;
     }
 

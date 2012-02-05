@@ -94,7 +94,7 @@ class MolajoControllerLogin
         }
 
         /** success message */
-        $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_SUCCESSFUL_LOGON'));
+        $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_SUCCESSFUL_LOGON'));
         $this->redirectClass->setSuccessIndicator(true);
     }
 
@@ -118,8 +118,8 @@ class MolajoControllerLogin
 
         if (isset($options['silent']) && $options['silent']) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('JLIB_LOGIN_AUTHORIZED'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('warning'));
+            $this->redirectClass->setRedirectMessage(TextHelper::_('JLIB_LOGIN_AUTHORIZED'));
+            $this->redirectClass->setRedirectMessageType(TextHelper::_('warning'));
         }
         return $this->redirectClass->setSuccessIndicator(false);
     }

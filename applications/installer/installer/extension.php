@@ -107,9 +107,9 @@ class MolajoInstallerExtension extends JObject
                 case 'theme':
                 case 'language':
                     $this->application = (string)$element->attributes()->application;
-                    $tmp_application_id = MolajoApplicationHelper::getApplicationInfo($this->application, 1);
+                    $tmp_application_id = AppHelper::getApplicationInfo($this->application, 1);
                     if ($tmp_application_id == null) {
-                        MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
+                        MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
                     }
                     else
                     {
@@ -125,7 +125,7 @@ class MolajoInstallerExtension extends JObject
                     // Catch all
                     // Get and set application and group if we don't recognise the extension
                     if ($application = (string)$element->attributes()->application) {
-                        $this->application_id = MolajoApplicationHelper::getApplicationInfo($this->application, 1);
+                        $this->application_id = AppHelper::getApplicationInfo($this->application, 1);
                         $this->application_id = $this->application_id->id;
                     }
                     if ($group = (string)$element->attributes()->group) {

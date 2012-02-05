@@ -39,7 +39,7 @@ class MolajoACL
         if (method_exists($aclClass, $authoriseTaskMethod)) {
             return $aclClass->$authoriseTaskMethod ($option, $entity, $task, $item);
         } else {
-            MolajoError::raiseError(403, MolajoTextHelper::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND') . ' ' . $aclClass . '::' . $authoriseTaskMethod);
+            MolajoError::raiseError(403, TextHelper::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND') . ' ' . $aclClass . '::' . $authoriseTaskMethod);
             return false;
         }
     }
@@ -235,7 +235,7 @@ class MolajoACL
         if (method_exists($aclClass, $method)) {
             $aclClass->$method ($option, $entity, $task, $id, $form, $item);
         } else {
-            MolajoError::raiseError(403, MolajoTextHelper::_('MOLAJO_ACL_CLASS_METHOD_FORM_AUTH_NOT_FOUND') . ' ' . $aclClass . '::' . $method);
+            MolajoError::raiseError(403, TextHelper::_('MOLAJO_ACL_CLASS_METHOD_FORM_AUTH_NOT_FOUND') . ' ' . $aclClass . '::' . $method);
             return false;
         }
     }
@@ -269,11 +269,11 @@ class MolajoACL
             if (method_exists($default_class, $method)) {
                 return $default_class;
             } else {
-                MolajoError::raiseError(403, MolajoTextHelper::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND') . ' ' . $default_class . '::' . $method);
+                MolajoError::raiseError(403, TextHelper::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND') . ' ' . $default_class . '::' . $method);
                 return false;
             }
         } else {
-            MolajoError::raiseError(403, MolajoTextHelper::_('MOLAJO_ACL_DEFAULT_CLASS_NOT_FOUND') . ' ' . $default_class);
+            MolajoError::raiseError(403, TextHelper::_('MOLAJO_ACL_DEFAULT_CLASS_NOT_FOUND') . ' ' . $default_class);
             return false;
         }
     }

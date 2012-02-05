@@ -287,7 +287,7 @@ class MolajoRenderer
      */
     protected function _getExtension()
     {
-        $results = MolajoExtensionHelper::getExtensionRequestObject($this->mvc);
+        $results = ExtensionHelper::getExtensionRequestObject($this->mvc);
 
         if ($results === false) {
             return false;
@@ -309,7 +309,7 @@ class MolajoRenderer
     {
         if ((int)$this->mvc->get('template_view_id', 0) == 0) {
             $this->mvc->set('template_view_id',
-                MolajoViewHelper::getViewDefaults('view',
+                ViewHelper::getViewDefaults('view',
                     $this->mvc->get('mvc_model'),
                     $this->mvc->get('mvc_task', ''),
                     (int)$this->mvc->get('mvc_id', 0))
@@ -319,7 +319,7 @@ class MolajoRenderer
         /** wrap */
         if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
             $this->mvc->set('wrap_view_id',
-                MolajoViewHelper::getViewDefaults('wrap',
+                ViewHelper::getViewDefaults('wrap',
                     $this->mvc->get('mvc_model'),
                     $this->mvc->get('mvc_task', ''),
                     (int)$this->mvc->get('mvc_id', 0))
@@ -343,7 +343,7 @@ class MolajoRenderer
         /** retrieve id or name */
         if ((int)$this->mvc->get('template_view_id', 0) == 0) {
             $this->mvc->set('template_view_id',
-                MolajoExtensionHelper::getInstanceID(
+                ExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
                     $this->mvc->get('template_view_name'),
                     'templates'
@@ -351,7 +351,7 @@ class MolajoRenderer
             );
         } else {
             $this->mvc->set('template_view_name',
-                MolajoExtensionHelper::getInstanceTitle(
+                ExtensionHelper::getInstanceTitle(
                     $this->mvc->get('template_view_id')
                 )
             );
@@ -374,7 +374,7 @@ class MolajoRenderer
         /** retrieve id or name */
         if ((int)$this->mvc->get('wrap_view_id', 0) == 0) {
             $this->mvc->set('wrap_view_id',
-                MolajoExtensionHelper::getInstanceID(
+                ExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW,
                     $this->mvc->get('wrap_view_name'),
                     'wraps'
@@ -382,7 +382,7 @@ class MolajoRenderer
             );
         } else {
             $this->mvc->set('wrap_view_name',
-                MolajoExtensionHelper::getInstanceTitle(
+                ExtensionHelper::getInstanceTitle(
                     $this->mvc->get('wrap_view_id')
                 )
             );
@@ -425,7 +425,7 @@ class MolajoRenderer
      */
     protected function _loadLanguage()
     {
-        return MolajoExtensionHelper::loadLanguage($this->mvc->get('extension_path'));
+        return ExtensionHelper::loadLanguage($this->mvc->get('extension_path'));
     }
 
     /**

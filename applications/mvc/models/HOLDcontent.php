@@ -125,7 +125,7 @@ class MolajoModelContent extends MolajoModel
     {
         /** title **/
         if (trim($this->title) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
+            $this->setError(TextHelper::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
             return false;
         }
 

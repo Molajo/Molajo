@@ -117,7 +117,6 @@ class MolajoController
         } else {
             self::$application = MolajoControllerApplication::getInstance($id, $config, $input);
         }
-
         return self::$application;
     }
 
@@ -140,7 +139,6 @@ class MolajoController
         } else {
             self::$request = MolajoControllerRequest::getInstance($request, $override_request_url, $override_asset_id);
         }
-
         return self::$request;
     }
 
@@ -191,7 +189,6 @@ class MolajoController
             self::$db = self::_createDbo();
             self::$db->debug($debug);
         }
-
         return self::$db;
     }
 
@@ -299,7 +296,7 @@ class MolajoController
         }
 
         if (empty($xml)) {
-            MolajoError::raiseWarning(100, MolajoTextHelper::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
+            MolajoError::raiseWarning(100, TextHelper::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
 
             if ($isFile) {
                 MolajoError::raiseWarning(100, $data);
@@ -411,7 +408,7 @@ class MolajoController
         }
 
         if ($db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $db->getErrorNum(), $db->getErrorMsg()));
+            MolajoError::raiseError(500, TextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $db->getErrorNum(), $db->getErrorMsg()));
         }
 
         return $db;
@@ -619,6 +616,11 @@ class Molajo extends MolajoController
     public static function DB()
     {
         return MolajoController::getDbo();
+    }
+
+    public static function XML($data, $isFile = true)
+    {
+        return MolajoController::getXML($data, $isFile);
     }
 
     public static function Mailer()

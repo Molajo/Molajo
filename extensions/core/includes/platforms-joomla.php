@@ -75,7 +75,7 @@ if (defined('JPATH_COMPONENT')) {
 /**
  * File Subsystem
  */
-$fileHelper = new MolajoFileHelper();
+$fileHelper = new FileHelper();
 
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/configuration.php', 'MolajoConfigurationHelper');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
@@ -85,7 +85,7 @@ require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/helpers/text.php';
 if (class_exists('JText')) {
 } else {
-    class JText extends MolajoTextHelper
+    class JText extends TextHelper
     {
     }
 }

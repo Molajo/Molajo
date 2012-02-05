@@ -368,7 +368,7 @@ class MolajoInstaller extends MolajoAdapter
         $debug = $conf->get('debug');
 
         if ($debug) {
-            MolajoError::raiseError(500, MolajoTextHelper::_('JLIB_INSTALLER_ABORT_DEBUG') . $msg);
+            MolajoError::raiseError(500, TextHelper::_('JLIB_INSTALLER_ABORT_DEBUG') . $msg);
         }
 
         return $retval;
@@ -392,12 +392,12 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_NOINSTALLPATH'));
+            $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_NOINSTALLPATH'));
             return false;
         }
 
         if (!$this->setupInstall()) {
-            $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
+            $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
 
             return false;
         }
@@ -454,13 +454,13 @@ class MolajoInstaller extends MolajoAdapter
             $this->extension = MolajoModel::getInstance('extension');
 
             if (!$this->extension->load($eid)) {
-                $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
+                $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
 
                 return false;
             }
 
             if ($this->extension->state != -1) {
-                $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_ALREADYINSTALLED'));
+                $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_ALREADYINSTALLED'));
 
                 return false;
             }
@@ -509,7 +509,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
                 else
                 {
-                    $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED'));
+                    $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED'));
 
                     return false;
                 }
@@ -519,7 +519,7 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_EXTENSIONNOTVALID'));
+            $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_EXTENSIONNOTVALID'));
 
             return false;
         }
@@ -571,11 +571,11 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_NOUPDATEPATH'));
+            $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_NOUPDATEPATH'));
         }
 
         if (!$this->setupInstall()) {
-            return $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
+            return $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
         }
 
         $type = (string)$this->manifest->attributes()->type;
@@ -667,12 +667,12 @@ class MolajoInstaller extends MolajoAdapter
             $this->extension = MolajoModel::getInstance('extension');
 
             if (!$this->extension->load($eid)) {
-                $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
+                $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
                 return false;
             }
 
             if ($this->extension->state == -1) {
-                $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE'));
+                $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE'));
                 return false;
             }
 
@@ -697,7 +697,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
                 else
                 {
-                    $this->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED_TYPE', $this->extension->type));
+                    $this->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED_TYPE', $this->extension->type));
 
                     return false;
                 }
@@ -707,7 +707,7 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE_VALID'));
+            $this->abort(TextHelper::_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE_VALID'));
 
             return false;
         }
@@ -777,7 +777,7 @@ class MolajoInstaller extends MolajoAdapter
             $db->setQuery($query->data());
 
             if (!$db->query()) {
-                MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
+                MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
 
                 return false;
             }
@@ -830,7 +830,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 // Check that sql files exists before reading. Otherwise raise error for rollback
                 if (!file_exists($sqlfile)) {
-                    MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_FILENOTFOUND', $sqlfile));
+                    MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_FILENOTFOUND', $sqlfile));
 
                     return false;
                 }
@@ -839,7 +839,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 // Graceful exit and rollback if read not successful
                 if ($buffer === false) {
-                    MolajoError::raiseWarning(1, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
+                    MolajoError::raiseWarning(1, TextHelper::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
 
                     return false;
                 }
@@ -862,7 +862,7 @@ class MolajoInstaller extends MolajoAdapter
                         $db->setQuery($query->__toString());
 
                         if (!$db->query()) {
-                            MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
+                            MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
 
                             return false;
                         }
@@ -995,7 +995,7 @@ class MolajoInstaller extends MolajoAdapter
 
                                 // Graceful exit and rollback if read not successful
                                 if ($buffer === false) {
-                                    MolajoError::raiseWarning(1, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
+                                    MolajoError::raiseWarning(1, TextHelper::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
 
                                     return false;
                                 }
@@ -1017,7 +1017,7 @@ class MolajoInstaller extends MolajoAdapter
                                         $db->setQuery($query->__toString());
 
                                         if (!$db->query()) {
-                                            MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
+                                            MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
 
                                             return false;
                                         }
@@ -1077,7 +1077,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Get the client info
         jimport('joomla.application.helper');
-        $client = MolajoApplicationHelper::getApplicationInfo($cid);
+        $client = AppHelper::getApplicationInfo($cid);
 
         /*
            * Here we set the folder we are going to remove the files from.
@@ -1154,7 +1154,7 @@ class MolajoInstaller extends MolajoAdapter
                 $newdir = dirname($path['dest']);
 
                 if (!JFolder::create($newdir)) {
-                    MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
+                    MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
                     return false;
                 }
             }
@@ -1190,7 +1190,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Get the client info
         jimport('joomla.application.helper');
-        $client = MolajoApplicationHelper::getApplicationInfo($cid);
+        $client = AppHelper::getApplicationInfo($cid);
 
         // Here we set the folder we are going to copy the files to.
         // 'languages' Files are copied to MOLAJO_BASE_FOLDER/language/ folder
@@ -1230,7 +1230,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 if ((string)$file->attributes()->client != '') {
                     // Override the client
-                    $langclient = MolajoApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
+                    $langclient = AppHelper::getApplicationInfo((string)$file->attributes()->client, true);
                     $path['dest'] = $langclient->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
                 }
                 else
@@ -1259,7 +1259,7 @@ class MolajoInstaller extends MolajoAdapter
                 $newdir = dirname($path['dest']);
 
                 if (!JFolder::create($newdir)) {
-                    MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
+                    MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 
                     return false;
                 }
@@ -1295,7 +1295,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Get the client info
         jimport('joomla.application.helper');
-        $client = MolajoApplicationHelper::getApplicationInfo($cid);
+        $client = AppHelper::getApplicationInfo($cid);
 
         // Here we set the folder we are going to copy the files to.
         //	Default 'media' Files are copied to the MOLAJO_BASE_FOLDER/media folder
@@ -1337,7 +1337,7 @@ class MolajoInstaller extends MolajoAdapter
                 $newdir = dirname($path['dest']);
 
                 if (!JFolder::create($newdir)) {
-                    MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
+                    MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 
                     return false;
                 }
@@ -1439,7 +1439,7 @@ class MolajoInstaller extends MolajoAdapter
                           * The source file does not exist.  Nothing to copy so set an error
                           * and return false.
                           */
-                    MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_NO_FILE', $filesource));
+                    MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_NO_FILE', $filesource));
 
                     return false;
                 }
@@ -1454,7 +1454,7 @@ class MolajoInstaller extends MolajoAdapter
                     // The destination file already exists and the overwrite flag is false.
                     // Set an error and return false.
 
-                    MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_FILE_EXISTS', $filedest));
+                    MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_FILE_EXISTS', $filedest));
 
                     return false;
                 }
@@ -1463,7 +1463,7 @@ class MolajoInstaller extends MolajoAdapter
                     // Copy the folder or file to the new location.
                     if ($filetype == 'folder') {
                         if (!(JFolder::copy($filesource, $filedest, null, $overwrite))) {
-                            MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FOLDER', $filesource, $filedest));
+                            MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FOLDER', $filesource, $filedest));
                             return false;
                         }
 
@@ -1472,7 +1472,7 @@ class MolajoInstaller extends MolajoAdapter
                     else
                     {
                         if (!(JFile::copy($filesource, $filedest, null))) {
-                            MolajoError::raiseWarning(1, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FILE', $filesource, $filedest));
+                            MolajoError::raiseWarning(1, TextHelper::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FILE', $filesource, $filedest));
 
                             return false;
                         }
@@ -1530,7 +1530,7 @@ class MolajoInstaller extends MolajoAdapter
         jimport('joomla.application.helper');
 
         if ($cid > -1) {
-            $client = MolajoApplicationHelper::getApplicationInfo($cid);
+            $client = AppHelper::getApplicationInfo($cid);
         }
         else
         {
@@ -1570,7 +1570,7 @@ class MolajoInstaller extends MolajoAdapter
                 $lang_client = (string)$element->attributes()->client;
 
                 if ($lang_client) {
-                    $client = MolajoApplicationHelper::getApplicationInfo($lang_client, true);
+                    $client = AppHelper::getApplicationInfo($lang_client, true);
                     $source = $client->path . '/language';
                 }
                 else
@@ -1614,7 +1614,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
                 else
                 {
-                    $target_client = MolajoApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
+                    $target_client = AppHelper::getApplicationInfo((string)$file->attributes()->client, true);
                     $path = $target_client->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
                 }
 
@@ -1664,7 +1664,7 @@ class MolajoInstaller extends MolajoAdapter
     {
         // Get the client info
         jimport('joomla.application.helper');
-        $client = MolajoApplicationHelper::getApplicationInfo($cid);
+        $client = AppHelper::getApplicationInfo($cid);
 
         $path['src'] = $this->getPath('manifest');
 
@@ -1724,14 +1724,14 @@ class MolajoInstaller extends MolajoAdapter
             }
 
             // None of the XML files found were valid install files
-            MolajoError::raiseWarning(1, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+            MolajoError::raiseWarning(1, TextHelper::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
 
             return false;
         }
         else
         {
             // No XML files were found in the install folder
-            MolajoError::raiseWarning(1, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+            MolajoError::raiseWarning(1, TextHelper::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
             return false;
         }
     }
@@ -1748,7 +1748,7 @@ class MolajoInstaller extends MolajoAdapter
     public function isManifest($file)
     {
         // Initialise variables.
-        $xml = Molajo::getXML($file);
+        $xml = Molajo::XML($file);
 
         // If we cannot load the XML file return null
         if (!$xml) {
@@ -1778,7 +1778,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function generateManifestCache()
     {
-        return json_encode(MolajoInstallHelper::parseManifestXML($this->getPath('manifest')));
+        return json_encode(InstallHelper::parseManifestXML($this->getPath('manifest')));
     }
 
     /**

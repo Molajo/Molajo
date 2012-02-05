@@ -2,17 +2,16 @@
 /**
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Language Helper
+ * Language
  *
  * @package     Molajo
- * @subpackage  Language Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoLanguageHelper
@@ -39,7 +38,7 @@ class MolajoLanguageHelper
             $installed == false;
 
         } elseif ($installed === true) {
-            $installed_languages = MolajoExtensionHelper::get(2);
+            $installed_languages = ExtensionHelper::get(2);
         }
 
         foreach ($languages as $language => $metadata)
@@ -70,7 +69,7 @@ class MolajoLanguageHelper
         /** 1. request */
         if (empty($options['language'])) {
             $language = JRequest::getString('language', null);
-            if ($language && MolajoLanguageHelper::exists($language)) {
+            if ($language && LanguageHelper::exists($language)) {
                 $options['language'] = $language;
             }
         }
@@ -78,7 +77,7 @@ class MolajoLanguageHelper
         /** 2. user option for user */
         if (empty($options['language'])) {
             $language = Molajo::User()->getParameter('language');
-            if ($language && MolajoLanguageHelper::exists($language)) {
+            if ($language && LanguageHelper::exists($language)) {
                 $options['language'] = $language;
             }
         }
@@ -86,8 +85,8 @@ class MolajoLanguageHelper
         /** 3. browser detection */
         if (empty($options['language'])) {
             if ($detect_browser && empty($options['language'])) {
-                $language = MolajoLanguageHelper::detectLanguage();
-                if ($language && MolajoLanguageHelper::exists($language)) {
+                $language = LanguageHelper::detectLanguage();
+                if ($language && LanguageHelper::exists($language)) {
                     $options['language'] = $language;
                 }
             }
@@ -96,13 +95,13 @@ class MolajoLanguageHelper
         /** 4. site default for application */
         if (empty($options['language'])) {
             $language = $config->get('language', 'en-GB');
-            if ($language && MolajoLanguageHelper::exists($language)) {
+            if ($language && LanguageHelper::exists($language)) {
                 $options['language'] = $language;
             }
         }
 
         /** 5. default */
-        if (MolajoLanguageHelper::exists($options['language'])) {
+        if (LanguageHelper::exists($options['language'])) {
         } else {
             $options['language'] = 'en-GB';
         }
@@ -170,14 +169,14 @@ class MolajoLanguageHelper
             // Installation uses available languages
             if (MOLAJO_APPLICATION_ID == 0) {
                 $languages[$key] = array();
-                $knownLangs = MolajoLanguageHelper::getKnownLanguages(MOLAJO_BASE_FOLDER);
+                $knownLangs = LanguageHelper::getKnownLanguages(MOLAJO_BASE_FOLDER);
                 foreach ($knownLangs as $metadata)
                 {
                     // take off 3 letters iso code languages as they can't match browsers' languages and default them to en
                     $languages[$key][] = new JObject(array('lang_code' => $metadata['tag']));
                 }
             } else {
-                $languages['default'] = MolajoExtensionHelper::get(2);
+                $languages['default'] = ExtensionHelper::get(2);
                 $languages['sef'] = array();
                 $languages['lang_code'] = array();
 

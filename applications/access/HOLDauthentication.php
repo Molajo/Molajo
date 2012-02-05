@@ -93,7 +93,7 @@ class MolajoAuthentication extends JObservable
 
         if ($isLoaded) {
         } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
+            MolajoError::raiseWarning('SOME_ERROR_CODE', TextHelper::_('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
         }
     }
 
@@ -158,7 +158,7 @@ class MolajoAuthentication extends JObservable
             }
             else {
                 // Bail here if the plugin can't be created
-                MolajoError::raiseWarning(50, MolajoTextHelper::sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+                MolajoError::raiseWarning(50, TextHelper::sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
                 continue;
             }
 
@@ -216,7 +216,7 @@ class MolajoAuthentication extends JObservable
             }
             else {
                 // Bail here if the plugin can't be created
-                MolajoError::raiseWarning(50, MolajoTextHelper::sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+                MolajoError::raiseWarning(50, TextHelper::sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
                 continue;
             }
 
@@ -260,15 +260,15 @@ class MolajoAuthentication extends JObservable
                     {
                         case MolajoAuthentication::STATUS_EXPIRED:
                             $response->status = STATUS_EXPIRED;
-                            return MolajoError::raiseWarning('102002', MolajoTextHelper::_('JLIB_LOGIN_EXPIRED'));
+                            return MolajoError::raiseWarning('102002', TextHelper::_('JLIB_LOGIN_EXPIRED'));
                             break;
                         case MolajoAuthentication::STATUS_DENIED:
                             $response->status = STATUS_DENIED;
-                            return MolajoError::raiseWarning('102003', MolajoTextHelper::_('JLIB_LOGIN_DENIED'));
+                            return MolajoError::raiseWarning('102003', TextHelper::_('JLIB_LOGIN_DENIED'));
                             break;
                         default:
                             $response->status = STATUS_FAILURE;
-                            return MolajoError::raiseWarning('102004', MolajoTextHelper::_('JLIB_LOGIN_AUTHORISATION'));
+                            return MolajoError::raiseWarning('102004', TextHelper::_('JLIB_LOGIN_AUTHORISATION'));
                             break;
                     }
                 }

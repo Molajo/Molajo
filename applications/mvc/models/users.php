@@ -153,22 +153,22 @@ class MolajoModelUsers extends MolajoModel
     function check()
     {
         if (trim($this->name) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_PLEASE_ENTER_YOUR_NAME'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_PLEASE_ENTER_YOUR_NAME'));
             return false;
         }
 
         if (trim($this->username) == '') {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_PLEASE_ENTER_A_USER_NAME'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_PLEASE_ENTER_A_USER_NAME'));
             return false;
         }
 
         if (preg_match("#[<>\"'%;()&]#i", $this->username) || strlen(utf8_decode($this->username)) < 2) {
-            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_VALID_AZ09', 2));
+            $this->setError(TextHelper::sprintf('MOLAJO_DB_ERROR_VALID_AZ09', 2));
             return false;
         }
 
-        if ((trim($this->email) == "") || !MolajoMailHelper::isEmailAddress($this->email)) {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_VALID_MAIL'));
+        if ((trim($this->email) == "") || !MailHelper::isEmailAddress($this->email)) {
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_VALID_MAIL'));
             return false;
         }
 
@@ -187,7 +187,7 @@ class MolajoModelUsers extends MolajoModel
         $this->_db->setQuery($query->__toString());
         $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_USERNAME_INUSE'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_USERNAME_INUSE'));
             return false;
         }
 
@@ -199,7 +199,7 @@ class MolajoModelUsers extends MolajoModel
         $this->_db->setQuery($query->__toString());
         $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
-            $this->setError(MolajoTextHelper::_('MOLAJO_DB_ERROR_EMAIL_INUSE'));
+            $this->setError(TextHelper::_('MOLAJO_DB_ERROR_EMAIL_INUSE'));
             return false;
         }
 
@@ -213,7 +213,7 @@ class MolajoModelUsers extends MolajoModel
         //			$this->_db->setQuery($query->__toString());
         //			$xid = intval($this->_db->loadResult());
         //			if ($rootUser==$this->username && (!$xid || $xid && $xid != intval($this->id))  || $xid && $xid == intval($this->id) && $rootUser!=$this->username) {
-        //				$this->setError( MolajoTextHelper::_('MOLAJO_DB_ERROR_USERNAME_CANNOT_CHANGE'));
+        //				$this->setError( TextHelper::_('MOLAJO_DB_ERROR_USERNAME_CANNOT_CHANGE'));
         //				return false;
         //			}
 
@@ -250,7 +250,7 @@ class MolajoModelUsers extends MolajoModel
         // Handle error if it exists.
         if ($return) {
         } else {
-            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
+            $this->setError(TextHelper::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
             return false;
         }
 
@@ -354,7 +354,7 @@ class MolajoModelUsers extends MolajoModel
                 $id = $this->id;
             } else {
                 // do not translate
-                jexit(MolajoTextHelper::_('MOLAJO_DB_ERROR_SETLASTVISIT'));
+                jexit(TextHelper::_('MOLAJO_DB_ERROR_SETLASTVISIT'));
             }
         }
 

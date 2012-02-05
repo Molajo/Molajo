@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Module
  *
  * @package     Molajo
- * @subpackage  Module
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class MolajoModuleHelper
@@ -26,7 +26,7 @@ abstract class MolajoModuleHelper
      */
     static public function get($module_name)
     {
-        $rows = MolajoExtensionHelper::get(
+        $rows = ExtensionHelper::get(
             MOLAJO_ASSET_TYPE_EXTENSION_MODULE,
             $module_name
         );

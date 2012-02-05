@@ -10,5 +10,5 @@ defined('MOLAJO') or die;
 /**
  *	Mustache
  */
-$fileHelper = new MolajoFileHelper();
+$fileHelper = new FileHelper();
 $fileHelper->requireClassFile(PLATFORM_MUSTACHE . '/Mustache.php', 'Mustache');

@@ -1,17 +1,17 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application Helper
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * MolajoConfiguration
+ * Configuration
  *
  * @package     Molajo
- * @subpackage  Configuration
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoConfigurationHelper

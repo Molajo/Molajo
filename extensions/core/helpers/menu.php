@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Menu
  *
  * @package     Molajo
- * @subpackage  Extensions
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class MolajoMenuHelper {}

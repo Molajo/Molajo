@@ -9,10 +9,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Application Helper
+ * Filter
  *
  * @package     Molajo
- * @subpackage  Filter Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoFilterHelper

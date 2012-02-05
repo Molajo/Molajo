@@ -26,7 +26,7 @@ class MolajoThemeHelper
      */
     public function get($theme)
     {
-        $rows = MolajoExtensionHelper::get(
+        $rows = ExtensionHelper::get(
             MOLAJO_ASSET_TYPE_EXTENSION_THEME,
             $theme
         );

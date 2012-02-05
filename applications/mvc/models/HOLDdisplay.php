@@ -290,7 +290,7 @@ class MolajoModelDisplay extends MolajoModel
         if (class_exists($nameClassName)) {
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
-            Molajo::App()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+            Molajo::App()->setMessage(TextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -461,7 +461,7 @@ class MolajoModelDisplay extends MolajoModel
 
                 /** trigger events */
                 //                $this->_triggerEvents();
-                $dateHelper = new MolajoDateHelper ();
+                $dateHelper = new DateHelper ();
                 if (isset($items[$i]->created)) {
                     $items[$i]->created_date = date($items[$i]->created);
                     $items[$i]->created_ccyymmdd = $dateHelper->convertCCYYMMDD($items[$i]->created);
@@ -972,7 +972,7 @@ class MolajoModelDisplay extends MolajoModel
 
         } else {
             if ($onlyWhereClause === true) {
-                Molajo::App()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                Molajo::App()->setMessage(TextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);

@@ -58,7 +58,7 @@ class MolajoDocument
      */
     public function __construct()
     {
-        /** provides sequence of render processing */
+        /** sequence of renderer processing */
         $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
         if (JFile::exists($formatXML)) {
         } else {
@@ -99,12 +99,12 @@ class MolajoDocument
         $body = $this->_renderLoop();
 
         /** theme: load template media and language files, does not renderer template output */
-        if (class_exists('MolajoRendererTheme')) {
+        if (class_exists('MolajoThemeRenderer')) {
             $tmp = array();
-            $rendererClass = new MolajoRendererTheme ('theme');
+            $rendererClass = new MolajoThemeRenderer ('theme');
             $results = $rendererClass->render($tmp);
         } else {
-            echo 'failed renderer = ' . MolajoRendererTheme . '<br />';
+            echo 'failed renderer = ' . 'MolajoThemeRenderer' . '<br />';
             // ERROR
         }
 
@@ -265,7 +265,7 @@ class MolajoDocument
                     $replace[] = "<include:" . $rendererArray['replace'] . "/>";
 
                     /** 7. load the renderer class */
-                    $class = 'Molajo' . 'Renderer' . ucfirst($rendererName);
+                    $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
                         $rendererClass = new $class ($rendererName, $includeName);
                     } else {

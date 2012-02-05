@@ -333,7 +333,7 @@ class MolajoControllerRequest
      */
     protected function _getAsset()
     {
-        $results = MolajoAssetHelper::getAssetRequestObject($this->request);
+        $results = AssetHelper::getAssetRequestObject($this->request);
 
         /** not found: exit */
         if ($results === false) {
@@ -369,7 +369,7 @@ class MolajoControllerRequest
             $this->set('status_found', false);
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_EXTENSION_NOT_FOUND'),
+                $message = TextHelper::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoControllerRequest::_getAsset',
@@ -393,7 +393,7 @@ class MolajoControllerRequest
      */
     protected function _getMenuItem()
     {
-        $row = MolajoContentHelper::get(
+        $row = ContentHelper::get(
             (int)$this->get('menu_item_id'),
             $this->get('source_table'));
 
@@ -402,7 +402,7 @@ class MolajoControllerRequest
             $this->set('status_found', false);
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_MENU_ITEM_NOT_FOUND'),
+                $message = TextHelper::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoControllerRequest::getMenuItem',
@@ -476,7 +476,7 @@ class MolajoControllerRequest
      */
     protected function _getSource()
     {
-        $row = MolajoContentHelper::get(
+        $row = ContentHelper::get(
             (int)$this->get('source_id'),
             $this->get('source_table'));
 
@@ -485,7 +485,7 @@ class MolajoControllerRequest
             $this->set('status_found', false);
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = TextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoControllerRequest::_getSource',
@@ -563,7 +563,7 @@ class MolajoControllerRequest
      */
     protected function _getPrimaryCategory()
     {
-        $row = MolajoContentHelper::get(
+        $row = ContentHelper::get(
             (int)$this->get(
                 'category_id'
             ),
@@ -575,7 +575,7 @@ class MolajoControllerRequest
             $this->set('status_found', false);
             Molajo::App()
                 ->setMessage(
-                $message = MolajoTextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = TextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoControllerRequest::_getSource',
@@ -622,7 +622,7 @@ class MolajoControllerRequest
         $this->set('extension_asset_type_id',
             MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT
         );
-        $results = MolajoExtensionHelper::getExtensionRequestObject($this->request);
+        $results = ExtensionHelper::getExtensionRequestObject($this->request);
 
         if ($results === false) {
             return $this->set('status_found', false);
@@ -630,13 +630,13 @@ class MolajoControllerRequest
         $this->request = $results;
 
         $this->set('extension_path',
-            MolajoComponentHelper::getPath(
+            ComponentHelper::getPath(
                 strtolower($this->get('extension_instance_name'))
             )
         );
 
         $this->set('extension_folder',
-            MolajoComponentHelper::getPath($this->get('extension_instance_name')
+            ComponentHelper::getPath($this->get('extension_instance_name')
             )
         );
         $this->set('extension_type', 'component');
@@ -749,7 +749,7 @@ class MolajoControllerRequest
         if ($this->get('request_url_redirect_to_id', 0) == 0) {
         } else {
             Molajo::App()->redirect(
-                MolajoAssetHelper::getURL(
+                AssetHelper::getURL(
                     $this->get('request_url_redirect_to_id')), 301
             );
         }
@@ -862,7 +862,7 @@ class MolajoControllerRequest
 
         if ((int)$this->get('template_view_id', 0) == '') {
             $this->set('template_view_id',
-                MolajoViewHelper::getViewDefaults('view',
+                ViewHelper::getViewDefaults('view',
                     $this->get('mvc_task', ''),
                     (int)$this->get('mvc_id', 0))
             );
@@ -870,7 +870,7 @@ class MolajoControllerRequest
 
         if ((int)$this->get('wrap_view_id', 0) == '') {
             $this->set('wrap_view_id',
-                MolajoViewHelper::getViewDefaults('wrap',
+                ViewHelper::getViewDefaults('wrap',
                     $this->get('mvc_task', ''),
                     (int)$this->get('mvc_id', 0))
             );
@@ -914,14 +914,14 @@ class MolajoControllerRequest
      */
     protected function _getTheme()
     {
-        $row = MolajoThemeHelper::get($this->get('theme_id'));
+        $row = ThemeHelper::get($this->get('theme_id'));
 
         if (count($row) == 0) {
             if ($this->set('theme_name') == 'system') {
                 // error
             } else {
                 $this->set('theme_name', 'system');
-                $row = MolajoThemeHelper::get($this->get('theme_name'));
+                $row = ThemeHelper::get($this->get('theme_name'));
                 if (count($row) > 0) {
                     // error
                 }
@@ -947,11 +947,11 @@ class MolajoControllerRequest
         }
 
         $this->set('theme_path',
-            MolajoThemeHelper::getPath($this->get('theme_name')));
+            ThemeHelper::getPath($this->get('theme_name')));
         $this->set('theme_path_url',
-            MolajoThemeHelper::getPathURL($this->get('theme_name')));
+            ThemeHelper::getPathURL($this->get('theme_name')));
         $this->set('theme_favicon',
-            MolajoThemeHelper::getFavicon($this->get('theme_name')));
+            ThemeHelper::getFavicon($this->get('theme_name')));
 
         return;
     }
@@ -968,7 +968,7 @@ class MolajoControllerRequest
     {
         /** Get Name */
         $this->set('page_view_name',
-            MolajoExtensionHelper::getInstanceTitle(
+            ExtensionHelper::getInstanceTitle(
                 $this->get('page_view_id'),
                 MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW,
                 'pages'
@@ -1003,7 +1003,7 @@ class MolajoControllerRequest
     {
         $this->set(
             'template_view_name',
-            MolajoExtensionHelper::getInstanceTitle(
+            ExtensionHelper::getInstanceTitle(
                 $this->get('template_view_id')
             )
         );
@@ -1034,7 +1034,7 @@ class MolajoControllerRequest
     {
         $this->set(
             'wrap_view_name',
-            MolajoExtensionHelper::getInstanceTitle(
+            ExtensionHelper::getInstanceTitle(
                 $this->get('wrap_view_id')
             )
         );

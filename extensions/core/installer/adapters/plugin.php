@@ -136,7 +136,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Get the component description
         $description = (string)$xml->description;
         if ($description) {
-            $this->parent->set('message', MolajoTextHelper::_($description));
+            $this->parent->set('message', TextHelper::_($description));
         }
         else
         {
@@ -165,7 +165,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         }
         else
         {
-            $this->parent->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_NO_FILE', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route)));
+            $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_NO_FILE', TextHelper::_('JLIB_INSTALLER_' . $this->route)));
             return false;
         }
 
@@ -185,7 +185,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         {
             // Install failed, roll back changes
             $this->parent
-                    ->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_ROLLBACK', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                    ->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_ROLLBACK', TextHelper::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
             return false;
         }
         $id = $db->loadResult();
@@ -213,8 +213,8 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 // We didn't have overwrite set, find an udpate function or find an update tag so lets call it safe
                 $this->parent
                         ->abort(
-                    MolajoTextHelper::sprintf(
-                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route),
+                    TextHelper::sprintf(
+                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', TextHelper::_('JLIB_INSTALLER_' . $this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -253,7 +253,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         if ($this->parent->manifestClass && method_exists($this->parent->manifestClass, 'preflight')) {
             if ($this->parent->manifestClass->preflight($this->route, $this) === false) {
                 // Install failed, rollback changes
-                $this->parent->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_PLG_INSTALL_CUSTOM_INSTALL_FAILURE'));
+                $this->parent->abort(TextHelper::_('JLIB_INSTALLER_ABORT_PLG_INSTALL_CUSTOM_INSTALL_FAILURE'));
                 return false;
             }
         }
@@ -268,8 +268,8 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
                 $this->parent
                         ->abort(
-                    MolajoTextHelper::sprintf(
-                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_CREATE_DIRECTORY', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route),
+                    TextHelper::sprintf(
+                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_CREATE_DIRECTORY', TextHelper::_('JLIB_INSTALLER_' . $this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -318,7 +318,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 if (!$this->parent->copyFiles(array($path))) {
                     // Install failed, rollback changes
                     $this->parent
-                            ->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_MANIFEST', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route)));
+                            ->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_MANIFEST', TextHelper::_('JLIB_INSTALLER_' . $this->route)));
                     return false;
                 }
             }
@@ -333,8 +333,8 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 // Install failed, roll back changes
                 $this->parent
                         ->abort(
-                    MolajoTextHelper::sprintf(
-                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_ALLREADY_EXISTS', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route),
+                    TextHelper::sprintf(
+                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_ALLREADY_EXISTS', TextHelper::_('JLIB_INSTALLER_' . $this->route),
                         $this->get('name')
                     )
                 );
@@ -373,7 +373,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 // Install failed, roll back changes
                 $this->parent
                         ->abort(
-                    MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_ROLLBACK', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
+                    TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_ROLLBACK', TextHelper::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
                 );
                 return false;
             }
@@ -396,7 +396,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 // Install failed, rollback changes
                 $this->parent
                         ->abort(
-                    MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_SQL_ERROR', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
+                    TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_SQL_ERROR', TextHelper::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
                 );
                 return false;
             }
@@ -412,7 +412,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 $result = $this->parent->parseSchemaUpdates($this->manifest->update->schemas, $row->extension_id);
                 if ($result === false) {
                     // Install failed, rollback changes
-                    $this->parent->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_UPDATE_SQL_ERROR', $db->stderr(true)));
+                    $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_UPDATE_SQL_ERROR', $db->stderr(true)));
                     return false;
                 }
             }
@@ -427,7 +427,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 }($this) === false
             ) {
                 // Install failed, rollback changes
-                $this->parent->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_PLG_INSTALL_CUSTOM_INSTALL_FAILURE'));
+                $this->parent->abort(TextHelper::_('JLIB_INSTALLER_ABORT_PLG_INSTALL_CUSTOM_INSTALL_FAILURE'));
                 return false;
             }
         }
@@ -440,7 +440,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Lastly, we will copy the manifest file to its appropriate place.
         if (!$this->parent->copyManifest(-1)) {
             // Install failed, rollback changes
-            $this->parent->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_COPY_SETUP', MolajoTextHelper::_('JLIB_INSTALLER_' . $this->route)));
+            $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_COPY_SETUP', TextHelper::_('JLIB_INSTALLER_' . $this->route)));
             return false;
         }
         // And now we run the postflight
@@ -498,20 +498,20 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // This should give us the necessary information to proceed.
         $row = MolajoModel::getInstance('extension');
         if (!$row->load((int)$id)) {
-            MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_ERRORUNKOWNEXTENSION'));
+            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_ERRORUNKOWNEXTENSION'));
             return false;
         }
 
         // Is the plugin we are trying to uninstall a core one?
         // Because that is not a good idea...
         if ($row->protected) {
-            MolajoError::raiseWarning(100, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_WARNCOREPLUGIN', $row->name));
+            MolajoError::raiseWarning(100, TextHelper::sprintf('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_WARNCOREPLUGIN', $row->name));
             return false;
         }
 
         // Get the plugin folder so we can properly build the plugin path
         if (trim($row->folder) == '') {
-            MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_FOLDER_FIELD_EMPTY'));
+            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_FOLDER_FIELD_EMPTY'));
             return false;
         }
 
@@ -532,17 +532,17 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         $manifestFile = $this->parent->getPath('extension_root') . '/' . $row->element . '.xml';
 
         if (!file_exists($manifestFile)) {
-            MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
             return false;
         }
 
-        $xml = Molajo::getXML($manifestFile);
+        $xml = Molajo::XML($manifestFile);
 
         $this->manifest = $xml;
 
         // If we cannot load the XML file return null
         if (!$xml) {
-            MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_LOAD_MANIFEST'));
+            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_LOAD_MANIFEST'));
             return false;
         }
 
@@ -552,7 +552,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
            * Should be 'extension', but for backward compatability we will accept 'install'.
            */
         if ($xml->getName() != 'install' && $xml->getName() != 'extension') {
-            MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_INVALID_MANIFEST'));
+            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_INVALID_MANIFEST'));
             return false;
         }
 
@@ -590,7 +590,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         if ($this->parent->manifestClass && method_exists($this->parent->manifestClass, 'preflight')) {
             if ($this->parent->manifestClass->preflight($this->route, $this) === false) {
                 // Install failed, rollback changes
-                $this->parent->abort(MolajoTextHelper::_('JLIB_INSTALLER_ABORT_PLG_INSTALL_CUSTOM_INSTALL_FAILURE'));
+                $this->parent->abort(TextHelper::_('JLIB_INSTALLER_ABORT_PLG_INSTALL_CUSTOM_INSTALL_FAILURE'));
                 return false;
             }
         }
@@ -607,7 +607,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         $utfresult = $this->parent->parseSQLFiles($xml->{strtolower($this->route)}->sql);
         if ($utfresult === false) {
             // Install failed, rollback changes
-            $this->parent->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_UNINSTALL_SQL_ERROR', $db->stderr(true)));
+            $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_PLG_UNINSTALL_SQL_ERROR', $db->stderr(true)));
             return false;
         }
 
@@ -669,7 +669,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             $file_list = JFolder::files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder, '\.xml$');
             foreach ($file_list as $file)
             {
-                $manifest_details = MolajoInstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $file);
+                $manifest_details = InstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $file);
                 $file = JFile::stripExt($file);
                 // Ignore example plugins
                 if ($file == 'example') {
@@ -692,7 +692,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
                 $file_list = JFolder::files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder, '\.xml$');
                 foreach ($file_list as $file)
                 {
-                    $manifest_details = MolajoInstallHelper::parseManifestXML(
+                    $manifest_details = InstallHelper::parseManifestXML(
                         MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder . '/' . $file
                     );
                     $file = JFile::stripExt($file);
@@ -729,7 +729,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Plugins use the extensions table as their primary store
         // Similar to modules and themes, rather easy
         // If it's not in the extensions table we just add it
-        $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
         if (is_dir($client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element)) {
             $manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'
                             . $this->parent->extension->element . '.xml';
@@ -741,14 +741,14 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $description = (string)$this->parent->manifest->description;
         if ($description) {
-            $this->parent->set('message', MolajoTextHelper::_($description));
+            $this->parent->set('message', TextHelper::_($description));
         }
         else
         {
             $this->parent->set('message', '');
         }
         $this->parent->setPath('manifest', $manifestPath);
-        $manifest_details = MolajoInstallHelper::parseManifestXML($manifestPath);
+        $manifest_details = InstallHelper::parseManifestXML($manifestPath);
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
@@ -759,7 +759,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         }
         else
         {
-            MolajoError::raiseWarning(101, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_DISCOVER_STORE_DETAILS'));
+            MolajoError::raiseWarning(101, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_DISCOVER_STORE_DETAILS'));
             return false;
         }
     }
@@ -776,12 +776,12 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Plugins use the extensions table as their primary store
         // Similar to modules and themes, rather easy
         // If it's not in the extensions table we just add it
-        $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
+        $client = AppHelper::getApplicationInfo($this->parent->extension->application_id);
         $manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'
                         . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $manifest_details = MolajoInstallHelper::parseManifestXML($this->parent->getPath('manifest'));
+        $manifest_details = InstallHelper::parseManifestXML($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
 
         $this->parent->extension->name = $manifest_details['name'];
@@ -790,7 +790,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         }
         else
         {
-            MolajoError::raiseWarning(101, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PLG_REFRESH_MANIFEST_CACHE'));
+            MolajoError::raiseWarning(101, TextHelper::_('JLIB_INSTALLER_ERROR_PLG_REFRESH_MANIFEST_CACHE'));
             return false;
         }
     }

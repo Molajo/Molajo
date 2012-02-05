@@ -27,7 +27,7 @@ abstract class MolajoComponentHelper
      */
     static public function get($component_name)
     {
-        $rows = MolajoExtensionHelper::get(
+        $rows = ExtensionHelper::get(
             MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT,
             $component_name
         );

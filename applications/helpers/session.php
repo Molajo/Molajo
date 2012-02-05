@@ -1,19 +1,18 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Session
+ * @subpackage  Helper
+ * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Class to manage the session
- *
- * Users session for the application.
+ * Session
  *
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoSessionHelper extends JObject

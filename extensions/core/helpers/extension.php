@@ -284,20 +284,20 @@ abstract class MolajoExtensionHelper
             $extension = (int)$request->get('extension_instance_id');
             $request->set(
                 'extension_instance_name',
-                MolajoExtensionHelper::getInstanceTitle(
+                ExtensionHelper::getInstanceTitle(
                     $request->get('extension_instance_id')
                 )
             );
         } else {
             $request->set('extension_instance_id',
-                MolajoExtensionHelper::getInstanceID(
+                ExtensionHelper::getInstanceID(
                     $request->get('extension_asset_type_id'),
                     $request->get('extension_instance_name')
                 )
             );
         }
 
-        $rows = MolajoExtensionHelper::get(
+        $rows = ExtensionHelper::get(
             (int)$request->get('extension_asset_type_id'),
             (int)$request->get('extension_instance_id')
         );

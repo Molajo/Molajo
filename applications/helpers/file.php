@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * File Helper
+ * File
  *
  * @package     Molajo
  * @subpackage  Helper
@@ -51,8 +51,8 @@ class MolajoFileHelper
                 echo 'MolajoFileHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             } else {
-//            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoController') && class_exists('MolajoControllerApplication')) {
-                MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
+//            if (class_exists('MolajoError') && class_exists('TextHelper') && class_exists('MolajoController') && class_exists('MolajoControllerApplication')) {
+                MolajoError::raiseNotice(500, TextHelper::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
                 return false;
             }
         }
@@ -64,10 +64,11 @@ class MolajoFileHelper
                 echo 'MolajoFileHelper Error class not found ' . $class;
                 exit;
             } else {
-            //if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoController') && class_exists('MolajoControllerApplication')) {
-                MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
+            //if (class_exists('MolajoError') && class_exists('TextHelper') && class_exists('MolajoController') && class_exists('MolajoControllerApplication')) {
+                MolajoError::raiseNotice(500, TextHelper::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
                 return false;
             }
         }
     }
 }
+Class FileHelper extends MolajoFileHelper {}

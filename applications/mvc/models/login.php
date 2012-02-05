@@ -71,8 +71,8 @@ class MolajoModelLogin extends MolajoModel
     public static function getLanguageList()
     {
         $languages = array();
-        $languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
-        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoTextHelper::_('JDEFAULT')));
+        $languages = LanguageHelper::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
+        array_unshift($languages, MolajoHTML::_('select.option', '', TextHelper::_('JDEFAULT')));
         return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
     }
 

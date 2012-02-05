@@ -41,7 +41,7 @@ class MolajoUtility
      */
     public static function sendMail($from, $from_name, $recipient, $subject, $body, $mode = 0, $cc = null, $bcc = null, $attachment = null, $replyto = null, $replytoname = null)
     {
-        Molajo::getMailer()->sendMail(
+        Molajo::Mail()->sendMail(
             $from, $from_name, $recipient, $subject, $body, $mode, $cc,
             $bcc, $attachment, $replyto, $replytoname
         );
@@ -64,7 +64,7 @@ class MolajoUtility
      */
     public static function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
     {
-        return Molajo::getMailer()->sendAdminMail(
+        return Molajo::Mail()->sendAdminMail(
             $adminName, $adminEmail, $email, $type, $title, $author, $url
         );
     }

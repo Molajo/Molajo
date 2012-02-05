@@ -62,7 +62,7 @@ class MolajoUpdater extends MolajoAdapter
         // Check if fopen is allowed
         $result = ini_get('allow_url_fopen');
         if (empty($result)) {
-            MolajoError::raiseWarning('101', MolajoTextHelper::_('JLIB_UPDATER_ERROR_COLLECTION_FOPEN'));
+            MolajoError::raiseWarning('101', TextHelper::_('JLIB_UPDATER_ERROR_COLLECTION_FOPEN'));
             return false;
         }
 

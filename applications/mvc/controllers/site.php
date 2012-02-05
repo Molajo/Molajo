@@ -85,7 +85,7 @@ class MolajoControllerSite
         }
         if (empty($instances[$id])) {
 
-            $info = MolajoSiteHelper::getSiteInfo($id);
+            $info = SiteHelper::getSiteInfo($id);
             if ($info === false) {
                 return false;
             }
@@ -148,7 +148,7 @@ class MolajoControllerSite
      */
     public function authorise($application_id)
     {
-        self::$applications = MolajoSiteHelper::getSiteApplications();
+        self::$applications = SiteHelper::getSiteApplications();
         if (self::$applications === false) {
             return false;
         }
@@ -163,7 +163,7 @@ class MolajoControllerSite
             return true;
         }
 
-        MolajoError::raiseError(403, MolajoTextHelper::_('SITE_NOT_AUTHORIZED_FOR_APPLICATION'));
+        MolajoError::raiseError(403, TextHelper::_('SITE_NOT_AUTHORIZED_FOR_APPLICATION'));
         return false;
     }
 

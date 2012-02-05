@@ -698,7 +698,7 @@ abstract class MolajoError
             Molajo::App()->setError($error);
 
             @ob_end_clean();
-            Molajo::App()->setTitle(MolajoTextHelper::_('Error') . ': ' . $error->get('code'));
+            Molajo::App()->setTitle(TextHelper::_('Error') . ': ' . $error->get('code'));
             $data = Molajo::App()->render(false, array('theme' => $theme, 'directory' => MOLAJO_EXTENSIONS_TEMPATES, 'debug' => $config->get('debug')));
 
             // Failsafe to get the error displayed.

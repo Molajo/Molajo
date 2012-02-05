@@ -179,7 +179,7 @@ class MolajoControllerExtension
         $results = $this->model->checkin($this->mvc->get('mvc_id'));
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_CHECK_IN_FAILED'));
+            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_CHECK_IN_FAILED'));
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -208,7 +208,7 @@ class MolajoControllerExtension
 
         if ($this->table->checked_out == Molajo::User()->get('id')) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER') . ' ' . $this->getTask());
+            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER') . ' ' . $this->getTask());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -237,7 +237,7 @@ class MolajoControllerExtension
 
         $results = $this->model->checkout($this->mvc->get('mvc_id'));
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
+            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -276,7 +276,7 @@ class MolajoControllerExtension
 
         /** error processing **/
         if ($versionKey === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_VERSION_SAVE_FAILED'));
+            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_VERSION_SAVE_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -284,7 +284,7 @@ class MolajoControllerExtension
         /** Trigger_Event: onContentCreateVersion
         $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->mvc->get('mvc_id'), $versionKey));
         if (count($results) && in_array(false, $results, true)) {
-        $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
+        $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
         $this->redirectClass->setRedirectMessageType('error');
         return false;
         }
@@ -328,7 +328,7 @@ class MolajoControllerExtension
 
         /** version delete failed **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' . $this->model->getError());
+            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' . $this->model->getError());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }

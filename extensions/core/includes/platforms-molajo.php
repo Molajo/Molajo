@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new MolajoFileHelper();
+$fileHelper = new FileHelper();
 
 /**
  *  Exceptions - already loaded

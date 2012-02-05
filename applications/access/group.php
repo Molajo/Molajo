@@ -52,7 +52,7 @@ class MolajoGroup
             if ($id = MolajoGroupHelper::get($identifier)) {
 
             } else {
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
+                MolajoError::raiseWarning('SOME_ERROR_CODE', TextHelper::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
                 return false;
             }
         }
@@ -103,7 +103,7 @@ class MolajoGroup
 
         $results = $table->load($id);
 
-        //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+        //  MolajoError::raiseWarning('SOME_ERROR_CODE', TextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
         $columns = $this->_database->getFields('#__users', true);
 
         foreach ($columns as $name => $value) {
