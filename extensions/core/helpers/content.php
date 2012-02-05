@@ -51,11 +51,21 @@ abstract class MolajoContentHelper
         $query->select('a.' . $db->namequote('ordering'));
 
         $query->from($db->namequote('#' . $content_table) . ' as a');
-        $query->where('a.' . $db->namequote('id') . ' = ' . (int)$id);
+        $query->where('a.' . $db->namequote('id') .
+            ' = ' . (int)$id);
+        $query->where('a.' . $db->namequote('status') .
+            ' = ' . MOLAJO_STATUS_PUBLISHED);
 
-        $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
-        $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
-        $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
+        $query->where('(a.start_publishing_datetime = ' .
+            $db->Quote($nullDate) .
+            ' OR a.start_publishing_datetime <= ' .
+            $db->Quote($now) . ')'
+        );
+        $query->where('(a.stop_publishing_datetime = ' .
+            $db->Quote($nullDate) .
+            ' OR a.stop_publishing_datetime >= ' .
+            $db->Quote($now) . ')'
+        );
 
         /** Assets Join and View Access Check */
         MolajoAccess::setQueryViewAccess(
@@ -73,11 +83,17 @@ abstract class MolajoContentHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            MolajoController::getApplication()->setMessage(
-                $db->getErrorMsg(),
-                MOLAJO_MESSAGE_TYPE_ERROR
+            MolajoController::getApplication()
+                ->setMessage(
+                $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.
+                    $db->getErrorNum().' '.
+                    $db->getErrorMsg(),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = 'MolajoContentHelper::_get',
+                $debug_object = $db
             );
-            return false;
+            return $this->request->set('status_found', false);
         }
 
         if (count($rows) == 0) {

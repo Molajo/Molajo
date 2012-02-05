@@ -99,7 +99,6 @@ if (defined('MOLAJO_SITE_BASE_URL')) {
         die;
     }
 }
-
 /*                                              */
 /*  APPLICATIONS LAYER                          */
 /*                                              */

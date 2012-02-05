@@ -41,6 +41,9 @@ class MolajoTextHelper
     public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
         $lang = MolajoController::getApplication()->getLanguage();
+        if ($lang == null) {
+            return $string;
+        }
 
         if (is_array($jsSafe)) {
             if (array_key_exists('interpretBackSlashes', $jsSafe)) {

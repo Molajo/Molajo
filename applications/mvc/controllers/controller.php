@@ -161,6 +161,19 @@ class MolajoController
     }
 
     /**
+     *  getDoctrine
+     *
+     * Get a database object for Doctrine
+     *
+     * @return Database object
+     * @since 1.0
+     */
+    public static function getDoctrine()
+    {
+        $entityManager = \Doctrine\ORM\EntityManager::create($conn, $config);
+    }
+
+    /**
      * getMailer
      *
      * Get a mailer object

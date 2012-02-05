@@ -40,7 +40,7 @@ class MolajoControllerApplication
      * @var    object
      * @since  1.0
      */
-    protected static $__appQueryResults = null;
+    protected static $_appQueryResults = null;
 
     /**
      * Application custom fields
@@ -289,8 +289,8 @@ class MolajoControllerApplication
             $this->_config = new JRegistry;
         }
 
-        /** $__appQueryResults database results from application helpers */
-        $this->__appQueryResults = $_appQueryResults;
+        /** Database results from application helpers */
+        $this->_appQueryResults = $_appQueryResults;
 
         /** get configuration */
         $this->getConfig();
@@ -303,7 +303,12 @@ class MolajoControllerApplication
         if ($this->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {
             } else {
-                $this->redirect((string)'https' . substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
+                $this->redirect((string)'https' .
+                        substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
+                        MOLAJO_APPLICATION_URL_PATH .
+                        '/' .
+                        MOLAJO_PAGE_REQUEST
+                );
             }
         }
 
@@ -330,15 +335,15 @@ class MolajoControllerApplication
         $site = new MolajoControllerSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
         if ($authorise === false) {
-            return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
+            $message = '304: ' . MOLAJO_BASE_URL;
+            echo $message;
+            die;
         }
 
         /** initialise */
         $this->loadSession();
         $this->loadLanguage();
         $this->loadDispatcher();
-
-        /**        $this->setMessage('Test message', MOLAJO_MESSAGE_TYPE_WARNING);
 
         /** request and rendering  */
         $requestClass = new MolajoRequest();
@@ -361,12 +366,12 @@ class MolajoControllerApplication
     public function getConfig()
     {
         $this->_metadata = new JRegistry;
-        $this->_metadata->loadString($this->__appQueryResults->metadata);
+        $this->_metadata->loadString($this->_appQueryResults->metadata);
 
         $this->_custom_fields = new JRegistry;
-        $this->_custom_fields->loadString($this->__appQueryResults->custom_fields);
+        $this->_custom_fields->loadString($this->_appQueryResults->custom_fields);
 
-        $configClass = new MolajoConfigurationHelper($this->__appQueryResults->parameters);
+        $configClass = new MolajoConfigurationHelper($this->_appQueryResults->parameters);
         $this->_config = $configClass->getConfig();
 
         return;
@@ -632,7 +637,7 @@ class MolajoControllerApplication
      * @return  bool
      * @since   1.0
      */
-    public function setMessage($message = null,
+    public static function setMessage($message = null,
                                $type = 'message',
                                $code = null,
                                $debug_location = null,
