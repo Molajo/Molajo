@@ -17,6 +17,14 @@ defined('MOLAJO') or die;
 class MolajoParserController
 {
     /**
+     * Application static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
      * $_sequence
      *
      * Renderers Processing Sequence
@@ -57,6 +65,42 @@ class MolajoParserController
     protected $_renderers = array();
 
     /**
+     * Configuration
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $_config = null;
+
+    /**
+     * getInstance
+     *
+     * Returns a reference to the global Application object,
+     *  only creating it if it doesn't already exist.
+     *
+     * @static
+     * @param  null $id
+     * @param  JInput|null $input
+     * @param  JRegistry|null $config
+     *
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance(JRegistry $config = null)
+    {
+        if (empty(self::$instance)) {
+
+            if ($config instanceof JRegistry) {
+            } else {
+                $config = new JRegistry;
+            }
+            self::$instance = new MolajoParserController($config);
+        }
+
+        return self::$instance;
+    }
+
+    /**
      * __construct
      *
      * Class constructor.
@@ -64,10 +108,26 @@ class MolajoParserController
      * @return boolean
      * @since  1.0
      */
-    public function __construct()
+    public function __construct(JRegistry $config)
     {
+        if ($config instanceof JRegistry) {
+            $this->_config = $config;
+        } else {
+            $this->_config = new JRegistry;
+        }
+
         /** sequence of renderer processing */
-        $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
+        $formatXML = '';
+        if (array_key_exists('xml', $this->_config)) {
+            $formatXML = $this->_config['xml'];
+            if (JFile::exists($formatXML)) {
+            } else {
+                $formatXML = '';
+            }
+        }
+        if ($formatXML == '') {
+            $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
+        }
         if (JFile::exists($formatXML)) {
         } else {
             //error

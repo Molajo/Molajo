@@ -2,7 +2,6 @@
 /**
  * @package     Molajo
  * @subpackage  Controller
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -23,12 +22,6 @@ class MolajoController
     public static $site = null;
 
     /**
-     * @var    Site Configuration
-     * @since  1.0
-     */
-    public static $siteConfig = null;
-
-    /**
      * @var    Application
      * @since  1.0
      */
@@ -45,6 +38,12 @@ class MolajoController
      * @since  1.0
      */
     public static $request = null;
+
+    /**
+     * @var    Parser
+     * @since  1.0
+     */
+    public static $parser = null;
 
     /**
      * @var    Database
@@ -94,7 +93,6 @@ class MolajoController
         } else {
             self::$site = MolajoSiteController::getInstance($id, $config, $prefix);
         }
-
         return self::$site;
     }
 
@@ -115,7 +113,10 @@ class MolajoController
     {
         if (self::$application) {
         } else {
-            self::$application = MolajoApplicationController::getInstance($id, $config, $input);
+            self::$application =
+                MolajoApplicationController::getInstance(
+                    $id, $config, $input
+                );
         }
         return self::$application;
     }
@@ -133,13 +134,43 @@ class MolajoController
      * @return Request|null
      * @since 1.0
      */
-    public static function getRequest(JRegistry $request = null, $override_request_url = null, $override_asset_id = null)
+    public static function getRequest(JRegistry $request = null,
+                                      $override_request_url = null,
+                                      $override_asset_id = null)
     {
         if (self::$request) {
         } else {
-            self::$request = MolajoRequestController::getInstance($request, $override_request_url, $override_asset_id);
+            self::$request =
+                MolajoRequestController::getInstance(
+                    $request, $override_request_url, $override_asset_id
+                );
         }
         return self::$request;
+    }
+
+    /**
+     * getParser
+     *
+     * Get the Request Controller Object
+     *
+     * @static
+     * @param JRegistry|null $config
+     * @param string $override_request_url
+     * @param string $override_asset_id
+     *
+     * @return Request|null
+     * @since 1.0
+     */
+    public static function getParser(JRegistry $config = null)
+    {
+        if (self::$parser) {
+        } else {
+            self::$parser =
+                MolajoParserController::getInstance(
+                    $config
+                );
+        }
+        return self::$parser;
     }
 
     /**
@@ -242,73 +273,6 @@ class MolajoController
         $copy = clone self::$mailer;
 
         return $copy;
-    }
-
-    /**
-     * getFeedParser
-     *
-     * todo: amy Move into MODEL
-     *
-     * Get a parsed XML Feed Source
-     *
-     * @static
-     * @param $url
-     * @param int $cache_time
-     * @return bool|SimplePie
-     * @since 1.0
-     */
-    public static function getFeedParser($url, $cache_time = 0)
-    {
-        $simplepie = new SimplePie(null, null, 0);
-
-        $simplepie->enable_cache(false);
-        $simplepie->set_feed_url($url);
-        $simplepie->force_feed(true);
-
-        $contents = $simplepie->init(null, false, false);
-
-        if ($contents) {
-            return $simplepie;
-        } else {
-            // error
-        }
-
-        return false;
-    }
-
-    /**
-     * Reads a XML file.
-     *
-     * @param   string  $data   Full path and file name.
-     * @param   boolean  $isFile true to load a file | false to load a string.
-     *
-     * @return  mixed    SimpleXMLElement on success | false on error.
-     * @todo This may go in a separate class - error reporting may be improved.
-     */
-    public static function getXML($data, $isFile = true)
-    {
-        // Disable libxml errors and allow to fetch error information as needed
-        libxml_use_internal_errors(false);
-        if ($isFile) {
-            $xml = simplexml_load_file($data, 'SimpleXMLElement');
-        } else {
-            $xml = simplexml_load_string($data, 'SimpleXMLElement');
-        }
-
-        if (empty($xml)) {
-            MolajoError::raiseWarning(100, TextHelper::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
-
-            if ($isFile) {
-                MolajoError::raiseWarning(100, $data);
-            }
-
-            foreach (libxml_get_errors() as $error)
-            {
-                MolajoError::raiseWarning(100, 'XML: ' . $error->message);
-            }
-        }
-
-        return $xml;
     }
 
     /**
@@ -608,6 +572,11 @@ class Molajo extends MolajoController
         return MolajoController::getRequest($request, $override_request_url, $override_asset_id);
     }
 
+    public static function Parser(JRegistry $config = null)
+    {
+        return MolajoController::getParser($config);
+    }
+
     public static function User($id = null)
     {
         return MolajoController::getUser($id);
@@ -618,19 +587,9 @@ class Molajo extends MolajoController
         return MolajoController::getDbo();
     }
 
-    public static function XML($data, $isFile = true)
-    {
-        return MolajoController::getXML($data, $isFile);
-    }
-
     public static function Mailer()
     {
         return MolajoController::getMailer();
-    }
-
-    public static function FeedParser($url, $cache_time = 0)
-    {
-        return MolajoController::getFeedParser($url, $cache_time);
     }
 
     public static function Editor($editor = null)

@@ -346,7 +346,10 @@ class MolajoApplicationController
             || $rc->get('mvc_task') == 'edit'
             || $rc->get('mvc_task') == 'display'
         ) {
-            $pc = new MolajoParserController ();
+
+            /** request  */
+            $pc = Molajo::Parser();
+            $rc->process();
 
             /** action task: insert, update, or delete */
         } else {
