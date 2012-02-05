@@ -435,91 +435,6 @@ class MolajoController
 
         return $retval;
     }
-
-    /**
-     * getSiteConfig
-     *
-     * Retrieve the Site configuration object
-     *
-     * @return  config object
-     * @since   1.0
-     */
-    public static function getSiteConfig()
-    {
-        if (self::$siteConfig) {
-        } else {
-            self::$siteConfig = new JRegistry;
-            $config = new MolajoConfigurationHelper ();
-            $data = $config->site();
-
-            if (is_array($data)) {
-                self::$siteConfig->loadArray($data);
-
-            } elseif (is_object($data)) {
-                self::$siteConfig->loadObject($data);
-            }
-        }
-
-        return self::$siteConfig;
-    }
-
-    /**
-     * getConfig
-     *
-     * Retrieve the Application configuration object
-     *
-     * @return  config object
-     * @since   1.0
-     */
-    public static function getConfig()
-    {
-        if (self::$config) {
-        } else {
-            self::$config = new JRegistry;
-            $configInstance = new MolajoConfigurationHelper ();
-            $data = $configInstance->getConfig();
-
-            if (is_array($data)) {
-                self::$config->loadArray($data);
-
-            } elseif (is_object($data)) {
-                self::$config->loadObject($data);
-            }
-        }
-
-        return self::$config;
-    }
-
-    /**
-     * get
-     *
-     * Returns a property of the Site, Application, and Extension objects
-     * or the default value if the property is not set.
-     *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
-     * @param   mixed   $type     The type of configuration data
-     *
-     * @return  mixed   The value of the configuration.
-     *
-     * @since   11.3
-     */
-    public function get($key, $default = null, $type = 'config')
-    {
-        if ($type == 'site') {
-            if (self::$siteConfig) {
-            } else {
-                self::getSiteConfig();
-            }
-            return self::$siteConfig->get($key, $default);
-        } else {
-            if (self::$config) {
-            } else {
-                self::getConfig();
-            }
-            return self::$config->get($key, $default);
-        }
-    }
 }
 
 /**
@@ -556,6 +471,8 @@ class Molajo extends MolajoController
     {
         return MolajoController::getDbo();
     }
+
+
 
     public static function Mailer()
     {

@@ -356,6 +356,9 @@ class MolajoApplicationController
             //$this->_processTask();
         }
 
+        /** render response */
+//        $pc = Molajo::Responder();
+
         /** response */
         $this->respond();
 
