@@ -60,8 +60,8 @@ class MolajoControllerEdit extends MolajoDisplayController
         }
 
         /** parameters */
-        if (Molajo::Applicationlication()->getName() == 'site') {
-            $this->parameters = Molajo::Applicationlication()->getParameters();
+        if (Molajo::Application()->getName() == 'site') {
+            $this->parameters = Molajo::Application()->getParameters();
             //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
             $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
@@ -91,7 +91,7 @@ class MolajoControllerEdit extends MolajoDisplayController
 
         /** page heading, toolbar buttons and submenu **/
         if (($this->getView() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
-            //        } else if (Molajo::Applicationlication()->getName() == 'site') {
+            //        } else if (Molajo::Application()->getName() == 'site') {
         } else {
             MolajoToolbarHelper::addButtonsEditView($this->item->state, $this->permissions, $this->item->id, $this->item);
         }
@@ -99,7 +99,7 @@ class MolajoControllerEdit extends MolajoDisplayController
         //Escape strings for HTML output
         $this->state->get('page_view_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
 
-        if (Molajo::Applicationlication()->getName() == 'site') {
+        if (Molajo::Application()->getName() == 'site') {
             $documentHelper = new MolajoDocumentHelper ();
             $documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
         }

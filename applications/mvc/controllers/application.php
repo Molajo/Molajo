@@ -56,7 +56,7 @@ class MolajoApplicationController
      * @var    array
      * @since  1.0
      */
-    protected $_metadata = array();
+    protected static $_metadata = array();
 
     /**
      * Application Parameters
@@ -64,7 +64,7 @@ class MolajoApplicationController
      * @var    array
      * @since  1.0
      */
-    protected $_parameters = array();
+    protected static $_parameters = array();
 
     /**
      * Input Object
@@ -72,7 +72,7 @@ class MolajoApplicationController
      * @var    object
      * @since  1.0
      */
-    protected $_input;
+    protected static $_input;
 
     /**
      * Client
@@ -265,21 +265,17 @@ class MolajoApplicationController
     {
         if ($input instanceof JInput) {
             $this->_input = $input;
-        } else {
-            $this->_input = new JInput;
         }
 
         if ($config instanceof JRegistry) {
             $this->_config = $config;
-        } else {
-            $this->_config = new JRegistry;
         }
-
         /** Database results from application helpers */
-        $this->_appQueryResults = $_appQueryResults;
-
-        /** get configuration */
-        $this->getConfig();
+        if ($_appQueryResults == null) {
+        } else {
+            $this->_appQueryResults = $_appQueryResults;
+            $this->setConfig();
+        }
 
         /** now */
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
@@ -297,9 +293,6 @@ class MolajoApplicationController
                 );
             }
         }
-
-        /** instantiate static responder */
-        Molajo::Responder($this->_config);
 
         return;
     }
@@ -322,6 +315,9 @@ class MolajoApplicationController
             echo $message;
             die;
         }
+
+        /** instantiate static responder */
+        Molajo::Responder();
 
         /** initialise */
         $this->loadSession();
@@ -354,14 +350,14 @@ class MolajoApplicationController
     }
 
     /**
-     * getConfig
+     * setConfig
      *
      * Creates the Application configuration object.
      *
      * @return  null
      * @since   1.0
      */
-    public function getConfig()
+    public function setConfig()
     {
         $this->_metadata = new JRegistry;
         $this->_metadata->loadString($this->_appQueryResults->metadata);

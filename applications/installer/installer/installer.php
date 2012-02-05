@@ -364,7 +364,7 @@ class MolajoInstaller extends MolajoAdapter
             $step = array_pop($this->_stepStack);
         }
 
-        $conf = Molajo::Applicationlication()->get();
+        $conf = Molajo::Application()->get();
         $debug = $conf->get('debug');
 
         if ($debug) {

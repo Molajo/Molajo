@@ -184,7 +184,7 @@ class MolajoParserController
         }
 
         /** set response body */
-        Molajo::Application()->setBody($body);
+        Molajo::Responder()->setBody($body);
 
         /** after rendering */
 //        Molajo::Application()->triggerEvent('onAfterRender');

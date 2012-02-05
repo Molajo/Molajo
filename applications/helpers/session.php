@@ -51,7 +51,7 @@ class MolajoSessionHelper extends JObject
         }
 
         /** retrieve session */
-        $this->_session = Molajo::Applicationlication()->getSession($options);
+        $this->_session = Molajo::Application()->getSession($options);
 
         /** unlock */
 
@@ -99,7 +99,7 @@ class MolajoSessionHelper extends JObject
     protected function _checkSession()
     {
         $db = Molajo::DB();
-        $session = Molajo::Applicationlication()->getSession();
+        $session = Molajo::Application()->getSession();
         $user = Molajo::User();
 
         $db->setQuery(
@@ -156,6 +156,6 @@ class MolajoSessionHelper extends JObject
      */
     protected function _getConfig($varname, $default = null)
     {
-        return Molajo::Applicationlication()->get('' . $varname, $default);
+        return Molajo::Application()->get('' . $varname, $default);
     }
 }

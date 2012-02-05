@@ -710,7 +710,7 @@ abstract class MolajoError
                 // Do not allow cache
                 Molajo::Application()->allowCache(false);
 
-                Molajo::Application()->setBody($data);
+                Molajo::Responder()->setBody($data);
                 echo Molajo::Application()->toString();
             }
         }

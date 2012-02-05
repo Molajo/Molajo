@@ -110,7 +110,7 @@ class MolajoResponderController
             if (ini_get('zlib.output_compression')) {
             } elseif (ini_get('output_handler') == 'ob_gzhandler') {
             } else {
-                $this->compress();
+                $this->_compress();
             }
         }
 
@@ -130,7 +130,7 @@ class MolajoResponderController
             $this->setHeader('Pragma', 'no-cache');
         }
 
-        $this->sendHeaders();
+        $this->_sendHeaders();
 
         echo $this->getBody();
 
@@ -147,7 +147,7 @@ class MolajoResponderController
      *
      * @since   1.0
      */
-    protected function compress()
+    protected function _compress()
     {
         // Supported compression encodings.
         $supported = array(
@@ -165,7 +165,7 @@ class MolajoResponderController
         }
 
         // Verify that headers have not yet been sent, and that our connection is still alive.
-        if ($this->checkHeadersSent() || !$this->checkConnectionAlive()) {
+        if ($this->_checkHeadersSent() || !$this->_checkConnectionAlive()) {
             return;
         }
 
@@ -295,9 +295,9 @@ class MolajoResponderController
      *
      * @since   1.0
      */
-    public function sendHeaders()
+    protected function _sendHeaders()
     {
-        if ($this->checkHeadersSent()) {
+        if ($this->_checkHeadersSent()) {
         } else {
             foreach ($this->_response->headers as $header) {
                 if ('status' == strtolower($header['name'])) {
@@ -312,12 +312,13 @@ class MolajoResponderController
     }
 
     /**
+     * setBody
+     *
      * Set body content.  If body content already defined, this will replace it.
      *
      * @param   string  $content  The content to set as the response body.
      *
      * @return  Application  Instance of $this to allow chaining.
-     *
      * @since   1.0
      */
     public function setBody($content)
@@ -387,7 +388,7 @@ class MolajoResponderController
      * @see     connection_status()
      * @since   1.0
      */
-    protected function checkConnectionAlive()
+    protected function _checkConnectionAlive()
     {
         return (connection_status() === CONNECTION_NORMAL);
     }
@@ -402,7 +403,7 @@ class MolajoResponderController
      * @see     headers_sent()
      * @since   1.0
      */
-    protected function checkHeadersSent()
+    protected function _checkHeadersSent()
     {
         return headers_sent();
     }

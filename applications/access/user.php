@@ -429,7 +429,7 @@ class MolajoUser extends JObject
      */
     public function getUserState($key, $default = null)
     {
-        $registry = Molajo::Applicationlication()->getSession()->get('registry');
+        $registry = Molajo::Application()->getSession()->get('registry');
         if (is_null($registry)) {
         } else {
             return $registry->get($key, $default);
@@ -451,7 +451,7 @@ class MolajoUser extends JObject
      */
     public function setUserState($key, $value)
     {
-        $registry = Molajo::Applicationlication()->getSession()->get('registry');
+        $registry = Molajo::Application()->getSession()->get('registry');
         if (is_null($registry)) {
         } else {
             return $registry->set($key, $value);
