@@ -80,6 +80,6 @@ class MolajoRendererModule extends MolajoRenderer
     {
         parent::_loadMedia(MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->mvc->get('extension_instance_name'),
             MOLAJO_SITE_MEDIA_URL . '/' . $this->mvc->get('extension_instance_name'),
-            MolajoController::getApplication()->get('media_priority_module', 400));
+            Molajo::App()->get('media_priority_module', 400));
     }
 }

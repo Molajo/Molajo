@@ -74,7 +74,7 @@ class MolajoModelExtensionSites extends MolajoModel
 
     function find($options = Array())
     {
-        $dbo = MolajoController::getDbo();
+        $dbo = Molajo::DB();
         $where = Array();
         foreach ($options as $col => $val) {
             $where[] = $col . ' = ' . $dbo->Quote($val);

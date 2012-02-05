@@ -275,25 +275,25 @@ Includes data about the application configuration, language, and response elemen
 
 To display all of the options available:
 
-    <?php echo '<pre>'; var_dump(MolajoController::getApplication()); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Molajo::App()); echo '</pre>';  ?>
 
 To display one item:
 
-    <?php echo MolajoController::getApplication()->get('sef'); ?>
+    <?php echo Molajo::App()->get('sef'); ?>
 
 ### User ###
 
 To display all of the options available:
 
-    <?php echo '<pre>'; var_dump(MolajoController::getUser()); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Molajo::User()); echo '</pre>';  ?>
 
 To display one item:
 
-    <?php echo MolajoController::getUser()->username; ?>
+    <?php echo Molajo::User()->username; ?>
 
 ### Input Request ###
 
-    <?php echo '<pre>'; var_dump(MolajoController::getApplication()->input); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Molajo::App()->input); echo '</pre>';  ?>
 
 ### Query Criteria ###
 

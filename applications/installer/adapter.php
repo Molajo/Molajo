@@ -73,7 +73,7 @@ class MolajoAdapter extends JObject
         $this->_classprefix = $classprefix ? $classprefix : 'Molajo';
         $this->_adapterfolder = $adapterfolder ? $adapterfolder : 'adapters';
 
-        $this->db = MolajoController::getDbo();
+        $this->db = Molajo::DB();
     }
 
     /**

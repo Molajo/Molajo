@@ -61,7 +61,7 @@ abstract class MolajoAccess
         $action = 'view';
         $action_id = 3;
 
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
@@ -69,7 +69,7 @@ abstract class MolajoAccess
         $query->where('a.' . $db->nameQuote('asset_id') . ' = ' . (int)$asset_id);
         $query->where('a.' . $db->nameQuote('action_id') . ' = ' . (int)$action_id);
         $query->where('a.' . $db->nameQuote('group_id') .
-            ' IN (' . implode(',', MolajoController::getUser()->groups) . ')');
+            ' IN (' . implode(',', Molajo::User()->groups) . ')');
 
         $db->setQuery($query->__toString());
         $count = $db->loadResult();
@@ -101,7 +101,7 @@ abstract class MolajoAccess
             return false;
         }
 
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
@@ -138,7 +138,7 @@ abstract class MolajoAccess
     static public function setQueryViewAccess($query = array(),
                                               $parameters = array())
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
 
         if ($parameters['select'] === true) {
             $query->select($parameters['asset_prefix'] .
@@ -162,7 +162,7 @@ abstract class MolajoAccess
 
         $query->where($parameters['asset_prefix'] .
                 '.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', MolajoController::getUser()->view_groups) . ')'
+                ' IN (' . implode(',', Molajo::User()->view_groups) . ')'
         );
 
         return $query;

@@ -41,7 +41,7 @@ class MolajoUtility
      */
     public static function sendMail($from, $from_name, $recipient, $subject, $body, $mode = 0, $cc = null, $bcc = null, $attachment = null, $replyto = null, $replytoname = null)
     {
-        MolajoController::getMailer()->sendMail(
+        Molajo::getMailer()->sendMail(
             $from, $from_name, $recipient, $subject, $body, $mode, $cc,
             $bcc, $attachment, $replyto, $replytoname
         );
@@ -64,7 +64,7 @@ class MolajoUtility
      */
     public static function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
     {
-        return MolajoController::getMailer()->sendAdminMail(
+        return Molajo::getMailer()->sendAdminMail(
             $adminName, $adminEmail, $email, $type, $title, $author, $url
         );
     }
@@ -81,7 +81,7 @@ class MolajoUtility
      */
     public static function getHash($seed)
     {
-        return md5(MolajoController::getApplication()->get('secret') . $seed);
+        return md5(Molajo::App()->get('secret') . $seed);
     }
 
     /**
@@ -95,7 +95,7 @@ class MolajoUtility
      */
     public static function getToken($forceNew = false)
     {
-        return MolajoController::getApplication()->getSession()->getFormToken($forceNew);
+        return Molajo::App()->getSession()->getFormToken($forceNew);
     }
 
     /**
@@ -133,11 +133,11 @@ class MolajoUtility
      *
      * @since       11.1
      * @deprecated  1.6
-     * @see            MolajoController::getApplication()->isWinOS()
+     * @see            Molajo::App()->isWinOS()
      */
     public static function isWinOS()
     {
-        return MolajoController::getApplication()->isWinOS();
+        return Molajo::App()->isWinOS();
     }
 
     /**

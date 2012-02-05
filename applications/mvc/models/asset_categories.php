@@ -117,9 +117,9 @@ class MolajoModelAssetCategories extends MolajoModel
             $this->alias = $this->title;
         }
 
-        $this->alias = MolajoController::getApplication()->stringURLSafe($this->alias);
+        $this->alias = Molajo::App()->stringURLSafe($this->alias);
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = MolajoController::getDate()->format('Y-m-d-H-i-s');
+            $this->alias = Molajo::Date()->format('Y-m-d-H-i-s');
         }
 
         return true;
@@ -169,8 +169,8 @@ class MolajoModelAssetCategories extends MolajoModel
      */
     public function store($updateNulls = false)
     {
-        $date = MolajoController::getDate();
-        $user = MolajoController::getUser();
+        $date = Molajo::Date();
+        $user = Molajo::User();
 
         if ($this->id) {
             // Existing category

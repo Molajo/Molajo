@@ -338,7 +338,7 @@ class MolajoControllerApplication
         $this->loadDispatcher();
 
         /** request  */
-        $requestClass = MolajoController::getRequest();
+        $requestClass = Molajo::Request();
         $requestClass->process();
 
 

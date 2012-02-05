@@ -26,9 +26,9 @@ abstract class MolajoContentHelper
      */
     static public function get($id, $content_table)
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
-        $date = MolajoController::getDate();
+        $date = Molajo::Date();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
@@ -83,7 +83,7 @@ abstract class MolajoContentHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            MolajoController::getApplication()
+            Molajo::App()
                 ->setMessage(
                 $message = MolajoTextHelper::_('ERROR_DATABASE_QUERY').' '.
                     $db->getErrorNum().' '.

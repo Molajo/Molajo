@@ -44,19 +44,19 @@ class MolajoModelHead extends MolajoModel
         /** type: base */
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
-        $tempObject->set('title', MolajoController::getRequest()->get('metadata_title'));
-        $tempObject->set('base', MolajoController::getRequest()->get('url_base'));
-        $tempObject->set('last_modified', MolajoController::getRequest()->get('source_last_modified'));
-        $tempObject->set('description', MolajoController::getRequest()->get('metadata_description'));
-        $tempObject->set('favicon', MolajoController::getRequest()->get('theme_favicon'));
-        $tempObject->set('keywords', MolajoController::getRequest()->get('metadata_keywords'));
-        $tempObject->set('author', MolajoController::getRequest()->get('metadata_author'));
-        $tempObject->set('content_rights', MolajoController::getRequest()->get('metadata_content_rights'));
-        $tempObject->set('robots', MolajoController::getRequest()->get('metadata_robots'));
+        $tempObject->set('title', Molajo::Request()->get('metadata_title'));
+        $tempObject->set('base', Molajo::Request()->get('url_base'));
+        $tempObject->set('last_modified', Molajo::Request()->get('source_last_modified'));
+        $tempObject->set('description', Molajo::Request()->get('metadata_description'));
+        $tempObject->set('favicon', Molajo::Request()->get('theme_favicon'));
+        $tempObject->set('keywords', Molajo::Request()->get('metadata_keywords'));
+        $tempObject->set('author', Molajo::Request()->get('metadata_author'));
+        $tempObject->set('content_rights', Molajo::Request()->get('metadata_content_rights'));
+        $tempObject->set('robots', Molajo::Request()->get('metadata_robots'));
         $this->items[] = $tempObject;
 
         /** type: links */
-        $list = MolajoController::getApplication()->getHeadLinks();
+        $list = Molajo::App()->getHeadLinks();
 
         if (count($list) > 0) {
             foreach ($list as $item) {
@@ -71,7 +71,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: stylesheet_links */
-        $list = MolajoController::getApplication()->getStyleLinks();
+        $list = Molajo::App()->getStyleLinks();
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $tempObject = new JObject();
@@ -86,7 +86,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: stylesheet_declarations */
-        $list = MolajoController::getApplication()->getStyleDeclarations();
+        $list = Molajo::App()->getStyleDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'stylesheet_declarations');
@@ -96,7 +96,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: javascript_links */
-        $list = MolajoController::getApplication()->getScriptLinks();
+        $list = Molajo::App()->getScriptLinks();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
@@ -109,7 +109,7 @@ class MolajoModelHead extends MolajoModel
         }
 
         /** type: javascript_declarations */
-        $list = MolajoController::getApplication()->getScriptDeclarations();
+        $list = Molajo::App()->getScriptDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');

@@ -364,7 +364,7 @@ class MolajoInstaller extends MolajoAdapter
             $step = array_pop($this->_stepStack);
         }
 
-        $conf = MolajoController::getApplication()->get();
+        $conf = Molajo::App()->get();
         $debug = $conf->get('debug');
 
         if ($debug) {
@@ -887,7 +887,7 @@ class MolajoInstaller extends MolajoAdapter
     public function setSchemaVersion($schema, $eid)
     {
         if ($eid && $schema) {
-            $db = MolajoController::getDbo();
+            $db = Molajo::DB();
             $schemapaths = $schema->children();
 
             if (!$schemapaths) {
@@ -951,7 +951,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Ensure we have an XML element and a valid extension id
         if ($eid && $schema) {
-            $db = MolajoController::getDbo();
+            $db = Molajo::DB();
             $schemapaths = $schema->children();
 
             if (count($schemapaths)) {
@@ -1748,7 +1748,7 @@ class MolajoInstaller extends MolajoAdapter
     public function isManifest($file)
     {
         // Initialise variables.
-        $xml = MolajoController::getXML($file);
+        $xml = Molajo::getXML($file);
 
         // If we cannot load the XML file return null
         if (!$xml) {
@@ -1795,7 +1795,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function cleanDiscoveredExtension($type, $element, $folder = '', $client = 0)
     {
-        $dbo = MolajoController::getDbo();
+        $dbo = Molajo::DB();
         $query = $dbo->getQuery(true);
         $query->delete($dbo->quoteName('#__extensions'));
         $query->where('type = ' . $dbo->Quote($type));

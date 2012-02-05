@@ -35,23 +35,23 @@ class MolajoControllerRequest
     /**
      * getInstance
      *
-     * Returns a reference to the global Application object,
+     * Returns a reference to the global request object,
      *  only creating it if it doesn't already exist.
      *
      * @static
-     * @param  null $id
-     * @param  JInput|null $input
      * @param  JRegistry|null $config
+     * @param  string $override_request_url
+     * @param  string $override_asset_id
      *
      * @return bool|object
      * @since  1.0
      */
     public static function getInstance(JRegistry $request = null,
                                        $override_request_url = null,
-                                       $asset_id = null)
+                                       $override_asset_id = null)
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoControllerRequest($request, $override_request_url, $asset_id);
+            self::$instance = new MolajoControllerRequest($request, $override_request_url, $override_asset_id);
         }
         return self::$instance;
     }
@@ -61,16 +61,17 @@ class MolajoControllerRequest
      *
      * Class constructor
      *
-     * @param   null  $override_request_url
-     * @param   null  $asset_id
+     * @static
+     * @param  JRegistry|null $config
+     * @param  string $override_request_url
+     * @param  string $override_asset_id
      *
-     * @return  object
-     *
+     * @return null
      * @since  1.0
      */
     public function __construct(JRegistry $request = null,
                                 $override_request_url = null,
-                                $asset_id = null)
+                                $override_asset_id = null)
     {
         /** request object */
         if ($request instanceof JRegistry) {
@@ -81,10 +82,10 @@ class MolajoControllerRequest
         }
 
         /** Specific asset */
-        if ((int)$asset_id == 0) {
+        if ((int)$override_asset_id == 0) {
             $this->set('request_asset_id', 0);
         } else {
-            $this->set('request_asset_id', $asset_id);
+            $this->set('request_asset_id', $override_asset_id);
         }
 
         /**
@@ -99,12 +100,12 @@ class MolajoControllerRequest
         }
 
         /** duplicate content: URLs without the .html */
-        if ((int)MolajoController::getApplication()->get('sef_suffix', 1) == 1
+        if ((int)Molajo::App()->get('sef_suffix', 1) == 1
             && substr($path, -11) == '/index.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 11));
         }
-        if ((int)MolajoController::getApplication()->get('sef_suffix', 1) == 1
+        if ((int)Molajo::App()->get('sef_suffix', 1) == 1
             && substr($path, -5) == '.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 5));
@@ -119,7 +120,7 @@ class MolajoControllerRequest
             || $this->get('request_url_query', '') == 'index.php?'
             || $this->get('request_url_query', '') == '/index.php/'
         ) {
-            MolajoController::getApplication()->redirect('', 301);
+            Molajo::App()->redirect('', 301);
             return $this->request;
         }
 
@@ -128,7 +129,7 @@ class MolajoControllerRequest
             && (int)$this->get('request_asset_id', 0) == 0
         ) {
             $this->set('request_asset_id',
-                MolajoController::getApplication()->get('home_asset_id', 0));
+                Molajo::App()->get('home_asset_id', 0));
             $this->set('request_url_home', true);
         }
 
@@ -302,7 +303,7 @@ class MolajoControllerRequest
     public function process()
     {
         /** offline */
-        if (MolajoController::getApplication()->get('offline', 0) == 1) {
+        if (Molajo::App()->get('offline', 0) == 1) {
             $this->_error(503);
 
         } else {
@@ -366,7 +367,7 @@ class MolajoControllerRequest
 
             /** 500: Extension not found */
             $this->set('status_found', false);
-            MolajoController::getApplication()
+            Molajo::App()
                 ->setMessage(
                 $message = MolajoTextHelper::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -399,7 +400,7 @@ class MolajoControllerRequest
         if (count($row) == 0) {
             /** 500: Extension not found */
             $this->set('status_found', false);
-            MolajoController::getApplication()
+            Molajo::App()
                 ->setMessage(
                 $message = MolajoTextHelper::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -482,7 +483,7 @@ class MolajoControllerRequest
         if (count($row) == 0) {
             /** 500: Source Content not found */
             $this->set('status_found', false);
-            MolajoController::getApplication()
+            Molajo::App()
                 ->setMessage(
                 $message = MolajoTextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -572,7 +573,7 @@ class MolajoControllerRequest
         if (count($row) == 0) {
             /** 500: Category not found */
             $this->set('status_found', false);
-            MolajoController::getApplication()
+            Molajo::App()
                 ->setMessage(
                 $message = MolajoTextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -747,20 +748,20 @@ class MolajoControllerRequest
         /** redirect */
         if ($this->get('request_url_redirect_to_id', 0) == 0) {
         } else {
-            MolajoController::getApplication()->redirect(
+            Molajo::App()->redirect(
                 MolajoAssetHelper::getURL(
                     $this->get('request_url_redirect_to_id')), 301
             );
         }
 
         /** must be logged on */
-        if (MolajoController::getApplication()->get('logon_requirement', 0) > 0
-            && MolajoController::getUser()->get('guest', true) === true
+        if (Molajo::App()->get('logon_requirement', 0) > 0
+            && Molajo::User()->get('guest', true) === true
             && $this->get('request_asset_id')
-                <> MolajoController::getApplication()->get('logon_requirement', 0)
+                <> Molajo::App()->get('logon_requirement', 0)
         ) {
-            MolajoController::getApplication()->redirect(
-                MolajoController::getApplication()->get('logon_requirement', 0), 303
+            Molajo::App()->redirect(
+                Molajo::App()->get('logon_requirement', 0), 303
             );
         }
 
@@ -827,7 +828,7 @@ class MolajoControllerRequest
     protected function _getUser()
     {
         $parameters = new JRegistry;
-        $parameters->loadString(MolajoController::getUser()->parameters);
+        $parameters->loadString(Molajo::User()->parameters);
 
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id', $parameters->def('user_theme_id', 0));
@@ -851,12 +852,12 @@ class MolajoControllerRequest
     {
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id',
-                MolajoController::getApplication()->get('default_theme_id', ''));
+                Molajo::App()->get('default_theme_id', ''));
         }
 
         if ($this->get('page_view_id', 0) == 0) {
             $this->set('page_view_id',
-                MolajoController::getApplication()->get('default_page_view_id', ''));
+                Molajo::App()->get('default_page_view_id', ''));
         }
 
         if ((int)$this->get('template_view_id', 0) == '') {
@@ -878,27 +879,27 @@ class MolajoControllerRequest
         /** metadata  */
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
-                MolajoController::getApplication()->get('metadata_title', '', 'metadata'));
+                Molajo::App()->get('metadata_title', '', 'metadata'));
         }
         if ($this->get('metadata_description', '') == '') {
             $this->set('metadata_description',
-                MolajoController::getApplication()->get('metadata_description', '', 'metadata'));
+                Molajo::App()->get('metadata_description', '', 'metadata'));
         }
         if ($this->get('metadata_keywords', '') == '') {
             $this->set('metadata_keywords',
-                MolajoController::getApplication()->get('metadata_keywords', '', 'metadata'));
+                Molajo::App()->get('metadata_keywords', '', 'metadata'));
         }
         if ($this->get('metadata_author', '') == '') {
             $this->set('metadata_author',
-                MolajoController::getApplication()->get('metadata_author', '', 'metadata'));
+                Molajo::App()->get('metadata_author', '', 'metadata'));
         }
         if ($this->get('metadata_content_rights', '') == '') {
             $this->set('metadata_content_rights',
-                MolajoController::getApplication()->get('metadata_content_rights', '', 'metadata'));
+                Molajo::App()->get('metadata_content_rights', '', 'metadata'));
         }
         if ($this->get('metadata_robots', '') == '') {
             $this->set('metadata_robots',
-                MolajoController::getApplication()->get('metadata_robots', '', 'metadata'));
+                Molajo::App()->get('metadata_robots', '', 'metadata'));
         }
         return;
     }
@@ -1062,14 +1063,14 @@ class MolajoControllerRequest
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
-        if ((int)$asset_id == MolajoController::getApplication()->get('home_asset_id', 0)) {
+        if ((int)$asset_id == Molajo::App()->get('home_asset_id', 0)) {
             return '';
         }
 
-        if (MolajoController::getApplication()->get('sef', 1) == 0) {
+        if (Molajo::App()->get('sef', 1) == 0) {
             $query->select('a.' . $db->nameQuote('sef_request'));
         } else {
             $query->select('a.' . $db->nameQuote('request'));
@@ -1162,14 +1163,14 @@ class MolajoControllerRequest
         /** default error theme and page */
         $this->set(
             'theme_id',
-            MolajoController::getApplication()->get(
+            Molajo::App()->get(
                 'error_theme_id',
                 'system'
             )
         );
         $this->set(
             'page_view_id',
-            MolajoController::getApplication()->get(
+            Molajo::App()->get(
                 'error_page_view_id',
                 'error'
             )
@@ -1177,13 +1178,13 @@ class MolajoControllerRequest
 
         /** set header status, message and override theme/page, if needed */
         if ($code == 503) {
-            MolajoController::getApplication()->setHeader(
+            Molajo::App()->setHeader(
                 'Status',
                 '503 Service Temporarily Unavailable',
                 'true'
             );
-            MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get(
+            Molajo::App()->setMessage(
+                Molajo::App()->get(
                     'offline_message',
                     'This site is not available.<br /> Please check back again soon.'
                 ),
@@ -1191,26 +1192,26 @@ class MolajoControllerRequest
                 503
             );
             $this->set('theme_id',
-                MolajoController::getApplication()->get(
+                Molajo::App()->get(
                     'offline_theme_id',
                     'system'
                 )
             );
             $this->set('page_view_id',
-                MolajoController::getApplication()->get(
+                Molajo::App()->get(
                     'offline_page_view_id',
                     'offline'
                 )
             );
 
         } else if ($code == 403) {
-            MolajoController::getApplication()->setHeader(
+            Molajo::App()->setHeader(
                 'Status',
                 '403 Not Authorised',
                 'true'
             );
-            MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get(
+            Molajo::App()->setMessage(
+                Molajo::App()->get(
                     'error_403_message',
                     'Not Authorised.'
                 ),
@@ -1219,13 +1220,13 @@ class MolajoControllerRequest
             );
 
         } else if ($code = 404) {
-            MolajoController::getApplication()->setHeader(
+            Molajo::App()->setHeader(
                 'Status',
                 '404 Not Found',
                 'true'
             );
-            MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get(
+            Molajo::App()->setMessage(
+                Molajo::App()->get(
                     'error_404_message',
                     'Page not found.'
                 ),
@@ -1234,13 +1235,13 @@ class MolajoControllerRequest
             );
 
         } else {
-            MolajoController::getApplication()->setHeader(
+            Molajo::App()->setHeader(
                 'Status',
                 '500 Not Found',
                 'true'
             );
-            MolajoController::getApplication()->setMessage(
-                MolajoController::getApplication()->get(
+            Molajo::App()->setMessage(
+                Molajo::App()->get(
                     'error_500_message',
                     'Pass the specific error in.'
                 ),

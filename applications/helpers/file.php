@@ -47,7 +47,7 @@ class MolajoFileHelper
 //echo 'Class '.$class.'<br />';
             JLoader::register($class, $file);
         } else {
-            if (MolajoController::$application == null) {
+            if (Molajo::$application == null) {
                 echo 'MolajoFileHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             } else {
@@ -60,7 +60,7 @@ class MolajoFileHelper
         if (class_exists($class)) {
             return true;
         } else {
-            if (MolajoController::$application == null) {
+            if (Molajo::$application == null) {
                 echo 'MolajoFileHelper Error class not found ' . $class;
                 exit;
             } else {

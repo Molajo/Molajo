@@ -180,12 +180,12 @@ JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 /**
  *  Site
  */
-$site = MolajoController::getSite(MOLAJO_SITE_ID);
+$site = Molajo::Site(MOLAJO_SITE_ID);
 $site->load();
 
 /**
  *  Application
  */
-$app = MolajoController::getApplication(MOLAJO_APPLICATION);
+$app = Molajo::App(MOLAJO_APPLICATION);
 $app->load();
 

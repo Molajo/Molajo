@@ -74,7 +74,7 @@ abstract class MolajoFieldHelper
      */
     protected function _getSimpleQuery($idField, $displayField, $tableName)
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         $query->select($db->namequote($idField));

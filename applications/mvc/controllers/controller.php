@@ -216,9 +216,9 @@ class MolajoController
                 array(
                     'driver' => 'pdo_mysql',
                     'path' => 'database.mysql',
-                    'dbname' => MolajoController::getApplication()->get('db'),
-                    'user' => MolajoController::getApplication()->get('user'),
-                    'password' => MolajoController::getApplication()->get('password')
+                    'dbname' => Molajo::App()->get('db'),
+                    'user' => Molajo::App()->get('user'),
+                    'password' => Molajo::App()->get('password')
                 )
             );
             self::$entityManager = $doctrineProxy->bootstrap();
@@ -262,17 +262,18 @@ class MolajoController
      */
     public static function getFeedParser($url, $cache_time = 0)
     {
-//cache
         $simplepie = new SimplePie(null, null, 0);
 
         $simplepie->enable_cache(false);
         $simplepie->set_feed_url($url);
         $simplepie->force_feed(true);
 
+        $contents = $simplepie->init(null, false, false);
+
         if ($contents) {
             return $simplepie;
         } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
+            // error
         }
 
         return false;
@@ -376,33 +377,6 @@ class MolajoController
         return $tmp;
     }
 
-    /**
-     * createSession
-     *
-     * Create a session object
-     *
-     * @return object
-     * @since   1.0
-
-    protected static function createSession($options = array())
-    {
-        $handler = self::get('session_handler', 'none', 'site');
-        $lifetime = self::get('lifetime', '15', 'site');
-        if ((int)$lifetime > 0) {
-        } else {
-            $lifetime = 15;
-        }
-        $options['expire'] = (int)$lifetime * 60;
-
-        $session = MolajoSession::getInstance($handler, $options);
-
-        if ($session->getState() == 'expired') {
-            $session->restart();
-        }
-
-        return $session;
-    }
-     */
     /**
      * Create an database object
      *
@@ -614,5 +588,56 @@ class MolajoController
             }
             return self::$config->get($key, $default);
         }
+    }
+}
+
+/**
+ *  Molajo Class for shortcuts
+ */
+class Molajo extends MolajoController
+{
+    public static function Site($id = null, $config = array(), $prefix = 'Molajo')
+    {
+        return MolajoController::getSite($id, $config, $prefix);
+    }
+
+    public static function App($id = null, JRegistry $config = null, JInput $input = null)
+    {
+        return MolajoController::getApplication($id, $config, $input);
+    }
+
+    public static function Request(JRegistry $request = null, $override_request_url = null, $override_asset_id = null)
+    {
+        return MolajoController::getRequest($request, $override_request_url, $override_asset_id);
+    }
+
+    public static function User($id = null)
+    {
+        return MolajoController::getUser($id);
+    }
+
+    public static function DB()
+    {
+        return MolajoController::getDbo();
+    }
+
+    public static function Mailer()
+    {
+        return MolajoController::getMailer();
+    }
+
+    public static function FeedParser($url, $cache_time = 0)
+    {
+        return MolajoController::getFeedParser($url, $cache_time);
+    }
+
+    public static function Editor($editor = null)
+    {
+        return MolajoController::getEditor($editor);
+    }
+
+    public static function Date($time = 'now', $tzOffset = null)
+    {
+        return MolajoController::getDate($time, $tzOffset);
     }
 }

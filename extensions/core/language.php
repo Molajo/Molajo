@@ -642,7 +642,7 @@ class MolajoLanguage
      */
     private function _parseMetadata($path)
     {
-        if ($xml = MolajoController::getXML($path)) {
+        if ($xml = Molajo::getXML($path)) {
         } else {
             return null;
         }

@@ -139,10 +139,10 @@ class MolajoImageHelper
      */
     public function getImage()
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
-        $date = MolajoController::getDate();
+        $date = Molajo::Date();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
@@ -167,7 +167,7 @@ class MolajoImageHelper
         }
 
         /** retrieve image folder for original images */
-        $images = MolajoController::getApplication()->get('media_path', 'media/images');
+        $images = Molajo::App()->get('media_path', 'media/images');
 
         /** folders */
         if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
@@ -192,7 +192,7 @@ class MolajoImageHelper
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = MolajoController::getApplication()->get('thumb_folder', '/media/images/thumbs');
+        $images = Molajo::App()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
         if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
@@ -218,15 +218,15 @@ class MolajoImageHelper
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 1) {
-            $dimensions = MolajoController::getApplication()->get('image_xsmall', 50);
+            $dimensions = Molajo::App()->get('image_xsmall', 50);
         } else if ($this->size == 2) {
-            $dimensions = MolajoController::getApplication()->get('image_small', 75);
+            $dimensions = Molajo::App()->get('image_small', 75);
         } else if ($this->size == 3) {
-            $dimensions = MolajoController::getApplication()->get('image_medium', 150);
+            $dimensions = Molajo::App()->get('image_medium', 150);
         } else if ($this->size == 4) {
-            $dimensions = MolajoController::getApplication()->get('image_large', 300);
+            $dimensions = Molajo::App()->get('image_large', 300);
         } else if ($this->size == 5) {
-            $dimensions = MolajoController::getApplication()->get('image_xlarge', 500);
+            $dimensions = Molajo::App()->get('image_xlarge', 500);
         } else {
             $dimensions = 100;
         }

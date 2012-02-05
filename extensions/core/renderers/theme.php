@@ -70,9 +70,9 @@ class MolajoRendererTheme extends MolajoRenderer
      */
     protected function _loadLanguage()
     {
-        MolajoController::getApplication()->getLanguage()->load
-        (MolajoController::getRequest()->get('extension_path'),
-            MolajoController::getApplication()->getLanguage()->getDefault(),
+        Molajo::App()->getLanguage()->load
+        (Molajo::Request()->get('extension_path'),
+            Molajo::App()->getLanguage()->getDefault(),
             false,
             false);
     }
@@ -89,24 +89,24 @@ class MolajoRendererTheme extends MolajoRenderer
     {
         /**  Site */
         $this->_loadMediaPlus('',
-            MolajoController::getApplication()->get('media_priority_site', 100));
+            Molajo::App()->get('media_priority_site', 100));
 
         /** Application */
         $this->_loadMediaPlus('/application' . MOLAJO_APPLICATION,
-            MolajoController::getApplication()->get('media_priority_application', 200));
+            Molajo::App()->get('media_priority_application', 200));
 
         /** User */
-        $this->_loadMediaPlus('/user' . MolajoController::getUser()->get('id'),
-            MolajoController::getApplication()->get('media_priority_user', 300));
+        $this->_loadMediaPlus('/user' . Molajo::User()->get('id'),
+            Molajo::App()->get('media_priority_user', 300));
 
         /** Theme */
-        $priority = MolajoController::getApplication()->get('media_priority_theme', 600);
-        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . MolajoController::getRequest()->get('theme_name');
-        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . MolajoController::getRequest()->get('theme_name');
+        $priority = Molajo::App()->get('media_priority_theme', 600);
+        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . Molajo::Request()->get('theme_name');
+        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . Molajo::Request()->get('theme_name');
 
-        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
     }
 
     /**
@@ -123,9 +123,9 @@ class MolajoRendererTheme extends MolajoRenderer
         /** Site Specific: Application */
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . '/' . $plus;
         $urlPath = MOLAJO_SITE_MEDIA_URL . '/' . $plus;
-        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -133,9 +133,9 @@ class MolajoRendererTheme extends MolajoRenderer
         /** Site Specific: Site-wide */
         $filePath = MOLAJO_SITE_MEDIA_FOLDER . $plus;
         $urlPath = MOLAJO_SITE_MEDIA_URL . $plus;
-        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
+        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -143,9 +143,9 @@ class MolajoRendererTheme extends MolajoRenderer
         /** All Sites: Application */
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $urlPath = MOLAJO_SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -153,9 +153,9 @@ class MolajoRendererTheme extends MolajoRenderer
         /** All Sites: Site Wide */
         $filePath = MOLAJO_SITES_MEDIA_FOLDER . $plus;
         $urlPath = MOLAJO_SITES_MEDIA_URL . $plus;
-        $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Molajo::App()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::App()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

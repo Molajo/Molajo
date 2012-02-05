@@ -29,7 +29,7 @@ abstract class MolajoInstallerHelper
      */
     public static function downloadPackage($url, $target = false)
     {
-        $config = MolajoController::getApplication()->get();
+        $config = Molajo::App()->get();
 
         // Capture PHP errors
         $php_errormsg = 'Error Unknown';
@@ -186,7 +186,7 @@ abstract class MolajoInstallerHelper
 
         foreach ($files as $file)
         {
-            if (!$xml = MolajoController::getXML($file)) {
+            if (!$xml = Molajo::getXML($file)) {
                 continue;
             }
 
@@ -237,7 +237,7 @@ abstract class MolajoInstallerHelper
      */
     public static function cleanupInstall($package, $resultdir)
     {
-        $config = MolajoController::getApplication()->get();
+        $config = Molajo::App()->get();
 
         // Does the unpacked extension directory exist?
         if (is_dir($resultdir)) {
@@ -267,7 +267,7 @@ abstract class MolajoInstallerHelper
      */
     public static function splitSql($sql)
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         return $db->splitSql($sql);
     }
 }

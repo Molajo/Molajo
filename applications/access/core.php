@@ -243,7 +243,7 @@ class MolajoACLCore extends MolajoACL
                 $authorised = $this->authorise($option_value_literal . '.own', $option . '.' . $entity . '.' . $id);
 
                 if ($authorised === true) {
-                    if ($item->created_by == MolajoController::getUser()->get('id')) {
+                    if ($item->created_by == Molajo::User()->get('id')) {
                         $authorised = true;
                     }
                 }
@@ -444,7 +444,7 @@ class MolajoACLCore extends MolajoACL
      *  getUsergroupsList
      *  getUsergroupingsList
      *
-     * MolajoController::getUser()->
+     * Molajo::User()->
      *
      * @param string $id
      * @param string $option
@@ -507,7 +507,7 @@ class MolajoACLCore extends MolajoACL
         echo 'Finish getCategoriesList';
         die();
 
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT a.id, a.title');
@@ -545,7 +545,7 @@ class MolajoACLCore extends MolajoACL
      */
     public function getGroupsList($id, $option, $task, $parameters = array())
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT g.id as value');
@@ -572,15 +572,15 @@ class MolajoACLCore extends MolajoACL
     public function getUsergroupsList($user_id, $option, $action, $parameters = array())
     {
         $acl = new MolajoACL();
-//        $cache = MolajoController::getCache('coreacl.getUsergroupsList', '');
+//        $cache = Molajo::getCache('coreacl.getUsergroupsList', '');
 
         /** $key */
         if ((int)$user_id == 0) {
-            $user_id = MolajoController::getUser()->get('id');
+            $user_id = Molajo::User()->get('id');
         }
 
         /** query  */
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT b.view_group_id as id');
@@ -695,7 +695,7 @@ class MolajoACLCore extends MolajoACL
     public function checkUserPermissions($user_id, $action, $asset = '', $access = '')
     {
         if ((int)$user_id == 0) {
-            $user_id = MolajoController::getUser()->id;
+            $user_id = Molajo::User()->id;
         }
 
         if ($action == 'login') {
@@ -710,7 +710,7 @@ class MolajoACLCore extends MolajoACL
         $userGroups = $acl->getList('Usergroups', $user_id, '', $action);
 
         /** query  */
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = $db->getQuery(true);
 
         /** view access */
@@ -818,6 +818,6 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkComponentTaskAuthorisation($option, $option_value_literal)
     {
-        return MolajoController::getUser()->getAuthorisedCategories($option, $option_value_literal);
+        return Molajo::User()->getAuthorisedCategories($option, $option_value_literal);
     }
 }

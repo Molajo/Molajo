@@ -206,7 +206,7 @@ class MolajoControllerExtension
             return true;
         }
 
-        if ($this->table->checked_out == MolajoController::getUser()->get('id')) {
+        if ($this->table->checked_out == Molajo::User()->get('id')) {
         } else {
             $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER') . ' ' . $this->getTask());
             $this->redirectClass->setRedirectMessageType('warning');
@@ -345,7 +345,7 @@ class MolajoControllerExtension
      */
     public function cleanCache()
     {
-//        $cache = MolajoController::getCache($this->mvc->get('extension_instance_name'));
+//        $cache = Molajo::getCache($this->mvc->get('extension_instance_name'));
 //        $cache->clean();
     }
 }

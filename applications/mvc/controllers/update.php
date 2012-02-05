@@ -249,7 +249,7 @@ class MolajoControllerUpdate extends MolajoControllerExtension
         }
 
         /** Preparation: Save form or version data **/
-        MolajoController::getUser()->setUserState(JRequest::getInt('datakey'), $data);
+        Molajo::User()->setUserState(JRequest::getInt('datakey'), $data);
         $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
@@ -277,16 +277,16 @@ class MolajoControllerUpdate extends MolajoControllerExtension
             $errors = $this->model->getErrors();
             for ($e = 0; $e < count($errors); $e++) {
                 if (MolajoError::isError($errors[$e])) {
-                    MolajoController::getApplication()->setMessage($errors[$e]->getMessage(), 'warning');
+                    Molajo::App()->setMessage($errors[$e]->getMessage(), 'warning');
                 } else {
-                    MolajoController::getApplication()->setMessage($errors[$e], 'warning');
+                    Molajo::App()->setMessage($errors[$e], 'warning');
                 }
             }
-            MolajoController::getUser()->setUserState(JRequest::getInt('datakey'), $data);
+            Molajo::User()->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        MolajoController::getUser()->setUserState(JRequest::getInt('datakey'), $validData);
+        Molajo::User()->setUserState(JRequest::getInt('datakey'), $validData);
 
         /** Trigger_Event: onContentValidateForm **/
         /** Molajo_Note: onContentValidateForm is a new event that follows the primary source validation **/
@@ -343,7 +343,7 @@ class MolajoControllerUpdate extends MolajoControllerExtension
         }
 
         /** clear session data **/
-        MolajoController::getUser()->setUserState(JRequest::getInt('datakey'), null);
+        Molajo::User()->setUserState(JRequest::getInt('datakey'), null);
 
         /** Molajo_Note: Testing added to ensure state change before onContentChangeState event is triggered  **/
         if ($this->existing_status == $validData->state || $this->isNew) {

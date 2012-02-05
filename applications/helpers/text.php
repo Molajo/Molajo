@@ -40,7 +40,7 @@ class MolajoTextHelper
      */
     public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = MolajoController::getApplication()->getLanguage();
+        $lang = Molajo::App()->getLanguage();
         if ($lang == null) {
             return $string;
         }
@@ -90,7 +90,7 @@ class MolajoTextHelper
      */
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = MolajoController::getApplication()->getLanguage();
+        $lang = Molajo::App()->getLanguage();
         if ($lang->hasKey($string . '_' . $alt)) {
             return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
         }
@@ -119,7 +119,7 @@ class MolajoTextHelper
      */
     public static function sprintf($string)
     {
-        $lang = MolajoController::getApplication()->getLanguage();
+        $lang = Molajo::App()->getLanguage();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
@@ -152,7 +152,7 @@ class MolajoTextHelper
      */
     public static function printf($string)
     {
-        $lang = MolajoController::getApplication()->getLanguage();
+        $lang = Molajo::App()->getLanguage();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
@@ -197,7 +197,7 @@ class MolajoTextHelper
         // Add the string to the array if not null.
         if ($string !== null) {
             // Normalize the key and translate the string.
-            self::$strings[strtoupper($string)] = MolajoController::getApplication()->getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
+            self::$strings[strtoupper($string)] = Molajo::App()->getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
         }
 
         return self::$strings;
@@ -228,8 +228,8 @@ class MolajoTextHelper
      */
     function replaceBuffer($change_from, $change_to)
     {
-        $buffer = preg_replace($change_from, $change_to, MolajoController::getApplication()->getBody());
-        MolajoController::getApplication()->setBody($buffer);
+        $buffer = preg_replace($change_from, $change_to, Molajo::App()->getBody());
+        Molajo::App()->setBody($buffer);
     }
 
     /**

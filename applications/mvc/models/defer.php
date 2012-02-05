@@ -42,7 +42,7 @@ class MolajoModelDefer extends MolajoModel
         $this->items = array();
 
         /** type: javascript_links */
-        $list = MolajoController::getApplication()->getScriptLinks(1);
+        $list = Molajo::App()->getScriptLinks(1);
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
@@ -55,7 +55,7 @@ class MolajoModelDefer extends MolajoModel
         }
 
         /** type: javascript_declarations */
-        $list = MolajoController::getApplication()->getScriptDeclarations(1);
+        $list = Molajo::App()->getScriptDeclarations(1);
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');

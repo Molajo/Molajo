@@ -133,7 +133,7 @@ class MolajoField
 
         /** retain value from previous page load if current request is null **/
         if ($this->value == null) {
-            $this->value = MolajoController::getUser()->getUserState('filter.' . $this->name);
+            $this->value = Molajo::User()->getUserState('filter.' . $this->name);
         }
     }
 

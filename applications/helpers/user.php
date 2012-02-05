@@ -33,7 +33,7 @@ abstract class MolajoUserHelper
      */
     public static function getUserId($username)
     {
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
         $db->setQuery($query->__toString());
 
@@ -75,7 +75,7 @@ abstract class MolajoUserHelper
         if (in_array($group_id, $user->groups)) {
         } else {
 
-            $db = MolajoController::getDbo();
+            $db = Molajo::DB();
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__content`' .
@@ -129,11 +129,11 @@ abstract class MolajoUserHelper
         }
 
         // Set the group data for any preloaded user objects.
-        $temp = MolajoController::getUser((int)$user_id);
+        $temp = Molajo::User((int)$user_id);
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = MolajoController::getUser();
+        $temp = Molajo::User();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -160,7 +160,7 @@ abstract class MolajoUserHelper
         $user->groups = $groups;
 
         // Get the titles for the user groups.
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $db->setQuery(
             'SELECT `id`, `title`' .
             ' FROM `#__content`' .
@@ -184,11 +184,11 @@ abstract class MolajoUserHelper
         }
 
         // Set the group data for any preloaded user objects.
-        $temp = MolajoController::getUser((int)$user_id);
+        $temp = Molajo::User((int)$user_id);
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = MolajoController::getUser();
+        $temp = Molajo::User();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -207,7 +207,7 @@ abstract class MolajoUserHelper
     public static function activateUser($activation)
     {
         // Initialize some variables.
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'

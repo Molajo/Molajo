@@ -82,10 +82,10 @@ class MolajoDocument
     protected function _render()
     {
         $parameters = array(
-            'theme' => MolajoController::getRequest()->get('theme_name'),
-            'theme_path' => MolajoController::getRequest()->get('theme_path'),
-            'page' => MolajoController::getRequest()->get('page_view_include'),
-            'parameters' => MolajoController::getRequest()->get('theme_parameters')
+            'theme' => Molajo::Request()->get('theme_name'),
+            'theme_path' => Molajo::Request()->get('theme_path'),
+            'page' => Molajo::Request()->get('page_view_include'),
+            'parameters' => Molajo::Request()->get('theme_parameters')
         );
 
         /** Theme Parameters */
@@ -93,7 +93,7 @@ class MolajoDocument
         $this->parameters->loadArray($parameters);
 
         /** Before Event */
-        // MolajoController::getApplication()->triggerEvent('onBeforeRender');
+        // Molajo::App()->triggerEvent('onBeforeRender');
 
         /** process theme include, and then all rendered output, for <include statements */
         $body = $this->_renderLoop();
@@ -109,10 +109,10 @@ class MolajoDocument
         }
 
         /** set response body */
-        MolajoController::getApplication()->setBody($body);
+        Molajo::App()->setBody($body);
 
         /** after rendering */
-        MolajoController::getApplication()->triggerEvent('onAfterRender');
+        Molajo::App()->triggerEvent('onAfterRender');
 
         return;
     }
@@ -133,7 +133,7 @@ class MolajoDocument
     {
         /** include the theme and page */
         ob_start();
-        require MolajoController::getRequest()->get('theme_path');
+        require Molajo::Request()->get('theme_path');
         $this->_theme = ob_get_contents();
         ob_end_clean();
 

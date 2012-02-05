@@ -195,9 +195,9 @@ class MolajoSession extends JObject
      */
     public static function getFormToken($forceNew = false)
     {
-        $user = MolajoController::getUser();
-        $session = MolajoController::getApplication()->getSession();
-        $hash = MolajoController::getApplication()->getHash($user->get('id', 0) . $session->getToken($forceNew));
+        $user = Molajo::User();
+        $session = Molajo::App()->getSession();
+        $hash = Molajo::App()->getHash($user->get('id', 0) . $session->getToken($forceNew));
 
         return $hash;
     }
@@ -387,7 +387,7 @@ class MolajoSession extends JObject
         } else {
             $session_name = session_name();
 
-            $input = MolajoController::getApplication()->getInput();
+            $input = Molajo::App()->getInput();
             $cookie = $input->get($session_name, false, 'COOKIE');
 
             if ($cookie === false) {
@@ -435,8 +435,8 @@ class MolajoSession extends JObject
         // must also be unset. If a cookie is used to propagate the session id (default behavior),
         // then the session cookie must be deleted.
         if (isset($_COOKIE[session_name()])) {
-            $cookie_domain = MolajoController::getApplication()->get('cookie_domain', '');
-            $cookie_path = MolajoController::getApplication()->get('cookie_path', '/');
+            $cookie_domain = Molajo::App()->get('cookie_domain', '');
+            $cookie_path = Molajo::App()->get('cookie_path', '/');
             setcookie(session_name(), '', time() - 42000, $cookie_path, $cookie_domain);
         }
 
@@ -563,14 +563,14 @@ class MolajoSession extends JObject
             $cookie['secure'] = true;
         }
 
-        if (MolajoController::getApplication()->get('cookie_domain', '') == '') {
+        if (Molajo::App()->get('cookie_domain', '') == '') {
         } else {
-            $cookie['domain'] = MolajoController::getApplication()->get('cookie_domain');
+            $cookie['domain'] = Molajo::App()->get('cookie_domain');
         }
 
-        if (MolajoController::getApplication()->get('cookie_path', '') == '') {
+        if (Molajo::App()->get('cookie_path', '') == '') {
         } else {
-            $cookie['path'] = MolajoController::getApplication()->get('cookie_path');
+            $cookie['path'] = Molajo::App()->get('cookie_path');
         }
 
         session_set_cookie_params($cookie['lifetime'],

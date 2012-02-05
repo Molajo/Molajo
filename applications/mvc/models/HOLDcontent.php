@@ -133,7 +133,7 @@ class MolajoModelContent extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = MolajoController::getDate()->format('Y-m-d-H-i-s');
+            $this->alias = Molajo::Date()->format('Y-m-d-H-i-s');
         }
 
         /** text fields **/
@@ -178,8 +178,8 @@ class MolajoModelContent extends MolajoModel
      */
     public function store($updateNulls = false)
     {
-        $date = MolajoController::getDate();
-        $user = MolajoController::getUser();
+        $date = Molajo::Date();
+        $user = Molajo::User();
 
         if ($this->id) {
             $this->modified = $date->toMySQL();
@@ -204,7 +204,7 @@ class MolajoModelContent extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = MolajoController::getDate()->format('Y-m-d-H-i-s');
+            $this->alias = Molajo::Date()->format('Y-m-d-H-i-s');
         }
 
         return parent::store($updateNulls);
@@ -228,7 +228,7 @@ class MolajoModelContent extends MolajoModel
         if (trim($this->alias) == '') {
             $this->alias = $this->title;
         }
-        $this->alias = MolajoController::getApplication()->stringURLSafe($this->alias);
+        $this->alias = Molajo::App()->stringURLSafe($this->alias);
 
         /** do not check alias for version saves  **/
         if ($this->state == MOLAJO_STATUS_VERSION) {

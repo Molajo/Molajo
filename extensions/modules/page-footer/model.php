@@ -45,12 +45,12 @@ class PagefooterModuleModel extends MolajoModel
 
         /** footer line 1 */
         if (JString::strpos(MolajoTextHelper :: _('FOOTER_LINE1'), '%date%')) {
-            $line1 = str_replace('%date%', MolajoController::getDate()->format('Y'), MolajoTextHelper :: _('FOOTER_LINE1'));
+            $line1 = str_replace('%date%', Molajo::Date()->format('Y'), MolajoTextHelper :: _('FOOTER_LINE1'));
         } else {
             $line1 = MolajoTextHelper :: _('FOOTER_LINE1');
         }
         if (JString::strpos($line1, '%site_name%')) {
-            $line1 = str_replace('%site_name%', MolajoController::getApplication()->get('site_name', 'Molajo'), $line1);
+            $line1 = str_replace('%site_name%', Molajo::App()->get('site_name', 'Molajo'), $line1);
         }
         $tempObject->set('line1', $line1);
 

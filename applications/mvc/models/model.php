@@ -182,7 +182,7 @@ class MolajoModel extends JObject
         if (array_key_exists('dbo', $this->config)) {
             $this->_db = $this->config['dbo'];
         } else {
-            $this->_db = MolajoController::getDbo();
+            $this->_db = Molajo::DB();
         }
     }
 
@@ -771,7 +771,7 @@ class MolajoModel extends JObject
         }
 
         // Get the current time in MySQL format.
-        $time = MolajoController::getDate()->toMysql();
+        $time = Molajo::Date()->toMysql();
 
         // Check the row out by primary key.
         $query = $this->_db->getQuery(true);
@@ -876,7 +876,7 @@ class MolajoModel extends JObject
             return false;
         }
 
-        $db = MolajoController::getDbo();
+        $db = Molajo::DB();
         $db->setQuery(
             'SELECT COUNT(user_id)' .
                 ' FROM ' . $db->quoteName('#__sessions') .

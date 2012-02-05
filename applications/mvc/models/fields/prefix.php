@@ -45,7 +45,7 @@ class MolajoFieldPrefix extends MolajoField
         $prefix = false;
 
 
-        $session = MolajoController::getApplication()->getSession()->get('setup.options', array());
+        $session = Molajo::App()->getSession()->get('setup.options', array());
         if (empty($session->db_prefix)) {
         } else {
             $prefix = $session->db_prefix;
@@ -53,7 +53,7 @@ class MolajoFieldPrefix extends MolajoField
 
         if ($prefix) {
         } else {
-            $prefix = MolajoController::getApplication()->get('prefix');
+            $prefix = Molajo::App()->get('prefix');
         }
 
         if ($prefix) {
@@ -170,9 +170,9 @@ class MolajoFieldPrefix extends MolajoField
     protected function getPrefix($size = 10, $count = 100)
     {
         // For an existing table, retrieve all table names
-        $db = MolajoController::getApplication()->get('db');
+        $db = Molajo::App()->get('db');
         if ($db) {
-            $tables = MolajoController::getDbo()->getModelList();
+            $tables = Molajo::DB()->getModelList();
         } else {
             $tables = array();
         }

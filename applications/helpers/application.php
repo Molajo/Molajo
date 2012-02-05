@@ -56,7 +56,7 @@ class MolajoApplicationHelper
 
             } else {
 
-                $db = MolajoController::getDbo();
+                $db = Molajo::DB();
 
                 $query = $db->getQuery(true);
 

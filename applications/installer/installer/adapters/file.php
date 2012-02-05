@@ -32,7 +32,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
     {
         $this->manifest = $this->parent->getManifest();
         $extension = 'files_' . str_replace('files_', '', strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd')));
-        $lang = MolajoController::getApplication()->getLanguage();
+        $lang = Molajo::App()->getLanguage();
         $source = $path;
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
@@ -383,7 +383,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
             // Set the plugin root path
             $this->parent->setPath('extension_root', MOLAJO_BASE_FOLDER); //.'/files/'.$manifest->filename);
 
-            $xml = MolajoController::getXML($manifestFile);
+            $xml = Molajo::getXML($manifestFile);
 
             // If we cannot load the XML file return null
             if (!$xml) {
@@ -453,7 +453,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
             }
 
             // Remove the schema version
-            $db = MolajoController::getDbo();
+            $db = Molajo::DB();
             $query = $db->getQuery(true);
             $query->delete()
                     ->from('#__schemas')
