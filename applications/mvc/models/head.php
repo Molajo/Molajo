@@ -44,15 +44,15 @@ class MolajoModelHead extends MolajoModel
         /** type: base */
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
-        $tempObject->set('title', $this->request->get('metadata_title'));
-        $tempObject->set('base', $this->request->get('url_base'));
-        $tempObject->set('last_modified', $this->request->get('source_last_modified'));
-        $tempObject->set('description', $this->request->get('metadata_description'));
-        $tempObject->set('favicon', $this->request->get('theme_favicon'));
-        $tempObject->set('keywords', $this->request->get('metadata_keywords'));
-        $tempObject->set('author', $this->request->get('metadata_author'));
-        $tempObject->set('content_rights', $this->request->get('metadata_content_rights'));
-        $tempObject->set('robots', $this->request->get('metadata_robots'));
+        $tempObject->set('title', MolajoController::getRequest()->get('metadata_title'));
+        $tempObject->set('base', MolajoController::getRequest()->get('url_base'));
+        $tempObject->set('last_modified', MolajoController::getRequest()->get('source_last_modified'));
+        $tempObject->set('description', MolajoController::getRequest()->get('metadata_description'));
+        $tempObject->set('favicon', MolajoController::getRequest()->get('theme_favicon'));
+        $tempObject->set('keywords', MolajoController::getRequest()->get('metadata_keywords'));
+        $tempObject->set('author', MolajoController::getRequest()->get('metadata_author'));
+        $tempObject->set('content_rights', MolajoController::getRequest()->get('metadata_content_rights'));
+        $tempObject->set('robots', MolajoController::getRequest()->get('metadata_robots'));
         $this->items[] = $tempObject;
 
         /** type: links */

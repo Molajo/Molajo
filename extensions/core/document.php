@@ -25,14 +25,6 @@ class MolajoDocument
     protected $sequence = array();
 
     /**
-     * Request
-     *
-     * @var object
-     * @since 1.0
-     */
-    public $request = null;
-
-    /**
      * Theme Parameters
      *
      * @var string
@@ -61,15 +53,12 @@ class MolajoDocument
      *
      * Class constructor.
      *
-     * @param   null    $requestArray from MolajoRequests
-     *
      * @return boolean
      * @since  1.0
      */
-    public function __construct($request = array())
+    public function __construct()
     {
-        $this->request = $request;
-
+        /** provides sequence of render processing */
         $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
         if (JFile::exists($formatXML)) {
         } else {
@@ -93,10 +82,10 @@ class MolajoDocument
     protected function _render()
     {
         $parameters = array(
-            'theme' => $this->request->get('theme_name'),
-            'theme_path' => $this->request->get('theme_path'),
-            'page' => $this->request->get('page_view_include'),
-            'parameters' => $this->request->get('theme_parameters')
+            'theme' => MolajoController::getRequest()->get('theme_name'),
+            'theme_path' => MolajoController::getRequest()->get('theme_path'),
+            'page' => MolajoController::getRequest()->get('page_view_include'),
+            'parameters' => MolajoController::getRequest()->get('theme_parameters')
         );
 
         /** Theme Parameters */
@@ -112,7 +101,7 @@ class MolajoDocument
         /** theme: load template media and language files, does not renderer template output */
         if (class_exists('MolajoRendererTheme')) {
             $tmp = array();
-            $rendererClass = new MolajoRendererTheme ('theme', $this->request);
+            $rendererClass = new MolajoRendererTheme ('theme');
             $results = $rendererClass->render($tmp);
         } else {
             echo 'failed renderer = ' . MolajoRendererTheme . '<br />';
@@ -144,7 +133,7 @@ class MolajoDocument
     {
         /** include the theme and page */
         ob_start();
-        require $this->request->get('theme_path');
+        require MolajoController::getRequest()->get('theme_path');
         $this->_theme = ob_get_contents();
         ob_end_clean();
 
@@ -275,10 +264,10 @@ class MolajoDocument
                     /** 6. store the "replace this" value */
                     $replace[] = "<include:" . $rendererArray['replace'] . "/>";
 
-                    /** 7. load the renderer class and send in requestArray */
+                    /** 7. load the renderer class */
                     $class = 'Molajo' . 'Renderer' . ucfirst($rendererName);
                     if (class_exists($class)) {
-                        $rendererClass = new $class ($rendererName, $this->request, $includeName);
+                        $rendererClass = new $class ($rendererName, $includeName);
                     } else {
                         echo 'failed renderer = ' . $class . '<br />';
                         // ERROR

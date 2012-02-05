@@ -15,7 +15,7 @@ $fileHelper = new MolajoFileHelper();
 /**
  *  Primary Extensions Classes
  */
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/request.php', 'MolajoRequest');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/request.php', 'MolajoControllerRequest');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document.php', 'MolajoDocument');
 $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderers/renderer.php', 'MolajoRenderer');
 

@@ -195,14 +195,6 @@ class MolajoControllerApplication
     protected $_custom_html = array();
 
     /**
-     * Request
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $request = null;
-
-    /**
      * Response
      *
      * @var    object
@@ -345,9 +337,22 @@ class MolajoControllerApplication
         $this->loadLanguage();
         $this->loadDispatcher();
 
-        /** request and rendering  */
-        $requestClass = new MolajoRequest();
-        $this->request = $requestClass->process();
+        /** request  */
+        $requestClass = MolajoController::getRequest();
+        $requestClass->process();
+
+
+        /** display */
+        if ($requestClass->get('mvc_task') == 'add'
+            || $requestClass->get('mvc_task') == 'edit'
+            || $requestClass->get('mvc_task') == 'display'
+        ) {
+            $render = new MolajoDocument ();
+
+            /** task action */
+        } else {
+            //$this->_processTask();
+        }
 
         /** response */
         $this->respond();

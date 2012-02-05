@@ -28,11 +28,10 @@ class MolajoRendererTheme extends MolajoRenderer
      * @return  null
      * @since   1.0
      */
-    public function __construct($name = null, $request = array(), $type = null)
+    public function __construct($name = null, $type = null)
     {
         $this->_name = $name;
         $this->_type = $type;
-        $this->request = $request;
 
         $this->parameters = new JRegistry;
         $this->parameters->set('extension_suppress_no_results', 0);
@@ -72,7 +71,7 @@ class MolajoRendererTheme extends MolajoRenderer
     protected function _loadLanguage()
     {
         MolajoController::getApplication()->getLanguage()->load
-        ($this->request->get('extension_path'),
+        (MolajoController::getRequest()->get('extension_path'),
             MolajoController::getApplication()->getLanguage()->getDefault(),
             false,
             false);
@@ -102,8 +101,8 @@ class MolajoRendererTheme extends MolajoRenderer
 
         /** Theme */
         $priority = MolajoController::getApplication()->get('media_priority_theme', 600);
-        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->request->get('theme_name');
-        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->request->get('theme_name');
+        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . MolajoController::getRequest()->get('theme_name');
+        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . MolajoController::getRequest()->get('theme_name');
 
         $css = MolajoController::getApplication()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = MolajoController::getApplication()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);

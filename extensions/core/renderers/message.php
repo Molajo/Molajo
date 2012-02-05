@@ -21,16 +21,16 @@ class MolajoRendererMessage extends MolajoRenderer
      *
      * Class constructor.
      *
-     * @param  null $name
-     * @param  array $request
+     * @param  string $name
+     * @param  string $type
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct($name = null, $request = array(), $type = null)
+    public function __construct($name = null, $type = null)
     {
         $this->_extension_required = false;
-        parent::__construct($name, $request, $type);
+        parent::__construct($name, $type);
     }
 
     /**

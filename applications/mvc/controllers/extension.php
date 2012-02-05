@@ -17,19 +17,9 @@ defined('MOLAJO') or die;
 class MolajoControllerExtension
 {
     /**
-     * $request
-     *
-     * Values used to generate the primary content on the page
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $request;
-
-    /**
      * $mvc
      *
-     * Values to use for generating content for this specific request
+     * Request array for rendering content
      *
      * @var    object
      * @since  1.0
@@ -89,21 +79,19 @@ class MolajoControllerExtension
      *
      * Constructor.
      *
-     * @param    array   $request
-     * @since    1.0
+     * @param  array  mvc request
+     * @param  array  parameters
+     *
+     * @since  1.0
      */
-    public function __construct($mvc, $request, $parameters)
+    public function __construct($mvc, $parameters)
     {
         if (is_object($mvc)) {
             $this->mvc = $mvc;
         } else {
             //error
         }
-        if (is_object($request)) {
-            $this->request = $request;
-        } else {
-            //error
-        }
+
         $this->parameters = new JRegistry;
         $this->parameters->loadJSON($parameters);
 

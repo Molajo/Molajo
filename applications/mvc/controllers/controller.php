@@ -41,6 +41,12 @@ class MolajoController
     public static $config = null;
 
     /**
+     * @var    Request
+     * @since  1.0
+     */
+    public static $request = null;
+
+    /**
      * @var    Database
      * @since  1.0
      */
@@ -113,6 +119,29 @@ class MolajoController
         }
 
         return self::$application;
+    }
+
+    /**
+     * getRequest
+     *
+     * Get the Request Controller Object
+     *
+     * @static
+     * @param JRegistry|null $config
+     * @param string $override_request_url
+     * @param string $override_asset_id
+     *
+     * @return Request|null
+     * @since 1.0
+     */
+    public static function getRequest(JRegistry $request = null, $override_request_url = null, $override_asset_id = null)
+    {
+        if (self::$request) {
+        } else {
+            self::$request = MolajoControllerRequest::getInstance($request, $override_request_url, $override_asset_id);
+        }
+
+        return self::$request;
     }
 
     /**

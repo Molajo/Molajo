@@ -25,16 +25,6 @@ class MolajoRenderer
     protected $_name = null;
 
     /**
-     * $request
-     *
-     * The page request established in MolajoRequest
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $request;
-
-    /**
      * $_type
      *
      * @var    string
@@ -86,17 +76,16 @@ class MolajoRenderer
      *
      * Class constructor.
      *
-     * @param  null $name
-     * @param  array $request
+     * @param  string $name
+     * @param  string $type
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct($name = null, $request = array(), $type = null)
+    public function __construct($name = null, $type = null)
     {
         $this->_name = $name;
         $this->_type = $type;
-        $this->request = $request;
 
         $this->parameters = new JRegistry;
         $this->parameters->set('extension_suppress_no_results', 0);
@@ -105,7 +94,7 @@ class MolajoRenderer
     /**
      * render
      *
-     * Sets mvc request
+     * Sets MVC request
      * Establishes extension classes, language files, and media
      * Instantiates mvc controller and executes task
      *
@@ -473,7 +462,7 @@ class MolajoRenderer
         $this->mvc->set('mvc_task', $task);
 
         /** instantiate controller  */
-        $controller = new $controllerClass($this->mvc, $this->request, $this->parameters);
+        $controller = new $controllerClass($this->mvc, $this->parameters);
 
         /** execute task: display, edit, or add  */
         return $controller->$task();

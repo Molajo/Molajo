@@ -24,9 +24,9 @@ class MolajoControllerDisplay extends MolajoControllerExtension
      * @param  array   $request
      * @since  1.0
      */
-    public function __construct($mvc, $request, $parameters)
+    public function __construct($mvc, $parameters)
     {
-        parent::__construct($mvc, $request, $parameters);
+        parent::__construct($mvc, $parameters);
     }
 
     /**
@@ -42,8 +42,6 @@ class MolajoControllerDisplay extends MolajoControllerExtension
         /** instantiate model */
         $modelClass = (string)$this->mvc->get('mvc_model');
         $this->model = new $modelClass();
-
-        $this->model->request = $this->request;
         $this->model->mvc = $this->mvc;
         $this->model->parameters = $this->parameters;
 

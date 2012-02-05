@@ -35,78 +35,78 @@ class MolajoRendererComponent extends MolajoRenderer
 
         /** extension */
         $this->mvc->set('extension_instance_id',
-            (int) $this->request->get('extension_instance_id'));
+            (int) MolajoController::getRequest()->get('extension_instance_id'));
         $this->mvc->set('extension_instance_name',
-            $this->request->get('extension_instance_name'));
+            MolajoController::getRequest()->get('extension_instance_name'));
         $this->mvc->set('extension_asset_type_id',
-            (int) $this->request->get('extension_asset_type_id'));
+            (int) MolajoController::getRequest()->get('extension_asset_type_id'));
         $this->mvc->set('extension_asset_id',
-            (int) $this->request->get('extension_asset_id'));
+            (int) MolajoController::getRequest()->get('extension_asset_id'));
         $this->mvc->set('extension_view_group_id',
-            (int) $this->request->get('extension_view_group_id'));
+            (int) MolajoController::getRequest()->get('extension_view_group_id'));
         $this->mvc->set('extension_custom_fields',
-            $this->request->get('extension_custom_fields'));
+            MolajoController::getRequest()->get('extension_custom_fields'));
         $this->mvc->set('extension_metadata',
-            $this->request->get('extension_metadata'));
+            MolajoController::getRequest()->get('extension_metadata'));
         $this->mvc->set('extension_parameters',
-            $this->request->get('extension_parameters'));
+            MolajoController::getRequest()->get('extension_parameters'));
         $this->mvc->set('extension_path',
-            $this->request->get('extension_path'));
+            MolajoController::getRequest()->get('extension_path'));
         $this->mvc->set('extension_type',
-            $this->request->get('extension_type'));
+            MolajoController::getRequest()->get('extension_type'));
         $this->mvc->set('extension_folder','');
         $this->mvc->set('extension_event_type',
-            $this->request->get('extension_event_type'));
+            MolajoController::getRequest()->get('extension_event_type'));
 
         /** view */
         $this->mvc->set('template_view_id',
-            (int) $this->request->get('template_view_id'));
+            (int) MolajoController::getRequest()->get('template_view_id'));
         $this->mvc->set('template_view_name',
-            $this->request->get('template_view_name'));
+            MolajoController::getRequest()->get('template_view_name'));
         $this->mvc->set('template_view_css_id',
-            $this->request->get('template_view_css_id'));
+            MolajoController::getRequest()->get('template_view_css_id'));
         $this->mvc->set('template_view_css_class',
-            $this->request->get('template_view_css_class'));
+            MolajoController::getRequest()->get('template_view_css_class'));
         $this->mvc->set('template_view_asset_type_id',
-            $this->request->get('template_view_asset_type_id'));
+            MolajoController::getRequest()->get('template_view_asset_type_id'));
         $this->mvc->set('template_view_asset_id',
-            (int) $this->request->get('template_view_asset_id'));
+            (int) MolajoController::getRequest()->get('template_view_asset_id'));
         $this->mvc->set('template_view_path',
-            $this->request->get('template_view_path'));
+            MolajoController::getRequest()->get('template_view_path'));
         $this->mvc->set('template_view_path_url',
-            $this->request->get('template_view_path_url'));
+            MolajoController::getRequest()->get('template_view_path_url'));
 
         /** wrap */
         $this->mvc->set('wrap_view_id',
-            (int) $this->request->get('wrap_view_id'));
+            (int) MolajoController::getRequest()->get('wrap_view_id'));
         $this->mvc->set('wrap_view_name',
-            $this->request->get('wrap_view_name'));
+            MolajoController::getRequest()->get('wrap_view_name'));
         $this->mvc->set('wrap_view_css_id',
-            $this->request->get('wrap_view_css_id'));
+            MolajoController::getRequest()->get('wrap_view_css_id'));
         $this->mvc->set('wrap_view_css_class',
-            $this->request->get('wrap_view_css_class'));
+            MolajoController::getRequest()->get('wrap_view_css_class'));
         $this->mvc->set('wrap_view_asset_type_id',
-            $this->request->get('wrap_view_asset_type_id'));
+            MolajoController::getRequest()->get('wrap_view_asset_type_id'));
         $this->mvc->set('wrap_view_asset_id',
-            (int) $this->request->get('wrap_view_asset_id'));
+            (int) MolajoController::getRequest()->get('wrap_view_asset_id'));
         $this->mvc->set('wrap_view_path',
-            $this->request->get('wrap_view_path'));
+            MolajoController::getRequest()->get('wrap_view_path'));
         $this->mvc->set('wrap_view_path_url',
-            $this->request->get('wrap_view_path_url'));
+            MolajoController::getRequest()->get('wrap_view_path_url'));
 
         /** mvc parameters */
         $this->mvc->set('mvc_controller',
-            $this->request->get('mvc_controller'));
+            MolajoController::getRequest()->get('mvc_controller'));
         $this->mvc->set('mvc_task',
-            $this->request->get('mvc_task'));
+            MolajoController::getRequest()->get('mvc_task'));
         $this->mvc->set('mvc_model',
-            $this->request->get('mvc_model'));
+            MolajoController::getRequest()->get('mvc_model'));
         $this->mvc->set('mvc_id',
-            (int) $this->request->get('mvc_id'));
+            (int) MolajoController::getRequest()->get('mvc_id'));
         $this->mvc->set('mvc_category_id',
-            (int) $this->request->get('mvc_category_id'));
+            (int) MolajoController::getRequest()->get('mvc_category_id'));
         $this->mvc->set('mvc_suppress_no_results',
-            (bool)$this->request->get('mvc_suppress_no_results'));
+            (bool)MolajoController::getRequest()->get('mvc_suppress_no_results'));
 
         return;
     }
