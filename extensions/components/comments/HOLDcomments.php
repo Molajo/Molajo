@@ -16,10 +16,10 @@ class CommentsControllerUpdate extends MolajoUpdateController
 class CommentsControllerUpdatelist extends MolajoUpdatelistController
 {
 }
-class CommentsTableComment extends MolajoModelContent
+class CommentsTableComment extends MolajoContentModel
 {
 }
-class CommentsModelDisplay extends MolajoModelDisplay
+class CommentsModelDisplay extends MolajoDisplayModel
 {
 }
 class CommentsModelEdit extends MolajoModelEdit

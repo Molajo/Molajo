@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Language
  * @since       1.0
  */
-class MolajoLanguage
+class MolajoLanguageController
 {
     /**
      * $_languages
@@ -95,7 +95,7 @@ class MolajoLanguage
     {
         if (isset(self::$_languages[$language])) {
         } else {
-            self::$_languages[$language] = new MolajoLanguage($language);
+            self::$_languages[$language] = new MolajoLanguageController($language);
         }
         return self::$_languages[$language];
     }

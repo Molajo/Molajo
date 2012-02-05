@@ -32,7 +32,7 @@ class MolajoLanguageHelper
     public static function createLanguageList($actualLanguage, $basePath = MOLAJO_EXTENSIONS_LANGUAGES, $caching = false, $installed = false)
     {
         $list = array();
-        $languages = MolajoLanguage::getKnownLanguages($basePath);
+        $languages = MolajoLanguageController::getKnownLanguages($basePath);
 
         if (MOLAJO_APPLICATION_ID == 0) {
             $installed == false;

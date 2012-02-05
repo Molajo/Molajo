@@ -45,9 +45,9 @@ class MolajoHeadRenderer extends MolajoRendererController
     protected function _getExtension()
     {
         if ($this->_type == 'defer') {
-            $this->mvc->set('mvc_model', 'MolajoModelDefer');
+            $this->mvc->set('mvc_model', 'MolajoDeferModel');
         } else {
-            $this->mvc->set('mvc_model', 'MolajoModelHead');
+            $this->mvc->set('mvc_model', 'MolajoHeadModel');
         }
         $this->mvc->set('mvc_task', 'display');
 

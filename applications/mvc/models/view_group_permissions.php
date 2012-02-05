@@ -15,4 +15,4 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelViewGroupPermissions extends MolajoModel {}
+class MolajoViewGroupPermissionsModel extends MolajoModel {}

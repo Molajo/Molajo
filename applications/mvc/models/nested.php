@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelNested extends MolajoModel
+class MolajoNestedModel extends MolajoModel
 {
     /**
      * Object property holding the primary key of the parent node.  Provides
@@ -98,7 +98,7 @@ class MolajoModelNested extends MolajoModel
      * @param   boolean  Only select diagnostic data for the nested sets.
      * @return  mixed    Boolean false on failure or array of node objects on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/getPath
+     * @link    http://docs.molajo.org/MolajoNestedModel/getPath
      */
     public function getPath($pk = null, $diagnostic = false)
     {
@@ -135,7 +135,7 @@ class MolajoModelNested extends MolajoModel
      * @param   boolean  Only select diagnostic data for the nested sets.
      * @return  mixed    Boolean false on failure or array of node objects on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/getTree
+     * @link    http://docs.molajo.org/MolajoNestedModel/getTree
      */
     public function getTree($pk = null, $diagnostic = false)
     {
@@ -170,7 +170,7 @@ class MolajoModelNested extends MolajoModel
      * @param   integer  Primary key of the node to check.
      * @return  boolean  True if a leaf node.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/isLeaf
+     * @link    http://docs.molajo.org/MolajoNestedModel/isLeaf
      */
     public function isLeaf($pk = null)
     {
@@ -197,7 +197,7 @@ class MolajoModelNested extends MolajoModel
      * @param   string   Location type string. ['before', 'after', 'first-child', 'last-child']
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/setLocation
+     * @link    http://docs.molajo.org/MolajoNestedModel/setLocation
      */
     public function setLocation($referenceId, $position = 'after')
     {
@@ -271,7 +271,7 @@ class MolajoModelNested extends MolajoModel
      * @param   integer  The primary key of the node to move.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/moveByReference
+     * @link    http://docs.molajo.org/MolajoNestedModel/moveByReference
      */
 
     public function moveByReference($referenceId, $position = 'after', $pk = null)
@@ -478,7 +478,7 @@ class MolajoModelNested extends MolajoModel
      * @param   boolean  True to delete child nodes, false to move them up a level.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/delete
+     * @link    http://docs.molajo.org/MolajoNestedModel/delete
      */
     public function delete($pk = null, $children = true)
     {
@@ -645,7 +645,7 @@ class MolajoModelNested extends MolajoModel
      * @param   boolean  True to update null values as well.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/store
+     * @link    http://docs.molajo.org/MolajoNestedModel/store
      */
     public function store($updateNulls = false)
     {
@@ -793,7 +793,7 @@ class MolajoModelNested extends MolajoModel
      * @param   integer The user id of the user performing the operation.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/publish
+     * @link    http://docs.molajo.org/MolajoNestedModel/publish
      */
     public function publish($pks = null, $state = 1, $userId = 0)
     {
@@ -922,7 +922,7 @@ class MolajoModelNested extends MolajoModel
      * @param   integer  Primary key of the node to move.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/orderUp
+     * @link    http://docs.molajo.org/MolajoNestedModel/orderUp
      */
     public function orderUp($pk)
     {
@@ -1011,7 +1011,7 @@ class MolajoModelNested extends MolajoModel
      * @param   integer  Primary key of the node to move.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/orderDown
+     * @link    http://docs.molajo.org/MolajoNestedModel/orderDown
      */
     public function orderDown($pk)
     {
@@ -1188,7 +1188,7 @@ class MolajoModelNested extends MolajoModel
      * @param   string   The path to the current nodes.
      * @return  integer  1 + value of root rgt on success, false on failure
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/rebuild
+     * @link    http://docs.molajo.org/MolajoNestedModel/rebuild
      */
     public function rebuild($parentId = null, $leftId = 0, $level = 0, $path = '')
     {
@@ -1267,7 +1267,7 @@ class MolajoModelNested extends MolajoModel
      * @param   integer  Primary key of the node for which to get the path.
      * @return  boolean  True on success.
      * @since   1.0
-     * @link    http://docs.molajo.org/MolajoModelNested/rebuildPath
+     * @link    http://docs.molajo.org/MolajoNestedModel/rebuildPath
      */
     public function rebuildPath($pk = null)
     {

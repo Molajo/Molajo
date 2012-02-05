@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelExtensionSites extends MolajoModel
+class MolajoExtensionSitesModel extends MolajoModel
 {
     /**
      * Contructor

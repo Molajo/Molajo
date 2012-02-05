@@ -67,7 +67,7 @@ class MolajoFieldAlias extends MolajoField
      */
     public function validateRequestValue()
     {
-        //return MolajoModelDisplay::validateValue('alias', $this->value, 'string', $table = null);
+        //return MolajoDisplayModel::validateValue('alias', $this->value, 'string', $table = null);
     }
 
     /**

@@ -141,14 +141,14 @@ class MolajoGroup
      * @return  object   The user table object
      * @since   1.0
      */
-    protected function _getModel($type = null, $prefix = 'MolajoModel')
+    protected function _getModel($type = 'Groups', $prefix = 'Molajo')
     {
         static $tabletype;
 
         if (isset($tabletype)) {
         } else {
-            $tabletype['name'] = 'Group';
-            $tabletype['prefix'] = 'MolajoModel';
+            $tabletype['name'] = 'Groups';
+            $tabletype['prefix'] = 'Molajo';
         }
 
         if (isset($type)) {

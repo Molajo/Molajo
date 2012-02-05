@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoModelUsers extends MolajoModel
+class MolajoUsersModel extends MolajoModel
 {
     /**
      * __construct
@@ -27,7 +27,7 @@ class MolajoModelUsers extends MolajoModel
      * @since   1.0
      */
     public function __construct($name = 'Users',
-                                $prefix = 'MolajoModel',
+                                $prefix = 'Molajo',
                                 $config = array())
     {
         $this->_table = '#__users';

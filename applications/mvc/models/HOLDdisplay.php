@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoModelDisplay extends MolajoModel
+class MolajoDisplayModel extends MolajoModel
 {
     /**
      * $request
@@ -1077,7 +1077,7 @@ class MolajoModelDisplay extends MolajoModel
      */
     public function getModel($type = '', $prefix = '', $config = array())
     {
-        return MolajoModel::getInstance($type = ucfirst('Article'),
+        return MolajoModel::getInstance(ucfirst($type),
             $prefix = ucfirst($this->mvc['option'] . 'Table'),
             $config);
     }

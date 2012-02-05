@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelExtensionInstances extends MolajoModel
+class MolajoExtensionInstancesModel extends MolajoModel
 {
 
     public function __construct($db)

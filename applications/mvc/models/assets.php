@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelAssets extends MolajoModel
+class MolajoAssetsModel extends MolajoModel
 {
     /**
      * The primary key of the asset.

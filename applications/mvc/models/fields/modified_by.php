@@ -74,7 +74,7 @@ class MolajoFieldModifiedBy extends MolajoField
      */
     public function validateRequestValue()
     {
-        return MolajoModelDisplay::validateValue('modified_by', $this->value, 'integer', $table = null);
+        return MolajoDisplayModel::validateValue('modified_by', $this->value, 'integer', $table = null);
     }
 
     /**

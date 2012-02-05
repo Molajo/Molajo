@@ -40,8 +40,8 @@ class MolajoDisplayController extends MolajoExtensionController
     public function display()
     {
         /** instantiate model */
-        $modelClass = (string)$this->mvc->get('mvc_model');
-        $this->model = new $modelClass();
+        $mc = (string)$this->mvc->get('mvc_model');
+        $this->model = new $mc();
         $this->model->mvc = $this->mvc;
         $this->model->parameters = $this->parameters;
 

@@ -140,7 +140,7 @@ class MolajoModel extends JObject
     /**
      * getInstance
      *
-     * Static method to get an instance of a MolajoModel class
+     * Static method to get an instance of a Model class
      *
      * @param   string   $name
      * @param   string   $prefix
@@ -150,11 +150,11 @@ class MolajoModel extends JObject
      * @since   1.0
      */
     public static function getInstance($name,
-                                       $prefix = 'MolajoModel',
+                                       $prefix = 'Molajo',
                                        $config = array())
     {
         $name = preg_replace('/[^A-Z0-9_\.-]/i', '', $name);
-        $modelClass = $prefix . ucfirst($name);
+        $modelClass = $prefix . ucfirst($name) . 'Model';
         if (class_exists($modelClass)) {
         } else {
             MolajoError::raiseWarning(0, TextHelper::sprintf('MOLAJO_DB_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
@@ -174,8 +174,8 @@ class MolajoModel extends JObject
      * @return  object
      * @since   1.0
      */
-    public function __construct($name = 'Users',
-                                $prefix = 'MolajoModel',
+    public function __construct($name,
+                                $prefix = 'Molajo',
                                 $config = array())
     {
         $this->config = $config;
@@ -345,7 +345,7 @@ class MolajoModel extends JObject
     /**
      * getDbo
      *
-     * Method to get the JDatabase connector object.
+     * Method to get the Database connector object.
      *
      * @return  object
      * @since   1.0
@@ -358,7 +358,7 @@ class MolajoModel extends JObject
     /**
      * setDbo
      *
-     * Method to set the JDatabase connector object.
+     * Method to set the Database connector object.
      *
      * @param   object   Database connection object
      * @return  boolean  True on success.
@@ -541,8 +541,7 @@ class MolajoModel extends JObject
     public function bind($source, $ignore = array())
     {
         if (is_object($source)
-            || is_array($source)
-        ) {
+            || is_array($source)) {
         } else {
             $e = new MolajoException(TextHelper::sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
             $this->setError($e);

@@ -289,7 +289,7 @@ class MolajoUser extends JObject
      * @return  object   user model
      * @since   1.0
      */
-    protected function _getModel($name = 'Users', $prefix = 'MolajoModel')
+    protected function _getModel($name = 'Users', $prefix = 'Molajo')
     {
         static $modeltype;
 
@@ -300,7 +300,7 @@ class MolajoUser extends JObject
             $modeltype['prefix'] = $prefix;
         }
 
-        $className = $modeltype['prefix'] . $modeltype['name'];
+        $className = $modeltype['prefix'] . $modeltype['name'] . 'Model';
 
         return $className::getInstance(
             $modeltype['name'],

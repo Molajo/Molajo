@@ -8,11 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Application Extension Instances
+ * Action Type
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoModelApplicationExtensionInstances extends MolajoModel {}
+class MolajoApplicationExtensionInstancesModel extends MolajoModel {}

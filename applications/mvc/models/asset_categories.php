@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelAssetCategories extends MolajoModel
+class MolajoAssetCategoriesModel extends MolajoModel
 {
     /**
      * @param database A database connector object
@@ -182,7 +182,7 @@ class MolajoModelAssetCategories extends MolajoModel
             $this->created_user_id = $user->get('id');
         }
         // Verify that the alias is unique
-        $table = MolajoModel::getInstance('Assetcategory', 'MolajoModel');
+        $table = MolajoModel::getInstance('Assetcategory', 'Molajo');
         if ($table->load(array('alias' => $this->alias,
                               'parent_id' => $this->parent_id,
                               'extension' => $this->extension))

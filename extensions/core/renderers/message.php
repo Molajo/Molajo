@@ -43,7 +43,7 @@ class MolajoMessageRenderer extends MolajoRendererController
      */
     protected function _getExtension()
     {
-        $this->mvc->set('mvc_model', 'MolajoModelMessages');
+        $this->mvc->set('mvc_model', 'MolajoMessagesModel');
         $this->mvc->set('mvc_task', 'display');
         $this->parameters->set('extension_suppress_no_results', 1);
 

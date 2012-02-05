@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoModelGroupViewGroups extends MolajoModel
+class MolajoGroupViewGroupsModel extends MolajoModel
 {
     /**
      * Constructor
