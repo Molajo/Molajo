@@ -98,10 +98,10 @@ class MolajoDisplayModel extends MolajoModel
      * @param  $config
      * @since  1.0
      */
-    public function __construct($config = array())
+    public function __construct(JConfig $config = null)
     {
         $this->_name = get_class($this);
-        parent::__construct($config = array());
+        parent::__construct($config);
     }
 
     /**
@@ -1075,11 +1075,12 @@ class MolajoDisplayModel extends MolajoModel
      *
      * @return    MolajoModel    A database object
      */
-    public function getModel($type = '', $prefix = '', $config = array())
+    public function getModel($type = '', $prefix = 'Molajo', $config = array())
     {
-        return MolajoModel::getInstance(ucfirst($type),
-            $prefix = ucfirst($this->mvc['option'] . 'Table'),
-            $config);
+        $mc = ucfirst($prefix).$type.'Model';
+        if (class_exists($mc)) {
+            return new $mc($config);
+        }
     }
 
     /**

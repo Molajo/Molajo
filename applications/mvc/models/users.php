@@ -26,14 +26,12 @@ class MolajoUsersModel extends MolajoModel
      * @return  object
      * @since   1.0
      */
-    public function __construct($name = 'Users',
-                                $prefix = 'Molajo',
-                                $config = array())
+    public function __construct(JRegistry $config = null)
     {
         $this->_table = '#__users';
         $this->_primary_key = 'id';
 
-        return parent::__construct($name, $prefix, $config);
+        return parent::__construct($config);
     }
 
     /**

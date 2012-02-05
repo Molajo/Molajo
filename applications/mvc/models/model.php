@@ -44,16 +44,6 @@ class MolajoModel extends JObject
     protected $_state;
 
     /**
-     * $request
-     *
-     * Primary request variables
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $request;
-
-    /**
      * $mvc
      *
      * Current request variables
@@ -138,33 +128,6 @@ class MolajoModel extends JObject
     public $task = null;
 
     /**
-     * getInstance
-     *
-     * Static method to get an instance of a Model class
-     *
-     * @param   string   $name
-     * @param   string   $prefix
-     * @param   array    $config
-     *
-     * @return  mixed    Model object or boolean false
-     * @since   1.0
-     */
-    public static function getInstance($name,
-                                       $prefix = 'Molajo',
-                                       $config = array())
-    {
-        $name = preg_replace('/[^A-Z0-9_\.-]/i', '', $name);
-        $modelClass = $prefix . ucfirst($name) . 'Model';
-        if (class_exists($modelClass)) {
-        } else {
-            MolajoError::raiseWarning(0, TextHelper::sprintf('MOLAJO_DB_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $name));
-            return false;
-        }
-
-        return new $modelClass($name, $prefix, $config);
-    }
-
-    /**
      * __construct
      *
      * @param   string  $name
@@ -174,13 +137,16 @@ class MolajoModel extends JObject
      * @return  object
      * @since   1.0
      */
-    public function __construct($name,
-                                $prefix = 'Molajo',
-                                $config = array())
+    public function __construct(JRegistry $config = null)
     {
-        $this->config = $config;
-        if (array_key_exists('dbo', $this->config)) {
-            $this->_db = $this->config['dbo'];
+        if ($config instanceof JRegistry) {
+            $this->_config = $config;
+        } else {
+            $this->_config = new JRegistry;
+        }
+
+        if (array_key_exists('dbo', $this->_config)) {
+            $this->_db = $this->_config['dbo'];
         } else {
             $this->_db = Molajo::DB();
         }
@@ -244,18 +210,6 @@ class MolajoModel extends JObject
     public function getMVC()
     {
         return $this->mvc;
-    }
-
-    /**
-     * getRequest
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getRequest()
-    {
-        return $this->request;
     }
 
     /**
@@ -632,7 +586,7 @@ class MolajoModel extends JObject
      */
     private function _storeAsset()
     {
-        $asset = MolajoModel::getInstance('Asset');
+        $asset = new MolajoAssetModel();
 
         $asset->asset_type_id = $this->_table->asset_type_id;
 
@@ -703,7 +657,7 @@ class MolajoModel extends JObject
             // Get and the asset name.
             $this->$k = $pk;
             $name = $this->_getAssetName();
-            $asset = MolajoModel::getInstance('Asset');
+            $asset = new MolajoAssetModel();
 
             if ($asset->loadByName($name)) {
                 if (!$asset->delete()) {

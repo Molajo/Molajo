@@ -215,6 +215,7 @@ class MolajoRendererController
         $this->mvc->set('mvc_controller', '');
         $this->mvc->set('mvc_task', '');
         $this->mvc->set('mvc_model', '');
+        $this->mvc->set('mvc_table', '');
         $this->mvc->set('mvc_id', 0);
         $this->mvc->set('mvc_category_id', 0);
         $this->mvc->set('mvc_suppress_no_results', false);

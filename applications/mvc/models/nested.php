@@ -495,7 +495,7 @@ class MolajoNestedModel extends MolajoModel
         // If tracking assets, remove the asset first.
         if ($this->_trackAssets) {
             $name = $this->_getAssetName();
-            $asset = MolajoModel::getInstance('Asset');
+            $asset = new MolajoAssetModel();
 
             // Lock the table for writing.
             if (!$asset->_lock()) {

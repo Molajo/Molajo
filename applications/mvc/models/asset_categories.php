@@ -182,7 +182,8 @@ class MolajoAssetCategoriesModel extends MolajoModel
             $this->created_user_id = $user->get('id');
         }
         // Verify that the alias is unique
-        $table = MolajoModel::getInstance('Assetcategory', 'Molajo');
+        /**
+        $table = MolajoModel::xxxxxx('Assetcategory', 'Molajo');
         if ($table->load(array('alias' => $this->alias,
                               'parent_id' => $this->parent_id,
                               'extension' => $this->extension))
@@ -192,6 +193,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
             $this->setError(TextHelper::_('MOLAJO_DB_ERROR_CATEGORY_UNIQUE_ALIAS'));
             return false;
         }
+         */
         return parent::store($updateNulls);
     }
 }

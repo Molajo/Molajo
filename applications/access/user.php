@@ -302,11 +302,8 @@ class MolajoUser extends JObject
 
         $className = $modeltype['prefix'] . $modeltype['name'] . 'Model';
 
-        return $className::getInstance(
-            $modeltype['name'],
-            $modeltype['prefix'],
-            array()
-        );
+        return new $className();
+
     }
 
     /**

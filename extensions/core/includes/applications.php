@@ -17,7 +17,6 @@ $fileHelper = new FileHelper();
  */
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/access.php', 'MolajoAccess');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/user.php', 'MolajoUser');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/group.php', 'MolajoGroup');
 
 /**
  *  MVC

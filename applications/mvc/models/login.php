@@ -25,10 +25,10 @@ class MolajoLoginModel extends MolajoModel
      * @param  $config
      * @since  1.0
      */
-    public function __construct($config = array())
+    public function __construct(JConfig $config = null)
     {
         $this->_name = get_class($this);
-        parent::__construct($config = array());
+        parent::__construct($config);
     }
 
     /**
