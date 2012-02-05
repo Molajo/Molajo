@@ -581,7 +581,7 @@ class MolajoControllerApplication
      */
     protected function loadDispatcher()
     {
-        $this->dispatcher = JDispatcher::getInstance();
+//        $this->dispatcher = JDispatcher::getInstance();
     }
 
     /**
@@ -598,9 +598,9 @@ class MolajoControllerApplication
      */
     public function registerEvent($event, $handler)
     {
-        if ($this->dispatcher instanceof JDispatcher) {
-            $this->dispatcher->register($event, $handler);
-        }
+//        if ($this->dispatcher instanceof JDispatcher) {
+//            $this->dispatcher->register($event, $handler);
+//        }
 
         return $this;
     }
@@ -619,9 +619,9 @@ class MolajoControllerApplication
      */
     public function triggerEvent($event, array $args = null)
     {
-        if ($this->dispatcher instanceof JDispatcher) {
-            return $this->dispatcher->trigger($event, $args);
-        }
+//        if ($this->dispatcher instanceof JDispatcher) {
+//            return $this->dispatcher->trigger($event, $args);
+//        }
 
         return null;
     }

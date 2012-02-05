@@ -58,31 +58,6 @@ abstract class MolajoUserHelper
     }
 
     /**
-     * getProfile
-     *
-     * Gets the user profile information
-     *
-     * @param int $user_id
-     * @return JObject
-     */
-    function getProfile($user_id = 0)
-    {
-        if ($user_id == 0) {
-            $user = MolajoController::getUser();
-            $user_id = $user->id;
-        } else {
-            $user = MolajoController::getUser((int)$user_id);
-        }
-
-        $dispatcher = JDispatcher::getInstance();
-        MolajoPluginHelper::importPlugin('user');
-
-        $data = new JObject;
-        $results = $dispatcher->trigger('contentPrepareData', array($user_id, &$data));
-        return $data;
-    }
-
-    /**
      * addUserToGroup
      *
      * Method to add a user to a group.

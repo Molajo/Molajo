@@ -242,9 +242,9 @@ class MolajoAuthentication extends JObservable
      */
     public static function authorise($response, $options = Array())
     {
-        MolajoPluginHelper::getPlugin('authentication');
-        $dispatcher = JDispatcher::getInstance();
-        $authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
+//        MolajoPluginHelper::getPlugin('authentication');
+//        $dispatcher = JDispatcher::getInstance();
+//        $authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
 
         $response->status = MolajoAuthentication::STATUS_SUCCESS;
         foreach ($authorisations as $authorisation) {

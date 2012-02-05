@@ -109,12 +109,12 @@ class MolajoControllerLogin
      */
     protected function _loginFailed($type, $response, $options = Array())
     {
-        MolajoPluginHelper::getPlugin('user');
-        if ($type == 'authenticate') {
-            JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
-        } else {
-            JDispatcher::getInstance()->trigger('onUserAuthorisationFailure', array($response, $options));
-        }
+//        MolajoPluginHelper::getPlugin('user');
+//        if ($type == 'authenticate') {
+//            JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
+//        } else {
+//            JDispatcher::getInstance()->trigger('onUserAuthorisationFailure', array($response, $options));
+//        }
 
         if (isset($options['silent']) && $options['silent']) {
         } else {
@@ -152,23 +152,6 @@ class MolajoControllerLogin
     }
 
     /**
-     * Calls all handlers associated with an event group.
-     *
-     * @param   string  $event  The event name.
-     * @param   array   $args   An array of arguments.
-     *
-     * @return  array  An array of results from each function call.
-     *
-     * @since   1.0
-     */
-    function triggerEvent($event, $args = null)
-    {
-        $dispatcher = JDispatcher::getInstance();
-
-        return $dispatcher->trigger($event, $args);
-    }
-
-    /**
      * Logout authentication function.
      *
      * Passed the current user information to the onUserLogout event and reverts the current
@@ -203,25 +186,25 @@ class MolajoControllerLogin
         }
 
         // Import the user plugin group.
-        MolajoPluginHelper::importPlugin('user');
+//        MolajoPluginHelper::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
-        $results = MolajoController::getApplication()->triggerEvent('onUserLogout', array($parameters, $options));
+//        $results = MolajoController::getApplication()->triggerEvent('onUserLogout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
-        if (in_array(false, $results, true)) {
-        } else {
+//        if (in_array(false, $results, true)) {
+//        } else {
             // Use domain and path set in config for cookie if it exists.
             $cookie_domain = $this->getConfig('cookie_domain', '');
             $cookie_path = $this->getConfig('cookie_path', '/');
             setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
             return true;
-        }
+//        }
 
         // Trigger onUserLoginFailure Event.
-        MolajoController::getApplication()->triggerEvent('onUserLogoutFailure', array($parameters));
+//        MolajoController::getApplication()->triggerEvent('onUserLogoutFailure', array($parameters));
 
         return false;
     }

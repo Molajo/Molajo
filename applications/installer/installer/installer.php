@@ -411,12 +411,12 @@ class MolajoInstaller extends MolajoAdapter
             }
 
             // Fire the onExtensionBeforeInstall event.
-            MolajoPluginHelper::importPlugin('extension');
-            $dispatcher = JDispatcher::getInstance();
-            $dispatcher->trigger(
-                'onExtensionBeforeInstall',
-                array('method' => 'install', 'type' => $type, 'manifest' => $this->manifest, 'extension' => 0)
-            );
+//            MolajoPluginHelper::importPlugin('extension');
+//            $dispatcher = JDispatcher::getInstance();
+//            $dispatcher->trigger(
+//                'onExtensionBeforeInstall',
+//                array('method' => 'install', 'type' => $type, 'manifest' => $this->manifest, 'extension' => 0)
+//            );
 
             // Run the install
             $result = $this->_adapters[$type]->install();
@@ -480,25 +480,25 @@ class MolajoInstaller extends MolajoAdapter
                     }
 
                     // Fire the onExtensionBeforeInstall event.
-                    MolajoPluginHelper::importPlugin('extension');
-                    $dispatcher = JDispatcher::getInstance();
-                    $dispatcher->trigger(
-                        'onExtensionBeforeInstall',
-                        array(
-                             'method' => 'discover_install',
-                             'type' => $this->extension->get('type'),
-                             'manifest' => null,
-                             'extension' => $this->extension->get('extension_id')
-                        )
-                    );
+//                    MolajoPluginHelper::importPlugin('extension');
+//                    $dispatcher = JDispatcher::getInstance();
+//                    $dispatcher->trigger(
+//                        'onExtensionBeforeInstall',
+//                        array(
+//                             'method' => 'discover_install',
+//                             'type' => $this->extension->get('type'),
+//                             'manifest' => null,
+//                             'extension' => $this->extension->get('extension_id')
+//                       )
+//                    );
 
                     // Run the install
                     $result = $this->_adapters[$this->extension->type]->discover_install();
                     // Fire the onExtensionAfterInstall
-                    $dispatcher->trigger(
-                        'onExtensionAfterInstall',
-                        array('installer' => clone $this, 'eid' => $result)
-                    );
+//                    $dispatcher->trigger(
+//                        'onExtensionAfterInstall',
+//                        array('installer' => clone $this, 'eid' => $result)
+//                    );
                     if ($result !== false) {
                         return true;
                     }
@@ -587,9 +587,9 @@ class MolajoInstaller extends MolajoAdapter
             }
 
             // Fire the onExtensionBeforeUpdate event.
-            MolajoPluginHelper::importPlugin('extension');
-            $dispatcher = JDispatcher::getInstance();
-            $dispatcher->trigger('onExtensionBeforeUpdate', array('type' => $type, 'manifest' => $this->manifest));
+//            MolajoPluginHelper::importPlugin('extension');
+//            $dispatcher = JDispatcher::getInstance();
+//            $dispatcher->trigger('onExtensionBeforeUpdate', array('type' => $type, 'manifest' => $this->manifest));
 
             // Run the update
             $result = $this->_adapters[$type]->update();
@@ -635,16 +635,16 @@ class MolajoInstaller extends MolajoAdapter
         if (is_object($this->_adapters[$type])) {
             // We don't load languages here, we get the extension adapter to work it out
             // Fire the onExtensionBeforeUninstall event.
-            MolajoPluginHelper::importPlugin('extension');
-            $dispatcher = JDispatcher::getInstance();
-            $dispatcher->trigger('onExtensionBeforeUninstall', array('eid' => $identifier));
+//            MolajoPluginHelper::importPlugin('extension');
+//            $dispatcher = JDispatcher::getInstance();
+//            $dispatcher->trigger('onExtensionBeforeUninstall', array('eid' => $identifier));
             // Run the uninstall
             $result = $this->_adapters[$type]->uninstall($identifier);
             // Fire the onExtensionAfterInstall
-            $dispatcher->trigger(
-                'onExtensionAfterUninstall',
-                array('installer' => clone $this, 'eid' => $identifier, 'result' => $result)
-            );
+//            $dispatcher->trigger(
+//                'onExtensionAfterUninstall',
+//                array('installer' => clone $this, 'eid' => $identifier, 'result' => $result)
+//            );
 
             return $result;
         }

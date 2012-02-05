@@ -122,10 +122,10 @@ class MolajoModelDisplay extends MolajoModel
 
         $this->fieldClass = new MolajoField();
 
-        $this->dispatcher = JDispatcher::getInstance();
+//        $this->dispatcher = JDispatcher::getInstance();
 
-        MolajoPluginHelper::importPlugin('query');
-        MolajoPluginHelper::importPlugin($this->mvc['plugin_type']);
+//        MolajoPluginHelper::importPlugin('query');
+//        MolajoPluginHelper::importPlugin($this->mvc['plugin_type']);
 
         if ($this->mvc['id'] == 0) {
             $this->populateStateMultiple();
@@ -133,7 +133,7 @@ class MolajoModelDisplay extends MolajoModel
             $this->populateItemState();
         }
 
-        $this->dispatcher->trigger('queryGetState', array(&$this->status, &$this->parameters));
+//        $this->dispatcher->trigger('queryGetState', array(&$this->status, &$this->parameters));
     }
 
     /**
@@ -368,11 +368,12 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** pass query results to event */
-        $this->dispatcher->trigger('queryAfterQuery',
-            array(&$this->status,
-                &$items,
-                &$this->parameters)
-        );
+//        $this->dispatcher->trigger(
+//            'queryAfterQuery',
+//                array(&$this->status,
+//                    &$items,
+//                    &$this->parameters)
+//       );
 
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
         $nullDate = $this->db->quote($this->db->getNullDate());
@@ -393,7 +394,7 @@ class MolajoModelDisplay extends MolajoModel
                 $keep = true;
                 $items[$i]->canCheckin = false;
                 $items[$i]->checked_out = false;
-                $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
+//                $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
 
                 /** category is archived, so item should be too **/
                 if ($items[$i]->minimum_status_category < $items[$i]->status && $items[$i]->status > MOLAJO_STATUS_VERSION) {
@@ -514,23 +515,23 @@ class MolajoModelDisplay extends MolajoModel
                     $keep = false;
                 }
 
-                $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
+//                $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
 
                 /** process content plugins */
-                $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+//                $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event = new stdClass();
 
-                $results = $this->dispatcher->trigger(
-                    'contentBeforeDisplay',
-                    array($this->context,
-                        &$items[$i],
-                        &$this->parameters,
-                        $this->getState('list.start')
-                    )
-                );
+//                $results = $this->dispatcher->trigger(
+//                    'contentBeforeDisplay',
+//                    array($this->context,
+//                        &$items[$i],
+//                        &$this->parameters,
+//                        $this->getState('list.start')
+//                   )
+//                );
                 $items[$i]->event->beforeDisplayContent = trim(implode("\n", $results));
 
-                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+//                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event->afterDisplayContent = trim(implode("\n", $results));
 
                 /** remove item overridden by category and no longer valid for criteria **/
@@ -543,7 +544,7 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** final event for queryset */
-        $this->dispatcher->trigger('queryComplete', array(&$this->status, &$items, &$this->parameters));
+//        $this->dispatcher->trigger('queryComplete', array(&$this->status, &$items, &$this->parameters));
 
         /** place query results in cache **/
         $this->cache[$store] = $items;
@@ -625,7 +626,7 @@ class MolajoModelDisplay extends MolajoModel
         $this->query->order($this->db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
-        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->status, &$this->query, &$this->parameters));
+//        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->status, &$this->query, &$this->parameters));
 
         return $this->query;
     }

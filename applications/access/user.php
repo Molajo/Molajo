@@ -641,14 +641,14 @@ class save_user_crud
             }
 
             // Fire the onUserBeforeSave event.
-            MolajoPluginHelper::importPlugin('user');
-            $dispatcher = JDispatcher::getInstance();
+//            MolajoPluginHelper::importPlugin('user');
+//            $dispatcher = JDispatcher::getInstance();
 
-            $result = $dispatcher->trigger('onUserBeforeSave', array($oldUser->getProperties(), $isNew, $this->getProperties()));
-            if (in_array(false, $result, true)) {
+//            $result = $dispatcher->trigger('onUserBeforeSave', array($oldUser->getProperties(), $isNew, $this->getProperties()));
+//            if (in_array(false, $result, true)) {
                 // Plugin will have to raise it's own error or throw an exception.
-                return false;
-            }
+//                return false;
+//            }
 
             // Store the user data in the database
             if (!($result = $model->store())) {
@@ -687,10 +687,10 @@ class save_user_crud
      */
     public function delete()
     {
-        MolajoPluginHelper::importPlugin('user');
+//        MolajoPluginHelper::importPlugin('user');
 
-        $dispatcher = JDispatcher::getInstance();
-        $dispatcher->trigger('onUserBeforeDelete', array($this->getProperties()));
+//        $dispatcher = JDispatcher::getInstance();
+//        $dispatcher->trigger('onUserBeforeDelete', array($this->getProperties()));
 
         $model = $this->getModel();
 
@@ -698,7 +698,7 @@ class save_user_crud
         // $this->setError($model->getError());
 
         // Trigger the onUserAfterDelete event
-        $dispatcher->trigger('onUserAfterDelete', array($this->getProperties(), $result, $this->getError()));
+//        $dispatcher->trigger('onUserAfterDelete', array($this->getProperties(), $result, $this->getError()));
 
         return $result;
     }
