@@ -112,8 +112,6 @@ class MolajoParserController
     {
         if ($config instanceof JRegistry) {
             $this->_config = $config;
-        } else {
-            $this->_config = new JRegistry;
         }
 
         /** sequence of renderer processing */
@@ -128,6 +126,7 @@ class MolajoParserController
         if ($formatXML == '') {
             $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
         }
+
         if (JFile::exists($formatXML)) {
         } else {
             //error
@@ -178,6 +177,7 @@ class MolajoParserController
         if (class_exists('MolajoThemeRenderer')) {
             $rc = new MolajoThemeRenderer ('theme');
             $results = $rc->render();
+
         } else {
             echo 'failed renderer = ' . 'MolajoThemeRenderer' . '<br />';
             // ERROR

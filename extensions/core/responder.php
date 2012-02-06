@@ -38,7 +38,7 @@ class MolajoResponderController
      * @var    object
      * @since  1.0
      */
-    protected static $_response = array();
+    protected $_response = array();
 
     /**
      * getInstance
@@ -55,14 +55,12 @@ class MolajoResponderController
     public static function getInstance(JRegistry $config = null)
     {
         if (empty(self::$instance)) {
-
             if ($config instanceof JRegistry) {
             } else {
                 $config = new JRegistry;
             }
-            self::$instance = new MolajoParserController($config);
+            self::$instance = new MolajoResponderController($config);
         }
-
         return self::$instance;
     }
 
@@ -78,14 +76,13 @@ class MolajoResponderController
     {
         if ($config instanceof JRegistry) {
             $this->_config = $config;
-        } else {
-            $this->_config = new JRegistry;
         }
 
         $this->_response = new stdClass;
         $this->_response->cachable = false;
         $this->_response->headers = array();
         $this->_response->body = array();
+        $this->_response->last_modified = null;
 
         return true;
     }
@@ -115,12 +112,12 @@ class MolajoResponderController
         }
 
         // Send the content-type header.
-        $this->setHeader('Content-Type', $this->_mimetype . '; charset=utf-8');
+        $this->setHeader('Content-Type', Molajo::Application()->getMimeEncoding() . '; charset=utf-8');
 
         if ($this->_response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
-            if ($this->last_modified instanceof JDate) {
-                $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
+            if ($this->_response->last_modified instanceof JDate) {
+                $this->setHeader('Last-Modified', $this->_response->last_modified->format('D, d M Y H:i:s'));
             }
         } else {
             $this->setHeader('Expires', 'Fri, 6 Jan 1989 00:00:00 GMT', true);

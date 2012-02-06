@@ -24,20 +24,35 @@ if ((int)Molajo::Application()->get('html5', 1) == 1):
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"<?php echo $end; ?>
 <?php endif; ?>
 
-  <title><?php echo $this->row->title; ?></title>
+      <title><?php echo $this->row->title; ?></title>
+<?php if (trim($this->row->title) == ''):
+else : ?>
+    <meta name="title" content="<?php echo $this->row->title; ?>"<?php echo $end; ?>
+<?php endif; ?>
 <?php if (trim($this->row->description) == ''):
 else : ?>
-    <meta name="description" content="<?php echo $this->row->description; ?>"<?php echo $end; ?>
-<?php endif; ?>
-<?php if (trim($this->row->robots) == ''):
-else : ?>
 
-    <meta name="robots" content="<?php echo $this->row->robots; ?>"<?php echo $end; ?>
+    <meta name="description" content="<?php echo $this->row->description; ?>"<?php echo $end; ?>
 <?php endif; ?>
 <?php if (trim($this->row->keywords) == ''):
 else : ?>
 
     <meta name="keywords" content="<?php echo $this->row->keywords; ?>"<?php echo $end; ?>
+<?php endif; ?>
+<?php if (trim($this->row->author) == ''):
+else : ?>
+
+    <meta name="author" content="<?php echo $this->row->author; ?>"<?php echo $end; ?>
+<?php endif; ?>
+<?php if (trim($this->row->content_rights) == ''):
+else : ?>
+
+    <meta name="content_rights" content="<?php echo $this->row->content_rights; ?>"<?php echo $end; ?>
+<?php endif; ?>
+<?php if (trim($this->row->robots) == ''):
+else : ?>
+
+    <meta name="robots" content="<?php echo $this->row->robots; ?>"<?php echo $end; ?>
 <?php endif; ?>
 <?php if (trim($this->row->favicon) == ''):
 else : ?>

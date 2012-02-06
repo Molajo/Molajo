@@ -316,35 +316,45 @@ class MolajoApplicationController
             die;
         }
 
-        /** instantiate static responder */
-        Molajo::Responder();
-
-        /** initialise */
+        /** initialise application */
         $this->loadSession();
         $this->loadLanguage();
         $this->loadDispatcher();
 
+        /** responder: be available for rendered output */
+        $res = Molajo::Responder();
+
         /** request  */
-        $rc = Molajo::Request();
-        $rc->process();
+        $req = Molajo::Request();
+        $req->process();
+
+        /** save request metadata to application array */
+        $this->setMetadata('metadata_title', $req->get('metadata_title'));
+        $this->setMetadata('metadata_description', $req->get('metadata_description'));
+        $this->setMetadata('metadata_keywords', $req->get('metadata_keywords'));
+        $this->setMetadata('metadata_robots', $req->get('metadata_robots'));
+        $this->setMetadata('metadata_author', $req->get('metadata_author'));
+        $this->setMetadata('metadata_content_rights', $req->get('metadata_content_rights'));
+
+        /** save source modified date to response element */
+        $res->response->last_modified = $req->get('source_last_modified');
 
         /** parser and renderer */
-        if ($rc->get('mvc_task') == 'add'
-            || $rc->get('mvc_task') == 'edit'
-            || $rc->get('mvc_task') == 'display'
+        if ($req->get('mvc_task') == 'add'
+            || $req->get('mvc_task') == 'edit'
+            || $req->get('mvc_task') == 'display'
         ) {
 
             /** process include statements in theme and views */
-            $pc = Molajo::Parser();
-            $rc->process();
+            Molajo::Parser();
 
             /** action task: insert, update, or delete */
         } else {
             //$this->_processTask();
         }
 
-        /** delivers response */
-        Molajo::Responder()->respond();
+        /** responder: process rendered output */
+        $res->respond();
 
         return;
     }

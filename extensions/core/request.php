@@ -51,7 +51,12 @@ class MolajoRequestController
                                        $override_asset_id = null)
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoRequestController($request, $override_request_url, $override_asset_id);
+            self::$instance =
+                new MolajoRequestController(
+                    $request,
+                    $override_request_url,
+                    $override_asset_id
+                );
         }
         return self::$instance;
     }
@@ -78,8 +83,8 @@ class MolajoRequestController
             $this->request = $request;
         } else {
             $this->request = new JRegistry;
-            $this->_setRequest();
         }
+        $this->_setRequest();
 
         /** Specific asset */
         if ((int)$override_asset_id == 0) {
@@ -495,7 +500,7 @@ class MolajoRequestController
         }
 
         /** match found */
-        $this->set('source_title', $row->asset_type_id);
+        $this->set('source_title', $row->title);
         $this->set('source_asset_type_id', $row->asset_type_id);
         $this->set('source_asset_id', $row->asset_id);
         $this->set('source_view_group_id', $row->view_group_id);
@@ -1178,7 +1183,7 @@ class MolajoRequestController
 
         /** set header status, message and override theme/page, if needed */
         if ($code == 503) {
-            Molajo::Application()->setHeader(
+            Molajo::Responder()->setHeader(
                 'Status',
                 '503 Service Temporarily Unavailable',
                 'true'
@@ -1205,7 +1210,7 @@ class MolajoRequestController
             );
 
         } else if ($code == 403) {
-            Molajo::Application()->setHeader(
+            Molajo::Responder()->setHeader(
                 'Status',
                 '403 Not Authorised',
                 'true'
@@ -1220,7 +1225,7 @@ class MolajoRequestController
             );
 
         } else if ($code = 404) {
-            Molajo::Application()->setHeader(
+            Molajo::Responder()->setHeader(
                 'Status',
                 '404 Not Found',
                 'true'
@@ -1235,7 +1240,7 @@ class MolajoRequestController
             );
 
         } else {
-            Molajo::Application()->setHeader(
+            Molajo::Responder()->setHeader(
                 'Status',
                 '500 Not Found',
                 'true'

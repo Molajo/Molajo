@@ -41,18 +41,23 @@ class MolajoHeadModel extends MolajoModel
     {
         $this->items = array();
 
-        /** type: base */
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
-        $tempObject->set('title', Molajo::Request()->get('metadata_title'));
+
+        $metadata = Molajo::Application()->getMetadata();
+
+        if (count($metadata) > 0) {
+            $tempObject->set('title', $metadata['standard']['metadata_title']);
+            $tempObject->set('description', $metadata['standard']['metadata_description']);
+            $tempObject->set('keywords', $metadata['standard']['metadata_keywords']);
+            $tempObject->set('author', $metadata['standard']['metadata_author']);
+            $tempObject->set('content_rights', $metadata['standard']['metadata_content_rights']);
+            $tempObject->set('robots', $metadata['standard']['metadata_robots']);
+        }
+
         $tempObject->set('base', Molajo::Request()->get('url_base'));
         $tempObject->set('last_modified', Molajo::Request()->get('source_last_modified'));
-        $tempObject->set('description', Molajo::Request()->get('metadata_description'));
         $tempObject->set('favicon', Molajo::Request()->get('theme_favicon'));
-        $tempObject->set('keywords', Molajo::Request()->get('metadata_keywords'));
-        $tempObject->set('author', Molajo::Request()->get('metadata_author'));
-        $tempObject->set('content_rights', Molajo::Request()->get('metadata_content_rights'));
-        $tempObject->set('robots', Molajo::Request()->get('metadata_robots'));
         $this->items[] = $tempObject;
 
         /** type: links */
