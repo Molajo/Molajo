@@ -186,4 +186,78 @@ class MolajoConfigurationHelper
 
         return $db;
     }
+
+    /**
+     * getMailer
+     *
+     * Get a mailer object
+     *
+     * @static
+     * @return Mailer|null
+     * @since 1.0
+     */
+    public static function getMailer()
+    {
+        $site = MolajoConfigurationHelper::site();
+
+        $send_mail = $site->send_mail;
+        $smtpauth = $site->smtpauth;
+        $smtpuser = $site->smtpuser;
+        $smtppass = $site->smtppass;
+        $smtphost = $site->smtphost;
+        $smtpsecure = $site->smtpsecure;
+        $smtpport = $site->smtpport;
+        $mail_from = $site->mail;
+        $from_name = $site->from_name;
+        $mailer = $site->mailer;
+
+        $mail = MolajoMail::getInstance();
+        $mail->setSender(array($mail_from, $from_name));
+
+        switch ($mailer)
+        {
+            case 'smtp' :
+                $mail->useSMTP($smtpauth, $smtphost, $smtpuser, $smtppass, $smtpsecure, $smtpport);
+                break;
+
+            case 'send_mail' :
+                $mail->IsSendmail();
+                break;
+
+            default :
+                $mail->IsMail();
+                break;
+        }
+
+        return $mail;
+    }
+
+    /**
+     *  getDoctrine
+     *
+     * Get a database object for Doctrine
+     *
+     * @return Database object
+     * @since 1.0
+     */
+    public static function getDoctrine()
+    {
+        $doctrineProxy = new DoctrineBootstrapper(1);
+
+        $doctrineProxy->setEntityLibrary(MOLAJO_DOCTRINE_MODELS . '/models');
+        $doctrineProxy->setProxyLibrary(MOLAJO_DOCTRINE_PROXIES . '/proxies');
+        $doctrineProxy->setProxyNamespace('Proxies');
+        $doctrineProxy->setConnectionOptions(
+            array(
+                'driver' => 'pdo_mysql',
+                'path' => 'database.mysql',
+                'dbname' => Molajo::Application()->get('db'),
+                'user' => Molajo::Application()->get('user'),
+                'password' => Molajo::Application()->get('password')
+            )
+        );
+        $entityManager = $doctrineProxy->bootstrap();
+
+        return $entityManager;
+    }
 }

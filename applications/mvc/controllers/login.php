@@ -173,7 +173,7 @@ class MolajoLoginController
         // Initialise variables.
         $retval = false;
 
-        // Get a user object from the MolajoApplicationController.
+        // Get a user object from the MolajoApplication.
         $user = Molajo::User($user_id);
 
         // Build the credentials array.
