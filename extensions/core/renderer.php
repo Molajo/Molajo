@@ -240,6 +240,7 @@ class MolajoRendererController
             ) {
                 $this->mvc->set('extension_instance_name', $value);
 
+
             } else if ($name == 'tag') {
                 $this->_tag = $value;
 

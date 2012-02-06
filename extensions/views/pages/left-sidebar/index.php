@@ -7,15 +7,9 @@
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<div class="wrapper">
-    <include:module name=page-header template=page-header wrap=header wrap_class=header />
-    <section class="middle">
-        <include:message />
-            <div class="container">
-                <include:request wrap="div" wrap_class="content" />
-            </div>
-            <include:tag name=sidebar template=sidebar wrap=aside wrap_class=leftsidebar />
-    </section>
-    <include:module name=page-footer template=page-footer wrap=footer wrap_class="footer" />
-</div>
-<include:defer />
+<include:module name=page-header template=page-header wrap=header wrap_class=header />
+<include:message/>
+<include:request/>
+<include:tag name=sidebar template=sidebar wrap=aside wrap_class=leftsidebar />
+<include:module name=page-footer template=page-footer wrap=footer wrap_class="footer" />
+<include:defer/>

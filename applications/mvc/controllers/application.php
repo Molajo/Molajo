@@ -32,7 +32,7 @@ class MolajoApplicationController
      * @var    object
      * @since  1.0
      */
-    protected static $_config = null;
+    protected $_config = null;
 
     /**
      * Application static database results
@@ -40,7 +40,7 @@ class MolajoApplicationController
      * @var    object
      * @since  1.0
      */
-    protected static $_appQueryResults = null;
+    protected $_appQueryResults = null;
 
     /**
      * Application custom fields
@@ -48,7 +48,7 @@ class MolajoApplicationController
      * @var    object
      * @since  1.0
      */
-    protected static $_custom_fields = null;
+    protected $_custom_fields = null;
 
     /**
      * Application Metadata
@@ -56,7 +56,7 @@ class MolajoApplicationController
      * @var    array
      * @since  1.0
      */
-    protected static $_metadata = array();
+    protected $_metadata = array();
 
     /**
      * Application Parameters
@@ -64,7 +64,7 @@ class MolajoApplicationController
      * @var    array
      * @since  1.0
      */
-    protected static $_parameters = array();
+    protected $_parameters = array();
 
     /**
      * Input Object
@@ -72,15 +72,7 @@ class MolajoApplicationController
      * @var    object
      * @since  1.0
      */
-    protected static $_input;
-
-    /**
-     * Client
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_client;
+    public $input;
 
     /**
      * Language
@@ -197,9 +189,6 @@ class MolajoApplicationController
     /**
      * getInstance
      *
-     * Returns a reference to the global Application object,
-     *  only creating it if it doesn't already exist.
-     *
      * @static
      * @param  null $id
      * @param  JInput|null $input
@@ -274,7 +263,7 @@ class MolajoApplicationController
         if ($_appQueryResults == null) {
         } else {
             $this->_appQueryResults = $_appQueryResults;
-            $this->setConfig();
+            $this->loadConfig();
         }
 
         /** now */
@@ -317,18 +306,20 @@ class MolajoApplicationController
         }
 
         /** initialise application */
-        $this->loadSession();
         $this->loadLanguage();
+        $this->loadSession();
         $this->loadDispatcher();
 
-        /** responder: be available for rendered output */
+        /** responder: collect rendered output */
         $res = Molajo::Responder();
 
-        /** request  */
+        /** request: use url to determine what must be rendered  */
         $req = Molajo::Request();
         $req->process();
 
-        /** save request metadata to application array */
+        /** after request processing: */
+
+        /** ...store metadata in application array */
         $this->setMetadata('metadata_title', $req->get('metadata_title'));
         $this->setMetadata('metadata_description', $req->get('metadata_description'));
         $this->setMetadata('metadata_keywords', $req->get('metadata_keywords'));
@@ -336,16 +327,22 @@ class MolajoApplicationController
         $this->setMetadata('metadata_author', $req->get('metadata_author'));
         $this->setMetadata('metadata_content_rights', $req->get('metadata_content_rights'));
 
-        /** save source modified date to response element */
+        /** ...save "modified date" for content request */
         $res->response->last_modified = $req->get('source_last_modified');
 
-        /** parser and renderer */
+        /**
+         * Parser => Renderer(s) => MVC <input statement processing Loop
+         *
+         * parser: parses theme and rendered output for <input:renderer statements
+         * renderer: each input statement processed by extension renderer
+         * MVC: renderer determines values needed to execute task/controller
+         *    and render template and wrap views for the extension
+         * parser, renderer, and MVC process continue until no more <input found
+         */
         if ($req->get('mvc_task') == 'add'
             || $req->get('mvc_task') == 'edit'
             || $req->get('mvc_task') == 'display'
         ) {
-
-            /** process include statements in theme and views */
             Molajo::Parser();
 
             /** action task: insert, update, or delete */
@@ -367,7 +364,7 @@ class MolajoApplicationController
      * @return  null
      * @since   1.0
      */
-    public function setConfig()
+    public function loadConfig()
     {
         $this->_metadata = new JRegistry;
         $this->_metadata->loadString($this->_appQueryResults->metadata);
@@ -531,7 +528,7 @@ class MolajoApplicationController
     }
 
     /**
-     * Returns the document language.
+     * Returns the application language.
      *
      * @return  string
      * @since   1.0
@@ -631,6 +628,40 @@ class MolajoApplicationController
     }
 
     /**
+     * setEscape
+     *
+     * Sets the escape method
+     *
+     * @param  string
+     *
+     * @return  void
+     */
+    function setEscape($escapeFunction)
+    {
+        if (is_callable($escapeFunction)) {
+            $this->_escapeFunction = $escapeFunction;
+        }
+    }
+
+    /**
+     * escape
+     *
+     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
+     *
+     * @param   mixed  $var  The output to escape.
+     *
+     * @return  mixed  The escaped value.
+     * @since   1.0
+     */
+    function escape($var)
+    {
+        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, 'utf-8');
+        }
+        return call_user_func($this->_escapeFunction, $var);
+    }
+
+    /**
      * setMessage
      *
      * Set the system message.
@@ -715,40 +746,6 @@ class MolajoApplicationController
     }
 
     /**
-     * setEscape
-     *
-     * Sets the escape method
-     *
-     * @param  string
-     *
-     * @return  void
-     */
-    function setEscape($escapeFunction)
-    {
-        if (is_callable($escapeFunction)) {
-            $this->_escapeFunction = $escapeFunction;
-        }
-    }
-
-    /**
-     * escape
-     *
-     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
-     *
-     * @param   mixed  $var  The output to escape.
-     *
-     * @return  mixed  The escaped value.
-     * @since   1.0
-     */
-    function escape($var)
-    {
-        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, 'utf-8');
-        }
-        return call_user_func($this->_escapeFunction, $var);
-    }
-
-    /**
      * setMetadata
      *
      * @param   string  $name
@@ -813,7 +810,6 @@ class MolajoApplicationController
     public function setMimeEncoding($format = 'text/html', $sync = true)
     {
         $this->_mimetype = strtolower($format);
-
         if ($sync) {
             $this->setMetadata('content-type', $format, true, false);
         }

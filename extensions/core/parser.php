@@ -75,12 +75,7 @@ class MolajoParserController
     /**
      * getInstance
      *
-     * Returns a reference to the global Application object,
-     *  only creating it if it doesn't already exist.
-     *
      * @static
-     * @param  null $id
-     * @param  JInput|null $input
      * @param  JRegistry|null $config
      *
      * @return bool|object
@@ -89,14 +84,12 @@ class MolajoParserController
     public static function getInstance(JRegistry $config = null)
     {
         if (empty(self::$instance)) {
-
             if ($config instanceof JRegistry) {
             } else {
                 $config = new JRegistry;
             }
             self::$instance = new MolajoParserController($config);
         }
-
         return self::$instance;
     }
 
@@ -170,10 +163,7 @@ class MolajoParserController
         /** Before Event */
         // Molajo::Application()->triggerEvent('onBeforeRender');
 
-        /** process theme include, and then all rendered output, for <include statements */
-        $body = $this->_renderLoop();
-
-        /** theme: load template media and language files, does not renderer template output */
+        /** theme: load template media and language files */
         if (class_exists('MolajoThemeRenderer')) {
             $rc = new MolajoThemeRenderer ('theme');
             $results = $rc->render();
@@ -182,6 +172,9 @@ class MolajoParserController
             echo 'failed renderer = ' . 'MolajoThemeRenderer' . '<br />';
             // ERROR
         }
+
+        /** process theme include, and then all rendered output, for <include statements */
+        $body = $this->_renderLoop();
 
         /** set response body */
         Molajo::Responder()->setBody($body);
@@ -237,7 +230,6 @@ class MolajoParserController
             /** look for new include statements in just rendered output */
             continue;
         }
-
         return $this->_theme;
     }
 

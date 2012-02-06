@@ -25,7 +25,7 @@ if ($this->row->type == 'metadata'): ?>
 <?php
     elseif ($this->row->type == 'javascript_links'): ?>
 
-    <script src="<?php echo $this->row->url; ?>" <?php if ((int)Molajo::Application()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if (trim($this->row->defer) != ''): ?>defer="defer" <?php endif; ?><?php if (trim($this->row->async) != ''): ?>async="async" <?php endif; ?>/></script>
+    <script src="<?php echo $this->row->url; ?>" <?php if ((int)Molajo::Application()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if ((int)$this->row->defer == 1): ?>defer="defer" <?php endif; ?><?php if ((int)$this->row->async == 1): ?>async="async" <?php endif; ?>/></script>
 <?php
 
 /** stylesheet_declarations */

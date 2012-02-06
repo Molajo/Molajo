@@ -4,13 +4,4 @@
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-*{margin:0;padding:0}
-header,nav,section,article,aside,footer{display:block}
-.wrapper{min-width:1000px;width:100%}
-.header{height:150px}
-.middle{height:1%;position:relative}
-.middle:after{clear:both;content:'.';display:block;height:0;visibility:hidden}
-.container{float:left;margin-right:-100%;overflow:hidden;width:100%}
-.content{padding:0 20px}
-.leftsidebar{float:left;left:-250px;position:relative;width:250px}
-.footer{height:100px}
+
