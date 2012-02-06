@@ -99,7 +99,7 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolde
  *  Base
  */
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/language.php', 'MolajoLanguageController');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/language.php', 'MolajoLanguage');
 
 /**
  *  Input

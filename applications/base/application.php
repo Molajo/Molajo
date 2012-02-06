@@ -445,7 +445,7 @@ class MolajoApplication
     public function loadLanguage()
     {
         $locale = $this->get('language', 'en-gb');
-        $this->_language = MolajoLanguageController::getInstance($locale);
+        $this->_language = MolajoLanguage::getInstance($locale);
     }
 
     /**
