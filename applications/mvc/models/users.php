@@ -26,7 +26,7 @@ class MolajoUsersModel extends MolajoModel
      * @return  object
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null)
+    public function __construct(Registry $config = null)
     {
         $this->_table = '#__users';
         $this->_primary_key = 'id';

@@ -47,7 +47,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         $clientId = isset($this->parent->extension) ? $this->parent->extension->application_id : 0;
         $this->manifest = $this->parent->getManifest();
-        $name = strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $name = strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         $client = (string)$this->manifest->attributes()->client;
 
         // Load administrator language if not set.
@@ -56,7 +56,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
 
         $extension = "theme_$name";
-        $lang = Molajo::Application()->getLanguage();
+        $lang = Molajo::Application()->get('language');
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                 : MOLAJO_BASE_FOLDER) . '/themes/' . $name;
         $lang->load($extension . '.sys', $source, null, false, false)
@@ -74,7 +74,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
      */
     public function install()
     {
-        $lang = Molajo::Application()->getLanguage();
+        $lang = Molajo::Application()->get('language');
         $xml = $this->parent->getManifest();
 
         // Get the client application target
@@ -98,7 +98,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
 
         // Set the extension's name
-        $name = JFilterInput::getInstance()->clean((string)$xml->name, 'cmd');
+        $name = FilterInput::getInstance()->clean((string)$xml->name, 'cmd');
 
         $element = strtolower(str_replace(" ", "_", $name));
         $this->set('name', $name);

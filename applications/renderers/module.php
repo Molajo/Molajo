@@ -26,7 +26,7 @@ class MolajoModuleRenderer extends MolajoRenderer
      */
     protected function _getExtension()
     {
-        $this->task_request->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
+        $this->task->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
 
         $results = parent::_getExtension();
 
@@ -34,11 +34,11 @@ class MolajoModuleRenderer extends MolajoRenderer
             return false;
         }
 
-        $this->task_request->set('extension_path',
+        $this->task->set('extension_path',
             ModuleHelper::getPath(
-                strtolower($this->task_request->get('extension_instance_name'))));
+                strtolower($this->task->get('extension_instance_name'))));
 
-        $this->task_request->set('extension_type', 'module');
+        $this->task->set('extension_type', 'module');
 
         return true;
     }
@@ -52,18 +52,18 @@ class MolajoModuleRenderer extends MolajoRenderer
     protected function _importClasses()
     {
         $fileHelper = new FileHelper();
-        $name = ucfirst($this->task_request->get('extension_instance_name'));
+        $name = ucfirst($this->task->get('extension_instance_name'));
         $name = str_replace (array('-', '_'), '', $name);
 
         /** Controller */
-        if (file_exists($this->task_request->get('extension_path') . '/controller.php')) {
-            $fileHelper->requireClassFile($this->task_request->get('extension_path') . '/controller.php',
+        if (file_exists($this->task->get('extension_path') . '/controller.php')) {
+            $fileHelper->requireClassFile($this->task->get('extension_path') . '/controller.php',
                 $name . 'ModuleControllerDisplay');
         }
 
         /** Model */
-        if (file_exists($this->task_request->get('extension_path') . '/model.php')) {
-            $fileHelper->requireClassFile($this->task_request->get('extension_path') . '/model.php',
+        if (file_exists($this->task->get('extension_path') . '/model.php')) {
+            $fileHelper->requireClassFile($this->task->get('extension_path') . '/model.php',
                 $name . 'ModuleModelDisplay');
         }
     }
@@ -78,8 +78,8 @@ class MolajoModuleRenderer extends MolajoRenderer
      */
     protected function _loadMedia()
     {
-        parent::_loadMedia(MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->task_request->get('extension_instance_name'),
-            MOLAJO_SITE_MEDIA_URL . '/' . $this->task_request->get('extension_instance_name'),
+        parent::_loadMedia(MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->task->get('extension_instance_name'),
+            MOLAJO_SITE_MEDIA_URL . '/' . $this->task->get('extension_instance_name'),
             Molajo::Application()->get('media_priority_module', 400));
     }
 }

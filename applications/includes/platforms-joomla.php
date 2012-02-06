@@ -59,10 +59,11 @@ if (defined('JPATH_CACHE')) {
 } else {
     define('JPATH_CACHE', MOLAJO_SITE_FOLDER_PATH . '/cache');
 }
+/*
 if (defined('JPATH_MANIFESTS')) {
 } else {
     define('JPATH_MANIFESTS', MOLAJO_EXTENSIONS_MANIFESTS);
-}
+}*/
 if (defined('JPATH_THEMES')) {
 } else {
     define('JPATH_THEMES', MOLAJO_EXTENSIONS_THEMES);
@@ -75,8 +76,10 @@ if (defined('JPATH_COMPONENT')) {
 /**
  * File Subsystem
  */
-$fileHelper = new FileHelper();
+$fileHelper = new MolajoFileHelper();
 
+require_once JOOMLA_LIBRARY . '/registry/registry.php';
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/base.php', 'MolajoBase');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/configuration.php', 'MolajoConfigurationHelper');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 
@@ -85,12 +88,10 @@ require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/helpers/text.php';
 if (class_exists('JText')) {
 } else {
-    class JText extends TextHelper
+    class JText extends MolajoTextHelper
     {
     }
 }
-require_once JOOMLA_LIBRARY . '/registry/registry.php';
-
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/path.php', 'JPath');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/file.php', 'JFile');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolder');
@@ -99,7 +100,7 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolde
  *  Base
  */
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/language.php', 'MolajoLanguage');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/language.php', 'MolajoLanguage');
 
 /**
  *  Input

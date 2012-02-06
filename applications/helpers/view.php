@@ -212,9 +212,9 @@ class MolajoViewHelper
      */
     protected function _loadLanguage()
     {
-        Molajo::Application()->getLanguage()->load(
+        Molajo::Application()->get('language')->load(
             MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view,
-            Molajo::Application()->getLanguage()->getDefault(),
+            Molajo::Application()->get('language'),
             false,
             false);
     }

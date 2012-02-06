@@ -58,13 +58,13 @@ class MolajoExtensionsModel extends MolajoModel
     function bind($array, $ignore = '')
     {
         if (isset($array['parameters']) && is_array($array['parameters'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['parameters']);
             $array['parameters'] = (string)$registry;
         }
 
         if (isset($array['control']) && is_array($array['control'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['control']);
             $array['control'] = (string)$registry;
         }

@@ -149,7 +149,7 @@ class MolajoFilterHelper
             // Black lists take second precedence.
             if ($blackList) {
                 // Remove the white-listed attributes from the black-list.
-                $filter = JFilterInput::getInstance(
+                $filter = FilterInput::getInstance(
                     array_diff($blackListTags, $whiteListTags), // blacklisted tags
                     array_diff($blackListAttributes, $whiteListAttributes), // blacklisted attributes
                     1, // blacklist tags
@@ -158,11 +158,11 @@ class MolajoFilterHelper
             }
                 // White lists take third precedence.
             else if ($whiteList) {
-                $filter = JFilterInput::getInstance($whiteListTags, $whiteListAttributes, 0, 0, 0); // turn off xss auto clean
+                $filter = FilterInput::getInstance($whiteListTags, $whiteListAttributes, 0, 0, 0); // turn off xss auto clean
             }
                 // No HTML takes last place.
             else {
-                $filter = JFilterInput::getInstance();
+                $filter = FilterInput::getInstance();
             }
 
             $text = $filter->clean($text, 'html');

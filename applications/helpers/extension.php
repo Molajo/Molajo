@@ -263,12 +263,12 @@ abstract class MolajoExtensionHelper
         } else {
             return false;
         }
-        return Molajo::Application()->getLanguage()->load (
-            $path,
-            Molajo::Application()->getLanguage()->getDefault(),
-            false,
-            false
-        );
+        return Molajo::Application()->get('languageObject')
+            ->load ($path,
+                    Molajo::Application()->get('language'),
+                    false,
+                    false
+                    );
     }
 
     /**
@@ -314,15 +314,15 @@ abstract class MolajoExtensionHelper
         $request->set('extension_asset_id', $row->asset_id);
         $request->set('extension_view_group_id', $row->view_group_id);
 
-        $custom_fields = new JRegistry;
+        $custom_fields = new Registry;
         $custom_fields->loadString($row->custom_fields);
         $request->set('category_custom_fields', $custom_fields);
 
-        $metadata = new JRegistry;
+        $metadata = new Registry;
         $metadata->loadString($row->metadata);
         $request->set('category_metadata', $metadata);
 
-        $parameters = new JRegistry;
+        $parameters = new Registry;
         $parameters->loadString($row->parameters);
         $request->set('extension_parameters', $parameters);
 

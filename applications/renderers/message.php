@@ -43,8 +43,8 @@ class MolajoMessageRenderer extends MolajoRenderer
      */
     protected function _getExtension()
     {
-        $this->task_request->set('mvc_model', 'MolajoMessagesModel');
-        $this->task_request->set('mvc_task', 'display');
+        $this->task->set('model', 'MolajoMessagesModel');
+        $this->task->set('task', 'display');
         $this->parameters->set('extension_suppress_no_results', 1);
 
         return true;
@@ -60,11 +60,11 @@ class MolajoMessageRenderer extends MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
-        if ((int)$this->task_request->get('template_view_id', 0) == 0) {
-            $this->task_request->set('template_view_id', Molajo::Application()->get('message_template_view_id'));
+        if ((int)$this->task->get('template_view_id', 0) == 0) {
+            $this->task->set('template_view_id', Molajo::Application()->get('message_template_view_id'));
         }
-        if ((int)$this->task_request->get('wrap_view_id', 0) == 0) {
-            $this->task_request->set('wrap_view_id', Molajo::Application()->get('message_wrap_view_id'));
+        if ((int)$this->task->get('wrap_view_id', 0) == 0) {
+            $this->task->set('wrap_view_id', Molajo::Application()->get('message_wrap_view_id'));
         }
 
         return true;

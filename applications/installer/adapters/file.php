@@ -31,8 +31,8 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
     public function loadLanguage($path)
     {
         $this->manifest = $this->parent->getManifest();
-        $extension = 'files_' . str_replace('files_', '', strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd')));
-        $lang = Molajo::Application()->getLanguage();
+        $extension = 'files_' . str_replace('files_', '', strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd')));
+        $lang = Molajo::Application()->get('language');
         $source = $path;
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
@@ -55,7 +55,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
         // Manifest Document Setup Section
 
         // Set the extension's name
-        $name = JFilterInput::getInstance()->clean((string)$this->manifest->name, 'string');
+        $name = FilterInput::getInstance()->clean((string)$this->manifest->name, 'string');
         $this->set('name', $name);
 
         // Set element

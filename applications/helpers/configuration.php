@@ -49,8 +49,8 @@ class MolajoConfigurationHelper
      */
     public function __construct($appConfig = null)
     {
-        $this->config = new JRegistry;
-        $this->siteConfig = new JRegistry;
+        $this->config = new Registry;
+        $this->siteConfig = new Registry;
         $this->appConfig = $appConfig;
     }
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Request
+ * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -30,7 +30,7 @@ class MolajoRequest
      * @var    object
      * @since  1.0
      */
-    public static $page_request;
+    public $page_request;
 
     /**
      * getInstance
@@ -39,14 +39,14 @@ class MolajoRequest
      *  only creating it if it doesn't already exist.
      *
      * @static
-     * @param  JRegistry|null $config
+     * @param  Registry|null $config
      * @param  string $override_request_url
      * @param  string $override_asset_id
      *
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance(JRegistry $request = null,
+    public static function getInstance(Registry $request = null,
                                        $override_request_url = null,
                                        $override_asset_id = null)
     {
@@ -67,22 +67,22 @@ class MolajoRequest
      * Class constructor
      *
      * @static
-     * @param  JRegistry|null $config
+     * @param  Registry|null $config
      * @param  string $override_request_url
      * @param  string $override_asset_id
      *
      * @return null
      * @since  1.0
      */
-    public function __construct(JRegistry $request = null,
+    public function __construct(Registry $request = null,
                                 $override_request_url = null,
                                 $override_asset_id = null)
     {
         /** request object */
-        if ($request instanceof JRegistry) {
+        if ($request instanceof Registry) {
             $this->page_request = $request;
         } else {
-            $this->page_request = new JRegistry;
+            $this->page_request = new Registry;
         }
         $this->_setRequest();
 
@@ -421,15 +421,15 @@ class MolajoRequest
         $this->set('menu_item_asset_id', $row->asset_id);
         $this->set('menu_item_view_group_id', $row->view_group_id);
 
-        $parameters = new JRegistry;
+        $parameters = new Registry;
         $parameters->loadString($row->parameters);
         $this->set('menu_item_parameters', $parameters);
 
-        $custom_fields = new JRegistry;
+        $custom_fields = new Registry;
         $custom_fields->loadString($row->custom_fields);
         $this->set('menu_item_custom_fields', $custom_fields);
 
-        $metadata = new JRegistry;
+        $metadata = new Registry;
         $metadata->loadString($row->metadata);
         $this->set('menu_item_metadata', $metadata);
 
@@ -510,15 +510,15 @@ class MolajoRequest
 
         $this->set('extension_instance_id', $row->extension_instance_id);
 
-        $custom_fields = new JRegistry;
+        $custom_fields = new Registry;
         $custom_fields->loadString($row->custom_fields);
         $this->set('source_custom_fields', $custom_fields);
 
-        $metadata = new JRegistry;
+        $metadata = new Registry;
         $metadata->loadString($row->metadata);
         $this->set('source_metadata', $metadata);
 
-        $parameters = new JRegistry;
+        $parameters = new Registry;
         $parameters->loadString($row->parameters);
         $this->set('source_parameters', $parameters);
 
@@ -596,15 +596,15 @@ class MolajoRequest
         $this->set('category_language', $row->language);
         $this->set('category_translation_of_id', $row->translation_of_id);
 
-        $custom_fields = new JRegistry;
+        $custom_fields = new Registry;
         $custom_fields->loadString($row->custom_fields);
         $this->set('category_custom_fields', $custom_fields);
 
-        $metadata = new JRegistry;
+        $metadata = new Registry;
         $metadata->loadString($row->metadata);
         $this->set('category_metadata', $metadata);
 
-        $parameters = new JRegistry;
+        $parameters = new Registry;
         $parameters->loadString($row->parameters);
         $this->set('category_parameters', $parameters);
 
@@ -668,7 +668,7 @@ class MolajoRequest
     protected function _setPageValues($parameters = null, $metadata = null)
     {
         /** rendering parameters */
-        $params = new JRegistry;
+        $params = new Registry;
         $params->loadString($parameters);
 
         if ((int)$this->get('theme_id', 0) == 0) {
@@ -693,7 +693,7 @@ class MolajoRequest
         }
 
         /** merge meta data */
-        $meta = new JRegistry;
+        $meta = new Registry;
         $meta->loadString($metadata);
 
         if ($this->get('metadata_title', '') == '') {
@@ -832,7 +832,7 @@ class MolajoRequest
      */
     protected function _getUser()
     {
-        $parameters = new JRegistry;
+        $parameters = new Registry;
         $parameters->loadString(Molajo::User()->parameters);
 
         if ($this->get('theme_id', 0) == 0) {
@@ -943,7 +943,7 @@ class MolajoRequest
         $this->set('theme_custom_fields', $row->custom_fields);
         $this->set('theme_metadata', $row->metadata);
 
-        $parameters = new JRegistry;
+        $parameters = new Registry;
         $parameters->loadString($row->parameters);
         $this->set('theme_parameters', $parameters);
 

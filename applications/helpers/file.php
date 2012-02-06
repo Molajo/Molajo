@@ -44,10 +44,9 @@ class MolajoFileHelper
         }
 
         if (file_exists($file)) {
-//echo 'Class '.$class.'<br />';
             JLoader::register($class, $file);
         } else {
-            if (Molajo::$application == null) {
+            if (MolajoBase::$application == null) {
                 echo 'MolajoFileHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             } else {
@@ -60,7 +59,7 @@ class MolajoFileHelper
         if (class_exists($class)) {
             return true;
         } else {
-            if (Molajo::$application == null) {
+            if (MolajoBase::$application == null) {
                 echo 'MolajoFileHelper Error class not found ' . $class;
                 exit;
             } else {
@@ -71,4 +70,3 @@ class MolajoFileHelper
         }
     }
 }
-Class FileHelper extends MolajoFileHelper {}

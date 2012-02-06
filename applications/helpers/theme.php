@@ -21,10 +21,11 @@ class MolajoThemeHelper
      *
      * Get requested theme data
      *
+     * @static
      * @return  array
      * @since   1.0
      */
-    public function get($theme)
+    public static function get($theme)
     {
         $rows = ExtensionHelper::get(
             MOLAJO_ASSET_TYPE_EXTENSION_THEME,
@@ -34,6 +35,7 @@ class MolajoThemeHelper
         if (count($rows) == 0) {
             return array();
         }
+        $row = null;
         foreach ($rows as $row) {
         }
 
@@ -45,10 +47,11 @@ class MolajoThemeHelper
      *
      * Return path for selected Theme
      *
+     * @static
+     * @param $theme_name
      * @return bool|string
-     * @since 1.0
      */
-    public function getPath($theme_name)
+    public static function getPath($theme_name)
     {
         if (file_exists(MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
             return MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php';
@@ -61,10 +64,11 @@ class MolajoThemeHelper
      *
      * Return path for selected Theme
      *
+     * @static
      * @return bool|string
      * @since 1.0
      */
-    public function getPathURL($theme_name)
+    public static function getPathURL($theme_name)
     {
         if (file_exists(MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
             return MOLAJO_EXTENSIONS_THEMES_URL . '/' . $theme_name;
@@ -81,10 +85,11 @@ class MolajoThemeHelper
      *  - Themes/images/ folder (priority 1)
      *  - Root of the website (priority 2)
      *
+     * @static
      * @return  mixed
      * @since   1.0
      */
-    static public function getFavicon($theme_name)
+    public static function getFavicon($theme_name)
     {
         $path = MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/images/';
         if (file_exists($path . 'favicon.ico')) {

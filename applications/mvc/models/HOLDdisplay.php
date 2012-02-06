@@ -500,7 +500,7 @@ class MolajoDisplayModel extends MolajoModel
                 foreach ($jsonFields as $name) {
                     $attribute = $name->value;
                     if (property_exists($items[$i], $attribute)) {
-                        $registry = new JRegistry;
+                        $registry = new Registry;
                         $registry->loadJSON($items[$i]->$attribute);
                         $items[$i]->$attribute = $registry->toArray();
                     }

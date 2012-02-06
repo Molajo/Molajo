@@ -96,7 +96,7 @@ class MolajoContentModel extends MolajoModel
 
         foreach ($results as $count => $result) {
             if (isset($array[$result->value]) && is_array($array[$result->value])) {
-                $registry = new JRegistry();
+                $registry = new Registry();
                 $registry->loadArray($array[$result->value]);
                 $array[$result->value] = (string)$registry;
             }

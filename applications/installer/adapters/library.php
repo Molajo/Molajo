@@ -33,9 +33,9 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
             $this->parent->setPath('source', JPATH_PLATFORM . '/' . $this->parent->extension->element);
         }
         $this->manifest = $this->parent->getManifest();
-        $extension = 'lib_' . strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $extension = 'lib_' . strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         $name = strtolower((string)$this->manifest->libraryname);
-        $lang = Molajo::Application()->getLanguage();
+        $lang = Molajo::Application()->get('language');
         $source = $path ? $path : JPATH_PLATFORM . "/$name";
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
@@ -58,7 +58,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         // Manifest Document Setup Section
 
         // Set the extensions name
-        $name = JFilterInput::getInstance()->clean((string)$this->manifest->name, 'string');
+        $name = FilterInput::getInstance()->clean((string)$this->manifest->name, 'string');
         $element = str_replace('.xml', '', basename($this->parent->getPath('manifest')));
         $this->set('name', $name);
         $this->set('element', $element);
@@ -184,7 +184,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
 
         // Set the extensions name
         $name = (string)$this->manifest->name;
-        $name = JFilterInput::getInstance()->clean($name, 'string');
+        $name = FilterInput::getInstance()->clean($name, 'string');
         $element = str_replace('.xml', '', basename($this->parent->getPath('manifest')));
         $this->set('name', $name);
         $this->set('element', $element);

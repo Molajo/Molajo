@@ -1,20 +1,19 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Base
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
-// addCustomHTML
 
 /**
- * Molajo Application Class
+ * Application
  *
- * Base class
- *
- * Combines original code, fork of JWebApplication and JDocument
+ * @package     Molajo
+ * @subpackage  Base
+ * @since       1.0
  */
 class MolajoApplication
 {
@@ -72,7 +71,7 @@ class MolajoApplication
      * @var    object
      * @since  1.0
      */
-    public $input;
+    protected $_input;
 
     /**
      * Language
@@ -96,7 +95,7 @@ class MolajoApplication
      * @var    object
      * @since  1.0
      */
-    protected $dispatcher;
+    protected $_dispatcher;
 
     /**
      * Session
@@ -104,7 +103,7 @@ class MolajoApplication
      * @var    object
      * @since  1.0
      */
-    protected $session;
+    protected $_session;
 
     /**
      * Messages
@@ -115,27 +114,19 @@ class MolajoApplication
     protected $_messages = array();
 
     /**
-     * Callback for escaping
-     *
-     * @var   string
-     * @since 1.0
-     */
-    protected $_escapeFunction = 'htmlspecialchars';
-
-    /**
      * getInstance
      *
      * @static
      * @param  null $id
-     * @param  JInput|null $input
-     * @param  JRegistry|null $config
+     * @param  Input|null $input
+     * @param  Registry|null $config
      *
      * @return bool|object
      * @since  1.0
      */
     public static function getInstance($id = null,
-                                       JRegistry $config = null,
-                                       JInput $input = null)
+                                       Registry $config = null,
+                                       Input $input = null)
     {
         if ($id == null) {
             $id = MOLAJO_APPLICATION;
@@ -143,28 +134,24 @@ class MolajoApplication
 
         if (empty(self::$instance)) {
 
-            if ($input instanceof JInput) {
+            if ($input instanceof Input) {
             } else {
-                $input = new JInput;
+                $input = new Input;
             }
-
-            if ($config instanceof JRegistry) {
+            if ($config instanceof Registry) {
             } else {
-                $config = new JRegistry;
+                $config = new Registry;
             }
-
             $_appQueryResults = ApplicationHelper::getApplicationInfo($id);
             if ($_appQueryResults === false) {
                 return false;
             }
-
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
                 define('MOLAJO_APPLICATION_PATH',
                     MOLAJO_APPLICATIONS_CORE . '/applications/' . $_appQueryResults->path
                 );
             }
-
             if (defined('MOLAJO_APPLICATION_ID')) {
             } else {
                 define('MOLAJO_APPLICATION_ID', $_appQueryResults->id);
@@ -190,16 +177,18 @@ class MolajoApplication
      * @return  null
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null,
-                                JInput $input = null,
+    public function __construct(Registry $config = null,
+                                Input $input = null,
                                 $_appQueryResults = null)
     {
-        if ($input instanceof JInput) {
+        if ($input instanceof Input) {
             $this->_input = $input;
         }
 
-        if ($config instanceof JRegistry) {
+        if ($config instanceof Registry) {
             $this->_config = $config;
+        } else {
+            $this->_config = new Registry();
         }
         /** Database results from application helpers */
         if ($_appQueryResults == null) {
@@ -216,7 +205,7 @@ class MolajoApplication
         if ($this->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {
             } else {
-                $this->redirect((string)'https' .
+                Molajo::Responder()->redirect((string)'https' .
                         substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
                         MOLAJO_APPLICATION_URL_PATH .
                         '/' .
@@ -267,7 +256,7 @@ class MolajoApplication
          * 1. Parser: parses theme and rendered output for <input:renderer statements
          *
          * 2. Renderer: each input statement processed by extension renderer in order
-         *    to collect task_request object for use by the MVC
+         *    to collect task object for use by the MVC
          *
          * 3. MVC: executes task/controller which handles model processing and
          *    renders template and wrap views
@@ -299,10 +288,10 @@ class MolajoApplication
      */
     public function loadConfig()
     {
-        $this->_metadata = new JRegistry;
+        $this->_metadata = new Registry;
         $this->_metadata->loadString($this->_appQueryResults->metadata);
 
-        $this->_custom_fields = new JRegistry;
+        $this->_custom_fields = new Registry;
         $this->_custom_fields->loadString($this->_appQueryResults->custom_fields);
 
         $cc = new MolajoConfigurationHelper($this->_appQueryResults->parameters);
@@ -328,8 +317,13 @@ class MolajoApplication
     {
         if ($type == 'custom') {
             return $this->_custom_fields->get($key, $default);
+
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
+
+        } else if ($key == 'languageObject') {
+            return $this->_language;
+
         } else {
             return $this->_config->get($key, $default);
         }
@@ -351,8 +345,10 @@ class MolajoApplication
     {
         if ($type == 'custom') {
             return $this->_custom_fields->set($key, $value);
+
         } else if ($type == 'metadata') {
             return $this->_metadata->set($key, $value);
+
         } else {
             return $this->_config->set($key, $value);
         }
@@ -376,7 +372,7 @@ class MolajoApplication
      *
      * Method to create a session for the Web application.  The logic and options for creating this
      * object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create session objects based on more specific needs.
+     * to override this method and create _session objects based on more specific needs.
      *
      * @return  void
      *
@@ -384,16 +380,16 @@ class MolajoApplication
      */
     protected function loadSession()
     {
-        // Generate a session name.
+        // Generate a _session name.
         $name = md5($this->get('secret') .
-            $this->get('session_name', get_class($this)));
+            $this->get('_session_name', get_class($this)));
 
-        // Calculate the session lifetime.
-        $lifetime = (($this->get('session_lifetime'))
-            ? $this->get('session_lifetime') * 60 : 900);
+        // Calculate the _session lifetime.
+        $lifetime = (($this->get('_session_lifetime'))
+            ? $this->get('_session_lifetime') * 60 : 900);
 
-        // Get the session handler from the configuration.
-        $handler = $this->get('session_handler', 'none');
+        // Get the _session handler from the configuration.
+        $handler = $this->get('_session_handler', 'none');
 
         // Initialize the options for Session.
         $options = array(
@@ -402,39 +398,38 @@ class MolajoApplication
             'force_ssl' => $this->get('force_ssl')
         );
 
-        // Instantiate the session object.
-        $session = MolajoSession::getInstance($handler, $options);
+        // Instantiate the _session object.
+        $_session = MolajoSession::getInstance($handler, $options);
 
-        if ($session->getState() == 'expired') {
-            $session->restart();
+        if ($_session->getState() == 'expired') {
+            $_session->restart();
         }
 
-        // If the session is new, load the user and registry objects.
-        if ($session->isNew()) {
-            $session->set('registry', new JRegistry);
-            $session->set('user', new MolajoUser);
+        // If the _session is new, load the user and registry objects.
+        if ($_session->isNew()) {
+            $_session->set('registry', new Registry);
+            $_session->set('user', new MolajoUser);
         }
 
-        // Set the session object.
-        $this->session = $session;
+        // Set the _session object.
+        $this->_session = $_session;
     }
 
     /**
      * getSession
      *
-     * Method to get the application session object.
+     * Method to get the application _session object.
      *
-     * @return  Session  The session object
+     * @return  Session  The _session object
      *
      * @since   1.0
      */
     public function getSession()
     {
-        return $this->session;
+        return $this->_session;
     }
 
     /**
-     * What is this really for?
      * loadLanguage
      *
      * Load the core language files, set defaults, etc
@@ -444,16 +439,16 @@ class MolajoApplication
      */
     public function loadLanguage()
     {
-        $locale = $this->get('language', 'en-gb');
+        $locale = $this->get('language', 'en-GB');
         $this->_language = MolajoLanguage::getInstance($locale);
     }
 
     /**
      * loadDispatcher
      *
-     * Method to create an event dispatcher for the Web application.  The logic and options for creating
+     * Method to create an event _dispatcher for the Web application.  The logic and options for creating
      * this object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create event dispatchers based on more specific needs.
+     * to override this method and create event _dispatchers based on more specific needs.
      *
      * @return  void
      *
@@ -461,7 +456,7 @@ class MolajoApplication
      */
     protected function loadDispatcher()
     {
-//        $this->dispatcher = JDispatcher::getInstance();
+        //        $this->_dispatcher = JDispatcher::getInstance();
     }
 
     /**
@@ -478,9 +473,9 @@ class MolajoApplication
      */
     public function registerEvent($event, $handler)
     {
-//        if ($this->dispatcher instanceof JDispatcher) {
-//            $this->dispatcher->register($event, $handler);
-//        }
+        //        if ($this->_dispatcher instanceof JDispatcher) {
+        //            $this->_dispatcher->register($event, $handler);
+        //        }
 
         return $this;
     }
@@ -493,15 +488,15 @@ class MolajoApplication
      * @param   string  $event  The event name.
      * @param   array   $args   An array of arguments (optional).
      *
-     * @return  array   An array of results from each function call, or null if no dispatcher is defined.
+     * @return  array   An array of results from each function call, or null if no _dispatcher is defined.
      *
      * @since   1.0
      */
     public function triggerEvent($event, array $args = null)
     {
-//        if ($this->dispatcher instanceof JDispatcher) {
-//            return $this->dispatcher->trigger($event, $args);
-//        }
+        //        if ($this->_dispatcher instanceof JDispatcher) {
+        //            return $this->_dispatcher->trigger($event, $args);
+        //        }
 
         return null;
     }
@@ -518,10 +513,10 @@ class MolajoApplication
      * @since   1.0
      */
     public static function setMessage($message = null,
-                               $type = 'message',
-                               $code = null,
-                               $debug_location = null,
-                               $debug_object = null)
+                                      $type = 'message',
+                                      $code = null,
+                                      $debug_location = null,
+                                      $debug_object = null)
     {
         if ($message == null
             && $code == null
@@ -538,7 +533,7 @@ class MolajoApplication
             $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
         }
 
-        /** load session messages into application messages array */
+        /** load _session messages into application messages array */
         $this->_sessionMessages();
 
         /** add new message */
@@ -570,83 +565,24 @@ class MolajoApplication
     /**
      *  _sessionMessages
      *
-     * Retrieve messages in session and load into Application messages array
+     * Retrieve messages in _session and load into Application messages array
      *
      * @return  void
      * @since   1.0
      */
     private function _sessionMessages()
     {
-        $session = $this->getSession();
-        $sessionMessages = $session->get('application.messages');
+        $_session = $this->getSession();
+        $_sessionMessages = $_session->get('application.messages');
 
-        if (count($sessionMessages) > 0) {
+        if (count($_sessionMessages) > 0) {
             $count = count($this->_messages);
-            foreach ($sessionMessages as $sessionMessage) {
-                $this->_messages[$count] = $sessionMessage;
+            foreach ($_sessionMessages as $_sessionMessage) {
+                $this->_messages[$count] = $_sessionMessage;
                 $count++;
             }
-            $session->set('application.messages', null);
+            $_session->set('application.messages', null);
         }
-    }
-
-    /**
-     * setEscape
-     *
-     * Sets the escape method
-     *
-     * @param  string
-     *
-     * @return  void
-     */
-    function setEscape($escapeFunction)
-    {
-        if (is_callable($escapeFunction)) {
-            $this->_escapeFunction = $escapeFunction;
-        }
-    }
-
-    /**
-     * escape
-     *
-     * If escaping mechanism is either htmlspecialchars or htmlentities, uses encoding setting
-     *
-     * @param   mixed  $var  The output to escape.
-     *
-     * @return  mixed  The escaped value.
-     * @since   1.0
-     */
-    function escape($var)
-    {
-        if (in_array($this->_escapeFunction, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escapeFunction, $var, ENT_COMPAT, 'utf-8');
-        }
-        return call_user_func($this->_escapeFunction, $var);
-    }
-
-    /**
-     * stringURLSafe
-     *
-     * This method transliterates a string into an URL
-     * safe string or returns a URL safe UTF-8 string
-     * based on the global configuration
-     *
-     * @param   string  $string  String to process
-     *
-     * @return  string  Processed string
-     *
-     * @since  1.0
-     */
-    static public function stringURLSafe($string)
-    {
-        if (self::get('unicode_slugs') == 1) {
-            $output = JFilterOutput::stringURLUnicodeSlug($string);
-
-        } else {
-            $output = JFilterOutput::stringURLSafe($string);
-        }
-
-        return $output;
     }
 
     /**
@@ -657,7 +593,6 @@ class MolajoApplication
      * @param   string   $seed  Seed string.
      *
      * @return  string   A secure hash
-     *
      * @since  1.0
      */
     public static function getHash($seed)

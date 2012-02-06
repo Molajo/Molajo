@@ -45,11 +45,11 @@ class MolajoHeadRenderer extends MolajoRenderer
     protected function _getExtension()
     {
         if ($this->_type == 'defer') {
-            $this->task_request->set('mvc_model', 'MolajoDeferModel');
+            $this->task->set('model', 'MolajoDeferModel');
         } else {
-            $this->task_request->set('mvc_model', 'MolajoHeadModel');
+            $this->task->set('model', 'MolajoHeadModel');
         }
-        $this->task_request->set('mvc_task', 'display');
+        $this->task->set('task', 'display');
 
         return true;
     }
@@ -65,21 +65,21 @@ class MolajoHeadRenderer extends MolajoRenderer
     protected function _getApplicationDefaults()
     {
         if ($this->_type == 'defer') {
-            if ((int)$this->task_request->get('template_view_id', 0) == 0) {
-                $this->task_request->set('template_view_id',
+            if ((int)$this->task->get('template_view_id', 0) == 0) {
+                $this->task->set('template_view_id',
                     Molajo::Application()->get('defer_template_view_id', 'document-defer'));
             }
-            if ((int)$this->task_request->get('wrap_view_id', 0) == 0) {
-                $this->task_request->set('wrap_view_id',
+            if ((int)$this->task->get('wrap_view_id', 0) == 0) {
+                $this->task->set('wrap_view_id',
                     Molajo::Application()->get('defer_wrap_view_id', 'none'));
             }
         } else {
-            if ((int)$this->task_request->get('template_view_id', 0) == 0) {
-                $this->task_request->set('template_view_id',
+            if ((int)$this->task->get('template_view_id', 0) == 0) {
+                $this->task->set('template_view_id',
                     Molajo::Application()->get('head_template_view_id', 'document-head'));
             }
-            if ((int)$this->task_request->get('wrap_view_id', 0) == 0) {
-                $this->task_request->set('wrap_view_id',
+            if ((int)$this->task->get('wrap_view_id', 0) == 0) {
+                $this->task->set('wrap_view_id',
                     Molajo::Application()->get('head_wrap_view_id', 'none'));
             }
         }

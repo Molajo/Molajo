@@ -138,13 +138,13 @@ class MolajoAssetCategoriesModel extends MolajoModel
     public function bind($array, $ignore = '')
     {
         if (isset($array['parameters']) && is_array($array['parameters'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['parameters']);
             $array['parameters'] = (string)$registry;
         }
 
         if (isset($array['metadata']) && is_array($array['metadata'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string)$registry;
         }

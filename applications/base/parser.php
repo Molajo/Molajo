@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -76,17 +76,17 @@ class MolajoParser
      * getInstance
      *
      * @static
-     * @param  JRegistry|null $config
+     * @param  Registry|null $config
      *
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance(JRegistry $config = null)
+    public static function getInstance(Registry $config = null)
     {
         if (empty(self::$instance)) {
-            if ($config instanceof JRegistry) {
+            if ($config instanceof Registry) {
             } else {
-                $config = new JRegistry;
+                $config = new Registry;
             }
             self::$instance = new MolajoParser($config);
         }
@@ -101,9 +101,9 @@ class MolajoParser
      * @return boolean
      * @since  1.0
      */
-    public function __construct(JRegistry $config)
+    public function __construct(Registry $config)
     {
-        if ($config instanceof JRegistry) {
+        if ($config instanceof Registry) {
             $this->_config = $config;
         }
 
@@ -117,7 +117,7 @@ class MolajoParser
             }
         }
         if ($formatXML == '') {
-            $formatXML = MOLAJO_EXTENSIONS_CORE . '/core/renderers/sequence.xml';
+            $formatXML = MOLAJO_APPLICATIONS_CORE . '/renderers/sequence.xml';
         }
 
         if (JFile::exists($formatXML)) {
@@ -150,7 +150,7 @@ class MolajoParser
     protected function _processTheme()
     {
         /** Theme Parameters */
-        $this->parameters = new JRegistry;
+        $this->parameters = new Registry;
         $this->parameters->loadArray(
             array(
                 'theme' => Molajo::Request()->get('theme_name'),

@@ -6,7 +6,6 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
-
 /**
  * Text
  *
@@ -40,7 +39,7 @@ class MolajoTextHelper
      */
     public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = Molajo::Application()->getLanguage();
+        $lang = Molajo::Application()->get('languageObject');
         if ($lang == null) {
             return $string;
         }
@@ -90,7 +89,7 @@ class MolajoTextHelper
      */
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = Molajo::Application()->getLanguage();
+        $lang = Molajo::Application()->get('languageObject');
         if ($lang->hasKey($string . '_' . $alt)) {
             return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
         }
@@ -119,7 +118,9 @@ class MolajoTextHelper
      */
     public static function sprintf($string)
     {
-        $lang = Molajo::Application()->getLanguage();
+        RETURN;
+        //todo: amy
+        $lang = Molajo::Application()->get('language');
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
@@ -152,7 +153,7 @@ class MolajoTextHelper
      */
     public static function printf($string)
     {
-        $lang = Molajo::Application()->getLanguage();
+        $lang = Molajo::Application()->get('languageObject');
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
@@ -197,7 +198,10 @@ class MolajoTextHelper
         // Add the string to the array if not null.
         if ($string !== null) {
             // Normalize the key and translate the string.
-            self::$strings[strtoupper($string)] = Molajo::Application()->getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
+            self::$strings[strtoupper($string)] =
+                Molajo::Application()->
+                get('languageObject')->
+                _($string, $jsSafe, $interpretBackSlashes);
         }
 
         return self::$strings;
@@ -324,4 +328,3 @@ class MolajoTextHelper
         return ucfirst($generator->getContent($count, $html_format, $start_with_lorem_ipsum));
     }
 }
-Class TextHelper extends MolajoTextHelper {}

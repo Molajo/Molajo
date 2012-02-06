@@ -95,7 +95,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
             }
             if ($name) {
                 $extension = "plg_${group}_${name}";
-                $lang = Molajo::Application()->getLanguage();
+                $lang = Molajo::Application()->get('language');
                 $source = $path ? $path : MOLAJO_EXTENSIONS_PLUGINS . "/$group/$name";
                 $folder = (string)$element->attributes()->folder;
                 if ($folder && file_exists("$path/$folder")) {
@@ -130,7 +130,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
 
         // Set the extension name
         $name = (string)$xml->name;
-        $name = JFilterInput::getInstance()->clean($name, 'string');
+        $name = FilterInput::getInstance()->clean($name, 'string');
         $this->set('name', $name);
 
         // Get the component description

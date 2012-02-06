@@ -56,7 +56,7 @@ class MolajoDisplayAdapter
         if ($parameters instanceof JRegistry) {
             $this->_parameters = $parameters;
         } else {
-            $this->_parameters = new JRegistry;
+            $this->_parameters = new Registry;
         }
 
         return;

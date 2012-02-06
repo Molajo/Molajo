@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class MolajoDisplayController extends MolajoExtensionController
+class MolajoDisplayController extends MolajoController
 {
     /**
      * __construct
@@ -24,9 +24,9 @@ class MolajoDisplayController extends MolajoExtensionController
      * @param  array   $request
      * @since  1.0
      */
-    public function __construct($mvc, $parameters)
+    public function __construct($task, $parameters)
     {
-        parent::__construct($mvc, $parameters);
+        parent::__construct($task, $parameters);
     }
 
     /**
@@ -40,13 +40,13 @@ class MolajoDisplayController extends MolajoExtensionController
     public function display()
     {
         /** instantiate model */
-        $mc = (string)$this->mvc->get('mvc_model');
+        $mc = (string)$this->task->get('model');
         $this->model = new $mc();
-        $this->model->mvc = $this->mvc;
+        $this->model->task = $this->task;
         $this->model->parameters = $this->parameters;
 
         /** check out */
-        if ($this->mvc->get('mvc_task') == 'edit') {
+        if ($this->task->get('task') == 'edit') {
             $results = parent::checkoutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -67,12 +67,12 @@ class MolajoDisplayController extends MolajoExtensionController
         }
 
         /** render template view */
-        $this->view_path = $this->mvc->get('template_view_path');
-        $this->view_path_url = $this->mvc->get('template_view_path_url');
-        $renderedOutput = $this->renderView($this->mvc->get('template_view_name'));
+        $this->view_path = $this->task->get('template_view_path');
+        $this->view_path_url = $this->task->get('template_view_path_url');
+        $renderedOutput = $this->renderView($this->task->get('template_view_name'));
 
         /** render wrap view around template view results */
-        return $this->wrapView($this->mvc->get('wrap_view_name'), $renderedOutput);
+        return $this->wrapView($this->task->get('wrap_view_name'), $renderedOutput);
     }
 
     /**
@@ -90,18 +90,18 @@ class MolajoDisplayController extends MolajoExtensionController
         $this->rowset = array();
 
         $tempObject = new JObject();
-        $tempObject->set('wrap_view_css_id', $this->mvc->get('wrap_view_css_id'));
-        $tempObject->set('wrap_view_css_class', $this->mvc->get('wrap_view_css_class'));
+        $tempObject->set('wrap_view_css_id', $this->task->get('wrap_view_css_id'));
+        $tempObject->set('wrap_view_css_class', $this->task->get('wrap_view_css_class'));
         $tempObject->set('content', $renderedOutput);
 
         $this->rowset[] = $tempObject;
 
         /** paths */
-        $this->view_path = $this->mvc->get('wrap_view_path');
-        $this->view_path_url = $this->mvc->get('wrap_view_path_url');
+        $this->view_path = $this->task->get('wrap_view_path');
+        $this->view_path_url = $this->task->get('wrap_view_path_url');
 
         /** render wrap */
-        return $this->renderView($this->mvc->get('wrap_view_name'), 'wraps');
+        return $this->renderView($this->task->get('wrap_view_name'), 'wraps');
     }
 
     /**
@@ -193,7 +193,64 @@ class MolajoDisplayController extends MolajoExtensionController
         ob_end_clean();
         return $output;
     }
+
+    /**
+     * safeHTML
+     *
+     * @param string $text
+     *
+     * @return  string
+     * @since   1.0
+     */
+    static public function safeHTML($htmlText)
+    {
+
+    }
+
+    /**
+     * safeInteger
+     *
+     * @param string $integer
+     *
+     * @return  string
+     * @since   1.0
+     */
+    static public function safeInteger($integer)
+    {
+        return (int) $integer;
+    }
+
+    /**
+     * safeText
+     *
+     * @param string $text
+     *
+     * @return  string
+     * @since   1.0
+     */
+    static public function safeText($text)
+    {
+        return htmlspecialchars($text, ENT_COMPAT, 'utf-8');
+    }
+
+    /**
+     * safeURL
+     *
+     * @param   string  $url
+     *
+     * @return  string
+     * @since  1.0
+     */
+    static public function safeURL($url)
+    {
+        if (Molajo::Application()->get('unicode_slugs') == 1) {
+            return JFilterOutput::stringURLUnicodeSlug($url);
+        } else {
+            return JFilterOutput::stringURLSafe($url);
+        }
+    }
 }
+class Display extends MolajoDisplayController {}
 
 /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');

@@ -22,7 +22,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class MolajoUpdateController extends MolajoExtensionController
+class MolajoUpdateController extends MolajoController
 {
     /**
      * __construct

@@ -51,10 +51,10 @@ abstract class MolajoPluginHelper extends JEvent
     public function __construct(&$subject, $config = array())
     {
         if (isset($config['parameters'])) {
-            if ($config['parameters'] instanceof JRegistry) {
+            if ($config['parameters'] instanceof Registry) {
                 $this->parameters = $config['parameters'];
             } else {
-                $this->parameters = new JRegistry;
+                $this->parameters = new Registry;
                 $this->parameters->loadString($config['parameters']);
             }
         }
@@ -86,6 +86,6 @@ abstract class MolajoPluginHelper extends JEvent
         if (empty($extension)) {
             $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
         }
-        Molajo::Application()->getLanguage()->load(strtolower($extension), MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
+        Molajo::Application()->get('language')->load(strtolower($extension), MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
     }
 }

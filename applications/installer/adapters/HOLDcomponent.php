@@ -95,7 +95,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         $this->manifest = parent::getManifest();
 
         /** Read Manifest Information */
-        $name = strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $name = strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
 
 
         parent::set('message', TextHelper::_((string)$this->manifest->description));
@@ -508,7 +508,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
          */
 
         // Set the extension's name
-        $name = strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $name = strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         if (substr($name, 0, 4) == "") {
             $element = $name;
         }
@@ -981,7 +981,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         }
 
         // Set the extensions name
-        $name = strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $name = strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         if (substr($name, 0, 4) == "") {
             $element = $name;
         }
@@ -1532,7 +1532,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
          */
 
         // Set the extensions name
-        $name = strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $name = strtolower(FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         if (substr($name, 0, 4) == "") {
             $element = $name;
         }

@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * JFilterInput is a class for filtering input from any data source
+ * FilterInput is a class for filtering input from any data source
  *
  * Forked from the php input filter library by: Daniel Morris <dan@rootcube.com>
  * Original Contributors: Gianpaolo Racca, Ghislain Picard, Marco Wandschneider, Chris Tobin and Andrew Eddie.
@@ -19,10 +19,10 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Filter
  * @since       11.1
  */
-class JFilterInput extends JObject
+class FilterInput extends JObject
 {
     /**
-     * @var    array  A container for JFilterInput instances.
+     * @var    array  A container for FilterInput instances.
      * @since  11.3
      */
     protected static $instances = array();
@@ -132,7 +132,7 @@ class JFilterInput extends JObject
      * @param   integer  $attrMethod  WhiteList method = 0, BlackList method = 1
      * @param   integer  $xssAuto     Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
      *
-     * @return  object  The JFilterInput object.
+     * @return  object  The FilterInput object.
      *
      * @since   1.0
      */
@@ -141,7 +141,7 @@ class JFilterInput extends JObject
         $sig = md5(serialize(array($tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto)));
 
         if (empty(self::$instances[$sig])) {
-            self::$instances[$sig] = new JFilterInput($tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto);
+            self::$instances[$sig] = new FilterInput($tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto);
         }
 
         return self::$instances[$sig];

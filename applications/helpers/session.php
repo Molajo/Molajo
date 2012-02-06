@@ -137,7 +137,7 @@ class MolajoSessionHelper extends JObject
 
         // Session doesn't exist yet, so create session variables
         if ($session->isNew()) {
-            $session->set('registry', new JRegistry('session'));
+            $session->set('registry', new Registry('session'));
             $session->set('user', new MolajoUser());
         }
     }

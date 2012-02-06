@@ -1,20 +1,18 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Molajo Controller
+ * Molajo Factory
  *
  * Alias Molajo
- *
- * Primary Controller which acts as a factory class
  */
-class MolajoController
+class MolajoBase
 {
     /**
      * Alias Molajo::Site
@@ -63,13 +61,6 @@ class MolajoController
     public static $db = null;
 
     /**
-     * Need to replace =)
-     * @var    Cache
-     * @since  1.0
-     */
-    public static $cache = null;
-
-    /**
      * @var    Dates
      * @since  1.0
      */
@@ -86,18 +77,16 @@ class MolajoController
      * @param   string $prefix
      *
      * @return  null|Site
-     * @since 1.0
+     * @since   1.0
      */
     public static function getSite($id = null,
-                                   JRegistry $config = null,
-                                   $prefix = 'Molajo')
+                                   $config = null)
     {
         if (self::$site) {
         } else {
             self::$site = MolajoSite::getInstance(
                 $id,
-                $config,
-                $prefix
+                $config
             );
         }
         return self::$site;
@@ -106,19 +95,19 @@ class MolajoController
     /**
      * getApplication
      *
-     * Get an Application object
+     * MolajoApplication, alias Molajo::Application
      *
      * @static
-     * @param null $id
-     * @param JRegistry|null $config
-     * @param JInput|null $input
+     * @param   null   $id
+     * @param   array  $config
+     * @param   string $prefix
      *
-     * @return MolajoApplication|null
-     * @since 1.0
+     * @return  null|Site
+     * @since   1.0
      */
     public static function getApplication($id = null,
-                                          JRegistry $config = null,
-                                          JInput $input = null)
+                                          $config = null,
+                                          $input = null)
     {
         if (self::$application) {
         } else {
@@ -138,14 +127,14 @@ class MolajoController
      * Get the Request Controller Object
      *
      * @static
-     * @param JRegistry|null $config
+     * @param null $request
      * @param string $override_request_url
      * @param string $override_asset_id
      *
      * @return Request|null
      * @since 1.0
      */
-    public static function getRequest(JRegistry $request = null,
+    public static function getRequest($request = null,
                                       $override_request_url = null,
                                       $override_asset_id = null)
     {
@@ -167,14 +156,14 @@ class MolajoController
      * Get the Request Controller Object
      *
      * @static
-     * @param JRegistry|null $config
+     * @param Registry|null $config
      * @param string $override_request_url
      * @param string $override_asset_id
      *
      * @return Request|null
      * @since 1.0
      */
-    public static function getParser(JRegistry $config = null)
+    public static function getParser($config = null)
     {
         if (self::$parser) {
         } else {
@@ -192,12 +181,12 @@ class MolajoController
      * Get the Responder Controller Object
      *
      * @static
-     * @param JRegistry|null $config
+     * @param Registry|null $config
      *
      * @return Responder|null
      * @since 1.0
      */
-    public static function getResponder(JRegistry $config = null)
+    public static function getResponder($config = null)
     {
         if (self::$responder) {
         } else {
@@ -252,7 +241,7 @@ class MolajoController
     {
         if (self::$db) {
         } else {
-            self::$db = MolajoConfigurationHelper::getDB();
+            self::$db = ConfigurationHelper::getDB();
         }
         return self::$db;
     }
@@ -278,7 +267,7 @@ class MolajoController
             $instances = array();
         }
 
-        $language = self::getApplication()->getLanguage();
+        $language = self::getApplication()->get('languageObject');
         $locale = $language->getTag();
 
         if (!isset($classname) || $locale != $mainLocale) {
@@ -302,48 +291,3 @@ class MolajoController
     }
 }
 
-/**
- *  Molajo Class for alias creation, ex Molajo::User
- */
-class Molajo extends MolajoFactory
-{
-    public static function Site($id = null, $config = array(), $prefix = 'Molajo')
-    {
-        return MolajoFactory::getSite($id, $config, $prefix);
-    }
-
-    public static function Application($id = null, JRegistry $config = null, JInput $input = null)
-    {
-        return MolajoFactory::getApplication($id, $config, $input);
-    }
-
-    public static function Request(JRegistry $request = null, $override_request_url = null, $override_asset_id = null)
-    {
-        return MolajoFactory::getRequest($request, $override_request_url, $override_asset_id);
-    }
-
-    public static function Parser(JRegistry $config = null)
-    {
-        return MolajoFactory::getParser($config);
-    }
-
-    public static function Responder(JRegistry $config = null)
-    {
-        return MolajoFactory::getResponder($config);
-    }
-
-    public static function User($id = null)
-    {
-        return MolajoFactory::getUser($id);
-    }
-
-    public static function DB()
-    {
-        return MolajoFactory::getDbo();
-    }
-
-    public static function Date($time = 'now', $tzOffset = null)
-    {
-        return MolajoFactory::getDate($time, $tzOffset);
-    }
-}

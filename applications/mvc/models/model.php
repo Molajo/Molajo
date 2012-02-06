@@ -137,12 +137,12 @@ class MolajoModel extends JObject
      * @return  object
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null)
+    public function __construct(Registry $config = null)
     {
-        if ($config instanceof JRegistry) {
+        if ($config instanceof Registry) {
             $this->_config = $config;
         } else {
-            $this->_config = new JRegistry;
+            $this->_config = new Registry;
         }
 
         if (array_key_exists('dbo', $this->_config)) {
@@ -390,7 +390,7 @@ class MolajoModel extends JObject
         if (key_exists('custom_fields', $row)
             && is_array($row['custom_fields'])
         ) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($row['custom_fields']);
             $row['custom_fields'] = (string)$registry;
         }
@@ -398,7 +398,7 @@ class MolajoModel extends JObject
         if (key_exists('parameters', $row)
             && is_array($row['parameters'])
         ) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($row['parameters']);
             $row['parameters'] = (string)$registry;
         }
@@ -406,7 +406,7 @@ class MolajoModel extends JObject
         if (key_exists('metadata', $row)
             && is_array($row['metadata'])
         ) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($row['metadata']);
             $row['metadata'] = (string)$registry;
         }

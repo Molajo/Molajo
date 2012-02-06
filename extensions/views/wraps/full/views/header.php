@@ -8,14 +8,14 @@
 defined('MOLAJO') or die;
 
 if ((int)Molajo::Application()->get('html5', 1) == 1
-    && ($this->mvc->get('wrap_view_name') == 'article'
-        || $this->mvc->get('wrap_view_name') == 'aside'
-        || $this->mvc->get('wrap_view_name') == 'footer'
-        || $this->mvc->get('wrap_view_name') == 'header'
-        || $this->mvc->get('wrap_view_name') == 'hgroup'
-        || $this->mvc->get('wrap_view_name') == 'nav'
-        || $this->mvc->get('wrap_view_name') == 'section') ):
-    $headerType = $this->mvc->get('wrap_view_name');
+    && ($this->task->get('wrap_view_name') == 'article'
+        || $this->task->get('wrap_view_name') == 'aside'
+        || $this->task->get('wrap_view_name') == 'footer'
+        || $this->task->get('wrap_view_name') == 'header'
+        || $this->task->get('wrap_view_name') == 'hgroup'
+        || $this->task->get('wrap_view_name') == 'nav'
+        || $this->task->get('wrap_view_name') == 'section') ):
+    $headerType = $this->task->get('wrap_view_name');
 else :
     $headerType = 'div';
 endif;

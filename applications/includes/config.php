@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  */
 if (class_exists('MolajoVersion')) {
 } else {
-    require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/version.php';
+    require_once MOLAJO_APPLICATIONS_CORE . '/includes/version.php';
 }
 
 /**

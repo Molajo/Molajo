@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Site
+ * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -15,87 +15,96 @@ defined('MOLAJO') or die;
 class MolajoSite
 {
     /**
-     * $config
-     *
-     * @var    integer
-     * @since  1.0
-     */
-    static protected $_config = null;
-
-    /**
-     * $dbinfo
+     * static instances
      *
      * @var    object
      * @since  1.0
      */
-    static protected $_siteQueryResults = null;
+    public static $instance = null;
 
     /**
-     * $base_url
+     * $_config
+     *
+     * @var    integer
+     * @since  1.0
+     */
+    protected $_config = null;
+
+    /**
+     * $_siteQueryResults
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $_siteQueryResults = null;
+
+    /**
+     * $_base_url
      *
      * @var    string
      * @since  1.0
      */
-    static public $base_url = null;
+    protected $_base_url = null;
 
     /**
-     * $applications
+     * $_applications
      *
      * Applications the site is authorized to access
      *
      * @var    array
      * @since  1.0
      */
-    static public $applications = null;
+    protected $_applications = null;
 
     /**
-     * $parameters
+     * $_parameters
      *
      * @var    array
      * @since  1.0
      */
-    static public $parameters = null;
+    protected $_parameters = null;
 
     /**
-     * $custom_fields
+     * $_custom_fields
      *
      * @var    array
      * @since  1.0
      */
-    static protected $_custom_fields = null;
+    protected $_custom_fields = null;
 
     /**
      * getInstance
      *
      * Returns the global site object, creating if not existing
      *
-     * @param   strong  $prefix Prefix for class names
+     * @param   $id site id
+     * @param   Registry $config
      *
-     * @return  site object
-     *
-     * @since  1.0
+     * @return  site  object
+     * @since   1.0
      */
-    public static function getInstance($id = null, $config = array(), $prefix = 'Molajo')
+    public static function getInstance($id = null,
+                                       Registry $config = null)
     {
-        static $instances;
-
-        if (isset($instances)) {
+        if (self::$instance) {
         } else {
-            $instances = array();
-        }
-        if (empty($instances[$id])) {
+
+            if ($config instanceof Registry) {
+            } else {
+                $config = new Registry;
+            }
 
             $info = SiteHelper::getSiteInfo($id);
             if ($info === false) {
                 return false;
             }
 
-            $instance = new MolajoSite($info);
-            $instances[$id] = &$instance;
-            self::siteConfig();
+            self::$instance = new MolajoSite (
+                $config,
+                $info
+            );
         }
-
-        return $instances[$id];
+        return self::$instance;
     }
 
     /**
@@ -103,14 +112,17 @@ class MolajoSite
      *
      * Class constructor.
      *
-     * @param  object $dbinfo
+     * @param  Registry $config
+     * @param  $_appQueryResults
      *
      * @since  1.0
      */
-    public function __construct($siteQueryResults = null)
+    public function __construct($config = null,
+                                $_appQueryResults = null)
     {
-        self::$_config = new JRegistry;
-        self::$_siteQueryResults = $siteQueryResults;
+
+        $this->_config = $config;
+        $this->_siteQueryResults = $_appQueryResults;
     }
 
     /**
@@ -124,16 +136,16 @@ class MolajoSite
      */
     public function load()
     {
-        $this->_custom_fields = new JRegistry;
-        $this->_custom_fields->loadString(self::$_siteQueryResults->custom_fields);
+        $this->_custom_fields = new Registry;
+        $this->_custom_fields->loadString($this->_siteQueryResults->custom_fields);
 
-        $this->_parameters = new JRegistry;
-        $this->_parameters->loadString(self::$_siteQueryResults->parameters);
+        $this->_parameters = new Registry;
+        $this->_parameters->loadString($this->_siteQueryResults->parameters);
 
-        $this->_metadata = new JRegistry;
-        $this->_metadata->loadString(self::$_siteQueryResults->metadata);
+        $this->_metadata = new Registry;
+        $this->_metadata->loadString($this->_siteQueryResults->metadata);
 
-        self::$base_url = self::$_siteQueryResults->base_url;
+        $this->_base_url = $this->_siteQueryResults->base_url;
 
         self::_setPaths();
     }
@@ -148,13 +160,13 @@ class MolajoSite
      */
     public function authorise($application_id)
     {
-        self::$applications = SiteHelper::getSiteApplications();
-        if (self::$applications === false) {
+        $this->_applications = SiteHelper::getSiteApplications();
+        if ($this->_applications === false) {
             return false;
         }
 
         $found = false;
-        foreach (self::$applications as $single) {
+        foreach ($this->_applications as $single) {
             if ($single->application_id == $application_id) {
                 $found = true;
             }
@@ -225,10 +237,10 @@ class MolajoSite
         $data = $siteConfig->site();
 
         if (is_array($data)) {
-            self::$_config->loadArray($data);
+            $this->_config->loadArray($data);
 
         } elseif (is_object($data)) {
-            self::$_config->loadObject($data);
+            $this->_config->loadObject($data);
         }
 
         return;
@@ -254,7 +266,7 @@ class MolajoSite
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
         } else {
-            return self::$_config->get($key, $default);
+            return $this->_config->get($key, $default);
         }
     }
 
@@ -277,7 +289,7 @@ class MolajoSite
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $value);
         } else {
-            return self::$_config->get($key, $value);
+            return $this->_config->get($key, $value);
         }
     }
 }

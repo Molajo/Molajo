@@ -14,17 +14,17 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class MolajoExtensionController
+class MolajoController
 {
     /**
-     * $mvc
+     * $task
      *
      * Request array for rendering content
      *
      * @var    object
      * @since  1.0
      */
-    public $mvc;
+    public $task;
 
     /**
      * $parameters
@@ -79,39 +79,39 @@ class MolajoExtensionController
      *
      * Constructor.
      *
-     * @param  array  mvc request
+     * @param  array  task request
      * @param  array  parameters
      *
      * @since  1.0
      */
-    public function __construct($mvc, $parameters)
+    public function __construct($task, $parameters)
     {
-        if (is_object($mvc)) {
-            $this->mvc = $mvc;
+        if (is_object($task)) {
+            $this->task = $task;
         } else {
             //error
         }
 
-        $this->parameters = new JRegistry;
+        $this->parameters = new Registry;
         $this->parameters->loadJSON($parameters);
 
         // todo: amy look at redirect
-//        $this->redirectClass = new MolajoRedirectController($this->mvc);
+//        $this->redirectClass = new MolajoRedirectController($this->task);
 
         /** load table */
-        if ($this->mvc->get('mvc_task') == 'display'
-            || $this->mvc->get('mvc_task') == 'add'
-            || $this->mvc->get('mvc_task') == 'login'
-            || $this->mvc->get('mvc_model') == 'static'
+        if ($this->task->get('task') == 'display'
+            || $this->task->get('task') == 'edit'
+            || $this->task->get('task') == 'login'
         ) {
             $this->isNew = false;
 
         } else {
+
             $this->table = $this->model->getModel();
             $this->table->reset();
-            $this->table->load((int)$this->mvc->get('mvc_id'));
+            $this->table->load((int)$this->task->get('id'));
 
-            if ($this->mvc->get('mvc_id') == 0) {
+            if ($this->task->get('id') == 0) {
                 $this->isNew = true;
                 $this->existing_status = 0;
             } else {
@@ -122,11 +122,11 @@ class MolajoExtensionController
 
         /** dispatch events
         if ($this->dispatcher
-        || $this->mvc->get('mvc_plugin_type') == ''
+        || $this->task->get('task_plugin_type') == ''
         ) {
         } else {
         $this->dispatcher = JDispatcher::getInstance();
-        MolajoPluginHelper::importPlugin($this->mvc->get('mvc_plugin_type'));
+        MolajoPluginHelper::importPlugin($this->task->get('task_plugin_type'));
         }
          */
 
@@ -167,7 +167,7 @@ class MolajoExtensionController
      */
     public function checkinItem()
     {
-        if ($this->mvc->get('mvc_id') == 0) {
+        if ($this->task->get('id') == 0) {
             return true;
         }
 
@@ -176,7 +176,7 @@ class MolajoExtensionController
             return true;
         }
 
-        $results = $this->model->checkin($this->mvc->get('mvc_id'));
+        $results = $this->model->checkin($this->task->get('id'));
 
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_CHECK_IN_FAILED'));
@@ -197,7 +197,7 @@ class MolajoExtensionController
      */
     public function verifyCheckout()
     {
-        if ($this->mvc->get('mvc_id') == 0) {
+        if ($this->task->get('id') == 0) {
             return true;
         }
 
@@ -208,7 +208,11 @@ class MolajoExtensionController
 
         if ($this->table->checked_out == Molajo::User()->get('id')) {
         } else {
-            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER') . ' ' . $this->getTask());
+            $this->redirectClass->setRedirectMessage(
+                TextHelper::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')
+                    . ' '
+                    . $this->getTask()
+            );
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -226,7 +230,7 @@ class MolajoExtensionController
      */
     public function checkoutItem()
     {
-        if ($this->mvc->get('mvc_id') == 0) {
+        if ($this->task->get('id') == 0) {
             return true;
         }
 
@@ -235,7 +239,7 @@ class MolajoExtensionController
             return true;
         }
 
-        $results = $this->model->checkout($this->mvc->get('mvc_id'));
+        $results = $this->model->checkout($this->task->get('id'));
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
@@ -260,19 +264,19 @@ class MolajoExtensionController
         }
 
         /** create **/
-        if ((int)$this->mvc->get('mvc_id') == 0) {
+        if ((int)$this->task->get('id') == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
-        if ($this->mvc->get('mvc_task') == 'delete'
+        if ($this->task->get('task') == 'delete'
             && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             return true;
         }
 
         /** create version **/
-        $versionKey = $this->model->createVersion($this->mvc->get('mvc_id'));
+        $versionKey = $this->model->createVersion($this->task->get('id'));
 
         /** error processing **/
         if ($versionKey === false) {
@@ -282,7 +286,7 @@ class MolajoExtensionController
         }
 
         /** Trigger_Event: onContentCreateVersion
-        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->mvc->get('mvc_id'), $versionKey));
+        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->task->get('id'), $versionKey));
         if (count($results) && in_array(false, $results, true)) {
         $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
         $this->redirectClass->setRedirectMessageType('error');
@@ -309,12 +313,12 @@ class MolajoExtensionController
         }
 
         /** no versions to delete for create **/
-        if ((int)$this->mvc->get('mvc_id') == 0) {
+        if ((int)$this->task->get('id') == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
-        if ($this->mvc->get('mvc_task') == 'delete'
+        if ($this->task->get('task') == 'delete'
             && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             $maintainVersions = 0;
@@ -324,17 +328,23 @@ class MolajoExtensionController
         }
 
         /** delete extra versions **/
-        $results = $this->model->maintainVersionCount($this->mvc->get('mvc_id'), $maintainVersions);
+        $results = $this->model->maintainVersionCount(
+            $this->task->get('id'),
+            $maintainVersions
+        );
 
         /** version delete failed **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(TextHelper::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' . $this->model->getError());
+            $this->redirectClass->setRedirectMessage(
+                TextHelper::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' .
+                    $this->model->getError()
+            );
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
 
         /** Trigger_Event: onContentMaintainVersions
-        return $this->dispatcher->trigger('onContentMaintainVersions', array($context, $this->mvc->get('mvc_id'), $maintainVersions));
+        return $this->dispatcher->trigger('onContentMaintainVersions', array($context, $this->task->get('id'), $maintainVersions));
          **/
     }
 
@@ -345,7 +355,7 @@ class MolajoExtensionController
      */
     public function cleanCache()
     {
-//        $cache = Molajo::getCache($this->mvc->get('extension_instance_name'));
+//        $cache = Molajo::getCache($this->task->get('extension_instance_name'));
 //        $cache->clean();
     }
 }

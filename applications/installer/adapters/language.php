@@ -110,7 +110,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
 
         // Get the language name
         // Set the extensions name
-        $name = JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd');
+        $name = FilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd');
         $this->set('name', $name);
 
         // Get the Language tag [ISO tag, eg. en-GB]
@@ -300,7 +300,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         // Get the language name
         // Set the extensions name
         $name = (string)$this->manifest->name;
-        $name = JFilterInput::getInstance()->clean($name, 'cmd');
+        $name = FilterInput::getInstance()->clean($name, 'cmd');
         $this->set('name', $name);
 
         // Get the Language tag [ISO tag, eg. en-GB]
@@ -495,7 +495,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
         $count = 0;
         foreach ($users as $user)
         {
-            $registry = new JRegistry;
+            $registry = new Registry;
             $registry->loadString($user->parameters);
             if ($registry->get($param_name) == $element) {
                 $registry->set($param_name, '');

@@ -13,7 +13,7 @@ if ((int)Molajo::Application()->get('html5', 1) == 1):
     $end = '/>'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php endif; ?>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo Molajo::Application()->getDirection(); ?>" lang="<?php echo Molajo::Application()->getLanguage()->getDefault(); ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo Molajo::Application()->get('direction'); ?>" lang="<?php echo Molajo::Application()->get('language'); ?>">
 <head>
     <base href="<?php echo MOLAJO_BASE_URL.'"'.$end; ?>
 <?php if ((int)Molajo::Application()->get('html5', 1) == 1): ?>

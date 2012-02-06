@@ -97,7 +97,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
             }
 
             if ($extension) {
-                $lang = Molajo::Application()->getLanguage();
+                $lang = Molajo::Application()->get('language');
                 $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                         : MOLAJO_BASE_FOLDER) . '/modules/' . $extension;
                 $folder = (string)$element->attributes()->folder;
@@ -134,7 +134,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
         // Set the extensions name
         $name = (string)$this->manifest->name;
-        $name = JFilterInput::getInstance()->clean($name, 'string');
+        $name = FilterInput::getInstance()->clean($name, 'string');
         $this->set('name', $name);
 
         // Get the component description

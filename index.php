@@ -21,7 +21,7 @@ define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
 /**
  *  OVERRIDE PATHS TO PRIMARY FOLDERS USING THE FOLLOWING DEFINES.PHP FILES
  *  - applications - define MOLAJO_APPLICATIONS_CORE
- *  - extensions - define MOLAJO_EXTENSIONS_CORE
+ *  - extensions - define MOLAJO_APPLICATIONS_CORE
  *  - platforms - define PLATFORMS
  *  - sites - define MOLAJO_SITES_BASE_FOLDER _and_ update the sites.xml file folderpath value
  */
@@ -146,35 +146,23 @@ if (defined('MOLAJO_PAGE_REQUEST')) {
     }
     define('MOLAJO_PAGE_REQUEST', $pageRequest);
 }
-
-/*                                              */
-/*  EXTENSIONS LAYER                            */
-/*                                              */
-if (defined('MOLAJO_EXTENSIONS_CORE')) {
-} else {
-    define('MOLAJO_EXTENSIONS_CORE', MOLAJO_BASE_FOLDER . '/extensions');
-}
-
 /*                                              */
 /*  Lazy Load Classes                           */
 /*                                              */
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/phpversion.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/defines.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/installcheck.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-joomla.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/config.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/applications.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/extensions.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-molajo.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-twig.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-mustache.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-doctrine.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-simplepie.php';
-require_once MOLAJO_EXTENSIONS_CORE . '/core/includes/platforms-sfevent.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/phpversion.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/defines.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/installcheck.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-joomla.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/config.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/applications.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/aliases.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-molajo.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-twig.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-mustache.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-doctrine.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-simplepie.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-sfevent.php';
 
-abstract class JFactory extends MolajoController
-{
-}
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**

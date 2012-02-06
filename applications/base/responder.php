@@ -1,7 +1,8 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Base
+ * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -11,7 +12,7 @@ defined('MOLAJO') or die;
  * Responder
  *
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Base
  * @since       1.0
  */
 class MolajoResponder
@@ -112,17 +113,17 @@ class MolajoResponder
      *  only creating it if it doesn't already exist.
      *
      * @static
-     * @param  JRegistry|null $config
+     * @param  Registry|null $config
      *
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance(JRegistry $config = null)
+    public static function getInstance(Registry $config = null)
     {
         if (empty(self::$instance)) {
-            if ($config instanceof JRegistry) {
+            if ($config instanceof Registry) {
             } else {
-                $config = new JRegistry;
+                $config = new Registry;
             }
             self::$instance = new MolajoResponder($config);
         }
@@ -137,9 +138,9 @@ class MolajoResponder
      * @return boolean
      * @since  1.0
      */
-    public function __construct(JRegistry $config)
+    public function __construct(Registry $config)
     {
-        if ($config instanceof JRegistry) {
+        if ($config instanceof Registry) {
             $this->_config = $config;
         }
 
@@ -595,7 +596,7 @@ class MolajoResponder
         }
 
         // Send the content-type header.
-        $this->setHeader('Content-Type', Molajo::Application()->getMimeEncoding() . '; charset=utf-8');
+        $this->setHeader('Content-Type', $this->getMimeEncoding() . '; charset=utf-8');
 
         if ($this->_response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');

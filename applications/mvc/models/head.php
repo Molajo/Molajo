@@ -44,7 +44,7 @@ class MolajoHeadModel extends MolajoModel
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
 
-        $metadata = Molajo::Application()->getMetadata();
+        $metadata = Molajo::Responder()->getMetadata();
 
         if (count($metadata) > 0) {
             $tempObject->set('title', $metadata['standard']['metadata_title']);
@@ -61,7 +61,7 @@ class MolajoHeadModel extends MolajoModel
         $this->items[] = $tempObject;
 
         /** type: links */
-        $list = Molajo::Application()->getHeadLinks();
+        $list = Molajo::Responder()->getHeadLinks();
 
         if (count($list) > 0) {
             foreach ($list as $item) {
@@ -76,7 +76,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: stylesheet_links */
-        $list = Molajo::Application()->getStyleLinks();
+        $list = Molajo::Responder()->getStyleLinks();
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $tempObject = new JObject();
@@ -91,7 +91,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: stylesheet_declarations */
-        $list = Molajo::Application()->getStyleDeclarations();
+        $list = Molajo::Responder()->getStyleDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'stylesheet_declarations');
@@ -101,7 +101,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: javascript_links */
-        $list = Molajo::Application()->getScriptLinks();
+        $list = Molajo::Responder()->getScriptLinks();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_links');
@@ -114,7 +114,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: javascript_declarations */
-        $list = Molajo::Application()->getScriptDeclarations();
+        $list = Molajo::Responder()->getScriptDeclarations();
         foreach ($list as $item) {
             $tempObject = new JObject();
             $tempObject->set('type', 'javascript_declarations');

@@ -38,7 +38,7 @@ class JRegistry
     /**
      * Constructor
      *
-     * @param   mixed  $data  The data to bind to the new JRegistry object.
+     * @param   mixed  $data  The data to bind to the new Registry object.
      *
      * @since   1.0
      */
@@ -195,7 +195,7 @@ class JRegistry
     public static function getInstance($id)
     {
         if (empty(self::$instances[$id])) {
-            self::$instances[$id] = new JRegistry;
+            self::$instances[$id] = new Registry;
         }
 
         return self::$instances[$id];

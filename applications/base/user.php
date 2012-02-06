@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  User
+ * @subpackage  Base
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -364,7 +364,7 @@ class MolajoUser extends JObject
      */
     public function _loadCustomFields($custom_fields)
     {
-        $this->custom_fields = new JRegistry;
+        $this->custom_fields = new Registry;
         $this->custom_fields->loadString($custom_fields, 'JSON');
         $this->custom_fields->toArray();
     }
@@ -410,7 +410,7 @@ class MolajoUser extends JObject
      */
     public function _loadParameters($parameters)
     {
-        $this->parameters = new JRegistry;
+        $this->parameters = new Registry;
         $this->parameters->loadString($parameters, 'JSON');
         $this->parameters->toArray();
     }
@@ -467,7 +467,7 @@ class MolajoUser extends JObject
      * @param   string   $key      The key of the user state variable.
      * @param   string   $request  The name of the variable passed in a request.
      * @param   string   $default  The default value for the variable if not found. Optional.
-     * @param   string   $type     Filter for the variable, for valid values see {@link JFilterInput::clean()}. Optional.
+     * @param   string   $type     Filter for the variable, for valid values see {@link FilterInput::clean()}. Optional.
      *
      * @return  The request user state.
      *
@@ -658,7 +658,7 @@ class save_user_crud
             }
 
             if ($my->id == $model->id) {
-                $registry = new JRegistry;
+                $registry = new Registry;
                 $registry->loadJSON($model->parameters);
                 $my->setParameters($registry);
             }

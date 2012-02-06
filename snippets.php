@@ -1,4 +1,73 @@
 <?php
+/*
+ * Application Configuration Object
+ *
+ * Site configuration (located in sites/N/configuration.php file) and
+ *  Application configuration (stored in the application table, parameter column)
+ *  are combined in the Application Controller and can be accessed anywhere in Molajo
+ */
+
+Molajo::Application()->set('sef', 1);
+
+echo Molajo::Application()->get('sef', 1);
+
+/** List all parameters and values */
+
+?>
+<?php
+/*
+ * Meta Data
+ */
+
+Molajo::Responder()->set('metadata_title', 1);
+
+echo Molajo::Responder()->get('sef', 1);
+
+/** List all parameters and values */
+
+?>
+
+<?php
+/*
+ * Errors and Messages
+ *
+ * Both errors and messages use the same application message object.
+ *
+ * define('MOLAJO_MESSAGE_TYPE_MESSAGE', 'message');
+ * define('MOLAJO_MESSAGE_TYPE_NOTICE', 'notice');
+ * define('MOLAJO_MESSAGE_TYPE_WARNING', 'warning');
+ * define('MOLAJO_MESSAGE_TYPE_ERROR', 'error');
+ */
+?>
+<?php
+/** Basic Message, for example: "Article saved." or "Title required."  */
+Molajo::Application()
+    ->setMessage(
+        TextHelper::_('Title required for article.'),
+        MOLAJO_MESSAGE_TYPE_WARNING
+    );
+
+Molajo::Application()
+    ->setMessage(
+        $message = TextHelper::_('ERROR_DATABASE_QUERY'),
+        $type = MOLAJO_MESSAGE_TYPE_ERROR,
+        $code = null,
+        $debug_location = 'AssetHelper::get',
+        $debug_object = $query->__toString()
+    );
+
+?>
+
+<?php
+/**
+ *  User Object
+ */
+echo Molajo::User()->view_groups;
+
+?>
+
+
+<?php
 /**
  *  Include Renderer Statements
  *
@@ -23,61 +92,6 @@
 <include:defer />
 
 <?php
-/*
- * Application Configuration Object
- *
- * Site configuration (located in sites/N/configuration.php file) and
- *  Application configuration (stored in the application table, parameter column)
- *  are combined in the Application Controller and can be accessed anywhere in Molajo
- */
-
-Molajo::Application()->set('sef', 1);
-
-echo Molajo::Application()->get('sef', 1);
-
-/** List all parameters and values */
-
-?>
-
-<?php
-/**
- *  User Object
- */
-Molajo::User()->view_groups;
-
-?>
-<?php
-/*
- * Errors and Messages
- *
- * Both errors and messages use the same application message object.
- *
- * define('MOLAJO_MESSAGE_TYPE_MESSAGE', 'message');
- * define('MOLAJO_MESSAGE_TYPE_NOTICE', 'notice');
- * define('MOLAJO_MESSAGE_TYPE_WARNING', 'warning');
- * define('MOLAJO_MESSAGE_TYPE_ERROR', 'error');
- */
-?>
-<?php
-/** Basic Message, for example: "Article saved." or "Title required."  */
-Molajo::Application()
-    ->setMessage(
-        TextHelper::_('Title required for article.'),
-        MOLAJO_MESSAGE_TYPE_WARNING
-);
-
-Molajo::Application()
-    ->setMessage(
-        $message = TextHelper::_('ERROR_DATABASE_QUERY'),
-        $type = MOLAJO_MESSAGE_TYPE_ERROR,
-        $code = null,
-        $debug_location = 'AssetHelper::get',
-        $debug_object = $query->__toString()
-);
-
-?>
-
-<?php
 /**
  *  Working with Media
  */
@@ -87,3 +101,15 @@ $doc->addScriptDeclaration('
 google.load("jquery", "1.6.2", {uncompressed: true});
 google.load("jqueryui", "1.8.15", {uncompressed:true});
 ');
+
+<?php
+/**
+ *  Security: output rendering
+ */
+echo Molajo::Display()->safeHTML($this->row->content_text);
+
+echo Molajo::Display()->safeText($this->row->title);
+
+echo Molajo::Display()->safeURL($this->row->url);
+
+echo Molajo::Display()->safeInteger($this->row->version);
