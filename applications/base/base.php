@@ -267,7 +267,7 @@ class MolajoBase
             $instances = array();
         }
 
-        $language = self::getApplication()->get('languageObject');
+        $language = self::getApplication()->get('languageObject', null, 'languageObject');
         $locale = $language->getTag();
 
         if (!isset($classname) || $locale != $mainLocale) {

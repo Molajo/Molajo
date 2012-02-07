@@ -34,14 +34,6 @@ class MolajoApplication
     protected $_config = null;
 
     /**
-     * Application static database results
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_appQueryResults = null;
-
-    /**
      * Application custom fields
      *
      * @var    object
@@ -142,25 +134,25 @@ class MolajoApplication
             } else {
                 $config = new Registry;
             }
-            $_appQueryResults = ApplicationHelper::getApplicationInfo($id);
-            if ($_appQueryResults === false) {
+            $results = ApplicationHelper::getApplicationInfo($id);
+            if ($results === false) {
                 return false;
             }
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
                 define('MOLAJO_APPLICATION_PATH',
-                    MOLAJO_APPLICATIONS_CORE . '/applications/' . $_appQueryResults->path
+                    MOLAJO_APPLICATIONS_CORE . '/applications/' . $results->path
                 );
             }
             if (defined('MOLAJO_APPLICATION_ID')) {
             } else {
-                define('MOLAJO_APPLICATION_ID', $_appQueryResults->id);
+                define('MOLAJO_APPLICATION_ID', $results->id);
             }
 
             self::$instance = new MolajoApplication(
                 $config,
                 $input,
-                $_appQueryResults
+                $results
             );
         }
 
@@ -172,14 +164,14 @@ class MolajoApplication
      *
      * @param  mixed   $input
      * @param  mixed   $config
-     * @param  object  $_appQueryResults
+     * @param  object  $results
      *
      * @return  null
      * @since   1.0
      */
     public function __construct(Registry $config = null,
                                 Input $input = null,
-                                $_appQueryResults = null)
+                                $results = null)
     {
         if ($input instanceof Input) {
             $this->_input = $input;
@@ -190,12 +182,7 @@ class MolajoApplication
         } else {
             $this->_config = new Registry();
         }
-        /** Database results from application helpers */
-        if ($_appQueryResults == null) {
-        } else {
-            $this->_appQueryResults = $_appQueryResults;
-            $this->loadConfig();
-        }
+        $this->loadConfig($results);
 
         /** now */
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
@@ -237,7 +224,7 @@ class MolajoApplication
         }
 
         /** initialise application */
-        $this->set('language', 'en-GB', 'languageObject');
+        $this->set('languageObject', 'en-GB', 'languageObject');
         $this->loadSession();
         $this->loadDispatcher();
 
@@ -286,15 +273,19 @@ class MolajoApplication
      * @return  null
      * @since   1.0
      */
-    public function loadConfig()
+    public function loadConfig($results)
     {
+        if ($results == null) {
+            return;
+        }
+
         $this->_metadata = new Registry;
-        $this->_metadata->loadString($this->_appQueryResults->metadata);
+        $this->_metadata->loadString($results->metadata);
 
         $this->_custom_fields = new Registry;
-        $this->_custom_fields->loadString($this->_appQueryResults->custom_fields);
+        $this->_custom_fields->loadString($results->custom_fields);
 
-        $cc = new MolajoConfigurationHelper($this->_appQueryResults->parameters);
+        $cc = new MolajoConfigurationHelper($results->parameters);
         $this->_config = $cc->getConfig();
 
         return;
@@ -321,7 +312,7 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
 
-        } else if ($key == 'languageObject') {
+        } else if ($type == 'languageObject') {
             return $this->_language;
 
         } else {
@@ -349,10 +340,11 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->set($key, $value);
 
-        } else if ($key == 'languageObject') {
-            $locale = $this->get('language', 'en-GB');
+        } else if ($key == 'languageObject' ||
+                        $type == 'languageObject')
+        {
+            $locale = $this->get('language', 'en-GB', 'config');
             $this->_language = MolajoLanguage::getInstance($locale);
-            return $this->_language;
 
         } else {
             return $this->_config->set($key, $value);

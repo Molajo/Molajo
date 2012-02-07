@@ -248,6 +248,7 @@ class MolajoUser
      */
     protected function _load($id)
     {
+        /** session */
         /** retrieve data for user */
         $model = $this->_getModel();
         $results = $model->load($id);
