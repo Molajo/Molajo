@@ -244,9 +244,9 @@ class MolajoDisplayController extends MolajoController
     static public function safeURL($url)
     {
         if (Molajo::Application()->get('unicode_slugs') == 1) {
-            return JFilterOutput::stringURLUnicodeSlug($url);
+            return FilterOutput::stringURLUnicodeSlug($url);
         } else {
-            return JFilterOutput::stringURLSafe($url);
+            return FilterOutput::stringURLSafe($url);
         }
     }
 }

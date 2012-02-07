@@ -237,7 +237,7 @@ class MolajoApplication
         }
 
         /** initialise application */
-        $this->loadLanguage();
+        $this->set('language', 'en-GB', 'languageObject');
         $this->loadSession();
         $this->loadDispatcher();
 
@@ -303,13 +303,13 @@ class MolajoApplication
     /**
      * get
      *
-     * Returns a property of the Application object
-     * or the default value if the property is not set.
+     * Retrieves values, or establishes the value with a default, if not available
      *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
+     * @param  string  $key      The name of the property.
+     * @param  string  $default  The default value (optional) if none is set.
+     * @param  string  $type     custom, metadata, languageObject, config
      *
-     * @return  mixed   The value of the configuration.
+     * @return  mixed
      *
      * @since   1.0
      */
@@ -332,13 +332,13 @@ class MolajoApplication
     /**
      * set
      *
-     * Modifies a property of the Application object, creating it if it does not already exist.
+     * Modifies a property, creating it and establishing a default if not existing
      *
      * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The value of the property to set (optional).
+     * @param   mixed   $value  The default value to use if not set (optional).
+     * @param  string  $type     custom, metadata, languageObject, config
      *
-     * @return  mixed   Previous value of the property
-     *
+     * @return  mixed
      * @since   1.0
      */
     public function set($key, $value = null, $type = 'config')
@@ -348,6 +348,11 @@ class MolajoApplication
 
         } else if ($type == 'metadata') {
             return $this->_metadata->set($key, $value);
+
+        } else if ($key == 'languageObject') {
+            $locale = $this->get('language', 'en-GB');
+            $this->_language = MolajoLanguage::getInstance($locale);
+            return $this->_language;
 
         } else {
             return $this->_config->set($key, $value);
@@ -427,20 +432,6 @@ class MolajoApplication
     public function getSession()
     {
         return $this->_session;
-    }
-
-    /**
-     * loadLanguage
-     *
-     * Load the core language files, set defaults, etc
-     *
-     * @return  Language object
-     * @since   1.0
-     */
-    public function loadLanguage()
-    {
-        $locale = $this->get('language', 'en-GB');
-        $this->_language = MolajoLanguage::getInstance($locale);
     }
 
     /**

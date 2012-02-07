@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  User
  * @since       1.1
  */
-class MolajoUser extends JObject
+class MolajoUser
 {
     /**
      * $id

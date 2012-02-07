@@ -82,9 +82,6 @@ abstract class JFactory extends MolajoBase
 {
 }
 class Registry extends JRegistry {}
-class RegistryFormatINI extends JRegistryFormatINI {}
-class RegistryFormatJSON extends JRegistryFormatJSON {}
-class RegistryFormatPHP extends JRegistryFormatPHP {}
-class RegistryFormatXML extends JRegistryFormatXML {}
 class Input extends JInput {}
 class FilterInput extends JFilterInput {}
+class FilterOutput extends JFilterOutput {}

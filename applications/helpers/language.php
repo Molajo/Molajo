@@ -173,7 +173,7 @@ class MolajoLanguageHelper
                 foreach ($knownLangs as $metadata)
                 {
                     // take off 3 letters iso code languages as they can't match browsers' languages and default them to en
-                    $languages[$key][] = new JObject(array('lang_code' => $metadata['tag']));
+                    $languages[$key][] = new Registry(array('lang_code' => $metadata['tag']));
                 }
             } else {
                 $languages['default'] = ExtensionHelper::get(2);
