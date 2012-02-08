@@ -29,7 +29,7 @@ abstract class MolajoAssetHelper
      */
     public static function get($asset_id = 0, $query_request = null)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->nameQuote('id') . ' as asset_id');
@@ -52,7 +52,7 @@ abstract class MolajoAssetHelper
             ' = b.' . $db->nameQuote('id'));
 
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->view_groups) . ')'
+                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
         );
 
         if ((int)$asset_id == 0) {
@@ -75,7 +75,7 @@ abstract class MolajoAssetHelper
         } else {
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_DATABASE_QUERY'),
+                $message = TextService::_('ERROR_DATABASE_QUERY'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::get',
@@ -229,7 +229,7 @@ abstract class MolajoAssetHelper
      */
     public static function getID($asset_type_id, $source_id)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->namequote('id') . ' as asset_id');
@@ -239,7 +239,7 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->namequote('source_id') .
             ' = ' . (int)$source_id);
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->view_groups) . ')'
+                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
         );
 
         $db->setQuery($query->__toString());
@@ -248,7 +248,7 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+                $message = TextService::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::getID',
@@ -272,7 +272,7 @@ abstract class MolajoAssetHelper
      */
     public static function getURL($asset_id)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
 
         /** home */
@@ -290,7 +290,7 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->namequote('id') .
             ' = ' . (int)$asset_id);
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->view_groups) . ')'
+                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
         );
 
         $db->setQuery($query->__toString());
@@ -299,7 +299,7 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+                $message = TextService::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::getURL',

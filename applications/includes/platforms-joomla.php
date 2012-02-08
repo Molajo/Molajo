@@ -17,7 +17,7 @@ if (defined('JPATH_PLATFORM')) {
 
 require_once JPATH_PLATFORM . '/platform.php';
 require_once JPATH_PLATFORM . '/loader.php';
-require_once MOLAJO_APPLICATIONS_CORE . '/helpers/file.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/services/file.php';
 
 if (defined('_JEXEC')) {
 } else {
@@ -76,19 +76,19 @@ if (defined('JPATH_COMPONENT')) {
 /**
  * File Subsystem
  */
-$fileHelper = new MolajoFileHelper();
+$fileHelper = new MolajoFileService();
 
 require_once JOOMLA_LIBRARY . '/registry/registry.php';
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/base.php', 'MolajoBase');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/configuration.php', 'MolajoConfigurationHelper');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/configuration.php', 'MolajoConfigurationService');
 $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
-require_once MOLAJO_APPLICATIONS_CORE . '/helpers/text.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/services/text.php';
 if (class_exists('JText')) {
 } else {
-    class JText extends MolajoTextHelper
+    class JText extends MolajoTextService
     {
     }
 }
@@ -148,7 +148,6 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/error/profiler.php', 'JProfiler
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'helper.php') {
-        $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/' . $file, 'JFilesystemHelper');
     } elseif ($file == 'path.php' || $file == 'file.php' || $file == 'folder.php') {
     } elseif ($file == 'stream.php') {
     } else {

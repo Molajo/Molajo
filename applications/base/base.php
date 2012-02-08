@@ -47,6 +47,14 @@ class MolajoBase
     public static $parser = null;
 
     /**
+     * Alias Molajo::Renderer
+     *
+     * @var    object MolajoRenderer
+     * @since  1.0
+     */
+    public static $renderer = null;
+
+    /**
      * Alias Molajo::Responder
      *
      * @var    object MolajoResponder
@@ -55,16 +63,12 @@ class MolajoBase
     public static $responder = null;
 
     /**
-     * @var    object JDatabase
+     * Alias Molajo::User
+     *
+     * @var    object MolajoUser
      * @since  1.0
      */
-    public static $db = null;
-
-    /**
-     * @var    Dates
-     * @since  1.0
-     */
-    public static $dates = array();
+    public static $user = null;
 
     /**
      * getSite
@@ -80,7 +84,7 @@ class MolajoBase
      * @since   1.0
      */
     public static function getSite($id = null,
-                                   $config = null)
+                                   Registry $config = null)
     {
         if (self::$site) {
         } else {
@@ -102,12 +106,12 @@ class MolajoBase
      * @param   array  $config
      * @param   string $prefix
      *
-     * @return  null|Site
+     * @return  Site
      * @since   1.0
      */
     public static function getApplication($id = null,
-                                          $config = null,
-                                          $input = null)
+                                          Registry $config = null,
+                                          Input $input = null)
     {
         if (self::$application) {
         } else {
@@ -124,7 +128,7 @@ class MolajoBase
     /**
      * getRequest
      *
-     * Get the Request Controller Object
+     * MolajoRequest, alias Molajo::Request
      *
      * @static
      * @param null $request
@@ -153,17 +157,17 @@ class MolajoBase
     /**
      * getParser
      *
-     * Get the Request Controller Object
+     * MolajoParser, alias Molajo::Parser
      *
      * @static
-     * @param Registry|null $config
-     * @param string $override_request_url
-     * @param string $override_asset_id
+     * @param   Registry|null $config
+     * @param   string $override_request_url
+     * @param   string $override_asset_id
      *
-     * @return Request|null
-     * @since 1.0
+     * @return  Request|null
+     * @since   1.0
      */
-    public static function getParser($config = null)
+    public static function getParser(Registry $config = null)
     {
         if (self::$parser) {
         } else {
@@ -176,17 +180,42 @@ class MolajoBase
     }
 
     /**
-     * getResponder
+     * getRender
      *
-     * Get the Responder Controller Object
+     * MolajoRender, alias Molajo::Renderer
      *
      * @static
-     * @param Registry|null $config
+     * @param   Registry|null $config
+     * @param   string $override_request_url
+     * @param   string $override_asset_id
      *
-     * @return Responder|null
-     * @since 1.0
+     * @return  Request|null
+     * @since   1.0
      */
-    public static function getResponder($config = null)
+    public static function getRenderer(Registry $config = null)
+    {
+        if (self::$renderer) {
+        } else {
+            self::$renderer =
+                MolajoRenderer::getInstance(
+                    $config
+                );
+        }
+        return self::$renderer;
+    }
+
+    /**
+     * getResponder
+     *
+     * MolajoResponder, alias Molajo::Responder
+     *
+     * @static
+     * @param   Registry|null $config
+     *
+     * @return  Responder|null
+     * @since   1.0
+     */
+    public static function getResponder(Registry $config = null)
     {
         if (self::$responder) {
         } else {
@@ -199,95 +228,27 @@ class MolajoBase
     }
 
     /**
-     * Get an user object.
+     * getUser
      *
-     * Returns the global User object, only creating it if it doesn't already exist.
+     * MolajoUser, alias Molajo::User
      *
      * @static
-     * @param null $id
-     * @return object|User
+     * @param   Registry|null $config
+     *
+     * @return  User|null
+     * @since   1.0
      */
     public static function getUser($id = null)
     {
         $id = 42;
-        //        if (is_null($id)) {
-        //            $instance = self::getSession()->get('user');
-        //            if ($instance instanceof MolajoUser) {
-        //            } else {
-        //                $instance = MolajoUser::getInstance();
-        //            }
-        //        } else {
-        //            $current = self::getSession()->get('user');
-        //            var_dump($current);
-        //            if ($current->id = $idxxxxxx) {
-        //                $instance = self::getSession()->get('user');
-        //            } else {
-        $instance = MolajoUser::getInstance($id);
-        //            }
-        //        }
-        //        echo '<pre>';var_dump($instance);'</pre>';
-        return $instance;
-    }
-
-    /**
-     * getDbo
-     *
-     * Get a database object
-     *
-     * @return Database object
-     * @since 1.0
-     */
-    public static function getDbo()
-    {
-        if (self::$db) {
+        if (self::$user) {
         } else {
-            self::$db = ConfigurationHelper::getDB();
+            self::$user =
+                MolajoUser::getInstance(
+                    $id
+                );
         }
-        return self::$db;
-    }
-
-    /**
-     * getDate
-     *
-     * Return the Date object
-     *
-     * @param   mixed  $time     The initial time for the JDate object
-     * @param   mixed  $tzOffset The timezone offset.
-     *
-     * @return JDate object
-     * @since   1.0
-     */
-    public static function getDate($time = 'now', $tzOffset = null)
-    {
-        static $instances;
-        static $classname;
-        static $mainLocale;
-
-        if (!isset($instances)) {
-            $instances = array();
-        }
-
-        $language = self::getApplication()->get('languageObject', null, 'languageObject');
-        $locale = $language->getTag();
-
-        if (!isset($classname) || $locale != $mainLocale) {
-            $mainLocale = $locale;
-
-            if ($mainLocale !== false) {
-                $classname = str_replace('-', '_', $mainLocale) . 'Date';
-
-                if (class_exists($classname)) {
-                } else {
-                    $classname = 'JDate';
-                }
-            } else {
-                $classname = 'JDate';
-            }
-        }
-        $key = $time . '-' . $tzOffset;
-
-        $tmp = new $classname($time, $tzOffset);
-        return $tmp;
+        return self::$user;
     }
 }
 

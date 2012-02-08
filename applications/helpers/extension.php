@@ -30,7 +30,7 @@ abstract class MolajoExtensionHelper
      */
     public static function get($asset_type_id, $extension = null)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
         $date = Molajo::Date();
         $now = $date->toMySQL();
@@ -84,7 +84,7 @@ abstract class MolajoExtensionHelper
         );
 
         /** Assets Join and View Access Check */
-        MolajoAccess::setQueryViewAccess(
+        MolajoAccessService::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
@@ -153,7 +153,7 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceID($asset_type_id, $title)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
         $date = Molajo::Date();
         $now = $date->toMySQL();
@@ -175,7 +175,7 @@ abstract class MolajoExtensionHelper
             $db->Quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        MolajoAccess::setQueryViewAccess(
+        MolajoAccessService::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
@@ -208,7 +208,7 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceTitle($extension_instance_id)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
         $date = Molajo::Date();
         $now = $date->toMySQL();
@@ -229,7 +229,7 @@ abstract class MolajoExtensionHelper
             $db->Quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        MolajoAccess::setQueryViewAccess(
+        MolajoAccessService::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
@@ -263,7 +263,8 @@ abstract class MolajoExtensionHelper
         } else {
             return false;
         }
-        return Molajo::Application()->get('languageObject')
+
+        return Molajo::Language()
             ->load ($path,
                     Molajo::Application()->get('language'),
                     false,

@@ -144,15 +144,8 @@ class MolajoResponder
             $this->_config = $config;
         }
 
-        $this->_response = new stdClass;
-        $this->_response->cachable = false;
-        $this->_response->headers = array();
-        $this->_response->body = array();
-        $this->_response->last_modified = null;
-
         return true;
     }
-
 
     /**
      * setMetadata

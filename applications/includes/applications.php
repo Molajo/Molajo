@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new MolajoFileHelper();
+$fileHelper = new MolajoFileService();
 
 /**
  *  Base
@@ -28,20 +28,30 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/helpers', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'configuration.php' || $file == 'text.php') {
-    } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
-    }
+    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
 }
 
 /**
  *  Renderers
  */
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/renderers', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/base/renderers', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'renderer.php') {
     } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
+        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
+    }
+}
+
+/**
+ *  Services
+ */
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/services.php', 'MolajoServices');
+
+$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/services', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'services.php' || $file == 'text.php') {
+    } else {
+        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
     }
 }
 

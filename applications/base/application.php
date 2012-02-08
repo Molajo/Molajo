@@ -2,7 +2,6 @@
 /**
  * @package     Molajo
  * @subpackage  Base
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -34,30 +33,6 @@ class MolajoApplication
     protected $_config = null;
 
     /**
-     * Application custom fields
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_custom_fields = null;
-
-    /**
-     * Application Metadata
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $_metadata = array();
-
-    /**
-     * Application Parameters
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $_parameters = array();
-
-    /**
      * Input Object
      *
      * @var    object
@@ -66,94 +41,32 @@ class MolajoApplication
     protected $_input;
 
     /**
-     * Language
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_language;
-
-    /**
-     * Language direction
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $_direction = 'ltr';
-
-    /**
-     * Dispatcher
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_dispatcher;
-
-    /**
-     * Session
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_session;
-
-    /**
-     * Messages
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $_messages = array();
-
-    /**
      * getInstance
      *
      * @static
      * @param  null $id
-     * @param  Input|null $input
      * @param  Registry|null $config
+     * @param  Input|null $input
      *
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance($id = null,
-                                       Registry $config = null,
+    public static function getInstance(Registry $config = null,
                                        Input $input = null)
     {
-        if ($id == null) {
-            $id = MOLAJO_APPLICATION;
-        }
-
         if (empty(self::$instance)) {
 
             if ($input instanceof Input) {
             } else {
                 $input = new Input;
             }
+
             if ($config instanceof Registry) {
             } else {
                 $config = new Registry;
             }
-            $results = ApplicationHelper::getApplicationInfo($id);
-            if ($results === false) {
-                return false;
-            }
-            if (defined('MOLAJO_APPLICATION_PATH')) {
-            } else {
-                define('MOLAJO_APPLICATION_PATH',
-                    MOLAJO_APPLICATIONS_CORE . '/applications/' . $results->path
-                );
-            }
-            if (defined('MOLAJO_APPLICATION_ID')) {
-            } else {
-                define('MOLAJO_APPLICATION_ID', $results->id);
-            }
 
-            self::$instance = new MolajoApplication(
-                $config,
-                $input,
-                $results
-            );
+            self::$instance = new MolajoApplication($config, $input);
         }
 
         return self::$instance;
@@ -162,31 +75,24 @@ class MolajoApplication
     /**
      * Class constructor.
      *
-     * @param  mixed   $input
      * @param  mixed   $config
-     * @param  object  $results
+     * @param  mixed   $input
      *
      * @return  null
      * @since   1.0
      */
     public function __construct(Registry $config = null,
-                                Input $input = null,
-                                $results = null)
+                                Input $input = null)
     {
-        if ($input instanceof Input) {
-            $this->_input = $input;
-        }
-
         if ($config instanceof Registry) {
             $this->_config = $config;
         } else {
-            $this->_config = new Registry();
+            //error
         }
-        $this->loadConfig($results);
 
-        /** now */
-        $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
-        $this->set('execution.timestamp', time());
+        if ($input instanceof Input) {
+            $this->_input = $input;
+        }
 
         /** ssl check for application */
         if ($this->get('force_ssl') >= 1) {
@@ -207,14 +113,14 @@ class MolajoApplication
     /**
      * load
      *
-     * Load the application.
+     * Controls Page Rendering and Task Logic Flow
      *
      * @return  mixed
      * @since   1.0
      */
     public function load()
     {
-        /** Site authorisation */
+        /** is site authorised? */
         $sc = new MolajoSite ();
         $authorise = $sc->authorise(MOLAJO_APPLICATION_ID);
         if ($authorise === false) {
@@ -223,10 +129,21 @@ class MolajoApplication
             die;
         }
 
-        /** initialise application */
-        $this->set('languageObject', 'en-GB', 'languageObject');
-        $this->loadSession();
-        $this->loadDispatcher();
+        /** Application Services */
+        //        $services = Services::getInstance();
+        $language = Services::connect('language', array('language', 'en-GB'));
+        //        $results = Services::connect('language', array('language', 'en-GB'));
+
+
+        var_dump($language);
+        die;
+        Molajo::Dispatcher();
+
+        Molajo::Language();
+
+        Molajo::Session();
+
+        Molajo::User();
 
         /** responder: instantiate class to listen for output */
         $res = Molajo::Responder();
@@ -254,39 +171,17 @@ class MolajoApplication
         ) {
             Molajo::Parser();
 
-            /** action task: insert, update, or delete */
+            /**
+             * Action Task
+             */
+
         } else {
+
             //$this->_processTask();
         }
 
         /** responder: process rendered output */
         $res->respond();
-
-        return;
-    }
-
-    /**
-     * setConfig
-     *
-     * Creates the Application configuration object.
-     *
-     * @return  null
-     * @since   1.0
-     */
-    public function loadConfig($results)
-    {
-        if ($results == null) {
-            return;
-        }
-
-        $this->_metadata = new Registry;
-        $this->_metadata->loadString($results->metadata);
-
-        $this->_custom_fields = new Registry;
-        $this->_custom_fields->loadString($results->custom_fields);
-
-        $cc = new MolajoConfigurationHelper($results->parameters);
-        $this->_config = $cc->getConfig();
 
         return;
     }
@@ -312,8 +207,11 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
 
-        } else if ($type == 'languageObject') {
-            return $this->_language;
+        } else if ($key == 'logging') {
+            return $this->_input;
+
+        } else if ($key == 'input') {
+            return $this->_input;
 
         } else {
             return $this->_config->get($key, $default);
@@ -325,9 +223,9 @@ class MolajoApplication
      *
      * Modifies a property, creating it and establishing a default if not existing
      *
-     * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The default value to use if not set (optional).
-     * @param  string  $type     custom, metadata, languageObject, config
+     * @param  string  $key    The name of the property.
+     * @param  mixed   $value  The default value to use if not set (optional).
+     * @param  string  $type   Custom, metadata, config
      *
      * @return  mixed
      * @since   1.0
@@ -340,28 +238,12 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->set($key, $value);
 
-        } else if ($key == 'languageObject' ||
-                        $type == 'languageObject')
-        {
-            $locale = $this->get('language', 'en-GB', 'config');
-            $this->_language = MolajoLanguage::getInstance($locale);
+        } else if ($type == 'logging') {
+            return $this->_metadata->set($key, $value);
 
         } else {
             return $this->_config->set($key, $value);
         }
-    }
-
-    /**
-     * getInput
-     *
-     * Returns Application Input object
-     *
-     * @return  object
-     * @since   1.0
-     */
-    public function getInput()
-    {
-        return $this->_input;
     }
 
     /**
@@ -426,147 +308,6 @@ class MolajoApplication
         return $this->_session;
     }
 
-    /**
-     * loadDispatcher
-     *
-     * Method to create an event _dispatcher for the Web application.  The logic and options for creating
-     * this object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create event _dispatchers based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    protected function loadDispatcher()
-    {
-        //        $this->_dispatcher = JDispatcher::getInstance();
-    }
-
-    /**
-     * registerEvent
-     *
-     * Registers a handler to a particular event group.
-     *
-     * @param   string    $event    The event name.
-     * @param   callback  $handler  The handler, a function or an instance of a event object.
-     *
-     * @return  Application  Instance of $this to allow chaining.
-     *
-     * @since   1.0
-     */
-    public function registerEvent($event, $handler)
-    {
-        //        if ($this->_dispatcher instanceof JDispatcher) {
-        //            $this->_dispatcher->register($event, $handler);
-        //        }
-
-        return $this;
-    }
-
-    /**
-     * triggerEvent
-     *
-     * Calls all handlers associated with an event group.
-     *
-     * @param   string  $event  The event name.
-     * @param   array   $args   An array of arguments (optional).
-     *
-     * @return  array   An array of results from each function call, or null if no _dispatcher is defined.
-     *
-     * @since   1.0
-     */
-    public function triggerEvent($event, array $args = null)
-    {
-        //        if ($this->_dispatcher instanceof JDispatcher) {
-        //            return $this->_dispatcher->trigger($event, $args);
-        //        }
-
-        return null;
-    }
-
-    /**
-     * setMessage
-     *
-     * Set the system message.
-     *
-     * @param   string  $message
-     * @param   string  $type      message, notice, warning, and error
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public static function setMessage($message = null,
-                                      $type = 'message',
-                                      $code = null,
-                                      $debug_location = null,
-                                      $debug_object = null)
-    {
-        if ($message == null
-            && $code == null
-        ) {
-            return false;
-        }
-
-        $type = strtolower($type);
-        if ($type == MOLAJO_MESSAGE_TYPE_NOTICE
-            || $type == MOLAJO_MESSAGE_TYPE_WARNING
-            || $type == MOLAJO_MESSAGE_TYPE_ERROR
-        ) {
-        } else {
-            $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
-        }
-
-        /** load _session messages into application messages array */
-        $this->_sessionMessages();
-
-        /** add new message */
-        $count = count($this->_messages);
-
-        $this->_messages[$count]['message'] = $message;
-        $this->_messages[$count]['type'] = $type;
-        $this->_messages[$count]['code'] = $code;
-        $this->_messages[$count]['debug_location'] = $debug_location;
-        $this->_messages[$count]['debug_object'] = $debug_object;
-
-        return true;
-    }
-
-    /**
-     * getMessages
-     *
-     * Get system messages
-     *
-     * @return  array  System messages
-     * @since   1.0
-     */
-    public function getMessages()
-    {
-        $this->_sessionMessages();
-        return $this->_messages;
-    }
-
-    /**
-     *  _sessionMessages
-     *
-     * Retrieve messages in _session and load into Application messages array
-     *
-     * @return  void
-     * @since   1.0
-     */
-    private function _sessionMessages()
-    {
-        $_session = $this->getSession();
-        $_sessionMessages = $_session->get('application.messages');
-
-        if (count($_sessionMessages) > 0) {
-            $count = count($this->_messages);
-            foreach ($_sessionMessages as $_sessionMessage) {
-                $this->_messages[$count] = $_sessionMessage;
-                $count++;
-            }
-            $_session->set('application.messages', null);
-        }
-    }
 
     /**
      * getHash

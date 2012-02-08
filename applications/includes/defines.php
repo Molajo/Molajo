@@ -61,19 +61,19 @@ if (defined('PLATFORM_SYMFONY_EVENT')) {
  */
 if (defined('MOLAJO_APPLICATIONS_MVC')) {
 } else {
-    define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS_CORE . '/mvc');
+    define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS_CORE . '/base/mvc');
 }
 if (defined('MOLAJO_APPLICATIONS_MVC_URL')) {
 } else {
-    define('MOLAJO_APPLICATIONS_MVC_URL', MOLAJO_BASE_URL . 'applications/mvc');
+    define('MOLAJO_APPLICATIONS_MVC_URL', MOLAJO_BASE_URL . 'applications/base/mvc');
 }
 if (defined('MOLAJO_DOCTRINE_MODELS')) {
 } else {
-    define('MOLAJO_DOCTRINE_MODELS', MOLAJO_APPLICATIONS_MVC . '/models/entities');
+    define('MOLAJO_DOCTRINE_MODELS', MOLAJO_APPLICATIONS_MVC . '/base/models/entities');
 }
 if (defined('MOLAJO_DOCTRINE_PROXIES')) {
 } else {
-    define('MOLAJO_DOCTRINE_PROXIES', MOLAJO_APPLICATIONS_MVC . '/models/proxies');
+    define('MOLAJO_DOCTRINE_PROXIES', MOLAJO_APPLICATIONS_MVC . '/base/models/proxies');
 }
 
 /**

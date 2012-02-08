@@ -44,10 +44,10 @@ class PagefooterModuleModel extends MolajoModel
         $tempObject = new JObject();
 
         /** footer line 1 */
-        if (JString::strpos(TextHelper :: _('FOOTER_LINE1'), '%date%')) {
-            $line1 = str_replace('%date%', Molajo::Date()->format('Y'), TextHelper :: _('FOOTER_LINE1'));
+        if (JString::strpos(TextServices :: _('FOOTER_LINE1'), '%date%')) {
+            $line1 = str_replace('%date%', Molajo::Date()->format('Y'), TextServices :: _('FOOTER_LINE1'));
         } else {
-            $line1 = TextHelper :: _('FOOTER_LINE1');
+            $line1 = TextServices :: _('FOOTER_LINE1');
         }
         if (JString::strpos($line1, '%site_name%')) {
             $line1 = str_replace('%site_name%', Molajo::Application()->get('site_name', 'Molajo'), $line1);
@@ -58,7 +58,7 @@ class PagefooterModuleModel extends MolajoModel
         $link = $this->parameters->def('link', 'http://molajo.org');
         $linked_text = $this->parameters->def('linked_text', 'Molajo&#153;');
         $remaining_text = $this->parameters->def('remaining_text', ' is free software.');
-        $version = $this->parameters->def('version', TextHelper::_(MOLAJOVERSION));
+        $version = $this->parameters->def('version', TextServices::_(MOLAJOVERSION));
 
         $tempObject->set('link', $link);
         $tempObject->set('linked_text', $linked_text);

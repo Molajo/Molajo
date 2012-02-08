@@ -211,7 +211,7 @@ class JPath
         jimport('joomla.filesystem.file');
         jimport('joomla.user.helper');
 
-        $tmp = md5(JUserHelper::genRandomPassword(16));
+        $tmp = md5(JUserServices::genRandomPassword(16));
         $ssp = ini_get('session.save_path');
         $jtp = JPATH_SITE . '/tmp';
 

@@ -47,7 +47,7 @@ class MolajoSiteHelper
 
             $obj = new stdClass();
 
-            $db = Molajo::DB();
+            $db = Molajo::Jdb();
 
             $query = $db->getQuery(true);
 
@@ -103,7 +103,7 @@ class MolajoSiteHelper
      */
     public static function getSiteApplications($id = null)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
 
         if ($id == null) {

@@ -19,6 +19,7 @@ class MolajoApplicationHelper
     /**
      * @var null $_applications
      *
+     * @static
      * @since 1.0
      */
     protected static $_applications = null;
@@ -33,7 +34,7 @@ class MolajoApplicationHelper
      * @return  boolean
      * @since   1.0
      */
-    public static function getApplicationInfo($name)
+    public static function getApplicationInfo()
     {
         $id = null;
         if (self::$_applications === null) {
@@ -55,7 +56,7 @@ class MolajoApplicationHelper
 
             } else {
 
-                $db = Molajo::DB();
+                $db = Molajo::Jdb();
 
                 $query = $db->getQuery(true);
 
@@ -107,3 +108,11 @@ class MolajoApplicationHelper
         return null;
     }
 }
+
+/**
+
+    if (defined('MOLAJO_APPLICATION_ID')) {
+    } else {
+        define('MOLAJO_APPLICATION_ID', $results->id);
+    }
+ */

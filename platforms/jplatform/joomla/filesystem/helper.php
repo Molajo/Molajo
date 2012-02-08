@@ -21,7 +21,7 @@ jimport('joomla.filesystem.folder');
  * @subpackage  FileSystem
  * @since       11.1
  */
-class JFilesystemHelper
+class JFilesystemServices
 {
     /**
      * Remote file size function for streams that don't support it
@@ -202,7 +202,7 @@ class JFilesystemHelper
         static $streams;
 
         if (!$streams) {
-            $streams = array_merge(stream_get_wrappers(), JFilesystemHelper::getJStreams());
+            $streams = array_merge(stream_get_wrappers(), JFilesystemServices::getJStreams());
         }
 
         return $streams;
@@ -264,6 +264,6 @@ class JFilesystemHelper
      */
     function isJoomlaStream($streamname)
     {
-        return in_array($streamname, JFilesystemHelper::getJStreams());
+        return in_array($streamname, JFilesystemServices::getJStreams());
     }
 }

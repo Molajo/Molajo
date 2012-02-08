@@ -83,7 +83,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             jimport('joomla.application.helper');
             $client = ApplicationHelper::getApplicationInfo($cname, true);
             if ($client === false) {
-                $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
+                $this->parent->abort(TextServices::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
                 return false;
             }
             $basePath = $client->path;
@@ -104,7 +104,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $this->set('name', $name);
         $this->set('element', $element);
 
-        $db = $this->parent->getDbo();
+        $db = $this->parent->getJdbo();
         $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="theme" AND element = "' . $element . '"');
         $id = $db->loadResult();
 
@@ -133,8 +133,8 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
                 // If we didn't have overwrite set, find an udpate function or find an update tag so let's call it safe
                 $this->parent
                         ->abort(
-                    TextHelper::sprintf(
-                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', TextHelper::_('JLIB_INSTALLER_' . $this->route),
+                    TextServices::sprintf(
+                        'JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', TextServices::_('JLIB_INSTALLER_' . $this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -149,7 +149,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         if (file_exists($this->parent->getPath('extension_root')) && !$this->parent->getOverwrite()) {
             MolajoError::raiseWarning(
                 100,
-                TextHelper::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ANOTHER_THEME_USING_DIRECTORY', $this->parent->getPath('extension_root'))
+                TextServices::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ANOTHER_THEME_USING_DIRECTORY', $this->parent->getPath('extension_root'))
             );
             return false;
         }
@@ -159,7 +159,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         if (!file_exists($this->parent->getPath('extension_root'))) {
             if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
                 $this->parent
-                        ->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
+                        ->abort(TextServices::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
 
                 return false;
             }
@@ -198,12 +198,12 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $this->parent->parseLanguages($xml->languages, $clientId);
 
         // Get the theme description
-        $this->parent->set('message', TextHelper::_((string)$xml->description));
+        $this->parent->set('message', TextServices::_((string)$xml->description));
 
         // Lastly, we will copy the manifest file to its appropriate place.
         if (!$this->parent->copyManifest(-1)) {
             // Install failed, rollback changes
-            $this->parent->abort(TextHelper::_('JLIB_INSTALLER_ABORT_TPL_INSTALL_COPY_SETUP'));
+            $this->parent->abort(TextServices::_('JLIB_INSTALLER_ABORT_TPL_INSTALL_COPY_SETUP'));
 
             return false;
         }
@@ -233,7 +233,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         if (!$row->store()) {
             // Install failed, roll back changes
-            $this->parent->abort(TextHelper::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ROLLBACK', $db->stderr(true)));
+            $this->parent->abort(TextServices::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ROLLBACK', $db->stderr(true)));
 
             return false;
         }
@@ -246,7 +246,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             $query->set('application_id=' . $db->Quote($clientId));
             $query->set('home=0');
             $debug = $lang->setDebug(false);
-            $query->set('title=' . $db->Quote(TextHelper::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', TextHelper::_($this->get('name')))));
+            $query->set('title=' . $db->Quote(TextServices::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', TextServices::_($this->get('name')))));
             $lang->setDebug($debug);
             $query->set('parameters=' . $db->Quote($row->parameters));
             $db->setQuery($query->__toString());
@@ -288,14 +288,14 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $row = MolajoModel::getInstance('extension');
 
         if (!$row->load((int)$id) || !strlen($row->element)) {
-            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
+            MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
             return false;
         }
 
         // Is the theme we are trying to uninstall a core one?
         // Because that is not a good idea...
         if ($row->protected) {
-            MolajoError::raiseWarning(100, TextHelper::sprintf('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_WARNCORETHEME', $row->name));
+            MolajoError::raiseWarning(100, TextServices::sprintf('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_WARNCORETHEME', $row->name));
             return false;
         }
 
@@ -304,18 +304,18 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         // For a theme the id will be the theme name which represents the subfolder of the themes folder that the theme resides in.
         if (!$name) {
-            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_ID_EMPTY'));
+            MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_ID_EMPTY'));
 
             return false;
         }
 
         // Deny remove default theme
-        $db = $this->parent->getDbo();
+        $db = $this->parent->getJdbo();
         $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->Quote($name);
         $db->setQuery($query->__toString());
 
         if ($db->loadResult() != 0) {
-            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_DEFAULT'));
+            MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_DEFAULT'));
 
             return false;
         }
@@ -324,7 +324,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $client = ApplicationHelper::getApplicationInfo($clientId);
 
         if (!$client) {
-            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
+            MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
             return false;
         }
 
@@ -340,7 +340,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             unset($row);
             // Make sure we delete the folders
             JFolder::delete($this->parent->getPath('extension_root'));
-            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+            MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 
             return false;
         }
@@ -355,7 +355,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
         else
         {
-            MolajoError::raiseWarning(100, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_DIRECTORY'));
+            MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_THEME_DIRECTORY'));
             $retval = false;
         }
 
@@ -447,7 +447,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $description = (string)$this->parent->manifest->description;
 
         if ($description) {
-            $this->parent->set('message', TextHelper::_($description));
+            $this->parent->set('message', TextServices::_($description));
         }
         else
         {
@@ -472,13 +472,13 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         if ($this->parent->extension->store()) {
             //insert record in #__theme_styles
-            $db = $this->parent->getDbo();
+            $db = $this->parent->getJdbo();
             $query = $db->getQuery(true);
             $query->insert('#__theme_styles');
             $query->set('theme=' . $db->Quote($this->parent->extension->name));
             $query->set('application_id=' . $db->Quote($this->parent->extension->application_id));
             $query->set('home=0');
-            $query->set('title=' . $db->Quote(TextHelper::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
+            $query->set('title=' . $db->Quote(TextServices::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
             $query->set('parameters=' . $db->Quote($this->parent->extension->parameters));
             $db->setQuery($query->__toString());
             $db->query();
@@ -487,7 +487,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
         else
         {
-            MolajoError::raiseWarning(101, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_DISCOVER_STORE_DETAILS'));
+            MolajoError::raiseWarning(101, TextServices::_('JLIB_INSTALLER_ERROR_TPL_DISCOVER_STORE_DETAILS'));
 
             return false;
         }
@@ -518,7 +518,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
         catch (Exception $e)
         {
-            MolajoError::raiseWarning(101, TextHelper::_('JLIB_INSTALLER_ERROR_TPL_REFRESH_MANIFEST_CACHE'));
+            MolajoError::raiseWarning(101, TextServices::_('JLIB_INSTALLER_ERROR_TPL_REFRESH_MANIFEST_CACHE'));
             return false;
         }
     }

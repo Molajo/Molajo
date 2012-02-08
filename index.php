@@ -163,17 +163,21 @@ require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-doctrine.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-simplepie.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-sfevent.php';
 
-JDEBUG ? $_PROFILER->mark('afterLoad') : null;
+/**
+ *  Services
+ */
+$services = Services::getInstance();
+var_dump($services);
 
 /**
- *  Site
+ *  Base
  */
-$site = Molajo::Site(MOLAJO_SITE_ID);
+$site = MolajoBase::getSite(MOLAJO_SITE_ID);
 $site->load();
 
 /**
- *  Application
+ *  Activation
  */
-$app = Molajo::Application(MOLAJO_APPLICATION);
+$app = MolajoBase::getApplication(MOLAJO_APPLICATION);
 $app->load();
 

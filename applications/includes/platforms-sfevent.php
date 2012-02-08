@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new FileHelper();
+$fileHelper = new MolajoFileService();
 require_once(PLATFORM_SYMFONY_EVENT . '/sfEventDispatcher.php');
 
 

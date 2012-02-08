@@ -100,7 +100,7 @@ class MolajoInstallerPackagemanifest extends JObject
         $xml = simplexml_load_file($xmlfile);
 
         if (!$xml) {
-            $this->_errors[] = TextHelper::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
+            $this->_errors[] = TextServices::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
 
             return false;
         }

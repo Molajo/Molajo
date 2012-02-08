@@ -10,16 +10,11 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new FileHelper();
+$fileHelper = new MolajoFileService();
 
 /**
  *  Exceptions - already loaded
  */
-
-/**
- *  Language - language and text already loaded
- */
-$fileHelper->requireClassFile(PLATFORM_MOLAJO . '/language/languagetransliterate.php', 'MolajoTransliterateHelper');
 
 /**
  *  Session

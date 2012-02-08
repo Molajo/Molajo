@@ -26,7 +26,7 @@ abstract class MolajoContentHelper
      */
     static public function get($id, $content_table)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
         $date = Molajo::Date();
         $now = $date->toMySQL();
@@ -68,7 +68,7 @@ abstract class MolajoContentHelper
         );
 
         /** Assets Join and View Access Check */
-        MolajoAccess::setQueryViewAccess(
+        MolajoAccessService::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
@@ -85,7 +85,7 @@ abstract class MolajoContentHelper
         } else {
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_DATABASE_QUERY').' '.
+                $message = TextService::_('ERROR_DATABASE_QUERY').' '.
                     $db->getErrorNum().' '.
                     $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,

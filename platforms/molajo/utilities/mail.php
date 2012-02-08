@@ -67,14 +67,14 @@ class MolajoMail extends PHPMailer
     public function Send()
     {
         if (($this->Mailer == 'mail') && !function_exists('mail')) {
-            return MolajoError::raiseNotice(500, TextHelper::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
+            return MolajoError::raiseNotice(500, TextServices::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
         }
 
         @$result = parent::Send();
 
         if ($result == false) {
             // TODO: Set an appropriate error number
-            $result = MolajoError::raiseNotice(500, TextHelper::_($this->ErrorInfo));
+            $result = MolajoError::raiseNotice(500, TextServices::_($this->ErrorInfo));
         }
 
         return $result;
@@ -95,15 +95,15 @@ class MolajoMail extends PHPMailer
     {
         if (is_array($from)) {
             // If $from is an array we assume it has an address and a name
-            $this->SetFrom(MailHelper::cleanLine($from[0]), MailHelper::cleanLine($from[1]));
+            $this->SetFrom(MailServices::cleanLine($from[0]), MailServices::cleanLine($from[1]));
         }
         elseif (is_string($from)) {
             // If it is a string we assume it is just the address
-            $this->SetFrom(MailHelper::cleanLine($from));
+            $this->SetFrom(MailServices::cleanLine($from));
         }
         else {
             // If it is neither, we throw a warning
-            MolajoError::raiseWarning(0, TextHelper::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
+            MolajoError::raiseWarning(0, TextServices::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
         }
 
         return $this;
@@ -119,7 +119,7 @@ class MolajoMail extends PHPMailer
      */
     public function setSubject($subject)
     {
-        $this->Subject = MailHelper::cleanLine($subject);
+        $this->Subject = MailServices::cleanLine($subject);
 
         return $this;
     }
@@ -138,7 +138,7 @@ class MolajoMail extends PHPMailer
            * Filter the Body
            * TODO: Check for XSS
            */
-        $this->Body = MailHelper::cleanText($content);
+        $this->Body = MailServices::cleanText($content);
 
         return $this;
     }
@@ -157,12 +157,12 @@ class MolajoMail extends PHPMailer
         if (is_array($recipient)) {
             foreach ($recipient as $to)
             {
-                $to = MailHelper::cleanLine($to);
+                $to = MailServices::cleanLine($to);
                 $this->AddAddress($to);
             }
         }
         else {
-            $recipient = MailHelper::cleanLine($recipient);
+            $recipient = MailServices::cleanLine($recipient);
             $this->AddAddress($recipient);
         }
 
@@ -184,12 +184,12 @@ class MolajoMail extends PHPMailer
             if (is_array($cc)) {
                 foreach ($cc as $to)
                 {
-                    $to = MailHelper::cleanLine($to);
+                    $to = MailServices::cleanLine($to);
                     parent::AddCC($to);
                 }
             }
             else {
-                $cc = MailHelper::cleanLine($cc);
+                $cc = MailServices::cleanLine($cc);
                 parent::AddCC($cc);
             }
         }
@@ -212,12 +212,12 @@ class MolajoMail extends PHPMailer
             if (is_array($bcc)) {
                 foreach ($bcc as $to)
                 {
-                    $to = MailHelper::cleanLine($to);
+                    $to = MailServices::cleanLine($to);
                     parent::AddBCC($to);
                 }
             }
             else {
-                $bcc = MailHelper::cleanLine($bcc);
+                $bcc = MailServices::cleanLine($bcc);
                 parent::AddBCC($bcc);
             }
         }
@@ -268,14 +268,14 @@ class MolajoMail extends PHPMailer
         if (is_array($replyto[0])) {
             foreach ($replyto as $to)
             {
-                $to0 = MailHelper::cleanLine($to[0]);
-                $to1 = MailHelper::cleanLine($to[1]);
+                $to0 = MailServices::cleanLine($to[0]);
+                $to1 = MailServices::cleanLine($to[1]);
                 parent::AddReplyTo($to0, $to1);
             }
         }
         else {
-            $replyto0 = MailHelper::cleanLine($replyto[0]);
-            $replyto1 = MailHelper::cleanLine($replyto[1]);
+            $replyto0 = MailServices::cleanLine($replyto[0]);
+            $replyto1 = MailServices::cleanLine($replyto[1]);
             parent::AddReplyTo($replyto0, $replyto1);
         }
 
@@ -411,10 +411,10 @@ class MolajoMail extends PHPMailer
      */
     public function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
     {
-        $subject = TextHelper::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
+        $subject = TextServices::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
 
-        $message = sprintf(TextHelper::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-        $message .= TextHelper::_('MOLAJO_MAIL_MSG') . "\n";
+        $message = sprintf(TextServices::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
+        $message .= TextServices::_('MOLAJO_MAIL_MSG') . "\n";
 
         $this->addRecipient($adminEmail);
         $this->setSubject($subject);

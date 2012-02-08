@@ -7,43 +7,51 @@
  */
 defined('MOLAJO') or die;
 
+function hook() {
+    echo 'is this all a hook is? interesting.';
+}
+
+Class AccessService extends MolajoAccessService {}
+Class ConfigurationService extends MolajoConfigurationService {}
+Class DateService extends MolajoDateService {}
+Class DispatcherService extends MolajoDispatcherService {}
+Class DoctrineService extends MolajoDoctrineService {}
+Class FileService extends MolajoFileService {}
+Class FilesystemService extends MolajoFileSystemService {}
+Class FilterService extends MolajoFilterService {}
+Class ImageService extends MolajoImageService {}
+Class JDatabaseService extends MolajoJDatabaseService {}
+Class LanguageService extends MolajoLanguageService {}
+Class MailService extends MolajoMailService {}
+Class MessageService extends MolajoMessageService {}
+Class SessionService extends MolajoSessionService {}
+Class TextService extends MolajoTextService {}
+Class TransliterateService extends MolajoTransliterateService {}
+Class UrlService extends MolajoUrlService {}
+
 Class ApplicationHelper extends MolajoApplicationHelper {}
 Class AssetHelper extends MolajoAssetHelper {}
 Class ComponentHelper extends MolajoComponentHelper {}
-Class ConfigurationHelper extends MolajoConfigurationHelper {}
 Class ContentHelper extends MolajoContentHelper {}
-Class DateHelper extends MolajoDateHelper {}
 Class ExtensionHelper extends MolajoExtensionHelper {}
-Class FileHelper extends MolajoFileHelper {}
-Class FilesystemHelper extends MolajoFileSystemHelper {}
-Class FilterHelper extends MolajoFilterHelper {}
-Class ImageHelper extends MolajoImageHelper {}
 Class InstallerHelper extends MolajoInstallerHelper {}
-Class LanguageHelper extends MolajoLanguageHelper {}
-Class MailHelper extends MolajoMailHelper {}
 Class MenuHelper extends MolajoMenuHelper {}
 Class ModuleHelper extends MolajoModuleHelper {}
-Class SessionHelper extends MolajoSessionHelper {}
 Class SiteHelper extends MolajoSiteHelper {}
-Class TextHelper extends MolajoTextHelper {}
 Class ThemeHelper extends MolajoThemeHelper {}
-Class TransliterateHelper extends MolajoTransliterateHelper {}
-Class UrlHelper extends MolajoUrlHelper {}
-Class UserHelper extends MolajoUserHelper {}
 Class ViewHelper extends MolajoViewHelper {}
 
-
 /**
- *  Molajo Class for alias creation, ex Molajo::User
+ *  Molajo Base Class
  */
 class Molajo extends MolajoBase
 {
-    public static function Site($id = null, $config = null)
+    public static function Site($id = null, Registry $config = null)
     {
         return MolajoBase::getSite($id, $config);
     }
 
-    public static function Application($id = null, $config = null, $input = null)
+    public static function Application($id = null, Registry $config = null, Input $input = null)
     {
         return MolajoBase::getApplication($id, $config, $input);
     }
@@ -53,12 +61,17 @@ class Molajo extends MolajoBase
         return MolajoBase::getRequest($request, $override_request_url, $override_asset_id);
     }
 
-    public static function Parser($config = null)
+    public static function Parser(Registry $config = null)
     {
         return MolajoBase::getParser($config);
     }
 
-    public static function Responder($config = null)
+    public static function Renderer(Registry $config = null)
+    {
+        return MolajoBase::getRenderer($config);
+    }
+
+    public static function Responder(Registry $config = null)
     {
         return MolajoBase::getResponder($config);
     }
@@ -67,20 +80,18 @@ class Molajo extends MolajoBase
     {
         return MolajoBase::getUser($id);
     }
-
-    public static function DB()
-    {
-        return MolajoBase::getDbo();
-    }
-
-    public static function Date($time = 'now', $tzOffset = null)
-    {
-        return MolajoBase::getDate($time, $tzOffset);
-    }
 }
+
 abstract class JFactory extends MolajoBase
 {
 }
+
+
+/**
+ *  Molajo Class for alias creation, ex Molajo::User
+ */
+class Services extends MolajoServices {}
+
 class Registry extends JRegistry {}
 class Input extends JInput {}
 class FilterInput extends JFilterInput {}

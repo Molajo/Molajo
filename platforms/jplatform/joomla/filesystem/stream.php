@@ -194,7 +194,7 @@ class JStream extends JObject
 
         if (isset($url['scheme'])) {
             // If we're dealing with a Joomla! stream, load it
-            if (JFilesystemHelper::isJoomlaStream($url['scheme'])) {
+            if (JFilesystemServices::isJoomlaStream($url['scheme'])) {
                 require_once dirname(__FILE__) . '/streams/' . $url['scheme'] . '.php';
             }
 
@@ -415,7 +415,7 @@ class JStream extends JObject
                 $tmp_error = $php_errormsg;
             }
 
-            $res = JFilesystemHelper::remotefsize($this->filename);
+            $res = JFilesystemServices::remotefsize($this->filename);
 
             if (!$res) {
                 if ($tmp_error) {
@@ -811,7 +811,7 @@ class JStream extends JObject
         {
             case 'ftp':
             case 'ftps':
-                $res = JFilesystemHelper::ftpChmod($filename, $mode);
+                $res = JFilesystemServices::ftpChmod($filename, $mode);
                 break;
 
             default:
@@ -1355,7 +1355,7 @@ class JStream extends JObject
 
             // Check if it's a write mode then add the appropriate prefix
             // Get rid of JPATH_ROOT (legacy compat) along the way
-            if (in_array($tmode, JFilesystemHelper::getWriteModes())) {
+            if (in_array($tmode, JFilesystemServices::getWriteModes())) {
                 if (!$relative && $this->writeprefix) {
                     $filename = str_replace(JPATH_ROOT, '', $filename);
                 }

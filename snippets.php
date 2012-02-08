@@ -43,13 +43,13 @@ echo Molajo::Responder()->get('sef', 1);
 /** Basic Message, for example: "Article saved." or "Title required."  */
 Molajo::Application()
     ->setMessage(
-        TextHelper::_('Title required for article.'),
+        TextServices::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
     );
 
 Molajo::Application()
     ->setMessage(
-        $message = TextHelper::_('ERROR_DATABASE_QUERY'),
+        $message = TextServices::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
         $code = null,
         $debug_location = 'AssetHelper::get',
@@ -62,7 +62,7 @@ Molajo::Application()
 /**
  *  User Object
  */
-echo Molajo::User()->view_groups;
+echo implode(',', Molajo::User()->get('view_groups'));
 
 ?>
 
@@ -113,3 +113,42 @@ echo Molajo::Display()->safeText($this->row->title);
 echo Molajo::Display()->safeURL($this->row->url);
 
 echo Molajo::Display()->safeInteger($this->row->version);
+
+?>
+
+<?php
+
+/**
+ * Static instance
+ *
+ * @var    object
+ * @since  1.0
+ */
+protected static $instance;
+
+
+/**
+ * getInstance
+ *
+ * @static
+ * @return  bool|object
+ * @since   1.0
+ */
+public static function getInstance()
+{
+    if (empty(self::$instance)) {
+        self::$instance = new MolajoXXXService();
+    }
+    return self::$instance;
+}
+
+/**
+ * Class constructor
+ *
+ * @return  null
+ * @since   1.0
+ */
+public function __construct()
+{
+    $this->connect();
+}

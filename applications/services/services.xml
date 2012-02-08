@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<services>
+    <service>
+        <name>Jdatabase</name>
+        <parameters></parameters>
+    </service>
+    <service>
+        <name>Configuration</name>
+        <parameters></parameters>
+    </service>
+
+    <service>
+        <name>Access</name>
+        <parameters></parameters>
+    </service>
+    <service>
+        <name>Session</name>
+        <parameters></parameters>
+    </service>
+    <service>
+        <name>Language</name>
+        <parameters>en-GB</parameters>
+    </service>
+    <service>
+        <name>HOLDDoctrine</name>
+        <parameters>get</parameters>
+    </service>
+</services>

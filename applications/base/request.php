@@ -71,7 +71,7 @@ class MolajoRequest
      * @param  string $override_request_url
      * @param  string $override_asset_id
      *
-     * @return null
+     * @return mixed
      * @since  1.0
      */
     public function __construct(Registry $request = null,
@@ -125,7 +125,7 @@ class MolajoRequest
             || $this->get('request_url_query', '') == 'index.php?'
             || $this->get('request_url_query', '') == '/index.php/'
         ) {
-            Molajo::Application()->redirect('', 301);
+            Molajo::Responder()->redirect('', 301);
             return $this->page_request;
         }
 
@@ -374,7 +374,7 @@ class MolajoRequest
             $this->set('status_found', false);
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_EXTENSION_NOT_FOUND'),
+                $message = TextServices::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getAsset',
@@ -407,7 +407,7 @@ class MolajoRequest
             $this->set('status_found', false);
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_MENU_ITEM_NOT_FOUND'),
+                $message = TextServices::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::getMenuItem',
@@ -490,7 +490,7 @@ class MolajoRequest
             $this->set('status_found', false);
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = TextServices::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -580,7 +580,7 @@ class MolajoRequest
             $this->set('status_found', false);
             Molajo::Application()
                 ->setMessage(
-                $message = TextHelper::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = TextServices::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -753,7 +753,7 @@ class MolajoRequest
         /** redirect */
         if ($this->get('request_url_redirect_to_id', 0) == 0) {
         } else {
-            Molajo::Application()->redirect(
+            Molajo::Responder()->redirect(
                 AssetHelper::getURL(
                     $this->get('request_url_redirect_to_id')), 301
             );
@@ -765,7 +765,7 @@ class MolajoRequest
             && $this->get('request_asset_id')
                 <> Molajo::Application()->get('logon_requirement', 0)
         ) {
-            Molajo::Application()->redirect(
+            Molajo::Responder()->redirect(
                 Molajo::Application()->get('logon_requirement', 0), 303
             );
         }
@@ -788,7 +788,7 @@ class MolajoRequest
 
         } else {
             $this->set('status_authorised',
-                MolajoAccess::authoriseTask(
+                MolajoAccessService::authoriseTask(
                     $this->get('mvc_task'),
                     $this->get('request_asset_id'))
             );
@@ -833,7 +833,7 @@ class MolajoRequest
     protected function _getUser()
     {
         $parameters = new Registry;
-        $parameters->loadString(Molajo::User()->parameters);
+        $parameters->loadString(Molajo::User()->get('parameters'));
 
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id', $parameters->def('user_theme_id', 0));
@@ -1068,7 +1068,7 @@ class MolajoRequest
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = Molajo::DB();
+        $db = Molajo::Jdb();
         $query = $db->getQuery(true);
 
         if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {
