@@ -17,6 +17,41 @@ defined('MOLAJO') or die;
 class MolajoDispatcherService
 {
     /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoDispatcherService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
+
+    /**
      * Dispatcher
      *
      * @var    object

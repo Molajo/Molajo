@@ -16,8 +16,43 @@ defined('MOLAJO') or die;
  * @subpackage  Access Control
  * @since       1.0
  */
-abstract class MolajoAccessService
+class MolajoAccessService
 {
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoAccessService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
+
     /**
      *  authoriseTaskList
      *
@@ -27,7 +62,7 @@ abstract class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTaskList($tasklist = array(), $asset_id = 0)
+    public function authoriseTaskList($tasklist = array(), $asset_id = 0)
     {
         if (count($tasklist) == 0) {
             return;
@@ -51,7 +86,7 @@ abstract class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    static public function authoriseTask($task = 'login', $asset_id = 0)
+    public function authoriseTask($task = 'login', $asset_id = 0)
     {
         if ($task == 'login') {
             return MolajoAccessService::authoriseLogin($asset_id);
@@ -172,7 +207,7 @@ abstract class MolajoAccessService
     /**
      *  TYPE 3 --> MolajoACL::getList -> getActionsList
      */
-    static public function getActionsList($id, $option, $task, $parameters = array())
+    public function getActionsList($id, $option, $task, $parameters = array())
     {
         $actions = array();
 

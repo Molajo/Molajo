@@ -263,8 +263,7 @@ abstract class MolajoExtensionHelper
         } else {
             return false;
         }
-
-        return Molajo::Language()
+        Services::connect('language')
             ->load ($path,
                     Molajo::Application()->get('language'),
                     false,

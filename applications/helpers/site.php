@@ -47,8 +47,7 @@ class MolajoSiteHelper
 
             $obj = new stdClass();
 
-            $db = Molajo::Jdb();
-
+            $db = Services::Connect('jdatabase');
             $query = $db->getQuery(true);
 
             $query->select($db->quoteName('id'));

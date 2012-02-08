@@ -18,12 +18,47 @@ defined('MOLAJO') or die;
 class MolajoSessionService extends JObject
 {
     /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
      * $_session
      *
      * @var    object Session
      * @since  1.0
      */
     protected $_session = null;
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoSessionService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * createSession

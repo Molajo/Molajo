@@ -308,7 +308,6 @@ class MolajoApplication
         return $this->_session;
     }
 
-
     /**
      * getHash
      *

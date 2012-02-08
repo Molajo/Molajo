@@ -17,6 +17,14 @@ defined('MOLAJO') or die;
 class MolajoImageService
 {
     /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
      * @var numeric $id
      */
     protected $id;
@@ -74,12 +82,41 @@ class MolajoImageService
     protected $imageResized;
 
     /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoImageService();
+        }
+        return self::$instance;
+    }
+
+    /**
      * __construct
      *
-     * @param $id
-     * @param int $this->size
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
      */
-    function __construct($id, $size = 0, $type = 'crop')
+    public function __construct()
+    {
+    }
+
+    /**
+     * getImage
+     *
+     * Build an SQL query to select an image.
+     *
+     * @return    JDatabaseQuery
+     * @since    1.0
+     */
+    public function getImage($id, $size = 0, $type = 'crop')
     {
         /** initialise  */
         $this->id = (int)$id;
@@ -95,8 +132,8 @@ class MolajoImageService
         }
         if ($this->type = 'exact'
             || $this->type = 'portrait'
-            || $this->type = 'landscape'
-            || $this->type = 'auto'
+                || $this->type = 'landscape'
+                    || $this->type = 'auto'
         ) {
         } else {
             $this->type = 'crop';
@@ -127,18 +164,7 @@ class MolajoImageService
         } else {
             return $this->fileNameNew;
         }
-    }
 
-    /**
-     * getImage
-     *
-     * Build an SQL query to select an image.
-     *
-     * @return    JDatabaseQuery
-     * @since    1.0
-     */
-    public function getImage()
-    {
         $db = Molajo::Jdb();
         $query = $db->getQuery(true);
 
@@ -147,17 +173,17 @@ class MolajoImageService
         $nullDate = $db->getNullDate();
 
         $query->select($db->nameQuote('path'));
-        $query->from($db->nameQuote('#__content').'as a');
-        $query->where('a.'.$db->nameQuote('status').' = 1');
-        $query->where('(a.'.$db->nameQuote('start_publishing_datetime').' = ' . $db->Quote($nullDate) .
-            ' OR a.'.$db->nameQuote('start_publishing_datetime').' <= ' . $db->Quote($now) . ')');
-        $query->where('(a.'.$db->nameQuote('stop_publishing_datetime').' = ' . $db->Quote($nullDate) .
-            ' OR a.'.$db->nameQuote('stop_publishing_datetime').' >= ' . $db->Quote($now) . ')');
+        $query->from($db->nameQuote('#__content') . 'as a');
+        $query->where('a.' . $db->nameQuote('status') . ' = 1');
+        $query->where('(a.' . $db->nameQuote('start_publishing_datetime') . ' = ' . $db->Quote($nullDate) .
+            ' OR a.' . $db->nameQuote('start_publishing_datetime') . ' <= ' . $db->Quote($now) . ')');
+        $query->where('(a.' . $db->nameQuote('stop_publishing_datetime') . ' = ' . $db->Quote($nullDate) .
+            ' OR a.' . $db->nameQuote('stop_publishing_datetime') . ' >= ' . $db->Quote($now) . ')');
         $query->where('a.id = ' . (int)$this->id);
 
-        $query->from($db->nameQuote('#__assets').'as b');
-        $query->where('b.'.$db->nameQuote('source_id').' = '.$db->nameQuote('id'));
-        $query->where('b.'.$db->nameQuote('asset_type_id').' = '.$db->nameQuote('asset_type_id'));
+        $query->from($db->nameQuote('#__assets') . 'as b');
+        $query->where('b.' . $db->nameQuote('source_id') . ' = ' . $db->nameQuote('id'));
+        $query->where('b.' . $db->nameQuote('asset_type_id') . ' = ' . $db->nameQuote('asset_type_id'));
 
         $db->setQuery($query->__toString());
 
@@ -382,19 +408,19 @@ class MolajoImageService
     {
         if ($this->height < $this->width) {
 
-        // *** Image to be resized is wider (landscape)
+            // *** Image to be resized is wider (landscape)
             $optimalWidth = $newWidth;
             $optimalHeight = $this->getSizeByFixedWidth($newWidth);
 
         } elseif ($this->height > $this->width) {
 
-        // *** Image to be resized is taller (portrait)
+            // *** Image to be resized is taller (portrait)
             $optimalWidth = $this->getSizeByFixedHeight($newHeight);
             $optimalHeight = $newHeight;
 
         } else {
 
-        // *** Image to be resized is a square
+            // *** Image to be resized is a square
             if ($newHeight < $newWidth) {
                 $optimalWidth = $newWidth;
                 $optimalHeight = $this->getSizeByFixedWidth($newWidth);

@@ -167,8 +167,9 @@ require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-sfevent.php';
  *  Services
  */
 $services = Services::getInstance();
-var_dump($services);
-
+$results = $services->connectStandardServices();
+var_dump($results);
+die;
 /**
  *  Base
  */

@@ -10,22 +10,47 @@ defined('MOLAJO') or die;
 /**
  * Molajo Services: Alias class name "Services"
  *
- * Activates static instance of services defined in the services.xml
- * Activates services when requested the first time
- * Stores instance in a static array for reuse with subsequent calls
+ * Instantiates a static instance of a service and stores the instance in a
+ * static array for reuse with subsequent calls
  *
- * All services must be named 'Molajo' . Name of service . 'Service'
+ * Creating a service:
+ * 1. The class must be named 'Molajo' . Name of service . 'Service'
+ * 2. Each class must have a getInstance and __construct methods
+ * 3. Each class must have a connect method which invokes the logic that
+ * should be retained in the static array so that it's not re-executed
  *
  * To use:
  * 1. For services required at startup, add an XML entry to services.xml
+ * This file is used during bootstrapping in the index.php.
  *
- * 2. Services can be connected on demand with this syntax:
+ * 2. For connecting services on demand, use this syntax:
  *
  * $nos = Services::Connect('Name of Service', array($parameters) );
  *
+ * To use the connection:
+ * ...whether the connection is initated in bootstrapping or on demand
+ *
+ * 1. Set the connect => Services::connect('language')
+ * 2. Then, using chaining, add the method desired:
+ *
+ * Services::connect('language')
+ *            ->load ($path,
+ *                    Molajo::Application()->get('language'),
+ *                    false,
+ *                    false
+ *                    );
  */
 class MolajoServices
 {
+    /**
+     * Array of Connected Services
+     *
+     * @static
+     * @var    $connection
+     * @since  1.0
+     */
+    protected $connection = array();
+
     /**
      * Static Instance
      *
@@ -34,15 +59,6 @@ class MolajoServices
      * @since  1.0
      */
     public static $instance = null;
-
-    /**
-     * Array of Connected Services Services
-     *
-     * @static
-     * @var    $connection
-     * @since  1.0
-     */
-    public static $connection = null;
 
     /**
      * getInstance
@@ -67,8 +83,6 @@ class MolajoServices
      */
     public function __construct()
     {
-        self::$connection = array();
-        $this->startup();
     }
 
     /**
@@ -81,11 +95,10 @@ class MolajoServices
      * @return mixed
      * @since 1.0
      */
-    public function startup()
+    public function connectStandardServices()
     {
         $services = simplexml_load_file(
-            MOLAJO_APPLICATIONS_CORE .
-                '/services/services.xml'
+            MOLAJO_APPLICATIONS_CORE . '/services/services.xml'
         );
 
         if (count($services) == 0) {
@@ -94,49 +107,77 @@ class MolajoServices
 
         foreach ($services->service as $s) {
 
-            $service_name = (string)$s->name;
-echo $service_name;
-            echo '<pre>';
-            var_dump($s);
-            echo '</pre>';
-                        die;
-            if (isset(self::$connection[$service_name])) {
+            $serviceName = (string)$s->name;
+
+            echo 'Service Name ' . $serviceName . '<br /><br />';
+
+            if (substr(basename($serviceName), 0, 4) == 'HOLD') {
             } else {
+                $serviceClass = (string)$s->serviceClass;
 
-                $class = 'Molajo' . ucfirst($service_name) . 'Service';
-                $method = 'connect';
-                $parameters = (string)$s->parameters;
+                if (trim($serviceClass == '')) {
+                    break;
+                }
 
-                self::$connection[$service_name] = $this->makeConnection(
-                    $service_name, $class, $method, $parameters
+                $instanceParameters = array();
+                if (isset($s->getInstance->parameters->parameter)) {
+                    foreach ($s->getInstance->parameters->parameter as $p) {
+                        $name = (string)$p['name'];
+                        $value = (string)$p['value'];
+                        $instanceParameters[$name] = $value;
+                    }
+                }
+                $connectParameters = array();
+                if (isset($s->connect->parameters->parameter)) {
+                    foreach ($s->connect->parameters->parameter as $p) {
+                        $name = (string)$p['key'];
+                        $value = (string)$p['value'];
+                        $connectParameters[$name] = $value;
+                    }
+                }
+
+                $this->connect(
+                    $serviceName,
+                    $serviceClass,
+                    $instanceParameters,
+                    $connectParameters
                 );
             }
         }
+        return true;
     }
 
     /**
      * connect
      *
-     * Connections "on demand" will return existing connection, if existing,
-     * or make the connection at this time
+     * Connections "on demand" return existing connections, if existing
      *
-     * @param $service_name
+     * @param $serviceName
+     * @param $serviceClass
+     * @param $instanceParameters
+     * @param $connectParameters
      *
      * @return bool
      * @since 1.0
      */
-    public function connect($service_name, $parameters = array())
+    public function connect($serviceName,
+                            $serviceClass = null,
+                            $instanceParameters = array(),
+                            $connectParameters = array())
     {
-        if (isset(self::$connection[$service_name])) {
-            return self::$connection[$service_name];
+        if (isset($this->connection[$serviceName])) {
+            return $this->connection[$serviceName];
+
         } else {
 
-            $class = 'Molajo' . ucfirst($service_name) . 'Services';
-            $method = 'connect';
-            $parameters = (array)$parameters;
-
-            self::$connection[$service_name] = $this->makeConnection(
-                $service_name, $class, $method, $parameters
+            if ($serviceClass == null || trim($serviceClass == '')) {
+                $serviceClass = 'Molajo' . ucfirst($serviceName) . 'Service';
+            }
+            $this->makeConnection(
+                $serviceName,
+                $serviceClass,
+                $instanceParameters,
+                $connectParameters
             );
         }
     }
@@ -144,30 +185,65 @@ echo $service_name;
     /**
      * makeConnection
      *
-     * Activate the specific service and return results to store in the
-     * static class variable; used for both startup and ondemand connections
+     * Activate the specific service and store results in array
      *
-     * @param $service_name
-     * @param $class
-     * @param $method
-     * @param $parameters
+     * @param $serviceName
+     * @param $serviceClass
+     * @param $instanceParameters
+     * @param $connectParameters
      *
      * @return bool|mixed
      * @since 1.0
      */
-    protected function activate_service(
-        $service_name, $class, $method, $parameters)
+    protected function makeConnection($serviceName,
+                                      $serviceClass,
+                                      $instanceParameters,
+                                      $connectParameters)
     {
-        if (isset(self::$connection->$service_name)) {
+        if (isset($this->connection[$serviceName])) {
             return false;
         }
 
-        if (class_exists($class)) {
-            if (method_exists($class, $method)) {
-                return call_user_func(array($class, $method), $parameters);
+        if (class_exists($serviceClass)) {
+
+            $this->connection[$serviceName] = '';
+
+            /** instantiate a static instance of the class */
+            if (method_exists($serviceClass, 'getInstance')) {
+                $this->connection[$serviceName] =
+                    call_user_func(array($serviceClass, 'getInstance'), $instanceParameters);
+            }
+
+            /** connect in object context */
+            if (method_exists($serviceClass, 'connect')) {
+                /** parameters from array to string */
+                $cp ='';
+                foreach ($connectParameters as $key => $value) {
+                    if ($cp !== '') {
+                        $cp .= ',';
+                    }
+                    $cp .= '$' . $key . '="' . $value . '"';
+                }
+
+                /** connect */
+                $objectContext = new $serviceClass ();
+                $execute = '$connection = $objectContext->connect('.$cp.');';
+                eval($execute);
+                if ($connection == false) {
+                    //todo: amy error handling
+                } else {
+                    $this->connection[$serviceName] = $connection;
+                }
             }
         }
-        return false;
+        return true;
+
+        echo '<pre>';
+        var_dump($this->connection[$serviceName]);
+        echo '</pre>';
+
+        return true;
+
     }
 }
 

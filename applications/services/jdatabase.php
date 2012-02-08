@@ -16,32 +16,75 @@ defined('MOLAJO') or die;
  */
 class MolajoJdatabaseService
 {
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
+     * Database connection
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $db;
+
+    /**
+     * getInstance
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoJdatabaseService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * @return null
+     * @since  1.0
+     */
+    public function __construct()
+    {
+
+    }
 
     /**
      * connect
      *
-     * Connect to the database
-     *
-     * @static
-     * @return JDatabase
+     * @return mixed
+     * @throws RuntimeException
      */
-    public static function connect($config = null)
+    public function connect($file = null, $configuration_class = null)
     {
-        if ($config instanceof Registry) {
-            $site = $config;
+        if ($file == null) {
+            $configuration_file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
+            $configuration_class = 'MolajoSiteConfiguration';
+
+        } else if (file_exists($file)) {
+            $configuration_file = $file;
 
         } else {
-
-            $file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
-            if (file_exists($file)) {
-                require_once $file;
-            } else {
-                throw new RuntimeException('Fatal error - Application-Site Configuration File does not exist');
-                return;
-            }
-
-            $site = new MolajoSiteConfiguration();
+            $configuration_file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
+            $configuration_class = 'MolajoSiteConfiguration';
         }
+
+        if (file_exists($configuration_file)) {
+            require_once $configuration_file;
+        } else {
+            throw new RuntimeException('Fatal error - Application-Site Configuration File does not exist');
+            return;
+        }
+
+        $site = new $configuration_class();
 
         $options = array(
             'driver' => $site->dbtype,
@@ -51,19 +94,19 @@ class MolajoJdatabaseService
             'database' => $site->db,
             'prefix' => $site->dbprefix);
 
-        $db = JDatabase::getInstance($options);
+        $this->db = JDatabase::getInstance($options);
 
-        if (MolajoError::isError($db)) {
+        if (MolajoError::isError($this->db)) {
             header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: ' . (string)$db);
+            jexit('Database Error: ' . (string)$this->db);
         }
 
-        if ($db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, TextService::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $db->getErrorNum(), $db->getErrorMsg()));
+        if ($this->db->getErrorNum() > 0) {
+            MolajoError::raiseError(500, TextService::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $this->db->getErrorNum(), $this->db->getErrorMsg()));
         }
 
-        $db->debug($site->debug);
+        $this->db->debug($site->debug);
 
-        return $db;
+        return $this->db;
     }
 }

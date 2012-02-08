@@ -25,12 +25,53 @@ class MolajoConfigurationService
     protected static $instance;
 
     /**
-     * getInstance
+     * Input
      *
-     * Create the combined file once, and reuse
+     * @var    object
+     * @since  1.0
+     */
+    protected $input;
+
+    /**
+     * Configuration for Site and Application
      *
      * @static
+     * @var    $connection
+     * @since  1.0
+     */
+    protected $configuration = array();
+
+    /**
+     * Custom Fields
      *
+     * @static
+     * @var    $custom_fields
+     * @since  1.0
+     */
+    protected $custom_fields = array();
+
+    /**
+     * Metadata
+     *
+     * @static
+     * @var    $custom_fields
+     * @since  1.0
+     */
+    protected $metadata = array();
+
+    /**
+     * Log
+     *
+     * @static
+     * @var    $log
+     * @since  1.0
+     */
+    protected $log = array();
+
+    /**
+     * getInstance
+     *
+     * @static
      * @return bool|object
      * @since  1.0
      */
@@ -45,23 +86,13 @@ class MolajoConfigurationService
     /**
      * __construct
      *
-     * Class constructor.
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    public function __construct() {}
-
-    /**
-     * connect
-     *
      * Retrieves and combines site and application configuration objects
      *
      * @return  object
      * @throws  RuntimeException
      * @since   1.0
      */
-    public function connect()
+    public function __construct()
     {
         $config = new Registry;
         $siteConfig = new Registry;
@@ -79,19 +110,18 @@ class MolajoConfigurationService
             return false;
         }
 
-        $this->_metadata = new Registry;
-        $this->_metadata->loadString($appConfig->metadata);
+        $this->metadata = new Registry;
+        $this->metadata->loadString($appConfig->metadata);
 
-        $this->_custom_fields = new Registry;
-        $this->_custom_fields->loadString($appConfig->custom_fields);
+        $this->custom_fields = new Registry;
+        $this->custom_fields->loadString($appConfig->custom_fields);
 
         $cc = new ConfigurationService();
-        $this->_config = $cc->getConfig($appConfig->parameters);
+        $this->configuration = $cc->getConfig($appConfig->parameters);
 
-//todo: amy replace profiler
+        //todo: amy replace profiler
         $this->set('application.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('application.timestamp', time());
-
 
         $temp = substr($appConfig, 1, strlen($appConfig) - 2);
         $tempArray = array();
@@ -107,7 +137,7 @@ class MolajoConfigurationService
         }
 
         /** combined populated */
-        return $config;
+        return $this->configuration;
     }
 
     /**
@@ -139,7 +169,6 @@ class MolajoConfigurationService
         return $siteConfigData;
     }
 
-
     /**
      * get
      *
@@ -156,19 +185,19 @@ class MolajoConfigurationService
     public function get($key, $default = null, $type = 'config')
     {
         if ($type == 'custom') {
-            return $this->_custom_fields->get($key, $default);
+            return $this->custom_fields->get($key, $default);
 
         } else if ($type == 'metadata') {
-            return $this->_metadata->get($key, $default);
+            return $this->metadata->get($key, $default);
 
         } else if ($key == 'logging') {
-            return $this->_input;
+            return $this->input;
 
         } else if ($key == 'input') {
-            return $this->_input;
+            return $this->input;
 
         } else {
-            return $this->_config->get($key, $default);
+            return $this->configuration->get($key, $default);
         }
     }
 
@@ -187,17 +216,16 @@ class MolajoConfigurationService
     public function set($key, $value = null, $type = 'config')
     {
         if ($type == 'custom') {
-            return $this->_custom_fields->set($key, $value);
+            return $this->custom_fields->set($key, $value);
 
         } else if ($type == 'metadata') {
-            return $this->_metadata->set($key, $value);
+            return $this->metadata->set($key, $value);
 
         } else if ($type == 'logging') {
-            return $this->_metadata->set($key, $value);
+            return $this->metadata->set($key, $value);
 
         } else {
-            return $this->_config->set($key, $value);
+            return $this->configuration->set($key, $value);
         }
     }
-
 }
