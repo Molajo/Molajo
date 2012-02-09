@@ -74,14 +74,14 @@ class MolajoExtensionsModel extends MolajoModel
 
     function find($options = array())
     {
-        $dbo = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $dbo->Quote($val);
+            $where[] = $col . ' = ' . $db->Quote($val);
         }
         $query = 'SELECT extension_id FROM #__extensions WHERE ' . implode(' AND ', $where);
-        $dbo->setQuery($query->__toString());
-        return $dbo->loadResult();
+        $db->setQuery($query->__toString());
+        return $db->loadResult();
     }
 
     /**

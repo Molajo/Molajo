@@ -30,7 +30,7 @@ class MolajoApplication
      * @var    object
      * @since  1.0
      */
-    protected $_config = null;
+    protected $_configuration = null;
 
     /**
      * Input Object
@@ -47,6 +47,22 @@ class MolajoApplication
      * @since 1.0
      */
     protected $_service;
+
+    /**
+     * Metadata
+     *
+     * @var object
+     * @since 1.0
+     */
+    protected $_metadata;
+
+    /**
+     * Custom Fields
+     *
+     * @var object
+     * @since 1.0
+     */
+    protected $_custom_fields;
 
     /**
      * getInstance
@@ -182,9 +198,13 @@ class MolajoApplication
             }
         }
 
-        $db = Molajo::Application()->get('jdb', '', 'service');
-        echo 'out';
-        var_dump($db);
+        /** Store Configuration data in Application Object  */
+        $config = $this->get('Configuration', '', 'service');
+        $this->_metadata = $config->metadata;
+        $this->_custom_fields = $config->custom_fields;
+        $this->_configuration = $config->configuration;
+
+        var_dump($this->get('Date', '', 'service'));
     }
 
     /**
@@ -254,6 +274,7 @@ class MolajoApplication
             }
 
             /** connect */
+            $connection = '';
             $objectContext = new $serviceClass ();
             $execute = '$connection = $objectContext->connect(' . $cp . ');';
             eval($execute);
@@ -287,8 +308,8 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
 
-        } else if ($type == 'logging') {
-            return $this->_input;
+        } else if ($type == 'log') {
+            return $this->_log->get($key, $default);
 
         } else if ($type == 'input') {
             return $this->_input;
@@ -297,7 +318,7 @@ class MolajoApplication
             return $this->_service->get($key);
 
         } else {
-            return $this->_config->get($key, $default);
+            return $this->_configuration->get($key, $default);
         }
     }
 
@@ -321,14 +342,17 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->set($key, $value);
 
-        } else if ($type == 'logging') {
-            return $this->_metadata->set($key, $value);
+        } else if ($type == 'log') {
+            return $this->_log->set($key, $value);
+
+        } else if ($type == 'input') {
+            return $this->_input;
 
         } else if ($type == 'service') {
             return $this->_service->set($key, $value);
 
         } else {
-            return $this->_config->set($key, $value);
+            return $this->_configuration->set($key, $value);
         }
     }
 

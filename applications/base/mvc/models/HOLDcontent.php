@@ -55,7 +55,7 @@ class MolajoContentModel extends MolajoModel
     {
         /** initialise **/
         $assetId = null;
-        $db = $this->getJdbo();
+        $db = $this->getDb();
 
         /** retrieve parent category asset **/
         if ($this->category_id) {
@@ -222,7 +222,7 @@ class MolajoContentModel extends MolajoModel
     {
         /** initialise **/
         $aliasFound = false;
-        $db = $this->getJdbo();
+        $db = $this->getDb();
 
         /** alias **/
         if (trim($this->alias) == '') {

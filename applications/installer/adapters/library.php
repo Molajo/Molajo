@@ -63,7 +63,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $this->set('name', $name);
         $this->set('element', $element);
 
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
         $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="library" AND element = "' . $element . '"');
         $result = $db->loadResult();
         if ($result) {
@@ -189,7 +189,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         $this->set('name', $name);
         $this->set('element', $element);
         $installer = new MolajoInstaller; // we don't want to compromise this instance!
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
         $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="library" AND element = "' . $element . '"');
         $result = $db->loadResult();
         if ($result) {

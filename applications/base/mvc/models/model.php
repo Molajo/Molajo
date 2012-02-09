@@ -148,7 +148,7 @@ class MolajoModel extends JObject
         if (array_key_exists('dbo', $this->_config)) {
             $this->_db = $this->_config['dbo'];
         } else {
-            $this->_db = Molajo::Jdb();
+            $this->_db = Molajo::Application()->get('jdb', 'service');
         }
     }
 
@@ -297,14 +297,14 @@ class MolajoModel extends JObject
     }
 
     /**
-     * getJdbo
+     * getDb
      *
      * Method to get the Database connector object.
      *
      * @return  object
      * @since   1.0
      */
-    public function getJdbo()
+    public function getDb()
     {
         return $this->_db;
     }
@@ -829,7 +829,7 @@ class MolajoModel extends JObject
             return false;
         }
 
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $db->setQuery(
             'SELECT COUNT(user_id)' .
                 ' FROM ' . $db->quoteName('#__sessions') .

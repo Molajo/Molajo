@@ -302,7 +302,7 @@ abstract class MolajoInstallerHelper
       */
      public static function splitSql($sql)
      {
-         $db = Molajo::Application()->get('jdb', 'service');
+         $db = Molajo::Application()->get('jdb', '', 'service');
          return $db->splitSql($sql);
      }
 }

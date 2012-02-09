@@ -91,7 +91,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      */
     public function install()
     {
-        $db = parent::getJdbo();
+        $db = parent::getDb();
         $this->manifest = parent::getManifest();
 
         /** Read Manifest Information */
@@ -493,7 +493,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     public function update()
     {
         // Get a database connector object
-        $db = parent::getJdbo();
+        $db = parent::getDb();
 
         // Set the overwrite setting
         parent::setOverwrite(true);
@@ -927,7 +927,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     public function uninstall($id)
     {
         // Initialise variables.
-        $db = parent::getJdbo();
+        $db = parent::getDb();
         $row = null;
         $retval = true;
 
@@ -1182,7 +1182,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     protected function _buildAdminMenus()
     {
         // Initialise variables.
-        $db = parent::getJdbo();
+        $db = parent::getDb();
         $table = MolajoModel::getInstance('menu');
         $option = $this->get('element');
 
@@ -1376,7 +1376,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
     protected function _removeAdminMenus(&$row)
     {
         // Initialise Variables
-        $db = parent::getJdbo();
+        $db = parent::getDb();
         $table = MolajoModel::getInstance('menu');
         $id = $row->extension_id;
 
@@ -1520,7 +1520,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
         // now we need to run any SQL it has, languages, media or menu stuff
 
         // Get a database connector object
-        $db = parent::getJdbo();
+        $db = parent::getDb();
 
         // Get the extension manifest object
         $this->manifest = parent::getManifest();

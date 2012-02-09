@@ -99,7 +99,7 @@ class MolajoAccessService
         $action = 'view';
         $action_id = 3;
 
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
@@ -139,7 +139,7 @@ class MolajoAccessService
             return false;
         }
 
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
@@ -176,7 +176,7 @@ class MolajoAccessService
     static public function setQueryViewAccess($query = array(),
                                               $parameters = array())
     {
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
 
         if ($parameters['select'] === true) {
             $query->select($parameters['asset_prefix'] .

@@ -172,7 +172,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
         // Finalization and Cleanup Section
 
         // Get a database connector object
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // Check to see if a module by the same name is already installed
         // If it is, then update the table because if the files aren't there
@@ -453,7 +453,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
             }
 
             // Remove the schema version
-            $db = Molajo::Application()->get('jdb', 'service');
+            $db = Molajo::Application()->get('jdb', '', 'service');
             $query = $db->getQuery(true);
             $query->delete()
                     ->from('#__schemas')
@@ -537,7 +537,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
     protected function extensionExistsInSystem($extension = null)
     {
         // Get a database connector object
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         $query = $db->getQuery(true);
         $query->select($query->qn('extension_id'))

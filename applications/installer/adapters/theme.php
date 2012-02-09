@@ -104,7 +104,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         $this->set('name', $name);
         $this->set('element', $element);
 
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
         $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="theme" AND element = "' . $element . '"');
         $id = $db->loadResult();
 
@@ -310,7 +310,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
         }
 
         // Deny remove default theme
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
         $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->Quote($name);
         $db->setQuery($query->__toString());
 
@@ -472,7 +472,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         if ($this->parent->extension->store()) {
             //insert record in #__theme_styles
-            $db = $this->parent->getJdbo();
+            $db = $this->parent->getDb();
             $query = $db->getQuery(true);
             $query->insert('#__theme_styles');
             $query->set('theme=' . $db->Quote($this->parent->extension->name));

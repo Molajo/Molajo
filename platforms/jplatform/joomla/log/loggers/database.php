@@ -64,7 +64,7 @@ class JLoggerDatabase extends JLogger
      * @var    JDatabase  The database connection object for the logger.
      * @since  11.1
      */
-    protected $dbo;
+    protected $db;
 
     /**
      * Constructor.

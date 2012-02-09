@@ -124,7 +124,7 @@ class MolajoFieldPrefix extends MolajoField
         if (trim($value) == '') {
             return;
         }
-        $db = $this->getJdbo();
+        $db = $this->getDb();
         $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 

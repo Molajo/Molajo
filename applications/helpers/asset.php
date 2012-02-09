@@ -29,7 +29,7 @@ abstract class MolajoAssetHelper
      */
     public static function get($asset_id = 0, $query_request = null)
     {
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
 
         $query = $db->getQuery(true);
 
@@ -230,7 +230,7 @@ abstract class MolajoAssetHelper
      */
     public static function getID($asset_type_id, $source_id)
     {
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->namequote('id') . ' as asset_id');
@@ -273,7 +273,7 @@ abstract class MolajoAssetHelper
      */
     public static function getURL($asset_id)
     {
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $query = $db->getQuery(true);
 
         /** home */

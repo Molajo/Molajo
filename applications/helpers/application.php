@@ -44,7 +44,7 @@ class MolajoApplicationHelper
 
         }  else {
 
-            $db = Molajo::Application()->get('jdb', 'service');
+            $db = Molajo::Application()->get('jdb', '', 'service');
             $query = $db->getQuery(true);
 
             $query->select($db->namequote('id'));
@@ -87,7 +87,6 @@ class MolajoApplicationHelper
             define('MOLAJO_APPLICATION_ID', $id);
         }
 
-        /** unsuccessful */
-        return true;
+        return $row;
     }
 }

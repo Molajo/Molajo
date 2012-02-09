@@ -29,7 +29,7 @@ abstract class MolajoUserService extends JObject
      */
     public static function getUserId($username)
     {
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $query = $db->getQuery(true);
 
         $query->select($db->quoteName('id'));
@@ -59,7 +59,7 @@ abstract class MolajoUserService extends JObject
         if (in_array($group_id, $user->groups)) {
         } else {
 
-            $db = Molajo::Application()->get('jdb', 'service');
+            $db = Molajo::Application()->get('jdb', '', 'service');
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__content`' .
@@ -144,7 +144,7 @@ abstract class MolajoUserService extends JObject
         $user->groups = $groups;
 
         // Get the titles for the user groups.
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $db->setQuery(
             'SELECT `id`, `title`' .
             ' FROM `#__content`' .
@@ -191,7 +191,7 @@ abstract class MolajoUserService extends JObject
     public static function activateUser($activation)
     {
         // Initialize some variables.
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'

@@ -30,7 +30,7 @@ class MolajoConfigurationService
      * @var    object
      * @since  1.0
      */
-    protected $input;
+    public $input;
 
     /**
      * Configuration for Site and Application
@@ -39,7 +39,7 @@ class MolajoConfigurationService
      * @var    $connection
      * @since  1.0
      */
-    protected $configuration = array();
+    public $configuration = array();
 
     /**
      * Custom Fields
@@ -48,7 +48,7 @@ class MolajoConfigurationService
      * @var    $custom_fields
      * @since  1.0
      */
-    protected $custom_fields = array();
+    public $custom_fields = array();
 
     /**
      * Metadata
@@ -57,16 +57,7 @@ class MolajoConfigurationService
      * @var    $metadata
      * @since  1.0
      */
-    protected $metadata = array();
-
-    /**
-     * Log
-     *
-     * @static
-     * @var    $log
-     * @since  1.0
-     */
-    protected $log = array();
+    public $metadata = array();
 
     /**
      * getInstance
@@ -85,8 +76,6 @@ class MolajoConfigurationService
 
     /**
      * __construct
-     *
-     * Retrieves and combines site and application configuration objects
      *
      * @return  object
      * @throws  RuntimeException
@@ -114,15 +103,11 @@ class MolajoConfigurationService
         /** Site Configuration: php file */
         $siteData = $this->getSite();
         foreach ($siteData as $key => $value) {
-            $this->set($key, $value, 'config');
+            $this->set($key, $value);
         }
 
         /** Application Table entry for each application - parameters field has config */
         $appConfig = ApplicationHelper::getApplicationInfo();
-        if ($appConfig === false) {
-            // error fail
-            return false;
-        }
 
         $this->metadata = new Registry;
         $this->metadata->loadString($appConfig->metadata);
@@ -130,32 +115,27 @@ class MolajoConfigurationService
         $this->custom_fields = new Registry;
         $this->custom_fields->loadString($appConfig->custom_fields);
 
-        $temp = substr($appConfig, 1, strlen($appConfig) - 2);
-        $tempArray = array();
-        $tempArray = explode(',', $temp);
-        foreach ($tempArray as $entry) {
+        // todo: amy check this after the interface is working and not test data
+        $parameters = substr($appConfig->parameters, 1, strlen($appConfig->parameters) - 2);
+        $parameters = substr($parameters, 1, strlen($parameters) - 2);
+        $parmArray = array();
+        $parmArray = explode(',', $parameters);
+        foreach ($parmArray as $entry) {
             $pair = explode(':', $entry);
             $key = substr(trim($pair[0]), 1, strlen(trim($pair[0])) - 2);
             if (trim($pair[0]) == '') {
             } else {
                 $value = substr(trim($pair[1]), 1, strlen(trim($pair[1])) - 2);
-                $this->set($key, $value, 'config');
+                $this->set($key, $value);
             }
         }
-
-        /** combined populated */
-        return $this->configuration;
+        return $this;
     }
 
     /**
      * getSite
      *
      * retrieve site configuration object from ini file
-     *
-     * In some cases (ex. DB and Mail connections), the site configuration data
-     * is required before the Application object is instantiated. in those cases,
-     * the site file is directly accessed since this combined data is not yet
-     * available.
      *
      * @return object
      * @throws RuntimeException
@@ -179,60 +159,29 @@ class MolajoConfigurationService
     /**
      * get
      *
-     * Retrieves values, or establishes the value with a default, if not available
-     *
-     * @param  string  $key      The name of the property.
-     * @param  string  $default  The default value (optional) if none is set.
-     * @param  string  $type     custom, metadata, languageObject, config
+     * @param  string  $key
+     * @param  string  $default
      *
      * @return  mixed
-     *
      * @since   1.0
      */
-    public function get($key, $default = null, $type = 'config')
+    public function get($key, $default = null)
     {
-        if ($type == 'custom') {
-            return $this->custom_fields->get($key, $default);
-
-        } else if ($type == 'metadata') {
-            return $this->metadata->get($key, $default);
-
-        } else if ($key == 'logging') {
-            return $this->input;
-
-        } else if ($key == 'input') {
-            return $this->input;
-
-        } else {
-            return $this->configuration->get($key, $default);
-        }
+        return $this->configuration->get($key, $default);
     }
 
     /**
      * set
      *
-     * Modifies a property, creating it and establishing a default if not existing
-     *
-     * @param  string  $key    The name of the property.
-     * @param  mixed   $value  The default value to use if not set (optional).
-     * @param  string  $type   Custom, metadata, config
+     * @param  string  $key
+     * @param  mixed   $value
      *
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null, $type = 'config')
+    public function set($key, $value = null)
     {
-        if ($type == 'custom') {
-            return $this->custom_fields->set($key, $value);
-
-        } else if ($type == 'metadata') {
-            return $this->metadata->set($key, $value);
-
-        } else if ($type == 'logging') {
-            return $this->metadata->set($key, $value);
-
-        } else {
-            return $this->configuration->set($key, $value);
-        }
+        return $this->configuration->set($key, $value);
     }
 }
+

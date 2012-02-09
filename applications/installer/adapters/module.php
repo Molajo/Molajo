@@ -125,7 +125,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
     public function install()
     {
         // Get a database connector object
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // Get the extension manifest object
         $this->manifest = $this->parent->getManifest();
@@ -654,7 +654,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         // Initialise variables.
         $row = null;
         $retval = true;
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // First order of business will be to load the module object table from the database.
         // This should give us the necessary information to proceed.
@@ -851,7 +851,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
     protected function _rollback_menu($arg)
     {
         // Get database connector object
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // Remove the entry from the #__modules_menu table
         $query = 'DELETE' . ' FROM `#__modules_menu`' . ' WHERE moduleid=' . (int)$arg['id'];
@@ -880,7 +880,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
     protected function _rollback_module($arg)
     {
         // Get database connector object
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // Remove the entry from the #__modules table
         $query = 'DELETE' . ' FROM `#__modules`' . ' WHERE id=' . (int)$arg['id'];

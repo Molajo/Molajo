@@ -26,7 +26,6 @@ Class MailService extends MolajoMailService {}
 Class MessageService extends MolajoMessageService {}
 Class SessionService extends MolajoSessionService {}
 Class TextService extends MolajoTextService {}
-Class TransliterateService extends MolajoTransliterateService {}
 Class UrlService extends MolajoUrlService {}
 
 Class ApplicationHelper extends MolajoApplicationHelper {}

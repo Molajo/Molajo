@@ -83,7 +83,7 @@ class MolajoAdapter extends JObject
      *
      * @since   1.0
      */
-    public function getJdbo()
+    public function getDb()
     {
         return $this->db;
     }

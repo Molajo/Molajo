@@ -74,13 +74,13 @@ class MolajoExtensionSitesModel extends MolajoModel
 
     function find($options = Array())
     {
-        $dbo = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $dbo->Quote($val);
+            $where[] = $col . ' = ' . $db->Quote($val);
         }
         $query = 'SELECT update_id FROM #__extension_sites WHERE ' . implode(' AND ', $where);
-        $dbo->setQuery($query->__toString());
-        return $dbo->loadResult();
+        $db->setQuery($query->__toString());
+        return $db->loadResult();
     }
 }

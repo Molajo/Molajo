@@ -328,7 +328,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 case 'extension':
                     // Get database connector object
-                    $db = $this->getJdbo();
+                    $db = $this->getDb();
                     $query = $db->getQuery(true);
 
                     // Remove the entry from the #__extensions table
@@ -887,7 +887,7 @@ class MolajoInstaller extends MolajoAdapter
     public function setSchemaVersion($schema, $eid)
     {
         if ($eid && $schema) {
-            $db = Molajo::Application()->get('jdb', 'service');
+            $db = Molajo::Application()->get('jdb', '', 'service');
             $schemapaths = $schema->children();
 
             if (!$schemapaths) {
@@ -951,7 +951,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Ensure we have an XML element and a valid extension id
         if ($eid && $schema) {
-            $db = Molajo::Application()->get('jdb', 'service');
+            $db = Molajo::Application()->get('jdb', '', 'service');
             $schemapaths = $schema->children();
 
             if (count($schemapaths)) {
@@ -1795,16 +1795,16 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function cleanDiscoveredExtension($type, $element, $folder = '', $client = 0)
     {
-        $dbo = Molajo::Jdb();
-        $query = $dbo->getQuery(true);
-        $query->delete($dbo->quoteName('#__extensions'));
-        $query->where('type = ' . $dbo->Quote($type));
-        $query->where('element = ' . $dbo->Quote($element));
-        $query->where('folder = ' . $dbo->Quote($folder));
+        $db = Molajo::Application()->get('jdb', '', 'service');
+        $query = $db->getQuery(true);
+        $query->delete($db->quoteName('#__extensions'));
+        $query->where('type = ' . $db->Quote($type));
+        $query->where('element = ' . $db->Quote($element));
+        $query->where('folder = ' . $db->Quote($folder));
         $query->where('application_id = ' . intval($client));
         $query->where('state = -1');
 
-        return $dbo->Query();
+        return $db->Query();
     }
 
     /**

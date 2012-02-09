@@ -1068,7 +1068,7 @@ class MolajoRequest
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = Molajo::Application()->get('jdb', 'service');
+        $db = Molajo::Application()->get('jdb', '', 'service');
         $query = $db->getQuery(true);
 
         if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {

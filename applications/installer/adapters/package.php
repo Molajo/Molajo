@@ -308,7 +308,7 @@ class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
      */
     protected function _getExtensionID($type, $id, $client, $group)
     {
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
         $result = $id;
 
         $query = $db->getQuery(true);

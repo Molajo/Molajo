@@ -58,7 +58,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
     {
         // Initialise variables.
         $assetId = null;
-        $db = $this->getJdbo();
+        $db = $this->getDb();
 
         // This is a category under a category.
         if ($this->parent_id > 1) {

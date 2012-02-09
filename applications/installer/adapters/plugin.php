@@ -119,7 +119,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
     public function install()
     {
         // Get a database connector object
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // Get the extension manifest object
         $this->manifest = $this->parent->getManifest();
@@ -492,7 +492,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
         // Initialise variables.
         $row = null;
         $retval = true;
-        $db = $this->parent->getJdbo();
+        $db = $this->parent->getDb();
 
         // First order of business will be to load the plugin object table from the database.
         // This should give us the necessary information to proceed.
