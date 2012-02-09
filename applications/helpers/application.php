@@ -17,14 +17,6 @@ defined('MOLAJO') or die;
 class MolajoApplicationHelper
 {
     /**
-     * @var null $_applications
-     *
-     * @static
-     * @since 1.0
-     */
-    protected static $_applications = null;
-
-    /**
      * getApplicationInfo
      *
      * Retrieves Application info from database
@@ -36,83 +28,66 @@ class MolajoApplicationHelper
      */
     public static function getApplicationInfo()
     {
-        $id = null;
-        if (self::$_applications === null) {
+        $row = new stdClass();
 
-            $obj = new stdClass();
+        if (MOLAJO_APPLICATION == 'installation') {
 
-            if ($name == 'installation') {
-                $id = 0;
-                $obj->id = 0;
-                $obj->name = 'installation';
-                $obj->path = 'installation';
-                $obj->asset_type_id = MOLAJO_ASSET_TYPE_BASE_APPLICATION;
-                $obj->description = '';
-                $obj->custom_fields = '';
-                $obj->parameters = '';
-                $obj->metadata = '';
+            $id = 0;
+            $row->id = 0;
+            $row->name = MOLAJO_APPLICATION;
+            $row->path = MOLAJO_APPLICATION;
+            $row->asset_type_id = MOLAJO_ASSET_TYPE_BASE_APPLICATION;
+            $row->description = '';
+            $row->custom_fields = '';
+            $row->parameters = '';
+            $row->metadata = '';
 
-                self::$_applications[0] = clone $obj;
+        }  else {
 
-            } else {
+            $db = Molajo::Application()->get('jdb', 'service');
+            $query = $db->getQuery(true);
 
-                $db = Molajo::Jdb();
+            $query->select($db->namequote('id'));
+            $query->select($db->namequote('asset_type_id'));
+            $query->select($db->namequote('name'));
+            $query->select($db->namequote('path'));
+            $query->select($db->namequote('description'));
+            $query->select($db->namequote('custom_fields'));
+            $query->select($db->namequote('parameters'));
+            $query->select($db->namequote('metadata'));
+            $query->from($db->namequote('#__applications'));
+            $query->where($db->namequote('name').
+                ' = '.$db->quote(MOLAJO_APPLICATION));
+            $db->setQuery($query->__toString());
+            $results = $db->loadObjectList();
 
-                $query = $db->getQuery(true);
+            if ($db->getErrorNum()) {
+                return new MolajoException($db->getErrorMsg());
+            }
 
-                $query->select($db->namequote('id'));
-                $query->select($db->namequote('asset_type_id'));
-                $query->select($db->namequote('name'));
-                $query->select($db->namequote('path'));
-                $query->select($db->namequote('description'));
-                $query->select($db->namequote('custom_fields'));
-                $query->select($db->namequote('parameters'));
-                $query->select($db->namequote('metadata'));
+            if (count($results) == 0) {
+                // todo: amy error;
+            }
 
-                $query->from($db->namequote('#__applications'));
-
-                $db->setQuery($query->__toString());
-
-                $query->where($db->namequote('name').' = '.$db->quote($name));
-
-                $results = $db->loadObjectList();
-                if ($db->getErrorNum()) {
-                    return new MolajoException($db->getErrorMsg());
-                }
-                if (count($results) == 0) {
-                    //amy error;
-                }
-
-                foreach ($results as $result) {
-
-                    $obj->id = $result->id;
-                    $id = $result->id;
-                    $obj->name = $result->name;
-                    $obj->path = $result->path;
-                    $obj->asset_type_id = $result->asset_type_id;
-                    $obj->description = $result->description;
-                    $obj->custom_fields = $result->custom_fields;
-                    $obj->parameters = $result->parameters;
-                    $obj->metadata = $result->metadata;
-
-                    self::$_applications[$id] = clone $obj;
-                }
+            foreach ($results as $result) {
+                $row->id = $result->id;
+                $id = $result->id;
+                $row->name = $result->name;
+                $row->path = $result->path;
+                $row->asset_type_id = $result->asset_type_id;
+                $row->description = $result->description;
+                $row->custom_fields = $result->custom_fields;
+                $row->parameters = $result->parameters;
+                $row->metadata = $result->metadata;
             }
         }
 
-        if (isset(self::$_applications[$id])) {
-            return self::$_applications[$id];
+        if (defined('MOLAJO_APPLICATION_ID')) {
+        } else {
+            define('MOLAJO_APPLICATION_ID', $id);
         }
 
         /** unsuccessful */
-        return null;
+        return true;
     }
 }
-
-/**
-
-    if (defined('MOLAJO_APPLICATION_ID')) {
-    } else {
-        define('MOLAJO_APPLICATION_ID', $results->id);
-    }
- */

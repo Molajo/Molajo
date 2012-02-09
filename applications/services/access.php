@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Access Control
+ * Access
  *
  * Various methods for Asset permissioning verification
  *
@@ -70,10 +70,13 @@ class MolajoAccessService
         if ($asset_id == 0) {
             return;
         }
-
         $taskPermissions = array();
         foreach ($tasklist as $task) {
-            $taskPermissions[$task] = MolajoAccessService::authoriseTask($task, $asset_id);
+            $taskPermissions[$task] =
+                MolajoAccessService::authoriseTask(
+                    $task,
+                    $asset_id
+                );
         }
     }
 
@@ -96,7 +99,7 @@ class MolajoAccessService
         $action = 'view';
         $action_id = 3;
 
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
@@ -136,7 +139,7 @@ class MolajoAccessService
             return false;
         }
 
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
@@ -173,7 +176,7 @@ class MolajoAccessService
     static public function setQueryViewAccess($query = array(),
                                               $parameters = array())
     {
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
 
         if ($parameters['select'] === true) {
             $query->select($parameters['asset_prefix'] .

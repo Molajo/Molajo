@@ -54,7 +54,7 @@ class MolajoConfigurationService
      * Metadata
      *
      * @static
-     * @var    $custom_fields
+     * @var    $metadata
      * @since  1.0
      */
     protected $metadata = array();
@@ -94,17 +94,31 @@ class MolajoConfigurationService
      */
     public function __construct()
     {
-        $config = new Registry;
-        $siteConfig = new Registry;
+
+    }
+
+    /**
+     * __construct
+     *
+     * Retrieves and combines site and application configuration objects
+     *
+     * @return  object
+     * @throws  RuntimeException
+     * @since   1.0
+     */
+    public function connect()
+    {
+        $this->configuration = new Registry;
+        $siteData = new Registry;
 
         /** Site Configuration: php file */
-        $configData = $this->getSite();
-        foreach ($configData as $key => $value) {
-            $this->set($key, $value);
+        $siteData = $this->getSite();
+        foreach ($siteData as $key => $value) {
+            $this->set($key, $value, 'config');
         }
 
         /** Application Table entry for each application - parameters field has config */
-        $appConfig = ApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION_ID);
+        $appConfig = ApplicationHelper::getApplicationInfo();
         if ($appConfig === false) {
             // error fail
             return false;
@@ -116,13 +130,6 @@ class MolajoConfigurationService
         $this->custom_fields = new Registry;
         $this->custom_fields->loadString($appConfig->custom_fields);
 
-        $cc = new ConfigurationService();
-        $this->configuration = $cc->getConfig($appConfig->parameters);
-
-        //todo: amy replace profiler
-        $this->set('application.datetime', gmdate('Y-m-d H:i:s'));
-        $this->set('application.timestamp', time());
-
         $temp = substr($appConfig, 1, strlen($appConfig) - 2);
         $tempArray = array();
         $tempArray = explode(',', $temp);
@@ -132,7 +139,7 @@ class MolajoConfigurationService
             if (trim($pair[0]) == '') {
             } else {
                 $value = substr(trim($pair[1]), 1, strlen(trim($pair[1])) - 2);
-                $this->set($key, $value);
+                $this->set($key, $value, 'config');
             }
         }
 

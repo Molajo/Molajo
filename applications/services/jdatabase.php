@@ -81,7 +81,6 @@ class MolajoJdatabaseService
             require_once $configuration_file;
         } else {
             throw new RuntimeException('Fatal error - Application-Site Configuration File does not exist');
-            return;
         }
 
         $site = new $configuration_class();

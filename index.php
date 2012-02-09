@@ -19,12 +19,20 @@ define('DS', DIRECTORY_SEPARATOR);
 define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
 
 /**
- *  OVERRIDE PATHS TO PRIMARY FOLDERS USING THE FOLLOWING DEFINES.PHP FILES
+ *  OVERRIDE
+ *
+ * $siteConfig and $appConfig - to pass in configuration data
+ *
+ * Overriding these will get all folders needed:
  *  - applications - define MOLAJO_APPLICATIONS_CORE
  *  - extensions - define MOLAJO_APPLICATIONS_CORE
  *  - platforms - define PLATFORMS
- *  - sites - define MOLAJO_SITES_BASE_FOLDER _and_ update the sites.xml file folderpath value
+ *  - sites - define MOLAJO_SITES_BASE_FOLDER
+ * _and_ update the sites.xml file folderpath value
+ *
  */
+$siteConfig = array();
+$appConfig = array();
 if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
     include_once MOLAJO_BASE_FOLDER . '/defines.php';
 }
@@ -146,6 +154,7 @@ if (defined('MOLAJO_PAGE_REQUEST')) {
     }
     define('MOLAJO_PAGE_REQUEST', $pageRequest);
 }
+
 /*                                              */
 /*  Lazy Load Classes                           */
 /*                                              */
@@ -164,21 +173,6 @@ require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-simplepie.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-sfevent.php';
 
 /**
- *  Services
+ *  Go Molajo.
  */
-$services = Services::getInstance();
-$results = $services->connectStandardServices();
-var_dump($results);
-die;
-/**
- *  Base
- */
-$site = MolajoBase::getSite(MOLAJO_SITE_ID);
-$site->load();
-
-/**
- *  Activation
- */
-$app = MolajoBase::getApplication(MOLAJO_APPLICATION);
-$app->load();
-
+$site = Molajo::Site();

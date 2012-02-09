@@ -26,7 +26,7 @@ abstract class MolajoContentHelper
      */
     static public function get($id, $content_table)
     {
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $query = $db->getQuery(true);
         $date = Molajo::Date();
         $now = $date->toMySQL();

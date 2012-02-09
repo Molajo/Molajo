@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<services>
+    <service>
+        <name>jdb</name>
+        <serviceClass>MolajoJdatabaseService</serviceClass>
+        <getInstance></getInstance>
+        <connect>
+            <parameters>
+                <parameter key="file" value="/users/amystephen/sites/molajo/sites/1/configuration.php"/>
+                <parameter key="configuration_class" value="MolajoSiteConfiguration"/>
+            </parameters>
+        </connect>
+    </service>
+</services>

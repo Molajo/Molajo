@@ -887,7 +887,7 @@ class MolajoInstaller extends MolajoAdapter
     public function setSchemaVersion($schema, $eid)
     {
         if ($eid && $schema) {
-            $db = Molajo::Jdb();
+            $db = Molajo::Application()->get('jdb', 'service');
             $schemapaths = $schema->children();
 
             if (!$schemapaths) {
@@ -951,7 +951,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Ensure we have an XML element and a valid extension id
         if ($eid && $schema) {
-            $db = Molajo::Jdb();
+            $db = Molajo::Application()->get('jdb', 'service');
             $schemapaths = $schema->children();
 
             if (count($schemapaths)) {

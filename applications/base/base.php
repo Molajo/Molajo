@@ -8,7 +8,9 @@
 defined('MOLAJO') or die;
 
 /**
- * Molajo Factory
+ * Molajo Base
+ *
+ * Creates static instances of base clases
  *
  * Alias Molajo
  */
@@ -76,22 +78,14 @@ class MolajoBase
      * MolajoSite, alias Molajo::Site
      *
      * @static
-     * @param   null   $id
-     * @param   array  $config
-     * @param   string $prefix
-     *
      * @return  null|Site
      * @since   1.0
      */
-    public static function getSite($id = null,
-                                   Registry $config = null)
+    public static function getSite()
     {
         if (self::$site) {
         } else {
-            self::$site = MolajoSite::getInstance(
-                $id,
-                $config
-            );
+            self::$site = MolajoSite::getInstance();
         }
         return self::$site;
     }
@@ -102,23 +96,17 @@ class MolajoBase
      * MolajoApplication, alias Molajo::Application
      *
      * @static
-     * @param   null   $id
-     * @param   array  $config
-     * @param   string $prefix
+     * @param   object JInput
      *
-     * @return  Site
+     * @return  Application
      * @since   1.0
      */
-    public static function getApplication($id = null,
-                                          Registry $config = null,
-                                          Input $input = null)
+    public static function getApplication(Input $input = null)
     {
         if (self::$application) {
         } else {
             self::$application =
                 MolajoApplication::getInstance(
-                    $id,
-                    $config,
                     $input
                 );
         }
@@ -160,21 +148,15 @@ class MolajoBase
      * MolajoParser, alias Molajo::Parser
      *
      * @static
-     * @param   Registry|null $config
-     * @param   string $override_request_url
-     * @param   string $override_asset_id
-     *
      * @return  Request|null
      * @since   1.0
      */
-    public static function getParser(Registry $config = null)
+    public static function getParser()
     {
         if (self::$parser) {
         } else {
             self::$parser =
-                MolajoParser::getInstance(
-                    $config
-                );
+                MolajoParser::getInstance();
         }
         return self::$parser;
     }
@@ -185,21 +167,18 @@ class MolajoBase
      * MolajoRender, alias Molajo::Renderer
      *
      * @static
-     * @param   Registry|null $config
      * @param   string $override_request_url
      * @param   string $override_asset_id
      *
-     * @return  Request|null
+     * @return  Render|null
      * @since   1.0
      */
-    public static function getRenderer(Registry $config = null)
+    public static function getRenderer()
     {
         if (self::$renderer) {
         } else {
             self::$renderer =
-                MolajoRenderer::getInstance(
-                    $config
-                );
+                MolajoRenderer::getInstance();
         }
         return self::$renderer;
     }
@@ -210,19 +189,15 @@ class MolajoBase
      * MolajoResponder, alias Molajo::Responder
      *
      * @static
-     * @param   Registry|null $config
-     *
      * @return  Responder|null
      * @since   1.0
      */
-    public static function getResponder(Registry $config = null)
+    public static function getResponder()
     {
         if (self::$responder) {
         } else {
             self::$responder =
-                MolajoResponder::getInstance(
-                    $config
-                );
+                MolajoResponder::getInstance();
         }
         return self::$responder;
     }

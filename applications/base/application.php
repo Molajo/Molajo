@@ -41,72 +41,46 @@ class MolajoApplication
     protected $_input;
 
     /**
+     * Service Connections
+     *
+     * @var object
+     * @since 1.0
+     */
+    protected $_service;
+
+    /**
      * getInstance
      *
      * @static
-     * @param  null $id
-     * @param  Registry|null $config
      * @param  Input|null $input
      *
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance(Registry $config = null,
-                                       Input $input = null)
+    public static function getInstance(Input $input = null)
     {
         if (empty(self::$instance)) {
-
-            if ($input instanceof Input) {
-            } else {
-                $input = new Input;
-            }
-
-            if ($config instanceof Registry) {
-            } else {
-                $config = new Registry;
-            }
-
-            self::$instance = new MolajoApplication($config, $input);
+            self::$instance = new MolajoApplication (
+                $input
+            );
         }
-
         return self::$instance;
     }
 
     /**
      * Class constructor.
      *
-     * @param  mixed   $config
      * @param  mixed   $input
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct(Registry $config = null,
-                                Input $input = null)
+    public function __construct(Input $input = null)
     {
-        if ($config instanceof Registry) {
-            $this->_config = $config;
-        } else {
-            //error
-        }
-
         if ($input instanceof Input) {
             $this->_input = $input;
         }
-
-        /** ssl check for application */
-        if ($this->get('force_ssl') >= 1) {
-            if (isset($_SERVER['HTTPS'])) {
-            } else {
-                Molajo::Responder()->redirect((string)'https' .
-                        substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
-                        MOLAJO_APPLICATION_URL_PATH .
-                        '/' .
-                        MOLAJO_PAGE_REQUEST
-                );
-            }
-        }
-
+        /** return to site class */
         return;
     }
 
@@ -120,35 +94,26 @@ class MolajoApplication
      */
     public function load()
     {
-        /** is site authorised? */
-        $sc = new MolajoSite ();
-        $authorise = $sc->authorise(MOLAJO_APPLICATION_ID);
-        if ($authorise === false) {
-            $message = '304: ' . MOLAJO_BASE_URL;
-            echo $message;
-            die;
-        }
-
-        /** Application Services */
-        //        $services = Services::getInstance();
-        $language = Services::connect('language', array('language', 'en-GB'));
-        //        $results = Services::connect('language', array('language', 'en-GB'));
-
-
-        var_dump($language);
-        die;
-        Molajo::Dispatcher();
-
-        Molajo::Language();
-
-        Molajo::Session();
-
-        Molajo::User();
+        /** initiate application services */
+        $this->initiateApplicationServices();
 
         /** responder: instantiate class to listen for output */
         $res = Molajo::Responder();
 
-        /** request: build page_request object with processing instructions */
+        /** configuration: ssl check for application */
+        if ($this->get('force_ssl') >= 1) {
+           if (isset($_SERVER['HTTPS'])) {
+           } else {
+               $res->redirect((string)'https' .
+                       substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
+                       MOLAJO_APPLICATION_URL_PATH .
+                       '/' .
+                       MOLAJO_PAGE_REQUEST
+               );
+           }
+        }
+
+        /** request: define processing instructions in page_request object */
         $req = Molajo::Request();
         $req->process();
 
@@ -165,6 +130,7 @@ class MolajoApplication
          * 3. MVC: executes task/controller which handles model processing and
          *    renders template and wrap views
          */
+
         if ($req->get('mvc_task') == 'add'
             || $req->get('mvc_task') == 'edit'
             || $req->get('mvc_task') == 'display'
@@ -184,6 +150,120 @@ class MolajoApplication
         $res->respond();
 
         return;
+    }
+
+    /**
+     * initiateApplicationServices
+     *
+     * loads all services defined in the services.xml file
+     *
+     * @param null|Registry $config
+     *
+     * @return mixed
+     * @since 1.0
+     */
+    protected function initiateApplicationServices()
+    {
+        $services = simplexml_load_file(
+            MOLAJO_APPLICATIONS_CORE . '/services/services.xml'
+        );
+        if (count($services) == 0) {
+            return;
+        }
+        $this->_service = new Registry();
+
+        foreach ($services->service as $s) {
+            $serviceName = (string)$s->name;
+            $connection = $this->connectService ($s);
+            if ($connection === false) {
+            } else {
+                $this->set($serviceName, $connection, 'service');
+                echo $serviceName.'<br />';
+            }
+        }
+
+        $db = Molajo::Application()->get('jdb', '', 'service');
+        echo 'out';
+        var_dump($db);
+    }
+
+    /**
+     * connectService
+     *
+     * @param $service
+     * @return bool
+     */
+    protected function connectService ($service)
+    {
+        $serviceName = (string)$service->name;
+
+        if (trim($serviceName) == '') {
+            return false;
+        }
+
+        if (substr($serviceName, 0, 4) == 'HOLD') {
+            return false;
+        }
+
+        $serviceClass = (string)$service->serviceClass;
+        if (trim($serviceClass == '')) {
+            $serviceClass = 'Molajo'.ucfirst($serviceName).'Service';
+        }
+
+        /** getInstance Method Parameters */
+        $instanceParameters = array();
+        if (isset($service->getInstance->parameters->parameter)) {
+            foreach ($service->getInstance->parameters->parameter as $p) {
+                $name = (string)$p['name'];
+                $value = (string)$p['value'];
+                $instanceParameters[$name] = $value;
+            }
+        }
+
+        /** connect Method Parameters */
+        $connectParameters = array();
+        if (isset($service->connect->parameters->parameter)) {
+            foreach ($service->connect->parameters->parameter as $p) {
+                $name = (string)$p['key'];
+                $value = (string)$p['value'];
+                $connectParameters[$name] = $value;
+            }
+        }
+
+        /** instantiate a static instance of the class */
+        if (method_exists($serviceClass, 'getInstance')) {
+            $results = call_user_func(
+                array($serviceClass, 'getInstance'),
+                $instanceParameters
+            );
+            if ($results === false) {
+                return false;
+            }
+        }
+
+        /** connect in object context */
+        if (method_exists($serviceClass, 'connect')) {
+
+            /** parameters from array to string */
+            $cp = '';
+            foreach ($connectParameters as $key => $value) {
+                if ($cp !== '') {
+                    $cp .= ',';
+                }
+                $cp .= '$' . $key . '="' . $value . '"';
+            }
+
+            /** connect */
+            $objectContext = new $serviceClass ();
+            $execute = '$connection = $objectContext->connect(' . $cp . ');';
+            eval($execute);
+
+            if ($connection == false) {
+                return false;
+            } else {
+                return $connection;
+            }
+        }
     }
 
     /**
@@ -207,11 +287,14 @@ class MolajoApplication
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
 
-        } else if ($key == 'logging') {
+        } else if ($type == 'logging') {
             return $this->_input;
 
-        } else if ($key == 'input') {
+        } else if ($type == 'input') {
             return $this->_input;
+
+        } else if ($type == 'service') {
+            return $this->_service->get($key);
 
         } else {
             return $this->_config->get($key, $default);
@@ -241,9 +324,27 @@ class MolajoApplication
         } else if ($type == 'logging') {
             return $this->_metadata->set($key, $value);
 
+        } else if ($type == 'service') {
+            return $this->_service->set($key, $value);
+
         } else {
             return $this->_config->set($key, $value);
         }
+    }
+
+    /**
+     * getHash
+     *
+     * Provides a secure hash based on a seed
+     *
+     * @param   string   $seed  Seed string.
+     *
+     * @return  string   A secure hash
+     * @since  1.0
+     */
+    public static function getHash($seed)
+    {
+        return md5(self::get('secret') . $seed);
     }
 
     /**
@@ -306,20 +407,5 @@ class MolajoApplication
     public function getSession()
     {
         return $this->_session;
-    }
-
-    /**
-     * getHash
-     *
-     * Provides a secure hash based on a seed
-     *
-     * @param   string   $seed  Seed string.
-     *
-     * @return  string   A secure hash
-     * @since  1.0
-     */
-    public static function getHash($seed)
-    {
-        return md5(self::get('secret') . $seed);
     }
 }

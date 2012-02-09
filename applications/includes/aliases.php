@@ -46,14 +46,14 @@ Class ViewHelper extends MolajoViewHelper {}
  */
 class Molajo extends MolajoBase
 {
-    public static function Site($id = null, Registry $config = null)
+    public static function Site()
     {
-        return MolajoBase::getSite($id, $config);
+        return MolajoBase::getSite();
     }
 
-    public static function Application($id = null, Registry $config = null, Input $input = null)
+    public static function Application(Input $input = null)
     {
-        return MolajoBase::getApplication($id, $config, $input);
+        return MolajoBase::getApplication($input);
     }
 
     public static function Request($request = null, $override_request_url = null, $override_asset_id = null)
@@ -61,19 +61,19 @@ class Molajo extends MolajoBase
         return MolajoBase::getRequest($request, $override_request_url, $override_asset_id);
     }
 
-    public static function Parser(Registry $config = null)
+    public static function Parser()
     {
-        return MolajoBase::getParser($config);
+        return MolajoBase::getParser();
     }
 
-    public static function Renderer(Registry $config = null)
+    public static function Renderer()
     {
-        return MolajoBase::getRenderer($config);
+        return MolajoBase::getRenderer();
     }
 
-    public static function Responder(Registry $config = null)
+    public static function Responder()
     {
-        return MolajoBase::getResponder($config);
+        return MolajoBase::getResponder();
     }
 
     public static function User($id = null)
@@ -90,8 +90,6 @@ abstract class JFactory extends MolajoBase
 /**
  *  Molajo Class for alias creation, ex Molajo::User
  */
-class Services extends MolajoServices {}
-
 class Registry extends JRegistry {}
 class Input extends JInput {}
 class FilterInput extends JFilterInput {}

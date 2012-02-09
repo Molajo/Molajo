@@ -111,7 +111,7 @@ class MolajoSessionService extends JObject
      */
     protected function _removeExpiredSessions()
     {
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
@@ -133,7 +133,7 @@ class MolajoSessionService extends JObject
      */
     protected function _checkSession()
     {
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $session = Molajo::Application()->getSession();
         $user = Molajo::User();
 

@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
 class MolajoSite
 {
     /**
-     * static instances
+     * $instance
      *
      * @var    object
      * @since  1.0
@@ -23,86 +23,52 @@ class MolajoSite
     public static $instance = null;
 
     /**
-     * $_config
+     * $config
      *
      * @var    integer
      * @since  1.0
      */
-    protected $_config = null;
+    protected $config = null;
 
     /**
-     * $_siteQueryResults
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_siteQueryResults = null;
-
-    /**
-     * $_base_url
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $_base_url = null;
-
-    /**
-     * $_applications
+     * $applications
      *
      * Applications the site is authorized to access
      *
      * @var    array
      * @since  1.0
      */
-    protected $_applications = null;
+    protected $applications = null;
 
     /**
-     * $_parameters
+     * $parameters
      *
      * @var    array
      * @since  1.0
      */
-    protected $_parameters = null;
+    protected $parameters = null;
 
     /**
-     * $_custom_fields
+     * $custom_fields
      *
      * @var    array
      * @since  1.0
      */
-    protected $_custom_fields = null;
+    protected $custom_fields = null;
 
     /**
      * getInstance
      *
      * Returns the global site object, creating if not existing
      *
-     * @param   $id site id
-     * @param   Registry $config
-     *
      * @return  site  object
      * @since   1.0
      */
-    public static function getInstance($id = null,
-                                       Registry $config = null)
+    public static function getInstance()
     {
         if (self::$instance) {
         } else {
-
-            if ($config instanceof Registry) {
-            } else {
-                $config = new Registry;
-            }
-
-            $info = SiteHelper::getSiteInfo($id);
-            if ($info === false) {
-                return false;
-            }
-
-            self::$instance = new MolajoSite (
-                $config,
-                $info
-            );
+            self::$instance = new MolajoSite ();
         }
         return self::$instance;
     }
@@ -112,17 +78,11 @@ class MolajoSite
      *
      * Class constructor.
      *
-     * @param  Registry $config
-     * @param  $_appQueryResults
-     *
      * @since  1.0
      */
-    public function __construct($config = null,
-                                $_appQueryResults = null)
+    public function __construct()
     {
-
-        $this->_config = $config;
-        $this->_siteQueryResults = $_appQueryResults;
+        $this->load();
     }
 
     /**
@@ -136,6 +96,25 @@ class MolajoSite
      */
     public function load()
     {
+
+       $app = Molajo::Application();
+
+        $app->load();
+        $this->_setPaths();
+
+        $info = SiteHelper::getSiteInfo();
+        if ($info === false) {
+            return false;
+        }
+        /** is site authorised? */
+        $sc = new MolajoSite ();
+        $authorise = $sc->authorise(MOLAJO_APPLICATION_ID);
+        if ($authorise === false) {
+            $message = '304: ' . MOLAJO_BASE_URL;
+            echo $message;
+            die;
+        }
+
         $this->_custom_fields = new Registry;
         $this->_custom_fields->loadString($this->_siteQueryResults->custom_fields);
 
@@ -146,8 +125,10 @@ class MolajoSite
         $this->_metadata->loadString($this->_siteQueryResults->metadata);
 
         $this->_base_url = $this->_siteQueryResults->base_url;
+        echo 'here';
+        die;
 
-        self::_setPaths();
+
     }
 
     /**

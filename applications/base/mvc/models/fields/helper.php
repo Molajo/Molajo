@@ -74,7 +74,7 @@ abstract class MolajoFieldHelper
      */
     protected function _getSimpleQuery($idField, $displayField, $tableName)
     {
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $query = $db->getQuery(true);
 
         $query->select($db->namequote($idField));

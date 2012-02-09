@@ -829,7 +829,7 @@ class MolajoModel extends JObject
             return false;
         }
 
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         $db->setQuery(
             'SELECT COUNT(user_id)' .
                 ' FROM ' . $db->quoteName('#__sessions') .

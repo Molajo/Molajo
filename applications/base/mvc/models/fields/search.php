@@ -80,7 +80,7 @@ class MolajoFieldSearch extends MolajoField
      */
     public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
-        $db = Molajo::Jdb();
+        $db = Molajo::Application()->get('jdb', 'service');
         if ($value == null || trim($value) == '') {
             return;
         }
