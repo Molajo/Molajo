@@ -98,7 +98,7 @@ class MolajoSite
     {
         /** Instantiate Application */
         $app = Molajo::Application();
-        $app->load();
+        $app->initialize();
 
         /** Set Site Paths */
         $this->_setPaths();
@@ -127,6 +127,11 @@ class MolajoSite
         $this->_metadata->loadString($this->_siteQueryResults->metadata);
 
         $this->_base_url = $this->_siteQueryResults->base_url;
+
+        /** Primary Application Logic Flow */
+        $app->process();
+
+        return;
     }
 
     /**

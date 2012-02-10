@@ -83,26 +83,23 @@ class MolajoApplication
     }
 
     /**
-     * load
+     * initialize
      *
-     * Controls Page Rendering and Task Logic Flow
+     * Load application services and verify required settings
      *
      * @return  mixed
      * @since   1.0
      */
-    public function load()
+    public function initialize()
     {
         /** Services: initiate Application Services */
         $sv = Molajo::Services()->initiateServices();
-
-        /** responder: listen for output */
-        $rs = Molajo::Responder();
 
         /** configuration: ssl check for application */
         if ($this->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {
             } else {
-                $rs->redirect((string)'https' .
+                Molajo::Responder()->redirect((string)'https' .
                         substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
                         MOLAJO_APPLICATION_URL_PATH .
                         '/' .
@@ -111,11 +108,28 @@ class MolajoApplication
             }
         }
 
+        /** return to Molajo::Site */
+        return;
+    }
+
+    /**
+     * process
+     *
+     * Primary Application Logic Flow
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function process()
+    {
+
+        /** responder: prepare for output */
+        $rs = Molajo::Responder();
+
         /** request: define processing instructions in page_request object */
         $rq = Molajo::Request();
         $rq->process();
-var_dump($rq);
-        die;
+
         /**
          * Display Task
          *
@@ -160,7 +174,7 @@ var_dump($rq);
      * @return  mixed
      * @since   1.0
      */
-    public function setApplicationProperties ($configuration)
+    public function setApplicationProperties($configuration)
     {
         $this->_metadata = $configuration->metadata;
         $this->_custom_fields = $configuration->custom_fields;
@@ -192,7 +206,7 @@ var_dump($rq);
             return $this->_log->get($key, $default);
 
         } else {
-//echo $key.' '.$default.' '.$type;
+            //echo $key.' '.$default.' '.$type;
             return $this->_configuration->get($key, $default);
         }
     }
