@@ -49,12 +49,30 @@ class MolajoApplication
     protected $_custom_fields;
 
     /**
+     * Services Loaded
+     *
+     * @static
+     * @var    $services
+     * @since  1.0
+     */
+    protected $_languages;
+
+    /**
      * Log
      *
      * @var object
      * @since 1.0
      */
     protected $_log;
+
+    /**
+     * Services Loaded
+     *
+     * @static
+     * @var    $services
+     * @since  1.0
+     */
+    protected $_services;
 
     /**
      * getInstance
@@ -93,6 +111,7 @@ class MolajoApplication
     public function initialize()
     {
         /** Services: initiate Application Services */
+        $this->_services = new Registry();
         $sv = Molajo::Services()->initiateServices();
 
         /** configuration: ssl check for application */
@@ -122,14 +141,9 @@ class MolajoApplication
      */
     public function process()
     {
-        var_dump(Molajo::Services()->connect('Language'));
-        /**
-        "language":"en-GB",
-        "direction":"ltr",
-        "offset":"UTC",
-        "offset_user":"UTC",
-        */
-        die;
+
+        echo $this->get('language','','language');
+        echo $this->get('rtl','','language');
         /** responder: prepare for output */
         Molajo::Responder();
 
@@ -174,7 +188,7 @@ class MolajoApplication
     /**
      * setApplicationProperties
      *
-     * Called from Services after Application Configuration loaded
+     * Called from Services after Application Configuration
      *
      * @param   $configuration
      * @return  mixed
@@ -185,8 +199,30 @@ class MolajoApplication
         $this->_metadata = $configuration->metadata;
         $this->_custom_fields = $configuration->custom_fields;
         $this->_configuration = $configuration->configuration;
-
         return;
+    }
+
+    /**
+     * setLanguageProperties
+     *
+     * Called from Services after Language started
+     *
+     * @param   $configuration
+     * @return  mixed
+     * @since   1.0
+     */
+    public function setLanguageProperties($configuration)
+    {
+        $this->_language = new Registry();
+        
+        $this->set('language', $configuration->language, 'language');
+        $this->set('name', $configuration->name, 'language');
+        $this->set('tag', $configuration->tag, 'language');
+        $this->set('rtl', $configuration->rtl, 'language');
+        $this->set('locale', $configuration->locale, 'language');
+        $this->set('first_day', $configuration->first_day, 'language');
+
+        return true;
     }
 
     /**
@@ -210,6 +246,12 @@ class MolajoApplication
 
         } else if ($type == 'log') {
             return $this->_log->get($key, $default);
+
+        } else if ($type == 'services') {
+            return $this->_services->get($key, false);
+
+        } else if ($type == 'language') {
+            return $this->_language->get($key);
 
         } else {
             //echo $key.' '.$default.' '.$type;
@@ -237,6 +279,12 @@ class MolajoApplication
 
         } else if ($type == 'log') {
             return $this->_log->set($key, $value);
+
+        } else if ($type == 'services') {
+            return $this->_services->set($key, true);
+
+        } else if ($type == 'language') {
+            return $this->_language->set($key, $value);
 
         } else {
             return $this->_configuration->set($key, $value);

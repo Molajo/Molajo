@@ -90,7 +90,13 @@ class MolajoServices
                 if ($serviceName == 'Application') {
                     Molajo::Application()
                         ->setApplicationProperties ($connection);
+                } else if ($serviceName == 'Language') {
+                    Molajo::Application()
+                        ->setLanguageProperties ($connection);
                 }
+                /** used to check dependencies */
+                Molajo::Application()
+                    ->set($serviceName, true, 'services');
             }
         }
 

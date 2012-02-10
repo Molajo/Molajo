@@ -27,9 +27,10 @@ class MolajoLanguageHelper
     public function get()
     {
         /** Installed Languages */
-        $languages = ExtensionHelper::get(
-            MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE
+        $languages = LanguageHelper::getLanguages(
+            MOLAJO_EXTENSIONS_LANGUAGES
         );
+
         $installed = array();
         foreach ($languages as $language) {
             $installed[] = $language->subtitle;
@@ -129,12 +130,17 @@ class MolajoLanguageHelper
     public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
     {
         if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
-            return ExtensionHelper::get(
-                MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE
-            );
+            if (Molajo::Application()->get('Date', false, 'services') === false) {
+                return LanguageHelper::getLanguagesCore();
+            } else {
+                return ExtensionHelper::get(
+                    MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE
+                );
+            }
         }
 
         $languages = array();
+
         $files = JFolder::files($path . '/language', '\.ini', false, false);
         if (count($files) == 0) {
             return false;
@@ -145,6 +151,31 @@ class MolajoLanguageHelper
 
             $language->title = substr($file, 0, strlen($file) - 4);
             $language->subtitle = substr($file, 0, strlen($file) - 4);
+
+            $languages[] = $language;
+        }
+
+        return $languages;
+    }
+
+    /**
+     * getLanguagesCore
+     *
+     * During Service Initiation, the language service is started before
+     * the Date Service. This routine is used at that time in lieu of
+     * ability to query where date comparisons are needed.
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getLanguagesCore()
+    {
+        $subfolders = JFolder::folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        foreach ($subfolders as $path) {
+            $language = new stdClass();
+
+            $language->title = $path;
+            $language->subtitle = $path;
 
             $languages[] = $language;
         }

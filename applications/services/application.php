@@ -236,7 +236,7 @@ class MolajoApplicationService
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $type = null)
     {
         return $this->configuration->get($key, $default);
     }
@@ -250,7 +250,7 @@ class MolajoApplicationService
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null)
+    public function set($key, $value = null, $type = null)
     {
         return $this->configuration->set($key, $value);
     }

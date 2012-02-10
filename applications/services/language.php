@@ -2,7 +2,6 @@
 /**
  * @package     Molajo
  * @subpackage  Service
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -26,52 +25,68 @@ class MolajoLanguageService
     protected static $_languages = array();
 
     /**
-     * The default language
+     * Language
      *
      * @var    string
      * @since  1.0
      */
-    protected $_default = 'en-GB';
+    public $language = null;
 
     /**
-     * Language metadata
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $_metadata = null;
-
-    /**
-     * Language locale
-     *
-     * @var    array|boolean
-     * @since  1.0
-     */
-    protected $_locale = null;
-
-    /**
-     * Language to load
+     * Name
      *
      * @var    string
      * @since  1.0
      */
-    protected $_language = null;
+    public $name = null;
 
     /**
-     * Loaded Language files
+     * Tag
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $tag = null;
+
+    /**
+     * rtl
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $rtl = null;
+
+    /**
+     * locale
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $locale = null;
+
+    /**
+     * first_day
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $first_day = null;
+
+    /**
+     * Loaded Language Files
      *
      * @var    array
      * @since  1.0
      */
-    protected $_paths = array();
+    protected $paths = array();
 
     /**
-     * Translations
+     * Loaded Translation Strings
      *
      * @var    array
      * @since  1.0
      */
-    protected $_strings = null;
+    protected $strings = array();
 
     /**
      * Overrides loaded
@@ -93,9 +108,6 @@ class MolajoLanguageService
      */
     public static function getInstance($language = null)
     {
-        if ($language == null) {
-            $language = MolajoLanguageHelper::get();
-        }
         if (isset(self::$_languages[$language])) {
         } else {
             self::$_languages[$language] = new MolajoLanguageService($language);
@@ -106,8 +118,6 @@ class MolajoLanguageService
     /**
      * __construct
      *
-     * Constructor activating default information of the language.
-     *
      * @param   string  $language
      *
      * @return  null
@@ -115,305 +125,97 @@ class MolajoLanguageService
      */
     public function __construct($language = null)
     {
-        $this->_language = $language;
-
-        $this->_strings = array();
+        if ($language == null || $language == '') {
+            $language = MolajoLanguageHelper::get();
+        }
+        $this->language = $language;
 
         /** load metadata */
-        $this->_setMetadata($language);
+        $metadata = $this->_getMetadata();
+
+        if (isset($metadata['name'])) {
+            $this->name = $metadata['name'];
+        }
+        if (isset($metadata['tag'])) {
+            $this->tag = $metadata['tag'];
+        }
+        if (isset($metadata['rtl'])) {
+            $this->rtl = $metadata['rtl'];
+        }
+        if (isset($metadata['locale'])) {
+            $locale = str_replace(' ', '', $metadata['locale']);
+            $this->locale = explode(',', $metadata['locale']);
+        }
+        if (isset($metadata['first_day'])) {
+            $this->first_day = $metadata['first_day'];
+        }
 
         /** load language overrides */
         $filename = MOLAJO_EXTENSIONS_LANGUAGES .
             "/$language/$language.override.ini";
 
-        if (file_exists($filename)
-            && $contents = $this->_parse($filename)
-        ) {
+        if (file_exists($filename)) {
+            $contents = $this->_parse($filename);
             if (is_array($contents)) {
                 $this->_override_strings = $contents;
             }
         }
+
+        /** load the language files */
+        $this->_strings = array();
+        return $this->load(MOLAJO_EXTENSIONS_LANGUAGES, $language);
     }
 
     /**
      * load
      *
-     * Loads a single language file and appends the results to the existing strings
+     * Loads language file
      *
-     * @param   string   $basePath   The basepath to use.
-     * @param   string   $language   The language to load, default null for the current language.
-     * @param   boolean  $reload     Flag that will force a language to be reloaded if set to true.
-     * @param   boolean  $default    Flag that force the default language to be loaded if the current does not exist.
+     * @param   string   $path
+     * @param   string   $language
      *
-     * @return  boolean  True if the file has successfully loaded.
-     *
+     * @return  boolean
      * @since   1.0
      */
-    public function load($basePath = null, $language = null, $reload = false, $default = true)
+    public function load($path = null, $language = null)
     {
-        /** language and default language request */
+        /** defaults */
         if ($language == null) {
-            $language = $this->_language;
+            $this->language = MolajoLanguageHelper::get();
         }
-        if ($language == $this->_language) {
-            $default = false;
+        if ($path == null) {
+            $path = MOLAJO_EXTENSIONS_LANGUAGES;
         }
-
-        /** path */
-        if ($basePath == null) {
-            $basePath = MOLAJO_EXTENSIONS_LANGUAGES;
-        }
-        $path = LanguageHelper::getPath($basePath, $language);
+        $path = LanguageHelper::getPath($path, $language);
 
         /** filename */
         $filename = $language;
         $filename = "$path/$filename.ini";
 
-        /** is the file already loaded? */
-        if (isset($this->_paths[$filename])
-            && $reload === false
-        ) {
+        /** already loaded */
+        if (isset($this->paths[$filename])) {
             return true;
         }
 
-        /** load it */
+        /** load */
         $result = $this->_loadLanguage($filename);
         if ($result === false) {
-            echo 'in language services - cannot load this file:'.$filename.'<br />';
+            echo 'MolajoLanguageServices: cannot load file: ' . $filename . '<br />';
         }
 
-        /** did language load fail? And, was load default requested? */
-        if ($result === false
-            && $default === true
-        ) {
-        } else {
-            return $result;
-        }
-
-        /** try the default language */
-        $filename = $this->_default;
-        $filename = "$path/$filename.ini";
-
-        /** is the file already loaded? */
-        if (isset($this->_paths[$filename])
-            && $reload === false
-        ) {
-            return true;
-        }
-
-        return $this->_loadLanguage($filename);
-    }
-
-    /**
-     * _
-     *
-     * Translate function, mimics the php gettext (alias _) function.
-     *
-     * @param   string  $string
-     *
-     * @return  string  The translation of the string
-     * @since   1.0
-     */
-    public function _($string)
-    {
-        $key = strtoupper($string);
-        if (isset($this->_strings[$key])) {
-            $string = $this->_strings[$key];
-        } else {
-            //todo: amy capture error
-        }
-        return $string;
-    }
-
-    /**
-     * isRtl
-     *
-     * Get the RTL property.
-     *
-     * @return  boolean  True is it an RTL language.
-     * @since   1.0
-     */
-    public function isRtl()
-    {
-        return $this->_metadata['rtl'];
-    }
-
-    /**
-     * getDefault
-     *
-     * Get the default language code.
-     *
-     * @return  string  Language code.
-     * @since   1.0
-     */
-    public function getDefault()
-    {
-        return $this->_default;
-    }
-
-    /**
-     * setDefault
-     *
-     * Set the default language code.
-     *
-     * @param   string  $language  The language code.
-     *
-     * @return  string  Previous value.
-     * @since   1.0
-     */
-    public function setDefault($language)
-    {
-        $previous = $this->_default;
-        $this->_default = $language;
-
-        return $previous;
-    }
-
-    /**
-     * getName
-     *
-     * Getter for Name.
-     *
-     * @return  string  Official name element of the language.
-     * @since   1.0
-     */
-    public function getName()
-    {
-        return $this->_metadata['name'];
-    }
-
-    /**
-     * getPaths
-     *
-     * Get a list of language files that have been loaded.
-     *
-     * @param   string  $extension  An optional extension name.
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getPaths($path = null)
-    {
-        if (isset($path)) {
-            if (isset($this->_paths[$path])) {
-                return $this->_paths[$path];
+        /** try default */
+        if ($result === false) {
+            $default = MolajoLanguageHelper::get();
+            if ($this->language == $default) {
+                echo 'MolajoLanguageServices 2: cannot load file: ' . $filename . '<br />';
+                return false;
             }
-            return null;
-        } else {
-            return $this->_paths;
-        }
-    }
-
-    /**
-     * getTag
-     *
-     * Getter for the language tag (as defined in RFC 3066)
-     *
-     * @return  string  The language tag.
-     * @since   1.0
-     */
-    public function getTag()
-    {
-        return $this->_metadata['tag'];
-    }
-
-    /**
-     * getLocale
-     *
-     * Get the language locale based on current language.
-     *
-     * @return  array  The locale according to the language.
-     * @since   1.0
-     */
-    public function getLocale()
-    {
-        if (isset($this->_locale)) {
-        } else {
-
-            if (isset($this->_metadata['locale'])) {
-                $locale = str_replace(' ', '', $this->_metadata['locale']);
-            } else {
-                $locale = '';
-            }
-            if ($locale == '' || $locale == null) {
-                $this->_locale = false;
-            } else {
-                $this->_locale = explode(',', $locale);
+            $result = $this->_loadLanguage($filename);
+            if ($result === false) {
+                echo 'MolajoLanguageServices 3: cannot load file: ' . $filename . '<br />';
+                return false;
             }
         }
-
-        return $this->_locale;
-    }
-
-    /**
-     * getFirstDay
-     *
-     * Get the first day of the week for this language.
-     *
-     * @return  integer  The first day of the week according to the language
-     * @since   1.0
-     */
-    public function getFirstDay()
-    {
-        return (int)(isset($this->_metadata['firstDay']) ? $this->_metadata['firstDay'] : 0);
-    }
-
-    /**
-     * get
-     *
-     * Get a metadata language property.
-     *
-     * @param   string  $property  The name of the property.
-     * @param   mixed   $default   The default value.
-     *
-     * @return  mixed  The value of the property.
-     * @since   1.0
-     */
-    public function get($property, $default = null)
-    {
-        if (isset($this->_metadata[$property])) {
-            return $this->_metadata[$property];
-        }
-        return $default;
-    }
-
-    /**
-     * _setMetadata
-     *
-     * Set the language attributes to the given language.
-     *
-     * @param   string  $language
-     *
-     * @return  null
-     * @since   1.0
-     */
-    private function _setMetadata($language)
-    {
-        $this->_language = $language;
-        $this->_metadata = $this->_getMetadata($this->_language);
-    }
-
-    /**
-     * _getMetadata
-     *
-     * Returns an associative array holding the metadata.
-     *
-     * @param   string  $language  The name of the language.
-     *
-     * @return  mixed  If $language exists return metadata key/value pair, otherwise NULL
-     * @since   1.0
-     */
-    private function _getMetadata($language)
-    {
-        $path = LanguageHelper::getPath(MOLAJO_EXTENSIONS_LANGUAGES, $language);
-        $file = "manifest.xml";
-
-        $result = null;
-
-        if (is_file("$path/$file")) {
-            $result = $this->_parseMetadata("$path/$file");
-        }
-
         return $result;
     }
 
@@ -459,6 +261,33 @@ class MolajoLanguageService
     }
 
     /**
+     * _getMetadata
+     *
+     * Returns an associative array holding the metadata.
+     *
+     * @param   string  $language  The name of the language.
+     *
+     * @return  mixed  If $language exists return metadata key/value pair, otherwise NULL
+     * @since   1.0
+     */
+    private function _getMetadata()
+    {
+        $path = LanguageHelper::getPath(
+            MOLAJO_EXTENSIONS_LANGUAGES,
+            $this->language
+        );
+        $file = "manifest.xml";
+
+        $result = null;
+
+        if (is_file("$path/$file")) {
+            $result = $this->_parseMetadata("$path/$file");
+        }
+
+        return $result;
+    }
+
+    /**
      * Parses a language file.
      *
      * @param   string  $filename  The name of the file.
@@ -477,7 +306,7 @@ class MolajoLanguageService
         }
 
         $contents = file_get_contents($filename);
-//echo 'filename '.$filename.'<br />';
+        //echo 'filename '.$filename.'<br />';
         if ($contents) {
             $contents = str_replace('_QQ_', '"\""', $contents);
             $strings = parse_ini_string($contents);
