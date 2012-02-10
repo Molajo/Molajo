@@ -192,7 +192,7 @@ var_dump($rq);
             return $this->_log->get($key, $default);
 
         } else {
-            echo $key.' '.$default.' '.$type;
+//echo $key.' '.$default.' '.$type;
             return $this->_configuration->get($key, $default);
         }
     }

@@ -31,10 +31,10 @@ abstract class MolajoUserHelper
         if ((int)$id == 0 && trim($id)) {
             return false;
         }
+
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Services()->connect('Date');
-        $now = $date->toMySQL();
+        $now = Molajo::Services()->connect('Date')->toMySQL();
         $nullDate = $db->getNullDate();
 
         /**

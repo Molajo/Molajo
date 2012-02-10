@@ -814,7 +814,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
 
         // Now we will no longer need the module object, so let's delete it and free up memory
         $row->delete($row->extension_id);
-        $query = 'DELETE FROM `#__modules` WHERE module = ' . $db->Quote($row->element) . ' AND application_id = ' . $row->application_id;
+        $query = 'DELETE FROM `#__modules` WHERE module = ' . $db->quote($row->element) . ' AND application_id = ' . $row->application_id;
         $db->setQuery($query->__toString());
 
         try

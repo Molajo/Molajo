@@ -60,9 +60,9 @@ abstract class MolajoAssetHelper
 
         if ((int)$asset_id == 0) {
             $query->where('(a.' . $db->nameQuote('sef_request') .
-                    ' = ' . $db->Quote($query_request) .
+                    ' = ' . $db->quote($query_request) .
                     ' OR a.' . $db->nameQuote('request') . ' = ' .
-                    $db->Quote($query_request) . ')'
+                    $db->quote($query_request) . ')'
             );
         } else {
             $query->where('a.' . $db->nameQuote('id') . ' = ' .
@@ -76,8 +76,8 @@ abstract class MolajoAssetHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            Molajo::Application()
-                ->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 $message = TextService::_('ERROR_DATABASE_QUERY'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
@@ -112,7 +112,8 @@ abstract class MolajoAssetHelper
                 }
 
                 if ($row->asset_id ==
-                    Molajo::Application()->get('home_asset_id', 0)) {
+                    Molajo::Application()->get('home_asset_id', 0)
+                ) {
                     if ($query_request == '') {
                     } else {
                         $row->redirect_to_id =
@@ -251,9 +252,10 @@ abstract class MolajoAssetHelper
         $asset_id = $db->loadResult();
 
         if ($error = $db->getErrorMsg()) {
-            Molajo::Application()
-                ->setMessage(
-                $message = TextService::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+            Molajo::Services()->connect('Message')
+                ->set(
+                $message = TextService::_('ERROR_DATABASE_QUERY') . ' ' .
+                    $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::getID',
@@ -304,9 +306,10 @@ abstract class MolajoAssetHelper
         $url = $db->loadResult();
 
         if ($error = $db->getErrorMsg()) {
-            Molajo::Application()
-                ->setMessage(
-                $message = TextService::_('ERROR_DATABASE_QUERY').' '.$db->getErrorMsg(),
+            Molajo::Services()->connect('Messages')
+                ->set(
+                $message = TextService::_('ERROR_DATABASE_QUERY')
+                    . ' ' . $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::getURL',

@@ -1798,9 +1798,9 @@ class MolajoInstaller extends MolajoAdapter
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
         $query->delete($db->quoteName('#__extensions'));
-        $query->where('type = ' . $db->Quote($type));
-        $query->where('element = ' . $db->Quote($element));
-        $query->where('folder = ' . $db->Quote($folder));
+        $query->where('type = ' . $db->quote($type));
+        $query->where('element = ' . $db->quote($element));
+        $query->where('folder = ' . $db->quote($folder));
         $query->where('application_id = ' . intval($client));
         $query->where('state = -1');
 

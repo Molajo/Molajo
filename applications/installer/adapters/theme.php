@@ -242,13 +242,13 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             //insert record in #__theme_styles
             $query = $db->getQuery(true);
             $query->insert('#__theme_styles');
-            $query->set('theme=' . $db->Quote($row->element));
-            $query->set('application_id=' . $db->Quote($clientId));
+            $query->set('theme=' . $db->quote($row->element));
+            $query->set('application_id=' . $db->quote($clientId));
             $query->set('home=0');
             $debug = $lang->setDebug(false);
-            $query->set('title=' . $db->Quote(TextServices::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', TextServices::_($this->get('name')))));
+            $query->set('title=' . $db->quote(TextServices::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', TextServices::_($this->get('name')))));
             $lang->setDebug($debug);
-            $query->set('parameters=' . $db->Quote($row->parameters));
+            $query->set('parameters=' . $db->quote($row->parameters));
             $db->setQuery($query->__toString());
             // There is a chance this could fail but we don't care...
             $db->query();
@@ -311,7 +311,7 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         // Deny remove default theme
         $db = $this->parent->getDb();
-        $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->Quote($name);
+        $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->quote($name);
         $db->setQuery($query->__toString());
 
         if ($db->loadResult() != 0) {
@@ -361,12 +361,12 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
 
         // Set menu that assigned to the theme back to default theme
         $query = 'UPDATE #__menu INNER JOIN #__theme_styles' . ' ON #__theme_styles.id = #__menu.theme_id'
-                 . ' SET #__menu.theme_id = 0' . ' WHERE #__theme_styles.theme = ' . $db->Quote(strtolower($name))
-                 . ' AND #__theme_styles.application_id = ' . $db->Quote($clientId);
+                 . ' SET #__menu.theme_id = 0' . ' WHERE #__theme_styles.theme = ' . $db->quote(strtolower($name))
+                 . ' AND #__theme_styles.application_id = ' . $db->quote($clientId);
         $db->setQuery($query->__toString());
         $db->Query();
 
-        $query = 'DELETE FROM #__theme_styles' . ' WHERE theme = ' . $db->Quote($name) . ' AND application_id = ' . $db->Quote($clientId);
+        $query = 'DELETE FROM #__theme_styles' . ' WHERE theme = ' . $db->quote($name) . ' AND application_id = ' . $db->quote($clientId);
         $db->setQuery($query->__toString());
         $db->Query();
 
@@ -475,11 +475,11 @@ class MolajoInstallerAdapterTheme extends MolajoAdapterInstance
             $db = $this->parent->getDb();
             $query = $db->getQuery(true);
             $query->insert('#__theme_styles');
-            $query->set('theme=' . $db->Quote($this->parent->extension->name));
-            $query->set('application_id=' . $db->Quote($this->parent->extension->application_id));
+            $query->set('theme=' . $db->quote($this->parent->extension->name));
+            $query->set('application_id=' . $db->quote($this->parent->extension->application_id));
             $query->set('home=0');
-            $query->set('title=' . $db->Quote(TextServices::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
-            $query->set('parameters=' . $db->Quote($this->parent->extension->parameters));
+            $query->set('title=' . $db->quote(TextServices::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
+            $query->set('parameters=' . $db->quote($this->parent->extension->parameters));
             $db->setQuery($query->__toString());
             $db->query();
 

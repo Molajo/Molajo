@@ -104,14 +104,14 @@ echo Molajo::Responder()->get('sef', 1);
 /** Basic Message, for example: "Article saved." or "Title required."  */
 Molajo::Services()
     ->connect('Message')
-    ->setMessage(
+    ->set(
         TextServices::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
     );
 
 Molajo::Services()
     ->connect('Message')
-    ->setMessage(
+    ->set(
         $message = TextServices::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
         $code = null,

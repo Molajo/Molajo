@@ -178,10 +178,10 @@ class MolajoImageService
         $query->select($db->nameQuote('path'));
         $query->from($db->nameQuote('#__content') . 'as a');
         $query->where('a.' . $db->nameQuote('status') . ' = 1');
-        $query->where('(a.' . $db->nameQuote('start_publishing_datetime') . ' = ' . $db->Quote($nullDate) .
-            ' OR a.' . $db->nameQuote('start_publishing_datetime') . ' <= ' . $db->Quote($now) . ')');
-        $query->where('(a.' . $db->nameQuote('stop_publishing_datetime') . ' = ' . $db->Quote($nullDate) .
-            ' OR a.' . $db->nameQuote('stop_publishing_datetime') . ' >= ' . $db->Quote($now) . ')');
+        $query->where('(a.' . $db->nameQuote('start_publishing_datetime') . ' = ' . $db->quote($nullDate) .
+            ' OR a.' . $db->nameQuote('start_publishing_datetime') . ' <= ' . $db->quote($now) . ')');
+        $query->where('(a.' . $db->nameQuote('stop_publishing_datetime') . ' = ' . $db->quote($nullDate) .
+            ' OR a.' . $db->nameQuote('stop_publishing_datetime') . ' >= ' . $db->quote($now) . ')');
         $query->where('a.id = ' . (int)$this->id);
 
         $query->from($db->nameQuote('#__assets') . 'as b');

@@ -372,8 +372,8 @@ class MolajoRequest
 
             /** 500: Extension not found */
             $this->set('status_found', false);
-            Molajo::Application()
-                ->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 $message = TextServices::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
@@ -405,8 +405,8 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Extension not found */
             $this->set('status_found', false);
-            Molajo::Application()
-                ->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 $message = TextServices::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
@@ -488,8 +488,8 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Source Content not found */
             $this->set('status_found', false);
-            Molajo::Application()
-                ->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 $message = TextServices::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
@@ -578,8 +578,8 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Category not found */
             $this->set('status_found', false);
-            Molajo::Application()
-                ->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 $message = TextServices::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
@@ -760,10 +760,16 @@ class MolajoRequest
         }
 
         /** must be logged on */
-        if (Molajo::Application()->get('logon_requirement', 0) > 0
-            && Molajo::Application()->get('User', '', 'services')->get('guest', true) === true
+        if (Molajo::Application()
+            ->get('logon_requirement', 0) > 0
+
+            && Molajo::Services()
+                ->connect('User')
+                ->get('guest', true) === true
+
             && $this->get('request_asset_id')
-                <> Molajo::Application()->get('logon_requirement', 0)
+                <> Molajo::Application()
+                    ->get('logon_requirement', 0)
         ) {
             Molajo::Responder()->redirect(
                 Molajo::Application()->get('logon_requirement', 0), 303
@@ -788,9 +794,12 @@ class MolajoRequest
 
         } else {
             $this->set('status_authorised',
-                MolajoAccessService::authoriseTask(
-                    $this->get('mvc_task'),
-                    $this->get('request_asset_id'))
+                Molajo::Services()
+                    ->connect('Access')
+                    ->authoriseTask(
+                        $this->get('mvc_task'),
+                        $this->get('request_asset_id')
+                )
             );
         }
 
@@ -833,7 +842,10 @@ class MolajoRequest
     protected function _getUser()
     {
         $parameters = new Registry;
-        $parameters->loadString(Molajo::Application()->get('User', '', 'services')->get('parameters'));
+        $parameters->loadString(
+            Molajo::Services()->connect('User')
+                ->get('parameters')
+        );
 
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id', $parameters->def('user_theme_id', 0));
@@ -1188,7 +1200,8 @@ class MolajoRequest
                 '503 Service Temporarily Unavailable',
                 'true'
             );
-            Molajo::Application()->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 Molajo::Application()->get(
                     'offline_message',
                     'This site is not available.<br /> Please check back again soon.'
@@ -1215,7 +1228,8 @@ class MolajoRequest
                 '403 Not Authorised',
                 'true'
             );
-            Molajo::Application()->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 Molajo::Application()->get(
                     'error_403_message',
                     'Not Authorised.'
@@ -1230,7 +1244,8 @@ class MolajoRequest
                 '404 Not Found',
                 'true'
             );
-            Molajo::Application()->setMessage(
+            Molajo::Services()->connect('Message')
+            ->set(
                 Molajo::Application()->get(
                     'error_404_message',
                     'Page not found.'
@@ -1245,7 +1260,8 @@ class MolajoRequest
                 '500 Not Found',
                 'true'
             );
-            Molajo::Application()->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 Molajo::Application()->get(
                     'error_500_message',
                     'Pass the specific error in.'

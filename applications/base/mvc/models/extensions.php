@@ -77,7 +77,7 @@ class MolajoExtensionsModel extends MolajoModel
         $db = Molajo::Services()->connect('jdb');
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $db->Quote($val);
+            $where[] = $col . ' = ' . $db->quote($val);
         }
         $query = 'SELECT extension_id FROM #__extensions WHERE ' . implode(' AND ', $where);
         $db->setQuery($query->__toString());

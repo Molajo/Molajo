@@ -32,10 +32,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Services()
-            ->connect('Date')
-            ->format('Y-m-d-H-i-s');
-        $now = $date->toMySQL();
+        $now = Molajo::Services()->connect('Date')->toMySQL();
         $nullDate = $db->getNullDate();
 
         /**
@@ -77,12 +74,12 @@ abstract class MolajoExtensionHelper
             ' = ' . MOLAJO_STATUS_PUBLISHED
         );
         $query->where('(a.start_publishing_datetime = ' .
-            $db->Quote($nullDate) .
-            ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')'
+            $db->quote($nullDate) .
+            ' OR a.start_publishing_datetime <= ' . $db->quote($now) . ')'
         );
         $query->where('(a.stop_publishing_datetime = ' .
-            $db->Quote($nullDate) .
-            ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')'
+            $db->quote($nullDate) .
+            ' OR a.stop_publishing_datetime >= ' . $db->quote($now) . ')'
         );
 
         /** Assets Join and View Access Check */
@@ -157,10 +154,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Services()
-            ->connect('Date')
-            ->format('Y-m-d-H-i-s');
-        $now = $date->toMySQL();
+        $now = Molajo::Services()->connect('Date')->toMySQL();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
@@ -172,11 +166,11 @@ abstract class MolajoExtensionHelper
         $query->where('a.' . $db->namequote('status') .
             ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(a.start_publishing_datetime = ' .
-            $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' .
-            $db->Quote($now) . ')');
+            $db->quote($nullDate) . ' OR a.start_publishing_datetime <= ' .
+            $db->quote($now) . ')');
         $query->where('(a.stop_publishing_datetime = ' .
-            $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' .
-            $db->Quote($now) . ')');
+            $db->quote($nullDate) . ' OR a.stop_publishing_datetime >= ' .
+            $db->quote($now) . ')');
 
         /** Assets Join and View Access Check */
         MolajoAccessService::setQueryViewAccess(
@@ -214,10 +208,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Services()
-            ->connect('Date')
-            ->format('Y-m-d-H-i-s');
-        $now = $date->toMySQL();
+        $now = Molajo::Services()->connect('Date')->toMySQL();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('title'));
@@ -228,14 +219,14 @@ abstract class MolajoExtensionHelper
         $query->where('a.' . $db->namequote('status') .
             ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(a.start_publishing_datetime = ' .
-            $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' .
-            $db->Quote($now) . ')');
+            $db->quote($nullDate) . ' OR a.start_publishing_datetime <= ' .
+            $db->quote($now) . ')');
         $query->where('(a.stop_publishing_datetime = ' .
-            $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' .
-            $db->Quote($now) . ')');
+            $db->quote($nullDate) . ' OR a.stop_publishing_datetime >= ' .
+            $db->quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        Molajo::Application()
+        Molajo::Services()
             ->connect('Access')
             ->setQueryViewAccess(
             $query,

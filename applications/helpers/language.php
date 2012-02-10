@@ -25,11 +25,7 @@ class MolajoLanguageHelper
      */
     public static function get($language = null)
     {
-        if (trim($language) == '') {
-            $language = Molajo::Configuration()->get('language', 'en-GB');
-        }
-        $debug = Molajo::Configuration()->get('debug_language', 0);
-        return MolajoLanguage::getInstance($language, $debug);
+        return Molajo::Services()->get('Language');
     }
 
     /**

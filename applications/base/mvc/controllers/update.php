@@ -275,18 +275,29 @@ class MolajoUpdateController extends MolajoController
         if ($validData === false) {
 
             $errors = $this->model->getErrors();
+
             for ($e = 0; $e < count($errors); $e++) {
                 if (MolajoError::isError($errors[$e])) {
-                    Molajo::Application()->setMessage($errors[$e]->getMessage(), 'warning');
+                    Molajo::Services()->connect('Message')
+                        ->set(
+                        $errors[$e]->getMessage(),
+                        'warning'
+                    );
                 } else {
-                    Molajo::Application()->setMessage($errors[$e], 'warning');
+                    Molajo::Services()->connect('Message')
+                        ->set(
+                        $errors[$e],
+                        'warning'
+                    );
                 }
             }
-            Molajo::Application()->get('User', '', 'services')->setUserState(JRequest::getInt('datakey'), $data);
+            Molajo::Services()->connect('User')
+                ->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        Molajo::Application()->get('User', '', 'services')->setUserState(JRequest::getInt('datakey'), $validData);
+        Molajo::Services()->connect('User')
+            ->setUserState(JRequest::getInt('datakey'), $validData);
 
         /** Trigger_Event: onContentValidateForm **/
         /** Molajo_Note: onContentValidateForm is a new event that follows the primary source validation **/

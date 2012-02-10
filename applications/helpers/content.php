@@ -28,11 +28,7 @@ abstract class MolajoContentHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Services()
-            ->connect('Date')
-            ->format('Y-m-d-H-i-s');
-
-        $now = $date->toMySQL();
+        $now = Molajo::Services()->connect('Date')->toMySQL();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
@@ -60,14 +56,14 @@ abstract class MolajoContentHelper
             ' = ' . MOLAJO_STATUS_PUBLISHED);
 
         $query->where('(a.start_publishing_datetime = ' .
-                $db->Quote($nullDate) .
+                $db->quote($nullDate) .
                 ' OR a.start_publishing_datetime <= ' .
-                $db->Quote($now) . ')'
+                $db->quote($now) . ')'
         );
         $query->where('(a.stop_publishing_datetime = ' .
-                $db->Quote($nullDate) .
+                $db->quote($nullDate) .
                 ' OR a.stop_publishing_datetime >= ' .
-                $db->Quote($now) . ')'
+                $db->quote($now) . ')'
         );
 
         /** Assets Join and View Access Check */
@@ -86,8 +82,8 @@ abstract class MolajoContentHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            Molajo::Application()
-                ->setMessage(
+            Molajo::Services()->connect('Message')
+                ->set(
                 $message = TextService::_('ERROR_DATABASE_QUERY') . ' ' .
                     $db->getErrorNum() . ' ' .
                     $db->getErrorMsg(),

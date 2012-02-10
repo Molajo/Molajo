@@ -290,7 +290,8 @@ class MolajoDisplayModel extends MolajoModel
         if (class_exists($nameClassName)) {
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
-            Molajo::Application()->setMessage(TextServices::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+            Molajo::Services()->connect('Message')
+                ->set(TextServices::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -614,8 +615,8 @@ class MolajoDisplayModel extends MolajoModel
         $date = Molajo::Date();
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
-        $query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
-        $query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
+        $query->where('(m.start_publishing_datetime = '.$db->quote($nullDate).' OR m.start_publishing_datetime <= '.$db->quote($now).')');
+        $query->where('(m.stop_publishing_datetime = '.$db->quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->quote($now).')');
          */
         /** set view access criteria for site visitor **/
         $acl = new MolajoACL ();
@@ -976,7 +977,8 @@ class MolajoDisplayModel extends MolajoModel
 
         } else {
             if ($onlyWhereClause === true) {
-                Molajo::Application()->setMessage(TextServices::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                Molajo::Services()->connect('Message')
+                    ->set(TextServices::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);
@@ -1015,7 +1017,8 @@ class MolajoDisplayModel extends MolajoModel
         $this->db->setQuery($this->query->__toString());
 
         if (!$results = $this->db->loadObjectList()) {
-            Molajo::Application()->setMessage($this->db->getErrorMsg(), 'error');
+            Molajo::Services()->connect('Message')
+                ->set($this->db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -1057,7 +1060,8 @@ class MolajoDisplayModel extends MolajoModel
         $this->db->setQuery($this->query->__toString());
 
         if (!$results = $this->db->loadObjectList()) {
-            Molajo::Application()->setMessage($this->db->getErrorMsg(), 'error');
+            Molajo::Services()->connect('Message')
+                ->set($this->db->getErrorMsg(), 'error');
             return false;
         }
 

@@ -47,8 +47,10 @@ class MolajoSiteHelper
 
             $obj = new stdClass();
 
-            $db = Services::Connect('jdatabase');
+            $db = Molajo::Services()->connect('jdb');
             $query = $db->getQuery(true);
+            $now = Molajo::Services()->connect('Date')->toMySQL();
+            $nullDate = $db->getNullDate();
 
             $query->select($db->quoteName('id'));
             $query->select($db->quoteName('name'));
@@ -104,6 +106,8 @@ class MolajoSiteHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
+        $now = Molajo::Services()->connect('Date')->toMySQL();
+        $nullDate = $db->getNullDate();
 
         if ($id == null) {
             $id = MOLAJO_SITE_ID;

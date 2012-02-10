@@ -73,8 +73,7 @@ class MolajoAccessService
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
-                Molajo::Application()
-                    ->get('Access', ' ', 'services')
+                Molajo::Services()->connect('Access')
                     ->authoriseTask($task, $asset_id);
         }
     }
@@ -91,8 +90,7 @@ class MolajoAccessService
     public function authoriseTask($task = 'login', $asset_id = 0)
     {
         if ($task == 'login') {
-            return Molajo::Application()
-                ->get('Access', ' ', 'services')
+            return Molajo::Services()->connect('Access')
                 ->authoriseTask('login', $asset_id);
         }
 
@@ -108,7 +106,11 @@ class MolajoAccessService
         $query->where('a.' . $db->nameQuote('asset_id') . ' = ' . (int)$asset_id);
         $query->where('a.' . $db->nameQuote('action_id') . ' = ' . (int)$action_id);
         $query->where('a.' . $db->nameQuote('group_id') .
-            ' IN (' . implode(',', Molajo::Application()->get('User', '', 'services')->get('groups')) . ')');
+            ' IN (' .
+            implode(',',
+                Molajo::Services()->connect('User')
+                    ->get('groups')) . ')'
+                );
 
         $db->setQuery($query->__toString());
         $count = $db->loadResult();

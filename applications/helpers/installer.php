@@ -63,7 +63,7 @@ abstract class MolajoInstallerHelper
       */
      public static function downloadPackage($url, $target = false)
      {
-         $config = Molajo::Application()->get();
+         $config = Molajo::Services()->connect('Application');
 
          // Capture PHP errors
          $php_errormsg = 'Error Unknown';
