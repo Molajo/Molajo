@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-class MolajoSessionService extends JObject
+class MolajoSessionService
 {
     /**
      * Static instance
@@ -72,8 +72,7 @@ class MolajoSessionService extends JObject
      *
      * @param   string  $name  The sessions name.
      *
-     * @return  MolajoSession  MolajoSession on success. May call exit() on database error.
-     *
+     * @return  MolajoSession  May call exit() on database error.
      * @since  1.0
      */
     public function get($name=null)
@@ -81,12 +80,12 @@ class MolajoSessionService extends JObject
         $options = array();
         $options['name'] = $name;
 
-        if ($this->_getConfig('force_ssl') == 2) {
+        if (Molajo::Application()->get('force_ssl') == 2) {
             $options['force_ssl'] = true;
         }
 
         /** retrieve session */
-//        $this->_session = Molajo::Application()->getSession($options);
+        $this->_session = Molajo::Application()->getSession($options);
 
         /** unlock */
 
@@ -111,7 +110,8 @@ class MolajoSessionService extends JObject
      */
     protected function _removeExpiredSessions()
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
+
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
@@ -133,14 +133,15 @@ class MolajoSessionService extends JObject
      */
     protected function _checkSession()
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
-        $session = Molajo::Application()->getSession();
-        $user = Molajo::User();
+        $db = Molajo::Services()->connect('jdb');
+        $session = Molajo::Services()->connect('Session');
+        $user = Molajo::Services()->connect('User');
 
         $db->setQuery(
             'SELECT `session_id`' .
             ' FROM `#__sessions`' .
-            ' WHERE `session_id` = ' . $db->quote($session->getId()), 0, 1
+            ' WHERE `session_id` = ' .
+                $db->quote($session->getId()), 0, 1
         );
         $exists = $db->loadResult();
         if ($exists) {
@@ -149,13 +150,17 @@ class MolajoSessionService extends JObject
 
         if ($session->isNew()) {
             $db->setQuery(
-                'INSERT INTO `#__sessions` (`session_id`, `application_id`, `session_time`)' .
-                ' VALUES (' . $db->quote($session->getId()) . ', ' . (int)MOLAJO_APPLICATION_ID . ', ' . (int)time() . ')'
+                'INSERT INTO `#__sessions` '.
+                    '(`session_id`, `application_id`, `session_time`)' .
+                ' VALUES (' . $db->quote($session->getId()) .
+                    ', ' . (int)MOLAJO_APPLICATION_ID .
+                    ', ' . (int)time() . ')'
             );
 
         } else {
             $db->setQuery(
-                'INSERT INTO `#__sessions` (`session_id`, `application_id`, `session_time`, `user_id`)' .
+                'INSERT INTO `#__sessions`
+                (`session_id`, `application_id`, `session_time`, `user_id`)' .
                 ' VALUES (' .
                 $db->quote($session->getId()) . ', ' .
                 (int)MOLAJO_APPLICATION_ID . ', ' .
@@ -178,19 +183,16 @@ class MolajoSessionService extends JObject
     }
 
     /**
-     * _getConfig
+     * getSession
      *
-     * Gets a configuration value.
+     * Method to get the application _session object.
      *
-     * @param   string   The name of the value to get.
-     * @param   string   Default value to return
+     * @return  Session  The _session object
      *
-     * @return  mixed    The user state.
-     *
-     * @since  1.0
+     * @since   1.0
      */
-    protected function _getConfig($varname, $default = null)
+    public function getSession()
     {
-        return Molajo::Application()->get('' . $varname, $default);
+        return $this->_session;
     }
 }

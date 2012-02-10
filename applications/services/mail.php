@@ -15,8 +15,42 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-abstract class MolajoMailService
+class MolajoMailService
 {
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoMailService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * getMailer
@@ -27,20 +61,18 @@ abstract class MolajoMailService
      * @return Mailer|null
      * @since 1.0
      */
-    public static function get()
+    public function get()
     {
-        $site = ConfigurationService::site();
-
-        $send_mail = $site->send_mail;
-        $smtpauth = $site->smtpauth;
-        $smtpuser = $site->smtpuser;
-        $smtppass = $site->smtppass;
-        $smtphost = $site->smtphost;
-        $smtpsecure = $site->smtpsecure;
-        $smtpport = $site->smtpport;
-        $mail_from = $site->mail;
-        $from_name = $site->from_name;
-        $mailer = $site->mailer;
+        $send_mail = Molajo::Application()->get('send_mail');
+        $smtpauth = Molajo::Application()->get('smtpauth');
+        $smtpuser = Molajo::Application()->get('smtpuser');
+        $smtppass = Molajo::Application()->get('smtppass');
+        $smtphost = Molajo::Application()->get('smtphost');
+        $smtpsecure = Molajo::Application()->get('smtpsecure');
+        $smtpport = Molajo::Application()->get('smtpport');
+        $mail_from = Molajo::Application()->get('mail');
+        $from_name = Molajo::Application()->get('from_name');
+        $mailer = Molajo::Application()->get('mailer');
 
         $mail = MolajoMail::getInstance();
         $mail->setSender(array($mail_from, $from_name));
@@ -48,7 +80,13 @@ abstract class MolajoMailService
         switch ($mailer)
         {
             case 'smtp' :
-                $mail->useSMTP($smtpauth, $smtphost, $smtpuser, $smtppass, $smtpsecure, $smtpport);
+                $mail->useSMTP(
+                    $smtpauth,
+                    $smtphost,
+                    $smtpuser,
+                    $smtppass,
+                    $smtpsecure,
+                    $smtpport);
                 break;
 
             case 'send_mail' :

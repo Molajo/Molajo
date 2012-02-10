@@ -1,3 +1,64 @@
+Four Application areas: processes, services, helpers, and installers.
+
+Any method can be extended (and possibly overridden) - by placing code xyz.
+
+PROCESSES
+
+Molajo::Base - proxy
+
+Process::Site
+Process::Application
+Process::Request
+Process::Parser
+Process::Renderer
+...component, formfield, head, message, module, tag, theme
+- Process::Controller
+- Process::Model
+- Process::View
+Process::Responder
+
+Process::Dispatcher (of services)
+
+SERVICES
+
+Molajo::Services
+
+Service::Access
+Service::Authentication
+Service::Cache
+Service::Configuration (including extensions, etc.)
+Service::Date
+Service::Database (any option)
+Service::Feeds
+Service::File (all of it)
+Service::Mail (any type)
+Service::Message (including errors, logs and profiler)
+Service::Media (including Image, Oembed)
+Service::Registry
+Service::Secure (filter and escape, captcha, blocking)
+Service::Session
+Service::Text
+Service::Url (Jinput, redirect
+Service::User
+getUserState
+setUserState
+getUserStateFromRequest
+
+HELPERS
+
+Molajo::Helpers
+
+Specific to process support, primarily implements extension layer
+
+Helper::Application
+Helper::Asset
+Helper::Extension
+Helper::Site
+
+INSTALLERS
+
+Molajo::Installer
+
 <?php
 /*
  * Application Configuration Object
@@ -41,13 +102,15 @@ echo Molajo::Responder()->get('sef', 1);
 ?>
 <?php
 /** Basic Message, for example: "Article saved." or "Title required."  */
-Molajo::Application()
+Molajo::Services()
+    ->connect('Message')
     ->setMessage(
         TextServices::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
     );
 
-Molajo::Application()
+Molajo::Services()
+    ->connect('Message')
     ->setMessage(
         $message = TextServices::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -55,14 +118,16 @@ Molajo::Application()
         $debug_location = 'AssetHelper::get',
         $debug_object = $query->__toString()
     );
-
+$config = $this
 ?>
-
+Service::Message()->get('x')
+Service::Session
+Service::User
 <?php
 /**
  *  User Object
  */
-echo implode(',', Molajo::User()->get('view_groups'));
+echo implode(',', Molajo::Application()->get('User', '', 'services')->get('view_groups'));
 
 ?>
 
@@ -116,39 +181,3 @@ echo Molajo::Display()->safeInteger($this->row->version);
 
 ?>
 
-<?php
-
-/**
- * Static instance
- *
- * @var    object
- * @since  1.0
- */
-protected static $instance;
-
-
-/**
- * getInstance
- *
- * @static
- * @return  bool|object
- * @since   1.0
- */
-public static function getInstance()
-{
-    if (empty(self::$instance)) {
-        self::$instance = new MolajoXXXService();
-    }
-    return self::$instance;
-}
-
-/**
- * Class constructor
- *
- * @return  null
- * @since   1.0
- */
-public function __construct()
-{
-    $this->connect();
-}

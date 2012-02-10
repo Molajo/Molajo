@@ -761,7 +761,7 @@ class MolajoRequest
 
         /** must be logged on */
         if (Molajo::Application()->get('logon_requirement', 0) > 0
-            && Molajo::User()->get('guest', true) === true
+            && Molajo::Application()->get('User', '', 'services')->get('guest', true) === true
             && $this->get('request_asset_id')
                 <> Molajo::Application()->get('logon_requirement', 0)
         ) {
@@ -833,7 +833,7 @@ class MolajoRequest
     protected function _getUser()
     {
         $parameters = new Registry;
-        $parameters->loadString(Molajo::User()->get('parameters'));
+        $parameters->loadString(Molajo::Application()->get('User', '', 'services')->get('parameters'));
 
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id', $parameters->def('user_theme_id', 0));
@@ -1068,7 +1068,7 @@ class MolajoRequest
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {

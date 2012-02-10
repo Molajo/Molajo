@@ -102,7 +102,7 @@ class MolajoSiteHelper
      */
     public static function getSiteApplications($id = null)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         if ($id == null) {

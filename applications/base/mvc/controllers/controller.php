@@ -206,7 +206,8 @@ class MolajoController
             return true;
         }
 
-        if ($this->table->checked_out == Molajo::User()->get('id')) {
+        if ($this->table->checked_out
+            == Molajo::Application()->get('User', '', 'services')->get('id')) {
         } else {
             $this->redirectClass->setRedirectMessage(
                 TextServices::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')

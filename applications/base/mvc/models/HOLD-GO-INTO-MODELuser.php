@@ -29,7 +29,7 @@ abstract class MolajoUserService extends JObject
      */
     public static function getUserId($username)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         $query->select($db->quoteName('id'));
@@ -59,7 +59,7 @@ abstract class MolajoUserService extends JObject
         if (in_array($group_id, $user->groups)) {
         } else {
 
-            $db = Molajo::Application()->get('jdb', '', 'service');
+            $db = Molajo::Services()->connect('jdb');
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__content`' .
@@ -117,7 +117,7 @@ abstract class MolajoUserService extends JObject
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = Molajo::User();
+        $temp = Molajo::Application()->get('User', '', 'services');
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -144,7 +144,7 @@ abstract class MolajoUserService extends JObject
         $user->groups = $groups;
 
         // Get the titles for the user groups.
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $db->setQuery(
             'SELECT `id`, `title`' .
             ' FROM `#__content`' .
@@ -172,7 +172,7 @@ abstract class MolajoUserService extends JObject
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = Molajo::User();
+        $temp = Molajo::Application()->get('User', '', 'services');
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -191,7 +191,7 @@ abstract class MolajoUserService extends JObject
     public static function activateUser($activation)
     {
         // Initialize some variables.
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'

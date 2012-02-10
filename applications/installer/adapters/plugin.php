@@ -551,7 +551,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
            * @todo: Remove backwards compatability in a future version
            * Should be 'extension', but for backward compatability we will accept 'install'.
            */
-        if ($xml->getName() != 'install' && $xml->getName() != 'extension') {
+        if ($xml->getName() != 'extension') {
             MolajoError::raiseWarning(100, TextServices::_('JLIB_INSTALLER_ERROR_PLG_UNINSTALL_INVALID_MANIFEST'));
             return false;
         }

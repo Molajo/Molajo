@@ -34,7 +34,7 @@ class MolajoDateService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoAccessService();
+            self::$instance = new MolajoDateService();
         }
         return self::$instance;
     }
@@ -51,6 +51,11 @@ class MolajoDateService
     {
     }
 
+    public function connect()
+    {
+        return $this->getDate();
+    }
+
     /**
      * getDate
      *
@@ -62,21 +67,18 @@ class MolajoDateService
      * @return JDate object
      * @since   1.0
      */
-    public function get($time = 'now', $tzOffset = null)
+    public function getDate($time = 'now', $tzOffset = null)
     {
-        $language = MolajoBase::getLanguage();
+        $language = Molajo::Services()->connect('Language');
         $locale = $language->getTag();
 
         $classname = str_replace('-', '_', $locale) . 'Date';
-
         if (class_exists($classname)) {
         } else {
             $classname = 'JDate';
         }
 
-        $key = $time . '-' . $tzOffset;
-
-        return $classname($time, $tzOffset);
+        return new $classname($time, $tzOffset);
     }
 
     /**
@@ -85,11 +87,15 @@ class MolajoDateService
      * @param date $date
      * @return string CCYY-MM-DD
      */
-    function convertCCYYMMDD($date)
+    function convertCCYYMMDD($date = null)
     {
-        return substr($date, 0, 4) .
-            '-' . substr($date, 5, 2) .
-            '-' . substr($date, 8, 2);
+        if (strlen($date) == 8) {
+            return substr($date, 0, 4) .
+                '-' . substr($date, 5, 2) .
+                '-' . substr($date, 8, 2);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -307,9 +313,8 @@ class MolajoDateService
      */
     function getUTCDate($input_date, $server_or_user_UTC = 'user')
     {
-
-        $config = Molajo::Application()->get();
-        $user = Molajo::User();
+        $config = Molajo::Services()->connect('Application');
+        $user = Molajo::Services()->connect('User');
 
         // If a known filter is given use it.
         switch (strtoupper((string)$server_or_user_UTC))
@@ -318,7 +323,7 @@ class MolajoDateService
                 // Convert a date to UTC based on the server timezone.
                 if (intval($input_date)) {
                     // Get a date object based on the correct timezone.
-                    $date = Molajo::Date($input_date, 'UTC');
+                    $date = $this->getDate($input_date, 'UTC');
                     $date->setTimezone(new DateTimeZone($config->get('offset')));
 
                     // Transform the date string.
@@ -330,7 +335,7 @@ class MolajoDateService
                 // Convert a date to UTC based on the user timezone.
                 if (intval($input_date)) {
                     // Get a date object based on the correct timezone.
-                    $date = Molajo::Date($input_date, 'UTC');
+                    $date = $this->getDate($input_date, 'UTC');
                     $date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
 
                     // Transform the date string.

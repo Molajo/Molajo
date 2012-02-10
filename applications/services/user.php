@@ -14,8 +14,24 @@ defined('MOLAJO') or die;
  * @subpackage  User
  * @since       1.1
  */
-class MolajoUser
+class MolajoUserService
 {
+    /**
+     * Instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance = array();
+
+    /**
+     * $_model
+     *
+     * @since  1.0
+     * @var object
+     */
+    protected $_model = 'MolajoUserModel';
+
     /**
      * $_id
      *
@@ -206,30 +222,13 @@ class MolajoUser
      * @return  object  User
      * @since   1.0
      */
-    public static function getInstance($identifier = 0)
+    public static function getInstance($id = 0)
     {
-        static $instances;
-        if (isset ($instances)) {
-        } else {
-            $instances = array();
-        }
-
-        if (is_numeric($identifier)) {
-            $id = $identifier;
-        } else {
-            $id = UserServices::getUserId($identifier);
-        }
-        if (is_numeric($identifier)) {
-        } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', TextServices::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
-            return false;
-        }
-
-        if (empty($instances[$id])) {
+        if (empty(self::$instances[$id])) {
             $user = new MolajoUser($id);
-            $instances[$id] = $user;
+            self::$instances[$id] = $user;
         }
-        return $instances[$id];
+        return self::$instances[$id];
     }
 
     /**
@@ -242,48 +241,47 @@ class MolajoUser
      * @return  object  user
      * @since   1.0
      */
-    protected function __construct($identifier = 0)
+    public function __construct($identifier = 0)
     {
-        if (empty($identifier)) {
-            $this->_id = 0;
-            $this->_send_email = 0;
-            $this->_guest = 1;
-            //todo: amy shouldn't we load guest groups, etc?
+        if (is_numeric($identifier)) {
+            $id = $identifier;
         } else {
-            $this->_load($identifier);
+            $id = MolajoUserHelper::getUserInstanceID($identifier);
         }
+        $this->_id = (int) $id;
     }
 
     /**
      * _load
      *
-     * Method to load a User object by user id number
+     * Retrieve User or Guest Information
      *
-     * @param   mixed  $id  The user id of the user to load
+     * @param   mixed  $id either the numeric userid or character username
      *
      * @return  boolean
      * @since   1.0
      */
-    protected function _load($id)
+    public function connect()
     {
-        $this->_id = $id;
-
-        /** session */
+        echo $this->_id;
 
         /** retrieve data for user */
-        $model = $this->_getModel();
-        $results = $model->load($this->_id);
-        $columns = $model->getFields('#__users', true);
+        $this->model = new MolajoUsersModel ();
+        $results = $this->model->load($this->_id);
+        $columns = $this->model->getFields('#__users', true);
 
         foreach ($results as $name => $value) {
             $protected_name = '_' . $name;
             $this->$protected_name = $results[$name];
         }
 
-        /** extra fields */
-        $this->_loadCustomFields($this->_custom_fields);
+        $this->custom_fields = new Registry;
+        $this->custom_fields->loadString($this->_custom_fields, 'JSON');
+        $this->custom_fields->toArray();
 
-        $this->_loadParameters($this->_parameters);
+        $this->_parameters = new Registry;
+        $this->_parameters->loadString($this->_parameters, 'JSON');
+        $this->_parameters->toArray();
 
         return true;
     }
@@ -309,6 +307,27 @@ class MolajoUser
         } else if ($type == 'metadata') {
             return $this->_metadata->get($key, $default);
 
+        } else if ($type == 'state') {
+            $registry = Molajo::Application()->getSession()->get('registry');
+            if (is_null($registry)) {
+            } else {
+                return $registry->get($key, $default);
+            }
+            return $default;
+
+            /** combine with get getUserStateFromRequest
+            $cur_state = $this->getUserState($key, $default);
+            $new_state = JRequest::getVar($request, null, 'default', $type);
+
+            // Save the new value only if it was set in this request.
+            if ($new_state == null) {
+            $new_state = $cur_state;
+            } else {
+            $this->setUserState($key, $new_state);
+            }
+
+            return $new_state;
+             */
         } else {
             $protected_name = '_' . $key;
             return $this->$protected_name;
@@ -316,129 +335,41 @@ class MolajoUser
     }
 
     /**
-     * setLastVisit
+     * set
      *
-     * @param   $timestamp
+     * Modifies a property, creating it and establishing a default if not existing
      *
-     * @return  boolean
+     * @param  string  $key    The name of the property.
+     * @param  mixed   $value  The default value to use if not set (optional).
+     * @param  string  $type   Custom, metadata, config
+     *
+     * @return  mixed
      * @since   1.0
      */
-    public function setLastVisit($timestamp = null)
+    public function set($key, $value = null, $type = 'config')
     {
-        $model = $this->_getModel();
-        $model->load($this->_id);
-        return $model->setLastVisit($timestamp);
-    }
+        if ($type == 'custom') {
+            return $this->_custom_fields->set($key, $value);
 
-    /**
-     * _loadCustomFields
-     *
-     * Loads user CustomFields JSON field into an array
-     *
-     * @since  1.0
-     */
-    protected function _loadCustomFields($_custom_fields)
-    {
-        $this->custom_fields = new Registry;
-        $this->custom_fields->loadString($_custom_fields, 'JSON');
-        $this->custom_fields->toArray();
-    }
+        } else if ($type == 'metadata') {
+            return $this->_metadata->set($key, $value);
 
-    /**
-     * _loadParameters
-     *
-     * Loads user parameters JSON field into an array
-     *
-     * @since  1.0
-     */
-    protected function _loadParameters($parameters)
-    {
-        $this->_parameters = new Registry;
-        $this->_parameters->loadString($parameters, 'JSON');
-        $this->_parameters->toArray();
-    }
+        } else if ($type == 'service') {
+            return $this->_service->set($key, $value);
 
-    /**
-     * _getModel
-     *
-     * @return  object
-     * @since   1.0
-     */
-    protected function _getModel()
-    {
-        return new MolajoUsersModel ();
-    }
+        } else if ($type == 'visit') {
+            return $this->model->setLastVisit();
 
-    /**
-     * getUserState
-     *
-     * Gets a user state.
-     *
-     * @param   string  The path of the state.
-     * @param   mixed   Optional default value, returned if the internal value is null.
-     *
-     * @return  mixed  The user state or null.
-     *
-     * @since  1.0
-     */
-    public function getUserState($key, $default = null)
-    {
-        $registry = Molajo::Application()->getSession()->get('registry');
-        if (is_null($registry)) {
+        } else if ($type == 'state') {
+            $registry = Molajo::Application()->getSession()->get('registry');
+            if (is_null($registry)) {
+            } else {
+                return $registry->set($key, $value);
+            }
+            return null;
+
         } else {
-            return $registry->get($key, $default);
+            return $this->_configuration->set($key, $value);
         }
-        return $default;
-    }
-
-    /**
-     * setUserState
-     *
-     * Sets the value of a user state variable.
-     *
-     * @param   string  The path of the state.
-     * @param   string  The value of the variable.
-     *
-     * @return  mixed   The previous state, if one existed.
-     *
-     * @since  1.0
-     */
-    public function setUserState($key, $value)
-    {
-        $registry = Molajo::Application()->getSession()->get('registry');
-        if (is_null($registry)) {
-        } else {
-            return $registry->set($key, $value);
-        }
-        return null;
-    }
-
-    /**
-     * getUserStateFromRequest
-     *
-     * Gets the value of a user state variable.
-     *
-     * @param   string   $key      The key of the user state variable.
-     * @param   string   $request  The name of the variable passed in a request.
-     * @param   string   $default  The default value for the variable if not found. Optional.
-     * @param   string   $type     Filter for the variable, for valid values see {@link FilterInput::clean()}. Optional.
-     *
-     * @return  The request user state.
-     *
-     * @since  1.0
-     */
-    public function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
-    {
-        $cur_state = $this->getUserState($key, $default);
-        $new_state = JRequest::getVar($request, null, 'default', $type);
-
-        // Save the new value only if it was set in this request.
-        if ($new_state == null) {
-            $new_state = $cur_state;
-        } else {
-            $this->setUserState($key, $new_state);
-        }
-
-        return $new_state;
     }
 }

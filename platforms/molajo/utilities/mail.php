@@ -95,11 +95,16 @@ class MolajoMail extends PHPMailer
     {
         if (is_array($from)) {
             // If $from is an array we assume it has an address and a name
-            $this->SetFrom(MailServices::cleanLine($from[0]), MailServices::cleanLine($from[1]));
+            $this->SetFrom(
+                MolajoMailServices::cleanLine($from[0]),
+                MolajoMailServices::cleanLine($from[1])
+            );
         }
         elseif (is_string($from)) {
             // If it is a string we assume it is just the address
-            $this->SetFrom(MailServices::cleanLine($from));
+            $this->SetFrom(
+                MolajoMailServices::cleanLine($from)
+            );
         }
         else {
             // If it is neither, we throw a warning
@@ -119,8 +124,7 @@ class MolajoMail extends PHPMailer
      */
     public function setSubject($subject)
     {
-        $this->Subject = MailServices::cleanLine($subject);
-
+        $this->Subject = MolajoMailServices::cleanLine($subject);
         return $this;
     }
 
@@ -138,8 +142,7 @@ class MolajoMail extends PHPMailer
            * Filter the Body
            * TODO: Check for XSS
            */
-        $this->Body = MailServices::cleanText($content);
-
+        $this->Body = MolajoMailServices::cleanText($content);
         return $this;
     }
 
@@ -157,12 +160,11 @@ class MolajoMail extends PHPMailer
         if (is_array($recipient)) {
             foreach ($recipient as $to)
             {
-                $to = MailServices::cleanLine($to);
+                $to = MolajoMailServices::cleanLine($to);
                 $this->AddAddress($to);
             }
-        }
-        else {
-            $recipient = MailServices::cleanLine($recipient);
+        } else {
+            $recipient = MolajoMailServices::cleanLine($recipient);
             $this->AddAddress($recipient);
         }
 
@@ -182,14 +184,12 @@ class MolajoMail extends PHPMailer
         // If the carbon copy recipient is an array, add each recipient... otherwise just add the one
         if (isset ($cc)) {
             if (is_array($cc)) {
-                foreach ($cc as $to)
-                {
-                    $to = MailServices::cleanLine($to);
+                foreach ($cc as $to) {
+                    $to = MolajoMailServices::cleanLine($to);
                     parent::AddCC($to);
                 }
-            }
-            else {
-                $cc = MailServices::cleanLine($cc);
+            } else {
+                $cc = MolajoMailServices::cleanLine($cc);
                 parent::AddCC($cc);
             }
         }
@@ -210,14 +210,12 @@ class MolajoMail extends PHPMailer
         // If the blind carbon copy recipient is an array, add each recipient... otherwise just add the one
         if (isset($bcc)) {
             if (is_array($bcc)) {
-                foreach ($bcc as $to)
-                {
-                    $to = MailServices::cleanLine($to);
+                foreach ($bcc as $to) {
+                    $to = MolajoMailServices::cleanLine($to);
                     parent::AddBCC($to);
                 }
-            }
-            else {
-                $bcc = MailServices::cleanLine($bcc);
+            } else {
+                $bcc = MolajoMailServices::cleanLine($bcc);
                 parent::AddBCC($bcc);
             }
         }
@@ -238,12 +236,10 @@ class MolajoMail extends PHPMailer
         // If the file attachments is an array, add each file... otherwise just add the one
         if (isset($attachment)) {
             if (is_array($attachment)) {
-                foreach ($attachment as $file)
-                {
+                foreach ($attachment as $file) {
                     parent::AddAttachment($file);
                 }
-            }
-            else {
+            } else {
                 parent::AddAttachment($attachment);
             }
         }
@@ -268,14 +264,14 @@ class MolajoMail extends PHPMailer
         if (is_array($replyto[0])) {
             foreach ($replyto as $to)
             {
-                $to0 = MailServices::cleanLine($to[0]);
-                $to1 = MailServices::cleanLine($to[1]);
+                $to0 = MolajoMailServices::cleanLine($to[0]);
+                $to1 = MolajoMailServices::cleanLine($to[1]);
                 parent::AddReplyTo($to0, $to1);
             }
         }
         else {
-            $replyto0 = MailServices::cleanLine($replyto[0]);
-            $replyto1 = MailServices::cleanLine($replyto[1]);
+            $replyto0 = MolajoMailServices::cleanLine($replyto[0]);
+            $replyto1 = MolajoMailServices::cleanLine($replyto[1]);
             parent::AddReplyTo($replyto0, $replyto1);
         }
 
@@ -293,15 +289,12 @@ class MolajoMail extends PHPMailer
     {
         $this->Sendmail = $send_mail;
 
-        if (!empty ($this->Sendmail)) {
-            $this->IsSendmail();
-
-            return true;
-        }
-        else {
+        if (empty ($this->Sendmail)) {
             $this->IsMail();
-
             return false;
+        } else {
+            $this->IsSendmail();
+            return true;
         }
     }
 
@@ -363,7 +356,7 @@ class MolajoMail extends PHPMailer
      * @since   1.0
      */
     public function sendMail($from, $fromName, $recipient, $subject, $body, $mode = 0,
-        $cc = null, $bcc = null, $attachment = null, $replyTo = null, $replyToName = null)
+                             $cc = null, $bcc = null, $attachment = null, $replyTo = null, $replyToName = null)
     {
         $this->setSender(array($from, $fromName));
         $this->setSubject($subject);

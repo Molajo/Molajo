@@ -165,10 +165,13 @@ class MolajoImageService
             return $this->fileNameNew;
         }
 
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
-        $date = Molajo::Date();
+        $date = Molajo::Services()
+            ->connect('Date')
+            ->format('Y-m-d-H-i-s');
+
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 

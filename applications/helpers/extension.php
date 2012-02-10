@@ -30,9 +30,11 @@ abstract class MolajoExtensionHelper
      */
     public static function get($asset_type_id, $extension = null)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Date();
+        $date = Molajo::Services()
+            ->connect('Date')
+            ->format('Y-m-d-H-i-s');
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
@@ -153,9 +155,11 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceID($asset_type_id, $title)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Date();
+        $date = Molajo::Services()
+            ->connect('Date')
+            ->format('Y-m-d-H-i-s');
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
@@ -208,9 +212,11 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceTitle($extension_instance_id)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $date = Molajo::Date();
+        $date = Molajo::Services()
+            ->connect('Date')
+            ->format('Y-m-d-H-i-s');
         $now = $date->toMySQL();
         $nullDate = $db->getNullDate();
 
@@ -229,7 +235,9 @@ abstract class MolajoExtensionHelper
             $db->Quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        MolajoAccessService::setQueryViewAccess(
+        Molajo::Application()
+            ->connect('Access')
+            ->setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
@@ -263,9 +271,13 @@ abstract class MolajoExtensionHelper
         } else {
             return false;
         }
-        Services::connect('language')
+
+        /** Assets Join and View Access Check */
+        Molajo::Application()
+            ->connect('Language')
             ->load ($path,
-                    Molajo::Application()->get('language'),
+                    Molajo::Application()
+                        ->get('language'),
                     false,
                     false
                     );

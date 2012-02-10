@@ -11,8 +11,13 @@ defined('MOLAJO') or die;
  * Molajo Base
  *
  * Creates static instances of base clases
+ * Aliases are set for each of the base classes
  *
- * Alias Molajo
+ * MolajoBase is aliased as Molajo
+ * Each process class is aliased as its subject, ex. MolajoRenderer is Renderer
+ * Combined, the shortcut alias is Molajo::Subject, ex. MolajoRenderer
+ *
+ * Aliases are set in applications/includes/aliases.php
  */
 class MolajoBase
 {
@@ -49,14 +54,6 @@ class MolajoBase
     public static $parser = null;
 
     /**
-     * Alias Molajo::Renderer
-     *
-     * @var    object MolajoRenderer
-     * @since  1.0
-     */
-    public static $renderer = null;
-
-    /**
      * Alias Molajo::Responder
      *
      * @var    object MolajoResponder
@@ -65,12 +62,12 @@ class MolajoBase
     public static $responder = null;
 
     /**
-     * Alias Molajo::User
+     * Alias Molajo::Services
      *
-     * @var    object MolajoUser
+     * @var    object MolajoServices
      * @since  1.0
      */
-    public static $user = null;
+    public static $services = null;
 
     /**
      * getSite
@@ -78,7 +75,7 @@ class MolajoBase
      * MolajoSite, alias Molajo::Site
      *
      * @static
-     * @return  null|Site
+     * @return  MolajoSite
      * @since   1.0
      */
     public static function getSite()
@@ -96,19 +93,15 @@ class MolajoBase
      * MolajoApplication, alias Molajo::Application
      *
      * @static
-     * @param   object JInput
      *
-     * @return  Application
+     * @return  MolajoApplication
      * @since   1.0
      */
-    public static function getApplication(Input $input = null)
+    public static function getApplication()
     {
         if (self::$application) {
         } else {
-            self::$application =
-                MolajoApplication::getInstance(
-                    $input
-                );
+            self::$application = MolajoApplication::getInstance();
         }
         return self::$application;
     }
@@ -123,7 +116,7 @@ class MolajoBase
      * @param string $override_request_url
      * @param string $override_asset_id
      *
-     * @return Request|null
+     * @return MolajoRequest|null
      * @since 1.0
      */
     public static function getRequest($request = null,
@@ -148,7 +141,7 @@ class MolajoBase
      * MolajoParser, alias Molajo::Parser
      *
      * @static
-     * @return  Request|null
+     * @return  MolajoRequest|null
      * @since   1.0
      */
     public static function getParser()
@@ -159,28 +152,6 @@ class MolajoBase
                 MolajoParser::getInstance();
         }
         return self::$parser;
-    }
-
-    /**
-     * getRender
-     *
-     * MolajoRender, alias Molajo::Renderer
-     *
-     * @static
-     * @param   string $override_request_url
-     * @param   string $override_asset_id
-     *
-     * @return  Render|null
-     * @since   1.0
-     */
-    public static function getRenderer()
-    {
-        if (self::$renderer) {
-        } else {
-            self::$renderer =
-                MolajoRenderer::getInstance();
-        }
-        return self::$renderer;
     }
 
     /**
@@ -203,27 +174,24 @@ class MolajoBase
     }
 
     /**
-     * getUser
+     * getServices
      *
-     * MolajoUser, alias Molajo::User
+     * MolajoServices, alias Molajo::Services
      *
      * @static
      * @param   Registry|null $config
      *
-     * @return  User|null
+     * @return  Services|null
      * @since   1.0
      */
-    public static function getUser($id = null)
+    public static function getServices()
     {
-        $id = 42;
-        if (self::$user) {
+        if (self::$services) {
         } else {
-            self::$user =
-                MolajoUser::getInstance(
-                    $id
-                );
+            self::$services =
+                MolajoServices::getInstance();
         }
-        return self::$user;
+        return self::$services;
     }
 }
 

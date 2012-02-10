@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new MolajoFileService();
+$load = new MolajoLoadHelper();
 
 /**
  *  Exceptions - already loaded
@@ -19,11 +19,11 @@ $fileHelper = new MolajoFileService();
 /**
  *  Session
  */
-$fileHelper->requireClassFile(PLATFORM_MOLAJO . '/session/session.php', 'MolajoSession');
-$fileHelper->requireClassFile(PLATFORM_MOLAJO . '/session/storage.php', 'MolajoSessionStorage');
+$load->requireClassFile(PLATFORM_MOLAJO . '/session/session.php', 'MolajoSession');
+$load->requireClassFile(PLATFORM_MOLAJO . '/session/storage.php', 'MolajoSessionStorage');
 $files = JFolder::files(PLATFORM_MOLAJO . '/session/storage', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(PLATFORM_MOLAJO . '/session/storage/' . $file, 'MolajoSessionStorage' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(PLATFORM_MOLAJO . '/session/storage/' . $file, 'MolajoSessionStorage' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
@@ -32,9 +32,9 @@ foreach ($files as $file) {
 $files = JFolder::files(PLATFORM_MOLAJO . '/utilities', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'LoremIpsum.class.php') {
-        $fileHelper->requireClassFile(PLATFORM_MOLAJO . '/utilities/' . $file, 'LoremIpsumGenerator');
+        $load->requireClassFile(PLATFORM_MOLAJO . '/utilities/' . $file, 'LoremIpsumGenerator');
     } else {
-        $fileHelper->requireClassFile(PLATFORM_MOLAJO . '/utilities/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $load->requireClassFile(PLATFORM_MOLAJO . '/utilities/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 

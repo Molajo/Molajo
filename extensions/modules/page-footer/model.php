@@ -41,16 +41,27 @@ class PagefooterModuleModel extends MolajoModel
     {
         $this->items = array();
 
-        $tempObject = new JObject();
+        $tempObject = new stdClass();
+        $date = Molajo::Services()
+            ->connect('Date')
+            ->format('Y-m-d-H-i-s');
 
         /** footer line 1 */
         if (JString::strpos(TextServices :: _('FOOTER_LINE1'), '%date%')) {
-            $line1 = str_replace('%date%', Molajo::Date()->format('Y'), TextServices :: _('FOOTER_LINE1'));
+            $line1 = str_replace(
+                '%date%',
+                Molajo::Services()->connect('Date')->format('Y'),
+                TextServices :: _('FOOTER_LINE1'));
         } else {
             $line1 = TextServices :: _('FOOTER_LINE1');
         }
+
         if (JString::strpos($line1, '%site_name%')) {
-            $line1 = str_replace('%site_name%', Molajo::Application()->get('site_name', 'Molajo'), $line1);
+            $line1 = str_replace(
+                '%site_name%',
+                Molajo::Application()->get('site_name', 'Molajo'),
+                $line1
+            );
         }
         $tempObject->set('line1', $line1);
 

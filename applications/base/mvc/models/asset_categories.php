@@ -119,7 +119,9 @@ class MolajoAssetCategoriesModel extends MolajoModel
 
         $this->alias = Molajo::Application()->stringURLSafe($this->alias);
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Molajo::Date()->format('Y-m-d-H-i-s');
+            $this->alias = Molajo::Services()
+                ->connect('Date')
+                ->format('Y-m-d-H-i-s');
         }
 
         return true;
@@ -170,7 +172,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
     public function store($updateNulls = false)
     {
         $date = Molajo::Date();
-        $user = Molajo::User();
+        $user = Molajo::Application()->get('User', '', 'services');
 
         if ($this->id) {
             // Existing category

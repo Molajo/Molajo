@@ -285,11 +285,11 @@ To display one item:
 
 To display all of the options available:
 
-    <?php echo '<pre>'; var_dump(Molajo::User()); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Molajo::Application()->get('User', '', 'services')); echo '</pre>';  ?>
 
 To display one item:
 
-    <?php echo Molajo::User()->username; ?>
+    <?php echo Molajo::Application()->get('User', '', 'services')->username; ?>
 
 ### Input Request ###
 

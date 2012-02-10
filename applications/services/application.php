@@ -8,13 +8,13 @@
 defined('MOLAJO') or die;
 
 /**
- * Configuration
+ * Application
  *
  * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
-class MolajoConfigurationService
+class MolajoApplicationService
 {
     /**
      * Static instance
@@ -69,7 +69,7 @@ class MolajoConfigurationService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoConfigurationService();
+            self::$instance = new MolajoApplicationService();
         }
         return self::$instance;
     }
@@ -107,17 +107,17 @@ class MolajoConfigurationService
         }
 
         /** Application Table entry for each application - parameters field has config */
-        $appConfig = ApplicationHelper::getApplicationInfo();
+        $appConfig = $this->getApplicationInfo();
 
         $this->metadata = new Registry;
-        $this->metadata->loadString($appConfig->metadata);
+        $this->metadata->loadString($appConfig->metadata, 'JSON');
 
         $this->custom_fields = new Registry;
-        $this->custom_fields->loadString($appConfig->custom_fields);
+        $this->custom_fields->loadString($appConfig->custom_fields, 'JSON');
 
         // todo: amy check this after the interface is working and not test data
         $parameters = substr($appConfig->parameters, 1, strlen($appConfig->parameters) - 2);
-        $parameters = substr($parameters, 1, strlen($parameters) - 2);
+        $parameters = substr($parameters, 0, strlen($parameters) - 1);
         $parmArray = array();
         $parmArray = explode(',', $parameters);
         foreach ($parmArray as $entry) {
@@ -154,6 +154,77 @@ class MolajoConfigurationService
 
         $siteConfigData = new MolajoSiteConfiguration();
         return $siteConfigData;
+    }
+
+    /**
+     * getApplicationInfo
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function getApplicationInfo()
+    {
+        $row = new stdClass();
+        $id = 0;
+
+        if (MOLAJO_APPLICATION == 'installation') {
+
+            $id = 0;
+            $row->id = 0;
+            $row->name = MOLAJO_APPLICATION;
+            $row->path = MOLAJO_APPLICATION;
+            $row->asset_type_id = MOLAJO_ASSET_TYPE_BASE_APPLICATION;
+            $row->description = '';
+            $row->custom_fields = '';
+            $row->parameters = '';
+            $row->metadata = '';
+
+        } else {
+
+            $db = Molajo::Services()->connect('jdb');
+            $query = $db->getQuery(true);
+
+            $query->select($db->namequote('id'));
+            $query->select($db->namequote('asset_type_id'));
+            $query->select($db->namequote('name'));
+            $query->select($db->namequote('path'));
+            $query->select($db->namequote('description'));
+            $query->select($db->namequote('custom_fields'));
+            $query->select($db->namequote('parameters'));
+            $query->select($db->namequote('metadata'));
+            $query->from($db->namequote('#__applications'));
+            $query->where($db->namequote('name') .
+                ' = ' . $db->quote(MOLAJO_APPLICATION));
+            $db->setQuery($query->__toString());
+            $results = $db->loadObjectList();
+
+            if ($db->getErrorNum()) {
+                return new MolajoException($db->getErrorMsg());
+            }
+
+            if (count($results) == 0) {
+                // todo: amy error;
+            }
+
+            foreach ($results as $result) {
+                $row->id = $result->id;
+                $id = $result->id;
+                $row->name = $result->name;
+                $row->path = $result->path;
+                $row->asset_type_id = $result->asset_type_id;
+                $row->description = $result->description;
+                $row->custom_fields = $result->custom_fields;
+                $row->parameters = $result->parameters;
+                $row->metadata = $result->metadata;
+            }
+        }
+
+        if (defined('MOLAJO_APPLICATION_ID')) {
+        } else {
+            define('MOLAJO_APPLICATION_ID', $id);
+        }
+
+        return $row;
     }
 
     /**

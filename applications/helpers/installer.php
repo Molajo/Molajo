@@ -225,7 +225,8 @@ abstract class MolajoInstallerHelper
                  continue;
              }
 
-             if ($xml->getName() != 'install' && $xml->getName() != 'extension') {
+             if ($xml->getName() == 'extension') {
+             } else {
                  unset($xml);
                  continue;
              }
@@ -302,7 +303,7 @@ abstract class MolajoInstallerHelper
       */
      public static function splitSql($sql)
      {
-         $db = Molajo::Application()->get('jdb', '', 'service');
+         $db = Molajo::Services()->connect('jdb');
          return $db->splitSql($sql);
      }
 }

@@ -49,8 +49,14 @@ class MolajoUsersModel extends MolajoModel
     {
         $this->id = $id;
         $row = $this->_query($this->id, $reset);
-        foreach ($row as $item) {}
-        return $this->bind($item, $ignore=array());
+
+        if (count($row) > 0) {
+            foreach ($row as $item) {
+            }
+            return $this->bind($item, $ignore = array());
+        } else {
+            //do an empty row
+        }
     }
 
     /**
@@ -74,9 +80,6 @@ class MolajoUsersModel extends MolajoModel
          *   provided by the parent query
          */
 
-        /** guest */
-        $row[0]['guest'] = 0;
-
         /** name */
         $row[0]['name'] = $row[0]['first_name'] . ' ' . $row[0]['last_name'];
 
@@ -95,6 +98,7 @@ class MolajoUsersModel extends MolajoModel
         $this->_db->setQuery($query->__toString());
 
         $row[0]['applications'] = $this->_db->loadAssocList('title', 'id');
+
         if ($this->_db->getErrorNum()) {
             $this->setError($this->_db->getErrorMsg());
             return false;
@@ -119,6 +123,14 @@ class MolajoUsersModel extends MolajoModel
         if ($this->_db->getErrorNum()) {
             $this->setError($this->_db->getErrorMsg());
             return false;
+        }
+
+        /** roles */
+        $row[0]['public'] = 1;
+        $row[0]['guest'] = 0;
+        $row[0]['registered'] = 1;
+        if (in_array(5, $row[0]['groups'])) {
+            $row[0]['administrator'] = 1;
         }
 
         /** view groups */
@@ -159,21 +171,25 @@ class MolajoUsersModel extends MolajoModel
             return false;
         }
 
-        if (preg_match("#[<>\"'%;()&]#i", $this->username) || strlen(utf8_decode($this->username)) < 2) {
+        if (preg_match("#[<>\"'%;()&]#i", $this->username)
+            || strlen(utf8_decode($this->username)) < 2) {
             $this->setError(TextServices::sprintf('MOLAJO_DB_ERROR_VALID_AZ09', 2));
             return false;
         }
 
-        if ((trim($this->email) == "") || !MailServices::isEmailAddress($this->email)) {
+        if ((trim($this->email) == "")
+            || !MailServices::isEmailAddress($this->email)) {
             $this->setError(TextServices::_('MOLAJO_DB_ERROR_VALID_MAIL'));
             return false;
         }
 
         // Set the registration timestamp
-        if ($this->register_datetime == null || $this->register_datetime == $this->_db->getNullDate()) {
-            $this->register_datetime = Molajo::Date()->toMySQL();
+        if ($this->register_datetime == null
+            || $this->register_datetime == $this->_db->getNullDate()) {
+            $this->register_datetime = Molajo::Services()
+                ->connect('Date')
+                ->toMySQL();
         }
-
 
         // check for existing username
         $query = 'SELECT id'
@@ -356,7 +372,9 @@ class MolajoUsersModel extends MolajoModel
         }
 
         // If no timestamp value is passed to functon, than current time is used.
-        $date = Molajo::Date($timeStamp);
+        $date = Molajo::Services()
+            ->connect('Date')
+            ->format('Y-m-d-H-i-s');
 
         // Update the database row for the user.
         // 			' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .

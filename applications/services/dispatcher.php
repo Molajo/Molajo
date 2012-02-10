@@ -25,6 +25,14 @@ class MolajoDispatcherService
     protected static $instance;
 
     /**
+     * Dispatcher
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $_dispatcher;
+
+    /**
      * getInstance
      *
      * @static
@@ -34,7 +42,7 @@ class MolajoDispatcherService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoDispatcherService();
+            self::$instance = new MolajoDispatcher();
         }
         return self::$instance;
     }
@@ -52,27 +60,14 @@ class MolajoDispatcherService
     }
 
     /**
-     * Dispatcher
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $_dispatcher;
-
-    /**
      * loadDispatcher
      *
-     * Method to create an event _dispatcher for the Web application.  The logic and options for creating
-     * this object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create event _dispatchers based on more specific needs.
-     *
      * @return  void
-     *
      * @since   1.0
      */
     protected function loadDispatcher()
     {
-        //        $this->_dispatcher = JDispatcher::getInstance();
+        // Startup should load the dispatcher
     }
 
     /**
@@ -89,6 +84,7 @@ class MolajoDispatcherService
      */
     public function registerEvent($event, $handler)
     {
+        //not used
         //        if ($this->_dispatcher instanceof JDispatcher) {
         //            $this->_dispatcher->register($event, $handler);
         //        }
@@ -99,9 +95,9 @@ class MolajoDispatcherService
     /**
      * triggerEvent
      *
-     * Calls all handlers associated with an event group.
+     * Invokes services listening for a specific event
      *
-     * @param   string  $event  The event name.
+     * @param   string  $event  Event
      * @param   array   $args   An array of arguments (optional).
      *
      * @return  array   An array of results from each function call, or null if no _dispatcher is defined.

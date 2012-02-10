@@ -31,7 +31,7 @@ class MolajoDoctrineService
             $site = $config;
         } else {
             /** database connect procedes instantiation of application */
-            $configClass = new ConfigurationService();
+            $configClass = new ApplicationService();
             $site = $configClass->getSite();
         }
 

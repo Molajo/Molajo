@@ -16,9 +16,54 @@ defined('MOLAJO') or die;
 class MolajoTextService
 {
     /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
      * javascript strings
      */
     protected static $strings = array();
+
+    /**
+     * @var array
+     */
+    protected $_language = array();
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoTextService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
+
+    public function connect()
+    {
+        $this->_language = Molajo::Session()->connect('Language');
+    }
 
     /**
      * Translates a string into the current language.
@@ -37,10 +82,9 @@ class MolajoTextService
      * @since   1.0
      *
      */
-    public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
+    public function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = Molajo::Language();
-        if ($lang == null) {
+        if ($this->_language == null) {
             return $string;
         }
 
@@ -59,11 +103,11 @@ class MolajoTextService
             }
         }
         if ($script) {
-            self::$strings[$string] = $lang->_($string, $jsSafe, $interpretBackSlashes);
+            self::$strings[$string] = $this->_language->_($string, $jsSafe, $interpretBackSlashes);
             return $string;
         }
         else {
-            return $lang->_($string, $jsSafe, $interpretBackSlashes);
+            return $this->_language->_($string, $jsSafe, $interpretBackSlashes);
         }
     }
 
@@ -89,8 +133,7 @@ class MolajoTextService
      */
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
-        $lang = Molajo::Language();
-        if ($lang->hasKey($string . '_' . $alt)) {
+        if ($this->_language->hasKey($string . '_' . $alt)) {
             return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
         }
         else {
@@ -118,12 +161,11 @@ class MolajoTextService
      */
     public static function sprintf($string)
     {
-        $lang = Molajo::Application()->get('language');
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
             if (is_array($args[$count - 1])) {
-                $args[0] = $lang->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
+                $args[0] = $this->_language->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
                     : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
                     ? $args[$count - 1]['interpretBackSlashes'] : true);
                 if (array_key_exists('script', $args[$count - 1]) && $args[$count - 1]['script']) {
@@ -132,7 +174,7 @@ class MolajoTextService
                 }
             }
             else {
-                $args[0] = $lang->_($string);
+                $args[0] = $this->_language->_($string);
             }
             return call_user_func_array('sprintf', $args);
         }
@@ -151,58 +193,20 @@ class MolajoTextService
      */
     public static function printf($string)
     {
-        $lang = Molajo::Language();
         $args = func_get_args();
         $count = count($args);
         if ($count > 0) {
             if (is_array($args[$count - 1])) {
-                $args[0] = $lang->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
+                $args[0] = $this->_language->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
                     : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
                     ? $args[$count - 1]['interpretBackSlashes'] : true);
             }
             else {
-                $args[0] = $lang->_($string);
+                $args[0] = $this->_language->_($string);
             }
             return call_user_func_array('printf', $args);
         }
         return '';
-    }
-
-    /**
-     * script
-     *
-     * Translate a string into the current language and stores it in the JavaScript language store.
-     *
-     * @static
-     * @param null $string
-     * @param bool $jsSafe
-     * @param bool $interpretBackSlashes
-     * @return array
-     */
-    public static function script($string = null, $jsSafe = false, $interpretBackSlashes = true)
-    {
-        if (is_array($jsSafe)) {
-            if (array_key_exists('interpretBackSlashes', $jsSafe)) {
-                $interpretBackSlashes = (boolean)$jsSafe['interpretBackSlashes'];
-            }
-            if (array_key_exists('jsSafe', $jsSafe)) {
-                $jsSafe = (boolean)$jsSafe['jsSafe'];
-            }
-            else {
-                $jsSafe = false;
-            }
-        }
-
-        // Add the string to the array if not null.
-        if ($string !== null) {
-            // Normalize the key and translate the string.
-            self::$strings[strtoupper($string)] =
-                Molajo::Application()->
-                get('languageObject')->
-                _($string, $jsSafe, $interpretBackSlashes);
-        }
-
-        return self::$strings;
     }
 
     /**
@@ -241,7 +245,7 @@ class MolajoTextService
     /**
      * smilies
      *
-     * change text smiley values into icons - smilie list from WordPress
+     * change text smiley values into icons
      *
      * @param  string $text
      * @return string
@@ -295,10 +299,16 @@ class MolajoTextService
             ':!:' => 'exclaim.gif',
             ':?:' => 'question.gif',
         );
-        //todo amy change media location for smilies
+
         if (count($smile) > 0) {
             foreach ($smile as $key => $val) {
-                $text = JString::str_ireplace($key, '<span><img src="' . JURI::base() . 'media/images/smiley/' . $val . '" alt="smiley" class="smiley-class" /></span>', $text);
+                $text = str_ireplace($key,
+                    '<span><img src="' .
+                        MOLAJO_SITE_MEDIA_URL .
+                        'smiley/'
+                        . $val
+                        . '" alt="smiley" class="smiley-class" /></span>',
+                    $text);
             }
         }
         return $text;

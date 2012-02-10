@@ -115,7 +115,7 @@ class MolajoThemeRenderer extends MolajoRenderer
             Molajo::Application()->get('media_priority_application', 200));
 
         /** User */
-        $this->_loadMediaPlus('/user' . Molajo::User()->get('id'),
+        $this->_loadMediaPlus('/user' . Molajo::Application()->get('User', '', 'services')->get('id'),
             Molajo::Application()->get('media_priority_user', 300));
 
         /** Theme */

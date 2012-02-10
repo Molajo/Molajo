@@ -122,10 +122,10 @@ class MolajoDisplayModel extends MolajoModel
 
         $this->fieldClass = new MolajoField();
 
-//        $this->dispatcher = JDispatcher::getInstance();
+        //        $this->dispatcher = JDispatcher::getInstance();
 
-//        MolajoPluginHelper::importPlugin('query');
-//        MolajoPluginHelper::importPlugin($this->mvc['plugin_type']);
+        //        MolajoPluginHelper::importPlugin('query');
+        //        MolajoPluginHelper::importPlugin($this->mvc['plugin_type']);
 
         if ($this->mvc['id'] == 0) {
             $this->populateStateMultiple();
@@ -133,7 +133,7 @@ class MolajoDisplayModel extends MolajoModel
             $this->populateItemState();
         }
 
-//        $this->dispatcher->trigger('queryGetState', array(&$this->status, &$this->parameters));
+        //        $this->dispatcher->trigger('queryGetState', array(&$this->status, &$this->parameters));
     }
 
     /**
@@ -189,7 +189,7 @@ class MolajoDisplayModel extends MolajoModel
         //        }
 
         /** list limit **/
-        $limit = (int)Molajo::User()->getUserStateFromRequest(
+        $limit = (int)Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
             'global.list.limit',
             'limit',
             Molajo::Application()->get('list_limit')
@@ -198,7 +198,7 @@ class MolajoDisplayModel extends MolajoModel
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
-        $value = Molajo::User()->getUserStateFromRequest(
+        $value = Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
             $this->context . '.limitstart',
             'limitstart',
             0
@@ -208,7 +208,7 @@ class MolajoDisplayModel extends MolajoModel
 
         /** ordering by field **/
         $ordering = 'a.title';
-        $value = Molajo::User()->getUserStateFromRequest(
+        $value = Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
             $this->context . '.ordercol',
             'filter_order',
             $ordering
@@ -223,7 +223,7 @@ class MolajoDisplayModel extends MolajoModel
         } else {
             $ordering = 'a.title';
         }
-        Molajo::User()->setUserState(
+        Molajo::Application()->get('User', '', 'services')->setUserState(
             $this->context . '.ordercol',
             $ordering
         );
@@ -238,7 +238,7 @@ class MolajoDisplayModel extends MolajoModel
 
         /** ordering direction **/
         $direction = 'ASC';
-        $value = Molajo::User()->getUserStateFromRequest(
+        $value = Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
             $this->context . '.orderdirn',
             'filter_order_Dir',
             $direction
@@ -246,7 +246,7 @@ class MolajoDisplayModel extends MolajoModel
         if (in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
         } else {
             $value = $direction;
-            Molajo::User()->setUserState(
+            Molajo::Application()->get('User', '', 'services')->setUserState(
                 $this->context . '.orderdirn',
                 $value
             );
@@ -368,16 +368,20 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /** pass query results to event */
-//        $this->dispatcher->trigger(
-//            'queryAfterQuery',
-//                array(&$this->status,
-//                    &$items,
-//                    &$this->parameters)
-//       );
+        //        $this->dispatcher->trigger(
+        //            'queryAfterQuery',
+        //                array(&$this->status,
+        //                    &$items,
+        //                    &$this->parameters)
+        //       );
 
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
         $nullDate = $this->db->quote($this->db->getNullDate());
-        $nowDate = $this->db->quote(Molajo::Date()->toMySQL());
+        $nowDate = $this->db->quote(
+            $this->alias = Molajo::Services()
+                ->connect('Date')
+                ->toMySQL()
+        );
 
         /** retrieve names of json fields for this type of content **/
         $jsonFields = $this->molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
@@ -394,7 +398,7 @@ class MolajoDisplayModel extends MolajoModel
                 $keep = true;
                 $items[$i]->canCheckin = false;
                 $items[$i]->checked_out = false;
-//                $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
+                //                $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
 
                 /** category is archived, so item should be too **/
                 if ($items[$i]->minimum_status_category < $items[$i]->status && $items[$i]->status > MOLAJO_STATUS_VERSION) {
@@ -515,23 +519,23 @@ class MolajoDisplayModel extends MolajoModel
                     $keep = false;
                 }
 
-//                $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
+                //                $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$items[$i], &$this->parameters, &$keep));
 
                 /** process content plugins */
-//                $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+                //                $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event = new stdClass();
 
-//                $results = $this->dispatcher->trigger(
-//                    'contentBeforeDisplay',
-//                    array($this->context,
-//                        &$items[$i],
-//                        &$this->parameters,
-//                        $this->getState('list.start')
-//                   )
-//                );
+                //                $results = $this->dispatcher->trigger(
+                //                    'contentBeforeDisplay',
+                //                    array($this->context,
+                //                        &$items[$i],
+                //                        &$this->parameters,
+                //                        $this->getState('list.start')
+                //                   )
+                //                );
                 $items[$i]->event->beforeDisplayContent = trim(implode("\n", $results));
 
-//                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
+                //                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event->afterDisplayContent = trim(implode("\n", $results));
 
                 /** remove item overridden by category and no longer valid for criteria **/
@@ -544,7 +548,7 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /** final event for queryset */
-//        $this->dispatcher->trigger('queryComplete', array(&$this->status, &$items, &$this->parameters));
+        //        $this->dispatcher->trigger('queryComplete', array(&$this->status, &$items, &$this->parameters));
 
         /** place query results in cache **/
         $this->cache[$store] = $items;
@@ -626,7 +630,7 @@ class MolajoDisplayModel extends MolajoModel
         $this->query->order($this->db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
-//        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->status, &$this->query, &$this->parameters));
+        //        $this->dispatcher->trigger('queryBeforeQuery', array(&$this->status, &$this->query, &$this->parameters));
 
         return $this->query;
     }
@@ -779,7 +783,7 @@ class MolajoDisplayModel extends MolajoModel
 
         $this->query->select('a.id AS value, a.name AS text');
         $this->query->from('#__users AS a');
-        $this->query->from($this->db->namequote('#' . $this->mvc['component_table']).' AS b');
+        $this->query->from($this->db->namequote('#' . $this->mvc['component_table']) . ' AS b');
         $this->query->where('a.created_by = b.id');
         $this->query->group('a.id');
         $this->query->order('a.name');
@@ -1077,7 +1081,7 @@ class MolajoDisplayModel extends MolajoModel
      */
     public function getModel($type = '', $prefix = 'Molajo', $config = array())
     {
-        $mc = ucfirst($prefix).$type.'Model';
+        $mc = ucfirst($prefix) . $type . 'Model';
         if (class_exists($mc)) {
             return new $mc($config);
         }

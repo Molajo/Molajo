@@ -12,8 +12,8 @@
         </connect>
     </service>
     <service>
-        <name>Configuration</name>
-        <serviceClass>MolajoConfigurationService</serviceClass>
+        <name>Application</name>
+        <serviceClass>MolajoApplicationService</serviceClass>
     </service>
     <service>
         <name>Language</name>
@@ -24,8 +24,19 @@
         <serviceClass>MolajoDateService</serviceClass>
     </service>
     <service>
-        <name>Dispatcher</name>
-        <serviceClass>MolajoDispatcherService</serviceClass>
+        <name>Access</name>
+        <serviceClass>MolajoAccessService</serviceClass>
+    </service>
+    <service>
+        <name>User</name>
+        <serviceClass>MolajoUserService</serviceClass>
+        <getInstance>
+            <parameters>
+                <parameter key="identifier" value="{{userid}}"/>
+            </parameters>
+        </getInstance>
+         <connect>
+         </connect>
     </service>
     <service>
         <name>Filter</name>
@@ -42,6 +53,14 @@
     <service>
         <name>Message</name>
         <serviceClass>MolajoMessageService</serviceClass>
+    </service>
+    <service>
+        <name>Session</name>
+        <serviceClass>MolajoSessionService</serviceClass>
+    </service>
+    <service>
+        <name>Security</name>
+        <serviceClass>MolajoSecurityService</serviceClass>
     </service>
     <service>
         <name>Text</name>

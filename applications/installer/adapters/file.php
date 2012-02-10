@@ -453,7 +453,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
             }
 
             // Remove the schema version
-            $db = Molajo::Application()->get('jdb', '', 'service');
+            $db = Molajo::Services()->connect('jdb');
             $query = $db->getQuery(true);
             $query->delete()
                     ->from('#__schemas')

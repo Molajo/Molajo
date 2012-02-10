@@ -67,7 +67,7 @@ class MolajoControllerEdit extends MolajoDisplayController
             $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         }
 
-        $this->user = Molajo::User();
+        $this->user = Molajo::Application()->get('User', '', 'services');
 
         /** id */
         if ($this->item->id == null) {

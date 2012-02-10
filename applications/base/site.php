@@ -96,19 +96,21 @@ class MolajoSite
      */
     public function load()
     {
-
-       $app = Molajo::Application();
-
+        /** Instantiate Application */
+        $app = Molajo::Application();
         $app->load();
+
+        /** Set Site Paths */
         $this->_setPaths();
 
+        /** Site Parameters */
         $info = SiteHelper::getSiteInfo();
         if ($info === false) {
             return false;
         }
-        /** is site authorised? */
-        $sc = new MolajoSite ();
-        $authorise = $sc->authorise(MOLAJO_APPLICATION_ID);
+
+        /** is site authorised for this Application? */
+        $authorise = $this->authorise();
         if ($authorise === false) {
             $message = '304: ' . MOLAJO_BASE_URL;
             echo $message;
@@ -125,10 +127,6 @@ class MolajoSite
         $this->_metadata->loadString($this->_siteQueryResults->metadata);
 
         $this->_base_url = $this->_siteQueryResults->base_url;
-        echo 'here';
-        die;
-
-
     }
 
     /**
@@ -139,7 +137,7 @@ class MolajoSite
      * @param $application_id
      * @return boolean
      */
-    public function authorise($application_id)
+    public function authorise()
     {
         $this->_applications = SiteHelper::getSiteApplications();
         if ($this->_applications === false) {
@@ -148,7 +146,7 @@ class MolajoSite
 
         $found = false;
         foreach ($this->_applications as $single) {
-            if ($single->application_id == $application_id) {
+            if ($single->application_id == MOLAJO_APPLICATION_ID) {
                 $found = true;
             }
         }
@@ -172,105 +170,83 @@ class MolajoSite
     {
         if (defined('MOLAJO_SITE_NAME')) {
         } else {
-            define('MOLAJO_SITE_NAME', self::get('site_name', MOLAJO_SITE_ID));
+            define('MOLAJO_SITE_NAME',
+                Molajo::Application()
+                ->get(
+                    'site_name',
+                    MOLAJO_SITE_ID
+                )
+            );
         }
+
         if (defined('MOLAJO_SITE_CACHE_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_CACHE_FOLDER', self::get('cache_path', MOLAJO_SITE_FOLDER_PATH . '/cache'));
+            define('MOLAJO_SITE_CACHE_FOLDER',
+                Molajo::Application()
+                ->get(
+                    'cache_path',
+                    MOLAJO_SITE_FOLDER_PATH . '/cache'
+                )
+            );
         }
+
         if (defined('MOLAJO_SITE_LOGS_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_LOGS_FOLDER', self::get('logs_path', MOLAJO_SITE_FOLDER_PATH . '/logs'));
+            define('MOLAJO_SITE_LOGS_FOLDER',
+                Molajo::Application()
+                ->get(
+                    'logs_path',
+                    MOLAJO_SITE_FOLDER_PATH . '/logs'
+                )
+            );
         }
 
         /** following must be within the web document folder */
         if (defined('MOLAJO_SITE_MEDIA_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_MEDIA_FOLDER', self::get('media_path', MOLAJO_SITE_FOLDER_PATH . '/media'));
+            define('MOLAJO_SITE_MEDIA_FOLDER',
+                Molajo::Application()
+                ->get(
+                    'media_path',
+                    MOLAJO_SITE_FOLDER_PATH . '/media'
+                )
+            );
         }
+
         if (defined('MOLAJO_SITE_MEDIA_URL')) {
         } else {
-            define('MOLAJO_SITE_MEDIA_URL', MOLAJO_BASE_URL . self::get('media_url', MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media'));
+            define('MOLAJO_SITE_MEDIA_URL',
+                MOLAJO_BASE_URL .
+                Molajo::Application()
+                ->get(
+                    'media_url',
+                    MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media'
+                )
+            );
         }
+
         if (defined('MOLAJO_SITE_TEMP_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_TEMP_FOLDER', self::get('temp_path', MOLAJO_SITE_FOLDER_PATH . '/temp'));
+            define('MOLAJO_SITE_TEMP_FOLDER',
+            Molajo::Application()
+                ->get(
+                    'temp_path',
+                    MOLAJO_SITE_FOLDER_PATH . '/temp'
+                )
+            );
         }
         if (defined('MOLAJO_SITE_TEMP_URL')) {
         } else {
-            define('MOLAJO_SITE_TEMP_URL', MOLAJO_BASE_URL . self::get('temp_url', MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/temp'));
+            define('MOLAJO_SITE_TEMP_URL',
+                MOLAJO_BASE_URL .
+                Molajo::Application()
+                    ->get(
+                    'temp_url',
+                    MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/temp'
+                )
+            );
         }
 
         return;
-    }
-
-    /**
-     * siteConfig
-     *
-     * Creates the Site Configuration object.
-     *
-     * return  null
-     * @since  1.0
-     */
-    public function siteConfig()
-    {
-        $siteConfig = new ConfigurationService ();
-        $data = $siteConfig->site();
-
-        if (is_array($data)) {
-            $this->_config->loadArray($data);
-
-        } elseif (is_object($data)) {
-            $this->_config->loadObject($data);
-        }
-
-        return;
-    }
-
-    /**
-     * get
-     *
-     * Returns a property of the Application object
-     * or the default value if the property is not set.
-     *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
-     *
-     * @return  mixed   The value of the configuration.
-     *
-     * @since   1.0
-     */
-    public function get($key, $default = null, $type = 'config')
-    {
-        if ($type == 'custom') {
-            return $this->_custom_fields->get($key, $default);
-        } else if ($type == 'metadata') {
-            return $this->_metadata->get($key, $default);
-        } else {
-            return $this->_config->get($key, $default);
-        }
-    }
-
-    /**
-     * set
-     *
-     * Modifies a property of the Application object, creating it if it does not already exist.
-     *
-     * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The value of the property to set (optional).
-     *
-     * @return  mixed   Previous value of the property
-     *
-     * @since   1.0
-     */
-    public function set($key, $value = null, $type = 'config')
-    {
-        if ($type == 'custom') {
-            return $this->_custom_fields->set($key, $value);
-        } else if ($type == 'metadata') {
-            return $this->_metadata->get($key, $value);
-        } else {
-            return $this->_config->get($key, $value);
-        }
     }
 }

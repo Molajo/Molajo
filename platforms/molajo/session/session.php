@@ -140,67 +140,6 @@ class MolajoSession extends JObject
         return $this->_expire;
     }
 
-    /**
-     * Get a session token, if a token isn't set yet one will be generated.
-     *
-     * Tokens are used to secure forms from spamming attacks. Once a token
-     * has been generated the system will check the post request to see if
-     * it is present, if not it will invalidate the session.
-     *
-     * @param   boolean  If true, force a new token to be created
-     *
-     * @return  string    The session token
-     */
-    public function getToken($forceNew = false)
-    {
-        $token = $this->get('session.token');
-
-        if ($token === null || $forceNew) {
-            $token = $this->_createToken(12);
-            $this->set('session.token', $token);
-        }
-
-        return $token;
-    }
-
-    /**
-     * Method to determine if a token exists in the session. If not the
-     * session will be set to expired
-     *
-     * @param   string    Hashed token to be verified
-     * @param   boolean  If true, expires the session
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function hasToken($tCheck, $forceExpire = true)
-    {
-        $tStored = $this->get('session.token');
-
-        if (($tStored !== $tCheck)) {
-            if ($forceExpire) {
-                $this->_state = 'expired';
-            }
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Method to determine a hash for anti-spoofing variable names
-     *
-     * @return  string  Hashed var name
-     * @since       11.1
-     */
-    public static function getFormToken($forceNew = false)
-    {
-        $user = Molajo::User();
-        $session = Molajo::Application()->getSession();
-        $hash = Molajo::Application()->getHash($user->get('id', 0) . $session->getToken($forceNew));
-
-        return $hash;
-    }
 
     /**
      * Get session name
@@ -577,26 +516,6 @@ class MolajoSession extends JObject
                                     $cookie['path'],
                                     $cookie['domain'],
                                     $cookie['secure']);
-    }
-
-    /**
-     * Create a token-string
-     *
-     * @param   integer  length of string
-     *
-     * @return  string  generated token
-     */
-    protected function _createToken($length = 32)
-    {
-        static $chars = '0123456789abcdef';
-        $max = strlen($chars) - 1;
-        $token = '';
-        $name = session_name();
-        for ($i = 0; $i < $length; ++$i) {
-            $token .= $chars[(rand(0, $max))];
-        }
-
-        return md5($token . $name);
     }
 
     /**

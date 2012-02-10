@@ -148,7 +148,7 @@ class MolajoModel extends JObject
         if (array_key_exists('dbo', $this->_config)) {
             $this->_db = $this->_config['dbo'];
         } else {
-            $this->_db = Molajo::Application()->get('jdb', 'service');
+            $this->_db = Molajo::Services()->connect('jdb');
         }
     }
 
@@ -495,7 +495,8 @@ class MolajoModel extends JObject
     public function bind($source, $ignore = array())
     {
         if (is_object($source)
-            || is_array($source)) {
+            || is_array($source)
+        ) {
         } else {
             $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
             $this->setError($e);
@@ -512,7 +513,7 @@ class MolajoModel extends JObject
         }
 
         /** populate temporary table  */
-        foreach ($source as $key=>$value) {
+        foreach ($source as $key => $value) {
             if (in_array($key, $ignore)) {
             } else {
                 $this->tableQueryResults[$key] = $value;
@@ -724,7 +725,9 @@ class MolajoModel extends JObject
         }
 
         // Get the current time in MySQL format.
-        $time = Molajo::Date()->toMysql();
+        $time = Molajo::Application()
+            ->connect('Date')
+            ->toMysql();
 
         // Check the row out by primary key.
         $query = $this->_db->getQuery(true);
@@ -829,7 +832,7 @@ class MolajoModel extends JObject
             return false;
         }
 
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $db->setQuery(
             'SELECT COUNT(user_id)' .
                 ' FROM ' . $db->quoteName('#__sessions') .

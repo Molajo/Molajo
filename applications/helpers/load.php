@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Service
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -11,10 +11,10 @@ defined('MOLAJO') or die;
  * File
  *
  * @package     Molajo
- * @subpackage  Service
+ * @subpackage  Helper
  * @since       1.0
  */
-class MolajoFileService
+class MolajoLoadHelper
 {
     /**
      * requireClassFile
@@ -33,7 +33,7 @@ class MolajoFileService
             return true;
         }
 
-        /** Populate Configuration with Application Parameters from Database */
+        /** Dashes/Underscores removed, next word uppercased for class name */
         if (strpos($class, '_') === false) {
         } else {
             $classArray = explode('_', $class);
@@ -47,7 +47,7 @@ class MolajoFileService
             JLoader::register($class, $file);
         } else {
             if (MolajoBase::$application == null) {
-                echo 'MolajoFileService Error: file not found ' . $file . ' for Class: ' . $class;
+                echo 'MolajoLoadHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             } else {
 //            if (class_exists('MolajoError') && class_exists('TextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {
@@ -60,7 +60,7 @@ class MolajoFileService
             return true;
         } else {
             if (MolajoBase::$application == null) {
-                echo 'MolajoFileService Error class not found ' . $class;
+                echo 'MolajoLoadHelper Error class not found ' . $class;
                 exit;
             } else {
             //if (class_exists('MolajoError') && class_exists('TextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {

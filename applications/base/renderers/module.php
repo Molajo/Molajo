@@ -51,19 +51,19 @@ class MolajoModuleRenderer extends MolajoRenderer
      */
     protected function _importClasses()
     {
-        $fileHelper = new FileServices();
+        $load = new LoadHelper();
         $name = ucfirst($this->task->get('extension_instance_name'));
         $name = str_replace (array('-', '_'), '', $name);
 
         /** Controller */
         if (file_exists($this->task->get('extension_path') . '/controller.php')) {
-            $fileHelper->requireClassFile($this->task->get('extension_path') . '/controller.php',
+            $load->requireClassFile($this->task->get('extension_path') . '/controller.php',
                 $name . 'ModuleControllerDisplay');
         }
 
         /** Model */
         if (file_exists($this->task->get('extension_path') . '/model.php')) {
-            $fileHelper->requireClassFile($this->task->get('extension_path') . '/model.php',
+            $load->requireClassFile($this->task->get('extension_path') . '/model.php',
                 $name . 'ModuleModelDisplay');
         }
     }

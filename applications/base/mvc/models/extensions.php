@@ -74,7 +74,7 @@ class MolajoExtensionsModel extends MolajoModel
 
     function find($options = array())
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $where = Array();
         foreach ($options as $col => $val) {
             $where[] = $col . ' = ' . $db->Quote($val);

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
+ * @subpackage  Services
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -73,10 +73,9 @@ class MolajoAccessService
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
-                MolajoAccessService::authoriseTask(
-                    $task,
-                    $asset_id
-                );
+                Molajo::Application()
+                    ->get('Access', ' ', 'services')
+                    ->authoriseTask($task, $asset_id);
         }
     }
 
@@ -92,14 +91,16 @@ class MolajoAccessService
     public function authoriseTask($task = 'login', $asset_id = 0)
     {
         if ($task == 'login') {
-            return MolajoAccessService::authoriseLogin($asset_id);
+            return Molajo::Application()
+                ->get('Access', ' ', 'services')
+                ->authoriseTask('login', $asset_id);
         }
 
         /** need task to action mapping in a) site ini or b) application parameters */
         $action = 'view';
         $action_id = 3;
 
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
@@ -107,7 +108,7 @@ class MolajoAccessService
         $query->where('a.' . $db->nameQuote('asset_id') . ' = ' . (int)$asset_id);
         $query->where('a.' . $db->nameQuote('action_id') . ' = ' . (int)$action_id);
         $query->where('a.' . $db->nameQuote('group_id') .
-            ' IN (' . implode(',', Molajo::User()->get('groups')) . ')');
+            ' IN (' . implode(',', Molajo::Application()->get('User', '', 'services')->get('groups')) . ')');
 
         $db->setQuery($query->__toString());
         $count = $db->loadResult();
@@ -139,7 +140,7 @@ class MolajoAccessService
             return false;
         }
 
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
@@ -176,7 +177,7 @@ class MolajoAccessService
     static public function setQueryViewAccess($query = array(),
                                               $parameters = array())
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
 
         if ($parameters['select'] === true) {
             $query->select($parameters['asset_prefix'] .
@@ -200,7 +201,11 @@ class MolajoAccessService
 
         $query->where($parameters['asset_prefix'] .
                 '.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
+                ' IN (' . implode(',',
+                Molajo::Services()
+                    ->connect('User')
+                    ->get('view_groups')) .
+                ')'
         );
 
         return $query;

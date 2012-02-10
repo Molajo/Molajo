@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Asset
  *
  * @package     Molajo
- * @subpackage  Component
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class MolajoAssetHelper
@@ -29,7 +29,12 @@ abstract class MolajoAssetHelper
      */
     public static function get($asset_id = 0, $query_request = null)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $user = Molajo::Application()
+                    ->get('User', '', 'services');
+        var_dump($user);
+                    //->get('view_groups');
+
+        $db = Molajo::Services()->connect('jdb');
 
         $query = $db->getQuery(true);
 
@@ -53,7 +58,10 @@ abstract class MolajoAssetHelper
             ' = b.' . $db->nameQuote('id'));
 
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
+                ' IN (' .
+                implode(',', Molajo::Application()
+                    ->get('User', '', 'services')
+                    ->get('view_groups')) . ')'
         );
 
         if ((int)$asset_id == 0) {
@@ -230,7 +238,7 @@ abstract class MolajoAssetHelper
      */
     public static function getID($asset_type_id, $source_id)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->namequote('id') . ' as asset_id');
@@ -240,7 +248,7 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->namequote('source_id') .
             ' = ' . (int)$source_id);
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
+                ' IN (' . implode(',', Molajo::Application()->get('User', '', 'services')->get('view_groups')) . ')'
         );
 
         $db->setQuery($query->__toString());
@@ -273,7 +281,7 @@ abstract class MolajoAssetHelper
      */
     public static function getURL($asset_id)
     {
-        $db = Molajo::Application()->get('jdb', '', 'service');
+        $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
         /** home */
@@ -291,7 +299,7 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->namequote('id') .
             ' = ' . (int)$asset_id);
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::User()->get('view_groups')) . ')'
+                ' IN (' . implode(',', Molajo::Application()->get('User', '', 'services')->get('view_groups')) . ')'
         );
 
         $db->setQuery($query->__toString());

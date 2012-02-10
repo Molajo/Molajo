@@ -26,7 +26,7 @@ class MolajoContentModel extends MolajoModel
      */
     function __construct($db)
     {
-     //   parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
+        //   parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
         parent::__construct('#__content', 'id', $db);
     }
 
@@ -133,7 +133,9 @@ class MolajoContentModel extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Molajo::Date()->format('Y-m-d-H-i-s');
+            $this->alias = Molajo::Services()
+                ->connect('Date')
+                ->format('Y-m-d-H-i-s');
         }
 
         /** text fields **/
@@ -178,8 +180,8 @@ class MolajoContentModel extends MolajoModel
      */
     public function store($updateNulls = false)
     {
-        $date = Molajo::Date();
-        $user = Molajo::User();
+        $date = Molajo::Services()->connect('Date');
+        $user = Molajo::Services()->connect('User');
 
         if ($this->id) {
             $this->modified = $date->toMySQL();
@@ -204,7 +206,9 @@ class MolajoContentModel extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Molajo::Date()->format('Y-m-d-H-i-s');
+            $this->alias = Molajo::Services()
+                ->connect('Date')
+                ->format('Y-m-d-H-i-s');
         }
 
         return parent::store($updateNulls);

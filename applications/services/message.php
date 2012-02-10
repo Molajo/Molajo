@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Dispatcher
+ * Message
  *
  * @package     Molajo
  * @subpackage  Service
@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoMessageService
 {
-
     /**
      * Messages
      *
@@ -25,6 +24,40 @@ class MolajoMessageService
      */
     protected $_messages = array();
 
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MolajoMessageService();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * setMessage
@@ -58,8 +91,8 @@ class MolajoMessageService
             $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
         }
 
-        /** load _session messages into application messages array */
-        $this->_sessionMessages();
+        /** load session messages into messages array */
+        $this->_getSessionMessages();
 
         /** add new message */
         $count = count($this->_messages);
@@ -76,37 +109,55 @@ class MolajoMessageService
     /**
      * getMessages
      *
-     * Get system messages
-     *
-     * @return  array  System messages
+     * @return  array  Application messages
      * @since   1.0
      */
     public function getMessages()
     {
-        $this->_sessionMessages();
+        $this->_getSessionMessages();
         return $this->_messages;
     }
 
     /**
-     *  _sessionMessages
+     *  _getSessionMessages
      *
      * Retrieve messages in _session and load into Application messages array
      *
      * @return  void
      * @since   1.0
      */
-    private function _sessionMessages()
+    private function _getSessionMessages()
     {
         $_session = $this->getSession();
-        $_sessionMessages = $_session->get('application.messages');
+        $_getSessionMessages = $_session->get('application.messages');
 
-        if (count($_sessionMessages) > 0) {
+        if (count($_getSessionMessages) > 0) {
             $count = count($this->_messages);
-            foreach ($_sessionMessages as $_sessionMessage) {
+            foreach ($_getSessionMessages as $_sessionMessage) {
                 $this->_messages[$count] = $_sessionMessage;
                 $count++;
             }
             $_session->set('application.messages', null);
+        }
+    }
+
+    /**
+     * _setSessionMessages
+     *
+     * Store system messages in Session variable
+     *
+     * @return  array  System messages
+     * @since   1.0
+     */
+    public function _setSessionMessages()
+    {
+        $_session = $this->getSession();
+
+        if (count($this->_messages) > 0) {
+            $_session->set('application.messages', $this->_messages);
+        } else {
+            $_session->set('application.messages', null);
+
         }
     }
 }

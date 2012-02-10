@@ -10,16 +10,16 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$fileHelper = new MolajoFileService();
+$load = new MolajoLoadHelper();
 
 /**
  *  Base
  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE. '/base', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'base.php' || $file == 'language.php') {
+    if ($file == 'base.php') {
     } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 
@@ -28,7 +28,7 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/helpers', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
+    $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
 }
 
 /**
@@ -38,7 +38,7 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/base/renderers', '\.php$', 
 foreach ($files as $file) {
     if ($file == 'renderer.php') {
     } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
+        $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
     }
 }
 
@@ -49,44 +49,44 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/services', '\.php$', false,
 foreach ($files as $file) {
     if ($file == 'file.php' || $file == 'text.php') {
     } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
+        $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
     }
 }
 
 /**
  *  Installer
  */
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapter.php', 'MolajoAdapter');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapterinstance.php', 'MolajoAdapterInstance');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer.php', 'MolajoInstaller');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/extension.php', 'MolajoInstallerExtension');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/librarymanifest.php', 'MolajoInstallerLibraryManifest');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/packagemanifest.php', 'MolajoInstallerPackageManifest');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapter.php', 'MolajoAdapter');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapterinstance.php', 'MolajoAdapterInstance');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer.php', 'MolajoInstaller');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/extension.php', 'MolajoInstallerExtension');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/librarymanifest.php', 'MolajoInstallerLibraryManifest');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/packagemanifest.php', 'MolajoInstallerPackageManifest');
 
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/adapters', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  MVC
  */
 /** Controller */
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/display.php', 'MolajoDisplayController');
-//$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/edit.php', 'MolajoEditController');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/login.php', 'MolajoLoginController');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/redirect.php', 'MolajoRedirectController');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/update.php', 'MolajoUpdateController');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/updatelist.php', 'MolajoUpdatelistController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/display.php', 'MolajoDisplayController');
+//$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/edit.php', 'MolajoEditController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/login.php', 'MolajoLoginController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/redirect.php', 'MolajoRedirectController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/update.php', 'MolajoUpdateController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/updatelist.php', 'MolajoUpdatelistController');
 
 /** Models */
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/model.php', 'MolajoModel');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/nested.php', 'MolajoNestedModel');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/model.php', 'MolajoModel');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/nested.php', 'MolajoNestedModel');
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'model.php' || $file == 'nested.php') {
     } else {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Model');
+        $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Model');
     }
 }

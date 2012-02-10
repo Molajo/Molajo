@@ -17,7 +17,7 @@ if (defined('JPATH_PLATFORM')) {
 
 require_once JPATH_PLATFORM . '/platform.php';
 require_once JPATH_PLATFORM . '/loader.php';
-require_once MOLAJO_APPLICATIONS_CORE . '/services/file.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/helpers/load.php';
 
 if (defined('_JEXEC')) {
 } else {
@@ -59,11 +59,6 @@ if (defined('JPATH_CACHE')) {
 } else {
     define('JPATH_CACHE', MOLAJO_SITE_FOLDER_PATH . '/cache');
 }
-/*
-if (defined('JPATH_MANIFESTS')) {
-} else {
-    define('JPATH_MANIFESTS', MOLAJO_EXTENSIONS_MANIFESTS);
-}*/
 if (defined('JPATH_THEMES')) {
 } else {
     define('JPATH_THEMES', MOLAJO_EXTENSIONS_THEMES);
@@ -76,12 +71,11 @@ if (defined('JPATH_COMPONENT')) {
 /**
  * File Subsystem
  */
-$fileHelper = new MolajoFileService();
+$load = new MolajoLoadHelper();
 
 require_once JOOMLA_LIBRARY . '/registry/registry.php';
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/base.php', 'MolajoBase');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/configuration.php', 'MolajoConfigurationService');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/base.php', 'MolajoBase');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
@@ -92,22 +86,21 @@ if (class_exists('JText')) {
     {
     }
 }
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/path.php', 'JPath');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/file.php', 'JFile');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolder');
+$load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/path.php', 'JPath');
+$load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/file.php', 'JFile');
+$load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolder');
 
 /**
  *  Base
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
-$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/language.php', 'MolajoLanguage');
+$load->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
 
 /**
  *  Input
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/input/input.php', 'JInput');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/input/cookie.php', 'JInputCookie');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/input/files.php', 'JInputFiles');
+$load->requireClassFile(JOOMLA_LIBRARY . '/input/input.php', 'JInput');
+$load->requireClassFile(JOOMLA_LIBRARY . '/input/cookie.php', 'JInputCookie');
+$load->requireClassFile(JOOMLA_LIBRARY . '/input/files.php', 'JInputFiles');
 
 /**
  *  Client
@@ -118,9 +111,9 @@ foreach ($files as $file) {
     if ($file == 'ftp.php') {
         /** babs cannot run this require statement - not sure why yet */
     } else if ($file == 'helper.php') {
-        $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/client/' . $file, 'JClientHelper');
+        $load->requireClassFile(JOOMLA_LIBRARY . '/client/' . $file, 'JClientHelper');
     } else {
-        $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/client/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $load->requireClassFile(JOOMLA_LIBRARY . '/client/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 
@@ -140,7 +133,7 @@ JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY . '/database/query.php');
 /**
  *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/error/profiler.php', 'JProfiler');
+$load->requireClassFile(JOOMLA_LIBRARY . '/error/profiler.php', 'JProfiler');
 
 /**
  *  Filesystem (continued)
@@ -151,27 +144,27 @@ foreach ($files as $file) {
     } elseif ($file == 'path.php' || $file == 'file.php' || $file == 'folder.php') {
     } elseif ($file == 'stream.php') {
     } else {
-        $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem/archive', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/archive/' . $file, 'JArchive' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/archive/' . $file, 'JArchive' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem/streams', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/streams/' . $file, 'JStream' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/streams/' . $file, 'JStream' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem/support', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filesystem/support/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/support/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  Filter
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filter/filterinput.php', 'JFilterInput');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/filter/filteroutput.php', 'JFilterOutput');
+$load->requireClassFile(JOOMLA_LIBRARY . '/filter/filterinput.php', 'JFilterInput');
+$load->requireClassFile(JOOMLA_LIBRARY . '/filter/filteroutput.php', 'JFilterOutput');
 
 /**
  *  Log
@@ -180,37 +173,37 @@ $files = JFolder::files(JOOMLA_LIBRARY . '/log', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'logexception.php') {
     } else {
-        $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/log/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $load->requireClassFile(JOOMLA_LIBRARY . '/log/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 $files = JFolder::files(JOOMLA_LIBRARY . '/log/loggers', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/log/loggers/' . $file, 'JLogger' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(JOOMLA_LIBRARY . '/log/loggers/' . $file, 'JLogger' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  Registry
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/registry/format.php', 'JRegistryFormat');
+$load->requireClassFile(JOOMLA_LIBRARY . '/registry/format.php', 'JRegistryFormat');
 $files = JFolder::files(JOOMLA_LIBRARY . '/registry/format', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/registry/format/' . $file, 'JRegistryFormat' . strtoupper(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(JOOMLA_LIBRARY . '/registry/format/' . $file, 'JRegistryFormat' . strtoupper(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  String
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/string/string.php', 'JString');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/string/stringnormalize.php', 'JStringNormalize');
+$load->requireClassFile(JOOMLA_LIBRARY . '/string/string.php', 'JString');
+$load->requireClassFile(JOOMLA_LIBRARY . '/string/stringnormalize.php', 'JStringNormalize');
 
 /**
  *  Utilities
  */
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/utilities/arrayhelper.php', 'JArrayHelper');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/utilities/buffer.php', 'JBuffer');
-$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/utilities/date.php', 'JDate');
+$load->requireClassFile(JOOMLA_LIBRARY . '/utilities/arrayhelper.php', 'JArrayHelper');
+$load->requireClassFile(JOOMLA_LIBRARY . '/utilities/buffer.php', 'JBuffer');
+$load->requireClassFile(JOOMLA_LIBRARY . '/utilities/date.php', 'JDate');
 
 /**
  *  PHPMailer
  */
-$fileHelper->requireClassFile(PLATFORMS . '/jplatform/phpmailer/phpmailer.php', 'PHPMailer');
+$load->requireClassFile(PLATFORMS . '/jplatform/phpmailer/phpmailer.php', 'PHPMailer');
