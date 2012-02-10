@@ -29,11 +29,7 @@ abstract class MolajoAssetHelper
      */
     public static function get($asset_id = 0, $query_request = null)
     {
-        $user = Molajo::Application()
-                    ->get('User', '', 'services');
-        var_dump($user);
-                    //->get('view_groups');
-
+        $user = Molajo::Services()->connect('User');
         $db = Molajo::Services()->connect('jdb');
 
         $query = $db->getQuery(true);
@@ -59,9 +55,7 @@ abstract class MolajoAssetHelper
 
         $query->where('a.' . $db->namequote('view_group_id') .
                 ' IN (' .
-                implode(',', Molajo::Application()
-                    ->get('User', '', 'services')
-                    ->get('view_groups')) . ')'
+                implode(',', $user->get('view_groups')) . ')'
         );
 
         if ((int)$asset_id == 0) {
@@ -238,6 +232,7 @@ abstract class MolajoAssetHelper
      */
     public static function getID($asset_type_id, $source_id)
     {
+        $user = Molajo::Services()->connect('User');
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
@@ -248,7 +243,8 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->namequote('source_id') .
             ' = ' . (int)$source_id);
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::Application()->get('User', '', 'services')->get('view_groups')) . ')'
+                ' IN (' .
+                implode(',', $user->get('view_groups')) . ')'
         );
 
         $db->setQuery($query->__toString());
@@ -281,6 +277,7 @@ abstract class MolajoAssetHelper
      */
     public static function getURL($asset_id)
     {
+        $user = Molajo::Services()->connect('User');
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
@@ -299,7 +296,8 @@ abstract class MolajoAssetHelper
         $query->where('a.' . $db->namequote('id') .
             ' = ' . (int)$asset_id);
         $query->where('a.' . $db->namequote('view_group_id') .
-                ' IN (' . implode(',', Molajo::Application()->get('User', '', 'services')->get('view_groups')) . ')'
+                ' IN (' .
+                implode(',', $user->get('view_groups')) . ')'
         );
 
         $db->setQuery($query->__toString());

@@ -62,7 +62,7 @@ class MolajoTextService
 
     public function connect()
     {
-        $this->_language = Molajo::Session()->connect('Language');
+        $this->_language = Molajo::Services()->connect('Language');
     }
 
     /**

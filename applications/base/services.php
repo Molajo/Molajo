@@ -57,7 +57,7 @@ class MolajoServices
      */
     public function __construct()
     {
-        return $this->initiateServices();
+
     }
 
     /**
@@ -86,7 +86,7 @@ class MolajoServices
             if ($connection === false) {
             } else {
                 $this->set($serviceName, $connection);
-                echo 'Service '.$serviceName.'<br />';
+                /** Push Configuration into Application for other services */
                 if ($serviceName == 'Application') {
                     Molajo::Application()
                         ->setApplicationProperties ($connection);
@@ -226,7 +226,7 @@ class MolajoServices
     }
 
     /**
-     * get
+     * connect
      *
      * Retrieves service connection
      *
@@ -239,7 +239,7 @@ class MolajoServices
      */
     public function connect($key, $default = null)
     {
-        $this->_service->get($key, $default);
+        return $this->_service->get($key, $default);
     }
 
     /**
@@ -255,6 +255,6 @@ class MolajoServices
      */
     public function set($key, $value = null)
     {
-        return $this->_service->set($key, $value);
+        $this->_service->set($key, $value);
     }
 }

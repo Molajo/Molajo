@@ -263,8 +263,6 @@ class MolajoUserService
      */
     public function connect()
     {
-        echo $this->_id;
-
         /** retrieve data for user */
         $this->model = new MolajoUsersModel ();
         $results = $this->model->load($this->_id);
@@ -283,7 +281,7 @@ class MolajoUserService
         $this->_parameters->loadString($this->_parameters, 'JSON');
         $this->_parameters->toArray();
 
-        return true;
+        return $this;
     }
 
     /**

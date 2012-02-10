@@ -60,7 +60,7 @@ class MolajoMessageService
     }
 
     /**
-     * setMessage
+     * set
      *
      * Set the system message.
      *
@@ -70,7 +70,7 @@ class MolajoMessageService
      * @return  bool
      * @since   1.0
      */
-    public static function setMessage($message = null,
+    public static function set($message = null,
                                       $type = 'message',
                                       $code = null,
                                       $debug_location = null,
@@ -107,12 +107,12 @@ class MolajoMessageService
     }
 
     /**
-     * getMessages
+     * get
      *
      * @return  array  Application messages
      * @since   1.0
      */
-    public function getMessages()
+    public function get()
     {
         $this->_getSessionMessages();
         return $this->_messages;

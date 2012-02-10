@@ -93,15 +93,7 @@ class MolajoApplication
     public function load()
     {
         /** Services: initiate Application Services */
-        $sv = Molajo::Services();
-
-        /** Set application properties */
-        $config = $sv->get('Application');
-        var_dump($config);
-        die;
-        $this->_metadata = $config->metadata;
-        $this->_custom_fields = $config->custom_fields;
-        $this->_configuration = $config->configuration;
+        $sv = Molajo::Services()->initiateServices();
 
         /** responder: listen for output */
         $rs = Molajo::Responder();
@@ -122,7 +114,8 @@ class MolajoApplication
         /** request: define processing instructions in page_request object */
         $rq = Molajo::Request();
         $rq->process();
-
+var_dump($rq);
+        die;
         /**
          * Display Task
          *
