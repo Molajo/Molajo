@@ -138,7 +138,7 @@ class MolajoRequest
             $this->set('request_url_home', true);
         }
 
-        return;
+        return $this;
     }
 
     /**

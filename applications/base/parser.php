@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
  * Parser
  *
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Base
  * @since       1.0
  */
 class MolajoParser
@@ -81,14 +81,10 @@ class MolajoParser
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance(Registry $config = null)
+    public static function getInstance()
     {
         if (empty(self::$instance)) {
-            if ($config instanceof Registry) {
-            } else {
-                $config = new Registry;
-            }
-            self::$instance = new MolajoParser($config);
+            self::$instance = new MolajoParser();
         }
         return self::$instance;
     }
@@ -101,23 +97,29 @@ class MolajoParser
      * @return boolean
      * @since  1.0
      */
-    public function __construct(Registry $config)
+    public function __construct()
     {
-        if ($config instanceof Registry) {
-            $this->_config = $config;
-        }
+        return;
+    }
+
+    /**
+     * processTheme
+     *
+     * Retrieves Theme and begins the process of first parsing the Theme and Page View
+     * for input:renderer statements, looping through the renderers for the statements found,
+     * and then continuing the process by parsing the rendered output for additional input
+     * statements until no more are found.
+     *
+     * @return  object
+     * @since  1.0
+     */
+    public function processTheme()
+    {
 
         /** sequence of renderer processing */
         $formatXML = '';
-        if (array_key_exists('xml', $this->_config)) {
-            $formatXML = $this->_config['xml'];
-            if (JFile::exists($formatXML)) {
-            } else {
-                $formatXML = '';
-            }
-        }
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS_CORE . '/renderers/sequence.xml';
+            $formatXML = MOLAJO_APPLICATIONS_CORE . '/base/renderers/sequence.xml';
         }
 
         if (JFile::exists($formatXML)) {
@@ -131,24 +133,6 @@ class MolajoParser
             $this->_sequence[] = (string)$next;
         }
 
-        $this->_processTheme();
-
-        return true;
-    }
-
-    /**
-     * _processTheme
-     *
-     * Retrieves Theme and begins the process of first parsing the Theme and Page View
-     * for input:renderer statements, looping through the renderers for the statements found,
-     * and then continuing the process by parsing the rendered output for additional input
-     * statements until no more are found.
-     *
-     * @return  object
-     * @since  1.0
-     */
-    protected function _processTheme()
-    {
         /** Theme Parameters */
         $this->parameters = new Registry;
         $this->parameters->loadArray(

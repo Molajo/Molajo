@@ -56,10 +56,12 @@ abstract class MolajoExtensionHelper
         $query->from($db->namequote('#__extension_instances') . ' as a');
         $query->where('a.' . $db->namequote('extension_id') . ' > 0 ');
 
+        /** extension specified by id, title or request for list */
         if ((int)$extension > 0) {
             $query->where('(a.' . $db->namequote('id') .
                 ' = ' . (int)$extension . ')'
             );
+        } else if ($extension == null) {
         } else {
             $query->where('(a.' . $db->namequote('title') .
                 ' = ' . $db->quote($extension) . ')'
@@ -83,12 +85,14 @@ abstract class MolajoExtensionHelper
         );
 
         /** Assets Join and View Access Check */
-        MolajoAccessService::setQueryViewAccess(
-            $query,
-            array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
-                'select' => true
+        Molajo::Services()
+            ->connect('Access')
+            ->setQueryViewAccess(
+                $query,
+                array('join_to_prefix' => 'a',
+                    'join_to_primary_key' => 'id',
+                    'asset_prefix' => 'b_assets',
+                    'select' => true
             )
         );
 
@@ -173,12 +177,14 @@ abstract class MolajoExtensionHelper
             $db->quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        MolajoAccessService::setQueryViewAccess(
-            $query,
-            array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
-                'select' => false
+        Molajo::Services()
+            ->connect('Access')
+            ->setQueryViewAccess(
+                $query,
+                array('join_to_prefix' => 'a',
+                    'join_to_primary_key' => 'id',
+                    'asset_prefix' => 'b_assets',
+                    'select' => true
             )
         );
 
@@ -229,11 +235,11 @@ abstract class MolajoExtensionHelper
         Molajo::Services()
             ->connect('Access')
             ->setQueryViewAccess(
-            $query,
-            array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
-                'select' => false
+                $query,
+                array('join_to_prefix' => 'a',
+                    'join_to_primary_key' => 'id',
+                    'asset_prefix' => 'b_assets',
+                    'select' => true
             )
         );
 
@@ -264,11 +270,10 @@ abstract class MolajoExtensionHelper
         }
 
         /** Assets Join and View Access Check */
-        Molajo::Application()
+        Molajo::Services()
             ->connect('Language')
             ->load ($path,
-                    Molajo::Application()
-                        ->get('language'),
+                    Molajo::Application()->get('language'),
                     false,
                     false
                     );

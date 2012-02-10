@@ -118,15 +118,15 @@ class MolajoSite
         }
 
         $this->_custom_fields = new Registry;
-        $this->_custom_fields->loadString($this->_siteQueryResults->custom_fields);
+        $this->_custom_fields->loadString($info->custom_fields);
 
         $this->_parameters = new Registry;
-        $this->_parameters->loadString($this->_siteQueryResults->parameters);
+        $this->_parameters->loadString($info->parameters);
 
         $this->_metadata = new Registry;
-        $this->_metadata->loadString($this->_siteQueryResults->metadata);
+        $this->_metadata->loadString($info->metadata);
 
-        $this->_base_url = $this->_siteQueryResults->base_url;
+        $this->_base_url = $info->base_url;
 
         /** Primary Application Logic Flow */
         $app->process();

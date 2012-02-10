@@ -328,7 +328,11 @@ class MolajoUserService
              */
         } else {
             $protected_name = '_' . $key;
-            return $this->$protected_name;
+            if (isset($this->$protected_name)) {
+                return $this->$protected_name;
+            }
+
+            return false;
         }
     }
 

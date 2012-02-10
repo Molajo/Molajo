@@ -94,7 +94,7 @@ class MolajoLanguageService
     public static function getInstance($language = null)
     {
         if ($language == null) {
-            $language = 'en-GB';
+            $language = MolajoLanguageHelper::get();
         }
         if (isset(self::$_languages[$language])) {
         } else {
@@ -163,7 +163,7 @@ class MolajoLanguageService
         if ($basePath == null) {
             $basePath = MOLAJO_EXTENSIONS_LANGUAGES;
         }
-        $path = self::_getPath($basePath, $language);
+        $path = LanguageHelper::getPath($basePath, $language);
 
         /** filename */
         $filename = $language;
@@ -175,15 +175,13 @@ class MolajoLanguageService
         ) {
             return true;
         }
-echo $filename;
+
         /** load it */
         $result = $this->_loadLanguage($filename);
         if ($result === false) {
-            echo 'false';
-        } else {
-            echo 'true';
+            echo 'in language services - cannot load this file:'.$filename.'<br />';
         }
-        die;
+
         /** did language load fail? And, was load default requested? */
         if ($result === false
             && $default === true
@@ -195,7 +193,7 @@ echo $filename;
         /** try the default language */
         $filename = $this->_default;
         $filename = "$path/$filename.ini";
-echo 'Filename'.$filename;
+
         /** is the file already loaded? */
         if (isset($this->_paths[$filename])
             && $reload === false
@@ -269,64 +267,6 @@ echo 'Filename'.$filename;
         $this->_default = $language;
 
         return $previous;
-    }
-
-    /**
-     * getKnownLanguages
-     *
-     * Returns a list of known languages for a specific directory
-     *
-     * @param   string  $basePath  The basepath to use
-     *
-     * @return  array  key/value pair with the language file and real name.
-     * @since   1.0
-     */
-    public function getKnownLanguages($basePath = MOLAJO_EXTENSIONS_LANGUAGES)
-    {
-        $dir = self::_getPath($basePath);
-        $knownLanguages = self::_parseLanguageFiles($dir);
-
-        return $knownLanguages;
-    }
-
-    /**
-     * Checks if a language exists.
-     *
-     * This is a simple, quick check for the directory
-     *
-     * @param   string  $language      Language to check.
-     * @param   string  $basePath  Optional path to check.
-     *
-     * @return  boolean  True if the language exists.
-     *
-     * @since   1.0
-     */
-    public function exists($language, $basePath)
-    {
-        static $paths = array();
-
-        /** language */
-        if ($language == null) {
-            $language = $this->_language;
-        }
-        /** path */
-        if ($basePath == null) {
-            $basePath = MOLAJO_EXTENSIONS_LANGUAGES;
-        }
-        $path = self::_getPath($basePath, $language);
-
-        /** filename */
-        $filename = $language;
-        $filename = "$path/$filename.ini";
-
-        /** loaded already? */
-        if (isset($paths[$path])) {
-            return $paths[$path];
-        }
-
-        /** return path */
-        $paths[$path] = JFolder::exists($path);
-        return $paths[$path];
     }
 
     /**
@@ -465,13 +405,13 @@ echo 'Filename'.$filename;
      */
     private function _getMetadata($language)
     {
-        $path = self::_getPath(MOLAJO_EXTENSIONS_LANGUAGES, $language);
+        $path = LanguageHelper::getPath(MOLAJO_EXTENSIONS_LANGUAGES, $language);
         $file = "manifest.xml";
 
         $result = null;
 
         if (is_file("$path/$file")) {
-            $result = self::_parseMetadata("$path/$file");
+            $result = $this->_parseMetadata("$path/$file");
         }
 
         return $result;
@@ -559,45 +499,25 @@ echo 'Filename'.$filename;
     }
 
     /**
-     * _getPath
-     *
-     * Get the path to a specific language
-     *
-     * @param   string  $basePath
-     * @param   string  $language
-     *
-     * @return  string  Path
-     *
-     * @since   1.0
-     */
-    private function _getPath($path = MOLAJO_EXTENSIONS_LANGUAGES, $language = null)
-    {
-        if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
-            $dir = $path . '/' . $language;
-        } else {
-            $dir = $path . '/language';
-        }
-        return $dir;
-    }
-
-    /**
-     * _parseLanguageFiles
+     * parseLanguageFiles
      *
      * Searches for language directories within a certain base dir.
      *
      * @param   string  $dir  directory of files.
      *
-     * @return  array  Array holding the found languages as filename => real name pairs.
+     * @return  array  languages discovered
      * @since   1.0
      */
-    private function _parseLanguageFiles($dir = null)
+    public function parseLanguageFiles($dir = null)
     {
         $_languages = array();
 
-        $subfolders = JFolder::folders($dir);
-        foreach ($subfolders as $path) {
-            $xml = self::_parseXMLLanguageFiles("$dir/$path");
-            $_languages = array_merge($_languages, $xml);
+        if ($dir == MOLAJO_EXTENSIONS_LANGUAGES) {
+            $subfolders = JFolder::folders($dir);
+            foreach ($subfolders as $path) {
+                $xml = $this->_parseXMLLanguageFiles("$dir/$path");
+                $_languages = array_merge($_languages, $xml);
+            }
         }
 
         return $_languages;
@@ -625,7 +545,7 @@ echo 'Filename'.$filename;
         foreach ($files as $file)
         {
             if ($content = file_get_contents("$dir/$file")) {
-                if ($metadata = self::_parseMetadata("$dir/$file")) {
+                if ($metadata = $this->_parseMetadata("$dir/$file")) {
                     $lang = str_replace('.xml', '', $file);
                     $_languages[$lang] = $metadata;
                 }

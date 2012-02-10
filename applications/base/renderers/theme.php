@@ -90,10 +90,13 @@ class MolajoThemeRenderer extends MolajoRenderer
     {
         /** theme */
         ExtensionHelper::loadLanguage(
-            MOLAJO_EXTENSIONS_THEMES . '/' . Molajo::Request()->get('theme_name'));
+            MOLAJO_EXTENSIONS_THEMES . '/'
+                . Molajo::Request()->get('theme_name')
+        );
         /** pages view */
         ExtensionHelper::loadLanguage(
-            Molajo::Request()->get('page_view_path'));
+            Molajo::Request()->get('page_view_path')
+        );
     }
 
     /**
@@ -115,13 +118,18 @@ class MolajoThemeRenderer extends MolajoRenderer
             Molajo::Application()->get('media_priority_application', 200));
 
         /** User */
-        $this->_loadMediaPlus('/user' . Molajo::Application()->get('User', '', 'services')->get('id'),
+        $this->_loadMediaPlus('/user' .
+                Molajo::Services()
+                    ->connect('User')
+                    ->get('id'),
             Molajo::Application()->get('media_priority_user', 300));
 
         /** Theme */
         $priority = Molajo::Application()->get('media_priority_theme', 600);
-        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . Molajo::Request()->get('theme_name');
-        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . Molajo::Request()->get('theme_name');
+        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' .
+            Molajo::Request()->get('theme_name');
+        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' .
+            Molajo::Request()->get('theme_name');
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);

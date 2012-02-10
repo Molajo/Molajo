@@ -97,7 +97,6 @@ class MolajoResponder
      */
     protected $_custom_html = array();
 
-
     /**
      * Response Object
      *
@@ -118,14 +117,10 @@ class MolajoResponder
      * @return bool|object
      * @since  1.0
      */
-    public static function getInstance(Registry $config = null)
+    public static function getInstance()
     {
         if (empty(self::$instance)) {
-            if ($config instanceof Registry) {
-            } else {
-                $config = new Registry;
-            }
-            self::$instance = new MolajoResponder($config);
+            self::$instance = new MolajoResponder();
         }
         return self::$instance;
     }
@@ -138,13 +133,9 @@ class MolajoResponder
      * @return boolean
      * @since  1.0
      */
-    public function __construct(Registry $config)
+    public function __construct()
     {
-        if ($config instanceof Registry) {
-            $this->_config = $config;
-        }
-
-        return true;
+        return;
     }
 
     /**
@@ -567,11 +558,6 @@ class MolajoResponder
     /**
      * respond
      *
-     * Retrieves Theme and begins the process of first parsing the Theme and Page View
-     * for input:renderer statements, looping through the renderers for the statements found,
-     * and then continuing the process by parsing the rendered output for additional input
-     * statements until no more are found.
-     *
      * @return  object
      * @since  1.0
      */
@@ -587,7 +573,10 @@ class MolajoResponder
                 $this->_compress();
             }
         }
-
+        echo '<pre>';
+        var_dump($this);
+        echo '</pre>';
+        die;
         // Send the content-type header.
         $this->setHeader('Content-Type', $this->getMimeEncoding() . '; charset=utf-8');
 
@@ -631,7 +620,10 @@ class MolajoResponder
         );
 
         // Get the supported encoding.
-        $encodings = array_intersect($this->_client->encodings, array_keys($supported));
+        $encodings = array_intersect(
+            $this->_client->encodings,
+            array_keys($supported)
+        );
 
         // If no supported encoding is detected do nothing and return.
         if (empty($encodings)) {
@@ -639,7 +631,8 @@ class MolajoResponder
         }
 
         // Verify that headers have not yet been sent, and that our connection is still alive.
-        if ($this->_checkHeadersSent() || !$this->_checkConnectionAlive()) {
+        if ($this->_checkHeadersSent()
+            || !$this->_checkConnectionAlive()) {
             return;
         }
 

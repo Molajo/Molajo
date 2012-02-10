@@ -122,13 +122,19 @@ class MolajoApplication
      */
     public function process()
     {
-
+        var_dump(Molajo::Services()->connect('Language'));
+        /**
+        "language":"en-GB",
+        "direction":"ltr",
+        "offset":"UTC",
+        "offset_user":"UTC",
+        */
+        die;
         /** responder: prepare for output */
-        $rs = Molajo::Responder();
+        Molajo::Responder();
 
         /** request: define processing instructions in page_request object */
-        $rq = Molajo::Request();
-        $rq->process();
+        Molajo::Request()->process();
 
         /**
          * Display Task
@@ -144,23 +150,23 @@ class MolajoApplication
          *    renders template and wrap views
          */
 
-        if ($rq->get('mvc_task') == 'add'
-            || $rq->get('mvc_task') == 'edit'
-            || $rq->get('mvc_task') == 'display'
+        if (Molajo::Request()->get('mvc_task') == 'add'
+            || Molajo::Request()->get('mvc_task') == 'edit'
+            || Molajo::Request()->get('mvc_task') == 'display'
         ) {
-            $ps = Molajo::Parser();
+
+            Molajo::Parser()->processTheme();
+
+        } else {
 
             /**
              * Action Task
              */
-
-        } else {
-
             //$this->_processTask();
         }
 
         /** responder: process rendered output */
-        $rs->respond();
+        Molajo::Responder()->respond();
 
         return;
     }

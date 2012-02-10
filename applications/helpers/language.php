@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  HHelper
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -17,58 +17,6 @@ defined('MOLAJO') or die;
 class MolajoLanguageHelper
 {
     /**
-     * Creates a language object
-     *
-     * @return  MolajoLanguage object
-     *
-     * @since   1.0
-     */
-    public static function get($language = null)
-    {
-        return Molajo::Services()->get('Language');
-    }
-
-    /**
-     * Builds a list of the system languages which can be used in a select option
-     *
-     *  $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-     * @param   string   $actualLanguage  Client key for the area
-     * @param   string   $basepath        Base path to use
-     * @param   boolean  $caching         True if caching is used
-     * @param   array    $installed       An array of arrays (text, value, selected)
-     *
-     * @return  array  List of system languages
-     *
-     * @since   1.0
-     */
-    public static function createLanguageList($actualLanguage, $basePath = MOLAJO_EXTENSIONS_LANGUAGES, $caching = false, $installed = false)
-    {
-        $list = array();
-        $languages = MolajoLanguage::getKnownLanguages($basePath);
-
-        if (MOLAJO_APPLICATION_ID == 0) {
-            $installed == false;
-
-        } elseif ($installed === true) {
-            $installed_languages = ExtensionService::get(2);
-        }
-
-        foreach ($languages as $language => $metadata)
-        {
-            $option = array();
-
-            $option['text'] = $metadata['name'];
-            $option['value'] = $language;
-            if ($language == $actualLanguage) {
-                $option['selected'] = 'selected="selected"';
-            }
-            $list[] = $option;
-        }
-
-        return $list;
-    }
-
-    /**
      * getLanguage
      *
      * Tries to detect the language.
@@ -76,131 +24,154 @@ class MolajoLanguageHelper
      * @return  string  locale or null if not found
      * @since   1.0
      */
-    public static function getLanguage($options)
+    public function get()
     {
-        /** 1. request */
-        if (empty($options['language'])) {
-            $language = JRequest::getString('language', null);
-            if ($language && LanguageService::exists($language)) {
-                $options['language'] = $language;
-            }
+        /** Installed Languages */
+        $languages = ExtensionHelper::get(
+            MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE
+        );
+        $installed = array();
+        foreach ($languages as $language) {
+            $installed[] = $language->subtitle;
         }
 
-        /** 2. user option for user */
-        if (empty($options['language'])) {
-            $language = Molajo::Application()->get('User', '', 'services')->getParameter('language');
-            if ($language && LanguageService::exists($language)) {
-                $options['language'] = $language;
-            }
+        $language = false;
+
+        /** 1. if there is just one, take it */
+        if (count($installed) == 1) {
+            return $installed[0];
         }
 
-        /** 3. browser detection */
-        if (empty($options['language'])) {
-            if ($detect_browser && empty($options['language'])) {
-                $language = LanguageService::detectLanguage();
-                if ($language && LanguageService::exists($language)) {
-                    $options['language'] = $language;
-                }
-            }
+        /** 2. user  */
+        $language = Molajo::Services()->connect('User')->get('language', '');
+        if ($language === false) {
+        } elseif (in_array($language, $installed)) {
+            return $language;
         }
 
-        /** 4. site default for application */
-        if (empty($options['language'])) {
-            $language = $config->get('language', 'en-GB');
-            if ($language && LanguageService::exists($language)) {
-                $options['language'] = $language;
-            }
-        }
-
-        /** 5. default */
-        if (LanguageService::exists($options['language'])) {
-        } else {
-            $options['language'] = 'en-GB';
-        }
-
-    }
-
-    /**
-     * Tries to detect the language.
-     *
-     * @return  string  locale or null if not found
-     * @since   1.0
-     */
-    public static function detectLanguage()
-    {
+        /** 3. language of browser */
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $browserLangs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
         } else {
             return null;
         }
-
-        $systemLangs = self::getLanguages();
-        foreach ($browserLangs as $browserLang)
-        {
-            // Slice out the part before ; on first step, the part before - on second, place into array
-            $browserLang = substr($browserLang, 0, strcspn($browserLang, ';'));
-            $primary_browserLang = substr($browserLang, 0, 2);
-            foreach ($systemLangs as $systemLang)
-            {
-                // Take off 3 letters iso code languages as they can't match browsers' languages and default them to en
-                $Jinstall_lang = $systemLang->lang_code;
-
-                if (strlen($Jinstall_lang) < 6) {
-                    if (strtolower($browserLang) == strtolower(substr($systemLang->lang_code, 0, strlen($browserLang)))) {
-                        return $systemLang->lang_code;
-                    }
-                    else if ($primary_browserLang == substr($systemLang->lang_code, 0, 2)) {
-                        $primaryDetectedLang = $systemLang->lang_code;
-                    }
-                }
-            }
-
-            if (isset($primaryDetectedLang)) {
-                return $primaryDetectedLang;
+        foreach ($browserLanguages as $language) {
+            if (in_array(strtolower($language), $installed)) {
+                return $language;
             }
         }
 
-        return null;
+        /** 4. Application configuration */
+        $language = Molajo::Application()->get('language', 'en-GB');
+        if (in_array($language, $installed)) {
+            return $language;
+        }
+
+        /** 5. default */
+        return 'en-GB';
     }
 
     /**
-     * Get available languages
+     * createLanguageList
      *
-     * @param   string  $key  Array key
+     * Builds a list of the system languages
      *
-     * @return  array  An array of published languages
-     *
+     * @return  array
      * @since   1.0
      */
-    public static function getLanguages($key = 'default')
+    public static function createLanguageList($path = null)
     {
-        static $languages;
+        if (MOLAJO_APPLICATION_ID == 0) {
+            $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . 'installer';
 
-        if (empty($languages)) {
-
-            // Installation uses available languages
-            if (MOLAJO_APPLICATION_ID == 0) {
-                $languages[$key] = array();
-                $knownLangs = LanguageService::getKnownLanguages(MOLAJO_BASE_FOLDER);
-                foreach ($knownLangs as $metadata)
-                {
-                    // take off 3 letters iso code languages as they can't match browsers' languages and default them to en
-                    $languages[$key][] = new Registry(array('lang_code' => $metadata['tag']));
-                }
-            } else {
-                $languages['default'] = ExtensionService::get(2);
-                $languages['sef'] = array();
-                $languages['lang_code'] = array();
-
-                if (isset($languages['default'][0])) {
-                    foreach ($languages['default'] as $lang) {
-                        $languages['sef'][$lang->sef] = $lang;
-                        $languages['lang_code'][$lang->lang_code] = $lang;
-                    }
-                }
+        } else {
+            if ($path == null) {
+                $path = MOLAJO_EXTENSIONS_LANGUAGES;
             }
         }
 
-        return $languages[$key];
+        /** for selected item determination */
+        $currentLanguage = Molajo::Application()->get('language');
+        if ($currentLanguage === false || $currentLanguage == null) {
+            $currentLanguage = 'en-GB';
+        }
+
+        /** retrieve language list */
+        $languages = LanguageHelper::getLanguages($path);
+
+        $list = array();
+        foreach ($languages as $language)
+        {
+            $listItem = array();
+
+            $listItem['text'] = $language->title;
+            $listItem['value'] = $language->subtitle;
+            if ($language->subtitle == $currentLanguage) {
+                $listItem['selected'] = 'selected="selected"';
+            }
+
+            $list[] = $listItem;
+        }
+
+        return $list;
+    }
+
+    /**
+     * getLanguages
+     *
+     * Returns languages for core or a specific extension
+     *
+     * @param   string  $path
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
+    {
+        if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
+            return ExtensionHelper::get(
+                MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE
+            );
+        }
+
+        $languages = array();
+        $files = JFolder::files($path . '/language', '\.ini', false, false);
+        if (count($files) == 0) {
+            return false;
+        }
+
+        foreach ($files as $file) {
+            $language = new stdClass();
+
+            $language->title = substr($file, 0, strlen($file) - 4);
+            $language->subtitle = substr($file, 0, strlen($file) - 4);
+
+            $languages[] = $language;
+        }
+
+        return $languages;
+    }
+
+    /**
+     * getPath
+     *
+     * Get the path to a specific language
+     *
+     * @param   string  $path
+     * @param   string  $language
+     *
+     * @return  string  Path
+     *
+     * @since   1.0
+     */
+    public function getPath($path = MOLAJO_EXTENSIONS_LANGUAGES,
+                            $language = null)
+    {
+        if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
+            $dir = $path . '/' . $language;
+        } else {
+            $dir = $path . '/language';
+        }
+        return $dir;
     }
 }
