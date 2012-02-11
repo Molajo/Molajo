@@ -98,7 +98,7 @@ class MolajoAccessService
         $action = 'view';
         $action_id = 3;
 
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
@@ -108,7 +108,7 @@ class MolajoAccessService
         $query->where('a.' . $db->nameQuote('group_id') .
             ' IN (' .
             implode(',',
-                Molajo::Services()->connect('User')
+                Services::User()
                     ->get('groups')) . ')'
                 );
 
@@ -142,7 +142,7 @@ class MolajoAccessService
             return false;
         }
 
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
@@ -179,7 +179,7 @@ class MolajoAccessService
     static public function setQueryViewAccess($query = array(),
                                               $parameters = array())
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
 
         if ($parameters['select'] === true) {
             $query->select($parameters['asset_prefix'] .

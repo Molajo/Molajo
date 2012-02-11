@@ -59,7 +59,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function read($id)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         if ($db->connected()) {
         } else {
             echo 'READ FAILED IN MolajoSessionStorageDatabase::read';
@@ -88,7 +88,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function write($id, $data)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         if ($db->connected()) {
         } else {
             echo 'WRITE FAILED IN MolajoSessionStorageDatabase::write';
@@ -122,7 +122,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function update($id, $data)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         if ($db->connected()) {
         } else {
             echo 'READ FAILED IN MolajoSessionStorageDatabase::update';
@@ -152,7 +152,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function insert($id, $data)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         if ($db->connected()) {
         } else {
             echo 'READ FAILED IN MolajoSessionStorageDatabase::insert';
@@ -183,7 +183,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function destroy($id)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         if ($db->connected()) {
         } else {
             echo 'READ FAILED IN MolajoSessionStorageDatabase::destroy';
@@ -209,7 +209,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     function gc($lifetime = 1440)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         if ($db->connected()) {
         } else {
             echo 'READ FAILED IN MolajoSessionStorageDatabase::gc';

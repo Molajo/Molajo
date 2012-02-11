@@ -29,8 +29,8 @@ abstract class MolajoAssetHelper
      */
     public static function get($asset_id = 0, $query_request = null)
     {
-        $user = Molajo::Services()->connect('User');
-        $db = Molajo::Services()->connect('jdb');
+        $user = Services::User();
+        $db = Services::DB();
 
         $query = $db->getQuery(true);
 
@@ -76,7 +76,7 @@ abstract class MolajoAssetHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            Molajo::Services()->connect('Message')
+            Services::Message()
                 ->set(
                 $message = MolajoTextService::_('ERROR_DATABASE_QUERY'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -233,8 +233,8 @@ abstract class MolajoAssetHelper
      */
     public static function getID($asset_type_id, $source_id)
     {
-        $user = Molajo::Services()->connect('User');
-        $db = Molajo::Services()->connect('jdb');
+        $user = Services::User();
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
         $query->select('a.' . $db->namequote('id') . ' as asset_id');
@@ -252,7 +252,7 @@ abstract class MolajoAssetHelper
         $asset_id = $db->loadResult();
 
         if ($error = $db->getErrorMsg()) {
-            Molajo::Services()->connect('Message')
+            Services::Message()
                 ->set(
                 $message = MolajoTextService::_('ERROR_DATABASE_QUERY')
                     . ' ' . $db->getErrorMsg(),
@@ -279,8 +279,8 @@ abstract class MolajoAssetHelper
      */
     public static function getURL($asset_id)
     {
-        $user = Molajo::Services()->connect('User');
-        $db = Molajo::Services()->connect('jdb');
+        $user = Services::User();
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
         /** home */
@@ -306,7 +306,7 @@ abstract class MolajoAssetHelper
         $url = $db->loadResult();
 
         if ($error = $db->getErrorMsg()) {
-            Molajo::Services()->connect('Messages')
+            Services::Message()
                 ->set(
                 $message = MolajoTextService::_('ERROR_DATABASE_QUERY')
                     . ' ' . $db->getErrorMsg(),

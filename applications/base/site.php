@@ -167,7 +167,7 @@ class MolajoSite
             '403 Not Authorised',
             'true'
         );
-        Molajo::Services()->connect('Message')
+        Services::Message()
             ->set(
             Molajo::Application()->get(
                 'error_403_message',

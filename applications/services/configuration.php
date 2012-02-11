@@ -181,7 +181,7 @@ class MolajoConfigurationService
 
         } else {
 
-            $db = Molajo::Services()->connect('jdb');
+            $db = Services::DB();
             $query = $db->getQuery(true);
 
             $query->select($db->namequote('id'));

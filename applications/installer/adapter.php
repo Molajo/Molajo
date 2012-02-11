@@ -42,7 +42,7 @@ class MolajoAdapter
      */
     public function __construct()
     {
-        $this->db = Molajo::Services()->connect('jdb');
+        $this->db = Services::DB();
     }
 
     /**

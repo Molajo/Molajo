@@ -312,8 +312,8 @@ class MolajoDateService
      */
     function getUTCDate($input_date, $server_or_user_UTC = 'user')
     {
-        $config = Molajo::Services()->connect('Application');
-        $user = Molajo::Services()->connect('User');
+        $config = Services::Configuration();
+        $user = Services::User();
 
         // If a known filter is given use it.
         switch (strtoupper((string)$server_or_user_UTC))

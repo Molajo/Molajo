@@ -47,7 +47,7 @@ class MolajoSiteHelper
 
             $obj = new stdClass();
 
-            $db = Molajo::Services()->connect('jdb');
+            $db = Services::DB();
             $query = $db->getQuery(true);
             $now = Services::Date()->toMySQL();
             $nullDate = $db->getNullDate();
@@ -104,7 +104,7 @@ class MolajoSiteHelper
      */
     public static function getApplications($id = null)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();

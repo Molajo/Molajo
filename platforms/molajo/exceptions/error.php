@@ -619,7 +619,7 @@ abstract class MolajoError
     public static function handleMessage(&$error, $options)
     {
         $type = ($error->get('level') == E_NOTICE) ? 'notice' : 'error';
-        Molajo::Services()->connect('Message')
+        Services::Message()
             ->set($error->get('message'), $type);
 
         return $error;

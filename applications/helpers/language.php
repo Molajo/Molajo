@@ -44,7 +44,7 @@ class MolajoLanguageHelper
         }
 
         /** 2. user  */
-        $language = Molajo::Services()->connect('User')->get('language', '');
+        $language = Services::User()->get('language', '');
         if ($language === false) {
         } elseif (in_array($language, $installed)) {
             return $language;

@@ -32,10 +32,10 @@ Services::Date
 Services::Dispatcher
 Services::Filter
 Services::Image
-Services::Jdb
+Services::DB
 Services::Language
 Services::Mail
-Services::Message
+Services::Message()
 Services::Security
 Services::Session
 Services::Text

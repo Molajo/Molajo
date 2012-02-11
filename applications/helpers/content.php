@@ -26,7 +26,7 @@ abstract class MolajoContentHelper
      */
     static public function get($id, $content_table)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
@@ -82,7 +82,7 @@ abstract class MolajoContentHelper
         if ($db->getErrorNum() == 0) {
 
         } else {
-            Molajo::Services()->connect('Message')
+            Services::Message()
                 ->set(
                 $message = MolajoTextService::_('ERROR_DATABASE_QUERY') . ' ' .
                     $db->getErrorNum() . ' ' .

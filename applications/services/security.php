@@ -71,7 +71,7 @@ class MolajoSecurityService
      */
     public function __construct()
     {
-        $this->_session = Molajo::Services()->connect('Session');
+        $this->_session = Services::Session();
     }
 
     /**

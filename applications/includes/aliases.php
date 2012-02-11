@@ -73,6 +73,10 @@ class Services extends MolajoServices
     {
         return Molajo::Services()->connect('Authentication');
     }
+    public static function Configuration ()
+       {
+           return Molajo::Services()->connect('Configuration');
+       }
     public static function Date ()
     {
         return Molajo::Services()->connect('Date');
@@ -85,9 +89,9 @@ class Services extends MolajoServices
     {
         return Molajo::Services()->connect('Image');
     }
-    public static function Jdb ()
+    public static function DB ()
     {
-        return Molajo::Services()->connect('jdb');
+        return Molajo::Services()->connect('Configuration');
     }
     public static function Language ()
     {

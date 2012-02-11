@@ -476,7 +476,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         $extension->delete();
 
         // Setting the language of users which have this language as the default language
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $query->from('#__users');
         $query->select('*');

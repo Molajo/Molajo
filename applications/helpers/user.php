@@ -32,7 +32,7 @@ abstract class MolajoUserHelper
             return false;
         }
 
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();

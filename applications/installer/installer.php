@@ -690,7 +690,7 @@ class MolajoInstaller extends MolajoAdapter
     public function setSchemaVersion($schema, $eid)
     {
         if ($eid && $schema) {
-            $db = Molajo::Services()->connect('jdb');
+            $db = Services::DB();
             $schemapaths = $schema->children();
 
             if (!$schemapaths) {
@@ -754,7 +754,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Ensure we have an XML element and a valid extension id
         if ($eid && $schema) {
-            $db = Molajo::Services()->connect('jdb');
+            $db = Services::DB();
             $schemapaths = $schema->children();
 
             if (count($schemapaths)) {
@@ -1598,7 +1598,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function cleanDiscoveredExtension($type, $element, $folder = '', $client = 0)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $query->delete($db->quoteName('#__extensions'));
         $query->where('type = ' . $db->quote($type));

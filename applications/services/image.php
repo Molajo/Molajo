@@ -165,7 +165,7 @@ class MolajoImageService
             return $this->fileNameNew;
         }
 
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
         $date = Services::Date()

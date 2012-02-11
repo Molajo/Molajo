@@ -30,7 +30,7 @@ abstract class MolajoExtensionHelper
      */
     public static function get($asset_type_id, $extension = null)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
@@ -155,7 +155,7 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceID($asset_type_id, $title)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
@@ -210,7 +210,7 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceTitle($extension_instance_id)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();

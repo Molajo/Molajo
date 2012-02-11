@@ -278,25 +278,25 @@ class MolajoUpdateController extends MolajoController
 
             for ($e = 0; $e < count($errors); $e++) {
                 if (MolajoError::isError($errors[$e])) {
-                    Molajo::Services()->connect('Message')
+                    Services::Message()
                         ->set(
                         $errors[$e]->getMessage(),
                         'warning'
                     );
                 } else {
-                    Molajo::Services()->connect('Message')
+                    Services::Message()
                         ->set(
                         $errors[$e],
                         'warning'
                     );
                 }
             }
-            Molajo::Services()->connect('User')
+            Services::User()
                 ->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        Molajo::Services()->connect('User')
+        Services::User()
             ->setUserState(JRequest::getInt('datakey'), $validData);
 
         /** Trigger_Event: onContentValidateForm **/

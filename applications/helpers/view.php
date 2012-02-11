@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Content
+ * View
  *
  * @package     Molajo
- * @subpackage  View
+ * @subpackage  Helper
  * @since       1.0
  */
 class MolajoViewHelper
@@ -212,8 +212,7 @@ class MolajoViewHelper
      */
     protected function _loadLanguage()
     {
-        Molajo::Services()
-            ->connect('language')
+        Services::Language()
             ->load(
             MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view,
             Molajo::Application()->get('language'),

@@ -148,7 +148,7 @@ class MolajoModel extends JObject
         if (array_key_exists('dbo', $this->_config)) {
             $this->_db = $this->_config['dbo'];
         } else {
-            $this->_db = Molajo::Services()->connect('jdb');
+            $this->_db = Services::DB();
         }
     }
 
@@ -831,7 +831,7 @@ class MolajoModel extends JObject
             return false;
         }
 
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $db->setQuery(
             'SELECT COUNT(user_id)' .
                 ' FROM ' . $db->quoteName('#__sessions') .

@@ -222,7 +222,7 @@ class MolajoRequest
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
         if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {
@@ -854,7 +854,8 @@ class MolajoRequest
         /** redirect */
         if ($this->get('request_url_redirect_to_id', 0) == 0) {
         } else {
-            Molajo::Responder()->redirect(
+            Molajo::Responder()
+                ->redirect(
                 AssetHelper::getURL(
                     $this->get('request_url_redirect_to_id')), 301
             );
@@ -1260,14 +1261,16 @@ class MolajoRequest
         /** default error theme and page */
         $this->set(
             'theme_id',
-            Molajo::Application()->get(
+            Molajo::Application()
+                ->get(
                 'error_theme_id',
                 'system'
             )
         );
         $this->set(
             'page_view_id',
-            Molajo::Application()->get(
+            Molajo::Application()
+                ->get(
                 'error_page_view_id',
                 'error'
             )
@@ -1275,14 +1278,16 @@ class MolajoRequest
 
         /** set header status, message and override theme/page, if needed */
         if ($code == 503) {
-            Molajo::Responder()->setHeader(
+            Molajo::Responder()
+                ->setHeader(
                 'Status',
                 '503 Service Temporarily Unavailable',
                 'true'
             );
-            Molajo::Services()->connect('Message')
+            Services::Message()
                 ->set(
-                Molajo::Application()->get(
+                Molajo::Application()
+                    ->get(
                     'offline_message',
                     'This site is not available.<br /> Please check back again soon.'
                 ),
@@ -1290,27 +1295,31 @@ class MolajoRequest
                 503
             );
             $this->set('theme_id',
-                Molajo::Application()->get(
+                Molajo::Application()
+                    ->get(
                     'offline_theme_id',
                     'system'
                 )
             );
             $this->set('page_view_id',
-                Molajo::Application()->get(
+                Molajo::Application()
+                    ->get(
                     'offline_page_view_id',
                     'offline'
                 )
             );
 
         } else if ($code == 403) {
-            Molajo::Responder()->setHeader(
+            Molajo::Responder()
+                ->setHeader(
                 'Status',
                 '403 Not Authorised',
                 'true'
             );
-            Molajo::Services()->connect('Message')
+            Services::Message()
                 ->set(
-                Molajo::Application()->get(
+                Molajo::Application()
+                    ->get(
                     'error_403_message',
                     'Not Authorised.'
                 ),
@@ -1319,14 +1328,16 @@ class MolajoRequest
             );
 
         } else if ($code = 404) {
-            Molajo::Responder()->setHeader(
+            Molajo::Responder()
+                ->setHeader(
                 'Status',
                 '404 Not Found',
                 'true'
             );
-            Molajo::Services()->connect('Message')
+            Services::Message()
             ->set(
-                Molajo::Application()->get(
+                Molajo::Application()
+                    ->get(
                     'error_404_message',
                     'Page not found.'
                 ),
@@ -1335,14 +1346,16 @@ class MolajoRequest
             );
 
         } else {
-            Molajo::Responder()->setHeader(
+            Molajo::Responder()
+                ->setHeader(
                 'Status',
                 '500 Not Found',
                 'true'
             );
-            Molajo::Services()->connect('Message')
+            Services::Message()
                 ->set(
-                Molajo::Application()->get(
+                Molajo::Application()
+                    ->get(
                     'error_500_message',
                     'Pass the specific error in.'
                 ),

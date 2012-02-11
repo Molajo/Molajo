@@ -180,7 +180,7 @@ class MolajoContentModel extends MolajoModel
     public function store($updateNulls = false)
     {
         $date = Services::Date();
-        $user = Molajo::Services()->connect('User');
+        $user = Services::User();
 
         if ($this->id) {
             $this->modified = $date->toMySQL();

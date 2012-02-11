@@ -110,7 +110,7 @@ class MolajoSessionService
      */
     protected function _removeExpiredSessions()
     {
-        $db = Molajo::Services()->connect('jdb');
+        $db = Services::DB();
 
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
@@ -133,9 +133,9 @@ class MolajoSessionService
      */
     protected function _checkSession()
     {
-        $db = Molajo::Services()->connect('jdb');
-        $session = Molajo::Services()->connect('Session');
-        $user = Molajo::Services()->connect('User');
+        $db = Services::DB();
+        $session = Services::Session();
+        $user = Services::User();
 
         $db->setQuery(
             'SELECT `session_id`' .

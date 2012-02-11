@@ -186,9 +186,7 @@ class MolajoUsersModel extends MolajoModel
         // Set the registration timestamp
         if ($this->register_datetime == null
             || $this->register_datetime == $this->_db->getNullDate()) {
-            $this->register_datetime = Molajo::Services()
-                ->connect('Date')
-                ->toMySQL();
+            $this->register_datetime = Services::Date()->toMySQL();
         }
 
         // check for existing username
@@ -372,9 +370,7 @@ class MolajoUsersModel extends MolajoModel
         }
 
         // If no timestamp value is passed to functon, than current time is used.
-        $date = Molajo::Services()
-            ->connect('Date')
-            ->format('Y-m-d-H-i-s');
+        $date = Services::Date()->format('Y-m-d-H-i-s');
 
         // Update the database row for the user.
         // 			' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
