@@ -105,14 +105,14 @@ echo Molajo::Responder()->get('sef', 1);
 Molajo::Services()
     ->connect('Message')
     ->set(
-        TextServices::_('Title required for article.'),
+        TextService::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
     );
 
 Molajo::Services()
     ->connect('Message')
     ->set(
-        $message = TextServices::_('ERROR_DATABASE_QUERY'),
+        $message = TextService::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
         $code = null,
         $debug_location = 'AssetHelper::get',

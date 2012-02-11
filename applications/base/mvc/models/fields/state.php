@@ -42,17 +42,17 @@ class MolajoFieldState extends MolajoField
         $this->state_spam = JRequest::getCmd('state_spam', '0');
 
         $options = array();
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_ARCHIVED, TextServices::_('MOLAJO_OPTION_STATUS_ARCHIVED'));
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_PUBLISHED, TextServices::_('MOLAJO_OPTION_STATUS_PUBLISHED'));
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_UNPUBLISHED, TextServices::_('MOLAJO_OPTION_STATUS_UNPUBLISHED'));
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_TRASHED, TextServices::_('MOLAJO_OPTION_STATUS_TRASHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_ARCHIVED, TextService::_('MOLAJO_OPTION_STATUS_ARCHIVED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_PUBLISHED, TextService::_('MOLAJO_OPTION_STATUS_PUBLISHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_UNPUBLISHED, TextService::_('MOLAJO_OPTION_STATUS_UNPUBLISHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_TRASHED, TextService::_('MOLAJO_OPTION_STATUS_TRASHED'));
         if ($this->parameters->def('state_spam', '0') == 1) {
-            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_SPAMMED, TextServices::_('MOLAJO_OPTION_STATUS_SPAMMED'));
+            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_SPAMMED, TextService::_('MOLAJO_OPTION_STATUS_SPAMMED'));
         }
         if ($this->parameters->def('version_management', '1') == 1) {
-            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_VERSION, TextServices::_('MOLAJO_OPTION_STATUS_VERSION'));
+            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_VERSION, TextService::_('MOLAJO_OPTION_STATUS_VERSION'));
         }
-        $options[] = MolajoHTML::_('select.option', '*', TextServices::_('MOLAJO_OPTION_ALL'));
+        $options[] = MolajoHTML::_('select.option', '*', TextService::_('MOLAJO_OPTION_ALL'));
 
         return $options;
     }

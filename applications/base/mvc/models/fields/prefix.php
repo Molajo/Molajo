@@ -153,7 +153,7 @@ class MolajoFieldPrefix extends MolajoField
             if ($item->stop_publishing_datetime == 0) {
                 $render['print_value'] = '-';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->stop_publishing_datetime, TextServices::_('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->stop_publishing_datetime, TextService::_('DATE_FORMAT_LC4'));
             }
 
             return $render;

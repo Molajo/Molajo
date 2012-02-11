@@ -67,14 +67,14 @@ class MolajoMail extends PHPMailer
     public function Send()
     {
         if (($this->Mailer == 'mail') && !function_exists('mail')) {
-            return MolajoError::raiseNotice(500, TextServices::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
+            return MolajoError::raiseNotice(500, TextService::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
         }
 
         @$result = parent::Send();
 
         if ($result == false) {
             // TODO: Set an appropriate error number
-            $result = MolajoError::raiseNotice(500, TextServices::_($this->ErrorInfo));
+            $result = MolajoError::raiseNotice(500, TextService::_($this->ErrorInfo));
         }
 
         return $result;
@@ -108,7 +108,7 @@ class MolajoMail extends PHPMailer
         }
         else {
             // If it is neither, we throw a warning
-            MolajoError::raiseWarning(0, TextServices::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
+            MolajoError::raiseWarning(0, TextService::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
         }
 
         return $this;
@@ -404,10 +404,10 @@ class MolajoMail extends PHPMailer
      */
     public function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
     {
-        $subject = TextServices::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
+        $subject = TextService::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
 
-        $message = sprintf(TextServices::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-        $message .= TextServices::_('MOLAJO_MAIL_MSG') . "\n";
+        $message = sprintf(TextService::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
+        $message .= TextService::_('MOLAJO_MAIL_MSG') . "\n";
 
         $this->addRecipient($adminEmail);
         $this->setSubject($subject);

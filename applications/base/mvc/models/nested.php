@@ -120,7 +120,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_GET_PATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_GET_PATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -156,7 +156,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_GET_TREE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_GET_TREE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -205,7 +205,7 @@ class MolajoNestedModel extends MolajoModel
         if (($position != 'before') && ($position != 'after') &&
             ($position != 'first-child') && ($position != 'last-child')
         ) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_INVALID_LOCATION', get_class($this)));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_INVALID_LOCATION', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -300,7 +300,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -310,7 +310,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Cannot move the node to be a child of itself.
         if (in_array($referenceId, $children)) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_INVALID_NODE_RECURSION', get_class($this)));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_INVALID_NODE_RECURSION', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -383,7 +383,7 @@ class MolajoNestedModel extends MolajoModel
 
             // Check for a database error.
             if ($this->_db->getErrorNum()) {
-                $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
                 $this->_unlock();
                 return false;
@@ -620,19 +620,19 @@ class MolajoNestedModel extends MolajoModel
             else
             {
                 if ($this->_db->getErrorNum()) {
-                    $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_CHECK_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                    $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_CHECK_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                 }
                 else
                 {
-                    $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_INVALID_PARENT_ID', get_class($this)));
+                    $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_INVALID_PARENT_ID', get_class($this)));
                     $this->setError($e);
                 }
             }
         }
         else
         {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_INVALID_PARENT_ID', get_class($this)));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_INVALID_PARENT_ID', get_class($this)));
             $this->setError($e);
         }
 
@@ -686,7 +686,7 @@ class MolajoNestedModel extends MolajoModel
 
                     // Check for a database error.
                     if ($this->_db->getErrorNum()) {
-                        $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                        $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                         $this->setError($e);
                         $this->_unlock();
                         return false;
@@ -737,7 +737,7 @@ class MolajoNestedModel extends MolajoModel
             else
             {
                 // Negative parent ids are invalid
-                $e = new MolajoException(TextServices::_('MOLAJO_DB_ERROR_INVALID_PARENT_ID'));
+                $e = new MolajoException(TextService::_('MOLAJO_DB_ERROR_INVALID_PARENT_ID'));
                 $this->setError($e);
                 return false;
             }
@@ -816,7 +816,7 @@ class MolajoNestedModel extends MolajoModel
                 // Nothing to set publishing state on, return false.
             else
             {
-                $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_NO_ROWS_SELECTED', get_class($this)));
+                $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_NO_ROWS_SELECTED', get_class($this)));
                 $this->setError($e);
                 return false;
             }
@@ -846,7 +846,7 @@ class MolajoNestedModel extends MolajoModel
 
                 // Check for checked out children.
                 if ($this->_db->loadResult()) {
-                    $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_CHILD_ROWS_CHECKED_OUT', get_class($this)));
+                    $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_CHILD_ROWS_CHECKED_OUT', get_class($this)));
                     $this->setError($e);
                     return false;
                 }
@@ -870,14 +870,14 @@ class MolajoNestedModel extends MolajoModel
 
                 // Check for a database error.
                 if ($this->_db->getErrorNum()) {
-                    $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                    $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                     return false;
                 }
 
                 if (!empty($rows)) {
                     $e = new MolajoException(
-                        TextServices::_('MOLAJO_DB_ERROR_ANCESTOR_NODES_LOWER_STATUS')
+                        TextService::_('MOLAJO_DB_ERROR_ANCESTOR_NODES_LOWER_STATUS')
                     );
                     $this->setError($e);
                     return false;
@@ -896,7 +896,7 @@ class MolajoNestedModel extends MolajoModel
 
             // Check for a database error.
             if (!$this->_db->query()) {
-                $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
                 return false;
             }
@@ -960,7 +960,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -976,7 +976,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -993,7 +993,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -1050,7 +1050,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -1066,7 +1066,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -1083,7 +1083,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;
@@ -1115,7 +1115,7 @@ class MolajoNestedModel extends MolajoModel
         $result = $this->_db->loadColumn();
 
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1134,7 +1134,7 @@ class MolajoNestedModel extends MolajoModel
 
             $result = $this->_db->loadColumn();
             if ($this->_db->getErrorNum()) {
-                $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
                 return false;
             }
@@ -1153,7 +1153,7 @@ class MolajoNestedModel extends MolajoModel
 
                 $result = $this->_db->loadColumn();
                 if ($this->_db->getErrorNum()) {
-                    $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                    $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                     return false;
                 }
@@ -1163,14 +1163,14 @@ class MolajoNestedModel extends MolajoModel
                 }
                 else
                 {
-                    $e = new MolajoException(TextServices::_('MOLAJO_DB_ERROR_ROOT_NODE_NOT_FOUND'));
+                    $e = new MolajoException(TextService::_('MOLAJO_DB_ERROR_ROOT_NODE_NOT_FOUND'));
                     $this->setError($e);
                     return false;
                 }
             }
             else
             {
-                $e = new MolajoException(TextServices::_('MOLAJO_DB_ERROR_ROOT_NODE_NOT_FOUND'));
+                $e = new MolajoException(TextService::_('MOLAJO_DB_ERROR_ROOT_NODE_NOT_FOUND'));
                 $this->setError($e);
                 return false;
             }
@@ -1251,7 +1251,7 @@ class MolajoNestedModel extends MolajoModel
 
         // If there is an update failure, return false to break out of the recursion.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_REBUILD_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_REBUILD_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1308,7 +1308,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_REBUILDPATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_REBUILDPATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1343,7 +1343,7 @@ class MolajoNestedModel extends MolajoModel
 
                 // Check for a database error.
                 if (!$this->_db->query()) {
-                    $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                    $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
                     $this->setError($e);
                     $this->_unlock();
                     return false;
@@ -1400,7 +1400,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error or no $row returned
         if ((!$row) || ($this->_db->getErrorNum())) {
-            $e = new MolajoException(TextServices::sprintf('MOLAJO_DB_ERROR_GETNODE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('MOLAJO_DB_ERROR_GETNODE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1534,7 +1534,7 @@ class MolajoNestedModel extends MolajoModel
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(TextServices::sprintf('$errorMessage', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(TextService::sprintf('$errorMessage', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             $this->_unlock();
             return false;

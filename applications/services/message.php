@@ -92,7 +92,7 @@ class MolajoMessageService
         }
 
         /** load session messages into messages array */
-        $this->_getSessionMessages();
+        //$this->_getSessionMessages();
 
         /** add new message */
         $count = count($this->_messages);
@@ -114,7 +114,7 @@ class MolajoMessageService
      */
     public function get()
     {
-        $this->_getSessionMessages();
+//        $this->_getSessionMessages();
         return $this->_messages;
     }
 

@@ -128,12 +128,6 @@ class MolajoRenderer
         /** css and js media files for extension and related entities */
         $this->_loadMedia();
 
-        /** verify all values required are available */
-        $this->_verifyMVC();
-        if ($this->task->get('status_found') === false) {
-            return $this->task->get('status_found');
-        }
-
         /** instantiate MVC and render output */
         return $this->_invokeMVC();
 
@@ -467,30 +461,6 @@ class MolajoRenderer
     }
 
     /**
-     * _verifyMVC
-     * @return bool
-     */
-    protected function _verifyMVC()
-    {
-        $test1 = (int)$this->_test($this->task->get('controller'), 'controller');
-        $test2 = (int)$this->_test($this->task->get('model'), 'model');
-        $test3 = (int)$this->_test($this->task->get('task'), 'task');
-
-        if (($test1 + $test2 + $test3) > 0) {
-            echo 'Error Count: '.($test1 + $test2 + $test3).'<br />';
-            echo 'Controller '.$this->task->get('controller').'<br />';
-            echo 'Model '.$this->task->get('model').'<br />';
-            echo 'Task '.$this->task->get('task').'<br />';
-            echo '<pre>';
-            var_dump($this->task);
-            echo '</pre>';
-            return $this->task->set('status_found', false);
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * _test
      *
      * Use to verify MVC elements
@@ -527,6 +497,11 @@ class MolajoRenderer
         /** task */
         $task = (string)$this->task->get('task', 'display');
         $this->task->set('task', $task);
+
+        /** verify all values required are available */
+        if ($this->task->get('status_found') === false) {
+            return $this->task->get('status_found');
+        }
 
         /** instantiate controller  */
         $controller = new $cc($this->task, $this->parameters);
@@ -627,5 +602,29 @@ class MolajoRenderer
 
         /** 4. Base Class (no query) */
         return 'MolajoController';
+    }
+
+    /**
+     * _verifyMVC
+     * @return bool
+     */
+    protected function _verifyMVC()
+    {
+        $test1 = (int)$this->_test($this->task->get('controller'), 'controller');
+        $test2 = (int)$this->_test($this->task->get('model'), 'model');
+        $test3 = (int)$this->_test($this->task->get('task'), 'task');
+
+        if (($test1 + $test2 + $test3) > 0) {
+            echo 'Error Count: '.($test1 + $test2 + $test3).'<br />';
+            echo 'Controller '.$this->task->get('controller').'<br />';
+            echo 'Model '.$this->task->get('model').'<br />';
+            echo 'Task '.$this->task->get('task').'<br />';
+            echo '<pre>';
+            var_dump($this->task);
+            echo '</pre>';
+            return $this->task->set('status_found', false);
+        } else {
+            return true;
+        }
     }
 }

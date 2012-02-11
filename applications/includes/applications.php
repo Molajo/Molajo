@@ -55,7 +55,7 @@ foreach ($files as $file) {
 
 /**
  *  Installer
- */
+
 $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapter.php', 'MolajoAdapter');
 $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapterinstance.php', 'MolajoAdapterInstance');
 $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer.php', 'MolajoInstaller');
@@ -65,9 +65,9 @@ $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/packagemanifest.p
 
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/adapters', '\.php$', false, false);
 foreach ($files as $file) {
-    $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapters/' . $file, 'MolajoAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-
+ */
 /**
  *  MVC
  */

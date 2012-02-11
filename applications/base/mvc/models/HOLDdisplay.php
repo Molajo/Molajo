@@ -291,7 +291,7 @@ class MolajoDisplayModel extends MolajoModel
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
             Molajo::Services()->connect('Message')
-                ->set(TextServices::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                ->set(TextService::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -978,7 +978,7 @@ class MolajoDisplayModel extends MolajoModel
         } else {
             if ($onlyWhereClause === true) {
                 Molajo::Services()->connect('Message')
-                    ->set(TextServices::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                    ->set(TextService::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);

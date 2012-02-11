@@ -24,7 +24,7 @@ class MolajoSiteHelper
     protected static $_sites = null;
 
     /**
-     * getSiteInfo
+     * get
      *
      * Retrieves Site info from database
      *
@@ -37,7 +37,7 @@ class MolajoSiteHelper
      * @return  boolean  True if the information is added. False on error
      * @since   1.0
      */
-    public static function getSiteInfo($id = null)
+    public static function get($id = null)
     {
         if ($id == null) {
             $id = MOLAJO_SITE_ID;
@@ -93,7 +93,7 @@ class MolajoSiteHelper
     }
 
     /**
-     * getSiteApplications
+     * getApplications
      *
      * Retrieves Applications for which the site is authorized to see
      *
@@ -102,7 +102,7 @@ class MolajoSiteHelper
      * @return  array
      * @since   1.0
      */
-    public static function getSiteApplications($id = null)
+    public static function getApplications($id = null)
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);

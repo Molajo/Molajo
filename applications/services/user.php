@@ -244,7 +244,7 @@ class MolajoUserService
         if (is_numeric($identifier)) {
             $id = $identifier;
         } else {
-            $id = MolajoUserHelper::getUserInstanceID($identifier);
+            $id = MolajoUserHelper::getId($identifier);
         }
         $this->_id = (int) $id;
     }
@@ -261,7 +261,6 @@ class MolajoUserService
      */
     public function connect()
     {
-        /** retrieve data for user */
         $this->model = new MolajoUsersModel ();
         $results = $this->model->load($this->_id);
         $columns = $this->model->getFields('#__users', true);
@@ -285,7 +284,8 @@ class MolajoUserService
     /**
      * get
      *
-     * Retrieves values, or establishes the value with a default, if not available
+     * Retrieves values, or establishes the value with a default,
+     * if not available
      *
      * @param  string  $key
      * @param  string  $default
@@ -304,7 +304,9 @@ class MolajoUserService
             return $this->_metadata->get($key, $default);
 
         } else if ($type == 'state') {
-            $registry = Molajo::Application()->getSession()->get('registry');
+            $registry = Molajo::Application()
+                ->getSession()
+                ->get('registry');
             if (is_null($registry)) {
             } else {
                 return $registry->get($key, $default);
@@ -329,7 +331,6 @@ class MolajoUserService
             if (isset($this->$protected_name)) {
                 return $this->$protected_name;
             }
-
             return false;
         }
     }
@@ -337,11 +338,12 @@ class MolajoUserService
     /**
      * set
      *
-     * Modifies a property, creating it and establishing a default if not existing
+     * Modifies a property, creating it and establishing
+     * a default if not existing
      *
-     * @param  string  $key    The name of the property.
-     * @param  mixed   $value  The default value to use if not set (optional).
-     * @param  string  $type   Custom, metadata, config
+     * @param  string  $key
+     * @param  mixed   $value
+     * @param  string  $type
      *
      * @return  mixed
      * @since   1.0
@@ -361,7 +363,9 @@ class MolajoUserService
             return $this->model->setLastVisit();
 
         } else if ($type == 'state') {
-            $registry = Molajo::Application()->getSession()->get('registry');
+            $registry = Molajo::Application()
+                ->getSession()
+                ->get('registry');
             if (is_null($registry)) {
             } else {
                 return $registry->set($key, $value);

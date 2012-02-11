@@ -175,4 +175,4 @@ require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-sfevent.php';
 /**
  *  Go Molajo.
  */
-$site = Molajo::Site();
+Molajo::Site();

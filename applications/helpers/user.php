@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
 abstract class MolajoUserHelper
 {
     /**
-     * getUserInstanceID
+     * getId
      *
      * Retrieves User ID given the ID or Username
      *
@@ -26,7 +26,7 @@ abstract class MolajoUserHelper
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function getUserInstanceID($id)
+    public static function getId($id)
     {
         if ((int)$id == 0 && trim($id)) {
             return false;
@@ -37,17 +37,10 @@ abstract class MolajoUserHelper
         $now = Molajo::Services()->connect('Date')->toMySQL();
         $nullDate = $db->getNullDate();
 
-        /**
-         *  Users Table
-         */
         $query->select('a.' . $db->namequote('id') . ' as extension_instance_id');
         $query->from($db->namequote('#__users') . ' as a');
         $query->where('(a.' . $db->namequote('id') . ' = ' . (int)$id .
             ' OR a.username = ' . $db->quote($id).')');
-
-        /**
-         *  Run Query
-         */
         $db->setQuery($query->__toString());
         $userid = $db->loadResult();
 
@@ -55,7 +48,6 @@ abstract class MolajoUserHelper
             MolajoError::raiseWarning(500, $error);
             return false;
         }
-
         return $userid;
     }
 }

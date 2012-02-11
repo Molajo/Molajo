@@ -25,26 +25,25 @@ class MolajoComponentRenderer extends MolajoRenderer
      */
     protected function _setRequest()
     {
-
-//        if ($this->_type == 'request') {
-//        } else {
+        if ($this->_type == 'request') {
+        } else {
             parent::_setRequest();
             return;
-//        }
+        }
 
         $this->task = new Registry();
 
         /** extension */
         $this->task->set('extension_instance_id',
-            (int) Molajo::Request()->get('extension_instance_id'));
+            (int)Molajo::Request()->get('extension_instance_id'));
         $this->task->set('extension_instance_name',
             Molajo::Request()->get('extension_instance_name'));
         $this->task->set('extension_asset_type_id',
-            (int) Molajo::Request()->get('extension_asset_type_id'));
+            (int)Molajo::Request()->get('extension_asset_type_id'));
         $this->task->set('extension_asset_id',
-            (int) Molajo::Request()->get('extension_asset_id'));
+            (int)Molajo::Request()->get('extension_asset_id'));
         $this->task->set('extension_view_group_id',
-            (int) Molajo::Request()->get('extension_view_group_id'));
+            (int)Molajo::Request()->get('extension_view_group_id'));
         $this->task->set('extension_custom_fields',
             Molajo::Request()->get('extension_custom_fields'));
         $this->task->set('extension_metadata',
@@ -55,13 +54,13 @@ class MolajoComponentRenderer extends MolajoRenderer
             Molajo::Request()->get('extension_path'));
         $this->task->set('extension_type',
             Molajo::Request()->get('extension_type'));
-        $this->task->set('extension_folder','');
+        $this->task->set('extension_folder', '');
         $this->task->set('extension_event_type',
             Molajo::Request()->get('extension_event_type'));
 
         /** view */
         $this->task->set('template_view_id',
-            (int) Molajo::Request()->get('template_view_id'));
+            (int)Molajo::Request()->get('template_view_id'));
         $this->task->set('template_view_name',
             Molajo::Request()->get('template_view_name'));
         $this->task->set('template_view_css_id',
@@ -71,7 +70,7 @@ class MolajoComponentRenderer extends MolajoRenderer
         $this->task->set('template_view_asset_type_id',
             Molajo::Request()->get('template_view_asset_type_id'));
         $this->task->set('template_view_asset_id',
-            (int) Molajo::Request()->get('template_view_asset_id'));
+            (int)Molajo::Request()->get('template_view_asset_id'));
         $this->task->set('template_view_path',
             Molajo::Request()->get('template_view_path'));
         $this->task->set('template_view_path_url',
@@ -79,7 +78,7 @@ class MolajoComponentRenderer extends MolajoRenderer
 
         /** wrap */
         $this->task->set('wrap_view_id',
-            (int) Molajo::Request()->get('wrap_view_id'));
+            (int)Molajo::Request()->get('wrap_view_id'));
         $this->task->set('wrap_view_name',
             Molajo::Request()->get('wrap_view_name'));
         $this->task->set('wrap_view_css_id',
@@ -89,7 +88,7 @@ class MolajoComponentRenderer extends MolajoRenderer
         $this->task->set('wrap_view_asset_type_id',
             Molajo::Request()->get('wrap_view_asset_type_id'));
         $this->task->set('wrap_view_asset_id',
-            (int) Molajo::Request()->get('wrap_view_asset_id'));
+            (int)Molajo::Request()->get('wrap_view_asset_id'));
         $this->task->set('wrap_view_path',
             Molajo::Request()->get('wrap_view_path'));
         $this->task->set('wrap_view_path_url',
@@ -103,9 +102,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         $this->task->set('model',
             Molajo::Request()->get('mvc_model'));
         $this->task->set('id',
-            (int) Molajo::Request()->get('mvc_id'));
+            (int)Molajo::Request()->get('mvc_id'));
         $this->task->set('category_id',
-            (int) Molajo::Request()->get('mvc_category_id'));
+            (int)Molajo::Request()->get('mvc_category_id'));
         $this->task->set('suppress_no_results',
             (bool)Molajo::Request()->get('mvc_suppress_no_results'));
 
@@ -122,16 +121,21 @@ class MolajoComponentRenderer extends MolajoRenderer
      */
     protected function _getExtension()
     {
-        $this->task->set('extension_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT);
+        $this->task->set(
+            'extension_asset_type_id',
+            MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT
+        );
 
         $results = parent::_getExtension();
         if ($results === false) {
             return false;
         }
 
-        $this->task->set('extension_path',
+        $this->task->set(
+            'extension_path',
             ComponentHelper::getPath(
-                strtolower($this->task->get('extension_instance_name'))));
+                strtolower($this->task->get('extension_instance_name')))
+        );
 
         $this->task->set('extension_type', 'component');
 
@@ -151,16 +155,22 @@ class MolajoComponentRenderer extends MolajoRenderer
         $load = new LoadHelper();
 
         $name = ucfirst($this->task->get('extension_instance_name'));
-        $name = str_replace (array('-', '_'), '', $name);
+        $name = str_replace(array('-', '_'), '', $name);
 
         /** Controllers */
         if (file_exists($this->task->get('extension_path') . '/controller.php')) {
-            $load->requireClassFile($this->task->get('extension_path') . '/controller.php', $name . 'Controller');
+            $load->requireClassFile(
+                $this->task->get('extension_path') . '/controller.php',
+                $name . 'Controller'
+            );
         }
         $files = JFolder::files($this->task->get('extension_path') . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $load->requireClassFile($this->task->get('extension_path') . '/controllers/' . $file, $name . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $load->requireClassFile(
+                    $this->task->get('extension_path') . '/controllers/' . $file,
+                    $name . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.')))
+                );
             }
         }
 
@@ -168,7 +178,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         $files = JFolder::files($this->task->get('extension_path') . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $load->requireClassFile($this->task->get('extension_path') . '/helpers/' . $file, $name . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $load->requireClassFile($this->task->get('extension_path') . '/helpers/' . $file,
+                    $name . ucfirst(substr($file, 0, strpos($file, '.')))
+                );
             }
         }
 
@@ -176,7 +188,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         $files = JFolder::files($this->task->get('extension_path') . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $load->requireClassFile($this->task->get('extension_path') . '/models/' . $file, $name . 'Model' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $load->requireClassFile($this->task->get('extension_path') . '/models/' . $file,
+                    $name . 'Model' . ucfirst(substr($file, 0, strpos($file, '.')))
+                );
             }
         }
 
@@ -184,7 +198,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         $files = JFolder::files($this->task->get('extension_path') . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
-                $load->requireClassFile($this->task->get('extension_path') . '/tables/' . $file, $name . 'Table' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $load->requireClassFile($this->task->get('extension_path') . '/tables/' . $file,
+                    $name . 'Table' . ucfirst(substr($file, 0, strpos($file, '.')))
+                );
             }
         }
 
@@ -195,7 +211,8 @@ class MolajoComponentRenderer extends MolajoRenderer
                 $files = JFolder::files($this->task->get('extension_path') . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
-                        $load->requireClassFile($this->task->get('extension_path') . '/views/' . $folder . '/' . $file, $name . 'View' . ucfirst($folder));
+                        $load->requireClassFile($this->task->get('extension_path') . '/views/' . $folder . '/' . $file,
+                            $name . 'View' . ucfirst($folder));
                     }
                 }
             }

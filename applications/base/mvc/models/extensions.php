@@ -39,7 +39,7 @@ class MolajoExtensionsModel extends MolajoModel
     {
         // check for valid name
         if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(TextServices::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+            $this->setError(TextService::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
             return false;
         }
         return true;
@@ -115,7 +115,7 @@ class MolajoExtensionsModel extends MolajoModel
             }
                 // Nothing to set publishing state on, return false.
             else {
-                $this->setError(TextServices::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
+                $this->setError(TextService::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }
         }

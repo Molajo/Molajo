@@ -39,14 +39,14 @@ class MolajoRequest
      *  only creating it if it doesn't already exist.
      *
      * @static
-     * @param  Registry|null $config
-     * @param  string $override_request_url
-     * @param  string $override_asset_id
+     * @param  string  $request
+     * @param  string  $override_request_url
+     * @param  string  $override_asset_id
      *
-     * @return bool|object
+     * @return object
      * @since  1.0
      */
-    public static function getInstance(Registry $request = null,
+    public static function getInstance($request = null,
                                        $override_request_url = null,
                                        $override_asset_id = null)
     {
@@ -74,7 +74,7 @@ class MolajoRequest
      * @return mixed
      * @since  1.0
      */
-    public function __construct(Registry $request = null,
+    public function __construct($request = null,
                                 $override_request_url = null,
                                 $override_asset_id = null)
     {
@@ -372,9 +372,10 @@ class MolajoRequest
 
             /** 500: Extension not found */
             $this->set('status_found', false);
-            Molajo::Services()->connect('Message')
+            Molajo::Services()
+                ->connect('Message')
                 ->set(
-                $message = TextServices::_('ERROR_EXTENSION_NOT_FOUND'),
+                $message = TextService::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getAsset',
@@ -400,14 +401,16 @@ class MolajoRequest
     {
         $row = ContentHelper::get(
             (int)$this->get('menu_item_id'),
-            $this->get('source_table'));
+            $this->get('source_table')
+        );
 
         if (count($row) == 0) {
             /** 500: Extension not found */
             $this->set('status_found', false);
-            Molajo::Services()->connect('Message')
+            Molajo::Services()
+                ->connect('Message')
                 ->set(
-                $message = TextServices::_('ERROR_MENU_ITEM_NOT_FOUND'),
+                $message = TextService::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::getMenuItem',
@@ -436,34 +439,50 @@ class MolajoRequest
         $this->set('menu_item_language', $row->language);
         $this->set('menu_item_translation_of_id', $row->translation_of_id);
 
-        $this->_setPageValues($this->get('menu_item_parameters',
-            $this->get('menu_item_metadata')));
+        $this->_setPageValues(
+            $this->get('menu_item_parameters',
+            $this->get('menu_item_metadata'))
+        );
 
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
-            $this->set('mvc_controller', $parameters->def('controller', ''));
+            $this->set('mvc_controller',
+                $parameters->def('controller', '')
+            );
         }
         if ($this->get('mvc_task', '') == '') {
-            $this->set('mvc_task', $parameters->def('task', ''));
+            $this->set('mvc_task',
+                $parameters->def('task', '')
+            );
         }
         if ($this->get('extension_instance_name', '') == '') {
-            $this->set('extension_instance_name', $parameters->def('option', ''));
+            $this->set('extension_instance_name',
+                $parameters->def('option', '')
+            );
         }
         if ($this->get('mvc_model', '') == '') {
-            $this->set('mvc_model', $parameters->def('model', ''));
+            $this->set('mvc_model',
+                $parameters->def('model', '')
+            );
         }
         if ((int)$this->get('mvc_id', 0) == 0) {
             $this->set('mvc_id', $parameters->def('id', 0));
         }
         if ((int)$this->get('mvc_category_id', 0) == 0) {
-            $this->set('mvc_category_id', $parameters->def('category_id', 0));
+            $this->set('mvc_category_id',
+                $parameters->def('category_id', 0)
+            );
         }
         if ((int)$this->get('mvc_suppress_no_results', 0) == 0) {
-            $this->set('mvc_suppress_no_results', $parameters->def('suppress_no_results', 0));
+            $this->set('mvc_suppress_no_results',
+                $parameters->def('suppress_no_results', 0)
+            );
         }
 
         /** extension */
-        $this->set('extension_instance_id', $parameters->def('extension_instance_id', 0));
+        $this->set('extension_instance_id',
+            $parameters->def('extension_instance_id', 0)
+        );
 
         /** source */
         $this->set('source_id', $parameters->def('id', 0));
@@ -488,9 +507,10 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Source Content not found */
             $this->set('status_found', false);
-            Molajo::Services()->connect('Message')
+            Molajo::Services()
+                ->connect('Message')
                 ->set(
-                $message = TextServices::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = TextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -552,7 +572,8 @@ class MolajoRequest
                 $parameters->def('suppress_no_results', 0));
         }
 
-        $this->_setPageValues($this->get('source_parameters',
+        $this->_setPageValues(
+            $this->get('source_parameters',
             $this->get('source_metadata')));
 
         return $this->set('status_found', true);
@@ -569,18 +590,17 @@ class MolajoRequest
     protected function _getPrimaryCategory()
     {
         $row = ContentHelper::get(
-            (int)$this->get(
-                'category_id'
-            ),
+            (int)$this->get('category_id'),
             '__content'
         );
 
         if (count($row) == 0) {
             /** 500: Category not found */
             $this->set('status_found', false);
-            Molajo::Services()->connect('Message')
+            Molajo::Services()
+                ->connect('Message')
                 ->set(
-                $message = TextServices::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = TextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -608,8 +628,10 @@ class MolajoRequest
         $parameters->loadString($row->parameters);
         $this->set('category_parameters', $parameters);
 
-        $this->_setPageValues($this->get('category_parameters',
-            $this->get('category_metadata')));
+        $this->_setPageValues(
+            $this->get('category_parameters',
+            $this->get('category_metadata'))
+        );
 
         return $this->set('status_found', true);
     }
@@ -627,7 +649,9 @@ class MolajoRequest
         $this->set('extension_asset_type_id',
             MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT
         );
-        $results = ExtensionHelper::getExtensionRequestObject($this->page_request);
+        $results = ExtensionHelper::getExtensionRequestObject(
+            $this->page_request
+        );
 
         if ($results === false) {
             return $this->set('status_found', false);
@@ -641,12 +665,14 @@ class MolajoRequest
         );
 
         $this->set('extension_folder',
-            ComponentHelper::getPath($this->get('extension_instance_name')
+            ComponentHelper::getPath(
+                $this->get('extension_instance_name')
             )
         );
         $this->set('extension_type', 'component');
 
-        $this->_setPageValues($this->get('extension_parameters',
+        $this->_setPageValues(
+            $this->get('extension_parameters',
                 $this->get('extension_metadata')
             )
         );
@@ -771,8 +797,10 @@ class MolajoRequest
                 <> Molajo::Application()
                     ->get('logon_requirement', 0)
         ) {
-            Molajo::Responder()->redirect(
-                Molajo::Application()->get('logon_requirement', 0), 303
+            Molajo::Responder()
+                ->redirect(
+                Molajo::Application()
+                    ->get('logon_requirement', 0), 303
             );
         }
 
@@ -843,7 +871,8 @@ class MolajoRequest
     {
         $parameters = new Registry;
         $parameters->loadString(
-            Molajo::Services()->connect('User')
+            Molajo::Services()
+                ->connect('User')
                 ->get('parameters')
         );
 
@@ -869,12 +898,14 @@ class MolajoRequest
     {
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id',
-                Molajo::Application()->get('default_theme_id', ''));
+                Molajo::Application()
+                    ->get('default_theme_id', ''));
         }
 
         if ($this->get('page_view_id', 0) == 0) {
             $this->set('page_view_id',
-                Molajo::Application()->get('default_page_view_id', ''));
+                Molajo::Application()
+                    ->get('default_page_view_id', ''));
         }
 
         if ((int)$this->get('template_view_id', 0) == '') {
@@ -896,27 +927,33 @@ class MolajoRequest
         /** metadata  */
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
-                Molajo::Application()->get('metadata_title', '', 'metadata'));
+                Molajo::Application()
+                    ->get('metadata_title', '', 'metadata'));
         }
         if ($this->get('metadata_description', '') == '') {
             $this->set('metadata_description',
-                Molajo::Application()->get('metadata_description', '', 'metadata'));
+                Molajo::Application()
+                    ->get('metadata_description', '', 'metadata'));
         }
         if ($this->get('metadata_keywords', '') == '') {
             $this->set('metadata_keywords',
-                Molajo::Application()->get('metadata_keywords', '', 'metadata'));
+                Molajo::Application()
+                    ->get('metadata_keywords', '', 'metadata'));
         }
         if ($this->get('metadata_author', '') == '') {
             $this->set('metadata_author',
-                Molajo::Application()->get('metadata_author', '', 'metadata'));
+                Molajo::Application()
+                    ->get('metadata_author', '', 'metadata'));
         }
         if ($this->get('metadata_content_rights', '') == '') {
             $this->set('metadata_content_rights',
-                Molajo::Application()->get('metadata_content_rights', '', 'metadata'));
+                Molajo::Application()
+                    ->get('metadata_content_rights', '', 'metadata'));
         }
         if ($this->get('metadata_robots', '') == '') {
             $this->set('metadata_robots',
-                Molajo::Application()->get('metadata_robots', '', 'metadata'));
+                Molajo::Application()
+                    ->get('metadata_robots', '', 'metadata'));
         }
         return;
     }

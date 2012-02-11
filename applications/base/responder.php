@@ -135,6 +135,8 @@ class MolajoResponder
      */
     public function __construct()
     {
+        $this->_response = new Registry();
+        $this->_response->set('cachable', true);
         return;
     }
 
@@ -573,18 +575,15 @@ class MolajoResponder
                 $this->_compress();
             }
         }
-        echo '<pre>';
-        var_dump($this);
-        echo '</pre>';
-        die;
+
         // Send the content-type header.
         $this->setHeader('Content-Type', $this->getMimeEncoding() . '; charset=utf-8');
 
-        if ($this->_response->cachable === true) {
+        if ($this->_response->get('cachable', true)) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
-            if ($this->_response->last_modified instanceof JDate) {
-                $this->setHeader('Last-Modified', $this->_response->last_modified->format('D, d M Y H:i:s'));
-            }
+//            if ($this->_response->get('last_modified')) {
+//                $this->setHeader('Last-Modified', $this->_response->set('last_modified'), format('D, d M Y H:i:s'));
+//            }
         } else {
             $this->setHeader('Expires', 'Fri, 6 Jan 1989 00:00:00 GMT', true);
             $this->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);

@@ -166,7 +166,7 @@ class MolajoApplication
             || Molajo::Request()->get('mvc_task') == 'display'
         ) {
 
-            Molajo::Parser()->processTheme();
+            $body = Molajo::Parser()->processTheme();
 
         } else {
 

@@ -65,6 +65,8 @@ class MolajoTextService
 
     }
 
+    public function sprintf () {}
+
     /**
      * addLineBreaks
      *

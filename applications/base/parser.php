@@ -162,7 +162,7 @@ class MolajoParser
         /** after rendering */
 //        Molajo::Application()->triggerEvent('onAfterRender');
 
-        return;
+        return $body;
     }
 
     /**

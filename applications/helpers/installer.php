@@ -273,7 +273,7 @@ abstract class MolajoInstallerHelper
       */
      public static function cleanupInstall($package, $resultdir)
      {
-         $config = Molajo::Application()->get();
+         $config = Molajo::Services()->connect('Application');
 
          // Does the unpacked extension directory exist?
          if (is_dir($resultdir)) {
@@ -292,18 +292,17 @@ abstract class MolajoInstallerHelper
      }
 
      /**
-      * Splits contents of a sql file into array of discreet queries.
-      * Queries need to be delimited with end of statement marker ';'
+      * splitSql
+      *
+      * Splits sql file into array of discreet queries separated by ';'.
       *
       * @param   string  $sql  The SQL statement.
       *
       * @return  array  Array of queries
-      *
       * @since   1.0
       */
      public static function splitSql($sql)
      {
-         $db = Molajo::Services()->connect('jdb');
-         return $db->splitSql($sql);
+         return Molajo::Services()->connect('jdb')->splitSql($sql);
      }
 }

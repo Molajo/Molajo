@@ -104,7 +104,7 @@ class MolajoSite
         $this->_setPaths();
 
         /** Site Parameters */
-        $info = SiteHelper::getSiteInfo();
+        $info = SiteHelper::get();
         if ($info === false) {
             return false;
         }
@@ -144,7 +144,7 @@ class MolajoSite
      */
     public function authorise()
     {
-        $this->_applications = SiteHelper::getSiteApplications();
+        $this->_applications = SiteHelper::getApplications();
         if ($this->_applications === false) {
             return false;
         }
@@ -159,14 +159,30 @@ class MolajoSite
             return true;
         }
 
-        MolajoError::raiseError(403, TextServices::_('SITE_NOT_AUTHORIZED_FOR_APPLICATION'));
+        /** set header status, message and override theme/page, if needed */
+        Molajo::Responder()->setHeader(
+            'Status',
+            '403 Not Authorised',
+            'true'
+        );
+        Molajo::Services()->connect('Message')
+            ->set(
+            Molajo::Application()->get(
+                'error_403_message',
+                'Not Authorised.'
+            ),
+            MOLAJO_MESSAGE_TYPE_ERROR,
+            403
+        );
+
         return false;
     }
 
     /**
      * _setPaths
      *
-     * Retrieves site configuration information and sets paths for site file locations
+     * Retrieves site configuration information
+     * and sets paths for site file locations
      *
      * @results  null
      * @since    1.0
@@ -176,33 +192,33 @@ class MolajoSite
         if (defined('MOLAJO_SITE_NAME')) {
         } else {
             define('MOLAJO_SITE_NAME',
-                Molajo::Application()
+            Molajo::Application()
                 ->get(
-                    'site_name',
-                    MOLAJO_SITE_ID
-                )
+                'site_name',
+                MOLAJO_SITE_ID
+            )
             );
         }
 
         if (defined('MOLAJO_SITE_CACHE_FOLDER')) {
         } else {
             define('MOLAJO_SITE_CACHE_FOLDER',
-                Molajo::Application()
+            Molajo::Application()
                 ->get(
-                    'cache_path',
-                    MOLAJO_SITE_FOLDER_PATH . '/cache'
-                )
+                'cache_path',
+                MOLAJO_SITE_FOLDER_PATH . '/cache'
+            )
             );
         }
 
         if (defined('MOLAJO_SITE_LOGS_FOLDER')) {
         } else {
             define('MOLAJO_SITE_LOGS_FOLDER',
-                Molajo::Application()
+            Molajo::Application()
                 ->get(
-                    'logs_path',
-                    MOLAJO_SITE_FOLDER_PATH . '/logs'
-                )
+                'logs_path',
+                MOLAJO_SITE_FOLDER_PATH . '/logs'
+            )
             );
         }
 
@@ -210,11 +226,11 @@ class MolajoSite
         if (defined('MOLAJO_SITE_MEDIA_FOLDER')) {
         } else {
             define('MOLAJO_SITE_MEDIA_FOLDER',
-                Molajo::Application()
+            Molajo::Application()
                 ->get(
-                    'media_path',
-                    MOLAJO_SITE_FOLDER_PATH . '/media'
-                )
+                'media_path',
+                MOLAJO_SITE_FOLDER_PATH . '/media'
+            )
             );
         }
 
@@ -223,7 +239,7 @@ class MolajoSite
             define('MOLAJO_SITE_MEDIA_URL',
                 MOLAJO_BASE_URL .
                 Molajo::Application()
-                ->get(
+                    ->get(
                     'media_url',
                     MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media'
                 )
@@ -235,9 +251,9 @@ class MolajoSite
             define('MOLAJO_SITE_TEMP_FOLDER',
             Molajo::Application()
                 ->get(
-                    'temp_path',
-                    MOLAJO_SITE_FOLDER_PATH . '/temp'
-                )
+                'temp_path',
+                MOLAJO_SITE_FOLDER_PATH . '/temp'
+            )
             );
         }
         if (defined('MOLAJO_SITE_TEMP_URL')) {
