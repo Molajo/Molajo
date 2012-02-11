@@ -234,9 +234,7 @@ class MolajoUserService
     /**
      * __construct
      *
-     * Constructor activating the default information of the language
-     *
-     * @param   integer  $identifier  The primary key of the user to load (optional).
+     * @param   integer  $identifier
      *
      * @return  object  user
      * @since   1.0
@@ -289,9 +287,9 @@ class MolajoUserService
      *
      * Retrieves values, or establishes the value with a default, if not available
      *
-     * @param  string  $key      The name of the property.
-     * @param  string  $default  The default value (optional) if none is set.
-     * @param  string  $type     custom, metadata, languageObject, config
+     * @param  string  $key
+     * @param  string  $default
+     * @param  string  $type
      *
      * @return  mixed
      *

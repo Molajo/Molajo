@@ -171,6 +171,8 @@ class MolajoLanguageHelper
     public function getLanguagesCore()
     {
         $subfolders = JFolder::folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $languages = array();
+
         foreach ($subfolders as $path) {
             $language = new stdClass();
 

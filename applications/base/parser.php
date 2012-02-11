@@ -75,9 +75,6 @@ class MolajoParser
     /**
      * getInstance
      *
-     * @static
-     * @param  Registry|null $config
-     *
      * @return bool|object
      * @since  1.0
      */
@@ -115,7 +112,6 @@ class MolajoParser
      */
     public function processTheme()
     {
-
         /** sequence of renderer processing */
         $formatXML = '';
         if ($formatXML == '') {

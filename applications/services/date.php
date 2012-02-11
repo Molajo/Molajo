@@ -69,8 +69,7 @@ class MolajoDateService
      */
     public function getDate($time = 'now', $tzOffset = null)
     {
-        $language = Molajo::Services()->connect('Language');
-        $locale = $language->getTag();
+        $locale = Molajo::Application()->get('tag', 'en-GB', 'language');
 
         $classname = str_replace('-', '_', $locale) . 'Date';
         if (class_exists($classname)) {

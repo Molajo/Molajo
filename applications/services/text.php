@@ -24,16 +24,6 @@ class MolajoTextService
     protected static $instance;
 
     /**
-     * javascript strings
-     */
-    protected static $strings = array();
-
-    /**
-     * @var array
-     */
-    protected $_language = array();
-
-    /**
      * getInstance
      *
      * @static
@@ -60,153 +50,19 @@ class MolajoTextService
     {
     }
 
-    public function connect()
-    {
-        $this->_language = Molajo::Services()->connect('Language');
-    }
-
     /**
      * Translates a string into the current language.
      *
-     * Examples:
-     * <script>alert(Joomla.TextService._('<?php echo TextService::_("JDEFAULT", array("script"=>true));?>'));</script> will generate an alert message containing 'Default'
-     * <?php echo TextService::_("JDEFAULT");?> it will generate a 'Default' string
-     *
-     * @param   string         The string to translate.
-     * @param   boolean|array  boolean: Make the result javascript safe. array an array of option as described in the TextService::sprintf function
-     * @param   boolean        To interpret backslashes (\\=\, \n=carriage return, \t=tabulation)
-     * @param   boolean        To indicate that the string will be push in the javascript language store
-     *
+     * @param   string
+
      * @return  string  The translated string or the key is $script is true
-     *
      * @since   1.0
-     *
      */
-    public function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
+    public function _($string)
     {
-        if ($this->_language == null) {
-            return $string;
-        }
+        $language = Molajo::Application()->get('Language', '', 'Language');
+//todo amy replace the alias function
 
-        if (is_array($jsSafe)) {
-            if (array_key_exists('interpretBackSlashes', $jsSafe)) {
-                $interpretBackSlashes = (boolean)$jsSafe['interpretBackSlashes'];
-            }
-            if (array_key_exists('script', $jsSafe)) {
-                $script = (boolean)$jsSafe['script'];
-            }
-            if (array_key_exists('jsSafe', $jsSafe)) {
-                $jsSafe = (boolean)$jsSafe['jsSafe'];
-            }
-            else {
-                $jsSafe = false;
-            }
-        }
-        if ($script) {
-            self::$strings[$string] = $this->_language->_($string, $jsSafe, $interpretBackSlashes);
-            return $string;
-        }
-        else {
-            return $this->_language->_($string, $jsSafe, $interpretBackSlashes);
-        }
-    }
-
-    /**
-     * alt
-     *
-     * Translates a string into the current language.
-     *
-     * Examples:
-     * <?php echo TextService::alt("JALL","language");?> it will generate a 'All' string in English but a "Toutes" string in French
-     * <?php echo TextService::alt("JALL","module");?> it will generate a 'All' string in English but a "Tous" string in French
-     *
-     * @param   string         The string to translate.
-     * @param   string         The alternate option for global string
-     * @param   boolean|array  boolean: Make the result javascript safe. array an array of option as described in the TextService::sprintf function
-     * @param   boolean        To interpret backslashes (\\=\, \n=carriage return, \t=tabulation)
-     * @param   boolean        To indicate that the string will be pushed in the javascript language store
-     *
-     * @return  string  The translated string or the key if $script is true
-     *
-     * @since   1.0
-     *
-     */
-    public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
-    {
-        if ($this->_language->hasKey($string . '_' . $alt)) {
-            return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
-        }
-        else {
-            return self::_($string, $jsSafe, $interpretBackSlashes);
-        }
-    }
-
-    /**
-     * sprintf
-     *
-     * Passes a string thru a sprintf.
-     *
-     * @static
-     * @param  $string
-     * optional Array of option array
-     * ('jsSafe'=>boolean, 'interpretBackSlashes'=>boolean, 'script'=>boolean) where
-     *  -jsSafe is a boolean to generate a javascript safe strings
-     *  -interpretBackSlashes is a boolean to interpret backslashes \\->\, \n->new line, \t->tabulation
-     *  -script is a boolean to indicate that the string will be push in the javascript language store
-     *
-     * @return  string  The translated strings or the key if 'script' is true in the array of options
-     *
-     * @return mixed|string
-     * @since  1.0
-     */
-    public static function sprintf($string)
-    {
-        $args = func_get_args();
-        $count = count($args);
-        if ($count > 0) {
-            if (is_array($args[$count - 1])) {
-                $args[0] = $this->_language->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
-                    : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
-                    ? $args[$count - 1]['interpretBackSlashes'] : true);
-                if (array_key_exists('script', $args[$count - 1]) && $args[$count - 1]['script']) {
-                    self::$strings[$string] = call_user_func_array('sprintf', $args);
-                    return $string;
-                }
-            }
-            else {
-                $args[0] = $this->_language->_($string);
-            }
-            return call_user_func_array('sprintf', $args);
-        }
-        return '';
-    }
-
-    /**
-     * printf
-     *
-     * Passes a string thru an printf.
-     *
-     * @static
-     * @param  $string
-     * @return mixed|string
-     * @since  1.0
-     */
-    public static function printf($string)
-    {
-        $args = func_get_args();
-        $count = count($args);
-        if ($count > 0) {
-            if (is_array($args[$count - 1])) {
-                $args[0] = $this->_language->_($string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe']
-                    : false, array_key_exists('interpretBackSlashes', $args[$count - 1])
-                    ? $args[$count - 1]['interpretBackSlashes'] : true);
-            }
-            else {
-                $args[0] = $this->_language->_($string);
-            }
-            return call_user_func_array('printf', $args);
-        }
-        return '';
     }
 
     /**

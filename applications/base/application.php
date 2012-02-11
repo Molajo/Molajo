@@ -141,9 +141,6 @@ class MolajoApplication
      */
     public function process()
     {
-
-        echo $this->get('language','','language');
-        echo $this->get('rtl','','language');
         /** responder: prepare for output */
         Molajo::Responder();
 
@@ -214,7 +211,7 @@ class MolajoApplication
     public function setLanguageProperties($configuration)
     {
         $this->_language = new Registry();
-        
+
         $this->set('language', $configuration->language, 'language');
         $this->set('name', $configuration->name, 'language');
         $this->set('tag', $configuration->tag, 'language');
