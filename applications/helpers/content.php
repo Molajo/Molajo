@@ -28,7 +28,7 @@ abstract class MolajoContentHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $now = Molajo::Services()->connect('Date')->toMySQL();
+        $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));

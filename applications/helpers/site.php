@@ -49,7 +49,7 @@ class MolajoSiteHelper
 
             $db = Molajo::Services()->connect('jdb');
             $query = $db->getQuery(true);
-            $now = Molajo::Services()->connect('Date')->toMySQL();
+            $now = Services::Date()->toMySQL();
             $nullDate = $db->getNullDate();
 
             $query->select($db->quoteName('id'));
@@ -106,7 +106,7 @@ class MolajoSiteHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $now = Molajo::Services()->connect('Date')->toMySQL();
+        $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
 
         if ($id == null) {

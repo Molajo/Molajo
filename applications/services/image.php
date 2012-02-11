@@ -168,8 +168,7 @@ class MolajoImageService
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
 
-        $date = Molajo::Services()
-            ->connect('Date')
+        $date = Services::Date()
             ->format('Y-m-d-H-i-s');
 
         $now = $date->toMySQL();

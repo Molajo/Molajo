@@ -119,9 +119,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
 
         $this->alias = Molajo::Application()->stringURLSafe($this->alias);
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Molajo::Services()
-                ->connect('Date')
-                ->format('Y-m-d-H-i-s');
+            $this->alias = Services::Date()->format('Y-m-d-H-i-s');
         }
 
         return true;

@@ -379,8 +379,7 @@ class MolajoDisplayModel extends MolajoModel
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
         $nullDate = $this->db->quote($this->db->getNullDate());
         $nowDate = $this->db->quote(
-            $this->alias = Molajo::Services()
-                ->connect('Date')
+            $this->alias = Services::Date()
                 ->toMySQL()
         );
 

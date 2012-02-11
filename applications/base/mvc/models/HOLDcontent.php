@@ -133,8 +133,7 @@ class MolajoContentModel extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Molajo::Services()
-                ->connect('Date')
+            $this->alias = Services::Date()
                 ->format('Y-m-d-H-i-s');
         }
 
@@ -180,7 +179,7 @@ class MolajoContentModel extends MolajoModel
      */
     public function store($updateNulls = false)
     {
-        $date = Molajo::Services()->connect('Date');
+        $date = Services::Date();
         $user = Molajo::Services()->connect('User');
 
         if ($this->id) {
@@ -206,9 +205,7 @@ class MolajoContentModel extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Molajo::Services()
-                ->connect('Date')
-                ->format('Y-m-d-H-i-s');
+            $this->alias = Services::Date()->format('Y-m-d-H-i-s');
         }
 
         return parent::store($updateNulls);

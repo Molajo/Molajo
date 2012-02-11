@@ -725,8 +725,7 @@ class MolajoModel extends JObject
         }
 
         // Get the current time in MySQL format.
-        $time = Molajo::Application()
-            ->connect('Date')
+        $time = Services::Date()
             ->toMysql();
 
         // Check the row out by primary key.

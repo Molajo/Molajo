@@ -32,7 +32,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $now = Molajo::Services()->connect('Date')->toMySQL();
+        $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
 
         /**
@@ -157,7 +157,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $now = Molajo::Services()->connect('Date')->toMySQL();
+        $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
@@ -212,7 +212,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Molajo::Services()->connect('jdb');
         $query = $db->getQuery(true);
-        $now = Molajo::Services()->connect('Date')->toMySQL();
+        $now = Services::Date()->toMySQL();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('title'));
