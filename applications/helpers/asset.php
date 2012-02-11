@@ -78,7 +78,7 @@ abstract class MolajoAssetHelper
         } else {
             Molajo::Services()->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_DATABASE_QUERY'),
+                $message = MolajoTextService::_('ERROR_DATABASE_QUERY'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::get',
@@ -254,8 +254,8 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Molajo::Services()->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_DATABASE_QUERY') . ' ' .
-                    $db->getErrorMsg(),
+                $message = MolajoTextService::_('ERROR_DATABASE_QUERY')
+                    . ' ' . $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::getID',
@@ -308,7 +308,7 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Molajo::Services()->connect('Messages')
                 ->set(
-                $message = TextService::_('ERROR_DATABASE_QUERY')
+                $message = MolajoTextService::_('ERROR_DATABASE_QUERY')
                     . ' ' . $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,

@@ -27,10 +27,10 @@ class MolajoApplication
     /**
      * Configuration
      *
-     * @var    object
+     * @var    Registry
      * @since  1.0
      */
-    protected $_configuration = null;
+    protected $configuration;
 
     /**
      * Metadata
@@ -38,7 +38,7 @@ class MolajoApplication
      * @var object
      * @since 1.0
      */
-    protected $_metadata;
+    protected $metadata;
 
     /**
      * Custom Fields
@@ -46,16 +46,16 @@ class MolajoApplication
      * @var object
      * @since 1.0
      */
-    protected $_custom_fields;
+    protected $custom_fields;
 
     /**
-     * Services Loaded
+     * Language
      *
      * @static
-     * @var    $services
+     * @var    $language
      * @since  1.0
      */
-    protected $_languages;
+    protected $language;
 
     /**
      * Log
@@ -63,7 +63,7 @@ class MolajoApplication
      * @var object
      * @since 1.0
      */
-    protected $_log;
+    protected $log;
 
     /**
      * Services Loaded
@@ -72,7 +72,7 @@ class MolajoApplication
      * @var    $services
      * @since  1.0
      */
-    protected $_services;
+    protected $services;
 
     /**
      * getInstance
@@ -110,11 +110,17 @@ class MolajoApplication
      */
     public function initialize()
     {
-        /** Services: initiate Application Services */
-        $this->_services = new Registry();
+        /** Services: initiate */
+        $this->configuration = new Registry;
+        $this->metadata = new Registry;
+        $this->custom_fields = new Registry;
+        $this->language = new Registry;
+        $this->log = new Registry;
+        $this->services = new Registry;
+
         $sv = Molajo::Services()->initiateServices();
 
-        /** configuration: ssl check for application */
+        /** SSL: check requirement */
         if ($this->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {
             } else {
@@ -134,7 +140,7 @@ class MolajoApplication
     /**
      * process
      *
-     * Primary Application Logic Flow
+     * Primary Application Logic Flow activated by Molajo::Site
      *
      * @return  mixed
      * @since   1.0
@@ -166,7 +172,7 @@ class MolajoApplication
             || Molajo::Request()->get('mvc_task') == 'display'
         ) {
 
-            $body = Molajo::Parser()->processTheme();
+            Molajo::Parser()->processTheme();
 
         } else {
 
@@ -183,26 +189,41 @@ class MolajoApplication
     }
 
     /**
-     * setApplicationProperties
+     * setServicesProperties
      *
-     * Called from Services after Application Configuration
+     * Called from Services after each service is started
      *
      * @param   $configuration
      * @return  mixed
      * @since   1.0
      */
-    public function setApplicationProperties($configuration)
+    public function setServicesProperties($key, $value)
     {
-        $this->_metadata = $configuration->metadata;
-        $this->_custom_fields = $configuration->custom_fields;
-        $this->_configuration = $configuration->configuration;
+        return $this->set($key, $value, 'Services');
+    }
+
+    /**
+     * setConfigurationProperties
+     *
+     * Called from Services after Configuration
+     *
+     * @param   $configuration
+     * @return  mixed
+     * @since   1.0
+     */
+    public function setConfigurationProperties($configuration)
+    {
+        $this->metadata = $configuration->metadata;
+        $this->custom_fields = $configuration->custom_fields;
+        $this->configuration = $configuration->configuration;
+
         return;
     }
 
     /**
      * setLanguageProperties
      *
-     * Called from Services after Language started
+     * Called from Services after Language
      *
      * @param   $configuration
      * @return  mixed
@@ -210,8 +231,6 @@ class MolajoApplication
      */
     public function setLanguageProperties($configuration)
     {
-        $this->_language = new Registry();
-
         $this->set('language', $configuration->language, 'language');
         $this->set('name', $configuration->name, 'language');
         $this->set('tag', $configuration->tag, 'language');
@@ -236,23 +255,23 @@ class MolajoApplication
     public function get($key, $default = null, $type = 'config')
     {
         if ($type == 'custom') {
-            return $this->_custom_fields->get($key, $default);
+            return $this->custom_fields->get($key, $default);
 
         } else if ($type == 'metadata') {
-            return $this->_metadata->get($key, $default);
+            return $this->metadata->get($key, $default);
 
         } else if ($type == 'log') {
-            return $this->_log->get($key, $default);
+            return $this->log->get($key, $default);
 
         } else if ($type == 'services') {
-            return $this->_services->get($key, false);
+            return $this->services->get($key, false);
 
         } else if ($type == 'language') {
-            return $this->_language->get($key);
+            return $this->language->get($key);
 
         } else {
             //echo $key.' '.$default.' '.$type;
-            return $this->_configuration->get($key, $default);
+            return $this->configuration->get($key, $default);
         }
     }
 
@@ -266,25 +285,25 @@ class MolajoApplication
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null, $type = 'config')
+    private function set($key, $value = null, $type = 'config')
     {
         if ($type == 'custom') {
-            return $this->_custom_fields->set($key, $value);
+            return $this->custom_fields->set($key, $value);
 
         } else if ($type == 'metadata') {
-            return $this->_metadata->set($key, $value);
+            return $this->metadata->set($key, $value);
 
         } else if ($type == 'log') {
-            return $this->_log->set($key, $value);
+            return $this->log->set($key, $value);
 
         } else if ($type == 'services') {
-            return $this->_services->set($key, true);
+            return $this->services->set($key, true);
 
         } else if ($type == 'language') {
-            return $this->_language->set($key, $value);
+            return $this->language->set($key, $value);
 
         } else {
-            return $this->_configuration->set($key, $value);
+            return $this->configuration->set($key, $value);
         }
     }
 }

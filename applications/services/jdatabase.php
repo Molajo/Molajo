@@ -101,7 +101,7 @@ class MolajoJdatabaseService
         }
 
         if ($this->db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, TextService::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $this->db->getErrorNum(), $this->db->getErrorMsg()));
+            MolajoError::raiseError(500, MolajoTextService::sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $this->db->getErrorNum(), $this->db->getErrorMsg()));
         }
 
         $this->db->debug($site->debug);

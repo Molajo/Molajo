@@ -83,20 +83,26 @@ class MolajoServices
         foreach ($services->service as $s) {
             $serviceName = (string)$s->name;
             $connection = $this->_connectService($s);
+
             if ($connection === false) {
+                Molajo::Application()
+                    ->setServicesProperties($serviceName, false);
+
             } else {
                 $this->set($serviceName, $connection);
-                /** Push Configuration into Application for other services */
-                if ($serviceName == 'Application') {
+
+                /** Service data needed in the Application Object */
+                if ($serviceName == 'Configuration') {
                     Molajo::Application()
-                        ->setApplicationProperties ($connection);
+                        ->setConfigurationProperties ($connection);
+
                 } else if ($serviceName == 'Language') {
                     Molajo::Application()
                         ->setLanguageProperties ($connection);
                 }
                 /** used to check dependencies */
                 Molajo::Application()
-                    ->set($serviceName, true, 'services');
+                    ->setServicesProperties($serviceName, true);
             }
         }
 

@@ -21,28 +21,28 @@ Process::Dispatcher (of services)
 
 SERVICES
 
-Molajo::Services
+Services
 
-Service::Access
-Service::Authentication
-Service::Cache
-Service::Configuration (including extensions, etc.)
-Service::Date
-Service::Database (any option)
-Service::Feeds
-Service::File (all of it)
-Service::Mail (any type)
-Service::Message (including errors, logs and profiler)
-Service::Media (including Image, Oembed)
-Service::Registry
-Service::Secure (filter and escape, captcha, blocking)
-Service::Session
-Service::Text
-Service::Url (Jinput, redirect
-Service::User
-getUserState
-setUserState
-getUserStateFromRequest
+Live connection to a data source
+
+Services::Access
+Services::Authentication
+Services::Configuration
+Services::Date
+Services::Dispatcher
+Services::Filter
+Services::Image
+Services::Jdb
+Services::Language
+Services::Mail
+Services::Message
+Services::Security
+Services::Session
+Services::Text
+Services::Url
+Services::User
+
+Services::Connect('User')
 
 HELPERS
 
@@ -58,6 +58,9 @@ Helper::Site
 INSTALLERS
 
 Molajo::Installer
+
+$user = Services::Connect('User');
+$db = Services::Connect('jdb');
 
 <?php
 /*
@@ -105,14 +108,14 @@ echo Molajo::Responder()->get('sef', 1);
 Molajo::Services()
     ->connect('Message')
     ->set(
-        TextService::_('Title required for article.'),
+        MolajoTextService::_('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
     );
 
 Molajo::Services()
     ->connect('Message')
     ->set(
-        $message = TextService::_('ERROR_DATABASE_QUERY'),
+        $message = MolajoTextService::_('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
         $code = null,
         $debug_location = 'AssetHelper::get',

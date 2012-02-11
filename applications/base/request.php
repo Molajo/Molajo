@@ -25,12 +25,15 @@ class MolajoRequest
     protected static $instance;
 
     /**
-     *  Page Request object containing processing requirements
+     *  Page Request object which MolajoRequset
+     *  populates with processing requirements for this request
+     *
+     *  Can be accessed via Molajo::Request()->get('property')
      *
      * @var    object
      * @since  1.0
      */
-    public $page_request;
+    protected $page_request;
 
     /**
      * getInstance
@@ -67,7 +70,7 @@ class MolajoRequest
      * Class constructor
      *
      * @static
-     * @param  Registry|null $config
+     * @param  Registry $config
      * @param  string $override_request_url
      * @param  string $override_asset_id
      *
@@ -126,7 +129,6 @@ class MolajoRequest
             || $this->get('request_url_query', '') == '/index.php/'
         ) {
             Molajo::Responder()->redirect('', 301);
-            return $this->page_request;
         }
 
         /** Home */
@@ -142,6 +144,113 @@ class MolajoRequest
     }
 
     /**
+     * process
+     *
+     * Using the MOLAJO_PAGE_REQUEST value,
+     *  retrieve the asset record,
+     *  set the variables needed to render output,
+     *  execute document renders and MVC
+     *
+     * @return bool
+     * @since  1.0
+     */
+    public function process()
+    {
+        /** offline */
+        if (Molajo::Application()->get('offline', 0) == 1) {
+            $this->_error(503);
+
+        } else {
+            $this->_getAsset();
+            $this->_routeRequest();
+            $this->_authoriseTask();
+        }
+
+        /** display */
+        if ($this->get('mvc_task') == 'add'
+            || $this->get('mvc_task') == 'edit'
+            || $this->get('mvc_task') == 'display'
+        ) {
+            $this->_getRenderData();
+        }
+
+        return;
+    }
+
+    /**
+     * get
+     *
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->page_request->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Request object, creating it if it does not already exist.
+     *
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->page_request->set($key, $value);
+    }
+
+    /**
+     * getRedirectURL
+     *
+     * Function to retrieve asset information for the Request or Asset ID
+     *
+     * @return  string url
+     * @since   1.0
+     */
+    public static function getRedirectURL($asset_id)
+    {
+        $db = Molajo::Services()->connect('jdb');
+        $query = $db->getQuery(true);
+
+        if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {
+            return '';
+        }
+
+        if (Molajo::Application()->get('sef', 1) == 0) {
+            $query->select('a.' . $db->nameQuote('sef_request'));
+        } else {
+            $query->select('a.' . $db->nameQuote('request'));
+        }
+
+        $query->from($db->nameQuote('#__assets') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
+
+        $db->setQuery($query->__toString());
+
+        return $db->loadResult();
+    }
+
+
+    /**
+     * end of public methods
+     *
+     * remaining methods determine page processing requirements for request
+     */
+
+    /**
      * _setRequest
      *
      * Create and Initialize the request
@@ -152,7 +261,7 @@ class MolajoRequest
      * @return array
      * @since 1.0
      */
-    private function _setRequest()
+    protected function _setRequest()
     {
         /** request */
         $this->set('request_url_base',
@@ -295,40 +404,6 @@ class MolajoRequest
     }
 
     /**
-     * process
-     *
-     * Using the MOLAJO_PAGE_REQUEST value,
-     *  retrieve the asset record,
-     *  set the variables needed to render output,
-     *  execute document renders and MVC
-     *
-     * @return bool
-     * @since  1.0
-     */
-    public function process()
-    {
-        /** offline */
-        if (Molajo::Application()->get('offline', 0) == 1) {
-            $this->_error(503);
-
-        } else {
-            $this->_getAsset();
-            $this->_routeRequest();
-            $this->_authoriseTask();
-        }
-
-        /** display */
-        if ($this->get('mvc_task') == 'add'
-            || $this->get('mvc_task') == 'edit'
-            || $this->get('mvc_task') == 'display'
-        ) {
-            $this->_renderDocument();
-        }
-
-        return;
-    }
-
-    /**
      * _getAsset
      *
      * Retrieve Asset and Asset Type data for a specific asset id or query request
@@ -375,7 +450,7 @@ class MolajoRequest
             Molajo::Services()
                 ->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_EXTENSION_NOT_FOUND'),
+                $message = MolajoTextService::_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getAsset',
@@ -410,7 +485,7 @@ class MolajoRequest
             Molajo::Services()
                 ->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_MENU_ITEM_NOT_FOUND'),
+                $message = MolajoTextService::_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::getMenuItem',
@@ -510,7 +585,7 @@ class MolajoRequest
             Molajo::Services()
                 ->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = MolajoTextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -600,7 +675,7 @@ class MolajoRequest
             Molajo::Services()
                 ->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = MolajoTextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -838,7 +913,7 @@ class MolajoRequest
     }
 
     /**
-     *  _renderDocument
+     *  _getRenderData
      *
      *  Retrieves and sets parameter values in order of priority
      *  Then, execute Document Class (which executes renderers and MVC classes)
@@ -846,7 +921,7 @@ class MolajoRequest
      * @return void
      * @since  1.0
      */
-    protected function _renderDocument()
+    protected function _getRenderData()
     {
         $this->_getUser();
         $this->_getApplicationDefaults();
@@ -1108,37 +1183,6 @@ class MolajoRequest
     }
 
     /**
-     * getRedirectURL
-     *
-     * Function to retrieve asset information for the Request or Asset ID
-     *
-     * @return  string url
-     * @since   1.0
-     */
-    public static function getRedirectURL($asset_id)
-    {
-        $db = Molajo::Services()->connect('jdb');
-        $query = $db->getQuery(true);
-
-        if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {
-            return '';
-        }
-
-        if (Molajo::Application()->get('sef', 1) == 0) {
-            $query->select('a.' . $db->nameQuote('sef_request'));
-        } else {
-            $query->select('a.' . $db->nameQuote('request'));
-        }
-
-        $query->from($db->nameQuote('#__assets') . ' as a');
-        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
-
-        $db->setQuery($query->__toString());
-
-        return $db->loadResult();
-    }
-
-    /**
      *  _mergeParameters
      */
     protected function _mergeParameters()
@@ -1308,40 +1352,5 @@ class MolajoRequest
             );
         }
         return;
-    }
-
-    /**
-     * get
-     *
-     * Returns a property of the Application object
-     * or the default value if the property is not set.
-     *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
-     *
-     * @return  mixed   The value of the configuration.
-     *
-     * @since   1.0
-     */
-    public function get($key, $default = null)
-    {
-        return $this->page_request->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * Modifies a property of the Request object, creating it if it does not already exist.
-     *
-     * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The value of the property to set (optional).
-     *
-     * @return  mixed   Previous value of the property
-     *
-     * @since   1.0
-     */
-    public function set($key, $value = null)
-    {
-        return $this->page_request->set($key, $value);
     }
 }

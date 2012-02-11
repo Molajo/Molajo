@@ -38,7 +38,7 @@ class MolajoSessionsModel extends MolajoModel
         $ret = $this->_db->insertObject($this->_tbl, $this, 'session_id');
 
         if (!$ret) {
-            $this->setError(TextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
+            $this->setError(MolajoTextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
             return false;
         } else {
             return true;
@@ -51,7 +51,7 @@ class MolajoSessionsModel extends MolajoModel
         $ret = $this->_db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
 
         if (!$ret) {
-            $this->setError(TextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
+            $this->setError(MolajoTextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
             return false;
         } else {
             return true;

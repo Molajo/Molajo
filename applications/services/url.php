@@ -155,7 +155,7 @@ class MolajoUrlService
     /**
      * encodeLink
      * @param object $option_Link
-     * $url = MolajoApplicationServiceURL::encodeLink ($option_Link);
+     * $url = MolajoConfigurationServiceURL::encodeLink ($option_Link);
      */
     function encodeLink($option_Link)
     {
@@ -165,7 +165,7 @@ class MolajoUrlService
     /**
      * encodeLinkText
      * @param object $option_Text
-     * $url = MolajoApplicationServiceURL::encodeLinkText ($option_Text);
+     * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_Text);
      */
     function encodeLinkText($option_Text)
     {
@@ -175,7 +175,7 @@ class MolajoUrlService
     /**
      * addTrailingSlash
      * @param object $option_Text
-     * $url = MolajoApplicationServiceURL::encodeLinkText ($option_InputText);
+     * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_InputText);
      */
     function addTrailingSlash($option_InputText)
     {
@@ -185,7 +185,7 @@ class MolajoUrlService
     /**
      * removeTrailingSlash
      * @param object $option_Text
-     * $url = MolajoApplicationServiceURL::removeTrailingSlash ($option_InputText);
+     * $url = MolajoConfigurationServiceURL::removeTrailingSlash ($option_InputText);
      */
     function removeTrailingSlash($option_InputText)
     {

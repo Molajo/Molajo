@@ -12,8 +12,8 @@
         </connect>
     </service>
     <service>
-        <name>Application</name>
-        <serviceClass>MolajoApplicationService</serviceClass>
+        <name>Configuration</name>
+        <serviceClass>MolajoConfigurationService</serviceClass>
     </service>
     <service>
         <name>Language</name>

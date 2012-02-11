@@ -130,8 +130,6 @@ class MolajoRenderer
 
         /** instantiate MVC and render output */
         return $this->_invokeMVC();
-
-
     }
 
     /**

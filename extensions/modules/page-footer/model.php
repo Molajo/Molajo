@@ -47,13 +47,13 @@ class PagefooterModuleModel extends MolajoModel
             ->format('Y-m-d-H-i-s');
 
         /** footer line 1 */
-        if (JString::strpos(TextService :: _('FOOTER_LINE1'), '%date%')) {
+        if (JString::strpos(MolajoTextService :: _('FOOTER_LINE1'), '%date%')) {
             $line1 = str_replace(
                 '%date%',
                 Molajo::Services()->connect('Date')->format('Y'),
-                TextService :: _('FOOTER_LINE1'));
+                MolajoTextService :: _('FOOTER_LINE1'));
         } else {
-            $line1 = TextService :: _('FOOTER_LINE1');
+            $line1 = MolajoTextService :: _('FOOTER_LINE1');
         }
 
         if (JString::strpos($line1, '%site_name%')) {
@@ -69,7 +69,7 @@ class PagefooterModuleModel extends MolajoModel
         $link = $this->parameters->def('link', 'http://molajo.org');
         $linked_text = $this->parameters->def('linked_text', 'Molajo&#153;');
         $remaining_text = $this->parameters->def('remaining_text', ' is free software.');
-        $version = $this->parameters->def('version', TextService::_(MOLAJOVERSION));
+        $version = $this->parameters->def('version', MolajoTextService::_(MOLAJOVERSION));
 
         $tempObject->set('link', $link);
         $tempObject->set('linked_text', $linked_text);

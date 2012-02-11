@@ -84,7 +84,7 @@ abstract class MolajoContentHelper
         } else {
             Molajo::Services()->connect('Message')
                 ->set(
-                $message = TextService::_('ERROR_DATABASE_QUERY') . ' ' .
+                $message = MolajoTextService::_('ERROR_DATABASE_QUERY') . ' ' .
                     $db->getErrorNum() . ' ' .
                     $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,

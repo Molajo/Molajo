@@ -74,7 +74,7 @@ abstract class MolajoUserService extends JObject
             if ($title) {
             } else {
                 return new MolajoException(
-                    TextService::_('MOLAJO_ERROR_GROUP_INVALID')
+                    MolajoTextService::_('MOLAJO_ERROR_GROUP_INVALID')
                 );
             }
 
@@ -216,7 +216,7 @@ abstract class MolajoUserService extends JObject
                 return false;
             }
         } else {
-            MolajoError::raiseWarning("SOME_ERROR_CODE", TextService::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
+            MolajoError::raiseWarning("SOME_ERROR_CODE", MolajoTextService::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
             return false;
         }
 

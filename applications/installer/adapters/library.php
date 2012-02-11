@@ -76,7 +76,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
             else
             {
                 // Abort the install, no upgrade possible
-                $this->parent->abort(TextService::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_ALREADY_INSTALLED'));
+                $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_ALREADY_INSTALLED'));
                 return false;
             }
         }
@@ -84,7 +84,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         // Get the libraries description
         $description = (string)$this->manifest->description;
         if ($description) {
-            $this->parent->set('message', TextService::_($description));
+            $this->parent->set('message', MolajoTextService::_($description));
         }
         else
         {
@@ -94,7 +94,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         // Set the installation path
         $group = (string)$this->manifest->libraryname;
         if (!$group) {
-            $this->parent->abort(TextService::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_NOFILE'));
+            $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_NOFILE'));
             return false;
         }
         else
@@ -109,7 +109,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         if (!file_exists($this->parent->getPath('extension_root'))) {
             if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
                 $this->parent->abort(
-                    TextService::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root'))
+                    MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root'))
                 );
                 return false;
             }
@@ -149,7 +149,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         $row->manifest_cache = $this->parent->generateManifestCache();
         if (!$row->store()) {
             // Install failed, roll back changes
-            $this->parent->abort(TextService::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_ROLLBACK', $db->stderr(true)));
+            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_ROLLBACK', $db->stderr(true)));
             return false;
         }
 
@@ -161,7 +161,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         $manifest['dest'] = MOLAJO_SITE_MANIFESTS . '/libraries/' . basename($this->parent->getPath('manifest'));
         if (!$this->parent->copyFiles(array($manifest), true)) {
             // Install failed, rollback changes
-            $this->parent->abort(TextService::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
+            $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
             return false;
         }
         return $row->get('extension_id');
@@ -218,14 +218,14 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         // This should give us the necessary information to proceed.
         $row = MolajoModel::getInstance('extension');
         if (!$row->load((int)$id) || !strlen($row->element)) {
-            MolajoError::raiseWarning(100, TextService::_('ERRORUNKOWNEXTENSION'));
+            MolajoError::raiseWarning(100, MolajoTextService::_('ERRORUNKOWNEXTENSION'));
             return false;
         }
 
         // Is the library we are trying to uninstall a core one?
         // Because that is not a good idea...
         if ($row->protected) {
-            MolajoError::raiseWarning(100, TextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_WARNCORELIBRARY'));
+            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_WARNCORELIBRARY'));
             return false;
         }
 
@@ -241,7 +241,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
 
             // If we cannot load the XML file return null
             if (!$xml) {
-                MolajoError::raiseWarning(100, TextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_LOAD_MANIFEST'));
+                MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_LOAD_MANIFEST'));
                 return false;
             }
 
@@ -250,7 +250,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
             // Should be 'extension', but for backward compatability we will accept 'install'.
 
             if ($xml->getName() != 'extension') {
-                MolajoError::raiseWarning(100, TextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_MANIFEST'));
+                MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_MANIFEST'));
                 return false;
             }
 
@@ -263,7 +263,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
             // Remove this row entry since its invalid
             $row->delete($row->extension_id);
             unset($row);
-            MolajoError::raiseWarning(100, TextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
             return false;
         }
 
@@ -347,7 +347,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         }
         else
         {
-            MolajoError::raiseWarning(101, TextService::_('JLIB_INSTALLER_ERROR_LIB_DISCOVER_STORE_DETAILS'));
+            MolajoError::raiseWarning(101, MolajoTextService::_('JLIB_INSTALLER_ERROR_LIB_DISCOVER_STORE_DETAILS'));
             return false;
         }
     }
@@ -376,7 +376,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         }
         catch (Exception $e)
         {
-            MolajoError::raiseWarning(101, TextService::_('JLIB_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
+            MolajoError::raiseWarning(101, MolajoTextService::_('JLIB_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
             return false;
         }
     }

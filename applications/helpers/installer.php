@@ -79,7 +79,7 @@ abstract class MolajoInstallerHelper
          $inputHandle = @ fopen($url, "r");
          $error = strstr($php_errormsg, 'failed to open stream:');
          if (!$inputHandle) {
-             MolajoError::raiseWarning(42, TextService::sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
+             MolajoError::raiseWarning(42, MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
              return false;
          }
 
@@ -108,7 +108,7 @@ abstract class MolajoInstallerHelper
          {
              $contents .= fread($inputHandle, 4096);
              if ($contents === false) {
-                 MolajoError::raiseWarning(44, TextService::sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
+                 MolajoError::raiseWarning(44, MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
                  return false;
              }
          }
@@ -214,7 +214,7 @@ abstract class MolajoInstallerHelper
          $files = JFolder::files($p_dir, '\.xml$', 1, true);
 
          if (!count($files)) {
-             MolajoError::raiseWarning(1, TextService::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+             MolajoError::raiseWarning(1, MolajoTextService::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
              return false;
          }
 
@@ -237,7 +237,7 @@ abstract class MolajoInstallerHelper
              return $type;
          }
 
-         MolajoError::raiseWarning(1, TextService::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+         MolajoError::raiseWarning(1, MolajoTextService::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
          // Free up memory.
          unset($xml);
          return false;

@@ -232,11 +232,11 @@ class MolajoDateService
 
         if ($numeric_value == 1) {
             return ', ' . $numeric_value . ' ' .
-                strtolower(TextService::_($singular_literal));
+                strtolower(MolajoTextService::_($singular_literal));
         }
 
         return ', ' . $numeric_value . ' ' .
-            strtolower(TextService::_($plural_literal));
+            strtolower(MolajoTextService::_($plural_literal));
     }
 
     /**

@@ -72,7 +72,7 @@ class MolajoLoginModel extends MolajoModel
     {
         $languages = array();
         $languages = LanguageServices::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
-        array_unshift($languages, MolajoHTML::_('select.option', '', TextService::_('JDEFAULT')));
+        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoTextService::_('JDEFAULT')));
         return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
     }
 

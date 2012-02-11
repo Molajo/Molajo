@@ -10,7 +10,9 @@ defined('MOLAJO') or die;
 /**
  * MolajoSite
  *
- * Acts as a Factory class for site specific functions and API options
+ * @package     Molajo
+ * @subpackage  Base
+ * @since       1.0
  */
 class MolajoSite
 {
@@ -20,7 +22,7 @@ class MolajoSite
      * @var    object
      * @since  1.0
      */
-    public static $instance = null;
+    protected static $instance = null;
 
     /**
      * $config
@@ -110,7 +112,7 @@ class MolajoSite
         }
 
         /** is site authorised for this Application? */
-        $authorise = $this->authorise();
+        $authorise = $this->_authorise();
         if ($authorise === false) {
             $message = '304: ' . MOLAJO_BASE_URL;
             echo $message;
@@ -142,7 +144,7 @@ class MolajoSite
      * @param $application_id
      * @return boolean
      */
-    public function authorise()
+    protected function _authorise()
     {
         $this->_applications = SiteHelper::getApplications();
         if ($this->_applications === false) {

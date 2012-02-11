@@ -10,24 +10,6 @@ defined('MOLAJO') or die;
 function hook() {
     echo 'is this all a hook is? interesting.';
 }
-// todo: automate service names
-Class AccessService extends MolajoAccessService {}
-Class ApplicationService extends MolajoApplicationService {}
-Class DateService extends MolajoDateService {}
-Class DispatcherService extends MolajoDispatcherService {}
-Class DoctrineService extends MolajoDoctrineService {}
-Class FilesystemService extends MolajoFileSystemService {}
-Class FilterService extends MolajoFilterService {}
-Class ImageService extends MolajoImageService {}
-Class JDatabaseService extends MolajoJDatabaseService {}
-Class LanguageService extends MolajoLanguageService {}
-Class MailService extends MolajoMailService {}
-Class MessageService extends MolajoMessageService {}
-Class SecurityService extends MolajoSecurityService {}
-Class SessionService extends MolajoSessionService {}
-Class TextService extends MolajoTextService {}
-Class UrlService extends MolajoUrlService {}
-Class UserService extends MolajoUserService {}
 
 Class AssetHelper extends MolajoAssetHelper {}
 Class ComponentHelper extends MolajoComponentHelper {}
@@ -64,10 +46,7 @@ class Molajo extends MolajoBase
     {
         return MolajoBase::getParser();
     }
-    public static function Renderer()
-    {
-        return MolajoBase::getRenderer();
-    }
+    // MolajoRenderer is not statically linked
     public static function Responder()
     {
         return MolajoBase::getResponder();
@@ -77,11 +56,72 @@ class Molajo extends MolajoBase
         return MolajoBase::getServices();
     }
 }
-
 abstract class JFactory extends MolajoBase
 {
 }
 
+/**
+ *  Molajo Services
+ */
+class Services extends MolajoServices
+{
+    public static function Access ()
+    {
+        return Molajo::Services()->connect('Access');
+    }
+    public static function Authentication ()
+    {
+        return Molajo::Services()->connect('Authentication');
+    }
+    public static function Date ()
+    {
+        return Molajo::Services()->connect('Date');
+    }
+    public static function Dispatcher ()
+    {
+        return Molajo::Services()->connect('Dispatcher');
+    }
+    public static function Image ()
+    {
+        return Molajo::Services()->connect('Image');
+    }
+    public static function Jdb ()
+    {
+        return Molajo::Services()->connect('jdb');
+    }
+    public static function Language ()
+    {
+        return Molajo::Services()->connect('Language');
+    }
+    public static function Mail ()
+    {
+        return Molajo::Services()->connect('Mail');
+    }
+    public static function Message ()
+    {
+        return Molajo::Services()->connect('Message');
+    }
+    public static function Security ()
+    {
+        return Molajo::Services()->connect('Security');
+    }
+    public static function Session ()
+    {
+        return Molajo::Services()->connect('Session');
+    }
+    public static function Text ()
+    {
+        return Molajo::Services()->connect('Text');
+    }
+    public static function Url ()
+    {
+        return Molajo::Services()->connect('Url');
+    }
+    public static function User ()
+    {
+        return Molajo::Services()->connect('User');
+    }
+}
 
 /**
  *  Molajo Class for alias creation, ex Molajo::User

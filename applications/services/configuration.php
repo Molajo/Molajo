@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-class MolajoApplicationService
+class MolajoConfigurationService
 {
     /**
      * Static instance
@@ -69,7 +69,7 @@ class MolajoApplicationService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoApplicationService();
+            self::$instance = new MolajoConfigurationService();
         }
         return self::$instance;
     }

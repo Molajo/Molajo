@@ -50,21 +50,26 @@ class MolajoLoadHelper
                 echo 'MolajoLoadHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             } else {
-//            if (class_exists('MolajoError') && class_exists('TextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {
-                MolajoError::raiseNotice(500, TextService::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
+//            if (class_exists('MolajoError') && class_exists('MolajoTextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {
+                MolajoError::raiseNotice(500, MolajoTextService::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
                 return false;
             }
         }
 
         if (class_exists($class)) {
+//            $api = MOLAJO_BASE_FOLDER.'/api.txt';
+//            $apiFile = fopen($api, 'a') or die("Cannot find API file.");
+//            $apiData = $class.chr(10);
+//            fwrite($apiFile, $apiData);
+//            fclose($apiFile);
             return true;
         } else {
             if (MolajoBase::$application == null) {
                 echo 'MolajoLoadHelper Error class not found ' . $class;
                 exit;
             } else {
-            //if (class_exists('MolajoError') && class_exists('TextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {
-                MolajoError::raiseNotice(500, TextService::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
+            //if (class_exists('MolajoError') && class_exists('MolajoTextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {
+                MolajoError::raiseNotice(500, MolajoTextService::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
                 return false;
             }
         }

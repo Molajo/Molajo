@@ -290,7 +290,7 @@ class MolajoRedirectController
         if ($this->successIndicator === false) {
 
             if ($this->redirectMessage == null || $this->redirectMessage == '') {
-                $this->redirectMessage = TextService::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
+                $this->redirectMessage = MolajoTextService::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'error';
@@ -300,7 +300,7 @@ class MolajoRedirectController
 
             /** defaults to success **/
             if ($this->redirectMessage == null) {
-                $this->redirectMessage = TextService::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
+                $this->redirectMessage = MolajoTextService::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'message';
