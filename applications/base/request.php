@@ -897,8 +897,7 @@ class MolajoRequest
 
         } else {
             $this->set('status_authorised',
-                Molajo::Services()
-                    ->connect('Access')
+                Services::Access()
                     ->authoriseTask(
                         $this->get('mvc_task'),
                         $this->get('request_asset_id')

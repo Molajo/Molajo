@@ -85,8 +85,7 @@ abstract class MolajoExtensionHelper
         );
 
         /** Assets Join and View Access Check */
-        Molajo::Services()
-            ->connect('Access')
+        Services::Access()
             ->setQueryViewAccess(
                 $query,
                 array('join_to_prefix' => 'a',
@@ -177,8 +176,7 @@ abstract class MolajoExtensionHelper
             $db->quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        Molajo::Services()
-            ->connect('Access')
+        Services::Access()
             ->setQueryViewAccess(
                 $query,
                 array('join_to_prefix' => 'a',
@@ -232,8 +230,7 @@ abstract class MolajoExtensionHelper
             $db->quote($now) . ')');
 
         /** Assets Join and View Access Check */
-        Molajo::Services()
-            ->connect('Access')
+        Services::Access()
             ->setQueryViewAccess(
                 $query,
                 array('join_to_prefix' => 'a',

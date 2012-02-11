@@ -73,7 +73,7 @@ class MolajoAccessService
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
-                Molajo::Services()->connect('Access')
+                Services::Access()
                     ->authoriseTask($task, $asset_id);
         }
     }
@@ -90,7 +90,7 @@ class MolajoAccessService
     public function authoriseTask($task = 'login', $asset_id = 0)
     {
         if ($task == 'login') {
-            return Molajo::Services()->connect('Access')
+            return Services::Access()
                 ->authoriseTask('login', $asset_id);
         }
 
