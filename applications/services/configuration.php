@@ -25,21 +25,13 @@ class MolajoConfigurationService
     protected static $instance;
 
     /**
-     * Input
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $input;
-
-    /**
      * Configuration for Site and Application
      *
      * @static
      * @var    $connection
      * @since  1.0
      */
-    public $configuration = array();
+    protected $configuration = array();
 
     /**
      * Custom Fields
@@ -48,7 +40,7 @@ class MolajoConfigurationService
      * @var    $custom_fields
      * @since  1.0
      */
-    public $custom_fields = array();
+    protected $custom_fields = array();
 
     /**
      * Metadata
@@ -57,7 +49,7 @@ class MolajoConfigurationService
      * @var    $metadata
      * @since  1.0
      */
-    public $metadata = array();
+    protected $metadata = array();
 
     /**
      * getInstance
@@ -81,7 +73,7 @@ class MolajoConfigurationService
      * @throws  RuntimeException
      * @since   1.0
      */
-    public function __construct()
+    protected function __construct()
     {
         $this->getConfiguration();
     }
@@ -95,7 +87,7 @@ class MolajoConfigurationService
      * @throws  RuntimeException
      * @since   1.0
      */
-    public function getConfiguration()
+    protected function getConfiguration()
     {
         $this->configuration = new Registry;
         $siteData = new Registry;

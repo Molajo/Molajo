@@ -17,20 +17,20 @@ defined('MOLAJO') or die;
 class MolajoMessageService
 {
     /**
-     * Messages
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $_messages = array();
-
-    /**
      * Static instance
      *
      * @var    object
      * @since  1.0
      */
     protected static $instance;
+
+    /**
+     * Messages
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $_messages = array();
 
     /**
      * getInstance
@@ -70,11 +70,11 @@ class MolajoMessageService
      * @return  bool
      * @since   1.0
      */
-    public static function set($message = null,
-                                      $type = 'message',
-                                      $code = null,
-                                      $debug_location = null,
-                                      $debug_object = null)
+    public function set($message = null,
+                          $type = 'message',
+                          $code = null,
+                          $debug_location = null,
+                          $debug_object = null)
     {
         if ($message == null
             && $code == null
@@ -149,7 +149,7 @@ class MolajoMessageService
      * @return  array  System messages
      * @since   1.0
      */
-    public function _setSessionMessages()
+    private function _setSessionMessages()
     {
         $_session = $this->getSession();
 

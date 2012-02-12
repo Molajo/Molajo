@@ -42,16 +42,6 @@ class MolajoAccessService
     }
 
     /**
-     * __construct
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      *  authoriseTaskList
      *
      * @param  array   $tasklist

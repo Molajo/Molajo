@@ -47,7 +47,7 @@ class MolajoDateService
      * @return boolean
      * @since  1.0
      */
-    public function __construct()
+    protected function __construct()
     {
         return $this->getDate();
     }

@@ -38,34 +38,10 @@ class MolajoTextService
         return self::$instance;
     }
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    public function __construct()
+    public function sprintf()
     {
+        return Services::Language()->sprintf();
     }
-
-    /**
-     * Translates a string into the current language.
-     *
-     * @param   string
-
-     * @return  string  The translated string or the key is $script is true
-     * @since   1.0
-     */
-    public function _($string)
-    {
-        $language = Services::Language();
-//todo amy replace the alias function
-
-    }
-
-    public function sprintf () {}
 
     /**
      * addLineBreaks

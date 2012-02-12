@@ -80,6 +80,7 @@ class MolajoApplication
      */
     public function process()
     {
+
         /** responder: prepare for output */
         Molajo::Responder();
 

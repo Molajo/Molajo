@@ -255,10 +255,15 @@ class MolajoLanguageService
     {
         if (isset($this->loaded_strings[$key])) {
             return $this->loaded_strings[$key];
-            echo 'Missing language key: '.$key.'<br />';
+
         } else {
+            //            echo 'Missing language key: '.$key.'<br />';
             return $key;
         }
+    }
+
+    public function sprintf()
+    {
     }
 
     /**

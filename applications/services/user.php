@@ -273,7 +273,6 @@ class MolajoUserService
         $columns = $this->model->getFields('#__users', true);
 
         foreach ($results as $name => $value) {
-            echo $name . ' ' . $value . '<br />';
             $this->set($name, $value);
         }
 

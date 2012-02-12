@@ -30,7 +30,7 @@ class MolajoSecurityService
      * @var    object
      * @since  1.0
      */
-    protected $_session;
+    protected $session;
 
     /**
      * Hash
@@ -38,7 +38,7 @@ class MolajoSecurityService
      * @var    array
      * @since  1.0
      */
-    protected $_hash;
+    protected $hash;
 
     /**
      * Token
@@ -46,7 +46,7 @@ class MolajoSecurityService
      * @var    array
      * @since  1.0
      */
-    protected $_token;
+    protected $token;
 
     /**
      * getInstance
@@ -71,7 +71,7 @@ class MolajoSecurityService
      */
     public function __construct()
     {
-        $this->_session = Services::Session();
+        $this->session = Services::Session();
     }
 
     /**
@@ -84,13 +84,13 @@ class MolajoSecurityService
      */
     public function getToken($forceNew = false)
     {
-        $token = $this->_session->get('session.token');
+        $token = $this->session->get('session.token');
 
         if ($token === null
             || $forceNew
         ) {
-            $token = $this->_session->_createToken(12);
-            $this->_session->set('session.token', $token);
+            $token = $this->session->_createToken(12);
+            $this->session->set('session.token', $token);
         }
 
         return $token;
@@ -110,11 +110,11 @@ class MolajoSecurityService
      */
     public function hasToken($tCheck, $forceExpire = true)
     {
-        $tStored = $this->_session->get('session.token');
+        $tStored = $this->session->get('session.token');
 
         if (($tStored !== $tCheck)) {
             if ($forceExpire) {
-                $this->_session->_state = 'expired';
+                $this->session->_state = 'expired';
             }
             return false;
         }
@@ -130,14 +130,10 @@ class MolajoSecurityService
      * @return  string  Hashed variable name
      * @since   1.0
      */
-    public static function getFormToken($forceNew = false)
+    public function getFormToken($forceNew = false)
     {
-       	return
-           $this->getHash(
-               Services::User()
-                   ->get('id', 0) .
-                $this->getToken($forceNew)
-           );
+        return $this->getHash(Services::User()->get('id', 0));
+        //                . $this->getToken($forceNew)
     }
 
     /**
@@ -152,11 +148,7 @@ class MolajoSecurityService
      */
     public function getHash($seed)
     {
-        return md5(
-            Molajo::Application()
-                ->get('secret')
-                . $seed
-        );
+        return md5(Services::Configuration()->get('secret') . $seed);
     }
 
     /**

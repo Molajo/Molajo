@@ -8,6 +8,8 @@
  */
 defined('MOLAJO') or die;
 
+//todo: amy JInput
+
 /**
  * URL
  *

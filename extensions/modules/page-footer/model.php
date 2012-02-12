@@ -47,12 +47,13 @@ class PagefooterModuleModel extends MolajoModel
             ->format('Y-m-d-H-i-s');
 
         /** footer line 1 */
-        if (JString::strpos(MolajoTextService :: _('FOOTER_LINE1'), '%date%')) {
+        if (JString::strpos(
+            Services::Language()->_('FOOTER_LINE1'), '%date%')) {
             $line1 = str_replace('%date%',
                 Services::Date()->getDate()->format('Y'),
-                MolajoTextService :: _('FOOTER_LINE1'));
+                Services::Language()->_('FOOTER_LINE1'));
         } else {
-            $line1 = MolajoTextService :: _('FOOTER_LINE1');
+            $line1 = Services::Language()->_('FOOTER_LINE1');
         }
 
         if (JString::strpos($line1, '%site_name%')) {
