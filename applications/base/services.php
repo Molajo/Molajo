@@ -30,7 +30,7 @@ class MolajoServices
      * @var object
      * @since 1.0
      */
-    protected $_service;
+    protected $service_connection;
 
     /**
      * getInstance
@@ -55,9 +55,42 @@ class MolajoServices
      * @return boolean
      * @since  1.0
      */
-    public function __construct()
+    protected function __construct()
     {
 
+    }
+
+    /**
+     * get
+     *
+     * Retrieves service key value pair
+     *
+     * @param  string  $key
+     * @param  string  $default
+     *
+     * @return  mixed
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->service_connection->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Stores the service connection
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $this->service_connection->set($key, $value);
     }
 
     /**
@@ -78,7 +111,7 @@ class MolajoServices
         if (count($services) == 0) {
             return;
         }
-        $this->_service = new Registry();
+        $this->service_connection = new Registry();
 
         foreach ($services->service as $s) {
             $serviceName = (string)$s->name;
@@ -90,19 +123,6 @@ class MolajoServices
 
             } else {
                 $this->set($serviceName, $connection);
-
-                /** Service data needed in the Application Object */
-                if ($serviceName == 'Configuration') {
-                    Molajo::Application()
-                        ->setConfigurationProperties ($connection);
-
-                } else if ($serviceName == 'Language') {
-                    Molajo::Application()
-                        ->setLanguageProperties ($connection);
-                }
-                /** used to check dependencies */
-                Molajo::Application()
-                    ->setServicesProperties($serviceName, true);
             }
         }
 
@@ -235,38 +255,5 @@ class MolajoServices
         eval($execute);
 
         return $connection;
-    }
-
-    /**
-     * connect
-     *
-     * Retrieves service connection
-     *
-     * @param  string  $key
-     * @param  string  $default
-     *
-     * @return  mixed
-     *
-     * @since   1.0
-     */
-    public function connect($key, $default = null)
-    {
-        return $this->_service->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * Stores the service connection
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function set($key, $value = null)
-    {
-        $this->_service->set($key, $value);
     }
 }

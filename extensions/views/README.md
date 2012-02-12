@@ -279,17 +279,17 @@ To display all of the options available:
 
 To display one item:
 
-    <?php echo Molajo::Application()->get('sef'); ?>
+    <?php echo Services::Configuration()->get('sef'); ?>
 
 ### User ###
 
 To display all of the options available:
 
-    <?php echo '<pre>'; var_dump(Molajo::Application()->get('User', '', 'services')); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Services::User()); echo '</pre>';  ?>
 
 To display one item:
 
-    <?php echo Molajo::Application()->get('User', '', 'services')->username; ?>
+    <?php echo Services::User()->username; ?>
 
 ### Input Request ###
 

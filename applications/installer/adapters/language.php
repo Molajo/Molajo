@@ -50,7 +50,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         // Get the client application target
         if ((string)$this->manifest->attributes()->client == 'both') {
-            MolajoError::raiseWarning(42, MolajoTextService::_('JLIB_INSTALLER_ERROR_DEPRECATED_FORMAT'));
+            MolajoError::raiseWarning(42, Services::Language()->_('JLIB_INSTALLER_ERROR_DEPRECATED_FORMAT'));
             $element = $this->manifest->site->files;
             if (!$this->_install('site', MOLAJO_BASE_FOLDER, 0, $element)) {
                 return false;
@@ -69,7 +69,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
             jimport('joomla.application.helper');
             $client = ApplicationHelper::getApplicationInfo($cname, true);
             if ($client === null) {
-                $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
+                $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
                 return false;
             }
             $basePath = $client->path;
@@ -116,7 +116,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         // Check if we found the tag - if we didn't, we may be trying to install from an older language package
         if (!$tag) {
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', MolajoTextService::_('JLIB_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->_('JLIB_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
             return false;
         }
 
@@ -141,7 +141,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         if (!$this->_core) {
             if (!JFile::exists($this->parent->getPath('extension_site') . '/' . $this->get('tag') . '.xml')) {
                 $this->parent
-                        ->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
+                        ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
                 return false;
             }
         }
@@ -152,9 +152,9 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
             if (!$created = JFolder::create($this->parent->getPath('extension_site'))) {
                 $this->parent
                         ->abort(
-                    MolajoTextService::sprintf(
+                    Services::Language()->sprintf(
                         'JLIB_INSTALLER_ABORT',
-                        MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_CREATE_FOLDER_FAILED', $this->parent->getPath('extension_site'))
+                        Services::Language()->sprintf('JLIB_INSTALLER_ERROR_CREATE_FOLDER_FAILED', $this->parent->getPath('extension_site'))
                     )
                 );
                 return false;
@@ -180,9 +180,9 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
                     // If the site exists say so.
                     MolajoError::raiseWarning(
                         1,
-                        MolajoTextService::sprintf(
+                        Services::Language()->sprintf(
                             'JLIB_INSTALLER_ABORT',
-                            MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_site'))
+                            Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_site'))
                         )
                     );
                 }
@@ -191,9 +191,9 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
                     // If the admin exists say so.
                     MolajoError::raiseWarning(
                         1,
-                        MolajoTextService::sprintf(
+                        Services::Language()->sprintf(
                             'JLIB_INSTALLER_ABORT',
-                            MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_administrator'))
+                            Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_administrator'))
                         )
                     );
                 }
@@ -233,7 +233,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         // Get the language description
         $description = (string)$this->manifest->description;
         if ($description) {
-            $this->parent->set('message', MolajoTextService::_($description));
+            $this->parent->set('message', Services::Language()->_($description));
         }
         else
         {
@@ -256,7 +256,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         if (!$row->store()) {
             // Install failed, roll back changes
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', $row->getError()));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', $row->getError()));
             return false;
         }
 
@@ -289,7 +289,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         jimport('joomla.application.helper');
         $client = ApplicationHelper::getApplicationInfo($cname, true);
         if ($client === null || (empty($cname) && $cname !== 0)) {
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
             return false;
         }
         $basePath = $client->path;
@@ -306,7 +306,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         // Check if we found the tag - if we didn't, we may be trying to install from an older language package
         if (!$tag) {
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', MolajoTextService::_('JLIB_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->_('JLIB_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
             return false;
         }
 
@@ -331,7 +331,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         if (!$this->_core) {
             if (!JFile::exists($this->parent->getPath('extension_site') . '/' . $this->get('tag') . '.xml')) {
                 $this->parent
-                        ->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
+                        ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
                 return false;
             }
         }
@@ -391,7 +391,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         if (!$row->store()) {
             // Install failed, roll back changes
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT', $row->getError()));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', $row->getError()));
             return false;
         }
 
@@ -430,21 +430,21 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         // Check the element isn't blank to prevent nuking the languages directory...just in case
         $element = $extension->get('element');
         if (empty($element)) {
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_ELEMENT_EMPTY'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_ELEMENT_EMPTY'));
             return false;
         }
 
         // Check that the language is not protected, Normally en-GB.
         $protected = $extension->get('protected');
         if ($protected == 1) {
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PROTECTED'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PROTECTED'));
             return false;
         }
 
         // Verify that it's not the default language for that client
         $parameters = MolajoComponent::getParameters('languages');
         if ($parameters->get($client->name) == $element) {
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DEFAULT'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DEFAULT'));
             return false;
         }
 
@@ -462,13 +462,13 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         if (!JFolder::exists($path)) {
             // If the folder doesn't exist lets just nuke the row as well and presume the user killed it for us
             $extension->delete();
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PATH_EMPTY'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PATH_EMPTY'));
             return false;
         }
 
         if (!JFolder::delete($path)) {
             // If deleting failed we'll leave the extension entry in tact just in case
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DIRECTORY'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DIRECTORY'));
             return false;
         }
 
@@ -507,7 +507,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
             }
         }
         if (!empty($count)) {
-            MolajoError::raiseNotice(500, MolajoTextService::plural('JLIB_INSTALLER_NOTICE_LANG_RESET_USERS', $count));
+            MolajoError::raiseNotice(500, Services::Language()->plural('JLIB_INSTALLER_NOTICE_LANG_RESET_USERS', $count));
         }
 
         // All done!
@@ -588,7 +588,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         }
         catch (Exception $e)
         {
-            MolajoError::raiseWarning(101, MolajoTextService::_('JLIB_INSTALLER_ERROR_LANG_DISCOVER_STORE_DETAILS'));
+            MolajoError::raiseWarning(101, Services::Language()->_('JLIB_INSTALLER_ERROR_LANG_DISCOVER_STORE_DETAILS'));
             return false;
         }
         return $this->parent->extension->get('extension_id');
@@ -616,7 +616,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         }
         else
         {
-            MolajoError::raiseWarning(101, MolajoTextService::_('JLIB_INSTALLER_ERROR_REFRESH_MANIFEST_CACHE'));
+            MolajoError::raiseWarning(101, Services::Language()->_('JLIB_INSTALLER_ERROR_REFRESH_MANIFEST_CACHE'));
 
             return false;
         }

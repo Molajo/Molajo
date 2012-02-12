@@ -21,17 +21,17 @@ class MolajoThemeRenderer extends MolajoRenderer
      *
      * Class constructor.
      *
-     * @param  null   $name
-     * @param  array  $request
+     * @param  string $name
      * @param  string $type
+     * @param  array  $items (used for event processing renderers, only)
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    public function __construct($name = null, $type = null, $items = null)
     {
-        $this->_name = $name;
-        $this->_type = $type;
+        $this->name = $name;
+        $this->type = $type;
 
         $this->parameters = new Registry;
         $this->parameters->set('extension_suppress_no_results', 0);
@@ -47,7 +47,7 @@ class MolajoThemeRenderer extends MolajoRenderer
      * @return  mixed
      * @since   1.0
      */
-    public function render($attributes=array())
+    public function process($attributes = array())
     {
         $this->_loadMetadata();
         $this->_loadLanguage();
@@ -111,21 +111,20 @@ class MolajoThemeRenderer extends MolajoRenderer
     {
         /**  Site */
         $this->_loadMediaPlus('',
-            Molajo::Application()->get('media_priority_site', 100));
+            Services::Configuration()->get('media_priority_site', 100));
 
         /** Application */
         $this->_loadMediaPlus('/application' . MOLAJO_APPLICATION,
-            Molajo::Application()->get('media_priority_application', 200));
+            Services::Configuration()->get('media_priority_application', 200));
 
         /** User */
         $this->_loadMediaPlus('/user' .
-                Molajo::Services()
-                    ->connect('User')
+                Services::User()
                     ->get('id'),
-            Molajo::Application()->get('media_priority_user', 300));
+            Services::Configuration()->get('media_priority_user', 300));
 
         /** Theme */
-        $priority = Molajo::Application()->get('media_priority_theme', 600);
+        $priority = Services::Configuration()->get('media_priority_theme', 600);
         $filePath = MOLAJO_EXTENSIONS_THEMES . '/' .
             Molajo::Request()->get('theme_name');
         $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' .
@@ -135,7 +134,7 @@ class MolajoThemeRenderer extends MolajoRenderer
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
 
         /** Page */
-        $priority = Molajo::Application()->get('media_priority_theme', 600);
+        $priority = Services::Configuration()->get('media_priority_theme', 600);
         $filePath = Molajo::Request()->get('page_view_path');
         $urlPath = Molajo::Request()->get('page_view_path_url');
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);

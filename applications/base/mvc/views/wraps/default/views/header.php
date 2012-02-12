@@ -7,15 +7,15 @@
  */
 defined('MOLAJO') or die;
 
-if ((int)Molajo::Application()->get('html5', 1) == 1
-    && ($this->task->get('wrap_view_name') == 'article'
-        || $this->task->get('wrap_view_name') == 'aside'
-        || $this->task->get('wrap_view_name') == 'footer'
-        || $this->task->get('wrap_view_name') == 'header'
-        || $this->task->get('wrap_view_name') == 'hgroup'
-        || $this->task->get('wrap_view_name') == 'nav'
-        || $this->task->get('wrap_view_name') == 'section') ):
-    $headerType = $this->task->get('wrap_view_name');
+if ((int) Services::Configuration()->get('html5', 1) == 1
+    && ($this->get('wrap_view_name') == 'article'
+        || $this->get('wrap_view_name') == 'aside'
+        || $this->get('wrap_view_name') == 'footer'
+        || $this->get('wrap_view_name') == 'header'
+        || $this->get('wrap_view_name') == 'hgroup'
+        || $this->get('wrap_view_name') == 'nav'
+        || $this->get('wrap_view_name') == 'section') ):
+    $headerType = $this->get('wrap_view_name');
 else :
     $headerType = 'div';
 endif;
@@ -35,7 +35,7 @@ endif;
 <<?php echo trim($headerType.$headerId.$headerClass);?>>
 <?php
 $headingLevel = $this->parameters->get('wrap_view_header_level', 3);
-if ((int)Molajo::Application()->get('html5', 1) == 1):
+if ((int) Services::Configuration()->get('html5', 1) == 1):
     if ($this->parameters->get('wrap_view_show_title', false) === true
         && $this->parameters->get('wrap_view_show_subtitle', false) === true
     ) : ?>
@@ -57,7 +57,7 @@ if ($this->parameters->get('wrap_view_show_subtitle', false) === true) :  ?>
     <?php
     endif;
 
-if ((int)Molajo::Application()->get('html5', 1) == 1) :
+if ((int) Services::Configuration()->get('html5', 1) == 1) :
     if ($this->parameters->get('wrap_view_show_title', false) === true
         && $this->parameters->get('wrap_view_show_subtitle', false) === true
     ) : ?>

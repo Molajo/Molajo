@@ -24,19 +24,6 @@ defined('MOLAJO') or die;
  */
 class MolajoUpdateController extends MolajoController
 {
-    /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param    array   $config    An optional associative array of configuration settings.
-     *
-     * @since    1.0
-     */
-    public function __construct($request = array())
-    {
-        parent::__construct($request);
-    }
 
     /**
      * cancelItem
@@ -64,13 +51,13 @@ class MolajoUpdateController extends MolajoController
         JRequest::checkToken() or die;
 
         /** Check In Item **/
-        if ($this->mvc['id'] == 0) {
+        if ($this->get('id') == 0) {
         } else {
             $results = parent::checkinItem();
         }
 
         /** success message **/
-        $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_CANCEL_SUCCESSFUL'));
+        $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_CANCEL_SUCCESSFUL'));
         $this->redirectClass->setSuccessIndicator(true);
     }
 
@@ -88,19 +75,19 @@ class MolajoUpdateController extends MolajoController
     {
         if ($this->parameters->def('version_management', 1) == 1) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_RESTORE_DISABLED_IN_CONFIGURATION'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextService::_('error'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_RESTORE_DISABLED_IN_CONFIGURATION'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Model: Get Data for Restore ID **/
-        $data = $this->model->restore($this->mvc['id']);
+        $data = $this->model->restore($this->get('id'));
 
         /** Version_History: reset ids to point to current row **/
-        JRequest::setVar('from_id', $this->mvc['id']);
+        JRequest::setVar('from_id', $this->get('id'));
         JRequest::setVar('id', $data->id);
-        $this->mvc['id'] = $data->id;
-        $this->table->reset();
+        $this->set('id', $data->id);
+        $this->model->reset();
 
         return $this->saveItem($data, 'save');
     }
@@ -122,16 +109,16 @@ class MolajoUpdateController extends MolajoController
 
         /** Model: Get Data for Copy ID **/
         if ($task == 'copy') {
-            $data = $this->model->copy($this->mvc['id'], $this->batch_category_id);
+            $data = $this->model->copy($this->get('id'), $this->batch_category_id);
 
             /** reset ids to point to current row **/
-            JRequest::setVar('from_id', $this->mvc['id']);
+            JRequest::setVar('from_id', $this->get('id'));
             JRequest::setVar('id', 0);
 
-            $this->mvc['id'] = 0;
-            $this->table->reset();
+            $this->set('id', 0);
+            $this->model->reset();
         } else {
-            $data = $this->model->move($this->mvc['id'], $this->batch_category_id);
+            $data = $this->model->move($this->get('id'), $this->batch_category_id);
         }
 
         return $this->saveItem($data, 'save');
@@ -194,7 +181,7 @@ class MolajoUpdateController extends MolajoController
 
         /** Preparation: save as copy id and task cleanup **/
         if ($task == 'saveascopy') {
-            $this->mvc['id'] = 0;
+            $this->set('id', 0);
             $data['id'] = 0;
             $task = 'apply';
             JRequest::setVar('id', 0);
@@ -226,35 +213,35 @@ class MolajoUpdateController extends MolajoController
 
         /** Edit: Must have data from form input, copy or restore task **/
         if (empty($data)) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextService::_('warning'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->_('warning'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        /** Edit: check for valid state **/
-        if ($this->table->state == MOLAJO_STATUS_ARCHIVED) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextService::_('error'));
+        /** Edit: check for valid status **/
+        if ($this->model->status == MOLAJO_STATUS_ARCHIVED) {
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
-        if ($this->table->state == MOLAJO_STATUS_TRASHED) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextService::_('error'));
+        if ($this->model->status == MOLAJO_STATUS_TRASHED) {
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
-        if ($this->table->state == MOLAJO_STATUS_VERSION) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextService::_('error'));
+        if ($this->model->status == MOLAJO_STATUS_VERSION) {
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Preparation: Save form or version data **/
-        Molajo::Application()->get('User', '', 'services')->setUserState(JRequest::getInt('datakey'), $data);
+        Services::User()->setUserState(JRequest::getInt('datakey'), $data);
         $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
-        if ((int)$this->mvc['id']) {
-            $results = $this->verifyCheckout($this->mvc['id']);
+        if ((int)$this->get('id')) {
+            $results = $this->verifyCheckout($this->get('id'));
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
             }
@@ -343,8 +330,8 @@ class MolajoUpdateController extends MolajoController
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        $this->mvc['id'] = $results;
-        $validData->id = $this->mvc['id'];
+        $this->get('id', (int) $results);
+        $validData->id = $this->get('id');
 
         /** Event: onContentSaveForm **/
         /** Molajo_Note: New Event onContentSaveForm follows primary content save to keep data insync **/
@@ -354,13 +341,13 @@ class MolajoUpdateController extends MolajoController
         }
 
         /** clear session data **/
-        Molajo::Application()->get('User', '', 'services')->setUserState(JRequest::getInt('datakey'), null);
+        Services::User()->setUserState(JRequest::getInt('datakey'), null);
 
-        /** Molajo_Note: Testing added to ensure state change before onContentChangeState event is triggered  **/
-        if ($this->existing_status == $validData->state || $this->isNew) {
+        /** Molajo_Note: Testing added to ensure status change before onContentChangeState event is triggered  **/
+        if ($this->existing_status == $validData->status || $this->isNew) {
         } else {
             /** Event: onContentChangeState **/
-            $this->dispatcher->trigger('onContentChangeState', array($context, $this->mvc['id'], $validData->state));
+            $this->dispatcher->trigger('onContentChangeState', array($context, $this->get('id'), $validData->status));
         }
 
         /** Version_History: maintain count **/
@@ -384,12 +371,12 @@ class MolajoUpdateController extends MolajoController
         }
 
         if ($task == 'restore') {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_RESTORE_SUCCESSFUL'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_RESTORE_SUCCESSFUL'));
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_SAVE_SUCCESSFUL'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_SAVE_SUCCESSFUL'));
         }
 
-        JRequest::setVar('id', $this->mvc['id']);
+        JRequest::setVar('id', $this->get('id'));
         $this->redirectClass->setRedirectMessageType('message');
         return $this->redirectClass->setSuccessIndicator(true);
     }
@@ -416,9 +403,9 @@ class MolajoUpdateController extends MolajoController
         $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
-        if ($this->table->state == MOLAJO_STATUS_TRASHED || $this->table->state == MOLAJO_STATUS_VERSION) {
+        if ($this->model->status == MOLAJO_STATUS_TRASHED || $this->model->status == MOLAJO_STATUS_VERSION) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED') . ' ' . $this->mvc['id'], 'error');
+            $this->redirectClass->setRedirectMessage(Services::Language()->sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED') . ' ' . $this->get('id'), 'error');
             $this->redirectClass->setRedirect(MolajoRouteHelper::_($this->redirectClass->redirectFailure, false));
             return false;
         }
@@ -430,13 +417,13 @@ class MolajoUpdateController extends MolajoController
         }
 
         /** Delete_Event: onContentBeforeDelete **/
-        $results = $this->dispatcher->trigger('onContentBeforeDelete', array($context, $this->table));
+        $results = $this->dispatcher->trigger('onContentBeforeDelete', array($context, $this->model));
         if (in_array(false, $results, true)) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Model: delete **/
-        $results = $this->model->delete($this->mvc['id']);
+        $results = $this->model->delete($this->get('id'));
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -448,7 +435,7 @@ class MolajoUpdateController extends MolajoController
         }
 
         /** Delete_Event: onContentAfterDelete **/
-        $results = $this->dispatcher->trigger('onContentAfterDelete', array($context, $this->table));
+        $results = $this->dispatcher->trigger('onContentAfterDelete', array($context, $this->model));
         if (in_array(false, $results, true)) {
             return $this->redirectClass->setSuccessIndicator(false);
         }

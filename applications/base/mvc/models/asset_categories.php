@@ -109,7 +109,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
     {
         // Check for a title.
         if (trim($this->title) == '') {
-            $this->setError(MolajoTextService::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
+            $this->setError(Services::Language()->_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
             return false;
         }
         $this->alias = trim($this->alias);
@@ -119,7 +119,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
 
         $this->alias = Molajo::Application()->stringURLSafe($this->alias);
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Services::Date()->format('Y-m-d-H-i-s');
+            $this->alias = Services::Date()->getDate()->format('Y-m-d-H-i-s');
         }
 
         return true;
@@ -169,16 +169,16 @@ class MolajoAssetCategoriesModel extends MolajoModel
      */
     public function store($updateNulls = false)
     {
-        $date = Molajo::Date();
-        $user = Molajo::Application()->get('User', '', 'services');
+        $date = Services::Date();
+        $user = Services::User();
 
         if ($this->id) {
             // Existing category
-            $this->modified_time = $date->toMySQL();
+            $this->modified_time = $date->toSql();
             $this->modified_user_id = $user->get('id');
         } else {
             // New category
-            $this->created_time = $date->toMySQL();
+            $this->created_time = $date->toSql();
             $this->created_user_id = $user->get('id');
         }
         // Verify that the alias is unique
@@ -190,7 +190,7 @@ class MolajoAssetCategoriesModel extends MolajoModel
             && ($table->id != $this->id || $this->id == 0)
         ) {
 
-            $this->setError(MolajoTextService::_('MOLAJO_DB_ERROR_CATEGORY_UNIQUE_ALIAS'));
+            $this->setError(Services::Language()->_('MOLAJO_DB_ERROR_CATEGORY_UNIQUE_ALIAS'));
             return false;
         }
          */

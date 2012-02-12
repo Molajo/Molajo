@@ -43,9 +43,7 @@ class MolajoMessagesModel extends MolajoModel
     {
         $this->items = array();
 
-        $messages = Molajo::Services()
-            ->connect('Message')
-            ->get();
+        $messages = Services::Message()->get();
 
         if (count($messages) == 0) {
             return array();

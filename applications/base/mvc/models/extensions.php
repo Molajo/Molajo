@@ -39,7 +39,7 @@ class MolajoExtensionsModel extends MolajoModel
     {
         // check for valid name
         if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(MolajoTextService::_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+            $this->setError(Services::Language()->_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
             return false;
         }
         return true;
@@ -115,7 +115,7 @@ class MolajoExtensionsModel extends MolajoModel
             }
                 // Nothing to set publishing state on, return false.
             else {
-                $this->setError(MolajoTextService::_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
+                $this->setError(Services::Language()->_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }
         }
@@ -132,22 +132,22 @@ class MolajoExtensionsModel extends MolajoModel
         }
 
         // Update the publishing state for rows with the given primary keys.
-        $this->_db->setQuery(
-            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
-            ' SET ' . $this->_db->quoteName('enabled') . ' = ' . (int)$state .
+        $this->db->setQuery(
+            'UPDATE ' . $this->db->quoteName($this->_tbl) .
+            ' SET ' . $this->db->quoteName('enabled') . ' = ' . (int)$state .
             ' WHERE (' . $where . ')' .
             $checkin
         );
-        $this->_db->query();
+        $this->db->query();
 
         // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
+        if ($this->db->getErrorNum()) {
+            $this->setError($this->db->getErrorMsg());
             return false;
         }
 
         // If checkin is supported and all rows were adjusted, check them in.
-        if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
+        if ($checkin && (count($pks) == $this->db->getAffectedRows())) {
             // Checkin the rows.
             foreach ($pks as $pk)
             {

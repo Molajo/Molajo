@@ -60,7 +60,7 @@ class MolajoTextService
      */
     public function _($string)
     {
-        $language = Molajo::Application()->get('Language', '', 'Language');
+        $language = Services::Language();
 //todo amy replace the alias function
 
     }

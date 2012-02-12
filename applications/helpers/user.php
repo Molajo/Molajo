@@ -34,7 +34,7 @@ abstract class MolajoUserHelper
 
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->toMySQL();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id') . ' as extension_instance_id');

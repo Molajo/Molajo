@@ -94,7 +94,7 @@ class MolajoLoginController
         }
 
         /** success message */
-        $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_SUCCESSFUL_LOGON'));
+        $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_SUCCESSFUL_LOGON'));
         $this->redirectClass->setSuccessIndicator(true);
     }
 
@@ -111,15 +111,15 @@ class MolajoLoginController
     {
 //        MolajoPluginHelper::getPlugin('user');
 //        if ($type == 'authenticate') {
-//            JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
+//            Services::Dispatcher()->trigger('onUserLoginFailure', array($response, $options));
 //        } else {
-//            JDispatcher::getInstance()->trigger('onUserAuthorisationFailure', array($response, $options));
+//            Services::Dispatcher()->trigger('onUserAuthorisationFailure', array($response, $options));
 //        }
 
         if (isset($options['silent']) && $options['silent']) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('JLIB_LOGIN_AUTHORIZED'));
-            $this->redirectClass->setRedirectMessageType(MolajoTextService::_('warning'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('JLIB_LOGIN_AUTHORIZED'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->_('warning'));
         }
         return $this->redirectClass->setSuccessIndicator(false);
     }
@@ -188,7 +188,7 @@ class MolajoLoginController
 //        MolajoPluginHelper::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
-//        $results = Molajo::Application()->triggerEvent('onUserLogout', array($parameters, $options));
+//        $results = Services::Dispatcher()->notify('onUserLogout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
@@ -203,7 +203,7 @@ class MolajoLoginController
 //        }
 
         // Trigger onUserLoginFailure Event.
-//        Molajo::Application()->triggerEvent('onUserLogoutFailure', array($parameters));
+//        Services::Dispatcher()->notify('onUserLogoutFailure', array($parameters));
 
         return false;
     }

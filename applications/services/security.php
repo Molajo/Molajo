@@ -134,8 +134,7 @@ class MolajoSecurityService
     {
        	return
            $this->getHash(
-               Molajo::Services()
-                   ->connect('User')
+               Services::User()
                    ->get('id', 0) .
                 $this->getToken($forceNew)
            );

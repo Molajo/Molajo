@@ -78,7 +78,7 @@ abstract class MolajoAssetHelper
         } else {
             Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_DATABASE_QUERY'),
+                $message = Services::Language()->_('ERROR_DATABASE_QUERY'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'AssetHelper::get',
@@ -96,7 +96,7 @@ abstract class MolajoAssetHelper
 
             if ((int)$asset_id == 0) {
 
-                if (Molajo::Application()->get('sef', 1) == 1) {
+                if (Services::Configuration()->get('sef', 1) == 1) {
                     if ($row->sef_request == $query_request) {
 
                     } else {
@@ -112,12 +112,12 @@ abstract class MolajoAssetHelper
                 }
 
                 if ($row->asset_id ==
-                    Molajo::Application()->get('home_asset_id', 0)
+                    Services::Configuration()->get('home_asset_id', 0)
                 ) {
                     if ($query_request == '') {
                     } else {
                         $row->redirect_to_id =
-                            Molajo::Application()->get('home_asset_id', 0);
+                            Services::Configuration()->get('home_asset_id', 0);
                     }
                 }
             }
@@ -162,7 +162,7 @@ abstract class MolajoAssetHelper
 
         /** home */
         if ((int)$request->get('request_asset_id', 0)
-            == Molajo::Application()->get('home_asset_id', null)
+            == Services::Configuration()->get('home_asset_id', null)
         ) {
             $request->set('request_url_home', true);
         } else {
@@ -254,7 +254,7 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_DATABASE_QUERY')
+                $message = Services::Language()->_('ERROR_DATABASE_QUERY')
                     . ' ' . $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
@@ -284,12 +284,12 @@ abstract class MolajoAssetHelper
         $query = $db->getQuery(true);
 
         /** home */
-        if ($asset_id == Molajo::Application()->get('home_asset_id', 0)) {
+        if ($asset_id == Services::Configuration()->get('home_asset_id', 0)) {
             return '';
         }
 
         /** retrieve id if not home */
-        if (Molajo::Application()->get('sef', 1) == 1) {
+        if (Services::Configuration()->get('sef', 1) == 1) {
             $query->select('a.' . $db->namequote('sef_request'));
         } else {
             $query->select('a.' . $db->namequote('request'));
@@ -308,7 +308,7 @@ abstract class MolajoAssetHelper
         if ($error = $db->getErrorMsg()) {
             Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_DATABASE_QUERY')
+                $message = Services::Language()->_('ERROR_DATABASE_QUERY')
                     . ' ' . $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,

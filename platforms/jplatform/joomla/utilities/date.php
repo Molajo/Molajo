@@ -507,7 +507,7 @@ class JDate extends DateTime
      * @link http://dev.mysql.com/doc/refman/5.0/en/datetime.html
      * @since   1.0
      */
-    public function toMySQL($local = false)
+    public function toSql($local = false)
     {
 
         return $this->format('Y-m-d H:i:s', $local, false);

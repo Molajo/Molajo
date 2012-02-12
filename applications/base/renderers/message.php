@@ -23,14 +23,15 @@ class MolajoMessageRenderer extends MolajoRenderer
      *
      * @param  string $name
      * @param  string $type
+     * @param  array  $items (used for event processing renderers, only)
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    public function __construct($name = null, $type = null, $items = null)
     {
-        $this->_extension_required = false;
-        parent::__construct($name, $type);
+        $this->extension_required = false;
+        parent::__construct($name, $type, $items);
     }
 
     /**
@@ -43,8 +44,8 @@ class MolajoMessageRenderer extends MolajoRenderer
      */
     protected function _getExtension()
     {
-        $this->task->set('model', 'MolajoMessagesModel');
-        $this->task->set('task', 'display');
+        $this->set('model', 'MolajoMessagesModel');
+        $this->set('task', 'display');
         $this->parameters->set('extension_suppress_no_results', 1);
 
         return true;
@@ -60,11 +61,11 @@ class MolajoMessageRenderer extends MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
-        if ((int)$this->task->get('template_view_id', 0) == 0) {
-            $this->task->set('template_view_id', Molajo::Application()->get('message_template_view_id'));
+        if ((int)$this->get('template_view_id', 0) == 0) {
+            $this->set('template_view_id', Services::Configuration()->get('message_template_view_id'));
         }
-        if ((int)$this->task->get('wrap_view_id', 0) == 0) {
-            $this->task->set('wrap_view_id', Molajo::Application()->get('message_wrap_view_id'));
+        if ((int)$this->get('wrap_view_id', 0) == 0) {
+            $this->set('wrap_view_id', Services::Configuration()->get('message_wrap_view_id'));
         }
 
         return true;

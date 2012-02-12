@@ -49,10 +49,6 @@ class MolajoDateService
      */
     public function __construct()
     {
-    }
-
-    public function connect()
-    {
         return $this->getDate();
     }
 
@@ -69,7 +65,7 @@ class MolajoDateService
      */
     public function getDate($time = 'now', $tzOffset = null)
     {
-        $locale = Molajo::Application()->get('tag', 'en-GB', 'language');
+        $locale = Services::Language()->get('tag', 'en-GB');
 
         $classname = str_replace('-', '_', $locale) . 'Date';
         if (class_exists($classname)) {
@@ -86,7 +82,7 @@ class MolajoDateService
      * @param date $date
      * @return string CCYY-MM-DD
      */
-    function convertCCYYMMDD($date = null)
+    public function convertCCYYMMDD($date = null)
     {
         if (strlen($date) == 8) {
             return substr($date, 0, 4) .
@@ -107,7 +103,7 @@ class MolajoDateService
      * @since 1.0
      * @return integer
      */
-    function differenceDays($date1, $date2)
+    public function differenceDays($date1, $date2)
     {
         $day1mm = substr($date1, 5, 2);
         $day1dd = substr($date1, 8, 2);
@@ -128,33 +124,33 @@ class MolajoDateService
      * @param  $date
      * @return string human-readable pretty date
      */
-    function prettydate($parameter_date)
+    public function prettydate($source_date)
     {
         /** user time zone */
-        $parameter_date = DateService::getUTCDate($parameter_date, 'user');
-        $current_date = DateService::getUTCDate(
-            date('m/d/Y h:i:s a',
-                time()),
-            'user'
+        $source_date = Services::Date()->getUTCDate(
+            $source_date, 'user'
+        );
+        $current_date = Services::Date()->getUTCDate(
+            date('m/d/Y h:i:s a', time()), 'user'
         );
 
-        $parameter_date = strtotime($parameter_date);
+        $source_date = strtotime($source_date);
         $current_date = strtotime($current_date);
 
         /** verify dates */
-        if ($parameter_date === false
-            || $parameter_date < 0
-            || $parameter_date > $current_date
+        if ($source_date === false
+            || $source_date < 0
+            || $source_date > $current_date
         ) {
             return false;
         }
 
         /** difference in years */
-        $years = date('Y', $current_date) - date('Y', $parameter_date);
+        $years = date('Y', $current_date) - date('Y', $source_date);
 
         /** difference in months */
         $endMonth = date('m', $current_date);
-        $startMonth = date('m', $parameter_date);
+        $startMonth = date('m', $source_date);
         $months = $endMonth - $startMonth;
         if ($months < 0) {
             $months = $months + 12;
@@ -171,7 +167,7 @@ class MolajoDateService
         }
         $remove_years_months = count($remove_years_months) > 0 ? '+' . implode(' ', $remove_years_months) : 'now';
 
-        $days = $current_date - strtotime($remove_years_months, $parameter_date);
+        $days = $current_date - strtotime($remove_years_months, $source_date);
         $days = date('z', $days);
 
         /** only calculate hours, minutes and seconds for current date */
@@ -179,7 +175,7 @@ class MolajoDateService
         $minutes = 0;
         $seconds = 0;
         if ($years == 0 && $months == 0 && $days == 0) {
-            $seconds = date('s', $current_date) - date('s', $parameter_date);
+            $seconds = date('s', $current_date) - date('s', $source_date);
 
             /** difference in hours */
             $hours = round($seconds / (60 * 60), 0);
@@ -205,12 +201,12 @@ class MolajoDateService
         }
 
         /** format pretty date */
-        $prettyDate = DateService::prettyDateFormat($years, 'MOLAJO_YEAR_SINGULAR', 'MOLAJO_YEAR_PLURAL');
-        $prettyDate .= DateService::prettyDateFormat($months, 'MOLAJO_MONTH_SINGULAR', 'MOLAJO_MONTH_PLURAL');
-        $prettyDate .= DateService::prettyDateFormat($days, 'MOLAJO_DAY_SINGULAR', 'MOLAJO_DAY_PLURAL');
-        $prettyDate .= DateService::prettyDateFormat($hours, 'MOLAJO_HOUR_SINGULAR', 'MOLAJO_HOUR_PLURAL');
-        $prettyDate .= DateService::prettyDateFormat($minutes, 'MOLAJO_MINUTE_SINGULAR', 'MOLAJO_MINUTE_PLURAL');
-        $prettyDate .= DateService::prettyDateFormat($seconds, 'MOLAJO_SECOND_SINGULAR', 'MOLAJO_SECOND_PLURAL');
+        $prettyDate = Services::Date()->prettyDateFormat($years, 'YEAR_SINGULAR', 'YEAR_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($months, 'MONTH_SINGULAR', 'MONTH_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($days, 'DAY_SINGULAR', 'DAY_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($hours, 'HOUR_SINGULAR', 'HOUR_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($minutes, 'MINUTE_SINGULAR', 'MINUTE_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($seconds, 'SECOND_SINGULAR', 'SECOND_PLURAL');
 
         /** remove leading comma */
         return trim(substr($prettyDate, 1, strlen($prettyDate) - 1));
@@ -232,11 +228,11 @@ class MolajoDateService
 
         if ($numeric_value == 1) {
             return ', ' . $numeric_value . ' ' .
-                strtolower(MolajoTextService::_($singular_literal));
+                strtolower(Services::Language()->_($singular_literal));
         }
 
         return ', ' . $numeric_value . ' ' .
-            strtolower(MolajoTextService::_($plural_literal));
+            strtolower(Services::Language()->_($plural_literal));
     }
 
     /**
@@ -250,7 +246,7 @@ class MolajoDateService
      * $dateComponents = getdate();
      * $month = $dateComponents['mon'];
      * $year = $dateComponents['year'];
-     * echo DateService::buildCalendar ($month,$year,$dateArray);
+     * echo Services::Date()->buildCalendar ($month,$year,$dateArray);
      */
 //todo: Amy - redo to generate a set of dates, combine with other data, pass to a view for rendering
 
@@ -326,7 +322,7 @@ class MolajoDateService
                     $date->setTimezone(new DateTimeZone($config->get('offset')));
 
                     // Transform the date string.
-                    return $date->toMySQL(true);
+                    return $date->toSql(true);
                 }
                 break;
 
@@ -335,10 +331,10 @@ class MolajoDateService
                 if (intval($input_date)) {
                     // Get a date object based on the correct timezone.
                     $date = $this->getDate($input_date, 'UTC');
-                    $date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
+                    $date->setTimezone(new DateTimeZone($user->get('timezone', $config->get('offset'))));
 
                     // Transform the date string.
-                    return $date->toMySQL(true);
+                    return $date->toSql(true);
                 }
                 break;
         }

@@ -83,11 +83,11 @@ class MolajoConfigurationService
      */
     public function __construct()
     {
-
+        $this->getConfiguration();
     }
 
     /**
-     * __construct
+     * getConfiguration
      *
      * Retrieves and combines site and application configuration objects
      *
@@ -95,7 +95,7 @@ class MolajoConfigurationService
      * @throws  RuntimeException
      * @since   1.0
      */
-    public function connect()
+    public function getConfiguration()
     {
         $this->configuration = new Registry;
         $siteData = new Registry;
@@ -130,6 +130,34 @@ class MolajoConfigurationService
             }
         }
         return $this;
+    }
+
+    /**
+     * get
+     *
+     * @param  string  $key
+     * @param  string  $default
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->configuration->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->configuration->set($key, $value);
     }
 
     /**
@@ -225,34 +253,6 @@ class MolajoConfigurationService
         }
 
         return $row;
-    }
-
-    /**
-     * get
-     *
-     * @param  string  $key
-     * @param  string  $default
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function get($key, $default = null, $type = null)
-    {
-        return $this->configuration->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function set($key, $value = null, $type = null)
-    {
-        return $this->configuration->set($key, $value);
     }
 }
 

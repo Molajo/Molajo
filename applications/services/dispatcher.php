@@ -93,9 +93,9 @@ class MolajoDispatcherService
     }
 
     /**
-     * triggerEvent
+     * notify
      *
-     * Invokes services listening for a specific event
+     * Notifies services listening for a specific event
      *
      * @param   string  $event  Event
      * @param   array   $args   An array of arguments (optional).
@@ -104,7 +104,7 @@ class MolajoDispatcherService
      *
      * @since   1.0
      */
-    public function triggerEvent($event, array $args = null)
+    public function notify($event, array $args = null)
     {
         //        if ($this->_dispatcher instanceof JDispatcher) {
         //            return $this->_dispatcher->trigger($event, $args);

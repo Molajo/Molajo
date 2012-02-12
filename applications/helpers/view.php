@@ -21,42 +21,42 @@ class MolajoViewHelper
      *
      * @var    string
      */
-    protected $_view = null;
+    protected $view = null;
 
     /**
      * View Type
      *
      * @var    string
      */
-    protected $_view_type = null;
+    protected $view_type = null;
 
     /**
      * Extension Name
      *
      * @var    string
      */
-    protected $_extension_name = null;
+    protected $extension_name = null;
 
     /**
      * Extension Type
      *
      * @var    string
      */
-    protected $_extension_type = null;
+    protected $extension_type = null;
 
     /**
      * Extension Folder
      *
      * @var    string
      */
-    protected $_extension_folder = null;
+    protected $extension_folder = null;
 
     /**
      * Theme Name
      *
      * @var    string
      */
-    protected $_theme_name = null;
+    protected $theme_name = null;
 
     /**
      * Path
@@ -88,17 +88,17 @@ class MolajoViewHelper
     public function __construct($view, $view_type, $extension_name,
                                 $extension_type, $extension_folder, $theme_name)
     {
-        $this->_view = strtolower($view);
+        $this->view = strtolower($view);
         if (strtolower($view_type) == 'pages'
             || strtolower($view_type) == 'wraps') {
         } else {
             $view_type = 'templates';
         }
-        $this->_view_type = strtolower($view_type);
-        $this->_extension_name = strtolower($extension_name);
-        $this->_extension_type = strtolower($extension_type);
-        $this->_extension_folder = strtolower($extension_folder);
-        $this->_theme_name = strtolower($theme_name);
+        $this->view_type = strtolower($view_type);
+        $this->extension_name = strtolower($extension_name);
+        $this->extension_type = strtolower($extension_type);
+        $this->extension_folder = strtolower($extension_folder);
+        $this->theme_name = strtolower($theme_name);
 
         $results = $this->_findPath();
 
@@ -131,26 +131,26 @@ class MolajoViewHelper
         $this->view_path = false;
 
         /** Remaining portion of path for all locations */
-        $plus = '/views/' . $this->_view_type . '/' . $this->_view;
+        $plus = '/views/' . $this->view_type . '/' . $this->view;
 
         /** 1. Theme */
-        $theme = MOLAJO_EXTENSIONS_THEMES . '/' . $this->_theme_name;
+        $theme = MOLAJO_EXTENSIONS_THEMES . '/' . $this->theme_name;
         $themeViewPath = $theme . $plus;
-        $themeViewPathURL = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->_theme_name . $plus;
+        $themeViewPathURL = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->theme_name . $plus;
 
         /** 2. Extension */
         $extensionPath = '';
-        if ($this->_extension_type == 'plugin') {
-            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_extension_folder . '/' . $this->_extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_PLUGINS_URL . '/' . $this->_extension_folder . '/' . $this->_extension_name . $plus;
+        if ($this->extension_type == 'plugin') {
+            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->extension_folder . '/' . $this->extension_name . $plus;
+            $extensionPathURL = MOLAJO_EXTENSIONS_PLUGINS_URL . '/' . $this->extension_folder . '/' . $this->extension_name . $plus;
 
-        } else if ($this->_extension_type == 'component') {
-            $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->_extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_COMPONENTS_URL . '/' . $this->_extension_name . $plus;
+        } else if ($this->extension_type == 'component') {
+            $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->extension_name . $plus;
+            $extensionPathURL = MOLAJO_EXTENSIONS_COMPONENTS_URL . '/' . $this->extension_name . $plus;
 
-        } else if ($this->_extension_type == 'module') {
-            $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->_extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->_extension_name . $plus;
+        } else if ($this->extension_type == 'module') {
+            $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->extension_name . $plus;
+            $extensionPathURL = MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->extension_name . $plus;
 
         } else {
             $extensionPath = '';
@@ -158,8 +158,8 @@ class MolajoViewHelper
         }
 
         /** 3. Views */
-        $corePath = MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view;
-        $corePathURL = MOLAJO_EXTENSIONS_VIEWS_URL . '/' . $this->_view_type . '/' . $this->_view;
+        $corePath = MOLAJO_EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view;
+        $corePathURL = MOLAJO_EXTENSIONS_VIEWS_URL . '/' . $this->view_type . '/' . $this->view;
 
         /** 4. MVC */
         $mvcPath = MOLAJO_APPLICATIONS_MVC . $plus;
@@ -214,8 +214,8 @@ class MolajoViewHelper
     {
         Services::Language()
             ->load(
-            MOLAJO_EXTENSIONS_VIEWS . '/' . $this->_view_type . '/' . $this->_view,
-            Molajo::Application()->get('language'),
+            MOLAJO_EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view,
+            Services::Language()->get('tag'),
             false,
             false);
     }
@@ -235,21 +235,21 @@ class MolajoViewHelper
         if ($type = 'template') {
 
             if ($task == 'add' || $task == 'edit') {
-                $template_view_id =
-                    (int)Molajo::Application()->get(
-                        'default_edit_template_view_id',
+                $templateview_id =
+                    (int) Services::Configuration()->get(
+                        'default_edit_templateview_id',
                         0
                     );
             } else if ((int)$id == 0) {
-                $template_view_id =
-                    (int)Molajo::Application()->get(
-                        'default_items_template_view_id',
+                $templateview_id =
+                    (int) Services::Configuration()->get(
+                        'default_items_templateview_id',
                         0
                     );
             } else {
-                $template_view_id =
-                    (int)Molajo::Application()->get(
-                    'default_item_template_view_id',
+                $templateview_id =
+                    (int) Services::Configuration()->get(
+                    'default_item_templateview_id',
                     0
                 );
             }
@@ -257,21 +257,21 @@ class MolajoViewHelper
 
         if ($type == 'wrap') {
             if ($task == 'add' || $task == 'edit') {
-                $wrap_view_id =
-                    (int)Molajo::Application()->get(
-                        'default_edit_wrap_view_id',
+                $wrapview_id =
+                    (int) Services::Configuration()->get(
+                        'default_edit_wrapview_id',
                         0
                     );
 
             } else if ((int)$id == 0) {
-                $wrap_view_id = (int)Molajo::Application()->get(
-                    'default_items_wrap_view_id',
+                $wrapview_id = (int) Services::Configuration()->get(
+                    'default_items_wrapview_id',
                     0
                 );
 
             } else {
-                $wrap_view_id = (int)Molajo::Application()->get(
-                    'default_item_wrap_view_id',
+                $wrapview_id = (int) Services::Configuration()->get(
+                    'default_item_wrapview_id',
                     0
                 );
             }

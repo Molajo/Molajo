@@ -46,7 +46,6 @@ class Molajo extends MolajoBase
     {
         return MolajoBase::getParser();
     }
-    // MolajoRenderer is not statically linked
     public static function Responder()
     {
         return MolajoBase::getResponder();
@@ -67,63 +66,63 @@ class Services extends MolajoServices
 {
     public static function Access ()
     {
-        return Molajo::Services()->connect('Access');
+        return Molajo::Services()->get('Access');
     }
     public static function Authentication ()
     {
-        return Molajo::Services()->connect('Authentication');
+        return Molajo::Services()->get('Authentication');
     }
     public static function Configuration ()
        {
-           return Molajo::Services()->connect('Configuration');
+           return Molajo::Services()->get('Configuration');
        }
     public static function Date ()
     {
-        return Molajo::Services()->connect('Date');
+        return Molajo::Services()->get('Date');
     }
     public static function Dispatcher ()
     {
-        return Molajo::Services()->connect('Dispatcher');
+        return Molajo::Services()->get('Dispatcher');
     }
     public static function Image ()
     {
-        return Molajo::Services()->connect('Image');
+        return Molajo::Services()->get('Image');
     }
     public static function DB ()
     {
-        return Molajo::Services()->connect('Configuration');
+        return Molajo::Services()->get('jdb');
     }
     public static function Language ()
     {
-        return Molajo::Services()->connect('Language');
+        return Molajo::Services()->get('Language');
     }
     public static function Mail ()
     {
-        return Molajo::Services()->connect('Mail');
+        return Molajo::Services()->get('Mail');
     }
     public static function Message ()
     {
-        return Molajo::Services()->connect('Message');
+        return Molajo::Services()->get('Message');
     }
     public static function Security ()
     {
-        return Molajo::Services()->connect('Security');
+        return Molajo::Services()->get('Security');
     }
     public static function Session ()
     {
-        return Molajo::Services()->connect('Session');
+        return Molajo::Services()->get('Session');
     }
     public static function Text ()
     {
-        return Molajo::Services()->connect('Text');
+        return Molajo::Services()->get('Text');
     }
     public static function Url ()
     {
-        return Molajo::Services()->connect('Url');
+        return Molajo::Services()->get('Url');
     }
     public static function User ()
     {
-        return Molajo::Services()->connect('User');
+        return Molajo::Services()->get('User');
     }
 }
 

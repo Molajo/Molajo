@@ -64,8 +64,8 @@ class MolajoContentModel extends MolajoModel
             $query->from('#__categories');
             $query->where('id = ' . (int)$this->category_id);
 
-            $this->_db->setQuery($query->__toString());
-            if ($result = $this->_db->loadResult()) {
+            $this->db->setQuery($query->__toString());
+            if ($result = $this->db->loadResult()) {
                 $assetId = (int)$result;
             }
         }
@@ -125,7 +125,7 @@ class MolajoContentModel extends MolajoModel
     {
         /** title **/
         if (trim($this->title) == '') {
-            $this->setError(MolajoTextService::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
+            $this->setError(Services::Language()->_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
             return false;
         }
 
@@ -183,7 +183,7 @@ class MolajoContentModel extends MolajoModel
         $user = Services::User();
 
         if ($this->id) {
-            $this->modified = $date->toMySQL();
+            $this->modified = $date->toSql();
             $this->modified_by = $user->get('id');
 
             if (intval($this->stop_publishing_datetime) > 0 && $this->stop_publishing_datetime < $this->start_publishing_datetime) {
@@ -195,7 +195,7 @@ class MolajoContentModel extends MolajoModel
         } else {
             if (intval($this->created)) {
             } else {
-                $this->created = $date->toMySQL();
+                $this->created = $date->toSql();
             }
             if (empty($this->created_by)) {
                 $this->created_by = $user->get('id');
@@ -205,7 +205,7 @@ class MolajoContentModel extends MolajoModel
         $this->_getAlias();
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $this->alias = Services::Date()->format('Y-m-d-H-i-s');
+            $this->alias = Services::Date()->getDate()->format('Y-m-d-H-i-s');
         }
 
         return parent::store($updateNulls);
@@ -249,9 +249,9 @@ class MolajoContentModel extends MolajoModel
             $query->where($db->namequote('id') . ' <> ' . (int)$this->id);
             $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATUS_VERSION);
 
-            $this->_db->setQuery($query->__toString());
+            $this->db->setQuery($query->__toString());
 
-            if ($result = $this->_db->loadResult()) {
+            if ($result = $this->db->loadResult()) {
                 $aliasFound = false;
             } else {
                 $aliasFound = true;

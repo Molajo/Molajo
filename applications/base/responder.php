@@ -565,10 +565,10 @@ class MolajoResponder
      */
     public function respond()
     {
-//        $this->triggerEvent('onBeforeRespond');
+//        Services::Dispatcher()->notify('onBeforeRespond');
 
         // If gzip compression is enabled in configuration and the server is compliant, compress the output.
-        if (Molajo::Application()->get('gzip')) {
+        if (Services::Configuration()->get('gzip')) {
             if (ini_get('zlib.output_compression')) {
             } elseif (ini_get('output_handler') == 'ob_gzhandler') {
             } else {
@@ -596,7 +596,7 @@ class MolajoResponder
 
         echo $this->getBody();
 
-//        $this->triggerEvent('onAfterRespond');
+//        Services::Dispatcher()->notify('onAfterRespond');
 
         return;
     }

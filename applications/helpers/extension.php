@@ -32,7 +32,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->toMySQL();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         /**
@@ -157,7 +157,7 @@ abstract class MolajoExtensionHelper
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->toMySQL();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
@@ -212,14 +212,13 @@ abstract class MolajoExtensionHelper
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->toMySQL();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('title'));
         $query->from($db->namequote('#__extension_instances') . ' as a');
         $query->where('a.' . $db->namequote('id') .
             ' = ' . (int)$extension_instance_id);
-
         $query->where('a.' . $db->namequote('status') .
             ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(a.start_publishing_datetime = ' .
@@ -261,16 +260,16 @@ abstract class MolajoExtensionHelper
      */
     public static function loadLanguage($path)
     {
+        $path .= '/language';
+
         if (JFolder::exists($path)) {
         } else {
             return false;
         }
 
-        /** Assets Join and View Access Check */
-        Molajo::Services()
-            ->connect('Language')
+        Services::Language()
             ->load ($path,
-                    Molajo::Application()->get('language'),
+                    Services::Language()->get('tag'),
                     false,
                     false
                     );

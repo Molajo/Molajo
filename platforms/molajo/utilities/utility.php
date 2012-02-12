@@ -81,7 +81,7 @@ class MolajoUtility
      */
     public static function getHash($seed)
     {
-        return md5(Molajo::Application()->get('secret') . $seed);
+        return md5(Services::Configuration()->get('secret') . $seed);
     }
 
     /**
@@ -95,7 +95,7 @@ class MolajoUtility
      */
     public static function getToken($forceNew = false)
     {
-        return Molajo::Application()->getSession()->getFormToken($forceNew);
+        return Services::Session()->getFormToken($forceNew);
     }
 
     /**

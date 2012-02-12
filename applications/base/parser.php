@@ -17,22 +17,14 @@ defined('MOLAJO') or die;
 class MolajoParser
 {
     /**
-     * Application static instance
+     * $instance
+     *
+     * Parser static instance
      *
      * @var    object
      * @since  1.0
      */
     protected static $instance;
-
-    /**
-     * $_sequence
-     *
-     * Renderers Processing Sequence
-     *
-     * @var array
-     * @since 1.0
-     */
-    protected $_sequence = array();
 
     /**
      * $parameters
@@ -42,18 +34,40 @@ class MolajoParser
      * @var string
      * @since 1.0
      */
-    public $parameters = array();
+    protected $parameters = array();
 
     /**
-     * $_theme
+     * $sequence
+     *
+     * System defined order for processing renderers
+     * stored in the sequence.xml file
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $sequence = array();
+
+    /**
+     * $renderer_requests
+     *
+     * Include Statement Renderer requests extracted from the
+     * theme (initially) and then the rendered output
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $renderer_requests = array();
+
+    /**
+     * $rendered_output
      *
      * @var string
      * @since 1.0
      */
-    protected $_theme = array();
+    protected $rendered_output = array();
 
     /**
-     * $_renderers
+     * $renderers
      *
      * Parsing process retrieves input:renderer statements from the theme and
      * rendered output, loading the requests for renderers (and associated attributes)
@@ -62,15 +76,7 @@ class MolajoParser
      * @var string
      * @since 1.0
      */
-    protected $_renderers = array();
-
-    /**
-     * Configuration
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $_config = null;
+    protected $renderers = array();
 
     /**
      * getInstance
@@ -89,30 +95,32 @@ class MolajoParser
     /**
      * __construct
      *
-     * Class constructor.
-     *
      * @return boolean
      * @since  1.0
      */
     public function __construct()
     {
-        return;
+        $this->process();
     }
 
     /**
-     * processTheme
+     * process
      *
-     * Retrieves Theme and begins the process of first parsing the Theme and Page View
-     * for input:renderer statements, looping through the renderers for the statements found,
-     * and then continuing the process by parsing the rendered output for additional input
-     * statements until no more are found.
+     * Retrieve sequence.xml file and load into array for use in determining renderer processing order
+     *
+     * Invoke Theme Renderer to load page metadata, and theme language and media resources
+     *
+     * Retrieve Theme and Page View to initiate the iterative process of parsing rendered output
+     * for <include:renderer/> statements and then looping through all renderer requests
+     *
+     * When no more <include:renderer/> statements are found in the rendered output,
+     * process sets the Responder body and completes
      *
      * @return  object
      * @since  1.0
      */
-    public function processTheme()
+    public function process()
     {
-        /** sequence of renderer processing */
         $formatXML = '';
         if ($formatXML == '') {
             $formatXML = MOLAJO_APPLICATIONS_CORE . '/base/renderers/sequence.xml';
@@ -126,7 +134,7 @@ class MolajoParser
 
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
         foreach ($sequence->renderer as $next) {
-            $this->_sequence[] = (string)$next;
+            $this->sequence[] = (string)$next;
         }
 
         /** Theme Parameters */
@@ -141,12 +149,12 @@ class MolajoParser
         );
 
         /** Before Event */
-        // Molajo::Application()->triggerEvent('onBeforeRender');
+        // Services::Dispatcher()->notify('onBeforeRender');
 
         /** theme: load template media and language files */
         if (class_exists('MolajoThemeRenderer')) {
             $rc = new MolajoThemeRenderer ('theme');
-            $results = $rc->render();
+            $results = $rc->process();
 
         } else {
             echo 'failed renderer = ' . 'MolajoThemeRenderer' . '<br />';
@@ -160,9 +168,9 @@ class MolajoParser
         Molajo::Responder()->setBody($body);
 
         /** after rendering */
-//        Molajo::Application()->triggerEvent('onAfterRender');
+//        Services::Dispatcher()->notify('onAfterRender');
 
-        return $body;
+        return;
     }
 
     /**
@@ -182,7 +190,7 @@ class MolajoParser
         /** include the theme and page */
         ob_start();
         require Molajo::Request()->get('theme_path');
-        $this->_theme = ob_get_contents();
+        $this->rendered_output = ob_get_contents();
         ob_end_clean();
 
         /** process all buffered input for include: statements  */
@@ -193,15 +201,15 @@ class MolajoParser
             /** count looping */
             $loop++;
 
-            /** parse $this->theme for include statements */
-            $this->_parseTheme();
+            /** parse theme (initially) and rendered output for include statements */
+            $this->_extractRendererRequests();
 
-            /** if no more include statements found, processing is complete */
-            if (count($this->_renderers) == 0) {
+            /** if no include statements found, processing is complete */
+            if (count($this->renderer_requests) == 0) {
                 break;
             } else {
                 /** invoke renderers for new include statements */
-                $this->_theme = $this->_renderTheme();
+                $this->rendered_output = $this->_callRenderer();
             }
 
             if ($loop > MOLAJO_STOP_LOOP) {
@@ -210,58 +218,63 @@ class MolajoParser
             /** look for new include statements in just rendered output */
             continue;
         }
-        return $this->_theme;
+        return $this->rendered_output;
     }
 
     /**
-     * _parseTheme
+     * _extractRendererRequests
      *
-     * Parse the theme and extract renderers and associated attributes
+     * Parse the theme (first) and then rendered output (subsequent calls)
+     * in search of include statements in order to extract renderers
+     * and associated attributes
      *
-     * @return  Parsed contents of the theme
+     * @return  array
      * @since   1.0
      */
-    protected function _parseTheme()
+    protected function _extractRendererRequests()
     {
         /** initialise */
         $matches = array();
-        $this->_renderers = array();
+        $this->renderer_requests = array();
         $i = 0;
 
         /** parse theme for renderers */
-        preg_match_all('#<include:(.*)\/>#iU', $this->_theme, $matches);
+        preg_match_all('#<include:(.*)\/>#iU',
+            $this->rendered_output,
+            $matches
+        );
 
         if (count($matches) == 0) {
             return;
         }
 
         /** store renderers in array */
-        foreach ($matches[1] as $includeString) {
+        foreach ($matches[1] as $includeStatement) {
 
             /** initialise for each renderer */
-            $includeArray = array();
-            $includeArray = explode(' ', $includeString);
+            $parts = array();
+            $parts = explode(' ', $includeStatement);
             $rendererType = '';
 
-            foreach ($includeArray as $rendererCommand) {
+            foreach ($parts as $part) {
 
-                /** Type of Renderer */
+                /** 1st part is the Renderer Command */
                 if ($rendererType == '') {
-                    $rendererType = $rendererCommand;
-                    $this->_renderers[$i]['name'] = $rendererType;
-                    $this->_renderers[$i]['replace'] = $includeString;
+                    $rendererType = $part;
+                    $this->renderer_requests[$i]['name'] = $rendererType;
+                    $this->renderer_requests[$i]['replace'] = $includeStatement;
 
                     /** Renderer Attributes */
                 } else {
-                    $rendererAttributes = str_replace('"', '', $rendererCommand);
+                    $attributes = str_replace('"', '', $part);
 
-                    if (trim($rendererAttributes) == '') {
+                    if (trim($attributes) == '') {
                     } else {
 
-                        /** Associative array of named pairs */
-                        $splitAttribute = array();
-                        $splitAttribute = explode('=', $rendererAttributes);
-                        $this->_renderers[$i]['attributes'][$splitAttribute[0]] = $splitAttribute[1];
+                        /** Associative array of attributes */
+                        $pair = array();
+                        $pair = explode('=', $attributes);
+                        $this->renderer_requests[$i]['attributes'][$pair[0]] = $pair[1];
                     }
                 }
             }
@@ -270,72 +283,76 @@ class MolajoParser
     }
 
     /**
-     * _renderTheme
+     * _callRenderer
      *
-     * Render pre-parsed theme
+     * Invoke extension-specific renderer for include statement
      *
-     * @return  string rendered theme
+     * @return  string rendered output
      * @since   1.0
      */
-    protected function _renderTheme()
+    protected function _callRenderer()
     {
         $replace = array();
         $with = array();
 
-        /** 1. process every renderer in the format file in defined order */
-        foreach ($this->_sequence as $nextSequence) {
+        /** 1. process renderers in order defined by the sequence.xml file */
+        foreach ($this->sequence as $sequence) {
 
-            /** 2. if necessary, split renderer name from include name (ex. request:component) */
-            if (stripos($nextSequence, ':')) {
-                $includeName = substr($nextSequence, 0, strpos($nextSequence, ':'));
-                $rendererName = substr($nextSequence, strpos($nextSequence, ':') + 1, 999);
+            /*
+            /** 2. if necessary, split renderer name from include name
+            /** (ex. request:component or defer:head)
+             */
+            if (stripos($sequence, ':')) {
+                $includeName = substr($sequence, 0, strpos($sequence, ':'));
+                $rendererName = substr($sequence, strpos($sequence, ':') + 1, 999);
             } else {
-                $includeName = $nextSequence;
-                $rendererName = $nextSequence;
+                $includeName = $sequence;
+                $rendererName = $sequence;
             }
 
-            /** 4. loop thru all extracted include values to find match */
-            for ($i = 0; $i < count($this->_renderers); $i++) {
+            /** 4. loop thru parsed include requests for matching renderer */
+            for ($i = 0; $i < count($this->renderer_requests); $i++) {
 
-                $rendererArray = $this->_renderers[$i];
+                $parsedRequests = $this->renderer_requests[$i];
 
-                if ($includeName == $rendererArray['name']) {
+                if ($includeName == $parsedRequests['name']) {
 
                     /** 5. place attribute pairs into variable */
-                    if (isset($rendererArray['attributes'])) {
-                        $attributes = $rendererArray['attributes'];
+                    if (isset($parsedRequests['attributes'])) {
+                        $attributes = $parsedRequests['attributes'];
                     } else {
                         $attributes = array();
                     }
 
                     /** 6. store the "replace this" value */
-                    $replace[] = "<include:" . $rendererArray['replace'] . "/>";
+                    $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-                    /** 7. load the renderer class */
+                    /** 7. call the renderer class */
                     $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
                         $rc = new $class ($rendererName, $includeName);
                     } else {
                         echo 'failed renderer = ' . $class . '<br />';
+                        die;
                         // ERROR
                     }
                     /** 8. render output and store results as "replace with" */
-                    $with[] = $rc->render($attributes);
+                    $with[] = $rc->process($attributes);
                 }
             }
         }
 
         /** 9. replace it */
-        $this->_theme = str_replace($replace, $with, $this->_theme);
+        $this->rendered_output = str_replace($replace, $with, $this->rendered_output);
 
         /** 10. make certain all <include:xxx /> literals are removed */
         $replace = array();
         $with = array();
-        for ($i = 0; $i < count($this->_renderers); $i++) {
-            $replace[] = "<include:" . $this->_renderers[$i]['replace'] . "/>";
+        for ($i = 0; $i < count($this->renderer_requests); $i++) {
+            $replace[] = "<include:" . $this->renderer_requests[$i]['replace'] . "/>";
             $with[] = '';
         }
 
-        return str_replace($replace, $with, $this->_theme);
+        return str_replace($replace, $with, $this->rendered_output);
     }
 }

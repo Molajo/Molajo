@@ -94,13 +94,13 @@ class MolajoSite
      *
      * @param    array
      *
+     * @return null
      * @since 1.0
      */
     public function load()
     {
         /** Instantiate Application */
-        $app = Molajo::Application();
-        $app->initialize();
+        Molajo::Application()->initialize();
 
         /** Set Site Paths */
         $this->_setPaths();
@@ -108,7 +108,7 @@ class MolajoSite
         /** Site Parameters */
         $info = SiteHelper::get();
         if ($info === false) {
-            return false;
+            return;
         }
 
         /** is site authorised for this Application? */
@@ -119,21 +119,19 @@ class MolajoSite
             die;
         }
 
-        $this->_custom_fields = new Registry;
-        $this->_custom_fields->loadString($info->custom_fields);
+        $this->custom_fields = new Registry;
+        $this->custom_fields->loadString($info->custom_fields);
 
-        $this->_parameters = new Registry;
-        $this->_parameters->loadString($info->parameters);
+        $this->parameters = new Registry;
+        $this->parameters->loadString($info->parameters);
 
-        $this->_metadata = new Registry;
-        $this->_metadata->loadString($info->metadata);
+        $this->metadata = new Registry;
+        $this->metadata->loadString($info->metadata);
 
-        $this->_base_url = $info->base_url;
+        $this->base_url = $info->base_url;
 
         /** Primary Application Logic Flow */
-        $app->process();
-
-        return;
+        return Molajo::Application()->process();
     }
 
     /**
@@ -146,13 +144,13 @@ class MolajoSite
      */
     protected function _authorise()
     {
-        $this->_applications = SiteHelper::getApplications();
-        if ($this->_applications === false) {
+        $this->applications = SiteHelper::getApplications();
+        if ($this->applications === false) {
             return false;
         }
 
         $found = false;
-        foreach ($this->_applications as $single) {
+        foreach ($this->applications as $single) {
             if ($single->application_id == MOLAJO_APPLICATION_ID) {
                 $found = true;
             }
@@ -169,13 +167,13 @@ class MolajoSite
         );
         Services::Message()
             ->set(
-            Molajo::Application()->get(
+            Services::Configuration()->get(
                 'error_403_message',
                 'Not Authorised.'
-            ),
-            MOLAJO_MESSAGE_TYPE_ERROR,
-            403
-        );
+                ),
+                MOLAJO_MESSAGE_TYPE_ERROR,
+                403
+            );
 
         return false;
     }
@@ -194,33 +192,30 @@ class MolajoSite
         if (defined('MOLAJO_SITE_NAME')) {
         } else {
             define('MOLAJO_SITE_NAME',
-            Molajo::Application()
+                Services::Configuration()
                 ->get(
                 'site_name',
-                MOLAJO_SITE_ID
-            )
+                MOLAJO_SITE_ID)
             );
         }
 
         if (defined('MOLAJO_SITE_CACHE_FOLDER')) {
         } else {
             define('MOLAJO_SITE_CACHE_FOLDER',
-            Molajo::Application()
+                Services::Configuration()
                 ->get(
                 'cache_path',
-                MOLAJO_SITE_FOLDER_PATH . '/cache'
-            )
+                MOLAJO_SITE_FOLDER_PATH . '/cache')
             );
         }
 
         if (defined('MOLAJO_SITE_LOGS_FOLDER')) {
         } else {
             define('MOLAJO_SITE_LOGS_FOLDER',
-            Molajo::Application()
+                Services::Configuration()
                 ->get(
                 'logs_path',
-                MOLAJO_SITE_FOLDER_PATH . '/logs'
-            )
+                MOLAJO_SITE_FOLDER_PATH . '/logs')
             );
         }
 
@@ -228,11 +223,10 @@ class MolajoSite
         if (defined('MOLAJO_SITE_MEDIA_FOLDER')) {
         } else {
             define('MOLAJO_SITE_MEDIA_FOLDER',
-            Molajo::Application()
+                Services::Configuration()
                 ->get(
                 'media_path',
-                MOLAJO_SITE_FOLDER_PATH . '/media'
-            )
+                MOLAJO_SITE_FOLDER_PATH . '/media')
             );
         }
 
@@ -240,33 +234,30 @@ class MolajoSite
         } else {
             define('MOLAJO_SITE_MEDIA_URL',
                 MOLAJO_BASE_URL .
-                Molajo::Application()
-                    ->get(
-                    'media_url',
-                    MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media'
-                )
+                Services::Configuration()
+                ->get(
+                'media_url',
+                MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media')
             );
         }
 
         if (defined('MOLAJO_SITE_TEMP_FOLDER')) {
         } else {
             define('MOLAJO_SITE_TEMP_FOLDER',
-            Molajo::Application()
+                Services::Configuration()
                 ->get(
                 'temp_path',
-                MOLAJO_SITE_FOLDER_PATH . '/temp'
-            )
+                MOLAJO_SITE_FOLDER_PATH . '/temp')
             );
         }
         if (defined('MOLAJO_SITE_TEMP_URL')) {
         } else {
             define('MOLAJO_SITE_TEMP_URL',
                 MOLAJO_BASE_URL .
-                Molajo::Application()
-                    ->get(
-                    'temp_url',
-                    MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/temp'
-                )
+                Services::Configuration()
+                ->get(
+                'temp_url',
+                MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/temp')
             );
         }
 

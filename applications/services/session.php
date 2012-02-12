@@ -80,12 +80,12 @@ class MolajoSessionService
         $options = array();
         $options['name'] = $name;
 
-        if (Molajo::Application()->get('force_ssl') == 2) {
+        if (Services::Configuration()->get('force_ssl') == 2) {
             $options['force_ssl'] = true;
         }
 
         /** retrieve session */
-        $this->_session = Molajo::Application()->getSession($options);
+        $this->_session = Services::Session()->get($options);
 
         /** unlock */
 

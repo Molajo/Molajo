@@ -28,7 +28,7 @@ abstract class MolajoContentHelper
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->toMySQL();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
@@ -84,7 +84,7 @@ abstract class MolajoContentHelper
         } else {
             Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_DATABASE_QUERY') . ' ' .
+                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
                     $db->getErrorNum() . ' ' .
                     $db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,

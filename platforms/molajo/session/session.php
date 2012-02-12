@@ -326,7 +326,7 @@ class MolajoSession extends JObject
         } else {
             $session_name = session_name();
 
-            $input = Molajo::Application()->get('input');
+            $input = Services::Configuration()->get('input');
             $cookie = $input->get($session_name, false, 'COOKIE');
 
             if ($cookie === false) {
@@ -374,8 +374,8 @@ class MolajoSession extends JObject
         // must also be unset. If a cookie is used to propagate the session id (default behavior),
         // then the session cookie must be deleted.
         if (isset($_COOKIE[session_name()])) {
-            $cookie_domain = Molajo::Application()->get('cookie_domain', '');
-            $cookie_path = Molajo::Application()->get('cookie_path', '/');
+            $cookie_domain = Services::Configuration()->get('cookie_domain', '');
+            $cookie_path = Services::Configuration()->get('cookie_path', '/');
             setcookie(session_name(), '', time() - 42000, $cookie_path, $cookie_domain);
         }
 
@@ -502,14 +502,14 @@ class MolajoSession extends JObject
             $cookie['secure'] = true;
         }
 
-        if (Molajo::Application()->get('cookie_domain', '') == '') {
+        if (Services::Configuration()->get('cookie_domain', '') == '') {
         } else {
-            $cookie['domain'] = Molajo::Application()->get('cookie_domain');
+            $cookie['domain'] = Services::Configuration()->get('cookie_domain');
         }
 
-        if (Molajo::Application()->get('cookie_path', '') == '') {
+        if (Services::Configuration()->get('cookie_path', '') == '') {
         } else {
-            $cookie['path'] = Molajo::Application()->get('cookie_path');
+            $cookie['path'] = Services::Configuration()->get('cookie_path');
         }
 
         session_set_cookie_params($cookie['lifetime'],

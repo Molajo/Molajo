@@ -26,15 +26,16 @@ abstract class MolajoAPIHelper
      */
     public static function get()
     {
-        $cmethods = get_class_methods(__CLASS__);
-        var_dump($cmethods);
-                $exclude = array('ddd');
-                $methods = array();
-                foreach($cmethods as $value){
-                    if(!in_array($value, $exclude)) {
-                        $methods[] = $value;
-                    }
-                }
-                return $methods;
+        $cmethods = get_class_methods('JFile');
+        $exclude = array();
+        $methods = array();
+        foreach($cmethods as $value){
+            echo $value.'<br />';
+            if(in_array($value, $exclude)) {
+            } else {
+                $methods[] = $value;
+            }
+        }
+        return $methods;
     }
 }

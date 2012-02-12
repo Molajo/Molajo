@@ -63,7 +63,7 @@ class MolajoLanguageHelper
         }
 
         /** 4. Application configuration */
-        $language = Molajo::Application()->get('language', 'en-GB');
+        $language = Services::Language()->get('tag', 'en-GB');
         if (in_array($language, $installed)) {
             return $language;
         }
@@ -75,7 +75,7 @@ class MolajoLanguageHelper
     /**
      * createLanguageList
      *
-     * Builds a list of the system languages
+     * Builds a list of the languages installed for core or an extension
      *
      * @return  array
      * @since   1.0
@@ -92,7 +92,7 @@ class MolajoLanguageHelper
         }
 
         /** for selected item determination */
-        $currentLanguage = Molajo::Application()->get('language');
+        $currentLanguage = Services::Language()->get('tag');
         if ($currentLanguage === false || $currentLanguage == null) {
             $currentLanguage = 'en-GB';
         }
@@ -130,13 +130,7 @@ class MolajoLanguageHelper
     public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
     {
         if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
-            if (Molajo::Application()->get('Date', false, 'services') === false) {
-                return LanguageHelper::getLanguagesCore();
-            } else {
-                return ExtensionHelper::get(
-                    MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE
-                );
-            }
+            return LanguageHelper::getLanguagesCore();
         }
 
         $languages = array();
@@ -181,30 +175,32 @@ class MolajoLanguageHelper
 
             $languages[] = $language;
         }
-
         return $languages;
     }
 
     /**
-     * getPath
+     * getMetadata
      *
-     * Get the path to a specific language
+     * Read Language Manifest XML file for metadata
      *
      * @param   string  $path
-     * @param   string  $language
      *
-     * @return  string  Path
-     *
+     * @return  array  array
      * @since   1.0
      */
-    public function getPath($path = MOLAJO_EXTENSIONS_LANGUAGES,
-                            $language = null)
+    public function getMetadata($file)
     {
-        if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
-            $dir = $path . '/' . $language;
+        $xml = simplexml_load_file($file);
+        if ($xml) {
         } else {
-            $dir = $path . '/language';
+            return true;
         }
-        return $dir;
+
+        $metadata = array();
+        foreach ($xml->metadata->children() as $child) {
+            $metadata[$child->getName()] = (string)$child;
+        }
+
+        return $metadata;
     }
 }

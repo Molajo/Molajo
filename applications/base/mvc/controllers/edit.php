@@ -61,13 +61,13 @@ class MolajoControllerEdit extends MolajoDisplayController
 
         /** parameters */
         if (Molajo::Application()->getName() == 'site') {
-            $this->parameters = Molajo::Application()->getParameters();
+            $this->parameters = Ser::Application()->getParameters();
             //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
             $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         }
 
-        $this->user = Molajo::Application()->get('User', '', 'services');
+        $this->user = Services::User();
 
         /** id */
         if ($this->item->id == null) {

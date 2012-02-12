@@ -83,7 +83,7 @@ class MolajoAssetsModel extends MolajoModel
     public function check()
     {
         if ($this->content_table == null) {
-            $this->setError(MolajoTextService::_('ASSET_TABLE_MUST_HAVE_VALUE_FOR_CONTENT_TABLE'));
+            $this->setError(Services::Language()->_('ASSET_TABLE_MUST_HAVE_VALUE_FOR_CONTENT_TABLE'));
             return false;
         }
         return true;

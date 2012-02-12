@@ -21,17 +21,17 @@ class MolajoHeadRenderer extends MolajoRenderer
      *
      * Class constructor.
      *
-     * @param  null   $name
-     * @param  array  $request
+     * @param  string $name
      * @param  string $type
+     * @param  array  $items (used for event processing renderers, only)
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    public function __construct($name = null, $type = null, $items = null)
     {
-        $this->_extension_required = false;
-        parent::__construct($name, $type);
+        $this->extension_required = false;
+        parent::__construct($name, $type, $items);
     }
 
     /**
@@ -44,12 +44,12 @@ class MolajoHeadRenderer extends MolajoRenderer
      */
     protected function _getExtension()
     {
-        if ($this->_type == 'defer') {
-            $this->task->set('model', 'MolajoDeferModel');
+        if ($this->type == 'defer') {
+            $this->set('model', 'MolajoDeferModel');
         } else {
-            $this->task->set('model', 'MolajoHeadModel');
+            $this->set('model', 'MolajoHeadModel');
         }
-        $this->task->set('task', 'display');
+        $this->set('task', 'display');
 
         return true;
     }
@@ -64,23 +64,23 @@ class MolajoHeadRenderer extends MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
-        if ($this->_type == 'defer') {
-            if ((int)$this->task->get('template_view_id', 0) == 0) {
-                $this->task->set('template_view_id',
-                    Molajo::Application()->get('defer_template_view_id', 'document-defer'));
+        if ($this->type == 'defer') {
+            if ((int)$this->get('template_view_id', 0) == 0) {
+                $this->set('template_view_id',
+                    Services::Configuration()->get('defer_template_view_id', 'document-defer'));
             }
-            if ((int)$this->task->get('wrap_view_id', 0) == 0) {
-                $this->task->set('wrap_view_id',
-                    Molajo::Application()->get('defer_wrap_view_id', 'none'));
+            if ((int)$this->get('wrap_view_id', 0) == 0) {
+                $this->set('wrap_view_id',
+                    Services::Configuration()->get('defer_wrap_view_id', 'none'));
             }
         } else {
-            if ((int)$this->task->get('template_view_id', 0) == 0) {
-                $this->task->set('template_view_id',
-                    Molajo::Application()->get('head_template_view_id', 'document-head'));
+            if ((int)$this->get('template_view_id', 0) == 0) {
+                $this->set('template_view_id',
+                    Services::Configuration()->get('head_template_view_id', 'document-head'));
             }
-            if ((int)$this->task->get('wrap_view_id', 0) == 0) {
-                $this->task->set('wrap_view_id',
-                    Molajo::Application()->get('head_wrap_view_id', 'none'));
+            if ((int)$this->get('wrap_view_id', 0) == 0) {
+                $this->set('wrap_view_id',
+                    Services::Configuration()->get('head_wrap_view_id', 'none'));
             }
         }
 

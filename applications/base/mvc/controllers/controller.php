@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Extension
+ * Primary Controller
  *
  * @package      Molajo
  * @subpackage   Controller
@@ -17,14 +17,12 @@ defined('MOLAJO') or die;
 class MolajoController
 {
     /**
-     * $task
-     *
-     * Request array for rendering content
+     * Request array for current Task Request
      *
      * @var    object
      * @since  1.0
      */
-    public $task;
+    public $task_request;
 
     /**
      * $parameters
@@ -32,15 +30,7 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $parameters = array();
-
-    /**
-     * $table
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $table = null;
+    public $parameters;
 
     /**
      * $model
@@ -48,7 +38,7 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $model = null;
+    public $model;
 
     /**
      * $isNew
@@ -56,7 +46,7 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $isNew = null;
+    public $isNew;
 
     /**
      * $existing_status
@@ -64,7 +54,7 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $existing_status = null;
+    public $existing_status;
 
     /**
      * $redirectClass
@@ -72,61 +62,58 @@ class MolajoController
      * @var    string
      * @since  1.0
      */
-    public $redirectClass = null;
+    public $redirectClass;
 
     /**
      * __construct
      *
      * Constructor.
      *
-     * @param  array  task request
-     * @param  array  parameters
+     * @param  array  $task_request
+     * @param  array  $parameters
      *
      * @since  1.0
      */
-    public function __construct($task, $parameters)
+    public function __construct($task_request, $parameters)
     {
-        if (is_object($task)) {
-            $this->task = $task;
-        } else {
-            //error
-        }
+        $this->task_request = new Registry;
+        $this->task_request->loadString($task_request);
 
         $this->parameters = new Registry;
-        $this->parameters->loadJSON($parameters);
+        $this->parameters->loadString($parameters);
 
         // todo: amy look at redirect
 //        $this->redirectClass = new MolajoRedirectController($this->task);
 
         /** load table */
-        if ($this->task->get('task') == 'display'
-            || $this->task->get('task') == 'edit'
-            || $this->task->get('task') == 'login'
+        if ($this->get('task') == 'display'
+            || $this->get('task') == 'edit'
+            || $this->get('task') == 'login'
         ) {
             $this->isNew = false;
 
         } else {
 
-            $this->table = $this->model->getModel();
-            $this->table->reset();
-            $this->table->load((int)$this->task->get('id'));
+            $this->model = $this->model->getModel();
+            $this->model->reset();
+            $this->model->load((int)$this->get('id'));
 
-            if ($this->task->get('id') == 0) {
+            if ($this->get('id') == 0) {
                 $this->isNew = true;
                 $this->existing_status = 0;
             } else {
                 $this->isNew = false;
-                $this->existing_status = $this->table->state;
+                $this->existing_status = $this->model->status;
             }
         }
 
         /** dispatch events
         if ($this->dispatcher
-        || $this->task->get('task_plugin_type') == ''
+        || $this->get('task_plugin_type') == ''
         ) {
         } else {
-        $this->dispatcher = JDispatcher::getInstance();
-        MolajoPluginHelper::importPlugin($this->task->get('task_plugin_type'));
+        $this->dispatcher = Services::Dispatcher();
+        MolajoPluginHelper::importPlugin($this->get('task_plugin_type'));
         }
          */
 
@@ -146,40 +133,78 @@ class MolajoController
         return true;
     }
 
+
+    /**
+     * get
+     *
+     * Returns a property of the Task Request object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->task_request->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Task Request object,
+     * creating it if it does not already exist.
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        //echo 'Set '.$key.' '.$value.'<br />';
+        return $this->task_request->set($key, $value);
+    }
+
     /**
      * checkTaskAuthorisation
      *
-     * Method to verify the user's authorisation to perform a specific task
+     * Method to verify user's authorisation to perform a specific task
      *
      * @return bool
      */
     public function checkTaskAuthorisation()
     {
-        return true;
+        Services::Access()
+            ->authoriseTask(
+                $this->get('task'),
+                $this->get('asset_id')
+            );
     }
 
     /**
      * checkinItem
      *
-     * Used to check in item if it is already checked out
+     * Method to check in an item after processing
      *
      * @return bool
      */
     public function checkinItem()
     {
-        if ($this->task->get('id') == 0) {
+        if ($this->get('id') == 0) {
             return true;
         }
 
-        if (property_exists($this->table, 'checked_out')) {
+        if (property_exists($this->model, 'checked_out')) {
         } else {
             return true;
         }
 
-        $results = $this->model->checkin($this->task->get('id'));
+        $results = $this->model->checkin($this->get('id'));
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_CHECK_IN_FAILED'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_CHECK_IN_FAILED'));
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -190,27 +215,28 @@ class MolajoController
     /**
      * verifyCheckout
      *
-     * method to verify that the current user is recorded in the checked_out column of the item
+     * Checks that the current user is the checked_out user for item
      *
      * @return  boolean
      * @since   1.0
      */
     public function verifyCheckout()
     {
-        if ($this->task->get('id') == 0) {
+        if ($this->get('id') == 0) {
             return true;
         }
 
-        if (property_exists($this->table, 'checked_out')) {
+        if (property_exists($this->model, 'checked_out')) {
         } else {
             return true;
         }
 
-        if ($this->table->checked_out
-            == Molajo::Application()->get('User', '', 'services')->get('id')) {
+        if ($this->model->checked_out
+            == Services::User()->get('id')) {
+
         } else {
             $this->redirectClass->setRedirectMessage(
-                MolajoTextService::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')
+                Services::Language()->_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')
                     . ' '
                     . $this->getTask()
             );
@@ -231,18 +257,19 @@ class MolajoController
      */
     public function checkoutItem()
     {
-        if ($this->task->get('id') == 0) {
+        if ($this->get('id') == 0) {
             return true;
         }
 
-        if (property_exists($this->table, 'checked_out')) {
+        if (property_exists($this->model, 'checked_out')) {
         } else {
             return true;
         }
 
-        $results = $this->model->checkout($this->task->get('id'));
+        $results = $this->model->checkout($this->get('id'));
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
+            $this->redirectClass->setRedirectMessage
+            (Services::Language()->_('MOLAJO_ERROR_CHECKOUT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -257,7 +284,7 @@ class MolajoController
      * @return  boolean
      * @since   1.0
      */
-    public function createVersion($context)
+    public function createVersion()
     {
         if ($this->parameters->def('version_management', 1) == 1) {
         } else {
@@ -265,31 +292,33 @@ class MolajoController
         }
 
         /** create **/
-        if ((int)$this->task->get('id') == 0) {
+        if ((int)$this->get('id') == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
-        if ($this->task->get('task') == 'delete'
+        if ($this->get('task') == 'delete'
             && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             return true;
         }
 
         /** create version **/
-        $versionKey = $this->model->createVersion($this->task->get('id'));
+        $versionKey = $this->model->createVersion($this->get('id'));
 
         /** error processing **/
         if ($versionKey === false) {
-            $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_ERROR_VERSION_SAVE_FAILED'));
+            $this->redirectClass->setRedirectMessage(
+                Services::Language()->_('MOLAJO_ERROR_VERSION_SAVE_FAILED')
+            );
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
 
         /** Trigger_Event: onContentCreateVersion
-        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->task->get('id'), $versionKey));
+        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->get('id'), $versionKey));
         if (count($results) && in_array(false, $results, true)) {
-        $this->redirectClass->setRedirectMessage(MolajoTextService::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
+        $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
         $this->redirectClass->setRedirectMessageType('error');
         return false;
         }
@@ -300,13 +329,11 @@ class MolajoController
     /**
      * maintainVersionCount
      *
-     * Molajo_Note: All Components have version management save and restore processes as
-     * an automatic option
+     * Prune version history, if necessary
      *
-     * @param  $context
      * @return boolean
      */
-    public function maintainVersionCount($context)
+    public function maintainVersionCount()
     {
         if ($this->parameters->def('version_management', 1) == 1) {
         } else {
@@ -314,12 +341,12 @@ class MolajoController
         }
 
         /** no versions to delete for create **/
-        if ((int)$this->task->get('id') == 0) {
+        if ((int)$this->get('id') == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
-        if ($this->task->get('task') == 'delete'
+        if ($this->get('task') == 'delete'
             && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             $maintainVersions = 0;
@@ -329,15 +356,16 @@ class MolajoController
         }
 
         /** delete extra versions **/
-        $results = $this->model->maintainVersionCount(
-            $this->task->get('id'),
+        $results = $this->model
+            ->maintainVersionCount(
+            $this->get('id'),
             $maintainVersions
         );
 
         /** version delete failed **/
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(
-                MolajoTextService::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' .
+                Services::Language()->_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' .
                     $this->model->getError()
             );
             $this->redirectClass->setRedirectMessageType('warning');
@@ -345,7 +373,8 @@ class MolajoController
         }
 
         /** Trigger_Event: onContentMaintainVersions
-        return $this->dispatcher->trigger('onContentMaintainVersions', array($context, $this->task->get('id'), $maintainVersions));
+        return $this->dispatcher->trigger('onContentMaintainVersions',
+         * array($context, $this->get('id'), $maintainVersions));
          **/
     }
 
@@ -356,7 +385,7 @@ class MolajoController
      */
     public function cleanCache()
     {
-//        $cache = Molajo::getCache($this->task->get('extension_instance_name'));
+//        $cache = Molajo::getCache($this->get('extension_instance_name'));
 //        $cache->clean();
     }
 }

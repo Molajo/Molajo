@@ -171,7 +171,7 @@ class MolajoImageService
         $date = Services::Date()
             ->format('Y-m-d-H-i-s');
 
-        $now = $date->toMySQL();
+        $now = $date->toSql();
         $nullDate = $db->getNullDate();
 
         $query->select($db->nameQuote('path'));
@@ -195,7 +195,7 @@ class MolajoImageService
         }
 
         /** retrieve image folder for original images */
-        $images = Molajo::Application()->get('media_path', 'media/images');
+        $images = Services::Configuration()->get('media_path', 'media/images');
 
         /** folders */
         if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
@@ -220,7 +220,7 @@ class MolajoImageService
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = Molajo::Application()->get('thumb_folder', '/media/images/thumbs');
+        $images = Services::Configuration()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
         if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
@@ -246,15 +246,15 @@ class MolajoImageService
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 1) {
-            $dimensions = Molajo::Application()->get('image_xsmall', 50);
+            $dimensions = Services::Configuration()->get('image_xsmall', 50);
         } else if ($this->size == 2) {
-            $dimensions = Molajo::Application()->get('image_small', 75);
+            $dimensions = Services::Configuration()->get('image_small', 75);
         } else if ($this->size == 3) {
-            $dimensions = Molajo::Application()->get('image_medium', 150);
+            $dimensions = Services::Configuration()->get('image_medium', 150);
         } else if ($this->size == 4) {
-            $dimensions = Molajo::Application()->get('image_large', 300);
+            $dimensions = Services::Configuration()->get('image_large', 300);
         } else if ($this->size == 5) {
-            $dimensions = Molajo::Application()->get('image_xlarge', 500);
+            $dimensions = Services::Configuration()->get('image_xlarge', 500);
         } else {
             $dimensions = 100;
         }

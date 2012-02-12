@@ -6,17 +6,17 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-if ((int)Molajo::Application()->get('html5', 1) == 1):
+if ((int)Services::Configuration()->get('html5', 1) == 1):
     $end = '>'; ?>
 <!DOCTYPE html>
 <?php else :
     $end = '/>'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php endif; ?>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo Molajo::Application()->get('direction'); ?>" lang="<?php echo Molajo::Application()->get('language'); ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo Services::Language()->get('direction'); ?>" lang="<?php echo Services::Language()->get('tag'); ?>">
 <head>
     <base href="<?php echo MOLAJO_BASE_URL.'"'.$end; ?>
-<?php if ((int)Molajo::Application()->get('html5', 1) == 1): ?>
+<?php if ((int) Services::Configuration()->get('html5', 1) == 1): ?>
 
     <meta charset="UTF-8"<?php echo $end; ?>
 <?php else : ?>
@@ -57,5 +57,5 @@ else : ?>
 <?php if (trim($this->row->favicon) == ''):
 else : ?>
 
-    <link rel="shortcut icon" href="<?php echo $this->row->favicon; ?>"<?php if ((int)Molajo::Application()->get('html5', 1) == 0): ?>type="image/x-icon"<?php endif;?><?php echo $end; ?>
+    <link rel="shortcut icon" href="<?php echo $this->row->favicon; ?>"<?php if ((int) Services::Configuration()->get('html5', 1) == 0): ?>type="image/x-icon"<?php endif;?><?php echo $end; ?>
 <?php endif; ?>

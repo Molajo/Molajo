@@ -63,16 +63,16 @@ class MolajoMailService
      */
     public function get()
     {
-        $send_mail = Molajo::Application()->get('send_mail');
-        $smtpauth = Molajo::Application()->get('smtpauth');
-        $smtpuser = Molajo::Application()->get('smtpuser');
-        $smtppass = Molajo::Application()->get('smtppass');
-        $smtphost = Molajo::Application()->get('smtphost');
-        $smtpsecure = Molajo::Application()->get('smtpsecure');
-        $smtpport = Molajo::Application()->get('smtpport');
-        $mail_from = Molajo::Application()->get('mail');
-        $from_name = Molajo::Application()->get('from_name');
-        $mailer = Molajo::Application()->get('mailer');
+        $send_mail = Services::Configuration()->get('send_mail');
+        $smtpauth = Services::Configuration()->get('smtpauth');
+        $smtpuser = Services::Configuration()->get('smtpuser');
+        $smtppass = Services::Configuration()->get('smtppass');
+        $smtphost = Services::Configuration()->get('smtphost');
+        $smtpsecure = Services::Configuration()->get('smtpsecure');
+        $smtpport = Services::Configuration()->get('smtpport');
+        $mail_from = Services::Configuration()->get('mail');
+        $from_name = Services::Configuration()->get('from_name');
+        $mailer = Services::Configuration()->get('mailer');
 
         $mail = MolajoMail::getInstance();
         $mail->setSender(array($mail_from, $from_name));

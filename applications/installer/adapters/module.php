@@ -97,7 +97,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             }
 
             if ($extension) {
-                $lang = Molajo::Application()->get('language');
+                $lang = Services::Language()->get('tag');
                 $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                         : MOLAJO_BASE_FOLDER) . '/modules/' . $extension;
                 $folder = (string)$element->attributes()->folder;
@@ -140,7 +140,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         // Get the component description
         $description = (string)$this->manifest->description;
         if ($description) {
-            $this->parent->set('message', MolajoTextService::_($description));
+            $this->parent->set('message', Services::Language()->_($description));
         }
         else
         {
@@ -156,7 +156,7 @@ class MolajoModuleAdapter extends MolajoAdapter
 
             if ($client === false) {
                 $this->parent
-                        ->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_UNKNOWN_CLIENT', MolajoTextService::_('JLIB_INSTALLER_' . $this->route), $client->name));
+                        ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_UNKNOWN_CLIENT', Services::Language()->_('JLIB_INSTALLER_' . $this->route), $client->name));
                 return false;
             }
 
@@ -189,7 +189,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         }
         else
         {
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_INSTALL_NOFILE', MolajoTextService::_('JLIB_INSTALLER_' . $this->route)));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_INSTALL_NOFILE', Services::Language()->_('JLIB_INSTALLER_' . $this->route)));
 
             return false;
         }
@@ -211,7 +211,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         {
             // Install failed, roll back changes
             $this->parent
-                    ->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_ROLLBACK', MolajoTextService::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                    ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_ROLLBACK', Services::Language()->_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
 
             return false;
         }
@@ -248,8 +248,8 @@ class MolajoModuleAdapter extends MolajoAdapter
                 // We didn't have overwrite set, find an udpate function or find an update tag so lets call it safe
                 $this->parent
                         ->abort(
-                    MolajoTextService::sprintf(
-                        'JLIB_INSTALLER_ABORT_INSTALL_DIRECTORY', MolajoTextService::_('JLIB_INSTALLER_' . $this->route),
+                    Services::Language()->sprintf(
+                        'JLIB_INSTALLER_ABORT_INSTALL_DIRECTORY', Services::Language()->_('JLIB_INSTALLER_' . $this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -292,7 +292,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         if ($this->parent->manifestClass && method_exists($this->parent->manifestClass, 'preflight')) {
             if ($this->parent->manifestClass->preflight($this->route, $this) === false) {
                 // Install failed, rollback changes
-                $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_INSTALL_CUSTOM_INSTALL_FAILURE'));
+                $this->parent->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
                 return false;
             }
@@ -311,8 +311,8 @@ class MolajoModuleAdapter extends MolajoAdapter
             if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
                 $this->parent
                         ->abort(
-                    MolajoTextService::sprintf(
-                        'JLIB_INSTALLER_ABORT_INSTALL_CREATE_DIRECTORY', MolajoTextService::_('JLIB_INSTALLER_' . $this->route),
+                    Services::Language()->sprintf(
+                        'JLIB_INSTALLER_ABORT_INSTALL_CREATE_DIRECTORY', Services::Language()->_('JLIB_INSTALLER_' . $this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -345,7 +345,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
                 if (!$this->parent->copyFiles(array($path))) {
                     // Install failed, rollback changes
-                    $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_INSTALL_MANIFEST'));
+                    $this->parent->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_INSTALL_MANIFEST'));
 
                     return false;
                 }
@@ -373,7 +373,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             if (!$row->store()) {
                 // Install failed, roll back changes
                 $this->parent
-                        ->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_ROLLBACK', MolajoTextService::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                        ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_ROLLBACK', Services::Language()->_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
 
                 return false;
             }
@@ -395,7 +395,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             if (!$row->store()) {
                 // Install failed, roll back changes
                 $this->parent
-                        ->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_ROLLBACK', MolajoTextService::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                        ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_ROLLBACK', Services::Language()->_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
                 return false;
             }
 
@@ -407,7 +407,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             $this->parent->pushStep(array('type' => 'extension', 'extension_id' => $row->extension_id));
 
             // Create unpublished module in jos_modules
-            $name = preg_replace('#[\*?]#', '', MolajoTextService::_($this->get('name')));
+            $name = preg_replace('#[\*?]#', '', Services::Language()->_($this->get('name')));
             $module = MolajoModel::getInstance('module');
             $module->set('title', $name);
             $module->set('module', $this->get('element'));
@@ -432,7 +432,7 @@ class MolajoModuleAdapter extends MolajoAdapter
                 // Install failed, rollback changes
                 $this->parent
                         ->abort(
-                    MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_INSTALL_SQL_ERROR', MolajoTextService::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
+                    Services::Language()->sprintf('JLIB_INSTALLER_ABORT_INSTALL_SQL_ERROR', Services::Language()->_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
                 );
 
                 return false;
@@ -449,7 +449,7 @@ class MolajoModuleAdapter extends MolajoAdapter
                 $result = $this->parent->parseSchemaUpdates($this->manifest->update->schemas, $row->extension_id);
                 if ($result === false) {
                     // Install failed, rollback changes
-                    $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ABORT_UPDATE_SQL_ERROR', $db->stderr(true)));
+                    $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_UPDATE_SQL_ERROR', $db->stderr(true)));
                     return false;
                 }
             }
@@ -465,7 +465,7 @@ class MolajoModuleAdapter extends MolajoAdapter
                 }($this) === false
             ) {
                 // Install failed, rollback changes
-                $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_INSTALL_CUSTOM_INSTALL_FAILURE'));
+                $this->parent->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
                 return false;
             }
@@ -480,7 +480,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         // Lastly, we will copy the manifest file to its appropriate place.
         if (!$this->parent->copyManifest(-1)) {
             // Install failed, rollback changes
-            $this->parent->abort(MolajoTextService::_('JLIB_INSTALLER_ABORT_INSTALL_COPY_SETUP'));
+            $this->parent->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_INSTALL_COPY_SETUP'));
 
             return false;
         }
@@ -586,7 +586,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         $description = (string)$this->parent->manifest->description;
 
         if ($description) {
-            $this->parent->set('message', MolajoTextService::_($description));
+            $this->parent->set('message', Services::Language()->_($description));
         }
         else
         {
@@ -606,7 +606,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         }
         else
         {
-            MolajoError::raiseWarning(101, MolajoTextService::_('JLIB_INSTALLER_ERROR_DISCOVER_STORE_DETAILS'));
+            MolajoError::raiseWarning(101, Services::Language()->_('JLIB_INSTALLER_ERROR_DISCOVER_STORE_DETAILS'));
 
             return false;
         }
@@ -634,7 +634,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         }
         else
         {
-            MolajoError::raiseWarning(101, MolajoTextService::_('JLIB_INSTALLER_ERROR_REFRESH_MANIFEST_CACHE'));
+            MolajoError::raiseWarning(101, Services::Language()->_('JLIB_INSTALLER_ERROR_REFRESH_MANIFEST_CACHE'));
 
             return false;
         }
@@ -661,14 +661,14 @@ class MolajoModuleAdapter extends MolajoAdapter
         $row = MolajoModel::getInstance('extension');
 
         if (!$row->load((int)$id) || !strlen($row->element)) {
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_UNINSTALL_ERRORUNKOWNEXTENSION'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_UNINSTALL_ERRORUNKOWNEXTENSION'));
             return false;
         }
 
         // Is the module we are trying to uninstall a core one?
         // Because that is not a good idea...
         if ($row->protected) {
-            MolajoError::raiseWarning(100, MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_WARNCOREMODULE', $row->name));
+            MolajoError::raiseWarning(100, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_WARNCOREMODULE', $row->name));
             return false;
         }
 
@@ -678,7 +678,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         $client = ApplicationHelper::getApplicationInfo($row->application_id);
 
         if ($client === false) {
-            $this->parent->abort(MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_UNKNOWN_CLIENT', $row->application_id));
+            $this->parent->abort(Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_UNKNOWN_CLIENT', $row->application_id));
             return false;
         }
         $this->parent->setPath('extension_root', $client->path . '/modules/' . $element);
@@ -732,7 +732,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         if (!($this->manifest instanceof SimpleXMLElement)) {
             // Make sure we delete the folders
             JFolder::delete($this->parent->getPath('extension_root'));
-            MolajoError::raiseWarning(100, MolajoTextService::_('JLIB_INSTALLER_ERROR_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+            MolajoError::raiseWarning(100, Services::Language()->_('JLIB_INSTALLER_ERROR_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 
             return false;
         }
@@ -748,7 +748,7 @@ class MolajoModuleAdapter extends MolajoAdapter
 
         if ($utfresult === false) {
             // Install failed, rollback changes
-            MolajoError::raiseWarning(100, MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_SQL_ERROR', $db->stderr(true)));
+            MolajoError::raiseWarning(100, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_SQL_ERROR', $db->stderr(true)));
             $retval = false;
         }
 
@@ -793,7 +793,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             }
             catch (Exception $e)
             {
-                MolajoError::raiseWarning(100, MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_EXCEPTION', $db->stderr(true)));
+                MolajoError::raiseWarning(100, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_EXCEPTION', $db->stderr(true)));
                 $retval = false;
             }
 
@@ -807,7 +807,7 @@ class MolajoModuleAdapter extends MolajoAdapter
             }
             catch (Exception $e)
             {
-                MolajoError::raiseWarning(100, MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_EXCEPTION', $db->stderr(true)));
+                MolajoError::raiseWarning(100, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_UNINSTALL_EXCEPTION', $db->stderr(true)));
                 $retval = false;
             }
         }

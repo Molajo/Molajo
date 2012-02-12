@@ -35,10 +35,10 @@ class MolajoSessionsModel extends MolajoModel
         $this->application_id = $application_id;
 
         $this->session_time = time();
-        $ret = $this->_db->insertObject($this->_tbl, $this, 'session_id');
+        $ret = $this->db->insertObject($this->_tbl, $this, 'session_id');
 
         if (!$ret) {
-            $this->setError(MolajoTextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
+            $this->setError(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->db->stderr()));
             return false;
         } else {
             return true;
@@ -48,10 +48,10 @@ class MolajoSessionsModel extends MolajoModel
     function update($updateNulls = false)
     {
         $this->session_time = time();
-        $ret = $this->_db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
+        $ret = $this->db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
 
         if (!$ret) {
-            $this->setError(MolajoTextService::sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
+            $this->setError(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->db->stderr()));
             return false;
         } else {
             return true;
@@ -66,13 +66,13 @@ class MolajoSessionsModel extends MolajoModel
         $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->_db->Quote($userId)
+                 . ' WHERE user_id = ' . $this->db->Quote($userId)
                  . ' AND application_id IN (' . $application_ids . ')';
 
-        $this->_db->setQuery($query->__toString());
+        $this->db->setQuery($query->__toString());
 
-        if (!$this->_db->query()) {
-            $this->setError($this->_db->stderr());
+        if (!$this->db->query()) {
+            $this->setError($this->db->stderr());
             return false;
         }
 
@@ -90,9 +90,9 @@ class MolajoSessionsModel extends MolajoModel
     {
         $past = time() - $maxLifetime;
         $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (session_time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
-        $this->_db->setQuery($query->__toString());
+        $this->db->setQuery($query->__toString());
 
-        return $this->_db->query();
+        return $this->db->query();
     }
 
     /**
@@ -107,12 +107,12 @@ class MolajoSessionsModel extends MolajoModel
     function exists($user_id)
     {
         $query = 'SELECT COUNT(user_id) FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->_db->Quote($user_id);
+                 . ' WHERE user_id = ' . $this->db->Quote($user_id);
 
-        $this->_db->setQuery($query->__toString());
+        $this->db->setQuery($query->__toString());
 
-        if (!$result = $this->_db->loadResult()) {
-            $this->setError($this->_db->stderr());
+        if (!$result = $this->db->loadResult()) {
+            $this->setError($this->db->stderr());
             return false;
         }
 
@@ -133,17 +133,17 @@ class MolajoSessionsModel extends MolajoModel
             $this->$k = $oid;
         }
 
-        $query = 'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
-                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->_db->Quote($this->$k);
+        $query = 'DELETE FROM ' . $this->db->quoteName($this->_tbl) .
+                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->db->Quote($this->$k);
 
-        $this->_db->setQuery($query->__toString());
+        $this->db->setQuery($query->__toString());
 
-        if ($this->_db->query()) {
+        if ($this->db->query()) {
             return true;
         }
         else
         {
-            $this->setError($this->_db->getErrorMsg());
+            $this->setError($this->db->getErrorMsg());
             return false;
         }
     }

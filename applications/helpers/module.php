@@ -21,7 +21,7 @@ abstract class MolajoModuleHelper
      *
      * Retrieve module data
      *
-     * @return  mixed    An array of module data objects, or a module data object.
+     * @return  array
      * @since   1.0
      */
     static public function get($module_name)

@@ -27,7 +27,7 @@ class MolajoBase
      * @var    object MolajoSite
      * @since  1.0
      */
-    public static $site = null;
+    protected static $site = null;
 
     /**
      * Molajo::Application
@@ -35,7 +35,7 @@ class MolajoBase
      * @var    object MolajoApplication
      * @since  1.0
      */
-    public static $application = null;
+    protected static $application = null;
 
     /**
      * Molajo::Request
@@ -43,7 +43,7 @@ class MolajoBase
      * @var    object MolajoRequest
      * @since  1.0
      */
-    public static $request = null;
+    protected static $request = null;
 
     /**
      * Molajo::Parser
@@ -51,7 +51,7 @@ class MolajoBase
      * @var    object MolajoParser
      * @since  1.0
      */
-    public static $parser = null;
+    protected static $parser = null;
 
     /**
      * Molajo::Responder
@@ -59,7 +59,7 @@ class MolajoBase
      * @var    object MolajoResponder
      * @since  1.0
      */
-    public static $responder = null;
+    protected static $responder = null;
 
     /**
      * Molajo::Services
@@ -67,7 +67,7 @@ class MolajoBase
      * @var    object MolajoServices
      * @since  1.0
      */
-    public static $services = null;
+    protected static $services = null;
 
     /**
      * getSite

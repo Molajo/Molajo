@@ -74,7 +74,7 @@ abstract class MolajoUserService extends JObject
             if ($title) {
             } else {
                 return new MolajoException(
-                    MolajoTextService::_('MOLAJO_ERROR_GROUP_INVALID')
+                    Services::Language()->_('MOLAJO_ERROR_GROUP_INVALID')
                 );
             }
 
@@ -117,7 +117,7 @@ abstract class MolajoUserService extends JObject
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = Molajo::Application()->get('User', '', 'services');
+        $temp = Services::User();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -172,7 +172,7 @@ abstract class MolajoUserService extends JObject
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = Molajo::Application()->get('User', '', 'services');
+        $temp = Services::User();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -216,7 +216,7 @@ abstract class MolajoUserService extends JObject
                 return false;
             }
         } else {
-            MolajoError::raiseWarning("SOME_ERROR_CODE", MolajoTextService::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
+            MolajoError::raiseWarning("SOME_ERROR_CODE", Services::Language()->_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
             return false;
         }
 

@@ -122,7 +122,7 @@ class MolajoDisplayModel extends MolajoModel
 
         $this->fieldClass = new MolajoField();
 
-        //        $this->dispatcher = JDispatcher::getInstance();
+        //        $this->dispatcher = Services::Dispatcher();
 
         //        MolajoPluginHelper::importPlugin('query');
         //        MolajoPluginHelper::importPlugin($this->mvc['plugin_type']);
@@ -189,16 +189,16 @@ class MolajoDisplayModel extends MolajoModel
         //        }
 
         /** list limit **/
-        $limit = (int)Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
+        $limit = (int)Services::User()->getUserStateFromRequest(
             'global.list.limit',
             'limit',
-            Molajo::Application()->get('list_limit')
+            Services::Configuration()->get('list_limit')
         );
 
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
-        $value = Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
+        $value = Services::User()->getUserStateFromRequest(
             $this->context . '.limitstart',
             'limitstart',
             0
@@ -208,7 +208,7 @@ class MolajoDisplayModel extends MolajoModel
 
         /** ordering by field **/
         $ordering = 'a.title';
-        $value = Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
+        $value = Services::User()->getUserStateFromRequest(
             $this->context . '.ordercol',
             'filter_order',
             $ordering
@@ -223,7 +223,7 @@ class MolajoDisplayModel extends MolajoModel
         } else {
             $ordering = 'a.title';
         }
-        Molajo::Application()->get('User', '', 'services')->setUserState(
+        Services::User()->setUserState(
             $this->context . '.ordercol',
             $ordering
         );
@@ -238,7 +238,7 @@ class MolajoDisplayModel extends MolajoModel
 
         /** ordering direction **/
         $direction = 'ASC';
-        $value = Molajo::Application()->get('User', '', 'services')->getUserStateFromRequest(
+        $value = Services::User()->getUserStateFromRequest(
             $this->context . '.orderdirn',
             'filter_order_Dir',
             $direction
@@ -246,7 +246,7 @@ class MolajoDisplayModel extends MolajoModel
         if (in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
         } else {
             $value = $direction;
-            Molajo::Application()->get('User', '', 'services')->setUserState(
+            Services::User()->setUserState(
                 $this->context . '.orderdirn',
                 $value
             );
@@ -291,7 +291,7 @@ class MolajoDisplayModel extends MolajoModel
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
             Services::Message()
-                ->set(MolajoTextService::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                ->set(Services::Language()->_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -380,7 +380,7 @@ class MolajoDisplayModel extends MolajoModel
         $nullDate = $this->db->quote($this->db->getNullDate());
         $nowDate = $this->db->quote(
             $this->alias = Services::Date()
-                ->toMySQL()
+                ->toSql()
         );
 
         /** retrieve names of json fields for this type of content **/
@@ -464,14 +464,14 @@ class MolajoDisplayModel extends MolajoModel
                 //                $items[$i]->readmore_link = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($items[$i]->slug, $items[$i]->catslug));
 
                 /** trigger events */
-                //                $this->_triggerEvents();
-                $dateHelper = new DateServices ();
+                //                Services::Dispatcher->notifys();
+
                 if (isset($items[$i]->created)) {
                     $items[$i]->created_date = date($items[$i]->created);
-                    $items[$i]->created_ccyymmdd = $dateHelper->convertCCYYMMDD($items[$i]->created);
-                    $items[$i]->created_n_days_ago = $dateHelper->differenceDays(date('Y-m-d'), $items[$i]->created_ccyymmdd);
+                    $items[$i]->created_ccyymmdd = Services::Date()->convertCCYYMMDD($items[$i]->created);
+                    $items[$i]->created_n_days_ago = Services::Date()->differenceDays(date('Y-m-d'), $items[$i]->created_ccyymmdd);
                     $items[$i]->created_ccyymmdd = str_replace('-', '', $items[$i]->created_ccyymmdd);
-                    $items[$i]->created_pretty_date = $dateHelper->prettydate($items[$i]->created);
+                    $items[$i]->created_pretty_date = Services::Date()->prettydate($items[$i]->created);
                 } else {
                     $items[$i]->created_n_days_ago = '';
                     $items[$i]->created_ccyymmdd = '';
@@ -479,10 +479,10 @@ class MolajoDisplayModel extends MolajoModel
                 }
 
                 if (isset($items[$i]->modified)) {
-                    $items[$i]->modified_ccyymmdd = $dateHelper->convertCCYYMMDD($items[$i]->modified);
-                    $items[$i]->modified_n_days_ago = $dateHelper->differenceDays(date('Y-m-d'), $items[$i]->modified_ccyymmdd);
+                    $items[$i]->modified_ccyymmdd = Services::Date()->convertCCYYMMDD($items[$i]->modified);
+                    $items[$i]->modified_n_days_ago = Services::Date()->differenceDays(date('Y-m-d'), $items[$i]->modified_ccyymmdd);
                     $items[$i]->modified_ccyymmdd = str_replace('-', '', $items[$i]->modified_ccyymmdd);
-                    $items[$i]->modified_pretty_date = $dateHelper->prettydate($items[$i]->modified);
+                    $items[$i]->modified_pretty_date = Services::Date()->prettydate($items[$i]->modified);
                 } else {
                     $items[$i]->modified_n_days_ago = '';
                     $items[$i]->modified_ccyymmdd = '';
@@ -490,10 +490,10 @@ class MolajoDisplayModel extends MolajoModel
                 }
 
                 if (isset($items[$i]->start_publishing_datetime)) {
-                    $items[$i]->published_ccyymmdd = $dateHelper->convertCCYYMMDD($items[$i]->start_publishing_datetime);
-                    $items[$i]->published_n_days_ago = $dateHelper->differenceDays(date('Y-m-d'), $items[$i]->published_ccyymmdd);
+                    $items[$i]->published_ccyymmdd = Services::Date()->convertCCYYMMDD($items[$i]->start_publishing_datetime);
+                    $items[$i]->published_n_days_ago = Services::Date()->differenceDays(date('Y-m-d'), $items[$i]->published_ccyymmdd);
                     $items[$i]->published_ccyymmdd = str_replace('-', '', $items[$i]->published_ccyymmdd);
-                    $items[$i]->published_pretty_date = $dateHelper->prettydate($items[$i]->start_publishing_datetime);
+                    $items[$i]->published_pretty_date = Services::Date()->prettydate($items[$i]->start_publishing_datetime);
                 } else {
                     $items[$i]->published_n_days_ago = '';
                     $items[$i]->published_ccyymmdd = '';
@@ -611,8 +611,8 @@ class MolajoDisplayModel extends MolajoModel
         //        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
 
         /**
-        $date = Molajo::Date();
-        $now = $date->toMySQL();
+        $date = Services::Date();
+        $now = $date->toSql();
         $nullDate = $db->getNullDate();
         $query->where('(m.start_publishing_datetime = '.$db->quote($nullDate).' OR m.start_publishing_datetime <= '.$db->quote($now).')');
         $query->where('(m.stop_publishing_datetime = '.$db->quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->quote($now).')');
@@ -977,7 +977,7 @@ class MolajoDisplayModel extends MolajoModel
         } else {
             if ($onlyWhereClause === true) {
                 Services::Message()
-                    ->set(MolajoTextService::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                    ->set(Services::Language()->_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);

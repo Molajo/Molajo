@@ -33,7 +33,7 @@ class MolajoRequest
      * @var    object
      * @since  1.0
      */
-    protected $page_request;
+    public $page_request;
 
     /**
      * getInstance
@@ -108,12 +108,12 @@ class MolajoRequest
         }
 
         /** duplicate content: URLs without the .html */
-        if ((int)Molajo::Application()->get('sef_suffix', 1) == 1
+        if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
             && substr($path, -11) == '/index.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 11));
         }
-        if ((int)Molajo::Application()->get('sef_suffix', 1) == 1
+        if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
             && substr($path, -5) == '.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 5));
@@ -136,7 +136,7 @@ class MolajoRequest
             && (int)$this->get('request_asset_id', 0) == 0
         ) {
             $this->set('request_asset_id',
-                Molajo::Application()->get('home_asset_id', 0));
+                Services::Configuration()->get('home_asset_id', 0));
             $this->set('request_url_home', true);
         }
 
@@ -157,7 +157,7 @@ class MolajoRequest
     public function process()
     {
         /** offline */
-        if (Molajo::Application()->get('offline', 0) == 1) {
+        if (Services::Configuration()->get('offline', 0) == 1) {
             $this->_error(503);
 
         } else {
@@ -209,6 +209,7 @@ class MolajoRequest
      */
     public function set($key, $value = null)
     {
+        //echo 'Set '.$key.' '.$value.'<br />';
         return $this->page_request->set($key, $value);
     }
 
@@ -225,11 +226,11 @@ class MolajoRequest
         $db = Services::DB();
         $query = $db->getQuery(true);
 
-        if ((int)$asset_id == Molajo::Application()->get('home_asset_id', 0)) {
+        if ((int)$asset_id == Services::Configuration()->get('home_asset_id', 0)) {
             return '';
         }
 
-        if (Molajo::Application()->get('sef', 1) == 0) {
+        if (Services::Configuration()->get('sef', 1) == 0) {
             $query->select('a.' . $db->nameQuote('sef_request'));
         } else {
             $query->select('a.' . $db->nameQuote('request'));
@@ -242,7 +243,6 @@ class MolajoRequest
 
         return $db->loadResult();
     }
-
 
     /**
      * end of public methods
@@ -397,6 +397,9 @@ class MolajoRequest
         $this->set('mvc_url_parameters', array());
         $this->set('mvc_suppress_no_results', false);
 
+        /** set in view controller with query results */
+        $this->set('query_results', array());
+
         /** results */
         $this->set('status_error', false);
         $this->set('status_authorised', false);
@@ -447,10 +450,9 @@ class MolajoRequest
 
             /** 500: Extension not found */
             $this->set('status_found', false);
-            Molajo::Services()
-                ->connect('Message')
+            Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_EXTENSION_NOT_FOUND'),
+                $message = Services::Language()->_('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getAsset',
@@ -482,10 +484,9 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Extension not found */
             $this->set('status_found', false);
-            Molajo::Services()
-                ->connect('Message')
+            Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_MENU_ITEM_NOT_FOUND'),
+                $message = Services::Language()->_('ERROR_MENU_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::getMenuItem',
@@ -508,15 +509,15 @@ class MolajoRequest
         $this->set('menu_item_custom_fields', $custom_fields);
 
         $metadata = new Registry;
-        $metadata->loadString($row->metadata);
+        $metadata->loadJSON($row->metadata);
         $this->set('menu_item_metadata', $metadata);
 
         $this->set('menu_item_language', $row->language);
         $this->set('menu_item_translation_of_id', $row->translation_of_id);
 
         $this->_setPageValues(
-            $this->get('menu_item_parameters',
-            $this->get('menu_item_metadata'))
+            $parameters,
+            $metadata
         );
 
         /** mvc */
@@ -582,10 +583,9 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Source Content not found */
             $this->set('status_found', false);
-            Molajo::Services()
-                ->connect('Message')
+            Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -672,10 +672,9 @@ class MolajoRequest
         if (count($row) == 0) {
             /** 500: Category not found */
             $this->set('status_found', false);
-            Molajo::Services()
-                ->connect('Message')
+            Services::Message()
                 ->set(
-                $message = MolajoTextService::_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getSource',
@@ -768,28 +767,27 @@ class MolajoRequest
      */
     protected function _setPageValues($parameters = null, $metadata = null)
     {
-        /** rendering parameters */
-        $params = new Registry;
-        $params->loadString($parameters);
 
         if ((int)$this->get('theme_id', 0) == 0) {
             $this->set('theme_id',
-                $params->def('theme_id', 0)
+                $parameters->get('theme_id', 0)
             );
         }
         if ((int)$this->get('page_view_id', 0) == 0) {
             $this->set('page_view_id',
-                $params->def('page_view_id', 0)
+                $parameters->get('page_view_id', 0)
             );
         }
+
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                $params->def('template_view_id', 0)
+                $parameters->get('template_view_id', 0)
             );
         }
+
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                $params->def('wrap_view_id', 0)
+                $parameters->get('wrap_view_id', 0)
             );
         }
 
@@ -862,20 +860,19 @@ class MolajoRequest
         }
 
         /** must be logged on */
-        if (Molajo::Application()
+        if (Services::Configuration()
             ->get('logon_requirement', 0) > 0
 
-            && Molajo::Services()
-                ->connect('User')
+            && Services::User()
                 ->get('guest', true) === true
 
             && $this->get('request_asset_id')
-                <> Molajo::Application()
+                <> Services::Configuration()
                     ->get('logon_requirement', 0)
         ) {
             Molajo::Responder()
                 ->redirect(
-                Molajo::Application()
+                Services::Configuration()
                     ->get('logon_requirement', 0), 303
             );
         }
@@ -946,8 +943,7 @@ class MolajoRequest
     {
         $parameters = new Registry;
         $parameters->loadString(
-            Molajo::Services()
-                ->connect('User')
+            Services::User()
                 ->get('parameters')
         );
 
@@ -973,13 +969,13 @@ class MolajoRequest
     {
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id',
-                Molajo::Application()
+                Services::Configuration()
                     ->get('default_theme_id', ''));
         }
 
         if ($this->get('page_view_id', 0) == 0) {
             $this->set('page_view_id',
-                Molajo::Application()
+                Services::Configuration()
                     ->get('default_page_view_id', ''));
         }
 
@@ -1002,33 +998,33 @@ class MolajoRequest
         /** metadata  */
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
-                Molajo::Application()
-                    ->get('metadata_title', '', 'metadata'));
+                Services::Configuration()
+                    ->get('metadata_title', ''));
         }
         if ($this->get('metadata_description', '') == '') {
             $this->set('metadata_description',
-                Molajo::Application()
-                    ->get('metadata_description', '', 'metadata'));
+                Services::Configuration()
+                    ->get('metadata_description', ''));
         }
         if ($this->get('metadata_keywords', '') == '') {
             $this->set('metadata_keywords',
-                Molajo::Application()
-                    ->get('metadata_keywords', '', 'metadata'));
+                Services::Configuration()
+                    ->get('metadata_keywords', ''));
         }
         if ($this->get('metadata_author', '') == '') {
             $this->set('metadata_author',
-                Molajo::Application()
-                    ->get('metadata_author', '', 'metadata'));
+                Services::Configuration()
+                    ->get('metadata_author', ''));
         }
         if ($this->get('metadata_content_rights', '') == '') {
             $this->set('metadata_content_rights',
-                Molajo::Application()
-                    ->get('metadata_content_rights', '', 'metadata'));
+                Services::Configuration()
+                    ->get('metadata_content_rights', ''));
         }
         if ($this->get('metadata_robots', '') == '') {
             $this->set('metadata_robots',
-                Molajo::Application()
-                    ->get('metadata_robots', '', 'metadata'));
+                Services::Configuration()
+                    ->get('metadata_robots', ''));
         }
         return;
     }
@@ -1261,7 +1257,7 @@ class MolajoRequest
         /** default error theme and page */
         $this->set(
             'theme_id',
-            Molajo::Application()
+            Services::Configuration()
                 ->get(
                 'error_theme_id',
                 'system'
@@ -1269,7 +1265,7 @@ class MolajoRequest
         );
         $this->set(
             'page_view_id',
-            Molajo::Application()
+            Services::Configuration()
                 ->get(
                 'error_page_view_id',
                 'error'
@@ -1286,7 +1282,7 @@ class MolajoRequest
             );
             Services::Message()
                 ->set(
-                Molajo::Application()
+                Services::Configuration()
                     ->get(
                     'offline_message',
                     'This site is not available.<br /> Please check back again soon.'
@@ -1295,14 +1291,14 @@ class MolajoRequest
                 503
             );
             $this->set('theme_id',
-                Molajo::Application()
+                Services::Configuration()
                     ->get(
                     'offline_theme_id',
                     'system'
                 )
             );
             $this->set('page_view_id',
-                Molajo::Application()
+                Services::Configuration()
                     ->get(
                     'offline_page_view_id',
                     'offline'
@@ -1318,7 +1314,7 @@ class MolajoRequest
             );
             Services::Message()
                 ->set(
-                Molajo::Application()
+                Services::Configuration()
                     ->get(
                     'error_403_message',
                     'Not Authorised.'
@@ -1336,7 +1332,7 @@ class MolajoRequest
             );
             Services::Message()
             ->set(
-                Molajo::Application()
+                Services::Configuration()
                     ->get(
                     'error_404_message',
                     'Page not found.'
@@ -1354,7 +1350,7 @@ class MolajoRequest
             );
             Services::Message()
                 ->set(
-                Molajo::Application()
+                Services::Configuration()
                     ->get(
                     'error_500_message',
                     'Pass the specific error in.'

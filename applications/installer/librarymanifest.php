@@ -123,7 +123,7 @@ class MolajoInstallerLibrarymanifest extends JObject
 
         $xml = simplexml_load_file($xmlfile);
         if (!$xml) {
-            $this->_errors[] = MolajoTextService::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
+            $this->_errors[] = Services::Language()->sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
             return false;
         }
         else

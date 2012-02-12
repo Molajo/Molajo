@@ -44,8 +44,6 @@ class MolajoAccessService
     /**
      * __construct
      *
-     * Class constructor.
-     *
      * @return boolean
      * @since  1.0
      */
@@ -76,6 +74,7 @@ class MolajoAccessService
                 Services::Access()
                     ->authoriseTask($task, $asset_id);
         }
+        return $taskPermissions;
     }
 
     /**
@@ -87,7 +86,7 @@ class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    public function authoriseTask($task = 'login', $asset_id = 0)
+    public function authoriseTask($task, $asset_id)
     {
         if ($task == 'login') {
             return Services::Access()
@@ -204,8 +203,7 @@ class MolajoAccessService
         $query->where($parameters['asset_prefix'] .
                 '.' . $db->namequote('view_group_id') .
                 ' IN (' . implode(',',
-                Molajo::Services()
-                    ->connect('User')
+                Services::User()
                     ->get('view_groups')) .
                 ')'
         );

@@ -26,7 +26,7 @@ class MolajoModuleRenderer extends MolajoRenderer
      */
     protected function _getExtension()
     {
-        $this->task->set(
+        $this->set(
             'extension_asset_type_id',
             MOLAJO_ASSET_TYPE_EXTENSION_MODULE
         );
@@ -37,13 +37,13 @@ class MolajoModuleRenderer extends MolajoRenderer
             return false;
         }
 
-        $this->task->set(
+        $this->set(
             'extension_path',
             ModuleHelper::getPath(
-                strtolower($this->task->get('extension_instance_name')))
+                strtolower($this->get('extension_instance_name')))
         );
 
-        $this->task->set('extension_type', 'module');
+        $this->set('extension_type', 'module');
 
         return true;
     }
@@ -57,20 +57,20 @@ class MolajoModuleRenderer extends MolajoRenderer
     protected function _importClasses()
     {
         $load = new LoadHelper();
-        $name = ucfirst($this->task->get('extension_instance_name'));
+        $name = ucfirst($this->get('extension_instance_name'));
         $name = str_replace (array('-', '_'), '', $name);
 
         /** Controller */
-        if (file_exists($this->task->get('extension_path') . '/controller.php')) {
+        if (file_exists($this->get('extension_path') . '/controller.php')) {
             $load->requireClassFile(
-                $this->task->get('extension_path') . '/controller.php',
+                $this->get('extension_path') . '/controller.php',
                 $name . 'ModuleControllerDisplay');
         }
 
         /** Model */
-        if (file_exists($this->task->get('extension_path') . '/model.php')) {
+        if (file_exists($this->get('extension_path') . '/model.php')) {
             $load->requireClassFile(
-                $this->task->get('extension_path') . '/model.php',
+                $this->get('extension_path') . '/model.php',
                 $name . 'ModuleModelDisplay');
         }
     }
@@ -86,9 +86,9 @@ class MolajoModuleRenderer extends MolajoRenderer
     protected function _loadMedia()
     {
         parent::_loadMedia(
-            MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->task->get('extension_instance_name'),
-            MOLAJO_SITE_MEDIA_URL . '/' . $this->task->get('extension_instance_name'),
-            Molajo::Application()->get('media_priority_module', 400)
+            MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
+            MOLAJO_SITE_MEDIA_URL . '/' . $this->get('extension_instance_name'),
+            Services::Configuration()->get('media_priority_module', 400)
         );
     }
 }
