@@ -125,10 +125,10 @@ class MolajoLanguageService
      * @return  null
      * @since   1.0
      */
-    public function __construct($language = null)
+    protected function __construct($language = null)
     {
         if ($language == null || $language == '') {
-            $language = LanguageHelper::get();
+            $language = LanguageHelper::getDefault();
         }
         $this->language = $language;
         $this->loaded_override_strings = array();
@@ -136,39 +136,6 @@ class MolajoLanguageService
         $this->loaded_files = array();
 
         return $this->load_core_files();
-    }
-
-    /**
-     * get
-     *
-     * @param  string  $key
-     * @param  string  $default
-     *
-     * @return  mixed
-     *
-     * @since   1.0
-     */
-    public function get($key, $default = null)
-    {
-        if (isset($this->$key)) {
-            return $this->$key;
-        } else {
-            return $default;
-        }
-    }
-
-    /**
-     * set
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function set($key, $value = null)
-    {
-        return $this->$key = $value;
     }
 
     /**
@@ -228,7 +195,7 @@ class MolajoLanguageService
             return true;
         }
 
-        $default = LanguageHelper::get();
+        $default = LanguageHelper::getDefault();
         if ($this->language == $default) {
             return false;
         }
@@ -239,6 +206,59 @@ class MolajoLanguageService
             return false;
         }
         return $loaded;
+    }
+
+    /**
+     * get
+     *
+     * @param  string  $key
+     * @param  string  $default
+     *
+     * @return  mixed
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        if (isset($this->$key)) {
+            return $this->$key;
+        } else {
+            return $default;
+        }
+    }
+
+    /**
+     * set
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->$key = $value;
+    }
+
+    /**
+     * _
+     *
+     * Replaces Language Key with translation
+     *
+     * @param  $key
+     *
+     * @return mixed
+     * @since  1.0
+     */
+    public function _($key)
+    {
+        if (isset($this->loaded_strings[$key])) {
+            return $this->loaded_strings[$key];
+            echo 'Missing language key: '.$key.'<br />';
+        } else {
+            return $key;
+        }
     }
 
     /**

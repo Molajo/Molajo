@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
+ * @subpackage  Service
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -11,8 +11,8 @@ defined('MOLAJO') or die;
  * User Class
  *
  * @package     Molajo
- * @subpackage  User
- * @since       1.1
+ * @subpackage  Service
+ * @since       1.0
  */
 class MolajoUserService
 {
@@ -22,23 +22,23 @@ class MolajoUserService
      * @var    object
      * @since  1.0
      */
-    protected static $instance = array();
+    protected static $instances = array();
 
     /**
-     * $_model
+     * $model
      *
      * @since  1.0
      * @var object
      */
-    protected $_model = 'MolajoUserModel';
+    protected $model = 'MolajoUserModel';
 
     /**
-     * $_id
+     * $id
      *
      * @since  1.0
      * @var int
      */
-    protected $_id = null;
+    protected $id = null;
 
     /**
      * $asset_type_id
@@ -46,173 +46,180 @@ class MolajoUserService
      * @since  1.0
      * @var int
      */
-    protected $_asset_type_id = null;
+    protected $asset_type_id = null;
 
     /**
-     * $_username
+     * $username
      *
      * @since  1.0
      * @var string
      */
-    protected $_username = null;
+    protected $username = null;
 
     /**
-     * $_first_name
+     * $first_name
      *
      * @since  1.0
      * @var string
      */
-    protected $_first_name = null;
+    protected $first_name = null;
 
     /**
-     * $_last_name
+     * $last_name
      *
      * @since  1.0
      * @var string
      */
-    protected $_last_name = null;
+    protected $last_name = null;
 
     /**
-     * $_name
+     * $name
      *
      * @since  1.0
      * @var string
      */
-    protected $_name = null;
+    protected $name = null;
 
     /**
-     * $_content_text
+     * $content_text
      *
      * @since  1.0
      * @var string
      */
-    protected $_content_text = null;
+    protected $content_text = null;
 
     /**
-     * $_email
+     * $email
      *
      * @since  1.0
      * @var string
      */
-    protected $_email = null;
+    protected $email = null;
 
     /**
-     * $_password
+     * $password
      *
      * @since  1.0
      * @var string
      */
-    protected $_password = null;
+    protected $password = null;
 
     /**
-     * $_block
+     * $block
      *
      * @since  1.0
      * @var int
      */
-    protected $_block = null;
+    protected $block = null;
 
     /**
-     * $_activation
+     * $activation
      *
      * @since  1.0
      * @var string activation hash
      */
-    protected $_activation = null;
+    protected $activation = null;
 
     /**
-     * $_send_email
+     * $send_email
      *
      * @since  1.0
      * @var int
      */
-    protected $_send_email = null;
+    protected $send_email = null;
 
     /**
-     * $_register_datetime
+     * $register_datetime
      *
      * @since  1.0
      * @var datetime
      */
-    protected $_register_datetime = null;
+    protected $register_datetime = null;
 
     /**
-     * $_last_visit_datetime
+     * $last_visit_datetime
      *
      * @since  1.0
      * @var datetime
      */
-    protected $_last_visit_datetime = null;
+    protected $last_visit_datetime = null;
 
     /**
-     * $_custom_fields
+     * $custom_fields
      *
      * @var string
      */
-    protected $_custom_fields = array();
+    protected $custom_fields = array();
 
     /**
-     * $_parameters
+     * $metadata
      *
      * @var string
      */
-    protected $_parameters = array();
+    protected $metadata = array();
 
     /**
-     * $_applications
+     * $parameters
+     *
+     * @var string
+     */
+    protected $parameters = array();
+
+    /**
+     * $applications
      *
      * @since  1.0
      * @var    array
      */
-    protected $_applications = array();
+    protected $applications = array();
 
     /**
-     * $_groups
+     * $groups
      *
      * @since  1.0
      * @var    array
      */
-    protected $_groups = array();
+    protected $groups = array();
 
     /**
-     * $_view_groups
+     * $view_groups
      *
      * @since  1.0
      * @var    array
      */
-    protected $_view_groups = array();
+    protected $view_groups = array();
 
     /**
-     * $_public
+     * $public
      *
      * @since  1.0
      * @var boolean
      */
-    protected $_public = null;
+    protected $public = null;
 
     /**
-     * $_guest
+     * $guest
      *
      * @since  1.0
      * @var boolean
      */
-    protected $_guest = null;
+    protected $guest = null;
 
     /**
-     * $_registered
+     * $registered
      *
      * @since  1.0
      * @var boolean
      */
-    protected $_registered = null;
+    protected $registered = null;
 
     /**
-     * $_administrator
+     * $administrator
      *
      * @since  1.0
      * @var boolean
      */
-    protected $_administrator = null;
+    protected $administrator = null;
 
     /**
      * getInstance
@@ -224,8 +231,12 @@ class MolajoUserService
      */
     public static function getInstance($id = 0)
     {
+        if (is_numeric($id)) {
+        } else {
+            $id = MolajoUserHelper::getId($id);
+        }
         if (empty(self::$instances[$id])) {
-            $user = new MolajoUser($id);
+            $user = new MolajoUserService($id);
             self::$instances[$id] = $user;
         }
         return self::$instances[$id];
@@ -236,17 +247,13 @@ class MolajoUserService
      *
      * @param   integer  $identifier
      *
-     * @return  object  user
+     * @return  object
      * @since   1.0
      */
-    public function __construct($identifier = 0)
+    protected function __construct($id = 0)
     {
-        if (is_numeric($identifier)) {
-            $id = $identifier;
-        } else {
-            $id = MolajoUserHelper::getId($identifier);
-        }
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
+        $this->load();
     }
 
     /**
@@ -259,25 +266,33 @@ class MolajoUserService
      * @return  boolean
      * @since   1.0
      */
-    public function connect()
+    protected function load()
     {
         $this->model = new MolajoUsersModel ();
-        $results = $this->model->load($this->_id);
+        $results = $this->model->load($this->id);
         $columns = $this->model->getFields('#__users', true);
 
         foreach ($results as $name => $value) {
-            $protected_name = '_' . $name;
-            $this->$protected_name = $results[$name];
+            echo $name . ' ' . $value . '<br />';
+            $this->set($name, $value);
         }
 
-        $this->custom_fields = new Registry;
-        $this->custom_fields->loadString($this->_custom_fields, 'JSON');
-        $this->custom_fields->toArray();
+        $custom_fields = new Registry;
+        $custom_fields->loadString($this->custom_fields);
+        $this->set('custom_fields', $custom_fields);
 
-        $this->_parameters = new Registry;
-        $this->_parameters->loadString($this->_parameters, 'JSON');
-        $this->_parameters->toArray();
+        $metadata = new Registry;
+        $metadata->loadString($this->metadata);
+        $this->set('metadata', $metadata);
 
+        $parameters = new Registry;
+        $parameters->loadString($this->parameters);
+        $this->set('parameters', $parameters);
+/**
+        echo '<pre>';
+        var_dump($this->parameters);
+        echo '</pre>';
+*/
         return $this;
     }
 
@@ -298,10 +313,10 @@ class MolajoUserService
     public function get($key, $default = null, $type = null)
     {
         if ($type == 'custom') {
-            return $this->_custom_fields->get($key, $default);
+            return $this->custom_fields->get($key, $default);
 
         } else if ($type == 'metadata') {
-            return $this->_metadata->get($key, $default);
+            return $this->metadata->get($key, $default);
 
         } else if ($type == 'state') {
             $registry = Molajo::Application()
@@ -327,9 +342,8 @@ class MolajoUserService
             return $new_state;
              */
         } else {
-            $protected_name = '_' . $key;
-            if (isset($this->$protected_name)) {
-                return $this->$protected_name;
+            if (isset($this->$key)) {
+                return $this->$key;
             }
             return false;
         }
@@ -351,13 +365,13 @@ class MolajoUserService
     public function set($key, $value = null, $type = 'config')
     {
         if ($type == 'custom') {
-            return $this->_custom_fields->set($key, $value);
+            return $this->custom_fields->set($key, $value);
 
         } else if ($type == 'metadata') {
-            return $this->_metadata->set($key, $value);
+            return $this->metadata->set($key, $value);
 
         } else if ($type == 'service') {
-            return $this->_service->set($key, $value);
+            return $this->service->set($key, $value);
 
         } else if ($type == 'visit') {
             return $this->model->setLastVisit();
@@ -373,7 +387,7 @@ class MolajoUserService
             return null;
 
         } else {
-            return $this->_configuration->set($key, $value);
+            return $this->$key = $value;
         }
     }
 }

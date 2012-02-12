@@ -46,7 +46,7 @@ class MolajoLoadHelper
         if (file_exists($file)) {
             JLoader::register($class, $file);
         } else {
-            if (Services::Configuration() == null) {
+            if (Services::Language() == null) {
                 echo 'MolajoLoadHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             } else {
@@ -64,12 +64,14 @@ class MolajoLoadHelper
 //            fclose($apiFile);
             return true;
         } else {
-            if (Services::Configuration() == null) {
+            if (Services::Language() == null) {
                 echo 'MolajoLoadHelper Error class not found ' . $class;
                 exit;
             } else {
             //if (class_exists('MolajoError') && class_exists('MolajoTextService') && class_exists('MolajoController') && class_exists('MolajoApplication')) {
-                MolajoError::raiseNotice(500, Services::Language()->_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
+                MolajoError::raiseNotice(
+                    500,
+                    Services::Language()->_('MOLAJO_CLASS_NOT_FOUND_IN_FILE') . ' ' . $class . ' ' . $file, 'error');
                 return false;
             }
         }

@@ -30,9 +30,6 @@ class MolajoDisplayController extends MolajoController
         /** model */
         $mc = (string)$this->get('model');
         $this->model = new $mc();
-        echo '<pre>';
-        var_dump($this->model);
-        echo '</pre>';
         $this->model->task_request = $this->task_request;
         $this->model->parameters = $this->parameters;
 

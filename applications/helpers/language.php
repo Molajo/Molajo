@@ -24,7 +24,7 @@ class MolajoLanguageHelper
      * @return  string  locale or null if not found
      * @since   1.0
      */
-    public function get()
+    public function getDefault()
     {
         /** Installed Languages */
         $languages = LanguageHelper::getLanguages(
