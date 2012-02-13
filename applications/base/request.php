@@ -171,6 +171,9 @@ class MolajoRequest
         ) {
             $this->_getRenderData();
         }
+echo '<pre>';
+var_dump($this->page_request);
+echo '</pre>';
 
         return;
     }
