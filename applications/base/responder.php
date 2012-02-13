@@ -943,13 +943,13 @@ class MolajoResponder
         $exception = false;
 
         /** IE */
-        if (stripos($SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
-            || stripos($SERVER['HTTP_USER_AGENT'], 'Trident') !== false
+        if (stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
+            || stripos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false
         ) {
             $exception = 'trident';
         }
-        if (stripos($SERVER['HTTP_USER_AGENT'], 'AppleWebKit') !== false
-            || stripos($SERVER['HTTP_USER_AGENT'], 'blackberry') !== false
+        if (stripos($_SERVER['HTTP_USER_AGENT'], 'AppleWebKit') !== false
+            || stripos($_SERVER['HTTP_USER_AGENT'], 'blackberry') !== false
         ) {
             $exception = 'webkit';
         }
