@@ -766,7 +766,6 @@ class MolajoRequest
      */
     protected function _setPageValues($parameters = null, $metadata = null)
     {
-
         if ((int)$this->get('theme_id', 0) == 0) {
             $this->set('theme_id',
                 $parameters->get('theme_id', 0)
@@ -979,18 +978,15 @@ class MolajoRequest
         }
 
         if ((int)$this->get('template_view_id', 0) == '') {
+
             $this->set('template_view_id',
-                ViewHelper::getViewDefaults('view',
-                    $this->get('mvc_task', ''),
-                    (int)$this->get('mvc_id', 0))
+                ViewHelper::getViewDefaults('template', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
             );
         }
 
         if ((int)$this->get('wrap_view_id', 0) == '') {
             $this->set('wrap_view_id',
-                ViewHelper::getViewDefaults('wrap',
-                    $this->get('mvc_task', ''),
-                    (int)$this->get('mvc_id', 0))
+                ViewHelper::getViewDefaults('wrap', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
             );
         }
 

@@ -90,7 +90,8 @@ class MolajoViewHelper
     {
         $this->view = strtolower($view);
         if (strtolower($view_type) == 'pages'
-            || strtolower($view_type) == 'wraps') {
+            || strtolower($view_type) == 'wraps'
+        ) {
         } else {
             $view_type = 'templates';
         }
@@ -228,53 +229,34 @@ class MolajoViewHelper
      * @return bool
      * @since 1.0
      */
-    static public function getViewDefaults($type='template',
-                                           $task=null,
-                                           $id=0)
+    static public function getViewDefaults($type = 'template',
+                                           $task = null,
+                                           $id = 0)
     {
-        if ($type = 'template') {
-
+        $id = 0;
+        if ($type == 'template') {
             if ($task == 'add' || $task == 'edit') {
-                $templateview_id =
-                    (int) Services::Configuration()->get(
-                        'default_edit_templateview_id',
-                        0
-                    );
+                $id = (int)Services::Configuration()->get('default_edit_template_view_id', 0);
+
             } else if ((int)$id == 0) {
-                $templateview_id =
-                    (int) Services::Configuration()->get(
-                        'default_items_templateview_id',
-                        0
-                    );
+                $id = (int)Services::Configuration()->get('default_items_template_view_id', 0);
+
             } else {
-                $templateview_id =
-                    (int) Services::Configuration()->get(
-                    'default_item_templateview_id',
-                    0
-                );
+                $id = (int)Services::Configuration()->get('default_item_template_view_id', 0);
             }
         }
 
         if ($type == 'wrap') {
             if ($task == 'add' || $task == 'edit') {
-                $wrapview_id =
-                    (int) Services::Configuration()->get(
-                        'default_edit_wrapview_id',
-                        0
-                    );
+                $id = (int)Services::Configuration()->get('default_edit_wrap_view_id', 0);
 
             } else if ((int)$id == 0) {
-                $wrapview_id = (int) Services::Configuration()->get(
-                    'default_items_wrapview_id',
-                    0
-                );
+                $id = (int)Services::Configuration()->get('default_items_wrap_view_id', 0);
 
             } else {
-                $wrapview_id = (int) Services::Configuration()->get(
-                    'default_item_wrapview_id',
-                    0
-                );
+                $id = (int)Services::Configuration()->get('default_item_wrap_view_id', 0);
             }
         }
+        return $id;
     }
 }
