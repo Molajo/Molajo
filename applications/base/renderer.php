@@ -286,7 +286,6 @@ class MolajoRenderer
         } else {
             $this->set('extension_primary', false);
         }
-        $this->set('extension_folder', '');
         $this->set('extension_event_type', '');
 
         /** view */
@@ -391,13 +390,89 @@ class MolajoRenderer
      */
     protected function _getExtension()
     {
-        $results = ExtensionHelper::getExtensionRequestObject($this->task_request);
-
-        if ($results === false) {
-            return false;
+        /** Retrieve Extension Query Results */
+        if ($this->get('extension_instance_id', 0) == 0) {
+        } else {
+            $rows = ExtensionHelper::get(
+                 0,
+                 (int)$this->get('extension_instance_id')
+             );
         }
 
-        $this->task_request = $results;
+        /** Extension not found */
+        if (($this->get('extension_instance_id', 0) == 0)
+            || (count($rows) == 0)) {
+
+            $this->set('status_found', false);
+        }
+
+        /** Process Results */
+        $row = array();
+        foreach ($rows as $row) {
+        }
+
+        $this->set('extension_instance_name', $row->title);
+        $this->set('extension_asset_id', $row->asset_id);
+        $this->set('extension_asset_type_id', $row->asset_type_id);
+        $this->set('extension_view_group_id', $row->view_group_id);
+        $this->set('extension_type', $row->asset_type_title);
+
+        $custom_fields = new Registry;
+        $custom_fields->loadString($row->custom_fields);
+        $this->set('category_custom_fields', $custom_fields);
+
+        $metadata = new Registry;
+        $metadata->loadString($row->metadata);
+        $this->set('category_metadata', $metadata);
+
+        $parameters = new Registry;
+        $parameters->loadString($row->parameters);
+        $this->set('extension_parameters', $parameters);
+
+        /** mvc */
+        if ($this->get('controller', '') == '') {
+            $this->set('controller',
+                $parameters->def('controller', '')
+            );
+        }
+        if ($this->get('task', '') == '') {
+            $this->set('task',
+                $parameters->def('task', 'display')
+            );
+        }
+        if ($this->get('model', '') == '') {
+            $this->set('model',
+                $parameters->def('model', 'content')
+            );
+        }
+        if ((int)$this->get('id', 0) == 0) {
+            $this->set('id',
+                $parameters->def('id', 0)
+            );
+        }
+        if ((int)$this->get('category_id', 0) == 0) {
+            $this->set('category_id',
+                $parameters->def('category_id', 0)
+            );
+        }
+        if ((int)$this->get('suppress_no_results', 0) == 0) {
+            $this->set('suppress_no_results',
+                $parameters->def('suppress_no_results', 0)
+            );
+        }
+
+        $this->set('extension_event_type',
+            $parameters->def('plugin_type', array('content'))
+        );
+
+        $this->set('extension_path',
+            ExtensionHelper::getPath(
+                $this->get('extension_asset_type_id'),
+                $this->get('extension_instance_name')
+            )
+        );
+
+
         return $this->set('status_found', true);
     }
 
@@ -505,7 +580,6 @@ class MolajoRenderer
             'templates',
             $this->get('extension_instance_name'),
             $this->get('extension_type'),
-            ' ',
             $this->get('theme_name')
         );
         $this->set('template_view_path', $tc->view_path);
@@ -536,7 +610,6 @@ class MolajoRenderer
             'wraps',
             $this->get('extension_instance_name'),
             $this->get('extension_type'),
-            ' ',
             $this->get('theme_name')
         );
         $this->set('wrap_view_path', $wc->view_path);
@@ -615,7 +688,6 @@ class MolajoRenderer
         $this->set('task', $task);
 
         $this->_verifyMVC(true);
-die;
         if ($this->get('status_found') === false) {
             return $this->get('status_found');
         }
@@ -741,7 +813,6 @@ die;
         } else {
             $test5 = 1;
         }
-
 
         if (($test1 + $test2 + $test3 + $test4 + $test5) < 5) {
             $this->set('status_found', false);

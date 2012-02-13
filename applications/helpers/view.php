@@ -45,13 +45,6 @@ class MolajoViewHelper
     protected $extension_type = null;
 
     /**
-     * Extension Folder
-     *
-     * @var    string
-     */
-    protected $extension_folder = null;
-
-    /**
      * Theme Name
      *
      * @var    string
@@ -79,14 +72,13 @@ class MolajoViewHelper
      * @param  $view_type - type of view (pages, templates, wraps)
      * @param  $extension_name - name of component, module, theme, or listener
      * @param  $extension_type - type of extension
-     * @param  $extension_folder - subtype, or folder, for view and listener extensions
      * @param  $theme_name - name of theme
      *
      * @return  array
      * @since   1.0
      */
     public function __construct($view, $view_type, $extension_name,
-                                $extension_type, $extension_folder, $theme_name)
+                                $extension_type, $theme_name)
     {
         $this->view = strtolower($view);
         if (strtolower($view_type) == 'pages'
@@ -98,7 +90,6 @@ class MolajoViewHelper
         $this->view_type = strtolower($view_type);
         $this->extension_name = strtolower($extension_name);
         $this->extension_type = strtolower($extension_type);
-        $this->extension_folder = strtolower($extension_folder);
         $this->theme_name = strtolower($theme_name);
 
         $results = $this->_findPath();
@@ -142,8 +133,8 @@ class MolajoViewHelper
         /** 2. Extension */
         $extensionPath = '';
         if ($this->extension_type == 'plugin') {
-            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->extension_folder . '/' . $this->extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_PLUGINS_URL . '/' . $this->extension_folder . '/' . $this->extension_name . $plus;
+            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->extension_name . $plus;
+            $extensionPathURL = MOLAJO_EXTENSIONS_PLUGINS_URL . '/' . $this->extension_name . $plus;
 
         } else if ($this->extension_type == 'component') {
             $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->extension_name . $plus;

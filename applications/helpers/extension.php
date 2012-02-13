@@ -28,7 +28,7 @@ abstract class MolajoExtensionHelper
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function get($asset_type_id, $extension = null)
+    public static function get($asset_type_id = 0, $extension = null)
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
@@ -39,6 +39,7 @@ abstract class MolajoExtensionHelper
          *  a. Extensions Instances Table
          */
         $query->select('a.' . $db->namequote('id') . ' as extension_instance_id');
+        $query->select('a.' . $db->namequote('asset_type_id'));
         $query->select('a.' . $db->namequote('title'));
         $query->select('a.' . $db->namequote('subtitle'));
         $query->select('a.' . $db->namequote('alias'));
@@ -59,49 +60,50 @@ abstract class MolajoExtensionHelper
         /** extension specified by id, title or request for list */
         if ((int)$extension > 0) {
             $query->where('(a.' . $db->namequote('id') .
-                ' = ' . (int)$extension . ')'
+                    ' = ' . (int)$extension . ')'
             );
         } else if ($extension == null) {
         } else {
             $query->where('(a.' . $db->namequote('title') .
-                ' = ' . $db->quote($extension) . ')'
+                    ' = ' . $db->quote($extension) . ')'
+            );
+        }
+        if ((int)$asset_type_id > 0) {
+            $query->where('a.' . $db->namequote('asset_type_id') .
+                    ' = ' . (int)$asset_type_id
             );
         }
 
-        $query->where('a.' . $db->namequote('asset_type_id') .
-            ' = ' . (int)$asset_type_id
-        );
-
         $query->where('a.' . $db->namequote('status') .
-            ' = ' . MOLAJO_STATUS_PUBLISHED
+                ' = ' . MOLAJO_STATUS_PUBLISHED
         );
         $query->where('(a.start_publishing_datetime = ' .
-            $db->quote($nullDate) .
-            ' OR a.start_publishing_datetime <= ' . $db->quote($now) . ')'
+                $db->quote($nullDate) .
+                ' OR a.start_publishing_datetime <= ' . $db->quote($now) . ')'
         );
         $query->where('(a.stop_publishing_datetime = ' .
-            $db->quote($nullDate) .
-            ' OR a.stop_publishing_datetime >= ' . $db->quote($now) . ')'
+                $db->quote($nullDate) .
+                ' OR a.stop_publishing_datetime >= ' . $db->quote($now) . ')'
         );
 
         /** Assets Join and View Access Check */
         Services::Access()
             ->setQueryViewAccess(
-                $query,
-                array('join_to_prefix' => 'a',
-                    'join_to_primary_key' => 'id',
-                    'asset_prefix' => 'b_assets',
-                    'select' => true
+            $query,
+            array('join_to_prefix' => 'a',
+                'join_to_primary_key' => 'id',
+                'asset_prefix' => 'b_assets',
+                'select' => true
             )
         );
 
         /** b_asset_types. Asset Types Table  */
-        $query->from($db->namequote('#__asset_types') .
-            ' as b_asset_types');
+        $query->select($db->namequote('b_asset_types.title') . ' as asset_type_title');
+        $query->from($db->namequote('#__asset_types') . ' as b_asset_types');
         $query->where('b_assets.asset_type_id = b_asset_types.id');
         $query->where('b_asset_types.' .
-            $db->namequote('component_option') .
-            ' = ' . $db->quote('extensions')
+                $db->namequote('component_option') .
+                ' = ' . $db->quote('extensions')
         );
 
         /**
@@ -157,8 +159,6 @@ abstract class MolajoExtensionHelper
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
         $query->from($db->namequote('#__extension_instances') . ' as a');
@@ -166,26 +166,6 @@ abstract class MolajoExtensionHelper
             $db->quote($title));
         $query->where('a.' . $db->namequote('asset_type_id') .
             ' = ' . (int)$asset_type_id);
-        $query->where('a.' . $db->namequote('status') .
-            ' = ' . MOLAJO_STATUS_PUBLISHED);
-        $query->where('(a.start_publishing_datetime = ' .
-            $db->quote($nullDate) . ' OR a.start_publishing_datetime <= ' .
-            $db->quote($now) . ')');
-        $query->where('(a.stop_publishing_datetime = ' .
-            $db->quote($nullDate) . ' OR a.stop_publishing_datetime >= ' .
-            $db->quote($now) . ')');
-
-        /** Assets Join and View Access Check */
-        Services::Access()
-            ->setQueryViewAccess(
-                $query,
-                array('join_to_prefix' => 'a',
-                    'join_to_primary_key' => 'id',
-                    'asset_prefix' => 'b_assets',
-                    'select' => true
-            )
-        );
-
         $db->setQuery($query->__toString());
         $id = $db->loadResult();
 
@@ -212,33 +192,11 @@ abstract class MolajoExtensionHelper
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('title'));
         $query->from($db->namequote('#__extension_instances') . ' as a');
         $query->where('a.' . $db->namequote('id') .
             ' = ' . (int)$extension_instance_id);
-        $query->where('a.' . $db->namequote('status') .
-            ' = ' . MOLAJO_STATUS_PUBLISHED);
-        $query->where('(a.start_publishing_datetime = ' .
-            $db->quote($nullDate) . ' OR a.start_publishing_datetime <= ' .
-            $db->quote($now) . ')');
-        $query->where('(a.stop_publishing_datetime = ' .
-            $db->quote($nullDate) . ' OR a.stop_publishing_datetime >= ' .
-            $db->quote($now) . ')');
-
-        /** Assets Join and View Access Check */
-        Services::Access()
-            ->setQueryViewAccess(
-                $query,
-                array('join_to_prefix' => 'a',
-                    'join_to_primary_key' => 'id',
-                    'asset_prefix' => 'b_assets',
-                    'select' => true
-            )
-        );
-
         $db->setQuery($query->__toString());
         $name = $db->loadResult();
 
@@ -248,6 +206,27 @@ abstract class MolajoExtensionHelper
         }
 
         return $name;
+    }
+
+    /**
+     * getPath
+     *
+     * Return path for Extension
+     *
+     * @return bool|string
+     * @since 1.0
+     */
+    static public function getPath($asset_type_id, $name)
+    {
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT) {
+            return ComponentHelper::getPath($name);
+        } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_MODULE) {
+            return ModuleHelper::getPath($name);
+        } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_THEME) {
+            return ThemeHelper::getPath($name);
+        } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN) {
+            return PluginHelper::getPath($name);
+        }
     }
 
     /**
@@ -268,112 +247,10 @@ abstract class MolajoExtensionHelper
         }
 
         Services::Language()
-            ->load ($path,
-                    Services::Language()->get('tag'),
-                    false,
-                    false
-                    );
-    }
-
-    /**
-     * getExtensionRequestObject
-     *
-     * Retrieve Component information using either the ID or the Name
-     *
-     * @return bool
-     * @since 1.0
-     */
-    static public function getExtensionRequestObject($request)
-    {
-        if ((int)$request->get('extension_instance_id') > 0) {
-            $extension = (int)$request->get('extension_instance_id');
-            $request->set(
-                'extension_instance_name',
-                ExtensionHelper::getInstanceTitle(
-                    $request->get('extension_instance_id')
-                )
-            );
-        } else {
-            $request->set('extension_instance_id',
-                ExtensionHelper::getInstanceID(
-                    $request->get('extension_asset_type_id'),
-                    $request->get('extension_instance_name')
-                )
-            );
-        }
-
-        $rows = ExtensionHelper::get(
-            (int)$request->get('extension_asset_type_id'),
-            (int)$request->get('extension_instance_id')
+            ->load($path,
+            Services::Language()->get('tag'),
+            false,
+            false
         );
-
-        if (count($rows) == 0) {
-            return false;
-        }
-
-        foreach ($rows as $row) {
-        }
-
-        $request->set('extension_instance_name', $row->title);
-        $request->set('extension_asset_id', $row->asset_id);
-        $request->set('extension_view_group_id', $row->view_group_id);
-
-        $custom_fields = new Registry;
-        $custom_fields->loadString($row->custom_fields);
-        $request->set('category_custom_fields', $custom_fields);
-
-        $metadata = new Registry;
-        $metadata->loadString($row->metadata);
-        $request->set('category_metadata', $metadata);
-
-        $parameters = new Registry;
-        $parameters->loadString($row->parameters);
-        $request->set('extension_parameters', $parameters);
-
-        /** mvc */
-        if ($request->get('mvc_controller', '') == '') {
-            $request->set('mvc_controller',
-                $parameters->def('controller', '')
-            );
-        }
-        if ($request->get('mvc_task', '') == '') {
-            $request->set('mvc_task',
-                $parameters->def('task', 'display')
-            );
-        }
-        if ($request->get('mvc_model', '') == '') {
-            $request->set('mvc_model',
-                $parameters->def('model', '')
-            );
-        }
-        if ((int)$request->get('mvc_id', 0) == 0) {
-            $request->set('mvc_id',
-                $parameters->def('id', 0)
-            );
-        }
-        if ((int)$request->get('mvc_category_id', 0) == 0) {
-            $request->set('mvc_category_id',
-                $parameters->def('category_id', 0)
-            );
-        }
-        if ((int)$request->get('mvc_suppress_no_results', 0) == 0) {
-            $request->set('mvc_suppress_no_results',
-                $parameters->def('suppress_no_results', 0)
-            );
-        }
-
-        $request->set('extension_event_type',
-            $parameters->def(
-                'plugin_type',
-                array('content')
-            )
-        );
-
-        if ($request->get('request_suppress_no_results', '') == '') {
-            $request->set('request_suppress_no_results',
-                $parameters->def('suppress_no_results')
-            );
-        }
-        return $request;
     }
 }

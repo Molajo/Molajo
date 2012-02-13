@@ -19,17 +19,14 @@ abstract class MolajoComponentHelper
     /**
      * get
      *
-     * Get the component data of a specific type if no specific component is specified
-     * otherwise only the specific component data is returned.
-     *
-     * @return  mixed  An array of component data objects, or a component data object.
+     * @return  array
      * @since   1.0
      */
-    static public function get($component_name)
+    static public function get($name)
     {
         $rows = ExtensionHelper::get(
             MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT,
-            $component_name
+            $name
         );
         if (count($rows) == 0) {
             return array();
@@ -49,8 +46,8 @@ abstract class MolajoComponentHelper
      * @return bool|string
      * @since 1.0
      */
-    static public function getPath($component_name)
+    static public function getPath($name)
     {
-        return MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component_name;
+        return MOLAJO_EXTENSIONS_COMPONENTS . '/' . $name;
     }
 }

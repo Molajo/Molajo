@@ -20,6 +20,7 @@ Class LanguageHelper extends MolajoLanguageHelper {}
 Class LoadHelper extends MolajoLoadHelper {}
 Class MenuHelper extends MolajoMenuHelper {}
 Class ModuleHelper extends MolajoModuleHelper {}
+Class PluginHelper extends MolajoPluginHelper {}
 Class SiteHelper extends MolajoSiteHelper {}
 Class ThemeHelper extends MolajoThemeHelper {}
 Class UserHelper extends MolajoUserHelper {}

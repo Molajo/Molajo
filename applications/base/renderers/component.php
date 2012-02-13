@@ -54,12 +54,9 @@ class MolajoComponentRenderer extends MolajoRenderer
             Molajo::Request()->get('extension_path'));
         $this->set('extension_type',
             Molajo::Request()->get('extension_type'));
-        if ($this->type == 'request') {
-            $this->set('extension_primary', true);
-        } else {
-            $this->set('extension_primary', false);
-        }
-        $this->set('extension_folder', '');
+
+        $this->set('extension_primary', true);
+
         $this->set('extension_event_type',
             Molajo::Request()->get('extension_event_type'));
 
