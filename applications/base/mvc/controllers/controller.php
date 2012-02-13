@@ -22,7 +22,7 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $task_request;
+    protected $task_request;
 
     /**
      * $parameters
@@ -30,7 +30,7 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $parameters;
+    protected $parameters;
 
     /**
      * $model
@@ -38,23 +38,31 @@ class MolajoController
      * @var    object
      * @since  1.0
      */
-    public $model;
+    protected $model;
 
     /**
-     * $isNew
+     * $rowset
      *
      * @var    object
      * @since  1.0
      */
-    public $isNew;
+    protected $rowset;
 
     /**
-     * $existing_status
+     * $pagination
      *
      * @var    object
      * @since  1.0
      */
-    public $existing_status;
+    protected $pagination;
+
+    /**
+     * $model_state
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $model_state;
 
     /**
      * $redirectClass
@@ -85,27 +93,13 @@ class MolajoController
         // todo: amy look at redirect
 //        $this->redirectClass = new MolajoRedirectController($this->task);
 
-        /** load table */
-        if ($this->get('task') == 'display'
-            || $this->get('task') == 'edit'
-            || $this->get('task') == 'login'
-        ) {
-            $this->isNew = false;
+        /** model */
+        $mc = (string)$this->get('model');
+        $this->model = new $mc();
+        $this->model->task_request = $this->task_request;
+        $this->model->parameters = $this->parameters;
 
-        } else {
-
-            $this->model = $this->model->getModel();
-            $this->model->reset();
-            $this->model->load((int)$this->get('id'));
-
-            if ($this->get('id') == 0) {
-                $this->isNew = true;
-                $this->existing_status = 0;
-            } else {
-                $this->isNew = false;
-                $this->existing_status = $this->model->status;
-            }
-        }
+//        $this->model->load((int)$this->get('id'));
 
         /** dispatch events
         if ($this->dispatcher
@@ -133,6 +127,18 @@ class MolajoController
         return true;
     }
 
+    /**
+     * display
+     *
+     * Display task is used to render view output
+     *
+     * @return  string  Rendered output
+     * @since   1.0
+     */
+    public function display()
+    {
+
+    }
 
     /**
      * get

@@ -108,4 +108,5 @@ class MolajoJdatabaseService
 
         return $this->db;
     }
+
 }

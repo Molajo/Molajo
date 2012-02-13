@@ -39,10 +39,6 @@
          </connect>
     </service>
     <service>
-        <name>Filter</name>
-        <serviceClass>MolajoFilterService</serviceClass>
-    </service>
-    <service>
         <name>Image</name>
         <serviceClass>MolajoImageService</serviceClass>
     </service>

@@ -1,81 +1,33 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Model
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Content Table Class
+ * Content
  *
- * @package     Molajo
- * @subpackage  Model
- * @since       1.0
- * @link
+ * @package      Molajo
+ * @subpackage   Model
+ * @since        1.0
  */
 class MolajoContentModel extends MolajoDisplayModel
 {
     /**
      * __construct
      *
-     * @param database A database connector object
-     *
-     * @since 1.0
+     * @return  object
+     * @since   1.0
      */
-    function __construct($db)
+    function __construct()
     {
-        //   parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
-        parent::__construct('#__content', 'id', $db);
-    }
+        $this->name = $this;
+        $this->table = '#__content';
 
-    /**
-     * _getAssetTitle
-     *
-     * Method to return the title to use for the asset table.
-     *
-     * @return    string
-     * @since    1.6
-     */
-    protected function _getAssetTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * _getAssetParentId
-     *
-     * Get the parent asset id for the record
-     *
-     * @return    int
-     * @since    1.6
-     */
-    protected function _getAssetParentId($table = null, $id = null)
-    {
-        /** initialise **/
-        $assetId = null;
-        $db = $this->getDb();
-
-        /** retrieve parent category asset **/
-        if ($this->category_id) {
-            $query = $db->getQuery(true);
-            $query->select('asset_id');
-            $query->from('#__categories');
-            $query->where('id = ' . (int)$this->category_id);
-
-            $this->db->setQuery($query->__toString());
-            if ($result = $this->db->loadResult()) {
-                $assetId = (int)$result;
-            }
-        }
-
-        /** return results **/
-        if ($assetId) {
-            return $assetId;
-        } else {
-            return parent::_getAssetParentId($table, $id);
-        }
+        parent::__construct();
     }
 
     /**
@@ -91,9 +43,6 @@ class MolajoContentModel extends MolajoDisplayModel
      */
     public function bind($array, $ignore = '')
     {
-        $jsonModel = JModel::getInstance('ModelConfiguration', 'Molajo', array('ignore_request' => true));
-        $results = $jsonModel->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
-
         foreach ($results as $count => $result) {
             if (isset($array[$result->value]) && is_array($array[$result->value])) {
                 $registry = new Registry();

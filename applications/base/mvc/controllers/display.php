@@ -27,12 +27,6 @@ class MolajoDisplayController extends MolajoController
      */
     public function display()
     {
-        /** model */
-        $mc = (string)$this->get('model');
-        $this->model = new $mc();
-        $this->model->task_request = $this->task_request;
-        $this->model->parameters = $this->parameters;
-
         /** check out */
         if ($this->get('task') == 'edit') {
             $results = parent::checkoutItem();
@@ -50,9 +44,12 @@ class MolajoDisplayController extends MolajoController
         /** pagination */
         $this->pagination = $this->model->getPagination();
 
+        /** state */
+        $this->model_state = $this->model->getState();
+
         /** no results */
         if (count($this->rowset) == 0
-            && $this->parameters->get('extension_suppress_no_results') == 1
+            && $this->parameters->get('suppress_no_results') == 1
         ) {
             return '';
         }
@@ -183,62 +180,6 @@ class MolajoDisplayController extends MolajoController
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-    }
-
-    /**
-     * safeHTML
-     *
-     * @param string $text
-     *
-     * @return  string
-     * @since   1.0
-     */
-    static public function safeHTML($htmlText)
-    {
-
-    }
-
-    /**
-     * safeInteger
-     *
-     * @param string $integer
-     *
-     * @return  string
-     * @since   1.0
-     */
-    static public function safeInteger($integer)
-    {
-        return (int) $integer;
-    }
-
-    /**
-     * safeText
-     *
-     * @param string $text
-     *
-     * @return  string
-     * @since   1.0
-     */
-    static public function safeText($text)
-    {
-        return htmlspecialchars($text, ENT_COMPAT, 'utf-8');
-    }
-
-    /**
-     * safeURL
-     *
-     * @param   string  $url
-     *
-     * @return  string
-     * @since  1.0
-     */
-    static public function safeURL($url)
-    {
-        if (Services::Configuration()->get('unicode_slugs') == 1) {
-            return FilterOutput::stringURLUnicodeSlug($url);
-        } else {
-            return FilterOutput::stringURLSafe($url);
-        }
     }
 }
 class Display extends MolajoDisplayController {}

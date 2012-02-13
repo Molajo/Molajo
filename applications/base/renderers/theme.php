@@ -34,7 +34,7 @@ class MolajoThemeRenderer extends MolajoRenderer
         $this->type = $type;
 
         $this->parameters = new Registry;
-        $this->parameters->set('extension_suppress_no_results', 0);
+        $this->parameters->set('suppress_no_results', 0);
     }
 
     /**

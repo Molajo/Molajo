@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage    Model
  * @since 1.0
  */
-class MolajoModel extends JObject
+class MolajoModel
 {
     /**
      * Model Name
@@ -25,7 +25,7 @@ class MolajoModel extends JObject
      * @var    string
      * @since  1.0
      */
-    protected $name = 'MolajoModel';
+    protected $name;
 
     /**
      * Database connection
@@ -49,7 +49,7 @@ class MolajoModel extends JObject
      * @var    string
      * @since  1.0
      */
-    protected $_primary_key;
+    protected $primary_key;
 
     /**
      * Primary key value
@@ -58,6 +58,14 @@ class MolajoModel extends JObject
      * @since  1.0
      */
     protected $id;
+
+    /**
+     * Used in setter/getter to store model state
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $state;
 
     /**
      * Results set from display query
@@ -99,13 +107,37 @@ class MolajoModel extends JObject
      */
     public function __construct()
     {
-        $this->db = Services::DB();
+        if (isset($this->name)) {
+        } else {
+            $this->name = $this;
+        }
+
+        if (isset($this->db)) {
+        } else {
+            return $this->db = Services::DB();
+        }
+
+        if (isset($this->primary_key)) {
+        } else {
+            $this->primary_key = 'id';
+        }
+
+        if (isset($this->state)) {
+        } else {
+            $this->state = new Registry();
+        }
+
+        if ($this->get('crud', '') == '') {
+            $this->set('crud', 'r');
+        }
+
+        return $this;
     }
 
     /**
      * get
      *
-     * Returns a property of the Model object
+     * Returns property of the Model object
      * or the default value if the property is not set.
      *
      * @param   string  $key      The name of the property.
@@ -117,207 +149,62 @@ class MolajoModel extends JObject
      */
     public function get($key, $default = null)
     {
-        return $this->status->get($key, $default);
+        return $this->state->get($key, $default);
     }
 
     /**
      * set
      *
-     * Modifies a property of the Model object, creating it if it does not already exist.
+     * Modifies a property of the Model object,
+     * creating it if it does not already exist.
      *
      * @param   string  $key    The name of the property.
      * @param   mixed   $value  The value of the property to set (optional).
      *
-     * @return  mixed   Previous value of the property
+     * @return  mixed   Value of the property
      *
      * @since   1.0
      */
     public function set($key, $value = null)
     {
-        $this->status->set($key, $value);
+        return $this->state->set($key, $value);
     }
 
     /**
-     * populateState
-     *
-     * Method to auto-populate the model state.
-     *
-     * @return    void
-     * @since    1.0
-     */
-    protected function populateState()
-    {
-
-    }
-
-    /**
-     * getMVC
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getMVC()
-    {
-        return $this->mvc;
-    }
-
-    /**
-     * getParameters
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
-
-    /**
-     * getItems
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * getPagination
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getPagination()
-    {
-        return $this->pagination;
-    }
-
-    /**
-     * getFields
-     *
-     * Retrieves columns from the database table
-     *
-     * @return bool
-     * @since  1.0
-     */
-    public function getFields()
-    {
-        $name = $this->table;
-        $fields = $this->db->getTableColumns($name, false);
-
-        if (empty($fields)) {
-            $e = new JException(JText::_('JLIB_DB_ERROR_COLUMNS_NOT_FOUND'));
-            $this->setError($e);
-            return false;
-        }
-
-        return $fields;
-    }
-
-    /**
-     * getTableName
-     *
-     * Method to get the database table name for the class.
-     *
-     * @return  string  The name of the database table being modeled.
-     * @since   1.0
-     */
-    public function getTableName()
-    {
-        return $this->table;
-    }
-
-    /**
-     * getKeyName
-     *
-     * Method to get the primary key field name for the table.
-     *
-     * @return  string  Primary key for the table
-     * @since   1.0
-     */
-    public function getKeyName()
-    {
-        return $this->primary_key;
-    }
-
-    /**
-     * getDb
-     *
-     * Method to get the Database connector object.
+     * Create
      *
      * @return  object
      * @since   1.0
      */
-    public function getDb()
+    public function create()
     {
-        return $this->db;
-    }
+        $this->set('crud', 'c');
 
-    /**
-     * setDbo
-     *
-     * Method to set the Database connector object.
-     *
-     * @param   object   Database connection object
-     * @return  boolean  True on success.
-     * @since   1.0
-     */
-    public function setDbo($db)
-    {
-        if ($db instanceof JDatabase) {
-        } else {
+        $results = $this->validate();
+
+        if ($results === false) {
             return false;
         }
 
-        $this->db = $db;
 
-        return true;
+        return $this;
     }
 
     /**
-     * load
+     * read
      *
-     * Method to load a row from the database by primary key and bind its fields
-     *
-     * @param   string  $id
-     * @param   bool    $reset
-     *
-     * @return  bool
+     * @return  object
      * @since   1.0
      */
-    public function load($id = null, $reset = true)
+    public function read()
     {
-        $this->id = $id;
+        $this->set('crud', 'r');
 
-        /** initialize */
-        if ($reset === true) {
-            $this->reset();
-        }
+        $this->_reset();
 
-        $row = $this->_query($this->id, $reset);
-
-        return $this->bind($row, array());
-    }
-
-    /**
-     * _query
-     *
-     * @param   null  $id
-     * @param   bool  $reset
-     * @return  array|bool
-     */
-    protected function _query($id = null, $reset = true)
-    {
-        /** load query */
         $query = $this->db->getQuery(true);
 
-        $query->select('*');
+        $query->select(' * ');
         $query->from($this->db->quoteName($this->table));
         $query->where($this->primary_key . ' = ' . $this->db->quote($this->id));
 
@@ -365,78 +252,282 @@ class MolajoModel extends JObject
     }
 
     /**
-     * reset
+     * update
      *
-     * Method to reset class properties to the defaults
-     * Ignores primary key and private class properties
-     *
-     * @return  void
+     * @return
      * @since   1.0
      */
-    public function reset()
+    public function update()
     {
-        foreach ($this->getFields() as $k => $v) {
-            if ($k == $this->primary_key || (strpos($k, '_') == 0)) {
+        $this->set('crud', 'u');
+
+        $results = $this->validate();
+        if ($results === false) {
+            return false;
+        }
+
+        // update it
+
+        return $this;
+    }
+
+    /**
+     * delete
+     *
+     * @return
+     * @since   1.0
+     */
+    public function delete()
+    {
+        $this->set('crud', 'd');
+
+        $results = $this->validate();
+        if ($results === false) {
+            return false;
+        }
+
+        // delete it
+
+        return $this;
+    }
+
+    /**
+     * validate
+     *
+     * Runs custom validation methods define in the table xml
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function validate()
+    {
+        /** will be set to false for error */
+        $this->set('valid', true);
+
+        /** Verify row is loaded */
+        $results = $this->isLoaded();
+        if ($results === false) {
+            return false;
+        }
+
+        $crudCurrent = $this->get('crud');
+        if ($crudCurrent == 'r') {
+            return true;
+        }
+
+        /** Retrieve custom validations by table */
+        $x = simplexml_load_file(
+            MOLAJO_APPLICATIONS_MVC . '/models/tables/' . $this->table . '.xml'
+        );
+        if (count($x) == 0) {
+            return true;
+        }
+
+        /** Foreign Keys */
+        if (in_array($crudCurrent, array('c', 'u'))) {
+
+            foreach ($x->validations->foreignkeys as $f) {
+
+                $key = (string)$f->key;
+                $pk = (string)$f->pk;
+                $table = (string)$f->table;
+                $zero = (string)$f->zero;
+
+                $this->_validateForeignKey($key, $pk, $table);
+            }
+        }
+
+        /** Values */
+        if (in_array($crudCurrent, array('c', 'u'))) {
+
+            foreach ($x->validations->values as $v) {
+
+                $field = (string)$v->field;
+                $required = (string)$v->required;
+                $values = (string)$v->values;
+                $default = (string)$v->default;
+
+                $this->_validateValues($field, $required, $values, $default);
+            }
+        }
+
+        /** Functions */
+        foreach ($x->validations->functions as $f) {
+
+            $class = (string)$f->class;
+            $method = (stirng)$f->method;
+
+            $crudArray = (string)$f->crud;
+            if (in_array($crudCurrent, $crudArray)) {
+                $this->_validateFunction($class, $method);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * isLoaded
+     *
+     * Checks if the primary key of the object is set.
+     *
+     * @return  boolean  True if loaded, false otherwise.
+     * @since   1.0
+     */
+    protected function isLoaded()
+    {
+        return isset($this->primary_key);
+    }
+
+    /**
+     * _validateForeignKey
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function _validateForeignKey($key, $pk, $table)
+    {
+        $query = $this->db->getQuery(true);
+
+        $query->select($this->db->quoteName($pk));
+        $query->from($this->db->quoteName($table));
+        $query->where($this->db->quoteName($pk) . ' = ' . (int)$this->table->$key);
+
+        $this->db->setQuery($query->__toString());
+
+        $result = $this->db->loadResult();
+
+        if ($this->db->getErrorNum()) {
+            $e = new MolajoException($this->db->getErrorMsg());
+            $this->setError($e);
+            return false;
+        }
+
+        if ($result == (int)$this->table->$key) {
+        } else {
+            $this->set('valid', false);
+        }
+    }
+
+    /**
+     * _validateValues
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function _validateValues($field, $required = null, $values = null, $default = null)
+    {
+        /** Default */
+        if (isset($this->table->$field)) {
+        } else if ($default == null) {
+        } else {
+            $this->table->$field = $default;
+        }
+
+        /** Required */
+        if ($required === true) {
+            if (isset($this->table->$field)) {
             } else {
-                $this->$k = $v->Default;
+                $this->set('valid', false);
+            }
+            if (trim($this->table->$field) == ''
+                || (int)$this->table->$field == 0
+            ) {
+                $this->set('valid', false);
+            }
+        }
+
+        /** Values */
+        if ($values == null) {
+        } else {
+            $testArray = explode(',', $values);
+            if (in_array($this->table->$field, $testArray)) {
+            } else {
+                $this->set('valid', false);
             }
         }
     }
 
     /**
-     * save
-     *
-     * Method to provide a shortcut to binding, checking and storing data
-     *
-     * @param   mixed   Array or object to bind to table
-     * @param   string  Filter for the order updating
-     * @param   mixed   An optional array or space separated list of properties to ignore for binding
+     * _validateFunction
      *
      * @return  boolean
      * @since   1.0
      */
-    public function save($source, $orderingFilter = '', $ignore = '')
+    protected function _validateFunction($class, $method)
     {
-        if ($this->bind($source, $ignore)) {
+        if (class_exists($class)) {
         } else {
             return false;
         }
 
-        if ($this->check()) {
+        if (method_exists($class, $method)) {
         } else {
             return false;
         }
 
-        if ($this->store()) {
-        } else {
-            return false;
+        $return = '';
+        $execute = '$return = ' . $class . '::' . $method .
+            '(' . $this->table . ');';
+        eval($execute);
+        if ($return === false) {
+            $this->set('valid', false);
         }
+    }
 
-        if ($this->checkin()) {
-        } else {
-            return false;
-        }
+    /**
+     * getItems
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
 
-        if ($orderingFilter) {
-            $filterValue = $this->$orderingFilter;
-            $this->reorder($orderingFilter
-                ? $this->db->quoteName($orderingFilter) . ' = ' . $this->db->Quote($filterValue)
-                : '');
-        }
+    /**
+     * getPagination
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        return $this->pagination;
+    }
 
-        $this->setError('');
+    /**
+     * getState
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
 
-        return true;
+    /**
+     * getFields
+     *
+     * Retrieves columns from the database table
+     *
+     * @return bool
+     * @since  1.0
+     */
+    public function getFields()
+    {
+        return $this->db->getTableColumns($this->table, false);
     }
 
     /**
      * bind
      *
-     * Method to bind an associative array or object to the Table instance. This
-     * method only binds properties that are publicly accessible and optionally
-     * takes an array of properties to ignore when binding.
+     * Method to bind an associative array to the Table
+     * Ignores properties not publicly accessible and
+     * those defined in the ignore parameter
      *
-     * @param  $source
+     * @param  JTable $source
      * @param  array $ignore
      *
      * @return bool
@@ -471,20 +562,6 @@ class MolajoModel extends JObject
         }
 
         return $this->tableQueryResults;
-    }
-
-    /**
-     * check
-     *
-     * Method to perform editing to ensure correctness before storing in database
-     * Child classes should override method to implement specific business rules for table.
-     *
-     * @return  boolean  True if the instance is sane and able to be stored in the database.
-     * @since   1.0
-     */
-    public function check()
-    {
-        return true;
     }
 
     /**
@@ -580,63 +657,6 @@ class MolajoModel extends JObject
         //				return false;
         //			}
         //        }
-    }
-
-    /**
-     * delete
-     *
-     * Method to delete a row from the database table by primary key value.
-     *
-     * @param   mixed    An optional primary key value to delete.  If not set the
-     *                    instance property value is used.
-     * @return  boolean  True on success.
-     * @since   1.0
-     */
-    public function delete($pk = null)
-    {
-        $k = $this->primary_key;
-        $pk = (is_null($pk)) ? $this->$k : $pk;
-
-        if ($pk === null) {
-            $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
-            $this->setError($e);
-            return false;
-        }
-
-        // If tracking assets, remove the asset first.
-        if ($this->_trackAssets) {
-            // Get and the asset name.
-            $this->$k = $pk;
-            $name = $this->_getAssetName();
-            $asset = new MolajoAssetModel();
-
-            if ($asset->loadByName($name)) {
-                if (!$asset->delete()) {
-                    $this->setError($asset->getError());
-                    return false;
-                }
-            }
-            else {
-                $this->setError($asset->getError());
-                return false;
-            }
-        }
-
-        // Delete the row by primary key.
-        $query = $this->db->getQuery(true);
-        $query->delete();
-        $query->from($this->table);
-        $query->where($this->primary_key . ' = ' . $this->db->quote($pk));
-        $this->db->setQuery($query->__toString());
-
-        // Check for a database error.
-        if (!$this->db->query()) {
-            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_DELETE_FAILED', get_class($this), $this->db->getErrorMsg()));
-            $this->setError($e);
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -751,46 +771,6 @@ class MolajoModel extends JObject
         $this->checked_out_time = '';
 
         return true;
-    }
-
-    /**
-     * TODO: This either needs to be static or not.
-     *
-     * isCheckedOut
-     *
-     * Method to determine if a row is checked out and therefore uneditable by
-     * a user.  If the row is checked out by the same user, then it is considered
-     * not checked out -- as the user can still edit it.
-     *
-     * @param   integer  The user_id to preform the match with, if an item is checked
-     *                    out by this user the function will return false.
-     * @param   integer  The user_id to perform the match against when the function
-     *                    is used as a static function.
-     * @return  boolean  True if checked out.
-     * @since   1.0
-     */
-    public function isCheckedOut($with = 0, $against = null)
-    {
-        // Handle the non-static case.
-        if (isset($this) && ($this instanceof MolajoModel) && is_null($against)) {
-            $against = $this->get('checked_out');
-        }
-
-        // The item is not checked out or is checked out by the same user.
-        if (!$against || ($against == $with)) {
-            return false;
-        }
-
-        $db = Services::DB();
-        $db->setQuery(
-            'SELECT COUNT(user_id)' .
-                ' FROM ' . $db->quoteName('#__sessions') .
-                ' WHERE ' . $db->quoteName('user_id') . ' = ' . (int)$against
-        );
-        $checkedOut = (boolean)$db->loadResult();
-
-        // If a session exists for the user then it is checked out.
-        return $checkedOut;
     }
 
     /**
@@ -1192,56 +1172,6 @@ class MolajoModel extends JObject
                 return true;
             }
         }
-
-        return true;
-    }
-
-    /**
-     * Method to lock the database table for writing.
-     *
-     * @return  boolean  True on success.
-     * @since   1.0
-     */
-    protected function _lock()
-    {
-        // Lock the table for writing.
-        $this->db->setQuery('LOCK TABLES ' . $this->db->quoteName($this->table) . ' WRITE');
-        $this->db->query();
-
-        // Check for a database error.
-        if ($this->db->getErrorNum()) {
-            $this->setError($this->db->getErrorMsg());
-
-            return false;
-        }
-
-        $this->_locked = true;
-
-        return true;
-    }
-
-    /**
-     * _unlock
-     *
-     * Method to unlock the database table for writing.
-     *
-     * @return  boolean  True on success.
-     * @since   1.0
-     */
-    protected function _unlock()
-    {
-        // Unlock the table.
-        $this->db->setQuery('UNLOCK TABLES');
-        $this->db->query();
-
-        // Check for a database error.
-        if ($this->db->getErrorNum()) {
-            $this->setError($this->db->getErrorMsg());
-
-            return false;
-        }
-
-        $this->_locked = false;
 
         return true;
     }

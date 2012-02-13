@@ -30,7 +30,7 @@ class MolajoUserService
      * @since  1.0
      * @var object
      */
-    protected $model = 'MolajoUserModel';
+    protected $model = 'MolajoUsersModel';
 
     /**
      * $id
@@ -253,11 +253,11 @@ class MolajoUserService
     protected function __construct($id = 0)
     {
         $this->id = (int) $id;
-        $this->load();
+        $this->read();
     }
 
     /**
-     * _load
+     * read
      *
      * Retrieve User or Guest Information
      *
@@ -266,10 +266,10 @@ class MolajoUserService
      * @return  boolean
      * @since   1.0
      */
-    protected function load()
+    protected function read()
     {
-        $this->model = new MolajoUsersModel ();
-        $results = $this->model->load($this->id);
+        $this->model = new $this->model ();
+        $results = $this->model->read($this->id);
         $columns = $this->model->getFields('#__users', true);
 
         foreach ($results as $name => $value) {

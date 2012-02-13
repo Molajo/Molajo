@@ -157,7 +157,7 @@ class MolajoDisplayModel extends MolajoModel
         $this->processFilter('status');
 
         /** force title filter for restore list **/
-        if ($this->status->get('filter.status') == MOLAJO_STATUS_VERSION) {
+        if ($this->state->get('filter.status') == MOLAJO_STATUS_VERSION) {
             $loadFilterArray[] = 'title';
             $this->processFilter('title');
         }
@@ -622,8 +622,8 @@ class MolajoDisplayModel extends MolajoModel
         $results = $acl->getQueryInformation($this->mvc['view'], $this->query, 'user', '', $this->mvc['view']);
 
         /** set ordering and direction **/
-        $orderCol = $this->status->get('list.ordering', 'a.title');
-        $orderDirn = $this->status->get('list.direction', 'asc');
+        $orderCol = $this->state->get('list.ordering', 'a.title');
+        $orderDirn = $this->state->get('list.direction', 'asc');
         //        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
         //            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
         //        }

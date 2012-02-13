@@ -35,7 +35,7 @@ class MolajoUsersModel extends MolajoModel
     }
 
     /**
-     * load
+     * read
      *
      * Method to load a user
      *
@@ -45,7 +45,7 @@ class MolajoUsersModel extends MolajoModel
      * @return  bool    True on success, false on failure.
      * @since   1.0
      */
-    public function load($id = null, $reset = true)
+    public function read($id = null, $reset = true)
     {
         $this->id = $id;
         $row = $this->_query($this->id, $reset);

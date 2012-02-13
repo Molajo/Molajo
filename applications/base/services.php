@@ -244,9 +244,6 @@ class MolajoServices
         /** execute method */
         $connection = '';
         if ($serviceMethod == 'getInstance') {
-            /** instantiate the class */
-//            $execute = '$connection = new $serviceClass' .
-//                '(' . $parms . ');';
             $execute = '$connection = $serviceClass::getInstance '.
                   '(' . $parms . ');';
         } else {

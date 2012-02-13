@@ -46,7 +46,7 @@ class MolajoMessageRenderer extends MolajoRenderer
     {
         $this->set('model', 'MolajoMessagesModel');
         $this->set('task', 'display');
-        $this->parameters->set('extension_suppress_no_results', 1);
+        $this->parameters->set('suppress_no_results', 1);
 
         return true;
     }

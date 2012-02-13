@@ -30,6 +30,7 @@ abstract class MolajoContentHelper
         $query = $db->getQuery(true);
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
+        $table_name = Services::Configuration()->get('dbprefix').$content_table;
 
         $query->select('a.' . $db->namequote('id'));
         $query->select('a.' . $db->namequote('extension_instance_id'));
@@ -48,8 +49,7 @@ abstract class MolajoContentHelper
         $query->select('a.' . $db->namequote('language'));
         $query->select('a.' . $db->namequote('translation_of_id'));
         $query->select('a.' . $db->namequote('ordering'));
-
-        $query->from($db->namequote('#' . $content_table) . ' as a');
+        $query->from('#__content as a ');
         $query->where('a.' . $db->namequote('id') .
             ' = ' . (int)$id);
         $query->where('a.' . $db->namequote('status') .
@@ -70,13 +70,14 @@ abstract class MolajoContentHelper
         MolajoAccessService::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
+                'join_toprimary_key' => 'id',
                 'asset_prefix' => 'b_assets',
                 'select' => true
             )
         );
 
-        $db->setQuery($query->__toString());
+        //$db->setQuery($query->__toString());
+        $db->setQuery($query);
         $rows = $db->loadObjectList();
 
         if ($db->getErrorNum() == 0) {

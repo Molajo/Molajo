@@ -91,7 +91,7 @@ abstract class MolajoExtensionHelper
             ->setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
+                'join_toprimary_key' => 'id',
                 'asset_prefix' => 'b_assets',
                 'select' => true
             )

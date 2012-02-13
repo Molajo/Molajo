@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<table>
+    <name>content</name>
+    <primary_key>id</primary_key>
+    <security>
+        <field name="" filter="" escape=""/>
+        <field name="id" filter="" escape=""/>
+        <field name="extension_instance_id" filter="" escape=""/>
+        <field name="asset_type_id" filter="" escape=""/>
+        <field name="title" filter="" escape=""/>
+        <field name="subtitle" filter="" escape=""/>
+        <field name="path" filter="" escape=""/>
+        <field name="alias" filter="" escape=""/>
+        <field name="content_text" filter="" escape=""/>
+        <field name="protected" filter="" escape=""/>
+        <field name="featured" filter="" escape=""/>
+        <field name="stickied" filter="" escape=""/>
+        <field name="status" filter="" escape=""/>
+        <field name="start_publishing_datetime" filter="" escape=""/>
+        <field name="stop_publishing_datetime" filter="" escape=""/>
+        <field name="version" filter="" escape=""/>
+        <field name="version_of_id" filter="" escape=""/>
+        <field name="status_prior_to_version" filter="" escape=""/>
+        <field name="created_datetime" filter="" escape=""/>
+        <field name="created_by" filter="" escape=""/>
+        <field name="modified_datetime" filter="" escape=""/>
+        <field name="modified_by" filter="" escape=""/>
+        <field name="checked_out_datetime" filter="" escape=""/>
+        <field name="checked_out_by" filter="" escape=""/>
+        <field name="root" filter="" escape=""/>
+        <field name="parent_id" filter="" escape=""/>
+        <field name="lft" filter="" escape=""/>
+        <field name="rgt" filter="" escape=""/>
+        <field name="lvl" filter="" escape=""/>
+        <field name="home" filter="" escape=""/>
+        <field name="language" filter="" escape=""/>
+        <field name="translation_of_id" filter="" escape=""/>
+        <field name="ordering" filter="" escape=""/>
+    </security>
+    <validations>
+        <foreignkeys>
+            <fk key="extension_instance_id" pk="id" table="extension_instances" zero="0"/>
+            <fk key="asset_type_id" pk="id" table="asset_types" zero="0" />
+            <fk key="checked_out_by" pk="id" table="users" zero="1"/>
+            <fk key="created_by" pk="id" table="users" zero="1"/>
+            <fk key="modified_by" pk="id" table="users" zero="1"/>
+        </foreignkeys>
+        <values>
+            <value field="title" required="true"/>
+            <value field="protected" values="0,1" default="0"/>
+            <value field="featured" values="0,1" default="0"/>
+            <value field="stickied" values="0,1" default="0"/>
+            <value field="protected" values="0,1" default="0"/>
+        </values>
+        <functions>
+            <function class="MolajoContentModelHelper" method="checkAlias" crud="c"/>
+            <function class="MolajoContentModelHelper" method="checkStatus" crud="c,u"/>
+            <function class="MolajoContentModelHelper" method="checkDates" crud="c,u"/>
+            <function class="MolajoContentModelHelper" method="checkVersion" crud="c,u,d"/>
+            <function class="MolajoContentModelHelper" method="checkHome" crud="c,u,d"/>
+            <function class="MolajoContentModelHelper" method="checkCustomFields" crud="c,u"/>
+            <function class="MolajoContentModelHelper" method="checkParameters" crud="c,u"/>
+            <function class="MolajoContentModelHelper" method="checkMetadata" crud="c,u"/>
+            <function class="MolajoContentModelHelper" method="checkLanguage" crud="c,u"/>
+            <function class="MolajoContentModelHelper" method="checkOrdering" crud="c,u,d"/>
+        </functions>
+    </validations>
+</table>
