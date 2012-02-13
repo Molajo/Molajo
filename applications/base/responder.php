@@ -31,7 +31,7 @@ class MolajoResponder
      * @var    object
      * @since  1.0
      */
-    protected $_config = null;
+    protected $config = null;
 
     /**
      * Response Mimetype
@@ -39,7 +39,7 @@ class MolajoResponder
      * @var    string
      * @since  1.0
      */
-    protected $_mimetype = 'text/html';
+    protected $mimetype = 'text/html';
 
     /**
      * Links
@@ -47,7 +47,7 @@ class MolajoResponder
      * @var    string
      * @since  1.0
      */
-    protected $_links;
+    protected $links;
 
     /**
      * Metadata
@@ -55,7 +55,7 @@ class MolajoResponder
      * @var    array
      * @since  1.0
      */
-    protected $_page_view_metadata = array();
+    protected $metadata = array();
 
     /**
      * Stylesheet links
@@ -63,7 +63,7 @@ class MolajoResponder
      * @var    array
      * @since  1.0
      */
-    protected $_style_links = array();
+    protected $style_links = array();
 
     /**
      * Style Declarations
@@ -71,7 +71,7 @@ class MolajoResponder
      * @var    array
      * @since  1.0
      */
-    protected $_style_declarations = array();
+    protected $style_declarations = array();
 
     /**
      * Script Links
@@ -79,7 +79,7 @@ class MolajoResponder
      * @var    string
      * @since  1.0
      */
-    protected $_script_links = array();
+    protected $script_links = array();
 
     /**
      * Script Declarations
@@ -87,7 +87,7 @@ class MolajoResponder
      * @var    array
      * @since  1.0
      */
-    protected $_script_declarations = array();
+    protected $script_declarations = array();
 
     /**
      * Custom HTML
@@ -95,7 +95,7 @@ class MolajoResponder
      * @var    array
      * @since  1.0
      */
-    protected $_custom_html = array();
+    protected $custom_html = array();
 
     /**
      * Response Object
@@ -103,7 +103,7 @@ class MolajoResponder
      * @var    object
      * @since  1.0
      */
-    protected $_response = array();
+    public $response;
 
     /**
      * getInstance
@@ -135,9 +135,10 @@ class MolajoResponder
      */
     public function __construct()
     {
-        $this->_response = new Registry();
-        $this->_response->set('cachable', true);
-        return;
+		$this->response = new stdClass;
+		$this->response->cachable = false;
+		$this->response->headers = array();
+		$this->response->body = array();
     }
 
     /**
@@ -156,17 +157,17 @@ class MolajoResponder
         $name = strtolower($name);
 
         if (is_bool($context) && ($context === true)) {
-            $this->_page_view_metadata['http-equiv'][$name] = $content;
+            $this->metadata['http-equiv'][$name] = $content;
 
             if ($sync && strtolower($name) == 'content-type') {
                 $this->setMimeEncoding($content, false);
             }
 
         } else if (is_string($context)) {
-            $result = $this->_page_view_metadata[$context][$name];
+            $result = $this->metadata[$context][$name];
 
         } else {
-            $this->_page_view_metadata['standard'][$name] = $content;
+            $this->metadata['standard'][$name] = $content;
         }
     }
 
@@ -182,7 +183,7 @@ class MolajoResponder
      */
     public function getMetadata()
     {
-        return $this->_page_view_metadata;
+        return $this->metadata;
     }
 
     /**
@@ -204,7 +205,7 @@ class MolajoResponder
      */
     public function setMimeEncoding($format = 'text/html', $sync = true)
     {
-        $this->_mimetype = strtolower($format);
+        $this->mimetype = strtolower($format);
         if ($sync) {
             $this->setMetadata('content-type', $format, true, false);
         }
@@ -220,7 +221,7 @@ class MolajoResponder
      */
     public function getMimeEncoding()
     {
-        return $this->_mimetype;
+        return $this->mimetype;
     }
 
     /**
@@ -243,18 +244,18 @@ class MolajoResponder
      */
     public function addHeadLink($url, $relation, $relation_type = 'rel', $attributes = array())
     {
-        $count = count($this->_links);
+        $count = count($this->links);
         if ($count > 0) {
-            foreach ($this->_links as $link) {
+            foreach ($this->links as $link) {
                 if ($link['url'] == $url) {
                     return;
                 }
             }
         }
-        $this->_links[$count]['url'] = $url;
-        $this->_links[$count]['relation'] = $relation;
-        $this->_links[$count]['relation_type'] = $relation_type;
-        $this->_links[$count]['attributes'] = trim(implode(' ', $attributes));
+        $this->links[$count]['url'] = $url;
+        $this->links[$count]['relation'] = $relation;
+        $this->links[$count]['relation_type'] = $relation_type;
+        $this->links[$count]['attributes'] = trim(implode(' ', $attributes));
     }
 
     /**
@@ -264,7 +265,7 @@ class MolajoResponder
      */
     public function getHeadLinks()
     {
-        return $this->_links;
+        return $this->links;
     }
 
     /**
@@ -278,7 +279,7 @@ class MolajoResponder
      */
     public function addCustomHTML($html)
     {
-        $this->_custom_html[] = trim($html);
+        $this->custom_html[] = trim($html);
     }
 
     /**
@@ -289,7 +290,7 @@ class MolajoResponder
      */
     public function getCustomHTML()
     {
-        return $this->_custom_html;
+        return $this->custom_html;
     }
 
     /**
@@ -313,7 +314,7 @@ class MolajoResponder
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-                    if ($this->getDirection() == 'rtl') {
+                    if (Services::Language()->get('direction') == 'rtl') {
                         $this->addStyleLinks($urlPath . '/css/' . $file, $priority);
                     }
                 } else {
@@ -339,19 +340,19 @@ class MolajoResponder
      */
     public function addStyleLinks($url, $priority = 500, $mimetype = 'text/css', $media = null, $attributes = array())
     {
-        $count = count($this->_style_links);
+        $count = count($this->style_links);
         if ($count > 0) {
-            foreach ($this->_style_links as $stylesheet) {
+            foreach ($this->style_links as $stylesheet) {
                 if ($stylesheet['url'] == $url) {
                     return;
                 }
             }
         }
-        $this->_style_links[$count]['url'] = $url;
-        $this->_style_links[$count]['mimetype'] = $mimetype;
-        $this->_style_links[$count]['media'] = $media;
-        $this->_style_links[$count]['attributes'] = trim(implode(' ', $attributes));
-        $this->_style_links[$count]['priority'] = $priority;
+        $this->style_links[$count]['url'] = $url;
+        $this->style_links[$count]['mimetype'] = $mimetype;
+        $this->style_links[$count]['media'] = $media;
+        $this->style_links[$count]['attributes'] = trim(implode(' ', $attributes));
+        $this->style_links[$count]['priority'] = $priority;
     }
 
     /**
@@ -362,7 +363,7 @@ class MolajoResponder
      */
     public function getStyleLinks()
     {
-        return $this->_style_links;
+        return $this->style_links;
     }
 
     /**
@@ -378,16 +379,16 @@ class MolajoResponder
      */
     public function addStyleDeclaration($content, $mimetype = 'text/css')
     {
-        $count = count($this->_style_declarations);
+        $count = count($this->style_declarations);
         if ($count > 0) {
-            foreach ($this->_style_declarations as $style) {
+            foreach ($this->style_declarations as $style) {
                 if ($style['content'] == $content) {
                     return;
                 }
             }
         }
-        $this->_style_declarations[$count]['mimetype'] = $mimetype;
-        $this->_style_declarations[$count]['content'] = $content;
+        $this->style_declarations[$count]['mimetype'] = $mimetype;
+        $this->style_declarations[$count]['content'] = $content;
     }
 
     /**
@@ -398,7 +399,7 @@ class MolajoResponder
      */
     public function getStyleDeclarations()
     {
-        return $this->_style_declarations;
+        return $this->style_declarations;
     }
 
     /**
@@ -453,21 +454,21 @@ class MolajoResponder
             $defer = 0;
         }
 
-        $count = count($this->_script_links);
+        $count = count($this->script_links);
 
         if ($count > 0) {
-            foreach ($this->_script_links as $script) {
+            foreach ($this->script_links as $script) {
                 if ($script['url'] == $url) {
                     return;
                 }
             }
         }
 
-        $this->_script_links[$count]['url'] = $url;
-        $this->_script_links[$count]['mimetype'] = $mimetype;
-        $this->_script_links[$count]['defer'] = $defer;
-        $this->_script_links[$count]['async'] = $async;
-        $this->_script_links[$count]['priority'] = $priority;
+        $this->script_links[$count]['url'] = $url;
+        $this->script_links[$count]['mimetype'] = $mimetype;
+        $this->script_links[$count]['defer'] = $defer;
+        $this->script_links[$count]['async'] = $async;
+        $this->script_links[$count]['priority'] = $priority;
     }
 
     /**
@@ -484,10 +485,10 @@ class MolajoResponder
 
         $results = array();
 
-        $count = count($this->_script_links);
+        $count = count($this->script_links);
 
         if ($count > 0) {
-            foreach ($this->_script_links as $script) {
+            foreach ($this->script_links as $script) {
                 if ($script['defer'] == $defer) {
                     $results[] = $script;
                 }
@@ -515,19 +516,19 @@ class MolajoResponder
             $defer = 0;
         }
 
-        $count = count($this->_script_declarations);
+        $count = count($this->script_declarations);
 
         if ($count > 0) {
-            foreach ($this->_script_declarations as $script) {
+            foreach ($this->script_declarations as $script) {
                 if ($script['content'] == $script) {
                     return;
                 }
             }
         }
 
-        $this->_script_declarations[$count]['mimetype'] = $mimetype;
-        $this->_script_declarations[$count]['content'] = $content;
-        $this->_script_declarations[$count]['defer'] = $defer;
+        $this->script_declarations[$count]['mimetype'] = $mimetype;
+        $this->script_declarations[$count]['content'] = $content;
+        $this->script_declarations[$count]['defer'] = $defer;
     }
 
     /**
@@ -545,10 +546,10 @@ class MolajoResponder
 
         $results = array();
 
-        $count = count($this->_script_declarations);
+        $count = count($this->script_declarations);
 
         if ($count > 0) {
-            foreach ($this->_script_declarations as $script) {
+            foreach ($this->script_declarations as $script) {
                 if ($script['defer'] == $defer) {
                     $results[] = $script;
                 }
@@ -572,17 +573,17 @@ class MolajoResponder
             if (ini_get('zlib.output_compression')) {
             } elseif (ini_get('output_handler') == 'ob_gzhandler') {
             } else {
-                $this->_compress();
+                $this->compress();
             }
         }
 
         // Send the content-type header.
         $this->setHeader('Content-Type', $this->getMimeEncoding() . '; charset=utf-8');
 
-        if ($this->_response->get('cachable', true)) {
+        if ($this->response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
-//            if ($this->_response->get('last_modified')) {
-//                $this->setHeader('Last-Modified', $this->_response->set('last_modified'), format('D, d M Y H:i:s'));
+//            if ($this->response->get('last_modified')) {
+//                $this->setHeader('Last-Modified', $this->response->set('last_modified'), format('D, d M Y H:i:s'));
 //            }
         } else {
             $this->setHeader('Expires', 'Fri, 6 Jan 1989 00:00:00 GMT', true);
@@ -620,7 +621,7 @@ class MolajoResponder
 
         // Get the supported encoding.
         $encodings = array_intersect(
-            $this->_client->encodings,
+            $this->client->encodings,
             array_keys($supported)
         );
 
@@ -631,7 +632,7 @@ class MolajoResponder
 
         // Verify that headers have not yet been sent, and that our connection is still alive.
         if ($this->_checkHeadersSent()
-            || !$this->_checkConnectionAlive()) {
+            || !$this->checkConnectionAlive()) {
             return;
         }
 
@@ -684,10 +685,10 @@ class MolajoResponder
     public function allowCache($allow = null)
     {
         if ($allow !== null) {
-            $this->_response->cachable = (bool)$allow;
+            $this->response->cachable = (bool)$allow;
         }
 
-        return $this->_response->cachable;
+        return $this->response->cachable;
     }
 
     /**
@@ -710,19 +711,19 @@ class MolajoResponder
 
         // If the replace flag is set, unset all known headers with the given name.
         if ($replace) {
-            foreach ($this->_response->headers as $key => $header)
+            foreach ($this->response->headers as $key => $header)
             {
                 if ($name == $header['name']) {
-                    unset($this->_response->headers[$key]);
+                    unset($this->response->headers[$key]);
                 }
             }
 
             // Clean up the array as unsetting nested arrays leaves some junk.
-            $this->_response->headers = array_values($this->_response->headers);
+            $this->response->headers = array_values($this->response->headers);
         }
 
         // Add the header to the internal array.
-        $this->_response->headers[] = array('name' => $name, 'value' => $value);
+        $this->response->headers[] = array('name' => $name, 'value' => $value);
 
         return $this;
     }
@@ -737,7 +738,7 @@ class MolajoResponder
      */
     public function getHeaders()
     {
-        return $this->_response->headers;
+        return $this->response->headers;
     }
 
     /**
@@ -749,7 +750,7 @@ class MolajoResponder
      */
     public function clearHeaders()
     {
-        $this->_response->headers = array();
+        $this->response->headers = array();
 
         return $this;
     }
@@ -765,7 +766,7 @@ class MolajoResponder
     {
         if ($this->_checkHeadersSent()) {
         } else {
-            foreach ($this->_response->headers as $header) {
+            foreach ($this->response->headers as $header) {
                 if ('status' == strtolower($header['name'])) {
                     // 'status' headers indicate an HTTP status, and need to be handled slightly differently
                     $this->header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int)$header['value']);
@@ -789,7 +790,7 @@ class MolajoResponder
      */
     public function setBody($content)
     {
-        $this->_response->body = array((string)$content);
+        $this->response->body = array((string)$content);
 
         return $this;
     }
@@ -805,7 +806,7 @@ class MolajoResponder
      */
     public function prependBody($content)
     {
-        array_unshift($this->_response->body, (string)$content);
+        array_unshift($this->response->body, (string)$content);
 
         return $this;
     }
@@ -821,7 +822,7 @@ class MolajoResponder
      */
     public function appendBody($content)
     {
-        array_push($this->_response->body, (string)$content);
+        array_push($this->response->body, (string)$content);
 
         return $this;
     }
@@ -838,9 +839,9 @@ class MolajoResponder
     public function getBody($asArray = false)
     {
         if ($asArray === true) {
-            return $this->_response->body;
+            return $this->response->body;
         } else {
-            return implode('', $this->_response->body);
+            return implode('', $this->response->body);
         }
     }
 
@@ -921,14 +922,14 @@ class MolajoResponder
     public function redirect($pageRequest, $code = 303)
     {
         /** sef url options */
-        if ($this->get('sef', 1) == 1) {
-            if ($this->get('sef_rewrite', 0) == 0) {
+        if (Services::Configuration()->get('sef', 1) == 1) {
+            if (Services::Configuration()->get('sef_rewrite', 0) == 0) {
                 $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . 'index.php/' . $pageRequest;
             } else {
                 $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . $pageRequest;
             }
 
-            if ((int)$this->get('sef_suffix', 0) == 1) {
+            if ((int)Services::Configuration()->get('sef_suffix', 0) == 1) {
                 $url .= '.html';
             }
         }
@@ -942,18 +943,18 @@ class MolajoResponder
         $exception = false;
 
         /** IE */
-        if (stripos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
-            || stripos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false
+        if (stripos($SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
+            || stripos($SERVER['HTTP_USER_AGENT'], 'Trident') !== false
         ) {
             $exception = 'trident';
         }
-        if (stripos($_SERVER['HTTP_USER_AGENT'], 'AppleWebKit') !== false
-            || stripos($_SERVER['HTTP_USER_AGENT'], 'blackberry') !== false
+        if (stripos($SERVER['HTTP_USER_AGENT'], 'AppleWebKit') !== false
+            || stripos($SERVER['HTTP_USER_AGENT'], 'blackberry') !== false
         ) {
             $exception = 'webkit';
         }
 
-        if ($this->checkHeadersSent()) {
+        if ($this->_checkHeadersSent()) {
             echo "<script>document.location.href='$url';</script>\n";
         } else {
 
