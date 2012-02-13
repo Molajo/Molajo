@@ -15,4 +15,4 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoSiteExtensionInstancesModel extends MolajoModel {}
+class MolajoSiteExtensionInstancesModel extends MolajoDisplayModel {}

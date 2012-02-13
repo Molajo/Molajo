@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class BlockquoteModuleModel extends MolajoModel
+class MolajoBlockquoteModuleModel extends MolajoDisplayModel
 {
     /**
      * __construct
@@ -78,7 +78,7 @@ class BlockquoteModuleModel extends MolajoModel
             $item = array();
             $item->cite = $cite;
             $item->excerpt = $excerpt;
-
+$renderedLayout = '';
             /** replace **/
             $workText = str_replace($matches[0][$i], $renderedLayout, $workText);
         }

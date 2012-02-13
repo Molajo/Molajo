@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoApplicationExtensionInstancesModel extends MolajoModel {}
+class MolajoApplicationExtensionInstancesModel extends MolajoDisplayModel {}

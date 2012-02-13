@@ -51,27 +51,31 @@ class MolajoModuleRenderer extends MolajoRenderer
     /**
      * import
      *
-     * imports component folders and files
+     * lazy load imports of extension folders and files
+     * Files and classes do not have to exist if system
+     * defaults can be used
+     *
      * @since 1.0
      */
     protected function _importClasses()
     {
         $load = new LoadHelper();
         $name = ucfirst($this->get('extension_instance_name'));
-        $name = str_replace (array('-', '_'), '', $name);
+        $name = str_replace(array('-', '_'), '', $name);
+        $name = 'Molajo' . $name;
 
         /** Controller */
         if (file_exists($this->get('extension_path') . '/controller.php')) {
             $load->requireClassFile(
                 $this->get('extension_path') . '/controller.php',
-                $name . 'ModuleControllerDisplay');
+                $name . 'ModuleController');
         }
 
         /** Model */
         if (file_exists($this->get('extension_path') . '/model.php')) {
             $load->requireClassFile(
                 $this->get('extension_path') . '/model.php',
-                $name . 'ModuleModelDisplay');
+                $name . 'ModuleModel');
         }
     }
 

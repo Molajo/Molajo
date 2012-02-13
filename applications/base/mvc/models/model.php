@@ -28,128 +28,78 @@ class MolajoModel extends JObject
     protected $name = 'MolajoModel';
 
     /**
-     * Configuration
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $config;
-
-    /**
-     * Model Status
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $status;
-
-    /**
-     * $mvc
-     *
-     * Current request variables
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $mvc;
-
-    /**
-     * $parameters
-     *
-     * Options for current request
-     *
-     * @var    array
-     * @since  1.0
-     */
-    public $parameters = array();
-
-    /**
      * Database connection
      *
      * @var    string
      * @since  1.0
      */
-    protected $db = '';
+    protected $db;
 
     /**
-     * Name of the database table
+     * Database table
      *
      * @var    string
      * @since  1.0
      */
-    protected $table = '';
+    protected $table;
 
     /**
-     * Table array
+     * Primary key field
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $_primary_key;
+
+    /**
+     * Primary key value
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $id;
+
+    /**
+     * Results set from display query
      *
      * @var    array
      * @since  1.0
      */
-    public $tableQueryResults = '';
+    protected $items;
 
     /**
-     * Name of the primary key field in the table.
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $_primary_key = '';
-
-    /**
-     * Primary Key Value
-     *
-     * @var    string
-     * @since  1.0
-     */
-    public $id = 0;
-
-    /**
-     * $items
+     * Pagination object from display query
      *
      * @var    array
      * @since  1.0
      */
-    public $items = array();
+    protected $pagination;
 
     /**
-     * $pagination
+     * Task Request
      *
-     * @var    array
+     * @var    JRegistry
      * @since  1.0
      */
-    public $pagination = array();
+    public $task_request;
 
     /**
-     * $task
+     * Parameters
      *
-     * @var    string
+     * @var    JRegistry
      * @since  1.0
      */
-    public $task = null;
+    public $parameters;
 
     /**
      * __construct
      *
-     * @param   string  $name
-     * @param   string  $prefix
-     * @param   array   $config
-     *
      * @return  object
      * @since   1.0
      */
-    public function __construct(Registry $config = null)
+    public function __construct()
     {
-        if ($config instanceof Registry) {
-            $this->_config = $config;
-        } else {
-            $this->_config = new Registry;
-        }
-
-        if (array_key_exists('dbo', $this->_config)) {
-            $this->db = $this->_config['dbo'];
-        } else {
-            $this->db = Services::DB();
-        }
+        $this->db = Services::DB();
     }
 
     /**

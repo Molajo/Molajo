@@ -222,14 +222,14 @@ class MolajoViewHelper
     }
 
     /**
-     * getViewDefaults
+     * getViewDefaultsApplication
      *
      * Retrieve application defaults for views and wraps
      *
      * @return bool
      * @since 1.0
      */
-    static public function getViewDefaults($type = 'template',
+    static public function getViewDefaultsApplication($type = 'template',
                                            $task = null,
                                            $id = 0)
     {
@@ -255,6 +255,46 @@ class MolajoViewHelper
 
             } else {
                 $view = (int)Services::Configuration()->get('default_item_wrap_view_id', 0);
+            }
+        }
+        return $view;
+    }
+
+    /**
+     * getViewDefaultsOther
+     *
+     * Retrieve view and wrap defaults for categories and extensions
+     *
+     * @return bool
+     * @since 1.0
+     */
+    static public function getViewDefaultsOther($type = 'template',
+                                           $task = null,
+                                           $id = 0,
+                                           $parameters)
+    {
+        $view = 0;
+        if ($type == 'template') {
+            if ($task == 'add' || $task == 'edit') {
+                $view = $parameters->get('default_edit_template_view_id', 0);
+
+            } else if ((int)$id == 0) {
+                $view = $parameters->get('default_items_template_view_id', 0);
+
+            } else {
+                $view = $parameters->get('default_item_template_view_id', 0);
+            }
+        }
+
+        if ($type == 'wrap') {
+            if ($task == 'add' || $task == 'edit') {
+                $view = $parameters->get('default_edit_wrap_view_id', 0);
+
+            } else if ((int)$id == 0) {
+                $view = $parameters->get('default_items_wrap_view_id', 0);
+
+            } else {
+                $view = $parameters->get('default_item_wrap_view_id', 0);
             }
         }
         return $view;

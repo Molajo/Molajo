@@ -171,10 +171,11 @@ class MolajoRequest
         ) {
             $this->_getRenderData();
         }
-echo '<pre>';
-var_dump($this->page_request);
-echo '</pre>';
-
+/**
+        echo '<pre>';
+        var_dump($this->page_request);
+        echo '</pre>';
+*/
         return;
     }
 
@@ -581,20 +582,22 @@ echo '</pre>';
         $row = ContentHelper::get(
             (int)$this->get('source_id'),
             $this->get('source_table'));
-
         if (count($row) == 0) {
-            /** 500: Source Content not found */
-            $this->set('status_found', false);
-            Services::Message()
-                ->set(
-                $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
-                $code = 500,
-                $debug_location = 'MolajoRequest::_getSource',
-                $debug_object = $this->page_request
-            );
-            return $this->set('status_found', false);
+            return true;
         }
+//        if (count($row) == 0) {
+//            /** 500: Source Content not found */
+//            $this->set('status_found', false);
+//            Services::Message()
+//                ->set(
+//                $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+//                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+//                $code = 500,
+//                $debug_location = 'MolajoRequest::_getSource',
+//                $debug_object = $this->page_request
+//            );
+//            return $this->set('status_found', false);
+//        }
 
         /** match found */
         $this->set('source_title', $row->title);
@@ -651,7 +654,7 @@ echo '</pre>';
 
         $this->_setPageValues(
             $this->get('source_parameters',
-            $this->get('source_metadata')));
+                $this->get('source_metadata')));
 
         return $this->set('status_found', true);
     }
@@ -704,9 +707,9 @@ echo '</pre>';
         $parameters->loadString($row->parameters);
         $this->set('category_parameters', $parameters);
 
-        $this->_setPageValues(
+        $this->_setPageValuesDefaults(
             $this->get('category_parameters',
-            $this->get('category_metadata'))
+                $this->get('category_metadata'))
         );
 
         return $this->set('status_found', true);
@@ -747,7 +750,7 @@ echo '</pre>';
         );
         $this->set('extension_type', 'component');
 
-        $this->_setPageValues(
+        $this->_setPageValuesDefaults(
             $this->get('extension_parameters',
                 $this->get('extension_metadata')
             )
@@ -759,6 +762,7 @@ echo '</pre>';
     /**
      * _setPageValues
      *
+     * Called by content item and menu item methods
      * Set the values needed to generate the page (theme, page, view, wrap, and various metadata)
      *
      * @param null $sourceParameters
@@ -831,6 +835,78 @@ echo '</pre>';
     }
 
     /**
+     *  _setPageValuesDefaults
+     *
+     *  Called by Category and Extension Methods
+     *
+     * @return bool
+     * @since 1.0
+     */
+    protected function _setPageValuesDefaults($parameters = null, $metadata = null)
+    {
+        if ($this->get('theme_id', 0) == 0) {
+            $this->set('theme_id', $parameters->get('default_theme_id', 0));
+        }
+
+        if ($this->get('page_view_id', 0) == 0) {
+            $this->set('page_view_id', $parameters->get('default_page_view_id', 0));
+        }
+
+        if ((int)$this->get('template_view_id', 0) == 0) {
+            $this->set('template_view_id',
+                ViewHelper::getViewDefaultsOther(
+                    'template',
+                    $this->get('mvc_task', ''),
+                    (int)$this->get('mvc_id', 0),
+                    $parameters)
+            );
+        }
+
+        if ((int)$this->get('wrap_view_id', 0) == 0) {
+            $this->set('wrap_view_id',
+                ViewHelper::getViewDefaultsOther(
+                    'wrap',
+                    $this->get('mvc_task', ''),
+                    (int)$this->get('mvc_id', 0),
+                    $parameters)
+            );
+        }
+
+        /** metadata  */
+        if ($this->get('metadata_title', '') == '') {
+            $this->set('metadata_title',
+                Services::Configuration()
+                    ->get('metadata_title', ''));
+        }
+        if ($this->get('metadata_description', '') == '') {
+            $this->set('metadata_description',
+                Services::Configuration()
+                    ->get('metadata_description', ''));
+        }
+        if ($this->get('metadata_keywords', '') == '') {
+            $this->set('metadata_keywords',
+                Services::Configuration()
+                    ->get('metadata_keywords', ''));
+        }
+        if ($this->get('metadata_author', '') == '') {
+            $this->set('metadata_author',
+                Services::Configuration()
+                    ->get('metadata_author', ''));
+        }
+        if ($this->get('metadata_content_rights', '') == '') {
+            $this->set('metadata_content_rights',
+                Services::Configuration()
+                    ->get('metadata_content_rights', ''));
+        }
+        if ($this->get('metadata_robots', '') == '') {
+            $this->set('metadata_robots',
+                Services::Configuration()
+                    ->get('metadata_robots', ''));
+        }
+        return;
+    }
+
+    /**
      * _routeRequest
      *
      * Route the application.
@@ -898,8 +974,8 @@ echo '</pre>';
             $this->set('status_authorised',
                 Services::Access()
                     ->authoriseTask(
-                        $this->get('mvc_task'),
-                        $this->get('request_asset_id')
+                    $this->get('mvc_task'),
+                    $this->get('request_asset_id')
                 )
             );
         }
@@ -980,16 +1056,15 @@ echo '</pre>';
                     ->get('default_page_view_id', ''));
         }
 
-        if ((int)$this->get('template_view_id', 0) == '') {
-
+        if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                ViewHelper::getViewDefaults('template', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
+                ViewHelper::getViewDefaultsApplication('template', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
             );
         }
 
-        if ((int)$this->get('wrap_view_id', 0) == '') {
+        if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                ViewHelper::getViewDefaults('wrap', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
+                ViewHelper::getViewDefaultsApplication('wrap', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
             );
         }
 
@@ -1329,7 +1404,7 @@ echo '</pre>';
                 'true'
             );
             Services::Message()
-            ->set(
+                ->set(
                 Services::Configuration()
                     ->get(
                     'error_404_message',

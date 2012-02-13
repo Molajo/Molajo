@@ -161,6 +161,7 @@ class MolajoComponentRenderer extends MolajoRenderer
 
         $name = ucfirst($this->get('extension_instance_name'));
         $name = str_replace(array('-', '_'), '', $name);
+        $name = 'Molajo' . $name;
 
         /** Controllers */
         if (file_exists($this->get('extension_path') . '/controller.php')) {

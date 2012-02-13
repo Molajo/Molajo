@@ -168,7 +168,7 @@ class MolajoRenderer
         /** extension MVC classes are loaded */
         $this->_importClasses();
 
-        /** load Metadata (theme renderer, only) */
+        /** theme renderer, only - loads metadata for the page */
         $this->_loadMetadata();
 
         /** extension language files */
@@ -237,17 +237,22 @@ class MolajoRenderer
 
         /** retrieves extension and populates related mvc object values */
         $this->_getExtension();
-
         if ($this->extension_required === true) {
             if ($this->get('extension_instance_id', 0) == 0) {
                 return $this->set('status_found', false);
             }
         }
 
-        /** retrieves MVC defaults for application */
+        /** retrieves MVC defaults for extension */
+//        if ($this->get('extension_parameters', '') == '') {
+//        } else {
+//            $this->_getExtensionDefaults();
+//        }
+
+        /** retrieves MVC defaults for application object */
         $this->_getApplicationDefaults();
 
-        /** lazy load paths for view files */
+        /** gets paths for template and wrap views */
         $this->_setPaths();
 
         return $this->set('status_found', true);
@@ -397,6 +402,42 @@ class MolajoRenderer
     }
 
     /**
+     *  _getExtensionDefaults
+     *
+     *  Retrieve default values, if needed, for the extension
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function _getExtensionDefaults()
+    {
+        if ((int)$this->get('template_view_id', 0) == 0) {
+            $this->set('template_view_id',
+                ViewHelper::getViewDefaultsOther('view',
+                    $this->get('model'),
+                    $this->get('task', ''),
+                    (int)$this->get('id', 0),
+                    $this->get('extension_parameters', '')
+                )
+            );
+        }
+
+        /** wrap */
+        if ((int)$this->get('wrap_view_id', 0) == 0) {
+            $this->set('wrap_view_id',
+                ViewHelper::getViewDefaultsOther(
+                    'wrap',
+                    $this->get('model'),
+                    $this->get('task', ''),
+                    (int)$this->get('id', 0),
+                    $this->get('extension_parameters', '')
+                )
+            );
+        }
+        return true;
+    }
+
+    /**
      *  _getApplicationDefaults
      *
      *  Retrieve default values, if not provided by extension
@@ -408,7 +449,7 @@ class MolajoRenderer
     {
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                ViewHelper::getViewDefaults('view',
+                ViewHelper::getViewDefaultsApplication('view',
                     $this->get('model'),
                     $this->get('task', ''),
                     (int)$this->get('id', 0))
@@ -418,7 +459,7 @@ class MolajoRenderer
         /** wrap */
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                ViewHelper::getViewDefaults('wrap',
+                ViewHelper::getViewDefaultsApplication('wrap',
                     $this->get('model'),
                     $this->get('task', ''),
                     (int)$this->get('id', 0))
@@ -430,7 +471,9 @@ class MolajoRenderer
     /**
      *  _setPaths
      *
-     *  Lazy load extension files
+     *  Using default ordering (Theme, Extension, View, Core MVC)
+     *  this method identifies the file and URL paths for
+     *  both the Template and Wrap Views
      *
      * @return  null
      * @since   1.0
@@ -505,7 +548,7 @@ class MolajoRenderer
     /**
      * _importClasses
      *
-     * imports extension classes and files
+     * lazy load import for extension classes and files
      *
      * @return  null
      * @since   1.0
@@ -517,7 +560,7 @@ class MolajoRenderer
     /**
      * _loadMetadata
      *
-     * Theme Renderer use, only
+     * Theme Renderer use, only, loads the page metadata
      *
      * @return  null
      * @since   1.0
@@ -562,21 +605,17 @@ class MolajoRenderer
      */
     protected function _invokeMVC()
     {
-        /** model */
         $model = (string)$this->_setModel();
         $this->set('model', $model);
 
-        /** controller */
         $cc = (string)$this->_setController();
         $this->set('controller', $cc);
 
-        /** task */
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
         $this->_verifyMVC(true);
-
-        /** verify all values required are available */
+die;
         if ($this->get('status_found') === false) {
             return $this->get('status_found');
         }
@@ -684,9 +723,10 @@ class MolajoRenderer
 
     /**
      * _verifyMVC
+     *
      * @return bool
      */
-    protected function _verifyMVC($onlyErrors = true)
+    protected function _verifyMVC($display = false)
     {
         $test1 = class_exists($this->get('controller'));
         $test2 = method_exists($this->get('controller'), $this->get('task'));
@@ -708,7 +748,7 @@ class MolajoRenderer
         }
 
         if (($this->get('status_found') === false)
-            || $onlyErrors === false
+            || $display === true
         ) {
             echo 'Error Count: ' . (5 - ($test1 + $test2 + $test3 + $test4 + $test5)) . '<br />';
             echo 'Controller ' . $this->get('controller') . '<br />';

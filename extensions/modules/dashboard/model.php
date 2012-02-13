@@ -14,6 +14,6 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class DashboardModuleModel extends MolajoModel
+class MolajoDashboardModuleModel extends MolajoDisplayModel
 {
 }

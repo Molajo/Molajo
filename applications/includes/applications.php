@@ -74,7 +74,7 @@ foreach ($files as $file) {
 /** Controller */
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/display.php', 'MolajoDisplayController');
-//$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/edit.php', 'MolajoEditController');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/edit.php', 'MolajoEditController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/login.php', 'MolajoLoginController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/redirect.php', 'MolajoRedirectController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/update.php', 'MolajoUpdateController');
@@ -82,10 +82,11 @@ $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/updatelist.php',
 
 /** Models */
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/model.php', 'MolajoModel');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/display.php', 'MolajoDisplayModel');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/nested.php', 'MolajoNestedModel');
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'model.php' || $file == 'nested.php') {
+    if ($file == 'model.php' || $file == 'display.php'|| $file == 'nested.php') {
     } else {
         $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Model');
     }
