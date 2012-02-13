@@ -29,7 +29,7 @@ class MolajoRequest
     /**
      * $page_request
      *
-     * Page Request object which MolajoRequset
+     * Page Request object which MolajoRequest
      * populates with processing requirements for this request
      *
      * Can be accessed via Molajo::Request()->get('property')
@@ -46,21 +46,18 @@ class MolajoRequest
      *  only creating it if it doesn't already exist.
      *
      * @static
-     * @param  string  $request
      * @param  string  $override_request_url
      * @param  string  $override_asset_id
      *
      * @return object
      * @since  1.0
      */
-    public static function getInstance($request = null,
-                                       $override_request_url = null,
+    public static function getInstance($override_request_url = null,
                                        $override_asset_id = null)
     {
         if (empty(self::$instance)) {
             self::$instance =
                 new MolajoRequest(
-                    $request,
                     $override_request_url,
                     $override_asset_id
                 );
@@ -74,7 +71,6 @@ class MolajoRequest
      * Class constructor
      *
      * @static
-     * @param  Registry $config
      * @param  string $override_request_url
      * @param  string $override_asset_id
      *

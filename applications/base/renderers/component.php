@@ -103,6 +103,8 @@ class MolajoComponentRenderer extends MolajoRenderer
             Molajo::Request()->get('mvc_task'));
         $this->set('model',
             Molajo::Request()->get('mvc_model'));
+        $this->set('table',
+            Molajo::Request()->get('source_table'));
         $this->set('id',
             (int)Molajo::Request()->get('mvc_id'));
         $this->set('category_id',
