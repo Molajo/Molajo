@@ -149,7 +149,7 @@ if (defined('MOLAJO_APPLICATION')) {
 
 if (defined('MOLAJO_PAGE_REQUEST')) {
 } else {
-    if (strripos($pageRequest, '/')) {
+    if (strripos($pageRequest, '/') == (strlen($pageRequest) - 1)) {
         $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/'));
     }
     define('MOLAJO_PAGE_REQUEST', $pageRequest);

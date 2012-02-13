@@ -17,6 +17,8 @@ defined('MOLAJO') or die;
 class MolajoRequest
 {
     /**
+     * $instance
+     *
      * Application static instance
      *
      * @var    object
@@ -25,10 +27,12 @@ class MolajoRequest
     protected static $instance;
 
     /**
-     *  Page Request object which MolajoRequset
-     *  populates with processing requirements for this request
+     * $page_request
      *
-     *  Can be accessed via Molajo::Request()->get('property')
+     * Page Request object which MolajoRequset
+     * populates with processing requirements for this request
+     *
+     * Can be accessed via Molajo::Request()->get('property')
      *
      * @var    object
      * @since  1.0
@@ -77,17 +81,11 @@ class MolajoRequest
      * @return mixed
      * @since  1.0
      */
-    public function __construct($request = null,
-                                $override_request_url = null,
+    public function __construct($override_request_url = null,
                                 $override_asset_id = null)
     {
-        /** request object */
-        if ($request instanceof Registry) {
-            $this->page_request = $request;
-        } else {
-            $this->page_request = new Registry;
-        }
-        $this->_setRequest();
+
+        $this->_initializePageRequest();
 
         /** Specific asset */
         if ((int)$override_asset_id == 0) {
@@ -235,7 +233,6 @@ class MolajoRequest
         } else {
             $query->select('a.' . $db->nameQuote('request'));
         }
-
         $query->from($db->nameQuote('#__assets') . ' as a');
         $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
 
@@ -251,18 +248,20 @@ class MolajoRequest
      */
 
     /**
-     * _setRequest
+     * _initializePageRequest
      *
      * Create and Initialize the request
      *
-     * Request Object which is passed on to Document, Renderers and the MVC classes
+     * Request Object which can be accessed by other classes
      *
      * @static
      * @return array
      * @since 1.0
      */
-    protected function _setRequest()
+    protected function _initializePageRequest()
     {
+        $this->page_request = new JRegistry();
+
         /** request */
         $this->set('request_url_base',
             MOLAJO_BASE_URL);

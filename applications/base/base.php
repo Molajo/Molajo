@@ -118,15 +118,13 @@ class MolajoBase
      * @return MolajoRequest
      * @since 1.0
      */
-    public static function getRequest($request = null,
-                                      $override_request_url = null,
+    public static function getRequest($override_request_url = null,
                                       $override_asset_id = null)
     {
         if (self::$request) {
         } else {
             self::$request =
                 MolajoRequest::getInstance(
-                    $request,
                     $override_request_url,
                     $override_asset_id
                 );

@@ -26,14 +26,6 @@ class MolajoResponder
     protected static $instance;
 
     /**
-     * Configuration
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $config = null;
-
-    /**
      * Response Mimetype
      *
      * @var    string
@@ -109,12 +101,10 @@ class MolajoResponder
      * getInstance
      *
      * Returns a reference to the global Responder object,
-     *  only creating it if it doesn't already exist.
+     *  creating it if it doesn't already exist.
      *
      * @static
-     * @param  Registry|null $config
-     *
-     * @return bool|object
+     * @return object
      * @since  1.0
      */
     public static function getInstance()
@@ -130,7 +120,7 @@ class MolajoResponder
      *
      * Class constructor.
      *
-     * @return boolean
+     * @return null
      * @since  1.0
      */
     public function __construct()
@@ -176,8 +166,6 @@ class MolajoResponder
      *
      * Gets a metadata tag.
      *
-     * @param   string  $name     Value of name or http-equiv tag
-     * @param   bool    $context  true - http-equiv; false - standard; otherwise provided
      * @return  string
      * @since   1.0
      */
@@ -225,21 +213,19 @@ class MolajoResponder
     }
 
     /**
+     * addHeadLink
+     *
      * Adds <link> tags to the head of the document
      *
      * $relation_type defaults to 'rel' as it is the most common relation type used.
      * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
-     * Typical tag: <link href="index.php" rel="Start">
+     * Typical tag: <link href="index.php" rel="start">
      *
-     * @param   string  $url           The link that is being related.
-     * @param   string  $relation      Relation of link.
-     * @param   string  $relation_type Relation type attribute. Either rel or rev (default: 'rel').
-     * @param   array   $attributes    Associative array of remaining attributes.
+     * @param  $url           The link that is being related.
+     * @param  $relation      Relation of link.
+     * @param  $relation_type Relation type attribute. Either rel or rev (default: 'rel').
+     * @param  $attributes    Associative array of remaining attributes.
      *
-     * @param $url
-     * @param $relation
-     * @param string $relation_type
-     * @param array $attributes
      * @return mixed
      */
     public function addHeadLink($url, $relation, $relation_type = 'rel', $attributes = array())
@@ -274,6 +260,7 @@ class MolajoResponder
      * Adds a custom HTML string to the head block
      *
      * @param   string  $html  The HTML to add to the head
+     *
      * @return  void
      * @since   1.0
      */
@@ -298,9 +285,12 @@ class MolajoResponder
      *
      * Loads the CS located within the folder, as specified by the filepath
      *
-     * @param $filePath
-     * @param $urlPath
+     * @param  string  $filePath
+     * @param  string  $urlPath
+     * @param  integer $priority
+     *
      * @return void
+     * @since  1.0
      */
     public function addStyleLinksFolder($filePath, $urlPath, $priority = 500)
     {
@@ -463,7 +453,6 @@ class MolajoResponder
                 }
             }
         }
-
         $this->script_links[$count]['url'] = $url;
         $this->script_links[$count]['mimetype'] = $mimetype;
         $this->script_links[$count]['defer'] = $defer;
@@ -517,7 +506,6 @@ class MolajoResponder
         }
 
         $count = count($this->script_declarations);
-
         if ($count > 0) {
             foreach ($this->script_declarations as $script) {
                 if ($script['content'] == $script) {
@@ -582,9 +570,9 @@ class MolajoResponder
 
         if ($this->response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
-//            if ($this->response->get('last_modified')) {
-//                $this->setHeader('Last-Modified', $this->response->set('last_modified'), format('D, d M Y H:i:s'));
-//            }
+            if ($this->last_modified instanceof JDate) {
+         	    $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
+            }
         } else {
             $this->setHeader('Expires', 'Fri, 6 Jan 1989 00:00:00 GMT', true);
             $this->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
@@ -700,7 +688,7 @@ class MolajoResponder
      * @param   string   $value    The value of the header to set.
      * @param   boolean  $replace  True to replace any headers with the same name.
      *
-     * @return  Application  Instance of $this to allow chaining.
+     * @return  Responder  Instance of $this to allow chaining.
      *
      * @since   1.0
      */
@@ -744,7 +732,7 @@ class MolajoResponder
     /**
      * Method to clear any set response headers.
      *
-     * @return  Application  Instance of $this to allow chaining.
+     * @return  Responder  Instance of $this to allow chaining.
      *
      * @since   1.0
      */
@@ -758,7 +746,7 @@ class MolajoResponder
     /**
      * Send the response headers.
      *
-     * @return  Application  Instance of $this to allow chaining.
+     * @return  Responder  Instance of $this to allow chaining.
      *
      * @since   1.0
      */
@@ -785,7 +773,7 @@ class MolajoResponder
      *
      * @param   string  $content  The content to set as the response body.
      *
-     * @return  Application  Instance of $this to allow chaining.
+     * @return  Responder  Instance of $this to allow chaining.
      * @since   1.0
      */
     public function setBody($content)
@@ -800,7 +788,7 @@ class MolajoResponder
      *
      * @param   string  $content  The content to prepend to the response body.
      *
-     * @return  Application  Instance of $this to allow chaining.
+     * @return  Responder  Instance of $this to allow chaining.
      *
      * @since   1.0
      */
@@ -816,7 +804,7 @@ class MolajoResponder
      *
      * @param   string  $content  The content to append to the response body.
      *
-     * @return  Application  Instance of $this to allow chaining.
+     * @return  Responder  Instance of $this to allow chaining.
      *
      * @since   1.0
      */
