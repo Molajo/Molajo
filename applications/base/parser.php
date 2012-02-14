@@ -142,7 +142,7 @@ class MolajoParser
         $this->parameters->loadArray(
             array(
                 'theme' => Molajo::Request()->get('theme_name'),
-                'theme_path' => Molajo::Request()->get('theme_path'),
+                'theme_path' => Molajo::Request()->get('theme_path') . '/' . 'index.php',
                 'page' => Molajo::Request()->get('page_view_include'),
                 'parameters' => Molajo::Request()->get('theme_parameters')
             )
@@ -168,7 +168,7 @@ class MolajoParser
         Molajo::Responder()->setBody($body);
 
         /** after rendering */
-//        Services::Dispatcher()->notify('onAfterRender');
+        //        Services::Dispatcher()->notify('onAfterRender');
 
         return;
     }
@@ -189,7 +189,7 @@ class MolajoParser
     {
         /** include the theme and page */
         ob_start();
-        require Molajo::Request()->get('theme_path');
+        require $this->parameters->get('theme_path');
         $this->rendered_output = ob_get_contents();
         ob_end_clean();
 

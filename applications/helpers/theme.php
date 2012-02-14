@@ -54,7 +54,7 @@ class MolajoThemeHelper
     public static function getPath($theme_name)
     {
         if (file_exists(MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
-            return MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php';
+            return MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name;
         }
         return false;
     }

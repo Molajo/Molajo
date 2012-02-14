@@ -130,19 +130,19 @@ class MolajoDisplayController extends MolajoController
             $totalRows = count($this->rowset);
             foreach ($this->rowset as $this->row) {
 
-                /** view: before any rows are processed */
+                /** header: before any rows are processed */
                 if ($rowCount == 1) {
 
                     if (isset($this->row->event->beforeRenderView)) {
                         echo $this->row->event->beforeRenderView;
                     }
 
-                    if (file_exists($this->view_path . '/views/top.php')) {
-                        include $this->view_path . '/views/top.php';
+                    if (file_exists($this->view_path . '/views/header.php')) {
+                        include $this->view_path . '/views/header.php';
                     }
                 }
 
-                /** view: row header, body, and footer */
+                /** body: once for each row */
                 if ($this->row == null) {
                 } else {
 
@@ -150,16 +150,8 @@ class MolajoDisplayController extends MolajoController
                         echo $this->row->event->beforeRenderViewItem;
                     }
 
-                    if (file_exists($this->view_path . '/views/header.php')) {
-                        include $this->view_path . '/views/header.php';
-                    }
-
                     if (file_exists($this->view_path . '/views/body.php')) {
                         include $this->view_path . '/views/body.php';
-                    }
-
-                    if (file_exists($this->view_path . '/views/footer.php')) {
-                        include $this->view_path . '/views/footer.php';
                     }
 
                     if (isset($this->row->event->afterRenderViewItem)) {
@@ -170,10 +162,11 @@ class MolajoDisplayController extends MolajoController
                 }
             }
 
-            /** view: after all rows are processed */
+            /** footer: after all rows are processed */
             if ($rowCount > $totalRows) {
-                if (file_exists($this->view_path . '/views/bottom.php')) {
-                    include $this->view_path . '/views/bottom.php';
+
+                if (file_exists($this->view_path . '/views/footer.php')) {
+                    include $this->view_path . '/views/footer.php';
 
                     if (isset($this->row->event->afterRenderView)) {
                         echo $this->row->event->afterRenderView;
@@ -188,20 +181,42 @@ class MolajoDisplayController extends MolajoController
         return $output;
     }
 
-    protected function renderMustacheView($renderedOutput)
+    protected function renderMustacheView($template)
     {
-        $template = '';
-        if (stripos($renderedOutput, '}}') > 0) {
-            $template = $renderedOutput;
+        /** quick check for mustache commands */
+        if (stripos($template, '}}') > 0) {
         } else {
-            return $renderedOutput;
+            return $template;
         }
 
-        /** create hash for mustache */
-        $firstTime = true;
-        $rowset = new MustacheClass();
-        $rowset->items = array();
+        /** Instantiate Mustache before Helper */
+        $m = new Mustache;
 
+        /** Mustache Helper: Use the Theme Helper, if exists */
+        $classLoaded = false;
+
+        $helperFile = Molajo::Request()
+            ->get('theme_path') . '/helpers/mustache.php';
+
+        if (file_exists($helperFile)) {
+            require_once $helperFile;
+
+            $helperClass = 'Molajo' .
+                ucfirst(Molajo::Request()->get('theme_name'))
+                . 'MustacheHelper';
+
+            if (class_exists($helperClass)) {
+                $rowset = new $helperClass();
+                $classLoaded = true;
+            }
+        }
+
+        if ($classLoaded === false) {
+            $rowset = new MolajoMustacheHelper();
+        }
+
+        /** create mustache dataset */
+        $rowset->items = array();
         foreach ($this->rowset as $this->row) {
             $item = new stdClass();
             $pairs = get_object_vars($this->row);
@@ -211,60 +226,19 @@ class MolajoDisplayController extends MolajoController
             $rowset->items[] = $item;
         }
 
-        /** ending of hash */
-        $m = new Mustache;
+        /** Pass Template and Data to Mustache */
         ob_start();
         echo $m->render($template, $rowset);
         $output = ob_get_contents();
         ob_end_clean();
+
+        /** Return processed output */
         return $output;
     }
 }
 
-class MustacheClass
-{
-}
 class Display extends MolajoDisplayController
 {
-
-
-    protected function renderMustacheView($renderedOutput)
-    {
-        $template = '';
-        if (stripos($renderedOutput, '}}') > 0) {
-            $template = $renderedOutput;
-        } else {
-            return $renderedOutput;
-        }
-
-        /** create hash for mustache */
-        $firstTime = true;
-        $rowset = new stdClass();
-        $rowset->items = array();
-
-        foreach ($this->rowset as $this->row) {
-
-            if ($firstTime === true) {
-                $pairs = get_object_vars($this->row);
-                $firstTime = false;
-            }
-
-            $item = new stdClass();
-            foreach ($pairs as $key => $value) {
-                $item->$key = $value;
-            }
-
-            $rowset->items[] = $item;
-        }
-
-        /** ending of hash */
-        $m = new Mustache;
-        ob_start();
-        echo $m->render($template, $rowset);
-        $output = ob_get_contents();
-        ob_end_clean();
-        return $output;
-    }
 }
 
 /** 7. Optional data (put this into a model parent?) */
