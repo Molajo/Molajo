@@ -35,26 +35,6 @@ class MolajoHeadRenderer extends MolajoRenderer
     }
 
     /**
-     * _getExtension
-     *
-     * Retrieve extension information using either the ID or the name
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function _getExtension()
-    {
-        if ($this->type == 'defer') {
-            $this->set('model', 'MolajoDeferModel');
-        } else {
-            $this->set('model', 'MolajoHeadModel');
-        }
-        $this->set('task', 'display');
-
-        return true;
-    }
-
-    /**
      *  _getApplicationDefaults
      *
      *  Retrieve default values, if not provided by extension
@@ -64,6 +44,13 @@ class MolajoHeadRenderer extends MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
+        if ($this->type == 'defer') {
+            $this->set('model', 'MolajoDeferModel');
+        } else {
+            $this->set('model', 'MolajoHeadModel');
+        }
+        $this->set('task', 'display');
+
         if ($this->type == 'defer') {
             if ((int)$this->get('template_view_id', 0) == 0) {
                 $this->set('template_view_id',

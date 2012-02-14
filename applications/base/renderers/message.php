@@ -35,23 +35,6 @@ class MolajoMessageRenderer extends MolajoRenderer
     }
 
     /**
-     * _getExtension
-     *
-     * Retrieve extension information using either the ID or the name
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function _getExtension()
-    {
-        $this->set('model', 'MolajoMessagesModel');
-        $this->set('task', 'display');
-        $this->parameters->set('suppress_no_results', 1);
-
-        return true;
-    }
-
-    /**
      *  _getApplicationDefaults
      *
      *  Retrieve default values, if not provided by extension
@@ -61,6 +44,10 @@ class MolajoMessageRenderer extends MolajoRenderer
      */
     protected function _getApplicationDefaults()
     {
+        $this->set('model', 'MolajoMessagesModel');
+        $this->set('task', 'display');
+        $this->parameters->set('suppress_no_results', 1);
+
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id', Services::Configuration()->get('message_template_view_id'));
         }

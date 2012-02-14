@@ -10,8 +10,6 @@ defined('MOLAJO') or die;
 /**
  * Messages
  *
- * Retrieve System Messages
- *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
@@ -23,13 +21,16 @@ class MolajoMessagesModel extends MolajoModel
      *
      * Constructor.
      *
-     * @param  $config
+     * @param  $id
      * @since  1.0
      */
-    public function __construct(JConfig $config = null)
+    public function __construct($id = null)
     {
-        $this->_name = get_class($this);
-        parent::__construct($config);
+        $this->name = get_class($this);
+        $this->table = '';
+        $this->primary_key = '';
+
+        return parent::__construct($id);
     }
 
     /**
@@ -44,7 +45,6 @@ class MolajoMessagesModel extends MolajoModel
         $this->items = array();
 
         $messages = Services::Message()->get();
-
         if (count($messages) == 0) {
             return array();
         }
