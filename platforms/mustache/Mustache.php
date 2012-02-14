@@ -792,7 +792,7 @@ class Mustache {
 		foreach ($context as $view) {
 			if (is_object($view)) {
 				if (method_exists($view, $tag_name)) {
-					return $view->$tag_name();
+					return $view->$tag_name($context);
 				} else if (isset($view->$tag_name)) {
 					return $view->$tag_name;
 				}

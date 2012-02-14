@@ -336,6 +336,7 @@ class MolajoParser
                         die;
                         // ERROR
                     }
+
                     /** 8. render output and store results as "replace with" */
                     $with[] = $rc->process($attributes);
                 }

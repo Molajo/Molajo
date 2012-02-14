@@ -7,8 +7,9 @@
  */
 defined('MOLAJO') or die; ?>
 {{#items}}
+{{{hello}}}
 <header>
-	<h2>{{hello}}</h2>
+	<h2>{{title}}</h2>
 </header>
 <include:module name=pullquote template=pullquote wrap=aside />
 {{content_text}}

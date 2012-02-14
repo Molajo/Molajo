@@ -24,9 +24,18 @@ class MolajoCleanslateMustacheHelper extends MolajoMustacheHelper
      * @results  object
      * @since    1.0
      */
-    public static function hello()
+    public static function hello($context)
     {
-        return 'Goodbye';
+     //   echo $context[0]->author;
+//        return 'Hello1112';
+        $rc = new MolajoModuleRenderer ('module', 'module');
+        $attributes = array();
+        $attributes['name'] = 'dashboard';
+        $attributes['template'] = 'dashboard';
+        $attributes['wrap'] = 'section';
+        return $rc->process($attributes);
+
+        //return array ('MolajoCleanslateMustacheHelper', 'Hello2');
     }
 
     /**
