@@ -378,6 +378,32 @@ class MolajoRenderer
             //todo: amy merge other parameters into $this->parameters $this->set('other_parameters') = $other_parameters;
         }
 
+        /** Retrieve Template View Primary Key */
+        if ($this->get('template_view_id', 0) == 0) {
+            if ($this->get('template_view_name', '') == '') {
+            } else {
+                $this->set('template_view_id',
+                    ExtensionHelper::getInstanceID(
+                        MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
+                        $this->get('template_view_name')
+                    )
+                );
+            }
+        }
+
+        /** Retrieve Wrap View Primary Key */
+        if ($this->get('wrap_view_id', 0) == 0) {
+            if ($this->get('wrap_view_name', '') == '') {
+            } else {
+                $this->set('wrap_view_id',
+                    ExtensionHelper::getInstanceID(
+                        MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW,
+                        $this->get('wrap_view_name')
+                    )
+                );
+            }
+        }
+
         return true;
     }
 
