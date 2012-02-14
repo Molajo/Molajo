@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Head
+ * Display
  *
  * @package     Molajo
  * @subpackage  Model
@@ -21,13 +21,16 @@ class MolajoHeadModel extends MolajoModel
      *
      * Constructor.
      *
-     * @param  $config
+     * @param  $id
      * @since  1.0
      */
-    public function __construct(JConfig $config = null)
+    public function __construct($id = null)
     {
-        $this->_name = get_class($this);
-        parent::__construct($config);
+        $this->name = get_class($this);
+        $this->table = '';
+        $this->primary_key = '';
+
+        return parent::__construct($id);
     }
 
     /**

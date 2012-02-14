@@ -67,15 +67,22 @@ class MolajoThemeRenderer extends MolajoRenderer
     protected function _loadMetadata()
     {
         /** ...store metadata in application array */
-        Molajo::Responder()->setMetadata('metadata_title', Molajo::Request()->get('metadata_title'));
-        Molajo::Responder()->setMetadata('metadata_description', Molajo::Request()->get('metadata_description'));
-        Molajo::Responder()->setMetadata('metadata_keywords', Molajo::Request()->get('metadata_keywords'));
-        Molajo::Responder()->setMetadata('metadata_robots', Molajo::Request()->get('metadata_robots'));
-        Molajo::Responder()->setMetadata('metadata_author', Molajo::Request()->get('metadata_author'));
-        Molajo::Responder()->setMetadata('metadata_content_rights', Molajo::Request()->get('metadata_content_rights'));
+        Molajo::Responder()->setMetadata('metadata_title',
+            Molajo::Request()->get('metadata_title'));
+        Molajo::Responder()->setMetadata('metadata_description',
+            Molajo::Request()->get('metadata_description'));
+        Molajo::Responder()->setMetadata('metadata_keywords',
+            Molajo::Request()->get('metadata_keywords'));
+        Molajo::Responder()->setMetadata('metadata_robots',
+            Molajo::Request()->get('metadata_robots'));
+        Molajo::Responder()->setMetadata('metadata_author',
+            Molajo::Request()->get('metadata_author'));
+        Molajo::Responder()->setMetadata('metadata_content_rights',
+            Molajo::Request()->get('metadata_content_rights'));
 
         /** ...save "modified date" for content request */
-        Molajo::Responder()->response->last_modified = Molajo::Request()->get('source_last_modified');
+        Molajo::Responder()->response->last_modified =
+            Molajo::Request()->get('source_last_modified');
     }
 
     /**

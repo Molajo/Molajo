@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoDisplayController extends MolajoController
 {
-
     /**
      * display
      *
@@ -27,6 +26,7 @@ class MolajoDisplayController extends MolajoController
      */
     public function display()
     {
+
         /** check out */
         if ($this->get('task') == 'edit') {
             $results = parent::checkoutItem();
@@ -37,6 +37,8 @@ class MolajoDisplayController extends MolajoController
 
         /** query results */
         $this->rowset = $this->model->getItems();
+
+        /** store primary request query results for use by other extensions */
         if ($this->get('extension_primary') === true) {
             Molajo::Request()->set('query_results', $this->rowset);
         }

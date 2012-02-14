@@ -406,10 +406,9 @@ class MolajoRenderer
 
         /** Extension not found */
         if (($this->get('extension_instance_id', 0) == 0)
-            || (count($rows) == 0)
+            && (count($rows) == 0)
         ) {
-
-            $this->set('status_found', false);
+            return $this->set('status_found', false);
         }
 
         /** Process Results */
@@ -417,6 +416,7 @@ class MolajoRenderer
         foreach ($rows as $row) {
         }
 
+        $this->set('extension_instance_id', $row->extension_instance_id);
         $this->set('extension_instance_name', $row->title);
         $this->set('extension_asset_id', $row->asset_id);
         $this->set('extension_asset_type_id', $row->asset_type_id);
@@ -443,7 +443,7 @@ class MolajoRenderer
             $this->set('task', $parameters->def('task', 'display'));
         }
         if ($this->get('model', '') == '') {
-            $this->set('model', $parameters->def('model', 'content'));
+            $this->set('model', $parameters->def('model', ''));
         }
         if ((int)$this->get('id', 0) == 0) {
             $this->set('id', $parameters->def('id', 0));
@@ -703,19 +703,27 @@ class MolajoRenderer
      */
     protected function _setModel()
     {
+        /** Extension Name */
+        $extension = (string)ucfirst($this->get('extension_instance_name'));
+        $extension = str_replace(array('-', '_'), '', $extension);
+
         /** 1. Specifically Named Model */
         if ($this->get('model', '') == '') {
+
         } else {
             $mc = (string)ucfirst($this->get('model'));
+            if (class_exists($mc)) {
+                return $mc;
+            }
+            $mc = 'Molajo' . ucfirst($this->get('model')) . 'Model';
             if (class_exists($mc)) {
                 return $mc;
             }
         }
 
         /** 2. Extension Name (+ non-component name, if appropriate) + Model */
-        $mc = (string)ucfirst($this->get('extension_instance_name'));
-        $mc = str_replace(array('-', '_'), '', $mc);
-
+        $mc = 'Molajo';
+        $mc .= $extension;
         if ($this->get('extension_type') == 'component') {
         } else {
             $mc .= ucfirst(trim($this->get('extension_type', 'Module')));
@@ -751,10 +759,18 @@ class MolajoRenderer
      */
     protected function _setController()
     {
+        /** Extension Name */
+        $extension = (string)ucfirst($this->get('extension_instance_name'));
+        $extension = str_replace(array('-', '_'), '', $extension);
+
         /** 1. Specifically Named Controller */
         if ($this->get('controller', '') == '') {
         } else {
             $cc = (string)ucfirst($this->get('controller'));
+            if (class_exists($cc)) {
+                return $cc;
+            }
+            $cc = 'Molajo' . ucfirst($this->get('controller')) . 'Controller';
             if (class_exists($cc)) {
                 return $cc;
             }
@@ -763,6 +779,8 @@ class MolajoRenderer
         /** 2. Extension Name (+ Module, if appropriate) + Controller */
         $cc = (string)ucfirst($this->get('extension_instance_name'));
         $cc = str_replace(array('-', '_'), '', $cc);
+        $cc = 'Molajo';
+        $cc .= $extension;
         if ($this->get('extension_type') == 'component') {
         } else {
             $cc .= ucfirst(trim($this->get('extension_type', 'Module')));

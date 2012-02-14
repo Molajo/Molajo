@@ -167,11 +167,11 @@ class MolajoRequest
         ) {
             $this->_getRenderData();
         }
-        /**
+/**
         echo '<pre>';
         var_dump($this->page_request);
         echo '</pre>';
-         */
+*/
         return;
     }
 
@@ -541,16 +541,13 @@ class MolajoRequest
         $this->set('menu_item_custom_fields', $custom_fields);
 
         $metadata = new Registry;
-        $metadata->loadJSON($row->metadata);
+        $metadata->loadString($row->metadata);
         $this->set('menu_item_metadata', $metadata);
+
+        $this->_setPageValues($parameters, $metadata);
 
         $this->set('menu_item_language', $row->language);
         $this->set('menu_item_translation_of_id', $row->translation_of_id);
-
-        $this->_setPageValues(
-            $parameters,
-            $metadata
-        );
 
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
@@ -651,6 +648,8 @@ class MolajoRequest
         $parameters->loadString($row->parameters);
         $this->set('source_parameters', $parameters);
 
+        $this->_setPageValues($parameters, $metadata);
+
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
             $this->set('mvc_controller',
@@ -680,10 +679,6 @@ class MolajoRequest
             $this->set('mvc_suppress_no_results',
                 $parameters->def('suppress_no_results', 0));
         }
-
-        $this->_setPageValues(
-            $this->get('source_parameters',
-                $this->get('source_metadata')));
 
         return $this->set('status_found', true);
     }
@@ -736,10 +731,7 @@ class MolajoRequest
         $parameters->loadString($row->parameters);
         $this->set('category_parameters', $parameters);
 
-        $this->_setPageValuesDefaults(
-            $this->get('category_parameters',
-                $this->get('category_metadata'))
-        );
+        $this->_setPageValuesDefaults($parameters, $metadata);
 
         return $this->set('status_found', true);
     }
@@ -803,6 +795,8 @@ class MolajoRequest
         $parameters->loadString($row->parameters);
         $this->set('extension_parameters', $parameters);
 
+        $this->_setPageValuesDefaults($parameters, $metadata);
+
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
             $this->set('mvc_controller',
@@ -843,13 +837,6 @@ class MolajoRequest
             ExtensionHelper::getPath(
                 $this->get('extension_asset_type_id'),
                 $this->get('extension_instance_name')
-            )
-        );
-
-       /** Set Page Values not yet established */
-        $this->_setPageValuesDefaults(
-            $this->get('extension_parameters',
-                $this->get('extension_metadata')
             )
         );
 
@@ -894,37 +881,34 @@ class MolajoRequest
         }
 
         /** merge meta data */
-        $meta = new Registry;
-        $meta->loadString($metadata);
-
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
-                $meta->def('metadata_title', '')
+                $metadata->get('metadata_title', '')
             );
         }
         if ($this->get('metadata_description', '') == '') {
             $this->set('metadata_description',
-                $meta->def('metadata_description', '')
+                $metadata->get('metadata_description', '')
             );
         }
         if ($this->get('metadata_keywords', '') == '') {
             $this->set('metadata_keywords',
-                $meta->def('metadata_keywords', '')
+                $metadata->get('metadata_keywords', '')
             );
         }
         if ($this->get('metadata_author', '') == '') {
             $this->set('metadata_author',
-                $meta->def('metadata_author', '')
+                $metadata->get('metadata_author', '')
             );
         }
         if ($this->get('metadata_content_rights', '') == '') {
             $this->set('metadata_content_rights',
-                $meta->def('metadata_content_rights', '')
+                $metadata->get('metadata_content_rights', '')
             );
         }
         if ($this->get('metadata_robots', '') == '') {
             $this->set('metadata_robots',
-                $meta->def('metadata_robots', '')
+                $metadata->get('metadata_robots', '')
             );
         }
 

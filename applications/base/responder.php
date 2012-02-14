@@ -129,6 +129,8 @@ class MolajoResponder
 		$this->response->cachable = false;
 		$this->response->headers = array();
 		$this->response->body = array();
+
+        $this->metadata = array();
     }
 
     /**

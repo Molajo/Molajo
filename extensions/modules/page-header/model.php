@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Header
+ * @subpackage  Model
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -24,10 +24,13 @@ class MolajoPageheaderModuleModel extends MolajoDisplayModel
      * @param  $config
      * @since  1.0
      */
-    public function __construct(JConfig $config = null)
+    public function __construct($id = null)
     {
-        $this->_name = get_class($this);
-        parent::__construct($config);
+        $this->name = get_class($this);
+        $this->table = '';
+        $this->primary_key = '';
+
+        return parent::__construct($id);
     }
 
     /**

@@ -26,6 +26,7 @@ class MolajoUsersModel extends MolajoModel
      */
     public function __construct($id = null)
     {
+        $this->name = get_class($this);
         $this->table = '#__users';
         $this->primary_key = 'id';
 

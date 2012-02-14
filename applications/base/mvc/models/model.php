@@ -36,30 +36,6 @@ class MolajoModel
     protected $db;
 
     /**
-     * Database table
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $table;
-
-    /**
-     * Primary key field
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $primary_key;
-
-    /**
-     * Primary key value
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $id;
-
-    /**
      * Used in setter/getter to store model state
      *
      * @var    array
@@ -82,6 +58,30 @@ class MolajoModel
      * @since  1.0
      */
     protected $pagination;
+
+    /**
+     * Database table
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $table;
+
+    /**
+     * Primary key field
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $primary_key;
+
+    /**
+     * Primary key value
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $id;
 
     /**
      * Task Request
@@ -173,7 +173,40 @@ class MolajoModel
     }
 
     /**
-     * Create
+     * getItems
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getItems()
+    {
+        return array();
+    }
+
+    /**
+     * getPagination
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        return array();
+    }
+
+    /**
+     * getState
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getState()
+    {
+        return array();
+    }
+
+    /**
+     * create
      *
      * @return  object
      * @since   1.0
@@ -529,39 +562,6 @@ class MolajoModel
         if ($return === false) {
             $this->set('valid', false);
         }
-    }
-
-    /**
-     * getItems
-     *
-     * @return    array
-     * @since    1.0
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * getPagination
-     *
-     * @return    array
-     * @since    1.0
-     */
-    public function getPagination()
-    {
-        return $this->pagination;
-    }
-
-    /**
-     * getState
-     *
-     * @return    array
-     * @since    1.0
-     */
-    public function getState()
-    {
-        return $this->state;
     }
 
     /**

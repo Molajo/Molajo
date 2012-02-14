@@ -98,6 +98,7 @@ class MolajoController
         $this->model = new $mc();
         $this->model->task_request = $this->task_request;
         $this->model->parameters = $this->parameters;
+        $this->model->table = $this->get('table');
 
 //        $this->model->load((int)$this->get('id'));
 
