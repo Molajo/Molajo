@@ -14,40 +14,37 @@ defined('MOLAJO') or die;
  * @subpackage  Helper
  * @since       1.0
  */
-class MolajoCleanslateMustacheHelper extends MolajoMustacheHelper
+class MolajoCleanslateMustacheHelper extends Mustache
 {
     /**
      * hello
      *
-     * Example demonstrating how to override the core helper
+     * Accesses User Object and returns a text message
      *
      * @results  object
      * @since    1.0
      */
-    public static function hello($context)
+    public function hello()
     {
-     //   echo $context[0]->author;
-//        return 'Hello1112';
+        return 'Hello '.Services::User()->get('name').'!';
+    }
+
+    /**
+     * dashboard
+     *
+     * Renders the Dashboard Module
+     *
+     * $results  text
+     * $since    1.0
+     */
+    public function dashboard()
+    {
         $rc = new MolajoModuleRenderer ('module', 'module');
         $attributes = array();
         $attributes['name'] = 'dashboard';
         $attributes['template'] = 'dashboard';
         $attributes['wrap'] = 'section';
+
         return $rc->process($attributes);
-
-        //return array ('MolajoCleanslateMustacheHelper', 'Hello2');
-    }
-
-    /**
-     * hello2
-     *
-     * Example demonstrating how to add new functions
-     *
-     * @results  object
-     * @since    1.0
-     */
-    public static function hello2()
-    {
-        return 'Hello2';
     }
 }

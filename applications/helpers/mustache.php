@@ -25,7 +25,7 @@ class MolajoMustacheHelper extends Mustache
      * @results  object
      * @since    1.0
      */
-    public static function hello()
+    public function hello()
     {
         return 'Hello';
     }
