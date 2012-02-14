@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Module
+ * Content Model
  *
  * @package     Molajo
  * @subpackage  Helper

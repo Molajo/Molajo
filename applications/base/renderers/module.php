@@ -30,7 +30,6 @@ class MolajoModuleRenderer extends MolajoRenderer
             'extension_asset_type_id',
             MOLAJO_ASSET_TYPE_EXTENSION_MODULE
         );
-
         $results = parent::_getExtension();
 
         if ($results === false) {

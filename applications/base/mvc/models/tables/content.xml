@@ -47,22 +47,17 @@
         </foreignkeys>
         <values>
             <value field="title" required="true"/>
+            <value field="status" values="0,1" default="0"/>
             <value field="protected" values="0,1" default="0"/>
             <value field="featured" values="0,1" default="0"/>
             <value field="stickied" values="0,1" default="0"/>
             <value field="protected" values="0,1" default="0"/>
         </values>
-        <functions>
-            <function class="MolajoContentModelHelper" method="checkAlias" crud="c"/>
-            <function class="MolajoContentModelHelper" method="checkStatus" crud="c,u"/>
-            <function class="MolajoContentModelHelper" method="checkDates" crud="c,u"/>
-            <function class="MolajoContentModelHelper" method="checkVersion" crud="c,u,d"/>
-            <function class="MolajoContentModelHelper" method="checkHome" crud="c,u,d"/>
-            <function class="MolajoContentModelHelper" method="checkCustomFields" crud="c,u"/>
-            <function class="MolajoContentModelHelper" method="checkParameters" crud="c,u"/>
-            <function class="MolajoContentModelHelper" method="checkMetadata" crud="c,u"/>
-            <function class="MolajoContentModelHelper" method="checkLanguage" crud="c,u"/>
-            <function class="MolajoContentModelHelper" method="checkOrdering" crud="c,u,d"/>
-        </functions>
+        <helper>
+            <function method="validateCheckedOut" crud="u"/>
+            <function method="validateAlias" crud="c,u"/>
+            <function method="validateDates" crud="c,u"/>
+            <function method="validateLanguage" crud="c,u"/>
+        </helper>
     </validations>
 </table>

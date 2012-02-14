@@ -765,10 +765,10 @@ class MolajoRequest
 
         /** Fatal error if Extension cannot be found */
         if (($this->get('extension_instance_id', 0) == 0)
+            || 1 == 1
             || (count($rows) == 0)) {
 
             /** 500: Extension not found */
-            $this->set('status_found', false);
             Services::Message()
                 ->set(
                 $message = Services::Language()->_('ERROR_EXTENSION_NOT_FOUND'),
@@ -777,6 +777,7 @@ class MolajoRequest
                 $debug_location = 'MolajoRequest::_getExtension',
                 $debug_object = $this->page_request
             );
+            return $this->set('status_found', false);
         }
 
         /** Process Results */

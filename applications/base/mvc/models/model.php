@@ -362,7 +362,7 @@ class MolajoModel
         $this->set('valid', true);
 
         /** Verify row is loaded */
-        $results = $this->isLoaded();
+        $results = $this->_isLoaded();
         if ($results === false) {
             return false;
         }
@@ -408,29 +408,28 @@ class MolajoModel
             }
         }
 
-        /** Functions */
-        foreach ($x->validations->functions as $f) {
+        /** Helper Functions */
+        foreach ($x->validations->helper as $f) {
 
-            $class = (string)$f->class;
             $method = (string)$f->method;
-
             $crudArray = (string)$f->crud;
+
             if (in_array($crudCurrent, $crudArray)) {
-                $this->_validateFunction($class, $method);
+                $this->_validateHelperFunction($method);
             }
         }
         return $this;
     }
 
     /**
-     * isLoaded
+     * _isLoaded
      *
      * Checks if the primary key of the object is set.
      *
      * @return  boolean  True if loaded, false otherwise.
      * @since   1.0
      */
-    protected function isLoaded()
+    protected function _isLoaded()
     {
         return isset($this->primary_key);
     }
@@ -505,16 +504,17 @@ class MolajoModel
     }
 
     /**
-     * _validateFunction
+     * _validateHelperFunction
      *
      * @return  boolean
      * @since   1.0
      */
-    protected function _validateFunction($class, $method)
+    protected function _validateHelperFunction($method)
     {
+        $class = 'Molajo'.ucfirst($this->table).'ModelHelper';
         if (class_exists($class)) {
         } else {
-            return false;
+            $class = 'MolajoModelHelper';
         }
 
         if (method_exists($class, $method)) {
@@ -691,7 +691,8 @@ class MolajoModel
     public function checkOut($userId, $pk = null)
     {
         // If there is no checked_out or checked_out_time field, just return true.
-        if (property_exists($this, 'checked_out') && property_exists($this, 'checked_out_time')) {
+        if (property_exists($this, 'checked_out')
+            && property_exists($this, 'checked_out_time')) {
         } else {
             return true;
         }
@@ -708,8 +709,7 @@ class MolajoModel
         }
 
         // Get the current time in MySQL format.
-        $time = Services::Date()
-            ->toSql();
+        $time = Services::Date()->toSql();
 
         // Check the row out by primary key.
         $query = $this->db->getQuery(true);
@@ -747,7 +747,8 @@ class MolajoModel
     public function checkIn($pk = null)
     {
         // If there is no checked_out or checked_out_time field, just return true.
-        if (property_exists($this, 'checked_out') && property_exists($this, 'checked_out_time')) {
+        if (property_exists($this, 'checked_out')
+            && property_exists($this, 'checked_out_time')) {
         } else {
             return true;
         }
@@ -1188,4 +1189,33 @@ class MolajoModel
 
         return true;
     }
+
+    /**
+   	 * Returns an associative array of object properties.
+   	 *
+   	 * @param   boolean  $public  If true, returns only the public properties.
+   	 *
+   	 * @return  array
+   	 *
+   	 * @since   11.1
+   	 *
+   	 * @see     get()
+   	 */
+   	public function getProperties($public = true)
+   	{
+   		$vars = get_object_vars($this);
+   		if ($public)
+   		{
+   			foreach ($vars as $key => $value)
+   			{
+   				if ('_' == substr($key, 0, 1))
+   				{
+   					unset($vars[$key]);
+   				}
+   			}
+   		}
+
+   		return $vars;
+   	}
+
 }

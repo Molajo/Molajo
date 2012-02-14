@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Module
+ * Model
  *
  * @package     Molajo
  * @subpackage  Helper
@@ -16,21 +16,59 @@ defined('MOLAJO') or die;
  */
 class MolajoModelHelper
 {
-
     /**
-     * checkedOut
+     * validateCheckedOut
      *
      * Verify that the row has been checked out for update by the user
      *
      * @return  boolean  True if checked out to user
      * @since   1.0
      */
-    public function checkedOut($table)
+    public function validateCheckedOut($table)
     {
         if ($table->checked_out == Services::User()->get('id')) {
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * validateAlias
+     *
+     * Verify that the alias is unique for this component
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function validateAlias($table)
+    {
+
+    }
+
+    /**
+     * validateDates
+     *
+     * Verify and set defaults for dates
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function validateDates($table)
+    {
+
+    }
+
+    /**
+     * validateLanguage
+     *
+     * Verify language setting
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function validateLanguage($table)
+    {
+
     }
 }

@@ -236,18 +236,19 @@ class MolajoRenderer
         $this->_getAttributes();
 
         /** retrieves extension and populates related mvc object values */
-        $this->_getExtension();
-        if ($this->extension_required === true) {
+        if ($this->extension_required === false) {
+        } else {
+            $this->_getExtension();
             if ($this->get('extension_instance_id', 0) == 0) {
                 return $this->set('status_found', false);
             }
         }
 
         /** retrieves MVC defaults for extension */
-//        if ($this->get('extension_parameters', '') == '') {
-//        } else {
-//            $this->_getExtensionDefaults();
-//        }
+        //        if ($this->get('extension_parameters', '') == '') {
+        //        } else {
+        //            $this->_getExtensionDefaults();
+        //        }
 
         /** retrieves MVC defaults for application object */
         $this->_getApplicationDefaults();
@@ -392,16 +393,21 @@ class MolajoRenderer
     {
         /** Retrieve Extension Query Results */
         if ($this->get('extension_instance_id', 0) == 0) {
+            $rows = ExtensionHelper::get(
+                (int)$this->get('extension_asset_type_id'),
+                $this->get('extension_instance_name')
+            );
         } else {
             $rows = ExtensionHelper::get(
-                 0,
-                 (int)$this->get('extension_instance_id')
-             );
+                (int)$this->get('extension_asset_type_id'),
+                (int)$this->get('extension_instance_id')
+            );
         }
 
         /** Extension not found */
         if (($this->get('extension_instance_id', 0) == 0)
-            || (count($rows) == 0)) {
+            || (count($rows) == 0)
+        ) {
 
             $this->set('status_found', false);
         }
@@ -431,34 +437,23 @@ class MolajoRenderer
 
         /** mvc */
         if ($this->get('controller', '') == '') {
-            $this->set('controller',
-                $parameters->def('controller', '')
-            );
+            $this->set('controller', $parameters->def('controller', ''));
         }
         if ($this->get('task', '') == '') {
-            $this->set('task',
-                $parameters->def('task', 'display')
-            );
+            $this->set('task', $parameters->def('task', 'display'));
         }
         if ($this->get('model', '') == '') {
-            $this->set('model',
-                $parameters->def('model', 'content')
-            );
+            $this->set('model', $parameters->def('model', 'content'));
         }
         if ((int)$this->get('id', 0) == 0) {
-            $this->set('id',
-                $parameters->def('id', 0)
-            );
+            $this->set('id', $parameters->def('id', 0));
         }
         if ((int)$this->get('category_id', 0) == 0) {
-            $this->set('category_id',
-                $parameters->def('category_id', 0)
-            );
+            $this->set('category_id', $parameters->def('category_id', 0));
         }
         if ((int)$this->get('suppress_no_results', 0) == 0) {
             $this->set('suppress_no_results',
-                $parameters->def('suppress_no_results', 0)
-            );
+                $parameters->def('suppress_no_results', 0));
         }
 
         $this->set('extension_event_type',
@@ -471,7 +466,6 @@ class MolajoRenderer
                 $this->get('extension_instance_name')
             )
         );
-
 
         return $this->set('status_found', true);
     }
@@ -687,7 +681,7 @@ class MolajoRenderer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        $this->_verifyMVC(true);
+        $this->_verifyMVC(false);
         if ($this->get('status_found') === false) {
             return $this->get('status_found');
         }
@@ -837,7 +831,7 @@ class MolajoRenderer
      * _postMVCProcessing
      * @return bool
      */
-    protected function _postMVCProcessing ()
+    protected function _postMVCProcessing()
     {
 
     }
