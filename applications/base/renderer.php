@@ -176,6 +176,7 @@ class MolajoRenderer
 
         /** css and js media files for extension and related entities */
         $this->_loadMedia();
+        $this->_loadViewMedia();
 
         /** instantiate MVC and render output */
         $this->rendered_output = $this->_invokeMVC();
@@ -687,6 +688,31 @@ class MolajoRenderer
      */
     protected function _loadMedia()
     {
+    }
+
+    /**
+     * _loadViewMedia
+     *
+     * Loads Media CSS and JS files for Template and Wrap Views
+     *
+     * @return  null
+     * @since   1.0
+     */
+    protected function _loadViewMedia()
+    {
+        $priority = Services::Configuration()->get('media_priority_other_extension', 400);
+
+        $filePath = $this->get('template_view_path');
+        $urlPath = $this->get('template_view_path_url');
+        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+
+        $filePath = $this->get('wrap_view_path');
+        $urlPath = $this->get('wrap_view_path_url');
+        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
+        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
+        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
     }
 
     /**
