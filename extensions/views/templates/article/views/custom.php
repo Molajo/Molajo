@@ -9,11 +9,10 @@ defined('MOLAJO') or die; ?>
 {{{hello}}}
 {{#items}}
 <header>
-	<h2>{{title}}</h2>
+<h2>{{title}}<h2>
 </header>
 <include:module name=pullquote template=pullquote wrap=aside />
 {{content_text}}
-
 <footer>
 {{start_publishing_datetime}}
 </footer>

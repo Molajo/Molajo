@@ -29,10 +29,10 @@ class MolajoRequest
     /**
      * $page_request
      *
-     * Page Request object which MolajoRequest
-     * populates with processing requirements for this request
+     * Page Request object that will be populated by this class
+     * with overall processing requirements for the page
      *
-     * Can be accessed via Molajo::Request()->get('property')
+     * Access via Molajo::Request()->get('property')
      *
      * @var    object
      * @since  1.0
@@ -157,7 +157,10 @@ class MolajoRequest
         } else {
             $this->_getAsset();
             $this->_routeRequest();
-            $this->_authoriseTask();
+            if ($this->get('status_error') === true) {
+            } else {
+                $this->_authoriseTask();
+            }
         }
 
         /** display */

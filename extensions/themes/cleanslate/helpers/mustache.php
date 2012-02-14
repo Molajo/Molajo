@@ -28,7 +28,19 @@ class MolajoCleanslateMustacheHelper extends Mustache
     {
         return 'Hello '.Services::User()->get('name').'!';
     }
-
+    /**
+     * hello
+     *
+     * Accesses User Object and returns a text message
+     *
+     * @results  object
+     * @since    1.0
+     */
+    public function header()
+    {
+        echo 'daffsaas';
+        return '<h2>{{title}}</h2>';
+    }
     /**
      * dashboard
      *

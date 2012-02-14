@@ -41,6 +41,18 @@ class MolajoContentModel extends MolajoDisplayModel
      *
      * @since    1.0
      */
+    public function getItemsx()
+    {
+
+    }
+
+    /**
+     * getItems
+     *
+     * @return    array
+     *
+     * @since    1.0
+     */
     public function getItems()
     {
         $this->items = array();

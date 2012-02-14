@@ -181,6 +181,16 @@ class MolajoDisplayController extends MolajoController
         return $output;
     }
 
+    /**
+     * renderMustacheView
+     *
+     * Passes the rendered output (likely just the mustache template)
+     * and the rowset into Mustache for processing. Helper functions
+     * can be added, as need. Read comments in method for more info.
+     *
+     * @param $template
+     * @return string rendered output
+     */
     protected function renderMustacheView($template)
     {
         /** quick check for mustache commands */
@@ -206,29 +216,29 @@ class MolajoDisplayController extends MolajoController
                 . 'MustacheHelper';
 
             if (class_exists($helperClass)) {
-                $rowset = new $helperClass();
+                $h = new $helperClass();
                 $classLoaded = true;
             }
         }
 
         if ($classLoaded === false) {
-            $rowset = new MolajoMustacheHelper();
+            $h = new MolajoMustacheHelper();
         }
 
         /** create mustache dataset */
-        $rowset->items = array();
+        $h->items = array();
         foreach ($this->rowset as $this->row) {
             $item = new stdClass();
             $pairs = get_object_vars($this->row);
             foreach ($pairs as $key => $value) {
                 $item->$key = $value;
             }
-            $rowset->items[] = $item;
+            $h->items[] = $item;
         }
 
         /** Pass Template and Data to Mustache */
         ob_start();
-        echo $m->render($template, $rowset);
+        echo $h->render($template, $h);
         $output = ob_get_contents();
         ob_end_clean();
 
