@@ -19,36 +19,30 @@ class MolajoUsersModel extends MolajoModel
     /**
      * __construct
      *
-     * @param   string  $table
-     * @param   string  $key
-     * @param   array   $config
+     * @param   string  $id
      *
      * @return  object
      * @since   1.0
      */
-    public function __construct(Registry $config = null)
+    public function __construct($id = null)
     {
         $this->table = '#__users';
         $this->primary_key = 'id';
 
-        return parent::__construct($config);
+        return parent::__construct($id);
     }
 
     /**
      * read
      *
-     * Method to load a user
+     * Method to read user data
      *
-     * @param  integer  $id
-     * @param  bool     $reset
-     *
-     * @return  bool    True on success, false on failure.
+     * @return  bool
      * @since   1.0
      */
-    public function read($id = null, $reset = true)
+    public function read()
     {
-        $this->id = $id;
-        $row = $this->_query($this->id, $reset);
+        $row = $this->_query();
 
         if (count($row) > 0) {
             foreach ($row as $item) {
@@ -70,9 +64,9 @@ class MolajoUsersModel extends MolajoModel
      * @return bool
      * @since  1.0
      */
-    protected function _query($id = null, $reset = true)
+    protected function _query()
     {
-        $row = parent::_query($this->id, $reset);
+        $row = parent::_query();
 
         /**
          * append additional data elements needed for user to the
@@ -358,7 +352,6 @@ class MolajoUsersModel extends MolajoModel
      */
     function setLastVisit($timeStamp = null, $id = null)
     {
-
         // Check for User ID
         if (is_null($id)) {
             if (isset($this)) {

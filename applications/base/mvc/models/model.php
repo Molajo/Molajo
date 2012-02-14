@@ -105,8 +105,10 @@ class MolajoModel
      * @return  object
      * @since   1.0
      */
-    public function __construct()
+    public function __construct($id = null)
     {
+        $this->id = $id;
+
         if (isset($this->name)) {
         } else {
             $this->name = $this;
@@ -186,7 +188,6 @@ class MolajoModel
             return false;
         }
 
-
         return $this;
     }
 
@@ -200,13 +201,24 @@ class MolajoModel
     {
         $this->set('crud', 'r');
 
-        $this->_reset();
+        $this->_query();
+    }
 
+    /**
+     * _query
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _query()
+    {
         $query = $this->db->getQuery(true);
 
         $query->select(' * ');
         $query->from($this->db->quoteName($this->table));
-        $query->where($this->primary_key . ' = ' . $this->db->quote($this->id));
+        $query->where($this->primary_key
+            . ' = '
+            . $this->db->quote($this->id));
 
         $this->db->setQuery($query->__toString());
 
@@ -249,6 +261,51 @@ class MolajoModel
         }
 
         return $row;
+    }
+
+    /**
+     * bind
+     *
+     * Method to bind an associative array to the Table
+     * Ignores properties not publicly accessible and
+     * those defined in the ignore parameter
+     *
+     * @param  $source
+     * @param  $ignore
+     *
+     * @return bool
+     * @since  1.0
+     */
+    public function bind($source, $ignore = array())
+    {
+        if (is_object($source)
+            || is_array($source)
+        ) {
+        } else {
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
+            $this->setError($e);
+            return false;
+        }
+
+        if (is_array($ignore)) {
+        } else {
+            $ignore = explode(' ', $ignore);
+        }
+
+        if (is_object($source)) {
+            $source = get_object_vars($source);
+        }
+
+        /** populate temporary table  */
+        $this->items = array();
+        foreach ($source as $key => $value) {
+            if (in_array($key, $ignore)) {
+            } else {
+                $this->items[$key] = $value;
+            }
+        }
+
+        return $this->items;
     }
 
     /**
@@ -355,7 +412,7 @@ class MolajoModel
         foreach ($x->validations->functions as $f) {
 
             $class = (string)$f->class;
-            $method = (stirng)$f->method;
+            $method = (string)$f->method;
 
             $crudArray = (string)$f->crud;
             if (in_array($crudCurrent, $crudArray)) {
@@ -518,50 +575,6 @@ class MolajoModel
     public function getFields()
     {
         return $this->db->getTableColumns($this->table, false);
-    }
-
-    /**
-     * bind
-     *
-     * Method to bind an associative array to the Table
-     * Ignores properties not publicly accessible and
-     * those defined in the ignore parameter
-     *
-     * @param  JTable $source
-     * @param  array $ignore
-     *
-     * @return bool
-     * @since  1.0
-     */
-    public function bind($source, $ignore = array())
-    {
-        if (is_object($source)
-            || is_array($source)
-        ) {
-        } else {
-            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
-            $this->setError($e);
-            return false;
-        }
-
-        if (is_array($ignore)) {
-        } else {
-            $ignore = explode(' ', $ignore);
-        }
-
-        if (is_object($source)) {
-            $source = get_object_vars($source);
-        }
-
-        /** populate temporary table  */
-        foreach ($source as $key => $value) {
-            if (in_array($key, $ignore)) {
-            } else {
-                $this->tableQueryResults[$key] = $value;
-            }
-        }
-
-        return $this->tableQueryResults;
     }
 
     /**

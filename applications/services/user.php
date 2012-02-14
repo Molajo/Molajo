@@ -257,7 +257,7 @@ class MolajoUserService
     }
 
     /**
-     * read
+     * load
      *
      * Retrieve User or Guest Information
      *
@@ -268,9 +268,9 @@ class MolajoUserService
      */
     protected function read()
     {
-        $this->model = new $this->model ();
-        $results = $this->model->read($this->id);
-        $columns = $this->model->getFields('#__users', true);
+        $this->model = new MolajoUsersModel ($this->id);
+        $results = $this->model->read();
+        $columns = $this->model->getFields();
 
         foreach ($results as $name => $value) {
             $this->set($name, $value);

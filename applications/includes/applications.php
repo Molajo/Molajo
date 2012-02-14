@@ -91,3 +91,13 @@ foreach ($files as $file) {
         $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Model');
     }
 }
+
+/** Model Helpers */
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/helpers/helper.php', 'MolajoModelHelper');
+$files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models/helpers', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'helper.php') {
+    } else {
+        $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'ModelHelper');
+    }
+}

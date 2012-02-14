@@ -14,23 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Helper
  * @since       1.0
  */
-abstract class MolajoContentModelHelper
+class MolajoContentModelHelper extends MolajoModelHelper
 {
 
-    /**
-     * checkedOut
-     *
-     * Verify that the row has been checked out for update by the user
-     *
-     * @return  boolean  True if checked out to user
-     * @since   1.0
-     */
-    public function checkedOut($table)
-    {
-        if ($table->checked_out == Services::User()->get('id')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
