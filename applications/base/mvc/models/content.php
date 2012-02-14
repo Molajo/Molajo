@@ -54,6 +54,15 @@ class MolajoContentModel extends MolajoDisplayModel
 
         $this->items[] = $tempObject;
 
+        $tempObject = new JObject();
+
+        $tempObject->set('title', '2nd Article Test Title');
+        $tempObject->set('content_text', '2nd Test Paragraph.');
+        $tempObject->set('start_publishing_datetime', '2012-02-13');
+        $tempObject->set('author', 'Doug McGinnis');
+
+        $this->items[] = $tempObject;
+
         return $this->items;
     }
 }

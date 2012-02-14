@@ -26,7 +26,6 @@ class MolajoDisplayController extends MolajoController
      */
     public function display()
     {
-
         /** check out */
         if ($this->get('task') == 'edit') {
             $results = parent::checkoutItem();
@@ -60,6 +59,11 @@ class MolajoDisplayController extends MolajoController
         $this->view_path = $this->get('template_view_path');
         $this->view_path_url = $this->get('template_view_path_url');
         $renderedOutput = $this->renderView($this->get('template_view_name'));
+
+        /** mustache */
+        if ($this->parameters->get('mustache', 1) == 1) {
+            $renderedOutput = $this->renderMustacheView($renderedOutput);
+        }
 
         /** render wrap view around template view results */
         return $this->wrapView($this->get('wrap_view_name'), $renderedOutput);
@@ -183,8 +187,85 @@ class MolajoDisplayController extends MolajoController
         ob_end_clean();
         return $output;
     }
+
+    protected function renderMustacheView($renderedOutput)
+    {
+        $template = '';
+        if (stripos($renderedOutput, '}}') > 0) {
+            $template = $renderedOutput;
+        } else {
+            return $renderedOutput;
+        }
+
+        /** create hash for mustache */
+        $firstTime = true;
+        $rowset = new MustacheClass();
+        $rowset->items = array();
+
+        foreach ($this->rowset as $this->row) {
+            $item = new stdClass();
+            $pairs = get_object_vars($this->row);
+            foreach ($pairs as $key => $value) {
+                $item->$key = $value;
+            }
+            $rowset->items[] = $item;
+        }
+
+        /** ending of hash */
+        $m = new Mustache;
+        ob_start();
+        echo $m->render($template, $rowset);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
 }
-class Display extends MolajoDisplayController {}
+
+class MustacheClass
+{
+}
+class Display extends MolajoDisplayController
+{
+
+
+    protected function renderMustacheView($renderedOutput)
+    {
+        $template = '';
+        if (stripos($renderedOutput, '}}') > 0) {
+            $template = $renderedOutput;
+        } else {
+            return $renderedOutput;
+        }
+
+        /** create hash for mustache */
+        $firstTime = true;
+        $rowset = new stdClass();
+        $rowset->items = array();
+
+        foreach ($this->rowset as $this->row) {
+
+            if ($firstTime === true) {
+                $pairs = get_object_vars($this->row);
+                $firstTime = false;
+            }
+
+            $item = new stdClass();
+            foreach ($pairs as $key => $value) {
+                $item->$key = $value;
+            }
+
+            $rowset->items[] = $item;
+        }
+
+        /** ending of hash */
+        $m = new Mustache;
+        ob_start();
+        echo $m->render($template, $rowset);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+}
 
 /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');
