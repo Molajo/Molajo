@@ -757,7 +757,6 @@ class MolajoRequest
 
         /** Fatal error if Extension cannot be found */
         if (($this->get('extension_instance_id', 0) == 0)
-            || 1 == 1
             || (count($rows) == 0)) {
 
             /** 500: Extension not found */
