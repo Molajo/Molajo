@@ -39,11 +39,36 @@
     </security>
     <validations>
         <foreignkeys>
-            <fk key="extension_instance_id" pk="id" table="extension_instances" zero="0"/>
-            <fk key="asset_type_id" pk="id" table="asset_types" zero="0" />
-            <fk key="checked_out_by" pk="id" table="users" zero="1"/>
-            <fk key="created_by" pk="id" table="users" zero="1"/>
-            <fk key="modified_by" pk="id" table="users" zero="1"/>
+            <fk name="asset_type_id"
+                pk="id"
+                source_table="asset_types"
+                required="1"
+                    />
+            <fk name="checked_out_by"
+                pk="id"
+                source_table="users"
+                required="1"
+                    />
+            <fk name="created_by"
+                pk="id"
+                source_table="users"
+                required="1"
+                    />
+            <fk name="extension_instance_id"
+                pk="id"
+                source_table="extension_instances"
+                required="1"
+                    />
+            <fk name="modified_by"
+                pk="id"
+                source_table="users"
+                required="1"
+                    />
+            <fk name="extension_instance_id"
+                pk="id"
+                source_table="extension_instances"
+                required="1"
+                    />
         </foreignkeys>
         <values>
             <value field="title" required="true"/>

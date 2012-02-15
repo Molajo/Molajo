@@ -737,8 +737,6 @@ class MolajoRenderer
      */
     protected function _invokeMVC()
     {
-        $this->_processFilters();
-
         $model = (string)$this->_setModel();
         $this->set('model', $model);
 
@@ -910,46 +908,6 @@ class MolajoRenderer
             var_dump($this->task_request);
             echo '</pre>';
         }
-    }
-
-    /**
-     * _processFilters
-     * @return bool
-     */
-    protected function _processFilters()
-    {
-        $this->filters = new Registry();
-
-        $name = ucfirst($this->get('extension_instance_name'));
-        $name = str_replace(array('-', '_'), '', $name);
-
-        $helperClass = 'Molajo' . $name.'ModelHelper';
-
-        if (class_exists($helperClass)) {
-            $h = new $helperClass();
-        } else {
-            $h = new MolajoModelHelper();
-        }
-
-        /** Retrieve custom validations by table */
-        $xmlfile = $this->get('extension_path') . '/options/filters.xml';
-        if (file_exists($xmlfile)) {
-        } else {
-            //error
-        }
-
-        $x = simplexml_load_file($xmlfile);
-        if (count($x) == 0) {
-            return true;
-        }
-
-        foreach ($x->filters->filter as $f) {
-            $field = (string)$f->field;
-            $method = (string)$f->method;
-            $multiple = (string)$f->multiple;
-
-        }
-
     }
 
     /**

@@ -95,8 +95,6 @@ class MolajoRequest
 
         $this->input = new JInput;
 
-        var_dump($this->input);
-
         /** Specific asset */
         if ((int)$override_asset_id == 0) {
             $this->set('request_asset_id', 0);
@@ -164,6 +162,7 @@ class MolajoRequest
      */
     public function process()
     {
+
         /** offline */
         if (Services::Configuration()->get('offline', 0) == 1) {
             $this->_error(503);
@@ -184,6 +183,9 @@ class MolajoRequest
         ) {
             $this->_getRenderData();
         }
+
+        /** input fields */
+        $this->_processInputData();
 /**
         echo '<pre>';
         var_dump($this->page_request);
@@ -1410,6 +1412,63 @@ class MolajoRequest
             }
         }
         return $parameters;
+    }
+
+    /**
+     *
+     */
+
+    /**
+     * _processInputData
+     *
+     * @return bool
+     */
+    protected function _processInputData()
+    {
+        $this->_processSelectOptions();
+    }
+
+    /**
+     * _processInputData
+     *
+     * @return bool
+     */
+    protected function _processSelectOptions()
+    {
+        $selectOptions = new Registry();
+/**
+        $extensionName = ucfirst($this->get('extension_instance_name'));
+        $extensionName = str_replace(array('-', '_'), '', $extensionName);
+
+        $helperClass = 'Molajo' . $extensionName. 'ModelHelper';
+
+        if (class_exists($helperClass)) {
+            $h = new $helperClass();
+        } else {
+            $h = new MolajoModelHelper();
+        }
+*/
+        /** Retrieve select option definition for table */
+        $xmlfile = '';
+        $test = $this->get('extension_path') . '/options/selectOptions.xml';
+        if (file_exists($test)) {
+            $xmlfile = $test;
+        } else {
+            $test = MOLAJO_APPLICATIONS_MVC . '/options/filters.xml';
+        }
+
+        $x = simplexml_load_file($xmlfile);
+        if (count($x) == 0) {
+            return true;
+        }
+
+        foreach ($x->filters->filter as $f) {
+            $field = (string)$f->field;
+            $method = (string)$f->method;
+            $multiple = (string)$f->multiple;
+
+        }
+
     }
 
     /**

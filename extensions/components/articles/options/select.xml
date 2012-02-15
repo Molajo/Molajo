@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selectOptions>
+    <text>
+        <list name="search" length="20" filter="nohtml"/>
+    </text>
+    <lists>
+        <list name="author"
+              list_source="getAuthorList"
+              multiple="true"
+              default="0"
+              required="0"
+              source_table="users"
+              source_id="id"
+              input_filter="numeric,matchlist"
+                />
+        <list name="category"
+              list_source="getCategoryList"
+              multiple="true"
+              default="0"
+              required="0"
+              source_table="assets"
+              source_id="view_group_id"
+              input_filter="numeric,matchlist"
+                />
+        <list name="group"
+              list_source="getGroupList"
+              multiple="true"
+              default="0"
+              required="0"
+              source_table="assets"
+              source_id="view_group_id"
+              input_filter="numeric,matchlist"
+                />
+        <list name="language"
+              list_source="getLanguageList"
+              multiple="false"
+              default=""
+              required="0"
+              source_table="content"
+              source_id="language"
+              input_filter="matchlist"
+                />
+        <list name="status"
+              list_source="getStatusList"
+              multiple="false"
+              default="0"
+              filter="matchlist"
+                />
+        <list name="tag" list_source="getTitleList" filter="numeric"/>
+    </lists>
+</selectOptions>
