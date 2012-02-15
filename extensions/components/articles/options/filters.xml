@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lists>
+    <list name="group" method="getGroupList" multiple="true" filter="numeric" />
+    <list name="category" source="getCategoryList" multiple="true"  filter="numeric"/>
+    <list name="language" source="getLanguageList" multiple="true" filter="numeric"/>
+    <list name="status" source="getStatusList" multiple="true" filter="numeric"/>
+    <list name="tag" source="getTitleList" multiple="true" filter="numeric"/>
+</lists>

@@ -34,19 +34,21 @@ class MolajoDisplayController extends MolajoController
             }
         }
 
-        /** query results */
+        /** Set Criteria and Run Query */
         $this->rowset = $this->model->getItems();
+        $this->pagination = $this->model->getPagination();
+        $this->model_state = $this->model->getState();
 
-        /** store primary request query results for use by other extensions */
+        /** Save Query Results for Other Extensions  */
         if ($this->get('extension_primary') === true) {
             Molajo::Request()->set('query_results', $this->rowset);
         }
 
         /** pagination */
-        $this->pagination = $this->model->getPagination();
+
 
         /** state */
-        $this->model_state = $this->model->getState();
+
 
         /** no results */
         if (count($this->rowset) == 0

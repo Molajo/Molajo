@@ -27,6 +27,16 @@ class MolajoRequest
     protected static $instance;
 
     /**
+     * $input
+     *
+     * Application Request Object
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $input;
+
+    /**
      * $page_request
      *
      * Page Request object that will be populated by this class
@@ -82,6 +92,10 @@ class MolajoRequest
     {
 
         $this->_initializePageRequest();
+
+        $this->input = new JInput;
+
+        var_dump($this->input);
 
         /** Specific asset */
         if ((int)$override_asset_id == 0) {

@@ -26,9 +26,8 @@ class MolajoContentModel extends MolajoDisplayModel
      */
     public function __construct($id = null)
     {
-
         $this->name = get_class($this);
-        $this->table = '#__content';
+        $this->table = Services::Configuration()->get('dbprefix').'_content';
         $this->primary_key = 'id';
 
         return parent::__construct($id);
@@ -43,15 +42,25 @@ class MolajoContentModel extends MolajoDisplayModel
      */
     public function getItems()
     {
+        $this->setCriteria();
+        $this->_query();
+    }
+
+    public function setCriteria ()
+    {
         /** Set State for Selection Criteria */
         $asset_type_id = $this->task_request->get('source_asset_type_id');
+        $this->set('crud', 'r');
+    }
 
+    protected function _query()
+    {
         /** query  */
         $db = Services::DB();
         $query = $db->getQuery(true);
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
-        $table_name = Services::Configuration()->get('dbprefix').'content';
+        $asset_type_id = $this->task_request->get('source_asset_type_id');
 
         $query->select('a.' . $db->namequote('id'));
         $query->select('a.' . $db->namequote('extension_instance_id'));
@@ -91,7 +100,7 @@ class MolajoContentModel extends MolajoDisplayModel
         $query->select('a.' . $db->namequote('translation_of_id'));
         $query->select('a.' . $db->namequote('ordering'));
 
-        $query->from('#__content as a ');
+        $query->from(Services::Configuration()->get('dbprefix').'content'.' as a ');
 
         /** Status and Dates */
         $query->where('a.' . $db->namequote('status') .

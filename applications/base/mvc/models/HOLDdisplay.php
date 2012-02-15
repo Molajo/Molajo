@@ -163,9 +163,9 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /** selected filters **/
-        //        for ($i = 1; $i < 10000; $i++) {
+        //for ($i = 1; $i < 10000; $i++) {
 
-        //            $filterName = $this->parameters->def($this->filterFieldName . $i);
+        //    $filterName = $this->parameters->def($this->filterFieldName . $i);
 
         /** end of filter processing **/
         //            if ($filterName == null) {

@@ -43,10 +43,6 @@ if (defined('PLATFORM_DOCTRINE_EXTENSIONS')) {
 } else {
     define('PLATFORM_DOCTRINE_EXTENSIONS', PLATFORMS . '/DoctrineExtensions');
 }
-if (defined('PLATFORM_TWIG')) {
-} else {
-    define('PLATFORM_TWIG', PLATFORMS . '/Twig');
-}
 if (defined('PLATFORM_MUSTACHE')) {
 } else {
     define('PLATFORM_MUSTACHE', PLATFORMS . '/Mustache');

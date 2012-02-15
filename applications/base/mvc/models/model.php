@@ -107,6 +107,9 @@ class MolajoModel
      */
     public function __construct($id = null)
     {
+        $this->items = array();
+        $this->pagination = array();
+        $this->state = array();
         $this->id = $id;
 
         if (isset($this->name)) {
@@ -180,7 +183,7 @@ class MolajoModel
      */
     public function getItems()
     {
-        return array();
+        return $this->items;
     }
 
     /**
@@ -191,7 +194,7 @@ class MolajoModel
      */
     public function getPagination()
     {
-        return array();
+        return $this->pagination;
     }
 
     /**
@@ -202,7 +205,7 @@ class MolajoModel
      */
     public function getState()
     {
-        return array();
+        return $this->state;
     }
 
     /**

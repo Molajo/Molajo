@@ -105,11 +105,8 @@ class MolajoLanguageHelper
         {
             $listItem = array();
 
-            $listItem['text'] = $language->title;
-            $listItem['value'] = $language->subtitle;
-            if ($language->subtitle == $currentLanguage) {
-                $listItem['selected'] = 'selected="selected"';
-            }
+            $listItem['value'] = $language->title;
+            $listItem['key'] = $language->subtitle;
 
             $list[] = $listItem;
         }
@@ -143,8 +140,8 @@ class MolajoLanguageHelper
         foreach ($files as $file) {
             $language = new stdClass();
 
-            $language->title = substr($file, 0, strlen($file) - 4);
-            $language->subtitle = substr($file, 0, strlen($file) - 4);
+            $language->value = substr($file, 0, strlen($file) - 4);
+            $language->key = substr($file, 0, strlen($file) - 4);
 
             $languages[] = $language;
         }
