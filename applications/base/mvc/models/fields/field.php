@@ -24,11 +24,11 @@ class MolajoField
     public $name = null;
 
     /**
-     * $filter
+     * $xmlfile
      *
      * @var string
      */
-    public $filter = null;
+    public $xmlfile = null;
 
     /**
      * $value
@@ -38,35 +38,41 @@ class MolajoField
     public $value = null;
 
     /**
-     * $sortable
+     * $filter
      *
      * @var string
      */
-    public $sortable = false;
-
-    /**
-     * $checkbox
-     *
-     * @var string
-     */
-    public $checkbox = false;
-
-    /**
-     * $displayType
-     *
-     * @var string
-     */
-    public $displayType = 'string';
+    public $filter = null;
 
     /**
      * __construct
+     *
+     * @return
+     * @since   1.0
      */
     public function __construct()
     {
-        // find xml file (extension, then core)
-        // read xml file, place values into variable
-        parent::setName('access');
-        parent::setFilter('integer');
+
+    }
+
+
+    /**
+     * input
+     *
+     * Processes the input field
+     *
+     * @param $name
+     * @return void
+     */
+    protected function process($fieldname)
+    {
+        $this->setName($fieldname);
+
+        $this->getFieldDefinition();
+
+        $this->filterField();
+
+
     }
 
     /**
@@ -77,9 +83,9 @@ class MolajoField
      * @param $name
      * @return void
      */
-    protected function setName($name)
+    protected function setName($fieldname)
     {
-        $this->name = $name;
+        $this->name = $fieldname;
     }
 
     /**

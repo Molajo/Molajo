@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
-    <title>Article Manager</title>
-    <submenu>
-        <item>Articles</item>
-        <item>Category</item>
-        <item>Featured</item>
-        <item>Drafts</item>
-    </submenu>
-    <buttonbar>
-        <list>
-            <button>new</button>
-            <button>edit</button>
-            <button>publish</button>
-            <button>unpublish</button>
-            <button>checkin</button>
-            <button>archive</button>
-            <button>restore</button>
-            <button>delete</button>
-            <button>trash</button>
-            <button>help</button>
-        </list>
-        <batch>
-            <button>save</button>
-            <button>save_and_close</button>
-            <button>save_and_new</button>
-            <button>save_as_copy</button>
-            <button>close</button>
-            <button>help</button>
-        </batch>
-    </buttonbar>
-    <filters>
-        <filter>search</filter>
-        <filter>category_list</filter>
-        <filter>category_tag</filter>
-        <filter>view_group_id</filter>
-        <filter>created_by</filter>
-        <filter>language</filter>
-    </filters>
-    <columns>
+    <admin-toolbar>
+        <title>Grid</title>
+        <toolbar>
+            <list>
+                <button>new</button>
+                <button>edit</button>
+                <button>publish</button>
+                <button>feature</button>
+                <button>archive</button>
+                <button>checkin</button>
+                <button>restore</button>
+                <button>delete</button>
+                <button>trash</button>
+                <button>options</button>
+            </list>
+        </toolbar>
+    </admin-toolbar>
+    <admin-submenu>
+        <item name="items">Items</item>
+        <item name="categories">Categories</item>
+        <item name="tags">Tags</item>
+        <item name="featured">Featured</item>
+        <item name="drafts">Drafts</item>
+        <item name="trash">Trash</item>
+    </admin-submenu>
+    <admin-filters>
+        <field name="search" />
+        <field name="author" />
+        <field name="category" />
+        <field name="group" />
+        <field name="language" />
+        <field name="status" />
+        <field name="tag" />
+    </admin-filters>
+    <grid-table>
         <column name="title">
             <sortable>true</sortable>
             <function>editLink</function>
@@ -77,6 +74,11 @@
             <sortable>true</sortable>
             <function>translationOfID</function>
         </column>
-    </columns>
+    </grid-table>
+    <grid-pagination>
+        <item name="display" default="10" />
+        <item name="direction-buttons">1</item>
+        <item name="buttons">1</item>
+    </grid-pagination>
 </configuration>
 

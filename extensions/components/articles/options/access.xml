@@ -1,33 +1,27 @@
-
-<acl name="xyz">
+<?xml version="1.0" encoding="utf-8"?>
+<acl>
     <actions>
         <action name="admin">
-            <task>administer</task>
             <label>Administer</label>
             <hint>Permission to administer all functions for this data.</hint>
         </action>
         <action name="create">
-            <task>create</task>
             <label>Create</label>
             <hint>Permission to create this data.</hint>
         </action>
         <action name="view">
-            <task>view</task>
             <label>View</label>
             <hint>Permission to view this data</hint>
         </action>
         <action name="edit">
-            <task>edit</task>
             <label>Edit</label>
             <hint>Permission to edit this data</hint>
         </action>
         <action name="publish">
-            <task>publish</task>
             <label>Publish</label>
             <hint>Permission to publish this data.</hint>
         </action>
         <action name="delete">
-            <task>delete</task>
             <label>Delete</label>
             <hint>Permission to delete this data</hint>
         </action>

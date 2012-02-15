@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<field>
+    <name>category</name>
+    <components>
+        <component name="articles" join="1"/>
+        <component name="contacts" join="1"/>
+        <component name="comments" join="1"/>
+        <component name="contacts" join="1"/>
+        <component name="groups" join="1"/>
+        <component name="media" join="1"/>
+        <component name="users" join="1"/>
+    </components>
+    <processing>
+        <type name="filter" type="integer"/>
+        <type name="lookup" type="pk"/>
+        <type name="escape" type="integer"/>
+    </processing>
+    <interface>
+        <element name="sortable"/>
+        <element name="selectlist" key="id" value="title"/>
+    </interface>
+    <tables>
+        <table name="content"
+               pk="id"
+               display="title"
+               autonum="1"
+               asset_type_id="MOLAJO_ASSET_TYPE_CATEGORY_LIST"
+                />
+        <joins>
+            <join name="1">
+                <pair name="1"
+                      source_table="{{linking}}" source_field="id"
+                      to_table="assets" to_field="source_id"
+                        />
+                <pair name="2"
+                      source_table="{{linking}}" source_field="asset_type_id"
+                      to_table="assets" to_field="asset_type_id"
+                        />
+                <pair name="3"
+                      source_table="assets" source_field="id"
+                      to_table="asset_categories" to_field="asset_id"
+                        />
+                <pair name="4"
+                      source_table="assets" source_field="category_id"
+                      to_table="content" to_field="id"
+                        />
+            </join>
+        </joins>
+    </tables>
+</field>

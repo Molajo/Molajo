@@ -6,7 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
+//todo: amy get these into an xml file and load
 /**
  *  Rendering
  */
@@ -301,7 +301,7 @@ if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_END')) {
     define('MOLAJO_ASSET_TYPE_MENU_ITEM_END', 2999);
 }
 
-/** menu item types */
+/** category types */
 if (defined('MOLAJO_ASSET_TYPE_CATEGORY_BEGIN')) {
 } else {
     define('MOLAJO_ASSET_TYPE_CATEGORY_BEGIN', 3000);

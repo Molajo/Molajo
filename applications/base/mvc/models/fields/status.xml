@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<field>
+    <name>status</name>
+    <components>
+        <component name="articles" table="content" field="status" />
+        <component name="contacts" table="content" field="status" />
+        <component name="comments" table="content" field="status" />
+        <component name="groups" table="content" field="status" />
+        <component name="media" table="content" field="status" />
+    </components>
+    <processing>
+        <type name="filter" type="integer"/>
+        <type name="lookup" type="method:getStatusList" />
+        <type name="escape" type="integer"/>
+    </processing>
+    <interface>
+        <element name="display" value="model:getStatusText"/>
+        <element name="selectlist" key="id" value="value" method="model:getStatusText"/>
+        <element name="sortable"/>
+    </interface>
+</field>

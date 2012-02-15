@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<field>
+    <name>group</name>
+    <components>
+        <component name="acl"/>
+        <component name="assets"/>
+        <component name="users"/>
+    </components>
+    <processing>
+        <type name="filter" type="integer"/>
+        <type name="lookup" type="pk"/>
+        <type name="escape" type="integer"/>
+    </processing>
+    <interface>
+        <element name="sortable"/>
+        <element name="selectlist" key="id" value="title"/>
+    </interface>
+    <tables>
+        <table name="content"
+               pk="id"
+               display="title"
+               autonum="1"
+               asset_type_id="MOLAJO_ASSET_TYPE_GROUP_BEGIN-MOLAJO_ASSET_TYPE_GROUP_END"
+                />
+        <joins>
+            <join name="1"
+                  source_table="{{linking}}" source_field="id"
+                  to_table="assets" to_field="source_id"
+                    />
+            <join name="2"
+                  source_table="{{linking}}" source_field="asset_type_id"
+                  to_table="assets" to_field="asset_type_id"
+                    />
+            <join name="3"
+                  source_table="assets" source_field="id"
+                  to_table="group_permissions" to_field="asset_id"
+                    />
+            <join name="4"
+                  source_table="group_permissions" source_field="group_id"
+                  to_table="content" to_field="id"
+                    />
+        </joins>
+    </tables>
+</field>

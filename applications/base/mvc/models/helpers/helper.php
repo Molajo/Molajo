@@ -16,50 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoModelHelper
 {
-    /**
-     * getCategoryList
-     *
-     * @return  list
-     * @since   1.0
-     */
-    public function getCategoryList()
-    {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $location = 'MolajoModelHelper::getCategoryList';
-
-        $query->select('a.' . $db->namequote('id'));
-        $query->select('a.' . $db->namequote('title'));
-        $query->from($db->namequote('#__content').' as a');
-        $query->where('a.' . $db->namequote('asset_type_id') .
-            ' = '.MOLAJO_ASSET_TYPE_CATEGORY_LIST);
-        $query->order('a.' . $db->namequote('title') . ' ASC');
-
-        return MolajoModelHelper::getList($query, $location);
-    }
-
-    /**
-     * getGroupList
-     *
-     * @return  list
-     * @since   1.0
-     */
-    public function getGroupList()
-    {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $location = 'MolajoModelHelper::getGroupList';
-
-        $query->select('a.' . $db->namequote('id'));
-        $query->select('a.' . $db->namequote('title'));
-        $query->from($db->namequote('#__content').' a');
-        $query->where('a.' . $db->namequote('asset_type_id') .
-            ' IN ('.MOLAJO_ASSET_TYPE_GROUP_SYSTEM.', ' .
-                    MOLAJO_ASSET_TYPE_GROUP_NORMAL.')');
-        $query->order('a. title ASC');
-
-        return MolajoModelHelper::getList($query, $location);
-    }
 
     /**
      * getLanguageList
@@ -121,28 +77,6 @@ class MolajoModelHelper
     }
 
     /**
-     * getTagList
-     *
-     * @return  list
-     * @since   1.0
-     */
-    public function getTagList()
-    {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $location = 'MolajoModelHelper::getTagList';
-
-        $query->select('a.' . $db->namequote('id'));
-        $query->select('a.' . $db->namequote('title'));
-        $query->from($db->namequote('#__content').' as a');
-        $query->where('a.' . $db->namequote('asset_type_id') .
-            ' = '.MOLAJO_ASSET_TYPE_CATEGORY_TAG);
-        $query->order('a.' . $db->namequote('title') . ' ASC');
-
-        return MolajoModelHelper::getList($query, $location);
-    }
-
-    /**
      * getList
      *
      * @return  list
@@ -176,6 +110,25 @@ class MolajoModelHelper
     }
 
     /**
+     * validateToList
+     *
+     * Validate a value by verifying it exists in a list
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function validateToList($name)
+    {
+        $db = Services::DB();
+        $query = $db->getQuery(true);
+        $now = Services::Date()->getDate()->toSql();
+        $nullDate = $db->getNullDate();
+
+        $query->select('a.' . $db->namequote('view_group_id'));
+        $query->select('a.' . $db->namequote('asset'));
+    }
+
+    /**
      * validateCheckedOut
      *
      * Verify that the row has been checked out for update by the user
@@ -192,7 +145,6 @@ class MolajoModelHelper
 
         $query->select('a.' . $db->namequote('view_group_id'));
         $query->select('a.' . $db->namequote('asset'));
-
     }
 
     /**
@@ -233,6 +185,4 @@ class MolajoModelHelper
     {
 
     }
-
-
 }

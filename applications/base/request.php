@@ -186,11 +186,11 @@ class MolajoRequest
 
         /** input fields */
         $this->_processInputData();
-/**
+
         echo '<pre>';
         var_dump($this->page_request);
         echo '</pre>';
-*/
+die();
         return;
     }
 
@@ -484,22 +484,9 @@ class MolajoRequest
             == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT
         ) {
             $this->set('menu_item_id', $row->source_id);
+            $this->_getMenuItem();
         } else {
             $this->set('source_id', $row->source_id);
-        }
-
-        /** OTHER DATATYPES */
-
-        /** menu item */
-        if ($this->get('request_asset_type_id')
-            == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT
-        ) {
-            $this->_getMenuItem();
-        }
-
-        /** source data */
-        if ($this->get('source_id', 0) == 0) {
-        } else {
             $this->_getSource();
         }
 
@@ -1383,11 +1370,7 @@ class MolajoRequest
         $temp = json_decode($this->get('extension_parameters'));
 
         $this->parameters = $this->_merge($parameters, $temp);
-        /**
-        echo '<pre>';
-        var_dump($this->parameters);
-        echo '</pre>';
-         */
+
         die();
     }
 
@@ -1435,6 +1418,11 @@ class MolajoRequest
      */
     protected function _processSelectOptions()
     {
+        return;
+         echo '<pre>';
+         var_dump($this->page_request);
+         echo '</pre>';
+        die;
         $selectOptions = new Registry();
 /**
         $extensionName = ucfirst($this->get('extension_instance_name'));
@@ -1450,7 +1438,7 @@ class MolajoRequest
 */
         /** Retrieve select option definition for table */
         $xmlfile = '';
-        $test = $this->get('extension_path') . '/options/selectOptions.xml';
+        $test = $this->get('extension_path') . '/options/select.xml';
         if (file_exists($test)) {
             $xmlfile = $test;
         } else {
@@ -1466,7 +1454,6 @@ class MolajoRequest
             $field = (string)$f->field;
             $method = (string)$f->method;
             $multiple = (string)$f->multiple;
-
         }
 
     }

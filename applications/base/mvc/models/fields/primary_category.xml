@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<field>
+    <name>primary_category</name>
+    <components inherit="category" />
+    <processing inherit="category" />
+    <interface inherit="category" />
+    <tables>
+        <table name="content"
+               pk="id"
+               display="title"
+               autonum="1"
+               asset_type_id="MOLAJO_ASSET_TYPE_CATEGORY_LIST"
+                />
+        <joins>
+            <join name="1"
+                  source_table="{{linking}}" source_field="id"
+                  to_table="assets" to_field="source_id"
+                    />
+            <join name="2"
+                  source_table="{{linking}}" source_field="asset_type_id"
+                  to_table="assets" to_field="asset_type_id"
+                    />
+            <join name="3"
+                  source_table="assets" source_field="primary_category_id"
+                  to_table="content" to_field="id"
+                    />
+        </joins>
+    </tables>
+</field>

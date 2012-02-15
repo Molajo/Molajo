@@ -40,38 +40,33 @@
     <validations>
         <foreignkeys>
             <fk name="asset_type_id"
-                pk="id"
+                source_id="id"
                 source_table="asset_types"
                 required="1"
                     />
             <fk name="checked_out_by"
-                pk="id"
+                source_id="id"
                 source_table="users"
-                required="1"
+                required="0"
                     />
             <fk name="created_by"
-                pk="id"
+                source_id="id"
                 source_table="users"
                 required="1"
                     />
             <fk name="extension_instance_id"
-                pk="id"
+                source_id="id"
                 source_table="extension_instances"
                 required="1"
                     />
             <fk name="modified_by"
-                pk="id"
+                source_id="id"
                 source_table="users"
-                required="1"
-                    />
-            <fk name="extension_instance_id"
-                pk="id"
-                source_table="extension_instances"
                 required="1"
                     />
         </foreignkeys>
         <values>
-            <value field="title" required="true"/>
+            <value field="title" required="1"/>
             <value field="status" values="0,1" default="0"/>
             <value field="protected" values="0,1" default="0"/>
             <value field="featured" values="0,1" default="0"/>

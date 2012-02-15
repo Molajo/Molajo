@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<field>
+    <name>tag</name>
+    <components inherit="category" />
+    <processing inherit="category" />
+    <interface inherit="category" />
+    <tables>
+        <table name="content"
+               pk="id"
+               display="title"
+               autonum="1"
+               asset_type_id="MOLAJO_ASSET_TYPE_CATEGORY_TAG"
+                />
+        <joins inherit="category" />
+    </tables>
+</field>

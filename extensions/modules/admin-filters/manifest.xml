@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="1.0">
+    <name>MODULE_ADMIN_FILTERS_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>February 2012</create_date>
+    <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org/</author_url>
+    <version>1.0</version>
+    <description>MODULE_ADMIN_FILTERS_DESCRIPTION</description>
+    <config>
+        <fields name="parameters">
+            <fieldset include="advanced"/>
+        </fields>
+    </config>
+</extension>

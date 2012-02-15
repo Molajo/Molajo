@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<field>
+    <name>created_by</name>
+    <components>
+        <component name="articles"
+                   table="content"
+                   field="created_by"
+                   join="1"
+                />
+        <component name="contacts"
+                   table="content"
+                   field="created_by"
+                   join="1"
+                />
+        <component name="comments"
+                   table="content"
+                   field="created_by"
+                   join="1"
+                />
+        <component name="contacts"
+                   table="content"
+                   field="created_by"
+                   join="1"
+                />
+        <component name="groups"
+                   table="content"
+                   field="created_by"
+                   join="1"
+                />
+        <component name="media"
+                   table="content"
+                   field="created_by"
+                   join="1"
+                />
+    </components>
+    <processing>
+        <type name="filter" type="integer"/>
+        <type name="lookup" type="pk"/>
+        <type name="escape" type="integer"/>
+    </processing>
+    <interface>
+        <element name="sortable"/>
+        <element name="selectlist" key="id" value="last,first"/>
+    </interface>
+    <tables>
+        <table name="users"
+               pk="id"
+               display="username"
+               autonum="1"
+               asset_type_id="MOLAJO_ASSET_TYPE_USER"
+                />
+        <joins>
+            <join name="1"
+                  source_table="{{linking}}" source_field="created_by"
+                  to_table="users" to_field="id"
+                    />
+        </joins>
+    </tables>
+</field>
