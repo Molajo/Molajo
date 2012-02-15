@@ -54,6 +54,8 @@ class MolajoComponentRenderer extends MolajoRenderer
             Molajo::Request()->get('extension_path'));
         $this->set('extension_type',
             Molajo::Request()->get('extension_type'));
+        $this->set('source_asset_type_id',
+            Molajo::Request()->get('source_asset_type_id'));
 
         $this->set('extension_primary', true);
 

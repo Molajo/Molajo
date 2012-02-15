@@ -313,6 +313,7 @@ class MolajoRenderer
         $this->set('wrap_view_path_url', '');
 
         /** mvc parameters */
+        $this->set('source_asset_type_id', 0);
         $this->set('controller', '');
         $this->set('task', '');
         $this->set('model', '');
@@ -461,6 +462,8 @@ class MolajoRenderer
         $parameters = new Registry;
         $parameters->loadString($row->parameters);
         $this->set('extension_parameters', $parameters);
+        $this->set('source_asset_type_id',
+            $parameters->get('source_asset_type_id'));
 
         /** mvc */
         if ($this->get('controller', '') == '') {

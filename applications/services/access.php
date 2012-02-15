@@ -187,7 +187,7 @@ class MolajoAccessService
 
         $query->where($parameters['asset_prefix'] . '.source_id = ' .
                 $parameters['join_to_prefix'] .
-                '.' . $db->namequote($parameters['join_toprimary_key'])
+                '.' . $db->namequote($parameters['join_to_primary_key'])
         );
 
         $query->where($parameters['asset_prefix'] .

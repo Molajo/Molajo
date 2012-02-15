@@ -12,7 +12,7 @@ defined('MOLAJO') or die; ?>
 <h2>{{title}}<h2>
 </header>
 <include:module name=pullquote template=pullquote wrap=aside />
-{{content_text}}
+{{{content_text}}}
 <footer>
 {{start_publishing_datetime}}
 </footer>

@@ -70,7 +70,7 @@ abstract class MolajoContentHelper
         MolajoAccessService::setQueryViewAccess(
             $query,
             array('join_to_prefix' => 'a',
-                'join_toprimary_key' => 'id',
+                'join_to_primary_key' => 'id',
                 'asset_prefix' => 'b_assets',
                 'select' => true
             )
