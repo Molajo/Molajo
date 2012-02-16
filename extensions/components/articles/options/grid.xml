@@ -1,84 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
-    <admin-toolbar>
-        <title>Grid</title>
-        <toolbar>
-            <list>
-                <button>new</button>
-                <button>edit</button>
-                <button>publish</button>
-                <button>feature</button>
-                <button>archive</button>
-                <button>checkin</button>
-                <button>restore</button>
-                <button>delete</button>
-                <button>trash</button>
-                <button>options</button>
-            </list>
-        </toolbar>
-    </admin-toolbar>
-    <admin-submenu>
-        <item name="items">Items</item>
-        <item name="categories">Categories</item>
-        <item name="tags">Tags</item>
-        <item name="featured">Featured</item>
-        <item name="drafts">Drafts</item>
-        <item name="trash">Trash</item>
-    </admin-submenu>
-    <admin-filters>
-        <field name="search" />
-        <field name="author" />
-        <field name="category" />
-        <field name="group" />
-        <field name="language" />
-        <field name="status" />
-        <field name="tag" />
-    </admin-filters>
-    <grid-table>
-        <column name="title">
-            <sortable>true</sortable>
-            <function>editLink</function>
-        </column>
-        <column name="status">
-            <sortable>true</sortable>
-            <function>statusIcon</function>
-        </column>
-        <column name="featured">
-            <sortable>true</sortable>
-            <function>switchIcon</function>
-        </column>
-        <column name="primary_category">
-            <sortable>true</sortable>
-            <function>lookupCategoryName</function>
-        </column>
-        <column name="ordering">
-            <sortable>true</sortable>
-            <function>orderingField</function>
-        </column>
-        <column name="view_group_id">
-            <sortable>true</sortable>
-            <function>lookupGroupName</function>
-        </column>
-        <column name="created_by">
-            <sortable>true</sortable>
-            <function>lookupUserName</function>
-        </column>
-        <column name="start_publishing_datetime">
-            <sortable>true</sortable>
-            <function>formatDate(mm/dd/ccyy)</function>
-        </column>
-        <column name="visits">
-            <sortable>true</sortable>
-        </column>
-        <column name="language">
-            <sortable>true</sortable>
-            <function>translationOfID</function>
-        </column>
-    </grid-table>
-    <grid-pagination>
-        <item name="display" default="10" />
-        <item name="direction-buttons">1</item>
-        <item name="buttons">1</item>
-    </grid-pagination>
+    <toolbar>
+        <title>Articles Manager</title>
+        <buttons>
+            <button>new</button>
+            <button>edit</button>
+            <button>publish</button>
+            <button>feature</button>
+            <button>archive</button>
+            <button>checkin</button>
+            <button>restore</button>
+            <button>delete</button>
+            <button>trash</button>
+            <button>options</button>
+        </buttons>
+    </toolbar>
+    <submenuitems>
+        <submenuitem name="items" display="Items" />
+        <submenuitem name="categories" display="Categories" />
+        <submenuitem name="tags" display="Tags" />
+        <submenuitem name="featured" display="Featured" />
+        <submenuitem name="drafts"  display="Drafts" />
+        <submenuitem name="trash" display="Trash" />
+    </submenuitems>
+    <filters>
+        <filter name="search"/>
+        <filter name="author"/>
+        <filter name="category"/>
+        <filter name="group"/>
+        <filter name="language"/>
+        <filter name="status"/>
+        <filter name="tag"/>
+    </filters>
+    <columns>
+        <column name="title" />
+        <column name="status" />
+        <column name="featured" />
+        <column name="primary_category" />
+        <column name="ordering" />
+        <column name="view_group_id" />
+        <column name="created_by" />
+        <column name="start_publishing_datetime" />
+        <column name="visits" />
+        <column name="language" />
+    </columns>
+    <paginationoptions>
+        <paginationoption name="displayrows" display="1" rows="10"/>
+        <paginationoption name="direction-buttons" display="1" />
+        <paginationoption name="buttons" display="1" />
+    </paginationoptions>
+    <batchoptions>
+        <batchoption name="display" value="1"/>
+    </batchoptions>
 </configuration>
-

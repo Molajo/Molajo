@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.0">
-    <name>MODULE_ADMIN_BATCH_NAME</name>
+    <name>MODULE_ADMIN_FILTERS_NAME</name>
     <author>Amy Stephen</author>
     <create_date>February 2012</create_date>
     <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,10 +8,15 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
-    <description>MODULE_ADMIN_BATCH_DESCRIPTION</description>
-    <config>
-        <fields name="parameters">
-            <fieldset include="advanced"/>
-        </fields>
-    </config>
+    <description>MODULE_ADMIN_FILTERS_DESCRIPTION</description>
+    <parameters>
+        <fieldset name="extension">
+            <paginationoptions>
+                 <paginationoption name="displayrows" display="1" rows="10"/>
+                 <paginationoption name="direction-buttons" display="1" />
+                 <paginationoption name="buttons" display="1" />
+             </paginationoptions>
+        </fieldset>
+        <include fieldset="advanced"/>
+    </parameters>
 </extension>

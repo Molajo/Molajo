@@ -9,9 +9,18 @@
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_ADMIN_FILTERS_DESCRIPTION</description>
-    <config>
-        <fields name="parameters">
-            <fieldset include="advanced"/>
-        </fields>
-    </config>
+    <parameters>
+        <fieldset name="extension">
+            <filters>
+                 <filter name="search"/>
+                 <filter name="author"/>
+                 <filter name="category"/>
+                 <filter name="group"/>
+                 <filter name="language"/>
+                 <filter name="status"/>
+                 <filter name="tag"/>
+             </filters>
+        </fieldset>
+        <include fieldset="advanced"/>
+    </parameters>
 </extension>

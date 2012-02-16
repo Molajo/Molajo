@@ -9,9 +9,12 @@
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_ADMIN_PAGINATION_DESCRIPTION</description>
-    <config>
-        <fields name="parameters">
-            <fieldset include="advanced"/>
-        </fields>
-    </config>
+    <parameters>
+        <fieldset name="extension">
+            <batchoptions>
+                <batchoption name="display" value="1"/>
+            </batchoptions>
+        </fieldset>
+        <include fieldset="advanced"/>
+    </parameters>
 </extension>

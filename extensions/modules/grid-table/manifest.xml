@@ -9,9 +9,22 @@
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_ADMIN_TABLE_DESCRIPTION</description>
-    <config>
-        <fields name="parameters">
-            <fieldset include="advanced"/>
-        </fields>
-    </config>
+    <parameters>
+        <fieldset name="extension">
+            <columns>
+                <column name="title"/>
+                <column name="status"/>
+                <column name="featured"/>
+                <column name="primary_category"/>
+                <column name="ordering"/>
+                <column name="view_group_id"/>
+                <column name="created_by"/>
+                <column name="start_publishing_datetime"/>
+                <column name="visits"/>
+                <column name="language"/>
+            </columns>
+        </fieldset>
+        <include fieldset="advanced" />
+    </parameters>
 </extension>
+

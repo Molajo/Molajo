@@ -9,9 +9,24 @@
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_ADMIN_TOOLBAR_DESCRIPTION</description>
-    <config>
-        <fields name="parameters">
-            <fieldset include="advanced"/>
-        </fields>
-    </config>
+    <parameters>
+        <fieldset name="extension">
+            <toolbar>
+                <title>Articles Manager</title>
+                <buttons>
+                    <button>new</button>
+                    <button>edit</button>
+                    <button>publish</button>
+                    <button>feature</button>
+                    <button>archive</button>
+                    <button>checkin</button>
+                    <button>restore</button>
+                    <button>delete</button>
+                    <button>trash</button>
+                    <button>options</button>
+                </buttons>
+            </toolbar>
+        </fieldset>
+        <include fieldset="advanced"/>
+    </parameters>
 </extension>

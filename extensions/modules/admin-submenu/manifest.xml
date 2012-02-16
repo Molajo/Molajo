@@ -9,9 +9,17 @@
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
     <description>MODULE_ADMIN_SUBMENU_DESCRIPTION</description>
-    <config>
-        <fields name="parameters">
-            <fieldset include="advanced"/>
-        </fields>
-    </config>
+    <parameters>
+        <fieldset name="extension">
+            <submenuitems>
+                <submenuitem name="items" display="Items"/>
+                <submenuitem name="categories" display="Categories"/>
+                <submenuitem name="tags" display="Tags"/>
+                <submenuitem name="featured" display="Featured"/>
+                <submenuitem name="drafts" display="Drafts"/>
+                <submenuitem name="trash" display="Trash"/>
+            </submenuitems>
+        </fieldset>
+        <include fieldset="advanced"/>
+    </parameters>
 </extension>
