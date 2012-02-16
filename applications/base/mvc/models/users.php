@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoUsersModel extends MolajoModel
+class MolajoUsersModel extends MolajoCrudModel
 {
     /**
      * __construct
@@ -35,51 +35,22 @@ class MolajoUsersModel extends MolajoModel
     }
 
     /**
-     * read
+     * _getAdditionalData
      *
-     * Method to read user data
+     * Method to append additional data elements needed to the standard
+     * array of elements provided by the data source
      *
-     * @return  bool
-     * @since   1.0
-     */
-    public function read()
-    {
-        $row = $this->_query();
-
-        if (count($row) > 0) {
-            foreach ($row as $item) {
-            }
-            return $this->bind($item, $ignore = array());
-        } else {
-            //do an empty row
-        }
-    }
-
-    /**
-     * _query
+     * @param array $item
      *
-     * Method to query the database for the data requested
-     *
-     * @param null $id
-     * @param bool $reset
-     *
-     * @return bool
+     * @return array
      * @since  1.0
      */
-    protected function _query()
+    protected function _getAdditionalData($item)
     {
-        $row = parent::_query();
+        /** concatenate name */
+        $item['name'] = $item['first_name'] . ' ' . $item['last_name'];
 
-        /**
-         * append additional data elements needed for user to the
-         *   $tableQueryResults object beyond the standard results
-         *   provided by the parent query
-         */
-
-        /** name */
-        $row[0]['name'] = $row[0]['first_name'] . ' ' . $row[0]['last_name'];
-
-        /** applications */
+        /** retrieve applications for which the user is authorized to login */
         $query = $this->db->getQuery(true);
 
         $query->select('a.' . $this->db->nameQuote('id'));
@@ -93,14 +64,14 @@ class MolajoUsersModel extends MolajoModel
 
         $this->db->setQuery($query->__toString());
 
-        $row[0]['applications'] = $this->db->loadAssocList('title', 'id');
+        $item['applications'] = $this->db->loadAssocList('title', 'id');
 
         if ($this->db->getErrorNum()) {
             $this->setError($this->db->getErrorMsg());
             return false;
         }
 
-        /** groups */
+        /** retrieve groups to which the user belongs */
         $query = $this->db->getQuery(true);
 
         $query->select('a.' . $this->db->nameQuote('id'));
@@ -114,39 +85,42 @@ class MolajoUsersModel extends MolajoModel
 
         $this->db->setQuery($query->__toString());
 
-        $row[0]['groups'] = $this->db->loadAssocList('title', 'id');
+        $item['groups'] = $this->db->loadAssocList('title', 'id');
 
         if ($this->db->getErrorNum()) {
             $this->setError($this->db->getErrorMsg());
             return false;
         }
 
-        /** roles */
-        $row[0]['public'] = 1;
-        $row[0]['guest'] = 0;
-        $row[0]['registered'] = 1;
-        if (in_array(5, $row[0]['groups'])) {
-            $row[0]['administrator'] = 1;
+        /** retrieve system groups to which the user belongs */
+        $item['public'] = 1;
+        $item['guest'] = 0;
+        $item['registered'] = 1;
+        if (in_array(5, $item['groups'])) {
+            $item['administrator'] = 1;
         }
 
-        /** view groups */
+        /** retrieve view access groups to which the user belongs */
         $query = $this->db->getQuery(true);
 
         $query->select('a.' . $this->db->nameQuote('id'));
         $query->from($this->db->nameQuote('#__view_groups') . ' as a');
         $query->from($this->db->nameQuote('#__user_view_groups') . ' as b');
-        $query->where('a.' . $this->db->nameQuote('id') . ' = b.' . $this->db->nameQuote('view_group_id'));
-        $query->where('b.' . $this->db->nameQuote('user_id') . ' = ' . (int)$this->id);
+        $query->where('a.' . $this->db->nameQuote('id') .
+            ' = b.' . $this->db->nameQuote('view_group_id'));
+        $query->where('b.' . $this->db->nameQuote('user_id') .
+            ' = ' . (int)$this->id);
 
         $this->db->setQuery($query->__toString());
 
-        $row[0]['view_groups'] = $this->db->loadResultArray();
+        $item['view_groups'] = $this->db->loadResultArray();
 
         if ($this->db->getErrorNum()) {
             $this->setError($this->db->getErrorMsg());
             return false;
         }
 
-        return $row;
+        /** return array of primary query and additional data elements */
+        return $item;
     }
 }

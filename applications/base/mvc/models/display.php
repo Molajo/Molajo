@@ -41,16 +41,20 @@ class MolajoDisplayModel extends MolajoModel
      */
     public function getItems()
     {
+        $this->set('crud', 'r');
+
         $this->_setCriteria();
         $this->_setQuery();
-        $this->_query();
+        $this->items = $this->_query();
+
+        return $this->items;
     }
 
     protected function _setCriteria()
     {
         /** Set State for Selection Criteria */
         $asset_type_id = $this->task_request->get('source_asset_type_id');
-        $this->set('crud', 'r');
+
 
         $extensionName = ucfirst($this->get('extension_instance_name'));
         $extensionName = str_replace(array('-', '_'), '', $extensionName);
@@ -160,13 +164,14 @@ class MolajoDisplayModel extends MolajoModel
             )
         );
 
+        $this->db->setQuery($this->query);
+
         return;
     }
 
-    protected function _query ()
-    {
 
-        $this->db->setQuery($this->query);
+    protected function _query()
+    {
         $items = $this->db->loadObjectList();
 
         if ($this->db->getErrorNum() == 0) {
@@ -179,7 +184,7 @@ class MolajoDisplayModel extends MolajoModel
                     $this->db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoContentModel::_getItems',
+                $debug_location = $this->name . ':' . 'getItems',
                 $debug_object = $this->db
             );
             return $this->request->set('status_found', false);

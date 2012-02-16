@@ -72,6 +72,14 @@ class MolajoModel
     protected $state;
 
     /**
+     * Results set from crud query for a single item
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $item;
+
+    /**
      * Results set from display query
      *
      * @var    array
@@ -136,6 +144,7 @@ class MolajoModel
     public function __construct($id = null)
     {
         $this->state = new Registry();
+        $this->item = array();
         $this->items = array();
         $this->pagination = array();
 
@@ -198,6 +207,78 @@ class MolajoModel
     }
 
     /**
+     * _query
+     *
+     * Standard method used to execute a query
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _query()
+    {
+
+    }
+
+    /**
+     *  Following are part of the MolajoCrudModel:
+     */
+
+    /**
+     * getItem
+     *
+     * Method to retrieve one row of a specific data type and to allow for
+     *  appending in additional data elements, if needed
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function getItem()
+    {
+        $this->set('crud', 'r');
+
+        $this->_setQuery();
+
+        $item = $this->_query();
+
+        $this->item = $this->_getAdditionalData($item);
+
+        return $this->item;
+    }
+
+    /**
+     * _setQuery
+     *
+     * Standard query to retrieve all elements of the specific table for a specific item
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _setQuery()
+    {
+
+    }
+
+    /**
+     * _getAdditionalData
+     *
+     * Method to append additional data elements needed to the standard
+     * array of elements provided by the data source
+     *
+     * @param array $item
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function _getAdditionalData($item = array())
+    {
+        return $item;
+    }
+
+    /**
+     *  Following are part of the MolajoDisplayModel:
+     */
+
+    /**
      * getItems
      *
      * @return    array
@@ -250,78 +331,6 @@ class MolajoModel
     }
 
     /**
-     * read
-     *
-     * @return  object
-     * @since   1.0
-     */
-    public function read()
-    {
-        $this->set('crud', 'r');
-
-        $this->_query();
-    }
-
-    /**
-     * _query
-     *
-     * @return  object
-     * @since   1.0
-     */
-    protected function _query()
-    {
-        $query = $this->db->getQuery(true);
-
-        $query->select(' * ');
-        $query->from($this->db->quoteName($this->table));
-        $query->where($this->primary_key
-            . ' = '
-            . $this->db->quote($this->id));
-
-        $this->db->setQuery($query->__toString());
-
-        $row = $this->db->loadAssocList();
-
-        if ($this->db->getErrorNum()) {
-            $e = new MolajoException($this->db->getErrorMsg());
-            $this->setError($e);
-            return false;
-        }
-
-        if (empty($row)) {
-            $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_EMPTY_ROW_RETURNED'));
-            $this->setError($e);
-            return false;
-        }
-
-        if (key_exists('custom_fields', $row)
-            && is_array($row['custom_fields'])
-        ) {
-            $registry = new Registry();
-            $registry->loadArray($row['custom_fields']);
-            $row['custom_fields'] = (string)$registry;
-        }
-
-        if (key_exists('parameters', $row)
-            && is_array($row['parameters'])
-        ) {
-            $registry = new Registry();
-            $registry->loadArray($row['parameters']);
-            $row['parameters'] = (string)$registry;
-        }
-
-        if (key_exists('metadata', $row)
-            && is_array($row['metadata'])
-        ) {
-            $registry = new Registry();
-            $registry->loadArray($row['metadata']);
-            $row['metadata'] = (string)$registry;
-        }
-
-        return $row;
-    }
-
-    /**
      * bind
      *
      * Method to bind an associative array to the Table
@@ -336,34 +345,7 @@ class MolajoModel
      */
     public function bind($source, $ignore = array())
     {
-        if (is_object($source)
-            || is_array($source)
-        ) {
-        } else {
-            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
-            $this->setError($e);
-            return false;
-        }
 
-        if (is_array($ignore)) {
-        } else {
-            $ignore = explode(' ', $ignore);
-        }
-
-        if (is_object($source)) {
-            $source = get_object_vars($source);
-        }
-
-        /** populate temporary table  */
-        $this->items = array();
-        foreach ($source as $key => $value) {
-            if (in_array($key, $ignore)) {
-            } else {
-                $this->items[$key] = $value;
-            }
-        }
-
-        return $this->items;
     }
 
     /**
@@ -500,13 +482,13 @@ class MolajoModel
      */
     protected function _validateForeignKey($key, $pk, $table)
     {
-        $query = $this->db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
-        $query->select($this->db->quoteName($pk));
-        $query->from($this->db->quoteName($table));
-        $query->where($this->db->quoteName($pk) . ' = ' . (int)$this->table->$key);
+        $this->query->select($this->db->quoteName($pk));
+        $this->query->from($this->db->quoteName($table));
+        $this->query->where($this->db->quoteName($pk) . ' = ' . (int)$this->table->$key);
 
-        $this->db->setQuery($query->__toString());
+        $this->db->setQuery($this->query->__toString());
 
         $result = $this->db->loadResult();
 
@@ -682,11 +664,11 @@ class MolajoModel
         //       }
 
         //        if ((int) $this->asset_id == 0) {
-        //			$query = $this->db->getQuery(true);
-        //			$query->update($this->db->quoteName($this->table));
-        //			$query->set('asset_id = '.(int) $this->asset_id);
-        //			$query->where($this->db->quoteName($k).' = '.(int) $this->$k);
-        //			$this->db->setQuery($query->__toString());
+        //			$this->query = $this->db->getQuery(true);
+        //			$this->query->update($this->db->quoteName($this->table));
+        //			$this->query->set('asset_id = '.(int) $this->asset_id);
+        //			$this->query->where($this->db->quoteName($k).' = '.(int) $this->$k);
+        //			$this->db->setQuery($this->query->__toString());
 
         //			if ($this->db->query()) {
         //            } else {
@@ -737,12 +719,12 @@ class MolajoModel
         $time = Services::Date()->toSql();
 
         // Check the row out by primary key.
-        $query = $this->db->getQuery(true);
-        $query->update($this->table);
-        $query->set($this->db->quoteName('checked_out') . ' = ' . (int)$userId);
-        $query->set($this->db->quoteName('checked_out_time') . ' = ' . $this->db->quote($time));
-        $query->where($this->primary_key . ' = ' . $this->db->quote($pk));
-        $this->db->setQuery($query->__toString());
+        $this->query = $this->db->getQuery(true);
+        $this->query->update($this->table);
+        $this->query->set($this->db->quoteName('checked_out') . ' = ' . (int)$userId);
+        $this->query->set($this->db->quoteName('checked_out_time') . ' = ' . $this->db->quote($time));
+        $this->query->where($this->primary_key . ' = ' . $this->db->quote($pk));
+        $this->db->setQuery($this->query->__toString());
 
         if ($this->db->query()) {
         } else {
@@ -790,12 +772,12 @@ class MolajoModel
         }
 
         // Check the row in by primary key.
-        $query = $this->db->getQuery(true);
-        $query->update($this->table);
-        $query->set($this->db->quoteName('checked_out') . ' = 0');
-        $query->set($this->db->quoteName('checked_out_time') . ' = ' . $this->db->quote($this->db->getNullDate()));
-        $query->where($this->primary_key . ' = ' . $this->db->quote($pk));
-        $this->db->setQuery($query->__toString());
+        $this->query = $this->db->getQuery(true);
+        $this->query->update($this->table);
+        $this->query->set($this->db->quoteName('checked_out') . ' = 0');
+        $this->query->set($this->db->quoteName('checked_out_time') . ' = ' . $this->db->quote($this->db->getNullDate()));
+        $this->query->where($this->primary_key . ' = ' . $this->db->quote($pk));
+        $this->db->setQuery($this->query->__toString());
 
         // Check for a database error.
         if ($this->db->query()) {
@@ -833,15 +815,15 @@ class MolajoModel
         }
 
         // Get the largest ordering value for a given where clause.
-        $query = $this->db->getQuery(true);
-        $query->select('MAX(ordering)');
-        $query->from($this->table);
+        $this->query = $this->db->getQuery(true);
+        $this->query->select('MAX(ordering)');
+        $this->query->from($this->table);
 
         if ($where) {
-            $query->where($where);
+            $this->query->where($where);
         }
 
-        $this->db->setQuery($query->__toString());
+        $this->db->setQuery($this->query->__toString());
         $max = (int)$this->db->loadResult();
 
         // Check for a database error.
@@ -884,18 +866,18 @@ class MolajoModel
         $k = $this->primary_key;
 
         // Get the primary keys and ordering values for the selection.
-        $query = $this->db->getQuery(true);
-        $query->select($this->primary_key . ', ordering');
-        $query->from($this->table);
-        $query->where('ordering >= 0');
-        $query->order('ordering');
+        $this->query = $this->db->getQuery(true);
+        $this->query->select($this->primary_key . ', ordering');
+        $this->query->from($this->table);
+        $this->query->where('ordering >= 0');
+        $this->query->order('ordering');
 
         // Setup the extra where and ordering clause data.
         if ($where) {
-            $query->where($where);
+            $this->query->where($where);
         }
 
-        $this->db->setQuery($query->__toString());
+        $this->db->setQuery($this->query->__toString());
         $rows = $this->db->loadObjectList();
 
         // Check for a database error.
@@ -913,11 +895,11 @@ class MolajoModel
                 if ($row->ordering == $i + 1) {
                 } else {
                     // Update the row ordering field.
-                    $query = $this->db->getQuery(true);
-                    $query->update($this->table);
-                    $query->set('ordering = ' . ($i + 1));
-                    $query->where($this->primary_key . ' = ' . $this->db->quote($row->$k));
-                    $this->db->setQuery($query->__toString());
+                    $this->query = $this->db->getQuery(true);
+                    $this->query->update($this->table);
+                    $this->query->set('ordering = ' . ($i + 1));
+                    $this->query->where($this->primary_key . ' = ' . $this->db->quote($row->$k));
+                    $this->db->setQuery($this->query->__toString());
 
                     // Check for a database error.
                     if ($this->db->query()) {
@@ -969,41 +951,41 @@ class MolajoModel
         // Initialise variables.
         $k = $this->primary_key;
         $row = null;
-        $query = $this->db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
         // Select the primary key and ordering values from the table.
-        $query->select($this->primary_key . ', ordering');
-        $query->from($this->table);
+        $this->query->select($this->primary_key . ', ordering');
+        $this->query->from($this->table);
 
         // If the movement delta is negative move the row up.
         if ($delta < 0) {
-            $query->where('ordering < ' . (int)$this->ordering);
-            $query->order('ordering DESC');
+            $this->query->where('ordering < ' . (int)$this->ordering);
+            $this->query->order('ordering DESC');
         }
         // If the movement delta is positive move the row down.
         elseif ($delta > 0) {
-            $query->where('ordering > ' . (int)$this->ordering);
-            $query->order('ordering ASC');
+            $this->query->where('ordering > ' . (int)$this->ordering);
+            $this->query->order('ordering ASC');
         }
 
         // Add the custom WHERE clause if set.
         if ($where) {
-            $query->where($where);
+            $this->query->where($where);
         }
 
         // Select the first row with the criteria.
-        $this->db->setQuery($query, 0, 1);
+        $this->db->setQuery($this->query, 0, 1);
         $row = $this->db->loadObject();
 
         // If a row is found, move the item.
         if (empty($row)) {
 
             // Update the ordering field for this instance.
-            $query = $this->db->getQuery(true);
-            $query->update($this->table);
-            $query->set('ordering = ' . (int)$this->ordering);
-            $query->where($this->primary_key . ' = ' . $this->db->quote($this->$k));
-            $this->db->setQuery($query->__toString());
+            $this->query = $this->db->getQuery(true);
+            $this->query->update($this->table);
+            $this->query->set('ordering = ' . (int)$this->ordering);
+            $this->query->where($this->primary_key . ' = ' . $this->db->quote($this->$k));
+            $this->db->setQuery($this->query->__toString());
 
             // Check for a database error.
             if ($this->db->query()) {
@@ -1016,11 +998,11 @@ class MolajoModel
 
         } else {
             // Update the ordering field for this instance to the row's ordering value.
-            $query = $this->db->getQuery(true);
-            $query->update($this->table);
-            $query->set('ordering = ' . (int)$row->ordering);
-            $query->where($this->primary_key . ' = ' . $this->db->quote($this->$k));
-            $this->db->setQuery($query->__toString());
+            $this->query = $this->db->getQuery(true);
+            $this->query->update($this->table);
+            $this->query->set('ordering = ' . (int)$row->ordering);
+            $this->query->where($this->primary_key . ' = ' . $this->db->quote($this->$k));
+            $this->db->setQuery($this->query->__toString());
 
             // Check for a database error.
             if ($this->db->query()) {
@@ -1032,11 +1014,11 @@ class MolajoModel
             }
 
             // Update the ordering field for the row to this instance's ordering value.
-            $query = $this->db->getQuery(true);
-            $query->update($this->table);
-            $query->set('ordering = ' . (int)$this->ordering);
-            $query->where($this->primary_key . ' = ' . $this->db->quote($row->$k));
-            $this->db->setQuery($query->__toString());
+            $this->query = $this->db->getQuery(true);
+            $this->query->update($this->table);
+            $this->query->set('ordering = ' . (int)$this->ordering);
+            $this->query->where($this->primary_key . ' = ' . $this->db->quote($row->$k));
+            $this->db->setQuery($this->query->__toString());
 
             // Check for a database error.
             if ($this->db->query()) {
@@ -1093,13 +1075,13 @@ class MolajoModel
         }
 
         // Update the publishing state for rows with the given primary keys.
-        $query = $this->db->getQuery(true);
-        $query->update($this->table);
-        $query->set('published = ' . (int)$state);
+        $this->query = $this->db->getQuery(true);
+        $this->query->update($this->table);
+        $this->query->set('published = ' . (int)$state);
 
         // Determine if there is checkin support for the table.
         if (property_exists($this, 'checked_out') || property_exists($this, 'checked_out_time')) {
-            $query->where('(checked_out = 0 OR checked_out = ' . (int)$userId . ')');
+            $this->query->where('(checked_out = 0 OR checked_out = ' . (int)$userId . ')');
             $checkin = true;
 
         } else {
@@ -1107,9 +1089,9 @@ class MolajoModel
         }
 
         // Build the WHERE clause for the primary keys.
-        $query->where($k . ' = ' . implode(' OR ' . $k . ' = ', $pks));
+        $this->query->where($k . ' = ' . implode(' OR ' . $k . ' = ', $pks));
 
-        $this->db->setQuery($query->__toString());
+        $this->db->setQuery($this->query->__toString());
 
         // Check for a database error.
         if ($this->db->query()) {
@@ -1165,22 +1147,22 @@ class MolajoModel
 
         if (is_array($joins)) {
             // Get a query object.
-            $query = $this->db->getQuery(true);
+            $this->query = $this->db->getQuery(true);
 
             // Setup the basic query.
-            $query->select($this->db->quoteName($this->primary_key));
-            $query->from($this->db->quoteName($this->table));
-            $query->where($this->db->quoteName($this->primary_key) . ' = ' . $this->db->quote($this->$k));
-            $query->group($this->db->quoteName($this->primary_key));
+            $this->query->select($this->db->quoteName($this->primary_key));
+            $this->query->from($this->db->quoteName($this->table));
+            $this->query->where($this->db->quoteName($this->primary_key) . ' = ' . $this->db->quote($this->$k));
+            $this->query->group($this->db->quoteName($this->primary_key));
 
             // For each join add the select and join clauses to the query object.
             foreach ($joins as $table) {
-                $query->select('COUNT(DISTINCT ' . $table['idfield'] . ') AS ' . $table['idfield']);
-                $query->join('LEFT', $table['name'] . ' ON ' . $table['joinfield'] . ' = ' . $k);
+                $this->query->select('COUNT(DISTINCT ' . $table['idfield'] . ') AS ' . $table['idfield']);
+                $this->query->join('LEFT', $table['name'] . ' ON ' . $table['joinfield'] . ' = ' . $k);
             }
 
             // Get the row object from the query.
-            $this->db->setQuery((string)$query, 0, 1);
+            $this->db->setQuery((string)$this->query, 0, 1);
             $row = $this->db->loadObject();
 
             // Check for a database error.
