@@ -305,7 +305,7 @@ class MolajoDisplayModel extends MolajoModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * - set filters
      *      - triggers queryGetState event, passing in the full filter set
@@ -335,7 +335,7 @@ class MolajoDisplayModel extends MolajoModel
      * @return    mixed    An array of objects on success, false on failure.
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
         $names = $this->getModel()->getProperties();
 

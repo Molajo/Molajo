@@ -20,42 +20,6 @@ class MolajoCrudModel extends MolajoModel
 {
 
     /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param  $id
-     * @since  1.0
-     */
-    public function __construct($id = null)
-    {
-        // class name, table, and primary key set by child classes
-        return parent::__construct($id);
-    }
-
-    /**
-     * getItem
-     *
-     * Method to retrieve one row of a specific data type and to allow for
-     *  appending in additional data elements, if needed
-     *
-     * @return  object
-     * @since   1.0
-     */
-    public function getItem()
-    {
-        $this->set('crud', 'r');
-
-        $this->_setQuery();
-
-        $item = $this->_query();
-
-        $this->item = $this->_getAdditionalData($item);
-
-        return $this->item;
-    }
-
-    /**
      * _setQuery
      *
      * Standard query to retrieve all elements of the specific table for a specific item
@@ -65,6 +29,8 @@ class MolajoCrudModel extends MolajoModel
      */
     protected function _setQuery()
     {
+        $this->query = $this->db->getQuery(true);
+
         $this->query->select(' * ');
         $this->query->from($this->db->quoteName($this->table));
         $this->query->where($this->primary_key
@@ -75,14 +41,14 @@ class MolajoCrudModel extends MolajoModel
     }
 
     /**
-     * _query
+     * _runQuery
      *
      * Execute query and return an array of data elements
      *
      * @return  object
      * @since   1.0
      */
-    protected function _query()
+    protected function _runQuery()
     {
         $item = $this->db->loadAssocList();
 
@@ -123,26 +89,11 @@ class MolajoCrudModel extends MolajoModel
         }
 
         /** return as an array of data elements */
-        foreach ($item as $i) {
+        foreach ($item as $data) {
         }
 
-        return $i;
+        return $data;
     }
 
-    /**
-     * _getAdditionalData
-     *
-     * Method to append additional data elements needed to the standard
-     * array of elements provided by the data source
-     *
-     * @param array $item
-     *
-     * @return array
-     * @since  1.0
-     */
-    protected function _getAdditionalData($item)
-    {
-        return $item;
-    }
 }
 

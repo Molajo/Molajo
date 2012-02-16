@@ -34,15 +34,15 @@ class MolajoMessagesModel extends MolajoModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * @return    array
      *
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
-        $this->items = array();
+        $this->data = array();
 
         $messages = Services::Message()->get();
         if (count($messages) == 0) {
@@ -57,9 +57,9 @@ class MolajoMessagesModel extends MolajoModel
             $tempObject->set('debug_location', $message['debug_location']);
             $tempObject->set('debug_object', $message['debug_object']);
 
-            $this->items[] = $tempObject;
+            $this->data[] = $tempObject;
         }
 
-        return $this->items;
+        return $this->data;
     }
 }

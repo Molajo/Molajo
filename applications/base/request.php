@@ -417,7 +417,7 @@ class MolajoRequest
          *      extension for possible reuse by other extensions. MolajoRequestModel
          *      can be used to retrieve the data.
          */
-        $this->set('query_items', array());
+        $this->set('query_rowset', array());
         $this->set('query_pagination', array());
         $this->set('query_state', array());
     }

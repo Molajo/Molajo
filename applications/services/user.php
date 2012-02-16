@@ -253,7 +253,7 @@ class MolajoUserService
     protected function __construct($id = 0)
     {
         $this->id = (int) $id;
-        $this->_getItem();
+        $this->_getData();
     }
 
     /**
@@ -266,10 +266,10 @@ class MolajoUserService
      * @return  boolean
      * @since   1.0
      */
-    protected function _getItem()
+    protected function _getData()
     {
         $this->model = new MolajoUsersModel ($this->id);
-        $results = $this->model->getItem();
+        $results = $this->model->getData();
         $columns = $this->model->getFields();
 
         foreach ($results as $name => $value) {

@@ -72,20 +72,12 @@ class MolajoModel
     protected $state;
 
     /**
-     * Results set from crud query for a single item
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $item;
-
-    /**
      * Results set from display query
      *
      * @var    array
      * @since  1.0
      */
-    protected $items;
+    protected $data;
 
     /**
      * Pagination object from display query
@@ -144,8 +136,7 @@ class MolajoModel
     public function __construct($id = null)
     {
         $this->state = new Registry();
-        $this->item = array();
-        $this->items = array();
+        $this->data = array();
         $this->pagination = array();
 
         if ((int) $this->id == 0) {
@@ -207,48 +198,88 @@ class MolajoModel
     }
 
     /**
-     * _query
+     * getState
      *
-     * Standard method used to execute a query
-     *
-     * @return  object
-     * @since   1.0
+     * @return    array
+     * @since    1.0
      */
-    protected function _query()
+    public function getState()
     {
-
+        return $this->state;
     }
 
     /**
-     *  Following are part of the MolajoCrudModel:
+     * getFields
+     *
+     * Retrieves columns from the database table
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getFields()
+    {
+        return $this->db->getTableColumns($this->table, false);
+    }
+
+    /**
+   	 * getProperties
+     *
+     * Returns an associative array of object properties.
+   	 *
+   	 * @return  array
+   	 * @since   1.0
+   	 */
+   	public function getProperties()
+   	{
+   		return get_object_vars($this);
+   	}
+
+    /**
+     *  Read Methods
      */
 
     /**
-     * getItem
+     * getData
      *
-     * Method to retrieve one row of a specific data type and to allow for
-     *  appending in additional data elements, if needed
+     * Method to establish query criteria, formulate a database query,
+     * run the database query, allow for the addition of more data, and
+     * return the integrated data
      *
      * @return  object
      * @since   1.0
      */
-    public function getItem()
+    public function getData()
     {
         $this->set('crud', 'r');
 
+        $this->_setCriteria();
+
         $this->_setQuery();
 
-        $item = $this->_query();
+        $item = $this->_runQuery();
 
-        $this->item = $this->_getAdditionalData($item);
+        $this->data = $this->_getAdditionalData($item);
 
-        return $this->item;
+        return $this->data;
+    }
+
+    /**
+     * _setCriteria
+     *
+     * Method to set the criteria needed for a query
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _setCriteria()
+    {
+
     }
 
     /**
      * _setQuery
      *
-     * Standard query to retrieve all elements of the specific table for a specific item
+     * Method to create a query object in preparation of running a query
      *
      * @return  object
      * @since   1.0
@@ -259,34 +290,32 @@ class MolajoModel
     }
 
     /**
+     * _runQuery
+     *
+     * Method to execute a prepared and set query statement,
+     * returning the results
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _runQuery()
+    {
+        return array();
+    }
+
+    /**
      * _getAdditionalData
      *
-     * Method to append additional data elements needed to the standard
-     * array of elements provided by the data source
+     * Method to append additional data elements, as needed
      *
-     * @param array $item
+     * @param array $data
      *
      * @return array
      * @since  1.0
      */
-    protected function _getAdditionalData($item = array())
+    protected function _getAdditionalData($data = array())
     {
-        return $item;
-    }
-
-    /**
-     *  Following are part of the MolajoDisplayModel:
-     */
-
-    /**
-     * getItems
-     *
-     * @return    array
-     * @since    1.0
-     */
-    public function getItems()
-    {
-        return $this->items;
+        return $data;
     }
 
     /**
@@ -298,17 +327,6 @@ class MolajoModel
     public function getPagination()
     {
         return $this->pagination;
-    }
-
-    /**
-     * getState
-     *
-     * @return    array
-     * @since    1.0
-     */
-    public function getState()
-    {
-        return $this->state;
     }
 
     /**
@@ -333,7 +351,6 @@ class MolajoModel
     /**
      * bind
      *
-     * Method to bind an associative array to the Table
      * Ignores properties not publicly accessible and
      * those defined in the ignore parameter
      *
@@ -345,7 +362,7 @@ class MolajoModel
      */
     public function bind($source, $ignore = array())
     {
-
+        // come back to this on the update etc operations
     }
 
     /**
@@ -569,19 +586,6 @@ class MolajoModel
         if ($return === false) {
             $this->set('valid', false);
         }
-    }
-
-    /**
-     * getFields
-     *
-     * Retrieves columns from the database table
-     *
-     * @return bool
-     * @since  1.0
-     */
-    public function getFields()
-    {
-        return $this->db->getTableColumns($this->table, false);
     }
 
     /**
@@ -1196,33 +1200,4 @@ class MolajoModel
 
         return true;
     }
-
-    /**
-   	 * Returns an associative array of object properties.
-   	 *
-   	 * @param   boolean  $public  If true, returns only the public properties.
-   	 *
-   	 * @return  array
-   	 *
-   	 * @since   11.1
-   	 *
-   	 * @see     get()
-   	 */
-   	public function getProperties($public = true)
-   	{
-   		$vars = get_object_vars($this);
-   		if ($public)
-   		{
-   			foreach ($vars as $key => $value)
-   			{
-   				if ('_' == substr($key, 0, 1))
-   				{
-   					unset($vars[$key]);
-   				}
-   			}
-   		}
-
-   		return $vars;
-   	}
-
 }

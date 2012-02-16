@@ -40,15 +40,15 @@ class MolajoUsersModel extends MolajoCrudModel
      * Method to append additional data elements needed to the standard
      * array of elements provided by the data source
      *
-     * @param array $item
+     * @param array $data
      *
      * @return array
      * @since  1.0
      */
-    protected function _getAdditionalData($item)
+    protected function _getAdditionalData($data)
     {
         /** concatenate name */
-        $item['name'] = $item['first_name'] . ' ' . $item['last_name'];
+        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
 
         /** retrieve applications for which the user is authorized to login */
         $query = $this->db->getQuery(true);
@@ -64,7 +64,7 @@ class MolajoUsersModel extends MolajoCrudModel
 
         $this->db->setQuery($query->__toString());
 
-        $item['applications'] = $this->db->loadAssocList('title', 'id');
+        $data['applications'] = $this->db->loadAssocList('title', 'id');
 
         if ($this->db->getErrorNum()) {
             $this->setError($this->db->getErrorMsg());
@@ -85,7 +85,7 @@ class MolajoUsersModel extends MolajoCrudModel
 
         $this->db->setQuery($query->__toString());
 
-        $item['groups'] = $this->db->loadAssocList('title', 'id');
+        $data['groups'] = $this->db->loadAssocList('title', 'id');
 
         if ($this->db->getErrorNum()) {
             $this->setError($this->db->getErrorMsg());
@@ -93,11 +93,11 @@ class MolajoUsersModel extends MolajoCrudModel
         }
 
         /** retrieve system groups to which the user belongs */
-        $item['public'] = 1;
-        $item['guest'] = 0;
-        $item['registered'] = 1;
-        if (in_array(5, $item['groups'])) {
-            $item['administrator'] = 1;
+        $data['public'] = 1;
+        $data['guest'] = 0;
+        $data['registered'] = 1;
+        if (in_array(5, $data['groups'])) {
+            $data['administrator'] = 1;
         }
 
         /** retrieve view access groups to which the user belongs */
@@ -113,7 +113,7 @@ class MolajoUsersModel extends MolajoCrudModel
 
         $this->db->setQuery($query->__toString());
 
-        $item['view_groups'] = $this->db->loadResultArray();
+        $data['view_groups'] = $this->db->loadResultArray();
 
         if ($this->db->getErrorNum()) {
             $this->setError($this->db->getErrorMsg());
@@ -121,6 +121,6 @@ class MolajoUsersModel extends MolajoCrudModel
         }
 
         /** return array of primary query and additional data elements */
-        return $item;
+        return $data;
     }
 }

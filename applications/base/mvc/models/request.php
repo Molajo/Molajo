@@ -38,17 +38,17 @@ class MolajoRequestModel extends MolajoDisplayModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * @return    array
      *
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
         /** input for events is stored in the task request object */
-        $this->items = Molajo::Request()->get('query_items');
-        return $this->items;
+        $this->data = Molajo::Request()->get('query_rowset');
+        return $this->data;
     }
 
     /**

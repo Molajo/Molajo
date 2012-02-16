@@ -35,7 +35,7 @@ class MolajoDisplayController extends MolajoController
         }
 
         /** Set Criteria and Run Query */
-        $this->rowset = $this->model->getItems();
+        $this->rowset = $this->model->getData();
         $this->pagination = $this->model->getPagination();
         $this->model_state = $this->model->getState();
 
@@ -45,7 +45,7 @@ class MolajoDisplayController extends MolajoController
          *      extensions. MolajoRequestModel retrieves data.
          */
         if ($this->get('extension_primary') === true) {
-            Molajo::Request()->set('query_items', $this->rowset);
+            Molajo::Request()->set('query_rowset', $this->rowset);
             Molajo::Request()->set('query_pagination', $this->pagination);
             Molajo::Request()->set('query_state', $this->model_state);
         }

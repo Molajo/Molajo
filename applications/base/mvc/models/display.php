@@ -19,42 +19,17 @@ defined('MOLAJO') or die;
 class MolajoDisplayModel extends MolajoModel
 {
     /**
-     * __construct
+     * _setCriteria
      *
-     * Constructor.
+     * Method to set the criteria needed for a query
      *
-     * @param  $id
-     * @since  1.0
+     * @return  object
+     * @since   1.0
      */
-    public function __construct($id = null)
-    {
-        // class name, table, and primary key set by child classes
-        return parent::__construct($id);
-    }
-
-    /**
-     * getItems
-     *
-     * @return    array
-     *
-     * @since    1.0
-     */
-    public function getItems()
-    {
-        $this->set('crud', 'r');
-
-        $this->_setCriteria();
-        $this->_setQuery();
-        $this->items = $this->_query();
-
-        return $this->items;
-    }
-
     protected function _setCriteria()
     {
         /** Set State for Selection Criteria */
         $asset_type_id = $this->task_request->get('source_asset_type_id');
-
 
         $extensionName = ucfirst($this->get('extension_instance_name'));
         $extensionName = str_replace(array('-', '_'), '', $extensionName);
@@ -89,9 +64,21 @@ class MolajoDisplayModel extends MolajoModel
         return;
     }
 
+    /**
+     * _setQuery
+     *
+     * Method to create a query object in preparation of running a query
+     *
+     * @return  object
+     * @since   1.0
+     */
     protected function _setQuery()
     {
+        $this->query = $this->db->getQuery(true);
+        
+        /* remove below when set criteria done */
         $asset_type_id = $this->task_request->get('source_asset_type_id');
+        /* remove above when set criteria done */
 
         $this->query->select('a.' . $this->db->namequote('id'));
         $this->query->select('a.' . $this->db->namequote('extension_instance_id'));
@@ -169,10 +156,18 @@ class MolajoDisplayModel extends MolajoModel
         return;
     }
 
-
-    protected function _query()
+    /**
+     * _runQuery
+     *
+     * Method to execute a prepared and set query statement,
+     * returning the results
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _runQuery()
     {
-        $items = $this->db->loadObjectList();
+        $data = $this->db->loadObjectList();
 
         if ($this->db->getErrorNum() == 0) {
 
@@ -184,16 +179,16 @@ class MolajoDisplayModel extends MolajoModel
                     $this->db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = $this->name . ':' . 'getItems',
+                $debug_location = $this->name . ':' . 'getData',
                 $debug_object = $this->db
             );
             return $this->request->set('status_found', false);
         }
 
-        if (count($items) == 0) {
+        if (count($data) == 0) {
             return array();
         }
 
-        return $items;
+        return $data;
     }
 }

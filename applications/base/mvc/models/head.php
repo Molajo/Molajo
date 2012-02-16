@@ -34,15 +34,15 @@ class MolajoHeadModel extends MolajoModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * @return    array
      *
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
-        $this->items = array();
+        $this->data = array();
 
         $tempObject = new JObject();
         $tempObject->set('type', 'base');
@@ -61,7 +61,7 @@ class MolajoHeadModel extends MolajoModel
         $tempObject->set('base', Molajo::Request()->get('url_base'));
         $tempObject->set('last_modified', Molajo::Request()->get('source_last_modified'));
         $tempObject->set('favicon', Molajo::Request()->get('theme_favicon'));
-        $this->items[] = $tempObject;
+        $this->data[] = $tempObject;
 
         /** type: links */
         $list = Molajo::Responder()->getHeadLinks();
@@ -74,7 +74,7 @@ class MolajoHeadModel extends MolajoModel
                 $tempObject->set('relation', $item['relation']);
                 $tempObject->set('relation_type', $item['relation_type']);
                 $tempObject->set('attributes', $item['attributes']);
-                $this->items[] = $tempObject;
+                $this->data[] = $tempObject;
             }
         }
 
@@ -89,7 +89,7 @@ class MolajoHeadModel extends MolajoModel
                 $tempObject->set('media', $item['media']);
                 $tempObject->set('attributes', $item['attributes']);
                 $tempObject->set('priority', $item['priority']);
-                $this->items[] = $tempObject;
+                $this->data[] = $tempObject;
             }
         }
 
@@ -100,7 +100,7 @@ class MolajoHeadModel extends MolajoModel
             $tempObject->set('type', 'stylesheet_declarations');
             $tempObject->set('mimetype', $item['mimetype']);
             $tempObject->set('content', $item['content']);
-            $this->items[] = $tempObject;
+            $this->data[] = $tempObject;
         }
 
         /** type: javascript_links */
@@ -113,7 +113,7 @@ class MolajoHeadModel extends MolajoModel
             $tempObject->set('defer', 0);
             $tempObject->set('async', $item['async']);
             $tempObject->set('priority', $item['priority']);
-            $this->items[] = $tempObject;
+            $this->data[] = $tempObject;
         }
 
         /** type: javascript_declarations */
@@ -123,10 +123,10 @@ class MolajoHeadModel extends MolajoModel
             $tempObject->set('type', 'javascript_declarations');
             $tempObject->set('mimetype', $item['mimetype']);
             $tempObject->set('content', $item['content']);
-            $this->items[] = $tempObject;
+            $this->data[] = $tempObject;
         }
 
-        return $this->items;
+        return $this->data;
         /** custom */
     }
 }

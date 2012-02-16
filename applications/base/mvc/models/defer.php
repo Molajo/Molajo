@@ -34,15 +34,15 @@ class MolajoDeferModel extends MolajoDisplayModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * @return    array
      *
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
-        $this->items = array();
+        $this->data = array();
 
         /** type: javascript_links */
         $list = Molajo::Responder()->getScriptLinks(1);
@@ -54,7 +54,7 @@ class MolajoDeferModel extends MolajoDisplayModel
             $tempObject->set('defer', true);
             $tempObject->set('async', $item['async']);
             $tempObject->set('priority', $item['priority']);
-            $this->items[] = $tempObject;
+            $this->data[] = $tempObject;
         }
 
         /** type: javascript_declarations */
@@ -64,10 +64,10 @@ class MolajoDeferModel extends MolajoDisplayModel
             $tempObject->set('type', 'javascript_declarations');
             $tempObject->set('mimetype', $item['mimetype']);
             $tempObject->set('content', $item['content']);
-            $this->items[] = $tempObject;
+            $this->data[] = $tempObject;
         }
 
-        return $this->items;
+        return $this->data;
         /** custom */
     }
 }

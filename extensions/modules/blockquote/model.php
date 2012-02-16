@@ -34,13 +34,13 @@ class MolajoBlockquoteModuleModel extends MolajoDisplayModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * @return    array    An empty array
      *
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
         $rows = Molajo::Request()->get('query_results');
         if (count($rows) == 0) {

@@ -34,13 +34,13 @@ class MolajoGridBatchModuleModel extends MolajoDisplayModel
     }
 
     /**
-     * getItems
+     * getData
      *
      * @return    array
      *
      * @since    1.0
      */
-    public function getItems()
+    public function getData()
     {
         $this->items = array();
         return $this->items;
