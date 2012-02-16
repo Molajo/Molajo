@@ -184,9 +184,6 @@ class MolajoRequest
             $this->_getRenderData();
         }
 
-        /** input fields */
-        $this->_processInputData();
-
         return;
     }
 
@@ -1412,53 +1409,6 @@ class MolajoRequest
     protected function _processInputData()
     {
         $this->_processSelectOptions();
-    }
-
-    /**
-     * _processInputData
-     *
-     * @return bool
-     */
-    protected function _processSelectOptions()
-    {
-        return;
-        echo '<pre>';
-        var_dump($this->page_request);
-        echo '</pre>';
-        die;
-        $selectOptions = new Registry();
-        /**
-        $extensionName = ucfirst($this->get('extension_instance_name'));
-        $extensionName = str_replace(array('-', '_'), '', $extensionName);
-
-        $helperClass = 'Molajo' . $extensionName. 'ModelHelper';
-
-        if (class_exists($helperClass)) {
-        $h = new $helperClass();
-        } else {
-        $h = new MolajoModelHelper();
-        }
-         */
-        /** Retrieve select option definition for table */
-        $xmlfile = '';
-        $test = $this->get('extension_path') . '/options/select.xml';
-        if (file_exists($test)) {
-            $xmlfile = $test;
-        } else {
-            $test = MOLAJO_APPLICATIONS_MVC . '/options/filters.xml';
-        }
-
-        $x = simplexml_load_file($xmlfile);
-        if (count($x) == 0) {
-            return true;
-        }
-
-        foreach ($x->filters->filter as $f) {
-            $field = (string)$f->field;
-            $method = (string)$f->method;
-            $multiple = (string)$f->multiple;
-        }
-
     }
 
     /**

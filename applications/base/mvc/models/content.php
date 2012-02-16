@@ -28,7 +28,7 @@ class MolajoContentModel extends MolajoDisplayModel
     {
         $this->name = get_class($this);
         $this->table = Services::Configuration()
-            ->get('dbprefix').'_content';
+            ->get('dbprefix') . '_content';
         $this->primary_key = 'id';
 
         return parent::__construct($id);
@@ -47,11 +47,42 @@ class MolajoContentModel extends MolajoDisplayModel
         $this->_query();
     }
 
-    public function setCriteria ()
+    public function setCriteria()
     {
         /** Set State for Selection Criteria */
         $asset_type_id = $this->task_request->get('source_asset_type_id');
         $this->set('crud', 'r');
+
+        $extensionName = ucfirst($this->get('extension_instance_name'));
+        $extensionName = str_replace(array('-', '_'), '', $extensionName);
+
+        $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
+
+        if (class_exists($helperClass)) {
+            $h = new $helperClass();
+        } else {
+            $h = new MolajoModelHelper();
+        }
+
+
+        /** Retrieve xml for this view */
+        $xmlfile = MOLAJO_EXTENSIONS_COMPONENTS . '/articles/options/grid.xml';
+        $configuration = simplexml_load_file($xmlfile);
+        if (count($configuration) == 0) {
+            return true;
+        }
+
+        $filterArray = array();
+        foreach ($configuration->filters->children() as $child) {
+            $field = (string)$child['name'];
+            $requestAssetID = Molajo::Request()->get('request_asset_id');
+
+            $filterName = 'select.' . $filterName;
+            $storedAsName = $requestAssetID . '.' . $filterName;
+
+            $filterValue = Services::User()->get($storedAsName, $filterName);
+            $this->set($filterName, $filterValue);
+        }
     }
 
     protected function _query()
@@ -101,7 +132,7 @@ class MolajoContentModel extends MolajoDisplayModel
         $query->select('a.' . $db->namequote('translation_of_id'));
         $query->select('a.' . $db->namequote('ordering'));
 
-        $query->from(Services::Configuration()->get('dbprefix').'content'.' as a ');
+        $query->from(Services::Configuration()->get('dbprefix') . 'content' . ' as a ');
 
         /** Status and Dates */
         $query->where('a.' . $db->namequote('status') .
