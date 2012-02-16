@@ -18,9 +18,9 @@ Class ExtensionHelper extends MolajoExtensionHelper {}
 Class InstallerHelper extends MolajoInstallerHelper {}
 Class LanguageHelper extends MolajoLanguageHelper {}
 Class LoadHelper extends MolajoLoadHelper {}
-Class MenuHelper extends MolajoMenuHelper {}
 Class MustacheHelper extends MolajoMustacheHelper {}
 Class ModuleHelper extends MolajoModuleHelper {}
+Class MenuItemHelper extends MolajoMenuItemHelper {}
 Class PluginHelper extends MolajoPluginHelper {}
 Class SiteHelper extends MolajoSiteHelper {}
 Class ThemeHelper extends MolajoThemeHelper {}

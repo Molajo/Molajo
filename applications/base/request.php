@@ -510,9 +510,8 @@ class MolajoRequest
      */
     protected function _getMenuItem()
     {
-        $row = ContentHelper::get(
-            (int)$this->get('menu_item_id'),
-            $this->get('source_table')
+        $row = MenuItemHelper::get(
+            (int)$this->get('menu_item_id')
         );
 
         if (count($row) == 0) {
@@ -529,27 +528,33 @@ class MolajoRequest
             return $this->set('status_found', false);
         }
 
-        $this->set('menu_item_title', $row->title);
-        $this->set('menu_item_asset_type_id', $row->asset_type_id);
-        $this->set('menu_item_asset_id', $row->asset_id);
-        $this->set('menu_item_view_group_id', $row->view_group_id);
+        $this->set('menu_item_title', $row->menu_item_title);
+        $this->set('menu_item_asset_type_id', $row->menu_item_asset_type_id);
+        $this->set('menu_item_asset_id', $row->menu_item_asset_id);
+        $this->set('menu_item_view_group_id', $row->menu_item_view_group_id);
+
+        $this->set('extension_instance_id', $row->menu_id);
+        $this->set('extension_instance_name', $row->menu_title);
+        $this->set('extension_instance_asset_type_id', $row->menu_asset_type_id);
+        $this->set('extension_instance_asset_id', $row->menu_asset_id);
+        $this->set('extension_instance_view_group_id', $row->menu_view_group_id);
 
         $parameters = new Registry;
-        $parameters->loadString($row->parameters);
+        $parameters->loadString($row->menu_item_parameters);
         $this->set('menu_item_parameters', $parameters);
 
         $custom_fields = new Registry;
-        $custom_fields->loadString($row->custom_fields);
+        $custom_fields->loadString($row->menu_item_custom_fields);
         $this->set('menu_item_custom_fields', $custom_fields);
 
         $metadata = new Registry;
-        $metadata->loadString($row->metadata);
+        $metadata->loadString($row->menu_item_metadata);
         $this->set('menu_item_metadata', $metadata);
 
         $this->_setPageValues($parameters, $metadata);
 
-        $this->set('menu_item_language', $row->language);
-        $this->set('menu_item_translation_of_id', $row->translation_of_id);
+        $this->set('menu_item_language', $row->menu_item_language);
+        $this->set('menu_item_translation_of_id', $row->menu_item_translation_of_id);
 
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
@@ -585,14 +590,6 @@ class MolajoRequest
                 $parameters->def('suppress_no_results', 0)
             );
         }
-
-        /** extension */
-        $this->set('extension_instance_id',
-            $parameters->def('extension_instance_id', 0)
-        );
-
-        /** source */
-        $this->set('source_id', $parameters->def('id', 0));
 
         return $this->set('status_found', true);
     }

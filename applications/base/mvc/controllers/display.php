@@ -229,13 +229,16 @@ class MolajoDisplayController extends MolajoController
 
         /** create mustache dataset */
         $h->items = array();
-        foreach ($this->rowset as $this->row) {
-            $item = new stdClass();
-            $pairs = get_object_vars($this->row);
-            foreach ($pairs as $key => $value) {
-                $item->$key = $value;
+        $totalRows = count($this->rowset);
+        if ($totalRows > 0) {
+            foreach ($this->rowset as $this->row) {
+                $item = new stdClass();
+                $pairs = get_object_vars($this->row);
+                foreach ($pairs as $key => $value) {
+                    $item->$key = $value;
+                }
+                $h->items[] = $item;
             }
-            $h->items[] = $item;
         }
 
         /** Pass Template and Data to Mustache */
