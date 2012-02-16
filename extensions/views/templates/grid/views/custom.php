@@ -6,7 +6,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-dfasfasdfs
 <include:module name=admin-toolbar />
 <include:module name=admin-submenu />
 <include:module name=grid-filters />
