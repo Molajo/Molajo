@@ -8,13 +8,13 @@
 defined('MOLAJO') or die;
 
 /**
- * AdminToolbar
+ * AdminSubmenu
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoAdminToolbarModuleModel extends MolajoDisplayModel
+class MolajoAdminSubmenuModuleModel extends MolajoDisplayModel
 {
     /**
      * __construct

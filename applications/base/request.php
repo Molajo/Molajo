@@ -187,10 +187,6 @@ class MolajoRequest
         /** input fields */
         $this->_processInputData();
 
-        echo '<pre>';
-        var_dump($this->page_request);
-        echo '</pre>';
-die();
         return;
     }
 

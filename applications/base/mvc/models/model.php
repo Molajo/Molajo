@@ -25,7 +25,7 @@ class MolajoModel
      * @var    string
      * @since  1.0
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * Database connection
@@ -73,7 +73,7 @@ class MolajoModel
      * @var    string
      * @since  1.0
      */
-    public $primary_key;
+    public $primary_key = '';
 
     /**
      * Primary key value
@@ -81,7 +81,7 @@ class MolajoModel
      * @var    string
      * @since  1.0
      */
-    public $id;
+    public $id = 0;
 
     /**
      * Task Request
@@ -107,33 +107,23 @@ class MolajoModel
      */
     public function __construct($id = null)
     {
+        $this->state = new Registry();
         $this->items = array();
         $this->pagination = array();
-        $this->state = array();
-        $this->id = $id;
 
-        if (isset($this->name)) {
-        } else {
+        if ((int) $this->id == 0) {
+            $this->id = $id;
+        }
+        if (trim($this->name) == '') {
             $this->name = $this;
+        }
+        if (trim($this->primary_key) == '') {
+            $this->primary_key = 'id';
         }
 
         if (isset($this->db)) {
         } else {
             return $this->db = Services::DB();
-        }
-
-        if (isset($this->primary_key)) {
-        } else {
-            $this->primary_key = 'id';
-        }
-
-        if (isset($this->state)) {
-        } else {
-            $this->state = new Registry();
-        }
-
-        if ($this->get('crud', '') == '') {
-            $this->set('crud', 'r');
         }
 
         return $this;

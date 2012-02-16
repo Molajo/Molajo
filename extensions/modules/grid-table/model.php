@@ -8,13 +8,13 @@
 defined('MOLAJO') or die;
 
 /**
- * AdminToolbar
+ * GridTable
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoAdminToolbarModuleModel extends MolajoDisplayModel
+class MolajoGridTableModuleModel extends MolajoDisplayModel
 {
     /**
      * __construct

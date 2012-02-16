@@ -435,6 +435,7 @@ class MolajoRenderer
                 (int)$this->get('extension_asset_type_id'),
                 $this->get('extension_instance_name')
             );
+
         } else {
             $rows = ExtensionHelper::get(
                 (int)$this->get('extension_asset_type_id'),
@@ -474,6 +475,19 @@ class MolajoRenderer
         $this->set('extension_parameters', $parameters);
         $this->set('source_asset_type_id',
             $parameters->get('source_asset_type_id'));
+
+        if ((int)$this->get('template_view_id', 0) == 0) {
+             $this->set('template_view_id',
+                 $parameters->get('template_view_id')
+             );
+         }
+
+         /** wrap */
+         if ((int)$this->get('wrap_view_id', 0) == 0) {
+             $this->set('wrap_view_id',
+                 $parameters->get('wrap_view_id')
+             );
+         }
 
         /** mvc */
         if ($this->get('controller', '') == '') {
@@ -750,7 +764,11 @@ class MolajoRenderer
         if ($this->get('status_found') === false) {
             return $this->get('status_found');
         }
-
+/**
+        echo '<pre>';
+        var_dump($this->task_request);
+        echo '</pre>';
+*/
         /** instantiate controller  */
         $controller = new $cc($this->task_request, $this->parameters);
 

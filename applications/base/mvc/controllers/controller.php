@@ -95,6 +95,7 @@ class MolajoController
 
         /** model */
         $mc = (string)$this->get('model');
+
         $this->model = new $mc();
         $this->model->task_request = $this->task_request;
         $this->model->parameters = $this->parameters;

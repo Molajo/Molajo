@@ -67,6 +67,7 @@ abstract class MolajoExtensionHelper
             $query->where('(a.' . $db->namequote('title') .
                     ' = ' . $db->quote($extension) . ')'
             );
+
         }
         if ((int)$asset_type_id > 0) {
             $query->where('a.' . $db->namequote('asset_type_id') .

@@ -33,6 +33,9 @@ class MolajoModuleRenderer extends MolajoRenderer
         $results = parent::_getExtension();
 
         if ($results === false) {
+            echo 'remove from MolajoModuleRenderer when .
+            dev is done. Module not found: '.
+                $this->get('extension_instance_name').'<br />';
             return false;
         }
 
