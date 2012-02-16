@@ -436,7 +436,8 @@ class MolajoRequest
 
         /** 404: _routeRequest handles redirecting to error page */
         if (count($row) == 0
-            || (int)$row->routable == 0) {
+            || (int)$row->routable == 0
+        ) {
             return $this->set('status_found', false);
         }
 
@@ -481,6 +482,9 @@ class MolajoRequest
         ) {
             $this->set('menu_item_id', $row->source_id);
             $this->_getMenuItem();
+            if ($this->get('status_found') === false) {
+                return $this->get('status_found');
+            }
         } else {
             $this->set('source_id', $row->source_id);
             $this->_getSource();
@@ -514,17 +518,20 @@ class MolajoRequest
             (int)$this->get('menu_item_id')
         );
 
+        /**
+         *  403: Unauthorised Access
+         *
+         *  If the menu item doesn't return, it's likely that the user, application
+         *  or site do not have access to the menu (extension_instance).
+         *
+         *  Since the asset record was found, it is likely not a 404
+         *
+         *  Will be treating like a 404 for now
+         *
+         *  _authoriseTask handles redirecting to error page
+         */
         if (count($row) == 0) {
-            /** 500:  e\\ not found */
-            $this->set('status_found', false);
-            Services::Message()
-                ->set(
-                $message = Services::Language()->_('ERROR_MENU_ITEM_NOT_FOUND'),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
-                $code = 500,
-                $debug_location = 'MolajoRequest::getMenuItem',
-                $debug_object = $this->page_request
-            );
+            $this->set('status_authorised', false);
             return $this->set('status_found', false);
         }
 
@@ -749,14 +756,15 @@ class MolajoRequest
         if ($this->get('extension_instance_id', 0) == 0) {
         } else {
             $rows = ExtensionHelper::get(
-                 0,
-                 (int)$this->get('extension_instance_id')
-             );
+                0,
+                (int)$this->get('extension_instance_id')
+            );
         }
 
         /** Fatal error if Extension cannot be found */
         if (($this->get('extension_instance_id', 0) == 0)
-            || (count($rows) == 0)) {
+            || (count($rows) == 0)
+        ) {
 
             /** 500: Extension not found */
             Services::Message()
@@ -1048,11 +1056,13 @@ class MolajoRequest
     {
         /** display view verified in _getAsset */
         if ($this->get('mvc_task') == 'display'
-            && $this->get('status_authorised') === true) {
+            && $this->get('status_authorised') === true
+        ) {
             return true;
         }
         if ($this->get('mvc_task') == 'display'
-            && $this->get('status_authorised') === false) {
+            && $this->get('status_authorised') === false
+        ) {
             $this->_error(403);
         }
 
@@ -1412,23 +1422,23 @@ class MolajoRequest
     protected function _processSelectOptions()
     {
         return;
-         echo '<pre>';
-         var_dump($this->page_request);
-         echo '</pre>';
+        echo '<pre>';
+        var_dump($this->page_request);
+        echo '</pre>';
         die;
         $selectOptions = new Registry();
-/**
+        /**
         $extensionName = ucfirst($this->get('extension_instance_name'));
         $extensionName = str_replace(array('-', '_'), '', $extensionName);
 
         $helperClass = 'Molajo' . $extensionName. 'ModelHelper';
 
         if (class_exists($helperClass)) {
-            $h = new $helperClass();
+        $h = new $helperClass();
         } else {
-            $h = new MolajoModelHelper();
+        $h = new MolajoModelHelper();
         }
-*/
+         */
         /** Retrieve select option definition for table */
         $xmlfile = '';
         $test = $this->get('extension_path') . '/options/select.xml';
