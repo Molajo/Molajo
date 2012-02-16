@@ -135,6 +135,7 @@ class MolajoModel
      */
     public function __construct($id = null)
     {
+        $this->task_request = new Registry();
         $this->state = new Registry();
         $this->data = array();
         $this->pagination = array();
@@ -211,14 +212,37 @@ class MolajoModel
     /**
      * getFields
      *
-     * Retrieves columns from the database table
+     * Retrieves column names and definitions from the database table
      *
      * @return array
      * @since  1.0
      */
     public function getFields()
     {
+        if ($this->table == '') {
+            return array();
+        }
         return $this->db->getTableColumns($this->table, false);
+    }
+
+    /**
+     * getFieldnames
+     *
+     * Retrieves column names, only, for the database table
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getFieldnames ()
+    {
+        $fields = array();
+        $fieldDefinitions = $this->getFields();
+        if (count($fieldDefinitions) > 0) {
+            foreach ($fieldDefinitions as $fieldDefinition) {
+                $fields[] = $fieldDefinition->Field;
+            }
+        }
+        return $fields;
     }
 
     /**

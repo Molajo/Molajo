@@ -18,6 +18,33 @@ defined('MOLAJO') or die;
  */
 class MolajoDisplayModel extends MolajoModel
 {
+
+    /**
+     * $selectStatements
+     *
+     * Array of select elements
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $selectStatements;
+
+    /**
+     * $selectionCriteria
+     *
+     * Array of query criteria
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $selectionCriteria;
+
+    /**
+     *  $limitResults
+     *
+     *  Number of resultsets to return
+     *  @va
+     */
     /**
      * _setCriteria
      *
@@ -28,10 +55,11 @@ class MolajoDisplayModel extends MolajoModel
      */
     protected function _setCriteria()
     {
-        /** Set State for Selection Criteria */
-        $asset_type_id = $this->task_request->get('source_asset_type_id');
+        /** Asset Type */
+        $asset_type_id = $this->task_request->get('source_asset_type_id', 0);
 
-        $extensionName = ucfirst($this->get('extension_instance_name'));
+        /** Model Helper */
+        $extensionName = ucfirst($this->get('extension_instance_name', ''));
         $extensionName = str_replace(array('-', '_'), '', $extensionName);
 
         $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
@@ -42,23 +70,46 @@ class MolajoDisplayModel extends MolajoModel
             $h = new MolajoModelHelper();
         }
 
-        /** Retrieve xml for this view */
+        /**
+         *  Select Statements
+         */
+        $this->selectStatements = array();
+
+        $fields = $this->getFieldnames();
+        if (count($fields) > 0) {
+            foreach ($fields as $field) {
+                $this->selectStatements[] = 'a.'.$field;
+            }
+        }
+/**
+        echo '<pre>';
+        var_dump($this->selectStatements);
+        echo '</pre>';
+*/
+        /**
+         *  Selection Criteria
+         */
+        $this->selectionCriteria = array();
+
         $xmlfile = MOLAJO_EXTENSIONS_COMPONENTS . '/articles/options/grid.xml';
-        $configuration = simplexml_load_file($xmlfile);
-        if (count($configuration) == 0) {
-            return true;
+        if (file_exists($xmlfile)) {
+            $configuration = simplexml_load_file($xmlfile);
+        } else {
+            $configuration = array();
         }
 
-        $filterArray = array();
-        foreach ($configuration->filters->children() as $child) {
-            $field = (string)$child['name'];
-            $requestAssetID = Molajo::Request()->get('request_asset_id');
+        if (count($configuration) > 0) {
 
-            $filterName = 'select.' . $field;
-            $storedAsName = $requestAssetID . '.' . $filterName;
+            foreach ($configuration->filters->children() as $child) {
+                $field = (string)$child['name'];
+                $requestAssetID = Molajo::Request()->get('request_asset_id');
 
-            $filterValue = Services::User()->get($storedAsName, $filterName);
-            $this->set($filterName, $filterValue);
+                $filterName = 'select.' . $field;
+                $storedAsName = $requestAssetID . '.' . $filterName;
+
+                $filterValue = Services::User()->get($storedAsName, $filterName);
+                $this->set($filterName, $filterValue);
+            }
         }
 
         return;
@@ -75,50 +126,31 @@ class MolajoDisplayModel extends MolajoModel
     protected function _setQuery()
     {
         $this->query = $this->db->getQuery(true);
-        
+
         /* remove below when set criteria done */
         $asset_type_id = $this->task_request->get('source_asset_type_id');
         /* remove above when set criteria done */
 
-        $this->query->select('a.' . $this->db->namequote('id'));
-        $this->query->select('a.' . $this->db->namequote('extension_instance_id'));
-        $this->query->select('a.' . $this->db->namequote('asset_type_id'));
-        $this->query->select('a.' . $this->db->namequote('title'));
-        $this->query->select('a.' . $this->db->namequote('subtitle'));
-        $this->query->select('a.' . $this->db->namequote('path'));
-        $this->query->select('a.' . $this->db->namequote('alias'));
-        $this->query->select('a.' . $this->db->namequote('content_text'));
-        $this->query->select('a.' . $this->db->namequote('protected'));
-        $this->query->select('a.' . $this->db->namequote('featured'));
-        $this->query->select('a.' . $this->db->namequote('stickied'));
-        $this->query->select('a.' . $this->db->namequote('status'));
-        $this->query->select('a.' . $this->db->namequote('start_publishing_datetime'));
-        $this->query->select('a.' . $this->db->namequote('stop_publishing_datetime'));
-        $this->query->select('a.' . $this->db->namequote('version'));
-        $this->query->select('a.' . $this->db->namequote('version_of_id'));
-        $this->query->select('a.' . $this->db->namequote('status_prior_to_version'));
-        $this->query->select('a.' . $this->db->namequote('created_datetime'));
-        $this->query->select('a.' . $this->db->namequote('created_by'));
-        $this->query->select('a.' . $this->db->namequote('modified_datetime'));
-        $this->query->select('a.' . $this->db->namequote('modified_by'));
-        $this->query->select('a.' . $this->db->namequote('checked_out_datetime'));
-        $this->query->select('a.' . $this->db->namequote('checked_out_by'));
+        /**
+         *  Select Statements
+         */
+        if (count($this->selectStatements) > 0) {
+            foreach ($this->selectStatements as $select) {
+                $this->query->select(
+                    $this->db->namequote($select)
+                );
+            }
+        }
 
-        $this->query->select('a.' . $this->db->namequote('root'));
-        $this->query->select('a.' . $this->db->namequote('parent_id'));
-        $this->query->select('a.' . $this->db->namequote('lft'));
-        $this->query->select('a.' . $this->db->namequote('rgt'));
-        $this->query->select('a.' . $this->db->namequote('lvl'));
-        $this->query->select('a.' . $this->db->namequote('home'));
+        $this->query->from($this->table . ' as a ');
 
-        $this->query->select('a.' . $this->db->namequote('custom_fields'));
-        $this->query->select('a.' . $this->db->namequote('parameters'));
-        $this->query->select('a.' . $this->db->namequote('metadata'));
-        $this->query->select('a.' . $this->db->namequote('language'));
-        $this->query->select('a.' . $this->db->namequote('translation_of_id'));
-        $this->query->select('a.' . $this->db->namequote('ordering'));
+        $this->db->setQuery($this->query);
 
-        $this->query->from(Services::Configuration()->get('dbprefix') . 'content' . ' as a ');
+        return;
+    }
+
+    protected function _hold ()
+    {
 
         /** Status and Dates */
         $this->query->where('a.' . $this->db->namequote('status') .
@@ -151,9 +183,6 @@ class MolajoDisplayModel extends MolajoModel
             )
         );
 
-        $this->db->setQuery($this->query);
-
-        return;
     }
 
     /**

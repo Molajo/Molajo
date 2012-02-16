@@ -42,7 +42,7 @@ class MolajoAdminSubmenuModuleModel extends MolajoDisplayModel
      */
     public function getData()
     {
-        $this->items = array();
-        return $this->items;
+        $rows = Molajo::Request()->get('query_results');
+        var_dump($rows);
     }
 }

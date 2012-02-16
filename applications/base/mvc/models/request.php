@@ -31,8 +31,6 @@ class MolajoRequestModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '';
-        $this->primary_key = '';
 
         return parent::__construct($id);
     }
