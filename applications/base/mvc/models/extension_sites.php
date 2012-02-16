@@ -13,74 +13,23 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoExtensionSitesModel extends MolajoModel
+class MolajoExtensionSitesModel extends MolajoDisplayModel
 {
     /**
-     * Contructor
+     * __construct
      *
-     * @param database A database connector object
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
      */
-    function __construct($db)
+    public function __construct($id = null)
     {
-        parent::__construct('#__extension_sites', 'id', $db);
-    }
+        $this->name = get_class($this);
+        $this->table = '#__extension_sites';
+        $this->primary_key = 'id';
 
-
-    /**
-     * Overloaded check function
-     *
-     * @return  boolean  True if the object is ok
-     *
-     * @see     MolajoModel:bind
-     */
-    public function check()
-    {
-        // check for valid name
-        if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(Services::Language()->_('MOLAJO_DB_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Overloaded bind function
-     *
-     * @param   array  $hash named array
-     *
-     * @return  null|string  null is operation was satisfactory, otherwise returns an error
-     *
-     * @see     MolajoModel:bind
-     * @since   1.0
-     */
-    public function bind($array, $ignore = '')
-    {
-        if (isset($array['parameters']) && is_array($array['parameters'])) {
-            $registry = new Registry();
-            $registry->loadArray($array['parameters']);
-            $array['parameters'] = (string)$registry;
-        }
-
-        if (isset($array['control']) && is_array($array['control'])) {
-            $registry = new Registry();
-            $registry->loadArray($array['control']);
-            $array['control'] = (string)$registry;
-        }
-
-        return parent::bind($array, $ignore);
-    }
-
-    function find($options = Array())
-    {
-        $db = Services::DB();
-        $where = Array();
-        foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $db->quote($val);
-        }
-        $query = 'SELECT update_id FROM #__extension_sites WHERE ' . implode(' AND ', $where);
-        $db->setQuery($query->__toString());
-        return $db->loadResult();
+        return parent::__construct($id);
     }
 }

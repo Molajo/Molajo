@@ -407,13 +407,19 @@ class MolajoRequest
         $this->set('mvc_url_parameters', array());
         $this->set('mvc_suppress_no_results', false);
 
-        /** set in view controller with query results */
-        $this->set('query_results', array());
-
         /** results */
         $this->set('status_error', false);
         $this->set('status_authorised', false);
         $this->set('status_found', false);
+
+        /**
+         *  Display Controller saves the query results for the primary request
+         *      extension for possible reuse by other extensions. MolajoRequestModel
+         *      can be used to retrieve the data.
+         */
+        $this->set('query_items', array());
+        $this->set('query_pagination', array());
+        $this->set('query_state', array());
     }
 
     /**

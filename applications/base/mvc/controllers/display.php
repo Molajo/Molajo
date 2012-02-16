@@ -39,16 +39,16 @@ class MolajoDisplayController extends MolajoController
         $this->pagination = $this->model->getPagination();
         $this->model_state = $this->model->getState();
 
-        /** Save Query Results for Other Extensions  */
+        /**
+         *  For primary content (the extension determined in Molajo::Request),
+         *      save query results in the Request object for reuse by other
+         *      extensions. MolajoRequestModel retrieves data.
+         */
         if ($this->get('extension_primary') === true) {
-            Molajo::Request()->set('query_results', $this->rowset);
+            Molajo::Request()->set('query_items', $this->rowset);
+            Molajo::Request()->set('query_pagination', $this->pagination);
+            Molajo::Request()->set('query_state', $this->model_state);
         }
-
-        /** pagination */
-
-
-        /** state */
-
 
         /** no results */
         if (count($this->rowset) == 0

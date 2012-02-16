@@ -8,11 +8,28 @@
 defined('MOLAJO') or die;
 
 /**
- * User Applications
+ * Applications
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoUserApplicationsModel extends MolajoDisplayModel {}
+class MolajoUserApplicationsModel extends MolajoDisplayModel
+{
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct($id = null)
+    {
+        $this->name = get_class($this);
+        $this->table = '#__user_applications';
+        $this->primary_key = 'id';
+
+        return parent::__construct($id);
+    }
+}

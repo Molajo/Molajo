@@ -8,10 +8,28 @@
 defined('MOLAJO') or die;
 
 /**
- * Action Type
+ * ActionTypes
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoActionTypesModel extends MolajoDisplayModel {}
+class MolajoActionTypesModel extends MolajoDisplayModel
+{
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct($id = null)
+    {
+        $this->name = get_class($this);
+        $this->table = '#__action_types';
+        $this->primary_key = 'id';
+
+        return parent::__construct($id);
+    }
+}

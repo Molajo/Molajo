@@ -8,26 +8,29 @@
 defined('MOLAJO') or die;
 
 /**
- * Defer
+ * Content
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoDeferModel extends MolajoModel
+class MolajoDeferModel extends MolajoDisplayModel
 {
     /**
      * __construct
      *
      * Constructor.
      *
-     * @param  $config
+     * @param  $id
      * @since  1.0
      */
-    public function __construct(JConfig $config = null)
+    public function __construct($id = null)
     {
-        $this->_name = get_class($this);
-        parent::__construct($config);
+        $this->name = get_class($this);
+        $this->table = '';
+        $this->primary_key = '';
+
+        return parent::__construct($id);
     }
 
     /**

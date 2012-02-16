@@ -1,0 +1,81 @@
+<?php
+/**
+ * @package     Molajo
+ * @subpackage  Model
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ */
+defined('MOLAJO') or die;
+
+/**
+ * Request
+ *
+ * Model returns data that was saved in the Controller Display
+ *  method for the primary content (the extension determined in
+ *  Molajo Request.)
+ *
+ * @package     Molajo
+ * @subpackage  Model
+ * @since       1.0
+ */
+class MolajoRequestModel extends MolajoDisplayModel
+{
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct($id = null)
+    {
+        $this->name = get_class($this);
+        $this->table = '';
+        $this->primary_key = '';
+
+        return parent::__construct($id);
+    }
+
+    /**
+     * getItems
+     *
+     * @return    array
+     *
+     * @since    1.0
+     */
+    public function getItems()
+    {
+        /** input for events is stored in the task request object */
+        $this->items = Molajo::Request()->get('query_items');
+        return $this->items;
+    }
+
+    /**
+     * getPagination
+     *
+     * @return    array
+     *
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        /** input for events is stored in the task request object */
+        $this->pagination = Molajo::Request()->get('query_pagination');
+        return $this->pagination;
+    }
+
+    /**
+     * getState
+     *
+     * @return    array
+     *
+     * @since    1.0
+     */
+    public function getState()
+    {
+        /** input for events is stored in the task request object */
+        $this->state = Molajo::Request()->get('query_state');
+        return $this->state;
+    }
+}

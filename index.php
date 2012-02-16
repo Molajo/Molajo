@@ -167,7 +167,6 @@ require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-mustache.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/applications.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/aliases.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-molajo.php';
-require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-doctrine.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-simplepie.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/platforms-sfevent.php';
 

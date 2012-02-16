@@ -13,54 +13,23 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoGroupViewGroupsModel extends MolajoModel
+class MolajoGroupViewGroupsModel extends MolajoDisplayModel
 {
     /**
-     * Constructor
+     * __construct
      *
-     * @param   object  Database object
+     * Constructor.
      *
-     * @return  MolajoModelGrouping
-     *
-     * @since   1.0
+     * @param  $id
+     * @since  1.0
      */
-    public function __construct($db)
+    public function __construct($id = null)
     {
-        parent::__construct('#__group_view_groups', 'id', $db);
-    }
+        $this->name = get_class($this);
+        $this->table = '#__group_view_groups';
+        $this->primary_key = 'id';
 
-    /**
-     * Method to bind the data.
-     *
-     * @param   array  $array   The data to bind.
-     * @param   mixed  $ignore  An array or space separated list of fields to ignore.
-     *
-     * @return  bool  True on success, false on failure.
-     *
-     * @since   1.0
-     */
-    public function bind($array, $ignore = '')
-    {
-        return parent::bind($array, $ignore);
-    }
-
-    /**
-     * Method to check the current record to save
-     *
-     * @return  boolean  True on success
-     *
-     * @since   1.0
-     */
-    public function check()
-    {
-        // Validate the title.
-        if ((trim($this->title)) == '') {
-            $this->setError(Services::Language()->_('MOLAJO_DB_ERROR_GROUPING'));
-            return false;
-        }
-
-        return true;
+        return parent::__construct($id);
     }
 }

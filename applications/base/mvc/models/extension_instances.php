@@ -13,14 +13,23 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoExtensionInstancesModel extends MolajoModel
+class MolajoExtensionInstancesModel extends MolajoDisplayModel
 {
-
-    public function __construct($db)
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct($id = null)
     {
-        parent::__construct('#__extension_instances', 'id', $db);
-    }
+        $this->name = get_class($this);
+        $this->table = '#__extension_instances';
+        $this->primary_key = 'id';
 
+        return parent::__construct($id);
+    }
 }

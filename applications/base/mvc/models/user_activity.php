@@ -13,6 +13,23 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoUserActivityModel extends MolajoDisplayModel {}
+class MolajoUserActivityModel extends MolajoDisplayModel
+{
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct($id = null)
+    {
+        $this->name = get_class($this);
+        $this->table = '#__user_activity';
+        $this->primary_key = 'id';
+
+        return parent::__construct($id);
+    }
+}

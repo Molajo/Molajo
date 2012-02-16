@@ -36,6 +36,34 @@ class MolajoModel
     protected $db;
 
     /**
+     * Database query object
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $query;
+
+    /**
+     * $now
+     *
+     * Used in queries to determine date validity
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $now;
+
+    /**
+     * $nullDate
+     *
+     * Used in queries to determine date validity
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $nullDate;
+
+    /**
      * Used in setter/getter to store model state
      *
      * @var    array
@@ -115,7 +143,7 @@ class MolajoModel
             $this->id = $id;
         }
         if (trim($this->name) == '') {
-            $this->name = $this;
+            $this->name = get_class($this);
         }
         if (trim($this->primary_key) == '') {
             $this->primary_key = 'id';
@@ -123,8 +151,12 @@ class MolajoModel
 
         if (isset($this->db)) {
         } else {
-            return $this->db = Services::DB();
+            $this->db = Services::DB();
         }
+
+        $this->query = $this->db->getQuery(true);
+        $this->now = Services::Date()->getDate()->toSql();
+        $this->nullDate = $this->db->getNullDate();
 
         return $this;
     }

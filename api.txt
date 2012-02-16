@@ -58,7 +58,6 @@ MolajoAccessService
 MolajoConfigurationService
 MolajoDateService
 MolajoDispatcherService
-MolajoDoctrineService
 MolajoFilesystemService
 MolajoFilterService
 MolajoImageService

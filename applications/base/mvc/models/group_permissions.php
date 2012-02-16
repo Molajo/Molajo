@@ -13,22 +13,23 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoGroupPermissionsModel extends MolajoModel
+class MolajoGroupPermissionsModel extends MolajoDisplayModel
 {
     /**
-     * Constructor
+     * __construct
      *
-     * @param   object  Database object
+     * Constructor.
      *
-     * @return  MolajoModelGroup
-     *
-     * @since   1.0
+     * @param  $id
+     * @since  1.0
      */
-    public function __construct($db)
+    public function __construct($id = null)
     {
-        parent::__construct('#__group_permissions', 'id', $db);
-    }
+        $this->name = get_class($this);
+        $this->table = '#__group_permissions';
+        $this->primary_key = 'id';
 
+        return parent::__construct($id);
+    }
 }
