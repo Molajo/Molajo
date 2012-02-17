@@ -12,9 +12,6 @@ define('MOLAJO', 'Long Live Molajo!');
 
 define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
 
-/*                                              */
-/*  Server Super Globals                        */
-/*                                              */
 $protocol = 'http';
 $siteBase = '';
 if (isset($_SERVER['HTTPS'])) {
@@ -31,26 +28,18 @@ if (isset($_SERVER['SERVER_PORT'])) {
     }
 }
 if (strripos($_SERVER['PHP_SELF'], '/index.php')) {
-    $folder = substr($_SERVER['PHP_SELF'], 0, strripos($_SERVER['PHP_SELF'], '/index.php')).'/';
+    $folder = substr($_SERVER['PHP_SELF'], 0, strripos($_SERVER['PHP_SELF'], '/index.php')) . '/';
 } else {
     $folder = '/';
 }
-/* use $sitebase to identify site */
-$siteBase .= $folder;
-
-define('MOLAJO_BASE_URL', strtolower($protocol.$siteBase));
+define('MOLAJO_FOLDER', $folder);
+define('MOLAJO_PROTOCOL', strtolower($protocol));
+define('MOLAJO_BASE_URL', strtolower($protocol . $siteBase . $folder));
 
 /**
  *  Override folder locations using a new defines.php file
- *  on the base folder that identifies the following:
- *
- *  - applications - define MOLAJO_APPLICATIONS
- *  - extensions - define MOLAJO_EXTENSIONS
- *  - platforms - define PLATFORMS
- *  - sites - define SITES
- *
- * Also,
- *  - update the SITES/sites.xml file folderpath value
+ *  on the base folder that identifies the following defines
+ *  and update the SITES/sites.xml file folderpath values
  */
 if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
     include_once MOLAJO_BASE_FOLDER . '/defines.php';

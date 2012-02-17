@@ -6,21 +6,15 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-//todo: amy get these into an xml file and load
-/**
- *  Rendering
- */
-if (defined('MOLAJO_STOP_LOOP')) {
-} else {
-    define('MOLAJO_STOP_LOOP', 100);
-}
 
-/**
- *  Allows for quoting in language .ini files.
- */
-if (defined('_QQ_')) {
-} else {
-    define('_QQ_', '"');
+/** Define constances for these application variables */
+$defines = simplexml_load_file(strtolower(__DIR__) . '/defines.xml', 'SimpleXMLElement');
+foreach ($defines->define as $item) {
+    if (defined((string)$item['name'])) {
+    } else {
+        $value = (string)$item['value'];
+        define((string)$item['name'], $value);
+    }
 }
 
 /**
@@ -30,6 +24,7 @@ if (defined('PLATFORM_MOLAJO')) {
 } else {
     define('PLATFORM_MOLAJO', PLATFORMS . '/molajo');
 }
+
 if (defined('PLATFORM_MUSTACHE')) {
 } else {
     define('PLATFORM_MUSTACHE', PLATFORMS . '/Mustache');
@@ -107,267 +102,19 @@ if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
 } else {
     define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . 'extensions/views');
 }
-/**
- *  ACTION TYPES
- */
-if (defined('MOLAJO_ACTION_TYPE_LOGIN')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_LOGIN', 'login');
-}
-if (defined('MOLAJO_ACTION_TYPE_CREATE')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_CREATE', 'create');
-}
-if (defined('MOLAJO_ACTION_TYPE_VIEW')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_VIEW', 'view');
-}
-if (defined('MOLAJO_ACTION_TYPE_EDIT')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_EDIT', 'edit');
-}
-if (defined('MOLAJO_ACTION_TYPE_PUBLISH')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_PUBLISH', 'publish');
-}
-if (defined('MOLAJO_ACTION_TYPE_DELETE')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_DELETE', 'delete');
-}
-if (defined('MOLAJO_ACTION_TYPE_ADMIN')) {
-} else {
-    define('MOLAJO_ACTION_TYPE_ADMIN', 'admin');
-}
 
 /**
- *  ASSET TYPES
+ *  Allows for quoting in language .ini files.
  */
-/** base */
-if (defined('MOLAJO_ASSET_TYPE_BASE_BEGIN')) {
+if (defined('_QQ_')) {
 } else {
-    define('MOLAJO_ASSET_TYPE_BASE_BEGIN', 0);
+    define('_QQ_', '"');
 }
-if (defined('MOLAJO_ASSET_TYPE_BASE_CORE')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_BASE_CORE', 1);
-}
-if (defined('MOLAJO_ASSET_TYPE_BASE_SITE')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_BASE_SITE', 10);
-}
-if (defined('MOLAJO_ASSET_TYPE_BASE_APPLICATION')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_BASE_APPLICATION', 50);
-}
-if (defined('MOLAJO_ASSET_TYPE_BASE_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_BASE_END', 99);
-}
-
-/** group */
-if (defined('MOLAJO_ASSET_TYPE_GROUP_BEGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_GROUP_BEGIN', 100);
-}
-if (defined('MOLAJO_ASSET_TYPE_GROUP_SYSTEM')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_GROUP_SYSTEM', 100);
-}
-if (defined('MOLAJO_ASSET_TYPE_GROUP_NORMAL')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_GROUP_NORMAL', 110);
-}
-if (defined('MOLAJO_ASSET_TYPE_GROUP_USER')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_GROUP_USER', 120);
-}
-if (defined('MOLAJO_ASSET_TYPE_GROUP_FRIEND')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_GROUP_FRIEND', 130);
-}
-if (defined('MOLAJO_ASSET_TYPE_GROUP_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_GROUP_END', 199);
-}
-
-/** user */
-if (defined('MOLAJO_ASSET_TYPE_USER_BEGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_USER_BEGIN', 500);
-}
-if (defined('MOLAJO_ASSET_TYPE_USER')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_USER', 500);
-}
-if (defined('MOLAJO_ASSET_TYPE_USER_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_USER_END', 599);
-}
-
-/** extension */
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_BEGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_BEGIN', 1000);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT', 1050);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE', 1100);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW', 1150);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW', 1200);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW', 1250);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_MENU')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_MENU', 1300);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_MODULE')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_MODULE', 1350);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN', 1450);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_THEME')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_THEME', 1500);
-}
-if (defined('MOLAJO_ASSET_TYPE_EXTENSION_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_EXTENSION_END', 1999);
-}
-
-/** menu item types */
-if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_BEGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_MENU_ITEM_BEGIN', 2000);
-}
-if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT', 2000);
-}
-if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_LINK')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_MENU_ITEM_LINK', 2100);
-}
-if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_MODULE')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_MENU_ITEM_MODULE', 2200);
-}
-if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_SEPARATOR')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_MENU_ITEM_SEPARATOR', 2300);
-}
-if (defined('MOLAJO_ASSET_TYPE_MENU_ITEM_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_MENU_ITEM_END', 2999);
-}
-
-/** category types */
-if (defined('MOLAJO_ASSET_TYPE_CATEGORY_BEGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CATEGORY_BEGIN', 3000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CATEGORY_LIST')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CATEGORY_LIST', 3000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CATEGORY_TAG')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CATEGORY_TAG', 3500);
-}
-if (defined('MOLAJO_ASSET_TYPE_CATEGORY_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CATEGORY_END', 3999);
-}
-
-/** content */
-if (defined('MOLAJO_ASSET_TYPE_CONTENT_BEGIN')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CONTENT_BEGIN', 10000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CONTENT_ARTICLE')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CONTENT_ARTICLE', 10000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CONTENT_CONTACT')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CONTENT_CONTACT', 20000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CONTENT_COMMENT')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CONTENT_COMMENT', 30000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CONTENT_MEDIA')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CONTENT_MEDIA', 40000);
-}
-if (defined('MOLAJO_ASSET_TYPE_CONTENT_END')) {
-} else {
-    define('MOLAJO_ASSET_TYPE_CONTENT_END', 999999);
-}
-
-/**
- *  AUTHENTICATION
- */
-define('MOLAJO_AUTHENTICATE_STATUS_SUCCESS', 1);
-define('MOLAJO_AUTHENTICATE_STATUS_CANCEL', 2);
-define('MOLAJO_AUTHENTICATE_STATUS_FAILURE', 4);
-
-/**
- *  SYSTEM GROUPS
- */
-if (defined('MOLAJO_SYSTEM_GROUP_PUBLIC')) {
-} else {
-    define('MOLAJO_SYSTEM_GROUP_PUBLIC', 1);
-}
-if (defined('MOLAJO_SYSTEM_GROUP_GUEST')) {
-} else {
-    define('MOLAJO_SYSTEM_GROUP_GUEST', 2);
-}
-if (defined('MOLAJO_SYSTEM_GROUP_REGISTERED')) {
-} else {
-    define('MOLAJO_SYSTEM_GROUP_REGISTERED', 3);
-}
-if (defined('MOLAJO_SYSTEM_GROUP_ADMINISTRATOR')) {
-} else {
-    define('MOLAJO_SYSTEM_GROUP_ADMINISTRATOR', 4);
-}
-
-/**
- *  STATUS
- */
-define('MOLAJO_STATUS_ARCHIVED', 2);
-define('MOLAJO_STATUS_PUBLISHED', 1);
-define('MOLAJO_STATUS_UNPUBLISHED', 0);
-define('MOLAJO_STATUS_TRASHED', -1);
-define('MOLAJO_STATUS_SPAMMED', -2);
-define('MOLAJO_STATUS_DRAFT', -5);
-define('MOLAJO_STATUS_VERSION', -10);
-
-/**
- *  MESSAGE TYPES
- */
-define('MOLAJO_MESSAGE_TYPE_MESSAGE', 'message');
-define('MOLAJO_MESSAGE_TYPE_NOTICE', 'notice');
-define('MOLAJO_MESSAGE_TYPE_WARNING', 'warning');
-define('MOLAJO_MESSAGE_TYPE_ERROR', 'error');
 
 /**
  *  EXTENSION OPTIONS
+ *
+ *  SOON TO BE REMOVED
  */
 define('MOLAJO_EXTENSION_OPTION_ID_TABLE', 100);
 define('MOLAJO_EXTENSION_OPTION_ID_FIELDS', 200);
@@ -396,18 +143,3 @@ define('MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE', 6000);
 /** ACL Component Information */
 define('MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS', 10100);
 define('MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS', 10200);
-
-/** Detect the native operating system type */
-$os = strtoupper(substr(PHP_OS, 0, 3));
-if (defined('IS_WIN')) {
-} else {
-    define('IS_WIN', ($os === 'WIN') ? true : false);
-}
-if (defined('IS_MAC')) {
-} else {
-    define('IS_MAC', ($os === 'MAC') ? true : false);
-}
-if (defined('IS_UNIX')) {
-} else {
-    define('IS_UNIX', (($os !== 'MAC') && ($os !== 'WIN')) ? true : false);
-}

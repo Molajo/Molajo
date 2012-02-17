@@ -27,6 +27,7 @@ if (defined('SITES_TEMP_URL')) {
     define('SITES_TEMP_URL', MOLAJO_BASE_URL . 'sites/temp');
 }
 
+$siteBase = substr(MOLAJO_BASE_URL, strlen(MOLAJO_PROTOCOL), 999);
 if (defined('SITE_BASE_URL')) {
 } else {
     $sites = simplexml_load_file(SITES . '/sites.xml', 'SimpleXMLElement');
@@ -41,7 +42,7 @@ if (defined('SITE_BASE_URL')) {
     }
     if (defined('SITE_BASE_URL')) {
     } else {
-        echo 'Fatal Error: Cannot identify site for: '.$siteBase;
+        echo 'Fatal Error: Cannot identify site for: ' . $siteBase;
         die;
     }
 }
