@@ -50,6 +50,20 @@ class MolajoRequest
     public $page_request;
 
     /**
+     * $merged_parameters
+     *
+     * Parameters for source, menu item, extension, category,
+     * and application are merged into one set where the most
+     * detailed value (source or menu item) takes precedence.
+     *
+     * Access via Molajo::Request()->getParameter('property')
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $merged_parameters;
+
+    /**
      * getInstance
      *
      * Returns a reference to the global request object,
@@ -92,6 +106,8 @@ class MolajoRequest
     {
 
         $this->_initializePageRequest();
+
+        $this->merged_parameters = array();
 
         $this->input = new JInput;
 
@@ -162,7 +178,6 @@ class MolajoRequest
      */
     public function process()
     {
-
         /** offline */
         if (Services::Configuration()->get('offline', 0) == 1) {
             $this->_error(503);
@@ -339,8 +354,6 @@ class MolajoRequest
         $this->set('extension_event_type', '');
 
         /** merged */
-        $this->set('parameters', array());
-
         $this->set('metadata_title', '');
         $this->set('metadata_description', '');
         $this->set('metadata_keywords', '');
@@ -890,6 +903,11 @@ class MolajoRequest
             );
         }
 
+        $this->merged_parameters = ExtensionHelper::mergeParameters(
+            $parameters,
+            $this->merged_parameters
+        );
+
         /** merge meta data */
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
@@ -935,6 +953,7 @@ class MolajoRequest
      */
     protected function _setPageValuesDefaults($parameters = null, $metadata = null)
     {
+
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id', $parameters->get('default_theme_id', 0));
         }
@@ -994,6 +1013,12 @@ class MolajoRequest
                 Services::Configuration()
                     ->get('metadata_robots', ''));
         }
+
+        $this->merged_parameters = ExtensionHelper::mergeParameters(
+            $parameters,
+            $this->merged_parameters
+        );
+
         return;
     }
 
@@ -1102,7 +1127,6 @@ class MolajoRequest
         $this->_getPage();
         $this->_getTemplateView();
         $this->_getWrapView();
-        $this->_mergeParameters();
 
         return;
     }
@@ -1345,77 +1369,6 @@ class MolajoRequest
         $this->set('wrap_view_path_url', $wrapHelper->view_path_url);
 
         return;
-    }
-
-    /**
-     *  _mergeParameters
-     */
-    protected function _mergeParameters()
-    {
-        return true;
-
-        /** initialize */
-        $temp = array();
-        $parameters = array();
-
-        /** load request (without parameter fields) */
-        //        $temp = $this->page_request;
-        //        $parameters = $this->_merge($parameters, $temp);
-
-        /** source parameters */
-        $temp = array();
-        $temp = json_decode($this->get('source_parameters'));
-        $parameters = $this->_merge($parameters, $temp);
-
-        /** category parameters */
-        $temp = array();
-        $temp = json_decode($this->get('category_parameters'));
-        $parameters = $this->_merge($parameters, $temp);
-
-        /** extension parameters */
-        $temp = array();
-        $temp = json_decode($this->get('extension_parameters'));
-
-        $this->parameters = $this->_merge($parameters, $temp);
-
-        die();
-    }
-
-    /**
-     *  _merge
-     */
-    protected function _merge($parameters, $temp)
-    {
-        if (count($temp) == 0) {
-            return $parameters;
-        }
-        foreach ($temp as $name => $value) {
-            if (strpos($name, 'parameter')) {
-            } else {
-                if (isset($parameters->$name)) {
-                    if (trim($parameters->$name) == '') {
-                        $parameters->$name = $value;
-                    }
-                } else {
-                    $parameters->$name = $value;
-                }
-            }
-        }
-        return $parameters;
-    }
-
-    /**
-     *
-     */
-
-    /**
-     * _processInputData
-     *
-     * @return bool
-     */
-    protected function _processInputData()
-    {
-        $this->_processSelectOptions();
     }
 
     /**

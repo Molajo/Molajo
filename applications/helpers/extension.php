@@ -209,6 +209,48 @@ abstract class MolajoExtensionHelper
         return $name;
     }
 
+
+    /**
+     * _mergeParameters
+     *
+     * Page Request object that will be populated by this class
+     * with overall processing requirements for the page
+     *
+     * Access via Molajo::Request()->get('property')
+     *
+     * @param   Registry $parameters
+     *
+     * @return  null
+     * @since  1.0
+     */
+    public function mergeParameters($merge_in_parameters, $merged_parameters)
+    {
+        $mergeIn = $merge_in_parameters->toArray();
+
+        while (list($name, $value) = each($mergeIn)) {
+            if (isset($this->merged_parameters[$name])) {
+            } else if (substr($name, 0, strlen('extension')) == 'extension') {
+            } else if (substr($name, 0, strlen('theme')) == 'theme') {
+            } else if (substr($name, 0, strlen('page')) == 'page') {
+            } else if (substr($name, 0, strlen('template')) == 'template') {
+            } else if (substr($name, 0, strlen('wrap')) == 'wrap') {
+            } else if (substr($name, 0, strlen('default')) == 'default') {
+            } else if ($name == 'controller'
+                || $name == 'task'
+                || $name == 'model'
+                || $name == 'id'
+                || $name == 'category_id'
+                || $name == 'suppress_no_results'
+                || $name == 'source_asset_type_id'
+            ) {
+            } else {
+                $merged_parameters[$name] = $value;
+            }
+        }
+
+        return $merged_parameters;
+    }
+
     /**
      * getPath
      *

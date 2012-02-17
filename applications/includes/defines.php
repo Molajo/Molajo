@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-/** Define constances for these application variables */
+/** Define PHP constants for application variables */
 $defines = simplexml_load_file(strtolower(__DIR__) . '/defines.xml', 'SimpleXMLElement');
 foreach ($defines->define as $item) {
     if (defined((string)$item['name'])) {

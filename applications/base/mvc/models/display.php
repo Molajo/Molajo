@@ -78,7 +78,6 @@ class MolajoDisplayModel extends MolajoModel
      */
     protected function _setCriteria()
     {
-
         /** Model Helper */
         $extensionName = ucfirst($this->get('extension_instance_name', ''));
         $extensionName = str_replace(array('-', '_'), '', $extensionName);
@@ -100,17 +99,29 @@ class MolajoDisplayModel extends MolajoModel
             }
         }
 
-        /** true == acl check */
+        /** from tables; true == acl check */
         $this->from = array();
         $this->from[] = $this->table . ',' . 'a' . ',' . true;
 
         /** status - use published - create status groups */
         $this->where = array();
-        $asset_type_id = $this->task_request->get('source_asset_type_id', 0);
-        if ((int)$asset_type_id > 0) {
-            $this->where[] = 'a.asset_type_id = ' . $asset_type_id;
+
+        /** use task request criteria */
+        $taskRequestArray = $this->task_request->toArray();
+
+        while (list($name, $value) = each($taskRequestArray)) {
+            if (substr($name, 0, strlen('criteria')) == 'criteria') {
+                // helperfunction - pass in fieldname and query object
+
+            } else if ($name == 'id' && (int)$value > 0) {
+                $this->where[] = 'a.id = ' . (int)$value;
+
+            } else if ($name == 'source_asset_type_id' && (int)$value > 0) {
+                $this->where[] = 'a.asset_type_id = ' . (int)$value;
+            }
         }
 
+        /** predefined criteria from menu items and other configurations */
         $xmlfile = MOLAJO_EXTENSIONS_COMPONENTS . '/articles/options/grid.xml';
         if (file_exists($xmlfile)) {
             $configuration = simplexml_load_file($xmlfile);
@@ -118,7 +129,7 @@ class MolajoDisplayModel extends MolajoModel
             $configuration = array();
         }
 
-        if (count($configuration) > 0) {
+        if (count($configuration) > 111111110) {
 
             foreach ($configuration->filters->children() as $child) {
                 $field = (string)$child['name'];
@@ -127,9 +138,9 @@ class MolajoDisplayModel extends MolajoModel
                     . '.' . $field
                     . '.' . Molajo::Request()->get('request_asset_id');
 
-                echo $key;
+                //echo $key;
                 $value = Services::User()->get($key, null, 'state');
-                echo ' '.$value. '<br />';
+                //echo ' '.$value. '<br />';
                 $this->set($key, $value);
             }
         }
@@ -207,7 +218,8 @@ class MolajoDisplayModel extends MolajoModel
         /** order by */
 
         /** set the query */
-        //echo $this->query->__toString();
+        echo $this->query->__toString();
+        echo '<br />';
         $this->db->setQuery($this->query->__toString());
 
         return;
@@ -248,7 +260,7 @@ class MolajoDisplayModel extends MolajoModel
     protected function _runQuery()
     {
         $data = $this->db->loadObjectList();
-
+//var_dump($data);
         if ($this->db->getErrorNum() == 0) {
 
         } else {
