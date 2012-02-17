@@ -910,7 +910,7 @@ abstract class JDatabaseQuery
 
 		if ($quoted)
 		{
-			return $this->db->quote($result);
+			return $this->db->q($result);
 		}
 
 		return $result;
@@ -989,7 +989,7 @@ abstract class JDatabaseQuery
 			throw new JDatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
-		return $this->db->quote(($escape ? $this->db->escape($text) : $text));
+		return $this->db->q(($escape ? $this->db->escape($text) : $text));
 	}
 
 	/**
@@ -1019,7 +1019,7 @@ abstract class JDatabaseQuery
 			throw new JDatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
-		return $this->db->quoteName($name);
+		return $this->db->qn($name);
 	}
 
 	/**

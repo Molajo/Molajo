@@ -276,8 +276,8 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** Site Specific: Application */
-        $filePath = MOLAJO_SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = MOLAJO_SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $filePath = SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
@@ -286,8 +286,8 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** Site Specific: Site-wide */
-        $filePath = MOLAJO_SITE_MEDIA_FOLDER . $plus;
-        $urlPath = MOLAJO_SITE_MEDIA_URL . $plus;
+        $filePath = SITE_MEDIA_FOLDER . $plus;
+        $urlPath = SITE_MEDIA_URL . $plus;
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
         $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
@@ -296,8 +296,8 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** All Sites: Application */
-        $filePath = MOLAJO_SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = MOLAJO_SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $filePath = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
+        $urlPath = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
@@ -306,8 +306,8 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** All Sites: Site Wide */
-        $filePath = MOLAJO_SITES_MEDIA_FOLDER . $plus;
-        $urlPath = MOLAJO_SITES_MEDIA_URL . $plus;
+        $filePath = SITES_MEDIA_FOLDER . $plus;
+        $urlPath = SITES_MEDIA_URL . $plus;
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
         $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
         $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);

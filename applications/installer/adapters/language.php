@@ -499,7 +499,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
                 $registry->set($param_name, '');
                 $query = $db->getQuery(true);
                 $query->update('#__users');
-                $query->set('parameters=' . $db->quote($registry));
+                $query->set('parameters=' . $db->q($registry));
                 $query->where('id=' . (int)$user->id);
                 $db->setQuery($query->__toString());
                 $db->query();

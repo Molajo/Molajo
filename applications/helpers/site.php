@@ -31,16 +31,16 @@ class MolajoSiteHelper
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select($db->quoteName('id'));
-        $query->select($db->quoteName('name'));
-        $query->select($db->quoteName('description'));
-        $query->select($db->quoteName('path'));
-        $query->select($db->quoteName('parameters'));
-        $query->select($db->quoteName('custom_fields'));
-        $query->select($db->quoteName('metadata'));
-        $query->select($db->quoteName('base_url'));
-        $query->from($db->quoteName('#__sites'));
-        $query->where($db->quoteName('id') . ' = ' . (int)MOLAJO_SITE_ID);
+        $query->select($db->qn('id'));
+        $query->select($db->qn('name'));
+        $query->select($db->qn('description'));
+        $query->select($db->qn('path'));
+        $query->select($db->qn('parameters'));
+        $query->select($db->qn('custom_fields'));
+        $query->select($db->qn('metadata'));
+        $query->select($db->qn('base_url'));
+        $query->from($db->qn('#__sites'));
+        $query->where($db->qn('id') . ' = ' . (int)SITE_ID);
 
         $db->setQuery($query->__toString());
 
@@ -71,9 +71,9 @@ class MolajoSiteHelper
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select($db->quoteName('application_id'));
-        $query->from($db->quoteName('#__site_applications'));
-        $query->where($db->quoteName('site_id') . ' = ' . (int)MOLAJO_SITE_ID);
+        $query->select($db->qn('application_id'));
+        $query->from($db->qn('#__site_applications'));
+        $query->where($db->qn('site_id') . ' = ' . (int)SITE_ID);
 
         $db->setQuery($query->__toString());
 

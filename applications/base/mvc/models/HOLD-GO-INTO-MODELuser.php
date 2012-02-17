@@ -32,9 +32,9 @@ abstract class MolajoUserService extends JObject
         $db = Services::DB();
         $query = $db->getQuery(true);
 
-        $query->select($db->quoteName('id'));
-        $query->from($db->quoteName('#__users'));
-        $query->where($db->quoteName('username').' = ' . $db->quote($username));
+        $query->select($db->qn('id'));
+        $query->from($db->qn('#__users'));
+        $query->where($db->qn('username').' = ' . $db->q($username));
 
         $db->setQuery($query->__toString());
 
@@ -196,9 +196,9 @@ abstract class MolajoUserService extends JObject
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'
                  . ' FROM #__users'
-                 . ' WHERE activated = ' . $db->quote($activation)
+                 . ' WHERE activated = ' . $db->q($activation)
                  . ' AND block = 1'
-                 . ' AND last_visit_datetime = ' . $db->quote('0000-00-00 00:00:00');
+                 . ' AND last_visit_datetime = ' . $db->q('0000-00-00 00:00:00');
 
         $db->setQuery($query->__toString());
         $id = intval($db->loadResult());

@@ -525,9 +525,9 @@ class MolajoModel
     {
         $this->query = $this->db->getQuery(true);
 
-        $this->query->select($this->db->quoteName($pk));
-        $this->query->from($this->db->quoteName($table));
-        $this->query->where($this->db->quoteName($pk) . ' = ' . (int)$this->table->$key);
+        $this->query->select($this->db->qn($pk));
+        $this->query->from($this->db->qn($table));
+        $this->query->where($this->db->qn($pk) . ' = ' . (int)$this->table->$key);
 
         $this->db->setQuery($this->query->__toString());
 
@@ -693,9 +693,9 @@ class MolajoModel
 
         //        if ((int) $this->asset_id == 0) {
         //			$this->query = $this->db->getQuery(true);
-        //			$this->query->update($this->db->quoteName($this->table));
+        //			$this->query->update($this->db->qn($this->table));
         //			$this->query->set('asset_id = '.(int) $this->asset_id);
-        //			$this->query->where($this->db->quoteName($k).' = '.(int) $this->$k);
+        //			$this->query->where($this->db->qn($k).' = '.(int) $this->$k);
         //			$this->db->setQuery($this->query->__toString());
 
         //			if ($this->db->query()) {
@@ -749,9 +749,9 @@ class MolajoModel
         // Check the row out by primary key.
         $this->query = $this->db->getQuery(true);
         $this->query->update($this->table);
-        $this->query->set($this->db->quoteName('checked_out') . ' = ' . (int)$userId);
-        $this->query->set($this->db->quoteName('checked_out_time') . ' = ' . $this->db->quote($time));
-        $this->query->where($this->primary_key . ' = ' . $this->db->quote($pk));
+        $this->query->set($this->db->qn('checked_out') . ' = ' . (int)$userId);
+        $this->query->set($this->db->qn('checked_out_time') . ' = ' . $this->db->q($time));
+        $this->query->where($this->primary_key . ' = ' . $this->db->q($pk));
         $this->db->setQuery($this->query->__toString());
 
         if ($this->db->query()) {
@@ -802,9 +802,9 @@ class MolajoModel
         // Check the row in by primary key.
         $this->query = $this->db->getQuery(true);
         $this->query->update($this->table);
-        $this->query->set($this->db->quoteName('checked_out') . ' = 0');
-        $this->query->set($this->db->quoteName('checked_out_time') . ' = ' . $this->db->quote($this->db->getNullDate()));
-        $this->query->where($this->primary_key . ' = ' . $this->db->quote($pk));
+        $this->query->set($this->db->qn('checked_out') . ' = 0');
+        $this->query->set($this->db->qn('checked_out_time') . ' = ' . $this->db->q($this->db->getNullDate()));
+        $this->query->where($this->primary_key . ' = ' . $this->db->q($pk));
         $this->db->setQuery($this->query->__toString());
 
         // Check for a database error.
@@ -926,7 +926,7 @@ class MolajoModel
                     $this->query = $this->db->getQuery(true);
                     $this->query->update($this->table);
                     $this->query->set('ordering = ' . ($i + 1));
-                    $this->query->where($this->primary_key . ' = ' . $this->db->quote($row->$k));
+                    $this->query->where($this->primary_key . ' = ' . $this->db->q($row->$k));
                     $this->db->setQuery($this->query->__toString());
 
                     // Check for a database error.
@@ -1012,7 +1012,7 @@ class MolajoModel
             $this->query = $this->db->getQuery(true);
             $this->query->update($this->table);
             $this->query->set('ordering = ' . (int)$this->ordering);
-            $this->query->where($this->primary_key . ' = ' . $this->db->quote($this->$k));
+            $this->query->where($this->primary_key . ' = ' . $this->db->q($this->$k));
             $this->db->setQuery($this->query->__toString());
 
             // Check for a database error.
@@ -1029,7 +1029,7 @@ class MolajoModel
             $this->query = $this->db->getQuery(true);
             $this->query->update($this->table);
             $this->query->set('ordering = ' . (int)$row->ordering);
-            $this->query->where($this->primary_key . ' = ' . $this->db->quote($this->$k));
+            $this->query->where($this->primary_key . ' = ' . $this->db->q($this->$k));
             $this->db->setQuery($this->query->__toString());
 
             // Check for a database error.
@@ -1045,7 +1045,7 @@ class MolajoModel
             $this->query = $this->db->getQuery(true);
             $this->query->update($this->table);
             $this->query->set('ordering = ' . (int)$this->ordering);
-            $this->query->where($this->primary_key . ' = ' . $this->db->quote($row->$k));
+            $this->query->where($this->primary_key . ' = ' . $this->db->q($row->$k));
             $this->db->setQuery($this->query->__toString());
 
             // Check for a database error.
@@ -1178,10 +1178,10 @@ class MolajoModel
             $this->query = $this->db->getQuery(true);
 
             // Setup the basic query.
-            $this->query->select($this->db->quoteName($this->primary_key));
-            $this->query->from($this->db->quoteName($this->table));
-            $this->query->where($this->db->quoteName($this->primary_key) . ' = ' . $this->db->quote($this->$k));
-            $this->query->group($this->db->quoteName($this->primary_key));
+            $this->query->select($this->db->qn($this->primary_key));
+            $this->query->from($this->db->qn($this->table));
+            $this->query->where($this->db->qn($this->primary_key) . ' = ' . $this->db->q($this->$k));
+            $this->query->group($this->db->qn($this->primary_key));
 
             // For each join add the select and join clauses to the query object.
             foreach ($joins as $table) {

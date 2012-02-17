@@ -91,10 +91,10 @@ class MolajoAccessService
         $query = $db->getQuery(true);
 
         $query->select('count(*)');
-        $query->from($db->nameQuote('#__group_permissions') . ' as a');
-        $query->where('a.' . $db->nameQuote('asset_id') . ' = ' . (int)$asset_id);
-        $query->where('a.' . $db->nameQuote('action_id') . ' = ' . (int)$action_id);
-        $query->where('a.' . $db->nameQuote('group_id') .
+        $query->from($db->nq('#__group_permissions') . ' as a');
+        $query->where('a.' . $db->nq('asset_id') . ' = ' . (int)$asset_id);
+        $query->where('a.' . $db->nq('action_id') . ' = ' . (int)$action_id);
+        $query->where('a.' . $db->nq('group_id') .
             ' IN (' .
             implode(',',
                 Services::User()
@@ -172,31 +172,39 @@ class MolajoAccessService
 
         if ($parameters['select'] === true) {
             $query->select($parameters['asset_prefix'] .
-                    '.' . $db->namequote('view_group_id')
+                    '.' . $db->nq('view_group_id')
             );
 
             $query->select($parameters['asset_prefix'] .
-                    '.' . $db->namequote('id') .
-                    ' as ' . $db->namequote('asset_id')
+                    '.' . $db->nq('id') .
+                    ' as ' . $db->nq('asset_id')
             );
         }
 
-        $query->from($db->namequote('#__assets') .
+        $query->from($db->nq('#__assets') .
                 ' as ' . $parameters['asset_prefix']
         );
 
         $query->where($parameters['asset_prefix'] . '.source_id = ' .
                 $parameters['join_to_prefix'] .
-                '.' . $db->namequote($parameters['join_to_primary_key'])
+                '.' . $db->nq($parameters['join_to_primary_key'])
+        );
+
+        $query->where($parameters['asset_prefix'] . '.asset_type_id = ' .
+                $parameters['join_to_prefix'] .
+                '.' . $db->nq('asset_type_id')
         );
 
         $query->where($parameters['asset_prefix'] .
-                '.' . $db->namequote('view_group_id') .
+                '.' . $db->nq('view_group_id') .
                 ' IN (' . implode(',',
                 Services::User()
                     ->get('view_groups')) .
                 ')'
         );
+
+
+        $query->where($parameters['asset_prefix'] . '.redirect_to_id = 0');
 
         return $query;
     }

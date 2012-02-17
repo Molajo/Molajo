@@ -106,7 +106,7 @@ class MolajoServices
     public function initiateServices()
     {
         $services = simplexml_load_file(
-            MOLAJO_APPLICATIONS_CORE . '/services/services.xml'
+            MOLAJO_APPLICATIONS . '/services/services.xml'
         );
         if (count($services) == 0) {
             return;
@@ -116,14 +116,7 @@ class MolajoServices
         foreach ($services->service as $s) {
             $serviceName = (string)$s->name;
             $connection = $this->_connectService($s);
-
-            if ($connection === false) {
-                Molajo::Application()
-                    ->setServicesProperties($serviceName, false);
-
-            } else {
-                $this->set($serviceName, $connection);
-            }
+            $this->set($serviceName, $connection);
         }
 
         return;

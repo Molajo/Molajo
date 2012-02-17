@@ -176,7 +176,7 @@ class MolajoAdapterPackage extends MolajoAdapterInstance
         // Lastly, we will copy the manifest file to its appropriate place.
         $manifest = array();
         $manifest['src'] = $this->parent->getPath('manifest');
-        $manifest['dest'] = MOLAJO_SITE_MANIFESTS . '/packages/' . basename($this->parent->getPath('manifest'));
+        $manifest['dest'] = SITE_MANIFESTS . '/packages/' . basename($this->parent->getPath('manifest'));
 
         if (!$this->parent->copyFiles(array($manifest), true)) {
             // Install failed, rollback changes
@@ -227,11 +227,11 @@ class MolajoAdapterPackage extends MolajoAdapterInstance
             return false;
         }
 
-        $manifestFile = MOLAJO_SITE_MANIFESTS . '/packages/' . $row->get('element') . '.xml';
+        $manifestFile = SITE_MANIFESTS . '/packages/' . $row->get('element') . '.xml';
         $manifest = new JPackageManifest($manifestFile);
 
         // Set the package root path
-        $this->parent->setPath('extension_root', MOLAJO_SITE_MANIFESTS . '/packages/' . $manifest->packagename);
+        $this->parent->setPath('extension_root', SITE_MANIFESTS . '/packages/' . $manifest->packagename);
 
         // Because packages may not have their own folders we cannot use the standard method of finding an installation manifest
         if (!file_exists($manifestFile)) {
@@ -314,14 +314,14 @@ class MolajoAdapterPackage extends MolajoAdapterInstance
         $query = $db->getQuery(true);
         $query->select('extension_id');
         $query->from('#__extensions');
-        $query->where('type = ' . $db->quote($type));
-        $query->where('element = ' . $db->quote($id));
+        $query->where('type = ' . $db->q($type));
+        $query->where('element = ' . $db->q($id));
 
         switch ($type)
         {
             case 'plugin':
                 // Plugins have a folder but not a client
-                $query->where('folder = ' . $db->quote($group));
+                $query->where('folder = ' . $db->q($group));
                 break;
 
             case 'library':
@@ -358,7 +358,7 @@ class MolajoAdapterPackage extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $manifestPath = MOLAJO_SITE_MANIFESTS . '/packages/' . $this->parent->extension->element . '.xml';
+        $manifestPath = SITE_MANIFESTS . '/packages/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

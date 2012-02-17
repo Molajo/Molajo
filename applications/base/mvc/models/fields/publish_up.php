@@ -100,7 +100,7 @@ class MolajoFieldPublishUp extends MolajoField
             return;
         }
         $db = $this->getDb();
-        $query->where('SUBSTRING(a.start_publishing_datetime, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.start_publishing_datetime, 1, 7) = ' . $db->q(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 
     /**

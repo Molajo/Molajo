@@ -100,7 +100,7 @@ class MolajoFieldCreated extends MolajoField
             return;
         }
         $db = $this->getDb();
-        $query->where('SUBSTRING(a.created, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.created, 1, 7) = ' . $db->q(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 
     /**

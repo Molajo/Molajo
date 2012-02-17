@@ -89,12 +89,12 @@ class MolajoFieldSearch extends MolajoField
             $where = 'a.id = ' . (int)substr(trim($value), 3);
 
         } else if (stripos(trim($value), 'author:')) {
-            $authorname = $db->quote('%' . $db->getEscaped(substr($value, 7), true) . '%');
-            $where = 'author.name LIKE ' . $db->quote(trim($authorname)) . ' OR author.username LIKE ' . $db->quote(trim($authorname));
+            $authorname = $db->q('%' . $db->getEscaped(substr($value, 7), true) . '%');
+            $where = 'author.name LIKE ' . $db->q(trim($authorname)) . ' OR author.username LIKE ' . $db->q(trim($authorname));
 
         } else {
-            $title = $db->quote('%' . $db->getEscaped(trim($value)) . '%');
-            $where = 'a.title LIKE ' . $title . ' OR a.alias LIKE ' . $db->quote(trim($title));
+            $title = $db->q('%' . $db->getEscaped(trim($value)) . '%');
+            $where = 'a.title LIKE ' . $title . ' OR a.alias LIKE ' . $db->q(trim($title));
         }
         $query->where($where);
     }

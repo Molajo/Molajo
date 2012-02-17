@@ -17,7 +17,7 @@ if (defined('JPATH_PLATFORM')) {
 
 require_once JPATH_PLATFORM . '/platform.php';
 require_once JPATH_PLATFORM . '/loader.php';
-require_once MOLAJO_APPLICATIONS_CORE . '/helpers/load.php';
+require_once MOLAJO_APPLICATIONS . '/helpers/load.php';
 
 if (defined('_JEXEC')) {
 } else {
@@ -33,7 +33,7 @@ if (defined('JPATH_ROOT')) {
 }
 if (defined('JPATH_CONFIGURATION')) {
 } else {
-    define('JPATH_CONFIGURATION', MOLAJO_SITE_FOLDER_PATH);
+    define('JPATH_CONFIGURATION', SITE_FOLDER_PATH);
 }
 if (defined('JOOMLA_LIBRARY')) {
 } else {
@@ -57,7 +57,7 @@ if (defined('JPATH_PLUGINS')) {
 }
 if (defined('JPATH_CACHE')) {
 } else {
-    define('JPATH_CACHE', MOLAJO_SITE_FOLDER_PATH . '/cache');
+    define('JPATH_CACHE', SITE_FOLDER_PATH . '/cache');
 }
 if (defined('JPATH_THEMES')) {
 } else {
@@ -74,12 +74,12 @@ if (defined('JPATH_COMPONENT')) {
 $load = new MolajoLoadHelper();
 
 require_once JOOMLA_LIBRARY . '/registry/registry.php';
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/base.php', 'MolajoBase');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/base/base.php', 'MolajoBase');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php', 'MolajoController');
 
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
-require_once MOLAJO_APPLICATIONS_CORE . '/services/text.php';
+require_once MOLAJO_APPLICATIONS . '/services/text.php';
 if (class_exists('JText')) {
 } else {
     class JText extends MolajoTextService
@@ -99,6 +99,7 @@ $load->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
  *  Input
  */
 $load->requireClassFile(JOOMLA_LIBRARY . '/input/input.php', 'JInput');
+$load->requireClassFile(JOOMLA_LIBRARY . '/input/cli.php', 'JInputCli');
 $load->requireClassFile(JOOMLA_LIBRARY . '/input/cookie.php', 'JInputCookie');
 $load->requireClassFile(JOOMLA_LIBRARY . '/input/files.php', 'JInputFiles');
 

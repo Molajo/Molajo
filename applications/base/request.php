@@ -241,12 +241,12 @@ class MolajoRequest
         }
 
         if (Services::Configuration()->get('sef', 1) == 0) {
-            $query->select('a.' . $db->nameQuote('sef_request'));
+            $query->select('a.' . $db->nq('sef_request'));
         } else {
-            $query->select('a.' . $db->nameQuote('request'));
+            $query->select('a.' . $db->nq('request'));
         }
-        $query->from($db->nameQuote('#__assets') . ' as a');
-        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
+        $query->from($db->nq('#__assets') . ' as a');
+        $query->where('a.' . $db->nq('id') . ' = ' . (int)$asset_id);
 
         $db->setQuery($query->__toString());
 
@@ -448,6 +448,7 @@ class MolajoRequest
         if ((int)$row->redirect_to_id == 0) {
         } else {
             $this->set('request_url_redirect_to_id', (int)$row->redirect_to_id);
+            return $this->set('status_found', false);
         }
 
         /** 403: _authoriseTask handles redirecting to error page */

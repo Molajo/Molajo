@@ -37,10 +37,10 @@ abstract class MolajoUserHelper
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select('a.' . $db->namequote('id') . ' as extension_instance_id');
-        $query->from($db->namequote('#__users') . ' as a');
-        $query->where('(a.' . $db->namequote('id') . ' = ' . (int)$id .
-            ' OR a.username = ' . $db->quote($id).')');
+        $query->select('a.' . $db->nq('id') . ' as extension_instance_id');
+        $query->from($db->nq('#__users') . ' as a');
+        $query->where('(a.' . $db->nq('id') . ' = ' . (int)$id .
+            ' OR a.username = ' . $db->q($id).')');
         $db->setQuery($query->__toString());
         $userid = $db->loadResult();
 

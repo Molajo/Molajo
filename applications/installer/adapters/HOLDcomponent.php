@@ -1121,8 +1121,8 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
 
         // Remove categories for this component
         $query = $db->getQuery(true);
-        $query->delete()->from('#__categories')->where('extension=' . $db->quote($element), 'OR')
-                ->where('extension LIKE ' . $db->quote($element . '.%'));
+        $query->delete()->from('#__categories')->where('extension=' . $db->q($element), 'OR')
+                ->where('extension LIKE ' . $db->q($element . '.%'));
         $db->setQuery($query->__toString());
         $db->query();
         // Check for errors.
@@ -1193,7 +1193,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
         $query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
         $query->where('m.parent::_id = 1');
         $query->where("m.application_id = 1");
-        $query->where('e.element = ' . $db->quote($option));
+        $query->where('e.element = ' . $db->q($option));
 
         $db->setQuery($query->__toString());
 
@@ -1220,7 +1220,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
             $query->clear();
             $query->select('e.extension_id');
             $query->from('#__extensions AS e');
-            $query->where('e.element = ' . $db->quote($option));
+            $query->where('e.element = ' . $db->q($option));
 
             $db->setQuery($query->__toString());
 

@@ -189,75 +189,75 @@ class MolajoSite
      */
     protected function _setPaths()
     {
-        if (defined('MOLAJO_SITE_NAME')) {
+        if (defined('SITE_NAME')) {
         } else {
-            define('MOLAJO_SITE_NAME',
+            define('SITE_NAME',
                 Services::Configuration()
                 ->get(
                 'site_name',
-                MOLAJO_SITE_ID)
+                SITE_ID)
             );
         }
 
-        if (defined('MOLAJO_SITE_CACHE_FOLDER')) {
+        if (defined('SITE_CACHE_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_CACHE_FOLDER',
+            define('SITE_CACHE_FOLDER',
                 Services::Configuration()
                 ->get(
                 'cache_path',
-                MOLAJO_SITE_FOLDER_PATH . '/cache')
+                SITE_FOLDER_PATH . '/cache')
             );
         }
 
-        if (defined('MOLAJO_SITE_LOGS_FOLDER')) {
+        if (defined('SITE_LOGS_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_LOGS_FOLDER',
+            define('SITE_LOGS_FOLDER',
                 Services::Configuration()
                 ->get(
                 'logs_path',
-                MOLAJO_SITE_FOLDER_PATH . '/logs')
+                SITE_FOLDER_PATH . '/logs')
             );
         }
 
         /** following must be within the web document folder */
-        if (defined('MOLAJO_SITE_MEDIA_FOLDER')) {
+        if (defined('SITE_MEDIA_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_MEDIA_FOLDER',
+            define('SITE_MEDIA_FOLDER',
                 Services::Configuration()
                 ->get(
                 'media_path',
-                MOLAJO_SITE_FOLDER_PATH . '/media')
+                SITE_FOLDER_PATH . '/media')
             );
         }
 
-        if (defined('MOLAJO_SITE_MEDIA_URL')) {
+        if (defined('SITE_MEDIA_URL')) {
         } else {
-            define('MOLAJO_SITE_MEDIA_URL',
+            define('SITE_MEDIA_URL',
                 MOLAJO_BASE_URL .
                 Services::Configuration()
                 ->get(
                 'media_url',
-                MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/media')
+                MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media')
             );
         }
 
-        if (defined('MOLAJO_SITE_TEMP_FOLDER')) {
+        if (defined('SITE_TEMP_FOLDER')) {
         } else {
-            define('MOLAJO_SITE_TEMP_FOLDER',
+            define('SITE_TEMP_FOLDER',
                 Services::Configuration()
                 ->get(
                 'temp_path',
-                MOLAJO_SITE_FOLDER_PATH . '/temp')
+                SITE_FOLDER_PATH . '/temp')
             );
         }
-        if (defined('MOLAJO_SITE_TEMP_URL')) {
+        if (defined('SITE_TEMP_URL')) {
         } else {
-            define('MOLAJO_SITE_TEMP_URL',
+            define('SITE_TEMP_URL',
                 MOLAJO_BASE_URL .
                 Services::Configuration()
                 ->get(
                 'temp_url',
-                MOLAJO_BASE_URL . 'sites/' . MOLAJO_SITE_ID . '/temp')
+                MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp')
             );
         }
 

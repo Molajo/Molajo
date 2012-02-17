@@ -728,7 +728,7 @@ class MolajoInstaller extends MolajoAdapter
                         $query->clear();
                         $query->insert('#__schemas')
                                 ->set('extension_id = ' . $eid)
-                                ->set('version_id = ' . $db->quote(end($files)));
+                                ->set('version_id = ' . $db->q(end($files)));
                         $db->setQuery($query->__toString());
                         $db->query();
                     }
@@ -843,7 +843,7 @@ class MolajoInstaller extends MolajoAdapter
                         $query->clear();
                         $query->insert('#__schemas')
                                 ->set('extension_id = ' . $eid)
-                                ->set('version_id = ' . $db->quote(end($files)));
+                                ->set('version_id = ' . $db->q(end($files)));
                         $db->setQuery($query->__toString());
                         $db->Query();
                     }
@@ -1600,10 +1600,10 @@ class MolajoInstaller extends MolajoAdapter
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
-        $query->delete($db->quoteName('#__extensions'));
-        $query->where('type = ' . $db->quote($type));
-        $query->where('element = ' . $db->quote($element));
-        $query->where('folder = ' . $db->quote($folder));
+        $query->delete($db->qn('#__extensions'));
+        $query->where('type = ' . $db->q($type));
+        $query->where('element = ' . $db->q($element));
+        $query->where('folder = ' . $db->q($folder));
         $query->where('application_id = ' . intval($client));
         $query->where('state = -1');
 

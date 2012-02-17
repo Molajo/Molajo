@@ -138,7 +138,7 @@ class MolajoTextService
             foreach ($smile as $key => $val) {
                 $text = str_ireplace($key,
                     '<span><img src="' .
-                        MOLAJO_SITE_MEDIA_URL .
+                        SITE_MEDIA_URL .
                         'smiley/'
                         . $val
                         . '" alt="smiley" class="smiley-class" /></span>',

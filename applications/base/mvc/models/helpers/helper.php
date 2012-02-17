@@ -124,8 +124,8 @@ class MolajoModelHelper
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select('a.' . $db->namequote('view_group_id'));
-        $query->select('a.' . $db->namequote('asset'));
+        $query->select('a.' . $db->nq('view_group_id'));
+        $query->select('a.' . $db->nq('asset'));
     }
 
     /**
@@ -143,8 +143,8 @@ class MolajoModelHelper
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select('a.' . $db->namequote('view_group_id'));
-        $query->select('a.' . $db->namequote('asset'));
+        $query->select('a.' . $db->nq('view_group_id'));
+        $query->select('a.' . $db->nq('asset'));
     }
 
     /**

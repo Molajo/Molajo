@@ -60,9 +60,9 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                 : MOLAJO_BASE_FOLDER) . '/themes/' . $name;
         $lang->load($extension . '.sys', $source, null, false, false)
-        || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), null, false, false)
+        || $lang->load($extension . '.sys', constant('SITE_' . strtoupper($client)), null, false, false)
         || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-        || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), $lang->getDefault(), false, false);
+        || $lang->load($extension . '.sys', constant('SITE_' . strtoupper($client)), $lang->getDefault(), false, false);
     }
 
     /**
@@ -242,13 +242,13 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
             //insert record in #__theme_styles
             $query = $db->getQuery(true);
             $query->insert('#__theme_styles');
-            $query->set('theme=' . $db->quote($row->element));
-            $query->set('application_id=' . $db->quote($clientId));
+            $query->set('theme=' . $db->q($row->element));
+            $query->set('application_id=' . $db->q($clientId));
             $query->set('home=0');
             $debug = $lang->setDebug(false);
-            $query->set('title=' . $db->quote(Services::Language()->sprintf('JLIB_INSTALLER_DEFAULT_STYLE', Services::Language()->_($this->get('name')))));
+            $query->set('title=' . $db->q(Services::Language()->sprintf('JLIB_INSTALLER_DEFAULT_STYLE', Services::Language()->_($this->get('name')))));
             $lang->setDebug($debug);
-            $query->set('parameters=' . $db->quote($row->parameters));
+            $query->set('parameters=' . $db->q($row->parameters));
             $db->setQuery($query->__toString());
             // There is a chance this could fail but we don't care...
             $db->query();
@@ -311,7 +311,7 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
 
         // Deny remove default theme
         $db = $this->parent->getDb();
-        $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->quote($name);
+        $query = 'SELECT COUNT(*) FROM #__theme_styles' . ' WHERE home = 1 AND theme = ' . $db->q($name);
         $db->setQuery($query->__toString());
 
         if ($db->loadResult() != 0) {
@@ -361,12 +361,12 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
 
         // Set menu that assigned to the theme back to default theme
         $query = 'UPDATE #__menu INNER JOIN #__theme_styles' . ' ON #__theme_styles.id = #__menu.theme_id'
-                 . ' SET #__menu.theme_id = 0' . ' WHERE #__theme_styles.theme = ' . $db->quote(strtolower($name))
-                 . ' AND #__theme_styles.application_id = ' . $db->quote($clientId);
+                 . ' SET #__menu.theme_id = 0' . ' WHERE #__theme_styles.theme = ' . $db->q(strtolower($name))
+                 . ' AND #__theme_styles.application_id = ' . $db->q($clientId);
         $db->setQuery($query->__toString());
         $db->Query();
 
-        $query = 'DELETE FROM #__theme_styles' . ' WHERE theme = ' . $db->quote($name) . ' AND application_id = ' . $db->quote($clientId);
+        $query = 'DELETE FROM #__theme_styles' . ' WHERE theme = ' . $db->q($name) . ' AND application_id = ' . $db->q($clientId);
         $db->setQuery($query->__toString());
         $db->Query();
 
@@ -475,11 +475,11 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
             $db = $this->parent->getDb();
             $query = $db->getQuery(true);
             $query->insert('#__theme_styles');
-            $query->set('theme=' . $db->quote($this->parent->extension->name));
-            $query->set('application_id=' . $db->quote($this->parent->extension->application_id));
+            $query->set('theme=' . $db->q($this->parent->extension->name));
+            $query->set('application_id=' . $db->q($this->parent->extension->application_id));
             $query->set('home=0');
-            $query->set('title=' . $db->quote(Services::Language()->sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
-            $query->set('parameters=' . $db->quote($this->parent->extension->parameters));
+            $query->set('title=' . $db->q(Services::Language()->sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
+            $query->set('parameters=' . $db->q($this->parent->extension->parameters));
             $db->setQuery($query->__toString());
             $db->query();
 

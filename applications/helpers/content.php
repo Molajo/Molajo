@@ -32,38 +32,38 @@ abstract class MolajoContentHelper
         $nullDate = $db->getNullDate();
         $table_name = Services::Configuration()->get('dbprefix').$content_table;
 
-        $query->select('a.' . $db->namequote('id'));
-        $query->select('a.' . $db->namequote('extension_instance_id'));
-        $query->select('a.' . $db->namequote('asset_type_id'));
-        $query->select('a.' . $db->namequote('title'));
-        $query->select('a.' . $db->namequote('subtitle'));
-        $query->select('a.' . $db->namequote('path'));
-        $query->select('a.' . $db->namequote('alias'));
-        $query->select('a.' . $db->namequote('status'));
-        $query->select('a.' . $db->namequote('start_publishing_datetime'));
-        $query->select('a.' . $db->namequote('stop_publishing_datetime'));
-        $query->select('a.' . $db->namequote('modified_datetime'));
-        $query->select('a.' . $db->namequote('custom_fields'));
-        $query->select('a.' . $db->namequote('parameters'));
-        $query->select('a.' . $db->namequote('metadata'));
-        $query->select('a.' . $db->namequote('language'));
-        $query->select('a.' . $db->namequote('translation_of_id'));
-        $query->select('a.' . $db->namequote('ordering'));
+        $query->select('a.' . $db->nq('id'));
+        $query->select('a.' . $db->nq('extension_instance_id'));
+        $query->select('a.' . $db->nq('asset_type_id'));
+        $query->select('a.' . $db->nq('title'));
+        $query->select('a.' . $db->nq('subtitle'));
+        $query->select('a.' . $db->nq('path'));
+        $query->select('a.' . $db->nq('alias'));
+        $query->select('a.' . $db->nq('status'));
+        $query->select('a.' . $db->nq('start_publishing_datetime'));
+        $query->select('a.' . $db->nq('stop_publishing_datetime'));
+        $query->select('a.' . $db->nq('modified_datetime'));
+        $query->select('a.' . $db->nq('custom_fields'));
+        $query->select('a.' . $db->nq('parameters'));
+        $query->select('a.' . $db->nq('metadata'));
+        $query->select('a.' . $db->nq('language'));
+        $query->select('a.' . $db->nq('translation_of_id'));
+        $query->select('a.' . $db->nq('ordering'));
         $query->from('#__content as a ');
-        $query->where('a.' . $db->namequote('id') .
+        $query->where('a.' . $db->nq('id') .
             ' = ' . (int)$id);
-        $query->where('a.' . $db->namequote('status') .
+        $query->where('a.' . $db->nq('status') .
             ' = ' . MOLAJO_STATUS_PUBLISHED);
 
         $query->where('(a.start_publishing_datetime = ' .
-                $db->quote($nullDate) .
+                $db->q($nullDate) .
                 ' OR a.start_publishing_datetime <= ' .
-                $db->quote($now) . ')'
+                $db->q($now) . ')'
         );
         $query->where('(a.stop_publishing_datetime = ' .
-                $db->quote($nullDate) .
+                $db->q($nullDate) .
                 ' OR a.stop_publishing_datetime >= ' .
-                $db->quote($now) . ')'
+                $db->q($now) . ')'
         );
 
         /** Assets Join and View Access Check */

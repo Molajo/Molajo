@@ -32,10 +32,10 @@ class MolajoCrudModel extends MolajoModel
         $this->query = $this->db->getQuery(true);
 
         $this->query->select(' * ');
-        $this->query->from($this->db->quoteName($this->table));
+        $this->query->from($this->db->qn($this->table));
         $this->query->where($this->primary_key
             . ' = '
-            . $this->db->quote($this->id));
+            . $this->db->q($this->id));
 
         $this->db->setQuery($this->query->__toString());
     }

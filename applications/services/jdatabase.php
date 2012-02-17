@@ -66,14 +66,14 @@ class MolajoJdatabaseService
     public function connect($file = null, $configuration_class = null)
     {
         if ($file == null) {
-            $configuration_file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
+            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
             $configuration_class = 'MolajoSiteConfiguration';
 
         } else if (file_exists($file)) {
             $configuration_file = $file;
 
         } else {
-            $configuration_file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
+            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
             $configuration_class = 'MolajoSiteConfiguration';
         }
 

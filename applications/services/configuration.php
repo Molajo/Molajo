@@ -165,7 +165,7 @@ class MolajoConfigurationService
     {
         $siteConfigData = array();
 
-        $file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
+        $file = SITE_FOLDER_PATH . '/configuration.php';
         if (file_exists($file)) {
             require_once $file;
         } else {
@@ -204,17 +204,17 @@ class MolajoConfigurationService
             $db = Services::DB();
             $query = $db->getQuery(true);
 
-            $query->select($db->namequote('id'));
-            $query->select($db->namequote('asset_type_id'));
-            $query->select($db->namequote('name'));
-            $query->select($db->namequote('path'));
-            $query->select($db->namequote('description'));
-            $query->select($db->namequote('custom_fields'));
-            $query->select($db->namequote('parameters'));
-            $query->select($db->namequote('metadata'));
-            $query->from($db->namequote('#__applications'));
-            $query->where($db->namequote('name') .
-                ' = ' . $db->quote(MOLAJO_APPLICATION));
+            $query->select($db->nq('id'));
+            $query->select($db->nq('asset_type_id'));
+            $query->select($db->nq('name'));
+            $query->select($db->nq('path'));
+            $query->select($db->nq('description'));
+            $query->select($db->nq('custom_fields'));
+            $query->select($db->nq('parameters'));
+            $query->select($db->nq('metadata'));
+            $query->from($db->nq('#__applications'));
+            $query->where($db->nq('name') .
+                ' = ' . $db->q(MOLAJO_APPLICATION));
             $db->setQuery($query->__toString());
             $results = $db->loadObjectList();
 

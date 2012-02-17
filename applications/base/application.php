@@ -25,6 +25,14 @@ class MolajoApplication
     protected static $instance;
 
     /**
+   	 * The input object.
+   	 *
+   	 * @var    JInput
+   	 * @since  11.2
+   	 */
+   	public $input = null;
+
+    /**
      * getInstance
      *
      * @static
@@ -51,6 +59,10 @@ class MolajoApplication
     {
         /** Services: initiate */
         $sv = Molajo::Services()->initiateServices();
+
+        if (class_exists('JInput')) {
+      			$this->input = new JInput;
+      		}
 
         /** SSL: check requirement */
         if (Services::Configuration()->get('force_ssl') >= 1) {

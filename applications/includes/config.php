@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  */
 if (class_exists('MolajoVersion')) {
 } else {
-    require_once MOLAJO_APPLICATIONS_CORE . '/includes/version.php';
+    require_once MOLAJO_APPLICATIONS . '/includes/version.php';
 }
 
 /**
@@ -23,12 +23,12 @@ if (MOLAJO_APPLICATION == 'installation') {
 } else {
 
     /** site configuration */
-    if (file_exists(MOLAJO_SITE_FOLDER_PATH . '/configuration.php')) {
+    if (file_exists(SITE_FOLDER_PATH . '/configuration.php')) {
     } else {
         echo 'Molajo configuration.php File Missing';
         exit;
     }
-    require_once MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
+    require_once SITE_FOLDER_PATH . '/configuration.php';
 
     $CONFIG = new MolajoSiteConfiguration();
 

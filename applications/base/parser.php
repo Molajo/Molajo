@@ -123,7 +123,7 @@ class MolajoParser
     {
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS_CORE . '/base/renderers/sequence.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/base/renderers/sequence.xml';
         }
 
         if (JFile::exists($formatXML)) {

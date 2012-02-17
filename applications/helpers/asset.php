@@ -36,33 +36,33 @@ abstract class MolajoAssetHelper
 
         $query = $db->getQuery(true);
 
-        $query->select('a.' . $db->nameQuote('id') . ' as asset_id');
-        $query->select('a.' . $db->nameQuote('asset_type_id'));
-        $query->select('a.' . $db->nameQuote('source_id'));
-        $query->select('a.' . $db->nameQuote('routable'));
-        $query->select('a.' . $db->nameQuote('sef_request'));
-        $query->select('a.' . $db->nameQuote('request'));
-        $query->select('a.' . $db->nameQuote('request_option'));
-        $query->select('a.' . $db->nameQuote('request_model'));
-        $query->select('a.' . $db->nameQuote('redirect_to_id'));
-        $query->select('a.' . $db->nameQuote('view_group_id'));
-        $query->select('a.' . $db->nameQuote('primary_category_id'));
-        $query->select('b.' . $db->nameQuote('source_table'));
+        $query->select('a.' . $db->nq('id') . ' as asset_id');
+        $query->select('a.' . $db->nq('asset_type_id'));
+        $query->select('a.' . $db->nq('source_id'));
+        $query->select('a.' . $db->nq('routable'));
+        $query->select('a.' . $db->nq('sef_request'));
+        $query->select('a.' . $db->nq('request'));
+        $query->select('a.' . $db->nq('request_option'));
+        $query->select('a.' . $db->nq('request_model'));
+        $query->select('a.' . $db->nq('redirect_to_id'));
+        $query->select('a.' . $db->nq('view_group_id'));
+        $query->select('a.' . $db->nq('primary_category_id'));
+        $query->select('b.' . $db->nq('source_table'));
 
-        $query->from($db->nameQuote('#__assets') . ' as a');
-        $query->from($db->nameQuote('#__asset_types') . ' as b');
+        $query->from($db->nq('#__assets') . ' as a');
+        $query->from($db->nq('#__asset_types') . ' as b');
 
-        $query->where('a.' . $db->nameQuote('asset_type_id') .
-            ' = b.' . $db->nameQuote('id'));
+        $query->where('a.' . $db->nq('asset_type_id') .
+            ' = b.' . $db->nq('id'));
 
         if ((int)$asset_id == 0) {
-            $query->where('(a.' . $db->nameQuote('sef_request') .
-                    ' = ' . $db->quote($query_request) .
-                    ' OR a.' . $db->nameQuote('request') . ' = ' .
-                    $db->quote($query_request) . ')'
+            $query->where('(a.' . $db->nq('sef_request') .
+                    ' = ' . $db->q($query_request) .
+                    ' OR a.' . $db->nq('request') . ' = ' .
+                    $db->q($query_request) . ')'
             );
         } else {
-            $query->where('a.' . $db->nameQuote('id') . ' = ' .
+            $query->where('a.' . $db->nq('id') . ' = ' .
                     (int)$asset_id
             );
         }
@@ -140,13 +140,13 @@ abstract class MolajoAssetHelper
         $db = Services::DB();
         $query = $db->getQuery(true);
 
-        $query->select('a.' . $db->namequote('id') . ' as asset_id');
-        $query->from($db->namequote('#__assets') . ' as a');
-        $query->where('a.' . $db->namequote('asset_type_id') .
+        $query->select('a.' . $db->nq('id') . ' as asset_id');
+        $query->from($db->nq('#__assets') . ' as a');
+        $query->where('a.' . $db->nq('asset_type_id') .
             ' = ' . (int)$asset_type_id);
-        $query->where('a.' . $db->namequote('source_id') .
+        $query->where('a.' . $db->nq('source_id') .
             ' = ' . (int)$source_id);
-        $query->where('a.' . $db->namequote('view_group_id') .
+        $query->where('a.' . $db->nq('view_group_id') .
                 ' IN (' .
                 implode(',', $user->get('view_groups')) . ')'
         );
@@ -193,14 +193,14 @@ abstract class MolajoAssetHelper
 
         /** retrieve id if not home */
         if (Services::Configuration()->get('sef', 1) == 1) {
-            $query->select('a.' . $db->namequote('sef_request'));
+            $query->select('a.' . $db->nq('sef_request'));
         } else {
-            $query->select('a.' . $db->namequote('request'));
+            $query->select('a.' . $db->nq('request'));
         }
-        $query->from($db->namequote('#__assets') . ' as a');
-        $query->where('a.' . $db->namequote('id') .
+        $query->from($db->nq('#__assets') . ' as a');
+        $query->where('a.' . $db->nq('id') .
             ' = ' . (int)$asset_id);
-        $query->where('a.' . $db->namequote('view_group_id') .
+        $query->where('a.' . $db->nq('view_group_id') .
                 ' IN (' .
                 implode(',', $user->get('view_groups')) . ')'
         );

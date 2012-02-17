@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Display
  *
- * Abstracted class used as the parent class to most display views
+ * Abstracted class used as the parent class for common display views
  *
  * @package     Molajo
  * @subpackage  Model
@@ -18,33 +18,56 @@ defined('MOLAJO') or die;
  */
 class MolajoDisplayModel extends MolajoModel
 {
-
     /**
-     * $selectStatements
+     * $select
      *
-     * Array of select elements
+     * Array of data elements for display
      *
      * @var    array
      * @since  1.0
      */
-    protected $selectStatements;
+    protected $select;
 
     /**
-     * $selectionCriteria
+     * $from
+     *
+     * Array of tables
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $from;
+
+    /**
+     * $where
      *
      * Array of query criteria
      *
      * @var    array
      * @since  1.0
      */
-    protected $selectionCriteria;
+    protected $where;
 
     /**
-     *  $limitResults
+     * $ordering
      *
-     *  Number of resultsets to return
-     *  @va
+     * Value to limit the number of results
+     *
+     * @var    array
+     * @since  1.0
      */
+    protected $ordering;
+
+    /**
+     * $limitResults
+     *
+     * Value to limit the number of results
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $limitResults;
+
     /**
      * _setCriteria
      *
@@ -55,8 +78,6 @@ class MolajoDisplayModel extends MolajoModel
      */
     protected function _setCriteria()
     {
-        /** Asset Type */
-        $asset_type_id = $this->task_request->get('source_asset_type_id', 0);
 
         /** Model Helper */
         $extensionName = ucfirst($this->get('extension_instance_name', ''));
@@ -70,26 +91,25 @@ class MolajoDisplayModel extends MolajoModel
             $h = new MolajoModelHelper();
         }
 
-        /**
-         *  Select Statements
-         */
-        $this->selectStatements = array();
-
+        /** select fields can define joins in helper files */
+        $this->select = array();
         $fields = $this->getFieldnames();
         if (count($fields) > 0) {
             foreach ($fields as $field) {
-                $this->selectStatements[] = 'a.'.$field;
+                $this->select[] = 'a.' . ',' . $field . ',' . $field;
             }
         }
-/**
-        echo '<pre>';
-        var_dump($this->selectStatements);
-        echo '</pre>';
-*/
-        /**
-         *  Selection Criteria
-         */
-        $this->selectionCriteria = array();
+
+        /** true == acl check */
+        $this->from = array();
+        $this->from[] = $this->table . ',' . 'a' . ',' . true;
+
+        /** status - use published - create status groups */
+        $this->where = array();
+        $asset_type_id = $this->task_request->get('source_asset_type_id', 0);
+        if ((int)$asset_type_id > 0) {
+            $this->where[] = 'a.asset_type_id = ' . $asset_type_id;
+        }
 
         $xmlfile = MOLAJO_EXTENSIONS_COMPONENTS . '/articles/options/grid.xml';
         if (file_exists($xmlfile)) {
@@ -102,17 +122,39 @@ class MolajoDisplayModel extends MolajoModel
 
             foreach ($configuration->filters->children() as $child) {
                 $field = (string)$child['name'];
-                $requestAssetID = Molajo::Request()->get('request_asset_id');
 
-                $filterName = 'select.' . $field;
-                $storedAsName = $requestAssetID . '.' . $filterName;
+                $key = 'where.' . $this->table
+                    . '.' . $field
+                    . '.' . Molajo::Request()->get('request_asset_id');
 
-                $filterValue = Services::User()->get($storedAsName, $filterName);
-                $this->set($filterName, $filterValue);
+                echo $key;
+                $value = Services::User()->get($key, null, 'state');
+                echo ' '.$value. '<br />';
+                $this->set($key, $value);
             }
         }
 
+        /**
+         *  Ordering
+         */
+        if ((int)$this->limitResults == 0) {
+            $this->limitResults = 10;
+        }
+
+        /**
+         *  Limit
+         */
+        if ((int)$this->limitResults == 0) {
+            $this->limitResults = 10;
+        }
+
         return;
+        /**
+        echo '<pre>';
+        var_dump($this->select);
+        echo '</pre>';
+         */
+
     }
 
     /**
@@ -127,61 +169,70 @@ class MolajoDisplayModel extends MolajoModel
     {
         $this->query = $this->db->getQuery(true);
 
-        /* remove below when set criteria done */
-        $asset_type_id = $this->task_request->get('source_asset_type_id');
-        /* remove above when set criteria done */
-
-        /**
-         *  Select Statements
-         */
-        if (count($this->selectStatements) > 0) {
-            foreach ($this->selectStatements as $select) {
-                $this->query->select(
-                    $this->db->namequote($select)
-                );
+        /** select */
+        if (count($this->select) > 0) {
+            foreach ($this->select as $select) {
+                $x = explode(',', $select);
+                $this->query->select($x[0] . $this->db->nq($x[1]) . ' as ' . $x[2]);
             }
         }
 
-        $this->query->from($this->table . ' as a ');
+        /** from */
+        if (count($this->from) > 0) {
+            foreach ($this->from as $from) {
+                $x = explode(',', $from);
 
-        $this->db->setQuery($this->query);
+                $this->query->from($this->db->nq($x[0]) . ' as ' . $x[1]);
+
+                if ($x[2] == true) {
+                    MolajoAccessService::setQueryViewAccess(
+                        $this->query,
+                        array('join_to_prefix' => $x[1],
+                            'join_to_primary_key' => 'id',
+                            'asset_prefix' => $x[1] . '_assets',
+                            'select' => true
+                        )
+                    );
+                }
+            }
+        }
+
+        /** where */
+        if (count($this->where) > 0) {
+            foreach ($this->where as $where) {
+                $this->query->where($where);
+            }
+        }
+
+        /** order by */
+
+        /** set the query */
+        //echo $this->query->__toString();
+        $this->db->setQuery($this->query->__toString());
 
         return;
     }
 
-    protected function _hold ()
+    protected function _hold()
     {
-
         /** Status and Dates */
-        $this->query->where('a.' . $this->db->namequote('status') .
+        $this->query->where('a.' . $this->db->nq('status') .
             ' = ' . MOLAJO_STATUS_PUBLISHED);
 
         $this->query->where('(a.start_publishing_datetime = ' .
-                $this->db->quote($this->nullDate) .
+                $this->db->q($this->nullDate) .
                 ' OR a.start_publishing_datetime <= ' .
-                $this->db->quote($this->now) . ')'
+                $this->db->q($this->now) . ')'
         );
         $this->query->where('(a.stop_publishing_datetime = ' .
-                $this->db->quote($this->nullDate) .
+                $this->db->q($this->nullDate) .
                 ' OR a.stop_publishing_datetime >= ' .
-                $this->db->quote($this->now) . ')'
+                $this->db->q($this->now) . ')'
         );
+
 
         /** ordering */
         $this->query->order('a.start_publishing_datetime DESC');
-
-        /** Assets Join and View Access Check */
-        $this->query->where('b_assets.asset_type_id = ' .
-            $this->db->quote($asset_type_id));
-
-        MolajoAccessService::setQueryViewAccess(
-            $this->query,
-            array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
-                'select' => true
-            )
-        );
 
     }
 

@@ -15,57 +15,57 @@ $load = new MolajoLoadHelper();
 /**
  *  Base
  */
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE. '/base', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS. '/base', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'base.php') {
     } else {
-        $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $load->requireClassFile(MOLAJO_APPLICATIONS . '/base/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 
 /**
  *  Helpers
  */
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/helpers', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS . '/helpers', '\.php$', false, false);
 foreach ($files as $file) {
-    $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
+    $load->requireClassFile(MOLAJO_APPLICATIONS . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
 }
 
 /**
  *  Renderers
  */
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/base/renderers', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS . '/base/renderers', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'renderer.php') {
     } else {
-        $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/base/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
+        $load->requireClassFile(MOLAJO_APPLICATIONS . '/base/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Renderer');
     }
 }
 
 /**
  *  Services
  */
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/services', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS . '/services', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'file.php' || $file == 'text.php') {
     } else {
-        $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
+        $load->requireClassFile(MOLAJO_APPLICATIONS . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
     }
 }
 
 /**
  *  Installer
 
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapter.php', 'MolajoAdapter');
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapterinstance.php', 'MolajoAdapterInstance');
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer.php', 'MolajoInstaller');
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/extension.php', 'MolajoInstallerExtension');
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/librarymanifest.php', 'MolajoInstallerLibraryManifest');
-$load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/packagemanifest.php', 'MolajoInstallerPackageManifest');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/adapter.php', 'MolajoAdapter');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/adapterinstance.php', 'MolajoAdapterInstance');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/installer.php', 'MolajoInstaller');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/extension.php', 'MolajoInstallerExtension');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/librarymanifest.php', 'MolajoInstallerLibraryManifest');
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/packagemanifest.php', 'MolajoInstallerPackageManifest');
 
-$files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/adapters', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS . '/installer/adapters', '\.php$', false, false);
 foreach ($files as $file) {
-    $load->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/adapters/' . $file, 'MolajoAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/adapters/' . $file, 'MolajoAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
  */
 /**

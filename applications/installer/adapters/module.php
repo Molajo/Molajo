@@ -108,9 +108,9 @@ class MolajoModuleAdapter extends MolajoAdapter
 
                 $client = (string)$this->manifest->attributes()->client;
                 $lang->load($extension . '.sys', $source, null, false, false)
-                || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), null, false, false)
+                || $lang->load($extension . '.sys', constant('SITE_' . strtoupper($client)), null, false, false)
                 || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-                || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), $lang->getDefault(), false, false);
+                || $lang->load($extension . '.sys', constant('SITE_' . strtoupper($client)), $lang->getDefault(), false, false);
             }
         }
     }
@@ -814,7 +814,7 @@ class MolajoModuleAdapter extends MolajoAdapter
 
         // Now we will no longer need the module object, so let's delete it and free up memory
         $row->delete($row->extension_id);
-        $query = 'DELETE FROM `#__modules` WHERE module = ' . $db->quote($row->element) . ' AND application_id = ' . $row->application_id;
+        $query = 'DELETE FROM `#__modules` WHERE module = ' . $db->q($row->element) . ' AND application_id = ' . $row->application_id;
         $db->setQuery($query->__toString());
 
         try

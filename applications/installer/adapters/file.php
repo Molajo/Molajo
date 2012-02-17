@@ -299,7 +299,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
         // Lastly, we will copy the manifest file to its appropriate place.
         $manifest = array();
         $manifest['src'] = $this->parent->getPath('manifest');
-        $manifest['dest'] = MOLAJO_SITE_MANIFESTS . '/files/' . basename($this->parent->getPath('manifest'));
+        $manifest['dest'] = SITE_MANIFESTS . '/files/' . basename($this->parent->getPath('manifest'));
         if (!$this->parent->copyFiles(array($manifest), true)) {
             // Install failed, rollback changes
             $this->parent->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_FILE_INSTALL_COPY_SETUP'));
@@ -376,7 +376,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
         }
 
         $retval = true;
-        $manifestFile = MOLAJO_SITE_MANIFESTS . '/files/' . $row->element . '.xml';
+        $manifestFile = SITE_MANIFESTS . '/files/' . $row->element . '.xml';
 
         // Because files may not have their own folders we cannot use the standard method of finding an installation manifest
         if (file_exists($manifestFile)) {
@@ -666,7 +666,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $manifestPath = MOLAJO_SITE_MANIFESTS . '/files/' . $this->parent->extension->element . '.xml';
+        $manifestPath = SITE_MANIFESTS . '/files/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

@@ -141,7 +141,7 @@ class MolajoSessionService
             'SELECT `session_id`' .
             ' FROM `#__sessions`' .
             ' WHERE `session_id` = ' .
-                $db->quote($session->getId()), 0, 1
+                $db->q($session->getId()), 0, 1
         );
         $exists = $db->loadResult();
         if ($exists) {
@@ -152,7 +152,7 @@ class MolajoSessionService
             $db->setQuery(
                 'INSERT INTO `#__sessions` '.
                     '(`session_id`, `application_id`, `session_time`)' .
-                ' VALUES (' . $db->quote($session->getId()) .
+                ' VALUES (' . $db->q($session->getId()) .
                     ', ' . (int)MOLAJO_APPLICATION_ID .
                     ', ' . (int)time() . ')'
             );
@@ -162,7 +162,7 @@ class MolajoSessionService
                 'INSERT INTO `#__sessions`
                 (`session_id`, `application_id`, `session_time`, `user_id`)' .
                 ' VALUES (' .
-                $db->quote($session->getId()) . ', ' .
+                $db->q($session->getId()) . ', ' .
                 (int)MOLAJO_APPLICATION_ID . ', ' .
                 (int)$session->get('session.timer.start') . ', ' .
                 (int)$user->get('id') . ')'

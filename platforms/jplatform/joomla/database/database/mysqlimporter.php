@@ -147,7 +147,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getAddColumnSQL($table, SimpleXMLElement $field)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ADD COLUMN ' . $this->getColumnSQL($field);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' ADD COLUMN ' . $this->getColumnSQL($field);
 
 		return $sql;
 	}
@@ -164,7 +164,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getAddKeySQL($table, $keys)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ADD ' . $this->getKeySQL($keys);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' ADD ' . $this->getKeySQL($keys);
 
 		return $sql;
 	}
@@ -329,7 +329,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getChangeColumnSQL($table, SimpleXMLElement $field)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' CHANGE COLUMN ' . $this->db->quoteName((string) $field['Field']) . ' '
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' CHANGE COLUMN ' . $this->db->qn((string) $field['Field']) . ' '
 			. $this->getColumnSQL($field);
 
 		return $sql;
@@ -356,7 +356,7 @@ class JDatabaseImporterMySQL
 		$fDefault = isset($field['Default']) ? (string) $field['Default'] : null;
 		$fExtra = (string) $field['Extra'];
 
-		$sql = $this->db->quoteName($fName) . ' ' . $fType;
+		$sql = $this->db->qn($fName) . ' ' . $fType;
 
 		if ($fNull == 'NO')
 		{
@@ -367,7 +367,7 @@ class JDatabaseImporterMySQL
 			else
 			{
 				// TODO Don't quote numeric values.
-				$sql .= ' NOT NULL DEFAULT ' . $this->db->quote($fDefault);
+				$sql .= ' NOT NULL DEFAULT ' . $this->db->q($fDefault);
 			}
 		}
 		else
@@ -379,7 +379,7 @@ class JDatabaseImporterMySQL
 			else
 			{
 				// TODO Don't quote numeric values.
-				$sql .= ' DEFAULT ' . $this->db->quote($fDefault);
+				$sql .= ' DEFAULT ' . $this->db->q($fDefault);
 			}
 		}
 
@@ -403,7 +403,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getDropColumnSQL($table, $name)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' DROP COLUMN ' . $this->db->quoteName($name);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' DROP COLUMN ' . $this->db->qn($name);
 
 		return $sql;
 	}
@@ -420,7 +420,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getDropKeySQL($table, $name)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' DROP KEY ' . $this->db->quoteName($name);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' DROP KEY ' . $this->db->qn($name);
 
 		return $sql;
 	}
@@ -436,7 +436,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getDropPrimaryKeySQL($table)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' DROP PRIMARY KEY';
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' DROP PRIMARY KEY';
 
 		return $sql;
 	}
@@ -507,7 +507,7 @@ class JDatabaseImporterMySQL
 
 		if ($nColumns == 1)
 		{
-			$kColumns[] = $this->db->quoteName($kColumn);
+			$kColumns[] = $this->db->qn($kColumn);
 		}
 		else
 		{
@@ -517,7 +517,7 @@ class JDatabaseImporterMySQL
 			}
 		}
 
-		$sql = $prefix . 'KEY ' . ($kName != 'PRIMARY' ? $this->db->quoteName($kName) : '') . ' (' . implode(',', $kColumns) . ')';
+		$sql = $prefix . 'KEY ' . ($kName != 'PRIMARY' ? $this->db->qn($kName) : '') . ' (' . implode(',', $kColumns) . ')';
 
 		return $sql;
 	}

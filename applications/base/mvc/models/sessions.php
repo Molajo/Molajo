@@ -66,7 +66,7 @@ class MolajoSessionsModel extends MolajoModel
         $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->db->Quote($userId)
+                 . ' WHERE user_id = ' . $this->db->q($userId)
                  . ' AND application_id IN (' . $application_ids . ')';
 
         $this->db->setQuery($query->__toString());
@@ -107,7 +107,7 @@ class MolajoSessionsModel extends MolajoModel
     function exists($user_id)
     {
         $query = 'SELECT COUNT(user_id) FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->db->Quote($user_id);
+                 . ' WHERE user_id = ' . $this->db->q($user_id);
 
         $this->db->setQuery($query->__toString());
 
@@ -133,8 +133,8 @@ class MolajoSessionsModel extends MolajoModel
             $this->$k = $oid;
         }
 
-        $query = 'DELETE FROM ' . $this->db->quoteName($this->_tbl) .
-                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->db->Quote($this->$k);
+        $query = 'DELETE FROM ' . $this->db->qn($this->_tbl) .
+                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->db->q($this->$k);
 
         $this->db->setQuery($query->__toString());
 

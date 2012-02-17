@@ -318,28 +318,18 @@ class MolajoUserService
             return $this->metadata->get($key, $default);
 
         } else if ($type == 'state') {
-            $registry = Molajo::Application()
-                ->getSession()
-                ->get('registry');
-            if (is_null($registry)) {
-            } else {
-                return $registry->get($key, $default);
-            }
-            return $default;
 
-            /** combine with get getUserStateFromRequest
-            $cur_state = $this->getUserState($key, $default);
-            $new_state = JRequest::getVar($request, null, 'default', $type);
+            //$session = Services::Session();
+            $current_state = Molajo::Application()->input->get($key, null);
 
-            // Save the new value only if it was set in this request.
-            if ($new_state == null) {
-            $new_state = $cur_state;
+            if ($current_state == null) {
+                $current_state = null; //$session->get($key, $default);
             } else {
-            $this->setUserState($key, $new_state);
+                $this->set($key, $current_state);
             }
 
-            return $new_state;
-             */
+            return $current_state;
+
         } else {
             if (isset($this->$key)) {
                 return $this->$key;
@@ -379,6 +369,7 @@ class MolajoUserService
             $registry = Molajo::Application()
                 ->getSession()
                 ->get('registry');
+
             if (is_null($registry)) {
             } else {
                 return $registry->set($key, $value);

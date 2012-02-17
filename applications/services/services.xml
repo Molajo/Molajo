@@ -59,11 +59,12 @@
         <serviceClass>MolajoSecurityService</serviceClass>
     </service>
     <service>
-        <name>Text</name>
-        <serviceClass>MolajoTextService</serviceClass>
-    </service>
-    <service>
         <name>URL</name>
         <serviceClass>MolajoURLService</serviceClass>
     </service>
+    <service>
+        <name>Text</name>
+        <serviceClass>MolajoTextService</serviceClass>
+    </service>
+
 </services>

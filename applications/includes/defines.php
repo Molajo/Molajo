@@ -26,11 +26,6 @@ if (defined('_QQ_')) {
 /**
  *  Platform
  */
-if (defined('PLATFORMS')) {
-} else {
-    define('PLATFORMS', MOLAJO_BASE_FOLDER . '/platforms');
-}
-
 if (defined('PLATFORM_MOLAJO')) {
 } else {
     define('PLATFORM_MOLAJO', PLATFORMS . '/molajo');
@@ -49,7 +44,7 @@ if (defined('PLATFORM_SYMFONY_EVENT')) {
  */
 if (defined('MOLAJO_APPLICATIONS_MVC')) {
 } else {
-    define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS_CORE . '/base/mvc');
+    define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS . '/base/mvc');
 }
 if (defined('MOLAJO_APPLICATIONS_MVC_URL')) {
 } else {
@@ -59,10 +54,6 @@ if (defined('MOLAJO_APPLICATIONS_MVC_URL')) {
 /**
  *  Extensions
  */
-if (defined('MOLAJO_EXTENSIONS')) {
-} else {
-    define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER . '/extensions');
-}
 if (defined('MOLAJO_EXTENSIONS_COMPONENTS')) {
 } else {
     define('MOLAJO_EXTENSIONS_COMPONENTS', MOLAJO_EXTENSIONS . '/components');
@@ -119,33 +110,33 @@ if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
 /**
  *  ACTION TYPES
  */
-if (defined('MOLAO_ACTION_TYPE_LOGIN')) {
+if (defined('MOLAJO_ACTION_TYPE_LOGIN')) {
 } else {
-    define('MOLAO_ACTION_TYPE_LOGIN', 'login');
+    define('MOLAJO_ACTION_TYPE_LOGIN', 'login');
 }
-if (defined('MOLAO_ACTION_TYPE_CREATE')) {
+if (defined('MOLAJO_ACTION_TYPE_CREATE')) {
 } else {
-    define('MOLAO_ACTION_TYPE_CREATE', 'create');
+    define('MOLAJO_ACTION_TYPE_CREATE', 'create');
 }
-if (defined('MOLAO_ACTION_TYPE_VIEW')) {
+if (defined('MOLAJO_ACTION_TYPE_VIEW')) {
 } else {
-    define('MOLAO_ACTION_TYPE_VIEW', 'view');
+    define('MOLAJO_ACTION_TYPE_VIEW', 'view');
 }
-if (defined('MOLAO_ACTION_TYPE_EDIT')) {
+if (defined('MOLAJO_ACTION_TYPE_EDIT')) {
 } else {
-    define('MOLAO_ACTION_TYPE_EDIT', 'edit');
+    define('MOLAJO_ACTION_TYPE_EDIT', 'edit');
 }
-if (defined('MOLAO_ACTION_TYPE_PUBLISH')) {
+if (defined('MOLAJO_ACTION_TYPE_PUBLISH')) {
 } else {
-    define('MOLAO_ACTION_TYPE_PUBLISH', 'publish');
+    define('MOLAJO_ACTION_TYPE_PUBLISH', 'publish');
 }
-if (defined('MOLAO_ACTION_TYPE_DELETE')) {
+if (defined('MOLAJO_ACTION_TYPE_DELETE')) {
 } else {
-    define('MOLAO_ACTION_TYPE_DELETE', 'delete');
+    define('MOLAJO_ACTION_TYPE_DELETE', 'delete');
 }
-if (defined('MOLAO_ACTION_TYPE_ADMIN')) {
+if (defined('MOLAJO_ACTION_TYPE_ADMIN')) {
 } else {
-    define('MOLAO_ACTION_TYPE_ADMIN', 'admin');
+    define('MOLAJO_ACTION_TYPE_ADMIN', 'admin');
 }
 
 /**

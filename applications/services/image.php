@@ -174,18 +174,18 @@ class MolajoImageService
         $now = $date->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select($db->nameQuote('path'));
-        $query->from($db->nameQuote('#__content') . 'as a');
-        $query->where('a.' . $db->nameQuote('status') . ' = 1');
-        $query->where('(a.' . $db->nameQuote('start_publishing_datetime') . ' = ' . $db->quote($nullDate) .
-            ' OR a.' . $db->nameQuote('start_publishing_datetime') . ' <= ' . $db->quote($now) . ')');
-        $query->where('(a.' . $db->nameQuote('stop_publishing_datetime') . ' = ' . $db->quote($nullDate) .
-            ' OR a.' . $db->nameQuote('stop_publishing_datetime') . ' >= ' . $db->quote($now) . ')');
+        $query->select($db->nq('path'));
+        $query->from($db->nq('#__content') . 'as a');
+        $query->where('a.' . $db->nq('status') . ' = 1');
+        $query->where('(a.' . $db->nq('start_publishing_datetime') . ' = ' . $db->q($nullDate) .
+            ' OR a.' . $db->nq('start_publishing_datetime') . ' <= ' . $db->q($now) . ')');
+        $query->where('(a.' . $db->nq('stop_publishing_datetime') . ' = ' . $db->q($nullDate) .
+            ' OR a.' . $db->nq('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')');
         $query->where('a.id = ' . (int)$this->id);
 
-        $query->from($db->nameQuote('#__assets') . 'as b');
-        $query->where('b.' . $db->nameQuote('source_id') . ' = ' . $db->nameQuote('id'));
-        $query->where('b.' . $db->nameQuote('asset_type_id') . ' = ' . $db->nameQuote('asset_type_id'));
+        $query->from($db->nq('#__assets') . 'as b');
+        $query->where('b.' . $db->nq('source_id') . ' = ' . $db->nq('id'));
+        $query->where('b.' . $db->nq('asset_type_id') . ' = ' . $db->nq('asset_type_id'));
 
         $db->setQuery($query->__toString());
 
@@ -198,13 +198,13 @@ class MolajoImageService
         $images = Services::Configuration()->get('media_path', 'media/images');
 
         /** folders */
-        if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
+        if (JFolder::exists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            JFolder::create(MOLAJO_SITE_FOLDER_PATH . '/' . $images);
+            JFolder::create(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** make certain original image exists */
-        $this->fileNameOriginal = MOLAJO_SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
+        $this->fileNameOriginal = SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
         if (JFile::exists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
@@ -223,13 +223,13 @@ class MolajoImageService
         $images = Services::Configuration()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
-        if (JFolder::exists(MOLAJO_SITE_FOLDER_PATH . '/' . $images)) {
+        if (JFolder::exists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            JFolder::create(MOLAJO_SITE_FOLDER_PATH . '/' . $images);
+            JFolder::create(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** if resized image already exists, return it */
-        $this->fileNameNew = MOLAJO_SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
+        $this->fileNameNew = SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
         if (JFile::exists($this->fileNameNew)) {
             return true;
         }

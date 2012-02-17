@@ -53,13 +53,13 @@ class MolajoUsersModel extends MolajoCrudModel
         /** retrieve applications for which the user is authorized to login */
         $query = $this->db->getQuery(true);
 
-        $query->select('a.' . $this->db->nameQuote('id'));
-        $query->select('a.' . $this->db->nameQuote('name') . ' as title');
-        $query->from($this->db->nameQuote('#__applications') . ' as a');
-        $query->from($this->db->nameQuote('#__user_applications') . ' as b');
-        $query->where('a.' . $this->db->nameQuote('id') .
-            ' = b.' . $this->db->nameQuote('application_id'));
-        $query->where('b.' . $this->db->nameQuote('user_id') .
+        $query->select('a.' . $this->db->nq('id'));
+        $query->select('a.' . $this->db->nq('name') . ' as title');
+        $query->from($this->db->nq('#__applications') . ' as a');
+        $query->from($this->db->nq('#__user_applications') . ' as b');
+        $query->where('a.' . $this->db->nq('id') .
+            ' = b.' . $this->db->nq('application_id'));
+        $query->where('b.' . $this->db->nq('user_id') .
             ' = ' . (int)$this->id);
 
         $this->db->setQuery($query->__toString());
@@ -74,13 +74,13 @@ class MolajoUsersModel extends MolajoCrudModel
         /** retrieve groups to which the user belongs */
         $query = $this->db->getQuery(true);
 
-        $query->select('a.' . $this->db->nameQuote('id'));
-        $query->select('a.' . $this->db->nameQuote('title') . ' as title');
-        $query->from($this->db->nameQuote('#__content') . ' as a');
-        $query->from($this->db->nameQuote('#__user_groups') . ' as b');
-        $query->where('a.' . $this->db->nameQuote('id') .
-            ' = b.' . $this->db->nameQuote('group_id'));
-        $query->where('b.' . $this->db->nameQuote('user_id') .
+        $query->select('a.' . $this->db->nq('id'));
+        $query->select('a.' . $this->db->nq('title') . ' as title');
+        $query->from($this->db->nq('#__content') . ' as a');
+        $query->from($this->db->nq('#__user_groups') . ' as b');
+        $query->where('a.' . $this->db->nq('id') .
+            ' = b.' . $this->db->nq('group_id'));
+        $query->where('b.' . $this->db->nq('user_id') .
             ' = ' . (int)$this->id);
 
         $this->db->setQuery($query->__toString());
@@ -103,12 +103,12 @@ class MolajoUsersModel extends MolajoCrudModel
         /** retrieve view access groups to which the user belongs */
         $query = $this->db->getQuery(true);
 
-        $query->select('a.' . $this->db->nameQuote('id'));
-        $query->from($this->db->nameQuote('#__view_groups') . ' as a');
-        $query->from($this->db->nameQuote('#__user_view_groups') . ' as b');
-        $query->where('a.' . $this->db->nameQuote('id') .
-            ' = b.' . $this->db->nameQuote('view_group_id'));
-        $query->where('b.' . $this->db->nameQuote('user_id') .
+        $query->select('a.' . $this->db->nq('id'));
+        $query->from($this->db->nq('#__view_groups') . ' as a');
+        $query->from($this->db->nq('#__user_view_groups') . ' as b');
+        $query->where('a.' . $this->db->nq('id') .
+            ' = b.' . $this->db->nq('view_group_id'));
+        $query->where('b.' . $this->db->nq('user_id') .
             ' = ' . (int)$this->id);
 
         $this->db->setQuery($query->__toString());
