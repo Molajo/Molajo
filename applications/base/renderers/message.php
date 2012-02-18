@@ -46,13 +46,17 @@ class MolajoMessageRenderer extends MolajoRenderer
     {
         $this->set('model', 'MolajoMessagesModel');
         $this->set('task', 'display');
+
+        $this->parameters = new Registry();
         $this->parameters->set('suppress_no_results', 1);
 
         if ((int)$this->get('template_view_id', 0) == 0) {
-            $this->set('template_view_id', Services::Configuration()->get('message_template_view_id'));
+            $this->set('template_view_id',
+                Services::Configuration()->get('message_template_view_id'));
         }
         if ((int)$this->get('wrap_view_id', 0) == 0) {
-            $this->set('wrap_view_id', Services::Configuration()->get('message_wrap_view_id'));
+            $this->set('wrap_view_id',
+                Services::Configuration()->get('message_wrap_view_id'));
         }
 
         return true;

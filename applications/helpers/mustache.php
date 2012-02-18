@@ -16,6 +16,13 @@ defined('MOLAJO') or die;
  */
 class MolajoMustacheHelper extends Mustache
 {
+    public $data = array();
+
+    public function items() {
+        return new ArrayIterator($this->data);
+    }
+
+
     /**
      * hello
      *

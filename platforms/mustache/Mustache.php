@@ -224,7 +224,6 @@ class Mustache {
 	protected function _renderTheme($theme) {
 		if ($section = $this->_findSection($theme)) {
 			list($before, $type, $tag_name, $content, $after) = $section;
-
 			$rendered_before = $this->_renderTags($before);
 
 			$rendered_content = '';

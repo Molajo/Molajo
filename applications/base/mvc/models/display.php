@@ -219,7 +219,7 @@ class MolajoDisplayModel extends MolajoModel
     protected function _runQuery()
     {
         $data = $this->db->loadObjectList();
-        //var_dump($data);
+
         if ($this->db->getErrorNum() == 0) {
 
         } else {
@@ -255,7 +255,7 @@ class MolajoDisplayModel extends MolajoModel
      */
     protected function _getAdditionalData($data = array())
     {
-        $rowCount = 0;
+        $rowCount = 1;
         if (count($data) == 0) {
             return $data;
         }
@@ -333,6 +333,8 @@ class MolajoDisplayModel extends MolajoModel
                 unset($item);
             };
         }
+
+        return $data;
     }
 
     /**

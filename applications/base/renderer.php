@@ -256,10 +256,10 @@ class MolajoRenderer
         }
 
         /** retrieves MVC defaults for extension */
-        //        if ($this->get('extension_parameters', '') == '') {
-        //        } else {
-        //            $this->_getExtensionDefaults();
-        //        }
+        if ($this->get('extension_parameters', '') == '') {
+        } else {
+            $this->_getExtensionDefaults();
+        }
 
         /** retrieves MVC defaults for application object */
         $this->_getApplicationDefaults();
@@ -288,9 +288,6 @@ class MolajoRenderer
         $this->set('extension_asset_type_id', 0);
         $this->set('extension_asset_id', 0);
         $this->set('extension_view_group_id', 0);
-        $this->set('extension_custom_fields', array());
-        $this->set('extension_metadata', array());
-        $this->set('extension_parameters', array());
         $this->set('extension_path', '');
         $this->set('extension_type', $this->name);
         if ($this->type == 'request') {
@@ -350,11 +347,8 @@ class MolajoRenderer
     {
         foreach ($this->attributes as $name => $value) {
 
-            if ($name == 'name'
-                || $name == 'title'
-            ) {
+            if ($name == 'name' || $name == 'title') {
                 $this->set('extension_instance_name', $value);
-
 
             } else if ($name == 'tag') {
                 $this->tag = $value;
@@ -387,7 +381,6 @@ class MolajoRenderer
             ) {
                 $this->set('wrap_view_css_class', $value);
             }
-            //todo: amy merge other parameters into $this->parameters $this->set('other_parameters') = $other_parameters;
         }
 
         /** Retrieve Template View Primary Key */
@@ -429,7 +422,6 @@ class MolajoRenderer
      */
     protected function _getExtension()
     {
-        /** Retrieve Extension Query Results */
         if ($this->get('extension_instance_id', 0) == 0) {
             $rows = ExtensionHelper::get(
                 (int)$this->get('extension_asset_type_id'),
@@ -445,8 +437,7 @@ class MolajoRenderer
 
         /** Extension not found */
         if (($this->get('extension_instance_id', 0) == 0)
-            && (count($rows) == 0)
-        ) {
+            && (count($rows) == 0)) {
             return $this->set('status_found', false);
         }
 
@@ -462,56 +453,53 @@ class MolajoRenderer
         $this->set('extension_view_group_id', $row->view_group_id);
         $this->set('extension_type', $row->asset_type_title);
 
-        $custom_fields = new Registry;
-        $custom_fields->loadString($row->custom_fields);
-        $this->set('category_custom_fields', $custom_fields);
+        $this->parameters = new Registry;
+        $this->parameters->loadString($row->parameters);
 
-        $metadata = new Registry;
-        $metadata->loadString($row->metadata);
-        $this->set('category_metadata', $metadata);
-
-        $parameters = new Registry;
-        $parameters->loadString($row->parameters);
-        $this->set('extension_parameters', $parameters);
         $this->set('source_asset_type_id',
-            $parameters->get('source_asset_type_id'));
+            $this->parameters->get('source_asset_type_id'));
 
         if ((int)$this->get('template_view_id', 0) == 0) {
              $this->set('template_view_id',
-                 $parameters->get('template_view_id')
+                 $this->parameters->get('template_view_id')
              );
          }
 
          /** wrap */
          if ((int)$this->get('wrap_view_id', 0) == 0) {
              $this->set('wrap_view_id',
-                 $parameters->get('wrap_view_id')
+                 $this->parameters->get('wrap_view_id')
              );
          }
 
         /** mvc */
         if ($this->get('controller', '') == '') {
-            $this->set('controller', $parameters->def('controller', ''));
+            $this->set('controller',
+                $this->parameters->get('controller', ''));
         }
         if ($this->get('task', '') == '') {
-            $this->set('task', $parameters->def('task', 'display'));
+            $this->set('task',
+                $this->parameters->get('task', 'display'));
         }
         if ($this->get('model', '') == '') {
-            $this->set('model', $parameters->def('model', ''));
+            $this->set('model',
+                $this->parameters->get('model', ''));
         }
         if ((int)$this->get('id', 0) == 0) {
-            $this->set('id', $parameters->def('id', 0));
+            $this->set('id',
+                $this->parameters->get('id', 0));
         }
         if ((int)$this->get('category_id', 0) == 0) {
-            $this->set('category_id', $parameters->def('category_id', 0));
+            $this->set('category_id',
+                $this->parameters->get('category_id', 0));
         }
         if ((int)$this->get('suppress_no_results', 0) == 0) {
             $this->set('suppress_no_results',
-                $parameters->def('suppress_no_results', 0));
+                $this->parameters->get('suppress_no_results', 0));
         }
 
         $this->set('extension_event_type',
-            $parameters->def('plugin_type', array('content'))
+            $this->parameters->get('plugin_type', array('content'))
         );
 
         $this->set('extension_path',
@@ -535,6 +523,7 @@ class MolajoRenderer
     protected function _getExtensionDefaults()
     {
         if ((int)$this->get('template_view_id', 0) == 0) {
+
             $this->set('template_view_id',
                 ViewHelper::getViewDefaultsOther('view',
                     $this->get('model'),
@@ -543,10 +532,12 @@ class MolajoRenderer
                     $this->get('extension_parameters', '')
                 )
             );
+
         }
 
         /** wrap */
         if ((int)$this->get('wrap_view_id', 0) == 0) {
+
             $this->set('wrap_view_id',
                 ViewHelper::getViewDefaultsOther(
                     'wrap',
@@ -556,6 +547,7 @@ class MolajoRenderer
                     $this->get('extension_parameters', '')
                 )
             );
+
         }
         return true;
     }
@@ -571,22 +563,26 @@ class MolajoRenderer
     protected function _getApplicationDefaults()
     {
         if ((int)$this->get('template_view_id', 0) == 0) {
+
             $this->set('template_view_id',
                 ViewHelper::getViewDefaultsApplication('view',
                     $this->get('model'),
                     $this->get('task', ''),
                     (int)$this->get('id', 0))
             );
+
         }
 
         /** wrap */
         if ((int)$this->get('wrap_view_id', 0) == 0) {
+
             $this->set('wrap_view_id',
                 ViewHelper::getViewDefaultsApplication('wrap',
                     $this->get('model'),
                     $this->get('task', ''),
                     (int)$this->get('id', 0))
             );
+
         }
         return true;
     }

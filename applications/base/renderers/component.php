@@ -31,6 +31,8 @@ class MolajoComponentRenderer extends MolajoRenderer
             return;
         }
 
+        $this->parameters = Molajo::Request()->parameters;
+
         $this->task_request = new Registry();
 
         /** extension */

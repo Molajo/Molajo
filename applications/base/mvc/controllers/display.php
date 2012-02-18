@@ -195,6 +195,7 @@ class MolajoDisplayController extends MolajoController
      */
     protected function renderMustacheView($template)
     {
+
         /** quick check for mustache commands */
         if (stripos($template, '}}') > 0) {
         } else {
@@ -215,7 +216,7 @@ class MolajoDisplayController extends MolajoController
 
             $helperClass = 'Molajo' .
                 ucfirst(Molajo::Request()->get('theme_name'))
-                . 'MustacheHelper';
+                . 'dddMustacheHelper';
 
             if (class_exists($helperClass)) {
                 $h = new $helperClass();
@@ -228,16 +229,16 @@ class MolajoDisplayController extends MolajoController
         }
 
         /** create mustache dataset */
-        $h->items = array();
         $totalRows = count($this->rowset);
+
         if ($totalRows > 0) {
             foreach ($this->rowset as $this->row) {
-                $item = new stdClass();
+                $item = new stdClass ();
                 $pairs = get_object_vars($this->row);
                 foreach ($pairs as $key => $value) {
                     $item->$key = $value;
                 }
-                $h->items[] = $item;
+                $h->data['item'] = $item;
             }
         }
 
