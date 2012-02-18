@@ -106,7 +106,8 @@ class MolajoUrlService
     {
         if (substr($option_URL, 0, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER) {
             return false;
-        } elseif ((strtolower(substr($option_URL, 0, 3)) == 'www') && (substr($option_URL, 3, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER)) {
+        } elseif ((strtolower(substr($option_URL, 0, 3)) == 'www')
+            && (substr($option_URL, 3, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER)) {
             return false;
         } else {
             return true;
@@ -152,26 +153,6 @@ class MolajoUrlService
     function retrieveURLContents($option_URL)
     {
         return curl::processCurl($option_URL);
-    }
-
-    /**
-     * encodeLink
-     * @param object $option_Link
-     * $url = MolajoConfigurationServiceURL::encodeLink ($option_Link);
-     */
-    function encodeLink($option_Link)
-    {
-        return urlencode($option_Link);
-    }
-
-    /**
-     * encodeLinkText
-     * @param object $option_Text
-     * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_Text);
-     */
-    function encodeLinkText($option_Text)
-    {
-        return htmlentities($option_Text, ENT_QUOTES, 'UTF-8');
     }
 
     /**

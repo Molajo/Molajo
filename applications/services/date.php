@@ -128,10 +128,10 @@ class MolajoDateService
     {
         /** user time zone */
         $source_date = Services::Date()->getUTCDate(
-            $source_date, 'user'
+            $source_date, 'system'
         );
         $current_date = Services::Date()->getUTCDate(
-            date('m/d/Y h:i:s a', time()), 'user'
+            date('m/d/Y h:i:s a', time()), 'system'
         );
 
         $source_date = strtotime($source_date);
@@ -308,6 +308,9 @@ class MolajoDateService
      */
     function getUTCDate($input_date, $server_or_user_UTC = 'user')
     {
+//todo: amy fix user
+
+        $server_or_user_UTC = 'SERVER_UTC';
         $config = Services::Configuration();
         $user = Services::User();
 

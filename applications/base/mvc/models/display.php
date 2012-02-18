@@ -93,7 +93,8 @@ class MolajoDisplayModel extends MolajoModel
         /**
          *  From
          */
-        $this->query->from($this->db->nq($this->table)
+        $this->query->from(
+            $this->db->nq($this->table)
                 . ' as '
                 . $this->db->nq($primary_prefix)
         );
@@ -104,7 +105,7 @@ class MolajoDisplayModel extends MolajoModel
             MolajoAccessService::setQueryViewAccess(
                 $this->query,
                 array('join_to_prefix' => $primary_prefix,
-                    'join_to_primary_key' => 'id',
+                    'join_to_primary_key' => $this->primary_key,
                     'asset_prefix' => $primary_prefix . '_assets',
                     'select' => true
                 )
@@ -134,7 +135,7 @@ class MolajoDisplayModel extends MolajoModel
                         } else {
                             $datatype = explode(',', $fields[$field]);
                             if ($datatype[0] == 'int') {
-                                $v = (int) $value;
+                                $v = (int)$value;
                             } else {
                                 $v = $this->db->q($value);
                             }
@@ -152,15 +153,15 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /** Specific criteria */
-        if (isset($parameterArray['id'])
-            && (int)$parameterArray['id'] > 0
+        if (isset($parameterArray[$this->primary_key])
+            && (int)$parameterArray[$this->primary_key] > 0
         ) {
             $this->query->where(
                 $this->db->nq($primary_prefix)
                     . '.'
-                    . $this->db->nq('id')
+                    . $this->db->nq($this->primary_key)
                     . ' = '
-                    . (int)$parameterArray['id']
+                    . (int)$parameterArray[$this->primary_key]
             );
         }
 
@@ -186,16 +187,23 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /**
-         *  process parameter requested query helper methods
+         *  Helper Methods requested by parameters
          */
         foreach ($methods as $method) {
             $this->query = $h->$method($this->query, $primary_prefix);
         }
 
         /** set the query */
-//echo $this->query->__toString();
+        //echo $this->query->__toString();
         $this->db->setQuery($this->query->__toString());
 
+        /**
+        $this->db->setQuery(
+        $query,
+        $this->getStart(),
+        $this->getState('list.limit')
+        );
+         */
         return;
     }
 
@@ -233,5 +241,108 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         return $data;
+    }
+
+    /**
+     * _getAdditionalData
+     *
+     * Method to append additional data elements, as needed
+     *
+     * @param array $data
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function _getAdditionalData($data = array())
+    {
+        $rowCount = 0;
+        if (count($data) == 0) {
+            return $data;
+        }
+
+        /**
+         *  Model Helper: MolajoExtensionModelHelper extends MolajoModelHelper
+         */
+        $extensionName = ExtensionHelper::formatNameForClass(
+            $this->get('extension_instance_name')
+        );
+        $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
+        if (class_exists($helperClass)) {
+        } else {
+            $helperClass = 'MolajoModelHelper';
+        }
+        $h = new $helperClass();
+
+        $parameterArray = Molajo::Request()->parameters->toArray();
+
+        $methodArray = array();
+        if (isset($parameterArray['item_methods'])) {
+            $temp = explode(',', $parameterArray['item_methods']);
+            foreach ($temp as $method) {
+                $methodArray[] = trim($method);
+            }
+        }
+
+        /**
+         *  Loop through query results
+         */
+        foreach ($data as $item) {
+            $keep = true;
+
+            if (count($methodArray) > 0) {
+                foreach ($methodArray as $method) {
+                    if (method_exists($helperClass, $method)) {
+                        $item = $h->$method($item, $this->parameters);
+                    }
+                }
+            }
+            // $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
+
+
+            /** item-specific task permissions
+            $results = Services::Access()
+            ->getUserItemPermissions(
+            $tasklist,
+            $asset_id
+            );
+             **/
+
+            // $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
+
+            /** process content plugins */
+            //                $this->dispatcher->trigger('contentPrepare', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
+            //$item->event = new stdClass();
+
+            //                $results = $this->dispatcher->trigger(
+            //                    'contentBeforeDisplay',
+            //                    array($this->context,
+            //                        &$item,
+            //                        &$this->parameters,
+            //                        $this->getState('list.start')
+            //                   )
+            //                );
+            //$item->event->beforeDisplayContent = trim(implode("\n", $results));
+
+            //                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
+            //$item->event->afterDisplayContent = trim(implode("\n", $results));
+
+            /** remove items so marked **/
+            if ($keep === true) {
+                $item->rowCount = $rowCount++;
+            } else {
+                unset($item);
+            };
+        }
+    }
+
+    /**
+     * getPagination
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        return $this->pagination;
     }
 }

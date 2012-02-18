@@ -198,6 +198,26 @@ class MolajoSecurityService
     }
 
     /**
+     * encodeLink
+     * @param object $option_Link
+     * $url = MolajoConfigurationServiceURL::encodeLink ($option_Link);
+     */
+    function encodeLink($option_Link)
+    {
+        return urlencode($option_Link);
+    }
+
+    /**
+     * encodeLinkText
+     * @param object $option_Text
+     * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_Text);
+     */
+    function encodeLinkText($option_Text)
+    {
+        return htmlentities($option_Text, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
      * Applies the content text filters as per settings for current user group
      *
      * @param text The string to filter

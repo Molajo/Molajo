@@ -10,10 +10,10 @@ defined('MOLAJO') or die;
 /**
  * Access
  *
- * Various methods for Asset permissioning verification
+ * Asset permissioning verification
  *
  * @package     Molajo
- * @subpackage  Access Control
+ * @subpackage  Services
  * @since       1.0
  */
 class MolajoAccessService
@@ -50,7 +50,9 @@ class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    public function authoriseTaskList($tasklist = array(), $asset_id = 0)
+    public function authoriseTaskList(
+        $tasklist = array(),
+        $asset_id = 0)
     {
         if (count($tasklist) == 0) {
             return;
@@ -62,7 +64,10 @@ class MolajoAccessService
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
                 Services::Access()
-                    ->authoriseTask($task, $asset_id);
+                    ->authoriseTask(
+                    $task,
+                    $asset_id
+                );
         }
         return $taskPermissions;
     }
@@ -76,7 +81,9 @@ class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    public function authoriseTask($task, $asset_id)
+    public function authoriseTask(
+        $task,
+        $asset_id)
     {
         if ($task == 'login') {
             return Services::Access()
@@ -125,7 +132,8 @@ class MolajoAccessService
      * @param null $asset
      * @return void
      */
-    public function authoriseLogin($user_id)
+    public function authoriseLogin(
+        $user_id)
     {
         if ((int)$user_id == 0) {
             return false;
@@ -165,8 +173,9 @@ class MolajoAccessService
      * @return     boolean
      * @since      1.0
      */
-    static public function setQueryViewAccess($query = array(),
-                                              $parameters = array())
+    public function setQueryViewAccess(
+        $query = array(),
+        $parameters = array())
     {
         $db = Services::DB();
 
@@ -230,11 +239,14 @@ class MolajoAccessService
         return $query;
     }
 
-
     /**
      *  TYPE 3 --> MolajoACL::getList -> getActionsList
      */
-    public function getActionsList($id, $option, $task, $parameters = array())
+    public function getActionsList(
+        $id,
+        $option,
+        $task,
+        $parameters = array())
     {
         $actions = array();
 

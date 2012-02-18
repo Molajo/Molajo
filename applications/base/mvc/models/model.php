@@ -332,28 +332,13 @@ class MolajoModel
     {
         $this->set('crud', 'r');
 
-        $this->_setCriteria();
-
         $this->_setQuery();
 
-        $item = $this->_runQuery();
+        $results = $this->_runQuery();
 
-        $this->data = $this->_getAdditionalData($item);
+        $this->data = $this->_getAdditionalData($results);
 
         return $this->data;
-    }
-
-    /**
-     * _setCriteria
-     *
-     * Method to set the criteria needed for a query
-     *
-     * @return  object
-     * @since   1.0
-     */
-    protected function _setCriteria()
-    {
-
     }
 
     /**
@@ -574,7 +559,11 @@ class MolajoModel
     /**
      * _validateForeignKey
      *
-     * @return  boolean
+     * @param   $key
+     * @param   $pk
+     * @param   $table
+     *
+     * @return  bool
      * @since   1.0
      */
     protected function _validateForeignKey($key, $pk, $table)
@@ -603,6 +592,11 @@ class MolajoModel
 
     /**
      * _validateValues
+     *
+     * @param $field
+     * @param null $required
+     * @param null $values
+     * @param null $default
      *
      * @return  boolean
      * @since   1.0
@@ -642,6 +636,8 @@ class MolajoModel
 
     /**
      * _validateHelperFunction
+     *
+     * @param $method
      *
      * @return  boolean
      * @since   1.0

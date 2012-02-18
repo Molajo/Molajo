@@ -17,28 +17,30 @@ defined('MOLAJO') or die;
 class MolajoModelHelper
 {
     /**
-     * queryPrimaryCategory
+     * queryStatus
      *
-     * sets the select, table, and where clause to retrieve
-     * the primary category and description with content
+     * sets criteria for all published status and sets date checks
      *
      * @param array $query
+     * @param string $prefix
      *
      * @return  object
      * @since   1.0
      */
-    public function queryStatus($query = array(), $prefix = 'a')
+    public function queryStatus(
+        $query = array(),
+        $prefix = 'a')
     {
         $db = Services::DB();
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->where(
-                $db->nq($prefix)
+            $db->nq($prefix)
                 . '.'
                 . $db->nq('status')
                 . ' > '
-                . (int) MOLAJO_STATUS_UNPUBLISHED
+                . (int)MOLAJO_STATUS_UNPUBLISHED
         );
 
         $query->where('('
@@ -85,9 +87,247 @@ class MolajoModelHelper
      * @return  object
      * @since   1.0
      */
-    public function queryPrimaryCategory($query = array(), $prefix = 'a')
+    public function queryPrimarycategory(
+        $query = array(),
+        $prefix = 'a')
     {
         return $query;
+    }
+
+    /**
+     * itemSplittext
+     *
+     * splits the content_text field into intro and full text on readmore
+     *
+     * @param array $item
+     * @param array $parameters
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function itemSplittext(
+        $item = array(),
+        $parameters = array())
+    {
+        if (isset($item->content_text)) {
+        } else {
+            $item->introtext = '';
+            $item->fulltext = '';
+            return $item;
+        }
+
+        $pattern = '#<hr\s+id=("|\')system-readmore("|\')\s*\/*>#i';
+
+        $tagPos = preg_match($pattern, $item->content_text);
+
+        if ($tagPos == 0) {
+            $introtext = $item->content_text;
+            $fulltext = '';
+        } else {
+            list($introtext, $fulltext) = preg_split($pattern, $item->content_text, 2);
+        }
+
+        $item->introtext = $introtext;
+        $item->fulltext = $fulltext;
+
+        return $item;
+    }
+
+    /**
+     * itemSnippet
+     *
+     * Splits content_text field into intro and full text on readmore
+     *
+     * @param array $item
+     * @param array $parameters
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function itemSnippet(
+        $item = array(),
+        $parameters = array())
+    {
+
+        if (isset($item->content_text)) {
+        } else {
+            $item->snippet = '';
+            return $item;
+        }
+
+        $item->snippet =
+            substr(
+                $item->content_text,
+                0,
+                $parameters->get('view_text_snippet_length', 200)
+            );
+
+        return $item;
+    }
+
+    /**
+     * itemURL
+     *
+     * Determines the item URL
+     *
+     * @param array $item
+     * @param array $parameters
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function itemURL(
+        $item = array(),
+        $parameters = array())
+    {
+        if (isset($item->asset_id)) {
+        } else {
+            $item->url = '';
+            return $item;
+        }
+
+        $item->url = AssetHelper::getURL($item->asset_id);
+
+        return $item;
+    }
+
+    /**
+     * itemDateformats
+     *
+     * Adds formatted dates to $item
+     *
+     * @param array $item
+     * @param array $parameters
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function itemDateformats(
+        $item = array(),
+        $parameters = array())
+    {
+        if (isset($item->created_datetime)) {
+            if ($item->created_datetime == '0000-00-00 00:00:00') {
+            } else {
+                $item =
+                    MolajoModelHelper::itemDateRoutine(
+                        'created_datetime',
+                        $item
+                    );
+            }
+        }
+
+        if (isset($item->modified_datetime)) {
+            if ($item->modified_datetime == '0000-00-00 00:00:00') {
+            } else {
+                $item =
+                    MolajoModelHelper::itemDateRoutine(
+                        'modified_datetime',
+                        $item
+                    );
+            }
+        }
+
+        if (isset($item->start_publishing_datetime)) {
+            if ($item->start_publishing_datetime == '0000-00-00 00:00:00') {
+            } else {
+                $item =
+                    MolajoModelHelper::itemDateRoutine(
+                        'start_publishing_datetime',
+                        $item
+                    );
+            }
+        }
+
+        if (isset($item->stop_publishing_datetime)) {
+            if ($item->stop_publishing_datetime == '0000-00-00 00:00:00') {
+            } else {
+                $item =
+                    MolajoModelHelper::itemDateRoutine(
+                        'stop_publishing_datetime',
+                        $item
+                    );
+            }
+        }
+
+        return $item;
+    }
+
+    /**
+     * itemDateRoutine
+     *
+     * Creates formatted date fields based on a named field
+     *
+     * @param $fieldname
+     * @param $item
+     *
+     * @return array
+     * @since 1.0
+     */
+    public function itemDateRoutine(
+        $fieldname,
+        $item)
+    {
+        if ($item->$fieldname == '0000-00-00 00:00:00') {
+            return $item;
+        }
+
+        $newField = $fieldname . '_ccyymmdd';
+        $item->$newField =
+            Services::Date()
+                ->convertCCYYMMDD($item->$fieldname);
+        $item->$newField =
+            str_replace('-', '', $item->$newField);
+
+        $newField = $fieldname . '_n_days_ago';
+        $item->$newField =
+            Services::Date()
+                ->differenceDays(date('Y-m-d'), $item->$fieldname);
+
+        $newField = $fieldname . '_pretty_date';
+        $item->$newField =
+            Services::Date()
+                ->prettydate($item->$fieldname);
+
+        return $item;
+    }
+
+    /**
+     * itemExpandjsonfields
+     *
+     * Expands the json-encoded fields into normal fields
+     *
+     * @param array $item
+     * @param array $parameters
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function itemExpandjsonfields(
+        $item = array(),
+        $parameters = array())
+    {
+        $jsonfields[] = 'custom_fields';
+        $jsonfields[] = 'parameters';
+        $jsonfields[] = 'metadata';
+
+        foreach ($jsonfields as $name) {
+            $name = trim($name);
+            if (property_exists($item, $name)) {
+                $registry = new Registry;
+                $registry->loadString($item->$name);
+                $fields = $registry->toArray();
+
+                while (list($jsonfield, $jsonfieldvalue) = each($fields)) {
+                    if (property_exists($item, $jsonfield)) {
+                    } else {
+                        $item->$jsonfield = $jsonfieldvalue;
+                    }
+                }
+                unset($item->$name);
+            }
+        }
+        return $item;
     }
 
     /**
