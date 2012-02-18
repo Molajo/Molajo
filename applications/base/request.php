@@ -50,7 +50,7 @@ class MolajoRequest
     public $page_request;
 
     /**
-     * $merged_parameters
+     * $parameters
      *
      * Parameters for source, menu item, extension, category,
      * and application are merged into one set where the most
@@ -61,7 +61,7 @@ class MolajoRequest
      * @var    object
      * @since  1.0
      */
-    public $merged_parameters;
+    public $parameters;
 
     /**
      * getInstance
@@ -107,7 +107,7 @@ class MolajoRequest
 
         $this->_initializePageRequest();
 
-        $this->merged_parameters = array();
+        $this->parameters = array();
 
         $this->input = new JInput;
 
@@ -200,8 +200,8 @@ class MolajoRequest
         }
 
         $temp = new Registry();
-        $temp->loadArray($this->merged_parameters);
-        $this->merged_parameters = $temp;
+        $temp->loadArray($this->parameters);
+        $this->parameters = $temp;
 
         return;
     }
@@ -587,35 +587,35 @@ class MolajoRequest
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
             $this->set('mvc_controller',
-                $parameters->def('controller', '')
+                $parameters->get('controller', '')
             );
         }
         if ($this->get('mvc_task', '') == '') {
             $this->set('mvc_task',
-                $parameters->def('task', '')
+                $parameters->get('task', '')
             );
         }
         if ($this->get('extension_instance_name', '') == '') {
             $this->set('extension_instance_name',
-                $parameters->def('option', '')
+                $parameters->get('option', '')
             );
         }
         if ($this->get('mvc_model', '') == '') {
             $this->set('mvc_model',
-                $parameters->def('model', '')
+                $parameters->get('model', '')
             );
         }
         if ((int)$this->get('mvc_id', 0) == 0) {
-            $this->set('mvc_id', $parameters->def('id', 0));
+            $this->set('mvc_id', $parameters->get('id', 0));
         }
         if ((int)$this->get('mvc_category_id', 0) == 0) {
             $this->set('mvc_category_id',
-                $parameters->def('category_id', 0)
+                $parameters->get('category_id', 0)
             );
         }
         if ((int)$this->get('mvc_suppress_no_results', 0) == 0) {
             $this->set('mvc_suppress_no_results',
-                $parameters->def('suppress_no_results', 0)
+                $parameters->get('suppress_no_results', 0)
             );
         }
 
@@ -674,6 +674,8 @@ class MolajoRequest
 
         $parameters = new Registry;
         $parameters->loadString($row->parameters);
+        $parameters->set('id', $row->id);
+        $parameters->set('asset_type_id', $row->asset_type_id);
         $this->set('source_parameters', $parameters);
 
         $this->_setPageValues($parameters, $metadata);
@@ -681,31 +683,31 @@ class MolajoRequest
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
             $this->set('mvc_controller',
-                $parameters->def('controller', ''));
+                $parameters->get('controller', ''));
         }
         if ($this->get('mvc_task', '') == '') {
             $this->set('mvc_task',
-                $parameters->def('task', ''));
+                $parameters->get('task', ''));
         }
         if ($this->get('extension_instance_name', '') == '') {
             $this->set('extension_instance_name',
-                $parameters->def('option', ''));
+                $parameters->get('option', ''));
         }
         if ($this->get('mvc_model', '') == '') {
             $this->set('mvc_model',
-                $parameters->def('model', ''));
+                $parameters->get('model', ''));
         }
         if ((int)$this->get('mvc_id', 0) == 0) {
             $this->set('mvc_id',
-                $parameters->def('id', 0));
+                $parameters->get('id', 0));
         }
         if ((int)$this->get('mvc_category_id', 0) == 0) {
             $this->set('mvc_category_id',
-                $parameters->def('category_id', 0));
+                $parameters->get('category_id', 0));
         }
         if ((int)$this->get('mvc_suppress_no_results', 0) == 0) {
             $this->set('mvc_suppress_no_results',
-                $parameters->def('suppress_no_results', 0));
+                $parameters->get('suppress_no_results', 0));
         }
 
         return $this->set('status_found', true);
@@ -828,37 +830,37 @@ class MolajoRequest
         /** mvc */
         if ($this->get('mvc_controller', '') == '') {
             $this->set('mvc_controller',
-                $parameters->def('controller', '')
+                $parameters->get('controller', '')
             );
         }
         if ($this->get('mvc_task', '') == '') {
             $this->set('mvc_task',
-                $parameters->def('task', 'display')
+                $parameters->get('task', 'display')
             );
         }
         if ($this->get('mvc_model', '') == '') {
             $this->set('mvc_model',
-                $parameters->def('model', 'content')
+                $parameters->get('model', 'content')
             );
         }
         if ((int)$this->get('mvc_id', 0) == 0) {
             $this->set('mvc_id',
-                $parameters->def('id', 0)
+                $parameters->get('id', 0)
             );
         }
         if ((int)$this->get('mvc_category_id', 0) == 0) {
             $this->set('mvc_category_id',
-                $parameters->def('category_id', 0)
+                $parameters->get('category_id', 0)
             );
         }
         if ((int)$this->get('mvc_suppress_no_results', 0) == 0) {
             $this->set('mvc_suppress_no_results',
-                $parameters->def('suppress_no_results', 0)
+                $parameters->get('suppress_no_results', 0)
             );
         }
 
         $this->set('extension_event_type',
-            $parameters->def('plugin_type', array('content'))
+            $parameters->get('plugin_type', array('content'))
         );
 
         $this->set('extension_path',
@@ -908,9 +910,9 @@ class MolajoRequest
             );
         }
 
-        $this->merged_parameters = ExtensionHelper::mergeParameters(
+        $this->parameters = ExtensionHelper::mergeParameters(
             $parameters,
-            $this->merged_parameters
+            $this->parameters
         );
 
         /** merge meta data */
@@ -1019,9 +1021,9 @@ class MolajoRequest
                     ->get('metadata_robots', ''));
         }
 
-        $this->merged_parameters = ExtensionHelper::mergeParameters(
+        $this->parameters = ExtensionHelper::mergeParameters(
             $parameters,
-            $this->merged_parameters
+            $this->parameters
         );
 
         return;
@@ -1153,10 +1155,10 @@ class MolajoRequest
         );
 
         if ($this->get('theme_id', 0) == 0) {
-            $this->set('theme_id', $parameters->def('user_theme_id', 0));
+            $this->set('theme_id', $parameters->get('user_theme_id', 0));
         }
         if ($this->get('page_view_id', 0) == 0) {
-            $this->set('page_view_id', $parameters->def('user_page_view_id', 0));
+            $this->set('page_view_id', $parameters->get('user_page_view_id', 0));
         }
 
         return;

@@ -254,8 +254,6 @@ abstract class MolajoExtensionHelper
             } else if ($name == 'controller'
                 || $name == 'task'
                 || $name == 'model'
-                || $name == 'id'
-                || $name == 'category_id'
             ) {
             } else {
                 $merged_parameters[$name] = $value;

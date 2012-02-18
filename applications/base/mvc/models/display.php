@@ -44,11 +44,9 @@ class MolajoDisplayModel extends MolajoModel
         $h = new $helperClass();
 
         /**
-         *  Parameter arrays - select, criteria
-         *  Task array - specific selection criteria
+         *  Parameters - select, criteria for query
          */
-        $taskRequestArray = $this->task_request->toArray();
-        $parameterArray = Molajo::Request()->merged_parameters->toArray();
+        $parameterArray = Molajo::Request()->parameters->toArray();
 
         /** Primary table field names and prefix */
         $fields = $this->getFieldnames();
@@ -136,29 +134,31 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /** Task array: specific criteria */
-        if (isset($parameterArray->id)
-            && (int)$parameterArray->id > 0
+        if (isset($parameterArray['id'])
+            && (int)$parameterArray['id'] > 0
         ) {
             $this->query->where(
                 $this->db->nq($primary_prefix)
                     . '.'
                     . $this->db->nq('id')
                     . ' = '
-                    . (int)$parameterArray->id
+                    . (int)$parameterArray['id']
             );
         }
 
-        if (isset($parameterArray->asset_type_id)
-            && (int)$parameterArray->asset_type_id > 0
+        if (isset($parameterArray['asset_type_id'])
+            && (int)$parameterArray['asset_type_id'] > 0
         ) {
             $this->query->where(
                 $this->db->nq($primary_prefix)
                     . '.'
                     . $this->db->nq('asset_type_id')
                     . ' = '
-                    . (int)$parameterArray->asset_type_id
+                    . (int)$parameterArray['asset_type_id']
             );
         }
+
+        //todo: amy category id
 
         /**
          *  Ordering
@@ -168,7 +168,7 @@ class MolajoDisplayModel extends MolajoModel
         }
 
         /** set the query */
-        echo $this->query->__toString();
+//echo $this->query->__toString();
         $this->db->setQuery($this->query->__toString());
 
         return;
@@ -186,7 +186,7 @@ class MolajoDisplayModel extends MolajoModel
     protected function _runQuery()
     {
         $data = $this->db->loadObjectList();
-        var_dump($data);
+//var_dump($data);
         if ($this->db->getErrorNum() == 0) {
 
         } else {
