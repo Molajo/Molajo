@@ -21,7 +21,7 @@ class MolajoDisplayModel extends MolajoModel
     /**
      * _setQuery
      *
-     * Method to create a query object in preparation of running a query
+     * Method to create a query object
      *
      * @return  object
      * @since   1.0
@@ -31,7 +31,7 @@ class MolajoDisplayModel extends MolajoModel
         $this->query = $this->db->getQuery(true);
 
         /**
-         *  Model Helper
+         *  Model Helper: MolajoExtensionModelHelper extends MolajoModelHelper
          */
         $extensionName = ExtensionHelper::formatNameForClass(
             $this->get('extension_instance_name')
@@ -43,13 +43,16 @@ class MolajoDisplayModel extends MolajoModel
         }
         $h = new $helperClass();
 
+        /** collect unique parameter defined query methods and run at end */
+        $methods = array();
+
         /**
-         *  Parameters - select, criteria for query
+         *  Parameters: merged in MolajoRenderer
          */
         $parameterArray = Molajo::Request()->parameters->toArray();
 
         /** Primary table field names and prefix */
-        $fields = $this->getFieldnames();
+        $fields = $this->getFieldDatatypes();
         $primary_prefix = 'a';
 
         /**
@@ -57,21 +60,28 @@ class MolajoDisplayModel extends MolajoModel
          */
         $selectArray = array();
         if (isset($parameterArray['select'])) {
-            $selectArray = explode(',', trim($parameterArray['select']));
+            $temp = explode(',', $parameterArray['select']);
+            foreach ($temp as $select) {
+                $selectArray[] = trim($select);
+            }
         }
         if (count($selectArray) > 0) {
         } else {
             /** default to all primary table fields */
-            $selectArray = $fields;
+            while (list($name, $value) = each($fields)) {
+                $selectArray[] = $name;
+            }
         }
 
         foreach ($selectArray as $select) {
-            $select = trim($select);
-            $method = 'query' . $select;
+            $method = 'query' . ucfirst(strtolower($select));
             if (method_exists($helperClass, $method)) {
-                $this->query = $h->$method($this->query, $primary_prefix);
+                if (in_array($method, $methods)) {
+                } else {
+                    $methods[] = $method;
+                }
             } else {
-                if (in_array($select, $fields)) {
+                if (isset($fields[$select])) {
                     $this->query->select(
                         $this->db->nq($primary_prefix)
                             . '.'
@@ -91,7 +101,6 @@ class MolajoDisplayModel extends MolajoModel
         if (isset($parameterArray['disable_view_access_check'])
             && $parameterArray['disable_view_access_check'] == 0
         ) {
-
             MolajoAccessService::setQueryViewAccess(
                 $this->query,
                 array('join_to_prefix' => $primary_prefix,
@@ -108,10 +117,13 @@ class MolajoDisplayModel extends MolajoModel
         while (list($name, $value) = each($parameterArray)) {
             if (substr($name, 0, strlen('criteria_')) == 'criteria_') {
                 $field = trim(substr($name, strlen('criteria_'), 999));
-                if (in_array(trim($field), $fields)) {
-                    $method = 'query' . ucfirst(trim($field));
+                if (isset($fields[$field])) {
+                    $method = 'query' . ucfirst(strtolower($field));
                     if (method_exists($helperClass, $method)) {
-                        $this->query = $h->$method($this->query, $primary_prefix);
+                        if (in_array($method, $methods)) {
+                        } else {
+                            $methods[] = $method;
+                        }
                     } else {
 
                         if (trim($value) == '') {
@@ -120,12 +132,18 @@ class MolajoDisplayModel extends MolajoModel
 
                         if (trim($value == '')) {
                         } else {
+                            $datatype = explode(',', $fields[$field]);
+                            if ($datatype[0] == 'int') {
+                                $v = (int) $value;
+                            } else {
+                                $v = $this->db->q($value);
+                            }
                             $this->query->where(
                                 $this->db->nq($primary_prefix)
                                     . '.'
                                     . $this->db->nq($field)
                                     . ' = '
-                                    . $this->db->q($value)
+                                    . $v
                             );
                         }
                     }
@@ -133,7 +151,7 @@ class MolajoDisplayModel extends MolajoModel
             }
         }
 
-        /** Task array: specific criteria */
+        /** Specific criteria */
         if (isset($parameterArray['id'])
             && (int)$parameterArray['id'] > 0
         ) {
@@ -167,6 +185,13 @@ class MolajoDisplayModel extends MolajoModel
             $this->query->ordering(trim($parameterArray['ordering']));
         }
 
+        /**
+         *  process parameter requested query helper methods
+         */
+        foreach ($methods as $method) {
+            $this->query = $h->$method($this->query, $primary_prefix);
+        }
+
         /** set the query */
 //echo $this->query->__toString();
         $this->db->setQuery($this->query->__toString());
@@ -186,7 +211,7 @@ class MolajoDisplayModel extends MolajoModel
     protected function _runQuery()
     {
         $data = $this->db->loadObjectList();
-//var_dump($data);
+        //var_dump($data);
         if ($this->db->getErrorNum() == 0) {
 
         } else {

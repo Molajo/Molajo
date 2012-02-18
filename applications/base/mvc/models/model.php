@@ -140,7 +140,7 @@ class MolajoModel
         $this->data = array();
         $this->pagination = array();
 
-        if ((int) $this->id == 0) {
+        if ((int)$this->id == 0) {
             $this->id = $id;
         }
         if (trim($this->name) == '') {
@@ -233,7 +233,7 @@ class MolajoModel
      * @return array
      * @since  1.0
      */
-    public function getFieldnames ()
+    public function getFieldnames()
     {
         $fields = array();
         $fieldDefinitions = $this->getFields();
@@ -246,17 +246,73 @@ class MolajoModel
     }
 
     /**
-   	 * getProperties
+     * getFieldDatatypes
+     *
+     * Retrieves column names and brief datatype
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getFieldDatatypes()
+    {
+        $fields = array();
+        $fieldDefinitions = $this->getFields();
+        if (count($fieldDefinitions) > 0) {
+            foreach ($fieldDefinitions as $fieldDefinition) {
+
+                $datatype = '';
+
+                /* basic datatype */
+                if (stripos($fieldDefinition->Type, 'int') !== false) {
+                    $datatype = 'int';
+                } else if (stripos($fieldDefinition->Type, 'date') !== false) {
+                    $datatype = 'date';
+                } else if (stripos($fieldDefinition->Type, 'text') !== false) {
+                    $datatype = 'text';
+                } else {
+                    $datatype = 'char';
+                }
+
+                /* null */
+                if ((strtolower($fieldDefinition->Null)) == 'yes') {
+                    $datatype .= ',1';
+                } else {
+                    $datatype .= ',0';
+                }
+
+                /* default */
+                if ((strtolower($fieldDefinition->Extra)) == 'auto_increment') {
+                    $datatype .= ',auto_increment';
+                } else if ((strtolower($fieldDefinition->Default)) == ' ') {
+                    $datatype .= ',space';
+                } else if ((strtolower($fieldDefinition->Default)) == '0') {
+                    $datatype .= ',zero';
+                } else if ($fieldDefinition->Default == NULL) {
+                   $datatype .= ',null';
+                } else {
+                    $datatype .= ','.trim($fieldDefinition->Default);
+                }
+
+                /* save it to array */
+                $fields[$fieldDefinition->Field] = $datatype;
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * getProperties
      *
      * Returns an associative array of object properties.
-   	 *
-   	 * @return  array
-   	 * @since   1.0
-   	 */
-   	public function getProperties()
-   	{
-   		return get_object_vars($this);
-   	}
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function getProperties()
+    {
+        return get_object_vars($this);
+    }
 
     /**
      *  Read Methods
@@ -592,7 +648,7 @@ class MolajoModel
      */
     protected function _validateHelperFunction($method)
     {
-        $class = 'Molajo'.ucfirst($this->table).'ModelHelper';
+        $class = 'Molajo' . ucfirst($this->table) . 'ModelHelper';
         if (class_exists($class)) {
         } else {
             $class = 'MolajoModelHelper';
@@ -727,7 +783,8 @@ class MolajoModel
     {
         // If there is no checked_out or checked_out_time field, just return true.
         if (property_exists($this, 'checked_out')
-            && property_exists($this, 'checked_out_time')) {
+            && property_exists($this, 'checked_out_time')
+        ) {
         } else {
             return true;
         }
@@ -783,7 +840,8 @@ class MolajoModel
     {
         // If there is no checked_out or checked_out_time field, just return true.
         if (property_exists($this, 'checked_out')
-            && property_exists($this, 'checked_out_time')) {
+            && property_exists($this, 'checked_out_time')
+        ) {
         } else {
             return true;
         }
