@@ -40,7 +40,7 @@ class MolajoTextService
 
     public function sprintf()
     {
-        return Services::Language()->sprintf();
+        //return Services::Language()->sprintf();
     }
 
     /**

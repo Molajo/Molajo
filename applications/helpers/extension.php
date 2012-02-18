@@ -209,9 +209,24 @@ abstract class MolajoExtensionHelper
         return $name;
     }
 
+    /**
+     * formatNameForClass
+     *
+     * Extension names can include dashes (or underscores). This method
+     * prepares the name for use as a component of a classname.
+     *
+     * @param $extension_name
+     *
+     * @return string
+     * @since  1.0
+     */
+    public function formatNameForClass($extension_name)
+    {
+        return ucfirst(str_replace(array('-', '_'), '', $extension_name));
+    }
 
     /**
-     * _mergeParameters
+     * mergeParameters
      *
      * Page Request object that will be populated by this class
      * with overall processing requirements for the page
@@ -230,6 +245,7 @@ abstract class MolajoExtensionHelper
         while (list($name, $value) = each($mergeIn)) {
             if (isset($this->merged_parameters[$name])) {
             } else if (substr($name, 0, strlen('extension')) == 'extension') {
+            } else if (substr($name, 0, strlen('extension')) == 'source') {
             } else if (substr($name, 0, strlen('theme')) == 'theme') {
             } else if (substr($name, 0, strlen('page')) == 'page') {
             } else if (substr($name, 0, strlen('template')) == 'template') {
@@ -240,8 +256,6 @@ abstract class MolajoExtensionHelper
                 || $name == 'model'
                 || $name == 'id'
                 || $name == 'category_id'
-                || $name == 'suppress_no_results'
-                || $name == 'source_asset_type_id'
             ) {
             } else {
                 $merged_parameters[$name] = $value;

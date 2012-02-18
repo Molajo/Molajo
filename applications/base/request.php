@@ -199,6 +199,10 @@ class MolajoRequest
             $this->_getRenderData();
         }
 
+        $temp = new Registry();
+        $temp->loadArray($this->merged_parameters);
+        $this->merged_parameters = $temp;
+
         return;
     }
 
@@ -631,6 +635,7 @@ class MolajoRequest
         $row = ContentHelper::get(
             (int)$this->get('source_id'),
             $this->get('source_table'));
+
         if (count($row) == 0) {
             return true;
         }
@@ -808,11 +813,11 @@ class MolajoRequest
 
         $custom_fields = new Registry;
         $custom_fields->loadString($row->custom_fields);
-        $this->set('category_custom_fields', $custom_fields);
+        $this->set('extension_custom_fields', $custom_fields);
 
         $metadata = new Registry;
         $metadata->loadString($row->metadata);
-        $this->set('category_metadata', $metadata);
+        $this->set('extension_metadata', $metadata);
 
         $parameters = new Registry;
         $parameters->loadString($row->parameters);
