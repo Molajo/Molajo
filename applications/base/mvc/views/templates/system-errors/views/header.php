@@ -8,6 +8,6 @@
 defined('MOLAJO') or die; ?>
 <div class="system-message-container">
     <dl class="system-message">
-        <dt class="<?php echo $this->row->type; ?>"></dt>
-        <dd class="<?php echo $this->row->type; ?> message">
-            <ul>
+        <dt class="<?php echo $this->row->title; ?>">
+            <dd class="<?php echo $this->row->title; ?> message">
+                <ul>

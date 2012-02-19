@@ -257,7 +257,7 @@ class MolajoLanguageService
             return $this->loaded_strings[$key];
 
         } else {
-            //            echo 'Missing language key: '.$key.'<br />';
+            echo 'Missing language key: '.$key.'<br />';
             return $key;
         }
     }
@@ -280,6 +280,7 @@ class MolajoLanguageService
     {
         $filename = $path . '/' . $file;
 
+//echo $filename.'<br />';
         /** standard file */
         if (isset($this->loaded_files[$filename])) {
             return true;
@@ -332,11 +333,11 @@ class MolajoLanguageService
                     $override_strings
                 );
         }
-        /**
+/**
         echo '<pre>';
         var_dump($this->loaded_strings);
         echo '</pre>';
-         */
+*/
     }
 
     /**
@@ -359,6 +360,7 @@ class MolajoLanguageService
         $contents = file_get_contents($filename);
 
         if ($contents) {
+            $contents = str_replace('"', '', $contents);
             $contents = str_replace(MOLAJO_LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
             $strings = parse_ini_string($contents);
         } else {

@@ -44,46 +44,26 @@ class MolajoPagefooterModuleModel extends MolajoDisplayModel
     {
         $this->items = array();
 
-        $tempObject = new JObject();
         $date = Services::Date()
             ->getDate()
             ->format('Y-m-d-H-i-s');
 
-        /** footer line 1 */
-        if (JString::strpos(
-            Services::Language()->_('FOOTER_LINE1'), '%date%')) {
-            $line1 = str_replace('%date%',
-                Services::Date()->getDate()->format('Y'),
-                Services::Language()->_('FOOTER_LINE1'));
-        } else {
-            $line1 = Services::Language()->_('FOOTER_LINE1');
-        }
+        $row = new stdClass();
 
-        if (JString::strpos($line1, '%site_name%')) {
-            $line1 = str_replace('%site_name%',
-                Services::Configuration()->get('site_name', 'Molajo'),
-                $line1
-            );
-        }
-        $tempObject->set('line1', $line1);
-
-        /** footer line 2 */
-        $link = $this->parameters->def('link', 'http://molajo.org');
-        $linked_text = $this->parameters->def('linked_text', 'Molajo&#153;');
-        $remaining_text = $this->parameters->def('remaining_text', ' is free software.');
-        $version = $this->parameters->def('version', Services::Language()->_(MOLAJOVERSION));
-
-        $tempObject->set('link', $link);
-        $tempObject->set('linked_text', $linked_text);
-        $tempObject->set('remaining_text', $remaining_text);
-        $tempObject->set('version', $version);
-
-        $line2 = '<a href="' . $link . '">' . $linked_text . ' v.' . $version . '</a>';
-        $line2 .= $remaining_text;
-        $tempObject->set('line2', $line2);
+        $row->current_year = Services::Date()
+            ->getDate()
+            ->format('Y');
+        $row->site_name = Services::Configuration()
+            ->get('site_name', 'Molajo');
+        $row->link = 'http://molajo.org/';
+        $row->linked_text = 'Molajo'.'&reg;';
+        $row->remaining_text = ' '.Services::Language()
+            ->_('MOLAJO_IS_FREE_SOFTWARE');
+        $row->version = Services::Language()
+            ->_(MOLAJOVERSION);
 
         /** save recordset */
-        $this->items[] = $tempObject;
+        $this->items[] = $row;
 
         return $this->items;
     }

@@ -60,15 +60,21 @@ class MolajoAdminToolbarModuleModel extends MolajoDisplayModel
         $this->data = array();
         foreach ($buttonArray as $buttonname) {
             if ($permissions[$buttonname] === true) {
-                $displayButtons = new stdClass();
 
-                $displayButtons->name = $buttonname;
-                $displayButtons->option = Molajo::Request()->
-                            parameters->
-                            get('display_extension_option');
-                $displayButtons->task = $buttonname;
+                $row = new stdClass();
 
-                $this->data[] = $displayButtons;
+                $row->title = Molajo::Request()
+                    ->parameters
+                    ->get('display_title');
+                $row->name = Services::Language()
+                    ->_(strtoupper('TASK_'.$buttonname.'_BUTTON'));
+                $row->option = Molajo::Request()
+                    ->parameters
+                    ->get('display_extension_option');
+                $row->task = $buttonname;
+                $row->link = 'index.php?option='.$row->option.'&task='.$row->task;
+
+                $this->data[] = $row;
             }
         }
 

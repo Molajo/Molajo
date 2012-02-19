@@ -254,9 +254,6 @@ class MolajoDisplayController extends MolajoController
     }
 }
 
-class Display extends MolajoDisplayController
-{
-}
 
 /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');

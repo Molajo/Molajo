@@ -44,9 +44,9 @@ class MolajoPageheaderModuleModel extends MolajoDisplayModel
     {
         $this->items = array();
 
-        $tempObject = new JObject();
-        $tempObject->set('title', Services::Configuration()->get('site_title', 'Molajo'));
-        $this->items[] = $tempObject;
+        $row = new stdClass();
+        $row->title = Services::Configuration()->get('site_title', 'Molajo');
+        $this->items[] = $row;
 
         return $this->items;
     }

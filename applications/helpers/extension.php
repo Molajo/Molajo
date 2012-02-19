@@ -178,6 +178,7 @@ abstract class MolajoExtensionHelper
         $m->query->select('a.' . $m->db->nq('title'));
         $m->query->where('a.' . $m->db->nq('id') .
             ' = ' . (int)$extension_instance_id);
+
         return $m->loadResult();
     }
 
@@ -192,7 +193,7 @@ abstract class MolajoExtensionHelper
      * @return string
      * @since  1.0
      */
-    public function formatNameForClass($extension_name)
+    public static function formatNameForClass($extension_name)
     {
         return ucfirst(str_replace(array('-', '_'), '', $extension_name));
     }
@@ -210,12 +211,12 @@ abstract class MolajoExtensionHelper
      * @return  null
      * @since  1.0
      */
-    public function mergeParameters($merge_in_parameters, $merged_parameters)
+    public static function mergeParameters($merge_in_parameters, $merged_parameters)
     {
         $mergeIn = $merge_in_parameters->toArray();
 
         while (list($name, $value) = each($mergeIn)) {
-            if (isset($this->merged_parameters[$name])) {
+            if (isset($merged_parameters[$name])) {
             } else if (substr($name, 0, strlen('extension')) == 'extension') {
             } else if (substr($name, 0, strlen('extension')) == 'source') {
             } else if (substr($name, 0, strlen('theme')) == 'theme') {

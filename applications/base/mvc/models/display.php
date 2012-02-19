@@ -197,9 +197,9 @@ class MolajoDisplayModel extends MolajoCrudModel
 
         /**
         $this->db->setQuery(
-        $query,
-        $this->getStart(),
-        $this->getState('list.limit')
+            $query,
+            $this->getStart(),
+            $this->getState('list.limit')
         );
          */
         return;
@@ -238,7 +238,7 @@ class MolajoDisplayModel extends MolajoCrudModel
 
 
         /** set the query */
-//        echo $this->query->__toString().'<br />';
+        //echo $this->query->__toString().'<br />';
 
         $this->db->setQuery($this->query->__toString());
         $data = $this->db->loadObjectList();
@@ -325,15 +325,13 @@ class MolajoDisplayModel extends MolajoCrudModel
             }
             // $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
-
             /** item-specific task permissions
             $results = Services::Access()
-            ->getUserItemPermissions(
-            $tasklist,
-            $asset_id
+                ->getUserItemPermissions(
+                $tasklist,
+                $asset_id
             );
-             **/
-
+             */
             // $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
             /** process content plugins */
@@ -359,9 +357,7 @@ class MolajoDisplayModel extends MolajoCrudModel
             } else {
                 unset($item);
             }
-            ;
         }
-
         return $data;
     }
 

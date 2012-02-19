@@ -79,6 +79,8 @@ class MolajoModelHelper
     /**
      * queryPrimaryCategory
      *
+     * Note: Assumes a join is in place to the assets table on a_assets
+     *
      * sets the select, table, and where clause to retrieve
      * the primary category and description with content
      *
@@ -91,7 +93,18 @@ class MolajoModelHelper
         $query = array(),
         $prefix = 'a')
     {
+        $db = Services::DB();
+        $now = Services::Date()->getDate()->toSql();
+        $nullDate = $db->getNullDate();
+
+        $query->select($db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
+        $query->select($db->nq('pcat').'.*');
+        $query->from($db->nq('#__content') . ' as ' . $db->nq('pcat'));
+        $query->where($db->nq('pcat') . '.' . $db->nq('id')
+            . ' = ' . $db->nq('a_assets') . '.' . $db->nq('primary_category_id') );
+
         return $query;
+
     }
 
     /**
@@ -148,7 +161,6 @@ class MolajoModelHelper
         $item = array(),
         $parameters = array())
     {
-
         if (isset($item->content_text)) {
         } else {
             $item->snippet = '';

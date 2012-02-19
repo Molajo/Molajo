@@ -6,8 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-<li>
-    <?php echo '<strong>'.$this->row->code.' '.$this->row->title.':</strong> '.$this->row->content_text; ?>
+                    <li><?php echo '<strong>'.$this->row->code.' '.$this->row->title.':</strong> '.$this->row->content_text; ?>
 <?php
 if (Services::Configuration()->get('debug', 0) == 1) {
     if (trim($this->row->debug_location) == '') {

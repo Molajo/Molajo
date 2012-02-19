@@ -171,6 +171,9 @@ class MolajoRenderer
         /** theme renderer, only - loads metadata for the page */
         $this->_loadMetadata();
 
+        /** language must be there before the extension runs */
+        $this->_loadLanguage();
+
         /** instantiate MVC and render output */
         $this->rendered_output = $this->_invokeMVC();
 
@@ -178,7 +181,6 @@ class MolajoRenderer
         if ($this->rendered_output == ''
             && $this->parameters->get('suppress_no_results') == 0) {
         } else {
-            $this->_loadLanguage();
             $this->_loadMedia();
             $this->_loadViewMedia();
         }
