@@ -27,8 +27,6 @@ class MolajoAdminSubmenuModuleModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '';
-        $this->primary_key = '';
 
         return parent::__construct($id);
     }
@@ -42,7 +40,18 @@ class MolajoAdminSubmenuModuleModel extends MolajoDisplayModel
      */
     public function getData()
     {
-        $rows = Molajo::Request()->get('query_results');
-        var_dump($rows);
+        $links =
+            Molajo::Request()->
+                parameters->
+                get('submenu_items');
+
+        $linksArray = explode(',', $links);
+
+        $this->data = array();
+        foreach ($linksArray as $link) {
+            $this->data[] = $link;
+        }
+
+        return $this->data;
     }
 }

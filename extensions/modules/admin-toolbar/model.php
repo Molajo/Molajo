@@ -27,17 +27,12 @@ class MolajoAdminToolbarModuleModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '';
-        $this->primary_key = '';
 
         return parent::__construct($id);
     }
 
     /**
      * getData
-     *
-     * Get component button options and
-     * check user access permissions
      *
      * @return    array
      * @since    1.0
@@ -62,15 +57,15 @@ class MolajoAdminToolbarModuleModel extends MolajoDisplayModel
                  ->get('display_extension_asset_id')
         );
 
-        $this->items = array();
+        $this->data = array();
         foreach ($buttonArray as $buttonname) {
             if ($permissions[$buttonname] === true) {
                 $displayButtons = new stdClass();
                 $displayButtons->name = $buttonname;
-                $this->items[] = $displayButtons;
+                $this->data[] = $displayButtons;
             }
         }
 
-        return $this->items;
+        return $this->data;
     }
 }

@@ -45,27 +45,26 @@ class MolajoDeferModel extends MolajoDisplayModel
         /** type: javascript_links */
         $list = Molajo::Responder()->getScriptLinks(1);
         foreach ($list as $item) {
-            $tempObject = new JObject();
-            $tempObject->set('type', 'javascript_links');
-            $tempObject->set('url', $item['url']);
-            $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('defer', true);
-            $tempObject->set('async', $item['async']);
-            $tempObject->set('priority', $item['priority']);
-            $this->data[] = $tempObject;
+            $row = new stdClass();
+            $row->type = 'javascript_links';
+            $row->url = $item['url'];
+            $row->mimetype = $item['mimetype'];
+            $row->defer = true;
+            $row->async = $item['async'];
+            $row->priority = $item['priority'];
+            $this->data[] = $row;
         }
 
         /** type: javascript_declarations */
         $list = Molajo::Responder()->getScriptDeclarations(1);
         foreach ($list as $item) {
-            $tempObject = new JObject();
-            $tempObject->set('type', 'javascript_declarations');
-            $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('content', $item['content']);
-            $this->data[] = $tempObject;
+            $row = new stdClass();
+            $row->type = 'javascript_declarations';
+            $row->mimetype = $item['mimetype'];
+            $row->content = $item['content'];
+            $this->data[] = $row;
         }
 
         return $this->data;
-        /** custom */
     }
 }

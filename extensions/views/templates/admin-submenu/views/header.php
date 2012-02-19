@@ -7,4 +7,3 @@
  */
 defined('MOLAJO') or die; ?>
 <ul>
-    <li><strong><?php echo Molajo::Request()->parameters->get('display_title'); ?></strong></li>

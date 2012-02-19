@@ -724,7 +724,7 @@ class MolajoRenderer
     protected function _loadViewMedia()
     {
         $priority = Services::Configuration()->get('media_priority_other_extension', 400);
-
+        $priority = 10000;
         $filePath = $this->get('template_view_path');
         $urlPath = $this->get('template_view_path_url');
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);

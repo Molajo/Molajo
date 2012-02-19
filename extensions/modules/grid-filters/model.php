@@ -8,13 +8,13 @@
 defined('MOLAJO') or die;
 
 /**
- * GridFilters
+ * AdminToolbar
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoGridFiltersModuleModel extends MolajoDisplayModel
+class MolajoGridFiltersModuleModel extends MolajoModel
 {
     /**
      * __construct
@@ -27,8 +27,6 @@ class MolajoGridFiltersModuleModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '';
-        $this->primary_key = '';
 
         return parent::__construct($id);
     }
@@ -37,12 +35,22 @@ class MolajoGridFiltersModuleModel extends MolajoDisplayModel
      * getData
      *
      * @return    array
-     *
      * @since    1.0
      */
     public function getData()
     {
-        $this->items = array();
-        return $this->items;
+        $filters =
+            Molajo::Request()->
+            parameters->
+            get('filters');
+
+            $filterArray = explode(',', $filters);
+
+        $this->data = array();
+        foreach ($filterArray as $filter) {
+            $this->data[] = $filter;
+        }
+
+        return $this->data;
     }
 }
