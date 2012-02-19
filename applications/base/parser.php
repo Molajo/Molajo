@@ -177,7 +177,15 @@ class MolajoParser
         $this->sequence = array();
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
         foreach ($sequence->renderer as $next) {
-            $this->sequence[] = (string)$next;
+            if ($next == 'message') {
+                $messages = Services::Message()->get();
+                if (count($messages) == 0) {
+                } else {
+                    $this->sequence[] = (string)$next;
+                }
+            } else {
+                $this->sequence[] = (string)$next;
+            }
         }
 
         /** theme: load template media and language files */

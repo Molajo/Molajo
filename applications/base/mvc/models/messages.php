@@ -48,14 +48,14 @@ class MolajoMessagesModel extends MolajoModel
         }
 
         foreach($messages as $message) {
-            $tempObject = new JObject();
-            $tempObject->set('content_text', $message['message']);
-            $tempObject->set('title', $message['type']);
-            $tempObject->set('code', $message['code']);
-            $tempObject->set('debug_location', $message['debug_location']);
-            $tempObject->set('debug_object', $message['debug_object']);
+            $row = new stdClass();
+            $row->content_text = $message['message'];
+            $row->title = $message['type'];
+            $row->code = $message['code'];
+            $row->debug_location = $message['debug_location'];
+            $row->debug_object = $message['debug_object'];
 
-            $this->data[] = $tempObject;
+            $this->data[] = $row;
         }
 
         return $this->data;
