@@ -234,7 +234,6 @@ class MolajoRequest
      */
     public function set($key, $value = null)
     {
-        //echo 'Set '.$key.' '.$value.'<br />';
         return $this->page_request->set($key, $value);
     }
 
@@ -248,24 +247,20 @@ class MolajoRequest
      */
     public static function getRedirectURL($asset_id)
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-
-        if ((int)$asset_id == Services::Configuration()->get('home_asset_id', 0)) {
+        if ((int)$asset_id
+            == Services::Configuration()->get('home_asset_id', 0)) {
             return '';
         }
 
+        $m = new MolajoAssetsModel();
         if (Services::Configuration()->get('sef', 1) == 0) {
-            $query->select('a.' . $db->nq('sef_request'));
+            $m->query->select($m->db->nq('sef_request'));
         } else {
-            $query->select('a.' . $db->nq('request'));
+            $m->query->select($m->db->nq('request'));
         }
-        $query->from($db->nq('#__assets') . ' as a');
-        $query->where('a.' . $db->nq('id') . ' = ' . (int)$asset_id);
+        $m->query->where($m->db->nq('id') . ' = ' . (int)$asset_id);
 
-        $db->setQuery($query->__toString());
-
-        return $db->loadResult();
+        return $m->loadResult();
     }
 
     /**
@@ -473,7 +468,7 @@ class MolajoRequest
         if (in_array($row->view_group_id, Services::User()->get('view_groups'))) {
             $this->set('status_authorised', true);
         } else {
-            $this->set('status_authorised', false);
+            return $this->set('status_authorised', false);
         }
 
         /** request url */
@@ -726,7 +721,7 @@ class MolajoRequest
     {
         $row = ContentHelper::get(
             (int)$this->get('category_id'),
-            '__content'
+            '#__content'
         );
 
         if (count($row) == 0) {
@@ -737,7 +732,7 @@ class MolajoRequest
                 $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
-                $debug_location = 'MolajoRequest::_getSource',
+                $debug_location = 'MolajoRequest::_getPrimaryCategory',
                 $debug_object = $this->page_request
             );
             return $this->set('status_found', false);
@@ -961,7 +956,6 @@ class MolajoRequest
      */
     protected function _setPageValuesDefaults($parameters = null, $metadata = null)
     {
-
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id', $parameters->get('default_theme_id', 0));
         }

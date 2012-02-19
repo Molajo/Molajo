@@ -26,49 +26,28 @@ abstract class MolajoContentHelper
      */
     static public function get($id, $content_table)
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
-        $table_name = Services::Configuration()->get('dbprefix').$content_table;
+        $m = new MolajoDisplayModel();
 
-        $query->select('a.' . $db->nq('id'));
-        $query->select('a.' . $db->nq('extension_instance_id'));
-        $query->select('a.' . $db->nq('asset_type_id'));
-        $query->select('a.' . $db->nq('title'));
-        $query->select('a.' . $db->nq('subtitle'));
-        $query->select('a.' . $db->nq('path'));
-        $query->select('a.' . $db->nq('alias'));
-        $query->select('a.' . $db->nq('status'));
-        $query->select('a.' . $db->nq('start_publishing_datetime'));
-        $query->select('a.' . $db->nq('stop_publishing_datetime'));
-        $query->select('a.' . $db->nq('modified_datetime'));
-        $query->select('a.' . $db->nq('custom_fields'));
-        $query->select('a.' . $db->nq('parameters'));
-        $query->select('a.' . $db->nq('metadata'));
-        $query->select('a.' . $db->nq('language'));
-        $query->select('a.' . $db->nq('translation_of_id'));
-        $query->select('a.' . $db->nq('ordering'));
-        $query->from('#__content as a ');
-        $query->where('a.' . $db->nq('id') .
-            ' = ' . (int)$id);
-        $query->where('a.' . $db->nq('status') .
-            ' = ' . MOLAJO_STATUS_PUBLISHED);
+        $m->query->select('a.*');
+        $m->query->from('#__content as a ');
+        $m->query->where('a.' . $m->db->nq('id') . ' = ' . (int)$id);
+        $m->query->where('a.' . $m->db->nq('status') .
+            ' > ' . MOLAJO_STATUS_UNPUBLISHED);
 
-        $query->where('(a.start_publishing_datetime = ' .
-                $db->q($nullDate) .
+        $m->query->where('(a.start_publishing_datetime = ' .
+                $m->db->q($m->nullDate) .
                 ' OR a.start_publishing_datetime <= ' .
-                $db->q($now) . ')'
+                $m->db->q($m->now) . ')'
         );
-        $query->where('(a.stop_publishing_datetime = ' .
-                $db->q($nullDate) .
+        $m->query->where('(a.stop_publishing_datetime = ' .
+                $m->db->q($m->nullDate) .
                 ' OR a.stop_publishing_datetime >= ' .
-                $db->q($now) . ')'
+                $m->db->q($m->now) . ')'
         );
 
         /** Assets Join and View Access Check */
         MolajoAccessService::setQueryViewAccess(
-            $query,
+            $m->query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
                 'asset_prefix' => 'b_assets',
@@ -76,25 +55,8 @@ abstract class MolajoContentHelper
             )
         );
 
-        //$db->setQuery($query->__toString());
-        $db->setQuery($query);
-        $rows = $db->loadObjectList();
-
-        if ($db->getErrorNum() == 0) {
-
-        } else {
-            Services::Message()
-                ->set(
-                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
-                    $db->getErrorNum() . ' ' .
-                    $db->getErrorMsg(),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
-                $code = 500,
-                $debug_location = 'ContentHelper::_get',
-                $debug_object = $db
-            );
-            return $this->request->set('status_found', false);
-        }
+        //$m->db->setQuery($m->query->__toString());
+        $rows = $m->runQuery();
 
         if (count($rows) == 0) {
             return array();

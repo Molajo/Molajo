@@ -112,18 +112,6 @@ class MolajoController
         }
          */
 
-        /** check authorisation **/
-        if (MOLAJO_APPLICATION == 'installation') {
-        } else {
-//            $results = $this->checkTaskAuthorisation();
-//            if ($results === false) {
-//                return false;
-//            }
-        }
-
-        /** set redirects **/
-// $this->redirectClass->initialise();
-
         /** success **/
         return true;
     }
@@ -172,23 +160,6 @@ class MolajoController
     {
         //echo 'Set '.$key.' '.$value.'<br />';
         return $this->task_request->set($key, $value);
-    }
-
-    /**
-     * checkTaskAuthorisation
-     *
-     * Method to verify user's authorisation to perform a specific task
-     *
-     * @return bool
-     */
-    public function checkTaskAuthorisation()
-    {
-        echo 'in checkTaskAuthorisation in Controller AssetID: '.$this->get('asset_id').' see it?';
-        Services::Access()
-            ->authoriseTask(
-                $this->get('task'),
-                $this->get('asset_id')
-            );
     }
 
     /**

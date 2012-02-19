@@ -201,26 +201,10 @@ class MolajoConfigurationService
 
         } else {
 
-            $db = Services::DB();
-            $query = $db->getQuery(true);
-
-            $query->select($db->nq('id'));
-            $query->select($db->nq('asset_type_id'));
-            $query->select($db->nq('name'));
-            $query->select($db->nq('path'));
-            $query->select($db->nq('description'));
-            $query->select($db->nq('custom_fields'));
-            $query->select($db->nq('parameters'));
-            $query->select($db->nq('metadata'));
-            $query->from($db->nq('#__applications'));
-            $query->where($db->nq('name') .
-                ' = ' . $db->q(MOLAJO_APPLICATION));
-            $db->setQuery($query->__toString());
-            $results = $db->loadObjectList();
-
-            if ($db->getErrorNum()) {
-                return new MolajoException($db->getErrorMsg());
-            }
+            $m = new MolajoApplicationsModel ();
+            $m->query->where($m->db->nq('name') .
+                ' = ' . $m->db->q(MOLAJO_APPLICATION));
+            $results = $m->runQuery();
 
             if (count($results) == 0) {
                 // todo: amy error;

@@ -96,16 +96,6 @@ class MolajoRenderer
     protected $rendered_output;
 
     /**
-     * $filters
-     *
-     * Valid filters for component collected for Model
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $filters;
-
-    /**
      * $items
      *
      * Used only for event processing and will be passed into the
@@ -181,15 +171,17 @@ class MolajoRenderer
         /** theme renderer, only - loads metadata for the page */
         $this->_loadMetadata();
 
-        /** extension language files */
-        $this->_loadLanguage();
-
-        /** css and js media files for extension and related entities */
-        $this->_loadMedia();
-        $this->_loadViewMedia();
-
         /** instantiate MVC and render output */
         $this->rendered_output = $this->_invokeMVC();
+
+        /** only load media if there was rendered output */
+        if ($this->rendered_output == ''
+            && $this->parameters->get('suppress_no_results') == 0) {
+        } else {
+            $this->_loadLanguage();
+            $this->_loadMedia();
+            $this->_loadViewMedia();
+        }
 
         /** used by events to update $items, if necessary */
         $this->_postMVCProcessing();
@@ -226,7 +218,6 @@ class MolajoRenderer
      */
     public function set($key, $value = null)
     {
-        //echo 'Set '.$key.' '.$value.'<br />';
         return $this->task_request->set($key, $value);
     }
 
@@ -724,7 +715,7 @@ class MolajoRenderer
     protected function _loadViewMedia()
     {
         $priority = Services::Configuration()->get('media_priority_other_extension', 400);
-        $priority = 10000;
+
         $filePath = $this->get('template_view_path');
         $urlPath = $this->get('template_view_path_url');
         $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);

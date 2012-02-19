@@ -30,67 +30,64 @@ abstract class MolajoExtensionHelper
      */
     public static function get($asset_type_id = 0, $extension = null)
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
+        $m = new MolajoDisplayModel();
 
         /**
          *  a. Extensions Instances Table
          */
-        $query->select('a.' . $db->nq('id') . ' as extension_instance_id');
-        $query->select('a.' . $db->nq('asset_type_id'));
-        $query->select('a.' . $db->nq('title'));
-        $query->select('a.' . $db->nq('subtitle'));
-        $query->select('a.' . $db->nq('alias'));
-        $query->select('a.' . $db->nq('content_text'));
-        $query->select('a.' . $db->nq('protected'));
-        $query->select('a.' . $db->nq('featured'));
-        $query->select('a.' . $db->nq('stickied'));
-        $query->select('a.' . $db->nq('status'));
-        $query->select('a.' . $db->nq('custom_fields'));
-        $query->select('a.' . $db->nq('parameters'));
-        $query->select('a.' . $db->nq('metadata'));
-        $query->select('a.' . $db->nq('ordering'));
-        $query->select('a.' . $db->nq('language'));
+        $m->query->select('a.' . $m->db->nq('id') . ' as extension_instance_id');
+        $m->query->select('a.' . $m->db->nq('asset_type_id'));
+        $m->query->select('a.' . $m->db->nq('title'));
+        $m->query->select('a.' . $m->db->nq('subtitle'));
+        $m->query->select('a.' . $m->db->nq('alias'));
+        $m->query->select('a.' . $m->db->nq('content_text'));
+        $m->query->select('a.' . $m->db->nq('protected'));
+        $m->query->select('a.' . $m->db->nq('featured'));
+        $m->query->select('a.' . $m->db->nq('stickied'));
+        $m->query->select('a.' . $m->db->nq('status'));
+        $m->query->select('a.' . $m->db->nq('custom_fields'));
+        $m->query->select('a.' . $m->db->nq('parameters'));
+        $m->query->select('a.' . $m->db->nq('metadata'));
+        $m->query->select('a.' . $m->db->nq('ordering'));
+        $m->query->select('a.' . $m->db->nq('language'));
 
-        $query->from($db->nq('#__extension_instances') . ' as a');
-        $query->where('a.' . $db->nq('extension_id') . ' > 0 ');
+        $m->query->from($m->db->nq('#__extension_instances') . ' as a');
+        $m->query->where('a.' . $m->db->nq('extension_id') . ' > 0 ');
 
         /** extension specified by id, title or request for list */
         if ((int)$extension > 0) {
-            $query->where('(a.' . $db->nq('id') .
+            $m->query->where('(a.' . $m->db->nq('id') .
                     ' = ' . (int)$extension . ')'
             );
         } else if ($extension == null) {
         } else {
-            $query->where('(a.' . $db->nq('title') .
-                    ' = ' . $db->q($extension) . ')'
+            $m->query->where('(a.' . $m->db->nq('title') .
+                    ' = ' . $m->db->q($extension) . ')'
             );
 
         }
         if ((int)$asset_type_id > 0) {
-            $query->where('a.' . $db->nq('asset_type_id') .
+            $m->query->where('a.' . $m->db->nq('asset_type_id') .
                     ' = ' . (int)$asset_type_id
             );
         }
 
-        $query->where('a.' . $db->nq('status') .
+        $m->query->where('a.' . $m->db->nq('status') .
                 ' = ' . MOLAJO_STATUS_PUBLISHED
         );
-        $query->where('(a.start_publishing_datetime = ' .
-                $db->q($nullDate) .
-                ' OR a.start_publishing_datetime <= ' . $db->q($now) . ')'
+        $m->query->where('(a.start_publishing_datetime = ' .
+                $m->db->q($m->nullDate) .
+                ' OR a.start_publishing_datetime <= ' . $m->db->q($m->now) . ')'
         );
-        $query->where('(a.stop_publishing_datetime = ' .
-                $db->q($nullDate) .
-                ' OR a.stop_publishing_datetime >= ' . $db->q($now) . ')'
+        $m->query->where('(a.stop_publishing_datetime = ' .
+                $m->db->q($m->nullDate) .
+                ' OR a.stop_publishing_datetime >= ' . $m->db->q($m->now) . ')'
         );
 
         /** Assets Join and View Access Check */
         Services::Access()
             ->setQueryViewAccess(
-            $query,
+            $m->query,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
                 'asset_prefix' => 'b_assets',
@@ -99,46 +96,40 @@ abstract class MolajoExtensionHelper
         );
 
         /** b_asset_types. Asset Types Table  */
-        $query->select($db->nq('b_asset_types.title') . ' as asset_type_title');
-        $query->from($db->nq('#__asset_types') . ' as b_asset_types');
-        $query->where('b_assets.asset_type_id = b_asset_types.id');
-        $query->where('b_asset_types.' .
-                $db->nq('component_option') .
-                ' = ' . $db->q('extensions')
+        $m->query->select($m->db->nq('b_asset_types.title') . ' as asset_type_title');
+        $m->query->from($m->db->nq('#__asset_types') . ' as b_asset_types');
+        $m->query->where('b_assets.asset_type_id = b_asset_types.id');
+        $m->query->where('b_asset_types.' .
+                $m->db->nq('component_option') .
+                ' = ' . $m->db->q('extensions')
         );
 
         /**
          *  c. Application Table
          *      Extension Instances must be enabled for the Application
          */
-        $query->from($db->nq('#__application_extension_instances') .
+        $m->query->from($m->db->nq('#__application_extension_instances') .
             ' as c');
-        $query->where('c.' . $db->nq('extension_instance_id') .
-            ' = a.' . $db->nq('id'));
-        $query->where('c.' . $db->nq('application_id') .
+        $m->query->where('c.' . $m->db->nq('extension_instance_id') .
+            ' = a.' . $m->db->nq('id'));
+        $m->query->where('c.' . $m->db->nq('application_id') .
             ' = ' . MOLAJO_APPLICATION_ID);
 
         /**
          *  d. Site Table
          *      Extension Instances must be enabled for the Site
          */
-        $query->from($db->nq('#__site_extension_instances') .
+        $m->query->from($m->db->nq('#__site_extension_instances') .
             ' as d');
-        $query->where('d.' . $db->nq('extension_instance_id') .
-            ' = a.' . $db->nq('id'));
-        $query->where('d.' . $db->nq('site_id') .
+        $m->query->where('d.' . $m->db->nq('extension_instance_id') .
+            ' = a.' . $m->db->nq('id'));
+        $m->query->where('d.' . $m->db->nq('site_id') .
             ' = ' . SITE_ID);
 
         /**
          *  Run Query
          */
-        $db->setQuery($query->__toString());
-        $extensions = $db->loadObjectList();
-
-        if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
-            return false;
-        }
+        $extensions = $m->runQuery();
 
         return $extensions;
     }
@@ -158,24 +149,15 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceID($asset_type_id, $title)
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
+        $m = new MolajoExtensionInstancesModel();
 
-        $query->select('a.' . $db->nq('id'));
-        $query->from($db->nq('#__extension_instances') . ' as a');
-        $query->where('a.' . $db->nq('title') . ' = ' .
-            $db->q($title));
-        $query->where('a.' . $db->nq('asset_type_id') .
+        $m->query->select('a.' . $m->db->nq('id'));
+        $m->query->where('a.' . $m->db->nq('title') . ' = ' .
+            $m->db->q($title));
+        $m->query->where('a.' . $m->db->nq('asset_type_id') .
             ' = ' . (int)$asset_type_id);
-        $db->setQuery($query->__toString());
-        $id = $db->loadResult();
 
-        if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
-            return false;
-        }
-
-        return $id;
+        return $m->loadResult();
     }
 
     /**
@@ -191,22 +173,12 @@ abstract class MolajoExtensionHelper
      */
     public static function getInstanceTitle($extension_instance_id)
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
+        $m = new MolajoExtensionInstancesModel();
 
-        $query->select('a.' . $db->nq('title'));
-        $query->from($db->nq('#__extension_instances') . ' as a');
-        $query->where('a.' . $db->nq('id') .
+        $m->query->select('a.' . $m->db->nq('title'));
+        $m->query->where('a.' . $m->db->nq('id') .
             ' = ' . (int)$extension_instance_id);
-        $db->setQuery($query->__toString());
-        $name = $db->loadResult();
-
-        if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
-            return false;
-        }
-
-        return $name;
+        return $m->loadResult();
     }
 
     /**

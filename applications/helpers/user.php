@@ -28,27 +28,10 @@ abstract class MolajoUserHelper
      */
     public static function getId($id)
     {
-        if ((int)$id == 0 && trim($id)) {
-            return false;
-        }
-
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
-
-        $query->select('a.' . $db->nq('id') . ' as extension_instance_id');
-        $query->from($db->nq('#__users') . ' as a');
-        $query->where('(a.' . $db->nq('id') . ' = ' . (int)$id .
-            ' OR a.username = ' . $db->q($id).')');
-        $db->setQuery($query->__toString());
-        $userid = $db->loadResult();
-
-        if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning(500, $error);
-            return false;
-        }
-        return $userid;
+        $m = new MolajoUsersModel();
+        $m->query->where('('.$m->db->nq('id') . ' = ' . (int)$id .
+            ' OR username = ' . $m->db->q($id).')');
+        return $m->loadResult();
     }
 }
 

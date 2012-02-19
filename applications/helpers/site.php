@@ -26,30 +26,9 @@ class MolajoSiteHelper
      */
     public static function get()
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
-
-        $query->select($db->qn('id'));
-        $query->select($db->qn('name'));
-        $query->select($db->qn('description'));
-        $query->select($db->qn('path'));
-        $query->select($db->qn('parameters'));
-        $query->select($db->qn('custom_fields'));
-        $query->select($db->qn('metadata'));
-        $query->select($db->qn('base_url'));
-        $query->from($db->qn('#__sites'));
-        $query->where($db->qn('id') . ' = ' . (int)SITE_ID);
-
-        $db->setQuery($query->__toString());
-
-        $results = $db->loadObjectList();
-
-        if ($db->getErrorNum()) {
-            return new MolajoException($db->getErrorMsg());
-        }
-
+        $m = new MolajoSitesModel ();
+        $m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
+        $results = $m->runQuery();
         foreach ($results as $result)
         {
         }
@@ -66,23 +45,11 @@ class MolajoSiteHelper
      */
     public static function getApplications()
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
+        $m = new MolajoSiteApplicationsModel();
 
-        $query->select($db->qn('application_id'));
-        $query->from($db->qn('#__site_applications'));
-        $query->where($db->qn('site_id') . ' = ' . (int)SITE_ID);
+        $m->query->select($m->db->qn('application_id'));
+        $m->query->where($m->db->qn('site_id') . ' = ' . (int)SITE_ID);
 
-        $db->setQuery($query->__toString());
-
-        $results = $db->loadObjectList();
-
-        if ($db->getErrorNum()) {
-            return new MolajoException($db->getErrorMsg());
-        }
-
-        return $results;
+        return $m->runQuery();
     }
 }

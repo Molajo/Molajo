@@ -36,6 +36,14 @@ class MolajoModel
     public $db;
 
     /**
+     * Primary Prefix
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $primary_prefix;
+
+    /**
      * Database query object
      *
      * @var    object
@@ -94,6 +102,14 @@ class MolajoModel
      * @since  1.0
      */
     public $table;
+
+    /**
+     * Table fields
+     *
+     * @var    array
+     * @since  1.0
+     */
+    public $fields;
 
     /**
      * Primary key field
@@ -158,6 +174,7 @@ class MolajoModel
         $this->query = $this->db->getQuery(true);
         $this->now = Services::Date()->getDate()->toSql();
         $this->nullDate = $this->db->getNullDate();
+        $this->primary_prefix = 'a';
 
         return $this;
     }
@@ -450,6 +467,53 @@ class MolajoModel
     protected function _getAdditionalData($data = array())
     {
         return $data;
+    }
+
+    /**
+     * loadResult
+     *
+     * Method to execute a prepared and set query statement,
+     * returning a single value
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadResult()
+    {
+        if ($this->query->select == null) {
+            $this->query->select('count(*) as count');
+        }
+        if ($this->query->from == null) {
+            $this->query->from(
+                $this->db->nq($this->table)
+                    . ' as '
+                    . $this->db->nq($this->primary_prefix)
+            );
+        }
+
+        $this->db->setQuery($this->query->__toString());
+        $this->data = $this->db->loadResult();
+
+        if ($this->db->getErrorNum() == 0) {
+
+        } else {
+            Services::Message()
+                ->set(
+                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
+                    $this->db->getErrorNum() . ' ' .
+                    $this->db->getErrorMsg(),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = $this->name . ':' . 'loadResult',
+                $debug_object = $this->db
+            );
+        }
+
+        if (count($this->data) == 0) {
+            $this->data = null;
+        }
+
+        return $this->data;
     }
 
     /**

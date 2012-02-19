@@ -193,23 +193,19 @@ class MolajoAccessService
         /** check for permission */
         $action_id = 3;
         $m = new MolajoGroupPermissionsModel();
-        $m->query->select('count(*) as count');
-        $m->query->from($m->db->nq('#__group_permissions') . ' as a');
-        $m->query->where('a.' . $m->db->nq('asset_id') . ' = ' . (int)$asset_id);
-        $m->query->where('a.' . $m->db->nq('action_id') . ' = ' . (int)$action_id);
-        $m->query->where('a.' . $m->db->nq('group_id')
+        $m->query->where($m->db->nq('asset_id') . ' = ' . (int)$asset_id);
+        $m->query->where($m->db->nq('action_id') . ' = ' . (int)$action_id);
+        $m->query->where($m->db->nq('group_id')
                 . ' IN (' . implode(',', Services::User()->get('groups')) . ')'
         );
 
-        $results = $m->runQuery();
-        foreach ($results as $result) {
-        }
+        $count = $m->loadResult();
 
-        if ($result->count > 0) {
+        if ($count > 0) {
             return true;
         } else {
             echo 'Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id . ' (Message in Access)' . '<br />';
-            echo $result->count;
+            echo $count;
             return false;
         }
     }
@@ -230,16 +226,11 @@ class MolajoAccessService
         }
 
         $m = new MolajoUserApplicationsModel();
-        $m->query->select('count(*) as count');
-        $m->query->from('#__user_applications a');
         $m->query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
         $m->query->where('user_id = ' . (int)$user_id);
 
-        $results = $m->runQuery();
-        foreach ($results as $result) {
-        }
-
-        if ($result->count > 0) {
+        $count = $m->loadResult();
+        if ($count > 0) {
             return true;
         } else {
             echo 'Task: login ' . ' User ID: '. $user_id . ' (Message in Access)' . '<br />';

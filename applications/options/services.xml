@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>
+        <name>Language</name>
+        <serviceClass>MolajoLanguageService</serviceClass>
+    </service>
+    <service>
+        <name>Date</name>
+        <serviceClass>MolajoDateService</serviceClass>
+    </service>
+    <service>
         <name>jdb</name>
         <serviceClass>MolajoJdatabaseService</serviceClass>
         <getInstance></getInstance>
@@ -15,14 +23,7 @@
         <name>Configuration</name>
         <serviceClass>MolajoConfigurationService</serviceClass>
     </service>
-    <service>
-        <name>Language</name>
-        <serviceClass>MolajoLanguageService</serviceClass>
-    </service>
-    <service>
-        <name>Date</name>
-        <serviceClass>MolajoDateService</serviceClass>
-    </service>
+
     <service>
         <name>Access</name>
         <serviceClass>MolajoAccessService</serviceClass>

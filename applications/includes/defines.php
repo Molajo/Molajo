@@ -106,9 +106,9 @@ if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
 /**
  *  Allows for quoting in language .ini files.
  */
-if (defined('_QQ_')) {
+if (defined('MOLAJO_LANGUAGE_QUOTE_REPLACEMENT')) {
 } else {
-    define('_QQ_', '"');
+    define('MOLAJO_LANGUAGE_QUOTE_REPLACEMENT', '"');
 }
 
 /**

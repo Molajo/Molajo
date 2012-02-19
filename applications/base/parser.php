@@ -47,6 +47,15 @@ class MolajoParser
      */
     protected $sequence = array();
 
+    /**
+     * $final
+     *
+     * Indicator of final processing for renderers
+     * (which means clean up of unfound includes can take place)
+     *
+     * @var boolean
+     * @since 1.0
+     */
     protected $final = false;
 
     /**
@@ -125,6 +134,7 @@ class MolajoParser
     {
         /**
          *  Body Renderers: processed recursively until no more <include: found
+         *      for the set of includes defined in the renderers-page.xml
          */
         $formatXML = '';
         if ($formatXML == '') {
@@ -156,12 +166,12 @@ class MolajoParser
         /** Before Event */
         // Services::Dispatcher()->notify('onBeforeRender');
 
-        /** process theme include, and then all rendered output, for <include statements */
         $this->final = false;
         $body = $this->_renderLoop();
 
         /**
          *  Final Renderers: Now, the theme, head, messages, and defer renderers run
+         *      and any cleanup of unfound <include values can take place
          */
         $formatXML = '';
         if ($formatXML == '') {
@@ -342,10 +352,8 @@ class MolajoParser
         /** 1. process renderers in order defined by the sequence.xml file */
         foreach ($this->sequence as $sequence) {
 
-            /*
-            /** 2. if necessary, split renderer name from include name
-            /** (ex. request:component or defer:head)
-             */
+            /** 2. if necessary, split renderer name from include name     */
+            /** (ex. request:component or defer:head) */
             if (stripos($sequence, ':')) {
                 $includeName = substr($sequence, 0, strpos($sequence, ':'));
                 $rendererName = substr($sequence, strpos($sequence, ':') + 1, 999);
@@ -354,24 +362,24 @@ class MolajoParser
                 $rendererName = $sequence;
             }
 
-            /** 4. loop thru parsed include requests for matching renderer */
+            /** 3. loop thru parsed include requests for matching renderer */
             for ($i = 0; $i < count($this->renderer_requests); $i++) {
 
                 $parsedRequests = $this->renderer_requests[$i];
 
                 if ($includeName == $parsedRequests['name']) {
 
-                    /** 5. place attribute pairs into variable */
+                    /** 4. place attribute pairs into variable */
                     if (isset($parsedRequests['attributes'])) {
                         $attributes = $parsedRequests['attributes'];
                     } else {
                         $attributes = array();
                     }
 
-                    /** 6. store the "replace this" value */
+                    /** 5. store the "replace this" value */
                     $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-                    /** 7. call the renderer class */
+                    /** 6. call the renderer class */
                     $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
                     if (class_exists($class)) {
                         $rc = new $class ($rendererName, $includeName);
@@ -381,16 +389,16 @@ class MolajoParser
                         // ERROR
                     }
 
-                    /** 8. render output and store results as "replace with" */
+                    /** 7. render output and store results as "replace with" */
                     $with[] = $rc->process($attributes);
                 }
             }
         }
 
-        /** 9. replace it */
+        /** 8. replace it */
         $this->rendered_output = str_replace($replace, $with, $this->rendered_output);
 
-        /** 10. make certain all <include:xxx /> literals are removed */
+        /** 9. make certain all <include:xxx /> literals are removed on final */
         if ($this->final === true) {
             $replace = array();
             $with = array();

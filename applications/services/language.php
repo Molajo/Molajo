@@ -359,7 +359,7 @@ class MolajoLanguageService
         $contents = file_get_contents($filename);
 
         if ($contents) {
-            $contents = str_replace('_QQ_', '"\""', $contents);
+            $contents = str_replace(MOLAJO_LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
             $strings = parse_ini_string($contents);
         } else {
             $strings = array();
