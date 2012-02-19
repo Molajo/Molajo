@@ -24,12 +24,12 @@ class MolajoHeadModel extends MolajoModel
      * @param  $id
      * @since  1.0
      */
-    public function __construct($id = null)
-    {
-        $this->name = get_class($this);
+       public function __construct($id = null)
+       {
+           $this->name = get_class($this);
 
-        return parent::__construct($id);
-    }
+           return parent::__construct($id);
+       }
 
     /**
      * getData
@@ -42,37 +42,36 @@ class MolajoHeadModel extends MolajoModel
     {
         $this->data = array();
 
-        $tempObject = new JObject();
-        $tempObject->set('type', 'base');
+        $row = new stdClass();
+        $row->type = 'base';
 
         $metadata = Molajo::Responder()->getMetadata();
-
         if (count($metadata) > 0) {
-            $tempObject->set('title', $metadata['standard']['metadata_title']);
-            $tempObject->set('description', $metadata['standard']['metadata_description']);
-            $tempObject->set('keywords', $metadata['standard']['metadata_keywords']);
-            $tempObject->set('author', $metadata['standard']['metadata_author']);
-            $tempObject->set('content_rights', $metadata['standard']['metadata_content_rights']);
-            $tempObject->set('robots', $metadata['standard']['metadata_robots']);
+            $row->title = $metadata['standard']['metadata_title'];
+            $row->description = $metadata['standard']['metadata_description'];
+            $row->keywords = $metadata['standard']['metadata_keywords'];
+            $row->author = $metadata['standard']['metadata_author'];
+            $row->content_rights = $metadata['standard']['metadata_content_rights'];
+            $row->robots = $metadata['standard']['metadata_robots'];
         }
 
-        $tempObject->set('base', Molajo::Request()->get('url_base'));
-        $tempObject->set('last_modified', Molajo::Request()->get('source_last_modified'));
-        $tempObject->set('favicon', Molajo::Request()->get('theme_favicon'));
-        $this->data[] = $tempObject;
+        $row->base = Molajo::Request()->get('url_base');
+        $row->last_modified = Molajo::Request()->get('source_last_modified');
+        $row->favicon = Molajo::Request()->get('theme_favicon');
+        $this->data[] = $row;
 
         /** type: links */
         $list = Molajo::Responder()->getHeadLinks();
 
         if (count($list) > 0) {
             foreach ($list as $item) {
-                $tempObject = new JObject();
-                $tempObject->set('type', 'links');
-                $tempObject->set('url', $item['url']);
-                $tempObject->set('relation', $item['relation']);
-                $tempObject->set('relation_type', $item['relation_type']);
-                $tempObject->set('attributes', $item['attributes']);
-                $this->data[] = $tempObject;
+                $row = new stdClass();
+                $row->type = 'links';
+                $row->url = $item['url'];
+                $row->relation = $item['relation'];
+                $row->relation_type = $item['relation_type'];
+                $row->attributes = $item['attributes'];
+                $this->data[] = $row;
             }
         }
 
@@ -80,51 +79,50 @@ class MolajoHeadModel extends MolajoModel
         $list = Molajo::Responder()->getStyleLinks();
         if (count($list) > 0) {
             foreach ($list as $item) {
-                $tempObject = new JObject();
-                $tempObject->set('type', 'stylesheet_links');
-                $tempObject->set('url', $item['url']);
-                $tempObject->set('mimetype', $item['mimetype']);
-                $tempObject->set('media', $item['media']);
-                $tempObject->set('attributes', $item['attributes']);
-                $tempObject->set('priority', $item['priority']);
-                $this->data[] = $tempObject;
+                $row = new stdClass();
+                $row->type = 'stylesheet_links';
+                $row->url = $item['url'];
+                $row->mimetype = $item['mimetype'];
+                $row->media = $item['media'];
+                $row->attributes = $item['attributes'];
+                $row->priority = $item['priority'];
+                $this->data[] = $row;
             }
         }
 
         /** type: stylesheet_declarations */
         $list = Molajo::Responder()->getStyleDeclarations();
         foreach ($list as $item) {
-            $tempObject = new JObject();
-            $tempObject->set('type', 'stylesheet_declarations');
-            $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('content', $item['content']);
-            $this->data[] = $tempObject;
+            $row = new stdClass();
+            $row->type = 'stylesheet_declarations';
+            $row->mimetype = $item['mimetype'];
+            $row->content = $item['content'];
+            $this->data[] = $row;
         }
 
         /** type: javascript_links */
         $list = Molajo::Responder()->getScriptLinks();
         foreach ($list as $item) {
-            $tempObject = new JObject();
-            $tempObject->set('type', 'javascript_links');
-            $tempObject->set('url', $item['url']);
-            $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('defer', 0);
-            $tempObject->set('async', $item['async']);
-            $tempObject->set('priority', $item['priority']);
-            $this->data[] = $tempObject;
+            $row = new stdClass();
+            $row->type = 'javascript_links';
+            $row->url = $item['url'];
+            $row->mimetype = $item['mimetype'];
+            $row->defer = 0;
+            $row->async = $item['async'];
+            $row->priority = $item['priority'];
+            $this->data[] = $row;
         }
 
         /** type: javascript_declarations */
         $list = Molajo::Responder()->getScriptDeclarations();
         foreach ($list as $item) {
-            $tempObject = new JObject();
-            $tempObject->set('type', 'javascript_declarations');
-            $tempObject->set('mimetype', $item['mimetype']);
-            $tempObject->set('content', $item['content']);
-            $this->data[] = $tempObject;
+            $row = new stdClass();
+            $row->type = 'javascript_declarations';
+            $row->mimetype = $item['mimetype'];
+            $row->content = $item['content'];
+            $this->data[] = $row;
         }
 
         return $this->data;
-        /** custom */
     }
 }

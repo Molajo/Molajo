@@ -5,7 +5,4 @@
     <renderer>module</renderer>
     <renderer>tag</renderer>
     <renderer>component</renderer>
-    <renderer>message</renderer>
-    <renderer>head</renderer>
-    <renderer>defer:head</renderer>
 </sequence>

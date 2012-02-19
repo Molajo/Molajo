@@ -36,13 +36,41 @@ class MolajoAdminToolbarModuleModel extends MolajoDisplayModel
     /**
      * getData
      *
-     * @return    array
+     * Get component button options and
+     * check user access permissions
      *
+     * @return    array
      * @since    1.0
      */
     public function getData()
     {
+        /** Component Buttons */
+        $buttons =
+            Molajo::Request()->
+            parameters->
+            get('toolbar_buttons');
+
+            $buttonArray = explode(',', $buttons);
+
+        /** User Permissions */
+        $permissions =
+            Services::Access()->
+                authoriseTaskList(
+                $buttonArray,
+                Molajo::Request()
+                 ->parameters
+                 ->get('display_extension_asset_id')
+        );
+
         $this->items = array();
+        foreach ($buttonArray as $buttonname) {
+            if ($permissions[$buttonname] === true) {
+                $displayButtons = new stdClass();
+                $displayButtons->name = $buttonname;
+                $this->items[] = $displayButtons;
+            }
+        }
+
         return $this->items;
     }
 }

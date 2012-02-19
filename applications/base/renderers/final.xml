@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sequence>
+    <renderer>message</renderer>
+    <renderer>head</renderer>
+    <renderer>defer:head</renderer>
+</sequence>

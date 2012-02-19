@@ -216,7 +216,7 @@ class MolajoDisplayController extends MolajoController
 
             $helperClass = 'Molajo' .
                 ucfirst(Molajo::Request()->get('theme_name'))
-                . 'dddMustacheHelper';
+                . 'MustacheHelper';
 
             if (class_exists($helperClass)) {
                 $h = new $helperClass();
@@ -230,7 +230,7 @@ class MolajoDisplayController extends MolajoController
 
         /** create mustache dataset */
         $totalRows = count($this->rowset);
-
+        $row = 0;
         if ($totalRows > 0) {
             foreach ($this->rowset as $this->row) {
                 $item = new stdClass ();
@@ -238,7 +238,8 @@ class MolajoDisplayController extends MolajoController
                 foreach ($pairs as $key => $value) {
                     $item->$key = $value;
                 }
-                $h->data['item'] = $item;
+                $h->data[$row] = $item;
+                $row++;
             }
         }
 

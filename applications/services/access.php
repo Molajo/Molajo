@@ -60,6 +60,7 @@ class MolajoAccessService
         if ($asset_id == 0) {
             return;
         }
+
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =

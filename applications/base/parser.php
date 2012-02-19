@@ -47,6 +47,8 @@ class MolajoParser
      */
     protected $sequence = array();
 
+    protected $final = false;
+
     /**
      * $renderer_requests
      *
@@ -121,6 +123,9 @@ class MolajoParser
      */
     public function process()
     {
+        /**
+         *  Body Renderers: processed recursively until no more <include: found
+         */
         $formatXML = '';
         if ($formatXML == '') {
             $formatXML = MOLAJO_APPLICATIONS . '/base/renderers/sequence.xml';
@@ -151,6 +156,30 @@ class MolajoParser
         /** Before Event */
         // Services::Dispatcher()->notify('onBeforeRender');
 
+        /** process theme include, and then all rendered output, for <include statements */
+        $this->final = false;
+        $body = $this->_renderLoop();
+
+        /**
+         *  Final Renderers: Now, the theme, head, messages, and defer renderers run
+         */
+        $formatXML = '';
+        if ($formatXML == '') {
+            $formatXML = MOLAJO_APPLICATIONS . '/base/renderers/final.xml';
+        }
+
+        if (JFile::exists($formatXML)) {
+        } else {
+            //error
+            return false;
+        }
+
+        $this->sequence = array();
+        $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
+        foreach ($sequence->renderer as $next) {
+            $this->sequence[] = (string)$next;
+        }
+
         /** theme: load template media and language files */
         if (class_exists('MolajoThemeRenderer')) {
             $rc = new MolajoThemeRenderer ('theme');
@@ -161,10 +190,12 @@ class MolajoParser
             // ERROR
         }
 
-        /** process theme include, and then all rendered output, for <include statements */
-        $body = $this->_renderLoop();
+        $this->final = true;
+        $body = $this->_renderLoop($body);
 
-        /** set response body */
+        /**
+         *  Set the Response Body
+         */
         Molajo::Responder()->setBody($body);
 
         /** after rendering */
@@ -185,13 +216,18 @@ class MolajoParser
      * @return string  Rendered output for the Response Head and Body
      * @since  1.0
      */
-    protected function _renderLoop()
+    protected function _renderLoop($body = null)
     {
-        /** include the theme and page */
-        ob_start();
-        require $this->parameters->get('theme_path');
-        $this->rendered_output = ob_get_contents();
-        ob_end_clean();
+        /** initial run: include the theme and page */
+        if ($body == null) {
+            ob_start();
+            require $this->parameters->get('theme_path');
+            $this->rendered_output = ob_get_contents();
+            ob_end_clean();
+        } else {
+            /* final run: get message, head and defer */
+            $this->rendered_output = $body;
+        }
 
         /** process all buffered input for include: statements  */
         $complete = false;
@@ -347,13 +383,17 @@ class MolajoParser
         $this->rendered_output = str_replace($replace, $with, $this->rendered_output);
 
         /** 10. make certain all <include:xxx /> literals are removed */
-        $replace = array();
-        $with = array();
-        for ($i = 0; $i < count($this->renderer_requests); $i++) {
-            $replace[] = "<include:" . $this->renderer_requests[$i]['replace'] . "/>";
-            $with[] = '';
+        if ($this->final === true) {
+            $replace = array();
+            $with = array();
+            for ($i = 0; $i < count($this->renderer_requests); $i++) {
+                $replace[] = "<include:" . $this->renderer_requests[$i]['replace'] . "/>";
+                $with[] = '';
+            }
+
+            str_replace($replace, $with, $this->rendered_output);
         }
 
-        return str_replace($replace, $with, $this->rendered_output);
+        return $this->rendered_output;
     }
 }
