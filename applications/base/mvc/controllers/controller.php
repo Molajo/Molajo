@@ -115,10 +115,10 @@ class MolajoController
         /** check authorisation **/
         if (MOLAJO_APPLICATION == 'installation') {
         } else {
-            $results = $this->checkTaskAuthorisation();
-            if ($results === false) {
-                return false;
-            }
+//            $results = $this->checkTaskAuthorisation();
+//            if ($results === false) {
+//                return false;
+//            }
         }
 
         /** set redirects **/
@@ -183,6 +183,7 @@ class MolajoController
      */
     public function checkTaskAuthorisation()
     {
+        echo 'in checkTaskAuthorisation in Controller AssetID: '.$this->get('asset_id').' see it?';
         Services::Access()
             ->authoriseTask(
                 $this->get('task'),

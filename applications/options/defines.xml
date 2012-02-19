@@ -79,12 +79,4 @@
     <define name="MOLAJO_AUTHENTICATE_STATUS_SUCCESS" value="1"/>
     <define name="MOLAJO_AUTHENTICATE_STATUS_CANCEL" value="2"/>
     <define name="MOLAJO_AUTHENTICATE_STATUS_FAILURE" value="4"/>
-
-    <define name="MOLAJO_ACTION_TYPE_LOGIN" value="login"/>
-    <define name="MOLAJO_ASSET_TYPE_BASE_BEGIN" value="login"/>
-    <define name="MOLAJO_ASSET_TYPE_BASE_BEGIN" value="login"/>
-    <define name="MOLAJO_ACTION_TYPE_LOGIN" value="login"/>
-    <define name="MOLAJO_ASSET_TYPE_BASE_BEGIN" value="login"/>
-    <define name="MOLAJO_ASSET_TYPE_BASE_BEGIN" value="login"/>
-    <define name="MOLAJO_ACTION_TYPE_LOGIN" value="login"/>
 </defines>

@@ -105,11 +105,7 @@ class MolajoRequest
                                 $override_asset_id = null)
     {
 
-        $this->_initializePageRequest();
-
-        $this->parameters = array();
-
-        $this->input = new JInput;
+        $this->_initialize();
 
         /** Specific asset */
         if ((int)$override_asset_id == 0) {
@@ -279,9 +275,11 @@ class MolajoRequest
      */
 
     /**
-     * _initializePageRequest
+     * _initialize
      *
-     * Create and Initialize the request
+     * Create and Initialize the request and establish other
+     * properties needed by this method and downstream in the
+     * application
      *
      * Request Object which can be accessed by other classes
      *
@@ -289,13 +287,16 @@ class MolajoRequest
      * @return array
      * @since 1.0
      */
-    protected function _initializePageRequest()
+    protected function _initialize()
     {
+        $this->parameters = array();
+
+        $this->input = new JInput;
+
         $this->page_request = new JRegistry();
 
         /** request */
-        $this->set('request_url_base',
-            MOLAJO_BASE_URL);
+        $this->set('request_url_base', MOLAJO_BASE_URL);
         $this->set('request_asset_id', 0);
         $this->set('request_asset_type_id', 0);
         $this->set('request_url_query', '');

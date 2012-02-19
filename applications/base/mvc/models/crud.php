@@ -20,14 +20,14 @@ class MolajoCrudModel extends MolajoModel
 {
 
     /**
-     * _setQuery
+     * _setLoadQuery
      *
      * Standard query to retrieve all elements of the specific table for a specific item
      *
      * @return  object
      * @since   1.0
      */
-    protected function _setQuery()
+    protected function _setLoadQuery()
     {
         $this->query = $this->db->getQuery(true);
 
@@ -41,14 +41,14 @@ class MolajoCrudModel extends MolajoModel
     }
 
     /**
-     * _runQuery
+     * _runLoadQuery
      *
      * Execute query and return an array of data elements
      *
      * @return  object
      * @since   1.0
      */
-    protected function _runQuery()
+    protected function _runLoadQuery()
     {
         $item = $this->db->loadAssocList();
 
@@ -94,6 +94,5 @@ class MolajoCrudModel extends MolajoModel
 
         return $data;
     }
-
 }
 

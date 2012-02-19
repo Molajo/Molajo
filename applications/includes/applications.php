@@ -82,6 +82,7 @@ $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/updatelist.php',
 
 /** Models */
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/model.php', 'MolajoModel');
+$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/crud.php', 'MolajoCrudModel');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/display.php', 'MolajoDisplayModel');
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {

@@ -33,7 +33,7 @@ class MolajoModel
      * @var    string
      * @since  1.0
      */
-    protected $db;
+    public $db;
 
     /**
      * Database query object
@@ -41,7 +41,7 @@ class MolajoModel
      * @var    object
      * @since  1.0
      */
-    protected $query;
+    public $query;
 
     /**
      * $now
@@ -51,7 +51,7 @@ class MolajoModel
      * @var    object
      * @since  1.0
      */
-    protected $now;
+    public $now;
 
     /**
      * $nullDate
@@ -61,7 +61,7 @@ class MolajoModel
      * @var    object
      * @since  1.0
      */
-    protected $nullDate;
+    public $nullDate;
 
     /**
      * Used in setter/getter to store model state
@@ -319,7 +319,76 @@ class MolajoModel
      */
 
     /**
+     * load
+     *
+     * Method to load a specific item from a specific model.
+     * Creates and runs the database query, allow for additional data,
+     * and returns the integrated data for the item requested
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function load()
+    {
+        $this->set('crud', 'r');
+
+        $this->_setLoadQuery();
+
+        $results = $this->_runLoadQuery();
+
+        $this->data = $this->_getLoadAdditionalData($results);
+
+        return $this->data;
+    }
+
+    /**
+     * _setLoadQuery
+     *
+     * Method to create a query object for a specific item in a specific model
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _setLoadQuery()
+    {
+
+    }
+
+    /**
+     * _runLoadQuery
+     *
+     * Method to execute a query statement for a specific item,
+     * returning the results
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _runLoadQuery()
+    {
+        return array();
+    }
+
+    /**
+     * _getLoadAdditionalData
+     *
+     * Method to append additional data elements to a specific item,
+     * as needed
+     *
+     * @param array $data
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function _getLoadAdditionalData($data = array())
+    {
+        return $data;
+    }
+
+    /**
      * getData
+     *
+     * Used for most view access queries for any model. Not for a
+     * specific item with intent to update. Use load for that purpose.
      *
      * Method to establish query criteria, formulate a database query,
      * run the database query, allow for the addition of more data, and
@@ -334,7 +403,7 @@ class MolajoModel
 
         $this->_setQuery();
 
-        $results = $this->_runQuery();
+        $results = $this->runQuery();
 
         $this->data = $this->_getAdditionalData($results);
 
@@ -355,7 +424,7 @@ class MolajoModel
     }
 
     /**
-     * _runQuery
+     * runQuery
      *
      * Method to execute a prepared and set query statement,
      * returning the results
@@ -363,7 +432,7 @@ class MolajoModel
      * @return  object
      * @since   1.0
      */
-    protected function _runQuery()
+    public function runQuery()
     {
         return array();
     }

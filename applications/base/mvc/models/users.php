@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoUsersModel extends MolajoCrudModel
+class MolajoUsersModel extends MolajoDisplayModel
 {
     /**
      * __construct
@@ -45,7 +45,7 @@ class MolajoUsersModel extends MolajoCrudModel
      * @return array
      * @since  1.0
      */
-    protected function _getAdditionalData($data)
+    protected function _getLoadAdditionalData($data)
     {
         /** concatenate name */
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];

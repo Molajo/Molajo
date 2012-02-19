@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * ActionTypes
+ * Action Types
  *
  * @package     Molajo
  * @subpackage  Model

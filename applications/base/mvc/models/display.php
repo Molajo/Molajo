@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoDisplayModel extends MolajoModel
+class MolajoDisplayModel extends MolajoCrudModel
 {
     /**
      * _setQuery
@@ -28,8 +28,6 @@ class MolajoDisplayModel extends MolajoModel
      */
     protected function _setQuery()
     {
-        $this->query = $this->db->getQuery(true);
-
         /**
          *  Model Helper: MolajoExtensionModelHelper extends MolajoModelHelper
          */
@@ -49,7 +47,11 @@ class MolajoDisplayModel extends MolajoModel
         /**
          *  Parameters: merged in MolajoRenderer
          */
-        $parameterArray = Molajo::Request()->parameters->toArray();
+        if (is_object(Molajo::Request()->parameters)) {
+            $parameterArray = Molajo::Request()->parameters->toArray();
+        } else {
+            $parameterArray = array();
+        }
 
         /** Primary table field names and prefix */
         $fields = $this->getFieldDatatypes();
@@ -193,9 +195,6 @@ class MolajoDisplayModel extends MolajoModel
             $this->query = $h->$method($this->query, $primary_prefix);
         }
 
-        /** set the query */
-        //echo $this->query->__toString();
-        $this->db->setQuery($this->query->__toString());
 
         /**
         $this->db->setQuery(
@@ -208,7 +207,7 @@ class MolajoDisplayModel extends MolajoModel
     }
 
     /**
-     * _runQuery
+     * runQuery
      *
      * Method to execute a prepared and set query statement,
      * returning the results
@@ -216,8 +215,12 @@ class MolajoDisplayModel extends MolajoModel
      * @return  object
      * @since   1.0
      */
-    protected function _runQuery()
+    public function runQuery()
     {
+        /** set the query */
+//        echo $this->query->__toString().'<br />';
+
+        $this->db->setQuery($this->query->__toString());
         $data = $this->db->loadObjectList();
 
         if ($this->db->getErrorNum() == 0) {
@@ -273,7 +276,11 @@ class MolajoDisplayModel extends MolajoModel
         }
         $h = new $helperClass();
 
-        $parameterArray = Molajo::Request()->parameters->toArray();
+        if (is_object(Molajo::Request()->parameters)) {
+            $parameterArray = Molajo::Request()->parameters->toArray();
+        } else {
+            $parameterArray = array();
+        }
 
         $methodArray = array();
         if (isset($parameterArray['item_methods'])) {

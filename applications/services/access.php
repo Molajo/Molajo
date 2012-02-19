@@ -19,6 +19,36 @@ defined('MOLAJO') or die;
 class MolajoAccessService
 {
     /**
+     * $task_to_action
+     *
+     * Task to ACL Action list
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    public $task_to_action;
+
+    /**
+     * $action_to_action_id
+     *
+     * ACL Action literal to database pk
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    public $action_to_action_id;
+
+    /**
+     * $action_to_controller
+     *
+     * ACL Action to Molajo Controller list
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    public $action_to_controller;
+
+    /**
      * Static instance
      *
      * @var    object
@@ -42,6 +72,69 @@ class MolajoAccessService
     }
 
     /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @since  1.0
+     */
+    public function __construct()
+    {
+        $this->_initialize();
+    }
+
+    /**
+     * _initialize
+     *
+     * Load lists of ACL-related data needed by this method
+     * and other classes within the application
+     *
+     * @return null
+     * @since  1.0
+     */
+    protected function _initialize()
+    {
+        /** load task to action and controller data */
+        $tasks = simplexml_load_file(
+            MOLAJO_APPLICATIONS . '/options/tasks.xml'
+        );
+        if (count($tasks) == 0) {
+            return;
+        }
+        $this->task_to_action = new Registry();
+        $this->action_to_controller = new Registry();
+
+        foreach ($tasks->task as $t) {
+            $this->task_to_action
+                ->set(
+                (string)$t['name'],
+                (string)$t['action']
+            );
+            $this->action_to_controller
+                ->set(
+                (string)$t['action'],
+                (string)$t['controller']
+            );
+        }
+
+        /** action text to database key */
+        $this->action_to_action_id = new Registry();
+
+        /** retrieve database keys for actions */
+        $m = new MolajoActionTypesModel();
+        $actionsList = $m->getData();
+        foreach ($actionsList as $actionDefinition) {
+            $this->action_to_action_id
+                ->set(
+                $actionDefinition->title,
+                (int) $actionDefinition->id
+            );
+        }
+
+        return;
+    }
+
+    /**
      *  authoriseTaskList
      *
      * @param  array   $tasklist
@@ -50,9 +143,7 @@ class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    public function authoriseTaskList(
-        $tasklist = array(),
-        $asset_id = 0)
+    public function authoriseTaskList($tasklist = array(), $asset_id = 0)
     {
         if (count($tasklist) == 0) {
             return;
@@ -82,44 +173,43 @@ class MolajoAccessService
      * @return  boolean
      * @since   1.0
      */
-    public function authoriseTask(
-        $task,
-        $asset_id)
+    public function authoriseTask($task, $asset_id)
     {
         if ($task == 'login') {
             return Services::Access()
                 ->authoriseTask('login', $asset_id);
         }
 
-        /** need task to action mapping in a) site ini or b) application parameters */
-        $action = 'view';
-        $action_id = 3;
+        /** Retrieve ACL Action for this Task */
+        $action = $this->task_to_action->get($task);
+        $action_id = (int) $this->action_to_action_id->get($action);
 
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-
-        $query->select('count(*)');
-        $query->from($db->nq('#__group_permissions') . ' as a');
-        $query->where('a.' . $db->nq('asset_id') . ' = ' . (int)$asset_id);
-        $query->where('a.' . $db->nq('action_id') . ' = ' . (int)$action_id);
-        $query->where('a.' . $db->nq('group_id') .
-                ' IN (' .
-                implode(',',
-                    Services::User()
-                        ->get('groups')) . ')'
-        );
-
-        $db->setQuery($query->__toString());
-        $count = $db->loadResult();
-
-        if ($db->getErrorNum()) {
-            $this->setError($db->getErrorMsg());
-            return false;
+        if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
+            echo 'Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id . ' (Message in Access)' . '<br />';
         }
 
-        if ($count > 0) {
+        //todo: amy fill database with real actions
+
+        /** check for permission */
+        $action_id = 3;
+        $m = new MolajoGroupPermissionsModel();
+        $m->query->select('count(*) as count');
+        $m->query->from($m->db->nq('#__group_permissions') . ' as a');
+        $m->query->where('a.' . $m->db->nq('asset_id') . ' = ' . (int)$asset_id);
+        $m->query->where('a.' . $m->db->nq('action_id') . ' = ' . (int)$action_id);
+        $m->query->where('a.' . $m->db->nq('group_id')
+                . ' IN (' . implode(',', Services::User()->get('groups')) . ')'
+        );
+
+        $results = $m->runQuery();
+        foreach ($results as $result) {
+        }
+
+        if ($result->count > 0) {
             return true;
         } else {
+            echo 'Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id . ' (Message in Access)' . '<br />';
+            echo $result->count;
             return false;
         }
     }
@@ -133,32 +223,26 @@ class MolajoAccessService
      * @param null $asset
      * @return void
      */
-    public function authoriseLogin(
-        $user_id)
+    public function authoriseLogin($user_id)
     {
         if ((int)$user_id == 0) {
             return false;
         }
 
-        $db = Services::DB();
-        $query = $db->getQuery(true);
+        $m = new MolajoUserApplicationsModel();
+        $m->query->select('count(*) as count');
+        $m->query->from('#__user_applications a');
+        $m->query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
+        $m->query->where('user_id = ' . (int)$user_id);
 
-        $query->select('count(*) as count');
-        $query->from('#__user_applications a');
-        $query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
-        $query->where('user_id = ' . (int)$user_id);
-
-        $db->setQuery($query->__toString());
-        $result = $db->loadResult();
-
-        if ($db->getErrorNum()) {
-            $this->setError($db->getErrorMsg());
-            return false;
+        $results = $m->runQuery();
+        foreach ($results as $result) {
         }
 
-        if ($result == 1) {
+        if ($result->count > 0) {
             return true;
         } else {
+            echo 'Task: login ' . ' User ID: '. $user_id . ' (Message in Access)' . '<br />';
             return false;
         }
     }
@@ -238,37 +322,5 @@ class MolajoAccessService
                 ' = 0');
 
         return $query;
-    }
-
-    /**
-     *  TYPE 3 --> MolajoACL::getList -> getActionsList
-     */
-    public function getActionsList(
-        $id,
-        $option,
-        $task,
-        $parameters = array())
-    {
-        $actions = array();
-
-        $component = $parameters[0];
-        $section = $parameters[1];
-
-        if (is_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml')) {
-            $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml');
-
-            foreach ($xml->children() as $child)
-            {
-                if ($section == (string)$child['name']) {
-                    foreach ($child->children() as $action) {
-                        $actions[] = (object)array('name' => (string)$action['name'],
-                            'title' => (string)$action['title'],
-                            'description' => (string)$action['description']);
-                    }
-                    break;
-                }
-            }
-        }
-        return $actions;
     }
 }

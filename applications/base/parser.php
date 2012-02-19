@@ -128,7 +128,7 @@ class MolajoParser
          */
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS . '/base/renderers/sequence.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-page.xml';
         }
 
         if (JFile::exists($formatXML)) {
@@ -165,7 +165,7 @@ class MolajoParser
          */
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS . '/base/renderers/final.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-final.xml';
         }
 
         if (JFile::exists($formatXML)) {

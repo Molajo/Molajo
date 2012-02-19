@@ -30,7 +30,7 @@ if (defined('SITES_TEMP_URL')) {
 $siteBase = substr(MOLAJO_BASE_URL, strlen(MOLAJO_PROTOCOL), 999);
 if (defined('SITE_BASE_URL')) {
 } else {
-    $sites = simplexml_load_file(SITES . '/sites.xml', 'SimpleXMLElement');
+    $sites = simplexml_load_file(MOLAJO_APPLICATIONS . '/options/sites.xml', 'SimpleXMLElement');
     foreach ($sites->site as $single) {
         if ($single->base == $siteBase) {
             define('SITE_BASE_URL', $single->base);

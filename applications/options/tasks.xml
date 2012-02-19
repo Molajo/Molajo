@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tasks>
+    <task name="apply" action="edit" controller="update"/>
+    <task name="archive" action="publish" controller="updatelist"/>
+    <task name="cancel" action="none" controller="update"/>
+    <task name="checkin" action="administer" controller="updatelist"/>
+    <task name="copy" action="create" controller="updatelist"/>
+    <task name="create" action="create" controller="update"/>
+    <task name="delete" action="delete" controller="updatelist"/>
+    <task name="display" action="view" controller="display"/>
+    <task name="edit" action="edit" controller="display"/>
+    <task name="feature" action="publish" controller="updatelist"/>
+    <task name="login" action="login" controller="login"/>
+    <task name="logout" action="logout" controller="login"/>
+    <task name="move" action="edit" controller="updatelist"/>
+    <task name="new" action="create" controller="display"/>
+    <task name="orderdown" action="publish" controller="updatelist"/>
+    <task name="orderup" action="publish" controller="updatelist"/>
+    <task name="options" action="administer" controller="options"/>
+    <task name="publish" action="publish" controller="updatelist"/>
+    <task name="reorder" action="publish" controller="updatelist"/>
+    <task name="restore" action="publish" controller="updatelist"/>
+    <task name="save" action="edit" controller="update"/>
+    <task name="saveandnew" action="edit" controller="update"/>
+    <task name="saveascopy" action="edit" controller="update"/>
+    <task name="spam" action="publish" controller="updatelist"/>
+    <task name="sticky" action="publish" controller="updatelist"/>
+    <task name="trash" action="delete" controller="updatelist"/>
+    <task name="unfeature" action="publish" controller="updatelist"/>
+    <task name="unpublish" action="publish" controller="updatelist"/>
+    <task name="unsticky" action="publish" controller="updatelist"/>
+    <task name="restore" action="publish" controller="updatelist"/>
+</tasks>

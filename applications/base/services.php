@@ -106,7 +106,7 @@ class MolajoServices
     public function initiateServices()
     {
         $services = simplexml_load_file(
-            MOLAJO_APPLICATIONS . '/services/services.xml'
+            MOLAJO_APPLICATIONS . '/options/services.xml'
         );
         if (count($services) == 0) {
             return;
