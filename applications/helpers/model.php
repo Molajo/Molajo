@@ -98,14 +98,65 @@ class MolajoModelHelper
         $nullDate = $db->getNullDate();
 
         $query->select($db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
-        $query->select($db->nq('pcat').'.*');
+        $query->select($db->nq('pcat') . '.*');
         $query->from($db->nq('#__content') . ' as ' . $db->nq('pcat'));
         $query->where($db->nq('pcat') . '.' . $db->nq('id')
-            . ' = ' . $db->nq('a_assets') . '.' . $db->nq('primary_category_id') );
+            . ' = ' . $db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
 
         return $query;
 
     }
+
+    /**
+     * itemUserPermission
+     *
+     * Validate task-level user permissions on each row
+     *
+     * Note: Must request content asset_id in order to use this method
+     *
+     * @param array $item
+     * @param array $parameters
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function itemUserPermission(
+        $item = array(),
+        $parameters = array())
+    {
+        if (isset($item->asset_id)) {
+        } else {
+            return $item;
+        }
+
+        /** Component Buttons */
+        $tasks =
+            Molajo::Request()->
+                parameters->
+                get('toolbar_buttons');
+
+        $tasksArray = explode(',', $tasks);
+
+        /** User Permissions */
+        $permissions =
+            Services::Access()->
+                authoriseTaskList(
+                $tasksArray,
+                $item->asset_id
+            );
+
+
+        /** Append onto row */
+        foreach ($tasksArray as $task) {
+            if ($permissions[$task] === true) {
+                $fieldname = $task.'Permission';
+                $item->$fieldname = $permissions[$task];
+            }
+        }
+
+        return $item;
+    }
+
 
     /**
      * itemSplittext

@@ -60,10 +60,6 @@ class MolajoApplication
         /** Services: initiate */
         $sv = Molajo::Services()->initiateServices();
 
-        if (class_exists('JInput')) {
-      			$this->input = new JInput;
-      		}
-
         /** SSL: check requirement */
         if (Services::Configuration()->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {

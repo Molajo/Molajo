@@ -96,6 +96,11 @@ $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolder');
 $load->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
 
 /**
+ *  Environment
+ */
+$load->requireClassFile(JOOMLA_LIBRARY . '/environment/uri.php', 'JURI');
+
+/**
  *  Input
  */
 $load->requireClassFile(JOOMLA_LIBRARY . '/input/input.php', 'JInput');

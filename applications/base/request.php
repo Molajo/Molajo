@@ -27,16 +27,6 @@ class MolajoRequest
     protected static $instance;
 
     /**
-     * $input
-     *
-     * Application Request Object
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $input;
-
-    /**
      * $page_request
      *
      * Page Request object that will be populated by this class
@@ -285,8 +275,6 @@ class MolajoRequest
     protected function _initialize()
     {
         $this->parameters = array();
-
-        $this->input = new JInput;
 
         $this->page_request = new JRegistry();
 

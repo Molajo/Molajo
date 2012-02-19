@@ -27,6 +27,16 @@ class MolajoUrlService
     protected static $instance;
 
     /**
+     * $input
+     *
+     * Application Request Object
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public static $input;
+
+    /**
      * getInstance
      *
      * @static
@@ -51,7 +61,65 @@ class MolajoUrlService
      */
     public function __construct()
     {
+        $this->_getInput();
+    }
 
+    /**
+     * _getInput
+     *
+     * Retrieve URL contents
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    public function _getInput()
+    {
+        if (class_exists('JInput')) {
+            $this->input = new JInput;
+        }
+
+        // Get the full request URI.
+        $uri = clone JURI::getInstance();
+        $results = $uri->get('_vars');
+        foreach ($results as $key => $value) {
+            $this->input->set($key, $value);
+        }
+
+    }
+
+    /**
+     * get
+     *
+     * Returns a property of the Input object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->input->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Input object, creating it if it does not already exist.
+     *
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->input->set($key, $value);
     }
 
     /**
@@ -107,7 +175,8 @@ class MolajoUrlService
         if (substr($option_URL, 0, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER) {
             return false;
         } elseif ((strtolower(substr($option_URL, 0, 3)) == 'www')
-            && (substr($option_URL, 3, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER)) {
+            && (substr($option_URL, 3, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER)
+        ) {
             return false;
         } else {
             return true;
@@ -188,6 +257,8 @@ class MolajoUrlService
      */
     function urlShortener($longurl, $username, $apikey, $username, $apikey)
     {
+        $shortener = 1;
+
         if ($shortener == '1') {
             return $longurl; // todo: create local short url
 

@@ -120,7 +120,7 @@ class Services extends MolajoServices
     }
     public static function Url ()
     {
-        return Molajo::Services()->get('Url');
+        return Molajo::Services()->get('URL');
     }
     public static function User ()
     {

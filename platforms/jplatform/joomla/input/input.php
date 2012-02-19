@@ -9,7 +9,7 @@
 
 defined('JPATH_PLATFORM') or die;
 
-JLoader::discover('JInput', dirname(__FILE__) . '/input');
+JLoader::discover('JInput', dirname(__FILE__));
 
 /**
  * Joomla! Input Base Class

@@ -116,6 +116,9 @@ class MolajoServices
         foreach ($services->service as $s) {
             $serviceName = (string)$s->name;
             $connection = $this->_connectService($s);
+//echo 'Name '.$serviceName.'<br />';
+//var_dump($connection);
+//echo '<br />';
             $this->set($serviceName, $connection);
         }
 

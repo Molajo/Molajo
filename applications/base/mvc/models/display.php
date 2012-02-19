@@ -194,7 +194,6 @@ class MolajoDisplayModel extends MolajoCrudModel
             $this->query = $h->$method($this->query, $this->primary_prefix);
         }
 
-
         /**
         $this->db->setQuery(
             $query,
@@ -325,13 +324,6 @@ class MolajoDisplayModel extends MolajoCrudModel
             }
             // $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
-            /** item-specific task permissions
-            $results = Services::Access()
-                ->getUserItemPermissions(
-                $tasklist,
-                $asset_id
-            );
-             */
             // $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
             /** process content plugins */
