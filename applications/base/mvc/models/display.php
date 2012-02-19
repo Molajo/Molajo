@@ -191,7 +191,11 @@ class MolajoDisplayModel extends MolajoCrudModel
          *  Helper Methods requested by parameters
          */
         foreach ($methods as $method) {
-            $this->query = $h->$method($this->query, $this->primary_prefix);
+            $this->query = $h->$method(
+                $this->query,
+                $this->primary_prefix,
+                $this->db
+            );
         }
 
         /**

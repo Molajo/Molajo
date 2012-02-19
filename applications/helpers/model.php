@@ -29,9 +29,9 @@ class MolajoModelHelper
      */
     public function queryStatus(
         $query = array(),
-        $prefix = 'a')
+        $prefix = 'a',
+        $db)
     {
-        $db = Services::DB();
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
@@ -91,12 +91,9 @@ class MolajoModelHelper
      */
     public function queryPrimarycategory(
         $query = array(),
-        $prefix = 'a')
+        $prefix = 'a',
+        $db)
     {
-        $db = Services::DB();
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
-
         $query->select($db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
         $query->select($db->nq('pcat') . '.*');
         $query->from($db->nq('#__content') . ' as ' . $db->nq('pcat'));
@@ -149,7 +146,7 @@ class MolajoModelHelper
         /** Append onto row */
         foreach ($tasksArray as $task) {
             if ($permissions[$task] === true) {
-                $fieldname = $task.'Permission';
+                $fieldname = $task . 'Permission';
                 $item->$fieldname = $permissions[$task];
             }
         }
@@ -399,30 +396,68 @@ class MolajoModelHelper
      * @return  list
      * @since   1.0
      */
-    public function getList($query, $location)
+    public function getFilterList($field)
     {
-        $db = Services::DB();
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
+        echo 'Field ' . $field . '<br />';
+        // parameters:
+        // add acl checks, if desired
+        // add component-specific filtering, if desired
+        // types of groups
 
-        $db->setQuery($query);
+        if ($field == 'author') {
+            $m = new MolajoUsersModel();
+            $m->query->select($m->db->nq('id') . ' as ' . $m->db->nq('key'));
+            $m->query->select($m->db->nq('username') . ' as ' . $m->db->nq('value'));
+            $m->query->order('username DESC');
+            return $m->runQuery();
 
-        $list = $db->loadObjectList();
+        } else if ($field == 'category') {
+            $m = new MolajoContentModel();
+            $m->query->select($m->db->nq('id') . ' as ' . $m->db->nq('key'));
+            $m->query->select($m->db->nq('title') . ' as ' . $m->db->nq('value'));
+            $m->query->where($m->db->nq('asset_type_id') . ' = ' . (int)MOLAJO_ASSET_TYPE_CATEGORY_LIST);
+            $m->query->where($m->db->nq('status') . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
+            $m->query->order('title DESC');
+            return $m->runQuery();
 
-        if ($db->getErrorNum() == 0) {
-            return $list;
-        } else {
-            Services::Message()
-                ->set(
-                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
-                    $db->getErrorNum() . ' ' .
-                    $db->getErrorMsg(),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
-                $code = 500,
-                $debug_location = $location,
-                $debug_object = $db
+        } else if ($field == 'group') {
+            $m = new MolajoContentModel();
+            $m->query->select($m->db->nq('a') . '.' . $m->db->nq('id') . ' as ' . $m->db->nq('key'));
+            $m->query->select($m->db->nq('a') . '.' . $m->db->nq('title') . ' as ' . $m->db->nq('value'));
+            $m->query->from($m->db->nq('#__content') . ' as ' . $m->db->nq('a'));
+            $m->query->where($m->db->nq('a') . '.' . $m->db->nq('asset_type_id') . ' IN ('
+                    . (int)MOLAJO_ASSET_TYPE_GROUP_SYSTEM . ','
+                    . (int)MOLAJO_ASSET_TYPE_GROUP_NORMAL . ','
+                    . (int)MOLAJO_ASSET_TYPE_GROUP_USER . ','
+                    . (int)MOLAJO_ASSET_TYPE_GROUP_FRIEND . ')'
             );
-            return null;
+            $m->query->where($m->db->nq('status') . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
+            $m->query->order('title DESC');
+
+            MolajoAccessService::setQueryViewAccess(
+                $m->query,
+                array('join_to_prefix' => 'a',
+                    'join_to_primary_key' => 'id',
+                    'asset_prefix' => 'a_assets',
+                    'select' => false
+                )
+            );
+            return $m->runQuery();
+
+        } else if ($field == 'status') {
+            return $this->getStatusList();
+
+        } else if ($field == 'language') {
+            return $this->getLanguageList();
+
+        } else if ($field == 'tag') {
+            $m = new MolajoContentModel();
+            $m->query->select($m->db->nq('id') . ' as ' . $m->db->nq('key'));
+            $m->query->select($m->db->nq('title') . ' as ' . $m->db->nq('value'));
+            $m->query->where($m->db->nq('asset_type_id') . ' = ' . (int)MOLAJO_ASSET_TYPE_CATEGORY_TAG);
+            $m->query->where($m->db->nq('status') . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
+            $m->query->order('title DESC');
+            return $m->runQuery();
         }
     }
 
@@ -468,37 +503,37 @@ class MolajoModelHelper
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_ARCHIVED;
-        $obj->value = Services::Language()->_('Archived');
+        $obj->value = Services::Language()->_('STATUS_ARCHIVED');
         $rowset[] = $obj;
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_PUBLISHED;
-        $obj->value = Services::Language()->_('Published');
+        $obj->value = Services::Language()->_('STATUS_PUBLISHED');
         $rowset[] = $obj;
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_UNPUBLISHED;
-        $obj->value = Services::Language()->_('Unpublished');
+        $obj->value = Services::Language()->_('STATUS_UNPUBLISHED');
         $rowset[] = $obj;
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_TRASHED;
-        $obj->value = Services::Language()->_('Trashed');
+        $obj->value = Services::Language()->_('STATUS_TRASHED');
         $rowset[] = $obj;
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_SPAMMED;
-        $obj->value = Services::Language()->_('Spammed');
+        $obj->value = Services::Language()->_('STATUS_SPAMMED');
         $rowset[] = $obj;
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_DRAFT;
-        $obj->value = Services::Language()->_('Draft');
+        $obj->value = Services::Language()->_('STATUS_DRAFT');
         $rowset[] = $obj;
 
         $obj = new stdClass();
         $obj->key = MOLAJO_STATUS_VERSION;
-        $obj->value = Services::Language()->_('Version');
+        $obj->value = Services::Language()->_('STATUS_VERSION');
         $rowset[] = $obj;
 
         return $rowset;

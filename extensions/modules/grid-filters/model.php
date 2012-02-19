@@ -39,6 +39,9 @@ class MolajoGridFiltersModuleModel extends MolajoModel
      */
     public function getData()
     {
+        /**
+         *  Retrieve Filters from Parameters for Component
+         */
         $filters =
             Molajo::Request()->
             parameters->
@@ -46,9 +49,33 @@ class MolajoGridFiltersModuleModel extends MolajoModel
 
             $filterArray = explode(',', $filters);
 
+        /**
+         *  Model Helper: MolajoExtensionModelHelper extends MolajoModelHelper
+         */
+        $extensionName = ExtensionHelper::formatNameForClass(
+            $this->get('extension_instance_name')
+        );
+        $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
+        if (class_exists($helperClass)) {
+        } else {
+            $helperClass = 'MolajoModelHelper';
+        }
+        $h = new $helperClass();
+
+        /**
+         *  Get list and return results
+         */
         $this->data = array();
         foreach ($filterArray as $filter) {
-            $this->data[] = $filter;
+
+            $row = new stdClass();
+
+            $row->name = $filter;
+            $row->list = $h->getFilterList($filter);
+
+            $row->selected = ''; //get from user state
+
+            $this->data[] = $row;
         }
 
         return $this->data;
