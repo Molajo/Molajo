@@ -36,23 +36,23 @@ abstract class MolajoMenuitemHelper
          *  a. Content Table
          *      Menu Items
          */
-        $m->query->select('a.' . $m->db->nq('id') . ' as menu_item_id');
-        $m->query->select('a.' . $m->db->nq('asset_type_id') . ' as menu_item_asset_type_id');
-        $m->query->select('a.' . $m->db->nq('title') . ' as menu_item_title');
-        $m->query->select('a.' . $m->db->nq('custom_fields') . ' as menu_item_custom_fields');
-        $m->query->select('a.' . $m->db->nq('parameters') . ' as menu_item_parameters');
-        $m->query->select('a.' . $m->db->nq('metadata') . ' as menu_item_metadata');
-        $m->query->select('a.' . $m->db->nq('translation_of_id') . ' as menu_item_translation_of_id');
-        $m->query->select('a.' . $m->db->nq('language') . ' as menu_item_language');
+        $m->query->select('a.' . $m->db->qn('id') . ' as menu_item_id');
+        $m->query->select('a.' . $m->db->qn('asset_type_id') . ' as menu_item_asset_type_id');
+        $m->query->select('a.' . $m->db->qn('title') . ' as menu_item_title');
+        $m->query->select('a.' . $m->db->qn('custom_fields') . ' as menu_item_custom_fields');
+        $m->query->select('a.' . $m->db->qn('parameters') . ' as menu_item_parameters');
+        $m->query->select('a.' . $m->db->qn('metadata') . ' as menu_item_metadata');
+        $m->query->select('a.' . $m->db->qn('translation_of_id') . ' as menu_item_translation_of_id');
+        $m->query->select('a.' . $m->db->qn('language') . ' as menu_item_language');
 
-        $m->query->select('a_assets.' . $m->db->nq('id') . ' as menu_item_asset_id');
-        $m->query->select('a_assets.' . $m->db->nq('view_group_id') . ' as menu_item_view_group_id');
+        $m->query->select('a_assets.' . $m->db->qn('id') . ' as menu_item_asset_id');
+        $m->query->select('a_assets.' . $m->db->qn('view_group_id') . ' as menu_item_view_group_id');
 
-        $m->query->from($m->db->nq('#__content') . ' as a');
+        $m->query->from($m->db->qn('#__content') . ' as a');
 
-        $m->query->where('a.' . $m->db->nq('extension_instance_id') .
-            ' = b.' . $m->db->nq('id'));
-        $m->query->where('a.' . $m->db->nq('id') . ' = ' . (int)$menu_item_id);
+        $m->query->where('a.' . $m->db->qn('extension_instance_id') .
+            ' = b.' . $m->db->qn('id'));
+        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$menu_item_id);
 
         /** Assets Join and View Access Check */
         Services::Access()
@@ -68,18 +68,18 @@ abstract class MolajoMenuitemHelper
         /**
          *  b. Extensions Instances Table
          */
-        $m->query->select('b.' . $m->db->nq('id') . ' as menu_id');
-        $m->query->select('b.' . $m->db->nq('asset_type_id'). 'as menu_asset_type_id');
-        $m->query->select('b.' . $m->db->nq('title'). ' as menu_title');
-        $m->query->select('b.' . $m->db->nq('parameters'). 'as menu_parameters');
-        $m->query->select('b.' . $m->db->nq('metadata'). 'as menu_metadata');
+        $m->query->select('b.' . $m->db->qn('id') . ' as menu_id');
+        $m->query->select('b.' . $m->db->qn('asset_type_id'). 'as menu_asset_type_id');
+        $m->query->select('b.' . $m->db->qn('title'). ' as menu_title');
+        $m->query->select('b.' . $m->db->qn('parameters'). 'as menu_parameters');
+        $m->query->select('b.' . $m->db->qn('metadata'). 'as menu_metadata');
 
-        $m->query->select('b_assets.' . $m->db->nq('id') . ' as menu_asset_id');
-        $m->query->select('b_assets.' . $m->db->nq('view_group_id') . ' as menu_view_group_id');
+        $m->query->select('b_assets.' . $m->db->qn('id') . ' as menu_asset_id');
+        $m->query->select('b_assets.' . $m->db->qn('view_group_id') . ' as menu_view_group_id');
 
-        $m->query->from($m->db->nq('#__extension_instances') . ' as b');
+        $m->query->from($m->db->qn('#__extension_instances') . ' as b');
 
-        $m->query->where('b.' . $m->db->nq('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
+        $m->query->where('b.' . $m->db->qn('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
         $m->query->where('(b.start_publishing_datetime = ' .
                 $m->db->q($m->nullDate) .
                 ' OR b.start_publishing_datetime <= ' . $m->db->q($m->now) . ')'
@@ -103,20 +103,20 @@ abstract class MolajoMenuitemHelper
          *  c. Application Table
          *      Extension Instances must be enabled for the Application
          */
-        $m->query->from($m->db->nq('#__application_extension_instances') . ' as c');
-        $m->query->where('c.' . $m->db->nq('extension_instance_id') .
-            ' = b.' . $m->db->nq('id'));
-        $m->query->where('c.' . $m->db->nq('application_id') .
+        $m->query->from($m->db->qn('#__application_extension_instances') . ' as c');
+        $m->query->where('c.' . $m->db->qn('extension_instance_id') .
+            ' = b.' . $m->db->qn('id'));
+        $m->query->where('c.' . $m->db->qn('application_id') .
             ' = ' . MOLAJO_APPLICATION_ID);
 
         /**
          *  d. Site Table
          *      Extension Instances must be enabled for the Site
          */
-        $m->query->from($m->db->nq('#__site_extension_instances') .' as d');
-        $m->query->where('d.' . $m->db->nq('extension_instance_id') .
-            ' = b.' . $m->db->nq('id'));
-        $m->query->where('d.' . $m->db->nq('site_id') .
+        $m->query->from($m->db->qn('#__site_extension_instances') .' as d');
+        $m->query->where('d.' . $m->db->qn('extension_instance_id') .
+            ' = b.' . $m->db->qn('id'));
+        $m->query->where('d.' . $m->db->qn('site_id') .
             ' = ' . SITE_ID);
 
         /**

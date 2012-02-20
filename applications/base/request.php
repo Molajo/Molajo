@@ -244,11 +244,11 @@ class MolajoRequest
 
         $m = new MolajoAssetsModel();
         if (Services::Configuration()->get('sef', 1) == 0) {
-            $m->query->select($m->db->nq('sef_request'));
+            $m->query->select($m->db->qn('sef_request'));
         } else {
-            $m->query->select($m->db->nq('request'));
+            $m->query->select($m->db->qn('request'));
         }
-        $m->query->where($m->db->nq('id') . ' = ' . (int)$asset_id);
+        $m->query->where($m->db->qn('id') . ' = ' . (int)$asset_id);
 
         return $m->loadResult();
     }

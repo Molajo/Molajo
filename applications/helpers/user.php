@@ -29,7 +29,7 @@ abstract class MolajoUserHelper
     public static function getId($id)
     {
         $m = new MolajoUsersModel();
-        $m->query->where('('.$m->db->nq('id') . ' = ' . (int)$id .
+        $m->query->where('('.$m->db->qn('id') . ' = ' . (int)$id .
             ' OR username = ' . $m->db->q($id).')');
         return $m->loadResult();
     }

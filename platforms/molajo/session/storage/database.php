@@ -68,9 +68,9 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->select($db->nq('data'));
-        $query->from($db->nq('#__sessions'));
-        $query->where($db->nq('session_id') . ' = ' . $db->q($id));
+        $query->select($db->qn('data'));
+        $query->from($db->qn('#__sessions'));
+        $query->where($db->qn('session_id') . ' = ' . $db->q($id));
 
         $db->setQuery($query->__toString());
 
@@ -97,9 +97,9 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->select($db->nq('session_id'));
-        $query->from($db->nq('#__sessions'));
-        $query->where($db->nq('session_id') . ' = ' . $db->q($id));
+        $query->select($db->qn('session_id'));
+        $query->from($db->qn('#__sessions'));
+        $query->where($db->qn('session_id') . ' = ' . $db->q($id));
 
         $db->setQuery($query->__toString());
         $result = $db->loadResult();
@@ -131,10 +131,10 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->update($db->nq('#__sessions'));
-        $query->set($db->nq('data') . ' = ' . $db->q($data));
-        $query->set($db->nq('session_time') . ' = ' . (int)time());
-        $query->where($db->nq('session_id') . ' = ' . $db->q($id));
+        $query->update($db->qn('#__sessions'));
+        $query->set($db->qn('data') . ' = ' . $db->q($data));
+        $query->set($db->qn('session_time') . ' = ' . (int)time());
+        $query->where($db->qn('session_id') . ' = ' . $db->q($id));
 
         $db->setQuery($query->__toString());
 
@@ -161,11 +161,11 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->insert($db->nq('#__sessions'));
-        $query->set($db->nq('session_id') . ' = ' . $db->q($id));
-        $query->set($db->nq('application_id') . ' = ' . $db->q(MOLAJO_APPLICATION_ID));
-        $query->set($db->nq('data') . ' = ' . $db->q($data));
-        $query->set($db->nq('session_time') . ' = ' . (int)time());
+        $query->insert($db->qn('#__sessions'));
+        $query->set($db->qn('session_id') . ' = ' . $db->q($id));
+        $query->set($db->qn('application_id') . ' = ' . $db->q(MOLAJO_APPLICATION_ID));
+        $query->set($db->qn('data') . ' = ' . $db->q($data));
+        $query->set($db->qn('session_time') . ' = ' . (int)time());
 
         $db->setQuery($query->__toString());
 
@@ -192,8 +192,8 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->delete($db->nq('#__sessions'));
-        $query->where($db->nq('session_id') . ' = ' . $db->q($id));
+        $query->delete($db->qn('#__sessions'));
+        $query->where($db->qn('session_id') . ' = ' . $db->q($id));
 
         $db->setQuery($query->__toString());
 
@@ -220,8 +220,8 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->delete($db->nq('#__sessions'));
-        $query->where($db->nq('session_time') . ' = ' . (int)$past);
+        $query->delete($db->qn('#__sessions'));
+        $query->where($db->qn('session_time') . ' = ' . (int)$past);
 
         $db->setQuery($query->__toString());
 

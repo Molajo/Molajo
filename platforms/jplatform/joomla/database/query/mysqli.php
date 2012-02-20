@@ -10,13 +10,12 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Exception class definition for the Database subpackage.
+ * Query Building Class.
  *
  * @package     Joomla.Platform
  * @subpackage  Database
  * @since       11.1
- * @deprecated  12.3 Use semantic exceptions instead
  */
-class JDatabaseException extends Exception
+class JDatabaseQueryMysqli extends JDatabaseQueryMysql
 {
 }

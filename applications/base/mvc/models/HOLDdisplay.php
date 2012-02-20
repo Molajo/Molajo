@@ -783,7 +783,7 @@ class MolajoDisplayModel extends MolajoModel
 
         $this->query->select('a.id AS value, a.name AS text');
         $this->query->from('#__users AS a');
-        $this->query->from($this->db->nq('#' . $this->mvc['component_table']) . ' AS b');
+        $this->query->from($this->db->qn('#' . $this->mvc['component_table']) . ' AS b');
         $this->query->where('a.created_by = b.id');
         $this->query->group('a.id');
         $this->query->order('a.name');
@@ -857,20 +857,20 @@ class MolajoDisplayModel extends MolajoModel
     {
         $this->query = $this->db->getQuery(true);
 
-        $this->query->select('DISTINCT CONCAT(SUBSTRING(a.' . $this->db->nq($columnName) . ', 1, 4),
-                                            SUBSTRING(a.' . $this->db->nq($columnName) . ', 6, 2)) AS value,
-                                            SUBSTRING(a.' . $this->db->nq($columnName) . ', 1, 7) AS text');
+        $this->query->select('DISTINCT CONCAT(SUBSTRING(a.' . $this->db->qn($columnName) . ', 1, 4),
+                                            SUBSTRING(a.' . $this->db->qn($columnName) . ', 6, 2)) AS value,
+                                            SUBSTRING(a.' . $this->db->qn($columnName) . ', 1, 7) AS text');
 
         if ($table == null) {
             $this->queryTable = '#' . $this->mvc['component_table'];
         } else {
             $this->queryTable = $table;
         }
-        $this->query->from($this->db->nq($this->queryTable) . ' AS a');
-        $this->query->group('SUBSTRING(a.' . $this->db->nq($columnName) . ', 1, 4),
-                                            SUBSTRING(a.' . $this->db->nq($columnName) . ', 6, 2),
-                                            SUBSTRING(a.' . $this->db->nq($columnName) . ', 1, 7)');
-        $this->query->order('SUBSTRING(a.' . $this->db->nq($columnName) . ', 1, 7)');
+        $this->query->from($this->db->qn($this->queryTable) . ' AS a');
+        $this->query->group('SUBSTRING(a.' . $this->db->qn($columnName) . ', 1, 4),
+                                            SUBSTRING(a.' . $this->db->qn($columnName) . ', 6, 2),
+                                            SUBSTRING(a.' . $this->db->qn($columnName) . ', 1, 7)');
+        $this->query->order('SUBSTRING(a.' . $this->db->qn($columnName) . ', 1, 7)');
 
         $this->db->setQuery($this->query->__toString());
 
@@ -898,14 +898,14 @@ class MolajoDisplayModel extends MolajoModel
         /** select **/
         if ($showKey == true) {
             if ($showKeyFirst == true) {
-                $nameArray2 = 'CONCAT(' . $this->db->nq($name1) . ', ": ",' . $this->db->nq($name2) . ' )';
+                $nameArray2 = 'CONCAT(' . $this->db->qn($name1) . ', ": ",' . $this->db->qn($name2) . ' )';
             } else {
-                $nameArray2 = 'CONCAT(' . $this->db->nq($name2) . ', " (",' . $this->db->nq($name1) . ', ")")';
+                $nameArray2 = 'CONCAT(' . $this->db->qn($name2) . ', " (",' . $this->db->qn($name1) . ', ")")';
             }
         } else {
             $nameArray2 = $name2;
         }
-        $this->query->select('DISTINCT ' . $this->db->nq($name1) . ' AS value, ' . $nameArray2 . ' as text');
+        $this->query->select('DISTINCT ' . $this->db->qn($name1) . ' AS value, ' . $nameArray2 . ' as text');
 
         /** from **/
         if ($table == null) {
@@ -913,7 +913,7 @@ class MolajoDisplayModel extends MolajoModel
         } else {
             $this->queryTable = $table;
         }
-        $this->query->from($this->db->nq($this->queryTable) . ' AS a');
+        $this->query->from($this->db->qn($this->queryTable) . ' AS a');
 
         /** where **/
         $this->filterFieldName = JRequest::getCmd('filterFieldName', 'config_manager_list_filters') . '_query_filters';
@@ -999,18 +999,18 @@ class MolajoDisplayModel extends MolajoModel
     {
         $this->query = $this->db->getQuery(true);
 
-        $this->query->select('DISTINCT ' . $this->db->nq($columnName) . ' as value');
+        $this->query->select('DISTINCT ' . $this->db->qn($columnName) . ' as value');
 
         if ($table == null) {
-            $this->query->from($this->db->nq('#' . $this->mvc['component_table']));
+            $this->query->from($this->db->qn('#' . $this->mvc['component_table']));
         } else {
-            $this->query->from($this->db->nq($table));
+            $this->query->from($this->db->qn($table));
         }
 
         if ($valueType == 'numeric') {
-            $this->query->where($this->db->nq($columnName) . ' = ' . (int)$value);
+            $this->query->where($this->db->qn($columnName) . ' = ' . (int)$value);
         } else {
-            $this->query->where($this->db->nq($columnName) . ' = ' . $this->db->q($value));
+            $this->query->where($this->db->qn($columnName) . ' = ' . $this->db->q($value));
         }
 
         $this->db->setQuery($this->query->__toString());
@@ -1046,15 +1046,15 @@ class MolajoDisplayModel extends MolajoModel
         $this->query = $this->db->getQuery(true);
 
         $this->query->select('DISTINCT id');
-        $this->query->from($this->db->nq('#__categories'));
+        $this->query->from($this->db->qn('#__categories'));
 
         /** category array **/
         JArrayHelper::toInteger($categoryArray);
         if (empty($categoryArray)) {
             return;
         }
-        $this->query->where($this->db->nq('id') . ' IN (' . $categoryArray . ')');
-        $this->query->where($this->db->nq('extension') . ' = ' . $this->db->q($this->mvc['option']));
+        $this->query->where($this->db->qn('id') . ' IN (' . $categoryArray . ')');
+        $this->query->where($this->db->qn('extension') . ' = ' . $this->db->q($this->mvc['option']));
 
         $this->db->setQuery($this->query->__toString());
 

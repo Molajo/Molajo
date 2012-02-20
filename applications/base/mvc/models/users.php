@@ -51,46 +51,28 @@ class MolajoUsersModel extends MolajoDisplayModel
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
 
         /** retrieve applications for which the user is authorized to login */
-        $query = $this->db->getQuery(true);
+        $m = new MolajoUserApplicationsModel ();
+        $m->query->select($this->db->qn('application_id'));
+        $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
+        $applications = $m->runQuery();
 
-        $query->select('a.' . $this->db->nq('id'));
-        $query->select('a.' . $this->db->nq('name') . ' as title');
-        $query->from($this->db->nq('#__applications') . ' as a');
-        $query->from($this->db->nq('#__user_applications') . ' as b');
-        $query->where('a.' . $this->db->nq('id') .
-            ' = b.' . $this->db->nq('application_id'));
-        $query->where('b.' . $this->db->nq('user_id') .
-            ' = ' . (int)$this->id);
-
-        $this->db->setQuery($query->__toString());
-
-        $data['applications'] = $this->db->loadAssocList('title', 'id');
-
-        if ($this->db->getErrorNum()) {
-            $this->setError($this->db->getErrorMsg());
-            return false;
+        $x = array();
+        foreach ($applications as $application) {
+            $x[] = $application->application_id;
         }
+        $data['applications'] = $x;
 
         /** retrieve groups to which the user belongs */
-        $query = $this->db->getQuery(true);
+        $m = new MolajoUserGroupsModel ();
+        $m->query->select($this->db->qn('group_id'));
+        $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
+        $groups = $m->runQuery();
 
-        $query->select('a.' . $this->db->nq('id'));
-        $query->select('a.' . $this->db->nq('title') . ' as title');
-        $query->from($this->db->nq('#__content') . ' as a');
-        $query->from($this->db->nq('#__user_groups') . ' as b');
-        $query->where('a.' . $this->db->nq('id') .
-            ' = b.' . $this->db->nq('group_id'));
-        $query->where('b.' . $this->db->nq('user_id') .
-            ' = ' . (int)$this->id);
-
-        $this->db->setQuery($query->__toString());
-
-        $data['groups'] = $this->db->loadAssocList('title', 'id');
-
-        if ($this->db->getErrorNum()) {
-            $this->setError($this->db->getErrorMsg());
-            return false;
+        $x = array();
+        foreach ($groups as $group) {
+            $x[] = $group->group_id;
         }
+        $data['groups'] = $x;
 
         /** retrieve system groups to which the user belongs */
         $data['public'] = 1;
@@ -101,24 +83,16 @@ class MolajoUsersModel extends MolajoDisplayModel
         }
 
         /** retrieve view access groups to which the user belongs */
-        $query = $this->db->getQuery(true);
+        $m = new MolajoUserViewGroupsModel ();
+        $m->query->select($this->db->qn('view_group_id'));
+        $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
+        $vgroups = $m->runQuery();
 
-        $query->select('a.' . $this->db->nq('id'));
-        $query->from($this->db->nq('#__view_groups') . ' as a');
-        $query->from($this->db->nq('#__user_view_groups') . ' as b');
-        $query->where('a.' . $this->db->nq('id') .
-            ' = b.' . $this->db->nq('view_group_id'));
-        $query->where('b.' . $this->db->nq('user_id') .
-            ' = ' . (int)$this->id);
-
-        $this->db->setQuery($query->__toString());
-
-        $data['view_groups'] = $this->db->loadResultArray();
-
-        if ($this->db->getErrorNum()) {
-            $this->setError($this->db->getErrorMsg());
-            return false;
+        $x = array();
+        foreach ($vgroups as $vgroup) {
+            $x[] = $vgroup->view_group_id;
         }
+        $data['view_groups'] = $x;
 
         /** return array of primary query and additional data elements */
         return $data;

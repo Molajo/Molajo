@@ -84,9 +84,9 @@ class MolajoDisplayModel extends MolajoCrudModel
             } else {
                 if (isset($this->fields[$select])) {
                     $this->query->select(
-                        $this->db->nq($this->primary_prefix)
+                        $this->db->qn($this->primary_prefix)
                             . '.'
-                            . $this->db->nq($select));
+                            . $this->db->qn($select));
                 }
             }
         }
@@ -95,9 +95,9 @@ class MolajoDisplayModel extends MolajoCrudModel
          *  From
          */
         $this->query->from(
-            $this->db->nq($this->table)
+            $this->db->qn($this->table)
                 . ' as '
-                . $this->db->nq($this->primary_prefix)
+                . $this->db->qn($this->primary_prefix)
         );
 
         if (isset($parameterArray['disable_view_access_check'])
@@ -141,9 +141,9 @@ class MolajoDisplayModel extends MolajoCrudModel
                                 $v = $this->db->q($value);
                             }
                             $this->query->where(
-                                $this->db->nq($this->primary_prefix)
+                                $this->db->qn($this->primary_prefix)
                                     . '.'
-                                    . $this->db->nq($field)
+                                    . $this->db->qn($field)
                                     . ' = '
                                     . $v
                             );
@@ -158,9 +158,9 @@ class MolajoDisplayModel extends MolajoCrudModel
             && (int)$parameterArray[$this->primary_key] > 0
         ) {
             $this->query->where(
-                $this->db->nq($this->primary_prefix)
+                $this->db->qn($this->primary_prefix)
                     . '.'
-                    . $this->db->nq($this->primary_key)
+                    . $this->db->qn($this->primary_key)
                     . ' = '
                     . (int)$parameterArray[$this->primary_key]
             );
@@ -170,9 +170,9 @@ class MolajoDisplayModel extends MolajoCrudModel
             && (int)$parameterArray['asset_type_id'] > 0
         ) {
             $this->query->where(
-                $this->db->nq($this->primary_prefix)
+                $this->db->qn($this->primary_prefix)
                     . '.'
-                    . $this->db->nq('asset_type_id')
+                    . $this->db->qn('asset_type_id')
                     . ' = '
                     . (int)$parameterArray['asset_type_id']
             );
@@ -224,18 +224,18 @@ class MolajoDisplayModel extends MolajoCrudModel
             $this->fields = $this->getFieldDatatypes();
             while (list($name, $value) = each($this->fields)) {
                 $this->query->select(
-                    $this->db->nq($this->primary_prefix)
+                    $this->db->qn($this->primary_prefix)
                         . '.'
-                        . $this->db->nq($name));
+                        . $this->db->qn($name));
             }
         }
 
         /** primary table from clause */
         if ($this->query->from == null) {
             $this->query->from(
-                $this->db->nq($this->table)
+                $this->db->qn($this->table)
                     . ' as '
-                    . $this->db->nq($this->primary_prefix)
+                    . $this->db->qn($this->primary_prefix)
             );
         }
 

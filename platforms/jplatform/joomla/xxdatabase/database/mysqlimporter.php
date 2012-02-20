@@ -147,7 +147,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getAddColumnSQL($table, SimpleXMLElement $field)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ADD COLUMN ' . $this->getColumnSQL($field);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' ADD COLUMN ' . $this->getColumnSQL($field);
 
 		return $sql;
 	}
@@ -164,7 +164,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getAddKeySQL($table, $keys)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ADD ' . $this->getKeySQL($keys);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' ADD ' . $this->getKeySQL($keys);
 
 		return $sql;
 	}
@@ -252,27 +252,25 @@ class JDatabaseImporterMySQL
 							&& ((string) $newLookup[$name][$i]['Collation'] == $oldLookup[$name][$i]->Collation)
 							&& ((string) $newLookup[$name][$i]['Index_type'] == $oldLookup[$name][$i]->Index_type));
 
-						/*
-						Debug.
-						echo '<pre>';
-						echo '<br />Non_unique:   '.
-							((string) $newLookup[$name][$i]['Non_unique'] == $oldLookup[$name][$i]->Non_unique ? 'Pass' : 'Fail').' '.
-							(string) $newLookup[$name][$i]['Non_unique'].' vs '.$oldLookup[$name][$i]->Non_unique;
-						echo '<br />Column_name:  '.
-							((string) $newLookup[$name][$i]['Column_name'] == $oldLookup[$name][$i]->Column_name ? 'Pass' : 'Fail').' '.
-							(string) $newLookup[$name][$i]['Column_name'].' vs '.$oldLookup[$name][$i]->Column_name;
-						echo '<br />Seq_in_index: '.
-							((string) $newLookup[$name][$i]['Seq_in_index'] == $oldLookup[$name][$i]->Seq_in_index ? 'Pass' : 'Fail').' '.
-							(string) $newLookup[$name][$i]['Seq_in_index'].' vs '.$oldLookup[$name][$i]->Seq_in_index;
-						echo '<br />Collation:    '.
-							((string) $newLookup[$name][$i]['Collation'] == $oldLookup[$name][$i]->Collation ? 'Pass' : 'Fail').' '.
-							(string) $newLookup[$name][$i]['Collation'].' vs '.$oldLookup[$name][$i]->Collation;
-						echo '<br />Index_type:   '.
-							((string) $newLookup[$name][$i]['Index_type'] == $oldLookup[$name][$i]->Index_type ? 'Pass' : 'Fail').' '.
-							(string) $newLookup[$name][$i]['Index_type'].' vs '.$oldLookup[$name][$i]->Index_type;
-						echo '<br />Same = '.($same ? 'true' : 'false');
-						echo '</pre>';
-						 */
+						// Debug.
+						//						echo '<pre>';
+						//						echo '<br />Non_unique:   '.
+						//							((string) $newLookup[$name][$i]['Non_unique'] == $oldLookup[$name][$i]->Non_unique ? 'Pass' : 'Fail').' '.
+						//							(string) $newLookup[$name][$i]['Non_unique'].' vs '.$oldLookup[$name][$i]->Non_unique;
+						//						echo '<br />Column_name:  '.
+						//							((string) $newLookup[$name][$i]['Column_name'] == $oldLookup[$name][$i]->Column_name ? 'Pass' : 'Fail').' '.
+						//							(string) $newLookup[$name][$i]['Column_name'].' vs '.$oldLookup[$name][$i]->Column_name;
+						//						echo '<br />Seq_in_index: '.
+						//							((string) $newLookup[$name][$i]['Seq_in_index'] == $oldLookup[$name][$i]->Seq_in_index ? 'Pass' : 'Fail').' '.
+						//							(string) $newLookup[$name][$i]['Seq_in_index'].' vs '.$oldLookup[$name][$i]->Seq_in_index;
+						//						echo '<br />Collation:    '.
+						//							((string) $newLookup[$name][$i]['Collation'] == $oldLookup[$name][$i]->Collation ? 'Pass' : 'Fail').' '.
+						//							(string) $newLookup[$name][$i]['Collation'].' vs '.$oldLookup[$name][$i]->Collation;
+						//						echo '<br />Index_type:   '.
+						//							((string) $newLookup[$name][$i]['Index_type'] == $oldLookup[$name][$i]->Index_type ? 'Pass' : 'Fail').' '.
+						//							(string) $newLookup[$name][$i]['Index_type'].' vs '.$oldLookup[$name][$i]->Index_type;
+						//						echo '<br />Same = '.($same ? 'true' : 'false');
+						//						echo '</pre>';
 
 						if (!$same)
 						{
@@ -331,7 +329,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getChangeColumnSQL($table, SimpleXMLElement $field)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' CHANGE COLUMN ' . $this->db->quoteName((string) $field['Field']) . ' '
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' CHANGE COLUMN ' . $this->db->qn((string) $field['Field']) . ' '
 			. $this->getColumnSQL($field);
 
 		return $sql;
@@ -358,7 +356,7 @@ class JDatabaseImporterMySQL
 		$fDefault = isset($field['Default']) ? (string) $field['Default'] : null;
 		$fExtra = (string) $field['Extra'];
 
-		$sql = $this->db->quoteName($fName) . ' ' . $fType;
+		$sql = $this->db->qn($fName) . ' ' . $fType;
 
 		if ($fNull == 'NO')
 		{
@@ -369,7 +367,7 @@ class JDatabaseImporterMySQL
 			else
 			{
 				// TODO Don't quote numeric values.
-				$sql .= ' NOT NULL DEFAULT ' . $this->db->quote($fDefault);
+				$sql .= ' NOT NULL DEFAULT ' . $this->db->q($fDefault);
 			}
 		}
 		else
@@ -381,7 +379,7 @@ class JDatabaseImporterMySQL
 			else
 			{
 				// TODO Don't quote numeric values.
-				$sql .= ' DEFAULT ' . $this->db->quote($fDefault);
+				$sql .= ' DEFAULT ' . $this->db->q($fDefault);
 			}
 		}
 
@@ -405,7 +403,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getDropColumnSQL($table, $name)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' DROP COLUMN ' . $this->db->quoteName($name);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' DROP COLUMN ' . $this->db->qn($name);
 
 		return $sql;
 	}
@@ -422,7 +420,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getDropKeySQL($table, $name)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' DROP KEY ' . $this->db->quoteName($name);
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' DROP KEY ' . $this->db->qn($name);
 
 		return $sql;
 	}
@@ -438,7 +436,7 @@ class JDatabaseImporterMySQL
 	 */
 	protected function getDropPrimaryKeySQL($table)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' DROP PRIMARY KEY';
+		$sql = 'ALTER TABLE ' . $this->db->qn($table) . ' DROP PRIMARY KEY';
 
 		return $sql;
 	}
@@ -509,7 +507,7 @@ class JDatabaseImporterMySQL
 
 		if ($nColumns == 1)
 		{
-			$kColumns[] = $this->db->quoteName($kColumn);
+			$kColumns[] = $this->db->qn($kColumn);
 		}
 		else
 		{
@@ -519,7 +517,7 @@ class JDatabaseImporterMySQL
 			}
 		}
 
-		$sql = $prefix . 'KEY ' . ($kName != 'PRIMARY' ? $this->db->quoteName($kName) : '') . ' (' . implode(',', $kColumns) . ')';
+		$sql = $prefix . 'KEY ' . ($kName != 'PRIMARY' ? $this->db->qn($kName) : '') . ' (' . implode(',', $kColumns) . ')';
 
 		return $sql;
 	}

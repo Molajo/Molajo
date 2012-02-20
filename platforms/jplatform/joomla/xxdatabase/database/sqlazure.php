@@ -9,7 +9,9 @@
 
 defined('JPATH_PLATFORM') or die;
 
-JLoader::register('JDatabaseSQLSrv', __DIR__ . '/sqlsrv.php');
+JLoader::register('JDatabaseSQLSrv', dirname(__FILE__) . '/sqlsrv.php');
+
+JLoader::register('JDatabaseQuerySQLAzure', dirname(__FILE__) . '/sqlazurequery.php');
 
 /**
  * SQL Server database driver
@@ -44,12 +46,12 @@ class JDatabaseSQLAzure extends JDatabaseSQLSrv
 		if ($new)
 		{
 			// Make sure we have a query class for this driver.
-			if (!class_exists('JDatabaseQuerySqlazure'))
+			if (!class_exists('JDatabaseQuerySQLAzure'))
 			{
 				throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
 			}
 
-			return new JDatabaseQuerySqlazure($this);
+			return new JDatabaseQuerySQLAzure($this);
 		}
 		else
 		{

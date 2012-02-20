@@ -202,8 +202,9 @@ class MolajoConfigurationService
         } else {
 
             $m = new MolajoApplicationsModel ();
-            $m->query->where($m->db->nq('name') .
+            $m->query->where($m->db->qn('name') .
                 ' = ' . $m->db->q(MOLAJO_APPLICATION));
+
             $results = $m->runQuery();
 
             if (count($results) == 0) {

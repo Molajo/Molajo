@@ -174,18 +174,18 @@ class MolajoImageService
         $now = $date->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select($db->nq('path'));
-        $query->from($db->nq('#__content') . 'as a');
-        $query->where('a.' . $db->nq('status') . ' = 1');
-        $query->where('(a.' . $db->nq('start_publishing_datetime') . ' = ' . $db->q($nullDate) .
-            ' OR a.' . $db->nq('start_publishing_datetime') . ' <= ' . $db->q($now) . ')');
-        $query->where('(a.' . $db->nq('stop_publishing_datetime') . ' = ' . $db->q($nullDate) .
-            ' OR a.' . $db->nq('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')');
+        $query->select($db->qn('path'));
+        $query->from($db->qn('#__content') . 'as a');
+        $query->where('a.' . $db->qn('status') . ' = 1');
+        $query->where('(a.' . $db->qn('start_publishing_datetime') . ' = ' . $db->q($nullDate) .
+            ' OR a.' . $db->qn('start_publishing_datetime') . ' <= ' . $db->q($now) . ')');
+        $query->where('(a.' . $db->qn('stop_publishing_datetime') . ' = ' . $db->q($nullDate) .
+            ' OR a.' . $db->qn('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')');
         $query->where('a.id = ' . (int)$this->id);
 
-        $query->from($db->nq('#__assets') . 'as b');
-        $query->where('b.' . $db->nq('source_id') . ' = ' . $db->nq('id'));
-        $query->where('b.' . $db->nq('asset_type_id') . ' = ' . $db->nq('asset_type_id'));
+        $query->from($db->qn('#__assets') . 'as b');
+        $query->where('b.' . $db->qn('source_id') . ' = ' . $db->qn('id'));
+        $query->where('b.' . $db->qn('asset_type_id') . ' = ' . $db->qn('asset_type_id'));
 
         $db->setQuery($query->__toString());
 

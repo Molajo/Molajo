@@ -30,8 +30,8 @@ abstract class MolajoContentHelper
 
         $m->query->select('a.*');
         $m->query->from('#__content as a ');
-        $m->query->where('a.' . $m->db->nq('id') . ' = ' . (int)$id);
-        $m->query->where('a.' . $m->db->nq('status') .
+        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$id);
+        $m->query->where('a.' . $m->db->qn('status') .
             ' > ' . MOLAJO_STATUS_UNPUBLISHED);
 
         $m->query->where('(a.start_publishing_datetime = ' .

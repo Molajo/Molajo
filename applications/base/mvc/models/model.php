@@ -485,9 +485,9 @@ class MolajoModel
         }
         if ($this->query->from == null) {
             $this->query->from(
-                $this->db->nq($this->table)
+                $this->db->qn($this->table)
                     . ' as '
-                    . $this->db->nq($this->primary_prefix)
+                    . $this->db->qn($this->primary_prefix)
             );
         }
 

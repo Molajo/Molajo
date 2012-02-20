@@ -36,38 +36,38 @@ class MolajoModelHelper
         $nullDate = $db->getNullDate();
 
         $query->where(
-            $db->nq($prefix)
+            $db->qn($prefix)
                 . '.'
-                . $db->nq('status')
+                . $db->qn('status')
                 . ' > '
                 . (int)MOLAJO_STATUS_UNPUBLISHED
         );
 
         $query->where('('
-                . $db->nq($prefix)
+                . $db->qn($prefix)
                 . '.'
-                . $db->nq('start_publishing_datetime')
+                . $db->qn('start_publishing_datetime')
                 . ' = '
                 . $db->q($nullDate)
                 . ' OR '
-                . $db->nq($prefix)
+                . $db->qn($prefix)
                 . '.'
-                . $db->nq('start_publishing_datetime')
+                . $db->qn('start_publishing_datetime')
                 . ' <= '
                 . $db->q($now)
                 . ')'
         );
 
         $query->where('('
-                . $db->nq($prefix)
+                . $db->qn($prefix)
                 . '.'
-                . $db->nq('stop_publishing_datetime')
+                . $db->qn('stop_publishing_datetime')
                 . ' = '
                 . $db->q($nullDate)
                 . ' OR '
-                . $db->nq($prefix)
+                . $db->qn($prefix)
                 . '.'
-                . $db->nq('stop_publishing_datetime')
+                . $db->qn('stop_publishing_datetime')
                 . ' >= '
                 . $db->q($now)
                 . ')'
@@ -91,10 +91,10 @@ class MolajoModelHelper
         $prefix = 'a',
         $db)
     {
-        $query->select($db->nq('users') . '.' . $db->nq('username') . ' as ' . $db->nq('created_by_name'));
-        $query->from($db->nq('#__users') . ' as ' . $db->nq('users'));
-        $query->where($db->nq('a') . '.' . $db->nq('created_by')
-            . ' = ' . $db->nq('users') . '.' . $db->nq('id'));
+        $query->select($db->qn('users') . '.' . $db->qn('username') . ' as ' . $db->qn('created_by_name'));
+        $query->from($db->qn('#__users') . ' as ' . $db->qn('users'));
+        $query->where($db->qn('a') . '.' . $db->qn('created_by')
+            . ' = ' . $db->qn('users') . '.' . $db->qn('id'));
 
         return $query;
 
@@ -118,11 +118,11 @@ class MolajoModelHelper
         $prefix = 'a',
         $db)
     {
-        $query->select($db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
-        $query->select($db->nq('pcat') . '.title' . ' as ' . $db->nq('category_title'));
-        $query->from($db->nq('#__content') . ' as ' . $db->nq('pcat'));
-        $query->where($db->nq('pcat') . '.' . $db->nq('id')
-            . ' = ' . $db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
+        $query->select($db->qn('a_assets') . '.' . $db->qn('primary_category_id'));
+        $query->select($db->qn('pcat') . '.title' . ' as ' . $db->qn('category_title'));
+        $query->from($db->qn('#__content') . ' as ' . $db->qn('pcat'));
+        $query->where($db->qn('pcat') . '.' . $db->qn('id')
+            . ' = ' . $db->qn('a_assets') . '.' . $db->qn('primary_category_id'));
 
         return $query;
 
@@ -510,21 +510,21 @@ class MolajoModelHelper
 
         $m = new $model();
 
-        $m->query->select($m->db->nq('a') . '.' . $m->db->nq($key) . ' as ' . $m->db->nq('key'));
-        $m->query->select($m->db->nq('a') . '.' . $m->db->nq($value) . ' as ' . $m->db->nq('value'));
+        $m->query->select($m->db->qn('a') . '.' . $m->db->qn($key) . ' as ' . $m->db->qn('key'));
+        $m->query->select($m->db->qn('a') . '.' . $m->db->qn($value) . ' as ' . $m->db->qn('value'));
 
-        $m->query->from($m->db->nq(trim($m->table)) . ' as ' . $m->db->nq('a'));
+        $m->query->from($m->db->qn(trim($m->table)) . ' as ' . $m->db->qn('a'));
 
         if ((int)$assettypes == '0') {
         } else {
-            $m->query->where($m->db->nq('a')
+            $m->query->where($m->db->qn('a')
                 . '.'
-                . $m->db->nq('asset_type_id')
+                . $m->db->qn('asset_type_id')
                 . ' IN (' . $assettypes . ')');
         }
 
         if ((int)$status == 1) {
-            $m->query->where($m->db->nq('status')
+            $m->query->where($m->db->qn('status')
                 . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
         }
 
@@ -634,8 +634,8 @@ class MolajoModelHelper
         $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
-        $query->select('a.' . $db->nq('view_group_id'));
-        $query->select('a.' . $db->nq('asset'));
+        $query->select('a.' . $db->qn('view_group_id'));
+        $query->select('a.' . $db->qn('asset'));
     }
 
     /**

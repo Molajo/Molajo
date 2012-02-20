@@ -79,10 +79,10 @@ $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php',
 
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
-require_once MOLAJO_APPLICATIONS . '/services/text.php';
+require_once MOLAJO_APPLICATIONS . '/services/language.php';
 if (class_exists('JText')) {
 } else {
-    class JText extends MolajoTextService
+    class JText extends MolajoLanguageService
     {
     }
 }
@@ -126,15 +126,24 @@ foreach ($files as $file) {
 /**
  *  Database
  */
-JLoader::register('JDatabaseMySQL', JOOMLA_LIBRARY . '/database/database/mysql.php');
-JLoader::register('JDatabaseMySQLi', JOOMLA_LIBRARY . '/database/database/mysqli.php');
-JLoader::register('JDatabaseSQLSrv', JOOMLA_LIBRARY . '/database/database/sqlsrv.php');
-JLoader::register('JDatabaseSQLAzure', JOOMLA_LIBRARY . '/database/database/sqlazure.php');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database.php', 'JDatabase');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/query.php', 'JDatabaseQueryElement');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/exception.php', 'JDatabaseException');
 
-JLoader::register('JDatabaseInterface', JOOMLA_LIBRARY . '/database/database.php');
-JLoader::register('JDatabase', JOOMLA_LIBRARY . '/database/database.php');
-JLoader::register('JDatabaseQueryElement', JOOMLA_LIBRARY . '/database/query.php');
-JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY . '/database/query.php');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/mysql.php', 'JDatabaseMySQL');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/mysqli.php', 'JDatabaseMySQLi');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/sqlsrv.php', 'JDatabaseSQLSrv');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/sqlazure.php', 'JDatabaseSQLAzure');
+
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/mysqlexporter.php', 'JDatabaseExporterMySQL');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/mysqliexporter.php', 'JDatabaseExporterMySQLi');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/mysqlimporter.php', 'JDatabaseImporterMySQL');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/database/mysqliimporter.php', 'JDatabaseImporterMySQLi');
+
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/query/mysql.php', 'JDatabaseQueryMysql');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/query/mysqli.php', 'JDatabaseQueryMysqli');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/query/sqlsrv.php', 'JDatabaseQuerySqlsrv');
+$load->requireClassFile(JOOMLA_LIBRARY . '/database/query/sqlazure.php', 'JDatabaseQuerySqlazure');
 
 /**
  *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved

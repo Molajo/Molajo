@@ -9,21 +9,21 @@
 
 defined('JPATH_PLATFORM') or die;
 
-require_once __DIR__ . '/mysqlexporter.php';
+require_once dirname(__FILE__) . '/mysqlimporter.php';
 
 /**
- * MySQL export driver.
+ * MySQL import driver.
  *
  * @package     Joomla.Platform
  * @subpackage  Database
  * @since       11.1
  */
-class JDatabaseExporterMySQLi extends JDatabaseExporterMySQL
+class JDatabaseImporterMySQLi extends JDatabaseImporterMySQL
 {
 	/**
 	 * Checks if all data and options are in order prior to exporting.
 	 *
-	 * @return  JDatabaseExporterMySQLi  Method supports chaining.
+	 * @return  JDatabaseImporterMySQLi  Method supports chaining.
 	 *
 	 * @since   11.1
 	 * @throws  Exception if an error is encountered.
@@ -50,7 +50,7 @@ class JDatabaseExporterMySQLi extends JDatabaseExporterMySQL
 	 *
 	 * @param   JDatabaseMySQLi  $db  The database connector.
 	 *
-	 * @return  JDatabaseExporterMySQLi  Method supports chaining.
+	 * @return  JDatabaseImporterMySQLi  Method supports chaining.
 	 *
 	 * @since   11.1
 	 */

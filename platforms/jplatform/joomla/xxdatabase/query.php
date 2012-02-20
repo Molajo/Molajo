@@ -132,10 +132,6 @@ class JDatabaseQueryElement
  * @package     Joomla.Platform
  * @subpackage  Database
  * @since       11.1
- *
- * @method      string  q   Alias for quote method
- * @method      string  qn  Alias for quoteName method
- * @method      string  e   Alias for escape method
  */
 abstract class JDatabaseQuery
 {
@@ -242,12 +238,6 @@ abstract class JDatabaseQuery
 	protected $autoIncrementField = null;
 
 	/**
-	 * @var    JDatabaseQueryElement  The union element.
-	 * @since  12.1
-	 */
-	protected $union = null;
-
-	/**
 	 * Magic method to provide method alias support for quote() and quoteName().
 	 *
 	 * @param   string  $method  The called method.
@@ -314,7 +304,7 @@ abstract class JDatabaseQuery
 				$query .= (string) $this->from;
 				if ($this->join)
 				{
-					// Special case for joins
+					// special case for joins
 					foreach ($this->join as $join)
 					{
 						$query .= (string) $join;
@@ -343,17 +333,13 @@ abstract class JDatabaseQuery
 
 				break;
 
-			case 'union':
-				$query .= (string) $this->union;
-			break;
-
 			case 'delete':
 				$query .= (string) $this->delete;
 				$query .= (string) $this->from;
 
 				if ($this->join)
 				{
-					// Special case for joins
+					// special case for joins
 					foreach ($this->join as $join)
 					{
 						$query .= (string) $join;
@@ -372,7 +358,7 @@ abstract class JDatabaseQuery
 
 				if ($this->join)
 				{
-					// Special case for joins
+					// special case for joins
 					foreach ($this->join as $join)
 					{
 						$query .= (string) $join;
@@ -455,17 +441,15 @@ abstract class JDatabaseQuery
 	 * Usage:
 	 * $query->select($query->charLength('a'));
 	 *
-	 * @param   string  $field      A value.
-	 * @param   string  $operator   Comparison operator between charLength integer value and $condition
-	 * @param   string  $condition  Integer value to compare charLength with.
+	 * @param   string  $field  A value.
 	 *
 	 * @return  string  The required char length call.
 	 *
 	 * @since 11.1
 	 */
-	public function charLength($field, $operator = null, $condition = null)
+	public function charLength($field)
 	{
-		return 'CHAR_LENGTH(' . $field . ')' . (isset($operator) && isset($condition) ? ' ' . $operator . ' ' . $condition : '');
+		return 'CHAR_LENGTH(' . $field . ')';
 	}
 
 	/**
@@ -538,10 +522,6 @@ abstract class JDatabaseQuery
 				$this->values = null;
 				break;
 
-			case 'union':
-				$this->union = null;
-				break;
-
 			default:
 				$this->type = null;
 				$this->select = null;
@@ -558,7 +538,6 @@ abstract class JDatabaseQuery
 				$this->columns = null;
 				$this->values = null;
 				$this->autoIncrementField = null;
-				$this->union = null;
 				break;
 		}
 
@@ -704,7 +683,7 @@ abstract class JDatabaseQuery
 	 * @return  string  The escaped string.
 	 *
 	 * @since   11.1
-	 * @throws  JDatabaseException if the internal db property is not a valid object.
+	 * @throws  DatabaseError if the internal db property is not a valid object.
 	 */
 	public function escape($text, $extra = false)
 	{
@@ -742,108 +721,6 @@ abstract class JDatabaseQuery
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Used to get a string to extract year from date column.
-	 *
-	 * Usage:
-	 * $query->select($query->year($query->quoteName('dateColumn')));
-	 *
-	 * @param   string  $date  Date column containing year to be extracted.
-	 *
-	 * @return  string  Returns string to extract year from a date.
-	 *
-	 * @since   12.1
-	 */
-	public function year($date)
-	{
-		return 'YEAR(' . $date . ')';
-	}
-
-	/**
-	 * Used to get a string to extract month from date column.
-	 *
-	 * Usage:
-	 * $query->select($query->month($query->quoteName('dateColumn')));
-	 *
-	 * @param   string  $date  Date column containing month to be extracted.
-	 *
-	 * @return  string  Returns string to extract month from a date.
-	 *
-	 * @since   12.1
-	 */
-	public function month($date)
-	{
-		return 'MONTH(' . $date . ')';
-	}
-
-	/**
-	 * Used to get a string to extract day from date column.
-	 *
-	 * Usage:
-	 * $query->select($query->day($query->quoteName('dateColumn')));
-	 *
-	 * @param   string  $date  Date column containing day to be extracted.
-	 *
-	 * @return  string  Returns string to extract day from a date.
-	 *
-	 * @since   12.1
-	 */
-	public function day($date)
-	{
-		return 'DAY(' . $date . ')';
-	}
-
-	/**
-	 * Used to get a string to extract hour from date column.
-	 *
-	 * Usage:
-	 * $query->select($query->hour($query->quoteName('dateColumn')));
-	 *
-	 * @param   string  $date  Date column containing hour to be extracted.
-	 *
-	 * @return  string  Returns string to extract hour from a date.
-	 *
-	 * @since   12.1
-	 */
-	public function hour($date)
-	{
-		return 'HOUR(' . $date . ')';
-	}
-
-	/**
-	 * Used to get a string to extract minute from date column.
-	 *
-	 * Usage:
-	 * $query->select($query->minute($query->quoteName('dateColumn')));
-	 *
-	 * @param   string  $date  Date column containing minute to be extracted.
-	 *
-	 * @return  string  Returns string to extract minute from a date.
-	 *
-	 * @since   12.1
-	 */
-	public function minute($date)
-	{
-		return 'MINUTE(' . $date . ')';
-	}
-
-	/**
-	 * Used to get a string to extract seconds from date column.
-	 *
-	 * Usage:
-	 * $query->select($query->second($query->quoteName('dateColumn')));
-	 *
-	 * @param   string  $date  Date column containing second to be extracted.
-	 *
-	 * @return  string  Returns string to extract second from a date.
-	 *
-	 * @since   12.1
-	 */
-	public function second($date)
-	{
-		return 'SECOND(' . $date . ')';
 	}
 
 	/**
@@ -1033,7 +910,7 @@ abstract class JDatabaseQuery
 
 		if ($quoted)
 		{
-			return $this->db->quote($result);
+			return $this->db->q($result);
 		}
 
 		return $result;
@@ -1103,7 +980,7 @@ abstract class JDatabaseQuery
 	 * @return  string  The quoted input string.
 	 *
 	 * @since   11.1
-	 * @throws  JDatabaseException if the internal db property is not a valid object.
+	 * @throws  DatabaseError if the internal db property is not a valid object.
 	 */
 	public function quote($text, $escape = true)
 	{
@@ -1112,7 +989,7 @@ abstract class JDatabaseQuery
 			throw new JDatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
-		return $this->db->quote(($escape ? $this->db->escape($text) : $text));
+		return $this->db->q(($escape ? $this->db->escape($text) : $text));
 	}
 
 	/**
@@ -1133,7 +1010,7 @@ abstract class JDatabaseQuery
 	 * @return  string  The quote wrapped name.
 	 *
 	 * @since   11.1
-	 * @throws  JDatabaseException if the internal db property is not a valid object.
+	 * @throws  DatabaseError if the internal db property is not a valid object.
 	 */
 	public function quoteName($name)
 	{
@@ -1142,7 +1019,7 @@ abstract class JDatabaseQuery
 			throw new JDatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
-		return $this->db->quoteName($name);
+		return $this->db->qn($name);
 	}
 
 	/**
@@ -1322,80 +1199,5 @@ abstract class JDatabaseQuery
 				$this->{$k} = unserialize(serialize($v));
 			}
 		}
-	}
-
-	/**
-	 * Add a query to UNION with the current query.
-	 * Multiple unions each require separate statements and create an array of unions.
-	 *
-	 * Usage:
-	 * $query->union('SELECT name FROM  #__foo')
-	 * $query->union('SELECT name FROM  #__foo','distinct')
-	 * $query->union(array('SELECT name FROM  #__foo','SELECT name FROM  #__bar'))
-	 *
-	 * @param   mixed    $query     The JDatabaseQuery object or string to union.
-	 * @param   boolean  $distinct  True to only return distinct rows from the union.
-	 * @param   string   $glue      The glue by which to join the conditions.
-	 *
-	 * @return  mixed    The JDatabaseQuery object on success or boolean false on failure.
-	 *
-	 * @since   12.1
-	 */
-	public function union($query, $distinct = false, $glue = '')
-	{
-
-		// Clear any ORDER BY clause in UNION query
-		// See http://dev.mysql.com/doc/refman/5.0/en/union.html
-		if (!is_null($this->order))
-		{
-			$this->clear('order');
-		}
-
-		// Set up the DISTINCT flag, the name with parentheses, and the glue.
-		if ($distinct)
-		{
-			$name = 'UNION DISTINCT ()';
-			$glue = ')' . PHP_EOL . 'UNION DISTINCT (';
-		}
-		else
-		{
-			$glue = ')' . PHP_EOL . 'UNION (';
-			$name = 'UNION ()';
-
-		}
-		// Get the JDatabaseQueryElement if it does not exist
-		if (is_null($this->union))
-		{
-				$this->union = new JDatabaseQueryElement($name, $query, "$glue");
-		}
-		// Otherwise append the second UNION.
-		else
-		{
-			$glue = '';
-			$this->union->append($query);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Add a query to UNION DISTINCT with the current query. Simply a proxy to Union with the Distinct clause.
-	 *
-	 * Usage:
-	 * $query->unionDistinct('SELECT name FROM  #__foo')
-	 *
-	 * @param   mixed   $query  The JDatabaseQuery object or string to union.
-	 * @param   string  $glue   The glue by which to join the conditions.
-	 *
-	 * @return  mixed   The JDatabaseQuery object on success or boolean false on failure.
-	 *
-	 * @since   12.1
-	 */
-	public function unionDistinct($query, $glue = '')
-	{
-		$distinct = true;
-
-		// Apply the distinct flag to the union.
-		return $this->union($query, $distinct, $glue);
 	}
 }

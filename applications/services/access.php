@@ -193,9 +193,9 @@ class MolajoAccessService
         /** check for permission */
         $action_id = 3;
         $m = new MolajoGroupPermissionsModel();
-        $m->query->where($m->db->nq('asset_id') . ' = ' . (int)$asset_id);
-        $m->query->where($m->db->nq('action_id') . ' = ' . (int)$action_id);
-        $m->query->where($m->db->nq('group_id')
+        $m->query->where($m->db->qn('asset_id') . ' = ' . (int)$asset_id);
+        $m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
+        $m->query->where($m->db->qn('group_id')
                 . ' IN (' . implode(',', Services::User()->get('groups')) . ')'
         );
 
@@ -257,49 +257,49 @@ class MolajoAccessService
 
         if ($parameters['select'] === true) {
             $query->select(
-                $db->nq($parameters['asset_prefix']) .
+                $db->qn($parameters['asset_prefix']) .
                     '.' .
-                    $db->nq('view_group_id')
+                    $db->qn('view_group_id')
             );
 
             $query->select(
-                $db->nq($parameters['asset_prefix']) .
+                $db->qn($parameters['asset_prefix']) .
                     '.' .
-                    $db->nq('id') .
+                    $db->qn('id') .
                     ' as ' .
-                    $db->nq('asset_id')
+                    $db->qn('asset_id')
             );
         }
 
         $query->from(
-            $db->nq('#__assets') .
+            $db->qn('#__assets') .
                 ' as ' .
-                $db->nq($parameters['asset_prefix'])
+                $db->qn($parameters['asset_prefix'])
         );
 
         $query->where(
-            $db->nq($parameters['asset_prefix']) .
+            $db->qn($parameters['asset_prefix']) .
                 '.' .
-                $db->nq('source_id') .
+                $db->qn('source_id') .
                 ' = ' .
-                $db->nq($parameters['join_to_prefix']) .
+                $db->qn($parameters['join_to_prefix']) .
                 '.' .
-                $db->nq($parameters['join_to_primary_key'])
+                $db->qn($parameters['join_to_primary_key'])
         );
 
         $query->where(
-            $db->nq($parameters['asset_prefix']) .
-                '.' . $db->nq('asset_type_id') .
+            $db->qn($parameters['asset_prefix']) .
+                '.' . $db->qn('asset_type_id') .
                 ' = ' .
-                $db->nq($parameters['join_to_prefix']) .
+                $db->qn($parameters['join_to_prefix']) .
                 '.' .
-                $db->nq('asset_type_id')
+                $db->qn('asset_type_id')
         );
 
         $query->where(
-            $db->nq($parameters['asset_prefix']) .
+            $db->qn($parameters['asset_prefix']) .
                 '.' .
-                $db->nq('view_group_id') .
+                $db->qn('view_group_id') .
                 ' IN (' . implode(',',
                 Services::User()
                     ->get('view_groups')) .
@@ -307,9 +307,9 @@ class MolajoAccessService
         );
 
         $query->where(
-            $db->nq($parameters['asset_prefix']) .
+            $db->qn($parameters['asset_prefix']) .
                 '.' .
-                $db->nq('redirect_to_id') .
+                $db->qn('redirect_to_id') .
                 ' = 0');
 
         return $query;

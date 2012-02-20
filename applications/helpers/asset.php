@@ -33,33 +33,33 @@ abstract class MolajoAssetHelper
     {
         $m = new MolajoAssetsModel();
 
-        $m->query->select('a.' . $m->db->nq('id') . ' as asset_id');
-        $m->query->select('a.' . $m->db->nq('asset_type_id'));
-        $m->query->select('a.' . $m->db->nq('source_id'));
-        $m->query->select('a.' . $m->db->nq('routable'));
-        $m->query->select('a.' . $m->db->nq('sef_request'));
-        $m->query->select('a.' . $m->db->nq('request'));
-        $m->query->select('a.' . $m->db->nq('request_option'));
-        $m->query->select('a.' . $m->db->nq('request_model'));
-        $m->query->select('a.' . $m->db->nq('redirect_to_id'));
-        $m->query->select('a.' . $m->db->nq('view_group_id'));
-        $m->query->select('a.' . $m->db->nq('primary_category_id'));
-        $m->query->select('b.' . $m->db->nq('source_table'));
+        $m->query->select('a.' . $m->db->qn('id') . ' as asset_id');
+        $m->query->select('a.' . $m->db->qn('asset_type_id'));
+        $m->query->select('a.' . $m->db->qn('source_id'));
+        $m->query->select('a.' . $m->db->qn('routable'));
+        $m->query->select('a.' . $m->db->qn('sef_request'));
+        $m->query->select('a.' . $m->db->qn('request'));
+        $m->query->select('a.' . $m->db->qn('request_option'));
+        $m->query->select('a.' . $m->db->qn('request_model'));
+        $m->query->select('a.' . $m->db->qn('redirect_to_id'));
+        $m->query->select('a.' . $m->db->qn('view_group_id'));
+        $m->query->select('a.' . $m->db->qn('primary_category_id'));
+        $m->query->select('b.' . $m->db->qn('source_table'));
 
-        $m->query->from($m->db->nq('#__assets') . ' as a');
-        $m->query->from($m->db->nq('#__asset_types') . ' as b');
+        $m->query->from($m->db->qn('#__assets') . ' as a');
+        $m->query->from($m->db->qn('#__asset_types') . ' as b');
 
-        $m->query->where('a.' . $m->db->nq('asset_type_id') .
-            ' = b.' . $m->db->nq('id'));
+        $m->query->where('a.' . $m->db->qn('asset_type_id') .
+            ' = b.' . $m->db->qn('id'));
 
         if ((int)$asset_id == 0) {
-            $m->query->where('(a.' . $m->db->nq('sef_request') .
+            $m->query->where('(a.' . $m->db->qn('sef_request') .
                     ' = ' . $m->db->q($query_request) .
-                    ' OR a.' . $m->db->nq('request') . ' = ' .
+                    ' OR a.' . $m->db->qn('request') . ' = ' .
                     $m->db->q($query_request) . ')'
             );
         } else {
-            $m->query->where('a.' . $m->db->nq('id') . ' = ' .
+            $m->query->where('a.' . $m->db->qn('id') . ' = ' .
                     (int)$asset_id
             );
         }
@@ -120,12 +120,12 @@ abstract class MolajoAssetHelper
     {
         $m = new MolajoAssetsModel();
 
-        $m->query->select('a.' . $m->db->nq('id') . ' as asset_id');
-        $m->query->where('a.' . $m->db->nq('asset_type_id') .
+        $m->query->select('a.' . $m->db->qn('id') . ' as asset_id');
+        $m->query->where('a.' . $m->db->qn('asset_type_id') .
             ' = ' . (int)$asset_type_id);
-        $m->query->where('a.' . $m->db->nq('source_id') .
+        $m->query->where('a.' . $m->db->qn('source_id') .
             ' = ' . (int)$source_id);
-        $m->query->where('a.' . $m->db->nq('view_group_id') .
+        $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
                 implode(',', Services::User()->get('view_groups')) . ')'
         );
@@ -153,12 +153,12 @@ abstract class MolajoAssetHelper
         $m = new MolajoAssetsModel();
 
         if (Services::Configuration()->get('sef', 1) == 1) {
-            $m->query->select('a.' . $m->db->nq('sef_request'));
+            $m->query->select('a.' . $m->db->qn('sef_request'));
         } else {
-            $m->query->select('a.' . $m->db->nq('request'));
+            $m->query->select('a.' . $m->db->qn('request'));
         }
-        $m->query->where('a.' . $m->db->nq('id') . ' = ' . (int)$asset_id);
-        $m->query->where('a.' . $m->db->nq('view_group_id') .
+        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$asset_id);
+        $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
                 implode(',', Services::User()->get('view_groups')) . ')'
         );
