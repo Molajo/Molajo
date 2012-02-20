@@ -71,8 +71,7 @@ class MolajoGridFiltersModuleModel extends MolajoModel
             $row = new stdClass();
 
             $row->name = $filter;
-            $row->list = $h->getFilterList($filter);
-
+            $row->list = $h->getList($filter);
             $row->selected = ''; //get from user state
 
             $this->data[] = $row;

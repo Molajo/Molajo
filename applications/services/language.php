@@ -251,6 +251,10 @@ class MolajoLanguageService
      * @return mixed
      * @since  1.0
      */
+    public function translate($key)
+     {
+         return $this->_($key);
+     }
     public function _($key)
     {
         if (isset($this->loaded_strings[$key])) {

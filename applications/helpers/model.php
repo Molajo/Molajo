@@ -393,47 +393,118 @@ class MolajoModelHelper
     /**
      * getList
      *
-     * @return  list
-     * @since   1.0
+     * @param $model
+     * @param string $name
+     *
+     * @return list
+     * @since  1.0
      */
-    public function getFilterList($field)
+    public function getList($field)
     {
-        echo 'Field ' . $field . '<br />';
-        // parameters:
-        // add acl checks, if desired
-        // add component-specific filtering, if desired
-        // types of groups
+        $lists = simplexml_load_file(
+            MOLAJO_APPLICATIONS . '/options/lists.xml'
+        );
+        if (count($lists) == 0) {
+            return false;
+        }
 
-        if ($field == 'author') {
-            $m = new MolajoUsersModel();
-            $m->query->select($m->db->nq('id') . ' as ' . $m->db->nq('key'));
-            $m->query->select($m->db->nq('username') . ' as ' . $m->db->nq('value'));
-            $m->query->order('username DESC');
-            return $m->runQuery();
+        /** list definitions */
+        $found = false;
+        foreach ($lists->list as $l) {
 
-        } else if ($field == 'category') {
-            $m = new MolajoContentModel();
-            $m->query->select($m->db->nq('id') . ' as ' . $m->db->nq('key'));
-            $m->query->select($m->db->nq('title') . ' as ' . $m->db->nq('value'));
-            $m->query->where($m->db->nq('asset_type_id') . ' = ' . (int)MOLAJO_ASSET_TYPE_CATEGORY_LIST);
-            $m->query->where($m->db->nq('status') . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
-            $m->query->order('title DESC');
-            return $m->runQuery();
+            if (trim((string)$l['name']) == trim($field)) {
 
-        } else if ($field == 'group') {
-            $m = new MolajoContentModel();
-            $m->query->select($m->db->nq('a') . '.' . $m->db->nq('id') . ' as ' . $m->db->nq('key'));
-            $m->query->select($m->db->nq('a') . '.' . $m->db->nq('title') . ' as ' . $m->db->nq('value'));
-            $m->query->from($m->db->nq('#__content') . ' as ' . $m->db->nq('a'));
-            $m->query->where($m->db->nq('a') . '.' . $m->db->nq('asset_type_id') . ' IN ('
-                    . (int)MOLAJO_ASSET_TYPE_GROUP_SYSTEM . ','
-                    . (int)MOLAJO_ASSET_TYPE_GROUP_NORMAL . ','
-                    . (int)MOLAJO_ASSET_TYPE_GROUP_USER . ','
-                    . (int)MOLAJO_ASSET_TYPE_GROUP_FRIEND . ')'
-            );
-            $m->query->where($m->db->nq('status') . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
-            $m->query->order('title DESC');
+                $found = true;
 
+                if (isset($l['method'])) {
+                    $method = (string)$l['method'];
+                } else {
+                    $method = '';
+                }
+                if (isset($l['model'])) {
+                    $model = (string)$l['model'];
+                } else {
+                    $model = '';
+                }
+                if (isset($l['key'])) {
+                    $key = (string)$l['key'];
+                } else {
+                    $key = '';
+                }
+                if (isset($l['value'])) {
+                    $value = (string)$l['value'];
+                } else {
+                    $value = '';
+                }
+                if (isset($l['ordering'])) {
+                    $ordering = (string)$l['ordering'];
+                } else {
+                    $ordering = '';
+                }
+                if (isset($l['assettypes'])) {
+                    $assettypes = (string)$l['assettypes'];
+                } else {
+                    $assettypes = '';
+                }
+                if (isset($l['viewaccess'])) {
+                    $viewaccess = (string)$l['viewaccess'];
+                } else {
+                    $viewaccess = '';
+                }
+                if (isset($l['status'])) {
+                    $status = (string)$l['status'];
+                } else {
+                    $status = '';
+                }
+                if (isset($l['site'])) {
+                    $site = (string)$l['site'];
+                } else {
+                    $site = '';
+                }
+                if (isset($l['application'])) {
+                    $application = (string)$l['application'];
+                } else {
+                    $application = '';
+                }
+            }
+        }
+
+        if ($found === false) {
+            echo $field.' not found (in MolajoModelHelper::getList)';
+            return false;
+        }
+
+        if ($method == '') {
+        } else {
+            return $this->$method();
+        }
+
+        if (class_exists($model)) {
+        } else {
+            return false;
+        }
+
+        $m = new $model();
+
+        $m->query->select($m->db->nq('a') . '.' . $m->db->nq($key) . ' as ' . $m->db->nq('key'));
+        $m->query->select($m->db->nq('a') . '.' . $m->db->nq($value) . ' as ' . $m->db->nq('value'));
+
+        $m->query->from($m->db->nq(trim($m->table)). ' as ' . $m->db->nq('a'));
+
+        if ((int) $assettypes == '0') {
+        } else {
+            $m->query->where($m->db->nq('a')
+                . '.'
+                . $m->db->nq('asset_type_id')
+                . ' IN (' . $assettypes . ')');
+        }
+
+        if ((int)$status == 1) {
+            $m->query->where($m->db->nq('status')
+                . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
+        }
+
+        if ((int)$viewaccess == 1) {
             MolajoAccessService::setQueryViewAccess(
                 $m->query,
                 array('join_to_prefix' => 'a',
@@ -442,42 +513,14 @@ class MolajoModelHelper
                     'select' => false
                 )
             );
-            return $m->runQuery();
-
-        } else if ($field == 'status') {
-            return $this->getStatusList();
-
-        } else if ($field == 'language') {
-            return $this->getLanguageList();
-
-        } else if ($field == 'tag') {
-            $m = new MolajoContentModel();
-            $m->query->select($m->db->nq('id') . ' as ' . $m->db->nq('key'));
-            $m->query->select($m->db->nq('title') . ' as ' . $m->db->nq('value'));
-            $m->query->where($m->db->nq('asset_type_id') . ' = ' . (int)MOLAJO_ASSET_TYPE_CATEGORY_TAG);
-            $m->query->where($m->db->nq('status') . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
-            $m->query->order('title DESC');
-            return $m->runQuery();
         }
-    }
 
-    /**
-     * validateToList
-     *
-     * Validate a value by verifying it exists in a list
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function validateToList($name)
-    {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
+        if (trim($ordering) == '') {
+            $ordering = $value;
+        }
+        $m->query->order($ordering . ' ASC');
 
-        $query->select('a.' . $db->nq('view_group_id'));
-        $query->select('a.' . $db->nq('asset'));
+        return $m->runQuery();
     }
 
     /**
@@ -537,6 +580,19 @@ class MolajoModelHelper
         $rowset[] = $obj;
 
         return $rowset;
+    }
+
+    /**
+     * validateToList
+     *
+     * Validate a value by verifying it exists in a list
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function validateToList($name)
+    {
+
     }
 
     /**

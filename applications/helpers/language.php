@@ -103,10 +103,10 @@ class MolajoLanguageHelper
         $list = array();
         foreach ($languages as $language)
         {
-            $listItem = array();
+            $listItem = new stdClass();
 
-            $listItem['value'] = $language->title;
-            $listItem['key'] = $language->subtitle;
+            $listItem->key = $language->title;
+            $listItem->value = $language->subtitle;
 
             $list[] = $listItem;
         }
