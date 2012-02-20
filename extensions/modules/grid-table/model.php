@@ -42,7 +42,7 @@ class MolajoGridTableModuleModel extends MolajoDisplayModel
      */
     public function getData()
     {
-        $this->items = array();
+        $this->items = Molajo::Request()->get('query_rowset');
         return $this->items;
     }
 }

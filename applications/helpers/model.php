@@ -77,6 +77,30 @@ class MolajoModelHelper
     }
 
     /**
+     * queryAuthor
+     *
+     * Retrieves the created by name for content author
+     *
+     * @param array $query
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function queryAuthor(
+        $query = array(),
+        $prefix = 'a',
+        $db)
+    {
+        $query->select($db->nq('users') . '.' . $db->nq('username') . ' as ' . $db->nq('created_by_name'));
+        $query->from($db->nq('#__users') . ' as ' . $db->nq('users'));
+        $query->where($db->nq('a') . '.' . $db->nq('created_by')
+            . ' = ' . $db->nq('users') . '.' . $db->nq('id'));
+
+        return $query;
+
+    }
+
+    /**
      * queryPrimaryCategory
      *
      * Note: Assumes a join is in place to the assets table on a_assets
@@ -95,7 +119,7 @@ class MolajoModelHelper
         $db)
     {
         $query->select($db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
-        $query->select($db->nq('pcat') . '.*');
+        $query->select($db->nq('pcat') . '.title' . ' as ' . $db->nq('category_title'));
         $query->from($db->nq('#__content') . ' as ' . $db->nq('pcat'));
         $query->where($db->nq('pcat') . '.' . $db->nq('id')
             . ' = ' . $db->nq('a_assets') . '.' . $db->nq('primary_category_id'));
@@ -217,7 +241,7 @@ class MolajoModelHelper
 
         $item->snippet =
             substr(
-                $item->content_text,
+                strip_tags($item->content_text),
                 0,
                 $parameters->get('view_text_snippet_length', 200)
             );
@@ -470,7 +494,7 @@ class MolajoModelHelper
         }
 
         if ($found === false) {
-            echo $field.' not found (in MolajoModelHelper::getList)';
+            echo $field . ' not found (in MolajoModelHelper::getList)';
             return false;
         }
 
@@ -489,9 +513,9 @@ class MolajoModelHelper
         $m->query->select($m->db->nq('a') . '.' . $m->db->nq($key) . ' as ' . $m->db->nq('key'));
         $m->query->select($m->db->nq('a') . '.' . $m->db->nq($value) . ' as ' . $m->db->nq('value'));
 
-        $m->query->from($m->db->nq(trim($m->table)). ' as ' . $m->db->nq('a'));
+        $m->query->from($m->db->nq(trim($m->table)) . ' as ' . $m->db->nq('a'));
 
-        if ((int) $assettypes == '0') {
+        if ((int)$assettypes == '0') {
         } else {
             $m->query->where($m->db->nq('a')
                 . '.'
