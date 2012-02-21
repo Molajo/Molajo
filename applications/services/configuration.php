@@ -102,10 +102,10 @@ class MolajoConfigurationService
         $appConfig = $this->getApplicationInfo();
 
         $this->metadata = new Registry;
-        $this->metadata->loadString($appConfig->metadata, 'JSON');
+        $this->metadata->loadString($appConfig->metadata);
 
         $this->custom_fields = new Registry;
-        $this->custom_fields->loadString($appConfig->custom_fields, 'JSON');
+        $this->custom_fields->loadString($appConfig->custom_fields);
 
         // todo: amy check this after the interface is working and not test data
         $parameters = substr($appConfig->parameters, 1, strlen($appConfig->parameters) - 2);
@@ -185,7 +185,6 @@ class MolajoConfigurationService
     public function getApplicationInfo()
     {
         $row = new stdClass();
-        $id = 0;
 
         if (MOLAJO_APPLICATION == 'installation') {
 
@@ -204,24 +203,17 @@ class MolajoConfigurationService
             $m = new MolajoApplicationsModel ();
             $m->query->where($m->db->qn('name') .
                 ' = ' . $m->db->q(MOLAJO_APPLICATION));
+            $result = $m->loadObject();
 
-            $results = $m->runQuery();
-
-            if (count($results) == 0) {
-                // todo: amy error;
-            }
-
-            foreach ($results as $result) {
-                $row->id = $result->id;
-                $id = $result->id;
-                $row->name = $result->name;
-                $row->path = $result->path;
-                $row->asset_type_id = $result->asset_type_id;
-                $row->description = $result->description;
-                $row->custom_fields = $result->custom_fields;
-                $row->parameters = $result->parameters;
-                $row->metadata = $result->metadata;
-            }
+            $row->id = $result->id;
+            $id = $result->id;
+            $row->name = $result->name;
+            $row->path = $result->path;
+            $row->asset_type_id = $result->asset_type_id;
+            $row->description = $result->description;
+            $row->custom_fields = $result->custom_fields;
+            $row->parameters = $result->parameters;
+            $row->metadata = $result->metadata;
         }
 
         if (defined('MOLAJO_APPLICATION_ID')) {

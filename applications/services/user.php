@@ -253,7 +253,7 @@ class MolajoUserService
     protected function __construct($id = 0)
     {
         $this->id = (int) $id;
-        $this->_load();
+        return $this->_load();
     }
 
     /**
@@ -269,7 +269,12 @@ class MolajoUserService
     protected function _load()
     {
         $this->model = new MolajoUsersModel ($this->id);
+
         $results = $this->model->load();
+        if ($results == false) {
+            $this->guest = true;
+            return;
+        }
         $columns = $this->model->getFields();
 
         foreach ($results as $name => $value) {

@@ -26,12 +26,12 @@ class MolajoSessionService
     protected static $instance;
 
     /**
-     * $_session
+     * $this->session
      *
      * @var    object Session
      * @since  1.0
      */
-    protected $_session = null;
+    protected $session = null;
 
     /**
      * getInstance
@@ -61,47 +61,71 @@ class MolajoSessionService
     }
 
     /**
-     * createSession
+     * create
      *
-     * Create the user session.
+     * Initiated by Application startup to either a) identify an existing session
+     * for a user (in which case the last_visit_datetime for the user is updated)
+     * or b) create a new session (in which case, a session id is generated and
+     * a new session record created).
      *
-     * Old sessions are flushed based on the configuration value for the cookie
-     * lifetime. If an existing session, then the last access time is updated.
-     * If a new session, a session id is generated and a record is created in
-     * the #__sessions table.
+     * In addition, this method does general housekeeping on old sessions
      *
-     * @param   string  $name  The sessions name.
+     * @param   string  $name
      *
-     * @return  MolajoSession  May call exit() on database error.
+     * @return  session object
      * @since  1.0
      */
-    public function get($name=null)
+    public function create($name)
     {
+        $handler =
+                Services::Configuration()
+                    ->get('session_handler', 'none');
+
         $options = array();
-        $options['name'] = $name;
 
-        if (Services::Configuration()->get('force_ssl') == 2) {
-            $options['force_ssl'] = true;
+        $options['expire'] =
+               Services::Configuration()
+                   ->get('lifetime', 15)
+                   * 60;
+
+        $options['force_ssl'] =
+               Services::Configuration()
+                   ->get('force_ssl', 0);
+
+        $this->session = MolajoSession::getInstance($handler, $options);
+echo 'out of get instance'.'<br />';
+var_dump($this->session);
+die;
+        if ($this->session->getState() == 'expired') {
+            $this->session->restart();
         }
 
-        /** retrieve session */
-        $this->_session = Services::Session()->get($options);
 
-        /** unlock */
 
-        /** The modulus introduces a little entropy so that queries only fires less than half the time. */
-        $time = time() % 2;
-        if ($time) {
-        } else {
-            return $this->_session;
-        }
+       		$time = time();
+       		if ($time % 2)
+       		{
+       			$query = $db->getQuery(true);
+       			$query->delete($query->qn('#__session'))
+       				->where($query->qn('time') . ' < '
+                       . $query->q((int) ($time - $this->session->getExpire())));
 
-        $this->_removeExpiredSessions();
+       			$db->setQuery($query);
+       			$db->query();
+       		}
 
-        $this->_checkSession();
+       		// Check to see the the session already exists.
+       		if (($this->getCfg('session_handler') != 'database'
+                   && ($time % 2 || $this->session->isNew()))
+       			|| ($this->getCfg('session_handler') == 'database'
+                       && $this->session->isNew()))
+       		{
+       			$this->checkSession();
+       		}
 
-        return $this->_session;
-    }
+       		return $this->session;
+       	}
+
 
     /**
      * _removeExpiredSessions
@@ -110,11 +134,12 @@ class MolajoSessionService
      */
     protected function _removeExpiredSessions()
     {
-        $db = Services::DB();
+        $m = new MolajoSessionsModel();
+
 
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
-            ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
+            ' WHERE `session_time` < ' . (int)(time() - $this->session->getExpire())
         );
         $db->query();
     }
@@ -134,25 +159,25 @@ class MolajoSessionService
     protected function _checkSession()
     {
         $db = Services::DB();
-        $session = Services::Session();
+        $this->session = Services::Session();
         $user = Services::User();
 
         $db->setQuery(
             'SELECT `session_id`' .
             ' FROM `#__sessions`' .
             ' WHERE `session_id` = ' .
-                $db->q($session->getId()), 0, 1
+                $db->q($this->session->getId()), 0, 1
         );
         $exists = $db->loadResult();
         if ($exists) {
             return;
         }
 
-        if ($session->isNew()) {
+        if ($this->session->isNew()) {
             $db->setQuery(
                 'INSERT INTO `#__sessions` '.
                     '(`session_id`, `application_id`, `session_time`)' .
-                ' VALUES (' . $db->q($session->getId()) .
+                ' VALUES (' . $db->q($this->session->getId()) .
                     ', ' . (int)MOLAJO_APPLICATION_ID .
                     ', ' . (int)time() . ')'
             );
@@ -162,9 +187,9 @@ class MolajoSessionService
                 'INSERT INTO `#__sessions`
                 (`session_id`, `application_id`, `session_time`, `user_id`)' .
                 ' VALUES (' .
-                $db->q($session->getId()) . ', ' .
+                $db->q($this->session->getId()) . ', ' .
                 (int)MOLAJO_APPLICATION_ID . ', ' .
-                (int)$session->get('session.timer.start') . ', ' .
+                (int)$this->session->get('session.timer.start') . ', ' .
                 (int)$user->get('id') . ')'
             );
         }
@@ -176,9 +201,9 @@ class MolajoSessionService
         }
 
         // Session doesn't exist yet, so create session variables
-        if ($session->isNew()) {
-            $session->set('registry', new Registry('session'));
-            $session->set('user', new MolajoUser());
+        if ($this->session->isNew()) {
+            $this->session->set('registry', new Registry('session'));
+            $this->session->set('user', new MolajoUser());
         }
     }
 
@@ -193,6 +218,6 @@ class MolajoSessionService
      */
     public function getSession()
     {
-        return $this->_session;
+        return $this->session;
     }
 }

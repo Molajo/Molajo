@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<validations>
+    <values>
+            <value name="title" required="1" message="ACTION_TYPES_VALUES_TITLE_REQUIRED"/>
+            <value name="protected" values="0,1" default="0" message="ACTION_TYPES_VALUES_PROTECTED"/>
+    </values>
+</validations>

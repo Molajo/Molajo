@@ -40,46 +40,49 @@ class MolajoUsersModel extends MolajoDisplayModel
      * Method to append additional data elements needed to the standard
      * array of elements provided by the data source
      *
-     * @param array $data
+     * @param array $this->data
      *
      * @return array
      * @since  1.0
      */
-    protected function _getLoadAdditionalData($data)
+    protected function _getLoadAdditionalData()
     {
+        parent::_getLoadAdditionalData();
+
         /** concatenate name */
-        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
+        $this->data['name'] = $this->data['first_name'] . ' ' . $this->data['last_name'];
 
         /** retrieve applications for which the user is authorized to login */
         $m = new MolajoUserApplicationsModel ();
         $m->query->select($this->db->qn('application_id'));
         $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
-        $applications = $m->runQuery();
+
+        $applications = $m->loadObjectList();
 
         $x = array();
         foreach ($applications as $application) {
-            $x[] = $application->application_id;
+            $x[] = $application;
         }
-        $data['applications'] = $x;
+        $this->data['applications'] = $x;
 
         /** retrieve groups to which the user belongs */
         $m = new MolajoUserGroupsModel ();
         $m->query->select($this->db->qn('group_id'));
         $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
-        $groups = $m->runQuery();
+        $groups = $m->loadObjectList();
 
         $x = array();
         foreach ($groups as $group) {
             $x[] = $group->group_id;
         }
-        $data['groups'] = $x;
+        $this->data['groups'] = $x;
 
         /** retrieve system groups to which the user belongs */
-        $data['public'] = 1;
-        $data['guest'] = 0;
-        $data['registered'] = 1;
-        if (in_array(5, $data['groups'])) {
-            $data['administrator'] = 1;
+        $this->data['public'] = 1;
+        $this->data['guest'] = 0;
+        $this->data['registered'] = 1;
+        if (in_array(5, $this->data['groups'])) {
+            $this->data['administrator'] = 1;
         }
 
         /** retrieve view access groups to which the user belongs */
@@ -92,9 +95,9 @@ class MolajoUsersModel extends MolajoDisplayModel
         foreach ($vgroups as $vgroup) {
             $x[] = $vgroup->view_group_id;
         }
-        $data['view_groups'] = $x;
+        $this->data['view_groups'] = $x;
 
         /** return array of primary query and additional data elements */
-        return $data;
+        return $this->data;
     }
 }

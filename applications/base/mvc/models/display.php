@@ -117,10 +117,14 @@ class MolajoDisplayModel extends MolajoCrudModel
          *  Where
          */
         while (list($name, $value) = each($parameterArray)) {
+
             if (substr($name, 0, strlen('criteria_')) == 'criteria_') {
+
                 $field = trim(substr($name, strlen('criteria_'), 999));
+
                 if (isset($this->fields[$field])) {
                     $method = 'query' . ucfirst(strtolower($field));
+
                     if (method_exists($helperClass, $method)) {
                         if (in_array($method, $methods)) {
                         } else {
@@ -200,9 +204,9 @@ class MolajoDisplayModel extends MolajoCrudModel
 
         /**
         $this->db->setQuery(
-            $query,
-            $this->getStart(),
-            $this->getState('list.limit')
+        $query,
+        $this->getStart(),
+        $this->getState('list.limit')
         );
          */
         return;
@@ -219,54 +223,7 @@ class MolajoDisplayModel extends MolajoCrudModel
      */
     public function runQuery()
     {
-        /** default to all fields for primary table */
-        if ($this->query->select == null) {
-            $this->fields = $this->getFieldDatatypes();
-            while (list($name, $value) = each($this->fields)) {
-                $this->query->select(
-                    $this->db->qn($this->primary_prefix)
-                        . '.'
-                        . $this->db->qn($name));
-            }
-        }
-
-        /** primary table from clause */
-        if ($this->query->from == null) {
-            $this->query->from(
-                $this->db->qn($this->table)
-                    . ' as '
-                    . $this->db->qn($this->primary_prefix)
-            );
-        }
-
-
-        /** set the query */
-        //echo $this->query->__toString().'<br />';
-
-        $this->db->setQuery($this->query->__toString());
-        $data = $this->db->loadObjectList();
-
-        if ($this->db->getErrorNum() == 0) {
-
-        } else {
-            Services::Message()
-                ->set(
-                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
-                    $this->db->getErrorNum() . ' ' .
-                    $this->db->getErrorMsg(),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
-                $code = 500,
-                $debug_location = $this->name . ':' . 'getData',
-                $debug_object = $this->db
-            );
-            return $this->request->set('status_found', false);
-        }
-
-        if (count($data) == 0) {
-            return array();
-        }
-
-        return $data;
+        return $this->loadObjectList();
     }
 
     /**
@@ -274,16 +231,16 @@ class MolajoDisplayModel extends MolajoCrudModel
      *
      * Method to append additional data elements, as needed
      *
-     * @param array $data
+     * @param array $this->data
      *
      * @return array
      * @since  1.0
      */
-    protected function _getAdditionalData($data = array())
+    protected function _getAdditionalData()
     {
         $rowCount = 1;
-        if (count($data) == 0) {
-            return $data;
+        if (count($this->data) == 0) {
+            return $this->data;
         }
 
         /**
@@ -316,7 +273,7 @@ class MolajoDisplayModel extends MolajoCrudModel
         /**
          *  Loop through query results
          */
-        foreach ($data as $item) {
+        foreach ($this->data as $item) {
             $keep = true;
 
             if (count($methodArray) > 0) {
@@ -354,7 +311,7 @@ class MolajoDisplayModel extends MolajoCrudModel
                 unset($item);
             }
         }
-        return $data;
+        return $this->data;
     }
 
     /**

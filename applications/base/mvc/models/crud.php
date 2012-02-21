@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class MolajoCrudModel extends MolajoModel
 {
-
     /**
      * _setLoadQuery
      *
@@ -50,7 +49,11 @@ class MolajoCrudModel extends MolajoModel
      */
     protected function _runLoadQuery()
     {
-        $item = $this->db->loadAssocList();
+        $this->data = $this->db->loadAssoc();
+
+        if (empty($this->data)) {
+            return false;
+        }
 
         if ($this->db->getErrorNum()) {
             $e = new MolajoException($this->db->getErrorMsg());
@@ -58,41 +61,46 @@ class MolajoCrudModel extends MolajoModel
             return false;
         }
 
-        if (empty($item)) {
-            $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_EMPTY_ROW_RETURNED'));
-            $this->setError($e);
-            return false;
-        }
+        return $this->data;
+    }
 
-        if (key_exists('custom_fields', $item)
-            && is_array($item['custom_fields'])
+
+    /**
+     * _getAdditionalData
+     *
+     * Method to append additional data elements needed to the standard
+     * array of elements provided by the data source
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function _getLoadAdditionalData()
+    {
+        if (key_exists('custom_fields', $this->data)
+            && is_array($this->data['custom_fields'])
         ) {
             $registry = new Registry();
-            $registry->loadArray($item['custom_fields']);
-            $item['custom_fields'] = (string)$registry;
+            $registry->loadArray($this->data['custom_fields']);
+            $this->data['custom_fields'] = (string)$registry;
         }
 
-        if (key_exists('parameters', $item)
-            && is_array($item['parameters'])
+        if (key_exists('parameters', $this->data)
+            && is_array($this->data['parameters'])
         ) {
             $registry = new Registry();
-            $registry->loadArray($item['parameters']);
-            $item['parameters'] = (string)$registry;
+            $registry->loadArray($this->data['parameters']);
+            $this->data['parameters'] = (string)$registry;
         }
 
-        if (key_exists('metadata', $item)
-            && is_array($item['metadata'])
+        if (key_exists('metadata', $this->data)
+            && is_array($this->data['metadata'])
         ) {
             $registry = new Registry();
-            $registry->loadArray($item['metadata']);
-            $item['metadata'] = (string)$registry;
+            $registry->loadArray($this->data['metadata']);
+            $this->data['metadata'] = (string)$registry;
         }
 
-        /** return as an array of data elements */
-        foreach ($item as $data) {
-        }
-
-        return $data;
+        return $this->data;
     }
 }
 

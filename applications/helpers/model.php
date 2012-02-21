@@ -627,7 +627,7 @@ class MolajoModelHelper
      * @return  boolean  True if checked out to user
      * @since   1.0
      */
-    public function validateCheckedOut($table)
+    public function validateCheckedOut($model)
     {
         $db = Services::DB();
         $query = $db->getQuery(true);
@@ -646,7 +646,7 @@ class MolajoModelHelper
      * @return  boolean
      * @since   1.0
      */
-    public function validateAlias($table)
+    public function validateAlias($model)
     {
 
     }
@@ -659,7 +659,7 @@ class MolajoModelHelper
      * @return  boolean
      * @since   1.0
      */
-    public function validateDates($table)
+    public function validateDates($model)
     {
 
     }
@@ -672,7 +672,7 @@ class MolajoModelHelper
      * @return  boolean
      * @since   1.0
      */
-    public function validateLanguage($table)
+    public function validateLanguage($model)
     {
 
     }

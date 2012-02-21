@@ -8,143 +8,28 @@
 defined('MOLAJO') or die;
 
 /**
- * Extension Instances
+ * Sessions
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
-class MolajoSessionsModel extends MolajoModel
+class MolajoSessionsModel extends MolajoCrudModel
 {
     /**
-     * Constructor
-     * @param database A database connector object
+     * __construct
+     *
+     * @param  $id
+     *
+     * $return object
+     * @since  1.0
      */
-    function __construct($db)
+    public function __construct($id = null)
     {
-        parent::__construct('#__sessions', 'session_id', $db);
+        $this->name = get_class($this);
+        $this->table = '#__sessions';
+        $this->primary_key = 'session_id';
 
-        $this->username = '';
-    }
-
-    function insert($sessionId, $application_id)
-    {
-        $this->session_id = $sessionId;
-
-        $this->application_id = $application_id;
-
-        $this->session_time = time();
-        $ret = $this->db->insertObject($this->_tbl, $this, 'session_id');
-
-        if (!$ret) {
-            $this->setError(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->db->stderr()));
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    function update($updateNulls = false)
-    {
-        $this->session_time = time();
-        $ret = $this->db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
-
-        if (!$ret) {
-            $this->setError(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->db->stderr()));
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Destroys the pesisting session
-     */
-    function destroy($userId, $application_ids = array())
-    {
-        $application_ids = implode(',', $application_ids);
-
-        $query = 'DELETE FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->db->q($userId)
-                 . ' AND application_id IN (' . $application_ids . ')';
-
-        $this->db->setQuery($query->__toString());
-
-        if (!$this->db->query()) {
-            $this->setError($this->db->stderr());
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Purge old sessions
-     *
-     * @param   integer  Session age in seconds
-     *
-     * @return  mixed    Resource on success, null on fail
-     */
-    function purge($maxLifetime = 1440)
-    {
-        $past = time() - $maxLifetime;
-        $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (session_time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
-        $this->db->setQuery($query->__toString());
-
-        return $this->db->query();
-    }
-
-    /**
-     * Find out if a user has a one or more active sessions
-     *
-     * @param   integer  $user_id The identifier of the user
-     *
-     * @return  boolean  True if a session for this user exists
-     *
-     * @since   1.0
-     */
-    function exists($user_id)
-    {
-        $query = 'SELECT COUNT(user_id) FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->db->q($user_id);
-
-        $this->db->setQuery($query->__toString());
-
-        if (!$result = $this->db->loadResult()) {
-            $this->setError($this->db->stderr());
-            return false;
-        }
-
-        return (boolean)$result;
-    }
-
-    /**
-     * Overloaded delete method
-     *
-     * We must override it because of the non-integer primary key
-     *
-     * @return true if successful otherwise returns and error message
-     */
-    function delete($oid = null)
-    {
-        $k = $this->_tbl_key;
-        if ($oid) {
-            $this->$k = $oid;
-        }
-
-        $query = 'DELETE FROM ' . $this->db->qn($this->_tbl) .
-                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->db->q($this->$k);
-
-        $this->db->setQuery($query->__toString());
-
-        if ($this->db->query()) {
-            return true;
-        }
-        else
-        {
-            $this->setError($this->db->getErrorMsg());
-            return false;
-        }
+        parent::__construct($id);
     }
 }

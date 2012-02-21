@@ -10,27 +10,30 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * File session handler for PHP
+ * WINCACHE session storage handler for PHP
  *
  * @package     Joomla.Platform
  * @subpackage  Session
  * @see         http://www.php.net/manual/en/function.session-set-save-handler.php
  * @since       11.1
  */
-class MolajoSessionStorageNone extends MolajoSessionStorage
+class MolajoSessionStorageWincache extends MolajoSessionStorage
 {
 	/**
-	 * Register the functions of this class with PHP's session handler
+	 * Constructor
 	 *
 	 * @param   array  $options  Optional parameters.
 	 *
-	 * @return  void
-	 *
 	 * @since   11.1
 	 */
-	public function register($options = array())
+	public function __construct($options = array())
 	{
-		// Let php handle the session storage
+		if (!$this->test())
+		{
+			return JError::raiseError(404, JText::_('JLIB_SESSION_WINCACHE_EXTENSION_NOT_AVAILABLE'));
+		}
+
+		parent::__construct($options);
 	}
 
 	/**
@@ -39,9 +42,7 @@ class MolajoSessionStorageNone extends MolajoSessionStorage
 	 * @param   string  $save_path     The path to the session object.
 	 * @param   string  $session_name  The name of the session.
 	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
+	 * @return boolean  True on success, false otherwise.
 	 */
 	public function open($save_path, $session_name)
 	{
@@ -51,9 +52,7 @@ class MolajoSessionStorageNone extends MolajoSessionStorage
 	/**
 	 * Close the SessionHandler backend.
 	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
+	 * @return boolean  True on success, false otherwise.
 	 */
 	public function close()
 	{
@@ -61,8 +60,7 @@ class MolajoSessionStorageNone extends MolajoSessionStorage
 	}
 
 	/**
-	 * Read the data for a particular session identifier from the
-	 * SessionHandler backend.
+	 * Read the data for a particular session identifier from the SessionHandler backend.
 	 *
 	 * @param   string  $id  The session identifier.
 	 *
@@ -72,49 +70,47 @@ class MolajoSessionStorageNone extends MolajoSessionStorage
 	 */
 	public function read($id)
 	{
-		return true;
+		$sess_id = 'sess_' . $id;
+		return (string) wincache_ucache_get($sess_id);
 	}
 
 	/**
 	 * Write session data to the SessionHandler backend.
 	 *
-	 * @param   string  $id    The session identifier.
-	 * @param   string  $data  The session data.
+	 * @param   string  $id            The session identifier.
+	 * @param   string  $session_data  The session data.
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
 	 * @since   11.1
 	 */
-	public function write($id, $data)
+	public function write($id, $session_data)
 	{
-		return true;
+		$sess_id = 'sess_' . $id;
+		return wincache_ucache_set($sess_id, $session_data, ini_get("session.gc_maxlifetime"));
 	}
 
 	/**
-	 * Destroy the data for a particular session identifier in the
-	 * SessionHandler backend.
+	 * Destroy the data for a particular session identifier in the SessionHandler backend.
 	 *
 	 * @param   string  $id  The session identifier.
 	 *
 	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
 	 */
 	public function destroy($id)
 	{
-		return true;
+		$sess_id = 'sess_' . $id;
+		return wincache_ucache_delete($sess_id);
 	}
 
 	/**
 	 * Garbage collect stale sessions from the SessionHandler backend.
 	 *
-	 * @param   integer  $lifetime  The maximum age of a session.
+	 * @param   integer  $maxlifetime  The maximum age of a session.
 	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
+	 * @return boolean  True on success, false otherwise.
 	 */
-	public function gc($lifetime = 1440)
+	public function gc($maxlifetime = null)
 	{
 		return true;
 	}
@@ -122,12 +118,10 @@ class MolajoSessionStorageNone extends MolajoSessionStorage
 	/**
 	 * Test to see if the SessionHandler is available.
 	 *
-	 * @return  boolean  True on if available, false otherwise.
-	 *
-	 * @since   11.1
+	 * @return boolean  True on success, false otherwise.
 	 */
-	public static function test()
+	static public function test()
 	{
-		return true;
+		return (extension_loaded('wincache') && function_exists('wincache_ucache_get') && !strcmp(ini_get('wincache.ucenabled'), "1"));
 	}
 }

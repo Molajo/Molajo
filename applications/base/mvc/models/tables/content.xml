@@ -1,83 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<table>
-    <name>content</name>
-    <primary_key>id</primary_key>
-    <security>
-        <field name="" filter="" escape=""/>
-        <field name="id" filter="" escape=""/>
-        <field name="extension_instance_id" filter="" escape=""/>
-        <field name="asset_type_id" filter="" escape=""/>
-        <field name="title" filter="" escape=""/>
-        <field name="subtitle" filter="" escape=""/>
-        <field name="path" filter="" escape=""/>
-        <field name="alias" filter="" escape=""/>
-        <field name="content_text" filter="" escape=""/>
-        <field name="protected" filter="" escape=""/>
-        <field name="featured" filter="" escape=""/>
-        <field name="stickied" filter="" escape=""/>
-        <field name="status" filter="" escape=""/>
-        <field name="start_publishing_datetime" filter="" escape=""/>
-        <field name="stop_publishing_datetime" filter="" escape=""/>
-        <field name="version" filter="" escape=""/>
-        <field name="version_of_id" filter="" escape=""/>
-        <field name="status_prior_to_version" filter="" escape=""/>
-        <field name="created_datetime" filter="" escape=""/>
-        <field name="created_by" filter="" escape=""/>
-        <field name="modified_datetime" filter="" escape=""/>
-        <field name="modified_by" filter="" escape=""/>
-        <field name="checked_out_datetime" filter="" escape=""/>
-        <field name="checked_out_by" filter="" escape=""/>
-        <field name="root" filter="" escape=""/>
-        <field name="parent_id" filter="" escape=""/>
-        <field name="lft" filter="" escape=""/>
-        <field name="rgt" filter="" escape=""/>
-        <field name="lvl" filter="" escape=""/>
-        <field name="home" filter="" escape=""/>
-        <field name="language" filter="" escape=""/>
-        <field name="translation_of_id" filter="" escape=""/>
-        <field name="ordering" filter="" escape=""/>
-    </security>
-    <validations>
-        <foreignkeys>
-            <fk name="asset_type_id"
-                source_id="id"
-                source_table="asset_types"
-                required="1"
-                    />
-            <fk name="checked_out_by"
-                source_id="id"
-                source_table="users"
-                required="0"
-                    />
-            <fk name="created_by"
-                source_id="id"
-                source_table="users"
-                required="1"
-                    />
-            <fk name="extension_instance_id"
-                source_id="id"
-                source_table="extension_instances"
-                required="1"
-                    />
-            <fk name="modified_by"
-                source_id="id"
-                source_table="users"
-                required="1"
-                    />
-        </foreignkeys>
-        <values>
-            <value field="title" required="1"/>
-            <value field="status" values="0,1" default="0"/>
-            <value field="protected" values="0,1" default="0"/>
-            <value field="featured" values="0,1" default="0"/>
-            <value field="stickied" values="0,1" default="0"/>
-            <value field="protected" values="0,1" default="0"/>
-        </values>
-        <helper>
-            <function method="validateCheckedOut" crud="u"/>
-            <function method="validateAlias" crud="c,u"/>
-            <function method="validateDates" crud="c,u"/>
-            <function method="validateLanguage" crud="c,u"/>
-        </helper>
-    </validations>
-</table>
+<validations>
+    <fks>
+        <fk name="asset_type_id"
+            source_id="id"
+            source_model="MolajoAssetTypesModel"
+            required="1"
+            message="CONTENT_FK_ASSET_TYPE"
+                />
+        <fk name="checked_out_by"
+            source_id="id"
+            source_model="MolajoUsersModel"
+            required="0"
+            message="CONTENT_FK_CHECKED_OUT_BY"
+                />
+        <fk name="created_by"
+            source_id="id"
+            source_model="MolajoUsersModel"
+            required="1"
+            message="CONTENT_FK_CREATED_BY"
+                />
+        <fk name="extension_instance_id"
+            source_id="id"
+            source_model="MolajoExtensionInstancesModel"
+            required="1"
+            message="CONTENT_FK_EXT_INSTANCE_ID"
+                />
+        <fk name="modified_by"
+            source_id="id"
+            source_model="MolajoUsersModel"
+            required="1"
+            message="CONTENT_FK_MODIFIED_BY"
+                />
+    </fks>
+    <values>
+        <value name="title" required="1" message="CONTENT_VALUES_TITLE_REQUIRED"/>
+        <value name="status" values="0,1" default="0" message="CONTENT_VALUES_STATUS"/>
+        <value name="protected" values="0,1" default="0" message="CONTENT_VALUES_PROTECTED"/>
+        <value name="featured" values="0,1" default="0" message="CONTENT_VALUES_FEATURED"/>
+        <value name="stickied" values="0,1" default="0" message="CONTENT_VALUES_STICKIED"/>
+        <value name="protected" values="0,1" default="0" message="CONTENT_VALUES_PROTECTED"/>
+    </values>
+    <helper>
+        <function name="validateCheckedOut"/>
+        <function name="validateAlias"/>
+        <function name="validateDates"/>
+        <function name="validateLanguage"/>
+    </helper>
+</validations>
+
