@@ -34,7 +34,7 @@ class MolajoUrlService
      * @var    object
      * @since  1.0
      */
-    public static $input;
+    public $input;
 
     /**
      * getInstance
@@ -74,9 +74,7 @@ class MolajoUrlService
      */
     public function _getInput()
     {
-        if (class_exists('JInput')) {
-            $this->input = new JInput;
-        }
+        $this->input = new JInput;
 
         // Get the full request URI.
         $uri = clone JURI::getInstance();
@@ -84,7 +82,6 @@ class MolajoUrlService
         foreach ($results as $key => $value) {
             $this->input->set($key, $value);
         }
-
     }
 
     /**

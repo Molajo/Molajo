@@ -46,10 +46,10 @@ class MolajoFieldState extends MolajoField
         $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_PUBLISHED, Services::Language()->_('MOLAJO_OPTION_STATUS_PUBLISHED'));
         $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_UNPUBLISHED, Services::Language()->_('MOLAJO_OPTION_STATUS_UNPUBLISHED'));
         $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_TRASHED, Services::Language()->_('MOLAJO_OPTION_STATUS_TRASHED'));
-        if ($this->parameters->def('state_spam', '0') == 1) {
+        if ($this->parameters->get('state_spam', '0') == 1) {
             $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_SPAMMED, Services::Language()->_('MOLAJO_OPTION_STATUS_SPAMMED'));
         }
-        if ($this->parameters->def('version_management', '1') == 1) {
+        if ($this->parameters->get('version_management', '1') == 1) {
             $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_VERSION, Services::Language()->_('MOLAJO_OPTION_STATUS_VERSION'));
         }
         $options[] = MolajoHTML::_('select.option', '*', Services::Language()->_('MOLAJO_OPTION_ALL'));

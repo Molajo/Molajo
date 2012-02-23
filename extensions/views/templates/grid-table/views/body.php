@@ -6,7 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-<tr class="row<?php echo $i % 2; ?>">
+<tr class="row<?php echo $this->row->row_count % 2; ?>">
 <?php
 $count = 0;
 foreach ($columnArray as $column) {

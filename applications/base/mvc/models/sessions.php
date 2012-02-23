@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoSessionsModel extends MolajoCrudModel
+class MolajoSessionsModel extends MolajoLoadModel
 {
     /**
      * __construct
@@ -27,7 +27,7 @@ class MolajoSessionsModel extends MolajoCrudModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__sessions';
+        $this->table_name = '#__sessions';
         $this->primary_key = 'session_id';
 
         parent::__construct($id);

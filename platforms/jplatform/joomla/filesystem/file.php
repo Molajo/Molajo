@@ -88,7 +88,7 @@ class JFile
 
         // Check src path
         if (!is_readable($src)) {
-            JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_FIND_COPY', $src));
+            JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_JFILE_FIND_COPY', $src));
 
             return false;
         }
@@ -97,7 +97,7 @@ class JFile
             $stream = JFactory::getStream();
 
             if (!$stream->copy($src, $dest)) {
-                JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_STREAMS', $src, $dest, $stream->getError()));
+                JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_JFILE_STREAMS', $src, $dest, $stream->getError()));
 
                 return false;
             }
@@ -199,7 +199,7 @@ class JFile
             else
             {
                 $filename = basename($file);
-                JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_FILESYSTEM_DELETE_FAILED', $filename));
+                JError::raiseWarning('SOME_ERROR_CODE', Services::Language()->sprintf('JLIB_FILESYSTEM_DELETE_FAILED', $filename));
 
                 return false;
             }
@@ -237,7 +237,7 @@ class JFile
             $stream = JFactory::getStream();
 
             if (!$stream->move($src, $dest)) {
-                JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_MOVE_STREAMS', $stream->getError()));
+                JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_JFILE_MOVE_STREAMS', $stream->getError()));
 
                 return false;
             }
@@ -301,7 +301,7 @@ class JFile
         }
 
         if (false === $fh = fopen($filename, 'rb', $incpath)) {
-            JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_READ_UNABLE_TO_OPEN_FILE', $filename));
+            JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_READ_UNABLE_TO_OPEN_FILE', $filename));
 
             return false;
         }
@@ -365,7 +365,7 @@ class JFile
             $stream->set('chunksize', (1024 * 1024 * 1024));
 
             if (!$stream->writeFile($file, $buffer)) {
-                JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_WRITE_STREAMS', $file, $stream->getError()));
+                JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_WRITE_STREAMS', $file, $stream->getError()));
                 return false;
             }
 
@@ -424,7 +424,7 @@ class JFile
             $stream = JFactory::getStream();
 
             if (!$stream->upload($src, $dest)) {
-                JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_UPLOAD', $stream->getError()));
+                JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_UPLOAD', $stream->getError()));
                 return false;
             }
 

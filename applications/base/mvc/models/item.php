@@ -1,115 +1,784 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Model
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Update
+ * Item
  *
  * @package     Molajo
- * @subpackage  Controller
+ * @subpackage  Model
  * @since       1.0
  */
-class MolajoUpdateController extends MolajoController
+class MolajoItemModel extends MolajoModel
 {
+    /**
+     * Model Name
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $name = '';
 
     /**
-     * $record
+     * Database connection
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $db;
+
+    /**
+     * Primary Prefix
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $primary_prefix;
+
+    /**
+     * Database query object
      *
      * @var    object
      * @since  1.0
      */
-    protected $record;
+    public $query;
 
     /**
-     *  save
+     * $now
+     *
+     * Used in queries to determine date validity
+     *
+     * @var    object
+     * @since  1.0
      */
-    function save()
+    public $now;
+
+    /**
+     * $nullDate
+     *
+     * Used in queries to determine date validity
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $nullDate;
+
+    /**
+     * $query_results
+     *
+     * Results from various model queries
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $query_results;
+
+    /**
+     * Used by setter/getter to store model state
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    protected $state;
+
+    /**
+     * Pagination object from display query
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $pagination;
+
+    /**
+     * $table_name
+     *
+     * Name of the database table for the model
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $table_name;
+
+    /**
+     * $table_fields
+     *
+     * List of all data elements in table
+     *
+     * @var    array
+     * @since  1.0
+     */
+    public $table_fields;
+
+    /**
+     * $primary_key
+     *
+     * Name of the primary key for the model table
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $primary_key = '';
+
+    /**
+     * $id
+     *
+     * Value for the primary key of the model table
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $id = 0;
+
+    /**
+     * $task_request
+     *
+     * Processing instructions for the MVC set by the renderer
+     *
+     * @var    JRegistry
+     * @since  1.0
+     */
+    public $task_request;
+
+    /**
+     * $parameters
+     *
+     * Parameters
+     *
+     * @var    JRegistry
+     * @since  1.0
+     */
+    public $parameters;
+
+    /**
+     * __construct
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function __construct($id = null)
     {
-        /** Test */
-        $id = 50;
-        $valid = true;
+        $this->task_request = new Registry();
+        $this->state = new Registry();
+        $this->query_results = array();
+        $this->pagination = array();
 
-        /** Create or Update */
-        $this->model->query->where($this->model->db->qn('id')
-            . ' = ' . $this->model->db->q($id));
+        if ((int)$this->id == 0) {
+            $this->id = $id;
+        }
+        if (trim($this->name) == '') {
+            $this->name = get_class($this);
+        }
+        if (trim($this->primary_key) == '') {
+            $this->primary_key = 'id';
+        }
 
-        $results = $this->model->loadResult();
-        if (empty($results)) {
-            $action = 'create';
+        if (isset($this->db)) {
         } else {
-            $action = 'update';
+            $this->db = Services::DB();
         }
 
-        /** Prepare the data */
-        $data = new stdClass;
-        $data->id = 0;
-        $data->title = 'One long summer';
-        $data->protected = 0;
-        $data->asset_type_id = 10000;
-        $data->checked_out_by = 0;
-        $data->created_datetime = '2012-02-14';
-        $data->created_by = 42;
-        $data->extension_instance_id = 2;
-        $data->modified_by = 42;
-
-        $results = $this->_filter($data);
-
-        if ($results === true) {
-        } else {
-            $valid = false;
-            debug(' ');
-            debug('MolajoUpdateController::save');
-            debug('Bind Failed.');
-            die;
-        }
-
-        $results = $this->_validate();
-        if ($results === true) {
-        } else {
-            debug(' ');
-            debug('MolajoUpdateController::save');
-            debug('Validation Failed.');
-            die;
-        }
-
-        $results = $this->model->store();
-        if ($results === true) {
-        } else {
-            debug(' ');
-            debug('MolajoUpdateController::save');
-            debug('Store Failed.');
-            die;
-        }
-        echo 'success';
-        die;
-
-        if (isset($this->table->asset_type_id)) {
-            // asset
-        }
-
-        echo '<pre>';
-        var_dump($data);
-        die;
-        /**
-        echo $action;
-        die;
-
-
-        $hash = Services::Security()->getHash(MOLAJO_APPLICATION.get_class($this));
-
-        $session = Services::Session()->create($hash);
-        var_dump($session);
-        echo 'back in app';
-        die;*/
+        $this->query = $this->db->getQuery(true);
+        $this->now = Services::Date()->getDate()->toSql();
+        $this->nullDate = $this->db->getNullDate();
+        $this->primary_prefix = 'a';
     }
 
     /**
-     * _filter
+     * setError
+     *
+     * @return bool
+     */
+    protected function setError()
+    {
+        if ($this->db->getErrorNum() == 0) {
+            echo 'in MolajoModel::setError';
+            die;
+        } else {
+            echo 'in MolajoModel::setError';
+            die;
+            Services::Message()
+                ->set(
+                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
+                    $this->db->getErrorNum() . ' ' .
+                    $this->db->getErrorMsg(),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 0,
+                $debug_location = $this->name,
+                $debug_object = $this->db
+            );
+            return false;
+        }
+    }
+
+    /**
+     * get
+     *
+     * Returns property of the Model object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        return $this->state->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Model object,
+     * creating it if it does not already exist.
+     *
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Value of the property
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->state->set($key, $value);
+    }
+
+    /**
+     * getState
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * getFields
+     *
+     * Retrieves column names and definitions from the database table
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getFields()
+    {
+        if ($this->table_name == '') {
+            return array();
+        }
+        return $this->db->getTableColumns($this->table_name, false);
+    }
+
+    /**
+     * getFieldnames
+     *
+     * Retrieves column names, only, for the database table
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getFieldnames()
+    {
+        $fields = array();
+        $fieldDefinitions = $this->getFields();
+        if (count($fieldDefinitions) > 0) {
+            foreach ($fieldDefinitions as $fieldDefinition) {
+                $fields[] = $fieldDefinition->Field;
+            }
+        }
+        return $fields;
+    }
+
+    /**
+     * getFieldDatatypes
+     *
+     * Retrieves column names and brief datatype
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getFieldDatatypes()
+    {
+        $fields = array();
+        $fieldDefinitions = $this->getFields();
+        if (count($fieldDefinitions) > 0) {
+            foreach ($fieldDefinitions as $fieldDefinition) {
+
+                $datatype = '';
+
+                /* basic datatype */
+                if (stripos($fieldDefinition->Type, 'int') !== false) {
+                    $datatype = 'int';
+                } else if (stripos($fieldDefinition->Type, 'date') !== false) {
+                    $datatype = 'date';
+                } else if (stripos($fieldDefinition->Type, 'text') !== false) {
+                    $datatype = 'text';
+                } else {
+                    $datatype = 'char';
+                }
+
+                /* null */
+                if ((strtolower($fieldDefinition->Null)) == 'yes') {
+                    $datatype .= ',1';
+                } else {
+                    $datatype .= ',0';
+                }
+
+                /* default */
+                if ((strtolower($fieldDefinition->Extra)) == 'auto_increment') {
+                    $datatype .= ',auto_increment';
+                } else if ((strtolower($fieldDefinition->Default)) == ' ') {
+                    $datatype .= ',space';
+                } else if ((strtolower($fieldDefinition->Default)) == '0') {
+                    $datatype .= ',zero';
+                } else if ($fieldDefinition->Default == NULL) {
+                    $datatype .= ',null';
+                } else {
+                    $datatype .= ',' . trim($fieldDefinition->Default);
+                }
+
+                /* save it to array */
+                $fields[$fieldDefinition->Field] = $datatype;
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * getProperties
+     *
+     * Returns an associative array of object properties.
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function getProperties()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     *  Read Methods
+     */
+
+    /**
+     * load
+     *
+     * Method to load a specific item from a specific model.
+     * Creates and runs the database query, allow for additional data,
+     * and returns the integrated data for the item requested
+     *
+     * Implemented by MolajoLoadModel, can be overridden by child
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function load()
+    {
+        return $this->query_results = array();
+    }
+
+    /**
+     * _setLoadQuery
+     *
+     * Method used in load sequence to create a query object for a
+     * specific item in a specific model
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _setLoadQuery()
+    {
+        $this->query = $this->db->getQuery(true);
+    }
+
+    /**
+     * _runLoadQuery
+     *
+     * Method used in load sequence to execute a query statement
+     * for a specific item, returning the results
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _runLoadQuery()
+    {
+        return $this->query_results = array();
+    }
+
+    /**
+     * _getLoadAdditionalData
+     *
+     * Method used in load sequence to optionally append additional
+     * data elements to a specific item
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function _getLoadAdditionalData()
+    {
+        return $this->query_results = array();
+    }
+
+    /**
+     * getData
+     *
+     * Used for most view access queries for any model.
+     *
+     * Use load for retrieving a specific item with intent to update.
+     *
+     * Method to establish query criteria, formulate a database query,
+     * run the database query, allow for the addition of more data, and
+     * return the integrated data
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function getData()
+    {
+        $this->_setQuery();
+        $this->query_results = $this->runQuery();
+        if (empty($this->query_results)) {
+            return false;
+        }
+        $this->query_results = $this->_getAdditionalData();
+
+        return $this->query_results;
+    }
+
+    /**
+     * _setQuery
+     *
+     * Method to create a query object in preparation of running a query
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function _setQuery()
+    {
+
+    }
+
+    /**
+     * runQuery
+     *
+     * Method to execute a prepared and set query statement,
+     * returning the results
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function runQuery()
+    {
+        return array();
+    }
+
+    /**
+     * loadResult
+     *
+     * Single Value Result
+     *
+     * Access by referencing the query results field, directly
+     *
+     * For example, in this method, the result is in $this->query_results.
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadResult()
+    {
+        if ($this->query->select == null) {
+            $this->query->select(
+                $this->db->qn($this->primary_prefix)
+                    . '.'
+                    . $this->db->qn($this->primary_key));
+        }
+
+        if ($this->query->from == null) {
+            $this->query->from(
+                $this->db->qn($this->table_name)
+                    . ' as '
+                    . $this->db->qn($this->primary_prefix)
+            );
+        }
+        //echo $this->query->__toString();
+
+        $this->db->setQuery($this->query->__toString());
+        $this->query_results = $this->db->loadResult();
+        if (empty($this->query_results)) {
+            return false;
+        }
+        $this->processQueryResults('loadResult');
+
+        return $this->query_results;
+    }
+
+    /**
+     * loadResultArray
+     *
+     * Returns a single column returned in an array
+     *
+     * $this->query_results[0] thru $this->query_results[n]
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadResultArray()
+    {
+        if ($this->query->select == null) {
+            $this->query->select(
+                $this->db->qn($this->primary_prefix)
+                    . '.'
+                    . $this->db->qn($this->primary_key));
+        }
+
+        if ($this->query->from == null) {
+            $this->query->from(
+                $this->db->qn($this->table_name)
+                    . ' as '
+                    . $this->db->qn($this->primary_prefix)
+            );
+        }
+
+        $this->db->setQuery($this->query->__toString());
+        $this->query_results = $this->db->loadResultArray();
+
+        $this->processQueryResults('loadResultArray');
+
+        return $this->query_results;
+    }
+
+    /**
+     * LoadRow
+     *
+     * Returns an indexed array from a single record in the table
+     *
+     * Access results $this->query_results[0] thru $this->query_results[n]
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadRow()
+    {
+        $this->setQueryDefaults();
+        $this->query_results = $this->db->loadRow();
+        $this->processQueryResults('loadRow');
+
+        return $this->query_results;
+    }
+
+    /**
+     * loadAssoc
+     *
+     * Returns an associated array from a single record in the table
+     *
+     * Access results $this->query_results['id']
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadAssoc()
+    {
+        $this->setQueryDefaults();
+        $this->query_results = $this->db->loadAssoc();
+        $this->processQueryResults('loadAssoc');
+
+        return $this->query_results;
+    }
+
+    /**
+     * loadObject
+     *
+     * Returns a PHP object from a single record in the table
+     *
+     * Access results $this->query_results->fieldname
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadObject()
+    {
+        $this->setQueryDefaults();
+        $this->query_results = $this->db->loadObject();
+        $this->processQueryResults('loadObject');
+
+        return $this->query_results;
+    }
+
+    /**
+     * loadRowList
+     *
+     * Returns an indexed array for multiple rows
+     *
+     * Access results $this->query_results[0][0] thru $this->query_results[n][n]
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadRowList()
+    {
+        $this->setQueryDefaults();
+        $this->query_results = $this->db->loadRow();
+        $this->processQueryResults('loadRowList');
+
+        return $this->query_results;
+    }
+
+    /**
+     * loadAssocList
+     *
+     * Returns an indexed array of associative arrays
+     *
+     * Access results $this->query_results[0]['name']
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadAssocList()
+    {
+        $this->setQueryDefaults();
+        $this->query_results = $this->db->loadAssocList();
+        $this->processQueryResults('loadAssocList');
+
+        return $this->query_results;
+    }
+
+    /**
+     * loadObjectList
+     *
+     * Returns an indexed array of PHP objects
+     * from the table records returned by the query.
+     *
+     * Results are generally processed in a loop or
+     * can be directly accessed using the row index
+     * and column name
+     *
+     * $row['index']->name
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function loadObjectList()
+    {
+        $this->setQueryDefaults();
+        $this->query_results = $this->db->loadObjectList();
+        $this->processQueryResults('loadObjectList');
+
+        return $this->query_results;
+    }
+
+    /**
+     * setQueryDefaults
+     *
+     * sets default select and from values on query,
+     * if not established
+     *
+     * @return mixed
+     * @since  1.0
+     */
+    protected function setQueryDefaults()
+    {
+        if ($this->query->select == null) {
+            $this->fields = $this->getFieldDatatypes();
+            while (list($name, $value) = each($this->fields)) {
+                $this->query->select(
+                    $this->db->qn($this->primary_prefix)
+                        . '.'
+                        . $this->db->qn($name));
+            }
+        }
+
+        if ($this->query->from == null) {
+            $this->query->from(
+                $this->db->qn($this->table_name)
+                    . ' as '
+                    . $this->db->qn($this->primary_prefix)
+            );
+        }
+        $this->db->setQuery($this->query->__toString());
+        /**
+        echo '<pre>';
+        var_dump($this->query->__toString());
+        echo '</pre>';
+         */
+        return;
+    }
+
+    /**
+     * processQueryResults
+     *
+     * Processes the query, handles possible errors,
+     * returns results
+     *
+     * @param $location
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function processQueryResults($location)
+    {
+        if ($this->db->getErrorNum() == 0) {
+
+        } else {
+
+            Services::Message()
+                ->set(
+                $message = Services::Language()
+                    ->_('ERROR_DATABASE_QUERY') . ' ' .
+                    $this->db->getErrorNum() . ' ' .
+                    $this->db->getErrorMsg(),
+                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $code = 500,
+                $debug_location = $this->name . ':' . $location,
+                $debug_object = $this->db
+            );
+        }
+
+        if (count($this->query_results) == 0) {
+            $this->query_results = null;
+        }
+
+        return $this->query_results;
+    }
+
+    /**
+     * _getAdditionalData
+     *
+     * Method to append additional data elements, as needed
+     *
+     * @param array $data
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function _getAdditionalData($data = array())
+    {
+        return $data;
+    }
+
+    /**
+     * getPagination
+     *
+     * @return    array
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        return $this->pagination;
+    }
+
+    /**
+     * bind
      *
      * Unloads the array to class properties for use with the
      * insert / update operation
@@ -119,62 +788,30 @@ class MolajoUpdateController extends MolajoController
      * @return bool
      * @since  1.0
      */
-    protected function _filter($source)
+    public function bind($source)
     {
-        $this->record = new stdClass;
-        $fieldDatatypes = $this->model->getFieldDatatypes();
-
-        $valid = true;
-        foreach ($fieldDatatypes as $field => $value) {
-
-            $attributes = explode(',', $value);
-
-            $datatype = $attributes[0];
-            $null = $attributes[1];
-            $default = $attributes[2];
-
-            if (isset($source->$field)) {
-                $value = $source->$field;
-            } else {
-                $value = null;
-            }
-
-            try {
-                $this->record->$field =
-                    Services::Security()->filter(
-                        $field, $value, $datatype, $null, $default
-                    );
-
-            } catch (Exception $e) {
-                $valid = false;
-                Services::Message()
-                    ->set(
-                    $message =
-                        Services::Language()->translate($e->getMessage()),
-                    $type = MOLAJO_MESSAGE_TYPE_ERROR
-                );
-            }
+        foreach ($source as $key => $value) {
+            $this->$key = $source[$key];
         }
-
-        return $valid;
+        return true;
     }
 
     /**
-     * _validate
+     * validate
      *
      * Runs custom validation methods
      *
      * @return  object
      * @since   1.0
      */
-    protected function _validate()
+    public function validate()
     {
         $this->set('valid', true);
 
         $v = simplexml_load_file(
             MOLAJO_APPLICATIONS_MVC
                 . '/models/tables/'
-                . substr($this->model->table_name, 3, 99)
+                . substr($this->table_name, 3, 99)
                 . '.xml'
         );
         if (count($v) == 0) {
@@ -191,19 +828,8 @@ class MolajoUpdateController extends MolajoController
                 $required = (string)$f['required'];
                 $message = (string)$f['message'];
 
-                try {
-                    $this->_validateForeignKey($name, $source_id,
-                        $source_model, $required, $message);
-
-                } catch (Exception $e) {
-                    $valid = false;
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()),
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
-                    );
-                }
+                $this->_validateForeignKey($name, $source_id,
+                    $source_model, $required, $message);
             }
         }
 
@@ -217,40 +843,20 @@ class MolajoUpdateController extends MolajoController
                 $default = (string)$r['default'];
                 $message = (string)$r['message'];
 
-                try {
-                    $this->_validateValues($name, $required,
-                        $values, $default, $message);
-
-                } catch (Exception $e) {
-                    $valid = false;
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()),
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
-                    );
-                }
+                $this->_validateValues($name, $required,
+                    $values, $default, $message);
             }
         }
 
         /** Helper Functions */
+
+        /** Required and specific values */
         if (isset($v->helper->function)) {
             foreach ($v->helper->function as $h) {
 
                 $name = (string)$h['name'];
 
-                try {
-                    $this->_validateHelperFunction($name);
-
-                } catch (Exception $e) {
-                    $valid = false;
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()),
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
-                    );
-                }
+                $this->_validateHelperFunction($name);
             }
         }
         return $this->get('valid');
@@ -271,16 +877,15 @@ class MolajoUpdateController extends MolajoController
     protected function _validateForeignKey($name, $source_id, $source_model,
                                            $required, $message)
     {
-        if ($this->record->$name == 0
-            && $required == 0
-        ) {
+        if ($this->$name == 0
+            && $required == 0) {
             return;
         }
 
-        if (isset($this->record->$name)) {
+        if (isset($this->$name)) {
             $m = new $source_model ($source_id);
             $m->query->where($m->db->qn('id')
-                . ' = ' . $m->db->q($this->record->$name));
+                . ' = ' . $m->db->q($this->$name));
 
             $value = $m->loadResult();
 
@@ -294,7 +899,19 @@ class MolajoUpdateController extends MolajoController
             }
         }
 
-        throw new Exception('VALIDATE_FOREIGN_KEY');
+        $this->set('valid', false);
+
+        Services::Message()
+            ->set(
+            $message = Services::Language()
+                ->translate($message) . ' ' .
+                $this->db->getErrorNum() . ' ' .
+                $this->db->getErrorMsg(),
+            $type = MOLAJO_MESSAGE_TYPE_ERROR,
+            $code = 500,
+            $debug_location = $this->name . ':' . '_validateForeignKey',
+            $debug_object = $this->db
+        );
 
         return;
     }
@@ -317,24 +934,23 @@ class MolajoUpdateController extends MolajoController
         $result = true;
 
         /** Default */
-        if (isset($this->record->$name)) {
+        if (isset($this->$name)) {
         } else if ($default == null) {
         } else {
-            $this->record->$name = $default;
+            $this->$name = $default;
         }
 
         /** Required */
         if ($required == 1) {
-            if (isset($this->record->$name)) {
+            if (isset($this->$name)) {
             } else {
                 $result = false;
             }
         }
         if ($required == 1
-            && isset($this->record->$name)
-        ) {
-            if (trim($this->record->$name) == ''
-                && (int)$this->record->$name == 0
+            && isset($this->$name)) {
+            if (trim($this->$name) == ''
+                && (int)$this->$name == 0
             ) {
                 $result = false;
             }
@@ -345,7 +961,7 @@ class MolajoUpdateController extends MolajoController
         } else {
             $testArray = explode(',', $values);
 
-            if (in_array($this->record->$name, $testArray)) {
+            if (in_array($this->$name, $testArray)) {
             } else {
                 $result = false;
             }
@@ -355,9 +971,21 @@ class MolajoUpdateController extends MolajoController
             return;
         }
 
-        throw new Exception('VALIDATE_VALUES');
+        $this->set('valid', false);
+echo 'Failed '.$name.' '.$message.'<br />';
+        Services::Message()
+            ->set(
+            $message = Services::Language()
+                ->translate($message) . ' ' .
+                $this->db->getErrorNum() . ' ' .
+                $this->db->getErrorMsg(),
+            $type = MOLAJO_MESSAGE_TYPE_ERROR,
+            $code = 500,
+            $debug_location = $this->name . ':' . '_validateValues',
+            $debug_object = $this->db
+        );
 
-        return false;
+        return;
     }
 
     /**
@@ -370,7 +998,7 @@ class MolajoUpdateController extends MolajoController
      */
     protected function _validateHelperFunction($method)
     {
-        $class = 'Molajo' . ucfirst(substr($this->model->table_name, 3, 999)) . 'ModelHelper';
+        $class = 'Molajo' . ucfirst($this->table_name) . 'ModelHelper';
         if (class_exists($class)) {
         } else {
             $class = 'MolajoModelHelper';
@@ -383,13 +1011,50 @@ class MolajoUpdateController extends MolajoController
 
         $return = '';
         $execute = '$return = ' . $class . '::' . $method .
-            '("' . $this->record->name . '");';
+            '("' . $this->name . '");';
         eval($execute);
         if ($return === false) {
-            throw new Exception('VALIDATE_HELPER_FUNCTION');
+            $method.' Failed';
+            $this->set('valid', false);
         }
     }
 
+    /**
+     * store
+     *
+     * Method to store a row (insert: no PK; update: PK) in the database.
+     *
+     * @param   boolean True to update fields even if they are null.
+     *
+     * @return  boolean  True on success.
+     * @since   1.0
+     */
+    public function store($updateNulls = false)
+    {
+        $k = $this->primary_key;
+
+        if ($this->$k) {
+            $stored = $this->db->
+                updateObject($this->table_name, $this, $this->primary_key, $updateNulls);
+        } else {
+            $stored = $this->db->
+                insertObject($this->table_name, $this, $this->primary_key);
+        }
+
+        if ($stored) {
+        } else {
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->db->getErrorMsg()));
+            $this->setError($e);
+            return false;
+        }
+        /**
+        if ($this->_locked) {
+        $this->_unlock();
+        }
+         */
+
+        return true;
+    }
 
     /**
      * _storeRelated
@@ -405,7 +1070,7 @@ class MolajoUpdateController extends MolajoController
     {
         $asset = new MolajoAssetModel();
 
-        $asset->asset_type_id = $this->model->table_name->asset_type_id;
+        $asset->asset_type_id = $this->table_name->asset_type_id;
 
         $this->asset_id = $asset->save();
 
@@ -421,7 +1086,7 @@ class MolajoUpdateController extends MolajoController
         //		$grouping = MolajoModel::getInstance('Grouping');
 
         //       if ((int) $this->access == 0) {
-        //            $asset->content_table = $this->model->table_name;
+        //            $asset->content_table = $this->table_name;
         //            $this->asset_id = $asset->save();
         //        } else {
         //            $asset->load();
@@ -434,7 +1099,7 @@ class MolajoUpdateController extends MolajoController
 
         //        if ((int) $this->asset_id == 0) {
         //			$this->query = $this->db->getQuery(true);
-        //			$this->query->update($this->db->qn($this->model->table_name));
+        //			$this->query->update($this->db->qn($this->table_name));
         //			$this->query->set('asset_id = '.(int) $this->asset_id);
         //			$this->query->where($this->db->qn($k).' = '.(int) $this->$k);
         //			$this->db->setQuery($this->query->__toString());
@@ -490,7 +1155,7 @@ class MolajoUpdateController extends MolajoController
 
         // Check the row out by primary key.
         $this->query = $this->db->getQuery(true);
-        $this->query->update($this->model->table_name);
+        $this->query->update($this->table_name);
         $this->query->set($this->db->qn('checked_out') . ' = ' . (int)$userId);
         $this->query->set($this->db->qn('checked_out_time') . ' = ' . $this->db->q($time));
         $this->query->where($this->primary_key . ' = ' . $this->db->q($pk));
@@ -544,7 +1209,7 @@ class MolajoUpdateController extends MolajoController
 
         // Check the row in by primary key.
         $this->query = $this->db->getQuery(true);
-        $this->query->update($this->model->table_name);
+        $this->query->update($this->table_name);
         $this->query->set($this->db->qn('checked_out') . ' = 0');
         $this->query->set($this->db->qn('checked_out_time') . ' = ' . $this->db->q($this->db->getNullDate()));
         $this->query->where($this->primary_key . ' = ' . $this->db->q($pk));
@@ -588,7 +1253,7 @@ class MolajoUpdateController extends MolajoController
         // Get the largest ordering value for a given where clause.
         $this->query = $this->db->getQuery(true);
         $this->query->select('MAX(ordering)');
-        $this->query->from($this->model->table_name);
+        $this->query->from($this->table_name);
 
         if ($where) {
             $this->query->where($where);
@@ -639,7 +1304,7 @@ class MolajoUpdateController extends MolajoController
         // Get the primary keys and ordering values for the selection.
         $this->query = $this->db->getQuery(true);
         $this->query->select($this->primary_key . ', ordering');
-        $this->query->from($this->model->table_name);
+        $this->query->from($this->table_name);
         $this->query->where('ordering >= 0');
         $this->query->order('ordering');
 
@@ -667,7 +1332,7 @@ class MolajoUpdateController extends MolajoController
                 } else {
                     // Update the row ordering field.
                     $this->query = $this->db->getQuery(true);
-                    $this->query->update($this->model->table_name);
+                    $this->query->update($this->table_name);
                     $this->query->set('ordering = ' . ($i + 1));
                     $this->query->where($this->primary_key . ' = ' . $this->db->q($row->$k));
                     $this->db->setQuery($this->query->__toString());
@@ -726,7 +1391,7 @@ class MolajoUpdateController extends MolajoController
 
         // Select the primary key and ordering values from the table.
         $this->query->select($this->primary_key . ', ordering');
-        $this->query->from($this->model->table_name);
+        $this->query->from($this->table_name);
 
         // If the movement delta is negative move the row up.
         if ($delta < 0) {
@@ -753,7 +1418,7 @@ class MolajoUpdateController extends MolajoController
 
             // Update the ordering field for this instance.
             $this->query = $this->db->getQuery(true);
-            $this->query->update($this->model->table_name);
+            $this->query->update($this->table_name);
             $this->query->set('ordering = ' . (int)$this->ordering);
             $this->query->where($this->primary_key . ' = ' . $this->db->q($this->$k));
             $this->db->setQuery($this->query->__toString());
@@ -770,7 +1435,7 @@ class MolajoUpdateController extends MolajoController
         } else {
             // Update the ordering field for this instance to the row's ordering value.
             $this->query = $this->db->getQuery(true);
-            $this->query->update($this->model->table_name);
+            $this->query->update($this->table_name);
             $this->query->set('ordering = ' . (int)$row->ordering);
             $this->query->where($this->primary_key . ' = ' . $this->db->q($this->$k));
             $this->db->setQuery($this->query->__toString());
@@ -786,7 +1451,7 @@ class MolajoUpdateController extends MolajoController
 
             // Update the ordering field for the row to this instance's ordering value.
             $this->query = $this->db->getQuery(true);
-            $this->query->update($this->model->table_name);
+            $this->query->update($this->table_name);
             $this->query->set('ordering = ' . (int)$this->ordering);
             $this->query->where($this->primary_key . ' = ' . $this->db->q($row->$k));
             $this->db->setQuery($this->query->__toString());
@@ -847,7 +1512,7 @@ class MolajoUpdateController extends MolajoController
 
         // Update the publishing state for rows with the given primary keys.
         $this->query = $this->db->getQuery(true);
-        $this->query->update($this->model->table_name);
+        $this->query->update($this->table_name);
         $this->query->set('published = ' . (int)$state);
 
         // Determine if there is checkin support for the table.
@@ -922,7 +1587,7 @@ class MolajoUpdateController extends MolajoController
 
             // Setup the basic query.
             $this->query->select($this->db->qn($this->primary_key));
-            $this->query->from($this->db->qn($this->model->table_name));
+            $this->query->from($this->db->qn($this->table_name));
             $this->query->where($this->db->qn($this->primary_key) . ' = ' . $this->db->q($this->$k));
             $this->query->group($this->db->qn($this->primary_key));
 

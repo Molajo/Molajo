@@ -27,7 +27,7 @@ class MolajoContentModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__content';
+        $this->table_name = '#__content';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

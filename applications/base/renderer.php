@@ -525,7 +525,6 @@ class MolajoRenderer
                     $this->get('extension_parameters', '')
                 )
             );
-
         }
 
         /** wrap */
@@ -540,8 +539,8 @@ class MolajoRenderer
                     $this->get('extension_parameters', '')
                 )
             );
-
         }
+
         return true;
     }
 
@@ -749,15 +748,15 @@ class MolajoRenderer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        $this->_verifyMVC(false);
-        if ($this->get('status_found') === false) {
-            return $this->get('status_found');
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoRenderer::_invokeMVC');
+            debug('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
+            debug('Extension: '.$this->get('extension_instance_name').' ID: '.$this->get('id').'');
+            debug('Template: '.$this->get('template_view_path').'');
+            debug('Wrap: '.$this->get('wrap_view_path').'');
         }
-/**
-        echo '<pre>';
-        var_dump($this->task_request);
-        echo '</pre>';
-*/
+
         /** instantiate controller  */
         $controller = new $cc($this->task_request, $this->parameters);
 
@@ -875,46 +874,6 @@ class MolajoRenderer
 
         /** 4. Base Class (no query) */
         return 'MolajoController';
-    }
-
-    /**
-     * _verifyMVC
-     *
-     * @return bool
-     */
-    protected function _verifyMVC($display = false)
-    {
-        $test1 = class_exists($this->get('controller'));
-        $test2 = method_exists($this->get('controller'), $this->get('task'));
-        $test3 = class_exists($this->get('controller'));
-        if ($this->get('template_view_id', 0) == 0) {
-            $test4 = 0;
-        } else {
-            $test4 = 1;
-        }
-        if ($this->get('wrap_view_id', 0) == 0) {
-            $test5 = 0;
-        } else {
-            $test5 = 1;
-        }
-
-        if (($test1 + $test2 + $test3 + $test4 + $test5) < 5) {
-            $this->set('status_found', false);
-        }
-
-        if (($this->get('status_found') === false)
-            || $display === true
-        ) {
-            echo 'Error Count: ' . (5 - ($test1 + $test2 + $test3 + $test4 + $test5)) . '<br />';
-            echo 'Controller ' . $this->get('controller') . '<br />';
-            echo 'Model ' . $this->get('model') . '<br />';
-            echo 'Task ' . $this->get('task') . '<br />';
-            echo 'Template View ' . $this->get('template_view_id') . '<br />';
-            echo 'Wrap View ' . $this->get('wrap_view_id') . '<br />';
-            echo '<pre>';
-            var_dump($this->task_request);
-            echo '</pre>';
-        }
     }
 
     /**

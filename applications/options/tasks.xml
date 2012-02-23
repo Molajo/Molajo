@@ -4,11 +4,11 @@
     <task name="archive" action="publish" controller="updatelist"/>
     <task name="cancel" action="none" controller="update"/>
     <task name="checkin" action="administer" controller="updatelist"/>
-    <task name="copy" action="create" controller="updatelist"/>
-    <task name="create" action="create" controller="update"/>
+    <task name="copy" action="view" controller="updatelist"/>
+    <task name="create" action="view" controller="update"/>
     <task name="delete" action="delete" controller="updatelist"/>
     <task name="display" action="view" controller="display"/>
-    <task name="edit" action="edit" controller="display"/>
+    <task name="edit" action="view" controller="display"/>
     <task name="feature" action="publish" controller="updatelist"/>
     <task name="login" action="login" controller="login"/>
     <task name="logout" action="logout" controller="login"/>

@@ -38,3 +38,9 @@ foreach ($files as $file) {
     }
 }
 
+/**
+ *  Debug
+ */
+$load->requireClassFile(PLATFORM_MOLAJO . '/debug/PhpConsole.php', 'PhpConsole');
+PhpConsole::start(true, true, PLATFORM_MOLAJO . '/debug');
+

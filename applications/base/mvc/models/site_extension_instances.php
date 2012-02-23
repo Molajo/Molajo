@@ -27,7 +27,7 @@ class MolajoSiteExtensionInstancesModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__site_extension_instances';
+        $this->table_name = '#__site_extension_instances';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

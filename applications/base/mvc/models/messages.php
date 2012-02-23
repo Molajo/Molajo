@@ -40,7 +40,7 @@ class MolajoMessagesModel extends MolajoModel
      */
     public function getData()
     {
-        $this->data = array();
+        $this->query_results = array();
 
         $messages = Services::Message()->get();
         if (count($messages) == 0) {
@@ -55,9 +55,9 @@ class MolajoMessagesModel extends MolajoModel
             $row->debug_location = $message['debug_location'];
             $row->debug_object = $message['debug_object'];
 
-            $this->data[] = $row;
+            $this->query_results[] = $row;
         }
 
-        return $this->data;
+        return $this->query_results;
     }
 }

@@ -27,7 +27,7 @@ class MolajoUserViewGroupsModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__user_view_groups';
+        $this->table_name = '#__user_view_groups';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

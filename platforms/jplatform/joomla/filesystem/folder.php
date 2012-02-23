@@ -278,7 +278,7 @@ abstract class JFolder
 
         // Is this really a folder?
         if (!is_dir($path)) {
-            JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
+            JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
             return false;
         }
 
@@ -331,7 +331,7 @@ abstract class JFolder
         }
         else
         {
-            JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_DELETE', $path));
+            JError::raiseWarning('SOME_ERROR_CODE', Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_DELETE', $path));
             $ret = false;
         }
         return $ret;
@@ -369,7 +369,7 @@ abstract class JFolder
         if ($use_streams) {
             $stream = JFactory::getStream();
             if (!$stream->move($src, $dest)) {
-                return JText::sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_RENAME', $stream->getError());
+                return Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_RENAME', $stream->getError());
             }
             $ret = true;
         }
@@ -437,7 +437,7 @@ abstract class JFolder
 
         // Is the path a folder?
         if (!is_dir($path)) {
-            JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FILES', $path));
+            JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FILES', $path));
             return false;
         }
 
@@ -480,7 +480,7 @@ abstract class JFolder
 
         // Is the path a folder?
         if (!is_dir($path)) {
-            JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FOLDER', $path));
+            JError::raiseWarning(21, Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FOLDER', $path));
             return false;
         }
 

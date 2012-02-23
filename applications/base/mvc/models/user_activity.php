@@ -27,7 +27,7 @@ class MolajoUserActivityModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__user_activity';
+        $this->table_name = '#__user_activity';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

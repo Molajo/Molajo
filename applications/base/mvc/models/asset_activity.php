@@ -27,7 +27,7 @@ class MolajoAssetActivityModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__asset_activity';
+        $this->table_name = '#__asset_activity';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

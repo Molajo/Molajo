@@ -53,12 +53,15 @@ abstract class MolajoAssetHelper
             ' = b.' . $m->db->qn('id'));
 
         if ((int)$asset_id == 0) {
+
             $m->query->where('(a.' . $m->db->qn('sef_request') .
                     ' = ' . $m->db->q($query_request) .
                     ' OR a.' . $m->db->qn('request') . ' = ' .
                     $m->db->q($query_request) . ')'
             );
+
         } else {
+
             $m->query->where('a.' . $m->db->qn('id') . ' = ' .
                     (int)$asset_id
             );

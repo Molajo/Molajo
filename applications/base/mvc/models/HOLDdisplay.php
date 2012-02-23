@@ -72,7 +72,7 @@ class MolajoDisplayModel extends MolajoModel
      * @var    array
      * @since  1.0
      */
-    protected $tableFieldList = array();
+    protected $table_fields = array();
 
     /**
      * Model Object for Molajo configuration DELETE
@@ -165,7 +165,7 @@ class MolajoDisplayModel extends MolajoModel
         /** selected filters **/
         //for ($i = 1; $i < 10000; $i++) {
 
-        //    $filterName = $this->parameters->def($this->filterFieldName . $i);
+        //    $filterName = $this->parameters->get($this->filterFieldName . $i);
 
         /** end of filter processing **/
         //            if ($filterName == null) {
@@ -218,7 +218,7 @@ class MolajoDisplayModel extends MolajoModel
         } else {
             $searchValue = $value;
         }
-        if (in_array($searchValue, $this->tableFieldList)) {
+        if (in_array($searchValue, $this->table_fields)) {
             $ordering = $value;
         } else {
             $ordering = 'a.title';
@@ -230,7 +230,7 @@ class MolajoDisplayModel extends MolajoModel
 
         $this->setState('list.ordering', $value);
 
-        if (in_array($value, $this->tableFieldList)) {
+        if (in_array($value, $this->table_fields)) {
             $ordering = $value;
         } else {
             $ordering = 'a.title';
@@ -339,9 +339,9 @@ class MolajoDisplayModel extends MolajoModel
     {
         $names = $this->getModel()->getProperties();
 
-        $this->tableFieldList = array();
+        $this->table_fields = array();
         foreach ($names as $name => $value) {
-            $this->tableFieldList[] = $name;
+            $this->table_fields[] = $name;
         }
 
         /** create query **/
@@ -573,7 +573,7 @@ class MolajoDisplayModel extends MolajoModel
         $nameArray = array();
 
         /** load all available columns into select list **/
-        foreach ($this->tableFieldList as $name) {
+        foreach ($this->table_fields as $name) {
             $this->setQueryInformation($name, false);
         }
 
@@ -749,7 +749,7 @@ class MolajoDisplayModel extends MolajoModel
         $id = ':' . $this->getState('filter.search');
 
         //        for ($i = 1; $i < 1000; $i++) {
-        //            $temp = $this->parameters->def($this->filterFieldName . $i);
+        //            $temp = $this->parameters->get($this->filterFieldName . $i);
         //            $filterName = substr($temp, 0, stripos($temp, ';'));
         //            $filterDataType = substr($temp, stripos($temp, ';') + 1, 1);
         //            if ($filterName == null) {
@@ -920,7 +920,7 @@ class MolajoDisplayModel extends MolajoModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $filterName = $this->parameters->def($this->filterFieldName . $i);
+            $filterName = $this->parameters->get($this->filterFieldName . $i);
 
             /** end of filter processing **/
             if ($filterName == null) {
@@ -1143,7 +1143,7 @@ class MolajoDisplayModel extends MolajoModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $name = $this->parameters->def($this->filterFieldName . $i);
+            $name = $this->parameters->get($this->filterFieldName . $i);
 
             /** end of filter processing **/
             if ($name == null) {
@@ -1164,7 +1164,7 @@ class MolajoDisplayModel extends MolajoModel
 
         /** filter by known field names and append into query object **/
         foreach ($nameArray as $name) {
-            if ((in_array($name, $this->tableFieldList)) || $name == 'search') {
+            if ((in_array($name, $this->table_fields)) || $name == 'search') {
                 $this->setQueryInformation($name, false);
             }
         }

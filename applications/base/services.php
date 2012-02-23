@@ -90,6 +90,11 @@ class MolajoServices
      */
     public function set($key, $value = null)
     {
+        if ($value == null) {
+            debug(' ');
+            debug('MolajoServices::set');
+            debug('Service failed to start: '.$key);
+        }
         $this->service_connection->set($key, $value);
     }
 
@@ -116,9 +121,11 @@ class MolajoServices
         foreach ($services->service as $s) {
             $serviceName = (string)$s->name;
             $connection = $this->_connectService($s);
-//echo 'Name '.$serviceName.'<br />';
-//var_dump($connection);
-//echo '<br />';
+/**
+echo 'SERVICE: '.$serviceName.'<br />';
+var_dump($connection);
+echo '<br />';
+*/
             $this->set($serviceName, $connection);
         }
 

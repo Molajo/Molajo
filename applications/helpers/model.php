@@ -510,10 +510,13 @@ class MolajoModelHelper
 
         $m = new $model();
 
-        $m->query->select($m->db->qn('a') . '.' . $m->db->qn($key) . ' as ' . $m->db->qn('key'));
-        $m->query->select($m->db->qn('a') . '.' . $m->db->qn($value) . ' as ' . $m->db->qn('value'));
+        $m->query->select($m->db->qn('a') . '.' . $m->db->qn($key)
+            . ' as ' . $m->db->qn('key'));
+        $m->query->select($m->db->qn('a') . '.' . $m->db->qn($value)
+            . ' as ' . $m->db->qn('value'));
 
-        $m->query->from($m->db->qn(trim($m->table)) . ' as ' . $m->db->qn('a'));
+        $m->query->from($m->db->qn(trim($m->table_name))
+            . ' as ' . $m->db->qn('a'));
 
         if ((int)$assettypes == '0') {
         } else {
@@ -529,8 +532,9 @@ class MolajoModelHelper
         }
 
         if ((int)$viewaccess == 1) {
-            MolajoAccessService::setQueryViewAccess(
-                $m->query,
+            Services::Access()->setQueryViewAccess(
+                $this->query,
+                $this->db,
                 array('join_to_prefix' => 'a',
                     'join_to_primary_key' => 'id',
                     'asset_prefix' => 'a_assets',
@@ -627,13 +631,8 @@ class MolajoModelHelper
      * @return  boolean  True if checked out to user
      * @since   1.0
      */
-    public function validateCheckedOut($model)
+    public function validateCheckedOut($model, $query, $db)
     {
-        $db = Services::DB();
-        $query = $db->getQuery(true);
-        $now = Services::Date()->getDate()->toSql();
-        $nullDate = $db->getNullDate();
-
         $query->select('a.' . $db->qn('view_group_id'));
         $query->select('a.' . $db->qn('asset'));
     }

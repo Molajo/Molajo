@@ -13,7 +13,6 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
- * @link
  */
 class MolajoUsersModel extends MolajoDisplayModel
 {
@@ -28,7 +27,7 @@ class MolajoUsersModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__users';
+        $this->table_name = '#__users';
         $this->primary_key = 'id';
 
         return parent::__construct($id);
@@ -40,8 +39,6 @@ class MolajoUsersModel extends MolajoDisplayModel
      * Method to append additional data elements needed to the standard
      * array of elements provided by the data source
      *
-     * @param array $this->data
-     *
      * @return array
      * @since  1.0
      */
@@ -50,10 +47,11 @@ class MolajoUsersModel extends MolajoDisplayModel
         parent::_getLoadAdditionalData();
 
         /** concatenate name */
-        $this->data['name'] = $this->data['first_name'] . ' ' . $this->data['last_name'];
+        $this->query_results['name'] = $this->query_results['first_name'] . ' ' . $this->query_results['last_name'];
 
         /** retrieve applications for which the user is authorized to login */
         $m = new MolajoUserApplicationsModel ();
+
         $m->query->select($this->db->qn('application_id'));
         $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
 
@@ -63,41 +61,45 @@ class MolajoUsersModel extends MolajoDisplayModel
         foreach ($applications as $application) {
             $x[] = $application;
         }
-        $this->data['applications'] = $x;
+        $this->query_results['applications'] = $x;
 
         /** retrieve groups to which the user belongs */
         $m = new MolajoUserGroupsModel ();
+
         $m->query->select($this->db->qn('group_id'));
         $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
+
         $groups = $m->loadObjectList();
 
         $x = array();
         foreach ($groups as $group) {
             $x[] = $group->group_id;
         }
-        $this->data['groups'] = $x;
+        $this->query_results['groups'] = $x;
 
         /** retrieve system groups to which the user belongs */
-        $this->data['public'] = 1;
-        $this->data['guest'] = 0;
-        $this->data['registered'] = 1;
-        if (in_array(5, $this->data['groups'])) {
-            $this->data['administrator'] = 1;
+        $this->query_results['public'] = 1;
+        $this->query_results['guest'] = 0;
+        $this->query_results['registered'] = 1;
+        if (in_array(MOLAJO_SYSTEM_GROUP_ADMINISTRATOR, $this->query_results['groups'])) {
+            $this->query_results['administrator'] = 1;
         }
 
         /** retrieve view access groups to which the user belongs */
         $m = new MolajoUserViewGroupsModel ();
+
         $m->query->select($this->db->qn('view_group_id'));
         $m->query->where($this->db->qn('user_id') . ' = ' . (int)$this->id);
+
         $vgroups = $m->runQuery();
 
         $x = array();
         foreach ($vgroups as $vgroup) {
             $x[] = $vgroup->view_group_id;
         }
-        $this->data['view_groups'] = $x;
+        $this->query_results['view_groups'] = $x;
 
         /** return array of primary query and additional data elements */
-        return $this->data;
+        return $this->query_results;
     }
 }

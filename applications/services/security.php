@@ -49,6 +49,14 @@ class MolajoSecurityService
     protected $token;
 
     /**
+     * Filter
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $filter;
+
+    /**
      * @var        array    A list of the default whitelist tags.
      * @since    1.5
      */
@@ -96,6 +104,7 @@ class MolajoSecurityService
     public function __construct()
     {
         $this->session = Services::Session();
+        $this->filter = FilterInput::getInstance();
     }
 
     /**
@@ -218,6 +227,213 @@ class MolajoSecurityService
     }
 
     /**
+     * filter
+     *
+     * Filter input, default value, edit
+     *
+     * @param   string  $field_name   Value of input field
+     * @param   string  $field_value  Value of input field
+     * @param   string  $datatype     Datatype of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function filter($field_name,
+                           $field_value = null,
+                           $datatype = 'char',
+                           $null = 1,
+                           $default = null)
+    {
+        if ($datatype == 'int') {
+            return $this->filter_int(
+                $field_name, $field_value, $null, $default
+            );
+
+        } else if ($datatype == 'date') {
+            return $this->filter_date(
+                $field_name, $field_value, $null, $default
+            );
+
+        } else if ($datatype == 'text') {
+            return $this->filter_html(
+                $field_name, $field_value, $null, $default
+            );
+
+        } else {
+            return $this->filter_char(
+                $field_name, $field_value, $null, $default
+            );
+        }
+    }
+
+    /**
+     * filter_int
+     *
+     * @param   string  $field_name   Value of input field
+     * @param   string  $field_value  Value of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function filter_int($field_name,
+                               $field_value = null,
+                               $null = 1,
+                               $default = null)
+    {
+        if ($default == null) {
+        } else if ($field_value == null) {
+            $field_value = $default;
+        }
+
+        if ($field_value == null) {
+        } else {
+            $test = (int)$field_value;
+            if ($test == $field_value) {
+                return $test;
+            }
+        }
+
+        if ($field_value == null
+            && $null == 0
+        ) {
+            throw new Exception('FILTER_VALUE_REQUIRED');
+        }
+
+        return $field_value;
+    }
+
+
+    /**
+     * filter_date
+     *
+     * @param   string  $field_name   Value of input field
+     * @param   string  $field_value  Value of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function filter_date($field_name,
+                                $field_value = null,
+                                $null = 1,
+                                $default = null)
+    {
+        if ($default == null) {
+        } else if ($field_value == null
+            || $field_value == ''
+            || $field_value == 0 ) {
+            $field_value = $default;
+        }
+
+        if ($field_value == null
+            || $field_value == '0000-00-00 00:00:00') {
+        } else {
+            $dd = substr($field_value, 8, 2);
+            $mm = substr($field_value, 5, 2);
+            $ccyy = substr($field_value, 0, 4);
+
+            if (checkdate((int) $mm, (int) $dd, (int) $ccyy)) {
+            } else {
+                throw new Exception('FILTER_INVALID_VALUE');
+            }
+            $test = $ccyy . '-' . $mm . '-' . $dd;
+
+            if ($test == $field_value) {
+                return $test;
+            } else {
+                throw new Exception('FILTER_INVALID_VALUE');
+            }
+        }
+
+        if ($field_value == null
+            && $null == 0
+        ) {
+            throw new Exception('FILTER_VALUE_REQUIRED');
+        }
+
+        return $field_value;
+    }
+
+    /**
+     * filter_html
+     *
+     * @param   string  $field_name   Value of input field
+     * @param   string  $field_value  Value of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function filter_html($field_name,
+                                $field_value = null,
+                                $null = 1,
+                                $default = null)
+    {
+        if ($default == null) {
+        } else if ($field_value == null) {
+            $field_value = $default;
+        }
+
+        if ($field_value == null) {
+        } else {
+            $field_value = $this->filter->clean($field_value, 'HTML');
+        }
+
+        if ($field_value == null
+            && $null == 0
+        ) {
+            throw new Exception('FILTER_VALUE_REQUIRED');
+        }
+
+        return $field_value;
+    }
+
+    /**
+     * filter_char
+     *
+     * @param   string  $field_name   Value of input field
+     * @param   string  $field_value  Value of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function filter_char($field_name,
+                                $field_value = null,
+                                $null = 1,
+                                $default = null)
+    {
+        if ($default == null) {
+        } else if ($field_value == null) {
+            if ($default == 'space') {
+                $field_value = ' ';
+            } else {
+                $field_value = $default;
+            }
+        }
+
+        if ($field_value == null) {
+        } else {
+            $field_value = $this->filter->clean($field_value, 'STRING');
+        }
+
+        if ($field_value == null
+            && $null == 0
+        ) {
+            throw new Exception('FILTER_VALUE_REQUIRED');
+        }
+
+        return $field_value;
+    }
+
+    /**
      * Applies the content text filters as per settings for current user group
      *
      * @param text The string to filter
@@ -226,10 +442,6 @@ class MolajoSecurityService
     public function filterText($text)
     {
         return true;
-
-        /** filter parameters **/
-        $molajoSystemPlugin =& MolajoPluginService::getPlugin('system', 'molajo');
-        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         $acl = new MolajoACL ();
         $userGroups = $acl->getList('usergroups');
@@ -332,11 +544,11 @@ class MolajoSecurityService
                     1 // blacklist attributes
                 );
             }
-                // White lists take third precedence.
+            // White lists take third precedence.
             else if ($whiteList) {
                 $filter = FilterInput::getInstance($whiteListTags, $whiteListAttributes, 0, 0, 0); // turn off xss auto clean
             }
-                // No HTML takes last place.
+            // No HTML takes last place.
             else {
                 $filter = FilterInput::getInstance();
             }
@@ -345,22 +557,6 @@ class MolajoSecurityService
         }
 
         return $text;
-    }
-
-    public static function filterURL($text)
-    {
-    }
-
-    public static function filterEmail($text)
-    {
-    }
-
-    public static function filterFile($text)
-    {
-    }
-
-    public static function filterIPAddress($text)
-    {
     }
 
     /**
@@ -386,7 +582,7 @@ class MolajoSecurityService
      */
     static public function escapeInteger($integer)
     {
-        return (int) $integer;
+        return (int)$integer;
     }
 
     /**

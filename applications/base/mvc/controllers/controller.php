@@ -265,7 +265,7 @@ class MolajoController
      */
     public function createVersion()
     {
-        if ($this->parameters->def('version_management', 1) == 1) {
+        if ($this->parameters->get('version_management', 1) == 1) {
         } else {
             return true;
         }
@@ -277,7 +277,7 @@ class MolajoController
 
         /** versions deleted with delete **/
         if ($this->get('task') == 'delete'
-            && $this->parameters->def('retain_versions_after_delete', 1) == 0
+            && $this->parameters->get('retain_versions_after_delete', 1) == 0
         ) {
             return true;
         }
@@ -314,7 +314,7 @@ class MolajoController
      */
     public function maintainVersionCount()
     {
-        if ($this->parameters->def('version_management', 1) == 1) {
+        if ($this->parameters->get('version_management', 1) == 1) {
         } else {
             return true;
         }
@@ -326,12 +326,12 @@ class MolajoController
 
         /** versions deleted with delete **/
         if ($this->get('task') == 'delete'
-            && $this->parameters->def('retain_versions_after_delete', 1) == 0
+            && $this->parameters->get('retain_versions_after_delete', 1) == 0
         ) {
             $maintainVersions = 0;
         } else {
             /** retrieve versions desired **/
-            $maintainVersions = $this->parameters->def('maintain_version_count', 5);
+            $maintainVersions = $this->parameters->get('maintain_version_count', 5);
         }
 
         /** delete extra versions **/

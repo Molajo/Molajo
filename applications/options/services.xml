@@ -23,11 +23,6 @@
         <name>Configuration</name>
         <serviceClass>MolajoConfigurationService</serviceClass>
     </service>
-
-    <service>
-        <name>Access</name>
-        <serviceClass>MolajoAccessService</serviceClass>
-    </service>
     <service>
         <name>User</name>
         <serviceClass>MolajoUserService</serviceClass>
@@ -38,6 +33,10 @@
         </getInstance>
          <connect>
          </connect>
+    </service>
+    <service>
+        <name>Access</name>
+        <serviceClass>MolajoAccessService</serviceClass>
     </service>
     <service>
         <name>Image</name>
@@ -60,12 +59,11 @@
         <serviceClass>MolajoSecurityService</serviceClass>
     </service>
     <service>
-        <name>URL</name>
+        <name>Url</name>
         <serviceClass>MolajoURLService</serviceClass>
     </service>
     <service>
         <name>Text</name>
         <serviceClass>MolajoTextService</serviceClass>
     </service>
-
 </services>

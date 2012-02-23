@@ -85,9 +85,9 @@ abstract class MolajoExtensionHelper
         );
 
         /** Assets Join and View Access Check */
-        Services::Access()
-            ->setQueryViewAccess(
+        Services::Access()->setQueryViewAccess(
             $m->query,
+            $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
                 'asset_prefix' => 'b_assets',

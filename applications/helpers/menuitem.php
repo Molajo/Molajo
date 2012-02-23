@@ -55,9 +55,9 @@ abstract class MolajoMenuitemHelper
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$menu_item_id);
 
         /** Assets Join and View Access Check */
-        Services::Access()
-            ->setQueryViewAccess(
+        Services::Access()->setQueryViewAccess(
             $m->query,
+            $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
                 'asset_prefix' => 'a_assets',
@@ -89,9 +89,9 @@ abstract class MolajoMenuitemHelper
                 ' OR b.stop_publishing_datetime >= ' . $m->db->q($m->now) . ')'
         );
 
-        Services::Access()
-            ->setQueryViewAccess(
+        Services::Access()->setQueryViewAccess(
             $m->query,
+            $m->db,
             array('join_to_prefix' => 'b',
                 'join_to_primary_key' => 'id',
                 'asset_prefix' => 'b_assets',

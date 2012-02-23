@@ -27,7 +27,7 @@ class MolajoSiteApplicationsModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__site_applications';
+        $this->table_name = '#__site_applications';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

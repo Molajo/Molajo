@@ -18,15 +18,6 @@ defined('MOLAJO') or die;
  */
 class MolajoAccessService
 {
-    /**
-     * $task_to_action
-     *
-     * Task to ACL Action list
-     *
-     * @var    Registry
-     * @since  1.0
-     */
-    public $task_to_action;
 
     /**
      * $action_to_action_id
@@ -36,7 +27,17 @@ class MolajoAccessService
      * @var    Registry
      * @since  1.0
      */
-    public $action_to_action_id;
+    protected $action_to_action_id;
+
+    /**
+     * $task_to_action
+     *
+     * Task to ACL Action list
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    protected $task_to_action;
 
     /**
      * $action_to_controller
@@ -46,7 +47,7 @@ class MolajoAccessService
      * @var    Registry
      * @since  1.0
      */
-    public $action_to_controller;
+    protected $action_to_controller;
 
     /**
      * Static instance
@@ -101,6 +102,7 @@ class MolajoAccessService
         if (count($tasks) == 0) {
             return;
         }
+
         $this->task_to_action = new Registry();
         $this->action_to_controller = new Registry();
 
@@ -122,7 +124,9 @@ class MolajoAccessService
 
         /** retrieve database keys for actions */
         $m = new MolajoActionTypesModel();
+
         $actionsList = $m->getData();
+
         foreach ($actionsList as $actionDefinition) {
             $this->action_to_action_id
                 ->set(
@@ -132,6 +136,23 @@ class MolajoAccessService
         }
 
         return;
+    }
+
+    /**
+     * getTaskController
+     *
+     * Using the Task, retrieve the Controller
+     *
+     * @param $task
+     *
+     * @return string
+     * @since  1.0
+     */
+    public function getTaskController ($task)
+    {
+        $action = $this->task_to_action->get($task);
+        $controller = $this->action_to_controller->get($action);
+        return $controller;
     }
 
     /**
@@ -146,20 +167,16 @@ class MolajoAccessService
     public function authoriseTaskList($tasklist = array(), $asset_id = 0)
     {
         if (count($tasklist) == 0) {
-            return;
+            return false;
         }
         if ($asset_id == 0) {
-            return;
+            return false;
         }
 
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
-                Services::Access()
-                    ->authoriseTask(
-                    $task,
-                    $asset_id
-                );
+                Services::Access()->authoriseTask($task, $asset_id);
         }
         return $taskPermissions;
     }
@@ -176,8 +193,7 @@ class MolajoAccessService
     public function authoriseTask($task, $asset_id)
     {
         if ($task == 'login') {
-            return Services::Access()
-                ->authoriseTask('login', $asset_id);
+            return Services::Access()->authoriseLogin('login', $asset_id);
         }
 
         /** Retrieve ACL Action for this Task */
@@ -185,14 +201,20 @@ class MolajoAccessService
         $action_id = (int) $this->action_to_action_id->get($action);
 
         if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
-            echo 'Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id . ' (Message in Access)' . '<br />';
+            if (Services::Configuration()->get('debug', 0) == 1) {
+                debug(' ');
+                debug('MolajoAccessService::authoriseTask');
+                debug('Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id);
+            }
         }
 
         //todo: amy fill database with real actions
 
         /** check for permission */
         $action_id = 3;
+
         $m = new MolajoGroupPermissionsModel();
+
         $m->query->where($m->db->qn('asset_id') . ' = ' . (int)$asset_id);
         $m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
         $m->query->where($m->db->qn('group_id')
@@ -226,6 +248,7 @@ class MolajoAccessService
         }
 
         $m = new MolajoUserApplicationsModel();
+
         $m->query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
         $m->query->where('user_id = ' . (int)$user_id);
 
@@ -243,18 +266,18 @@ class MolajoAccessService
      *
      *  Append criteria needed to implement view access for Query
      *
-     * @param  string  $query
-     * @param  string  $parameters
+     * @param  array  $query
+     * $param  array  $db
+     * @param  Registry  $parameters
      *
      * @return     boolean
      * @since      1.0
      */
     public function setQueryViewAccess(
         $query = array(),
+        $db = array(),
         $parameters = array())
     {
-        $db = Services::DB();
-
         if ($parameters['select'] === true) {
             $query->select(
                 $db->qn($parameters['asset_prefix']) .

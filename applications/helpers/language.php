@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Helper
  * @since       1.0
  */
-class MolajoLanguageHelper
+abstract class MolajoLanguageHelper
 {
     /**
      * getLanguage
@@ -24,7 +24,7 @@ class MolajoLanguageHelper
      * @return  string  locale or null if not found
      * @since   1.0
      */
-    public function getDefault()
+    static public function getDefault()
     {
         /** Installed Languages */
         $languages = LanguageHelper::getLanguages(
@@ -80,7 +80,7 @@ class MolajoLanguageHelper
      * @return  array
      * @since   1.0
      */
-    public static function createLanguageList($path = null)
+    static public function createLanguageList($path = null)
     {
         if (MOLAJO_APPLICATION_ID == 0) {
             $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . 'installer';
@@ -124,7 +124,7 @@ class MolajoLanguageHelper
      * @return  object
      * @since   1.0
      */
-    public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
+    static public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
     {
         if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
             return LanguageHelper::getLanguagesCore();
@@ -159,7 +159,7 @@ class MolajoLanguageHelper
      * @return array
      * @since  1.0
      */
-    public function getLanguagesCore()
+    static public function getLanguagesCore()
     {
         $subfolders = JFolder::folders(MOLAJO_EXTENSIONS_LANGUAGES);
         $languages = array();
@@ -185,7 +185,7 @@ class MolajoLanguageHelper
      * @return  array  array
      * @since   1.0
      */
-    public function getMetadata($file)
+    static public function getMetadata($file)
     {
         $xml = simplexml_load_file($file);
         if ($xml) {

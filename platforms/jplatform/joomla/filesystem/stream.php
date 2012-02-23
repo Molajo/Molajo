@@ -1138,13 +1138,13 @@ class JStream extends JObject
                 else
                 {
                     @fclose($reader); // close the reader off
-                    $php_errormsg = JText::sprintf('JLIB_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_WRITER', $this->getError());
+                    $php_errormsg = Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_WRITER', $this->getError());
                 }
             }
             else
             {
                 if (!$php_errormsg) {
-                    $php_errormsg = JText::sprintf('JLIB_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_READER', $this->getError());
+                    $php_errormsg = Services::Language()->sprintf('JLIB_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_READER', $this->getError());
                 }
             }
         }

@@ -45,8 +45,8 @@ class MolajoRequestModel extends MolajoDisplayModel
     public function getData()
     {
         /** input for events is stored in the task request object */
-        $this->data = Molajo::Request()->get('query_rowset');
-        return $this->data;
+        $this->query_results = Molajo::Request()->get('query_rowset');
+        return $this->query_results;
     }
 
     /**

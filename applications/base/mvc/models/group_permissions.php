@@ -27,7 +27,7 @@ class MolajoGroupPermissionsModel extends MolajoDisplayModel
     public function __construct($id = null)
     {
         $this->name = get_class($this);
-        $this->table = '#__group_permissions';
+        $this->table_name = '#__group_permissions';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

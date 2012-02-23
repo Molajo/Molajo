@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class MolajoDisplayModel extends MolajoCrudModel
+class MolajoDisplayModel extends MolajoLoadModel
 {
     /**
      * _setQuery
@@ -95,7 +95,7 @@ class MolajoDisplayModel extends MolajoCrudModel
          *  From
          */
         $this->query->from(
-            $this->db->qn($this->table)
+            $this->db->qn($this->table_name)
                 . ' as '
                 . $this->db->qn($this->primary_prefix)
         );
@@ -103,8 +103,9 @@ class MolajoDisplayModel extends MolajoCrudModel
         if (isset($parameterArray['disable_view_access_check'])
             && $parameterArray['disable_view_access_check'] == 0
         ) {
-            MolajoAccessService::setQueryViewAccess(
+            Services::Access()->setQueryViewAccess(
                 $this->query,
+                $this->db,
                 array('join_to_prefix' => $this->primary_prefix,
                     'join_to_primary_key' => $this->primary_key,
                     'asset_prefix' => $this->primary_prefix . '_assets',
@@ -231,7 +232,7 @@ class MolajoDisplayModel extends MolajoCrudModel
      *
      * Method to append additional data elements, as needed
      *
-     * @param array $this->data
+     * @param array $this->query_results
      *
      * @return array
      * @since  1.0
@@ -239,8 +240,8 @@ class MolajoDisplayModel extends MolajoCrudModel
     protected function _getAdditionalData()
     {
         $rowCount = 1;
-        if (count($this->data) == 0) {
-            return $this->data;
+        if (count($this->query_results) == 0) {
+            return $this->query_results;
         }
 
         /**
@@ -273,7 +274,7 @@ class MolajoDisplayModel extends MolajoCrudModel
         /**
          *  Loop through query results
          */
-        foreach ($this->data as $item) {
+        foreach ($this->query_results as $item) {
             $keep = true;
 
             if (count($methodArray) > 0) {
@@ -306,12 +307,12 @@ class MolajoDisplayModel extends MolajoCrudModel
 
             /** remove items so marked **/
             if ($keep === true) {
-                $item->rowCount = $rowCount++;
+                $item->row_count = $rowCount++;
             } else {
                 unset($item);
             }
         }
-        return $this->data;
+        return $this->query_results;
     }
 
     /**

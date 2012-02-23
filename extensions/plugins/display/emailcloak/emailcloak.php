@@ -71,7 +71,7 @@ class plgContentEmailcloak extends MolajoPluginHelper
             return true;
         }
 
-        $mode = $this->parameters->def('mode', 1);
+        $mode = $this->parameters->get('mode', 1);
 
         // any@email.address.com
         $searchEmail = '([\w\.\-]+\@(?:[a-z0-9\.\-]+\.)+(?:[a-z0-9\-]{2,4}))';

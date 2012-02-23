@@ -61,6 +61,18 @@ $db = Services::Connect('jdb');
 
 <?php
 /*
+ *  Debugging: Send message to Chrome Console
+ *
+ *  To use, must use Chrome and install:
+ *  https://chrome.google.com/webstore/detail/nfhmhhlpfleoednkpnnnkolmclajemef
+ *
+ */
+
+if (Services::Configuration()->get('debug', 0) == 1) {
+    debug('stuff goes here'.$includingVariables);
+}
+
+/*
  * Application Configuration Object
  *
  * Site configuration (located in sites/N/configuration.php file) and

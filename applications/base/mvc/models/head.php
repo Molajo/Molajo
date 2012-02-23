@@ -40,7 +40,7 @@ class MolajoHeadModel extends MolajoModel
      */
     public function getData()
     {
-        $this->data = array();
+        $this->query_results = array();
 
         $row = new stdClass();
         $row->type = 'base';
@@ -58,7 +58,7 @@ class MolajoHeadModel extends MolajoModel
         $row->base = Molajo::Request()->get('url_base');
         $row->last_modified = Molajo::Request()->get('source_last_modified');
         $row->favicon = Molajo::Request()->get('theme_favicon');
-        $this->data[] = $row;
+        $this->query_results[] = $row;
 
         /** type: links */
         $list = Molajo::Responder()->getHeadLinks();
@@ -71,7 +71,7 @@ class MolajoHeadModel extends MolajoModel
                 $row->relation = $item['relation'];
                 $row->relation_type = $item['relation_type'];
                 $row->attributes = $item['attributes'];
-                $this->data[] = $row;
+                $this->query_results[] = $row;
             }
         }
 
@@ -86,7 +86,7 @@ class MolajoHeadModel extends MolajoModel
                 $row->media = $item['media'];
                 $row->attributes = $item['attributes'];
                 $row->priority = $item['priority'];
-                $this->data[] = $row;
+                $this->query_results[] = $row;
             }
         }
 
@@ -97,7 +97,7 @@ class MolajoHeadModel extends MolajoModel
             $row->type = 'stylesheet_declarations';
             $row->mimetype = $item['mimetype'];
             $row->content = $item['content'];
-            $this->data[] = $row;
+            $this->query_results[] = $row;
         }
 
         /** type: javascript_links */
@@ -110,7 +110,7 @@ class MolajoHeadModel extends MolajoModel
             $row->defer = 0;
             $row->async = $item['async'];
             $row->priority = $item['priority'];
-            $this->data[] = $row;
+            $this->query_results[] = $row;
         }
 
         /** type: javascript_declarations */
@@ -120,9 +120,9 @@ class MolajoHeadModel extends MolajoModel
             $row->type = 'javascript_declarations';
             $row->mimetype = $item['mimetype'];
             $row->content = $item['content'];
-            $this->data[] = $row;
+            $this->query_results[] = $row;
         }
 
-        return $this->data;
+        return $this->query_results;
     }
 }
