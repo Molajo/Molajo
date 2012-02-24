@@ -18,57 +18,16 @@ class MolajoUpdateController extends MolajoController
 {
 
     /**
-     * $record
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $record;
-
-    /**
      *  save
      */
     function save()
     {
         /** Test */
-        $id = 50;
+        $this->id = 113;
         $valid = true;
 
-        /** Create or Update */
-        $this->model->query->where($this->model->db->qn('id')
-            . ' = ' . $this->model->db->q($id));
-
-        $results = $this->model->loadResult();
-        if (empty($results)) {
-            $action = 'create';
-        } else {
-            $action = 'update';
-        }
-
-        /** Prepare the data */
-        $data = new stdClass;
-        $data->id = 0;
-        $data->title = 'One long summer';
-        $data->protected = 0;
-        $data->asset_type_id = 10000;
-        $data->checked_out_by = 0;
-        $data->created_datetime = '2012-02-14';
-        $data->created_by = 42;
-        $data->extension_instance_id = 2;
-        $data->modified_by = 42;
-
-        $results = $this->_filter($data);
-
-        if ($results === true) {
-        } else {
-            $valid = false;
-            debug(' ');
-            debug('MolajoUpdateController::save');
-            debug('Bind Failed.');
-            die;
-        }
-
-        $results = $this->_validate();
+        /** load data into model */
+        $results = $this->load();
         if ($results === true) {
         } else {
             debug(' ');
@@ -77,6 +36,17 @@ class MolajoUpdateController extends MolajoController
             die;
         }
 
+        /** filter input, validate values and foreign keys */
+        $results = $this->_filter_and_validate($this->model->row);
+        if ($results === true) {
+        } else {
+            debug(' ');
+            debug('MolajoUpdateController::_filter_and_validate');
+            debug('Validation Failed.');
+            die;
+        }
+
+        /** insert or update model data */
         $results = $this->model->store();
         if ($results === true) {
         } else {
@@ -85,16 +55,9 @@ class MolajoUpdateController extends MolajoController
             debug('Store Failed.');
             die;
         }
-        echo 'success';
+        echo 'success,now redirect';
         die;
 
-        if (isset($this->table->asset_type_id)) {
-            // asset
-        }
-
-        echo '<pre>';
-        var_dump($data);
-        die;
         /**
         echo $action;
         die;
@@ -109,49 +72,57 @@ class MolajoUpdateController extends MolajoController
     }
 
     /**
-     * _filter
+     * load
      *
-     * Unloads the array to class properties for use with the
-     * insert / update operation
+     * load existing data from model
      *
-     * @param  $source
-     *
-     * @return bool
+     * @return boolean
      * @since  1.0
      */
-    protected function _filter($source)
+    function load()
     {
-        $this->record = new stdClass;
-        $fieldDatatypes = $this->model->getFieldDatatypes();
-
         $valid = true;
-        foreach ($fieldDatatypes as $field => $value) {
 
-            $attributes = explode(',', $value);
+        /** new or update? */
+        $this->model->query->where($this->model->db->qn('id')
+            . ' = ' . (int) $this->id);
 
-            $datatype = $attributes[0];
-            $null = $attributes[1];
-            $default = $attributes[2];
+        $results = $this->model->load();
 
-            if (isset($source->$field)) {
-                $value = $source->$field;
-            } else {
-                $value = null;
-            }
+        if (empty($results)) {
+            $this->model->row = new stdClass;
+            $this->model->row->id = 0;
+            $this->model->row->title = 'One long summer';
+            $this->model->row->protected = 0;
+            $this->model->row->asset_type_id = 10000;
+            $this->model->row->checked_out_by = 0;
+            $this->model->row->created_datetime = '2012-02-14';
+            $this->model->row->created_by = 42;
+            $this->model->row->extension_instance_id = 2;
+            $this->model->row->modified_by = 42;
+
+            return $valid;
+        } else {
 
             try {
-                $this->record->$field =
-                    Services::Security()->filter(
-                        $field, $value, $datatype, $null, $default
-                    );
+                $this->model->query = $this->model->db->getQuery(true);
+                $this->model->id = $this->id;
+                $this->model->query->where('id = '.(int)$this->id);
+                $this->model->row = $this->model->loadObject();
 
             } catch (Exception $e) {
                 $valid = false;
+                if (Services::Configuration()->get('debug', 0) == 1) {
+                    debug(' ');
+                    debug('MolajoUpdateController::load Failed');
+                    debug('Model: '.$this->model->name.' ID: '.$this->id);
+                    debug(Services::Language()->translate($e->getMessage()));
+                }
                 Services::Message()
                     ->set(
                     $message =
                         Services::Language()->translate($e->getMessage()),
-                    $type = MOLAJO_MESSAGE_TYPE_ERROR
+                        $type = MOLAJO_MESSAGE_TYPE_ERROR
                 );
             }
         }
@@ -160,16 +131,16 @@ class MolajoUpdateController extends MolajoController
     }
 
     /**
-     * _validate
+     * _filter_and_validate
      *
      * Runs custom validation methods
      *
      * @return  object
      * @since   1.0
      */
-    protected function _validate()
+    protected function _filter_and_validate()
     {
-        $this->set('valid', true);
+        $valid = true;
 
         $v = simplexml_load_file(
             MOLAJO_APPLICATIONS_MVC
@@ -179,6 +150,87 @@ class MolajoUpdateController extends MolajoController
         );
         if (count($v) == 0) {
             return true;
+        }
+
+        /** filters and defaults */
+        $valid = true;
+        if (isset($v->filters->filter)) {
+            foreach ($v->filters->filter as $f) {
+
+                $name = (string)$f['name'];
+                $datatype = (string)$f['filter'];
+                $null = (string)$f['null'];
+                $default = (string)$f['default'];
+
+                if (isset($this->model->row->$name)) {
+                    $value = $this->model->row->$name;
+                } else {
+                    $value = null;
+                }
+
+                if ($datatype == null) {
+                } else {
+                    try {
+                        $value =
+                            Services::Security()->filter(
+                                $name, $value, $datatype, $null, $default
+                            );
+
+                    } catch (Exception $e) {
+                        $valid = false;
+                        if (Services::Configuration()->get('debug', 0) == 1) {
+                            debug(' ');
+                            debug('MolajoUpdateController::_filter_and_validate Filter Failed');
+                            debug(Services::Language()->translate($e->getMessage()) . ' ' . $f['name']);
+                        }
+                        Services::Message()
+                            ->set(
+                            $message =
+                                Services::Language()->translate($e->getMessage())
+                                    . ' '. $name,
+                            $type = MOLAJO_MESSAGE_TYPE_ERROR
+                        );
+                    }
+
+                    if (Services::Configuration()->get('debug', 0) == 1) {
+                        debug('MolajoUpdateController::_filter_and_validate Filter Name: ' . $name . ' Source: ' . $value . ' Datatype: ' . $datatype . ' Null: ' . $null . ' Default: ' . $default . ' Value: ' . $this->model->row->$name);
+                    }
+                }
+            }
+        }
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoUpdateController::_filter_and_validate Filter::Success: ' . $valid);
+        }
+
+        /** Helper Functions */
+        if (isset($v->helpers->helper)) {
+            foreach ($v->helpers->helper as $h) {
+
+                $name = (string)$h['name'];
+
+                try {
+                    $this->_validateHelperFunction($name);
+
+                } catch (Exception $e) {
+                    $valid = false;
+                    if (Services::Configuration()->get('debug', 0) == 1) {
+                        debug(' ');
+                        debug('MolajoUpdateController::_filter_and_validate Helper Failed');
+                        debug(Services::Language()->translate($e->getMessage()) . ' ' . $name);
+                    }
+                    Services::Message()
+                        ->set(
+                        $message =
+                            Services::Language()->translate($e->getMessage()).' '.$name,
+                        $type = MOLAJO_MESSAGE_TYPE_ERROR
+                    );
+                }
+            }
+        }
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoUpdateController::_filter_and_validate Helper::Success: ' . $valid);
         }
 
         /** Foreign Keys */
@@ -197,6 +249,11 @@ class MolajoUpdateController extends MolajoController
 
                 } catch (Exception $e) {
                     $valid = false;
+                    if (Services::Configuration()->get('debug', 0) == 1) {
+                        debug(' ');
+                        debug('MolajoUpdateController::_filter_and_validate Foreign Key Failed');
+                        debug(Services::Language()->translate($e->getMessage()) . ' ' . $f['name']);
+                    }
                     Services::Message()
                         ->set(
                         $message =
@@ -206,158 +263,12 @@ class MolajoUpdateController extends MolajoController
                 }
             }
         }
-
-        /** Required and specific values */
-        if (isset($v->values->value)) {
-            foreach ($v->values->value as $r) {
-
-                $name = (string)$r['name'];
-                $required = (string)$r['required'];
-                $values = (string)$r['values'];
-                $default = (string)$r['default'];
-                $message = (string)$r['message'];
-
-                try {
-                    $this->_validateValues($name, $required,
-                        $values, $default, $message);
-
-                } catch (Exception $e) {
-                    $valid = false;
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()),
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
-                    );
-                }
-            }
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoUpdateController::Validate FK::Success: ' . $valid);
         }
 
-        /** Helper Functions */
-        if (isset($v->helper->function)) {
-            foreach ($v->helper->function as $h) {
-
-                $name = (string)$h['name'];
-
-                try {
-                    $this->_validateHelperFunction($name);
-
-                } catch (Exception $e) {
-                    $valid = false;
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()),
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
-                    );
-                }
-            }
-        }
-        return $this->get('valid');
-    }
-
-    /**
-     * _validateForeignKey
-     *
-     * @param $name
-     * @param $source_id
-     * @param $source_table
-     * @param $required
-     * @param $message
-     *
-     * @return  null
-     * @since   1.0
-     */
-    protected function _validateForeignKey($name, $source_id, $source_model,
-                                           $required, $message)
-    {
-        if ($this->record->$name == 0
-            && $required == 0
-        ) {
-            return;
-        }
-
-        if (isset($this->record->$name)) {
-            $m = new $source_model ($source_id);
-            $m->query->where($m->db->qn('id')
-                . ' = ' . $m->db->q($this->record->$name));
-
-            $value = $m->loadResult();
-
-            if (empty($value)) {
-            } else {
-                return;
-            }
-        } else {
-            if ($required == 0) {
-                return;
-            }
-        }
-
-        throw new Exception('VALIDATE_FOREIGN_KEY');
-
-        return;
-    }
-
-    /**
-     * _validateValues
-     *
-     * @param $name
-     * @param null $required
-     * @param null $values
-     * @param null $default
-     * @param null $message
-     *
-     * @return  null
-     * @since   1.0
-     */
-    protected function _validateValues($name, $required = null, $values = null,
-                                       $default = null, $message = null)
-    {
-        $result = true;
-
-        /** Default */
-        if (isset($this->record->$name)) {
-        } else if ($default == null) {
-        } else {
-            $this->record->$name = $default;
-        }
-
-        /** Required */
-        if ($required == 1) {
-            if (isset($this->record->$name)) {
-            } else {
-                $result = false;
-            }
-        }
-        if ($required == 1
-            && isset($this->record->$name)
-        ) {
-            if (trim($this->record->$name) == ''
-                && (int)$this->record->$name == 0
-            ) {
-                $result = false;
-            }
-        }
-
-        /** Values */
-        if ($values == null) {
-        } else {
-            $testArray = explode(',', $values);
-
-            if (in_array($this->record->$name, $testArray)) {
-            } else {
-                $result = false;
-            }
-        }
-
-        if ($result === true) {
-            return;
-        }
-
-        throw new Exception('VALIDATE_VALUES');
-
-        return false;
+        return $valid;
     }
 
     /**
@@ -370,26 +281,81 @@ class MolajoUpdateController extends MolajoController
      */
     protected function _validateHelperFunction($method)
     {
-        $class = 'Molajo' . ucfirst(substr($this->model->table_name, 3, 999)) . 'ModelHelper';
-        if (class_exists($class)) {
+        $helperClass = 'Molajo'
+            . ucfirst(substr($this->model->table_name, 3, 999))
+            . 'ModelHelper';
+
+        if (class_exists($helperClass)) {
         } else {
-            $class = 'MolajoModelHelper';
+            $helperClass = 'MolajoModelHelper';
         }
 
-        if (method_exists($class, $method)) {
+        if (method_exists($helperClass, $method)) {
         } else {
-            return false;
+            throw new Exception('VALIDATE_HELPER_FUNCTION_NOT_FOUND');
         }
 
-        $return = '';
-        $execute = '$return = ' . $class . '::' . $method .
-            '("' . $this->record->name . '");';
-        eval($execute);
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoUpdateController::_validateHelperFunction Helper Class: ' . $helperClass . ' Method: ' . $method);
+        }
+
+        $h = new $helperClass();
+        $h->row = $this->model->row;
+        $return = $h->$method();
+        //get your helper class data back
         if ($return === false) {
             throw new Exception('VALIDATE_HELPER_FUNCTION');
         }
     }
 
+    /**
+     * _validateForeignKey
+     *
+     * @param $name
+     * @param $source_id
+     * @param $source_table
+     * @param $required
+     * @param $message
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function _validateForeignKey($name, $source_id, $source_model,
+                                           $required, $message)
+    {
+        if (Services::Configuration()->get('debug', 0) == 1) {
+                 debug(' ');
+                 debug('MolajoUpdateController::_validateForeignKey Field: '.$name.' Value: '.$this->model->row->$name.' Source: '.$source_id.' Model: '.$source_model.' Required: '.$required);
+             }
+
+        if ($this->model->row->$name == 0
+            && $required == 0
+        ) {
+            return true;
+        }
+
+        if (isset($this->model->row->$name)) {
+
+            $m = new $source_model ();
+
+            $m->query->where($m->db->qn('id')
+                . ' = ' . $m->db->q($this->model->row->$name));
+
+            $value = $m->loadResult();
+
+            if (empty($value)) {
+            } else {
+                return true;
+            }
+        } else {
+            if ($required == 0) {
+                return true;
+            }
+        }
+
+        throw new Exception('VALIDATE_FOREIGN_KEY');
+    }
 
     /**
      * _storeRelated

@@ -108,6 +108,16 @@ class MolajoModel
     public $table_name;
 
     /**
+     * $row
+     *
+     * Single row for $table_name
+     *
+     * @var    stdclass
+     * @since  1.0
+     */
+    public $row;
+
+    /**
      * $table_fields
      *
      * List of all data elements in table
@@ -703,6 +713,7 @@ class MolajoModel
                     . $this->db->qn($this->primary_prefix)
             );
         }
+
         $this->db->setQuery($this->query->__toString());
         /**
         echo '<pre>';
@@ -787,28 +798,6 @@ class MolajoModel
      */
     public function store($updateNulls = false)
     {
-        $k = $this->primary_key;
-
-        if ($this->$k) {
-            $stored = $this->db->
-                updateObject($this->table_name, $this, $this->primary_key, $updateNulls);
-        } else {
-            $stored = $this->db->
-                insertObject($this->table_name, $this, $this->primary_key);
-        }
-
-        if ($stored) {
-        } else {
-            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED', get_class($this), $this->db->getErrorMsg()));
-            $this->setError($e);
-            return false;
-        }
-        /**
-        if ($this->_locked) {
-        $this->_unlock();
-        }
-         */
-
         return true;
     }
 }

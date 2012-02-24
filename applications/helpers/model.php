@@ -16,6 +16,53 @@ defined('MOLAJO') or die;
  */
 class MolajoModelHelper
 {
+
+    /**
+     * Table row
+     *
+     * @var    stdclass
+     * @since  1.0
+     */
+    public $row = '';
+
+    /**
+     * __construct
+     *
+     * Class constructor
+     *
+     * @since  1.0
+     */
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * checkIn
+     *
+     * Verify that the row has been checked out for update by the user
+     *
+     * @return  boolean  True if checked out to user
+     * @since   1.0
+     */
+    public function checkIn()
+    {
+
+    }
+
+    /**
+     * checkOut
+     *
+     * Verify that the row has been checked out for update by the user
+     *
+     * @return  boolean  True if checked out to user
+     * @since   1.0
+     */
+    public function checkOut()
+    {
+
+    }
+
     /**
      * queryStatus
      *
@@ -177,7 +224,6 @@ class MolajoModelHelper
 
         return $item;
     }
-
 
     /**
      * itemSplittext
@@ -503,11 +549,6 @@ class MolajoModelHelper
             return $this->$method();
         }
 
-        if (class_exists($model)) {
-        } else {
-            return false;
-        }
-
         $m = new $model();
 
         $m->query->select($m->db->qn('a') . '.' . $m->db->qn($key)
@@ -611,67 +652,131 @@ class MolajoModelHelper
     }
 
     /**
-     * validateToList
+     * updateAlias
      *
-     * Validate a value by verifying it exists in a list
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function validateToList($name)
-    {
-
-    }
-
-    /**
-     * validateCheckedOut
-     *
-     * Verify that the row has been checked out for update by the user
-     *
-     * @return  boolean  True if checked out to user
-     * @since   1.0
-     */
-    public function validateCheckedOut($model, $query, $db)
-    {
-        $query->select('a.' . $db->qn('view_group_id'));
-        $query->select('a.' . $db->qn('asset'));
-    }
-
-    /**
-     * validateAlias
-     *
-     * Verify that the alias is unique for this component
+     * Verify that the alias is unique
      *
      * @return  boolean
      * @since   1.0
      */
-    public function validateAlias($model)
+    public function updateAlias()
     {
 
     }
 
     /**
-     * validateDates
+     * updateAssetTypeId
+     *
+     * Ensure the correct asset_type_id has been defined
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateAssetTypeId()
+    {
+
+    }
+
+    /**
+     * updateContentText
      *
      * Verify and set defaults for dates
      *
      * @return  boolean
      * @since   1.0
      */
-    public function validateDates($model)
+    public function updateContentText()
+    {
+
+    }
+    /**
+     * updateDates
+     *
+     * Verify and set defaults for dates
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateDates()
     {
 
     }
 
     /**
-     * validateLanguage
+     * updateLanguage
      *
      * Verify language setting
      *
      * @return  boolean
      * @since   1.0
      */
-    public function validateLanguage($model)
+    public function updateLanguage()
+    {
+
+    }
+
+    /**
+     * updateUser
+     *
+     * Verify and set defaults for dates
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateUser()
+    {
+
+    }
+
+    /**
+     * updateStatus
+     *
+     * Verify and set values for Status
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateStatus()
+    {
+
+    }
+
+    /**
+     * updateCustomFields
+     *
+     * Verify and set values for Custom Fields
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateCustomFields()
+    {
+
+    }
+
+    /**
+     * updateMetadata
+     *
+     * Verify and set values for Custom Fields
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateMetadata()
+    {
+
+    }
+
+
+    /**
+     * updateParameters
+     *
+     * Verify and set values for Parameters
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function updateParameters()
     {
 
     }
