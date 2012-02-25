@@ -227,9 +227,8 @@ class MolajoViewHelper
         $view = 0;
         if ($type == 'template') {
             if ($task == 'add' || $task == 'edit') {
-                echo $task;
-                $view = (int)Services::Configuration()->get('default_edit_template_view_id', 0);
-echo $view;
+                $view = (int)Services::Configuration()->get('default_edit_template_view_id', 0);;
+
             } else if ((int)$id == 0) {
                 $view = (int)Services::Configuration()->get('default_items_template_view_id', 0);
 
