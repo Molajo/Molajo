@@ -27,6 +27,16 @@ class MolajoRequest
     protected static $instance;
 
     /**
+     * $redirect_to_id
+     *
+     * Redirect the Tequest URL to Asset ID
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $redirect_to_id;
+
+    /**
      * $page_request
      *
      * Page Request object that will be populated by this class
@@ -107,6 +117,8 @@ class MolajoRequest
 
         $this->_initialize();
 
+        $this->redirect_to_id = 0;
+
         /** Specific asset */
         if ((int)$override_asset_id == 0) {
             $this->set('request_asset_id', 0);
@@ -162,84 +174,6 @@ class MolajoRequest
     }
 
     /**
-     * process
-     *
-     * Using the MOLAJO_PAGE_REQUEST value,
-     *  retrieve the asset record,
-     *  set the variables needed to render output,
-     *  execute document renders and MVC
-     *
-     * @return  null
-     * @since   1.0
-     */
-    public function process()
-    {
-        /** offline */
-        if (Services::Configuration()->get('offline', 0) == 1) {
-            $this->_error(503);
-        }
-
-        /** URL parameters */
-        $this->_getInput();
-
-        /** display controllers, only */
-        if ($this->get('mvc_controller', '')
-            || $this->get('mvc_controller', 'display')
-        ) {
-            $this->_getAsset();
-        }
-
-        /** Authorise */
-        if ($this->get('status_found')) {
-            $this->_authoriseTask();
-        }
-
-        /** Route */
-        $this->_routeRequest();
-
-        /** Action: Render Page */
-        if ($this->get('mvc_task') == 'add'
-            || $this->get('mvc_task') == 'edit'
-            || $this->get('mvc_task') == 'display'
-        ) {
-            $this->_getUser();
-            $this->_getApplicationDefaults();
-            $this->_getTheme();
-            $this->_getPage();
-            $this->_getTemplateView();
-            $this->_getWrapView();
-
-            $temp = new Registry();
-            $temp->loadArray($this->parameters);
-            $this->parameters = $temp;
-
-        } else {
-
-            /** Action: Database action */
-            $temp = new Registry();
-            $temp->loadArray($this->parameters);
-            $this->parameters = $temp;
-
-            $this->set('model', 'Molajo'
-                . ucfirst(trim($this->get('mvc_model')))
-                . 'Model');
-
-            $cc = 'Molajo' . ucfirst($this->get('mvc_controller')) . 'Controller';
-            $this->set('controller', $cc);
-            $task = $this->get('mvc_task');
-            $this->set('task', $task);
-            $this->set('id', $this->get('mvc_id'));
-
-            $controller = new $cc($this->page_request, $this->parameters);
-
-            /** execute task: display, edit, or add  */
-            return $controller->$task();
-        }
-
-        return;
-    }
-
-    /**
      * get
      *
      * Returns a property of the Application object
@@ -275,37 +209,79 @@ class MolajoRequest
     }
 
     /**
-     * getRedirectURL
+     * process
      *
-     * Function to retrieve asset information for the Request or Asset ID
+     * Using the MOLAJO_PAGE_REQUEST value,
+     *  retrieve the asset record,
+     *  set the variables needed to render output,
+     *  execute document renders and MVC
      *
-     * @return  string url
+     * @return  null
      * @since   1.0
      */
-    public static function getRedirectURL($asset_id)
+    public function process()
     {
-        if ((int)$asset_id
-            == Services::Configuration()->get('home_asset_id', 0)
+        /** offline */
+        if (Services::Configuration()->get('offline', 0) == 1) {
+            $this->_error(503);
+        }
+
+        /** URL parameters */
+        $this->_getInput();
+
+        /** Asset, Access Control, links to source, menus, extensions, etc. */
+        $this->_getAsset();
+
+        /** Authorise */
+        if ($this->get('status_found')) {
+            $this->_authoriseTask();
+        }
+
+        /** Route */
+        $this->_routeRequest();
+
+        /** Action: Render Page */
+        if ($this->get('mvc_controller') == 'display'
         ) {
-            return '';
-        }
+            $this->_getUser();
+            $this->_getApplicationDefaults();
+            $this->_getTheme();
+            $this->_getPage();
+            $this->_getTemplateView();
+            $this->_getWrapView();
 
-        $m = new MolajoAssetsModel();
-        if (Services::Configuration()->get('sef', 1) == 0) {
-            $m->query->select($m->db->qn('sef_request'));
+            $temp = new Registry();
+            $temp->loadArray($this->parameters);
+            $this->parameters = $temp;
+
         } else {
-            $m->query->select($m->db->qn('request'));
+
+            /** Action: Database action */
+            $temp = new Registry();
+            $temp->loadArray($this->parameters);
+            $this->parameters = $temp;
+
+            if (Services::Configuration()->get('sef', 1) == 0) {
+                $link = $this->page_request->get('request_url_sef');
+            } else {
+                $link = $this->page_request->get('request_url');
+            }
+            $this->set('redirect_on_failure', $link);
+
+            $this->set('model', 'Molajo' . ucfirst(trim($this->get('mvc_model'))) . 'Model');
+            $cc = 'Molajo' . ucfirst($this->get('mvc_controller')) . 'Controller';
+            $this->set('controller', $cc);
+            $task = $this->get('mvc_task');
+            $this->set('task', $task);
+            $this->set('id', $this->get('mvc_id'));
+            $controller = new $cc($this->page_request, $this->parameters);
+
+            /** execute task: display, edit, or add  */
+            return $controller->$task();
         }
-        $m->query->where($m->db->qn('id') . ' = ' . (int)$asset_id);
 
-        return $m->loadResult();
+        return;
     }
-
-    /**
-     * end of public methods
-     *
-     * remaining methods determine page processing requirements for request
-     */
 
     /**
      * _getInput
@@ -321,6 +297,7 @@ class MolajoRequest
         $this->input = array();
 
         $uri = clone JURI::getInstance();
+
         $results = $uri->get('_vars');
         foreach ($results as $key => $value) {
             $this->input[$key] = $value;
@@ -330,53 +307,140 @@ class MolajoRequest
             && isset($this->input['task'])
         ) {
         } else {
+            $this->set('mvc_task', 'display');
             return;
         }
 
         /** task */
         $this->set('mvc_task', $this->input['task']);
+
         if ($this->get('mvc_task', '') == ''
             && $this->get('mvc_task', 'display')
         ) {
             return;
         }
 
+        /** return */
+        if (isset($this->input['return'])) {
+            $return = $this->input['return'];
+        } else {
+            $return = '';
+        }
+
+        if (trim($return) == '') {
+            $this->set('redirect_on_success', '');
+        } else if (JUri::isInternal(base64_decode($return))) {
+            $this->set('redirect_on_success', base64_decode($return));
+        } else {
+            $this->set('redirect_on_success', '');
+        }
+
         /** option */
         $this->set('mvc_option', (string)$this->input['option']);
 
-        /** retrieve controller, given option */
-        $m = new MolajoAssetTypesModel();
-        $m->query->where($m->db->qn('component_option')
-            . ' = ' . $m->db->q($this->get('mvc_option')));
+        /** asset information */
+        $this->set('mvc_id', (int)$this->input['id']);
 
-        $results = $m->loadObject();
+        return true;
+    }
 
-        if ($results === false) {
-            return;
+    /**
+     * _getAsset
+     *
+     * Retrieve Asset and Asset Type data for a specific asset id
+     * or query request
+     *
+     * @return   boolean
+     * @since    1.0
+     */
+    protected function _getAsset()
+    {
+        $row = AssetHelper::get(
+            (int)$this->get('request_asset_id'),
+            $this->get('request_url_query'),
+            $this->get('mvc_option'),
+            $this->get('mvc_id')
+        );
+
+        /** 404: _routeRequest handles redirecting to error page */
+        if (count($row) == 0
+            || (int)$row->routable == 0
+        ) {
+            return $this->set('status_found', false);
         }
-        $this->set('mvc_model', 'Molajo'
-            . ucfirst(trim(substr($results->source_table, 3, 99)))
-            . 'Model');
 
-        $this->set('source_asset_type_id', (int)$results->id);
+        /** Redirect: _routeRequest handles rerouting the request */
+        if ((int)$row->redirect_to_id == 0) {
+        } else {
+            $this->redirect_to_id = (int)$row->redirect_to_id;
+            return $this->set('status_found', false);
+        }
+
+        /** 403: _authoriseTask handles redirecting to error page */
+        if (in_array($row->view_group_id, Services::User()->get('view_groups'))) {
+            $this->set('status_authorised', true);
+        } else {
+            return $this->set('status_authorised', false);
+        }
+
+        /** request url */
+        $this->set('request_asset_id', (int)$row->asset_id);
+        $this->set('request_asset_type_id', (int)$row->asset_type_id);
+        $this->set('request_url', $row->request);
+        $this->set('request_url_sef', $row->sef_request);
+
+        /** home */
+        if ((int)$this->get('request_asset_id', 0)
+            == Services::Configuration()->get('home_asset_id', null)
+        ) {
+            $this->set('request_url_home', true);
+        } else {
+            $this->set('request_url_home', false);
+        }
+
+        $this->set('source_table', $row->source_table);
+        $this->set('category_id', (int)$row->primary_category_id);
+
+        /** mvc options and url parameters */
+        $this->set('extension_instance_name', $row->request_option);
+        $this->set('mvc_model', $row->request_model);
+        $this->set('mvc_id', (int)$row->source_id);
 
         $this->set('mvc_controller',
             Services::Access()
                 ->getTaskController($this->get('mvc_task'))
         );
 
-        /** retrieve asset id */
-        $this->set('mvc_id', (int)$this->input['id']);
+        /** Action Tasks need no additional information */
+        if ($this->get('mvc_controller') == 'display') {
+        } else {
+            return $this->set('status_found', true);
+        }
 
-        $m = new MolajoAssetsModel();
-        $m->query->where($m->db->qn('source_id')
-            . ' = ' . (int)$this->get('mvc_id'));
-        $m->query->where($m->db->qn('asset_type_id')
-            . ' = ' . (int)$this->get('source_asset_type_id'));
-        $asset_id = $m->loadResult();
-        $this->set('request_asset_id', (int)$asset_id);
+        if ($this->get('request_asset_type_id')
+            == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT
+        ) {
+            $this->set('menu_item_id', $row->source_id);
+            $this->_getMenuItem();
+            if ($this->get('status_found') === false) {
+                return $this->get('status_found');
+            }
+        } else {
+            $this->set('source_id', $row->source_id);
+            $this->_getSource();
+        }
 
-        return;
+        /** primary category */
+        if ($this->get('category_id', 0) == 0) {
+        } else {
+            $this->set('mvc_category_id', $this->get('category_id'));
+            $this->_getPrimaryCategory();
+        }
+
+        /** Extension */
+        $this->_getExtension();
+
+        return $this->get('status_found');
     }
 
     /**
@@ -437,131 +501,24 @@ class MolajoRequest
         }
 
         /** redirect */
-        if ($this->get('request_url_redirect_to_id', 0) == 0) {
+        if ($this->redirect_to_id == 0) {
         } else {
-            Molajo::Responder()
-                ->redirect(
-                AssetHelper::getURL(
-                    $this->get('request_url_redirect_to_id')), 301
+            Molajo::Responder()->redirect(
+                AssetHelper::getURL($this->redirect_to_id),
+                301
             );
         }
 
         /** must be logged on */
-        if (Services::Configuration()
-            ->get('logon_requirement', 0) > 0
-
-            && Services::User()
-                ->get('guest', true) === true
-
+        if (Services::Configuration()->get('logon_requirement', 0) > 0
+            && Services::User()->get('guest', true) === true
             && $this->get('request_asset_id')
-                <> Services::Configuration()
-                    ->get('logon_requirement', 0)
+                <> Services::Configuration()->get('logon_requirement', 0)
         ) {
-            Molajo::Responder()
-                ->redirect(
-                Services::Configuration()
-                    ->get('logon_requirement', 0), 303
-            );
+            Molajo::Responder()->redirect(Services::Configuration()->get('logon_requirement', 0), 303);
         }
 
         return;
-    }
-
-    /**
-     * _getAsset
-     *
-     * Retrieve Asset and Asset Type data for a specific asset id
-     * or query request
-     *
-     * @return   boolean
-     * @since    1.0
-     */
-    protected function _getAsset()
-    {
-
-        /** display controllers, only
-        if ($this->get('mvc_task', '')
-        || $this->get('mvc_task', 'display')
-        ) {
-        } else {
-        echo 'Amy - deal with the edit/add task';
-        die;
-        }
-         */
-        $row = AssetHelper::get(
-            (int)$this->get('request_asset_id'),
-            $this->get('request_url_query')
-        );
-
-        /** 404: _routeRequest handles redirecting to error page */
-        if (count($row) == 0
-            || (int)$row->routable == 0
-        ) {
-            return $this->set('status_found', false);
-        }
-
-        /** Redirect: _routeRequest handles rerouting the request */
-        if ((int)$row->redirect_to_id == 0) {
-        } else {
-            $this->set('request_url_redirect_to_id', (int)$row->redirect_to_id);
-            return $this->set('status_found', false);
-        }
-
-        /** 403: _authoriseTask handles redirecting to error page */
-        if (in_array($row->view_group_id, Services::User()->get('view_groups'))) {
-            $this->set('status_authorised', true);
-        } else {
-            return $this->set('status_authorised', false);
-        }
-
-        /** request url */
-        $this->set('request_asset_id', (int)$row->asset_id);
-        $this->set('request_asset_type_id', (int)$row->asset_type_id);
-        $this->set('request_url', $row->request);
-        $this->set('request_url_sef', $row->sef_request);
-
-        /** home */
-        if ((int)$this->get('request_asset_id', 0)
-            == Services::Configuration()->get('home_asset_id', null)
-        ) {
-            $this->set('request_url_home', true);
-        } else {
-            $this->set('request_url_home', false);
-        }
-
-        $this->set('source_table', $row->source_table);
-        $this->set('category_id', (int)$row->primary_category_id);
-
-        /** mvc options and url parameters */
-        $this->set('extension_instance_name', $row->request_option);
-        $this->set('mvc_model', $row->request_model);
-        $this->set('mvc_id', (int)$row->source_id);
-
-        if ($this->get('request_asset_type_id')
-            == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT
-        ) {
-            $this->set('menu_item_id', $row->source_id);
-            $this->_getMenuItem();
-            if ($this->get('status_found') === false) {
-                return $this->get('status_found');
-            }
-        } else {
-            $this->set('source_id', $row->source_id);
-            $this->_getSource();
-        }
-
-        /** primary category */
-        if ($this->get('category_id', 0) == 0) {
-        } else {
-            $this->set('mvc_category_id',
-                $this->get('category_id'));
-            $this->_getPrimaryCategory();
-        }
-
-        /** Extension */
-        $this->_getExtension();
-
-        return $this->get('status_found');
     }
 
     /**
@@ -1473,7 +1430,6 @@ class MolajoRequest
         $this->set('request_url_query', '');
         $this->set('request_url', '');
         $this->set('request_url_sef', '');
-        $this->set('request_url_redirect_to_id', 0);
         $this->set('request_url_home', false);
 
         /** menu item data */

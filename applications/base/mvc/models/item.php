@@ -28,7 +28,11 @@ class MolajoItemModel extends MolajoModel
      */
     public function store()
     {
-
+        /**
+        echo '<pre>';
+        var_dump($this->row);
+        echo '</pre>';
+        */
         if ((int) $this->id == 0) {
             $stored = $this->db->insertObject(
                     $this->table_name, $this->row, $this->primary_key);

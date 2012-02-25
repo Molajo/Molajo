@@ -923,7 +923,10 @@ class MolajoResponder
                 $url .= '.html';
             }
         }
-
+        if (Services::Configuration()->get('debug', 0) == 1) {
+             debug(' ');
+             debug('MolajoResponderer::save Success redirect to: '.$url);
+         }
         /** validate code */
         if ($code == 301) {
         } else {

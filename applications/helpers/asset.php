@@ -29,7 +29,7 @@ abstract class MolajoAssetHelper
      * @results  object
      * @since    1.0
      */
-    public static function get($asset_id = 0, $query_request = null)
+    public static function get($asset_id = 0, $query_request = null, $request_option = '', $source_id = 0)
     {
         $m = new MolajoAssetsModel();
 
@@ -52,55 +52,60 @@ abstract class MolajoAssetHelper
         $m->query->where('a.' . $m->db->qn('asset_type_id') .
             ' = b.' . $m->db->qn('id'));
 
-        if ((int)$asset_id == 0) {
+        if ((int)$asset_id > 0) {
+
+            $m->query->where('a.' . $m->db->qn('id') . ' = ' .
+                     (int)$asset_id);
+
+        } else if ((int) $source_id > 0) {
+
+            $m->query->where('a.' . $m->db->qn('request_option') .
+                    ' = ' . $m->db->q($request_option));
+            $m->query->where('a.' . $m->db->qn('redirect_to_id') . ' = 0 ');
+            $m->query->where('a.' . $m->db->qn('source_id') . ' = ' .
+                     (int)$source_id);
+
+        } else {
 
             $m->query->where('(a.' . $m->db->qn('sef_request') .
                     ' = ' . $m->db->q($query_request) .
                     ' OR a.' . $m->db->qn('request') . ' = ' .
                     $m->db->q($query_request) . ')'
             );
-
-        } else {
-
-            $m->query->where('a.' . $m->db->qn('id') . ' = ' .
-                    (int)$asset_id
-            );
         }
 
-        $rows = $m->runQuery();
+        $row = $m->loadObject();
 
-        if (count($rows) == 0) {
+        if (count($row) == 0) {
             return array();
         }
 
-        $row = array();
-        foreach ($rows as $row) {
+        if ((int)$source_id > 0) {
 
-            if ((int)$asset_id == 0) {
+        } else if ((int)$asset_id == 0) {
 
-                if (Services::Configuration()->get('sef', 1) == 1) {
-                    if ($row->sef_request == $query_request) {
-
-                    } else {
-                        $row->redirect_to_id = (int)$row->asset_id;
-                    }
+            if (Services::Configuration()->get('sef', 1) == 1) {
+                if ($row->sef_request == $query_request) {
 
                 } else {
-                    if ($row->request == $query_request) {
-
-                    } else {
-                        $row->redirect_to_id = (int)$row->asset_id;
-                    }
+                    $row->redirect_to_id = (int)$row->asset_id;
                 }
 
-                if ($row->asset_id ==
-                    Services::Configuration()->get('home_asset_id', 0)
-                ) {
-                    if ($query_request == '') {
-                    } else {
-                        $row->redirect_to_id =
-                            Services::Configuration()->get('home_asset_id', 0);
-                    }
+            } else {
+                if ($row->request == $query_request) {
+
+                } else {
+                    $row->redirect_to_id = (int)$row->asset_id;
+                }
+            }
+
+            if ($row->asset_id ==
+                Services::Configuration()->get('home_asset_id', 0)
+            ) {
+                if ($query_request == '') {
+                } else {
+                    $row->redirect_to_id =
+                        Services::Configuration()->get('home_asset_id', 0);
                 }
             }
         }
@@ -165,6 +170,33 @@ abstract class MolajoAssetHelper
                 ' IN (' .
                 implode(',', Services::User()->get('view_groups')) . ')'
         );
+
+        return $m->loadResult();
+    }
+
+    /**
+     * getRedirectURL
+     *
+     * Function to retrieve asset information for the Request or Asset ID
+     *
+     * @return  string url
+     * @since   1.0
+     */
+    public static function getRedirectURL($asset_id)
+    {
+        if ((int)$asset_id
+            == Services::Configuration()->get('home_asset_id', 0)
+        ) {
+            return '';
+        }
+
+        $m = new MolajoAssetsModel();
+        if (Services::Configuration()->get('sef', 1) == 0) {
+            $m->query->select($m->db->qn('sef_request'));
+        } else {
+            $m->query->select($m->db->qn('request'));
+        }
+        $m->query->where($m->db->qn('id') . ' = ' . (int)$asset_id);
 
         return $m->loadResult();
     }

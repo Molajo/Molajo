@@ -27,36 +27,44 @@ class MolajoUpdateController extends MolajoController
         $valid = true;
 
         /** load data into model */
-        $results = $this->load();
-        if ($results === true) {
-        } else {
-            debug(' ');
-            debug('MolajoUpdateController::save');
-            debug('Validation Failed.');
-            die;
-        }
-
+        $valid = $this->load();
+/**
+        $this->id = 0;
+        $this->model->id = 0;
+        $this->model->row->id = 0;
+*/
+        $this->model->row->title = 'Puff it up.';
         /** filter input, validate values and foreign keys */
-        $results = $this->_filter_and_validate($this->model->row);
-        if ($results === true) {
-        } else {
-            debug(' ');
-            debug('MolajoUpdateController::_filter_and_validate');
-            debug('Validation Failed.');
-            die;
+        if ($valid === true) {
+            $valid = $this->_filter_and_validate($this->model->row);
         }
 
         /** insert or update model data */
-        $results = $this->model->store();
-        if ($results === true) {
-        } else {
-            debug(' ');
-            debug('MolajoUpdateController::save');
-            debug('Store Failed.');
-            die;
+        if ($valid === true) {
+            //$valid = $this->model->store();
         }
-        echo 'success,now redirect';
-        die;
+
+        /** redirect */
+        if ($valid === true) {
+            if ($this->model->row->id == 0
+                || $this->model->row->status == 0) {
+                Molajo::Responder()->redirect($this->task_request->get('redirect_on_success'), 301);
+            } else {
+                Molajo::Responder()->redirect(
+                     AssetHelper::getURL($this->task_request->get('request_asset_id')),
+                     301
+                 );
+            }
+        } else {
+            $link = $this->task_request->get('redirect_on_failure');
+            if ((int) $this->id == 0) {
+                $link .= '&task=add';
+            } else {
+                $link .= '&task=edit';
+            }
+            Molajo::Responder()
+                ->redirect($link, 301);
+        }
 
         /**
         echo $action;
@@ -85,7 +93,7 @@ class MolajoUpdateController extends MolajoController
 
         /** new or update? */
         $this->model->query->where($this->model->db->qn('id')
-            . ' = ' . (int) $this->id);
+            . ' = ' . (int)$this->id);
 
         $results = $this->model->load();
 
@@ -107,7 +115,7 @@ class MolajoUpdateController extends MolajoController
             try {
                 $this->model->query = $this->model->db->getQuery(true);
                 $this->model->id = $this->id;
-                $this->model->query->where('id = '.(int)$this->id);
+                $this->model->query->where('id = ' . (int)$this->id);
                 $this->model->row = $this->model->loadObject();
 
             } catch (Exception $e) {
@@ -115,14 +123,14 @@ class MolajoUpdateController extends MolajoController
                 if (Services::Configuration()->get('debug', 0) == 1) {
                     debug(' ');
                     debug('MolajoUpdateController::load Failed');
-                    debug('Model: '.$this->model->name.' ID: '.$this->id);
+                    debug('Model: ' . $this->model->name . ' ID: ' . $this->id);
                     debug(Services::Language()->translate($e->getMessage()));
                 }
                 Services::Message()
                     ->set(
                     $message =
                         Services::Language()->translate($e->getMessage()),
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
+                    $type = MOLAJO_MESSAGE_TYPE_ERROR
                 );
             }
         }
@@ -187,7 +195,7 @@ class MolajoUpdateController extends MolajoController
                             ->set(
                             $message =
                                 Services::Language()->translate($e->getMessage())
-                                    . ' '. $name,
+                                    . ' ' . $name,
                             $type = MOLAJO_MESSAGE_TYPE_ERROR
                         );
                     }
@@ -222,7 +230,7 @@ class MolajoUpdateController extends MolajoController
                     Services::Message()
                         ->set(
                         $message =
-                            Services::Language()->translate($e->getMessage()).' '.$name,
+                            Services::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
                 }
@@ -325,9 +333,9 @@ class MolajoUpdateController extends MolajoController
                                            $required, $message)
     {
         if (Services::Configuration()->get('debug', 0) == 1) {
-                 debug(' ');
-                 debug('MolajoUpdateController::_validateForeignKey Field: '.$name.' Value: '.$this->model->row->$name.' Source: '.$source_id.' Model: '.$source_model.' Required: '.$required);
-             }
+            debug(' ');
+            debug('MolajoUpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
+        }
 
         if ($this->model->row->$name == 0
             && $required == 0
