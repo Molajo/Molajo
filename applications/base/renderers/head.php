@@ -32,6 +32,7 @@ class MolajoHeadRenderer extends MolajoRenderer
     {
         $this->extension_required = false;
         parent::__construct($name, $type, $items);
+        $this->parameters->set('html_display_filter', false);
     }
 
     /**

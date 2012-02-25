@@ -13,6 +13,7 @@ defined('MOLAJO') or die;
 require_once MOLAJO_APPLICATIONS . '/includes/phpversion.php';
 require_once MOLAJO_APPLICATIONS . '/includes/defines.php';
 require_once MOLAJO_APPLICATIONS . '/includes/installcheck.php';
+require_once MOLAJO_APPLICATIONS . '/includes/platforms-htmlpurifier.php';
 require_once MOLAJO_APPLICATIONS . '/includes/platforms-joomla.php';
 require_once MOLAJO_APPLICATIONS . '/includes/config.php';
 require_once MOLAJO_APPLICATIONS . '/includes/platforms-mustache.php';

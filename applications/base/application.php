@@ -90,9 +90,22 @@ class MolajoApplication
     {
         /** responder: prepare for output */
         Molajo::Responder();
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoApplication::process Molajo::Responder() completed');
+        }
 
         /** request: define processing instructions in page_request object */
         Molajo::Request()->process();
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug(' ');
+            debug('MolajoApplication::process Molajo::Request()->process() completed');
+        }
+
+//        $results = Molajo::Request()->getAll('array');
+//        foreach ($results as $key=>$value) {
+//            echo 'Key'.$key.'<br/>';
+//        }
 
         /**
          * Display Task
@@ -113,7 +126,10 @@ class MolajoApplication
             || Molajo::Request()->get('mvc_task') == 'display'
         ) {
             Molajo::Parser();
-
+            if (Services::Configuration()->get('debug', 0) == 1) {
+                debug(' ');
+                debug('MolajoApplication::process Molajo::Parser() completed');
+            }
         } else {
 
             /**

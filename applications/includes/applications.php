@@ -15,12 +15,20 @@ $load = new MolajoLoadHelper();
 /**
  *  Base
  */
-$files = JFolder::files(MOLAJO_APPLICATIONS. '/base', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_APPLICATIONS . '/base', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'base.php') {
     } else {
         $load->requireClassFile(MOLAJO_APPLICATIONS . '/base/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
+}
+
+/**
+ *  Filters
+ */
+$files = JFolder::files(MOLAJO_APPLICATIONS . '/filters', '\.php$', false, false);
+foreach ($files as $file) {
+    $load->requireClassFile(MOLAJO_APPLICATIONS . '/filters/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Filter');
 }
 
 /**
@@ -65,7 +73,7 @@ $load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/packagemanifest.php', 
 
 $files = JFolder::files(MOLAJO_APPLICATIONS . '/installer/adapters', '\.php$', false, false);
 foreach ($files as $file) {
-    $load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/adapters/' . $file, 'MolajoAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
+$load->requireClassFile(MOLAJO_APPLICATIONS . '/installer/adapters/' . $file, 'MolajoAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
  */
 /**
@@ -88,7 +96,7 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, fa
 foreach ($files as $file) {
     if ($file == 'model.php' || $file == 'item.php' || $file == 'load.php' || $file == 'display.php') {
     } else {
-        $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Model');
+        $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Model');
     }
 }
 

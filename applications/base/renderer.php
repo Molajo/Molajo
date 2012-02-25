@@ -761,7 +761,15 @@ class MolajoRenderer
         $controller = new $cc($this->task_request, $this->parameters);
 
         /** execute task: display, edit, or add  */
-        return $controller->$task();
+        $results = $controller->$task();
+
+        /** html display filters */
+        $this->parameters->set('html_display_filter', false);
+        if ($this->parameters->get('html_display_filter', true) == false) {
+            return $results;
+        } else {
+            return Services::Security()->filter_html($results);
+        }
     }
 
     /**

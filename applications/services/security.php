@@ -59,28 +59,12 @@ class MolajoSecurityService
     protected $filter;
 
     /**
-     * @var        array    A list of the default whitelist tags.
-     * @since    1.5
+     * HTML Purifier
+     *
+     * @var    object
+     * @since  1.0
      */
-    var $tagWhitelist = array('a', 'abbr', 'acronym', 'address', 'area', 'b', 'big', 'blockquote', 'br', 'button', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'fieldset', 'font', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'map', 'menu', 'ol', 'optgroup', 'option', 'p', 'pre', 'q', 's', 'samp', 'select', 'small', 'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var');
-
-    /**
-     * @var        array    A list of the default whitelist tag attributes.
-     * @since    1.5
-     */
-    var $attrWhitelist = array('abbr', 'accept', 'accept-charset', 'accesskey', 'action', 'align', 'alt', 'axis', 'border', 'cellpadding', 'cellspacing', 'char', 'charoff', 'charset', 'checked', 'cite', 'class', 'clear', 'cols', 'colspan', 'color', 'compact', 'coords', 'datetime', 'dir', 'disabled', 'enctype', 'for', 'frame', 'headers', 'height', 'href', 'hreflang', 'hspace', 'id', 'ismap', 'label', 'lang', 'longdesc', 'maxlength', 'media', 'method', 'multiple', 'name', 'nohref', 'noshade', 'nowrap', 'prompt', 'readonly', 'rel', 'rev', 'rows', 'rowspan', 'rules', 'scope', 'selected', 'shape', 'size', 'span', 'src', 'start', 'summary', 'tabindex', 'target', 'title', 'type', 'usemap', 'valign', 'value', 'vspace', 'width');
-
-    /**
-     * @var        array    A list of the default blacklisted tags.
-     * @since    1.5
-     */
-    var $tagBlacklist = array('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
-
-    /**
-     * @var        array    A list of the default blacklisted tag attributes.
-     * @since    1.5
-     */
-    var $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
+    protected $purifier;
 
     /**
      * getInstance
@@ -107,6 +91,52 @@ class MolajoSecurityService
     {
         $this->session = Services::Session();
         $this->filter = FilterInput::getInstance();
+        $this->initialiseFiltering();
+    }
+
+    /**
+     * initialiseFiltering
+     *
+     * HTMLPurifier can be configured by:
+     *
+     * 1. defining options in applications/options/htmlpurifier.xml
+     * 2. creating custom filters in applications/filters
+     * 3. setting html_display_filter parameter false (default = true)
+     *
+     * HTML 5 is not supported by HTMLPurifier although they are
+     *  working on it. http://htmlpurifier.org/doxygen/html/classHTML5.html
+     *
+     */
+    protected function initialiseFiltering()
+    {
+        $config = HTMLPurifier_Config::createDefault();
+
+        if ((int) Services::Configuration()->get('html5', 1) == 1) {
+            $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+            //not supported $config->set('HTML.Doctype', 'HTML5');
+        } else {
+            $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+        }
+        $config->set('URI.Host', MOLAJO_BASE_URL);
+
+        /** Custom Filters */
+        $files = JFolder::files(MOLAJO_APPLICATIONS. '/filters', '\.php$', false, false);
+        foreach ($files as $file) {
+            $class = 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Filter';
+            $config->set('Filter.Custom', array(new $class()));
+        }
+
+        /** Configured Options */
+        $options = simplexml_load_file(MOLAJO_APPLICATIONS . '/options/htmlpurifier.xml');
+        $options = array();
+        if (count($options) > 0) {
+            foreach ($options->option as $o) {
+                $key = (string)$o['key'];
+                $value = (string)$o['value'];
+                $config->set($key, $value);
+            }
+        }
+        $this->purifier = new HTMLPurifier($config);
     }
 
     /**
@@ -246,7 +276,7 @@ class MolajoSecurityService
 
             case 'text':
                 return $this->filter_html(
-                    $field_name, $field_value, $null, $default
+                    $field_value, $null, $default
                 );
                 break;
 
@@ -523,9 +553,8 @@ class MolajoSecurityService
      * @return  mixed
      * @since   1.0
      */
-    public function filter_html($field_name,
-                                $field_value = null,
-                                $null = 1,
+    public function filter_html($field_value = null,
+                                $null = 0,
                                 $default = null)
     {
         if ($default == null) {
@@ -535,7 +564,7 @@ class MolajoSecurityService
 
         if ($field_value == null) {
         } else {
-            $field_value = $this->filter->clean($field_value, 'HTML');
+            $field_value = $this->purifier->purify($field_value);
         }
 
         if ($field_value == null

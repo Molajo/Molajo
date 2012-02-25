@@ -114,7 +114,6 @@ class MolajoRequest
     public function __construct($override_request_url = null,
                                 $override_asset_id = null)
     {
-
         $this->_initialize();
 
         $this->redirect_to_id = 0;
@@ -209,6 +208,30 @@ class MolajoRequest
     }
 
     /**
+     * getAll
+     *
+     * Returns an array of all entries in the $page_request Registry
+     *
+     * @return array
+     */
+    public function getAll($type = null)
+    {
+        if ($type == 'array') {
+            $r = new Registry($this->page_request);
+            $temp = $r->toArray();
+            $newArray = array();
+            foreach ($temp as $item) {
+                foreach ($item as $key => $value) {
+                    $newArray[$key] = $value;
+                }
+            }
+            return $newArray;
+        } else {
+            return $this->page_request;
+        }
+    }
+
+    /**
      * process
      *
      * Using the MOLAJO_PAGE_REQUEST value,
@@ -276,7 +299,7 @@ class MolajoRequest
             $this->set('id', $this->get('mvc_id'));
             $controller = new $cc($this->page_request, $this->parameters);
 
-            /** execute task: display, edit, or add  */
+            /** execute task: non-display, edit, or add tasks */
             return $controller->$task();
         }
 

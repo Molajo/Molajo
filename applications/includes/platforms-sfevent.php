@@ -14,6 +14,6 @@ defined('MOLAJO') or die;
  *  File Helper
  */
 $load = new MolajoLoadHelper();
-require_once(PLATFORM_SYMFONY_EVENT . '/sfEventDispatcher.php');
+require_once(PLATFORMS . '/sfEvent' . '/sfEventDispatcher.php');
 
 

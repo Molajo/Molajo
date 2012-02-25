@@ -32,7 +32,7 @@ class MolajoDisplayController extends MolajoController
             $results = parent::checkoutItem();
 
             if ($results === false) {
-               //
+                //
             }
         }
 
@@ -85,7 +85,6 @@ class MolajoDisplayController extends MolajoController
      */
     public function wrapView($view, $renderedOutput)
     {
-        /** create rowset */
         $this->rowset = array();
 
         $tempObject = new JObject();
