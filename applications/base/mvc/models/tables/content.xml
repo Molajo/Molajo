@@ -8,7 +8,7 @@
         <filter name="subtitle" filter="char" null="1" default=" " />
         <filter name="path" filter="char" null="1" default=" " />
         <filter name="alias" filter="char" null="1" default=" " />
-        <filter name="content_text" filter="html" null="1" default="" />
+        <filter name="content_text" filter="text" null="1" default="" />
         <filter name="protected" filter="boolean" null="0" default="0" />
         <filter name="featured" filter="boolean" null="0" default="0" />
         <filter name="stickied" filter="boolean" null="0" default="0" />

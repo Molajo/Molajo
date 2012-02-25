@@ -12,6 +12,9 @@ class MolajoSiteConfiguration
     public $db = 'molajo';
     public $dbprefix = 'molajo_';
 
+    /** disable html filters */
+    public $disable_filter_for_groups = '4';
+
     /* Server Settings */
     public $secret = 'FBVtggIk5lAzEU9H';
     public $gzip = '0';

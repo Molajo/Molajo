@@ -335,7 +335,7 @@ class MolajoRequest
         }
 
         if ($this->get('mvc_task', '') == ''
-            || $this->get('mvc_task', 'display')
+            || $this->get('mvc_task', 'display') == 'display'
         ) {
             $pageRequest = $this->get('request_url_query');
 

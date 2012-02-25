@@ -275,9 +275,13 @@ class MolajoSecurityService
                 break;
 
             case 'text':
-                return $this->filter_html(
-                    $field_value, $null, $default
-                );
+
+                if (Services::Access()->setHTMLFilter() === true) {
+                    return $this->filter_html(
+                        $field_value, $null, $default
+                    );
+                }
+                return $field_value;
                 break;
 
             case 'email':

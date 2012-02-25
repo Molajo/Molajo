@@ -337,4 +337,31 @@ class MolajoAccessService
 
         return $query;
     }
+
+    /**
+     * setHTMLFilter
+     *
+     * Returns false if there is one group that the user belongs to
+     *  authorized to save content without an HTML filter, otherwise
+     *  it returns true
+     *
+     * @return bool
+     * @since  1.0
+     */
+    public function setHTMLFilter ()
+    {
+        $groups = Services::Configuration()->get('disable_filter_for_groups');
+        $groupArray = explode(',', $groups);
+        $userGroups = Services::User()->get('groups');
+
+        foreach ($groupArray as $single) {
+
+            if (in_array($single, $userGroups)) {
+                return false;
+                break;
+            }
+
+        }
+        return true;
+    }
 }
