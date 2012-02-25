@@ -306,17 +306,29 @@ class MolajoRequest
         if (count($this->input) > 0
             && isset($this->input['task'])
         ) {
+            $this->set('mvc_task', $this->input['task']);
         } else {
             $this->set('mvc_task', 'display');
-            return;
         }
 
-        /** task */
-        $this->set('mvc_task', $this->input['task']);
-
         if ($this->get('mvc_task', '') == ''
-            && $this->get('mvc_task', 'display')
+            || $this->get('mvc_task', 'display')
         ) {
+            $pageRequest = $this->get('request_url_query');
+
+            if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
+                $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/edit'));
+                $this->set('request_url_query', $pageRequest);
+                $this->set('mvc_task', 'edit');
+
+            } else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
+                $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/add'));
+                $this->set('request_url_query', $pageRequest);
+                $this->set('mvc_task', 'add');
+
+            } else {
+                $this->set('mvc_task', 'display');
+            }
             return;
         }
 
@@ -1074,7 +1086,10 @@ class MolajoRequest
 
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                ViewHelper::getViewDefaultsApplication('template', $this->get('mvc_task', ''), (int)$this->get('mvc_id', 0))
+                ViewHelper::getViewDefaultsApplication(
+                    'template',
+                    $this->get('mvc_task', ''),
+                    (int)$this->get('mvc_id', 0))
             );
         }
 

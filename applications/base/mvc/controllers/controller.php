@@ -99,7 +99,7 @@ class MolajoController
         $this->model = new $mc();
         $this->model->task_request = $this->task_request;
         $this->model->parameters = $this->parameters;
-
+        $this->model->id = $this->task_request->get('id');
 //        $this->model->load((int)$this->get('id'));
 
         /** dispatch events
@@ -124,6 +124,14 @@ class MolajoController
      * @return  string  Rendered output
      * @since   1.0
      */
+    public function add()
+    {
+        return $this->display();
+    }
+    public function edit()
+    {
+        return $this->display();
+    }
     public function display()
     {
 

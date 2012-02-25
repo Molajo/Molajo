@@ -16,6 +16,7 @@ defined('MOLAJO') or die;
  */
 class MolajoDisplayController extends MolajoController
 {
+
     /**
      * display
      *
@@ -29,12 +30,14 @@ class MolajoDisplayController extends MolajoController
         /** check out */
         if ($this->get('task') == 'edit') {
             $results = parent::checkoutItem();
+
             if ($results === false) {
-                return $this->redirectClass->setSuccessIndicator(false);
+               //
             }
         }
 
         /** Set Criteria and Run Query */
+
         $this->rowset = $this->model->getData();
         $this->pagination = $this->model->getPagination();
         $this->model_state = $this->model->getState();

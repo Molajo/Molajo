@@ -76,7 +76,6 @@ $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php',
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/display.php', 'MolajoDisplayController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/edit.php', 'MolajoEditController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/login.php', 'MolajoLoginController');
-$load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/redirect.php', 'MolajoRedirectController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/update.php', 'MolajoUpdateController');
 $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/updatelist.php', 'MolajoUpdatelistController');
 
