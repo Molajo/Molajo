@@ -161,6 +161,8 @@ class MolajoUpdateController extends MolajoController
         }
 
         /** filters and defaults */
+        $userHTMLFilter = Services::Access()->setHTMLFilter();
+
         $valid = true;
         if (isset($v->filters->filter)) {
             foreach ($v->filters->filter as $f) {
@@ -177,31 +179,28 @@ class MolajoUpdateController extends MolajoController
                 }
 
                 if ($datatype == null) {
+                    // no filter defined
+                } else if ($datatype == 'html'
+                        && $userHTMLFilter === false) {
+                        // user does not require HTML filtering
+
                 } else {
+
                     try {
-                        $value =
-                            Services::Security()->filter(
-                                $name, $value, $datatype, $null, $default
+                        $value = Services::Security()->filter(
+                                $value, $datatype, $null, $default
                             );
 
                     } catch (Exception $e) {
                         $valid = false;
-                        if (Services::Configuration()->get('debug', 0) == 1) {
-                            debug(' ');
-                            debug('MolajoUpdateController::_filter_and_validate Filter Failed');
-                            debug(Services::Language()->translate($e->getMessage()) . ' ' . $f['name']);
-                        }
-                        Services::Message()
-                            ->set(
-                            $message =
-                                Services::Language()->translate($e->getMessage())
-                                    . ' ' . $name,
+                        Services::Message()->set(
+                            $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                             $type = MOLAJO_MESSAGE_TYPE_ERROR
                         );
-                    }
-
-                    if (Services::Configuration()->get('debug', 0) == 1) {
-                        debug('MolajoUpdateController::_filter_and_validate Filter Name: ' . $name . ' Source: ' . $value . ' Datatype: ' . $datatype . ' Null: ' . $null . ' Default: ' . $default . ' Value: ' . $this->model->row->$name);
+                        if (Services::Configuration()->get('debug', 0) == 1) {
+                            debug(' ');
+                            debug('MolajoUpdateController::_filter_and_validate Filter Failed'.' '.$message);
+                        }
                     }
                 }
             }
@@ -222,17 +221,14 @@ class MolajoUpdateController extends MolajoController
 
                 } catch (Exception $e) {
                     $valid = false;
-                    if (Services::Configuration()->get('debug', 0) == 1) {
-                        debug(' ');
-                        debug('MolajoUpdateController::_filter_and_validate Helper Failed');
-                        debug(Services::Language()->translate($e->getMessage()) . ' ' . $name);
-                    }
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()) . ' ' . $name,
+                    Services::Message()->set(
+                        $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
+                    if (Services::Configuration()->get('debug', 0) == 1) {
+                        debug(' ');
+                        debug('MolajoUpdateController::_filter_and_validate Helper Failed'.' '.$message);
+                    }
                 }
             }
         }
@@ -257,17 +253,14 @@ class MolajoUpdateController extends MolajoController
 
                 } catch (Exception $e) {
                     $valid = false;
-                    if (Services::Configuration()->get('debug', 0) == 1) {
-                        debug(' ');
-                        debug('MolajoUpdateController::_filter_and_validate Foreign Key Failed');
-                        debug(Services::Language()->translate($e->getMessage()) . ' ' . $f['name']);
-                    }
-                    Services::Message()
-                        ->set(
-                        $message =
-                            Services::Language()->translate($e->getMessage()),
+                    Services::Message()->set(
+                        $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
+                    if (Services::Configuration()->get('debug', 0) == 1) {
+                        debug(' ');
+                        debug('MolajoUpdateController::_filter_and_validate FKs Failed'.' '.$message);
+                    }
                 }
             }
         }
@@ -301,11 +294,6 @@ class MolajoUpdateController extends MolajoController
         if (method_exists($helperClass, $method)) {
         } else {
             throw new Exception('VALIDATE_HELPER_FUNCTION_NOT_FOUND');
-        }
-
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
-            debug('MolajoUpdateController::_validateHelperFunction Helper Class: ' . $helperClass . ' Method: ' . $method);
         }
 
         $h = new $helperClass();

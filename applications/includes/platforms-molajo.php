@@ -8,6 +8,13 @@
 defined('MOLAJO') or die;
 
 /**
+ *  Molajo
+ */
+if (class_exists('MolajoVersion')) {
+} else {
+    require_once MOLAJO_APPLICATIONS . '/includes/version.php';
+}
+/**
  *  File Helper
  */
 $load = new MolajoLoadHelper();

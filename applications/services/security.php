@@ -90,7 +90,6 @@ class MolajoSecurityService
     public function __construct()
     {
         $this->session = Services::Session();
-        $this->filter = FilterInput::getInstance();
         $this->initialiseFiltering();
     }
 
@@ -243,7 +242,6 @@ class MolajoSecurityService
      *
      * Filter input, default value, edit
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   string  $datatype     Datatype of input field
      * @param   int     $null         0 or 1 - is null allowed
@@ -252,53 +250,76 @@ class MolajoSecurityService
      * @return  mixed
      * @since   1.0
      */
-    public function filter($field_name,
-                           $field_value,
+    public function filter($field_value,
                            $datatype = 'char',
                            $null = 1,
                            $default = null)
     {
 
-        switch ($datatype) {
+        switch (strtolower($datatype)) {
             case 'int':
             case 'boolean':
             case 'float':
                 return $this->filter_numeric(
-                    $field_name, $field_value, $datatype, $null, $default
+                    $field_value, $datatype, $null, $default
                 );
                 break;
 
             case 'date':
                 return $this->filter_date(
-                    $field_name, $field_value, $null, $default
+                    $field_value, $null, $default
                 );
                 break;
 
             case 'text':
 
-                if (Services::Access()->setHTMLFilter() === true) {
-                    return $this->filter_html(
-                        $field_value, $null, $default
-                    );
-                }
-                return $field_value;
+                return $this->filter_html(
+                    $field_value, $null, $default
+                );
                 break;
 
             case 'email':
                 return $this->filter_email(
-                    $field_name, $field_value, $null, $default
+                    $field_value, $null, $default
                 );
                 break;
 
             case 'url':
                 return $this->filter_url(
-                    $field_name, $field_value, $null, $default
+                    $field_value, $null, $default
                 );
                 break;
 
-            case 'char':
+            case 'word':
+                $result = (string)preg_replace('/[^A-Z_]/i', '', $field_value);
+                break;
+
+            case 'alnum':
+                $result = (string)preg_replace('/[^A-Z0-9]/i', '', $field_value);
+                break;
+
+            case 'cmd':
+                $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $field_value);
+                $result = ltrim($result, '.');
+                break;
+
+            case 'base64':
+                $result = (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $field_value);
+                break;
+
+            case 'path':
+                $pattern = '/^[A-Za-z0-9_-]+[A-Za-z0-9_\.-]*([\\\\\/][A-Za-z0-9_-]+[A-Za-z0-9_\.-]*)*$/';
+                preg_match($pattern, (string)$field_value, $matches);
+                return @ (string)$matches[0];
+                break;
+
+            case 'username':
+                return (string)preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $field_value);
+                break;
+
+            default:
                 return $this->filter_char(
-                    $field_name, $field_value, $null, $default
+                    $field_value, $null, $default
                 );
                 break;
         }
@@ -307,7 +328,6 @@ class MolajoSecurityService
     /**
      * filter_numeric
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   string  $datatype     Datatype of input field
      * @param   int     $null         0 or 1 - is null allowed
@@ -316,8 +336,7 @@ class MolajoSecurityService
      * @return  string
      * @since   1.0
      */
-    public function filter_numeric($field_name,
-                                   $field_value = null,
+    public function filter_numeric($field_value,
                                    $datatype = 'int',
                                    $null = 1,
                                    $default = null)
@@ -330,6 +349,7 @@ class MolajoSecurityService
         if ($field_value == null) {
         } else {
             switch ($datatype) {
+
                 case 'boolean':
                     $test = filter_var(
                         $field_value,
@@ -355,6 +375,7 @@ class MolajoSecurityService
                         FILTER_SANITIZE_NUMBER_INT
                     );
                     break;
+
             }
             if ($test == $field_value) {
                 return $test;
@@ -375,7 +396,6 @@ class MolajoSecurityService
     /**
      * filter_date
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
@@ -383,8 +403,7 @@ class MolajoSecurityService
      * @return  string
      * @since   1.0
      */
-    public function filter_date($field_name,
-                                $field_value = null,
+    public function filter_date($field_value = null,
                                 $null = 1,
                                 $default = null)
     {
@@ -399,6 +418,7 @@ class MolajoSecurityService
         if ($field_value == null
             || $field_value == '0000-00-00 00:00:00'
         ) {
+
         } else {
             $dd = substr($field_value, 8, 2);
             $mm = substr($field_value, 5, 2);
@@ -429,7 +449,6 @@ class MolajoSecurityService
     /**
      * filter_char
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
@@ -437,8 +456,7 @@ class MolajoSecurityService
      * @return  mixed
      * @since   1.0
      */
-    public function filter_char($field_name,
-                                $field_value = null,
+    public function filter_char($field_value = null,
                                 $null = 1,
                                 $default = null)
     {
@@ -469,7 +487,6 @@ class MolajoSecurityService
     /**
      * filter_email
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
@@ -477,8 +494,7 @@ class MolajoSecurityService
      * @return  mixed
      * @since   1.0
      */
-    public function filter_email($field_name,
-                                 $field_value = null,
+    public function filter_email($field_value = null,
                                  $null = 1,
                                  $default = null)
     {
@@ -509,7 +525,6 @@ class MolajoSecurityService
     /**
      * filter_url
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
@@ -517,8 +532,7 @@ class MolajoSecurityService
      * @return  mixed
      * @since   1.0
      */
-    public function filter_url($field_name,
-                               $field_value = null,
+    public function filter_url($field_value = null,
                                $null = 1,
                                $default = null)
     {
@@ -549,7 +563,6 @@ class MolajoSecurityService
     /**
      * filter_html
      *
-     * @param   string  $field_name   Value of input field
      * @param   string  $field_value  Value of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
@@ -579,245 +592,6 @@ class MolajoSecurityService
 
         return $field_value;
     }
-
-    /**
-     * Method to be called by another php script. Processes for XSS and
-     * specified bad code.
-     *
-     * @param   mixed   $source  Input string/array-of-string to be 'cleaned'
-     * @param   string  $type    Return type for the variable (INT, UINT, FLOAT, BOOLEAN, WORD, ALNUM, CMD, BASE64, STRING, ARRAY, PATH, NONE)
-     *
-     * @return  mixed  'Cleaned' version of input parameter
-     *
-     * @since   1.0
-     */
-    public function clean($source, $type = 'string')
-    {
-        // Handle the type constraint
-        switch (strtoupper($type))
-        {
-            case 'INT':
-            case 'INTEGER':
-                // Only use the first integer value
-                preg_match('/-?[0-9]+/', (string)$source, $matches);
-                $result = @ (int)$matches[0];
-                break;
-
-            case 'UINT':
-                // Only use the first integer value
-                preg_match('/-?[0-9]+/', (string)$source, $matches);
-                $result = @ abs((int)$matches[0]);
-                break;
-
-            case 'FLOAT':
-            case 'DOUBLE':
-                // Only use the first floating point value
-                preg_match('/-?[0-9]+(\.[0-9]+)?/', (string)$source, $matches);
-                $result = @ (float)$matches[0];
-                break;
-
-            case 'BOOL':
-            case 'BOOLEAN':
-                $result = (bool)$source;
-                break;
-
-            case 'WORD':
-                $result = (string)preg_replace('/[^A-Z_]/i', '', $source);
-                break;
-
-            case 'ALNUM':
-                $result = (string)preg_replace('/[^A-Z0-9]/i', '', $source);
-                break;
-
-            case 'CMD':
-                $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
-                $result = ltrim($result, '.');
-                break;
-
-            case 'BASE64':
-                $result = (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $source);
-                break;
-
-            case 'STRING':
-                $result = (string)$this->_remove($this->_decode((string)$source));
-                break;
-
-            case 'HTML':
-                $result = (string)$this->_remove((string)$source);
-                break;
-
-            case 'ARRAY':
-                $result = (array)$source;
-                break;
-
-            case 'PATH':
-                $pattern = '/^[A-Za-z0-9_-]+[A-Za-z0-9_\.-]*([\\\\\/][A-Za-z0-9_-]+[A-Za-z0-9_\.-]*)*$/';
-                preg_match($pattern, (string)$source, $matches);
-                $result = @ (string)$matches[0];
-                break;
-
-            case 'USERNAME':
-                $result = (string)preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $source);
-                break;
-
-            default:
-                // Are we dealing with an array?
-                if (is_array($source)) {
-                    foreach ($source as $key => $value)
-                    {
-                        // filter element for XSS and other 'bad' code etc.
-                        if (is_string($value)) {
-                            $source[$key] = $this->_remove($this->_decode($value));
-                        }
-                    }
-                    $result = $source;
-                }
-                else
-                {
-                    // Or a string?
-                    if (is_string($source) && !empty($source)) {
-                        // filter source for XSS and other 'bad' code etc.
-                        $result = $this->_remove($this->_decode($source));
-                    }
-                    else
-                    {
-                        // Not an array or string.. return the passed parameter
-                        $result = $source;
-                    }
-                }
-                break;
-        }
-
-        return $result;
-    }
-
-
-    /**
-     * Applies the content text filters as per settings for current user group
-     *
-     * @param text The string to filter
-     * @return string The filtered string
-     */
-    public function filterText($text)
-    {
-        return true;
-
-        $acl = new MolajoACL ();
-        $userGroups = $acl->getList('usergroups');
-
-        /** retrieve defined filters by group **/
-        $filters = $systemParameters->get('filters');
-
-        /** initialise with default black and white list values **/
-        $blackListTags = array();
-        $blackListAttributes = array();
-        $blackListTags = explode(',', $tagBlacklist);
-        $blackListAttributes = explode(',', $attrBlacklist);
-
-        $whiteListTags = array();
-        $whiteListAttributes = array();
-        $whiteListTags = explode(',', $tagWhitelist);
-        $whiteListAttributes = explode(',', $attrWhitelist);
-
-        $noHtml = false;
-        $whiteList = false;
-        $blackList = false;
-        $unfiltered = false;
-
-        // Cycle through each of the user groups the user is in.
-        // Remember they are include in the Public group as well.
-        foreach ($userGroups AS $groupId)
-        {
-            // May have added a group by not saved the filters.
-            if (!isset($filters->$groupId)) {
-                continue;
-            }
-
-            // Each group the user is in could have different filtering properties.
-            $filterData = $filters->$groupId;
-            $filterType = strtoupper($filterData->filter_type);
-
-            if ($filterType == 'NH') {
-                // Maximum HTML filtering.
-                $noHtml = true;
-            }
-            else if ($filterType == 'NONE') {
-                // No HTML filtering.
-                $unfiltered = true;
-            }
-            else {
-                // Black or white list.
-                // Preprocess the tags and attributes.
-                $tags = explode(',', $filterData->filter_tags);
-                $attributes = explode(',', $filterData->filter_attributes);
-                $tempTags = array();
-                $tempAttributes = array();
-
-                foreach ($tags AS $tag) {
-                    $tag = trim($tag);
-                    if ($tag) {
-                        $tempTags[] = $tag;
-                    }
-                }
-
-                foreach ($attributes AS $attribute) {
-                    $attribute = trim($attribute);
-                    if ($attribute) {
-                        $tempAttributes[] = $attribute;
-                    }
-                }
-
-                // Collect the black or white list tags and attributes.
-                // Each list is cummulative.
-                if ($filterType == 'BL') {
-                    $blackList = true;
-                    $blackListTags = array_merge($blackListTags, $tempTags);
-                    $blackListAttributes = array_merge($blackListAttributes, $tempAttributes);
-                }
-                else if ($filterType == 'WL') {
-                    $whiteList = true;
-                    $whiteListTags = array_merge($whiteListTags, $tempTags);
-                    $whiteListAttributes = array_merge($whiteListAttributes, $tempAttributes);
-                }
-            }
-        }
-
-        // Remove duplicates before processing (because the black list uses both sets of arrays).
-        $blackListTags = array_unique($blackListTags);
-        $blackListAttributes = array_unique($blackListAttributes);
-        $whiteListTags = array_unique($whiteListTags);
-        $whiteListAttributes = array_unique($whiteListAttributes);
-
-        // Unfiltered assumes first priority.
-        if ($unfiltered) {
-            // Dont apply filtering.
-        }
-        else {
-            // Black lists take second precedence.
-            if ($blackList) {
-                // Remove the white-listed attributes from the black-list.
-                $filter = FilterInput::getInstance(
-                    array_diff($blackListTags, $whiteListTags), // blacklisted tags
-                    array_diff($blackListAttributes, $whiteListAttributes), // blacklisted attributes
-                    1, // blacklist tags
-                    1 // blacklist attributes
-                );
-            }
-            // White lists take third precedence.
-            else if ($whiteList) {
-                $filter = FilterInput::getInstance($whiteListTags, $whiteListAttributes, 0, 0, 0); // turn off xss auto clean
-            }
-            // No HTML takes last place.
-            else {
-                $filter = FilterInput::getInstance();
-            }
-
-            $text = $filter->clean($text, 'html');
-        }
-
-        return $text;
-    }
-
 
     /**
      * encodeLink

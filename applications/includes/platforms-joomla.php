@@ -101,14 +101,6 @@ $load->requireClassFile(JOOMLA_LIBRARY . '/base/object.php', 'JObject');
 $load->requireClassFile(JOOMLA_LIBRARY . '/environment/uri.php', 'JURI');
 
 /**
- *  Input
- */
-$load->requireClassFile(JOOMLA_LIBRARY . '/input/input.php', 'JInput');
-$load->requireClassFile(JOOMLA_LIBRARY . '/input/cli.php', 'JInputCli');
-$load->requireClassFile(JOOMLA_LIBRARY . '/input/cookie.php', 'JInputCookie');
-$load->requireClassFile(JOOMLA_LIBRARY . '/input/files.php', 'JInputFiles');
-
-/**
  *  Client
  *
  */
@@ -146,11 +138,6 @@ $load->requireClassFile(JOOMLA_LIBRARY . '/database/query/sqlsrv.php', 'JDatabas
 $load->requireClassFile(JOOMLA_LIBRARY . '/database/query/sqlazure.php', 'JDatabaseQuerySqlazure');
 
 /**
- *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved
- */
-$load->requireClassFile(JOOMLA_LIBRARY . '/error/profiler.php', 'JProfiler');
-
-/**
  *  Filesystem (continued)
  */
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem', '\.php$', false, false);
@@ -173,27 +160,6 @@ foreach ($files as $file) {
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem/support', '\.php$', false, false);
 foreach ($files as $file) {
     $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/support/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
-
-/**
- *  Filter
- */
-$load->requireClassFile(JOOMLA_LIBRARY . '/filter/filterinput.php', 'JFilterInput');
-$load->requireClassFile(JOOMLA_LIBRARY . '/filter/filteroutput.php', 'JFilterOutput');
-
-/**
- *  Log
- */
-$files = JFolder::files(JOOMLA_LIBRARY . '/log', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'logexception.php') {
-    } else {
-        $load->requireClassFile(JOOMLA_LIBRARY . '/log/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
-$files = JFolder::files(JOOMLA_LIBRARY . '/log/loggers', '\.php$', false, false);
-foreach ($files as $file) {
-    $load->requireClassFile(JOOMLA_LIBRARY . '/log/loggers/' . $file, 'JLogger' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**

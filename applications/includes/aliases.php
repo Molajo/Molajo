@@ -132,6 +132,3 @@ class Services extends MolajoServices
  *  Molajo Class for alias creation, ex Molajo::User
  */
 class Registry extends JRegistry {}
-class Input extends JInput {}
-class FilterInput extends JFilterInput {}
-class FilterOutput extends JFilterOutput {}

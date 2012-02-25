@@ -7,8 +7,6 @@
  */
 defined('MOLAJO') or die;
 
-//todo: amy JInput
-
 /**
  * URL
  *
@@ -25,16 +23,6 @@ class MolajoUrlService
      * @since  1.0
      */
     protected static $instance;
-
-    /**
-     * $input
-     *
-     * Application Request Object
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $input;
 
     /**
      * getInstance
@@ -61,27 +49,7 @@ class MolajoUrlService
      */
     public function __construct()
     {
-        $this->_getInput();
-    }
 
-    /**
-     * _getInput
-     *
-     * Retrieve URL contents
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    public function _getInput()
-    {
-        $this->input = new JInput;
-
-        // Get the full request URI.
-        $uri = clone JURI::getInstance();
-        $results = $uri->get('_vars');
-        foreach ($results as $key => $value) {
-            $this->input->set($key, $value);
-        }
     }
 
     /**
