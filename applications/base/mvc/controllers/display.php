@@ -67,7 +67,7 @@ class MolajoDisplayController extends MolajoController
 
         /** mustache */
         if ($this->parameters->get('mustache', 1) == 1) {
-            $renderedOutput = $this->renderMustacheView($renderedOutput);
+            $renderedOutput = $this->processRenderedOutput($renderedOutput);
         }
 
         /** render wrap view around template view results */
@@ -87,12 +87,12 @@ class MolajoDisplayController extends MolajoController
     {
         $this->rowset = array();
 
-        $tempObject = new JObject();
-        $tempObject->set('wrap_view_css_id', $this->get('wrap_view_css_id'));
-        $tempObject->set('wrap_view_css_class', $this->get('wrap_view_css_class'));
-        $tempObject->set('content', $renderedOutput);
+        $temp = new stdClass();
+        $temp->wrap_view_css_id = $this->get('wrap_view_css_id');
+        $temp->wrap_view_css_class = $this->get('wrap_view_css_class');
+        $temp->content = $renderedOutput;
 
-        $this->rowset[] = $tempObject;
+        $this->rowset[] = $temp;
 
         /** paths */
         $this->view_path = $this->get('wrap_view_path');
@@ -107,11 +107,10 @@ class MolajoDisplayController extends MolajoController
      *
      * Depending on the files within view/view-type/view-name/views/*.*:
      *
-     * 1. Provide all query results in $this->rowset for the view to process
-     *      How? Include view named custom.php
+     * 1. Include a single custom.php file to process all query results in $this->rowset
      *
-     * 2. Loop thru the $this->rowset object processing each row, one at a time.
-     *      How? Include top.php, header.php, body.php, footer.php, and/or bottom.php views
+     * 2. Include header.php, body.php, and/or footer.php views for Molajo to
+     *  perform the looping, sending $row into the views
      *
      * @return string
      * @since 1.0
@@ -186,51 +185,39 @@ class MolajoDisplayController extends MolajoController
     }
 
     /**
-     * renderMustacheView
+     * processRenderedOutput
      *
-     * Passes the rendered output (likely just the mustache template)
-     * and the rowset into Mustache for processing. Helper functions
-     * can be added, as need. Read comments in method for more info.
+     * Passes the rendered output and the entire rowset into the
+     * Theme Helper and Mustache for processing.
      *
      * @param $template
+     *
      * @return string rendered output
+     * @since  1.0
      */
-    protected function renderMustacheView($template)
+    protected function processRenderedOutput($template)
     {
-
         /** quick check for mustache commands */
         if (stripos($template, '}}') > 0) {
         } else {
             return $template;
         }
 
-        /** Instantiate Mustache before Helper */
+        /** Instantiate Mustache before Theme Helper */
         $m = new Mustache;
 
-        /** Mustache Helper: Use the Theme Helper, if exists */
-        $classLoaded = false;
+        /** Theme Helper */
+        $helperClass = 'Molajo' .
+            ucfirst(Molajo::Request()->get('theme_name'))
+            . 'ThemeHelper';
 
-        $helperFile = Molajo::Request()
-            ->get('theme_path') . '/helpers/mustache.php';
-
-        if (file_exists($helperFile)) {
-            require_once $helperFile;
-
-            $helperClass = 'Molajo' .
-                ucfirst(Molajo::Request()->get('theme_name'))
-                . 'MustacheHelper';
-
-            if (class_exists($helperClass)) {
-                $h = new $helperClass();
-                $classLoaded = true;
-            }
+        if (class_exists($helperClass)) {
+            $h = new $helperClass();
+        } else {
+            $h = new MolajoThemeHelper();
         }
 
-        if ($classLoaded === false) {
-            $h = new MolajoMustacheHelper();
-        }
-
-        /** create mustache dataset */
+        /** create input dataset */
         $totalRows = count($this->rowset);
         $row = 0;
         if ($totalRows > 0) {
@@ -245,7 +232,7 @@ class MolajoDisplayController extends MolajoController
             }
         }
 
-        /** Pass Template and Data to Mustache */
+        /** Pass rendered output and data to Helper */
         ob_start();
         echo $h->render($template, $h);
         $output = ob_get_contents();
@@ -256,42 +243,6 @@ class MolajoDisplayController extends MolajoController
     }
 }
 
-
-/** 7. Optional data (put this into a model parent?) */
-//		$this->category	            = $this->get('Category');
-//		$this->categoryAncestors    = $this->get('Ancestors');
-//		$this->categoryParent       = $this->get('Parent');
-//		$this->categoryPeers	    = $this->get('Peers');
-//		$this->categoryChildren	    = $this->get('Children');
-
-/** used in manager */
-
-/**
- * @var $render object
- */
-//protected $render;
-
-/**
- * @var $saveOrder string
- */
-// protected $saveOrder;
-//      $this->authorProfile        = $this->get('Author');
-
-//      $this->tags (tag cloud)
-//      $this->tagCategories (menu)
-//      $this->calendar
-
-/** blog variables
-move variables into $options
-retrieve variables here in controller - and split int rowset if needed
-
-protected $category;
-protected $children;
-protected $lead_items = array();
-protected $intro_items = array();
-protected $link_items = array();
-protected $columns = 1;
- */
 //Navigation
 //$this->navigation->get('form_return_to_link')
 //$this->navigation->get('previous')

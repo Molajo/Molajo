@@ -149,7 +149,7 @@ class MolajoLanguageService
     {
         /** load metadata */
         $xmlFile = MOLAJO_EXTENSIONS_LANGUAGES . '/' . $this->language . '/' . 'manifest.xml';
-        $metadata = LanguageHelper::getMetadata($xmlFile);
+        $metadata = LanguageHelper::get_metadata($xmlFile);
 
         if (isset($metadata['name'])) {
             $this->name = $metadata['name'];

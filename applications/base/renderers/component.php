@@ -268,51 +268,51 @@ class MolajoComponentRenderer extends MolajoRenderer
     protected function _loadMediaPlus($plus = '', $priority = 500)
     {
         /** Theme */
-        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' . $this->get('theme_name');
-        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->get('theme_name');
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = MOLAJO_EXTENSIONS_THEMES . '/' . $this->get('theme_name');
+        $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->get('theme_name');
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** Site Specific: Application */
-        $filePath = SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
+        $url_path = SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** Site Specific: Site-wide */
-        $filePath = SITE_MEDIA_FOLDER . $plus;
-        $urlPath = SITE_MEDIA_URL . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITE_MEDIA_FOLDER . $plus;
+        $url_path = SITE_MEDIA_URL . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, false);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** All Sites: Application */
-        $filePath = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
+        $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** All Sites: Site Wide */
-        $filePath = SITES_MEDIA_FOLDER . $plus;
-        $urlPath = SITES_MEDIA_URL . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITES_MEDIA_FOLDER . $plus;
+        $url_path = SITES_MEDIA_URL . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

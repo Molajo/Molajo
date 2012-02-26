@@ -42,29 +42,29 @@ class MolajoDeferModel extends MolajoDisplayModel
     {
         $this->query_results = array();
 
-        /** type: javascript_links */
-        $list = Molajo::Responder()->getScriptLinks(1);
-        foreach ($list as $item) {
+        /** type: js */
+        $list = Services::Media()->get_js($defer = 1);
 
+        foreach ($list as $item) {
             $row = new stdClass();
 
-            $row->type = 'javascript_links';
+            $row->type = 'js';
             $row->url = $item['url'];
             $row->mimetype = $item['mimetype'];
-            $row->defer = true;
+            $row->defer = 0;
             $row->async = $item['async'];
             $row->priority = $item['priority'];
 
             $this->query_results[] = $row;
         }
 
-        /** type: javascript_declarations */
-        $list = Molajo::Responder()->getScriptDeclarations(1);
-        foreach ($list as $item) {
+        /** type: js_declarations */
+        $list = Services::Media()->get_js_declarations($defer = 1);
 
+        foreach ($list as $item) {
             $row = new stdClass();
 
-            $row->type = 'javascript_declarations';
+            $row->type = 'js_declarations';
             $row->mimetype = $item['mimetype'];
             $row->content = $item['content'];
 

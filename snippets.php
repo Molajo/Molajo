@@ -116,13 +116,13 @@ echo Molajo::Responder()->get('sef', 1);
 /** Basic Message, for example: "Article saved." or "Title required."  */
 Services::Message()
     ->set(
-        Services::Language()->_('Title required for article.'),
+        Services::Language()->translate('Title required for article.'),
         MOLAJO_MESSAGE_TYPE_WARNING
     );
 
 Services::Message()
     ->set(
-        $message = Services::Language()->_('ERROR_DATABASE_QUERY'),
+        $message = Services::Language()->translate('ERROR_DATABASE_QUERY'),
         $type = MOLAJO_MESSAGE_TYPE_ERROR,
         $code = null,
         $debug_location = 'AssetHelper::get',
@@ -172,7 +172,7 @@ echo implode(',', Services::User()->get('view_groups'));
  */
 $doc = JFactory::getDocument();
 $doc->addScript('https://www.google.com/jsapi');
-$doc->addScriptDeclaration('
+$doc->add_js_declaration('
 google.load("jquery", "1.6.2", {uncompressed: true});
 google.load("jqueryui", "1.8.15", {uncompressed:true});
 ');

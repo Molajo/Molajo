@@ -90,7 +90,7 @@ class MolajoItemModel extends MolajoModel
             }
             // Nothing to set publishing state on, return false.
             else {
-                $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
+                $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 $this->setError($e);
 
                 return false;
@@ -206,7 +206,7 @@ class MolajoItemModel extends MolajoModel
 
         // If no primary key is given, return false.
         if ($this->id === null) {
-            $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }

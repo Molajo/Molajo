@@ -11,17 +11,14 @@
     <service>
         <name>jdb</name>
         <serviceClass>MolajoJdatabaseService</serviceClass>
-        <getInstance></getInstance>
-        <connect>
-            <parameters>
-                <parameter key="file" value="/users/amystephen/sites/molajo/sites/1/configuration.php"/>
-                <parameter key="configuration_class" value="MolajoSiteConfiguration"/>
-            </parameters>
-        </connect>
     </service>
     <service>
         <name>Configuration</name>
         <serviceClass>MolajoConfigurationService</serviceClass>
+    </service>
+    <service>
+        <name>Media</name>
+        <serviceClass>MolajoMediaService</serviceClass>
     </service>
     <service>
         <name>User</name>
@@ -31,8 +28,6 @@
                 <parameter key="identifier" value="{{userid}}"/>
             </parameters>
         </getInstance>
-         <connect>
-         </connect>
     </service>
     <service>
         <name>Access</name>

@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * @see         http://www.php.net/manual/en/function.session-set-save-handler.php
  * @since       11.1
  */
-abstract class MolajoSessionStorage extends JObject
+abstract class MolajoSessionStorage
 {
 	/**
 	 * @var    array  MolajoSessionStorage instances container.

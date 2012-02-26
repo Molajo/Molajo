@@ -48,19 +48,6 @@ class MolajoServices
     }
 
     /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    protected function __construct()
-    {
-
-    }
-
-    /**
      * get
      *
      * Retrieves service key value pair
@@ -91,9 +78,7 @@ class MolajoServices
     public function set($key, $value = null)
     {
         if ($value == null) {
-            debug(' ');
-            debug('MolajoServices::set');
-            debug('Service failed to start: '.$key);
+            debug('MolajoServices::set Service failed to start: ' . $key);
         }
         $this->service_connection->set($key, $value);
     }
@@ -120,13 +105,21 @@ class MolajoServices
 
         foreach ($services->service as $s) {
             $serviceName = (string)$s->name;
-            $connection = $this->_connectService($s);
-/**
-echo 'SERVICE: '.$serviceName.'<br />';
-var_dump($connection);
-echo '<br />';
-*/
+
+            try {
+                $connection = $this->_connectService($s);
+
+            } catch (Exception $e) {
+
+                Services::Message()->set(
+                    $message = Services::Language()->translate($e->getMessage()) . ' ' . $serviceName,
+                    $type = MOLAJO_MESSAGE_TYPE_ERROR
+                );
+                debug('MolajoServices::initiateServices Service Failed' . ' ' . $serviceName);
+            }
+
             $this->set($serviceName, $connection);
+            debug('MolajoServices::initiateServices Service Connection' . ' ' . $serviceName);
         }
 
         return;
@@ -142,10 +135,6 @@ echo '<br />';
     protected function _connectService($service)
     {
         $serviceName = (string)$service->name;
-
-        if (trim($serviceName) == '') {
-            return false;
-        }
         if (substr($serviceName, 0, 4) == 'HOLD') {
             return false;
         }
@@ -247,13 +236,14 @@ echo '<br />';
         /** execute method */
         $connection = '';
         if ($serviceMethod == 'getInstance') {
-            $execute = '$connection = $serviceClass::getInstance '.
-                  '(' . $parms . ');';
+            $execute = '$connection = $serviceClass::getInstance ' .
+                '(' . $parms . ');';
         } else {
             $execute = '$connection = $objectContext->' .
                 $serviceMethod .
                 '(' . $parms . ');';
         }
+
         eval($execute);
 
         return $connection;

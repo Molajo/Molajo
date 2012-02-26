@@ -94,7 +94,7 @@ class MolajoLoginController
         }
 
         /** success message */
-        $this->redirectClass->setRedirectMessage(Services::Language()->_('MOLAJO_SUCCESSFUL_LOGON'));
+        $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_SUCCESSFUL_LOGON'));
         $this->redirectClass->setSuccessIndicator(true);
     }
 
@@ -118,8 +118,8 @@ class MolajoLoginController
 
         if (isset($options['silent']) && $options['silent']) {
         } else {
-            $this->redirectClass->setRedirectMessage(Services::Language()->_('JLIB_LOGIN_AUTHORIZED'));
-            $this->redirectClass->setRedirectMessageType(Services::Language()->_('warning'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('JLIB_LOGIN_AUTHORIZED'));
+            $this->redirectClass->setRedirectMessageType(Services::Language()->translate('warning'));
         }
         return $this->redirectClass->setSuccessIndicator(false);
     }

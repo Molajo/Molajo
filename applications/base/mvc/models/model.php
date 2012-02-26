@@ -212,7 +212,7 @@ class MolajoModel
             die;
             Services::Message()
                 ->set(
-                $message = Services::Language()->_('ERROR_DATABASE_QUERY') . ' ' .
+                $message = Services::Language()->translate('ERROR_DATABASE_QUERY') . ' ' .
                     $this->db->getErrorNum() . ' ' .
                     $this->db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,

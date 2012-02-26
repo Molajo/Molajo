@@ -93,7 +93,7 @@ class MolajoAuthentication extends JObservable
 
         if ($isLoaded) {
         } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', Services::Language()->_('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
+            MolajoError::raiseWarning('SOME_ERROR_CODE', Services::Language()->translate('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
         }
     }
 
@@ -260,15 +260,15 @@ class MolajoAuthentication extends JObservable
                     {
                         case MolajoAuthentication::STATUS_EXPIRED:
                             $response->status = STATUS_EXPIRED;
-                            return MolajoError::raiseWarning('102002', Services::Language()->_('JLIB_LOGIN_EXPIRED'));
+                            return MolajoError::raiseWarning('102002', Services::Language()->translate('JLIB_LOGIN_EXPIRED'));
                             break;
                         case MolajoAuthentication::STATUS_DENIED:
                             $response->status = STATUS_DENIED;
-                            return MolajoError::raiseWarning('102003', Services::Language()->_('JLIB_LOGIN_DENIED'));
+                            return MolajoError::raiseWarning('102003', Services::Language()->translate('JLIB_LOGIN_DENIED'));
                             break;
                         default:
                             $response->status = STATUS_FAILURE;
-                            return MolajoError::raiseWarning('102004', Services::Language()->_('JLIB_LOGIN_AUTHORISATION'));
+                            return MolajoError::raiseWarning('102004', Services::Language()->translate('JLIB_LOGIN_AUTHORISATION'));
                             break;
                     }
                 }

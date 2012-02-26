@@ -13,29 +13,25 @@ defined('MOLAJO') or die;
  *  Note: Avoid horizontal space outside of the PHP sections
  *      because it will be reflected in the header section
  */
-
-/** javascript_links */
-if ($this->row->type == 'javascript_links'):
+if ($this->row->type == 'js'):
 ?>
-    <script src="<?php echo $this->row->url; ?>" <?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if (trim($this->row->defer) != ''): ?>defer="defer" <?php endif; ?><?php if (trim($this->row->async) != ''): ?>async="async" <?php endif; ?>/></script>
-    <?php
-
-    /** stylesheet_declarations */
-    elseif ($this->row->type == 'script_declarations'):
-    ?>
-        <script<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>" <?php endif; ?>>
-        <?php
-            if ($this->row->mimetype == 'text/html') :
-            else : ?>
-            <![CDATA[
-        <?php
-            endif;
-            echo $this->row->content;
-            if ($this->row->mimetype == 'text/html') :
-            else : ?>
-            ]]>
-        <?php
-            endif; ?>
-        </script>
-    <?php
+<script src="<?php echo $this->row->url; ?>"<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if ((int)$this->row->defer == 1): ?> defer="defer"<?php endif; ?><?php if ((int)$this->row->async == 1): ?> async="async"<?php endif; ?>></script><?php echo chr(10) . chr(13); ?>
+<?php
+elseif ($this->row->type == 'js_declarations'):
+?>
+<script<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
+<?php
+if ($this->row->mimetype == 'text/html') :
+else : ?>
+<![CDATA[
+<?php
+endif;
+echo $this->row->content;
+if ($this->row->mimetype == 'text/html') :
+else : ?>
+]]>
+<?php
+endif; ?>
+</script><?php echo chr(10) . chr(13); ?>
+<?php
 endif;

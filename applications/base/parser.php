@@ -163,6 +163,17 @@ class MolajoParser
             )
         );
 
+        $helperFile = Molajo::Request()->get('theme_path')
+            . '/helpers/theme.php';
+
+        if (file_exists($helperFile)) {
+            require_once $helperFile;
+
+            $helperClass = 'Molajo' .
+                ucfirst(Molajo::Request()->get('theme_name'))
+                . 'ThemeHelper';
+        }
+
         /** Before Event */
         // Services::Dispatcher()->notify('onBeforeRender');
 

@@ -48,10 +48,13 @@ class MolajoUpdateController extends MolajoController
         if ($valid === true) {
             if ($this->model->row->id == 0
                 || $this->model->row->status == 0) {
-                Molajo::Responder()->redirect($this->task_request->get('redirect_on_success'), 301);
+                Molajo::Responder()->redirect(
+                    $this->task_request->get('redirect_on_success'),
+                    301);
             } else {
                 Molajo::Responder()->redirect(
-                     AssetHelper::getURL($this->task_request->get('request_asset_id')),
+                     AssetHelper::getURL(
+                         $this->task_request->get('request_asset_id')),
                      301
                  );
             }
@@ -188,8 +191,7 @@ class MolajoUpdateController extends MolajoController
 
                     try {
                         $value = Services::Security()->filter(
-                                $value, $datatype, $null, $default
-                            );
+                                $value, $datatype, $null, $default);
 
                     } catch (Exception $e) {
                         $valid = false;
@@ -442,7 +444,7 @@ class MolajoUpdateController extends MolajoController
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -499,7 +501,7 @@ class MolajoUpdateController extends MolajoController
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -800,7 +802,7 @@ class MolajoUpdateController extends MolajoController
             }
             // Nothing to set publishing state on, return false.
             else {
-                $e = new MolajoException(Services::Language()->_('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
+                $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 $this->setError($e);
 
                 return false;
@@ -911,7 +913,7 @@ class MolajoUpdateController extends MolajoController
             foreach ($joins as $table) {
                 $k = $table['idfield'] . $i;
                 if ($row->$k) {
-                    $msg[] = Services::Language()->_($table['label']);
+                    $msg[] = Services::Language()->translate($table['label']);
                 }
 
                 $i++;

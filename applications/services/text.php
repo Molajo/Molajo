@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
+
 /**
  * Text
  *
@@ -15,6 +16,7 @@ defined('MOLAJO') or die;
  */
 class MolajoTextService
 {
+
     /**
      * Static instance
      *
@@ -38,9 +40,16 @@ class MolajoTextService
         return self::$instance;
     }
 
-    public function sprintf()
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @since  1.0
+     */
+    public function __construct()
     {
-        //return Services::Language()->sprintf();
+
     }
 
     /**
@@ -52,7 +61,7 @@ class MolajoTextService
      * @return string
      * @since  1.0
      */
-    function addLineBreaks($text)
+    public function addLineBreaks($text)
     {
         return nl2br($text);
     }
@@ -66,7 +75,7 @@ class MolajoTextService
      * @return string
      * @since  1.0
      */
-    function replaceBuffer($change_from, $change_to)
+    public function replaceBuffer($change_from, $change_to)
     {
         $buffer = preg_replace(
             $change_from,
@@ -85,61 +94,61 @@ class MolajoTextService
      * @return string
      * @since  1.0
      */
-    function smilies($text)
+    public function smilies($text)
     {
         $smile = array(
-            ':mrgreen:' => 'mrgreen.gif',
-            ':neutral:' => 'neutral.gif',
-            ':twisted:' => 'twisted.gif',
-            ':arrow:' => 'arrow.gif',
-            ':shock:' => 'eek.gif',
-            ':smile:' => 'smile.gif',
-            ':???:' => 'confused.gif',
-            ':cool:' => 'cool.gif',
-            ':evil:' => 'evil.gif',
-            ':grin:' => 'biggrin.gif',
-            ':idea:' => 'idea.gif',
-            ':oops:' => 'redface.gif',
-            ':razz:' => 'razz.gif',
-            ':roll:' => 'rolleyes.gif',
-            ':wink:' => 'wink.gif',
-            ':cry:' => 'cry.gif',
-            ':eek:' => 'surprised.gif',
-            ':lol:' => 'lol.gif',
-            ':mad:' => 'mad.gif',
-            ':sad:' => 'sad.gif',
-            '8-)' => 'cool.gif',
-            '8-O' => 'eek.gif',
-            ':-(' => 'sad.gif',
-            ':-)' => 'smile.gif',
-            ':-?' => 'confused.gif',
-            ':-D' => 'biggrin.gif',
-            ':-P' => 'razz.gif',
-            ':-o' => 'surprised.gif',
-            ':-x' => 'mad.gif',
-            ':-|' => 'neutral.gif',
-            ';-)' => 'wink.gif',
-            '8)' => 'cool.gif',
-            '8O' => 'eek.gif',
-            ':(' => 'sad.gif',
-            ':)' => 'smile.gif',
-            ':?' => 'confused.gif',
-            ':D' => 'biggrin.gif',
-            ':P' => 'razz.gif',
-            ':o' => 'surprised.gif',
-            ':x' => 'mad.gif',
-            ':|' => 'neutral.gif',
-            ';)' => 'wink.gif',
-            ':!:' => 'exclaim.gif',
-            ':?:' => 'question.gif',
+            ':mrgreen:' => 'icon_mrgreen.gif',
+            ':neutral:' => 'icon_neutral.gif',
+            ':twisted:' => 'icon_twisted.gif',
+            ':arrow:' => 'icon_arrow.gif',
+            ':shock:' => 'icon_eek.gif',
+            ':smile:' => 'icon_smile.gif',
+            ':???:' => 'icon_confused.gif',
+            ':cool:' => 'icon_cool.gif',
+            ':evil:' => 'icon_evil.gif',
+            ':grin:' => 'icon_biggrin.gif',
+            ':idea:' => 'icon_idea.gif',
+            ':oops:' => 'icon_redface.gif',
+            ':razz:' => 'icon_razz.gif',
+            ':roll:' => 'icon_rolleyes.gif',
+            ':wink:' => 'icon_wink.gif',
+            ':cry:' => 'icon_cry.gif',
+            ':eek:' => 'icon_surprised.gif',
+            ':lol:' => 'icon_lol.gif',
+            ':mad:' => 'icon_mad.gif',
+            ':sad:' => 'icon_sad.gif',
+            '8-)' => 'icon_cool.gif',
+            '8-O' => 'icon_eek.gif',
+            ':-(' => 'icon_sad.gif',
+            ':-)' => 'icon_smile.gif',
+            ':-?' => 'icon_confused.gif',
+            ':-D' => 'icon_biggrin.gif',
+            ':-P' => 'icon_razz.gif',
+            ':-o' => 'icon_surprised.gif',
+            ':-x' => 'icon_mad.gif',
+            ':-|' => 'icon_neutral.gif',
+            ';-)' => 'icon_wink.gif',
+            '8)' => 'icon_cool.gif',
+            '8O' => 'icon_eek.gif',
+            ':(' => 'icon_sad.gif',
+            ':)' => 'icon_smile.gif',
+            ':?' => 'icon_confused.gif',
+            ':D' => 'icon_biggrin.gif',
+            ':P' => 'icon_razz.gif',
+            ':o' => 'icon_surprised.gif',
+            ':x' => 'icon_mad.gif',
+            ':|' => 'icon_neutral.gif',
+            ';)' => 'icon_wink.gif',
+            ':!:' => 'icon_exclaim.gif',
+            ':?:' => 'icon_question.gif',
         );
 
         if (count($smile) > 0) {
             foreach ($smile as $key => $val) {
                 $text = str_ireplace($key,
                     '<span><img src="' .
-                        SITE_MEDIA_URL .
-                        'smiley/'
+                        SITES_MEDIA_URL .
+                        '/images/smilies/'
                         . $val
                         . '" alt="smiley" class="smiley-class" /></span>',
                     $text);
@@ -156,7 +165,7 @@ class MolajoTextService
      * @return  string
      * @since   1.0
      */
-    function getPlaceHolderText($count, $options = array())
+    public function getPlaceHolderText($count, $options = array())
     {
         $options = array_merge(
             array(

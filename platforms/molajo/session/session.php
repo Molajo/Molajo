@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  * @subpackage  Session
  * @since       11.1
  */
-class MolajoSession extends JObject
+class MolajoSession
 {
 
     /**

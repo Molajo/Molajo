@@ -228,11 +228,11 @@ class MolajoDateService
 
         if ($numeric_value == 1) {
             return ', ' . $numeric_value . ' ' .
-                strtolower(Services::Language()->_($singular_literal));
+                strtolower(Services::Language()->translate($singular_literal));
         }
 
         return ', ' . $numeric_value . ' ' .
-            strtolower(Services::Language()->_($plural_literal));
+            strtolower(Services::Language()->translate($plural_literal));
     }
 
     /**

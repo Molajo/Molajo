@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Utilities
  * @since       11.1
  */
-class MolajoSimplecrypt extends JObject
+class MolajoSimplecrypt
 {
     /**
      * Encryption/Decryption Key

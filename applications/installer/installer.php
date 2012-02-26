@@ -201,13 +201,13 @@ class MolajoInstaller extends MolajoAdapter
         if ($path && JFolder::exists($path)) {
             $this->setPath('source', $path);
         } else {
-            $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_NOINSTALLPATH'));
+            $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_NOINSTALLPATH'));
             return false;
         }
 
         if ($this->setupInstall()) {
         } else {
-            $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
+            $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
             return false;
         }
 
@@ -257,13 +257,13 @@ class MolajoInstaller extends MolajoAdapter
             $this->extension = MolajoModel::getInstance('extension');
 
             if (!$this->extension->load($eid)) {
-                $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
+                $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
 
                 return false;
             }
 
             if ($this->extension->state != -1) {
-                $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_ALREADYINSTALLED'));
+                $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_ALREADYINSTALLED'));
 
                 return false;
             }
@@ -312,7 +312,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
                 else
                 {
-                    $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED'));
+                    $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED'));
 
                     return false;
                 }
@@ -322,7 +322,7 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_EXTENSIONNOTVALID'));
+            $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_EXTENSIONNOTVALID'));
 
             return false;
         }
@@ -374,11 +374,11 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_NOUPDATEPATH'));
+            $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_NOUPDATEPATH'));
         }
 
         if (!$this->setupInstall()) {
-            return $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
+            return $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
         }
 
         $type = (string)$this->manifest->attributes()->type;
@@ -470,12 +470,12 @@ class MolajoInstaller extends MolajoAdapter
             $this->extension = MolajoModel::getInstance('extension');
 
             if (!$this->extension->load($eid)) {
-                $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
+                $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
                 return false;
             }
 
             if ($this->extension->state == -1) {
-                $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE'));
+                $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE'));
                 return false;
             }
 
@@ -510,7 +510,7 @@ class MolajoInstaller extends MolajoAdapter
         }
         else
         {
-            $this->abort(Services::Language()->_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE_VALID'));
+            $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE_VALID'));
 
             return false;
         }
@@ -642,7 +642,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 // Graceful exit and rollback if read not successful
                 if ($buffer === false) {
-                    MolajoError::raiseWarning(1, Services::Language()->_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
+                    MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
 
                     return false;
                 }
@@ -798,7 +798,7 @@ class MolajoInstaller extends MolajoAdapter
 
                                 // Graceful exit and rollback if read not successful
                                 if ($buffer === false) {
-                                    MolajoError::raiseWarning(1, Services::Language()->_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
+                                    MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
 
                                     return false;
                                 }
@@ -1527,14 +1527,14 @@ class MolajoInstaller extends MolajoAdapter
             }
 
             // None of the XML files found were valid install files
-            MolajoError::raiseWarning(1, Services::Language()->_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+            MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
 
             return false;
         }
         else
         {
             // No XML files were found in the install folder
-            MolajoError::raiseWarning(1, Services::Language()->_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+            MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
             return false;
         }
     }

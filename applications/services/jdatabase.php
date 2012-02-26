@@ -54,7 +54,7 @@ class MolajoJdatabaseService
      */
     public function __construct()
     {
-
+        return $this->connect();
     }
 
     /**
@@ -63,19 +63,10 @@ class MolajoJdatabaseService
      * @return mixed
      * @throws RuntimeException
      */
-    public function connect($file = null, $configuration_class = null)
+    public function connect()
     {
-        if ($file == null) {
-            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
-            $configuration_class = 'MolajoSiteConfiguration';
-
-        } else if (file_exists($file)) {
-            $configuration_file = $file;
-
-        } else {
-            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
-            $configuration_class = 'MolajoSiteConfiguration';
-        }
+        $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
+        $configuration_class = 'MolajoSiteConfiguration';
 
         if (file_exists($configuration_file)) {
             require_once $configuration_file;
@@ -108,5 +99,4 @@ class MolajoJdatabaseService
 
         return $this->db;
     }
-
 }

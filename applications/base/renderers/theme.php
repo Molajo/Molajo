@@ -67,30 +67,34 @@ class MolajoThemeRenderer extends MolajoRenderer
     protected function _loadMetadata()
     {
         if (Molajo::Request()->get('status_error') == true) {
-            Molajo::Responder()->setMetadata('metadata_title',
-                Services::Language()->_('ERROR_FOUND'));
-            Molajo::Responder()->setMetadata('metadata_description', '');
-            Molajo::Responder()->setMetadata('metadata_keywords', '');
-            Molajo::Responder()->setMetadata('metadata_robots', '');
-            Molajo::Responder()->setMetadata('metadata_author', '');
-            Molajo::Responder()->setMetadata('metadata_content_rights', '');
-            Molajo::Responder()->setMetadata('source_last_modified', '');
+
+            Services::Media()->set_metadata('metadata_title',
+                Services::Language()->translate('ERROR_FOUND'));
+
+            Services::Media()->set_metadata('metadata_description', '');
+            Services::Media()->set_metadata('metadata_keywords', '');
+            Services::Media()->set_metadata('metadata_robots', '');
+            Services::Media()->set_metadata('metadata_author', '');
+            Services::Media()->set_metadata('metadata_content_rights', '');
+            Services::Media()->set_metadata('source_last_modified', '');
+
         } else {
 
-            Molajo::Responder()->setMetadata('metadata_title',
+            Services::Media()->set_metadata('metadata_title',
                 Molajo::Request()->get('metadata_title'));
-            Molajo::Responder()->setMetadata('metadata_description',
+            Services::Media()->set_metadata('metadata_description',
                 Molajo::Request()->get('metadata_description'));
-            Molajo::Responder()->setMetadata('metadata_keywords',
+            Services::Media()->set_metadata('metadata_keywords',
                 Molajo::Request()->get('metadata_keywords'));
-            Molajo::Responder()->setMetadata('metadata_robots',
+            Services::Media()->set_metadata('metadata_robots',
                 Molajo::Request()->get('metadata_robots'));
-            Molajo::Responder()->setMetadata('metadata_author',
+            Services::Media()->set_metadata('metadata_author',
                 Molajo::Request()->get('metadata_author'));
-            Molajo::Responder()->setMetadata('metadata_content_rights',
+            Services::Media()->set_metadata('metadata_content_rights',
                 Molajo::Request()->get('metadata_content_rights'));
-            Molajo::Responder()->response->last_modified =
-                Molajo::Request()->get('source_last_modified');
+
+            Services::Media()->set_last_modified(
+                Molajo::Request()->get('source_last_modified'));
         }
     }
 
@@ -139,23 +143,42 @@ class MolajoThemeRenderer extends MolajoRenderer
                     ->get('id'),
             Services::Configuration()->get('media_priority_user', 300));
 
+        /** Theme Helper Load Media */
+        $helperClass = 'Molajo' .
+            ucfirst(Molajo::Request()->get('theme_name'))
+            . 'ThemeHelper';
+
+        if (class_exists($helperClass)) {
+            $h = new $helperClass();
+        } else {
+            $helperClass = 'MolajoThemeHelper';
+        }
+        $h = new $helperClass();
+
+        if (method_exists($helperClass, 'loadMedia')) {
+            $h->loadMedia();
+        }
+
         /** Theme */
+        $this->_loadMediaPlus('',
+            Services::Configuration()->get('media_priority_site', 100));
+
         $priority = Services::Configuration()->get('media_priority_theme', 600);
-        $filePath = MOLAJO_EXTENSIONS_THEMES . '/' .
+        $file_path = MOLAJO_EXTENSIONS_THEMES . '/' .
             Molajo::Request()->get('theme_name');
-        $urlPath = MOLAJO_EXTENSIONS_THEMES_URL . '/' .
+        $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' .
             Molajo::Request()->get('theme_name');
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Page */
         $priority = Services::Configuration()->get('media_priority_theme', 600);
-        $filePath = Molajo::Request()->get('page_view_path');
-        $urlPath = Molajo::Request()->get('page_view_path_url');
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = Molajo::Request()->get('page_view_path');
+        $url_path = Molajo::Request()->get('page_view_path_url');
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
         return;
     }
@@ -171,32 +194,32 @@ class MolajoThemeRenderer extends MolajoRenderer
     protected function _loadMediaPlus($plus = '', $priority = 500)
     {
         /** Site Specific: Application */
-        $filePath = SITE_MEDIA_FOLDER . '/' . $plus;
-        $urlPath = SITE_MEDIA_URL . '/' . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITE_MEDIA_FOLDER . '/' . $plus;
+        $url_path = SITE_MEDIA_URL . '/' . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Site Specific: Site-wide */
-        $filePath = SITE_MEDIA_FOLDER . $plus;
-        $urlPath = SITE_MEDIA_URL . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, false);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITE_MEDIA_FOLDER . $plus;
+        $url_path = SITE_MEDIA_URL . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, false);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Application */
-        $filePath = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $urlPath = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
+        $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Site Wide */
-        $filePath = SITES_MEDIA_FOLDER . $plus;
-        $urlPath = SITES_MEDIA_URL . $plus;
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = SITES_MEDIA_FOLDER . $plus;
+        $url_path = SITES_MEDIA_URL . $plus;
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
         return;
     }

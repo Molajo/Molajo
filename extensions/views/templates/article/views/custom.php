@@ -12,6 +12,7 @@ defined('MOLAJO') or die; ?>
 <h3>{{hello}}</h3>
 </header>
 <include:module name=pullquote template=pullquote wrap=aside />
+<img src="{{gravatar}}" alt="{{name}}" class="alignright" />
 {{{intro}}}
 {{{fulltext}}}
 <footer>
@@ -19,3 +20,4 @@ defined('MOLAJO') or die; ?>
 </footer>
 {{/ items }}
 {{{dashboard}}}
+{{{placeholder}}}

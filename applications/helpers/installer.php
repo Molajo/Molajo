@@ -214,7 +214,7 @@ abstract class MolajoInstallerHelper
          $files = JFolder::files($p_dir, '\.xml$', 1, true);
 
          if (!count($files)) {
-             MolajoError::raiseWarning(1, Services::Language()->_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+             MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
              return false;
          }
 
@@ -237,7 +237,7 @@ abstract class MolajoInstallerHelper
              return $type;
          }
 
-         MolajoError::raiseWarning(1, Services::Language()->_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+         MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
          // Free up memory.
          unset($xml);
          return false;

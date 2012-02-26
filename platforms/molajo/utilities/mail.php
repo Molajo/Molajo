@@ -67,14 +67,14 @@ class MolajoMail extends PHPMailer
     public function Send()
     {
         if (($this->Mailer == 'mail') && !function_exists('mail')) {
-            return MolajoError::raiseNotice(500, Services::Language()->_('MOLAJO_MAIL_FUNCTION_DISABLED'));
+            return MolajoError::raiseNotice(500, Services::Language()->translate('MOLAJO_MAIL_FUNCTION_DISABLED'));
         }
 
         @$result = parent::Send();
 
         if ($result == false) {
             // TODO: Set an appropriate error number
-            $result = MolajoError::raiseNotice(500, Services::Language()->_($this->ErrorInfo));
+            $result = MolajoError::raiseNotice(500, Services::Language()->translate($this->ErrorInfo));
         }
 
         return $result;
@@ -406,8 +406,8 @@ class MolajoMail extends PHPMailer
     {
         $subject = Services::Language()->sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
 
-        $message = sprintf(Services::Language()->_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-        $message .= Services::Language()->_('MOLAJO_MAIL_MSG') . "\n";
+        $message = sprintf(Services::Language()->translate('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
+        $message .= Services::Language()->translate('MOLAJO_MAIL_MSG') . "\n";
 
         $this->addRecipient($adminEmail);
         $this->setSubject($subject);

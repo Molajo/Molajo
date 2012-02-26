@@ -80,12 +80,7 @@ $load->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/controllers/controller.php',
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
 require_once MOLAJO_APPLICATIONS . '/services/language.php';
-if (class_exists('JText')) {
-} else {
-    class JText extends MolajoLanguageService
-    {
-    }
-}
+
 $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/path.php', 'JPath');
 $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/file.php', 'JFile');
 $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/folder.php', 'JFolder');
@@ -140,18 +135,15 @@ $load->requireClassFile(JOOMLA_LIBRARY . '/database/query/sqlazure.php', 'JDatab
 /**
  *  Filesystem (continued)
  */
+
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'helper.php') {
     } elseif ($file == 'path.php' || $file == 'file.php' || $file == 'folder.php') {
-    } elseif ($file == 'stream.php') {
+    } elseif ($file == 'stream.php' || $file == 'patcher.php') {
     } else {
         $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
-}
-$files = JFolder::files(JOOMLA_LIBRARY . '/filesystem/archive', '\.php$', false, false);
-foreach ($files as $file) {
-    $load->requireClassFile(JOOMLA_LIBRARY . '/filesystem/archive/' . $file, 'JArchive' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 $files = JFolder::files(JOOMLA_LIBRARY . '/filesystem/streams', '\.php$', false, false);
 foreach ($files as $file) {

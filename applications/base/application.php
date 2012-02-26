@@ -91,14 +91,12 @@ class MolajoApplication
         /** responder: prepare for output */
         Molajo::Responder();
         if (Services::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
             debug('MolajoApplication::process Molajo::Responder() completed');
         }
 
         /** request: define processing instructions in page_request object */
         Molajo::Request()->process();
         if (Services::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
             debug('MolajoApplication::process Molajo::Request()->process() completed');
         }
 
@@ -121,13 +119,10 @@ class MolajoApplication
          *    renders template and wrap views
          */
 
-        if (Molajo::Request()->get('mvc_task') == 'add'
-            || Molajo::Request()->get('mvc_task') == 'edit'
-            || Molajo::Request()->get('mvc_task') == 'display'
+        if (Molajo::Request()->get('mvc_controller') == 'display'
         ) {
             Molajo::Parser();
             if (Services::Configuration()->get('debug', 0) == 1) {
-                debug(' ');
                 debug('MolajoApplication::process Molajo::Parser() completed');
             }
         } else {
@@ -140,7 +135,9 @@ class MolajoApplication
 
         /** responder: process rendered output */
         Molajo::Responder()->respond();
-
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug('MolajoApplication::process Molajo::Responder()->respond() completed');
+        }
         return;
     }
 }

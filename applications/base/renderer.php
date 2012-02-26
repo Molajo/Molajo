@@ -717,17 +717,17 @@ class MolajoRenderer
     {
         $priority = Services::Configuration()->get('media_priority_other_extension', 400);
 
-        $filePath = $this->get('template_view_path');
-        $urlPath = $this->get('template_view_path_url');
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = $this->get('template_view_path');
+        $url_path = $this->get('template_view_path_url');
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
 
-        $filePath = $this->get('wrap_view_path');
-        $urlPath = $this->get('wrap_view_path_url');
-        $css = Molajo::Responder()->addStyleLinksFolder($filePath, $urlPath, $priority);
-        $js = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 0);
-        $defer = Molajo::Responder()->addScriptLinksFolder($filePath, $urlPath, $priority, 1);
+        $file_path = $this->get('wrap_view_path');
+        $url_path = $this->get('wrap_view_path_url');
+        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
     }
 
     /**

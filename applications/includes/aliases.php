@@ -20,7 +20,6 @@ Class LanguageHelper extends MolajoLanguageHelper {}
 Class LoadHelper extends MolajoLoadHelper {}
 Class MenuItemHelper extends MolajoMenuItemHelper {}
 Class ModuleHelper extends MolajoModuleHelper {}
-Class MustacheHelper extends MolajoMustacheHelper {}
 Class PluginHelper extends MolajoPluginHelper {}
 Class SiteHelper extends MolajoSiteHelper {}
 Class ThemeHelper extends MolajoThemeHelper {}
@@ -101,6 +100,10 @@ class Services extends MolajoServices
     public static function Mail ()
     {
         return Molajo::Services()->get('Mail');
+    }
+    public static function Media ()
+    {
+        return Molajo::Services()->get('Media');
     }
     public static function Message ()
     {

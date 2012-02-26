@@ -18,15 +18,23 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoDependenciesHelper
 {
-    /**
-     * add
-     *
-     * Retrieve a list of classes and methods
-     *
-     * @results  object
-     * @since    1.0
-     */
-    public static function add () {}
+    public static function add()
+    {
+    }
+}
+
+abstract class JText
+{
+
+    public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
+    {
+        return Services::Language()->translate($string, $jsSafe, $interpretBackSlashes, $script);
+    }
+
+    public static function sprintf($string)
+    {
+        sprintf($string);
+    }
 }
 
 abstract class JLog extends MolajoDependenciesHelper
@@ -37,16 +45,11 @@ abstract class JLog extends MolajoDependenciesHelper
      *  JLog::add
      */
 
-    /**
-   	 * Warning conditions.
-   	 * @var    integer
-   	 * @since  11.1
-   	 */
-   	const WARNING = 16;
+    const WARNING = 16;
 }
 // JError::isError($error)
 // JError::raiseWarning
-// JText::sprintf(
-// JText::_('JLIB_CL')
+
 // if (JError::$legacy)
 // if (JError::$legacy)
+

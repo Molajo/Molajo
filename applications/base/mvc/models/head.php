@@ -24,12 +24,12 @@ class MolajoHeadModel extends MolajoModel
      * @param  $id
      * @since  1.0
      */
-       public function __construct($id = null)
-       {
-           $this->name = get_class($this);
+    public function __construct($id = null)
+    {
+        $this->name = get_class($this);
 
-           return parent::__construct($id);
-       }
+        return parent::__construct($id);
+    }
 
     /**
      * getData
@@ -42,84 +42,132 @@ class MolajoHeadModel extends MolajoModel
     {
         $this->query_results = array();
 
-        $row = new stdClass();
-        $row->type = 'base';
+        /** base information */
+        $metadata = Services::Media()->get_metadata();
 
-        $metadata = Molajo::Responder()->getMetadata();
         if (count($metadata) > 0) {
-            $row->title = $metadata['standard']['metadata_title'];
-            $row->description = $metadata['standard']['metadata_description'];
-            $row->keywords = $metadata['standard']['metadata_keywords'];
-            $row->author = $metadata['standard']['metadata_author'];
-            $row->content_rights = $metadata['standard']['metadata_content_rights'];
-            $row->robots = $metadata['standard']['metadata_robots'];
+            $row = new stdClass();
+
+            $row->type = 'base';
+            $row->title = Services::Security()->escapeText(
+                $metadata['standard']['metadata_title']
+            );
+            $row->description = Services::Security()->escapeText(
+                $metadata['standard']['metadata_description']
+            );
+            $row->keywords = Services::Security()->escapeText(
+                $metadata['standard']['metadata_keywords']
+            );
+            $row->author = Services::Security()->escapeText(
+                $metadata['standard']['metadata_author']
+            );
+            $row->content_rights = Services::Security()->escapeText(
+                $metadata['standard']['metadata_content_rights']
+            );
+            $row->robots = Services::Security()->escapeText(
+                $metadata['standard']['metadata_robots']
+            );
+
+            $row->base = Molajo::Request()->get('url_base');
+            $row->last_modified = Services::Security()->escapeText(
+                Molajo::Request()->get('source_last_modified')
+            );
+            $row->favicon = Molajo::Request()->get('theme_favicon');
+
+            $this->query_results[] = $row;
         }
 
-        $row->base = Molajo::Request()->get('url_base');
-        $row->last_modified = Molajo::Request()->get('source_last_modified');
-        $row->favicon = Molajo::Request()->get('theme_favicon');
-        $this->query_results[] = $row;
-
         /** type: links */
-        $list = Molajo::Responder()->getHeadLinks();
+        $list = Services::Media()->get_links();
 
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $row = new stdClass();
+
                 $row->type = 'links';
                 $row->url = $item['url'];
                 $row->relation = $item['relation'];
-                $row->relation_type = $item['relation_type'];
-                $row->attributes = $item['attributes'];
+                $row->relation_type = Services::Security()->escapeText(
+                    $item['relation_type']
+                );
+
+                $row->attributes = '';
+                $temp = $item['attributes'];
+                if (count($temp) == 0) {
+                } else if (count($temp) == 1) {
+                    $temp = array($temp);
+                }
+                if (count($temp) > 0) {
+                    foreach ($temp as $pair) {
+                        $split = explode(',',$pair);
+                        $row->attributes .= ' ' . $split[0]
+                            . '="'
+                            . Services::Security()->escapeText($split[1])
+                            . '"';
+                    }
+                }
+
                 $this->query_results[] = $row;
             }
         }
 
-        /** type: stylesheet_links */
-        $list = Molajo::Responder()->getStyleLinks();
+        /** type: css */
+        $list = Services::Media()->get_css();
+
         if (count($list) > 0) {
             foreach ($list as $item) {
                 $row = new stdClass();
-                $row->type = 'stylesheet_links';
+
+                $row->type = 'css';
                 $row->url = $item['url'];
                 $row->mimetype = $item['mimetype'];
                 $row->media = $item['media'];
                 $row->attributes = $item['attributes'];
                 $row->priority = $item['priority'];
+
                 $this->query_results[] = $row;
             }
         }
 
-        /** type: stylesheet_declarations */
-        $list = Molajo::Responder()->getStyleDeclarations();
+        /** type: css_declarations */
+        $list = Services::Media()->get_css_declarations();
+
         foreach ($list as $item) {
             $row = new stdClass();
-            $row->type = 'stylesheet_declarations';
+
+            $row->type = 'css_declarations';
             $row->mimetype = $item['mimetype'];
             $row->content = $item['content'];
+
             $this->query_results[] = $row;
         }
 
-        /** type: javascript_links */
-        $list = Molajo::Responder()->getScriptLinks();
+        /** type: js */
+        $list = Services::Media()->get_js();
+
         foreach ($list as $item) {
             $row = new stdClass();
-            $row->type = 'javascript_links';
+
+            $row->type = 'js';
             $row->url = $item['url'];
             $row->mimetype = $item['mimetype'];
             $row->defer = 0;
             $row->async = $item['async'];
             $row->priority = $item['priority'];
+
             $this->query_results[] = $row;
         }
 
-        /** type: javascript_declarations */
-        $list = Molajo::Responder()->getScriptDeclarations();
+        /** type: js_declarations */
+        $list = Services::Media()->get_js_declarations();
+
         foreach ($list as $item) {
             $row = new stdClass();
-            $row->type = 'javascript_declarations';
+
+            $row->type = 'js_declarations';
             $row->mimetype = $item['mimetype'];
             $row->content = $item['content'];
+
             $this->query_results[] = $row;
         }
 

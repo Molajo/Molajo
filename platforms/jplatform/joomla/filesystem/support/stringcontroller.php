@@ -18,53 +18,54 @@ defined('JPATH_PLATFORM') or die;
  */
 class JStringController
 {
-    /**
-     * Defines a variable as an array
-     *
-     * @return  array
-     *
-     * @since   1.0
-     */
-    function _getArray()
-    {
-        static $strings = array();
-        return $strings;
-    }
+	/**
+	 * Defines a variable as an array
+	 *
+	 * @return  array
+	 *
+	 * @since   11.1
+	 */
+	public function _getArray()
+	{
+		static $strings = array();
+		return $strings;
+	}
 
-    /**
-     * Create a reference
-     *
-     * @param   string  $reference  The key
-     * @param   string  &$string    The value
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    function createRef($reference, &$string)
-    {
-        $ref = &JStringController::_getArray();
-        $ref[$reference] = & $string;
-    }
+	/**
+	 * Create a reference
+	 *
+	 * @param   string  $reference  The key
+	 * @param   string  &$string    The value
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
+	 */
+	public function createRef($reference, &$string)
+	{
+		$ref = &self::_getArray();
+		$ref[$reference] = & $string;
+	}
 
-    /**
-     * Get reference
-     *
-     * @param   string  $reference  The key for the reference.
-     *
-     * @return  mixed  False if not set, reference if it it exists
-     *
-     * @since   1.0
-     */
-    function getRef($reference)
-    {
-        $ref = &JStringController::_getArray();
-        if (isset($ref[$reference])) {
-            return $ref[$reference];
-        }
-        else
-        {
-            return false;
-        }
-    }
+	/**
+	 * Get reference
+	 *
+	 * @param   string  $reference  The key for the reference.
+	 *
+	 * @return  mixed  False if not set, reference if it it exists
+	 *
+	 * @since   11.1
+	 */
+	public function getRef($reference)
+	{
+		$ref = &self::_getArray();
+		if (isset($ref[$reference]))
+		{
+			return $ref[$reference];
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

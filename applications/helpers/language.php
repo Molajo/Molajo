@@ -176,7 +176,7 @@ abstract class MolajoLanguageHelper
     }
 
     /**
-     * getMetadata
+     * get_metadata
      *
      * Read Language Manifest XML file for metadata
      *
@@ -185,7 +185,7 @@ abstract class MolajoLanguageHelper
      * @return  array  array
      * @since   1.0
      */
-    static public function getMetadata($file)
+    static public function get_metadata($file)
     {
         $xml = simplexml_load_file($file);
         if ($xml) {

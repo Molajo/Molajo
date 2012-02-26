@@ -675,7 +675,7 @@ class MolajoRequest
         //            $this->set('status_found', false);
         //            Services::Message()
         //                ->set(
-        //                $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+        //                $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
         //                $type = MOLAJO_MESSAGE_TYPE_ERROR,
         //                $code = 500,
         //                $debug_location = 'MolajoRequest::_getSource',
@@ -764,7 +764,7 @@ class MolajoRequest
             $this->set('status_found', false);
             Services::Message()
                 ->set(
-                $message = Services::Language()->_('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getPrimaryCategory',
@@ -824,7 +824,7 @@ class MolajoRequest
             /** 500: Extension not found */
             Services::Message()
                 ->set(
-                $message = Services::Language()->_('ERROR_EXTENSION_NOT_FOUND'),
+                $message = Services::Language()->translate('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getExtension',
