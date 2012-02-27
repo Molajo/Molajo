@@ -7,6 +7,10 @@
  */
 defined('MOLAJO') or die;
 $page_mimetype = $this->row->mimetype;
+$defer = (int) $this->parameters->get('defer');
+if ($defer == 1) {
+} else {
+
 if ((int)Services::Configuration()->get('html5', 1) == 1):
     $end = '>'. chr(10) . chr(13); ?>
 <!DOCTYPE html>
@@ -23,3 +27,4 @@ if ((int)Services::Configuration()->get('html5', 1) == 1):
     <meta http-equiv="Content-Type" content="<?php echo $page_mimetype; ?>; charset=UTF-8"<?php echo $end; ?>
 <?php endif; ?>
     <title><?php echo $this->row->title; ?></title>
+<?php }
