@@ -66,6 +66,11 @@ class MolajoApplication
             }
         }
 
+        /** Session */
+        Services::Session()->create(
+            Services::Session()->getHash(get_class($this))
+        );
+
         /** return to Molajo::Site */
         return;
     }

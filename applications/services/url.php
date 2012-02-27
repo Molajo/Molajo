@@ -192,7 +192,7 @@ class MolajoUrlService
     /**
      * addTrailingSlash
      * @param object $option_Text
-     * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_InputText);
+     * $url = MolajoConfigurationServiceURL::encode_link_text ($option_InputText);
      */
     function addTrailingSlash($option_InputText)
     {

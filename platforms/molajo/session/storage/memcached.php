@@ -56,7 +56,7 @@ class MolajoSessionStorageMemcached extends MolajoSessionStorage
 	{
 		if (!$this->test())
 		{
-			return JError::raiseError(404, JText::_('JLIB_SESSION_MEMCACHE_EXTENSION_NOT_AVAILABLE'));
+			return JError::raiseError(404, Services::Languages()->translate('JLIB_SESSION_MEMCACHE_EXTENSION_NOT_AVAILABLE'));
 		}
 
 		parent::__construct($options);

@@ -58,6 +58,8 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function read($id)
     {
+        debug('MolajoSessionStorageDatabase read');
+
         $m = new MolajoSessionsModel ();
 
         $m->query->select($m->db->qn('data'));
@@ -79,13 +81,15 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      */
     public function write($id, $data)
     {
+        debug('MolajoSessionStorageDatabase write');
         /** Does the session exist? */
         $m = new MolajoSessionsModel();
         $m->query->where($m->db->qn('session_id')
             . ' = ' . $m->db->q($id));
 
         $results = $m->loadResult();
-
+var_dump($results);
+        die;
         if (empty($results)) {
             $action = 'insert';
         } else {

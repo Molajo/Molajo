@@ -324,7 +324,7 @@ class MolajoUserService
 
         } else if ($type == 'state') {
 
-            //$session = Services::Session();
+            $session = Services::Session();
             $current_state = Molajo::Application()->input->get($key, null);
 
             if ($current_state == null) {

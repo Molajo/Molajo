@@ -57,13 +57,13 @@ class MolajoHeadModel extends MolajoModel
                 if (trim($title) == '') {
                     $title = Services::Configuration()->get('metadata_title', 'Molajo');
                 }
-                $row->title = Services::Security()->escapeText($title);
+                $row->title = Services::Security()->escape_text($title);
 
                 $mimetype = Services::Document()->get_mime_encoding();
                 if (trim($mimetype) == '') {
                     $mimetype = 'text/html';
                 }
-                $row->mimetype = Services::Security()->escapeText($mimetype);
+                $row->mimetype = Services::Security()->escape_text($mimetype);
 
                 $row->base = Molajo::Request()->get('url_base');
 
@@ -71,7 +71,7 @@ class MolajoHeadModel extends MolajoModel
                 if (trim($last_modified) == '') {
                     $last_modified = $this->now;
                 }
-                $row->last_modified = Services::Security()->escapeText($last_modified);
+                $row->last_modified = Services::Security()->escape_text($last_modified);
 
                 $this->query_results[] = $row;
             }
@@ -89,8 +89,8 @@ class MolajoHeadModel extends MolajoModel
                         } else {
                             $row = new stdClass();
                             $row->type = 'metadata';
-                            $row->name = Services::Security()->escapeText($name);
-                            $row->content = Services::Security()->escapeText($content);
+                            $row->name = Services::Security()->escape_text($name);
+                            $row->content = Services::Security()->escape_text($content);
                             $this->query_results[] = $row;
                         }
         //				}
@@ -118,10 +118,10 @@ class MolajoHeadModel extends MolajoModel
 
                     $row->type = 'links';
                     $row->url = $item['url'];
-                    $row->relation = Services::Security()->escapeText(
+                    $row->relation = Services::Security()->escape_text(
                         $item['relation']
                     );
-                    $row->relation_type = Services::Security()->escapeText(
+                    $row->relation_type = Services::Security()->escape_text(
                         $item['relation_type']
                     );
 
@@ -136,7 +136,7 @@ class MolajoHeadModel extends MolajoModel
                             $split = explode(',',$pair);
                             $row->attributes .= ' ' . $split[0]
                                 . '="'
-                                . Services::Security()->escapeText($split[1])
+                                . Services::Security()->escape_text($split[1])
                                 . '"';
                         }
                     }

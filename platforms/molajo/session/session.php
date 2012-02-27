@@ -55,7 +55,7 @@ class MolajoSession
      *
      * Default values:
      * - fix_browser
-     * - fix_adress
+     * - fix_address
      *
      * @var array
      * @since  11.1
@@ -72,7 +72,9 @@ class MolajoSession
     protected $_force_ssl = false;
 
     /**
-     * @var    MolajoSession  MolajoSession instances container.
+     * $instance
+     *
+     * @var    MolajoSession
      * @since  11.3
      */
     protected static $instance;
@@ -114,7 +116,7 @@ class MolajoSession
             session_destroy();
         }
 
-        // Set default sessios save handler
+        // Set default sessions save handler
         ini_set('session.save_handler', 'files');
 
         // Disable transparent sid support
@@ -180,112 +182,6 @@ echo 'state';
     }
 
     /**
-     * Get a session token, if a token isn't set yet one will be generated.
-     *
-     * Tokens are used to secure forms from spamming attacks. Once a token
-     * has been generated the system will check the post request to see if
-     * it is present, if not it will invalidate the session.
-     *
-     * @param   boolean  $forceNew  If true, force a new token to be created
-     *
-     * @return  string  The session token
-     *
-     * @since   11.1
-     */
-    public function getToken($forceNew = false)
-    {
-        $token = $this->get('session.token');
-
-        // Create a token
-        if ($token === null || $forceNew) {
-            $token = $this->_createToken(12);
-            $this->set('session.token', $token);
-        }
-
-        return $token;
-    }
-
-    /**
-     * Method to determine if a token exists in the session. If not the
-     * session will be set to expired
-     *
-     * @param   string   $tCheck       Hashed token to be verified
-     * @param   boolean  $forceExpire  If true, expires the session
-     *
-     * @return  boolean
-     *
-     * @since   11.1
-     */
-    public function hasToken($tCheck, $forceExpire = true)
-    {
-        // Check if a token exists in the session
-        $tStored = $this->get('session.token');
-
-        // Check token
-        if (($tStored !== $tCheck)) {
-            if ($forceExpire) {
-                $this->_state = 'expired';
-            }
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Method to determine a hash for anti-spoofing variable names
-     *
-     * @param   boolean  $forceNew  If true, force a new token to be created
-     *
-     * @return  string  Hashed var name
-     *
-     * @since   11.1
-     */
-    public static function getFormToken($forceNew = false)
-    {
-        $session = JFactory::getSession();
-        $hash = JApplication::getHash(
-            Services::User()->get('id', 0)
-                . $session->getToken($forceNew));
-
-        return $hash;
-    }
-
-    /**
-     * Checks for a form token in the request.
-     *
-     * Use in conjunction with JHtml::_('form.token') or MolajoSession::getFormToken.
-     *
-     * @param   string  $method  The request method in which to look for the token key.
-     *
-     * @return  boolean  True if found and valid, false otherwise.
-     *
-     * @since       12.1
-     */
-    public static function checkToken($method = 'post')
-    {
-        $token = self::getFormToken();
-        $app = JFactory::getApplication();
-
-        if (!$app->input->$method->get($token, '', 'alnum')) {
-            $session = JFactory::getSession();
-            if ($session->isNew()) {
-                // Redirect to login screen.
-                $app->redirect(JRoute::_('index.php'), JText::_('JLIB_ENVIRONMENT_SESSION_EXPIRED'));
-                $app->close();
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /**
      * Get session name
      *
      * @return  string  The session name
@@ -318,25 +214,26 @@ echo 'state';
     }
 
     /**
+     * getStores
+     *
      * Get the session handlers
      *
      * @return  array  An array of available session handlers
      *
      * @since   11.1
      */
-    public static function getStores()
+    public function getStores()
     {
-        jimport('joomla.filesystem.folder');
         $handlers = Services::Folder()->files(__DIR__ . '/storage', '.php$');
 
         $names = array();
-        foreach ($handlers as $handler)
-        {
+        foreach ($handlers as $handler) {
+
             $name = substr($handler, 0, strrpos($handler, '.'));
             $class = 'MolajoSessionStorage' . ucfirst($name);
 
-            // Load the class only if needed
-            if (!class_exists($class)) {
+            if (class_exists($class)) {
+            } else {
                 require_once __DIR__ . '/storage/' . $name . '.php';
             }
 
@@ -349,11 +246,14 @@ echo 'state';
     }
 
     /**
+     * isNew
+     *
      * Check whether this session is currently created
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @return  boolean
+     * @since   1.0
      */
     public function isNew()
     {
@@ -365,6 +265,8 @@ echo 'state';
     }
 
     /**
+     * get
+     *
      * Get data from the session store
      *
      * @param   string  $name       Name of a variable
@@ -373,7 +275,7 @@ echo 'state';
      *
      * @return  mixed  Value of a variable
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($name, $default = null, $namespace = 'default')
     {
@@ -495,7 +397,9 @@ echo 'state';
         } else {
 
             $session_name = session_name();
-
+            echo $session_name;
+            die;
+//amy not input
             if (Services::URL()
                 ->input
                 ->getVar($session_name, false, 'COOKIE') === true
@@ -701,29 +605,6 @@ echo 'state';
     }
 
     /**
-     * Create a token-string
-     *
-     * @param   integer  $length  Length of string
-     *
-     * @return  string  Generated token
-     *
-     * @since   11.1
-     */
-    protected function _createToken($length = 32)
-    {
-        static $chars = '0123456789abcdef';
-        $max = strlen($chars) - 1;
-        $token = '';
-        $name = session_name();
-        for ($i = 0; $i < $length; ++$i)
-        {
-            $token .= $chars[(rand(0, $max))];
-        }
-
-        return md5($token . $name);
-    }
-
-    /**
      * Set counter of session usage
      *
      * @return  boolean  True on success
@@ -771,7 +652,7 @@ echo 'state';
      *
      * @since   11.1
      */
-    protected function _setOptions(&$options)
+    protected function _setOptions($options)
     {
         // Set name
         if (isset($options['name'])) {

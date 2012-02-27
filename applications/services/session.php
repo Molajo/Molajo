@@ -26,12 +26,28 @@ class MolajoSessionService
     protected static $instance;
 
     /**
-     * $this->session
+     * Session
      *
      * @var    object Session
      * @since  1.0
      */
     protected $session = null;
+
+    /**
+     * Hash
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $hash;
+
+    /**
+     * Token
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $token;
 
     /**
      * getInstance
@@ -77,21 +93,17 @@ class MolajoSessionService
      */
     public function create($name)
     {
+        debug('MolajoSessionService create');
+
         $handler =
                 Services::Configuration()
                     ->get('session_handler', 'none');
 
         $options = array();
 
-        $options['expire'] =
-               Services::Configuration()
-                   ->get('lifetime', 15)
-                   * 60;
-
-        $options['force_ssl'] =
-               Services::Configuration()
-                   ->get('force_ssl', 0);
-
+        $options['expire'] = Services::Configuration()->get('lifetime', 15) * 60;
+        $options['force_ssl'] = Services::Configuration()->get('force_ssl', 0);
+        debug('Going into MolajoSession::getInstance');
         $this->session = MolajoSession::getInstance($handler, $options);
 echo 'out of get instance'.'<br />';
 var_dump($this->session);
@@ -219,5 +231,148 @@ die;
     public function getSession()
     {
         return $this->session;
+    }
+
+    /**
+     * getHash
+     *
+     * Provides a secure hash based on a seed
+     *
+     * @param   string   $seed
+     *
+     * @return  string
+     * @since  1.0
+     */
+    public function getHash($seed)
+    {
+        return md5(Services::Configuration()->get('secret') . $seed);
+    }
+
+    /**
+     * Get a session token, if a token isn't set yet one will be generated.
+     *
+     * Tokens are used to secure forms from spamming attacks. Once a token
+     * has been generated the system will check the post request to see if
+     * it is present, if not it will invalidate the session.
+     *
+     * @param   boolean  $forceNew  If true, force a new token to be created
+     *
+     * @return  string  The session token
+     *
+     * @since   11.1
+     */
+    public function getToken($forceNew = false)
+    {
+        $token = $this->get('session.token');
+
+        // Create a token
+        if ($token === null || $forceNew) {
+            $token = $this->_createToken(12);
+            $this->set('session.token', $token);
+        }
+
+        return $token;
+    }
+
+    /**
+     * createToken
+     *
+     * Create a token-string
+     *
+     * @param   integer  length of string
+     *
+     * @return  string  generated token
+     * @since  1.0
+     */
+    protected function createToken($length = 32)
+    {
+        static $chars = '0123456789abcdef';
+        $max = strlen($chars) - 1;
+        $token = '';
+        $name = session_name();
+        for ($i = 0; $i < $length; ++$i) {
+            $token .= $chars[(rand(0, $max))];
+        }
+        return md5($token . $name);
+    }
+
+    /**
+     * Method to determine if a token exists in the session. If not the
+     * session will be set to expired
+     *
+     * @param   string   $tCheck       Hashed token to be verified
+     * @param   boolean  $forceExpire  If true, expires the session
+     *
+     * @return  boolean
+     *
+     * @since   11.1
+     */
+    public function hasToken($tCheck, $forceExpire = true)
+    {
+        // Check if a token exists in the session
+        $tStored = $this->get('session.token');
+
+        // Check token
+        if (($tStored !== $tCheck)) {
+            if ($forceExpire) {
+                $this->_state = 'expired';
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Method to determine a hash for anti-spoofing variable names
+     *
+     * @param   boolean  $forceNew  If true, force a new token to be created
+     *
+     * @return  string  Hashed var name
+     *
+     * @since   11.1
+     */
+    public function getFormToken($forceNew = false)
+    {
+        $session = JFactory::getSession();
+        $hash = JApplication::getHash(
+            Services::User()->get('id', 0)
+                . $session->getToken($forceNew));
+
+        return $hash;
+    }
+
+    /**
+     * Checks for a form token in the request.
+     *
+     * Use in conjunction with JHtml::_('form.token') or MolajoSession::getFormToken.
+     *
+     * @param   string  $method  The request method in which to look for the token key.
+     *
+     * @return  boolean  True if found and valid, false otherwise.
+     *
+     * @since       12.1
+     */
+    public function checkToken($method = 'post')
+    {
+        $token = self::getFormToken();
+        $app = JFactory::getApplication();
+
+        if (!$app->input->$method->get($token, '', 'alnum')) {
+            $session = JFactory::getSession();
+            if ($session->isNew()) {
+                // Redirect to login screen.
+                $app->redirect(JRoute::_('index.php'), Services::Languages()->translate('JLIB_ENVIRONMENT_SESSION_EXPIRED'));
+                $app->close();
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
     }
 }

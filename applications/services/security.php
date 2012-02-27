@@ -27,30 +27,6 @@ class MolajoSecurityService
     protected static $instance;
 
     /**
-     * Session
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $session;
-
-    /**
-     * Hash
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $hash;
-
-    /**
-     * Token
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $token;
-
-    /**
      * Filter
      *
      * @var    array
@@ -89,12 +65,11 @@ class MolajoSecurityService
      */
     public function __construct()
     {
-        $this->session = Services::Session();
-        $this->initialiseFiltering();
+        $this->initialise_filtering();
     }
 
     /**
-     * initialiseFiltering
+     * initialise_filtering
      *
      * HTMLPurifier can be configured by:
      *
@@ -106,7 +81,7 @@ class MolajoSecurityService
      *  working on it. http://htmlpurifier.org/doxygen/html/classHTML5.html
      *
      */
-    protected function initialiseFiltering()
+    protected function initialise_filtering()
     {
         $config = HTMLPurifier_Config::createDefault();
 
@@ -136,105 +111,6 @@ class MolajoSecurityService
             }
         }
         $this->purifier = new HTMLPurifier($config);
-    }
-
-    /**
-     * getHash
-     *
-     * Provides a secure hash based on a seed
-     *
-     * @param   string   $seed  Seed string.
-     *
-     * @return  string   A secure hash
-     * @since  1.0
-     */
-    public function getHash($seed)
-    {
-        return md5(Services::Configuration()->get('secret') . $seed);
-    }
-
-    /**
-     * getToken
-     *
-     * Tokens are used to secure forms from spamming attacks.
-     *
-     * @param   boolean  If true, force a new token to be created
-     * @return  string   Session token
-     */
-    public function getToken($forceNew = false)
-    {
-        $token = $this->session->get('session.token');
-
-        if ($token === null
-            || $forceNew
-        ) {
-            $token = $this->session->_createToken(12);
-            $this->session->set('session.token', $token);
-        }
-
-        return $token;
-    }
-
-    /**
-     * hasToken
-     *
-     * Method to determine if a token exists in the session. If not the
-     * session will be set to expired
-     *
-     * @param   string   Hashed token to be verified
-     * @param   boolean  If true, expires the session
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function hasToken($tCheck, $forceExpire = true)
-    {
-        $tStored = $this->session->get('session.token');
-
-        if (($tStored !== $tCheck)) {
-            if ($forceExpire) {
-                $this->session->_state = 'expired';
-            }
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * getFormToken
-     *
-     * Method to determine a hash for anti-spoofing variable names
-     *
-     * @return  string  Hashed variable name
-     * @since   1.0
-     */
-    public function getFormToken($forceNew = false)
-    {
-        return $this->getHash(Services::User()->get('id', 0));
-        //                . $this->getToken($forceNew)
-    }
-
-    /**
-     * _createToken
-     *
-     * Create a token-string
-     *
-     * @param   integer  length of string
-     *
-     * @return  string  generated token
-     * @since  1.0
-     */
-    protected function _createToken($length = 32)
-    {
-        static $chars = '0123456789abcdef';
-        $max = strlen($chars) - 1;
-        $token = '';
-        $name = session_name();
-        for ($i = 0; $i < $length; ++$i) {
-            $token .= $chars[(rand(0, $max))];
-        }
-        return md5($token . $name);
     }
 
     /**
@@ -629,75 +505,75 @@ class MolajoSecurityService
     }
 
     /**
-     * encodeLink
+     * encode_link
      *
      * @param object $option_Link
-     * $url = MolajoConfigurationServiceURL::encodeLink ($option_Link);
+     * $url = MolajoConfigurationServiceURL::encode_link ($option_Link);
      */
-    public function encodeLink($option_Link)
+    public function encode_link($option_Link)
     {
         return urlencode($option_Link);
     }
 
     /**
-     * encodeLinkText
+     * encode_link_text
      *
      * @param object $option_Text
-     * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_Text);
+     * $url = MolajoConfigurationServiceURL::encode_link_text ($option_Text);
      */
-    public function encodeLinkText($option_Text)
+    public function encode_link_text($option_Text)
     {
         return htmlentities($option_Text, ENT_QUOTES, 'UTF-8');
     }
 
     /**
-     * escapeHTML
+     * escape_html
      *
      * @param string $text
      *
      * @return  string
      * @since   1.0
      */
-    public function escapeHTML($htmlText)
+    public function escape_html($htmlText)
     {
 
     }
 
     /**
-     * escapeInteger
+     * escape_integer
      *
      * @param string $integer
      *
      * @return  string
      * @since   1.0
      */
-    public function escapeInteger($integer)
+    public function escape_integer($integer)
     {
         return (int)$integer;
     }
 
     /**
-     * escapeText
+     * escape_text
      *
      * @param string $text
      *
      * @return  string
      * @since   1.0
      */
-    public function escapeText($text)
+    public function escape_text($text)
     {
         return htmlspecialchars($text, ENT_COMPAT, 'utf-8');
     }
 
     /**
-     * escapeURL
+     * escape_url
      *
      * @param   string  $url
      *
      * @return  string
      * @since  1.0
      */
-    public function escapeURL($url)
+    public function escape_url($url)
     {
         if (Services::Configuration()->get('unicode_slugs') == 1) {
             return FilterOutput::stringURLUnicodeSlug($url);

@@ -49,7 +49,6 @@ abstract class MolajoSessionStorage
 	 */
 	public static function getInstance($name = 'none', $options = array())
 	{
-		$name = strtolower(JFilterInput::getInstance()->clean($name, 'word'));
 		if (empty(self::$instances[$name])) {
             $class = 'MolajoSessionStorage' . ucfirst($name);
 			self::$instances[$name] = new $class($options);
