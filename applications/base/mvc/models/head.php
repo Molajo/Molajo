@@ -52,16 +52,26 @@ class MolajoHeadModel extends MolajoModel
             if (count($metadata) > 0) {
                 $row = new stdClass();
                 $row->type = 'base';
-                $row->title = Services::Security()->escapeText(
-                    $metadata['standard']['title']
-                );
-                $row->mimetype = Services::Security()->escapeText(
-                    Services::Document()->get_mime_encoding()
-                );
+
+                $title = $metadata['standard']['title'];
+                if (trim($title) == '') {
+                    $title = Services::Configuration()->get('metadata_title', 'Molajo');
+                }
+                $row->title = Services::Security()->escapeText($title);
+
+                $mimetype = Services::Document()->get_mime_encoding();
+                if (trim($mimetype) == '') {
+                    $mimetype = 'text/html';
+                }
+                $row->mimetype = Services::Security()->escapeText($mimetype);
+
                 $row->base = Molajo::Request()->get('url_base');
-                $row->last_modified = Services::Security()->escapeText(
-                    Molajo::Request()->get('source_last_modified')
-                );
+
+                $last_modified = Molajo::Request()->get('source_last_modified');
+                if (trim($last_modified) == '') {
+                    $last_modified = $this->now;
+                }
+                $row->last_modified = Services::Security()->escapeText($last_modified);
 
                 $this->query_results[] = $row;
             }
@@ -75,17 +85,19 @@ class MolajoHeadModel extends MolajoModel
         //					$content .= '; charset=' . $document->getCharset();
         //					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
         //				} else {
+                        if (trim($content) == '') {
+                        } else {
                             $row = new stdClass();
                             $row->type = 'metadata';
                             $row->name = Services::Security()->escapeText($name);
                             $row->content = Services::Security()->escapeText($content);
                             $this->query_results[] = $row;
+                        }
         //				}
                     }
                 }
             }
         }
-
 
         /** type: links */
         if ($defer == 1) {

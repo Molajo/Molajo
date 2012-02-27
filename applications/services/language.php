@@ -59,6 +59,14 @@ class MolajoLanguageService
     protected $rtl;
 
     /**
+     * direction
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $direction;
+
+    /**
      * locale
      *
      * @var    string
@@ -128,7 +136,7 @@ class MolajoLanguageService
     protected function __construct($language = null)
     {
         if ($language == null || $language == '') {
-            $language = LanguageHelper::getDefault();
+            $language = $this->getDefault();
         }
         $this->language = $language;
         $this->loaded_override_strings = array();
@@ -149,7 +157,7 @@ class MolajoLanguageService
     {
         /** load metadata */
         $xmlFile = MOLAJO_EXTENSIONS_LANGUAGES . '/' . $this->language . '/' . 'manifest.xml';
-        $metadata = LanguageHelper::get_metadata($xmlFile);
+        $metadata = $this->get_metadata($xmlFile);
 
         if (isset($metadata['name'])) {
             $this->name = $metadata['name'];
@@ -159,6 +167,11 @@ class MolajoLanguageService
         }
         if (isset($metadata['rtl'])) {
             $this->rtl = $metadata['rtl'];
+            if ((int) $this->rtl == 0) {
+                $this->direction = 'ltr';
+            } else {
+                $this->direction = 'rtl';
+            }
         }
         if (isset($metadata['locale'])) {
             $locale = str_replace(' ', '', $metadata['locale']);
@@ -190,19 +203,19 @@ class MolajoLanguageService
     {
         $loaded = $this->_loadLanguage($path, $this->language . '.ini');
         if ($loaded === false) {
-            echo 'MolajoLanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini' . '<br />';
+            debug('MolajoLanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
         } else {
             return true;
         }
 
-        $default = LanguageHelper::getDefault();
+        $default = $this->getDefault();
         if ($this->language == $default) {
             return false;
         }
 
         $loaded = $this->_loadLanguage($path, $default . '.ini');
         if ($loaded === false) {
-            echo 'MolajoLanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini' . '<br />';
+            debug('MolajoLanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
             return false;
         }
         return $loaded;
@@ -261,13 +274,14 @@ class MolajoLanguageService
             return $this->loaded_strings[$key];
 
         } else {
-            echo 'Missing language key: '.$key.'<br />';
+            debug('MolajoLanguage: Missing language key: '.$key);
             return $key;
         }
     }
 
     public function sprintf()
     {
+        //use the php sprintf and printf
     }
 
     /**
@@ -284,7 +298,6 @@ class MolajoLanguageService
     {
         $filename = $path . '/' . $file;
 
-//echo $filename.'<br />';
         /** standard file */
         if (isset($this->loaded_files[$filename])) {
             return true;
@@ -345,15 +358,16 @@ class MolajoLanguageService
     }
 
     /**
+     * _parse
+     *
      * Parses a language file.
      *
      * @param   string  $filename  The name of the file.
      *
      * @return  array  The array of parsed strings.
-     *
      * @since   1.0
      */
-    private function _parse($filename)
+    protected function _parse($filename)
     {
         /** capture php errors during parsing */
         $track_errors = ini_get('track_errors');
@@ -377,6 +391,190 @@ class MolajoLanguageService
         }
 
         return $strings;
+    }
+    /**
+     * getDefault
+     *
+     * Tries to detect the language.
+     *
+     * @return  string  locale or null if not found
+     * @since   1.0
+     */
+    public function getDefault()
+    {
+        /** Installed Languages */
+        $languages = $this->getLanguages(
+            MOLAJO_EXTENSIONS_LANGUAGES
+        );
+
+        $installed = array();
+        foreach ($languages as $language) {
+            $installed[] = $language->subtitle;
+        }
+
+        $language = false;
+
+        /** 1. if there is just one, take it */
+        if (count($installed) == 1) {
+            return $installed[0];
+        }
+
+        /** 2. user  */
+        $language = Services::User()->get('language', '');
+        if ($language === false) {
+        } elseif (in_array($language, $installed)) {
+            return $language;
+        }
+
+        /** 3. language of browser */
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        } else {
+            return null;
+        }
+        foreach ($browserLanguages as $language) {
+            if (in_array(strtolower($language), $installed)) {
+                return $language;
+            }
+        }
+
+        /** 4. Application configuration */
+        $language = $this->get('tag', 'en-GB');
+        if (in_array($language, $installed)) {
+            return $language;
+        }
+
+        /** 5. default */
+        return 'en-GB';
+    }
+
+    /**
+     * createLanguageList
+     *
+     * Builds a list of the languages installed for core or an extension
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function createLanguageList($path = null)
+    {
+        if (MOLAJO_APPLICATION_ID == 0) {
+            $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . 'installer';
+
+        } else {
+            if ($path == null) {
+                $path = MOLAJO_EXTENSIONS_LANGUAGES;
+            }
+        }
+
+        /** for selected item determination */
+        $currentLanguage = $this->get('tag');
+        if ($currentLanguage === false || $currentLanguage == null) {
+            $currentLanguage = 'en-GB';
+        }
+
+        /** retrieve language list */
+        $languages = $this->getLanguages($path);
+
+        $list = array();
+        foreach ($languages as $language)
+        {
+            $listItem = new stdClass();
+
+            $listItem->key = $language->title;
+            $listItem->value = $language->subtitle;
+
+            $list[] = $listItem;
+        }
+
+        return $list;
+    }
+
+    /**
+     * getLanguages
+     *
+     * Returns languages for core or a specific extension
+     *
+     * @param   string  $path
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
+    {
+        if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
+            return $this->getLanguagesCore();
+        }
+
+        $languages = array();
+
+        $files = Services::Folder()->files($path . '/language', '\.ini', false, false);
+        if (count($files) == 0) {
+            return false;
+        }
+
+        foreach ($files as $file) {
+            $language = new stdClass();
+
+            $language->value = substr($file, 0, strlen($file) - 4);
+            $language->key = substr($file, 0, strlen($file) - 4);
+
+            $languages[] = $language;
+        }
+
+        return $languages;
+    }
+
+    /**
+     * getLanguagesCore
+     *
+     * During Service Initiation, the language service is started before
+     * the Date Service. This routine is used at that time in lieu of
+     * ability to query where date comparisons are needed.
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getLanguagesCore()
+    {
+        $subfolders = Services::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $languages = array();
+
+        foreach ($subfolders as $path) {
+            $language = new stdClass();
+
+            $language->title = $path;
+            $language->subtitle = $path;
+
+            $languages[] = $language;
+        }
+        return $languages;
+    }
+
+    /**
+     * get_metadata
+     *
+     * Read Language Manifest XML file for metadata
+     *
+     * @param   string  $path
+     *
+     * @return  array  array
+     * @since   1.0
+     */
+    public function get_metadata($file)
+    {
+        $xml = simplexml_load_file($file);
+        if ($xml) {
+        } else {
+            return true;
+        }
+
+        $metadata = array();
+        foreach ($xml->metadata->children() as $child) {
+            $metadata[$child->getName()] = (string)$child;
+        }
+
+        return $metadata;
     }
 }
 

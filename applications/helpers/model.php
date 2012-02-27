@@ -600,7 +600,7 @@ class MolajoModelHelper
      */
     public function getLanguageList()
     {
-        return MolajoLanguageHelper::createLanguageList();
+        return Services::Language()->createLanguageList();
     }
 
     /**

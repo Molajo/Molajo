@@ -16,7 +16,6 @@ Class ComponentHelper extends MolajoComponentHelper {}
 Class ContentHelper extends MolajoContentHelper {}
 Class ExtensionHelper extends MolajoExtensionHelper {}
 Class InstallerHelper extends MolajoInstallerHelper {}
-Class LanguageHelper extends MolajoLanguageHelper {}
 Class LoadHelper extends MolajoLoadHelper {}
 Class MenuItemHelper extends MolajoMenuItemHelper {}
 Class ModuleHelper extends MolajoModuleHelper {}

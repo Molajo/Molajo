@@ -1508,7 +1508,7 @@ class MolajoRequest
         $this->set('source_language', '');
         $this->set('source_translation_of_id', 0);
         $this->set('source_table', '');
-        $this->set('source_last_modified', getDate());
+        $this->set('source_last_modified', '');
 
         /** extension */
         $this->set('extension_instance_id', 0);
