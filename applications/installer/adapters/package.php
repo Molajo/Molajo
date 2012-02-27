@@ -282,7 +282,7 @@ class MolajoAdapterPackage extends MolajoAdapterInstance
 
         // clean up manifest file after we're done if there were no errors
         if (!$error) {
-            JFile::delete($manifestFile);
+            Services::File()->delete($manifestFile);
             $row->delete();
         }
         else

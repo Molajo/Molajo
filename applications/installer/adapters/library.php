@@ -255,7 +255,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
             }
 
             $this->parent->removeFiles($xml->files, -1);
-            JFile::delete($manifestFile);
+            Services::File()->delete($manifestFile);
 
         }
         else
@@ -300,7 +300,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         foreach ($file_list as $file)
         {
             $manifest_details = InstallHelper::parseManifestXML(SITE_MANIFESTS . '/libraries/' . $file);
-            $file = JFile::stripExt($file);
+            $file = Services::File()->no_extension($file);
             $extension = MolajoModel::getInstance('extension');
             $extension->set('type', 'library');
             $extension->set('application_id', 0);

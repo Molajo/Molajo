@@ -492,7 +492,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
                         else
                         {
                             $fileName = $targetFolder . '/' . $eFileName;
-                            JFile::delete($fileName);
+                            Services::File()->delete($fileName);
                         }
                     }
                 }
@@ -507,7 +507,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
                 }
             }
 
-            JFile::delete($manifestFile);
+            Services::File()->delete($manifestFile);
 
         }
         else

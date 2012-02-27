@@ -44,7 +44,7 @@ class MolajoAmaziumThemeHelper extends MolajoThemeHelper
 
         /** Mobile Specific Metas */
         Services::Media()->set_metadata('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
-        
+
         /** Favicons */
         Services::Media()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL

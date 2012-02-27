@@ -927,7 +927,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 foreach ($deletions['files'] as $deleted_file)
                 {
-                    JFile::delete($destination . '/' . $deleted_file);
+                    Services::File()->delete($destination . '/' . $deleted_file);
                 }
             }
         }
@@ -1274,7 +1274,7 @@ class MolajoInstaller extends MolajoAdapter
                     }
                     else
                     {
-                        if (!(JFile::copy($filesource, $filedest, null))) {
+                        if (!(Services::File()->copy($filesource, $filedest, null))) {
                             MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FILE', $filesource, $filedest));
 
                             return false;
@@ -1438,7 +1438,7 @@ class MolajoInstaller extends MolajoAdapter
             }
             else
             {
-                $val = JFile::delete($path);
+                $val = Services::File()->delete($path);
             }
 
             if ($val === false) {

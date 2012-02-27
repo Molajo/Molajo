@@ -205,7 +205,7 @@ class MolajoImageService
 
         /** make certain original image exists */
         $this->fileNameOriginal = SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
-        if (JFile::exists($this->fileNameOriginal)) {
+        if (Services::File()->exists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
             return false;
@@ -230,7 +230,7 @@ class MolajoImageService
 
         /** if resized image already exists, return it */
         $this->fileNameNew = SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
-        if (JFile::exists($this->fileNameNew)) {
+        if (Services::File()->exists($this->fileNameNew)) {
             return true;
         }
 

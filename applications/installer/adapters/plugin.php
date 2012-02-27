@@ -624,7 +624,7 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
         // Remove the plugin files
         $this->parent->removeFiles($xml->images, -1);
         $this->parent->removeFiles($xml->files, -1);
-        JFile::delete($manifestFile);
+        Services::File()->delete($manifestFile);
 
         // Remove all media and languages as well
         $this->parent->removeFiles($xml->media);
@@ -670,7 +670,7 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
             foreach ($file_list as $file)
             {
                 $manifest_details = InstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $file);
-                $file = JFile::stripExt($file);
+                $file = Services::File()->no_extension($file);
                 // Ignore example plugins
                 if ($file == 'example') {
                     continue;
@@ -695,7 +695,7 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
                     $manifest_details = InstallHelper::parseManifestXML(
                         MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder . '/' . $file
                     );
-                    $file = JFile::stripExt($file);
+                    $file = Services::File()->no_extension($file);
 
                     if ($file == 'example') {
                         continue;

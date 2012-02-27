@@ -141,7 +141,7 @@ class MolajoParser
             $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-page.xml';
         }
 
-        if (JFile::exists($formatXML)) {
+        if (Services::File()->exists($formatXML)) {
         } else {
             //error
             return false;
@@ -189,7 +189,7 @@ class MolajoParser
             $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-final.xml';
         }
 
-        if (JFile::exists($formatXML)) {
+        if (Services::File()->exists($formatXML)) {
         } else {
             //error
             return false;

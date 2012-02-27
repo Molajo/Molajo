@@ -5,6 +5,10 @@
         <serviceClass>MolajoFileService</serviceClass>
     </service>
     <service>
+        <name>Folder</name>
+        <serviceClass>MolajoFolderService</serviceClass>
+    </service>
+    <service>
         <name>Language</name>
         <serviceClass>MolajoLanguageService</serviceClass>
     </service>

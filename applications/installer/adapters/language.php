@@ -139,7 +139,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         // Either we are installing a core pack or a core pack must exist for the language we are installing.
         if (!$this->_core) {
-            if (!JFile::exists($this->parent->getPath('extension_site') . '/' . $this->get('tag') . '.xml')) {
+            if (!Services::File()->exists($this->parent->getPath('extension_site') . '/' . $this->get('tag') . '.xml')) {
                 $this->parent
                         ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
                 return false;
@@ -329,7 +329,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
 
         // Either we are installing a core pack or a core pack must exist for the language we are installing.
         if (!$this->_core) {
-            if (!JFile::exists($this->parent->getPath('extension_site') . '/' . $this->get('tag') . '.xml')) {
+            if (!Services::File()->exists($this->parent->getPath('extension_site') . '/' . $this->get('tag') . '.xml')) {
                 $this->parent
                         ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT', Services::Language()->sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
                 return false;

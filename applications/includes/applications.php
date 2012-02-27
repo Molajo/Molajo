@@ -55,10 +55,7 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(MOLAJO_APPLICATIONS . '/services', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'file.php') {
-    } else {
-        $load->requireClassFile(MOLAJO_APPLICATIONS . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
-    }
+    $load->requireClassFile(MOLAJO_APPLICATIONS . '/services/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Service');
 }
 
 /**

@@ -26,7 +26,7 @@ abstract class MolajoAPIHelper
      */
     public static function get()
     {
-        $cmethods = get_class_methods('JFile');
+        $cmethods = get_class_methods('MolajoFileService');
         $exclude = array();
         $methods = array();
         foreach($cmethods as $value){

@@ -598,7 +598,7 @@ class MolajoSecurityService
      * @param object $option_Link
      * $url = MolajoConfigurationServiceURL::encodeLink ($option_Link);
      */
-    function encodeLink($option_Link)
+    public function encodeLink($option_Link)
     {
         return urlencode($option_Link);
     }
@@ -608,10 +608,43 @@ class MolajoSecurityService
      * @param object $option_Text
      * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_Text);
      */
-    function encodeLinkText($option_Text)
+    public function encodeLinkText($option_Text)
     {
         return htmlentities($option_Text, ENT_QUOTES, 'UTF-8');
     }
+
+    /**
+   	 * filterFilename
+     *
+     * Filters the filename so that it is safe to use
+   	 *
+   	 * @param   string  $file  The name of the file [not full path]
+   	 *
+   	 * @return  string  The sanitised string
+   	 * @since   1.0
+   	 */
+   	public function filterFilename($file)
+   	{
+   		$regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
+
+   		return preg_replace($regex, '', $file);
+   	}
+    /**
+   	 * filterFoldername
+     *
+     * Filters the foldername so that it is safe to use
+   	 *
+   	 * @param   string  $path  The full path to sanitise.
+   	 *
+   	 * @return  string  The sanitised string.
+   	 * @since   1.0
+   	 */
+   	public function filterFoldername($path)
+   	{
+   		$regex = array('#[^A-Za-z0-9:_\\\/-]#');
+
+   		return preg_replace($regex, '', $path);
+   	}
 
     /**
      * escapeHTML
@@ -621,7 +654,7 @@ class MolajoSecurityService
      * @return  string
      * @since   1.0
      */
-    static public function escapeHTML($htmlText)
+    public function escapeHTML($htmlText)
     {
 
     }
@@ -634,7 +667,7 @@ class MolajoSecurityService
      * @return  string
      * @since   1.0
      */
-    static public function escapeInteger($integer)
+    public function escapeInteger($integer)
     {
         return (int)$integer;
     }
@@ -647,7 +680,7 @@ class MolajoSecurityService
      * @return  string
      * @since   1.0
      */
-    static public function escapeText($text)
+    public function escapeText($text)
     {
         return htmlspecialchars($text, ENT_COMPAT, 'utf-8');
     }
@@ -660,7 +693,7 @@ class MolajoSecurityService
      * @return  string
      * @since  1.0
      */
-    static public function escapeURL($url)
+    public function escapeURL($url)
     {
         if (Services::Configuration()->get('unicode_slugs') == 1) {
             return FilterOutput::stringURLUnicodeSlug($url);

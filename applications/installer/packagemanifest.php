@@ -95,7 +95,7 @@ class MolajoInstallerPackagemanifest extends JObject
      */
     function loadManifestFromXML($xmlfile)
     {
-        $this->manifest_file = JFile::stripExt(basename($xmlfile));
+        $this->manifest_file = Services::File()->no_extension(basename($xmlfile));
 
         $xml = simplexml_load_file($xmlfile);
 

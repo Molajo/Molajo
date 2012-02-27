@@ -114,7 +114,7 @@ abstract class MolajoInstallerHelper
          }
 
          // Write buffer to file
-         JFile::write($target, $contents);
+         Services::File()->write($target, $contents);
 
          // Close file pointer resource
          fclose($inputHandle);
@@ -282,12 +282,12 @@ abstract class MolajoInstallerHelper
 
          // Is the package file a valid file?
          if (is_file($package)) {
-             JFile::delete($package);
+             Services::File()->delete($package);
          }
          elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package)))
          {
              // It might also be just a base filename
-             JFile::delete(JPath::clean($config->get('temp_path') . '/' . $package));
+             Services::File()->delete(JPath::clean($config->get('temp_path') . '/' . $package));
          }
      }
 
