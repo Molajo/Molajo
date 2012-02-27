@@ -45,7 +45,7 @@ endif; ?>
      </style><?php echo chr(10) . chr(13); ?>
 <?php
 elseif ($this->row->type == 'js_declarations'): ?>
-    <script<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
+<script<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
 <?php
 if ($page_mimetype == 'text/html') :
 else : ?>
@@ -58,6 +58,6 @@ else : ?>
 ]]>
 <?php
 endif; ?>
-    </script><?php echo chr(10) . chr(13); ?>
+</script><?php echo chr(10) . chr(13); ?>
 <?php
 endif;

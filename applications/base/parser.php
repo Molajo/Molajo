@@ -418,7 +418,7 @@ class MolajoParser
                 $with[] = '';
             }
 
-            str_replace($replace, $with, $this->rendered_output);
+            $this->rendered_output = str_replace($replace, $with, $this->rendered_output);
         }
 
         return $this->rendered_output;
