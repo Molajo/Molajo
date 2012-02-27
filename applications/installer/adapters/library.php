@@ -107,7 +107,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
         // If the plugin directory does not exist, let's create it
         $created = false;
         if (!file_exists($this->parent->getPath('extension_root'))) {
-            if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
+            if (!$created = Services::Folder()->create($this->parent->getPath('extension_root'))) {
                 $this->parent->abort(
                     Services::Language()->sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root'))
                 );
@@ -269,11 +269,11 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
 
         // TODO: Change this so it walked up the path backwards so we clobber multiple empties
         // If the folder is empty, let's delete it
-        if (JFolder::exists($this->parent->getPath('extension_root'))) {
+        if (Services::Folder()->exists($this->parent->getPath('extension_root'))) {
             if (is_dir($this->parent->getPath('extension_root'))) {
-                $files = JFolder::files($this->parent->getPath('extension_root'));
+                $files = Services::Folder()->files($this->parent->getPath('extension_root'));
                 if (!count($files)) {
-                    JFolder::delete($this->parent->getPath('extension_root'));
+                    Services::Folder()->delete($this->parent->getPath('extension_root'));
                 }
             }
         }
@@ -296,7 +296,7 @@ class MolajoAdapterLibrary extends MolajoAdapterInstance
     public function discover()
     {
         $results = array();
-        $file_list = JFolder::files(SITE_MANIFESTS . '/libraries', '\.xml$');
+        $file_list = Services::Folder()->files(SITE_MANIFESTS . '/libraries', '\.xml$');
         foreach ($file_list as $file)
         {
             $manifest_details = InstallHelper::parseManifestXML(SITE_MANIFESTS . '/libraries/' . $file);

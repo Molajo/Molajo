@@ -157,7 +157,7 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
         // If the theme directory does not exist, let's create it
         $created = false;
         if (!file_exists($this->parent->getPath('extension_root'))) {
-            if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
+            if (!$created = Services::Folder()->create($this->parent->getPath('extension_root'))) {
                 $this->parent
                         ->abort(Services::Language()->sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
 
@@ -339,7 +339,7 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
             $row->delete($row->extension_id);
             unset($row);
             // Make sure we delete the folders
-            JFolder::delete($this->parent->getPath('extension_root'));
+            Services::Folder()->delete($this->parent->getPath('extension_root'));
             MolajoError::raiseWarning(100, Services::Language()->translate('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 
             return false;
@@ -350,8 +350,8 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
         $this->parent->removeFiles($manifest->languages, $clientId);
 
         // Delete the theme directory
-        if (JFolder::exists($this->parent->getPath('extension_root'))) {
-            $retval = JFolder::delete($this->parent->getPath('extension_root'));
+        if (Services::Folder()->exists($this->parent->getPath('extension_root'))) {
+            $retval = Services::Folder()->delete($this->parent->getPath('extension_root'));
         }
         else
         {
@@ -384,8 +384,8 @@ class MolajoAdapterTheme extends MolajoAdapterInstance
     function discover()
     {
         $results = array();
-        $site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/themes');
-        $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/themes');
+        $site_list = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/themes');
+        $admin_list = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/themes');
         $site_info = ApplicationHelper::getApplicationInfo('site', true);
         $admin_info = ApplicationHelper::getApplicationInfo('administrator', true);
 

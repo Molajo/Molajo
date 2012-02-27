@@ -43,10 +43,10 @@ class MolajoAmaziumThemeHelper extends MolajoThemeHelper
     {
 
         /** Mobile Specific Metas */
-        Services::Media()->set_metadata('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+        Services::Document()->set_metadata('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
 
         /** Favicons */
-        Services::Media()->add_link(
+        Services::Document()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL
                 . '/' . Molajo::Request()->get('theme_name')
                 . '/' . 'images/apple-touch-icon.png',
@@ -54,7 +54,7 @@ class MolajoAmaziumThemeHelper extends MolajoThemeHelper
             $relation_type = 'rel',
             $attributes = array()
         );
-        Services::Media()->add_link(
+        Services::Document()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL
                 . '/' . Molajo::Request()->get('theme_name')
                 . '/' . 'images/apple-touch-icon-72x72.png',
@@ -62,7 +62,7 @@ class MolajoAmaziumThemeHelper extends MolajoThemeHelper
             $relation_type = 'rel',
             $attributes = array('sizes,72x72')
         );
-        Services::Media()->add_link(
+        Services::Document()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL
                 . '/' . Molajo::Request()->get('theme_name')
                 . '/' . 'images/apple-touch-icon-114x114.png',
@@ -72,10 +72,10 @@ class MolajoAmaziumThemeHelper extends MolajoThemeHelper
         );
 
         /** HTML5 Shim */
-        Services::Media()->add_js('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
+        Services::Document()->add_js('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
 
         /** jQuery CDN and fallback */
-        Services::Media()->add_js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
+        Services::Document()->add_js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
         $url = MOLAJO_EXTENSIONS_THEMES_URL
                         . '/' . Molajo::Request()->get('theme_name')
                         . '/' . 'js/fallback/jquery-1.7.1.min.js';
@@ -85,6 +85,6 @@ class MolajoAmaziumThemeHelper extends MolajoThemeHelper
          {
             document.write(unescape(".'"'."%3Cscript src='".$url."' type='text/javascript'%3E%3C/script%3E".'"'."));
          }";
-        Services::Media()->add_js_declaration($fallback, 'text/javascript', 1000);
+        Services::Document()->add_js_declaration($fallback, 'text/javascript', 1000);
     }
 }

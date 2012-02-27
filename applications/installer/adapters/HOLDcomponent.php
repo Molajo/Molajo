@@ -198,7 +198,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
         $created = false;
 
         if (!file_exists(parent::getPath('extension_site'))) {
-            if (!$created = JFolder::create(parent::getPath('extension_site'))) {
+            if (!$created = Services::Folder()->create(parent::getPath('extension_site'))) {
                 MolajoError::raiseWarning(
                     1,
                     Services::Language()->sprintf('JLIB_INSTALLER_ERROR_COMP_INSTALL_FAILED_TO_CREATE_DIRECTORY_SITE', parent::getPath('extension_site'))
@@ -218,7 +218,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
         $created = false;
 
         if (!file_exists(parent::getPath('extension_administrator'))) {
-            if (!$created = JFolder::create(parent::getPath('extension_administrator'))) {
+            if (!$created = Services::Folder()->create(parent::getPath('extension_administrator'))) {
                 MolajoError::raiseWarning(
                     1,
                     Services::Language()->sprintf(
@@ -636,7 +636,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
         $created = false;
 
         if (!file_exists(parent::getPath('extension_site'))) {
-            if (!$created = JFolder::create(parent::getPath('extension_site'))) {
+            if (!$created = Services::Folder()->create(parent::getPath('extension_site'))) {
                 MolajoError::raiseWarning(
                     1,
                     Services::Language()->sprintf('JLIB_INSTALLER_ERROR_COMP_UPDATE_FAILED_TO_CREATE_DIRECTORY_SITE', parent::getPath('extension_site'))
@@ -658,7 +658,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
         $created = false;
 
         if (!file_exists(parent::getPath('extension_administrator'))) {
-            if (!$created = JFolder::create(parent::getPath('extension_administrator'))) {
+            if (!$created = Services::Folder()->create(parent::getPath('extension_administrator'))) {
                 MolajoError::raiseWarning(
                     1,
                     Services::Language()->sprintf(
@@ -967,8 +967,8 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
 
         if (!$this->manifest) {
             // Make sure we delete the folders if no manifest exists
-            JFolder::delete(parent::getPath('extension_administrator'));
-            JFolder::delete(parent::getPath('extension_site'));
+            Services::Folder()->delete(parent::getPath('extension_administrator'));
+            Services::Folder()->delete(parent::getPath('extension_site'));
 
             // Remove the menu
             $this->_removeAdminMenus($row);
@@ -1144,7 +1144,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
         if (trim($row->element)) {
             // Delete the component site directory
             if (is_dir(parent::getPath('extension_site'))) {
-                if (!JFolder::delete(parent::getPath('extension_site'))) {
+                if (!Services::Folder()->delete(parent::getPath('extension_site'))) {
                     MolajoError::raiseWarning(100, Services::Language()->translate('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_REMOVE_DIRECTORY_SITE'));
                     $retval = false;
                 }
@@ -1152,7 +1152,7 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
 
             // Delete the component admin directory
             if (is_dir(parent::getPath('extension_administrator'))) {
-                if (!JFolder::delete(parent::getPath('extension_administrator'))) {
+                if (!Services::Folder()->delete(parent::getPath('extension_administrator'))) {
                     MolajoError::raiseWarning(100, Services::Language()->translate('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_REMOVE_DIRECTORY_ADMIN'));
                     $retval = false;
                 }
@@ -1443,8 +1443,8 @@ class MolajoAdapterComponent extends MolajoAdapterInstance
     public function discover()
     {
         $results = array();
-        $site_components = JFolder::folders(MOLAJO_BASE_FOLDER . '/components');
-        $admin_components = JFolder::folders(MOLAJO_BASE_FOLDER . '/components');
+        $site_components = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/components');
+        $admin_components = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/components');
 
         foreach ($site_components as $component)
         {

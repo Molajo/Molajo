@@ -101,7 +101,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
         ";
-        Services::Media()->add_js_declaration($analytics, 'text/javascript', 1);
+        Services::Document()->add_js_declaration($analytics, 'text/javascript', 1);
     }
 
     public function placeholder()

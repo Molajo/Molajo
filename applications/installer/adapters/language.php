@@ -149,7 +149,7 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         // If the language directory does not exist, let's create it
         $created = false;
         if (!file_exists($this->parent->getPath('extension_site'))) {
-            if (!$created = JFolder::create($this->parent->getPath('extension_site'))) {
+            if (!$created = Services::Folder()->create($this->parent->getPath('extension_site'))) {
                 $this->parent
                         ->abort(
                     Services::Language()->sprintf(
@@ -459,14 +459,14 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
         $this->parent->removeFiles($this->manifest->media);
 
         // Check it exists
-        if (!JFolder::exists($path)) {
+        if (!Services::Folder()->exists($path)) {
             // If the folder doesn't exist lets just nuke the row as well and presume the user killed it for us
             $extension->delete();
             MolajoError::raiseWarning(100, Services::Language()->translate('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PATH_EMPTY'));
             return false;
         }
 
-        if (!JFolder::delete($path)) {
+        if (!Services::Folder()->delete($path)) {
             // If deleting failed we'll leave the extension entry in tact just in case
             MolajoError::raiseWarning(100, Services::Language()->translate('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DIRECTORY'));
             return false;
@@ -525,8 +525,8 @@ class MolajoAdapterLanguage extends MolajoAdapterInstance
     public function discover()
     {
         $results = array();
-        $site_languages = JFolder::folders(MOLAJO_BASE_FOLDER . '/language');
-        $admin_languages = JFolder::folders(MOLAJO_BASE_FOLDER . '/language');
+        $site_languages = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/language');
+        $admin_languages = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/language');
         foreach ($site_languages as $language)
         {
             if (file_exists(MOLAJO_BASE_FOLDER . '/language/' . $language . '/' . $language . '.xml')) {

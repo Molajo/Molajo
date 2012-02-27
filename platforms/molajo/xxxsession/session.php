@@ -176,7 +176,7 @@ class MolajoSession extends JObject
      */
     public static function getStores()
     {
-        $handlers = JFolder::files(__DIR__ . DS . 'storage', '.php$');
+        $handlers = Services::Folder()->files(__DIR__ . DS . 'storage', '.php$');
 
         $names = array();
         foreach ($handlers as $handler) {

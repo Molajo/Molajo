@@ -308,7 +308,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         $created = false;
 
         if (!file_exists($this->parent->getPath('extension_root'))) {
-            if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
+            if (!$created = Services::Folder()->create($this->parent->getPath('extension_root'))) {
                 $this->parent
                         ->abort(
                     Services::Language()->sprintf(
@@ -535,8 +535,8 @@ class MolajoModuleAdapter extends MolajoAdapter
     public function discover()
     {
         $results = array();
-        $site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/modules');
-        $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/modules');
+        $site_list = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/modules');
+        $admin_list = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/modules');
         $site_info = ApplicationHelper::getApplicationInfo('site', true);
         $admin_info = ApplicationHelper::getApplicationInfo('administrator', true);
 
@@ -731,7 +731,7 @@ class MolajoModuleAdapter extends MolajoAdapter
 
         if (!($this->manifest instanceof SimpleXMLElement)) {
             // Make sure we delete the folders
-            JFolder::delete($this->parent->getPath('extension_root'));
+            Services::Folder()->delete($this->parent->getPath('extension_root'));
             MolajoError::raiseWarning(100, Services::Language()->translate('JLIB_INSTALLER_ERROR_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 
             return false;
@@ -830,7 +830,7 @@ class MolajoModuleAdapter extends MolajoAdapter
         unset($row);
 
         // Remove the installation folder
-        if (!JFolder::delete($this->parent->getPath('extension_root'))) {
+        if (!Services::Folder()->delete($this->parent->getPath('extension_root'))) {
             // JFolder should raise an error
             $retval = false;
         }

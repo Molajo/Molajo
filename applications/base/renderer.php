@@ -719,15 +719,15 @@ class MolajoRenderer
 
         $file_path = $this->get('template_view_path');
         $url_path = $this->get('template_view_path_url');
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         $file_path = $this->get('wrap_view_path');
         $url_path = $this->get('wrap_view_path_url');
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
     }
 
     /**

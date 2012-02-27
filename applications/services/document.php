@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-class MolajoMediaService
+class MolajoDocumentService
 {
     /**
      * Static instance
@@ -98,7 +98,7 @@ class MolajoMediaService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoMediaService();
+            self::$instance = new MolajoDocumentService();
         }
         return self::$instance;
     }
@@ -240,12 +240,12 @@ class MolajoMediaService
      */
     public function add_css_folder($file_path, $url_path, $priority = 500)
     {
-        if (JFolder::exists($file_path . '/css')) {
+        if (Services::Folder()->exists($file_path . '/css')) {
         } else {
             return;
         }
 
-        $files = JFolder::files($file_path . '/css', '\.css$', false, false);
+        $files = Services::Folder()->files($file_path . '/css', '\.css$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -356,12 +356,12 @@ class MolajoMediaService
             $extra = '/js';
             $defer = 0;
         }
-        if (JFolder::exists($file_path . $extra)) {
+        if (Services::Folder()->exists($file_path . $extra)) {
         } else {
             return;
         }
 
-        $files = JFolder::files($file_path . $extra, '\.js$', false, false);
+        $files = Services::Folder()->files($file_path . $extra, '\.js$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {

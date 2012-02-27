@@ -110,7 +110,7 @@ class MolajoSecurityService
     {
         $config = HTMLPurifier_Config::createDefault();
 
-        if ((int) Services::Configuration()->get('html5', 1) == 1) {
+        if ((int)Services::Configuration()->get('html5', 1) == 1) {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             //not supported $config->set('HTML.Doctype', 'HTML5');
         } else {
@@ -119,9 +119,9 @@ class MolajoSecurityService
         $config->set('URI.Host', MOLAJO_BASE_URL);
 
         /** Custom Filters */
-        $files = JFolder::files(MOLAJO_APPLICATIONS. '/filters', '\.php$', false, false);
+        $files = Services::Folder()->files(MOLAJO_APPLICATIONS . '/filters', '\.php$', false, false);
         foreach ($files as $file) {
-            $class = 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Filter';
+            $class = 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Filter';
             $config->set('Filter.Custom', array(new $class()));
         }
 
@@ -272,7 +272,6 @@ class MolajoSecurityService
                 break;
 
             case 'text':
-
                 return $this->filter_html(
                     $field_value, $null, $default
                 );
@@ -291,26 +290,28 @@ class MolajoSecurityService
                 break;
 
             case 'word':
-                $result = (string)preg_replace('/[^A-Z_]/i', '', $field_value);
+                return (string)preg_replace('/[^A-Z_]/i', '', $field_value);
                 break;
 
             case 'alnum':
-                $result = (string)preg_replace('/[^A-Z0-9]/i', '', $field_value);
+                return (string)preg_replace('/[^A-Z0-9]/i', '', $field_value);
                 break;
 
             case 'cmd':
                 $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $field_value);
-                $result = ltrim($result, '.');
+                return ltrim($result, '.');
                 break;
 
             case 'base64':
-                $result = (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $field_value);
+                return (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $field_value);
+                break;
+
+            case 'filename':
+                return $this->filter_filename($field_value);
                 break;
 
             case 'path':
-                $pattern = '/^[A-Za-z0-9_-]+[A-Za-z0-9_\.-]*([\\\\\/][A-Za-z0-9_-]+[A-Za-z0-9_\.-]*)*$/';
-                preg_match($pattern, (string)$field_value, $matches);
-                return @ (string)$matches[0];
+                return $this->filter_foldername($field_value);
                 break;
 
             case 'username':
@@ -594,7 +595,42 @@ class MolajoSecurityService
     }
 
     /**
+     * filter_filename
+     *
+     * Filters the filename so that it is safe to use
+     *
+     * @param   string  $file  The name of the file [not full path]
+     *
+     * @return  string  The sanitised string
+     * @since   1.0
+     */
+    public function filter_filename($file)
+    {
+        $regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
+
+        return preg_replace($regex, '', $file);
+    }
+
+    /**
+     * filter_foldername
+     *
+     * Filters the foldername so that it is safe to use
+     *
+     * @param   string  $path  The full path to sanitise.
+     *
+     * @return  string  The sanitised string.
+     * @since   1.0
+     */
+    public function filter_foldername($path)
+    {
+        $regex = array('#[^A-Za-z0-9:_\\\/-]#');
+
+        return preg_replace($regex, '', $path);
+    }
+
+    /**
      * encodeLink
+     *
      * @param object $option_Link
      * $url = MolajoConfigurationServiceURL::encodeLink ($option_Link);
      */
@@ -605,6 +641,7 @@ class MolajoSecurityService
 
     /**
      * encodeLinkText
+     *
      * @param object $option_Text
      * $url = MolajoConfigurationServiceURL::encodeLinkText ($option_Text);
      */
@@ -612,39 +649,6 @@ class MolajoSecurityService
     {
         return htmlentities($option_Text, ENT_QUOTES, 'UTF-8');
     }
-
-    /**
-   	 * filterFilename
-     *
-     * Filters the filename so that it is safe to use
-   	 *
-   	 * @param   string  $file  The name of the file [not full path]
-   	 *
-   	 * @return  string  The sanitised string
-   	 * @since   1.0
-   	 */
-   	public function filterFilename($file)
-   	{
-   		$regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
-
-   		return preg_replace($regex, '', $file);
-   	}
-    /**
-   	 * filterFoldername
-     *
-     * Filters the foldername so that it is safe to use
-   	 *
-   	 * @param   string  $path  The full path to sanitise.
-   	 *
-   	 * @return  string  The sanitised string.
-   	 * @since   1.0
-   	 */
-   	public function filterFoldername($path)
-   	{
-   		$regex = array('#[^A-Za-z0-9:_\\\/-]#');
-
-   		return preg_replace($regex, '', $path);
-   	}
 
     /**
      * escapeHTML

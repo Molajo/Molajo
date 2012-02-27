@@ -198,7 +198,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function install($path = null)
     {
-        if ($path && JFolder::exists($path)) {
+        if ($path && Services::Folder()->exists($path)) {
             $this->setPath('source', $path);
         } else {
             $this->abort(Services::Language()->translate('JLIB_INSTALLER_ABORT_NOINSTALLPATH'));
@@ -369,7 +369,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function update($path = null)
     {
-        if ($path && JFolder::exists($path)) {
+        if ($path && Services::Folder()->exists($path)) {
             $this->setPath('source', $path);
         }
         else
@@ -715,7 +715,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
 
                 if (strlen($schemapath)) {
-                    $files = str_replace('.sql', '', JFolder::files($this->getPath('extension_root') . '/' . $schemapath, '\.sql$'));
+                    $files = str_replace('.sql', '', Services::Folder()->files($this->getPath('extension_root') . '/' . $schemapath, '\.sql$'));
                     usort($files, 'version_compare');
                     // Update the database
                     $query = $db->getQuery(true);
@@ -775,7 +775,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
 
                 if (strlen($schemapath)) {
-                    $files = str_replace('.sql', '', JFolder::files($this->getPath('extension_root') . '/' . $schemapath, '\.sql$'));
+                    $files = str_replace('.sql', '', Services::Folder()->files($this->getPath('extension_root') . '/' . $schemapath, '\.sql$'));
                     usort($files, 'version_compare');
 
                     if (!count($files)) {
@@ -922,7 +922,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 foreach ($deletions['folders'] as $deleted_folder)
                 {
-                    JFolder::delete($destination . '/' . $deleted_folder);
+                    Services::Folder()->delete($destination . '/' . $deleted_folder);
                 }
 
                 foreach ($deletions['files'] as $deleted_file)
@@ -956,7 +956,7 @@ class MolajoInstaller extends MolajoAdapter
             if (basename($path['dest']) != $path['dest']) {
                 $newdir = dirname($path['dest']);
 
-                if (!JFolder::create($newdir)) {
+                if (!Services::Folder()->create($newdir)) {
                     MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
                     return false;
                 }
@@ -1043,7 +1043,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
 
                 // If the language folder is not present, then the core pack hasn't been installed... ignore
-                if (!JFolder::exists(dirname($path['dest']))) {
+                if (!Services::Folder()->exists(dirname($path['dest']))) {
                     continue;
                 }
             }
@@ -1061,7 +1061,7 @@ class MolajoInstaller extends MolajoAdapter
             if (basename($path['dest']) != $path['dest']) {
                 $newdir = dirname($path['dest']);
 
-                if (!JFolder::create($newdir)) {
+                if (!Services::Folder()->create($newdir)) {
                     MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 
                     return false;
@@ -1139,7 +1139,7 @@ class MolajoInstaller extends MolajoAdapter
             if (basename($path['dest']) != $path['dest']) {
                 $newdir = dirname($path['dest']);
 
-                if (!JFolder::create($newdir)) {
+                if (!Services::Folder()->create($newdir)) {
                     MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 
                     return false;
@@ -1265,7 +1265,7 @@ class MolajoInstaller extends MolajoAdapter
                 {
                     // Copy the folder or file to the new location.
                     if ($filetype == 'folder') {
-                        if (!(JFolder::copy($filesource, $filedest, null, $overwrite))) {
+                        if (!(Services::Folder()->copy($filesource, $filedest, null, $overwrite))) {
                             MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FOLDER', $filesource, $filedest));
                             return false;
                         }
@@ -1422,7 +1422,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
 
                 // If the language folder is not present, then the core pack hasn't been installed... ignore
-                if (!JFolder::exists(dirname($path))) {
+                if (!Services::Folder()->exists(dirname($path))) {
                     continue;
                 }
             }
@@ -1434,7 +1434,7 @@ class MolajoInstaller extends MolajoAdapter
             // Actually delete the files/folders
 
             if (is_dir($path)) {
-                $val = JFolder::delete($path);
+                $val = Services::Folder()->delete($path);
             }
             else
             {
@@ -1448,7 +1448,7 @@ class MolajoInstaller extends MolajoAdapter
         }
 
         if (!empty($folder)) {
-            $val = JFolder::delete($source);
+            $val = Services::Folder()->delete($source);
         }
 
         return $retval;
@@ -1494,7 +1494,7 @@ class MolajoInstaller extends MolajoAdapter
     public function findManifest()
     {
         // Get an array of all the XML files from the installation directory
-        $xmlfiles = JFolder::files($this->getPath('source'), '.xml$', 1, true);
+        $xmlfiles = Services::Folder()->files($this->getPath('source'), '.xml$', 1, true);
         // If at least one XML file exists
         if (!empty($xmlfiles)) {
 

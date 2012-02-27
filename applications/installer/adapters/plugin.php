@@ -265,7 +265,7 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
         // If the plugin directory does not exist, lets create it
         $created = false;
         if (!file_exists($this->parent->getPath('extension_root'))) {
-            if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
+            if (!$created = Services::Folder()->create($this->parent->getPath('extension_root'))) {
                 $this->parent
                         ->abort(
                     Services::Language()->sprintf(
@@ -641,9 +641,9 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
         unset($row);
 
         // If the folder is empty, let's delete it
-        $files = JFolder::files($this->parent->getPath('extension_root'));
+        $files = Services::Folder()->files($this->parent->getPath('extension_root'));
 
-        JFolder::delete($this->parent->getPath('extension_root'));
+        Services::Folder()->delete($this->parent->getPath('extension_root'));
 
         if ($msg) {
             $this->parent->set('extension_message', $msg);
@@ -662,11 +662,11 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
     function discover()
     {
         $results = array();
-        $folder_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/plugins');
+        $folder_list = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/plugins');
 
         foreach ($folder_list as $folder)
         {
-            $file_list = JFolder::files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder, '\.xml$');
+            $file_list = Services::Folder()->files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder, '\.xml$');
             foreach ($file_list as $file)
             {
                 $manifest_details = InstallHelper::parseManifestXML(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $file);
@@ -686,10 +686,10 @@ class MolajoAdapterPlugin extends MolajoAdapterInstance
                 $extension->set('manifest_cache', json_encode($manifest_details));
                 $results[] = $extension;
             }
-            $folder_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/plugins/' . $folder);
+            $folder_list = Services::Folder()->folders(MOLAJO_BASE_FOLDER . '/plugins/' . $folder);
             foreach ($folder_list as $plugin_folder)
             {
-                $file_list = JFolder::files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder, '\.xml$');
+                $file_list = Services::Folder()->files(MOLAJO_BASE_FOLDER . '/plugins/' . $folder . '/' . $plugin_folder, '\.xml$');
                 foreach ($file_list as $file)
                 {
                     $manifest_details = InstallHelper::parseManifestXML(

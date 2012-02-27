@@ -173,7 +173,7 @@ class MolajoComponentRenderer extends MolajoRenderer
                 $name . 'Controller'
             );
         }
-        $files = JFolder::files($this->get('extension_path') . '/controllers', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile(
@@ -184,7 +184,7 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** Helpers */
-        $files = JFolder::files($this->get('extension_path') . '/helpers', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/helpers/' . $file,
@@ -194,7 +194,7 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** Models */
-        $files = JFolder::files($this->get('extension_path') . '/models', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/models/' . $file,
@@ -204,7 +204,7 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** Tables */
-        $files = JFolder::files($this->get('extension_path') . '/tables', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/tables/' . $file,
@@ -214,10 +214,10 @@ class MolajoComponentRenderer extends MolajoRenderer
         }
 
         /** Views */
-        $folders = JFolder::folders($this->get('extension_path') . '/views', false, false);
+        $folders = Services::Folder()->folders($this->get('extension_path') . '/views', false, false);
         if ($folders) {
             foreach ($folders as $folder) {
-                $files = JFolder::files($this->get('extension_path') . '/views/' . $folder, false, false);
+                $files = Services::Folder()->files($this->get('extension_path') . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
                         $load->requireClassFile($this->get('extension_path') . '/views/' . $folder . '/' . $file,
@@ -270,9 +270,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         /** Theme */
         $file_path = MOLAJO_EXTENSIONS_THEMES . '/' . $this->get('theme_name');
         $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->get('theme_name');
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -280,9 +280,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $url_path = SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -290,9 +290,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, false);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -300,9 +300,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -310,9 +310,9 @@ class MolajoComponentRenderer extends MolajoRenderer
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
-        $css = Services::Media()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Media()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Media()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

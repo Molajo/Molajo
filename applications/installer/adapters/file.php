@@ -144,9 +144,9 @@ class MolajoAdapterFile extends MolajoAdapterInstance
         // Now that we have folder list, lets start creating them
         foreach ($this->folderList as $folder)
         {
-            if (!JFolder::exists($folder)) {
+            if (!Services::Folder()->exists($folder)) {
 
-                if (!$created = JFolder::create($folder)) {
+                if (!$created = Services::Folder()->create($folder)) {
                     MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ABORT_FILE_INSTALL_FAIL_SOURCE_DIRECTORY', $folder));
                     // If installation fails, rollback
                     $this->parent->abort();
@@ -500,9 +500,9 @@ class MolajoAdapterFile extends MolajoAdapterInstance
                 // Delete any folders that don't have any content in them.
                 foreach ($folderList as $folder)
                 {
-                    $files = JFolder::files($folder);
+                    $files = Services::Folder()->files($folder);
                     if (!count($files)) {
-                        JFolder::delete($folder);
+                        Services::Folder()->delete($folder);
                     }
                 }
             }
@@ -607,7 +607,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
 
                 $folderName .= '/' . $dir;
                 // Check if folder exists, if not then add to the array for folder creation
-                if (!JFolder::exists($folderName)) {
+                if (!Services::Folder()->exists($folderName)) {
                     array_push($this->folderList, $folderName);
                 }
             }
@@ -617,7 +617,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
             $targetFolder = empty($target) ? $jRootPath : $jRootPath . '/' . $target;
 
             // Check if source folder exists
-            if (!JFolder::exists($sourceFolder)) {
+            if (!Services::Folder()->exists($sourceFolder)) {
                 MolajoError::raiseWarning(1, Services::Language()->sprintf('JLIB_INSTALLER_ABORT_FILE_INSTALL_FAIL_SOURCE_DIRECTORY', $sourceFolder));
                 // If installation fails, rollback
                 $this->parent->abort();
@@ -643,7 +643,7 @@ class MolajoAdapterFile extends MolajoAdapterInstance
             }
             else
             {
-                $files = JFolder::files($sourceFolder);
+                $files = Services::Folder()->files($sourceFolder);
                 foreach ($files as $file)
                 {
                     $path['src'] = $sourceFolder . '/' . $file;

@@ -47,7 +47,7 @@ class MolajoHeadModel extends MolajoModel
         /** get metadata (part used in base) */
         if ($defer == 1) {
         } else {
-            $metadata = Services::Media()->get_metadata();
+            $metadata = Services::Document()->get_metadata();
 
             if (count($metadata) > 0) {
                 $row = new stdClass();
@@ -56,7 +56,7 @@ class MolajoHeadModel extends MolajoModel
                     $metadata['standard']['title']
                 );
                 $row->mimetype = Services::Security()->escapeText(
-                    Services::Media()->get_mime_encoding()
+                    Services::Document()->get_mime_encoding()
                 );
                 $row->base = Molajo::Request()->get('url_base');
                 $row->last_modified = Services::Security()->escapeText(
@@ -98,7 +98,7 @@ class MolajoHeadModel extends MolajoModel
             $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
             $this->query_results[] = $row;
 
-            $list = Services::Media()->get_links();
+            $list = Services::Document()->get_links();
 
             if (count($list) > 0) {
                 foreach ($list as $item) {
@@ -136,7 +136,7 @@ class MolajoHeadModel extends MolajoModel
         /** type: css */
         if ($defer == 1) {
         } else {
-            $list = Services::Media()->get_css();
+            $list = Services::Document()->get_css();
 
             if (count($list) > 0) {
                 foreach ($list as $item) {
@@ -154,7 +154,7 @@ class MolajoHeadModel extends MolajoModel
             }
 
             /** type: css_declarations */
-            $list = Services::Media()->get_css_declarations();
+            $list = Services::Document()->get_css_declarations();
 
             foreach ($list as $item) {
                 $row = new stdClass();
@@ -168,7 +168,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: js */
-        $list = Services::Media()->get_js($defer);
+        $list = Services::Document()->get_js($defer);
 
         foreach ($list as $item) {
             $row = new stdClass();
@@ -184,7 +184,7 @@ class MolajoHeadModel extends MolajoModel
         }
 
         /** type: js_declarations */
-        $list = Services::Media()->get_js_declarations($defer);
+        $list = Services::Document()->get_js_declarations($defer);
 
         foreach ($list as $item) {
             $row = new stdClass();

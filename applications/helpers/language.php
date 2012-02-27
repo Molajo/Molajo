@@ -132,7 +132,7 @@ abstract class MolajoLanguageHelper
 
         $languages = array();
 
-        $files = JFolder::files($path . '/language', '\.ini', false, false);
+        $files = Services::Folder()->files($path . '/language', '\.ini', false, false);
         if (count($files) == 0) {
             return false;
         }
@@ -161,7 +161,7 @@ abstract class MolajoLanguageHelper
      */
     static public function getLanguagesCore()
     {
-        $subfolders = JFolder::folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $subfolders = Services::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
         $languages = array();
 
         foreach ($subfolders as $path) {

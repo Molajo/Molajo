@@ -268,7 +268,7 @@ abstract class MolajoExtensionHelper
     {
         $path .= '/language';
 
-        if (JFolder::exists($path)) {
+        if (Services::Folder()->exists($path)) {
         } else {
             return false;
         }

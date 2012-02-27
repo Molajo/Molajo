@@ -26,7 +26,7 @@ abstract class MolajoInstallerHelper
      */
     public static function parseManifestXML($path)
     {
-        if (JFolder::exists($path)) {
+        if (Services::Folder()->exists($path)) {
         } else {
             return false;
         }
@@ -172,10 +172,10 @@ abstract class MolajoInstallerHelper
             * List all the items in the installation directory.  If there is only one, and
             * it is a folder, then we will set that folder to be the installation folder.
             */
-         $dirList = array_merge(JFolder::files($extractdir, ''), JFolder::folders($extractdir, ''));
+         $dirList = array_merge(Services::Folder()->files($extractdir, ''), Services::Folder()->folders($extractdir, ''));
 
          if (count($dirList) == 1) {
-             if (JFolder::exists($extractdir . '/' . $dirList[0])) {
+             if (Services::Folder()->exists($extractdir . '/' . $dirList[0])) {
                  $extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
              }
          }
@@ -211,7 +211,7 @@ abstract class MolajoInstallerHelper
      public static function detectType($p_dir)
      {
          // Search the install dir for an XML file
-         $files = JFolder::files($p_dir, '\.xml$', 1, true);
+         $files = Services::Folder()->files($p_dir, '\.xml$', 1, true);
 
          if (!count($files)) {
              MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
@@ -277,7 +277,7 @@ abstract class MolajoInstallerHelper
 
          // Does the unpacked extension directory exist?
          if (is_dir($resultdir)) {
-             JFolder::delete($resultdir);
+             Services::Folder()->delete($resultdir);
          }
 
          // Is the package file a valid file?

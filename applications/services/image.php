@@ -198,9 +198,9 @@ class MolajoImageService
         $images = Services::Configuration()->get('media_path', 'media/images');
 
         /** folders */
-        if (JFolder::exists(SITE_FOLDER_PATH . '/' . $images)) {
+        if (Services::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            JFolder::create(SITE_FOLDER_PATH . '/' . $images);
+            Services::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** make certain original image exists */
@@ -223,9 +223,9 @@ class MolajoImageService
         $images = Services::Configuration()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
-        if (JFolder::exists(SITE_FOLDER_PATH . '/' . $images)) {
+        if (Services::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            JFolder::create(SITE_FOLDER_PATH . '/' . $images);
+            Services::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** if resized image already exists, return it */

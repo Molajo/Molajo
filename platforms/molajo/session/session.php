@@ -327,7 +327,7 @@ echo 'state';
     public static function getStores()
     {
         jimport('joomla.filesystem.folder');
-        $handlers = JFolder::files(__DIR__ . '/storage', '.php$');
+        $handlers = Services::Folder()->files(__DIR__ . '/storage', '.php$');
 
         $names = array();
         foreach ($handlers as $handler)

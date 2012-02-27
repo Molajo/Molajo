@@ -85,6 +85,10 @@ class Services extends MolajoServices
     {
         return Molajo::Services()->get('Dispatcher');
     }
+    public static function Document ()
+    {
+        return Molajo::Services()->get('Document');
+    }
     public static function File ()
     {
         return Molajo::Services()->get('File');
@@ -108,10 +112,6 @@ class Services extends MolajoServices
     public static function Mail ()
     {
         return Molajo::Services()->get('Mail');
-    }
-    public static function Media ()
-    {
-        return Molajo::Services()->get('Media');
     }
     public static function Message ()
     {

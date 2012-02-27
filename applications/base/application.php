@@ -25,14 +25,6 @@ class MolajoApplication
     protected static $instance;
 
     /**
-   	 * The input object.
-   	 *
-   	 * @var    JInput
-   	 * @since  11.2
-   	 */
-   	public $input = null;
-
-    /**
      * getInstance
      *
      * @static
