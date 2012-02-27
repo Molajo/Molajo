@@ -14,17 +14,16 @@ defined('MOLAJO') or die;
  *      because it will be reflected in the header section
  */
 
-/** metadata */
 if ($this->row->type == 'metadata'): ?>
-
+    <meta name="<?php echo $this->row->name; ?>" content="<?php echo $this->row->content; ?>"<?php echo $end; ?>
 <?php
 elseif ($this->row->type == 'links'):
 ?>
-    <link rel="<?php echo $this->row->relation; ?>" href="<?php echo $this->row->url; ?>" title="<?php echo $this->row->relation; ?>"<?php echo $this->row->attributes; ?><?php echo $end . chr(10) . chr(13); ?>
+    <link href="<?php echo $this->row->url; ?>" rel="<?php echo $this->row->relation; ?>"<?php echo $this->row->attributes; ?><?php echo $end; ?>
 <?php
 elseif ($this->row->type == 'css'):
 ?>
-    <link rel="stylesheet" href="<?php echo $this->row->url; ?>"<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if ($this->row->media != null): ?> type="<?php echo $this->row->media; ?>"<?php endif; ?><?php if (trim($this->row->attributes) != ''): ?><?php echo $this->row->attributes; ?><?php endif; ?><?php echo $end . chr(10) . chr(13); ?>
+    <link rel="stylesheet" href="<?php echo $this->row->url; ?>"<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if ($this->row->media != null): ?> type="<?php echo $this->row->media; ?>"<?php endif; ?><?php if (trim($this->row->attributes) != ''): ?><?php echo $this->row->attributes; ?><?php endif; ?><?php echo $end; ?>
 <?php
 elseif ($this->row->type == 'js'):
 ?>
@@ -32,32 +31,29 @@ elseif ($this->row->type == 'js'):
 <?php
 elseif ($this->row->type == 'css_declarations'):
 ?>
-    <style<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>" <?php endif; ?>>
-<?php
-if ($this->row->mimetype == 'text/html') :
+    <style<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php echo $end; ?>
+<?php if ($page_mimetype == 'text/html') :
 else : ?>
 <![CDATA[
-<?php
-endif;
-echo $this->row->content;
-if ($this->row->mimetype == 'text/html') :
+<?php endif;
+echo $this->row->content . chr(10) . chr(13);
+if ($page_mimetype == 'text/html') :
 else : ?>
 ]]>
 <?php
 endif; ?>
      </style><?php echo chr(10) . chr(13); ?>
 <?php
-elseif ($this->row->type == 'js_declarations'):
-?>
+elseif ($this->row->type == 'js_declarations'): ?>
     <script<?php if ((int)Services::Configuration()->get('html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
 <?php
-if ($this->row->mimetype == 'text/html') :
+if ($page_mimetype == 'text/html') :
 else : ?>
 <![CDATA[
 <?php
 endif;
-echo $this->row->content;
-if ($this->row->mimetype == 'text/html') :
+echo '    ' . trim($this->row->content) . chr(10) . chr(13);
+if ($page_mimetype == 'text/html') :
 else : ?>
 ]]>
 <?php

@@ -68,29 +68,28 @@ class MolajoThemeRenderer extends MolajoRenderer
     {
         if (Molajo::Request()->get('status_error') == true) {
 
-            Services::Media()->set_metadata('metadata_title',
+            Services::Media()->set_metadata('title',
                 Services::Language()->translate('ERROR_FOUND'));
 
-            Services::Media()->set_metadata('metadata_description', '');
-            Services::Media()->set_metadata('metadata_keywords', '');
-            Services::Media()->set_metadata('metadata_robots', '');
-            Services::Media()->set_metadata('metadata_author', '');
-            Services::Media()->set_metadata('metadata_content_rights', '');
-            Services::Media()->set_metadata('source_last_modified', '');
+            Services::Media()->set_metadata('description', '');
+            Services::Media()->set_metadata('keywords', '');
+            Services::Media()->set_metadata('robots', '');
+            Services::Media()->set_metadata('author', '');
+            Services::Media()->set_metadata('content_rights', '');
 
         } else {
 
-            Services::Media()->set_metadata('metadata_title',
+            Services::Media()->set_metadata('title',
                 Molajo::Request()->get('metadata_title'));
-            Services::Media()->set_metadata('metadata_description',
+            Services::Media()->set_metadata('description',
                 Molajo::Request()->get('metadata_description'));
-            Services::Media()->set_metadata('metadata_keywords',
+            Services::Media()->set_metadata('keywords',
                 Molajo::Request()->get('metadata_keywords'));
-            Services::Media()->set_metadata('metadata_robots',
+            Services::Media()->set_metadata('robots',
                 Molajo::Request()->get('metadata_robots'));
-            Services::Media()->set_metadata('metadata_author',
+            Services::Media()->set_metadata('author',
                 Molajo::Request()->get('metadata_author'));
-            Services::Media()->set_metadata('metadata_content_rights',
+            Services::Media()->set_metadata('content_rights',
                 Molajo::Request()->get('metadata_content_rights'));
 
             Services::Media()->set_last_modified(

@@ -42,42 +42,54 @@ class MolajoHeadModel extends MolajoModel
     {
         $this->query_results = array();
 
-        /** base information */
+        /** get metadata (part used in base) */
         $metadata = Services::Media()->get_metadata();
 
         if (count($metadata) > 0) {
             $row = new stdClass();
-
             $row->type = 'base';
             $row->title = Services::Security()->escapeText(
-                $metadata['standard']['metadata_title']
+                $metadata['standard']['title']
             );
-            $row->description = Services::Security()->escapeText(
-                $metadata['standard']['metadata_description']
+            $row->mimetype = Services::Security()->escapeText(
+                Services::Media()->get_mime_encoding()
             );
-            $row->keywords = Services::Security()->escapeText(
-                $metadata['standard']['metadata_keywords']
-            );
-            $row->author = Services::Security()->escapeText(
-                $metadata['standard']['metadata_author']
-            );
-            $row->content_rights = Services::Security()->escapeText(
-                $metadata['standard']['metadata_content_rights']
-            );
-            $row->robots = Services::Security()->escapeText(
-                $metadata['standard']['metadata_robots']
-            );
-
             $row->base = Molajo::Request()->get('url_base');
             $row->last_modified = Services::Security()->escapeText(
                 Molajo::Request()->get('source_last_modified')
             );
-            $row->favicon = Molajo::Request()->get('theme_favicon');
 
             $this->query_results[] = $row;
         }
 
+        /** metadata */
+        if (count($metadata) > 0) {
+
+            foreach ($metadata as $type => $tag) {
+                foreach ($tag as $name => $content) {
+    //				if ($type == 'http-equiv') {
+    //					$content .= '; charset=' . $document->getCharset();
+    //					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
+    //				} else {
+                        $row = new stdClass();
+                        $row->type = 'metadata';
+                        $row->name = Services::Security()->escapeText($name);
+                        $row->content = Services::Security()->escapeText($content);
+                        $this->query_results[] = $row;
+    //				}
+                }
+            }
+		}
+
         /** type: links */
+        $row = new stdClass();
+
+        $row->type = 'links';
+        $row->url = Molajo::Request()->get('theme_favicon');
+        $row->relation = 'shortcut icon';
+        $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
+        $this->query_results[] = $row;
+
         $list = Services::Media()->get_links();
 
         if (count($list) > 0) {
@@ -86,18 +98,20 @@ class MolajoHeadModel extends MolajoModel
 
                 $row->type = 'links';
                 $row->url = $item['url'];
-                $row->relation = $item['relation'];
+                $row->relation = Services::Security()->escapeText(
+                    $item['relation']
+                );
                 $row->relation_type = Services::Security()->escapeText(
                     $item['relation_type']
                 );
 
                 $row->attributes = '';
                 $temp = $item['attributes'];
-                if (count($temp) == 0) {
+                if (trim($temp) == '') {
                 } else if (count($temp) == 1) {
                     $temp = array($temp);
                 }
-                if (count($temp) > 0) {
+                if (is_array($temp) && count($temp) > 0) {
                     foreach ($temp as $pair) {
                         $split = explode(',',$pair);
                         $row->attributes .= ' ' . $split[0]
@@ -106,7 +120,6 @@ class MolajoHeadModel extends MolajoModel
                             . '"';
                     }
                 }
-
                 $this->query_results[] = $row;
             }
         }

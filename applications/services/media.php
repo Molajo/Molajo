@@ -25,6 +25,14 @@ class MolajoMediaService
     protected static $instance;
 
     /**
+     * Mime encoding
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $mime_encoding;
+
+    /**
      * Links
      *
      * @var    string
@@ -105,29 +113,55 @@ class MolajoMediaService
      */
     public function __construct()
     {
+        $this->set_mime_encoding('text/html');
     }
+
+    /**
+   	 * set_mime_encoding
+     *
+     * Sets the document MIME encoding that is sent to the browser.
+   	 *
+\  	 * @param   string   $type
+     *
+   	 * @return void
+   	 * @since   1.0
+   	 */
+   	public function set_mime_encoding($type = 'text/html')
+   	{
+   		$this->mime_encoding = strtolower($type);
+   	}
+
+    /**
+   	 * get_mime_encoding
+     *
+     * Sets the document MIME encoding that is sent to the browser.
+   	 *
+\  	 * @param   string   $type
+     *
+   	 * @return void
+   	 * @since   1.0
+   	 */
+   	public function get_mime_encoding()
+   	{
+   		return $this->mime_encoding;
+   	}
 
     /**
      * set_metadata
      *
      * @param   string  $name
-     * @param   string  $content  Value of the content tag
+     * @param   string  $content
      * @param   string  $context  True: http-equiv; False: standard; Otherise, provided
-     * @param   bool    $sync     Should http-equiv="content-type" by synced with HTTP-header?
      *
      * @return  void
      * @since   1.0
      */
-    public function set_metadata($name, $content, $context = false, $sync = true)
+    public function set_metadata($name, $content, $context = false)
     {
         $name = strtolower($name);
 
         if (is_bool($context) && ($context === true)) {
             $this->metadata['http-equiv'][$name] = $content;
-
-            if ($sync && strtolower($name) == 'content-type') {
-                $this->setMimeEncoding($content, false);
-            }
 
         } else if (is_string($context)) {
             $result = $this->metadata[$context][$name];
@@ -149,7 +183,6 @@ class MolajoMediaService
     {
         return $this->metadata;
     }
-
 
     /**
      * add_link

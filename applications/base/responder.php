@@ -69,10 +69,10 @@ class MolajoResponder
      */
     public function __construct()
     {
-		$this->response = new stdClass;
-		$this->response->cachable = false;
-		$this->response->headers = array();
-		$this->response->body = array();
+        $this->response = new stdClass;
+        $this->response->cachable = false;
+        $this->response->headers = array();
+        $this->response->body = array();
 
         $this->metadata = array();
     }
@@ -123,7 +123,7 @@ class MolajoResponder
      */
     public function respond()
     {
-//        Services::Dispatcher()->notify('onBeforeRespond');
+        //        Services::Dispatcher()->notify('onBeforeRespond');
 
         // If gzip compression is enabled in configuration and the server is compliant, compress the output.
         if (Services::Configuration()->get('gzip')) {
@@ -140,7 +140,7 @@ class MolajoResponder
         if ($this->response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
             if ($this->last_modified instanceof JDate) {
-         	    $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
+                $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
             }
         } else {
             $this->setHeader('Expires', 'Fri, 6 Jan 1989 00:00:00 GMT', true);
@@ -154,7 +154,7 @@ class MolajoResponder
 
         echo $this->getBody();
 
-//        Services::Dispatcher()->notify('onAfterRespond');
+        //        Services::Dispatcher()->notify('onAfterRespond');
 
         return;
     }
@@ -189,7 +189,8 @@ class MolajoResponder
 
         // Verify that headers have not yet been sent, and that our connection is still alive.
         if ($this->_checkHeadersSent()
-            || !$this->checkConnectionAlive()) {
+            || !$this->checkConnectionAlive()
+        ) {
             return;
         }
 
@@ -491,9 +492,9 @@ class MolajoResponder
             }
         }
         if (Services::Configuration()->get('debug', 0) == 1) {
-             debug(' ');
-             debug('MolajoResponderer::save Success redirect to: '.$url);
-         }
+            debug(' ');
+            debug('MolajoResponderer::save Success redirect to: ' . $url);
+        }
         /** validate code */
         if ($code == 301) {
         } else {

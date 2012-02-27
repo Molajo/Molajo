@@ -85,6 +85,10 @@ class Services extends MolajoServices
     {
         return Molajo::Services()->get('Dispatcher');
     }
+    public static function File ()
+    {
+        return Molajo::Services()->get('File');
+    }
     public static function Image ()
     {
         return Molajo::Services()->get('Image');

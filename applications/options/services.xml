@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>
+        <name>File</name>
+        <serviceClass>MolajoFileService</serviceClass>
+    </service>
+    <service>
         <name>Language</name>
         <serviceClass>MolajoLanguageService</serviceClass>
     </service>
