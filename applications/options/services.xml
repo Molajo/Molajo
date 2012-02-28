@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>
+        <name>Request</name>
+        <serviceClass>MolajoRequestService</serviceClass>
+    </service>
+    <service>
+        <name>Cookie</name>
+        <serviceClass>MolajoCookieService</serviceClass>
+    </service>
+    <service>
+        <name>Session</name>
+        <serviceClass>MolajoSessionService</serviceClass>
+    </service>
+    <service>
+        <name>Response</name>
+        <serviceClass>MolajoResponseService</serviceClass>
+    </service>
+    <service>
         <name>File</name>
         <serviceClass>MolajoFileService</serviceClass>
     </service>
@@ -15,6 +31,10 @@
     <service>
         <name>Date</name>
         <serviceClass>MolajoDateService</serviceClass>
+    </service>
+    <service>
+        <name>Message</name>
+        <serviceClass>MolajoMessageService</serviceClass>
     </service>
     <service>
         <name>jdb</name>
@@ -50,14 +70,6 @@
         <serviceClass>MolajoMailService</serviceClass>
     </service>
     <service>
-        <name>Message</name>
-        <serviceClass>MolajoMessageService</serviceClass>
-    </service>
-    <service>
-        <name>Session</name>
-        <serviceClass>MolajoSessionService</serviceClass>
-    </service>
-    <service>
         <name>Security</name>
         <serviceClass>MolajoSecurityService</serviceClass>
     </service>
@@ -68,5 +80,9 @@
     <service>
         <name>Text</name>
         <serviceClass>MolajoTextService</serviceClass>
+    </service>
+    <service>
+        <name>Parameter</name>
+        <serviceClass>MolajoParameterService</serviceClass>
     </service>
 </services>

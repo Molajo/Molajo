@@ -24,7 +24,10 @@ if (defined('PLATFORM_MOLAJO')) {
 } else {
     define('PLATFORM_MOLAJO', PLATFORMS . '/molajo');
 }
-
+if (defined('JPATH_SITE')) {
+} else {
+    define('JPATH_SITE', MOLAJO_BASE_FOLDER);
+}
 /**
  *  Applications
  */

@@ -131,7 +131,14 @@ class MolajoSite
         $this->base_url = $info->base_url;
 
         /** Primary Application Logic Flow */
-        return Molajo::Application()->process();
+        $results = Molajo::Application()->process();
+
+        /** Application Complete */
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug('MolajoSite::load End');
+        }
+
+        exit(0);
     }
 
     /**
@@ -170,10 +177,10 @@ class MolajoSite
             Services::Configuration()->get(
                 'error_403_message',
                 'Not Authorised.'
-                ),
-                MOLAJO_MESSAGE_TYPE_ERROR,
-                403
-            );
+            ),
+            MOLAJO_MESSAGE_TYPE_ERROR,
+            403
+        );
 
         return false;
     }
@@ -191,74 +198,37 @@ class MolajoSite
     {
         if (defined('SITE_NAME')) {
         } else {
-            define('SITE_NAME',
-                Services::Configuration()
-                ->get(
-                'site_name',
-                SITE_ID)
-            );
+            define('SITE_NAME', Services::Configuration()->get('site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
-            define('SITE_CACHE_FOLDER',
-                Services::Configuration()
-                ->get(
-                'cache_path',
-                SITE_FOLDER_PATH . '/cache')
-            );
+            define('SITE_CACHE_FOLDER', Services::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache'));
         }
 
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
-            define('SITE_LOGS_FOLDER',
-                Services::Configuration()
-                ->get(
-                'logs_path',
-                SITE_FOLDER_PATH . '/logs')
-            );
+            define('SITE_LOGS_FOLDER', Services::Configuration()->get('logs_path', SITE_FOLDER_PATH . '/logs'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
-            define('SITE_MEDIA_FOLDER',
-                Services::Configuration()
-                ->get(
-                'media_path',
-                SITE_FOLDER_PATH . '/media')
-            );
+            define('SITE_MEDIA_FOLDER', Services::Configuration()->get('media_path', SITE_FOLDER_PATH . '/media'));
         }
 
         if (defined('SITE_MEDIA_URL')) {
         } else {
-            define('SITE_MEDIA_URL',
-                MOLAJO_BASE_URL .
-                Services::Configuration()
-                ->get(
-                'media_url',
-                MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media')
-            );
+            define('SITE_MEDIA_URL', MOLAJO_BASE_URL . Services::Configuration()->get('media_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
-            define('SITE_TEMP_FOLDER',
-                Services::Configuration()
-                ->get(
-                'temp_path',
-                SITE_FOLDER_PATH . '/temp')
-            );
+            define('SITE_TEMP_FOLDER', Services::Configuration()->get('temp_path', SITE_FOLDER_PATH . '/temp'));
         }
         if (defined('SITE_TEMP_URL')) {
         } else {
-            define('SITE_TEMP_URL',
-                MOLAJO_BASE_URL .
-                Services::Configuration()
-                ->get(
-                'temp_url',
-                MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp')
-            );
+            define('SITE_TEMP_URL', MOLAJO_BASE_URL . Services::Configuration()->get('temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
         }
 
         return;

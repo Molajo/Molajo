@@ -19,7 +19,6 @@ class MolajoSiteConfiguration
     public $secret = 'FBVtggIk5lAzEU9H';
     public $gzip = '0';
     public $error_reporting = '-1';
-    public $helpurl = 'http://help.molajo.org/';
     public $ftp_host = '';
     public $ftp_port = '';
     public $ftp_user = '';

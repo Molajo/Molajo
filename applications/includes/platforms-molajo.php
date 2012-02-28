@@ -14,24 +14,6 @@ if (class_exists('MolajoVersion')) {
 } else {
     require_once MOLAJO_APPLICATIONS . '/includes/version.php';
 }
-/**
- *  File Helper
- */
-$load = new MolajoLoadHelper();
-
-/**
- *  Exceptions - already loaded
- */
-
-/**
- *  Session
- */
-$load->requireClassFile(PLATFORM_MOLAJO . '/session/session.php', 'MolajoSession');
-$load->requireClassFile(PLATFORM_MOLAJO . '/session/storage.php', 'MolajoSessionStorage');
-$files = JFolder::files(PLATFORM_MOLAJO . '/session/storage', '\.php$', false, false);
-foreach ($files as $file) {
-    $load->requireClassFile(PLATFORM_MOLAJO . '/session/storage/' . $file, 'MolajoSessionStorage' . ucfirst(substr($file, 0, strpos($file, '.'))));
-}
 
 /**
  *  Utilities
@@ -49,5 +31,4 @@ foreach ($files as $file) {
  *  Debug
  */
 $load->requireClassFile(PLATFORM_MOLAJO . '/debug/PhpConsole.php', 'PhpConsole');
-PhpConsole::start(true, true, PLATFORM_MOLAJO . '/debug');
-
+//PhpConsole::start(true, true, PLATFORM_MOLAJO . '/debug');

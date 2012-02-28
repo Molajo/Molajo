@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Application
+ * Configuration
  *
  * @package     Molajo
  * @subpackage  Service
@@ -220,7 +220,6 @@ class MolajoConfigurationService
         } else {
             define('MOLAJO_APPLICATION_ID', $id);
         }
-
         return $row;
     }
 }

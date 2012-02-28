@@ -225,7 +225,7 @@ class MolajoParser
         /**
          *  Set the Response Body
          */
-        Molajo::Responder()->setBody($body);
+        Molajo::Responder()->setContent($body);
 
         /** after rendering */
         //        Services::Dispatcher()->notify('onAfterRender');

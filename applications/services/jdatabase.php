@@ -86,9 +86,9 @@ class MolajoJdatabaseService
 
         $this->db = JDatabase::getInstance($options);
 
-        if (MolajoError::isError($this->db)) {
+        if ($this->db == null) {
             header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: ' . (string)$this->db);
+            jexit('Database Connection Failed.');
         }
 
         if ($this->db->getErrorNum() > 0) {

@@ -82,7 +82,7 @@ class MolajoTextService
             $change_to,
             Molajo::Responder()->getBody()
         );
-        Molajo::Responder()->setBody($buffer);
+        Molajo::Responder()->setContent($buffer);
     }
 
     /**

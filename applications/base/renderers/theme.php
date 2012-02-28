@@ -59,7 +59,7 @@ class MolajoThemeRenderer extends MolajoRenderer
     /**
      * _loadMetadata
      *
-     * Loads Metadata values into Molajo::Response array
+     * Loads Metadata values into Services::Document Metadata array
      *
      * @return  null
      * @since   1.0

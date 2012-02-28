@@ -5,7 +5,7 @@
  * @see http://code.google.com/p/php-console
  * @author Barbushin Sergey http://linkedin.com/in/barbushin
  * @version 1.1
- * 
+ *
  * @desc Sending messages to Google Chrome console
  *
  * You need to install Google Chrome extension:

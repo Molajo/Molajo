@@ -12,6 +12,8 @@ define('MOLAJO', 'Long Live Molajo!');
 
 define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
 
+require_once __DIR__.'/autoload.php';
+
 $protocol = 'http';
 $siteBase = '';
 if (isset($_SERVER['HTTPS'])) {
@@ -62,8 +64,8 @@ if (defined('SITES')) {
 }
 
 /*  Site, Application, and MOLAJO_PAGE_REQUEST  */
-include_once MOLAJO_APPLICATIONS . '/includes/idsite.php';
-include_once MOLAJO_APPLICATIONS . '/includes/idapp.php';
+require_once MOLAJO_APPLICATIONS . '/includes/idsite.php';
+require_once MOLAJO_APPLICATIONS . '/includes/idapp.php';
 
 /*  Lazy Load Classes                           */
 require_once MOLAJO_APPLICATIONS . '/includes/loadclasses.php';
@@ -72,3 +74,4 @@ require_once MOLAJO_APPLICATIONS . '/includes/loadclasses.php';
  *  Go Molajo.
  */
 Molajo::Site();
+

@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
 class MolajoApplication
 {
     /**
-     * Application static instance
+     * Application instance
      *
      * @var    object
      * @since  1.0
@@ -49,27 +49,38 @@ class MolajoApplication
      */
     public function initialize()
     {
-        /** Services: initiate */
-        $sv = Molajo::Services()->initiateServices();
+        /** initiate application services */
+        $sv = Molajo::Services()->startServices();
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug('MolajoApplication::initialize Start Services');
+        }
 
-        /** SSL: check requirement */
+        /** offline */
+        if (Services::Configuration()->get('offline', 0) == 1) {
+            $this->_error(503);
+        }
+
+        /** verify application secure access configuration */
         if (Services::Configuration()->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {
             } else {
-                Molajo::Responder()
-                    ->redirect((string)'https' .
-                        substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
-                        MOLAJO_APPLICATION_URL_PATH .
-                        '/' .
-                        MOLAJO_PAGE_REQUEST
-                );
+                $redirectTo = (string)'https' .
+                    substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
+                    MOLAJO_APPLICATION_URL_PATH .
+                    '/' . MOLAJO_PAGE_REQUEST;
+                Services::Response()
+                    ->setStatusCode(301)
+                    ->isRedirect($redirectTo);
             }
         }
 
-        /** Session */
-        Services::Session()->create(
-            Services::Session()->getHash(get_class($this))
-        );
+        /** establish the session */
+        //Services::Session()->create(
+        //        Services::Session()->getHash(get_class($this))
+        //  );
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            debug('MolajoApplication::initialize Services::Session()');
+        }
 
         /** return to Molajo::Site */
         return;
@@ -85,22 +96,12 @@ class MolajoApplication
      */
     public function process()
     {
-        /** responder: prepare for output */
-        Molajo::Responder();
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            debug('MolajoApplication::process Molajo::Responder() completed');
-        }
-
-        /** request: define processing instructions in page_request object */
         Molajo::Request()->process();
         if (Services::Configuration()->get('debug', 0) == 1) {
-            debug('MolajoApplication::process Molajo::Request()->process() completed');
+            debug('MolajoApplication::process Molajo::Request()->process()');
         }
 
-//        $results = Molajo::Request()->getAll('array');
-//        foreach ($results as $key=>$value) {
-//            echo 'Key'.$key.'<br/>';
-//        }
+        die;
 
         /**
          * Display Task
@@ -118,10 +119,17 @@ class MolajoApplication
 
         if (Molajo::Request()->get('mvc_controller') == 'display'
         ) {
-            Molajo::Parser();
+            $content = Molajo::Parser();
             if (Services::Configuration()->get('debug', 0) == 1) {
                 debug('MolajoApplication::process Molajo::Parser() completed');
             }
+
+            /** response */
+            Services::Response()->setContent($content);
+            Services::Response()->setStatusCode(200);
+            Services::Response()->prepare(Services::Request()->request);
+            Services::Response()->send();
+
         } else {
 
             /**
@@ -130,10 +138,8 @@ class MolajoApplication
             //$this->_processTask();
         }
 
-        /** responder: process rendered output */
-        Molajo::Responder()->respond();
         if (Services::Configuration()->get('debug', 0) == 1) {
-            debug('MolajoApplication::process Molajo::Responder()->respond() completed');
+            debug('MolajoApplication::process Services::Response()->respond() completed');
         }
         return;
     }

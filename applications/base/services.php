@@ -77,14 +77,15 @@ class MolajoServices
      */
     public function set($key, $value = null)
     {
-        if ($value == null) {
+        if (!(is_object($value)) || $value == null) {
             debug('MolajoServices::set Service failed to start: ' . $key);
+        } else {
+            $this->service_connection->set($key, $value);
         }
-        $this->service_connection->set($key, $value);
     }
 
     /**
-     * initiateServices
+     * startServices
      *
      * loads all services defined in the services.xml file
      *
@@ -93,7 +94,7 @@ class MolajoServices
      * @return mixed
      * @since 1.0
      */
-    public function initiateServices()
+    public function startServices()
     {
         $services = simplexml_load_file(
             MOLAJO_APPLICATIONS . '/options/services.xml'
@@ -110,18 +111,14 @@ class MolajoServices
                 $connection = $this->_connectService($s);
 
             } catch (Exception $e) {
-
-                Services::Message()->set(
-                    $message = Services::Language()->translate($e->getMessage()) . ' ' . $serviceName,
-                    $type = MOLAJO_MESSAGE_TYPE_ERROR
-                );
-                debug('MolajoServices::initiateServices Service Failed' . ' ' . $serviceName);
+                echo 'Fatal Error: ' . $e->getMessage() . ' ' . $serviceName;
+                debug('MolajoServices::startServices Service Failed' . ' ' . $serviceName);
+                exit(0);
             }
 
             $this->set($serviceName, $connection);
-            debug('MolajoServices::initiateServices Service Connection' . ' ' . $serviceName);
+            debug('MolajoServices::startServices Service Connection' . ' ' . $serviceName);
         }
-
         return;
     }
 

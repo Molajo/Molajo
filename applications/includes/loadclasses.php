@@ -7,9 +7,6 @@
  */
 defined('MOLAJO') or die;
 
-/*                                              */
-/*  Lazy load classes                           */
-/*                                              */
 require_once MOLAJO_APPLICATIONS . '/includes/phpversion.php';
 require_once MOLAJO_APPLICATIONS . '/includes/defines.php';
 require_once MOLAJO_APPLICATIONS . '/includes/installcheck.php';
@@ -20,5 +17,3 @@ require_once MOLAJO_APPLICATIONS . '/includes/applications.php';
 require_once MOLAJO_APPLICATIONS . '/includes/aliases.php';
 require_once MOLAJO_APPLICATIONS . '/includes/platforms-molajo.php';
 require_once MOLAJO_APPLICATIONS . '/includes/platforms-simplepie.php';
-require_once MOLAJO_APPLICATIONS . '/includes/platforms-sfevent.php';
-

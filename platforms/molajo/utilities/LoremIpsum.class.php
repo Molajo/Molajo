@@ -1,461 +1,519 @@
 <?php
-class LoremIpsumGenerator {
-	/**
-	*	Copyright (c) 2009, Mathew Tinsley (tinsley@tinsology.net)
-	*	All rights reserved.
-	*
-	*	Redistribution and use in source and binary forms, with or without
-	*	modification, are permitted provided that the following conditions are met:
-	*		* Redistributions of source code must retain the above copyright
-	*		  notice, this list of conditions and the following disclaimer.
-	*		* Redistributions in binary form must reproduce the above copyright
-	*		  notice, this list of conditions and the following disclaimer in the
-	*		  documentation and/or other materials provided with the distribution.
-	*		* Neither the name of the organization nor the
-	*		  names of its contributors may be used to endorse or promote products
-	*		  derived from this software without specific prior written permission.
-	*
-	*	THIS SOFTWARE IS PROVIDED BY MATHEW TINSLEY ''AS IS'' AND ANY
-	*	EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	*	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-	*	DISCLAIMED. IN NO EVENT SHALL <copyright holder> BE LIABLE FOR ANY
-	*	DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-	*	(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-	*	LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-	*	ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-	*	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-	*	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	*/
+/**
+ * @package     Molajo
+ * @subpackage  Platform
+ * @copyright   Copyright (c) 2009, Mathew Tinsley (tinsley@tinsology.net) All rights reserved.
+ */
+defined('MOLAJO') or die;
 
-	private $words, $wordsPerParagraph, $wordsPerSentence;
+class LoremIpsumGenerator
+{
+    /**
+     *    Copyright (c) 2009, Mathew Tinsley (tinsley@tinsology.net)
+     *    All rights reserved.
+     *
+     *    Redistribution and use in source and binary forms, with or without
+     *    modification, are permitted provided that the following conditions are met:
+     *        * Redistributions of source code must retain the above copyright
+     *          notice, this list of conditions and the following disclaimer.
+     *        * Redistributions in binary form must reproduce the above copyright
+     *          notice, this list of conditions and the following disclaimer in the
+     *          documentation and/or other materials provided with the distribution.
+     *        * Neither the name of the organization nor the
+     *          names of its contributors may be used to endorse or promote products
+     *          derived from this software without specific prior written permission.
+     *
+     *    THIS SOFTWARE IS PROVIDED BY MATHEW TINSLEY ''AS IS'' AND ANY
+     *    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+     *    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     *    DISCLAIMED. IN NO EVENT SHALL <copyright holder> BE LIABLE FOR ANY
+     *    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+     *    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     *    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+     *    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+     *    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+     *    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     */
 
-	function __construct($wordsPer = 100)
-	{
-		$this->wordsPerParagraph = $wordsPer;
-		$this->wordsPerSentence = 24.460;
-		$this->words = array(
-		'lorem',
-		'ipsum',
-		'dolor',
-		'sit',
-		'amet',
-		'consectetur',
-		'adipiscing',
-		'elit',
-		'curabitur',
-		'vel',
-		'hendrerit',
-		'libero',
-		'eleifend',
-		'blandit',
-		'nunc',
-		'ornare',
-		'odio',
-		'ut',
-		'orci',
-		'gravida',
-		'imperdiet',
-		'nullam',
-		'purus',
-		'lacinia',
-		'a',
-		'pretium',
-		'quis',
-		'congue',
-		'praesent',
-		'sagittis',
-		'laoreet',
-		'auctor',
-		'mauris',
-		'non',
-		'velit',
-		'eros',
-		'dictum',
-		'proin',
-		'accumsan',
-		'sapien',
-		'nec',
-		'massa',
-		'volutpat',
-		'venenatis',
-		'sed',
-		'eu',
-		'molestie',
-		'lacus',
-		'quisque',
-		'porttitor',
-		'ligula',
-		'dui',
-		'mollis',
-		'tempus',
-		'at',
-		'magna',
-		'vestibulum',
-		'turpis',
-		'ac',
-		'diam',
-		'tincidunt',
-		'id',
-		'condimentum',
-		'enim',
-		'sodales',
-		'in',
-		'hac',
-		'habitasse',
-		'platea',
-		'dictumst',
-		'aenean',
-		'neque',
-		'fusce',
-		'augue',
-		'leo',
-		'eget',
-		'semper',
-		'mattis',
-		'tortor',
-		'scelerisque',
-		'nulla',
-		'interdum',
-		'tellus',
-		'malesuada',
-		'rhoncus',
-		'porta',
-		'sem',
-		'aliquet',
-		'et',
-		'nam',
-		'suspendisse',
-		'potenti',
-		'vivamus',
-		'luctus',
-		'fringilla',
-		'erat',
-		'donec',
-		'justo',
-		'vehicula',
-		'ultricies',
-		'varius',
-		'ante',
-		'primis',
-		'faucibus',
-		'ultrices',
-		'posuere',
-		'cubilia',
-		'curae',
-		'etiam',
-		'cursus',
-		'aliquam',
-		'quam',
-		'dapibus',
-		'nisl',
-		'feugiat',
-		'egestas',
-		'class',
-		'aptent',
-		'taciti',
-		'sociosqu',
-		'ad',
-		'litora',
-		'torquent',
-		'per',
-		'conubia',
-		'nostra',
-		'inceptos',
-		'himenaeos',
-		'phasellus',
-		'nibh',
-		'pulvinar',
-		'vitae',
-		'urna',
-		'iaculis',
-		'lobortis',
-		'nisi',
-		'viverra',
-		'arcu',
-		'morbi',
-		'pellentesque',
-		'metus',
-		'commodo',
-		'ut',
-		'facilisis',
-		'felis',
-		'tristique',
-		'ullamcorper',
-		'placerat',
-		'aenean',
-		'convallis',
-		'sollicitudin',
-		'integer',
-		'rutrum',
-		'duis',
-		'est',
-		'etiam',
-		'bibendum',
-		'donec',
-		'pharetra',
-		'vulputate',
-		'maecenas',
-		'mi',
-		'fermentum',
-		'consequat',
-		'suscipit',
-		'aliquam',
-		'habitant',
-		'senectus',
-		'netus',
-		'fames',
-		'quisque',
-		'euismod',
-		'curabitur',
-		'lectus',
-		'elementum',
-		'tempor',
-		'risus',
-		'cras' );
-	}
+    private $words, $wordsPerParagraph, $wordsPerSentence;
 
-	function getContent($count, $format = 'html', $loremipsum = true)
-	{
-		$format = strtolower($format);
+    function __construct($wordsPer = 100)
+    {
+        $this->wordsPerParagraph = $wordsPer;
+        $this->wordsPerSentence = 24.460;
+        $this->words = array(
+            'lorem',
+            'ipsum',
+            'dolor',
+            'sit',
+            'amet',
+            'consectetur',
+            'adipiscing',
+            'elit',
+            'curabitur',
+            'vel',
+            'hendrerit',
+            'libero',
+            'eleifend',
+            'blandit',
+            'nunc',
+            'ornare',
+            'odio',
+            'ut',
+            'orci',
+            'gravida',
+            'imperdiet',
+            'nullam',
+            'purus',
+            'lacinia',
+            'a',
+            'pretium',
+            'quis',
+            'congue',
+            'praesent',
+            'sagittis',
+            'laoreet',
+            'auctor',
+            'mauris',
+            'non',
+            'velit',
+            'eros',
+            'dictum',
+            'proin',
+            'accumsan',
+            'sapien',
+            'nec',
+            'massa',
+            'volutpat',
+            'venenatis',
+            'sed',
+            'eu',
+            'molestie',
+            'lacus',
+            'quisque',
+            'porttitor',
+            'ligula',
+            'dui',
+            'mollis',
+            'tempus',
+            'at',
+            'magna',
+            'vestibulum',
+            'turpis',
+            'ac',
+            'diam',
+            'tincidunt',
+            'id',
+            'condimentum',
+            'enim',
+            'sodales',
+            'in',
+            'hac',
+            'habitasse',
+            'platea',
+            'dictumst',
+            'aenean',
+            'neque',
+            'fusce',
+            'augue',
+            'leo',
+            'eget',
+            'semper',
+            'mattis',
+            'tortor',
+            'scelerisque',
+            'nulla',
+            'interdum',
+            'tellus',
+            'malesuada',
+            'rhoncus',
+            'porta',
+            'sem',
+            'aliquet',
+            'et',
+            'nam',
+            'suspendisse',
+            'potenti',
+            'vivamus',
+            'luctus',
+            'fringilla',
+            'erat',
+            'donec',
+            'justo',
+            'vehicula',
+            'ultricies',
+            'varius',
+            'ante',
+            'primis',
+            'faucibus',
+            'ultrices',
+            'posuere',
+            'cubilia',
+            'curae',
+            'etiam',
+            'cursus',
+            'aliquam',
+            'quam',
+            'dapibus',
+            'nisl',
+            'feugiat',
+            'egestas',
+            'class',
+            'aptent',
+            'taciti',
+            'sociosqu',
+            'ad',
+            'litora',
+            'torquent',
+            'per',
+            'conubia',
+            'nostra',
+            'inceptos',
+            'himenaeos',
+            'phasellus',
+            'nibh',
+            'pulvinar',
+            'vitae',
+            'urna',
+            'iaculis',
+            'lobortis',
+            'nisi',
+            'viverra',
+            'arcu',
+            'morbi',
+            'pellentesque',
+            'metus',
+            'commodo',
+            'ut',
+            'facilisis',
+            'felis',
+            'tristique',
+            'ullamcorper',
+            'placerat',
+            'aenean',
+            'convallis',
+            'sollicitudin',
+            'integer',
+            'rutrum',
+            'duis',
+            'est',
+            'etiam',
+            'bibendum',
+            'donec',
+            'pharetra',
+            'vulputate',
+            'maecenas',
+            'mi',
+            'fermentum',
+            'consequat',
+            'suscipit',
+            'aliquam',
+            'habitant',
+            'senectus',
+            'netus',
+            'fames',
+            'quisque',
+            'euismod',
+            'curabitur',
+            'lectus',
+            'elementum',
+            'tempor',
+            'risus',
+            'cras');
+    }
 
-		if($count <= 0)
-			return '';
+    function getContent($count, $format = 'html', $loremipsum = true)
+    {
+        $format = strtolower($format);
 
-		switch($format)
-		{
-			case 'txt':
-				return $this->getText($count, $loremipsum);
-			case 'plain':
-				return $this->getPlain($count, $loremipsum);
-			default:
-				return $this->getHTML($count, $loremipsum);
-		}
-	}
+        if ($count <= 0)
+            return '';
 
-	private function getWords(&$arr, $count, $loremipsum)
-	{
-		$i = 0;
-		if($loremipsum)
-		{
-			$i = 2;
-			$arr[0] = 'lorem';
-			$arr[1] = 'ipsum';
-		}
+        switch ($format)
+        {
+            case 'txt':
+                return $this->getText($count, $loremipsum);
+            case 'plain':
+                return $this->getPlain($count, $loremipsum);
+            default:
+                return $this->getHTML($count, $loremipsum);
+        }
+    }
 
-		for($i; $i < $count; $i++)
-		{
-			$index = array_rand($this->words);
-			$word = $this->words[$index];
-			//echo $index . '=>' . $word . '<br />';
+    /**
+     * getWords
+     *
+     * @param $arr
+     * @param $count
+     * @param $loremipsum
+     */
+    private function getWords(&$arr, $count, $loremipsum)
+    {
+        $i = 0;
+        if ($loremipsum) {
+            $i = 2;
+            $arr[0] = 'lorem';
+            $arr[1] = 'ipsum';
+        }
 
-			if($i > 0 && $arr[$i - 1] == $word)
-				$i--;
-			else
-				$arr[$i] = $word;
-		}
-	}
+        for ($i; $i < $count; $i++)
+        {
+            $index = array_rand($this->words);
+            $word = $this->words[$index];
 
-	private function getPlain($count, $loremipsum, $returnStr = true)
-	{
-		$words = array();
-		$this->getWords($words, $count, $loremipsum);
-		//print_r($words);
+            if ($i > 0 && $arr[$i - 1] == $word)
+                $i--;
+            else
+                $arr[$i] = $word;
+        }
+    }
 
-		$delta = $count;
-		$curr = 0;
-		$sentences = array();
-		while($delta > 0)
-		{
-			$senSize = $this->gaussianSentence();
-			//echo $curr . '<br />';
-			if(($delta - $senSize) < 4)
-				$senSize = $delta;
+    /**
+     * getPlain
+     *
+     * @param $count
+     * @param $loremipsum
+     * @param bool $returnStr
+     *
+     * @return array|string
+     */
+    private function getPlain($count, $loremipsum, $returnStr = true)
+    {
+        $words = array();
+        $this->getWords($words, $count, $loremipsum);
 
-			$delta -= $senSize;
+        $delta = $count;
+        $curr = 0;
+        $sentences = array();
+        while ($delta > 0)
+        {
+            $senSize = $this->gaussianSentence();
+            if (($delta - $senSize) < 4)
+                $senSize = $delta;
 
-			$sentence = array();
-			for($i = $curr; $i < ($curr + $senSize); $i++)
-				$sentence[] = $words[$i];
+            $delta -= $senSize;
 
-			$this->punctuate($sentence);
-			$curr = $curr + $senSize;
-			$sentences[] = $sentence;
-		}
+            $sentence = array();
+            for ($i = $curr; $i < ($curr + $senSize); $i++)
+                $sentence[] = $words[$i];
 
-		if($returnStr)
-		{
-			$output = '';
-			foreach($sentences as $s)
-				foreach($s as $w)
-					$output .= $w . ' ';
+            $this->punctuate($sentence);
+            $curr = $curr + $senSize;
+            $sentences[] = $sentence;
+        }
 
-			return $output;
-		}
-		else
-			return $sentences;
-	}
+        if ($returnStr) {
+            $output = '';
+            foreach ($sentences as $s)
+                foreach ($s as $w)
+                    $output .= $w . ' ';
 
-	private function getText($count, $loremipsum)
-	{
-		$sentences = $this->getPlain($count, $loremipsum, false);
-		$paragraphs = $this->getParagraphArr($sentences);
+            return $output;
+        }
+        else
+            return $sentences;
+    }
 
-		$paragraphStr = array();
-		foreach($paragraphs as $p)
-		{
-			$paragraphStr[] = $this->paragraphToString($p);
-		}
+    /**
+     * getText
+     *
+     * @param $count
+     * @param $loremipsum
+     *
+     * @return string
+     */
+    private function getText($count, $loremipsum)
+    {
+        $sentences = $this->getPlain($count, $loremipsum, false);
+        $paragraphs = $this->getParagraphArr($sentences);
 
-		$paragraphStr[0] = "\t" . $paragraphStr[0];
-		return implode("\n\n\t", $paragraphStr);
-	}
+        $paragraphStr = array();
+        foreach ($paragraphs as $p)
+        {
+            $paragraphStr[] = $this->paragraphToString($p);
+        }
 
-	private function getParagraphArr($sentences)
-	{
-		$wordsPer = $this->wordsPerParagraph;
-		$sentenceAvg = $this->wordsPerSentence;
-		$total = count($sentences);
+        $paragraphStr[0] = "\t" . $paragraphStr[0];
+        return implode("\n\n\t", $paragraphStr);
+    }
 
-		$paragraphs = array();
-		$pCount = 0;
-		$currCount = 0;
-		$curr = array();
+    /**
+     * getParagraphArr
+     *
+     * @param $sentences
+     *
+     * @return array
+     */
+    private function getParagraphArr($sentences)
+    {
+        $wordsPer = $this->wordsPerParagraph;
+        $sentenceAvg = $this->wordsPerSentence;
+        $total = count($sentences);
 
-		for($i = 0; $i < $total; $i++)
-		{
-			$s = $sentences[$i];
-			$currCount += count($s);
-			$curr[] = $s;
-			if($currCount >= ($wordsPer - round($sentenceAvg / 2.00)) || $i == $total - 1)
-			{
-				$currCount = 0;
-				$paragraphs[] = $curr;
-				$curr = array();
-				//print_r($paragraphs);
-			}
-			//print_r($paragraphs);
-		}
+        $paragraphs = array();
+        $pCount = 0;
+        $currCount = 0;
+        $curr = array();
 
-		return $paragraphs;
-	}
+        for ($i = 0; $i < $total; $i++)
+        {
+            $s = $sentences[$i];
+            $currCount += count($s);
+            $curr[] = $s;
+            if ($currCount >= ($wordsPer - round($sentenceAvg / 2.00)) || $i == $total - 1) {
+                $currCount = 0;
+                $paragraphs[] = $curr;
+                $curr = array();
+            }
+        }
 
-	private function getHTML($count, $loremipsum)
-	{
-		$sentences = $this->getPlain($count, $loremipsum, false);
-		$paragraphs = $this->getParagraphArr($sentences);
-		//print_r($paragraphs);
+        return $paragraphs;
+    }
 
-		$paragraphStr = array();
-		foreach($paragraphs as $p)
-		{
-			$paragraphStr[] = "<p>\n" . $this->paragraphToString($p, true) . '</p>';
-		}
+    /**
+     * getHTML
+     *
+     * @param $count
+     * @param $loremipsum
+     *
+     * @return string
+     */
+    private function getHTML($count, $loremipsum)
+    {
+        $sentences = $this->getPlain($count, $loremipsum, false);
+        $paragraphs = $this->getParagraphArr($sentences);
 
-		//add new lines for the sake of clean code
-		return implode("\n", $paragraphStr);
-	}
+        $paragraphStr = array();
+        foreach ($paragraphs as $p)
+        {
+            $paragraphStr[] = "<p>\n" . $this->paragraphToString($p, true) . '</p>';
+        }
 
-	private function paragraphToString($paragraph, $htmlCleanCode = false)
-	{
-		$paragraphStr = '';
-		foreach($paragraph as $sentence)
-		{
-			foreach($sentence as $word)
-				$paragraphStr .= $word . ' ';
+        //add new lines for the sake of clean code
+        return implode("\n", $paragraphStr);
+    }
 
-			if($htmlCleanCode)
-				$paragraphStr .= "\n";
-		}
-		return $paragraphStr;
-	}
+    /**
+     * paragraphToString
+     *
+     * @param $paragraph
+     * @param bool $htmlCleanCode
+     *
+     * @return string
+     */
+    private function paragraphToString($paragraph, $htmlCleanCode = false)
+    {
+        $paragraphStr = '';
+        foreach ($paragraph as $sentence)
+        {
+            foreach ($sentence as $word)
+                $paragraphStr .= $word . ' ';
 
-	/*
-	* Inserts commas and periods in the given
-	* word array.
-	*/
-	private function punctuate(& $sentence)
-	{
-		$count = count($sentence);
-		$sentence[$count - 1] = $sentence[$count - 1] . '.';
+            if ($htmlCleanCode)
+                $paragraphStr .= "\n";
+        }
+        return $paragraphStr;
+    }
 
-		if($count < 4)
-			return $sentence;
+   /**
+    * punctuate
+    *
+    * Inserts commas and periods in word array.
+    *
+    * @param $sentence
+    * @return array
+    */
+    private function punctuate(& $sentence)
+    {
+        $count = count($sentence);
+        $sentence[$count - 1] = $sentence[$count - 1] . '.';
 
-		$commas = $this->numberOfCommas($count);
+        if ($count < 4)
+            return $sentence;
 
-		for($i = 1; $i <= $commas; $i++)
-		{
-			$index = (int) round($i * $count / ($commas + 1));
+        $commas = $this->numberOfCommas($count);
 
-			if($index < ($count - 1) && $index > 0)
-			{
-				$sentence[$index] = $sentence[$index] . ',';
-			}
-		}
-	}
+        for ($i = 1; $i <= $commas; $i++)
+        {
+            $index = (int)round($i * $count / ($commas + 1));
 
-	/*
-	* Determines the number of commas for a
-	* sentence of the given length. Average and
-	* standard deviation are determined superficially
-	*/
-	private function numberOfCommas($len)
-	{
-		$avg = (float) log($len, 6);
-		$stdDev = (float) $avg / 6.000;
+            if ($index < ($count - 1) && $index > 0) {
+                $sentence[$index] = $sentence[$index] . ',';
+            }
+        }
+    }
 
-		return (int) round($this->gauss_ms($avg, $stdDev));
-	}
+    /**
+     * numberOfCommas
+     *
+     * Determines the number of commas for a
+     * sentence of the given length. Average and
+     * standard deviation are determined superficially
+     *
+     * @param $len
+     * @return int
+     */
+    private function numberOfCommas($len)
+    {
+        $avg = (float)log($len, 6);
+        $stdDev = (float)$avg / 6.000;
 
-	/*
-	* Returns a number on a gaussian distribution
-	* based on the average word length of an english
-	* sentence.
-	* Statistics Source:
-	*	http://hearle.nahoo.net/Academic/Maths/Sentence.html
-	*	Average: 24.46
-	*	Standard Deviation: 5.08
-	*/
-	private function gaussianSentence()
-	{
-		$avg = (float) 24.460;
-		$stdDev = (float) 5.080;
+        return (int)round($this->gauss_ms($avg, $stdDev));
+    }
 
-		return (int) round($this->gauss_ms($avg, $stdDev));
-	}
+    /**
+     * gaussianSentence
+     *
+     * Returns a number on a gaussian distribution
+     * based on the average word length of an english
+     * sentence.
+     * Statistics Source:
+     *	http://hearle.nahoo.net/Academic/Maths/Sentence.html
+     *	Average: 24.46
+     *	Standard Deviation: 5.08
+     */
+    private function gaussianSentence()
+    {
+        $avg = (float)24.460;
+        $stdDev = (float)5.080;
 
-	/*
-	* The following three functions are used to
-	* compute numbers with a guassian cmsbution
-	* Source:
-	* 	http://us.php.net/manual/en/function.rand.php#53784
-	*/
-	private function gauss()
-	{   // N(0,1)
-		// returns random number with normal distribution:
-		//   mean=0
-		//   std dev=1
+        return (int)round($this->gauss_ms($avg, $stdDev));
+    }
 
-		// auxilary vars
-		$x=$this->random_0_1();
-		$y=$this->random_0_1();
+    /**
+     * gauss
+     *
+     * The following three functions are used to
+     * compute numbers with a guassian cmsbution
+     * Source:
+     * 	http://us.php.net/manual/en/function.rand.php#53784
+     */
+    private function gauss()
+    { // N(0,1)
+        // returns random number with normal distribution:
+        //   mean=0
+        //   std dev=1
 
-		// two independent variables with normal distribution N(0,1)
-		$u=sqrt(-2*log($x))*cos(2*pi()*$y);
-		$v=sqrt(-2*log($x))*sin(2*pi()*$y);
+        // auxilary vars
+        $x = $this->random_0_1();
+        $y = $this->random_0_1();
 
-		// i will return only one, couse only one needed
-		return $u;
-	}
+        // two independent variables with normal distribution N(0,1)
+        $u = sqrt(-2 * log($x)) * cos(2 * pi() * $y);
+        $v = sqrt(-2 * log($x)) * sin(2 * pi() * $y);
 
-	private function gauss_ms($m=0.0,$s=1.0)
-	{
-		return $this->gauss()*$s+$m;
-	}
+        // i will return only one, couse only one needed
+        return $u;
+    }
 
-	private function random_0_1()
-	{
-		return (float)rand()/(float)getrandmax();
-	}
+    private function gauss_ms($m = 0.0, $s = 1.0)
+    {
+        return $this->gauss() * $s + $m;
+    }
+
+    private function random_0_1()
+    {
+        return (float)rand() / (float)getrandmax();
+    }
 
 }

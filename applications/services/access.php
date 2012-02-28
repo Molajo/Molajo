@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Access
  *
- * Asset permissioning verification
+ * Permissioning
  *
  * @package     Molajo
  * @subpackage  Services
@@ -18,6 +18,14 @@ defined('MOLAJO') or die;
  */
 class MolajoAccessService
 {
+
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
     /**
      * $action_to_action_id
@@ -48,14 +56,6 @@ class MolajoAccessService
      * @since  1.0
      */
     protected $action_to_controller;
-
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
 
     /**
      * getInstance
@@ -124,10 +124,10 @@ class MolajoAccessService
 
         /** retrieve database keys for actions */
         $m = new MolajoActionTypesModel();
-
-        $actionsList = $m->getData();
+        $actionsList = $m->loadObjectList();
 
         foreach ($actionsList as $actionDefinition) {
+
             $this->action_to_action_id
                 ->set(
                 $actionDefinition->title,
@@ -202,9 +202,7 @@ class MolajoAccessService
 
         if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
             if (Services::Configuration()->get('debug', 0) == 1) {
-                debug(' ');
-                debug('MolajoAccessService::authoriseTask');
-                debug('Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id);
+                debug('MolajoAccessService::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id);
             }
         }
 
@@ -226,8 +224,9 @@ class MolajoAccessService
         if ($count > 0) {
             return true;
         } else {
-            echo 'Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id . ' (Message in Access)' . '<br />';
-            echo $count;
+            if (Services::Configuration()->get('debug', 0) == 1) {
+                debug('MolajoAccessService::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id);
+            }
             return false;
         }
     }
@@ -253,10 +252,10 @@ class MolajoAccessService
         $m->query->where('user_id = ' . (int)$user_id);
 
         $count = $m->loadResult();
+
         if ($count > 0) {
             return true;
         } else {
-            echo 'Task: login ' . ' User ID: '. $user_id . ' (Message in Access)' . '<br />';
             return false;
         }
     }
@@ -360,7 +359,6 @@ class MolajoAccessService
                 return false;
                 break;
             }
-
         }
         return true;
     }

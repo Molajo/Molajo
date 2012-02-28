@@ -770,9 +770,9 @@ class MolajoModel
      * @return array
      * @since  1.0
      */
-    protected function _getAdditionalData($data = array())
+    protected function _getAdditionalData()
     {
-        return $data;
+        return array();
     }
 
     /**
@@ -786,18 +786,4 @@ class MolajoModel
         return $this->pagination;
     }
 
-    /**
-     * store
-     *
-     * Method to store a row (insert: no PK; update: PK) in the database.
-     *
-     * @param   boolean True to update fields even if they are null.
-     *
-     * @return  boolean  True on success.
-     * @since   1.0
-     */
-    public function store($updateNulls = false)
-    {
-        return true;
-    }
 }

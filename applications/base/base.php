@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Molajo Base
  *
- * Creates static instances of base clases
+ * Creates instances of base clases
  *
  * Aliases are set for each of the base classes:
  * - For example, MolajoBase is aliased as Molajo
@@ -52,14 +52,6 @@ class MolajoBase
      * @since  1.0
      */
     protected static $parser = null;
-
-    /**
-     * Molajo::Responder
-     *
-     * @var    object MolajoResponder
-     * @since  1.0
-     */
-    protected static $responder = null;
 
     /**
      * Molajo::Services
@@ -149,25 +141,6 @@ class MolajoBase
                 MolajoParser::getInstance();
         }
         return self::$parser;
-    }
-
-    /**
-     * getResponder
-     *
-     * MolajoResponder, alias Molajo::Responder
-     *
-     * @static
-     * @return  MolajoResponder
-     * @since   1.0
-     */
-    public static function getResponder()
-    {
-        if (self::$responder) {
-        } else {
-            self::$responder =
-                MolajoResponder::getInstance();
-        }
-        return self::$responder;
     }
 
     /**

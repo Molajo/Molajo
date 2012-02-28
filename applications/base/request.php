@@ -19,8 +19,6 @@ class MolajoRequest
     /**
      * $instance
      *
-     * Application static instance
-     *
      * @var    object
      * @since  1.0
      */
@@ -29,7 +27,7 @@ class MolajoRequest
     /**
      * $redirect_to_id
      *
-     * Redirect the Tequest URL to Asset ID
+     * Redirect the Request URL to Asset ID
      *
      * @var    object
      * @since  1.0
@@ -37,7 +35,7 @@ class MolajoRequest
     protected $redirect_to_id;
 
     /**
-     * $page_request
+     * $page_request (move these into parameters)
      *
      * Page Request object that will be populated by this class
      * with overall processing requirements for the page
@@ -50,28 +48,26 @@ class MolajoRequest
     public $page_request;
 
     /**
-     * $parameters
+     * $parameters (create a new service for properties)
      *
-     * Parameters for source, menu item, extension, category,
-     * and application are merged into one set where the most
-     * detailed value (source or menu item) takes precedence.
+     * Inheritence chain:
+     * 1. Menu Item
+     * 2. Detail source content
+     * 3. Extension for content
+     * 4. Primary category of content
+     * 5. Application
+     * 6. Hard-coded defaults
      *
-     * Access via Molajo::Request()->getParameter('property')
+     * Interface options:
+     * Services::Parameters()->get('key', 'default')
+     * Services::Parameters()->set('key, 'value')
+     * Services::Parameters()->get('all')
+     * Services::Parameters()->get('keys')
      *
      * @var    object
      * @since  1.0
      */
     public $parameters;
-
-    /**
-     * $input
-     *
-     * Application Request Object
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $input;
 
     /**
      * getInstance
@@ -157,7 +153,7 @@ class MolajoRequest
             || $this->get('request_url_query', '') == 'index.php?'
             || $this->get('request_url_query', '') == '/index.php/'
         ) {
-            Molajo::Responder()->redirect('', 301);
+            Molajo::Responder()->setStatus(301)->isRedirect();
         }
 
         /** Home */
@@ -244,13 +240,8 @@ class MolajoRequest
      */
     public function process()
     {
-        /** offline */
-        if (Services::Configuration()->get('offline', 0) == 1) {
-            $this->_error(503);
-        }
-
         /** URL parameters */
-        $this->_getInput();
+        $this->_getRequest();
 
         /** Asset, Access Control, links to source, menus, extensions, etc. */
         $this->_getAsset();
@@ -314,16 +305,35 @@ class MolajoRequest
      * @return null
      * @since  1.0
      */
-    protected function _getInput()
+    protected function _getRequest()
     {
-        /** extract URL variables */
-        $this->input = array();
 
-        $uri = clone JURI::getInstance();
+        $r = Services::Request();
+        //echo 'Request (new)<br />';
+        echo '<pre>';
+        //var_dump($this->r);
+        echo '</pre>';
 
-        $results = $uri->get('_vars');
+
+
+        //echo 'Request (createFromGlobals)<br />';
+        echo '<pre>';
+        //var_dump($this->request);
+        echo '</pre>';
+
+                echo 'Request URI <br />';
+                echo '<pre>';
+                echo $r->getUri();
+                echo '</pre>';
+
+        foreach ($parameters[0] as $key=>$pair) {
+            echo $key . ' '. $pair .'<br />';
+        }
+        die;
+
         foreach ($results as $key => $value) {
-            $this->input[$key] = $value;
+            echo $key.' '.$value.' <br />';
+//            $this->input[$key] = $value;
         }
 
         if (count($this->input) > 0
