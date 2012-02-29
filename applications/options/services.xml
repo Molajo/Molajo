@@ -29,21 +29,21 @@
         <serviceClass>MolajoConfigurationService</serviceClass>
     </service>
     <service>
-           <name>Request</name>
-           <serviceClass>MolajoRequestService</serviceClass>
-       </service>
-       <service>
-           <name>Cookie</name>
-           <serviceClass>MolajoCookieService</serviceClass>
-       </service>
-       <service>
-           <name>Session</name>
-           <serviceClass>MolajoSessionService</serviceClass>
-       </service>
-       <service>
-           <name>Response</name>
-           <serviceClass>MolajoResponseService</serviceClass>
-       </service>
+        <name>Request</name>
+        <serviceClass>MolajoRequestService</serviceClass>
+    </service>
+    <service>
+        <name>Cookie</name>
+        <serviceClass>MolajoCookieService</serviceClass>
+    </service>
+    <service>
+        <name>Session</name>
+        <serviceClass>MolajoSessionService</serviceClass>
+    </service>
+    <service>
+        <name>Response</name>
+        <serviceClass>MolajoResponseService</serviceClass>
+    </service>
     <service>
         <name>Document</name>
         <serviceClass>MolajoDocumentService</serviceClass>

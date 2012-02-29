@@ -308,13 +308,14 @@ class MolajoRequest
     protected function _getRequest()
     {
 
-        $r = Services::Request();
-        //echo 'Request (new)<br />';
-        echo '<pre>';
-        //var_dump($this->r);
-        echo '</pre>';
+        $task = Services::Request()->request->get('task');
+               echo 'Task: '.$task.'<br />';
 
+// echo 'Ajax ' . Services::Request()->request->isXmlHttpRequest().'<br />';
 
+echo 'Querystring: '. Services::Request()->request->getQueryString() .'<br />';
+
+echo 'Keys: '. Services::Request()->request->keys() .'<br />';
 
         //echo 'Request (createFromGlobals)<br />';
         echo '<pre>';

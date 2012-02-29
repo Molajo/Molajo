@@ -50,7 +50,6 @@ class MolajoUserService
      */
     public static function getInstance($id = 0)
     {
-        return;
         if (is_numeric($id)) {
         } else {
             $id = MolajoUserHelper::getId($id);
@@ -72,10 +71,9 @@ class MolajoUserService
      */
     protected function __construct($id = 0)
     {
-        return;
         $this->id = (int) $id;
-        $this->storage = Services::Request()->getSession();
-
+//        $this->storage = Services::Request()->getSession();
+        $this->storage = new Registry;
         if ((int) $id == 0) {
             return $this->_loadGuest();
         } else {
@@ -95,7 +93,7 @@ class MolajoUserService
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default)
+    public function get($key, $default = null)
     {
         $this->storage->get($key, $default);
     }
@@ -112,7 +110,7 @@ class MolajoUserService
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null)
+    public function set($key, $value)
     {
         return $this->storage->set($key, $value);
     }
@@ -143,22 +141,21 @@ class MolajoUserService
         }
 
         $custom_fields = new Registry;
-        $custom_fields->loadString($this->custom_fields);
+        $custom_fields->loadString($this->get('custom_fields', array()));
         $this->set('custom_fields', $custom_fields);
 
         $metadata = new Registry;
-        $metadata->loadString($this->metadata);
+        $metadata->loadString($this->get('metadata', array()));
         $this->set('metadata', $metadata);
 
         $parameters = new Registry;
-        $parameters->loadString($this->parameters);
+        $parameters->loadString($this->get('parameters'));
         $this->set('parameters', $parameters);
 /**
         echo '<pre>';
         var_dump($this->parameters);
         echo '</pre>';
 */
-        return $this;
     }
 
     /**
@@ -172,7 +169,6 @@ class MolajoUserService
     protected function _loadGuest()
     {
         $this->model = new MolajoUsersModel (0);
-        var_dump($this->model);
 
         $columns = $this->model->getFields();
 
@@ -184,7 +180,7 @@ class MolajoUserService
 
         $parameters = new Registry;
         $parameters->loadString(
-            Service::Configuration()->get('guest_parameters', '{}')
+            Services::Configuration()->get('guest_parameters', '{}')
         );
 
         $this->set('applications', array());
@@ -194,5 +190,7 @@ class MolajoUserService
         $this->set('guest', 1);
         $this->set('registered', 0);
         $this->set('administrator', 0);
+
+        return $this;
     }
 }

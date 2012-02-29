@@ -49,64 +49,12 @@ class MolajoApplication
      */
     public function initialize()
     {
-
         /** initiate application services */
         $sv = Molajo::Services()->startServices();
-
         if (Services::Configuration()->get('debug', 0) == 1) {
             debug('MolajoApplication::initialize Start Services');
         }
 
-        /** Server */
-        $server = Services::Request()->request->server->get('HTTP_HOST');
-        echo 'Server: '.$server.'<br />';
-
-        /** Request */
-        // retrieve an HTTP request header, with normalized, lowercase keys
-        $host = Services::Request()->request->headers->get('host');
-        echo 'Host: '.$host.'<br />';
-        $content_type = Services::Request()->request->headers->get('content_type');
-        echo 'Content Type:  '.$content_type.'<br />';
-        $task = Services::Request()->request->get('task');
-        echo 'Task: '.$task.'<br />';
-
-        echo 'Ajax? ' . Services::Request()->request->isXmlHttpRequest().'<br />';
-
-        /** URL */
-        if (Services::Request()->isSecure() === true) {
-            $https = true;
-            echo 'https=true';
-        } else {
-            $https = false;
-            echo 'https=false';
-        }
-        echo 'PathInfo: '. Services::Request()->request->getPathInfo() .'<br />';
-        echo 'Querystring: '. Services::Request()->request->getQueryString() .'<br />';
-
-        /** Cookie */
-        $cookie = Services::Request()->cookies->get('PHPSESSID');
-        echo 'PHPSESSID Cookie: '.'<br />';
-         echo '<pre>';
-         var_dump($cookie);
-         echo '</pre>';
-
-
-
-        $all = Services::Request()->request->all();
-        echo 'All '.'<br />';
-        echo '<pre>';
-        var_dump($all);
-        echo '</pre>';
-  die;
-
-
-        /** User and Session */
-        $this->model = new MolajoUsersModel (0);
-        $columns = $this->model->getFields();
-        echo '<pre>';
-        var_dump($columns);
-        echo '</pre>';
-        die;
         /** offline */
         if (Services::Configuration()->get('offline', 0) == 1) {
             $this->_error(503);
@@ -114,7 +62,7 @@ class MolajoApplication
 
         /** verify application secure access configuration */
         if (Services::Configuration()->get('force_ssl') >= 1) {
-            if (isset($_SERVER['HTTPS'])) {
+            if ((Services::Request()->isSecure() === true)) {
             } else {
                 $redirectTo = (string)'https' .
                     substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
@@ -152,8 +100,6 @@ class MolajoApplication
         if (Services::Configuration()->get('debug', 0) == 1) {
             debug('MolajoApplication::process Molajo::Request()->process()');
         }
-
-        die;
 
         /**
          * Display Task
