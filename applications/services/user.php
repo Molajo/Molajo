@@ -25,201 +25,20 @@ class MolajoUserService
     protected static $instances = array();
 
     /**
+     * $storage
+     *
+     * @since  1.0
+     * @var object
+     */
+    protected $storage;
+
+    /**
      * $model
      *
      * @since  1.0
      * @var object
      */
     protected $model = 'MolajoUsersModel';
-
-    /**
-     * $id
-     *
-     * @since  1.0
-     * @var int
-     */
-    protected $id = null;
-
-    /**
-     * $asset_type_id
-     *
-     * @since  1.0
-     * @var int
-     */
-    protected $asset_type_id = null;
-
-    /**
-     * $username
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $username = null;
-
-    /**
-     * $first_name
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $first_name = null;
-
-    /**
-     * $last_name
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $last_name = null;
-
-    /**
-     * $name
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $name = null;
-
-    /**
-     * $content_text
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $content_text = null;
-
-    /**
-     * $email
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $email = null;
-
-    /**
-     * $password
-     *
-     * @since  1.0
-     * @var string
-     */
-    protected $password = null;
-
-    /**
-     * $block
-     *
-     * @since  1.0
-     * @var int
-     */
-    protected $block = null;
-
-    /**
-     * $activation
-     *
-     * @since  1.0
-     * @var string activation hash
-     */
-    protected $activation = null;
-
-    /**
-     * $send_email
-     *
-     * @since  1.0
-     * @var int
-     */
-    protected $send_email = null;
-
-    /**
-     * $register_datetime
-     *
-     * @since  1.0
-     * @var datetime
-     */
-    protected $register_datetime = null;
-
-    /**
-     * $last_visit_datetime
-     *
-     * @since  1.0
-     * @var datetime
-     */
-    protected $last_visit_datetime = null;
-
-    /**
-     * $custom_fields
-     *
-     * @var string
-     */
-    protected $custom_fields = array();
-
-    /**
-     * $metadata
-     *
-     * @var string
-     */
-    protected $metadata = array();
-
-    /**
-     * $parameters
-     *
-     * @var string
-     */
-    protected $parameters = array();
-
-    /**
-     * $applications
-     *
-     * @since  1.0
-     * @var    array
-     */
-    protected $applications = array();
-
-    /**
-     * $groups
-     *
-     * @since  1.0
-     * @var    array
-     */
-    protected $groups = array();
-
-    /**
-     * $view_groups
-     *
-     * @since  1.0
-     * @var    array
-     */
-    protected $view_groups = array();
-
-    /**
-     * $public
-     *
-     * @since  1.0
-     * @var boolean
-     */
-    protected $public = null;
-
-    /**
-     * $guest
-     *
-     * @since  1.0
-     * @var boolean
-     */
-    protected $guest = null;
-
-    /**
-     * $registered
-     *
-     * @since  1.0
-     * @var boolean
-     */
-    protected $registered = null;
-
-    /**
-     * $administrator
-     *
-     * @since  1.0
-     * @var boolean
-     */
-    protected $administrator = null;
 
     /**
      * getInstance
@@ -231,6 +50,7 @@ class MolajoUserService
      */
     public static function getInstance($id = 0)
     {
+        return;
         if (is_numeric($id)) {
         } else {
             $id = MolajoUserHelper::getId($id);
@@ -252,8 +72,49 @@ class MolajoUserService
      */
     protected function __construct($id = 0)
     {
+        return;
         $this->id = (int) $id;
-        return $this->_load();
+        $this->storage = Services::Request()->getSession();
+
+        if ((int) $id == 0) {
+            return $this->_loadGuest();
+        } else {
+            return $this->_load();
+        }
+    }
+
+    /**
+     * get
+     *
+     * Retrieves values, or establishes the value with a default,
+     * if not available
+     *
+     * @param  string  $key
+     * @param  string  $default
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function get($key, $default)
+    {
+        $this->storage->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property, creating it and establishing
+     * a default if not existing
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->storage->set($key, $value);
     }
 
     /**
@@ -273,7 +134,7 @@ class MolajoUserService
         $results = $this->model->load();
         if ($results == false) {
             $this->guest = true;
-            return;
+            return $this->_loadGuest();
         }
         $columns = $this->model->getFields();
 
@@ -301,88 +162,37 @@ class MolajoUserService
     }
 
     /**
-     * get
+     * _loadGuest
      *
-     * Retrieves values, or establishes the value with a default,
-     * if not available
+     * Set Guest values for visitor not logged on
      *
-     * @param  string  $key
-     * @param  string  $default
-     * @param  string  $type
-     *
-     * @return  mixed
-     *
+     * @return  boolean
      * @since   1.0
      */
-    public function get($key, $default = null, $type = null)
+    protected function _loadGuest()
     {
-        if ($type == 'custom') {
-            return $this->custom_fields->get($key, $default);
+        $this->model = new MolajoUsersModel (0);
+        var_dump($this->model);
 
-        } else if ($type == 'metadata') {
-            return $this->metadata->get($key, $default);
+        $columns = $this->model->getFields();
 
-        } else if ($type == 'state') {
-
-            $session = Services::Session();
-            $current_state = Molajo::Application()->input->get($key, null);
-
-            if ($current_state == null) {
-                $current_state = null; //$session->get($key, $default);
-            } else {
-                $this->set($key, $current_state);
-            }
-
-            return $current_state;
-
-        } else {
-            if (isset($this->$key)) {
-                return $this->$key;
-            }
-            return false;
+        foreach ($columns as $name => $value) {
+            $this->set($name, '');
         }
-    }
+        $this->set('id', 0);
+        $this->set('asset_type_id', MOLAJO_ASSET_TYPE_USER);
 
-    /**
-     * set
-     *
-     * Modifies a property, creating it and establishing
-     * a default if not existing
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @param  string  $type
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function set($key, $value = null, $type = 'config')
-    {
-        if ($type == 'custom') {
-            return $this->custom_fields->set($key, $value);
+        $parameters = new Registry;
+        $parameters->loadString(
+            Service::Configuration()->get('guest_parameters', '{}')
+        );
 
-        } else if ($type == 'metadata') {
-            return $this->metadata->set($key, $value);
-
-        } else if ($type == 'service') {
-            return $this->service->set($key, $value);
-
-        } else if ($type == 'visit') {
-            return $this->model->setLastVisit();
-
-        } else if ($type == 'state') {
-            $registry = Molajo::Application()
-                ->getSession()
-                ->get('registry');
-
-            if (is_null($registry)) {
-            } else {
-                return $registry->set($key, $value);
-            }
-            return null;
-
-        } else {
-            return $this->$key = $value;
-        }
+        $this->set('applications', array());
+        $this->set('groups', array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST));
+        $this->set('view_groups', array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST));
+        $this->set('public', 1);
+        $this->set('guest', 1);
+        $this->set('registered', 0);
+        $this->set('administrator', 0);
     }
 }
