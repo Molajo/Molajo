@@ -298,7 +298,7 @@ class MolajoRequest
     }
 
     /**
-     * _getInput
+     * _getRequest
      *
      * Retrieve URL contents
      *
@@ -308,34 +308,16 @@ class MolajoRequest
     protected function _getRequest()
     {
 
-        $task = Services::Request()->request->get('task');
-               echo 'Task: '.$task.'<br />';
-
 // echo 'Ajax ' . Services::Request()->request->isXmlHttpRequest().'<br />';
 
-echo 'Querystring: '. Services::Request()->request->getQueryString() .'<br />';
-
-echo 'Keys: '. Services::Request()->request->keys() .'<br />';
-
-        //echo 'Request (createFromGlobals)<br />';
-        echo '<pre>';
-        //var_dump($this->request);
-        echo '</pre>';
-
-                echo 'Request URI <br />';
-                echo '<pre>';
-                echo $r->getUri();
-                echo '</pre>';
-
-        foreach ($parameters[0] as $key=>$pair) {
-            echo $key . ' '. $pair .'<br />';
+        $queryString = Services::Request()->request->getQueryString();
+        $pair = explode('&', $queryString);
+        foreach ($pair as $item) {
+            $kv = explode('=', $item);
+            $this->input[$kv[0]] = $kv[1];
         }
-        die;
 
-        foreach ($results as $key => $value) {
-            echo $key.' '.$value.' <br />';
-//            $this->input[$key] = $value;
-        }
+/** NOTE: input is not filtered yet */
 
         if (count($this->input) > 0
             && isset($this->input['task'])
