@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SplClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
@@ -50,9 +49,9 @@ class SplClassLoader
     }
 
     /**
-     * Gets the namespace seperator used by classes in the namespace of this class loader.
+     * Gets the namespace separator used by classes in the namespace of this class loader.
      *
-     * @return void
+     * @return string _namespaceSeparator
      */
     public function getNamespaceSeparator()
     {
@@ -116,39 +115,31 @@ class SplClassLoader
     }
 
     /**
+     * loadClass
+     *
      * Loads the given class or interface.
      *
-     * @param string $className The name of the class to load.
+     * @param string $className
+     *
      * @return void
+     * @since  1.0
      */
     public function loadClass($className)
     {
-        if (null === $this->_namespace || $this->_namespace.$this->_namespaceSeparator === substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator))) {
+        if (null === $this->_namespace
+            || $this->_namespace.$this->_namespaceSeparator
+                === substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator))) {
             $fileName = '';
             $namespace = '';
-            if (false !== ($lastNsPos = strripos($className, $this->_namespaceSeparator))) {
+            if (false == ($lastNsPos = strripos($className, $this->_namespaceSeparator))) {
+            } else {
                 $namespace = substr($className, 0, $lastNsPos);
                 $className = substr($className, $lastNsPos + 1);
-                $fileName = str_replace($this->_namespaceSeparator, DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+                $fileName = str_replace($this->_namespaceSeparator, '/', $namespace) . '/';
             }
-            $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
+            $fileName .= str_replace('_', '/', $className) . $this->_fileExtension;
 
-            require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            require ($this->_includePath !== null ? $this->_includePath . '/' : '') . $fileName;
         }
-    }
-
-    function autoload($className)
-    {
-        $className = ltrim($className, '\\');
-        $fileName  = '';
-        $namespace = '';
-        if ($lastNsPos = strripos($className, '\\')) {
-            $namespace = substr($className, 0, $lastNsPos);
-            $className = substr($className, $lastNsPos + 1);
-            $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-        }
-        $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-
-        require $fileName;
     }
 }

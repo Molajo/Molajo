@@ -164,8 +164,7 @@ Class MailService
                $adminName, $adminEmail, $email, $type, $title, $author, $url
            );
        }
-
-
+}
 ClassMail extends PHPMailer
 {
     /**
