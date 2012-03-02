@@ -10,7 +10,7 @@ namespace Molajo\Application\Service;
 defined('MOLAJO') or die;
 
 /**
- * Joomla Database
+ * Database
  *
  * Used by the model
  *
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class JdatabaseService
+Class DatabaseService
 {
     /**
      * Static instance
@@ -53,7 +53,7 @@ Class JdatabaseService
     /**
      * __construct
      *
-     * @return null
+     * @return object
      * @since  1.0
      */
     public function __construct()
@@ -66,11 +66,15 @@ Class JdatabaseService
      *
      * @return mixed
      * @throws RuntimeException
+     * @since 1.0
      */
-    public function connect()
+    public function connect($database_class = 'JDatabase',
+                            $configuration_file = null)
     {
-        $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
-        $configuration_class = 'MolajoSiteConfiguration';
+        if ($configuration_file === null) {
+            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
+        }
+        $configuration_class = 'SiteConfiguration';
 
         if (file_exists($configuration_file)) {
             require_once $configuration_file;
@@ -78,25 +82,36 @@ Class JdatabaseService
             throw new RuntimeException('Fatal error - Application-Site Configuration File does not exist');
         }
 
-        $site = new $configuration_class();
-
-        $options = array(
-            'driver' => $site->dbtype,
-            'host' => $site->host,
-            'user' => $site->user,
-            'password' => $site->password,
-            'database' => $site->db,
-            'prefix' => $site->dbprefix);
-
-        $this->db = JDatabase::getInstance($options);
-
-        if ($this->db == null) {
-            header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Connection Failed.');
+        if (class_exists($configuration_class)) {
+            $site = new $configuration_class();
+        } else {
+            throw new RuntimeException('Fatal error - Configuration Class does not exist');
         }
 
-        if ($this->db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, Services::Language()->sprintf('MOLAJO_UTIL_ERROR_CONNECT_db', $this->db->getErrorNum(), $this->db->getErrorMsg()));
+        /** database connection specific elements */
+        $database_type = $database_class . '_dbtype';
+        $host = $database_class . '_host';
+        $user = $database_class . '_user';
+        $password = $database_class . '_password';
+        $db = $database_class . '_db';
+        $dbprefix = $database_class . '_dbprefix';
+
+        /** set connection options */
+        $options = array(
+            'driver' => $site->$database_type,
+            'host' => $site->$host,
+            'user' => $site->$user,
+            'password' => $site->$password,
+            'database' => $site->$db,
+            'prefix' => $site->$dbprefix);
+
+        /** connect */
+        $this->db = $database_class::getInstance($options);
+
+        if ($this->db == null
+            || $this->db->getErrorNum() > 0) {
+            header('HTTP/1.1 500 Internal Server Error');
+            jexit('Database Connection Failed.');
         }
 
         $this->db->debug($site->debug);

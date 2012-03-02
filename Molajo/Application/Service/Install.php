@@ -37,7 +37,7 @@ Class InstallService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new AccessService();
+            self::$instance = new InstallService();
         }
         return self::$instance;
     }

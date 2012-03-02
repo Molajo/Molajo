@@ -184,7 +184,7 @@ Class ConfigurationService
             throw new RuntimeException('Fatal error - Application-Site Configuration File does not exist');
         }
 
-        $siteConfigData = new MolajoSiteConfiguration();
+        $siteConfigData = new SiteConfiguration();
         return $siteConfigData;
     }
 

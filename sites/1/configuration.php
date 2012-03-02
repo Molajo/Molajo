@@ -1,16 +1,16 @@
 <?php
-ClassSiteConfiguration
+Class SiteConfiguration
 {
     /* Site Settings */
     public $site_name = 'Molajo';
 
     /* Database Settings */
-    public $dbtype = 'mysqli';
-    public $host = 'localhost';
-    public $user = 'root';
-    public $password = 'root';
-    public $db = 'molajo';
-    public $dbprefix = 'molajo_';
+    public $jdatabase_dbtype = 'mysqli';
+    public $jdatabase_host = 'localhost';
+    public $jdatabase_user = 'root';
+    public $jdatabase_password = 'root';
+    public $jdatabase_db = 'molajo';
+    public $jdatabase_dbprefix = 'molajo_';
 
     /** disable html filters */
     public $disable_filter_for_groups = '4';
@@ -19,12 +19,6 @@ ClassSiteConfiguration
     public $secret = 'FBVtggIk5lAzEU9H';
     public $gzip = '0';
     public $error_reporting = '-1';
-    public $ftp_host = '';
-    public $ftp_port = '';
-    public $ftp_user = '';
-    public $ftp_pass = '';
-    public $ftp_root = '';
-    public $ftp_enable = '';
     public $cache_path = 'cache';
     public $logs_path = 'logs';
     public $temp_path = 'temp';
@@ -39,14 +33,17 @@ ClassSiteConfiguration
     public $cookie_path = '';
 
     /* Mail Settings */
+    public $disable_sending = true;
+    public $only_deliver_to = 'AmyStephen@gmail.com';
     public $mailer = 'mail';
-    public $mail_from = '';
-    public $from_name = '';
+    public $mail_from_email_address = '';
+    public $mail_from_name = '';
     public $send_mail = '/usr/sbin/send_mail';
     public $smtpauth = '0';
     public $smtpuser = '';
     public $smtppass = '';
     public $smtphost = 'localhost';
+    public $mail_class = 'JMail';
 
     /* Debug */
     public $debug = '1';

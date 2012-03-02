@@ -12,6 +12,30 @@ defined('MOLAJO') or die;
 /**
  * Mail
  *
+ * Edits, filters input, sends email
+ *
+ * Example usage:
+ *
+ * $results = Services::Mail()
+ *  ->set('send_to_email', 'person@example.com')
+ *  ->set('from_email', 'admin@example.com')
+ *  ->set('subject', 'Welcome to our Site')
+ *  ->set('body', $bodyofemail)
+ *  ->send($message);
+ *
+ * Valid parameters:
+ * send_to_email - array of email addresses for recipients
+ * cc_email - array of email_addresses to blind copy
+ * bcc_email - array of email_addresses to blind copy
+ * from_email - email_address to use as the from address
+ * from_name - name to use as the from name
+ * reply_to_email - email_address to which this email is a response
+ * reply_to_name - name to use as the reply to
+ * subject - title of email
+ * body - email contents
+ * mode - html or default (plain text)
+ * attachment - file name of attachment
+ *
  * @package     Molajo
  * @subpackage  Service
  * @since       1.0
@@ -59,506 +83,349 @@ Class MailService
      */
     public function __construct()
     {
-        $this->configuration = new Registry();
+
     }
 
     /**
-     * getMailer
+     * get
      *
-     * Get a mailer object
+     * Returns a set property or it's default for the mail object
      *
-     * @return object
-     * @since 1.0
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed   The value of the configuration.
+     * @since   1.0
      */
-    public function connect()
+    public function get($key, $default = null)
     {
-        $send_mail = Services::Configuration()->get('send_mail');
-        $smtpauth = Services::Configuration()->get('smtpauth');
-        $smtpuser = Services::Configuration()->get('smtpuser');
-        $smtppass = Services::Configuration()->get('smtppass');
-        $smtphost = Services::Configuration()->get('smtphost');
-        $smtpsecure = Services::Configuration()->get('smtpsecure');
-        $smtpport = Services::Configuration()->get('smtpport');
+        return $this->configuration->get($key, $default);
     }
 
-    public function connectMail()
+    /**
+     * set
+     *
+     * Modifies a property of the mail object
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
     {
-        $mail_from = Services::Configuration()->get('mail');
-        $from_name = Services::Configuration()->get('from_name');
-        $mailer = Services::Configuration()->get('mailer');
+        return $this->configuration->set($key, $value);
+    }
 
-        $mail = stdClass() extends PHPMailer;
-        $mail->setSender(array($mail_from, $from_name));
+    /**
+     * send
+     *
+     * Checks permissions, validates data elements, and sends email
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function send()
+    {
+        if (Services::Configuration()->get('disable_sending', 1) == 1) {
+            return true;
+        }
 
-        switch ($mailer)
+        $this->configuration = new Registry();
+
+        $results = $this->permission();
+        if ($results === true) {
+            return $results;
+        }
+
+        $only_deliver_to = Services::Configuration()->get('only_deliver_to', '');
+        if (trim($only_deliver_to) == '') {
+        } else {
+            $this->set('cc_email', array());
+            $this->set('bcc_email', array());
+            $this->set('reply_to_email', '');
+            $this->set('send_to_email', $only_deliver_to);
+        }
+
+        $results = $this->edit_and_filter_input();
+        if ($results === true) {
+        } else {
+            return false;
+        }
+
+        /** Get instance */
+        $mailClass = $this->get('mail_class', 'JMail');
+        $mail = $mailClass::getInstance();
+
+        /** Set type of email */
+        switch (Services::Configuration()->get('mailer'))
         {
-            case 'smtp' :
+            case 'smtp':
                 $mail->useSMTP(
-                    $smtpauth,
-                    $smtphost,
-                    $smtpuser,
-                    $smtppass,
-                    $smtpsecure,
-                    $smtpport);
+                    Services::Configuration()->get('smtpauth'),
+                    Services::Configuration()->get('smtphost'),
+                    Services::Configuration()->get('smtpuser'),
+                    Services::Configuration()->get('smtppass'),
+                    Services::Configuration()->get('smtpsecure'),
+                    Services::Configuration()->get('smtpport')
+                );
                 break;
 
-            case 'send_mail' :
+            case 'sendmail':
                 $mail->IsSendmail();
                 break;
 
-            default :
+            default:
                 $mail->IsMail();
                 break;
         }
 
-        return $mail;
+        $mail->SetFrom(
+            $this->get('from_email'),
+            $this->get('from_name'),
+            0
+        );
+
+        $results = $mail->sendMail(
+            $this->get('from_email'),
+            $this->get('from_name'),
+            $this->get('send_to_email'),
+            $this->get('subject'),
+            $this->get('body'),
+            $this->get('mode'),
+            $this->get('cc_email'),
+            $this->get('bcc_email'),
+            $this->get('attachment'),
+            $this->get('reply_to_email'),
+            $this->get('reply_to_name')
+        );
+
+        return $results;
     }
 
     /**
-        * Mail function (uses phpMailer)
-        *
-        * @param   string   $from        From email address
-        * @param   string   $from_name    From name
-        * @param   mixed    $recipient    Recipient email address(es)
-        * @param   string   $subject    Email subject
-        * @param   string   $body        Message body
-        * @param   boolean  $mode        false = plain text, true = HTML
-        * @param   mixed    $cc            CC email address(es)
-        * @param   mixed    $bcc        BCC email address(es)
-        * @param   mixed    $attachment    Attachment file name(s)
-        * @param   mixed    $replyto    Reply to email address(es)
-        * @param   mixed    $replytoname Reply to name(s)
-        *
-        * @return  boolean  True on success
-        *
-        * @since       11.1
-        * @deprecated  1.6
-        * @see            Mail::sendMail()
-        */
-       public static function sendMail($from, $from_name, $recipient, $subject, $body, $mode = 0, $cc = null, $bcc = null, $attachment = null, $replyto = null, $replytoname = null)
-       {
-           Molajo::Mail()->sendMail(
-               $from, $from_name, $recipient, $subject, $body, $mode, $cc,
-               $bcc, $attachment, $replyto, $replytoname
-           );
-       }
-
-       /**
-        * Sends mail to administrator for approval of a user submission
-        *
-        * @param   string  $adminName    Name of administrator
-        * @param   string  $adminEmail    Email address of administrator
-        * @param   string  $email        [NOT USED TODO: Deprecate?]
-        * @param   string  $type        Type of item to approve
-        * @param   string  $title        Title of item to approve
-        * @param   string  $author        Author of item to approve
-        *
-        * @return  boolean  True on success
-        *
-        * @deprecated  1.6
-        * @see     Mail::sendAdminMail()
-        */
-       public static function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
-       {
-           return Molajo::Mail()->sendAdminMail(
-               $adminName, $adminEmail, $email, $type, $title, $author, $url
-           );
-       }
-}
-ClassMail extends PHPMailer
-{
-    /**
-     * Constructor
+     * permission
+     *
+     * Verify user and extension have permission to send email
+     *
+     * @return bool
+     * @since  1.0
      */
-    public function __construct()
+    protected function permission()
     {
-        // PHPMailer has an issue using the relative path for it's language files
-        $this->SetLanguage('joomla', JPATH_PLATFORM . '/joomla' . '/phpmailer/language/');
+        $permission = true;
+
+        /** Component (authorises any user) */
+
+        /** User */
+
+        /** authorization event */
+        //todo: what is the asset id of a service?
+        //$results = Services::Access()->authoriseTask('email', $asset_id);
+
+        return $permission;
     }
 
     /**
-     * Returns the global email object, only creating it
-     * if it doesn't already exist.
+     * edit_and_filter_input
      *
-     * NOTE: If you need an instance to use that does not have the global configuration
-     * values, use an id string that is not 'Joomla'.
+     * Verify all data required is available and filter input for security
      *
-     * @param   string  $id  The id string for the Mail instance [optional]
-     *
-     * @return  object  The global Mail object
-     * @since   1.0
+     * @return bool|int
      */
-    public static function getInstance($id = 'Molajo')
+    protected function edit_and_filter_input()
     {
-        static $instances;
+        $error = '';
 
-        if (!isset ($instances)) {
-            $instances = array();
+        /** Permission */
+        $results = $this->permission();
+        if ($results == false) {
+            return 304;
         }
 
-        if (empty($instances[$id])) {
-            $instances[$id] = new Mail();
+        /** From Email Address */
+        $name = 'from_email';
+        $value = $this->get('from_email');
+        $datatype = 'email';
+        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        if ($results === false) {
+           return false;
         }
+        $this->set('from_email', $results);
 
-        return $instances[$id];
-    }
-
-    /**
-     * Send the mail
-     *
-     * @return  mixed  True if successful, a MolajoError object otherwise
-     * @since   1.0
-     */
-    public function Send()
-    {
-        if (($this->Mailer == 'mail') && !function_exists('mail')) {
-            return MolajoError::raiseNotice(500, Services::Language()->translate('MOLAJO_MAIL_FUNCTION_DISABLED'));
+        /** From Name */
+        $name = 'from_name';
+        $value = $this->get('from_name', Services::Configuration()->get('site_name'));
+        $datatype = 'char';
+        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        if ($results === false) {
+           return false;
         }
+        $this->set('from_name', $results);
 
-        @$result = parent::Send();
-
-        if ($result == false) {
-            // TODO: Set an appropriate error number
-            $result = MolajoError::raiseNotice(500, Services::Language()->translate($this->ErrorInfo));
-        }
-
-        return $result;
-    }
-
-    /**
-     * Set the email sender
-     *
-     * @param   array  email address and Name of sender
-     *        <pre>
-     *            array([0] => email Address [1] => Name)
-     *        </pre>
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function setSender($from)
-    {
-        if (is_array($from)) {
-            // If $from is an array we assume it has an address and a name
-            $this->SetFrom(
-                MailServices::cleanLine($from[0]),
-                MailServices::cleanLine($from[1])
-            );
-        }
-        elseif (is_string($from)) {
-            // If it is a string we assume it is just the address
-            $this->SetFrom(
-                MailServices::cleanLine($from)
-            );
-        }
-        else {
-            // If it is neither, we throw a warning
-            MolajoError::raiseWarning(0, Services::Language()->sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set the email subject
-     *
-     * @param   string   $subject    Subject of the email
-     *
-     * @return  object   Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function setSubject($subject)
-    {
-        $this->Subject = MailServices::cleanLine($subject);
-        return $this;
-    }
-
-    /**
-     * Set the email body
-     *
-     * @param   string  $content    Body of the email
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function setBody($content)
-    {
-        /*
-           * Filter the Body
-           * TODO: Check for XSS
-           */
-        $this->Body = MailServices::cleanText($content);
-        return $this;
-    }
-
-    /**
-     * Add recipients to the email
-     *
-     * @param   mixed  $recipient    Either a string or array of strings [email address(es)]
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function addRecipient($recipient, $name = '')
-    {
-        // If the recipient is an array, add each recipient... otherwise just add the one
-        if (is_array($recipient)) {
-            foreach ($recipient as $to)
-            {
-                $to = MailServices::cleanLine($to);
-                $this->AddAddress($to);
-            }
+        /** Send to Email Address */
+        $name = 'send_to_email';
+        $values = $this->get('send_to_email');
+        $datatype = 'email';
+        if (is_array($value)) {
         } else {
-            $recipient = MailServices::cleanLine($recipient);
-            $this->AddAddress($recipient);
+            $values = array($value);
         }
-
-        return $this;
-    }
-
-    /**
-     * Add carbon copy recipients to the email
-     *
-     * @param   mixed  $cc  Either a string or array of strings [email address(es)]
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function addCC($cc, $name = '')
-    {
-        // If the carbon copy recipient is an array, add each recipient... otherwise just add the one
-        if (isset ($cc)) {
-            if (is_array($cc)) {
-                foreach ($cc as $to) {
-                    $to = MailServices::cleanLine($to);
-                    parent::AddCC($to);
+        $validated = array();
+        if (count($values) > 0) {
+            foreach ($values as $value) {
+                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                if ($results === false) {
+                   return false;
+                } else {
+                    $validated[] = $results;
                 }
-            } else {
-                $cc = MailServices::cleanLine($cc);
-                parent::AddCC($cc);
             }
         }
+        $this->set('send_to_email', $validated);
 
-        return $this;
-    }
-
-    /**
-     * Add blind carbon copy recipients to the email
-     *
-     * @param   mixed  $bcc    Either a string or array of strings [email address(es)]
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function addBCC($bcc, $name = '')
-    {
-        // If the blind carbon copy recipient is an array, add each recipient... otherwise just add the one
-        if (isset($bcc)) {
-            if (is_array($bcc)) {
-                foreach ($bcc as $to) {
-                    $to = MailServices::cleanLine($to);
-                    parent::AddBCC($to);
-                }
-            } else {
-                $bcc = MailServices::cleanLine($bcc);
-                parent::AddBCC($bcc);
-            }
+        /** Subject */
+        $name = 'subject';
+        $value = $this->get('subject', Services::Configuration()->get('site_name'));
+        $datatype = 'char';
+        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        if ($results === false) {
+           return false;
         }
+        $this->set('subject', $results);
 
-        return $this;
-    }
-
-    /**
-     * Add file attachments to the email
-     *
-     * @param   mixed  $attachment    Either a string or array of strings [filenames]
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function addAttachment($path, $name = '', $encoding = 'base64', $type = 'application/octet-stream')
-    {
-        // If the file attachments is an array, add each file... otherwise just add the one
-        if (isset($attachment)) {
-            if (is_array($attachment)) {
-                foreach ($attachment as $file) {
-                    parent::AddAttachment($file);
-                }
-            } else {
-                parent::AddAttachment($attachment);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add Reply to email address(es) to the email
-     *
-     * @param   array  $replyto    Either an array or multi-array of form
-     *        <pre>
-     *            array([0] => email Address [1] => Name)
-     *        </pre>
-     *
-     * @return  object  Mail    Returns this object for chaining.
-     * @since   1.0
-     */
-    public function addReplyTo($replyto, $name = '')
-    {
-        // Take care of reply email addresses
-        if (is_array($replyto[0])) {
-            foreach ($replyto as $to)
-            {
-                $to0 = MailServices::cleanLine($to[0]);
-                $to1 = MailServices::cleanLine($to[1]);
-                parent::AddReplyTo($to0, $to1);
-            }
-        }
-        else {
-            $replyto0 = MailServices::cleanLine($replyto[0]);
-            $replyto1 = MailServices::cleanLine($replyto[1]);
-            parent::AddReplyTo($replyto0, $replyto1);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use send_mail for sending the email
-     *
-     * @param   string   $send_mail    Path to send_mail [optional]
-     * @return  boolean  True on success
-     * @since   1.0
-     */
-    public function useSendmail($send_mail = null)
-    {
-        $this->Sendmail = $send_mail;
-
-        if (empty ($this->Sendmail)) {
-            $this->IsMail();
-            return false;
+        /** Body */
+        $name = 'body';
+        $value = $this->get('body');
+        if ($this->get('mode', 'text') == 'html') {
+            $datatype = 'html';
         } else {
-            $this->IsSendmail();
-            return true;
+            $datatype = 'text';
         }
-    }
-
-    /**
-     * Use SMTP for sending the email
-     *
-     * @param   string   $auth    SMTP Authentication [optional]
-     * @param   string   $host    SMTP Host [optional]
-     * @param   string   $user    SMTP Username [optional]
-     * @param   string   $pass    SMTP Password [optional]
-     * @param   string   $secure
-     * @param   integer  $port
-     *
-     * @return  boolean  True on success
-     * @since   1.0
-     */
-    public function useSMTP($auth = null, $host = null, $user = null, $pass = null, $secure = null, $port = 25)
-    {
-        $this->SMTPAuth = $auth;
-        $this->Host = $host;
-        $this->Username = $user;
-        $this->Password = $pass;
-        $this->Port = $port;
-
-        if ($secure == 'ssl' || $secure == 'tls') {
-            $this->SMTPSecure = $secure;
+        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        if ($results === false) {
+           return false;
         }
+        $this->set('body', $results);
 
-        if (($this->SMTPAuth !== null && $this->Host !== null && $this->Username !== null && $this->Password !== null)
-            || ($this->SMTPAuth === null && $this->Host !== null)
-        ) {
-            $this->IsSMTP();
-
-            return true;
+        /** Copy Email Address */
+        $name = 'cc_email';
+        $values = $this->get('cc_email');
+        $datatype = 'email';
+        if (is_array($value)) {
+        } else {
+            $values = array($value);
         }
-        else {
-            $this->IsMail();
-
-            return false;
-        }
-    }
-
-    /**
-     * Function to send an email
-     *
-     * @param   string   $from            From email address
-     * @param   string   $fromName        From name
-     * @param   mixed    $recipient        Recipient email address(es)
-     * @param   string   $subject        email subject
-     * @param   string   $body            Message body
-     * @param   boolean  $mode            false = plain text, true = HTML
-     * @param   mixed    $cc                CC email address(es)
-     * @param   mixed    $bcc            BCC email address(es)
-     * @param   mixed    $attachment        Attachment file name(s)
-     * @param   mixed    $replyTo        Reply to email address(es)
-     * @param   mixed    $replyToName    Reply to name(s)
-     *
-     * @return  boolean  True on success
-     * @since   1.0
-     */
-    public function sendMail($from, $fromName, $recipient, $subject, $body, $mode = 0,
-                             $cc = null, $bcc = null, $attachment = null, $replyTo = null, $replyToName = null)
-    {
-        $this->setSender(array($from, $fromName));
-        $this->setSubject($subject);
-        $this->setBody($body);
-
-        // Are we sending the email as HTML?
-        if ($mode) {
-            $this->IsHTML(true);
-        }
-
-        $this->addRecipient($recipient);
-        $this->addCC($cc);
-        $this->addBCC($bcc);
-        $this->addAttachment($attachment);
-
-        // Take care of reply email addresses
-        if (is_array($replyTo)) {
-            $numReplyTo = count($replyTo);
-
-            for ($i = 0; $i < $numReplyTo; $i++)
-            {
-                $this->addReplyTo(array($replyTo[$i], $replyToName[$i]));
+        $validated = array();
+        if (count($values) > 0) {
+            foreach ($values as $value) {
+                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                if ($results === false) {
+                   return false;
+                } else {
+                    $validated[] = $results;
+                }
             }
         }
-        else if (isset($replyTo)) {
-            $this->addReplyTo(array($replyTo, $replyToName));
-        }
+        $this->set('cc_email', $validated);
 
-        return $this->Send();
+        /** Blind Copy Email Address */
+        $name = 'bcc_email';
+        $values = $this->get('bcc_email');
+        $datatype = 'email';
+        if (is_array($value)) {
+        } else {
+            $values = array($value);
+        }
+        $validated = array();
+        if (count($values) > 0) {
+            foreach ($values as $value) {
+                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                if ($results === false) {
+                   return false;
+                } else {
+                    $validated[] = $results;
+                }
+            }
+        }
+        $this->set('bcc_email', $validated);
+
+        /** Attachment */
+        $name = 'attachment';
+        $values = $this->get('attachment');
+        $datatype = 'file';
+        if (is_array($value)) {
+        } else {
+            $values = array($value);
+        }
+        $validated = array();
+        if (count($values) > 0) {
+            foreach ($values as $value) {
+                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                if ($results === false) {
+                   return false;
+                } else {
+                    $validated[] = $results;
+                }
+            }
+        }
+        $this->set('attachment', $validated);
+
+        /** Reply to Email Address */
+        $name = 'reply_to_email';
+        $value = $this->get('reply_to_email');
+        $datatype = 'email';
+        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        if ($results === false) {
+           return false;
+        }
+        $this->set('reply_to_email', $results);
+
+        /** Reply to Name */
+        $name = 'reply_to_name';
+        $value = $this->get('reply_to_name');
+        $datatype = 'char';
+        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        if ($results === false) {
+           return false;
+        }
+        $this->set('reply_to_name', $results);
+
+        return true;
     }
 
     /**
-     * Sends mail to administrator for approval of a user submission
+     * call_security_filter
      *
-     * @param   string  $adminName    Name of administrator
-     * @param   string  $adminEmail    Email address of administrator
-     * @param   string  $email        [NOT USED TODO: Deprecate?]
-     * @param   string  $type        Type of item to approve
-     * @param   string  $title        Title of item to approve
-     * @param   string  $author        Author of item to approve
-     * @param   string  $url
+     * @param   string  $name         Name of input field
+     * @param   string  $field_value  Value of input field
+     * @param   string  $datatype     Datatype of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
      *
-     * @return  boolean  True on success
+     * @return  mixed
      * @since   1.0
      */
-    public function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
+    protected function call_security_filter(
+        $name, $value, $datatype, $null = null, $default = null)
     {
-        $subject = Services::Language()->sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
+        try {
+           $value = Services::Security()->filter(
+                   $value, $datatype, $null, $default);
 
-        $message = sprintf(Services::Language()->translate('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-        $message .= Services::Language()->translate('MOLAJO_MAIL_MSG') . "\n";
-
-        $this->addRecipient($adminEmail);
-        $this->setSubject($subject);
-        $this->setBody($message);
-
-        return $this->Send();
+        } catch (Exception $e) {
+           $value = false;
+           Services::Message()->set(
+               $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
+               $type = MOLAJO_MESSAGE_TYPE_ERROR
+           );
+           if (Services::Configuration()->get('debug', 0) == 1) {
+               debug('Services::mail Filter Failed'.' '.$message);
+           }
+        }
+        
+        return $value;
     }
-
 }
