@@ -45,16 +45,20 @@ Class UserService
     /**
      * getInstance
      *
-     * @param   string $identifier  Requested User (id or username)
+     * @param   string $identifier  Requested User (id or username or 0 for guest)
      *
      * @return  object  User
      * @since   1.0
      */
     public static function getInstance($id = 0)
     {
-        if (is_numeric($id)) {
+        if ((int) $id == 0) {
         } else {
             $id = UserHelper::getId($id);
+            $m = new UsersModel();
+            $m->query->where('(' . $m->db->qn('id') . ' = ' . (int)$id .
+                ' OR ' . $m->db->qn('username') . ' = ' . $m->db->q($id) . ')');
+            $id = $m->loadResult();
         }
         if (empty(self::$instances[$id])) {
             $user = new UserService($id);

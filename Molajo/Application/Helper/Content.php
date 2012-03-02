@@ -31,7 +31,7 @@ abstract class ContentHelper
         $m = new DisplayModel();
 
         $m->query->select('a.*');
-        $m->query->from('#__content as a ');
+        $m->query->from($m->db->qn($content_table).' as a ');
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$id);
         $m->query->where('a.' . $m->db->qn('status') .
             ' > ' . MOLAJO_STATUS_UNPUBLISHED);

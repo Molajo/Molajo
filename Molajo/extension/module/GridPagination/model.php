@@ -5,18 +5,19 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+namespace Molajo\Application\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
 
 /**
- * GridTable
+ * GridPagination
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-Class GridTableModuleModel extends DisplayModel
+Class ModuleGridPaginationModel extends DisplayModel
 {
     /**
      * __construct
@@ -44,7 +45,7 @@ Class GridTableModuleModel extends DisplayModel
      */
     public function getData()
     {
-        $this->items = Molajo::Request()->get('query_rowset');
+        $this->items = array();
         return $this->items;
     }
 }

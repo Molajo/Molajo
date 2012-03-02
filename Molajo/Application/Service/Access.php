@@ -132,11 +132,44 @@ Class AccessService
             $this->action_to_action_id
                 ->set(
                 $actionDefinition->title,
-                (int) $actionDefinition->id
+                (int)$actionDefinition->id
             );
         }
 
         return;
+    }
+
+    /**
+     * authorise
+     *
+     * Check if the site is authorized for this application
+     *
+     * @param  mixed $application_id if valid, or false
+     * @return boolean
+     */
+    public function authoriseSiteApplication()
+    {
+        $m = new MolajoSiteApplicationsModel();
+
+        $m->query->select($m->db->qn('application_id'));
+        $m->query->where($m->db->qn('site_id') . ' = ' . (int)SITE_ID);
+        $m->query->where($m->db->qn('application_id') . ' = ' . (int)MOLAJO_APPLICATION_ID);
+
+        $application_id = $m->getResult();
+
+        if ($application_id === false) {
+    //todo: finish the response action/test
+            Services::Response()
+                ->setHeader('Status', '403 Not Authorised', 'true'
+            );
+            Services::Message()->set(
+                Services::Configuration()->get('error_403_message', 'Not Authorised.'),
+                MOLAJO_MESSAGE_TYPE_ERROR,
+                403
+            );
+        }
+
+        return $application_id;
     }
 
     /**
@@ -211,11 +244,11 @@ Class AccessService
 
         /** Retrieve ACL Action for this Task */
         $action = $this->task_to_action->get($task);
-        $action_id = (int) $this->action_to_action_id->get($action);
+        $action_id = (int)$this->action_to_action_id->get($action);
 
-        if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
+        if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
             if (Services::Configuration()->get('debug', 0) == 1) {
-                debug('AccessService::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id);
+                debug('AccessService::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
         }
 
@@ -238,7 +271,7 @@ Class AccessService
             return true;
         } else {
             if (Services::Configuration()->get('debug', 0) == 1) {
-                debug('AccessService::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: '. $action_id);
+                debug('AccessService::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
             return false;
         }

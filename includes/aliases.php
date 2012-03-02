@@ -56,10 +56,6 @@ Class ThemeHelper extends MolajoThemeHelper
 {
 }
 
-Class UserHelper extends UserHelper
-{
-}
-
 Class ViewHelper extends MolajoViewHelper
 {
 }

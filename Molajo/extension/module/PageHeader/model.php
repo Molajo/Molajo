@@ -5,6 +5,7 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+namespace Molajo\Application\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
@@ -16,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-Class PageheaderModuleModel extends DisplayModel
+Class ModulePageheaderModel extends DisplayModel
 {
     /**
      * __construct

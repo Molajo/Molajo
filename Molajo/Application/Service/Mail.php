@@ -425,7 +425,7 @@ Class MailService
                debug('Services::mail Filter Failed'.' '.$message);
            }
         }
-        
+
         return $value;
     }
 }

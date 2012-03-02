@@ -35,16 +35,6 @@ Class Site
     protected $config = null;
 
     /**
-     * $applications
-     *
-     * Applications the site is authorized to access
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $applications = null;
-
-    /**
      * $parameters
      *
      * @var    array
@@ -108,13 +98,18 @@ Class Site
         $this->_setPaths();
 
         /** Site Parameters */
-        $info = SiteHelper::get();
+        $m = new MolajoSitesModel ();
+        $m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
+        $results = $m->runQuery();
+        foreach ($results as $info)
+        {
+        }
         if ($info === false) {
             return;
         }
 
         /** is site authorised for this Application? */
-        $authorise = $this->_authorise();
+        $authorise = Services::Access()->authoriseSiteApplication();
         if ($authorise === false) {
             $message = '304: ' . MOLAJO_BASE_URL;
             echo $message;
@@ -141,50 +136,6 @@ Class Site
         }
 
         exit(0);
-    }
-
-    /**
-     * authorise
-     *
-     * Check if the site is authorized for this application
-     *
-     * @param $application_id
-     * @return boolean
-     */
-    protected function _authorise()
-    {
-        $this->applications = SiteHelper::getApplications();
-        if ($this->applications === false) {
-            return false;
-        }
-
-        $found = false;
-        foreach ($this->applications as $single) {
-            if ($single->application_id == MOLAJO_APPLICATION_ID) {
-                $found = true;
-            }
-        }
-        if ($found === true) {
-            return true;
-        }
-
-        /** set header status, message and override theme/page, if needed */
-        Molajo::Responder()->setHeader(
-            'Status',
-            '403 Not Authorised',
-            'true'
-        );
-        Services::Message()
-            ->set(
-            Services::Configuration()->get(
-                'error_403_message',
-                'Not Authorised.'
-            ),
-            MOLAJO_MESSAGE_TYPE_ERROR,
-            403
-        );
-
-        return false;
     }
 
     /**

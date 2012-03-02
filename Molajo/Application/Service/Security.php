@@ -196,6 +196,10 @@ Class SecurityService
                 return (string)preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $field_value);
                 break;
 
+            case 'header_injection_test':
+                return $this->filter_header_injection_test($field_value);
+                break;
+
             default:
                 return $this->filter_char(
                     $field_value, $null, $default
@@ -504,6 +508,34 @@ Class SecurityService
         $regex = array('#[^A-Za-z0-9:_\\\/-]#');
 
         return preg_replace($regex, '', $path);
+    }
+
+    /**
+     * filter_header_injection_test
+     *
+     * Looks for unauthorized header information
+     *
+     * @param   string  $content  The content to test.
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function filter_header_injection_test($content)
+    {
+        $headers = array ( 'Content-Type:',
+            'MIME-Version:',
+            'Content-Transfer-Encoding:',
+            'bcc:',
+            'cc:'
+        );
+
+        foreach ($headers as $header) {
+            if (strpos($content, $header) !== false) {
+                throw new Exception('FILTER_INVALID_VALUE');
+            }
+        }
+
+        return $content;
     }
 
     /**

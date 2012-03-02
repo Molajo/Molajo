@@ -22,7 +22,7 @@ class ModelHelper
     /**
      * Table row
      *
-     * @var    stdclass
+     * @var    object
      * @since  1.0
      */
     public $row = '';
@@ -201,14 +201,15 @@ class ModelHelper
 
         /** Component Buttons */
         $tasks =
-            Molajo::Request()->
-                parameters->
-                get('toolbar_buttons');
+            Molajo::Request()
+                ->parameters
+                ->get('toolbar_buttons');
 
         $tasksArray = explode(',', $tasks);
 
         /** User Permissions */
-        $permissions = Services::Access()->authoriseTaskList($tasksArray, $item->asset_id);
+        $permissions = Services::Access()
+            ->authoriseTaskList($tasksArray, $item->asset_id);
 
         /** Append onto row */
         foreach ($tasksArray as $task) {
