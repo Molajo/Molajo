@@ -153,38 +153,38 @@ INSERT INTO `molajo_extension_instances`
 INSERT INTO `molajo_extensions`
     (`name`,`asset_type_id`, `subtype`, `extension_site_id`)
   VALUES
-    ('dashboard', 1150, 'templates', 1),
-    ('dashboard-module', 1150, 'templates', 1),
+    ('dashboard', 1150, 'Template', 1),
+    ('dashboard-module', 1150, 'Template', 1),
 
-    ('default', 1150, 'templates', 1),
+    ('default', 1150, 'Template', 1),
 
-    ('document-defer', 1150, 'templates', 1),
-    ('document-head', 1150, 'templates', 1),
+    ('document-defer', 1150, 'Template', 1),
+    ('document-head', 1150, 'Template', 1),
 
-    ('static', 1150, 'templates', 1),
-    ('edit', 1150, 'templates', 1),
-    ('edit-editor', 1150, 'templates', 1),
-    ('edit-access-control', 1150, 'templates', 1),
-    ('edit-custom-fields', 1150, 'templates', 1),
-    ('edit-metadata', 1150, 'templates', 1),
-    ('edit-parameters', 1150, 'templates', 1),
-    ('edit-title', 1150, 'templates', 1),
-    ('edit-toolbar', 1150, 'templates', 1),
+    ('static', 1150, 'Template', 1),
+    ('edit', 1150, 'Template', 1),
+    ('edit-editor', 1150, 'Template', 1),
+    ('edit-access-control', 1150, 'Template', 1),
+    ('edit-custom-fields', 1150, 'Template', 1),
+    ('edit-metadata', 1150, 'Template', 1),
+    ('edit-parameters', 1150, 'Template', 1),
+    ('edit-title', 1150, 'Template', 1),
+    ('edit-toolbar', 1150, 'Template', 1),
 
-    ('grid', 1150, 'templates', 1),
-    ('grid-batch', 1150, 'templates', 1),
-    ('grid-filters', 1150, 'templates', 1),
-    ('grid-pagination', 1150, 'templates', 1),
-    ('grid-submenu', 1150, 'templates', 1),
-    ('grid-table', 1150, 'templates', 1),
-    ('grid-title', 1150, 'templates', 1),
-    ('grid-toolbar', 1150, 'templates', 1),
+    ('Grid', 1150, 'Template', 1),
+    ('GridBatch', 1150, 'Template', 1),
+    ('GridFilters', 1150, 'Template', 1),
+    ('GridPagination', 1150, 'Template', 1),
+    ('GridSubmenu', 1150, 'Template', 1),
+    ('GridTable', 1150, 'Template', 1),
+    ('GridTitle', 1150, 'Template', 1),
+    ('GridToolbar', 1150, 'Template', 1),
 
-    ('page-header', 1150, 'templates', 1),
-    ('page-footer', 1150, 'templates', 1),
+    ('PageHeader', 1150, 'Template', 1),
+    ('PageFooter', 1150, 'Template', 1),
 
-    ('system-errors', 1150, 'templates', 1),
-    ('system-messages', 1150, 'templates', 1),
+    ('SystemErrors', 1150, 'Template', 1),
+    ('SystemMessages', 1150, 'Template', 1),
 
     ('button', 1150, 'formfields', 1),
     ('colorpicker', 1150, 'formfields', 1),
@@ -197,20 +197,20 @@ INSERT INTO `molajo_extensions`
     ('textarea', 1150, 'formfields', 1),
     ('user', 1150, 'formfields', 1),
 
-    ('default', 1150, 'pages', 1),
-    ('system-error', 1150, 'pages', 1),
-    ('system-offline', 1150, 'pages', 1),
+    ('default', 1150, 'Page', 1),
+    ('SystemError', 1150, 'Page', 1),
+    ('SystemOffline', 1150, 'Page', 1),
 
-    ('article', 1150, 'wraps', 1),
-    ('aside', 1150, 'wraps', 1),
-    ('default', 1150, 'wraps', 1),
-    ('div', 1150, 'wraps', 1),
-    ('footer', 1150, 'wraps', 1),
-    ('header', 1150, 'wraps', 1),
-    ('hgroup', 1150, 'wraps', 1),
-    ('nav', 1150, 'wraps', 1),
-    ('none', 1150, 'wraps', 1),
-    ('section', 1150, 'wraps', 1);
+    ('Article', 1150, 'Wrap', 1),
+    ('Aside', 1150, 'Wrap', 1),
+    ('Default', 1150, 'Wrap', 1),
+    ('Div', 1150, 'Wrap', 1),
+    ('Footer', 1150, 'Wrap', 1),
+    ('Header', 1150, 'Wrap', 1),
+    ('Hgroup', 1150, 'Wrap', 1),
+    ('Nav', 1150, 'Wrap', 1),
+    ('None', 1150, 'Wrap', 1),
+    ('Section', 1150, 'Wrap', 1);
 
 INSERT INTO `molajo_extension_instances`
   (`extension_id`, `asset_type_id`,
@@ -329,10 +329,10 @@ INSERT INTO `molajo_extensions`
     ('document-defer', 1350, 1),
     ('document-head', 1350, 1),
     ('static', 1350, 1),
-    ('page-header', 1350, 1),
-    ('page-footer', 1350, 1),
-    ('system-errors', 1350, 1),
-    ('system-messages', 1350, 1);
+    ('PageHeader', 1350, 1),
+    ('PageFooter', 1350, 1),
+    ('SystemErrors', 1350, 1),
+    ('SystemMessages', 1350, 1);
 
 INSERT INTO `molajo_extension_instances`
   (`extension_id`, `asset_type_id`,

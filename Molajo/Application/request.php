@@ -1218,14 +1218,14 @@ Class Request
             ExtensionHelper::getInstanceTitle(
                 $this->get('page_view_id'),
                 MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW,
-                'pages'
+                'Page'
             )
         );
 
         /** Page Path */
         $viewHelper = new MolajoViewHelper(
             $this->get('page_view_name'),
-            'pages',
+            'Page',
             $this->get('extension_instance_name'),
             $this->get('extension_type'),
             $this->get('theme_name')
@@ -1286,7 +1286,7 @@ Class Request
 
         $wrapHelper = new MolajoViewHelper(
             $this->get('wrap_view_name'),
-            'wraps',
+            'Wrap',
             $this->get('extension_title'),
             $this->get('extension_instance_name'),
             $this->get('theme_name')

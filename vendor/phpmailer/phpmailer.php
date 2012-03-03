@@ -1643,7 +1643,7 @@ class PHPMailer {
         if (version_compare(PHP_VERSION, '5.3.0', '<')) {
           set_magic_quotes_runtime(0);
         } else {
-		  ini_set('magic_quotes_runtime', 0); 
+		  ini_set('magic_quotes_runtime', 0);
 		}
 	  }
       $file_buffer  = file_get_contents($path);
@@ -1652,7 +1652,7 @@ class PHPMailer {
         if (version_compare(PHP_VERSION, '5.3.0', '<')) {
           set_magic_quotes_runtime($magic_quotes);
         } else {
-		  ini_set('magic_quotes_runtime', $magic_quotes); 
+		  ini_set('magic_quotes_runtime', $magic_quotes);
 	    }
 	  }
       return $file_buffer;
@@ -1735,7 +1735,7 @@ class PHPMailer {
     if (strlen($str)/3 < $x) {
       $encoding = 'B';
       if (function_exists('mb_strlen') && $this->HasMultiBytes($str)) {
-        // Use a custom function which correctly encodes and wraps long
+        // Use a custom function which correctly encodes and Wrap long
         // multibyte strings without breaking lines within a character
         $encoded = $this->Base64EncodeWrapMB($str);
       } else {
@@ -1771,7 +1771,7 @@ class PHPMailer {
   }
 
   /**
-   * Correctly encodes and wraps long multibyte strings for mail headers
+   * Correctly encodes and Wrap long multibyte strings for mail headers
    * without breaking lines within a character.
    * Adapted from a function by paravoid at http://uk.php.net/manual/en/function.mb-encode-mimeheader.php
    * @access public

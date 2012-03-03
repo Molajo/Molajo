@@ -1016,7 +1016,7 @@ abstract class JDatabaseQuery
 	 * Usage:
 	 * $query->where('modified_date <> '.$query->nullDate());
 	 *
-	 * @param   boolean  $quoted  Optionally wraps the null date in database quotes (true by default).
+	 * @param   boolean  $quoted  Optionally Wrap the null date in database quotes (true by default).
 	 *
 	 * @return  string  Null or zero representation of a timestamp.
 	 *

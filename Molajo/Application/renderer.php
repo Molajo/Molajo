@@ -601,7 +601,7 @@ Class Renderer
                 ExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
                     $this->get('template_view_name'),
-                    'templates'
+                    'Template'
                 )
             );
         } else {
@@ -615,7 +615,7 @@ Class Renderer
         /** retrieve paths */
         $tc = new MolajoViewHelper(
             $this->get('template_view_name'),
-            'templates',
+            'Template',
             $this->get('extension_instance_name'),
             $this->get('extension_type'),
             $this->get('theme_name')
@@ -631,7 +631,7 @@ Class Renderer
                 ExtensionHelper::getInstanceID(
                     MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW,
                     $this->get('wrap_view_name'),
-                    'wraps'
+                    'Wrap'
                 )
             );
         } else {
@@ -645,7 +645,7 @@ Class Renderer
         /** retrieve paths */
         $wc = new MolajoViewHelper(
             $this->get('wrap_view_name'),
-            'wraps',
+            'Wrap',
             $this->get('extension_instance_name'),
             $this->get('extension_type'),
             $this->get('theme_name')
@@ -752,7 +752,7 @@ Class Renderer
 
         if (Services::Configuration()->get('debug', 0) == 1) {
             debug(' ');
-            debug('MolajoRenderer::_invokeMVC');
+            debug('Renderer::_invokeMVC');
             debug('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
             debug('Extension: '.$this->get('extension_instance_name').' ID: '.$this->get('id').'');
             debug('Template: '.$this->get('template_view_path').'');

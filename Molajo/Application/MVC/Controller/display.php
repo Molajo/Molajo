@@ -101,7 +101,7 @@ class DisplayController extends Controller
         $this->view_path_url = $this->get('wrap_view_path_url');
 
         /** render wrap */
-        return $this->renderView($this->get('wrap_view_name'), 'wraps');
+        return $this->renderView($this->get('wrap_view_name'), 'Wrap');
     }
 
     /**

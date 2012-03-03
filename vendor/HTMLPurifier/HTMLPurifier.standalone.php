@@ -470,7 +470,7 @@ abstract class HTMLPurifier_AttrDef
     }
 
     /**
-     * Parses a possibly escaped CSS string and returns the "pure" 
+     * Parses a possibly escaped CSS string and returns the "pure"
      * version of it.
      */
     protected function expandCSSEscape($string) {
@@ -13280,7 +13280,7 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
 
     public function setup($config) {
         // TODO: create custom child-definition for noscript that
-        // auto-wraps stray #PCDATA in a similar manner to
+        // auto-Wrap stray #PCDATA in a similar manner to
         // blockquote's custom definition (we would use it but
         // blockquote's contents are optional while noscript's contents
         // are required)
@@ -16036,8 +16036,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                     }
 
                     if ($autoclose && $definition->info[$token->name]->wrap) {
-                        // Check if an element can be wrapped by another 
-                        // element to make it valid in a context (for 
+                        // Check if an element can be wrapped by another
+                        // element to make it valid in a context (for
                         // example, <ul><ul> needs a <li> in between)
                         $wrapname = $definition->info[$token->name]->wrap;
                         $wrapdef = $definition->info[$wrapname];

@@ -1,5 +1,14 @@
 <?php
 /**
+ * @package     Molajo
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ */
+namespace Molajo\Common;
+
+defined('MOLAJO') or die;
+
+/**
  * SplClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
  *
@@ -32,10 +41,8 @@ class SplClassLoader
      *
      * @param string $ns The namespace to use.
      */
-    public function __construct($ns = null, $includePath = null)
+    public function __construct()
     {
-        $this->_namespace = $ns;
-        $this->_includePath = $includePath;
     }
 
     /**
@@ -101,8 +108,10 @@ class SplClassLoader
     /**
      * Installs this class loader on the SPL autoload stack.
      */
-    public function register()
+    public function register($ns = null, $includePath = null)
     {
+        $this->_namespace = $ns;
+        $this->_includePath = $includePath;
         spl_autoload_register(array($this, 'loadClass'));
     }
 
