@@ -140,7 +140,7 @@ Class Parse
          */
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-page.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/Configuration/renderers-page.xml';
         }
 
         if (Service::File()->exists($formatXML)) {
@@ -188,7 +188,7 @@ Class Parse
          */
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-final.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/Configuration/renderers-final.xml';
         }
 
         if (Service::File()->exists($formatXML)) {

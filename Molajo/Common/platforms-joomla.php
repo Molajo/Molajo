@@ -1,15 +1,18 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Load Joomla Framework
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
+if (defined('JPATH_SITE')) {
+} else {
+    define('JPATH_SITE', MOLAJO_BASE_FOLDER);
+}
 if (defined('JPATH_PLATFORM')) {
 } else {
-    define('JPATH_PLATFORM', PLATFORMS . '/jplatform/');
+    define('JPATH_PLATFORM', VENDOR . '/jplatform/');
 }
 
 require_once MOLAJO_APPLICATIONS . '/helpers/load.php';
@@ -113,4 +116,4 @@ $load->requireClassFile(JPATH_PLATFORM . '/joomla' . '/utilities/date.php', 'JDa
 /**
  *  PHPMailer
  */
-$load->requireClassFile(PLATFORMS . '/jplatform/phpmailer/phpmailer.php', 'PHPMailer');
+$load->requireClassFile(VENDOR . '/jplatform/phpmailer/phpmailer.php', 'PHPMailer');

@@ -32,7 +32,7 @@ $pageRequest = '';
 if (defined('MOLAJO_APPLICATION')) {
     /* must also define MOLAJO_PAGE_REQUEST */
 } else {
-    $apps = simplexml_load_file(MOLAJO_APPLICATIONS . '/options/applications.xml', 'SimpleXMLElement');
+    $apps = simplexml_load_file(MOLAJO_APPLICATIONS . '/Configuration/applications.xml', 'SimpleXMLElement');
 
     foreach ($apps->application as $app) {
 

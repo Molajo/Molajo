@@ -75,7 +75,7 @@ Class Security
      *
      * HTMLPurifier can be configured by:
      *
-     * 1. defining options in applications/options/htmlpurifier.xml
+     * 1. defining options in applications/Configuration/htmlpurifier.xml
      * 2. creating custom filters in applications/filters
      * 3. setting html_display_filter parameter false (default = true)
      *
@@ -103,7 +103,7 @@ Class Security
         }
 
         /** Configured Options */
-        $options = simplexml_load_file(MOLAJO_APPLICATIONS . '/options/htmlpurifier.xml');
+        $options = simplexml_load_file(MOLAJO_APPLICATIONS . '/Configuration/htmlpurifier.xml');
         $options = array();
         if (count($options) > 0) {
             foreach ($options->option as $o) {

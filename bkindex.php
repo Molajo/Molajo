@@ -54,9 +54,9 @@ if (defined('MOLAJO_EXTENSIONS')) {
 } else {
     define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER . '/extensions');
 }
-if (defined('PLATFORMS')) {
+if (defined('VENDOR')) {
 } else {
-    define('PLATFORMS', MOLAJO_BASE_FOLDER . '/platforms');
+    define('VENDOR', MOLAJO_BASE_FOLDER . '/platforms');
 }
 if (defined('SITES')) {
 } else {

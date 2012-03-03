@@ -99,7 +99,7 @@ Class Service
     public function startServices()
     {
         $services = simplexml_load_file(
-            MOLAJO_APPLICATIONS . '/options/services.xml'
+            MOLAJO_APPLICATIONS . '/Configuration/services.xml'
         );
         if (count($services) == 0) {
             return;
@@ -246,5 +246,121 @@ Class Service
         eval($execute);
 
         return $connection;
+    }
+}
+
+/**
+ *  Molajo Services
+ */
+class Services extends Service
+{
+    public static function Access()
+    {
+        return Molajo::Service()->get('Access');
+    }
+
+    public static function Authentication()
+    {
+        return Molajo::Service()->get('Authentication');
+    }
+
+    public static function Configuration()
+    {
+        return Molajo::Service()->get('Configuration');
+    }
+
+    public static function Cookie()
+    {
+        return Molajo::Service()->get('Cookie');
+    }
+
+    public static function Date()
+    {
+        return Molajo::Service()->get('Date');
+    }
+
+    public static function DB()
+    {
+        return Molajo::Service()->get('jdb');
+    }
+
+    public static function Dispatcher()
+    {
+        return Molajo::Service()->get('Dispatcher');
+    }
+
+    public static function Document()
+    {
+        return Molajo::Service()->get('Document');
+    }
+
+    public static function File()
+    {
+        return Molajo::Service()->get('File');
+    }
+
+    public static function Folder()
+    {
+        return Molajo::Service()->get('Folder');
+    }
+
+    public static function Image()
+    {
+        return Molajo::Service()->get('Image');
+    }
+
+    public static function Language()
+    {
+        return Molajo::Service()->get('Language');
+    }
+
+    public static function Mail()
+    {
+        return Molajo::Service()->get('Mail');
+    }
+
+    public static function Message()
+    {
+        return Molajo::Service()->get('Message');
+    }
+
+    public static function Parameter()
+    {
+        return Molajo::Service()->get('Parameter');
+    }
+
+    public static function Request()
+    {
+        return Molajo::Service()->get('Request');
+    }
+
+    public static function Response()
+    {
+        return Molajo::Service()->get('Response');
+    }
+
+    public static function Security()
+    {
+        return Molajo::Service()->get('Security');
+    }
+
+    public static function Session()
+    {
+        return Molajo::Service()->get('Session');
+    }
+
+    public static function Text()
+    {
+        return Molajo::Service()->get('Text');
+    }
+
+    public static function Url()
+    {
+        return Molajo::Service()->get('URL');
+    }
+
+    public static function User()
+    {
+        return Molajo::Service()->get('User');
     }
 }

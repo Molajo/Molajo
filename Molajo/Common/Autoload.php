@@ -40,6 +40,31 @@ if (interface_exists('SessionHandlerInterface')) {
     $s->registerPrefixFallback(MOLAJO_BASE_FOLDER . '/Vendor/Symfony/Component/HttpFoundation/Resources/stubs');
 }
 
+if (defined('VENDOR')) {
+} else {
+    define('VENDOR', MOLAJO_BASE_FOLDER . '/Vendor');
+}
 
-use Molajo\Application\Molajo;
-Molajo::Site();
+/** Not namedspaced */
+//require_once __DIR__ . '/platforms-joomla.php';
+require_once VENDOR . '/HTMLPurifier/HTMLPurifier.standalone.php';
+require_once VENDOR . '/Mustache/Mustache.php';
+require_once VENDOR . '/Simplepie/simplepie.php';
+require_once VENDOR . '/PhpConsole/PhpConsole.php';
+//PhpConsole::start(true, true, VENDOR . '/PhpConsole');
+
+return;
+
+abstract class JFactory extends Base
+{
+}
+
+abstract class JError
+{
+    static $legacy = false;
+}
+
+class Registry extends JRegistry
+{
+}
+

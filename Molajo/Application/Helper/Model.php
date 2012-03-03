@@ -469,7 +469,7 @@ class ModelHelper
     public function getList($field)
     {
         $lists = simplexml_load_file(
-            MOLAJO_APPLICATIONS . '/options/lists.xml'
+            MOLAJO_APPLICATIONS . '/Configuration/lists.xml'
         );
         if (count($lists) == 0) {
             return false;

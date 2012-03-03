@@ -98,7 +98,7 @@ Class Access
     {
         /** load task to action and controller data */
         $tasks = simplexml_load_file(
-            MOLAJO_APPLICATIONS . '/options/tasks.xml'
+            MOLAJO_APPLICATIONS . '/Configuration/tasks.xml'
         );
         if (count($tasks) == 0) {
             return;
