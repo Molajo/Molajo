@@ -172,10 +172,11 @@ Class Site
         }
         if (defined('SITES')) {
         } else {
-            define('SITES', MOLAJO_BASE_FOLDER . '/sites');
+            define('SITES', MOLAJO_BASE_FOLDER . '/site');
         }
+
         $this->_identifySite();
-        echo MOLAJO_SITE;
+        echo 'in site defines'.MOLAJO_SITE;
         /** Define PHP constants for application variables */
         $defines = simplexml_load_file(MOLAJO_APPLICATIONS . '/Configuration/defines.xml', 'SimpleXMLElement');
 

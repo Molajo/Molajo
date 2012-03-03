@@ -11,7 +11,7 @@ define('MOLAJO', 'Long Live Molajo!');
 
 define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
 
-require_once MOLAJO_BASE_FOLDER.'/Molajo/Common/Autoload.php';
+require_once MOLAJO_BASE_FOLDER . '/Molajo/Common/Autoload.php';
 
 use Molajo\Application\Molajo;
 Molajo::Site();
