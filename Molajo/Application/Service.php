@@ -10,13 +10,13 @@ namespace Molajo\Application;
 defined('MOLAJO') or die;
 
 /**
- * Services
+ * Service
  *
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
-Class Services
+Class Service
 {
     /**
      * Static instance
@@ -44,7 +44,7 @@ Class Services
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoServices();
+            self::$instance = new Service();
         }
         return self::$instance;
     }
@@ -80,7 +80,7 @@ Class Services
     public function set($key, $value = null)
     {
         if (!(is_object($value)) || $value == null) {
-            debug('MolajoServices::set Service failed to start: ' . $key);
+            debug('Service::set Service failed to start: ' . $key);
         } else {
             $this->service_connection->set($key, $value);
         }
@@ -114,12 +114,12 @@ Class Services
 
             } catch (Exception $e) {
                 echo 'Fatal Error: ' . $e->getMessage() . ' ' . $serviceName;
-                debug('MolajoServices::startServices Service Failed' . ' ' . $serviceName);
+                debug('Service::startServices Service Failed' . ' ' . $serviceName);
                 exit(0);
             }
 
             $this->set($serviceName, $connection);
-            debug('MolajoServices::startServices Service Connection' . ' ' . $serviceName);
+            debug('Service::startServices Service Connection' . ' ' . $serviceName);
         }
         return;
     }
@@ -140,7 +140,7 @@ Class Services
 
         $serviceClass = (string)$service->serviceClass;
         if (trim($serviceClass == '')) {
-            $serviceClass = 'Molajo' . ucfirst($serviceName) . 'Service';
+            $serviceClass = ucfirst($serviceName);
         }
 
         /** execute the getInstance method */

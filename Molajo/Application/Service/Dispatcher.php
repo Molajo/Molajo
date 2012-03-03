@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class DispatcherService
+Class Dispatcher
 {
     /**
      * Static instance

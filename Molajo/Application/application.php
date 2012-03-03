@@ -54,36 +54,38 @@ Class Application
     public function initialize()
     {
         /** initiate application services */
-        $sv = Molajo::Services()->startServices();
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        $sv = Molajo::Service()->startServices();
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug('Application::initialize Start Services');
         }
 
         /** offline */
-        if (Services::Configuration()->get('offline', 0) == 1) {
+        if (Service::Configuration()->get('offline', 0) == 1) {
             $this->_error(503);
         }
 
         /** verify application secure access configuration */
-        if (Services::Configuration()->get('force_ssl') >= 1) {
-            if ((Services::Request()->isSecure() === true)) {
+        if (Service::Configuration()->get('force_ssl') >= 1) {
+            if ((Service::Request()->isSecure() === true)) {
             } else {
+
                 $redirectTo = (string)'https' .
                     substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
                     MOLAJO_APPLICATION_URL_PATH .
                     '/' . MOLAJO_PAGE_REQUEST;
-                Services::Response()
+
+                Service::Response()
                     ->setStatusCode(301)
                     ->isRedirect($redirectTo);
             }
         }
 
         /** establish the session */
-        //Services::Session()->create(
-        //        Services::Session()->getHash(get_class($this))
+        //Service::Session()->create(
+        //        Service::Session()->getHash(get_class($this))
         //  );
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            debug('Application::initialize Services::Session()');
+        if (Service::Configuration()->get('debug', 0) == 1) {
+            debug('Application::initialize Service::Session()');
         }
 
         /** return to Molajo::Site */
@@ -101,7 +103,7 @@ Class Application
     public function process()
     {
         Molajo::Request()->process();
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug('Application::process Molajo::Request()->process()');
         }
 
@@ -110,7 +112,7 @@ Class Application
          *
          * Input Statement Loop until no more <input statements found
          *
-         * 1. Parser: parses theme and rendered output for <input:renderer statements
+         * 1. Parse: parses theme and rendered output for <input:renderer statements
          *
          * 2. Renderer: each input statement processed by extension renderer in order
          *    to collect task object for use by the MVC
@@ -119,18 +121,17 @@ Class Application
          *    renders template and wrap views
          */
 
-        if (Molajo::Request()->get('mvc_controller') == 'display'
-        ) {
-            $content = Molajo::Parser();
-            if (Services::Configuration()->get('debug', 0) == 1) {
-                debug('Application::process Molajo::Parser() completed');
+        if (Molajo::Request()->get('mvc_controller') == 'display') {
+            $content = Molajo::Parse();
+            if (Service::Configuration()->get('debug', 0) == 1) {
+                debug('Application::process Molajo::Parse() completed');
             }
 
             /** response */
-            Services::Response()->setContent($content);
-            Services::Response()->setStatusCode(200);
-            Services::Response()->prepare(Services::Request()->request);
-            Services::Response()->send();
+            Service::Response()->setContent($content);
+            Service::Response()->setStatusCode(200);
+            Service::Response()->prepare(Service::Request()->request);
+            Service::Response()->send();
 
         } else {
 
@@ -140,8 +141,8 @@ Class Application
             //$this->_processTask();
         }
 
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            debug('Application::process Services::Response()->respond() completed');
+        if (Service::Configuration()->get('debug', 0) == 1) {
+            debug('Application::process Service::Response()->respond() completed');
         }
         return;
     }

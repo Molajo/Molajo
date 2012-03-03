@@ -147,7 +147,7 @@ Class Renderer
      *
      * Captures rendered output for possible post-processing
      *
-     * Returns rendered output to Molajo::Parser to use in place of <include:renderer />
+     * Returns rendered output to Molajo::Parse to use in place of <include:renderer />
      *
      * @param   $attributes <include:renderer attr1=x attr2=y attr3=z ... />
      *
@@ -717,19 +717,19 @@ Class Renderer
      */
     protected function _loadViewMedia()
     {
-        $priority = Services::Configuration()->get('media_priority_other_extension', 400);
+        $priority = Service::Configuration()->get('media_priority_other_extension', 400);
 
         $file_path = $this->get('template_view_path');
         $url_path = $this->get('template_view_path_url');
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         $file_path = $this->get('wrap_view_path');
         $url_path = $this->get('wrap_view_path_url');
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
     }
 
     /**
@@ -750,7 +750,7 @@ Class Renderer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug(' ');
             debug('Renderer::_invokeMVC');
             debug('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
@@ -770,7 +770,7 @@ Class Renderer
         if ($this->parameters->get('html_display_filter', true) == false) {
             return $results;
         } else {
-            return Services::Security()->filter_html($results);
+            return Service::Security()->filter_html($results);
         }
     }
 

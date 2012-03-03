@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class ConfigurationService
+Class Configuration
 {
     /**
      * Static instance
@@ -132,7 +132,7 @@ Class ConfigurationService
      * Retrieves a parameter value from the site/application configuration file
      *
      * Example usage:
-     * $row->title = Services::Configuration()->get('site_title', 'Molajo');
+     * $row->title = Service::Configuration()->get('site_title', 'Molajo');
      *
      * @param  string  $key
      * @param  string  $default
@@ -151,7 +151,7 @@ Class ConfigurationService
      * Sets a value in the Site/Application Configuration
      *
      * Example usage:
-     * Services::Configuration()->set('sef', 1);
+     * Service::Configuration()->set('sef', 1);
      *
      * @param  string  $key
      * @param  mixed   $value

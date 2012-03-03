@@ -41,8 +41,10 @@ class SplClassLoader
      *
      * @param string $ns The namespace to use.
      */
-    public function __construct()
+    public function __construct($ns = null, $includePath = null)
     {
+        $this->_namespace = $ns;
+        $this->_includePath = $includePath;
     }
 
     /**
@@ -106,12 +108,51 @@ class SplClassLoader
     }
 
     /**
+     * Registers an array of namespaces
+     *
+     * @param array $namespaces An array of namespaces (namespaces as keys and locations as values)
+     *
+     * @api
+     */
+    public function registerNamespaces(array $namespaces)
+    {
+        foreach ($namespaces as $namespace => $locations) {
+            $this->namespaces[$namespace] = (array) $locations;
+        }
+    }
+
+    /**
+     * Registers a namespace.
+     *
+     * @param string       $namespace The namespace
+     * @param array|string $paths     The location(s) of the namespace
+     *
+     * @api
+     */
+    public function registerNamespace($namespace, $paths)
+    {
+        $this->namespaces[$namespace] = (array) $paths;
+    }
+
+    /**
+     * Registers an array of classes using the PEAR naming convention.
+     *
+     * @param array $classes An array of classes (prefixes as keys and locations as values)
+     *
+     * @api
+     */
+    public function registerPrefixes(array $classes)
+    {
+        foreach ($classes as $prefix => $locations) {
+            $this->prefixes[$prefix] = (array) $locations;
+        }
+    }
+
+    /**
      * Installs this class loader on the SPL autoload stack.
      */
-    public function register($ns = null, $includePath = null)
+    public function register()
     {
-        $this->_namespace = $ns;
-        $this->_includePath = $includePath;
         spl_autoload_register(array($this, 'loadClass'));
     }
 

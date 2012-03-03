@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class UrlService
+Class Url
 {
     /**
      * Static instance

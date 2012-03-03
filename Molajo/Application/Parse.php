@@ -10,18 +10,18 @@ namespace Molajo\Application;
 defined('MOLAJO') or die;
 
 /**
- * Parser
+ * Parse
  *
  * @package     Molajo
  * @subpackage  Base
  * @since       1.0
  */
-Class Parser
+Class Parse
 {
     /**
      * $instance
      *
-     * Parser static instance
+     * Parse static instance
      *
      * @var    object
      * @since  1.0
@@ -100,7 +100,7 @@ Class Parser
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoParser();
+            self::$instance = new Parse();
         }
         return self::$instance;
     }
@@ -143,7 +143,7 @@ Class Parser
             $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-page.xml';
         }
 
-        if (Services::File()->exists($formatXML)) {
+        if (Service::File()->exists($formatXML)) {
         } else {
             //error
             return false;
@@ -177,7 +177,7 @@ Class Parser
         }
 
         /** Before Event */
-        // Services::Dispatcher()->notify('onBeforeRender');
+        // Service::Dispatcher()->notify('onBeforeRender');
 
         $this->final = false;
         $body = $this->_renderLoop();
@@ -191,7 +191,7 @@ Class Parser
             $formatXML = MOLAJO_APPLICATIONS . '/options/renderers-final.xml';
         }
 
-        if (Services::File()->exists($formatXML)) {
+        if (Service::File()->exists($formatXML)) {
         } else {
             //error
             return false;
@@ -201,7 +201,7 @@ Class Parser
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
         foreach ($sequence->renderer as $next) {
             if ($next == 'message') {
-                $messages = Services::Message()->get();
+                $messages = Service::Message()->get();
                 if (count($messages) == 0) {
                 } else {
                     $this->sequence[] = (string)$next;
@@ -230,7 +230,7 @@ Class Parser
         Molajo::Responder()->setContent($body);
 
         /** after rendering */
-        //        Services::Dispatcher()->notify('onAfterRender');
+        //        Service::Dispatcher()->notify('onAfterRender');
 
         return;
     }

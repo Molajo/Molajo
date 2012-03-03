@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @subpackage  Services
  * @since       1.0
  */
-Class ResponseService extends Response
+Class Response extends Symfony\Component\HttpFoundation\Response
 {
     /**
      * Response instance
@@ -76,9 +76,9 @@ Class ResponseService extends Response
      */
     public function isRedirect($location = null)
     {
-        if (Services::Configuration()->get('sef', 1) == 1) {
+        if (Service::Configuration()->get('sef', 1) == 1) {
 
-            if (Services::Configuration()->get('sef_rewrite', 0) == 0) {
+            if (Service::Configuration()->get('sef_rewrite', 0) == 0) {
                 $location = MOLAJO_BASE_URL
                     . MOLAJO_APPLICATION_URL_PATH
                     . 'index.php/' . $location;
@@ -88,11 +88,11 @@ Class ResponseService extends Response
                     . $location;
             }
 
-            if ((int)Services::Configuration()->get('sef_suffix', 0) == 1) {
+            if ((int)Service::Configuration()->get('sef_suffix', 0) == 1) {
                 $location .= '.html';
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug('Response::isRedirect redirect to: ' . $location);
         }
 

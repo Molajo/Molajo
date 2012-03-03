@@ -48,7 +48,7 @@ abstract class ContentHelper
         );
 
         /** Assets Join and View Access Check */
-        Services::Access()->setQueryViewAccess(
+        Service::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',

@@ -50,12 +50,12 @@ ClassHeadRenderer extends Renderer
 
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                Services::Configuration()->get('head_template_view_id', 'document-head'));
+                Service::Configuration()->get('head_template_view_id', 'document-head'));
         }
 
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                Services::Configuration()->get('head_wrap_view_id', 'none'));
+                Service::Configuration()->get('head_wrap_view_id', 'none'));
         }
 
         if ($this->type == 'defer') {

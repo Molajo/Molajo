@@ -28,6 +28,6 @@ Class BootstrapHelper extends ThemeHelper
      */
     public function hello()
     {
-        return 'Hello '.Services::User()->get('name').'!';
+        return 'Hello '.Service::User()->get('name').'!';
     }
 }

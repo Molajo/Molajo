@@ -66,7 +66,7 @@ class EditController extends DisplayController
             $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         }
 
-        $this->user = Services::User();
+        $this->user = Service::User();
 
         /** id */
         if ($this->item->id == null) {

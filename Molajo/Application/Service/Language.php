@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Language
  * @since       1.0
  */
-Class LanguageService
+Class Language
 {
     /**
      * Instance of each specific language
@@ -422,7 +422,7 @@ Class LanguageService
         }
 
         /** 2. user  */
-        $language = Services::User()->get('language', '');
+        $language = Service::User()->get('language', '');
         if ($language === false) {
         } elseif (in_array($language, $installed)) {
             return $language;
@@ -510,7 +510,7 @@ Class LanguageService
 
         $languages = array();
 
-        $files = Services::Folder()->files($path . '/language', '\.ini', false, false);
+        $files = Service::Folder()->files($path . '/language', '\.ini', false, false);
         if (count($files) == 0) {
             return false;
         }
@@ -539,7 +539,7 @@ Class LanguageService
      */
     public function getLanguagesCore()
     {
-        $subfolders = Services::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $subfolders = Service::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
         $languages = array();
 
         foreach ($subfolders as $path) {

@@ -49,7 +49,7 @@ class LoadHelper
             JLoader::register($class, $file);
         } else {
             if (class_exists('Service')) {
-                MolajoError::raiseNotice(500, Services::Language()->translate('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
+                MolajoError::raiseNotice(500, Service::Language()->translate('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
                 return false;
             } else {
                 echo 'LoadHelper Error: File not found ' . $file . ' for Class: ' . $class;
@@ -68,7 +68,7 @@ class LoadHelper
             if (class_exists('Service')) {
                 MolajoError::raiseNotice(
                     500,
-                    Services::Language()->translate('MOLAJO_CLASS_NOT_FOUND_IN_FILE') . ' ' . $class . ' ' . $file, 'error');
+                    Service::Language()->translate('MOLAJO_CLASS_NOT_FOUND_IN_FILE') . ' ' . $class . ' ' . $file, 'error');
                 return false;
             } else {
                 echo 'LoadHelper Error: Class not found ' . $class;

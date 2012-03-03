@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class AccessService
+Class Access
 {
     /**
      * Static instance
@@ -159,11 +159,11 @@ Class AccessService
 
         if ($application_id === false) {
     //todo: finish the response action/test
-            Services::Response()
+            Service::Response()
                 ->setHeader('Status', '403 Not Authorised', 'true'
             );
-            Services::Message()->set(
-                Services::Configuration()->get('error_403_message', 'Not Authorised.'),
+            Service::Message()->set(
+                Service::Configuration()->get('error_403_message', 'Not Authorised.'),
                 MOLAJO_MESSAGE_TYPE_ERROR,
                 403
             );
@@ -178,7 +178,7 @@ Class AccessService
      * Using the Task, retrieve the Controller
      *
      * Example usage:
-     * Services::Access()->getTaskController($this->get('mvc_task')
+     * Service::Access()->getTaskController($this->get('mvc_task')
      *
      * @param $task
      *
@@ -196,7 +196,7 @@ Class AccessService
      * authoriseTaskList
      *
      * Example usage:
-     * $permissions = Services::Access()->authoriseTaskList($tasksArray, $item->asset_id);
+     * $permissions = Service::Access()->authoriseTaskList($tasksArray, $item->asset_id);
      *
      * @param  array   $tasklist
      * @param  string  $asset_id
@@ -216,7 +216,7 @@ Class AccessService
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
-                Services::Access()->authoriseTask($task, $asset_id);
+                Service::Access()->authoriseTask($task, $asset_id);
         }
         return $taskPermissions;
     }
@@ -228,7 +228,7 @@ Class AccessService
      * on a specific asset
      *
      * Example usage:
-     * Services::Access()->authoriseTask($task, $asset_id);
+     * Service::Access()->authoriseTask($task, $asset_id);
      *
      * @param  string  $task
      * @param  string  $asset_id
@@ -239,7 +239,7 @@ Class AccessService
     public function authoriseTask($task, $asset_id)
     {
         if ($task == 'login') {
-            return Services::Access()->authoriseLogin('login', $asset_id);
+            return Service::Access()->authoriseLogin('login', $asset_id);
         }
 
         /** Retrieve ACL Action for this Task */
@@ -247,7 +247,7 @@ Class AccessService
         $action_id = (int)$this->action_to_action_id->get($action);
 
         if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-            if (Services::Configuration()->get('debug', 0) == 1) {
+            if (Service::Configuration()->get('debug', 0) == 1) {
                 debug('AccessService::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
         }
@@ -262,7 +262,7 @@ Class AccessService
         $m->query->where($m->db->qn('asset_id') . ' = ' . (int)$asset_id);
         $m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
         $m->query->where($m->db->qn('group_id')
-                . ' IN (' . implode(',', Services::User()->get('groups')) . ')'
+                . ' IN (' . implode(',', Service::User()->get('groups')) . ')'
         );
 
         $count = $m->loadResult();
@@ -270,7 +270,7 @@ Class AccessService
         if ($count > 0) {
             return true;
         } else {
-            if (Services::Configuration()->get('debug', 0) == 1) {
+            if (Service::Configuration()->get('debug', 0) == 1) {
                 debug('AccessService::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
             return false;
@@ -283,7 +283,7 @@ Class AccessService
      * Verifies permission for a user to logon to a specific application
      *
      * Example usage:
-     * Services::Access()->authoriseLogin('login', $asset_id);
+     * Service::Access()->authoriseLogin('login', $asset_id);
      *
      * @param $key
      * @param $action
@@ -317,7 +317,7 @@ Class AccessService
      *  Append criteria needed to implement view access for Query
      *
      * Example usage:
-     *  Services::Access()->setQueryViewAccess(
+     *  Service::Access()->setQueryViewAccess(
      *     $this->query,
      *     $this->db,
      *     array('join_to_prefix' => $this->primary_prefix,
@@ -385,7 +385,7 @@ Class AccessService
                 '.' .
                 $db->qn('view_group_id') .
                 ' IN (' . implode(',',
-                Services::User()
+                Service::User()
                     ->get('view_groups')) .
                 ')'
         );
@@ -407,16 +407,16 @@ Class AccessService
      *  it returns true
      *
      * Example usage:
-     * $userHTMLFilter = Services::Access()->setHTMLFilter();
+     * $userHTMLFilter = Service::Access()->setHTMLFilter();
      *
      * @return bool
      * @since  1.0
      */
     public function setHTMLFilter()
     {
-        $groups = Services::Configuration()->get('disable_filter_for_groups');
+        $groups = Service::Configuration()->get('disable_filter_for_groups');
         $groupArray = explode(',', $groups);
-        $userGroups = Services::User()->get('groups');
+        $userGroups = Service::User()->get('groups');
 
         foreach ($groupArray as $single) {
 

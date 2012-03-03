@@ -29,7 +29,7 @@ abstract ClassUserService
      */
     public static function getUserId($username)
     {
-        $db = Services::DB();
+        $db = Service::DB();
         $query = $db->getQuery(true);
 
         $query->select($db->qn('id'));
@@ -59,7 +59,7 @@ abstract ClassUserService
         if (in_array($group_id, $user->groups)) {
         } else {
 
-            $db = Services::DB();
+            $db = Service::DB();
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__content`' .
@@ -74,7 +74,7 @@ abstract ClassUserService
             if ($title) {
             } else {
                 return new MolajoException(
-                    Services::Language()->translate('MOLAJO_ERROR_GROUP_INVALID')
+                    Service::Language()->translate('MOLAJO_ERROR_GROUP_INVALID')
                 );
             }
 
@@ -117,7 +117,7 @@ abstract ClassUserService
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = Services::User();
+        $temp = Service::User();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -144,7 +144,7 @@ abstract ClassUserService
         $user->groups = $groups;
 
         // Get the titles for the user groups.
-        $db = Services::DB();
+        $db = Service::DB();
         $db->setQuery(
             'SELECT `id`, `title`' .
             ' FROM `#__content`' .
@@ -172,7 +172,7 @@ abstract ClassUserService
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
-        $temp = Services::User();
+        $temp = Service::User();
         if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
@@ -191,7 +191,7 @@ abstract ClassUserService
     public static function activateUser($activation)
     {
         // Initialize some variables.
-        $db = Services::DB();
+        $db = Service::DB();
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'
@@ -216,7 +216,7 @@ abstract ClassUserService
                 return false;
             }
         } else {
-            MolajoError::raiseWarning("SOME_ERROR_CODE", Services::Language()->translate('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
+            MolajoError::raiseWarning("SOME_ERROR_CODE", Service::Language()->translate('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
             return false;
         }
 

@@ -45,7 +45,7 @@ ClassFieldPrefix extends MolajoField
         $prefix = false;
 
 
-        $session = Services::Session()->get('setup.options', array());
+        $session = Service::Session()->get('setup.options', array());
         if (empty($session->db_prefix)) {
         } else {
             $prefix = $session->db_prefix;
@@ -53,7 +53,7 @@ ClassFieldPrefix extends MolajoField
 
         if ($prefix) {
         } else {
-            $prefix = Services::Configuration()->get('prefix');
+            $prefix = Service::Configuration()->get('prefix');
         }
 
         if ($prefix) {
@@ -153,7 +153,7 @@ ClassFieldPrefix extends MolajoField
             if ($item->stop_publishing_datetime == 0) {
                 $render['print_value'] = '-';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->stop_publishing_datetime, Services::Language()->translate('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->stop_publishing_datetime, Service::Language()->translate('DATE_FORMAT_LC4'));
             }
 
             return $render;
@@ -170,9 +170,9 @@ ClassFieldPrefix extends MolajoField
     protected function getPrefix($size = 10, $count = 100)
     {
         // For an existing table, retrieve all table names
-        $db = Services::DB();
+        $db = Service::DB();
         if ($db) {
-            $tables = Services::DB()->getModelList();
+            $tables = Service::DB()->getModelList();
         } else {
             $tables = array();
         }

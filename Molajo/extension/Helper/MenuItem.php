@@ -56,7 +56,7 @@ abstract class MenuItemHelper
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$menu_item_id);
 
         /** Assets Join and View Access Check */
-        Services::Access()->setQueryViewAccess(
+        Service::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',
@@ -90,7 +90,7 @@ abstract class MenuItemHelper
                 ' OR b.stop_publishing_datetime >= ' . $m->db->q($m->now) . ')'
         );
 
-        Services::Access()->setQueryViewAccess(
+        Service::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'b',

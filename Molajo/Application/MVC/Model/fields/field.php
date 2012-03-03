@@ -139,7 +139,7 @@ ClassField
 
         /** retain value from previous page load if current request is null **/
         if ($this->value == null) {
-            $this->value = Services::User()->getUserState('filter.' . $this->name);
+            $this->value = Service::User()->getUserState('filter.' . $this->name);
         }
     }
 

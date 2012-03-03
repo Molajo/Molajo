@@ -13,17 +13,17 @@ $action = 'index.php?option='.Molajo::Request()->parameters->get('display_extens
 <?php if (Molajo::Request()->parameters->get('search', 1) == 1) { ?>
         <div class="filter-search fltlft">
             <label class="filter-search-lbl" for="filter_search">
-                <?php echo Services::Language()->translate('FORM_SEARCH'); ?>
+                <?php echo Service::Language()->translate('FORM_SEARCH'); ?>
             </label>
             <input type="text" name="filter_search" id="filter_search"
                    value="<?php //echo $this->state->get('filter.search'); ?>"
-                   title="<?php echo Services::Language()->translate('FORM_SEARCH_DESC'); ?>"
+                   title="<?php echo Service::Language()->translate('FORM_SEARCH_DESC'); ?>"
                 />
             <button type="submit" class="btn">
-                <?php echo Services::Language()->translate('FORM_SEARCH_BUTTON'); ?>
+                <?php echo Service::Language()->translate('FORM_SEARCH_BUTTON'); ?>
             </button>
             <button type="button">
-                <?php echo Services::Language()->translate('FORM_CLEAR_BUTTON'); ?>
+                <?php echo Service::Language()->translate('FORM_CLEAR_BUTTON'); ?>
             </button>
         </div>
 <?php } ?>

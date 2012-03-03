@@ -45,7 +45,7 @@ Class MessagesModel extends Model
     {
         $this->query_results = array();
 
-        $messages = Services::Message()->get();
+        $messages = Service::Message()->get();
         if (count($messages) == 0) {
             return array();
         }

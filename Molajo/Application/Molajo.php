@@ -1,26 +1,30 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
-
+require_once MOLAJO_BASE_FOLDER.'/Molajo/Application/Site.php';
+require_once MOLAJO_BASE_FOLDER.'/Molajo/Application/Application.php';
+require_once MOLAJO_BASE_FOLDER.'/Molajo/Application/Parse.php';
+require_once MOLAJO_BASE_FOLDER.'/Molajo/Application/Renderer.php';
+require_once MOLAJO_BASE_FOLDER.'/Molajo/Application/Service.php';
 defined('MOLAJO') or die;
 
+Use Molajo\Application\Site;
+Use Molajo\Application\Application;
+Use Molajo\Application\Request;
+Use Molajo\Application\Parse;
+Use Molajo\Application\Service;
+
 /**
- * Base
+ * Molajo
  *
- * Creates instances of base clases
+ * Creates instances of base classes
  *
- * Aliases are set for each of the base classes:
- * - For example, Base is aliased as Molajo
- * - Combined, the shortcut alias is Molajo::Subject, ex. Molajo::Renderer
- *
- * Aliases are set in applications/includes/aliases.php during bootstrap processes
  */
-Class Base
+class Molajo
 {
     /**
      * Molajo::Site
@@ -47,31 +51,29 @@ Class Base
     protected static $request = null;
 
     /**
-     * Molajo::Parser
+     * Molajo::Parse
      *
-     * @var    object Parser
+     * @var    object Parse
      * @since  1.0
      */
-    protected static $parser = null;
+    protected static $parse = null;
 
     /**
-     * Molajo::Services
+     * Molajo::Service
      *
-     * @var    object Services
+     * @var    object Service
      * @since  1.0
      */
-    protected static $services = null;
+    protected static $service = null;
 
     /**
-     * getSite
-     *
-     * Site, alias Molajo::Site
+     * Molajo::Site
      *
      * @static
      * @return  Site
      * @since   1.0
      */
-    public static function getSite()
+    public static function Site()
     {
         if (self::$site) {
         } else {
@@ -81,15 +83,13 @@ Class Base
     }
 
     /**
-     * getApplication
-     *
-     * Application, alias Molajo::Application
+     * Molajo::Application
      *
      * @static
      * @return  Application
      * @since   1.0
      */
-    public static function getApplication()
+    public static function Application()
     {
         if (self::$application) {
         } else {
@@ -99,9 +99,7 @@ Class Base
     }
 
     /**
-     * getRequest
-     *
-     * Request, alias Molajo::Request
+     * Molajo::Request
      *
      * @static
      * @param null $request
@@ -111,7 +109,7 @@ Class Base
      * @return Request
      * @since 1.0
      */
-    public static function getRequest($override_request_url = null,
+    public static function Request($override_request_url = null,
                                       $override_asset_id = null)
     {
         if (self::$request) {
@@ -124,38 +122,34 @@ Class Base
     }
 
     /**
-     * getParser
-     *
-     * Parser, alias Molajo::Parser
+     * Molajo::Parse
      *
      * @static
-     * @return  Parser
+     * @return  Parse
      * @since   1.0
      */
-    public static function getParser()
+    public static function Parse()
     {
-        if (self::$parser) {
+        if (self::$parse) {
         } else {
-            self::$parser = Parser::getInstance();
+            self::$parse = Parse::getInstance();
         }
-        return self::$parser;
+        return self::$parse;
     }
 
     /**
-     * getServices
-     *
-     * Services, alias Molajo::Services
+     * Molajo::Service
      *
      * @static
-     * @return  Services
+     * @return  Service
      * @since   1.0
      */
-    public static function getServices()
+    public static function Service()
     {
-        if (self::$services) {
+        if (self::$service) {
         } else {
-            self::$services = Services::getInstance();
+            self::$service = Service::getInstance();
         }
-        return self::$services;
+        return self::$service;
     }
 }

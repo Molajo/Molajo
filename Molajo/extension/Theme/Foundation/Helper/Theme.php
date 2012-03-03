@@ -28,7 +28,7 @@ Class ThemeFoundationHelper extends ThemeHelper
      */
     public function hello()
     {
-        return 'Hello ' . Services::User()->get('name') . '!!!';
+        return 'Hello ' . Service::User()->get('name') . '!!!';
     }
 
     /**
@@ -45,11 +45,11 @@ Class ThemeFoundationHelper extends ThemeHelper
     public function loadMedia()
     {
         /** Mobile Specific Meta */
-        Services::Document()->set_metadata
+        Service::Document()->set_metadata
             ('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
 
         /** Favicons */
-        Services::Document()->add_link(
+        Service::Document()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL
                 . '/' . Molajo::Request()->get('theme_name')
                 . '/' . 'images/apple-touch-icon.png',
@@ -57,7 +57,7 @@ Class ThemeFoundationHelper extends ThemeHelper
             $relation_type = 'rel',
             $attributes = array()
         );
-        Services::Document()->add_link(
+        Service::Document()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL
                 . '/' . Molajo::Request()->get('theme_name')
                 . '/' . 'images/apple-touch-icon-72x72.png',
@@ -65,7 +65,7 @@ Class ThemeFoundationHelper extends ThemeHelper
             $relation_type = 'rel',
             $attributes = array('sizes,72x72')
         );
-        Services::Document()->add_link(
+        Service::Document()->add_link(
             $url = MOLAJO_EXTENSIONS_THEMES_URL
                 . '/' . Molajo::Request()->get('theme_name')
                 . '/' . 'images/apple-touch-icon-114x114.png',
@@ -75,11 +75,11 @@ Class ThemeFoundationHelper extends ThemeHelper
         );
 
         /** HTML5 Shim */
-        Services::Document()->add_js
+        Service::Document()->add_js
             ('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
 
         /** jQuery CDN and fallback */
-        Services::Document()->add_js
+        Service::Document()->add_js
             ('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
 
         $url = MOLAJO_EXTENSIONS_THEMES_URL
@@ -91,7 +91,7 @@ Class ThemeFoundationHelper extends ThemeHelper
          {
             document.write(unescape(".'"'."%3Cscript src='".$url."' type='text/javascript'%3E%3C/script%3E".'"'."));
          }";
-        Services::Document()->add_js_declaration
+        Service::Document()->add_js_declaration
             ($fallback, 'text/javascript', 1000);
     }
 }

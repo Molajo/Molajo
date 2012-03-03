@@ -12,86 +12,39 @@ function hook()
     echo 'is this all a hook is? interesting.';
 }
 
-Class AssetHelper extends AssetHelper
-{
-}
-
-Class ComponentHelper extends MolajoComponentHelper
-{
-}
-
-Class ContentHelper extends ContentHelper
-{
-}
-
-Class ExtensionHelper extends ExtensionHelper
-{
-}
-
-Class InstallerHelper extends InstallerHelper
-{
-}
-
-Class LoadHelper extends LoadHelper
-{
-}
-
-Class MenuItemHelper extends MolajoMenuItemHelper
-{
-}
-
-Class ModuleHelper extends MolajoModuleHelper
-{
-}
-
-Class PluginHelper extends MolajoPluginHelper
-{
-}
-
-Class SiteHelper extends SiteHelper
-{
-}
-
-Class ThemeHelper extends MolajoThemeHelper
-{
-}
-
-Class ViewHelper extends MolajoViewHelper
-{
-}
 
 /**
  *  Molajo Base Class
  */
-Class extends MolajoBase
+Class Molajo extends Base
 {
     public static function Site()
     {
-        return MolajoBase::getSite();
+        return Base::getSite();
     }
 
     public static function Application()
     {
-        return MolajoBase::getApplication();
+        return Base::getApplication();
     }
 
     public static function Request($request = null, $override_request_url = null, $override_asset_id = null)
     {
-        return MolajoBase::getRequest($request, $override_request_url, $override_asset_id);
+        return Base::getRequest($request, $override_request_url, $override_asset_id);
     }
 
-    public static function Parser()
+    public static function Parse()
     {
-        return MolajoBase::getParser();
+        return Base::getParse();
     }
 
-    public static function Services()
+    public static function Service()
     {
-        return MolajoBase::getServices();
+        return Base::getService();
     }
 }
 
-abstract class JFactory extends MolajoBase
+abstract class JFactory extends Base
 {
 }
 
@@ -103,116 +56,116 @@ abstract class JError
 /**
  *  Molajo Services
  */
-class Services extends MolajoServices
+class Services extends Service
 {
     public static function Access()
     {
-        return Molajo::Services()->get('Access');
+        return Molajo::Service()->get('Access');
     }
 
     public static function Authentication()
     {
-        return Molajo::Services()->get('Authentication');
+        return Molajo::Service()->get('Authentication');
     }
 
     public static function Configuration()
     {
-        return Molajo::Services()->get('Configuration');
+        return Molajo::Service()->get('Configuration');
     }
 
     public static function Cookie()
     {
-        return Molajo::Services()->get('Cookie');
+        return Molajo::Service()->get('Cookie');
     }
 
     public static function Date()
     {
-        return Molajo::Services()->get('Date');
+        return Molajo::Service()->get('Date');
     }
 
     public static function DB()
     {
-        return Molajo::Services()->get('jdb');
+        return Molajo::Service()->get('jdb');
     }
 
     public static function Dispatcher()
     {
-        return Molajo::Services()->get('Dispatcher');
+        return Molajo::Service()->get('Dispatcher');
     }
 
     public static function Document()
     {
-        return Molajo::Services()->get('Document');
+        return Molajo::Service()->get('Document');
     }
 
     public static function File()
     {
-        return Molajo::Services()->get('File');
+        return Molajo::Service()->get('File');
     }
 
     public static function Folder()
     {
-        return Molajo::Services()->get('Folder');
+        return Molajo::Service()->get('Folder');
     }
 
     public static function Image()
     {
-        return Molajo::Services()->get('Image');
+        return Molajo::Service()->get('Image');
     }
 
     public static function Language()
     {
-        return Molajo::Services()->get('Language');
+        return Molajo::Service()->get('Language');
     }
 
     public static function Mail()
     {
-        return Molajo::Services()->get('Mail');
+        return Molajo::Service()->get('Mail');
     }
 
     public static function Message()
     {
-        return Molajo::Services()->get('Message');
+        return Molajo::Service()->get('Message');
     }
 
     public static function Parameter()
     {
-        return Molajo::Services()->get('Parameter');
+        return Molajo::Service()->get('Parameter');
     }
 
     public static function Request()
     {
-        return Molajo::Services()->get('Request');
+        return Molajo::Service()->get('Request');
     }
 
     public static function Response()
     {
-        return Molajo::Services()->get('Response');
+        return Molajo::Service()->get('Response');
     }
 
     public static function Security()
     {
-        return Molajo::Services()->get('Security');
+        return Molajo::Service()->get('Security');
     }
 
     public static function Session()
     {
-        return Molajo::Services()->get('Session');
+        return Molajo::Service()->get('Session');
     }
 
     public static function Text()
     {
-        return Molajo::Services()->get('Text');
+        return Molajo::Service()->get('Text');
     }
 
     public static function Url()
     {
-        return Molajo::Services()->get('URL');
+        return Molajo::Service()->get('URL');
     }
 
     public static function User()
     {
-        return Molajo::Services()->get('User');
+        return Molajo::Service()->get('User');
     }
 }
 

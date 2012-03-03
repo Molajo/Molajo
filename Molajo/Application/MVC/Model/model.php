@@ -193,11 +193,11 @@ Class Model
 
         if (isset($this->db)) {
         } else {
-            $this->db = Services::DB();
+            $this->db = Service::DB();
         }
 
         $this->query = $this->db->getQuery(true);
-        $this->now = Services::Date()->getDate()->toSql();
+        $this->now = Service::Date()->getDate()->toSql();
         $this->nullDate = $this->db->getNullDate();
         $this->primary_prefix = 'a';
     }
@@ -211,9 +211,9 @@ Class Model
         } else {
             echo 'in Model::setError';
             die;
-            Services::Message()
+            Service::Message()
                 ->set(
-                $message = Services::Language()->translate('ERROR_DATABASE_QUERY') . ' ' .
+                $message = Service::Language()->translate('ERROR_DATABASE_QUERY') . ' ' .
                     $this->db->getErrorNum() . ' ' .
                     $this->db->getErrorMsg(),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
@@ -741,9 +741,9 @@ Class Model
 
         } else {
 
-            Services::Message()
+            Service::Message()
                 ->set(
-                $message = Services::Language()
+                $message = Service::Language()
                     ->_('ERROR_DATABASE_QUERY') . ' ' .
                     $this->db->getErrorNum() . ' ' .
                     $this->db->getErrorMsg(),

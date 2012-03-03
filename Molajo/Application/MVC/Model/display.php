@@ -118,7 +118,7 @@ class DisplayModel extends LoadModel
         if (isset($parameterArray['disable_view_access_check'])
             && $parameterArray['disable_view_access_check'] == 0
         ) {
-            Services::Access()->setQueryViewAccess(
+            Service::Access()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => $this->primary_prefix,

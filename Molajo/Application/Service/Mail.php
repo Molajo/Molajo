@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  *
  * Example usage:
  *
- * $results = Services::Mail()
+ * $results = Service::Mail()
  *  ->set('send_to_email', 'person@example.com')
  *  ->set('from_email', 'admin@example.com')
  *  ->set('subject', 'Welcome to our Site')
@@ -40,7 +40,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class MailService
+Class Mail
 {
     /**
      * Static instance
@@ -129,7 +129,7 @@ Class MailService
      */
     public function send()
     {
-        if (Services::Configuration()->get('disable_sending', 1) == 1) {
+        if (Service::Configuration()->get('disable_sending', 1) == 1) {
             return true;
         }
 
@@ -140,7 +140,7 @@ Class MailService
             return $results;
         }
 
-        $only_deliver_to = Services::Configuration()->get('only_deliver_to', '');
+        $only_deliver_to = Service::Configuration()->get('only_deliver_to', '');
         if (trim($only_deliver_to) == '') {
         } else {
             $this->set('cc_email', array());
@@ -160,16 +160,16 @@ Class MailService
         $mail = $mailClass::getInstance();
 
         /** Set type of email */
-        switch (Services::Configuration()->get('mailer'))
+        switch (Service::Configuration()->get('mailer'))
         {
             case 'smtp':
                 $mail->useSMTP(
-                    Services::Configuration()->get('smtpauth'),
-                    Services::Configuration()->get('smtphost'),
-                    Services::Configuration()->get('smtpuser'),
-                    Services::Configuration()->get('smtppass'),
-                    Services::Configuration()->get('smtpsecure'),
-                    Services::Configuration()->get('smtpport')
+                    Service::Configuration()->get('smtpauth'),
+                    Service::Configuration()->get('smtphost'),
+                    Service::Configuration()->get('smtpuser'),
+                    Service::Configuration()->get('smtppass'),
+                    Service::Configuration()->get('smtpsecure'),
+                    Service::Configuration()->get('smtpport')
                 );
                 break;
 
@@ -223,7 +223,7 @@ Class MailService
 
         /** authorization event */
         //todo: what is the asset id of a service?
-        //$results = Services::Access()->authoriseTask('email', $asset_id);
+        //$results = Service::Access()->authoriseTask('email', $asset_id);
 
         return $permission;
     }
@@ -257,7 +257,7 @@ Class MailService
 
         /** From Name */
         $name = 'from_name';
-        $value = $this->get('from_name', Services::Configuration()->get('site_name'));
+        $value = $this->get('from_name', Service::Configuration()->get('site_name'));
         $datatype = 'char';
         $results = $this->edit_and_filter_input($name, $value, $datatype);
         if ($results === false) {
@@ -288,7 +288,7 @@ Class MailService
 
         /** Subject */
         $name = 'subject';
-        $value = $this->get('subject', Services::Configuration()->get('site_name'));
+        $value = $this->get('subject', Service::Configuration()->get('site_name'));
         $datatype = 'char';
         $results = $this->edit_and_filter_input($name, $value, $datatype);
         if ($results === false) {
@@ -412,17 +412,17 @@ Class MailService
         $name, $value, $datatype, $null = null, $default = null)
     {
         try {
-           $value = Services::Security()->filter(
+           $value = Service::Security()->filter(
                    $value, $datatype, $null, $default);
 
         } catch (Exception $e) {
            $value = false;
-           Services::Message()->set(
-               $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
+           Service::Message()->set(
+               $message = Service::Language()->translate($e->getMessage()) . ' ' . $name,
                $type = MOLAJO_MESSAGE_TYPE_ERROR
            );
-           if (Services::Configuration()->get('debug', 0) == 1) {
-               debug('Services::mail Filter Failed'.' '.$message);
+           if (Service::Configuration()->get('debug', 0) == 1) {
+               debug('Service::mail Filter Failed'.' '.$message);
            }
         }
 

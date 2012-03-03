@@ -86,7 +86,7 @@ abstract class AssetHelper
 
         } else if ((int)$asset_id == 0) {
 
-            if (Services::Configuration()->get('sef', 1) == 1) {
+            if (Service::Configuration()->get('sef', 1) == 1) {
                 if ($row->sef_request == $query_request) {
 
                 } else {
@@ -102,12 +102,12 @@ abstract class AssetHelper
             }
 
             if ($row->asset_id ==
-                Services::Configuration()->get('home_asset_id', 0)
+                Service::Configuration()->get('home_asset_id', 0)
             ) {
                 if ($query_request == '') {
                 } else {
                     $row->redirect_to_id =
-                        Services::Configuration()->get('home_asset_id', 0);
+                        Service::Configuration()->get('home_asset_id', 0);
                 }
             }
         }
@@ -137,7 +137,7 @@ abstract class AssetHelper
             ' = ' . (int)$source_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
-                implode(',', Services::User()->get('view_groups')) . ')'
+                implode(',', Service::User()->get('view_groups')) . ')'
         );
 
         return $m->loadResult();
@@ -156,13 +156,13 @@ abstract class AssetHelper
     public static function getURL($asset_id)
     {
         /** home */
-        if ($asset_id == Services::Configuration()->get('home_asset_id', 0)) {
+        if ($asset_id == Service::Configuration()->get('home_asset_id', 0)) {
             return '';
         }
 
         $m = new MolajoAssetsModel();
 
-        if (Services::Configuration()->get('sef', 1) == 1) {
+        if (Service::Configuration()->get('sef', 1) == 1) {
             $m->query->select('a.' . $m->db->qn('sef_request'));
         } else {
             $m->query->select('a.' . $m->db->qn('request'));
@@ -170,7 +170,7 @@ abstract class AssetHelper
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$asset_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
-                implode(',', Services::User()->get('view_groups')) . ')'
+                implode(',', Service::User()->get('view_groups')) . ')'
         );
 
         return $m->loadResult();
@@ -187,13 +187,13 @@ abstract class AssetHelper
     public static function getRedirectURL($asset_id)
     {
         if ((int)$asset_id
-            == Services::Configuration()->get('home_asset_id', 0)
+            == Service::Configuration()->get('home_asset_id', 0)
         ) {
             return '';
         }
 
         $m = new MolajoAssetsModel();
-        if (Services::Configuration()->get('sef', 1) == 0) {
+        if (Service::Configuration()->get('sef', 1) == 0) {
             $m->query->select($m->db->qn('sef_request'));
         } else {
             $m->query->select($m->db->qn('request'));

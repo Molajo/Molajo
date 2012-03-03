@@ -86,6 +86,6 @@ abstract ClassPluginHelper extends JEvent
         if (empty($extension)) {
             $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
         }
-        Services::Language()->load(strtolower($extension), MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
+        Service::Language()->load(strtolower($extension), MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
     }
 }

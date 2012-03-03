@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class UserService
+Class User
 {
     /**
      * Instance
@@ -78,7 +78,7 @@ Class UserService
     protected function __construct($id = 0)
     {
         $this->id = (int) $id;
-//        $this->storage = Services::Request()->getSession();
+//        $this->storage = Service::Request()->getSession();
         $this->storage = new Registry;
         if ((int) $id == 0) {
             return $this->_loadGuest();
@@ -186,7 +186,7 @@ Class UserService
 
         $parameters = new Registry;
         $parameters->loadString(
-            Services::Configuration()->get('guest_parameters', '{}')
+            Service::Configuration()->get('guest_parameters', '{}')
         );
 
         $this->set('applications', array());

@@ -26,7 +26,7 @@ foreach ($columnArray as $column) {
         $extraClass = ' class="' . trim($extraClass) . '"';
     }
 ?>
-            <th<?php echo $extraClass; ?>><?php echo Services::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
+            <th<?php echo $extraClass; ?>><?php echo Service::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
 <?php
     $count++;
 } ?>

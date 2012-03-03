@@ -33,7 +33,7 @@ ClassModuleRenderer extends Renderer
         $results = parent::_getExtension();
 
         if ($results === false) {
-            if (Services::Configuration()->get('debug', 0) == 1) {
+            if (Service::Configuration()->get('debug', 0) == 1) {
                 debug(' ');
                 debug('MolajoModuleRenderer::_getExtension');
                 debug('Module not found: '.$this->get('extension_instance_name'));
@@ -96,7 +96,7 @@ ClassModuleRenderer extends Renderer
         parent::_loadMedia(
             MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
             SITE_MEDIA_URL . '/' . $this->get('extension_instance_name'),
-            Services::Configuration()->get('media_priority_module', 400)
+            Service::Configuration()->get('media_priority_module', 400)
         );
     }
 }

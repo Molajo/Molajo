@@ -76,9 +76,9 @@ class UpdateController extends Controller
         die;
 
 
-        $hash = Services::Security()->getHash(MOLAJO_APPLICATION.get_class($this));
+        $hash = Service::Security()->getHash(MOLAJO_APPLICATION.get_class($this));
 
-        $session = Services::Session()->create($hash);
+        $session = Service::Session()->create($hash);
         var_dump($session);
         echo 'back in app';
         die;*/
@@ -125,16 +125,16 @@ class UpdateController extends Controller
 
             } catch (Exception $e) {
                 $valid = false;
-                if (Services::Configuration()->get('debug', 0) == 1) {
+                if (Service::Configuration()->get('debug', 0) == 1) {
                     debug(' ');
                     debug('UpdateController::load Failed');
                     debug('Model: ' . $this->model->name . ' ID: ' . $this->id);
-                    debug(Services::Language()->translate($e->getMessage()));
+                    debug(Service::Language()->translate($e->getMessage()));
                 }
-                Services::Message()
+                Service::Message()
                     ->set(
                     $message =
-                        Services::Language()->translate($e->getMessage()),
+                        Service::Language()->translate($e->getMessage()),
                     $type = MOLAJO_MESSAGE_TYPE_ERROR
                 );
             }
@@ -166,7 +166,7 @@ class UpdateController extends Controller
         }
 
         /** filters and defaults */
-        $userHTMLFilter = Services::Access()->setHTMLFilter();
+        $userHTMLFilter = Service::Access()->setHTMLFilter();
 
         $valid = true;
         if (isset($v->filters->filter)) {
@@ -192,16 +192,16 @@ class UpdateController extends Controller
                 } else {
 
                     try {
-                        $value = Services::Security()->filter(
+                        $value = Service::Security()->filter(
                                 $value, $datatype, $null, $default);
 
                     } catch (Exception $e) {
                         $valid = false;
-                        Services::Message()->set(
-                            $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
+                        Service::Message()->set(
+                            $message = Service::Language()->translate($e->getMessage()) . ' ' . $name,
                             $type = MOLAJO_MESSAGE_TYPE_ERROR
                         );
-                        if (Services::Configuration()->get('debug', 0) == 1) {
+                        if (Service::Configuration()->get('debug', 0) == 1) {
                             debug(' ');
                             debug('UpdateController::_filter_and_validate Filter Failed'.' '.$message);
                         }
@@ -209,7 +209,7 @@ class UpdateController extends Controller
                 }
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug(' ');
             debug('UpdateController::_filter_and_validate Filter::Success: ' . $valid);
         }
@@ -225,18 +225,18 @@ class UpdateController extends Controller
 
                 } catch (Exception $e) {
                     $valid = false;
-                    Services::Message()->set(
-                        $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
+                    Service::Message()->set(
+                        $message = Service::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
-                    if (Services::Configuration()->get('debug', 0) == 1) {
+                    if (Service::Configuration()->get('debug', 0) == 1) {
                         debug(' ');
                         debug('UpdateController::_filter_and_validate Helper Failed'.' '.$message);
                     }
                 }
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug(' ');
             debug('UpdateController::_filter_and_validate Helper::Success: ' . $valid);
         }
@@ -257,18 +257,18 @@ class UpdateController extends Controller
 
                 } catch (Exception $e) {
                     $valid = false;
-                    Services::Message()->set(
-                        $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
+                    Service::Message()->set(
+                        $message = Service::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
-                    if (Services::Configuration()->get('debug', 0) == 1) {
+                    if (Service::Configuration()->get('debug', 0) == 1) {
                         debug(' ');
                         debug('UpdateController::_filter_and_validate FKs Failed'.' '.$message);
                     }
                 }
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug(' ');
             debug('UpdateController::Validate FK::Success: ' . $valid);
         }
@@ -324,7 +324,7 @@ class UpdateController extends Controller
     protected function _validateForeignKey($name, $source_id, $source_model,
                                            $required, $message)
     {
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Service::Configuration()->get('debug', 0) == 1) {
             debug(' ');
             debug('UpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
         }
@@ -407,7 +407,7 @@ class UpdateController extends Controller
 
         //			if ($this->db->query()) {
         //            } else {
-        //				$e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->db->getErrorMsg()));
+        //				$e = new MolajoException(Service::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->db->getErrorMsg()));
         //				$this->setError($e);
         //				return false;
         //			}

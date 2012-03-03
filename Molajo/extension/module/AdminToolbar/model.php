@@ -52,7 +52,7 @@ Class ModuleAdminToolbarModel extends DisplayModel
 
         /** User Permissions */
         $permissions =
-            Services::Access()
+            Service::Access()
                 ->authoriseTaskList(
                     $buttonArray,
                     Molajo::Request()
@@ -72,7 +72,7 @@ Class ModuleAdminToolbarModel extends DisplayModel
                     ->get('display_title');
 
                 $row->name =
-                    Services::Language()
+                    Service::Language()
                     ->_(strtoupper('TASK_'.$buttonname.'_BUTTON'));
 
                 $row->option =

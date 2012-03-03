@@ -91,7 +91,7 @@ class ThemeHelper extends Mustache
      */
     public function analytics()
     {
-        $code = Services::Configuration()->get('google_analytics_code','UA-1682054-15');
+        $code = Service::Configuration()->get('google_analytics_code','UA-1682054-15');
         if (trim($code) == '') {
             return;
         }
@@ -106,7 +106,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
         ";
-        Services::Document()->add_js_declaration($analytics, 'text/javascript', 1);
+        Service::Document()->add_js_declaration($analytics, 'text/javascript', 1);
     }
 
     /**
@@ -116,7 +116,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
      */
     public function placeholder()
     {
-        return Services::Text()->getPlaceHolderText(55, array('html', 'lorem'));
+        return Service::Text()->getPlaceHolderText(55, array('html', 'lorem'));
     }
 
     /**
@@ -130,7 +130,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
      */
     public function intro()
     {
-        $result = Services::Text()->smilies($this->data[$this->rows - 1]->introtext);
+        $result = Service::Text()->smilies($this->data[$this->rows - 1]->introtext);
         return $this->data[$this->rows - 1]->introtext;
     }
 
