@@ -119,7 +119,7 @@ Class Site
         if ($info === false) {
             return;
         }
-        
+
         /** is site authorised for this Application? */
         $authorise = Service::Access()->authoriseSiteApplication();
         if ($authorise === false) {
@@ -174,7 +174,7 @@ Class Site
         } else {
             define('SITES', MOLAJO_BASE_FOLDER . '/sites');
         }
-$this->_identifySite();
+        $this->_identifySite();
         echo MOLAJO_SITE;
         /** Define PHP constants for application variables */
         $defines = simplexml_load_file(MOLAJO_APPLICATIONS . '/Configuration/defines.xml', 'SimpleXMLElement');
@@ -427,4 +427,71 @@ $this->_identifySite();
 
         return;
     }
+
+    /**
+     *  _identifyApplication
+     *
+     *  Identify current application and page request
+     *
+     */
+    protected function _identifyApplication()
+    {
+
+        /** ex. /molajo/administrator/index.php?option=login    */
+        $requestURI = strtolower($_SERVER["REQUEST_URI"]);
+
+        /** remove folder ex. /molajo/                          */
+        $requestURI = substr(
+            $requestURI,
+            strlen(MOLAJO_FOLDER),
+            strlen($requestURI) - strlen(MOLAJO_FOLDER)
+        );
+
+        /** extract first node for testing as application name  */
+        if (strpos($requestURI, '/')) {
+            $applicationTest = substr($requestURI, 0, strpos($requestURI, '/'));
+        } else {
+            $applicationTest = $requestURI;
+        }
+
+        $pageRequest = '';
+        if (defined('MOLAJO_APPLICATION')) {
+            /* must also define MOLAJO_PAGE_REQUEST */
+        } else {
+            $apps = simplexml_load_file(MOLAJO_APPLICATIONS . '/Configuration/applications.xml', 'SimpleXMLElement');
+
+            foreach ($apps->application as $app) {
+
+                if ($app->name == $applicationTest) {
+
+                    define('MOLAJO_APPLICATION', $app->name);
+                    define('MOLAJO_APPLICATION_URL_PATH', MOLAJO_APPLICATION . '/');
+
+                    $pageRequest = substr(
+                        $requestURI,
+                        strlen(MOLAJO_APPLICATION) + 1,
+                        strlen($requestURI) - strlen(MOLAJO_APPLICATION) + 1
+                    );
+                    break;
+                }
+            }
+
+            if (defined('MOLAJO_APPLICATION')) {
+            } else {
+                define('MOLAJO_APPLICATION', $apps->default->name);
+                define('MOLAJO_APPLICATION_URL_PATH', '');
+                $pageRequest = $requestURI;
+            }
+        }
+
+        /*  Page Request used in Molajo::Request                */
+        if (defined('MOLAJO_PAGE_REQUEST')) {
+        } else {
+            if (strripos($pageRequest, '/') == (strlen($pageRequest) - 1)) {
+                $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/'));
+            }
+            define('MOLAJO_PAGE_REQUEST', $pageRequest);
+        }
+    }
 }
+
