@@ -12,13 +12,13 @@ Use Molajo\Application\Site;
 Use Molajo\Application\Application;
 Use Molajo\Application\Service;
 Use Molajo\Application\Request;
-Use Molajo\Application\Parse;
+Use Molajo\Application\Includer;
+Use Molajo\Application\Service\RequestService;
 
 /**
  * Molajo
  *
  * Creates instances of base classes
- *
  */
 class Molajo
 {
@@ -61,6 +61,14 @@ class Molajo
      * @since  1.0
      */
     protected static $parse = null;
+
+    /**
+     * Molajo::RequestService
+     *
+     * @var    object Parse
+     * @since  1.0
+     */
+    protected static $request_service = null;
 
     /**
      * Molajo::Site
@@ -148,4 +156,23 @@ class Molajo
         }
         return self::$parse;
     }
+
+    /**
+     * Molajo::RequestService
+     *
+     * @static
+     * @return  Parse
+     * @since   1.0
+     */
+    public static function RequestService()
+    {
+        if (self::$request_service) {
+        } else {
+            self::$request_service = RequestService::getInstance();
+        }
+        return self::$request_service;
+    }
+}
+abstract class JFactory extends Molajo
+{
 }

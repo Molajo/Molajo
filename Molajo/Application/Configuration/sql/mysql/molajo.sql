@@ -153,13 +153,13 @@ INSERT INTO `molajo_extension_instances`
 INSERT INTO `molajo_extensions`
     (`name`,`asset_type_id`, `subtype`, `extension_site_id`)
   VALUES
-    ('dashboard', 1150, 'Template', 1),
-    ('dashboard-module', 1150, 'Template', 1),
+    ('Dashboard', 1150, 'Template', 1),
+    ('DashboardModule', 1150, 'Template', 1),
 
     ('default', 1150, 'Template', 1),
 
-    ('document-defer', 1150, 'Template', 1),
-    ('document-head', 1150, 'Template', 1),
+    ('DocumentDefer', 1150, 'Template', 1),
+    ('DocumentHead', 1150, 'Template', 1),
 
     ('static', 1150, 'Template', 1),
     ('edit', 1150, 'Template', 1),
@@ -324,10 +324,10 @@ INSERT INTO `molajo_extensions`
     ('content', 1350, 1),
     ('custom', 1350, 1),
     ('dashboard', 1350, 1),
-    ('dashboard-module', 1350, 1),
+    ('DashboardModule', 1350, 1),
     ('default', 1350, 1),
-    ('document-defer', 1350, 1),
-    ('document-head', 1350, 1),
+    ('DocumentDefer', 1350, 1),
+    ('DocumentHead', 1350, 1),
     ('static', 1350, 1),
     ('PageHeader', 1350, 1),
     ('PageFooter', 1350, 1),

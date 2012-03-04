@@ -1,7 +1,6 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -13,7 +12,7 @@ defined('MOLAJO') or die;
  * Parse
  *
  * @package     Molajo
- * @subpackage  Base
+ * @subpackage  Application
  * @since       1.0
  */
 Class Parse
@@ -61,15 +60,15 @@ Class Parse
     protected $final = false;
 
     /**
-     * $renderer_requests
+     * $include_request
      *
-     * Include Statement Renderer requests extracted from the
+     * Include Statement Includer requests extracted from the
      * theme (initially) and then the rendered output
      *
      * @var array
      * @since 1.0
      */
-    protected $renderer_requests = array();
+    protected $include_request = array();
 
     /**
      * $rendered_output
@@ -119,14 +118,14 @@ Class Parse
     /**
      * process
      *
-     * Retrieve sequence.xml file and load into array for use in determining renderer processing order
+     * Load sequence.xml file contents into array for determining processing order
      *
-     * Invoke Theme Renderer to load page metadata, and theme language and media resources
+     * Invoke Theme Includer to load page metadata, and theme language and media resources
      *
      * Retrieve Theme and Page View to initiate the iterative process of parsing rendered output
-     * for <include:renderer/> statements and then looping through all renderer requests
+     * for <include:type/> statements and then looping through all renderer requests
      *
-     * When no more <include:renderer/> statements are found in the rendered output,
+     * When no more <include:type/> statements are found in the rendered output,
      * process sets the Responder body and completes
      *
      * @return  object
@@ -135,7 +134,7 @@ Class Parse
     public function process()
     {
         /**
-         *  Body Renderers: processed recursively until no more <include: found
+         *  Body Includers: processed recursively until no more <include: found
          *      for the set of includes defined in the renderers-page.xml
          */
         $formatXML = '';
@@ -183,7 +182,7 @@ Class Parse
         $body = $this->_renderLoop();
 
         /**
-         *  Final Renderers: Now, the theme, head, messages, and defer renderers run
+         *  Final Includers: Now, the theme, head, messages, and defer renderers run
          *      and any cleanup of unfound <include values can take place
          */
         $formatXML = '';
@@ -212,12 +211,12 @@ Class Parse
         }
 
         /** theme: load template media and language files */
-        if (class_exists('MolajoThemeRenderer')) {
-            $rc = new MolajoThemeRenderer ('theme');
+        if (class_exists('IncluderTheme')) {
+            $rc = new IncluderTheme ('theme');
             $results = $rc->process();
 
         } else {
-            echo 'failed renderer = ' . 'MolajoThemeRenderer' . '<br />';
+            echo 'failed renderer = ' . 'IncluderTheme' . '<br />';
             // ERROR
         }
 
@@ -227,7 +226,7 @@ Class Parse
         /**
          *  Set the Response Body
          */
-        Molajo::Responder()->setContent($body);
+        Service::Respond()->setContent($body);
 
         /** after rendering */
         //        Service::Dispatcher()->notify('onAfterRender');
@@ -238,74 +237,63 @@ Class Parse
     /**
      *  _renderLoop
      *
-     * Theme Views can contain <include:renderer statements in the same manner that the
-     *  Theme include files use these statements. For that reason, this method parses
-     *  the initial theme include, renders the output for the <include:renderer statements
-     *  found, and then parses that output again, over and over, until no more <include:renderer
-     *  statements are found. Potential endless loop stopped by MOLAJO_STOP_LOOP value.
+     * Parse the Theme and Page View, and then rendered output, for
+     *  <include:type statements
      *
      * @return string  Rendered output for the Response Head and Body
      * @since  1.0
      */
     protected function _renderLoop($body = null)
     {
-        /** initial run: include the theme and page */
+        /** initial run: start with theme and page */
         if ($body == null) {
             ob_start();
             require $this->parameters->get('theme_path');
             $this->rendered_output = ob_get_contents();
             ob_end_clean();
         } else {
-            /* final run: get message, head and defer */
+            /* final run (for page head): start with rendered body */
             $this->rendered_output = $body;
         }
 
-        /** process all buffered input for include: statements  */
+        /** process all input for include: statements  */
         $complete = false;
         $loop = 0;
         while ($complete === false) {
 
-            /** count looping */
             $loop++;
 
-            /** parse theme (initially) and rendered output for include statements */
-            $this->_extractRendererRequests();
+            $this->_parseIncludeRequests();
 
-            /** if no include statements found, processing is complete */
-            if (count($this->renderer_requests) == 0) {
+            if (count($this->include_request) == 0) {
                 break;
             } else {
-                /** invoke renderers for new include statements */
-                $this->rendered_output = $this->_callRenderer();
+                $this->rendered_output = $this->_callIncluder();
             }
 
             if ($loop > MOLAJO_STOP_LOOP) {
                 break;
             }
-            /** look for new include statements in just rendered output */
             continue;
         }
         return $this->rendered_output;
     }
 
     /**
-     * _extractRendererRequests
+     * _parseIncludeRequests
      *
      * Parse the theme (first) and then rendered output (subsequent calls)
-     * in search of include statements in order to extract renderers
-     * and associated attributes
+     * in search of include statements
      *
      * @return  array
      * @since   1.0
      */
-    protected function _extractRendererRequests()
+    protected function _parseIncludeRequests()
     {
-        /** initialise */
         $matches = array();
-        $this->renderer_requests = array();
+        $this->include_request = array();
         $i = 0;
 
-        /** parse theme for renderers */
         preg_match_all('#<include:(.*)\/>#iU',
             $this->rendered_output,
             $matches
@@ -315,23 +303,21 @@ Class Parse
             return;
         }
 
-        /** store renderers in array */
         foreach ($matches[1] as $includeStatement) {
 
-            /** initialise for each renderer */
             $parts = array();
             $parts = explode(' ', $includeStatement);
-            $rendererType = '';
+            $includerType = '';
 
             foreach ($parts as $part) {
 
-                /** 1st part is the Renderer Command */
-                if ($rendererType == '') {
-                    $rendererType = $part;
-                    $this->renderer_requests[$i]['name'] = $rendererType;
-                    $this->renderer_requests[$i]['replace'] = $includeStatement;
+                /** 1st part is the Includer Command */
+                if ($includerType == '') {
+                    $includerType = $part;
+                    $this->include_request[$i]['name'] = $includerType;
+                    $this->include_request[$i]['replace'] = $includeStatement;
 
-                    /** Renderer Attributes */
+                    /** Includer Attributes */
                 } else {
                     $attributes = str_replace('"', '', $part);
 
@@ -341,7 +327,7 @@ Class Parse
                         /** Associative array of attributes */
                         $pair = array();
                         $pair = explode('=', $attributes);
-                        $this->renderer_requests[$i]['attributes'][$pair[0]] = $pair[1];
+                        $this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
                     }
                 }
             }
@@ -350,35 +336,35 @@ Class Parse
     }
 
     /**
-     * _callRenderer
+     * _callIncluder
      *
-     * Invoke extension-specific renderer for include statement
+     * Invoke extension-specific includer for include statement
      *
      * @return  string rendered output
      * @since   1.0
      */
-    protected function _callRenderer()
+    protected function _callIncluder()
     {
         $replace = array();
         $with = array();
 
-        /** 1. process renderers in order defined by the sequence.xml file */
+        /** 1. process extension includers in order defined by sequence.xml */
         foreach ($this->sequence as $sequence) {
 
-            /** 2. if necessary, split renderer name from include name     */
-            /** (ex. request:component or defer:head) */
+            /** 2. if necessary, split includer name and type     */
+            /** (ex. request:component and defer:head)            */
             if (stripos($sequence, ':')) {
                 $includeName = substr($sequence, 0, strpos($sequence, ':'));
-                $rendererName = substr($sequence, strpos($sequence, ':') + 1, 999);
+                $includerType = substr($sequence, strpos($sequence, ':') + 1, 999);
             } else {
                 $includeName = $sequence;
-                $rendererName = $sequence;
+                $includerType = $sequence;
             }
 
-            /** 3. loop thru parsed include requests for matching renderer */
-            for ($i = 0; $i < count($this->renderer_requests); $i++) {
+            /** 3. loop thru parsed include requests for match */
+            for ($i = 0; $i < count($this->include_request); $i++) {
 
-                $parsedRequests = $this->renderer_requests[$i];
+                $parsedRequests = $this->include_request[$i];
 
                 if ($includeName == $parsedRequests['name']) {
 
@@ -392,12 +378,12 @@ Class Parse
                     /** 5. store the "replace this" value */
                     $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-                    /** 6. call the renderer class */
-                    $class = 'Molajo' . ucfirst($rendererName) . 'Renderer';
+                    /** 6. call the includer class */
+                    $class = 'Includer' . ucfirst($includerType);
                     if (class_exists($class)) {
-                        $rc = new $class ($rendererName, $includeName);
+                        $rc = new $class ($includerType, $includeName);
                     } else {
-                        echo 'failed renderer = ' . $class . '<br />';
+                        echo 'failed includer = ' . $class . '<br />';
                         die;
                         // ERROR
                     }
@@ -415,8 +401,8 @@ Class Parse
         if ($this->final === true) {
             $replace = array();
             $with = array();
-            for ($i = 0; $i < count($this->renderer_requests); $i++) {
-                $replace[] = "<include:" . $this->renderer_requests[$i]['replace'] . "/>";
+            for ($i = 0; $i < count($this->include_request); $i++) {
+                $replace[] = "<include:" . $this->include_request[$i]['replace'] . "/>";
                 $with[] = '';
             }
 

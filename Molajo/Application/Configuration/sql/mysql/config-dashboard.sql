@@ -1,7 +1,7 @@
 #
 # Dashboard
 #
-SET @id = (SELECT id FROM molajo_extension_instances WHERE title = 'dashboard' AND asset_type_id = 1050);
+SET @id = (SELECT id FROM molajo_extension_instances WHERE title = 'Dashboard' AND asset_type_id = 1050);
 SELECT @id;
 
 # DEFAULT

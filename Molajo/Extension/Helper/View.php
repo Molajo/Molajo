@@ -1,11 +1,11 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Renderer
+ * @subpackage  Includer
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Renderer;
+namespace Molajo\Extension\Includer;
 defined('MOLAJO') or die;
 
 /**

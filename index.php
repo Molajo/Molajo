@@ -9,9 +9,9 @@ define('MOLAJO', 'Long Live Molajo!');
 @ini_set('magic_quotes_runtime', 0);
 @ini_set('zend.ze1_compatibility_mode', 0);
 
-define('MOLAJO_BASE_FOLDER', strtolower(__DIR__));
+define('MOLAJO_BASE_FOLDER', __DIR__);
 
-require_once MOLAJO_BASE_FOLDER . '/Molajo/Common/Autoload.php';
+require_once MOLAJO_BASE_FOLDER . '/Autoload.php';
 
 use Molajo\Application\Molajo;
 Molajo::Site();

@@ -1,13 +1,34 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
 defined('MOLAJO') or die;
+
+use Molajo\Application\Service\AccessService;
+//use Molajo\Application\Service\AuthenticationService;
+use Molajo\Application\Service\ConfigurationService;
+use Molajo\Application\Service\DatabaseService;
+use Molajo\Application\Service\DateService;
+use Molajo\Application\Service\DispatcherService;
+use Molajo\Application\Service\DocumentService;
+use Molajo\Application\Service\FileService;
+use Molajo\Application\Service\FolderService;
+use Molajo\Application\Service\ImageService;
+use Molajo\Application\Service\InstallService;
+use Molajo\Application\Service\LanguageService;
+use Molajo\Application\Service\MailService;
+use Molajo\Application\Service\MessageService;
+use Molajo\Application\Service\ParameterService;
+use Molajo\Application\Service\RequestService;
+use Molajo\Application\Service\ResponseService;
+use Molajo\Application\Service\SecurityService;
+use Molajo\Application\Service\TextService;
+use Molajo\Application\Service\UrlService;
+use Molajo\Application\Service\UserService;
 
 /**
  * Service

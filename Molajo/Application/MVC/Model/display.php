@@ -60,7 +60,7 @@ class DisplayModel extends LoadModel
         $methods = array();
 
         /**
-         *  Parameters: merged in Renderer
+         *  Parameters: merged in Render
          */
         if (is_object(Molajo::Request()->parameters)) {
             $parameterArray = Molajo::Request()->parameters->toArray();

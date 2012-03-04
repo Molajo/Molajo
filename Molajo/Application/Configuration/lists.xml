@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lists>
     <list name="author" model="UsersModel" key="id" value="username" ordering="username" assettypes="0" viewaccess="0" />
-    <list name="category"  model="MolajoContentModel" key="id" value="title" ordering="title" assettypes="3000" viewaccess="1" />
-    <list name="tag"  model="MolajoContentModel" key="id" value="title" ordering="title" assettypes="3500" viewaccess="1" />
-    <list name="group"  model="MolajoContentModel" key="id" value="title" ordering="title" assettypes="100,110,120" viewaccess="1" />
-    <list name="friend"  model="MolajoContentModel" key="id" value="title" ordering="title" assettypes="130" viewaccess="1" />
+    <list name="category"  model="ContentModel" key="id" value="title" ordering="title" assettypes="3000" viewaccess="1" />
+    <list name="tag"  model="ContentModel" key="id" value="title" ordering="title" assettypes="3500" viewaccess="1" />
+    <list name="group"  model="ContentModel" key="id" value="title" ordering="title" assettypes="100,110,120" viewaccess="1" />
+    <list name="friend"  model="ContentModel" key="id" value="title" ordering="title" assettypes="130" viewaccess="1" />
     <list name="status" method="getStatusList"/>
     <list name="featured" method="getFeaturedList"/>
-    <list name="site" model="MolajoSitesModel" key="id" value="name" ordering="name" assettypes="0" viewaccess="0" />
+    <list name="site" model="SitesModel" key="id" value="name" ordering="name" assettypes="0" viewaccess="0" />
     <list name="application" model="ApplicationsModel" key="id" value="name" ordering="name" assettypes="0" site="{{select}}" />
     <list name="language" method="getLanguageList"/>
-    <list name="component" model="MolajoExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1050" application="{{select}}" />
-    <list name="module" model="MolajoExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1350" application="{{select}}" />
-    <list name="theme" model="MolajoExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1500" application="{{select}}" />
-    <list name="view_page" model="MolajoExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1200" application="{{select}}" />
-    <list name="view_template" model="MolajoExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1250" application="{{select}}" />
-    <list name="view_wrap" model="MolajoExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1150" application="{{select}}" />
+    <list name="component" model="ExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1050" application="{{select}}" />
+    <list name="module" model="ExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1350" application="{{select}}" />
+    <list name="theme" model="ExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1500" application="{{select}}" />
+    <list name="view_page" model="ExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1200" application="{{select}}" />
+    <list name="view_template" model="ExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1250" application="{{select}}" />
+    <list name="view_wrap" model="ExtensionInstancesModel" key="id" value="title" ordering="title" assettypes="1150" application="{{select}}" />
 </lists>

@@ -68,7 +68,7 @@
                 />
         <fk name="extension_instance_id"
             source_id="id"
-            source_model="MolajoExtensionInstancesModel"
+            source_model="ExtensionInstancesModel"
             required="1"
             message="CONTENT_FK_EXT_INSTANCE_ID"
                 />

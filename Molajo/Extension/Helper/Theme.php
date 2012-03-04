@@ -158,7 +158,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
      */
     public function profile()
     {
-        $rc = new MolajoModuleRenderer ('profile', '');
+        $rc = new MolajoModuleIncluder ('profile', '');
         $attributes = array();
         $attributes['name'] = 'dashboard';
         $attributes['template'] = 'dashboard';

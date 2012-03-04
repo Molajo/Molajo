@@ -1,7 +1,6 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helpers
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -9,11 +8,14 @@ namespace Molajo\Application\Helper;
 
 defined('MOLAJO') or die;
 
+use Molajo\Application\MVC\Model\AssetsModel;
+use Molajo\Application\Service;
+
 /**
  * Asset
  *
  * @package     Molajo
- * @subpackage  Helpers
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class AssetHelper
@@ -31,9 +33,10 @@ abstract class AssetHelper
      * @results  object
      * @since    1.0
      */
-    public static function get($asset_id = 0, $query_request = null, $request_option = '', $source_id = 0)
+    public static function get($asset_id = 0, $query_request = null,
+                               $request_option = '', $source_id = 0)
     {
-        $m = new MolajoAssetsModel();
+        $m = new AssetsModel();
 
         $m->query->select('a.' . $m->db->qn('id') . ' as asset_id');
         $m->query->select('a.' . $m->db->qn('asset_type_id'));
@@ -128,7 +131,7 @@ abstract class AssetHelper
      */
     public static function getID($asset_type_id, $source_id)
     {
-        $m = new MolajoAssetsModel();
+        $m = new AssetsModel();
 
         $m->query->select('a.' . $m->db->qn('id') . ' as asset_id');
         $m->query->where('a.' . $m->db->qn('asset_type_id') .
@@ -160,7 +163,7 @@ abstract class AssetHelper
             return '';
         }
 
-        $m = new MolajoAssetsModel();
+        $m = new AssetsModel();
 
         if (Service::Configuration()->get('sef', 1) == 1) {
             $m->query->select('a.' . $m->db->qn('sef_request'));
@@ -192,7 +195,7 @@ abstract class AssetHelper
             return '';
         }
 
-        $m = new MolajoAssetsModel();
+        $m = new AssetsModel();
         if (Service::Configuration()->get('sef', 1) == 0) {
             $m->query->select($m->db->qn('sef_request'));
         } else {

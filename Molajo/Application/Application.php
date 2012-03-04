@@ -1,15 +1,15 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
-namespace Molajo\Application\Service;
 
 defined('MOLAJO') or die;
 
+use Molajo\Application\Request;
+use Molajo\Application\Parse;
 use Molajo\Application\Service;
 
 /**
@@ -19,7 +19,7 @@ use Molajo\Application\Service;
  * @subpackage  Base
  * @since       1.0
  */
-Class Application
+class Application
 {
     /**
      * Application instance
@@ -54,43 +54,6 @@ Class Application
      */
     public function initialize()
     {
-        /** initiate application services */
-        $sv = Molajo::Service()->startServices();
-        if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Application::initialize Start Services');
-        }
-
-        /** offline */
-        if (Service::Configuration()->get('offline', 0) == 1) {
-            $this->_error(503);
-        }
-
-        /** verify application secure access configuration */
-        if (Service::Configuration()->get('force_ssl') >= 1) {
-            if ((Service::Request()->isSecure() === true)) {
-            } else {
-
-                $redirectTo = (string)'https' .
-                    substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
-                    MOLAJO_APPLICATION_URL_PATH .
-                    '/' . MOLAJO_PAGE_REQUEST;
-
-                Service::Response()
-                    ->setStatusCode(301)
-                    ->isRedirect($redirectTo);
-            }
-        }
-
-        /** establish the session */
-        //Service::Session()->create(
-        //        Service::Session()->getHash(get_class($this))
-        //  );
-        if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Application::initialize Service::Session()');
-        }
-
-        /** return to Molajo::Site */
-        return;
     }
 
     /**
@@ -111,15 +74,18 @@ Class Application
         /**
          * Display Task
          *
-         * Input Statement Loop until no more <input statements found
+         * 1. Parse: recursively parses theme and then rendered output
+         *      for <include:type statements
          *
-         * 1. Parse: parses theme and rendered output for <input:renderer statements
+         * 2. Includer: each include statement is processed by the
+         *      associated extension includer in order, collecting
+         *      rendering data needed by the MVC
          *
-         * 2. Renderer: each input statement processed by extension renderer in order
-         *    to collect task object for use by the MVC
+         * 3. MVC: executes controller task, invoking model processing and
+         *    rendering of template and wrap views
          *
-         * 3. MVC: executes task/controller which handles model processing and
-         *    renders template and wrap views
+         * Steps 1-3 continue until no more <include:type statements are
+         *    found in the Theme and rendered output
          */
 
         if (Molajo::Request()->get('mvc_controller') == 'display') {

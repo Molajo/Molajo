@@ -1,13 +1,14 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Base
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
 defined('MOLAJO') or die;
+
+use Molajo\Application\Service;
 
 /**
  * Request
@@ -89,7 +90,7 @@ Class Request
     {
         if (empty(self::$instance)) {
             self::$instance =
-                new MolajoRequest(
+                new Request(
                     $override_request_url,
                     $override_asset_id
                 );
@@ -284,7 +285,7 @@ Class Request
             }
             $this->set('redirect_on_failure', $link);
 
-            $this->set('model', 'Molajo' . ucfirst(trim($this->get('mvc_model'))) . 'Model');
+            $this->set('model', ucfirst(trim($this->get('mvc_model'))) . 'Model');
             $cc = 'Molajo' . ucfirst($this->get('mvc_controller')) . 'Controller';
             $this->set('controller', $cc);
             $task = $this->get('mvc_task');
@@ -545,7 +546,9 @@ Class Request
             && $this->get('request_asset_id')
                 <> Service::Configuration()->get('logon_requirement', 0)
         ) {
-            Molajo::Responder()->redirect(Service::Configuration()->get('logon_requirement', 0), 303);
+            Molajo::Responder()
+                ->redirect(Service::Configuration()
+                ->get('logon_requirement', 0), 303);
         }
 
         return;
@@ -1223,7 +1226,7 @@ Class Request
         );
 
         /** Page Path */
-        $viewHelper = new MolajoViewHelper(
+        $viewHelper = new ViewHelper(
             $this->get('page_view_name'),
             'Page',
             $this->get('extension_instance_name'),
@@ -1254,7 +1257,7 @@ Class Request
             )
         );
 
-        $viewHelper = new MolajoViewHelper(
+        $viewHelper = new ViewHelper(
             $this->get('template_view_name'),
             $this->get('view_type'),
             $this->get('extension_title'),
@@ -1284,7 +1287,7 @@ Class Request
             )
         );
 
-        $wrapHelper = new MolajoViewHelper(
+        $wrapHelper = new ViewHelper(
             $this->get('wrap_view_name'),
             'Wrap',
             $this->get('extension_title'),

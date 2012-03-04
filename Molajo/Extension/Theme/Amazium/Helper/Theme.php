@@ -5,18 +5,20 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Theme\Helper;
+namespace Molajo\Extension\Theme;
+
 defined('MOLAJO') or die;
+
 use Molajo\Extension\Helper\ThemeHelper;
 
 /**
- * Mustache
+ * Helper
  *
  * @package     Molajo
  * @subpackage  Helper
  * @since       1.0
  */
-Class ThemeAmaziumHelper extends ThemeHelper
+Class AmaziumThemeHelper extends ThemeHelper
 {
     /**
      * hello

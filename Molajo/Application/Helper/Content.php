@@ -1,13 +1,15 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helpers
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\Helper;
 
 defined('MOLAJO') or die;
+
+use Molajo\Application\MVC\Model\DisplayModel;
+use Molajo\Application\Service;
 
 /**
  * Content
