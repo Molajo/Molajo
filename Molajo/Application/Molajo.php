@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 
 Use Molajo\Application\Site;
 Use Molajo\Application\Application;
-Use Molajo\Application\Service;
+Use Molajo\Application\Services;
 Use Molajo\Application\Request;
 Use Molajo\Application\Includer;
 Use Molajo\Application\Service\RequestService;
@@ -52,7 +52,7 @@ class Molajo
      * @var    object Service
      * @since  1.0
      */
-    protected static $service = null;
+    protected static $services = null;
 
     /**
      * Molajo::Parse
@@ -103,19 +103,19 @@ class Molajo
     }
 
     /**
-     * Molajo::Service
+     * Molajo::Services
      *
      * @static
-     * @return  Service
+     * @return  Services
      * @since   1.0
      */
-    public static function Service()
+    public static function Services()
     {
-        if (self::$service) {
+        if (self::$services) {
         } else {
-            self::$service = Service::getInstance();
+            self::$services = Services::getInstance();
         }
-        return self::$service;
+        return self::$services;
     }
 
     /**

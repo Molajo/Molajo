@@ -17,8 +17,8 @@ if (defined('JPATH_PLATFORM')) {
 
 require_once JPATH_PLATFORM . '/platform.php';
 require_once JPATH_PLATFORM . '/loader.php';
-//use Molajo\Application\Helper\LoadHelper;
-//require_once MOLAJO_APPLICATIONS . '/Helper/FileloadHelper.php';
+use Molajo\Application\Helper\LoadHelper;
+require_once MOLAJO_APPLICATIONS . '/Helper/FileloadHelper.php';
 //$load = new FileloadHelper();
 
 //require_once JPATH_PLATFORM . '/base/object.php';

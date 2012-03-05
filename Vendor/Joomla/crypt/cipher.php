@@ -1,4 +1,5 @@
 <?php
+namespace Joomla;
 /**
  * @package     Joomla.Platform
  * @subpackage  Crypt
@@ -44,11 +45,11 @@ interface JCryptCipher
 
 	/**
 	 * Method to generate a new encryption key[/pair] object.
-	 * 
+	 *
 	 * @param   array  $options  Key generation options.
-	 * 
+	 *
 	 * @return  JCryptKey
-	 * 
+	 *
 	 * @since   12.1
 	 */
 	public function generateKey(array $options = array());

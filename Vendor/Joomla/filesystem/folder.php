@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\filesystem;
+use Joomla\filesystem\Path;
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -9,7 +11,7 @@
 
 defined('JPATH_PLATFORM') or die;
 
-jimport('joomla.filesystem.path');
+//jimport('joomla.filesystem.path');
 
 /**
  * A Folder handling class
@@ -308,7 +310,7 @@ abstract class JFolder
 		$files = self::files($path, '.', false, true, array(), array());
 		if (!empty($files))
 		{
-			jimport('joomla.filesystem.file');
+//			jimport('joomla.filesystem.file');
 			if (JFile::delete($files) !== true)
 			{
 				// JFile::delete throws an error
@@ -323,7 +325,7 @@ abstract class JFolder
 			if (is_link($folder))
 			{
 				// Don't descend into linked directories, just delete the link.
-				jimport('joomla.filesystem.file');
+//				jimport('joomla.filesystem.file');
 				if (JFile::delete($folder) !== true)
 				{
 					// JFile::delete throws an error
@@ -664,3 +666,4 @@ abstract class JFolder
 		return preg_replace($regex, '', $path);
 	}
 }
+class folder extends jfolder{}

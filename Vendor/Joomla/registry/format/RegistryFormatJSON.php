@@ -1,4 +1,7 @@
 <?php
+namespace Joomla\registry;
+use Joomla\registry\JRegistryFormat;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Registry
@@ -52,7 +55,7 @@ class JRegistryFormatJSON extends JRegistryFormat
             $options = array('processSections' => $options);
 
             // Deprecation warning.
-            JLog::add('JRegistryFormatJSON::stringToObject() second argument should not be a boolean.', JLog::WARNING, 'deprecated');
+//JLog::add('JRegistryFormatJSON::stringToObject() second argument should not be a boolean.', JLog::WARNING, 'deprecated');
         }
 
         $data = trim($data);

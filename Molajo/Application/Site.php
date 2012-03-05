@@ -10,6 +10,7 @@ defined('MOLAJO') or die;
 
 use Molajo\Common\Version;
 use Molajo\Application;
+use Molajo\Application\Services;
 use Molajo\Application\MVC\Model;
 
 /**
@@ -96,8 +97,8 @@ Class Site
 
         $this->_setApplication();
 
-        $sv = Molajo::Service()->startServices();
-        die;
+        $sv = Molajo::Services()->startServices();
+
         if (Service::Configuration()->get('debug', 0) == 1) {
             debug('Application::initialize Start Services');
         }
@@ -556,8 +557,6 @@ Class Site
         } else {
             define('SITE_TEMP_URL', MOLAJO_BASE_URL . Service::Configuration()->get('temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
         }
-
         return;
     }
 }
-

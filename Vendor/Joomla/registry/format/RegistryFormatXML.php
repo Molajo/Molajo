@@ -1,4 +1,7 @@
 <?php
+namespace Joomla\registry;
+use Joomla\registry\JRegistryFormat;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Registry
@@ -73,7 +76,7 @@ class JRegistryFormatXML extends JRegistryFormat
     public function stringToObject($data, $options = array())
     {
         // Initialize variables.
-        $obj = new stdClass;
+        $obj = new \stdClass;
 
         // Parse the XML string.
         $xml = simplexml_load_string($data);
@@ -122,7 +125,7 @@ class JRegistryFormatXML extends JRegistryFormat
                 }
                 break;
             default:
-                $value = new stdClass;
+                $value = new \stdClass;
                 foreach ($node->children() as $child)
                 {
                     $value->$child['name'] = $this->getValueFromNode($child);

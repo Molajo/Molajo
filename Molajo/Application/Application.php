@@ -39,7 +39,7 @@ class Application
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new Application ();
+            self::$instance = new Application();
         }
         return self::$instance;
     }

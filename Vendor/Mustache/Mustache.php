@@ -1,4 +1,5 @@
 <?php
+namespace Mustache;
 
 /**
  * A Mustache implementation in PHP.

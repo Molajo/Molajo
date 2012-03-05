@@ -6,6 +6,8 @@
  */
 namespace Molajo\Application\Service;
 
+//use Joomla\filesystem\File;
+
 defined('MOLAJO') or die;
 
 /**
@@ -26,7 +28,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class FileService
+class FileService
 {
 
     /**
@@ -61,7 +63,6 @@ Class FileService
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -116,7 +117,7 @@ Class FileService
      */
     public function read($filename, $incpath = false, $amount = 0, $chunksize = 8192, $offset = 0)
     {
-        return JFile::read($filename, $incpath, $amount, $chunksize, $offset);
+        return File::read($filename, $incpath, $amount, $chunksize, $offset);
     }
 
     /**
@@ -133,7 +134,7 @@ Class FileService
      */
     public function write($file, $buffer, $use_streams = false)
     {
-        return JFile::write($file, $buffer, $use_streams);
+        return File::write($file, $buffer, $use_streams);
     }
 
     /**
@@ -148,7 +149,7 @@ Class FileService
      */
     public function delete($file)
     {
-        return JFile::delete($file);
+        return File::delete($file);
     }
 
     /**
@@ -166,7 +167,7 @@ Class FileService
      */
     public function copy($src, $dest, $path = null, $use_streams = false)
     {
-        return JFile::copy($src, $dest, $path, $use_streams);
+        return File::copy($src, $dest, $path, $use_streams);
     }
 
     /**
@@ -184,7 +185,7 @@ Class FileService
      */
     public function move($src, $dest, $path = '', $use_streams = false)
     {
-        return JFile::move($src, $dest, $path, $use_streams);
+        return File::move($src, $dest, $path, $use_streams);
     }
 
     /**
@@ -199,7 +200,7 @@ Class FileService
      */
     public function get_ext($file)
     {
-        return JFile::getExt($file);
+        return File::getExt($file);
     }
 
     /**
@@ -230,6 +231,6 @@ Class FileService
      */
     public function upload($source, $destination)
     {
-        return JFile::upload($source, $destination, false);
+        return File::upload($source, $destination, false);
     }
 }

@@ -9,6 +9,7 @@ namespace Molajo\Application;
 defined('MOLAJO') or die;
 
 use Molajo\Application\Service\AccessService;
+
 //use Molajo\Application\Service\AuthenticationService;
 use Molajo\Application\Service\ConfigurationService;
 use Molajo\Application\Service\DatabaseService;
@@ -29,6 +30,7 @@ use Molajo\Application\Service\SecurityService;
 use Molajo\Application\Service\TextService;
 use Molajo\Application\Service\UrlService;
 use Molajo\Application\Service\UserService;
+use Joomla\registry\Registry;
 
 /**
  * Service
@@ -37,7 +39,7 @@ use Molajo\Application\Service\UserService;
  * @subpackage  Services
  * @since       1.0
  */
-Class Service
+Class Services
 {
     /**
      * Static instance
@@ -65,7 +67,7 @@ Class Service
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new Service();
+            self::$instance = new Services();
         }
         return self::$instance;
     }
@@ -101,9 +103,11 @@ Class Service
     public function set($key, $value = null)
     {
         if (!(is_object($value)) || $value == null) {
-            debug('Service::set Service failed to start: ' . $key);
+            echo 'failed' . '<br />';
+            //debug('Service::set Service failed to start: ' . $key);
         } else {
             $this->service_connection->set($key, $value);
+            echo 'succeeded' . '<br />';
         }
     }
 
@@ -125,22 +129,23 @@ Class Service
         if (count($services) == 0) {
             return;
         }
-        $this->service_connection = new Registry();
 
+        $this->service_connection = new Registry();
         foreach ($services->service as $s) {
-            $serviceName = (string)$s->name;
+            $serviceName = (string)$s->name . 'Service';
+            echo $serviceName . '<br />';
 
             try {
                 $connection = $this->_connectService($s);
 
             } catch (Exception $e) {
                 echo 'Fatal Error: ' . $e->getMessage() . ' ' . $serviceName;
-                debug('Service::startServices Service Failed' . ' ' . $serviceName);
+                //debug('Service::startServices Service Failed' . ' ' . $serviceName);
                 exit(0);
             }
 
             $this->set($serviceName, $connection);
-            debug('Service::startServices Service Connection' . ' ' . $serviceName);
+            //debug('Service::startServices Service Connection' . ' ' . $serviceName);
         }
         return;
     }
@@ -166,6 +171,7 @@ Class Service
 
         /** execute the getInstance method */
         $getInstanceConnection = false;
+        $serviceClass = 'Molajo\\Application\\Service\\'.$serviceClass;
         if (method_exists($serviceClass, 'getInstance')) {
 
             /** connect Method Parameters */
@@ -264,6 +270,8 @@ Class Service
                 '(' . $parms . ');';
         }
 
+        $ret = call_user_func(array($serviceClass, 'getInstance'));
+echo $execute.'<br />';
         eval($execute);
 
         return $connection;
@@ -272,8 +280,8 @@ Class Service
 
 /**
  *  Molajo Services
- */
-class Services extends Service
+
+class Service extends Services
 {
     public static function Access()
     {
@@ -385,3 +393,4 @@ class Services extends Service
         return Molajo::Service()->get('User');
     }
 }
+*/

@@ -1,4 +1,11 @@
 <?php
+namespace Joomla\registry;
+
+use Joomla\registry\format\RegistryFormatINI;
+use Joomla\registry\format\RegistryFormatJSON;
+use Joomla\registry\format\RegistryFormatPHP;
+use Joomla\registry\format\RegistryFormatXML;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Registry
@@ -51,7 +58,8 @@ abstract class JRegistryFormat
                 }
                 else
                 {
-                    throw new JException(JText::_('JLIB_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS'), 500, E_ERROR);
+//throw new JException(JText::_('JLIB_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS'), 500, E_ERROR);
+                    throw new Exception('JLIB_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS', 500, E_ERROR);
                 }
             }
 
@@ -84,3 +92,4 @@ abstract class JRegistryFormat
      */
     abstract public function stringToObject($data, $options = null);
 }
+abstract class RegistryFormat extends JRegistryFormat {}

@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\string;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  String
@@ -8,6 +10,9 @@
  */
 
 defined('JPATH_PLATFORM') or die;
+
+use phpuf8\utf8;
+use phpuf8\strcasecmp;
 
 //
 // PHP mbstring and iconv local configuration
@@ -31,8 +36,8 @@ if (function_exists('iconv') || ((!strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
 /**
  * Include the utf8 package
  */
-jimport('phputf8.utf8');
-jimport('phputf8.strcasecmp');
+//jimport('phputf8.utf8');
+//jimport('phputf8.strcasecmp');
 
 /**
  * String handling class for utf-8 data

@@ -1,4 +1,7 @@
 <?php
+namespace Joomla\filesystem;
+use Joomla\filesystem\File;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -221,7 +224,7 @@ class JPath
 	 */
 	public static function isOwner($path)
 	{
-		jimport('joomla.filesystem.file');
+//jimport('joomla.filesystem.file');
 
 		$tmp = md5(JUserHelper::genRandomPassword(16));
 		$ssp = ini_get('session.save_path');
@@ -303,3 +306,4 @@ class JPath
 		return false;
 	}
 }
+class Path extends JPath {}

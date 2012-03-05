@@ -1,5 +1,6 @@
 <?php
-
+namespace phpConsole;
+use phpConsole\PhpConsoleEvent;
 /**
  *
  * @see http://code.google.com/p/php-console
@@ -86,10 +87,10 @@ class PhpConsole {
 	protected static $index = 0;
 
 	protected function initClient() {
-		if(self::$isEnabledOnClient === null) {
-			self::setEnabledOnServer();
-			self::$isEnabledOnClient = self::isEnabledOnClient();
-			if(self::$isEnabledOnClient) {
+		if($this->isEnabledOnClient === null) {
+            $this->setEnabledOnServer();
+            $this->isEnabledOnClient = $this->isEnabledOnClient();
+			if($this->isEnabledOnClient) {
 				ob_start();
 			}
 		}

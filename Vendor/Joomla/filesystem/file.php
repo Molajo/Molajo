@@ -1,4 +1,8 @@
 <?php
+namespace Joomla\filesystem;
+use Joomla\filesystem\Path;
+use Joomla\filesystem\Folder;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -9,7 +13,7 @@
 
 defined('JPATH_PLATFORM') or die;
 
-jimport('joomla.filesystem.path');
+//jimport('joomla.filesystem.path');
 
 /**
  * A File handling class
@@ -546,3 +550,4 @@ class JFile
 		}
 	}
 }
+class file extends JFile {}

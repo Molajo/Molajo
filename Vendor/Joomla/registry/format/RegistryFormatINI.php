@@ -1,4 +1,5 @@
 <?php
+namespace Joomla\registry;
 /**
  * @package     Joomla.Platform
  * @subpackage  Registry
@@ -95,11 +96,11 @@ class JRegistryFormatINI extends JRegistryFormat
 
         // If no lines present just return the object.
         if (empty($data)) {
-            return new stdClass;
+            return new \stdClass;
         }
 
         // Initialize variables.
-        $obj = new stdClass;
+        $obj = new \stdClass;
         $section = false;
         $lines = explode("\n", $data);
 
@@ -120,7 +121,7 @@ class JRegistryFormatINI extends JRegistryFormat
                 // If we are processing sections and the line is a section add the object and continue.
                 if (($line[0] == '[') && ($line[$length - 1] == ']')) {
                     $section = substr($line, 1, $length - 2);
-                    $obj->$section = new stdClass;
+                    $obj->$section = new \stdClass;
                     continue;
                 }
             }
@@ -228,3 +229,4 @@ class JRegistryFormatINI extends JRegistryFormat
         return $string;
     }
 }
+class RegistryFormatINI extends JRegistryFormatINI {}

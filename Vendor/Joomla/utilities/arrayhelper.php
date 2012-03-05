@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\utilities;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Utilities
@@ -8,6 +10,9 @@
  */
 
 defined('JPATH_PLATFORM') or die;
+
+use Joomla\utilities\Arrayhelper;
+use Joomla\string\JString;
 
 /**
  * JArrayHelper is an array utility class for doing all sorts of odds and ends with arrays.
@@ -535,3 +540,4 @@ class JArrayHelper
         return $myArray;
     }
 }
+class ArrayHelper extends JArrayHelper {}
