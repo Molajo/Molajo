@@ -92,7 +92,7 @@ Class ResponseService extends Response
             }
         }
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Response::isRedirect redirect to: ' . $location);
+            PhpConsole\debug('Response::isRedirect redirect to: ' . $location);
         }
 
         parent::isRedirect($location);

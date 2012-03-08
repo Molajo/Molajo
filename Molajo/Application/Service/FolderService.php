@@ -106,7 +106,7 @@ Class FolderService
      */
     public function create($path = '', $mode = 0755)
     {
-        return JFolder::create($path, $mode);
+        return Folder::create($path, $mode);
     }
 
 
@@ -122,7 +122,7 @@ Class FolderService
      */
     public function delete($path)
     {
-        return JFolder::delete($path);
+        return Folder::delete($path);
     }
 
     /**
@@ -141,7 +141,7 @@ Class FolderService
      */
     public function copy($src, $dest, $path = null, $force = false, $use_streams = false)
     {
-        return JFolder::copy($src, $dest, $path, $use_streams);
+        return Folder::copy($src, $dest, $path, $use_streams);
     }
 
     /**
@@ -159,7 +159,7 @@ Class FolderService
      */
     public function move($src, $dest, $path = '', $use_streams = false)
     {
-        return JFolder::move($src, $dest, $path, $use_streams);
+        return Folder::move($src, $dest, $path, $use_streams);
     }
 
     /**
@@ -179,7 +179,7 @@ Class FolderService
     public function files($path, $filter = '.', $recurse = false, $full = false, $exclude = array('.svn', 'CVS', '.DS_Store', '__MACOSX'),
                           $excludefilter = array('^\..*', '.*~'))
     {
-        return JFolder::files($path, $filter, $recurse, $full, $exclude, $excludefilter);
+        return Folder::files($path, $filter, $recurse, $full, $exclude, $excludefilter);
     }
 
     /**
@@ -201,7 +201,7 @@ Class FolderService
     public function folders($path, $filter = '.', $recurse = false, $full = false, $exclude = array('.svn', 'CVS', '.DS_Store', '__MACOSX'),
                             $excludefilter = array('^\..*'))
     {
-        return JFolder::folders($path, $filter, $recurse, $full, $exclude, $excludefilter = array('^\..*'));
+        return Folder::folders($path, $filter, $recurse, $full, $exclude, $excludefilter = array('^\..*'));
     }
 
     /**
@@ -221,6 +221,6 @@ Class FolderService
      */
     public function listFolderTree($path, $filter, $maxLevel = 3, $level = 0, $parent = 0)
     {
-        return JFolder::listFolderTree($path, $filter, $maxLevel, $level, $parent);
+        return Folder::listFolderTree($path, $filter, $maxLevel, $level, $parent);
     }
 }

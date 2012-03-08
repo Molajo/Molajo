@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -103,7 +104,7 @@ class UpdateController extends Controller
         $results = $this->model->load();
 
         if (empty($results)) {
-            $this->model->row = new stdClass;
+            $this->model->row = new \stdClass;
             $this->model->row->id = 0;
             $this->model->row->title = 'One long summer';
             $this->model->row->protected = 0;
@@ -126,9 +127,9 @@ class UpdateController extends Controller
             } catch (Exception $e) {
                 $valid = false;
                 if (Service::Configuration()->get('debug', 0) == 1) {
-                    debug(' ');
-                    debug('UpdateController::load Failed');
-                    debug('Model: ' . $this->model->name . ' ID: ' . $this->id);
+                    PhpConsole\debug(' ');
+                    PhpConsole\debug('UpdateController::load Failed');
+                    PhpConsole\debug('Model: ' . $this->model->name . ' ID: ' . $this->id);
                     debug(Service::Language()->translate($e->getMessage()));
                 }
                 Service::Message()
@@ -202,16 +203,16 @@ class UpdateController extends Controller
                             $type = MOLAJO_MESSAGE_TYPE_ERROR
                         );
                         if (Service::Configuration()->get('debug', 0) == 1) {
-                            debug(' ');
-                            debug('UpdateController::_filter_and_validate Filter Failed'.' '.$message);
+                            PhpConsole\debug(' ');
+                            PhpConsole\debug('UpdateController::_filter_and_validate Filter Failed'.' '.$message);
                         }
                     }
                 }
             }
         }
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
-            debug('UpdateController::_filter_and_validate Filter::Success: ' . $valid);
+            PhpConsole\debug(' ');
+            PhpConsole\debug('UpdateController::_filter_and_validate Filter::Success: ' . $valid);
         }
 
         /** Helper Functions */
@@ -230,15 +231,15 @@ class UpdateController extends Controller
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
                     if (Service::Configuration()->get('debug', 0) == 1) {
-                        debug(' ');
-                        debug('UpdateController::_filter_and_validate Helper Failed'.' '.$message);
+                        PhpConsole\debug(' ');
+                        PhpConsole\debug('UpdateController::_filter_and_validate Helper Failed'.' '.$message);
                     }
                 }
             }
         }
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
-            debug('UpdateController::_filter_and_validate Helper::Success: ' . $valid);
+            PhpConsole\debug(' ');
+            PhpConsole\debug('UpdateController::_filter_and_validate Helper::Success: ' . $valid);
         }
 
         /** Foreign Keys */
@@ -262,15 +263,15 @@ class UpdateController extends Controller
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
                     if (Service::Configuration()->get('debug', 0) == 1) {
-                        debug(' ');
-                        debug('UpdateController::_filter_and_validate FKs Failed'.' '.$message);
+                        PhpConsole\debug(' ');
+                        PhpConsole\debug('UpdateController::_filter_and_validate FKs Failed'.' '.$message);
                     }
                 }
             }
         }
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
-            debug('UpdateController::Validate FK::Success: ' . $valid);
+            PhpConsole\debug(' ');
+            PhpConsole\debug('UpdateController::Validate FK::Success: ' . $valid);
         }
 
         return $valid;
@@ -325,8 +326,8 @@ class UpdateController extends Controller
                                            $required, $message)
     {
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug(' ');
-            debug('UpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
+            PhpConsole\debug(' ');
+            PhpConsole\debug('UpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
         }
 
         if ($this->model->row->$name == 0
@@ -369,7 +370,7 @@ class UpdateController extends Controller
      */
     private function _storeRelated()
     {
-        $asset = new MolajoAssetModel();
+        $asset = new AssetModel();
 
         $asset->asset_type_id = $this->model->table_name->asset_type_id;
 

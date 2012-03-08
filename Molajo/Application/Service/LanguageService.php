@@ -5,6 +5,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -204,8 +205,9 @@ Class LanguageService
     {
         $loaded = $this->_loadLanguage($path, $this->language . '.ini');
         if ($loaded === false) {
-            debug('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
+            PhpConsole\debug('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
         } else {
+            echo 'true';
             return true;
         }
 
@@ -216,7 +218,7 @@ Class LanguageService
 
         $loaded = $this->_loadLanguage($path, $default . '.ini');
         if ($loaded === false) {
-            debug('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
+            PhpConsole\debug('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
             return false;
         }
         return $loaded;
@@ -275,7 +277,7 @@ Class LanguageService
             return $this->loaded_strings[$key];
 
         } else {
-            debug('MolajoLanguage: Missing language key: '.$key);
+            PhpConsole\debug('MolajoLanguage: Missing language key: '.$key);
             return $key;
         }
     }
@@ -480,7 +482,7 @@ Class LanguageService
         $list = array();
         foreach ($languages as $language)
         {
-            $listItem = new stdClass();
+            $listItem = new \stdClass();
 
             $listItem->key = $language->title;
             $listItem->value = $language->subtitle;
@@ -515,7 +517,7 @@ Class LanguageService
         }
 
         foreach ($files as $file) {
-            $language = new stdClass();
+            $language = new \stdClass();
 
             $language->value = substr($file, 0, strlen($file) - 4);
             $language->key = substr($file, 0, strlen($file) - 4);
@@ -542,7 +544,7 @@ Class LanguageService
         $languages = array();
 
         foreach ($subfolders as $path) {
-            $language = new stdClass();
+            $language = new \stdClass();
 
             $language->title = $path;
             $language->subtitle = $path;

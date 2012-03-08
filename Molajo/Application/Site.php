@@ -100,7 +100,7 @@ Class Site
         $sv = Molajo::Services()->startServices();
 
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Application::initialize Start Services');
+            PhpConsole\debug('Application::initialize Start Services');
         }
 
         /** offline */
@@ -129,7 +129,7 @@ Class Site
         //        Service::Session()->getHash(get_class($this))
         //  );
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Application::initialize Service::Session()');
+            PhpConsole\debug('Application::initialize Service::Session()');
         }
 
         /** return to Molajo::Site */
@@ -191,7 +191,7 @@ Class Site
 
         /** Application Complete */
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('MolajoSite::load End');
+            PhpConsole\debug('MolajoSite::load End');
         }
 
         exit(0);
@@ -391,8 +391,10 @@ Class Site
 
         if (defined('SITE_BASE_URL')) {
         } else {
+
             $sites = simplexml_load_file(MOLAJO_APPLICATIONS
                 . '/Configuration/sites.xml', 'SimpleXMLElement');
+
             foreach ($sites->site as $single) {
                 if ($single->base == $siteBase) {
                     define('SITE_BASE_URL', $single->base);

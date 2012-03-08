@@ -11,6 +11,7 @@ defined('MOLAJO') or die;
 use Molajo\Application\Request;
 use Molajo\Application\Parse;
 use Molajo\Application\Service;
+use PhpConsole\PhpConsole;
 
 /**
  * Application
@@ -68,7 +69,7 @@ class Application
     {
         Molajo::Request()->process();
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Application::process Molajo::Request()->process()');
+            PhpConsole\debug('Application::process Molajo::Request()->process()');
         }
 
         /**
@@ -91,7 +92,7 @@ class Application
         if (Molajo::Request()->get('mvc_controller') == 'display') {
             $content = Molajo::Parse();
             if (Service::Configuration()->get('debug', 0) == 1) {
-                debug('Application::process Molajo::Parse() completed');
+                PhpConsole\debug('Application::process Molajo::Parse() completed');
             }
 
             /** response */
@@ -109,7 +110,7 @@ class Application
         }
 
         if (Service::Configuration()->get('debug', 0) == 1) {
-            debug('Application::process Service::Response()->respond() completed');
+            PhpConsole\debug('Application::process Service::Response()->respond() completed');
         }
         return;
     }

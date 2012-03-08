@@ -49,7 +49,7 @@ $listener->reset();
 $dispatcher = new sfEventDispatcher();
 $dispatcher->connect('foo', array($listener, 'listenToFoo'));
 $dispatcher->connect('foo', array($listener, 'listenToFooBis'));
-$e = $dispatcher->notify($event = new sfEvent(new stdClass(), 'foo'));
+$e = $dispatcher->notify($event = new sfEvent(new \stdClass(), 'foo'));
 $t->is($listener->getValue(), 'listenToFoolistenToFooBis', '->notify() notifies all registered listeners in order');
 $t->is($e, $event, '->notify() returns the event object');
 
@@ -57,7 +57,7 @@ $listener->reset();
 $dispatcher = new sfEventDispatcher();
 $dispatcher->connect('foo', array($listener, 'listenToFooBis'));
 $dispatcher->connect('foo', array($listener, 'listenToFoo'));
-$dispatcher->notify(new sfEvent(new stdClass(), 'foo'));
+$dispatcher->notify(new sfEvent(new \stdClass(), 'foo'));
 $t->is($listener->getValue(), 'listenToFooBislistenToFoo', '->notify() notifies all registered listeners in order');
 
 // ->notifyUntil()
@@ -66,7 +66,7 @@ $listener->reset();
 $dispatcher = new sfEventDispatcher();
 $dispatcher->connect('foo', array($listener, 'listenToFoo'));
 $dispatcher->connect('foo', array($listener, 'listenToFooBis'));
-$e = $dispatcher->notifyUntil($event = new sfEvent(new stdClass(), 'foo'));
+$e = $dispatcher->notifyUntil($event = new sfEvent(new \stdClass(), 'foo'));
 $t->is($listener->getValue(), 'listenToFoolistenToFooBis', '->notifyUntil() notifies all registered listeners in order and stops if it returns true');
 $t->is($e, $event, '->notifyUntil() returns the event object');
 
@@ -74,7 +74,7 @@ $listener->reset();
 $dispatcher = new sfEventDispatcher();
 $dispatcher->connect('foo', array($listener, 'listenToFooBis'));
 $dispatcher->connect('foo', array($listener, 'listenToFoo'));
-$e = $dispatcher->notifyUntil($event = new sfEvent(new stdClass(), 'foo'));
+$e = $dispatcher->notifyUntil($event = new sfEvent(new \stdClass(), 'foo'));
 $t->is($listener->getValue(), 'listenToFooBis', '->notifyUntil() notifies all registered listeners in order and stops if it returns true');
 
 // ->filter()
@@ -83,7 +83,7 @@ $listener->reset();
 $dispatcher = new sfEventDispatcher();
 $dispatcher->connect('foo', array($listener, 'filterFoo'));
 $dispatcher->connect('foo', array($listener, 'filterFooBis'));
-$e = $dispatcher->filter($event = new sfEvent(new stdClass(), 'foo'), 'foo');
+$e = $dispatcher->filter($event = new sfEvent(new \stdClass(), 'foo'), 'foo');
 $t->is($e->getReturnValue(), '-*foo*-', '->filter() filters a value');
 $t->is($e, $event, '->filter() returns the event object');
 
@@ -91,7 +91,7 @@ $listener->reset();
 $dispatcher = new sfEventDispatcher();
 $dispatcher->connect('foo', array($listener, 'filterFooBis'));
 $dispatcher->connect('foo', array($listener, 'filterFoo'));
-$e = $dispatcher->filter($event = new sfEvent(new stdClass(), 'foo'), 'foo');
+$e = $dispatcher->filter($event = new sfEvent(new \stdClass(), 'foo'), 'foo');
 $t->is($e->getReturnValue(), '*-foo-*', '->filter() filters a value');
 
 class Listener

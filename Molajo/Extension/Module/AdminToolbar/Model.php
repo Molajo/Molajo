@@ -64,7 +64,7 @@ Class ModuleAdminToolbarModel extends DisplayModel
         foreach ($buttonArray as $buttonname) {
             if ($permissions[$buttonname] === true) {
 
-                $row = new stdClass();
+                $row = new \stdClass();
 
                 $row->title =
                     Molajo::Request()

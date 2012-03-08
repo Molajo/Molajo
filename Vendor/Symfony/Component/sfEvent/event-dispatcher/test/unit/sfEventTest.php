@@ -13,7 +13,7 @@ require_once dirname(__FILE__).'/../../lib/sfEvent.php';
 
 $t = new lime_test(11);
 
-$subject = new stdClass();
+$subject = new \stdClass();
 $parameters = array('foo' => 'bar');
 $event = new sfEvent($subject, 'name', $parameters);
 

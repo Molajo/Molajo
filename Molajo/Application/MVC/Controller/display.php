@@ -89,7 +89,7 @@ class DisplayController extends Controller
     {
         $this->rowset = array();
 
-        $temp = new stdClass();
+        $temp = new \stdClass();
         $temp->wrap_view_css_id = $this->get('wrap_view_css_id');
         $temp->wrap_view_css_class = $this->get('wrap_view_css_class');
         $temp->content = $renderedOutput;
@@ -224,7 +224,7 @@ class DisplayController extends Controller
         $row = 0;
         if ($totalRows > 0) {
             foreach ($this->rowset as $this->row) {
-                $item = new stdClass ();
+                $item = new \stdClass ();
                 $pairs = get_object_vars($this->row);
                 foreach ($pairs as $key => $value) {
                     $item->$key = $value;

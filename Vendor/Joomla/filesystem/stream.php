@@ -1,5 +1,8 @@
 <?php
-namespace Joomla;
+namespace Joomla\database;
+use Joomla\object\JObject;
+use Joomla\filesystem\FilesystemHelper;
+use Joomla\filesystem\File;
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -197,7 +200,7 @@ class JStream extends JObject
 			// If we're dealing with a Joomla! stream, load it
 			if (JFilesystemHelper::isJoomlaStream($url['scheme']))
 			{
-				require_once __DIR__ . '/streams/' . $url['scheme'] . '.php';
+//				require_once __DIR__ . '/streams/' . $url['scheme'] . '.php';
 			}
 
 			// We have a scheme! force the method to be f
@@ -1421,3 +1424,4 @@ class JStream extends JObject
 		return $this->_fh;
 	}
 }
+class Stream extends JStream {}

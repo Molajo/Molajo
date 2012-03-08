@@ -5,6 +5,8 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
+use Joomla\registry\Registry;
+use Joomla\database\JDatabase;
 
 defined('MOLAJO') or die;
 
@@ -64,7 +66,7 @@ Class DatabaseService
      * connect
      *
      * @return mixed
-     * @throws RuntimeException
+     * @throws Exception
      * @since 1.0
      */
     public function connect($database_class = 'JDatabase',
@@ -78,22 +80,23 @@ Class DatabaseService
         if (file_exists($configuration_file)) {
             require_once $configuration_file;
         } else {
-            throw new RuntimeException('Fatal error - Application-Site Configuration File does not exist');
+            throw new Exception('Fatal error - Application-Site Configuration File does not exist');
         }
 
         if (class_exists($configuration_class)) {
             $site = new $configuration_class();
         } else {
-            throw new RuntimeException('Fatal error - Configuration Class does not exist');
+            throw new Exception('Fatal error - Configuration Class does not exist');
         }
 
         /** database connection specific elements */
-        $database_type = $database_class . '_dbtype';
-        $host = $database_class . '_host';
-        $user = $database_class . '_user';
-        $password = $database_class . '_password';
-        $db = $database_class . '_db';
-        $dbprefix = $database_class . '_dbprefix';
+        $database_type = strtolower($database_class) . '_dbtype';
+        $host = strtolower($database_class) . '_host';
+        $user = strtolower($database_class) . '_user';
+        $password = strtolower($database_class) . '_password';
+        $db = strtolower($database_class) . '_db';
+        $dbprefix = strtolower($database_class) . '_dbprefix';
+        $namespace = strtolower($database_class) . '_namespace';
 
         /** set connection options */
         $options = array(
@@ -105,10 +108,13 @@ Class DatabaseService
             'prefix' => $site->$dbprefix);
 
         /** connect */
-        $this->db = $database_class::getInstance($options);
+        $connectDBClass = $site->$namespace;
+//        $this->db = JDatabase::getInstance($options);
+        $this->db = $connectDBClass::getInstance($options);
 
         if ($this->db == null
-            || $this->db->getErrorNum() > 0) {
+           //|| $this->db->getErrorNum() > 0
+        ) {
             header('HTTP/1.1 500 Internal Server Error');
             jexit('Database Connection Failed.');
         }

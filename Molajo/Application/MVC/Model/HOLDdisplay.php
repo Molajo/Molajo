@@ -523,7 +523,7 @@ class DisplayModel extends Model
 
                 /** process content plugins */
                 //                $this->dispatcher->trigger('contentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
-                $items[$i]->event = new stdClass();
+                $items[$i]->event = new \stdClass();
 
                 //                $results = $this->dispatcher->trigger(
                 //                    'contentBeforeDisplay',

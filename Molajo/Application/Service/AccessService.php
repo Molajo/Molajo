@@ -247,7 +247,7 @@ Class AccessService
 
         if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
             if (Service::Configuration()->get('debug', 0) == 1) {
-                debug('AccessService::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
+                PhpConsole\debug('AccessService::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
         }
 
@@ -270,7 +270,7 @@ Class AccessService
             return true;
         } else {
             if (Service::Configuration()->get('debug', 0) == 1) {
-                debug('AccessService::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
+                PhpConsole\debug('AccessService::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
             return false;
         }

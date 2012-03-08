@@ -71,7 +71,7 @@ Class ModuleGridFiltersModel extends Model
         $this->data = array();
         foreach ($filterArray as $filter) {
 
-            $row = new stdClass();
+            $row = new \stdClass();
 
             $row->name = $filter;
             $row->list = $h->getList($filter);

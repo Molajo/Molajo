@@ -6,6 +6,8 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
+use Joomla\registry\Registry;
+use Joomla\database\JDatabase;
 
 defined('MOLAJO') or die;
 
@@ -113,7 +115,7 @@ Class Model
      *
      * Single row for $table_name
      *
-     * @var    stdclass
+     * @var    stdClass
      * @since  1.0
      */
     public $row;
@@ -153,7 +155,7 @@ Class Model
      *
      * Processing instructions for the MVC set by the renderer
      *
-     * @var    JRegistry
+     * @var    Registry
      * @since  1.0
      */
     public $task_request;
@@ -163,7 +165,7 @@ Class Model
      *
      * Parameters
      *
-     * @var    JRegistry
+     * @var    Registry
      * @since  1.0
      */
     public $parameters;

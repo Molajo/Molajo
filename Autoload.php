@@ -46,6 +46,7 @@ $s->register();
 $s->registerNamespace('Molajo', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\Helper', MOLAJO_BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\Controller', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\Model', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\View', MOLAJO_BASE_FOLDER);
@@ -74,7 +75,16 @@ if (interface_exists('SessionHandlerInterface')) {
 $s->registerNamespace('Joomla', VENDOR);
 $s->registerNamespace('Joomla\\client', VENDOR);
 $s->registerNamespace('Joomla\\crypt', VENDOR);
+$s->registerNamespace('Joomla\\database', VENDOR);
+$s->registerNamespace('Joomla\\database\\database', VENDOR);
+$s->registerNamespace('Joomla\\database\\query', VENDOR);
+$s->registerNamespace('Joomla\\error', VENDOR);
+$s->registerNamespace('Joomla\\exception', VENDOR);
 $s->registerNamespace('Joomla\\filesystem', VENDOR);
+$s->registerNamespace('Joomla\\filesystem\streams', VENDOR);
+$s->registerNamespace('Joomla\\filesystem\support', VENDOR);
+$s->registerNamespace('Joomla\\log', VENDOR);
+$s->registerNamespace('Joomla\\object', VENDOR);
 $s->registerNamespace('Joomla\\registry', VENDOR);
 $s->registerNamespace('Joomla\\string', VENDOR);
 $s->registerNamespace('Joomla\\utilities', VENDOR);
@@ -86,6 +96,7 @@ $s->registerNamespace('HTMLPurifier', VENDOR);
 $s->registerNamespace('phpmailer', VENDOR);
 $s->registerNamespace('phputf8', VENDOR);
 $s->registerNamespace('Simplepie', VENDOR);
+
 
 /** Not namedspaced */
 //require_once VENDOR . '/HTMLPurifier/HTMLPurifier.standalone.php';

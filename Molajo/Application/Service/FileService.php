@@ -5,8 +5,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
-
-//use Joomla\filesystem\File;
+use Joomla\filesystem\File;
 
 defined('MOLAJO') or die;
 
@@ -127,14 +126,13 @@ class FileService
      *
      * @param   string   $file
      * @param   string   $buffer
-     * @param   boolean  $use_streams
      *
      * @return  boolean  True on success
      * @since   1.0
      */
-    public function write($file, $buffer, $use_streams = false)
+    public function write($file, $buffer)
     {
-        return File::write($file, $buffer, $use_streams);
+        return File::write($file, $buffer, false);
     }
 
     /**
@@ -160,14 +158,13 @@ class FileService
      * @param   string   $src          The path to the source file
      * @param   string   $dest         The path to the destination file
      * @param   string   $path         An optional base path to prefix to the file names
-     * @param   boolean  $use_streams  True to use streams
      *
      * @return  boolean  True on success
      * @since   1.0
      */
-    public function copy($src, $dest, $path = null, $use_streams = false)
+    public function copy($src, $dest, $path = null)
     {
-        return File::copy($src, $dest, $path, $use_streams);
+        return File::copy($src, $dest, $path, false);
     }
 
     /**
@@ -178,14 +175,14 @@ class FileService
      * @param   string   $src          The path to the source file
      * @param   string   $dest         The path to the destination file
      * @param   string   $path         An optional base path to prefix to the file names
-     * @param   boolean  $use_streams  True to use streams
+     * @param   boolean  $use_streams  false
      *
      * @return  boolean  True on success
      * @since   1.0
      */
-    public function move($src, $dest, $path = '', $use_streams = false)
+    public function move($src, $dest, $path = '')
     {
-        return File::move($src, $dest, $path, $use_streams);
+        return File::move($src, $dest, $path, false);
     }
 
     /**

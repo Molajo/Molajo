@@ -9,19 +9,11 @@
         <serviceClass>FolderService</serviceClass>
     </service>
     <service>
-        <name>Language</name>
-        <serviceClass>LanguageService</serviceClass>
-    </service>
-    <service>
-        <name>Date</name>
-        <serviceClass>DateService</serviceClass>
-    </service>
-    <service>
         <name>Message</name>
         <serviceClass>MessageService</serviceClass>
     </service>
     <service>
-        <name>jdb</name>
+        <name>Database</name>
         <serviceClass>DatabaseService</serviceClass>
     </service>
     <service>
@@ -45,10 +37,6 @@
         <serviceClass>ResponseService</serviceClass>
     </service>
     <service>
-        <name>Document</name>
-        <serviceClass>DocumentService</serviceClass>
-    </service>
-    <service>
         <name>User</name>
         <serviceClass>UserService</serviceClass>
         <getInstance>
@@ -56,6 +44,18 @@
                 <parameter key="identifier" value="{{userid}}"/>
             </parameters>
         </getInstance>
+    </service>
+    <service>
+        <name>Language</name>
+        <serviceClass>LanguageService</serviceClass>
+    </service>
+    <service>
+        <name>Date</name>
+        <serviceClass>DateService</serviceClass>
+    </service>
+    <service>
+        <name>Document</name>
+        <serviceClass>DocumentService</serviceClass>
     </service>
     <service>
         <name>Access</name>

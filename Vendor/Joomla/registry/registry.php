@@ -3,6 +3,7 @@ namespace Joomla\registry;
 
 use Joomla\utilities\ArrayHelper;
 use Joomla\registry\RegistryFormat;
+use Joomla\filesystem\File;
 
 /**
  * @package     Joomla.Platform
@@ -202,7 +203,7 @@ class JRegistry
     public static function getInstance($id)
     {
         if (empty(self::$instances[$id])) {
-            self::$instances[$id] = new Registry;
+            self::$instances[$id] = new JRegistry;
         }
 
         return self::$instances[$id];

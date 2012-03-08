@@ -45,13 +45,13 @@ $load->requireClassFile(JPATH_PLATFORM . '/database/database.php', 'JDatabase');
 $load->requireClassFile(JPATH_PLATFORM . '/database/query.php', 'JDatabaseQueryElement');
 $load->requireClassFile(JPATH_PLATFORM . '/database/exception.php', 'JDatabaseException');
 
-$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysql.php', 'JDatabaseMySQL');
-$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqli.php', 'JDatabaseMySQLi');
+$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysql.php', 'JDatabaseMySql');
+$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqli.php', 'JDatabaseMySqli');
 $load->requireClassFile(JPATH_PLATFORM . '/database/database/sqlsrv.php', 'JDatabaseSQLSrv');
 $load->requireClassFile(JPATH_PLATFORM . '/database/database/sqlazure.php', 'JDatabaseSQLAzure');
 
-$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqlexporter.php', 'JDatabaseExporterMySQL');
-$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqliexporter.php', 'JDatabaseExporterMySQLi');
+$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqlexporter.php', 'JDatabaseExporterMySql');
+$load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqliexporter.php', 'JDatabaseExporterMySqli');
 $load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqlimporter.php', 'JDatabaseImporterMySQL');
 $load->requireClassFile(JPATH_PLATFORM . '/database/database/mysqliimporter.php', 'JDatabaseImporterMySQLi');
 

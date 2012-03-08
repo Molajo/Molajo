@@ -51,7 +51,7 @@ Class ModulePagefooterModel extends DisplayModel
             ->getDate()
             ->format('Y-m-d-H-i-s');
 
-        $row = new stdClass();
+        $row = new \stdClass();
 
         $row->current_year = Service::Date()
             ->getDate()

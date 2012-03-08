@@ -421,7 +421,7 @@ Class MailService
                $type = MOLAJO_MESSAGE_TYPE_ERROR
            );
            if (Service::Configuration()->get('debug', 0) == 1) {
-               debug('Service::mail Filter Failed'.' '.$message);
+               PhpConsole\debug('Service::mail Filter Failed'.' '.$message);
            }
         }
 

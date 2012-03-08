@@ -610,37 +610,37 @@ class ModelHelper
     {
         $rowset = array();
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_ARCHIVED;
         $obj->value = Service::Language()->translate('STATUS_ARCHIVED');
         $rowset[] = $obj;
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_PUBLISHED;
         $obj->value = Service::Language()->translate('STATUS_PUBLISHED');
         $rowset[] = $obj;
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_UNPUBLISHED;
         $obj->value = Service::Language()->translate('STATUS_UNPUBLISHED');
         $rowset[] = $obj;
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_TRASHED;
         $obj->value = Service::Language()->translate('STATUS_TRASHED');
         $rowset[] = $obj;
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_SPAMMED;
         $obj->value = Service::Language()->translate('STATUS_SPAMMED');
         $rowset[] = $obj;
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_DRAFT;
         $obj->value = Service::Language()->translate('STATUS_DRAFT');
         $rowset[] = $obj;
 
-        $obj = new stdClass();
+        $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_VERSION;
         $obj->value = Service::Language()->translate('STATUS_VERSION');
         $rowset[] = $obj;

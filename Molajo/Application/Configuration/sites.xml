@@ -4,7 +4,7 @@
         <id>1</id>
         <name>Primary</name>
         <base>localhost/molajo</base>
-        <folderpath>/users/amystephen/sites/molajo/sites/1</folderpath>
-        <appendtobaseurl>/sites/1</appendtobaseurl>
+        <folderpath>/users/amystephen/sites/molajo/site/1</folderpath>
+        <appendtobaseurl>/site/1</appendtobaseurl>
     </site>
 </sites>
