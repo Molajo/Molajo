@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  *
  * Example usage:
  *
- * $results = Service::Mail()
+ * $results = Services::Mail()
  *  ->set('send_to_email', 'person@example.com')
  *  ->set('from_email', 'admin@example.com')
  *  ->set('subject', 'Welcome to our Site')
@@ -128,7 +128,7 @@ Class MailService
      */
     public function send()
     {
-        if (Service::Configuration()->get('disable_sending', 1) == 1) {
+        if (Services::Configuration()->get('disable_sending', 1) == 1) {
             return true;
         }
 
@@ -139,7 +139,7 @@ Class MailService
             return $results;
         }
 
-        $only_deliver_to = Service::Configuration()->get('only_deliver_to', '');
+        $only_deliver_to = Services::Configuration()->get('only_deliver_to', '');
         if (trim($only_deliver_to) == '') {
         } else {
             $this->set('cc_email', array());
@@ -159,16 +159,16 @@ Class MailService
         $mail = $mailClass::getInstance();
 
         /** Set type of email */
-        switch (Service::Configuration()->get('mailer'))
+        switch (Services::Configuration()->get('mailer'))
         {
             case 'smtp':
                 $mail->useSMTP(
-                    Service::Configuration()->get('smtpauth'),
-                    Service::Configuration()->get('smtphost'),
-                    Service::Configuration()->get('smtpuser'),
-                    Service::Configuration()->get('smtppass'),
-                    Service::Configuration()->get('smtpsecure'),
-                    Service::Configuration()->get('smtpport')
+                    Services::Configuration()->get('smtpauth'),
+                    Services::Configuration()->get('smtphost'),
+                    Services::Configuration()->get('smtpuser'),
+                    Services::Configuration()->get('smtppass'),
+                    Services::Configuration()->get('smtpsecure'),
+                    Services::Configuration()->get('smtpport')
                 );
                 break;
 
@@ -222,7 +222,7 @@ Class MailService
 
         /** authorization event */
         //todo: what is the asset id of a service?
-        //$results = Service::Access()->authoriseTask('email', $asset_id);
+        //$results = Services::Access()->authoriseTask('email', $asset_id);
 
         return $permission;
     }
@@ -256,7 +256,7 @@ Class MailService
 
         /** From Name */
         $name = 'from_name';
-        $value = $this->get('from_name', Service::Configuration()->get('site_name'));
+        $value = $this->get('from_name', Services::Configuration()->get('site_name'));
         $datatype = 'char';
         $results = $this->edit_and_filter_input($name, $value, $datatype);
         if ($results === false) {
@@ -287,7 +287,7 @@ Class MailService
 
         /** Subject */
         $name = 'subject';
-        $value = $this->get('subject', Service::Configuration()->get('site_name'));
+        $value = $this->get('subject', Services::Configuration()->get('site_name'));
         $datatype = 'char';
         $results = $this->edit_and_filter_input($name, $value, $datatype);
         if ($results === false) {
@@ -411,17 +411,17 @@ Class MailService
         $name, $value, $datatype, $null = null, $default = null)
     {
         try {
-           $value = Service::Security()->filter(
+           $value = Services::Security()->filter(
                    $value, $datatype, $null, $default);
 
         } catch (Exception $e) {
            $value = false;
-           Service::Message()->set(
-               $message = Service::Language()->translate($e->getMessage()) . ' ' . $name,
+           Services::Message()->set(
+               $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                $type = MOLAJO_MESSAGE_TYPE_ERROR
            );
-           if (Service::Configuration()->get('debug', 0) == 1) {
-               PhpConsole\debug('Service::mail Filter Failed'.' '.$message);
+           if (Services::Configuration()->get('debug', 0) == 1) {
+               PhpConsole\debug('Services::mail Filter Failed'.' '.$message);
            }
         }
 

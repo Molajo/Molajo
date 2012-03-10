@@ -1,14 +1,15 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package	 	Molajo
+ * @copyright	Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
-use Molajo\Application\Services;
+use Joomla\registry\Registry;
+use Molajo\Application\Services; // Folder, User
+use Molajo\Application\MVC\Model\ApplicationsModel;
 
 defined('MOLAJO') or die;
-
 /**
  * Language
  *
@@ -423,7 +424,7 @@ Class LanguageService
         }
 
         /** 2. user  */
-        $language = Service::User()->get('language', '');
+        $language = Services::User()->get('language', '');
         if ($language === false) {
         } elseif (in_array($language, $installed)) {
             return $language;
@@ -511,7 +512,7 @@ Class LanguageService
 
         $languages = array();
 
-        $files = Service::Folder()->files($path . '/language', '\.ini', false, false);
+        $files = Services::Folder()->files($path . '/language', '\.ini', false, false);
         if (count($files) == 0) {
             return false;
         }
@@ -540,7 +541,7 @@ Class LanguageService
      */
     public function getLanguagesCore()
     {
-        $subfolders = Service::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $subfolders = Services::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
         $languages = array();
 
         foreach ($subfolders as $path) {

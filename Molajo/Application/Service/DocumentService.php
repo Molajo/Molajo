@@ -179,7 +179,7 @@ Class DocumentService
      * Defines an entry of metadata to be displayed within the document head
      *
      * Example usage:
-     * Service::Document()->set_metadata
+     * Services::Document()->set_metadata
                  ('viewport', 'width=device-width, initial-scale=1, maximum-scale=1')
      *
      * @param   string  $name
@@ -210,7 +210,7 @@ Class DocumentService
      * Retrieves an array of metadata defined for the document
      *
      * Example usage:
-     * $metadata = Service::Document()->get_metadata();
+     * $metadata = Services::Document()->get_metadata();
      *
      * @return  string
      * @since   1.0
@@ -226,7 +226,7 @@ Class DocumentService
      * Adds <link> tags to the head of the document
      *
      * Example usage:
-     * Service::Document()->add_link(
+     * Services::Document()->add_link(
      *   $url = MOLAJO_EXTENSIONS_THEMES_URL
      *      . '/' . Molajo::Request()->get('theme_name')
      *      . '/' . 'images/apple-touch-icon-114x114.png',
@@ -267,7 +267,7 @@ Class DocumentService
      * Retrieves and returns the entire array of links
      *
      * Example usage:
-     * $list = Service::Document()->get_links();
+     * $list = Services::Document()->get_links();
      *
      * @return array
      * @since  1.0
@@ -283,7 +283,7 @@ Class DocumentService
      * Loads the CS located within the folder, as specified by the filepath
      *
      * Example usage:
-     * Service::Document()->add_css_folder($file_path, $url_path, $priority);
+     * Services::Document()->add_css_folder($file_path, $url_path, $priority);
      *
      * @param  string  $file_path
      * @param  string  $url_path
@@ -294,17 +294,17 @@ Class DocumentService
      */
     public function add_css_folder($file_path, $url_path, $priority = 500)
     {
-        if (Service::Folder()->exists($file_path . '/css')) {
+        if (Services::Folder()->exists($file_path . '/css')) {
         } else {
             return;
         }
 
-        $files = Service::Folder()->files($file_path . '/css', '\.css$', false, false);
+        $files = Services::Folder()->files($file_path . '/css', '\.css$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-                    if (Service::Language()->get('direction') == 'rtl') {
+                    if (Services::Language()->get('direction') == 'rtl') {
                         $this->add_css($url_path . '/css/' . $file, $priority);
                     }
                 } else {
@@ -320,7 +320,7 @@ Class DocumentService
      * Adds a linked stylesheet to the page
      *
      * Example usage:
-     * Service::Document()->add_css($url_path . '/template.css');
+     * Services::Document()->add_css($url_path . '/template.css');
      *
      * @param  string $url
      * @param  int    $priority
@@ -354,7 +354,7 @@ Class DocumentService
      * Retrieves array of css links
      *
      * Example usage:
-     * $list = Service::Document()->get_css();
+     * $list = Services::Document()->get_css();
      *
      * @return array
      * @since  1.0
@@ -370,7 +370,7 @@ Class DocumentService
      * Adds a css declaration to the array for later rendering
      *
      * Example usage:
-     * Service::Document()->add_css_declaration
+     * Services::Document()->add_css_declaration
              ($css_in_here, 'text/css');
      *
      * @param   string  $content
@@ -399,7 +399,7 @@ Class DocumentService
      * Retrieves the array of CSS declarations
      *
      * Example usage:
-     * $list = Service::Document()->get_css_declarations();
+     * $list = Services::Document()->get_css_declarations();
      *
      * @return array
      * @since  1.0
@@ -415,7 +415,7 @@ Class DocumentService
      * Loads the JS Files located within the folder specified by the filepath
      *
      * Example usage:
-     * Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+     * Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
      *
      * @param  $file_path
      * @param  $url_path
@@ -430,12 +430,12 @@ Class DocumentService
             $extra = '/js';
             $defer = 0;
         }
-        if (Service::Folder()->exists($file_path . $extra)) {
+        if (Services::Folder()->exists($file_path . $extra)) {
         } else {
             return;
         }
 
-        $files = Service::Folder()->files($file_path . $extra, '\.js$', false, false);
+        $files = Services::Folder()->files($file_path . $extra, '\.js$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -450,7 +450,7 @@ Class DocumentService
      * Adds a linked script to the page
      *
      * Example usage:
-     * Service::Document()->add_js
+     * Services::Document()->add_js
      *   ('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
      *
      * @param  $url
@@ -492,7 +492,7 @@ Class DocumentService
      * or bottom (defer = 1) of the page
      *
      * Example usage:
-     * $list = Service::Document()->get_js($defer);
+     * $list = Services::Document()->get_js($defer);
      *
      * @return array
      */
@@ -523,7 +523,7 @@ Class DocumentService
      * Adds a js declaration to an array for later rendering
      *
      * Example usage:
-     * Service::Document()->add_js_declaration
+     * Services::Document()->add_js_declaration
      *    ($fallback, 'text/javascript', 1000);
      *
      * @param  string  $content
@@ -559,7 +559,7 @@ Class DocumentService
      * Retrieves an array of JS declarations
      *
      * Example usage:
-     * $list = Service::Document()->get_js_declarations($defer);
+     * $list = Services::Document()->get_js_declarations($defer);
      *
      * @param bool $defer
      *

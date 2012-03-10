@@ -92,7 +92,7 @@ Class ItemModel extends Model
             }
             // Nothing to set publishing state on, return false.
             else {
-                $e = new MolajoException(Service::Language()->translate('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
+                $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NO_ROWS_SELECTED'));
                 $this->setError($e);
 
                 return false;
@@ -121,7 +121,7 @@ Class ItemModel extends Model
         // Check for a database error.
         if ($this->db->query()) {
         } else {
-            $e = new MolajoException(Service::Language()->sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', $this->name, $this->db->getErrorMsg()));
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_PUBLISH_FAILED', $this->name, $this->db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -150,7 +150,7 @@ Class ItemModel extends Model
      */
     public function checkOut()
     {
-        $userId = Service::User()->get('id');
+        $userId = Services::User()->get('id');
         if (property_exists($this, 'checked_out')
             && property_exists($this, 'checked_out_time')
         ) {
@@ -160,7 +160,7 @@ Class ItemModel extends Model
 
         $this->query->update($this->table_name);
         $this->query->set($this->db->qn('checked_out') . ' = ' . (int)$userId);
-        $this->query->set($this->db->qn('checked_out_time') . ' = ' . $this->db->q($this->now));
+        $this->query->set($this->db->qn('checked_out_time') . ' = ' . $this->db->q(Services::Date()->getDate()->toSql()));
         $this->query->where($this->primary_key . ' = ' . $this->db->q($this->id));
 
         $this->db->setQuery($this->query->__toString());
@@ -168,7 +168,7 @@ Class ItemModel extends Model
         if ($this->db->query()) {
         } else {
             $e = new MolajoException(
-                Service::Language()->sprintf(
+                Services::Language()->sprintf(
                     'MOLAJO_DB_ERROR_CHECKOUT_FAILED',
                     $this->name,
                     $this->db->getErrorMsg()
@@ -208,7 +208,7 @@ Class ItemModel extends Model
 
         // If no primary key is given, return false.
         if ($this->id === null) {
-            $e = new MolajoException(Service::Language()->translate('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(Services::Language()->translate('MOLAJO_DB_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -224,7 +224,7 @@ Class ItemModel extends Model
         // Check for a database error.
         if ($this->db->query()) {
         } else {
-            $e = new MolajoException(Service::Language()->sprintf('MOLAJO_DB_ERROR_CHECKIN_FAILED', $this->name, $this->db->getErrorMsg()));
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_CHECKIN_FAILED', $this->name, $this->db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -251,7 +251,7 @@ Class ItemModel extends Model
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(Service::Language()->sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', $this->name));
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', $this->name));
             $this->setError($e);
             return false;
         }
@@ -271,7 +271,7 @@ Class ItemModel extends Model
         // Check for a database error.
         if ($this->db->getErrorNum()) {
             $e = new MolajoException(
-                Service::Language()->sprintf('MOLAJO_DB_ERROR_GET_NEXT_ORDER_FAILED', $this->name, $this->db->getErrorMsg())
+                Services::Language()->sprintf('MOLAJO_DB_ERROR_GET_NEXT_ORDER_FAILED', $this->name, $this->db->getErrorMsg())
             );
             $this->setError($e);
 
@@ -298,7 +298,7 @@ Class ItemModel extends Model
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(Service::Language()->sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', $this->name));
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', $this->name));
             $this->setError($e);
             return false;
         }
@@ -323,7 +323,7 @@ Class ItemModel extends Model
 
         // Check for a database error.
         if ($this->db->getErrorNum()) {
-            $e = new MolajoException(Service::Language()->sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', $this->name, $this->db->getErrorMsg()));
+            $e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_REORDER_FAILED', $this->name, $this->db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -346,7 +346,7 @@ Class ItemModel extends Model
                     if ($this->db->query()) {
                     } else {
                         $e = new MolajoException(
-                            Service::Language()->sprintf(
+                            Services::Language()->sprintf(
                                 'MOLAJO_DB_ERROR_REORDER_UPDATE_ROW_FAILED', $this->name, $i, $this->db->getErrorMsg()
                             )
                         );

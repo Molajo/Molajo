@@ -122,7 +122,7 @@ class DisplayModel extends Model
 
         $this->fieldClass = new MolajoField();
 
-        //        $this->dispatcher = Service::Dispatcher();
+        //        $this->dispatcher = Services::Dispatcher();
 
         //        MolajoPluginHelper::importPlugin('query');
         //        MolajoPluginHelper::importPlugin($this->mvc['plugin_type']);
@@ -189,16 +189,16 @@ class DisplayModel extends Model
         //        }
 
         /** list limit **/
-        $limit = (int)Service::User()->getUserStateFromRequest(
+        $limit = (int)Services::User()->getUserStateFromRequest(
             'global.list.limit',
             'limit',
-            Service::Configuration()->get('list_limit')
+            Services::Configuration()->get('list_limit')
         );
 
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
-        $value = Service::User()->getUserStateFromRequest(
+        $value = Services::User()->getUserStateFromRequest(
             $this->context . '.limitstart',
             'limitstart',
             0
@@ -208,7 +208,7 @@ class DisplayModel extends Model
 
         /** ordering by field **/
         $ordering = 'a.title';
-        $value = Service::User()->getUserStateFromRequest(
+        $value = Services::User()->getUserStateFromRequest(
             $this->context . '.ordercol',
             'filter_order',
             $ordering
@@ -223,7 +223,7 @@ class DisplayModel extends Model
         } else {
             $ordering = 'a.title';
         }
-        Service::User()->setUserState(
+        Services::User()->setUserState(
             $this->context . '.ordercol',
             $ordering
         );
@@ -238,7 +238,7 @@ class DisplayModel extends Model
 
         /** ordering direction **/
         $direction = 'ASC';
-        $value = Service::User()->getUserStateFromRequest(
+        $value = Services::User()->getUserStateFromRequest(
             $this->context . '.orderdirn',
             'filter_order_Dir',
             $direction
@@ -246,7 +246,7 @@ class DisplayModel extends Model
         if (in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
         } else {
             $value = $direction;
-            Service::User()->setUserState(
+            Services::User()->setUserState(
                 $this->context . '.orderdirn',
                 $value
             );
@@ -290,8 +290,8 @@ class DisplayModel extends Model
         if (class_exists($nameClassName)) {
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
-            Service::Message()
-                ->set(Service::Language()->translate('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+            Services::Message()
+                ->set(Services::Language()->translate('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -379,7 +379,7 @@ class DisplayModel extends Model
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
         $nullDate = $this->db->q($this->db->getNullDate());
         $nowDate = $this->db->q(
-            $this->alias = Service::Date()
+            $this->alias = Services::Date()
                 ->toSql()
         );
 
@@ -464,14 +464,14 @@ class DisplayModel extends Model
                 //                $items[$i]->readmore_link = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($items[$i]->slug, $items[$i]->catslug));
 
                 /** trigger events */
-                //                Service::Dispatcher->notifys();
+                //                Services::Dispatcher->notifys();
 
                 if (isset($items[$i]->created)) {
                     $items[$i]->created_date = date($items[$i]->created);
-                    $items[$i]->created_ccyymmdd = Service::Date()->convertCCYYMMDD($items[$i]->created);
-                    $items[$i]->created_n_days_ago = Service::Date()->differenceDays(date('Y-m-d'), $items[$i]->created_ccyymmdd);
+                    $items[$i]->created_ccyymmdd = Services::Date()->convertCCYYMMDD($items[$i]->created);
+                    $items[$i]->created_n_days_ago = Services::Date()->differenceDays(date('Y-m-d'), $items[$i]->created_ccyymmdd);
                     $items[$i]->created_ccyymmdd = str_replace('-', '', $items[$i]->created_ccyymmdd);
-                    $items[$i]->created_pretty_date = Service::Date()->prettydate($items[$i]->created);
+                    $items[$i]->created_pretty_date = Services::Date()->prettydate($items[$i]->created);
                 } else {
                     $items[$i]->created_n_days_ago = '';
                     $items[$i]->created_ccyymmdd = '';
@@ -479,10 +479,10 @@ class DisplayModel extends Model
                 }
 
                 if (isset($items[$i]->modified)) {
-                    $items[$i]->modified_ccyymmdd = Service::Date()->convertCCYYMMDD($items[$i]->modified);
-                    $items[$i]->modified_n_days_ago = Service::Date()->differenceDays(date('Y-m-d'), $items[$i]->modified_ccyymmdd);
+                    $items[$i]->modified_ccyymmdd = Services::Date()->convertCCYYMMDD($items[$i]->modified);
+                    $items[$i]->modified_n_days_ago = Services::Date()->differenceDays(date('Y-m-d'), $items[$i]->modified_ccyymmdd);
                     $items[$i]->modified_ccyymmdd = str_replace('-', '', $items[$i]->modified_ccyymmdd);
-                    $items[$i]->modified_pretty_date = Service::Date()->prettydate($items[$i]->modified);
+                    $items[$i]->modified_pretty_date = Services::Date()->prettydate($items[$i]->modified);
                 } else {
                     $items[$i]->modified_n_days_ago = '';
                     $items[$i]->modified_ccyymmdd = '';
@@ -490,10 +490,10 @@ class DisplayModel extends Model
                 }
 
                 if (isset($items[$i]->start_publishing_datetime)) {
-                    $items[$i]->published_ccyymmdd = Service::Date()->convertCCYYMMDD($items[$i]->start_publishing_datetime);
-                    $items[$i]->published_n_days_ago = Service::Date()->differenceDays(date('Y-m-d'), $items[$i]->published_ccyymmdd);
+                    $items[$i]->published_ccyymmdd = Services::Date()->convertCCYYMMDD($items[$i]->start_publishing_datetime);
+                    $items[$i]->published_n_days_ago = Services::Date()->differenceDays(date('Y-m-d'), $items[$i]->published_ccyymmdd);
                     $items[$i]->published_ccyymmdd = str_replace('-', '', $items[$i]->published_ccyymmdd);
-                    $items[$i]->published_pretty_date = Service::Date()->prettydate($items[$i]->start_publishing_datetime);
+                    $items[$i]->published_pretty_date = Services::Date()->prettydate($items[$i]->start_publishing_datetime);
                 } else {
                     $items[$i]->published_n_days_ago = '';
                     $items[$i]->published_ccyymmdd = '';
@@ -611,7 +611,7 @@ class DisplayModel extends Model
         //        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
 
         /**
-        $date = Service::Date();
+        $date = Services::Date();
         $now = $date->toSql();
         $nullDate = $db->getNullDate();
         $query->where('(m.start_publishing_datetime = '.$db->q($nullDate).' OR m.start_publishing_datetime <= '.$db->q($now).')');
@@ -976,8 +976,8 @@ class DisplayModel extends Model
 
         } else {
             if ($onlyWhereClause === true) {
-                Service::Message()
-                    ->set(Service::Language()->translate('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                Services::Message()
+                    ->set(Services::Language()->translate('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);
@@ -1016,7 +1016,7 @@ class DisplayModel extends Model
         $this->db->setQuery($this->query->__toString());
 
         if (!$results = $this->db->loadObjectList()) {
-            Service::Message()
+            Services::Message()
                 ->set($this->db->getErrorMsg(), 'error');
             return false;
         }
@@ -1059,7 +1059,7 @@ class DisplayModel extends Model
         $this->db->setQuery($this->query->__toString());
 
         if (!$results = $this->db->loadObjectList()) {
-            Service::Message()
+            Services::Message()
                 ->set($this->db->getErrorMsg(), 'error');
             return false;
         }

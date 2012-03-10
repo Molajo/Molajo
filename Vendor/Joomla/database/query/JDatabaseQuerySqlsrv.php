@@ -1,8 +1,4 @@
 <?php
-namespace Joomla\database\query;
-
-use Joomla\database\JDatabaseQuery;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -88,7 +84,6 @@ class JDatabaseQuerySqlsrv extends JDatabaseQuery
 					{
 						$query .= (string) $this->where;
 					}
-
 				}
 
 				break;

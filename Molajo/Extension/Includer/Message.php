@@ -56,11 +56,11 @@ Class MessageIncluder extends Includer
 
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                Service::Configuration()->get('message_template_view_id'));
+                Services::Configuration()->get('message_template_view_id'));
         }
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                Service::Configuration()->get('message_wrap_view_id'));
+                Services::Configuration()->get('message_wrap_view_id'));
         }
 
         return true;

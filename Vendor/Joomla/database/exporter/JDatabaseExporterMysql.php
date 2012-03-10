@@ -1,9 +1,4 @@
 <?php
-namespace Joomla\database\database;
-use Joomla\object\JObject;
-use Joomla\database\JDatabaseException;
-use Joomla\database\database\JDatabaseMySql;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -21,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Database
  * @since       11.1
  */
-class JDatabaseExporterMySql
+class JDatabaseExporterMysql extends JDatabaseExporter
 {
 	/**
 	 * An array of cached data.
@@ -34,7 +29,7 @@ class JDatabaseExporterMySql
 	/**
 	 * The database connector to use for exporting structure and/or data.
 	 *
-	 * @var    JDatabaseMySql
+	 * @var    JDatabaseDriverMysql
 	 * @since  11.1
 	 */
 	protected $db = null;
@@ -117,7 +112,7 @@ class JDatabaseExporterMySql
 	/**
 	 * Set the output option for the exporter to XML format.
 	 *
-	 * @return  JDatabaseExporterMySql  Method supports chaining.
+	 * @return  JDatabaseExporterMySQL  Method supports chaining.
 	 *
 	 * @since   11.1
 	 */
@@ -170,7 +165,7 @@ class JDatabaseExporterMySql
 			$table = $this->getGenericTableName($table);
 
 			// Get the details columns information.
-			$fields = $this->db->getTableColumns($table);
+			$fields = $this->db->getTableColumns($table, false);
 			$keys = $this->db->getTableKeys($table);
 
 			$buffer[] = '  <table_structure name="' . $table . '">';
@@ -199,7 +194,7 @@ class JDatabaseExporterMySql
 	/**
 	 * Checks if all data and options are in order prior to exporting.
 	 *
-	 * @return  JDatabaseExporterMySql  Method supports chaining.
+	 * @return  JDatabaseExporterMySQL  Method supports chaining.
 	 *
 	 * @since   11.1
 	 *
@@ -208,7 +203,7 @@ class JDatabaseExporterMySql
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabaseMySql))
+		if (!($this->db instanceof JDatabaseDriverMysql))
 		{
 			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
@@ -247,7 +242,7 @@ class JDatabaseExporterMySql
 	 *
 	 * @param   mixed  $from  The name of a single table, or an array of the table names to export.
 	 *
-	 * @return  JDatabaseExporterMySql  Method supports chaining.
+	 * @return  JDatabaseExporterMysql  Method supports chaining.
 	 *
 	 * @since   11.1
 	 * @throws  Exception if input is not a string or array.
@@ -273,13 +268,13 @@ class JDatabaseExporterMySql
 	/**
 	 * Sets the database connector to use for exporting structure and/or data from MySQL.
 	 *
-	 * @param   JDatabaseMySql  $db  The database connector.
+	 * @param   JDatabaseDriverMysql  $db  The database connector.
 	 *
-	 * @return  JDatabaseExporterMySql  Method supports chaining.
+	 * @return  JDatabaseExporterMysql  Method supports chaining.
 	 *
 	 * @since   11.1
 	 */
-	public function setDbo(JDatabaseMySql $db)
+	public function setDbo(JDatabaseDriverMysql $db)
 	{
 		$this->db = $db;
 
@@ -291,7 +286,7 @@ class JDatabaseExporterMySql
 	 *
 	 * @param   boolean  $setting  True to export the structure, false to not.
 	 *
-	 * @return  JDatabaseExporterMySql  Method supports chaining.
+	 * @return  JDatabaseExporterMysql  Method supports chaining.
 	 *
 	 * @since   11.1
 	 */

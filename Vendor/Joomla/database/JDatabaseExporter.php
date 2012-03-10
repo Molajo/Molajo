@@ -1,6 +1,4 @@
 <?php
-namespace Joomla\database;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -12,13 +10,13 @@ namespace Joomla\database;
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Exception class definition for the Database subpackage.
+ * Joomla Platform Database Exporter Class
  *
  * @package     Joomla.Platform
  * @subpackage  Database
- * @since       11.1
- * @deprecated  12.3 Use semantic exceptions instead
+ * @since       12.1
  */
-class JDatabaseException extends Exception
+abstract class JDatabaseExporter
 {
+
 }

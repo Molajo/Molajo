@@ -1,7 +1,6 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Model
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -73,8 +72,8 @@ class LoginModel extends DisplayModel
     public static function getLanguageList()
     {
         $languages = array();
-        $languages = LanguageService::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
-        array_unshift($languages, MolajoHTML::_('select.option', '', Service::Language()->translate('JDEFAULT')));
+        $languages = LanguageServices::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
+        array_unshift($languages, MolajoHTML::_('select.option', '', Services::Language()->translate('JDEFAULT')));
         return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
     }
 

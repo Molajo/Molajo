@@ -1,8 +1,10 @@
 <?php
 namespace Joomla\database;
+
 use Joomla\object\JObject;
 use Joomla\filesystem\FilesystemHelper;
 use Joomla\filesystem\File;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem

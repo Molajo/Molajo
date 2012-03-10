@@ -88,7 +88,7 @@ ClassFieldCheckedOutTime extends MolajoField
             if ($item->checked_out_time == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->checked_out_time, Service::Language()->translate('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->checked_out_time, Services::Language()->translate('DATE_FORMAT_LC4'));
             }
 
             return $render;

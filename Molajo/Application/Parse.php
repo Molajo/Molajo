@@ -142,7 +142,7 @@ Class Parse
             $formatXML = MOLAJO_APPLICATIONS . '/Configuration/renderers-page.xml';
         }
 
-        if (Service::File()->exists($formatXML)) {
+        if (Services::File()->exists($formatXML)) {
         } else {
             //error
             return false;
@@ -176,7 +176,7 @@ Class Parse
         }
 
         /** Before Event */
-        // Service::Dispatcher()->notify('onBeforeRender');
+        // Services::Dispatcher()->notify('onBeforeRender');
 
         $this->final = false;
         $body = $this->_renderLoop();
@@ -190,7 +190,7 @@ Class Parse
             $formatXML = MOLAJO_APPLICATIONS . '/Configuration/renderers-final.xml';
         }
 
-        if (Service::File()->exists($formatXML)) {
+        if (Services::File()->exists($formatXML)) {
         } else {
             //error
             return false;
@@ -200,7 +200,7 @@ Class Parse
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
         foreach ($sequence->renderer as $next) {
             if ($next == 'message') {
-                $messages = Service::Message()->get();
+                $messages = Services::Message()->get();
                 if (count($messages) == 0) {
                 } else {
                     $this->sequence[] = (string)$next;
@@ -226,10 +226,10 @@ Class Parse
         /**
          *  Set the Response Body
          */
-        Service::Respond()->setContent($body);
+        Services::Respond()->setContent($body);
 
         /** after rendering */
-        //        Service::Dispatcher()->notify('onAfterRender');
+        //        Services::Dispatcher()->notify('onAfterRender');
 
         return;
     }

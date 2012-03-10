@@ -11,15 +11,15 @@ defined('MOLAJO') or die;
 /**
  * Folder
  *
- * Service::Folder()->exists
- * Service::Folder()->getName
- * Service::Folder()->create
- * Service::Folder()->delete
- * Service::Folder()->copy
- * Service::Folder()->move
- * Service::Folder()->files
- * Service::Folder()->folders
- * Service::Folder()->listFolderTree
+ * Services::Folder()->exists
+ * Services::Folder()->getName
+ * Services::Folder()->create
+ * Services::Folder()->delete
+ * Services::Folder()->copy
+ * Services::Folder()->move
+ * Services::Folder()->files
+ * Services::Folder()->folders
+ * Services::Folder()->listFolderTree
  *
  * @package     Molajo
  * @subpackage  Services

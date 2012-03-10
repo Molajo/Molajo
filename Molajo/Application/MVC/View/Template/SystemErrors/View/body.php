@@ -8,7 +8,7 @@
 defined('MOLAJO') or die; ?>
                     <li><?php echo '<strong>'.$this->row->code.' '.$this->row->title.':</strong> '.$this->row->content_text; ?>
 <?php
-if (Service::Configuration()->get('debug', 0) == 1) {
+if (Services::Configuration()->get('debug', 0) == 1) {
     if (trim($this->row->debug_location) == '') {
     } else {
         echo 'Location: '.$this->row->debug_location.'<br />';

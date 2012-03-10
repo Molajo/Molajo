@@ -86,7 +86,7 @@ Class SecurityService
     {
         $config = HTMLPurifier_Config::createDefault();
 
-        if ((int)Service::Configuration()->get('html5', 1) == 1) {
+        if ((int)Services::Configuration()->get('html5', 1) == 1) {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             //not supported $config->set('HTML.Doctype', 'HTML5');
         } else {
@@ -95,7 +95,7 @@ Class SecurityService
         $config->set('URI.Host', MOLAJO_BASE_URL);
 
         /** Custom Filters */
-        $files = Service::Folder()->files(MOLAJO_APPLICATIONS . '/filters', '\.php$', false, false);
+        $files = Services::Folder()->files(MOLAJO_APPLICATIONS . '/filters', '\.php$', false, false);
         foreach ($files as $file) {
             $class = 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Filter';
             $config->set('Filter.Custom', array(new $class()));
@@ -608,7 +608,7 @@ Class SecurityService
      */
     public function escape_url($url)
     {
-        if (Service::Configuration()->get('unicode_slugs') == 1) {
+        if (Services::Configuration()->get('unicode_slugs') == 1) {
             return FilterOutput::stringURLUnicodeSlug($url);
         } else {
             return FilterOutput::stringURLSafe($url);

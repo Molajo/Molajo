@@ -128,7 +128,7 @@ ClassFieldPublishDown extends MolajoField
             if ($item->stop_publishing_datetime == 0) {
                 $render['print_value'] = '-';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->stop_publishing_datetime, Service::Language()->translate('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->stop_publishing_datetime, Services::Language()->translate('DATE_FORMAT_LC4'));
             }
 
             return $render;

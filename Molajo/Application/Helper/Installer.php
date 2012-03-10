@@ -28,7 +28,7 @@ abstract class InstallerHelper
          */
         public static function parseManifestXML($path)
         {
-            if (Service::Folder()->exists($path)) {
+            if (Services::Folder()->exists($path)) {
             } else {
                 return false;
             }
@@ -65,7 +65,7 @@ abstract class InstallerHelper
           */
          public static function downloadPackage($url, $target = false)
          {
-             $config = Service::Configuration();
+             $config = Services::Configuration();
 
              // Capture PHP errors
              $php_errormsg = 'Error Unknown';
@@ -81,7 +81,7 @@ abstract class InstallerHelper
              $inputHandle = @ fopen($url, "r");
              $error = strstr($php_errormsg, 'failed to open stream:');
              if (!$inputHandle) {
-                 MolajoError::raiseWarning(42, Service::Language()->sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
+                 MolajoError::raiseWarning(42, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
                  return false;
              }
 
@@ -110,13 +110,13 @@ abstract class InstallerHelper
              {
                  $contents .= fread($inputHandle, 4096);
                  if ($contents === false) {
-                     MolajoError::raiseWarning(44, Service::Language()->sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
+                     MolajoError::raiseWarning(44, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
                      return false;
                  }
              }
 
              // Write buffer to file
-             Service::File()->write($target, $contents);
+             Services::File()->write($target, $contents);
 
              // Close file pointer resource
              fclose($inputHandle);
@@ -174,10 +174,10 @@ abstract class InstallerHelper
                 * List all the items in the installation directory.  If there is only one, and
                 * it is a folder, then we will set that folder to be the installation folder.
                 */
-             $dirList = array_merge(Service::Folder()->files($extractdir, ''), Service::Folder()->folders($extractdir, ''));
+             $dirList = array_merge(Services::Folder()->files($extractdir, ''), Services::Folder()->folders($extractdir, ''));
 
              if (count($dirList) == 1) {
-                 if (Service::Folder()->exists($extractdir . '/' . $dirList[0])) {
+                 if (Services::Folder()->exists($extractdir . '/' . $dirList[0])) {
                      $extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
                  }
              }
@@ -213,10 +213,10 @@ abstract class InstallerHelper
          public static function detectType($p_dir)
          {
              // Search the install dir for an XML file
-             $files = Service::Folder()->files($p_dir, '\.xml$', 1, true);
+             $files = Services::Folder()->files($p_dir, '\.xml$', 1, true);
 
              if (!count($files)) {
-                 MolajoError::raiseWarning(1, Service::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+                 MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
                  return false;
              }
 
@@ -239,7 +239,7 @@ abstract class InstallerHelper
                  return $type;
              }
 
-             MolajoError::raiseWarning(1, Service::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+             MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
              // Free up memory.
              unset($xml);
              return false;
@@ -275,21 +275,21 @@ abstract class InstallerHelper
           */
          public static function cleanupInstall($package, $resultdir)
          {
-             $config = Service::Configuration();
+             $config = Services::Configuration();
 
              // Does the unpacked extension directory exist?
              if (is_dir($resultdir)) {
-                 Service::Folder()->delete($resultdir);
+                 Services::Folder()->delete($resultdir);
              }
 
              // Is the package file a valid file?
              if (is_file($package)) {
-                 Service::File()->delete($package);
+                 Services::File()->delete($package);
              }
              elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package)))
              {
                  // It might also be just a base filename
-                 Service::File()->delete(JPath::clean($config->get('temp_path') . '/' . $package));
+                 Services::File()->delete(JPath::clean($config->get('temp_path') . '/' . $package));
              }
          }
 
@@ -305,6 +305,6 @@ abstract class InstallerHelper
           */
          public static function splitSql($sql)
          {
-             return Service::DB()->splitSql($sql);
+             return Services::DB()->splitSql($sql);
          }
 }

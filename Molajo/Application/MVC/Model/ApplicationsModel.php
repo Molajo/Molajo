@@ -7,8 +7,6 @@
  */
 namespace Molajo\Application\MVC\Model;
 
-use Molajo\Application\MVC\Model\DisplayModel;
-
 defined('MOLAJO') or die;
 
 /**
@@ -33,7 +31,6 @@ Class ApplicationsModel extends DisplayModel
         $this->name = get_class($this);
         $this->table_name = '#__applications';
         $this->primary_key = 'id';
-
         return parent::__construct($id);
     }
 }

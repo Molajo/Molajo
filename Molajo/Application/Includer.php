@@ -714,19 +714,19 @@ class Includer
      */
     protected function _loadViewMedia()
     {
-        $priority = Service::Configuration()->get('media_priority_other_extension', 400);
+        $priority = Services::Configuration()->get('media_priority_other_extension', 400);
 
         $file_path = $this->get('template_view_path');
         $url_path = $this->get('template_view_path_url');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         $file_path = $this->get('wrap_view_path');
         $url_path = $this->get('wrap_view_path_url');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
     }
 
     /**
@@ -747,7 +747,7 @@ class Includer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        if (Service::Configuration()->get('debug', 0) == 1) {
+        if (Services::Configuration()->get('debug', 0) == 1) {
             PhpConsole\debug(' ');
             PhpConsole\debug('Includer::_invokeMVC');
             PhpConsole\debug('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
@@ -767,7 +767,7 @@ class Includer
         if ($this->parameters->get('html_display_filter', true) == false) {
             return $results;
         } else {
-            return Service::Security()->filter_html($results);
+            return Services::Security()->filter_html($results);
         }
     }
 

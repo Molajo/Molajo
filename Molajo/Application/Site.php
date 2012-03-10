@@ -99,18 +99,18 @@ Class Site
 
         $sv = Molajo::Services()->startServices();
 
-        if (Service::Configuration()->get('debug', 0) == 1) {
+        if (Services::Configuration()->get('debug', 0) == 1) {
             PhpConsole\debug('Application::initialize Start Services');
         }
 
         /** offline */
-        if (Service::Configuration()->get('offline', 0) == 1) {
+        if (Services::Configuration()->get('offline', 0) == 1) {
             $this->_error(503);
         }
 
         /** verify application secure access configuration */
-        if (Service::Configuration()->get('force_ssl') >= 1) {
-            if ((Service::Request()->isSecure() === true)) {
+        if (Services::Configuration()->get('force_ssl') >= 1) {
+            if ((Services::Request()->isSecure() === true)) {
             } else {
 
                 $redirectTo = (string)'https' .
@@ -118,18 +118,18 @@ Class Site
                     MOLAJO_APPLICATION_URL_PATH .
                     '/' . MOLAJO_PAGE_REQUEST;
 
-                Service::Response()
+                Services::Response()
                     ->setStatusCode(301)
                     ->isRedirect($redirectTo);
             }
         }
 
         /** establish the session */
-        //Service::Session()->create(
-        //        Service::Session()->getHash(get_class($this))
+        //Services::Session()->create(
+        //        Services::Session()->getHash(get_class($this))
         //  );
-        if (Service::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('Application::initialize Service::Session()');
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            PhpConsole\debug('Application::initialize Services::Session()');
         }
 
         /** return to Molajo::Site */
@@ -167,7 +167,7 @@ Class Site
         }
 
         /** is site authorised for this Application? */
-        $authorise = Service::Access()
+        $authorise = Services::Access()
             ->authoriseSiteApplication();
         if ($authorise === false) {
             $message = '304: ' . MOLAJO_BASE_URL;
@@ -190,7 +190,7 @@ Class Site
         $results = Molajo::Application()->process();
 
         /** Application Complete */
-        if (Service::Configuration()->get('debug', 0) == 1) {
+        if (Services::Configuration()->get('debug', 0) == 1) {
             PhpConsole\debug('MolajoSite::load End');
         }
 
@@ -527,37 +527,37 @@ Class Site
 
         if (defined('SITE_NAME')) {
         } else {
-            define('SITE_NAME', Service::Configuration()->get('site_name', SITE_ID));
+            define('SITE_NAME', Services::Configuration()->get('site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
-            define('SITE_CACHE_FOLDER', Service::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache'));
+            define('SITE_CACHE_FOLDER', Services::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache'));
         }
 
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
-            define('SITE_LOGS_FOLDER', Service::Configuration()->get('logs_path', SITE_FOLDER_PATH . '/logs'));
+            define('SITE_LOGS_FOLDER', Services::Configuration()->get('logs_path', SITE_FOLDER_PATH . '/logs'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
-            define('SITE_MEDIA_FOLDER', Service::Configuration()->get('media_path', SITE_FOLDER_PATH . '/media'));
+            define('SITE_MEDIA_FOLDER', Services::Configuration()->get('media_path', SITE_FOLDER_PATH . '/media'));
         }
 
         if (defined('SITE_MEDIA_URL')) {
         } else {
-            define('SITE_MEDIA_URL', MOLAJO_BASE_URL . Service::Configuration()->get('media_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media'));
+            define('SITE_MEDIA_URL', MOLAJO_BASE_URL . Services::Configuration()->get('media_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
-            define('SITE_TEMP_FOLDER', Service::Configuration()->get('temp_path', SITE_FOLDER_PATH . '/temp'));
+            define('SITE_TEMP_FOLDER', Services::Configuration()->get('temp_path', SITE_FOLDER_PATH . '/temp'));
         }
         if (defined('SITE_TEMP_URL')) {
         } else {
-            define('SITE_TEMP_URL', MOLAJO_BASE_URL . Service::Configuration()->get('temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
+            define('SITE_TEMP_URL', MOLAJO_BASE_URL . Services::Configuration()->get('temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
         }
         return;
     }

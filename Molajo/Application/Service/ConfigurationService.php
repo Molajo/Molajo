@@ -1,23 +1,23 @@
 <?php
 /**
- * @package	 Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package	 	Molajo
+ * @copyright	Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 use Joomla\registry\Registry;
+use Molajo\Application\MVC\Model\ApplicationsModel;
 
 defined('MOLAJO') or die;
 
 /**
  * Configuration
  *
- * @package	 Molajo
+ * @package	 	Molajo
  * @subpackage  Service
- * @since	   1.0
+ * @since	   	1.0
  */
 Class ConfigurationService
-
 {
 	/**
 	 * Static instance
@@ -73,7 +73,6 @@ Class ConfigurationService
 	 * __construct
 	 *
 	 * @return  object
-	 * @throws  RuntimeException
 	 * @since   1.0
 	 */
 	protected function __construct()
@@ -131,7 +130,7 @@ Class ConfigurationService
 	 * Retrieves a parameter value from the site/application configuration file
 	 *
 	 * Example usage:
-	 * $row->title = Service::Configuration()->get('site_title', 'Molajo');
+	 * $row->title = Services::Configuration()->get('site_title', 'Molajo');
 	 *
 	 * @param  string  $key
 	 * @param  string  $default
@@ -150,7 +149,7 @@ Class ConfigurationService
 	 * Sets a value in the Site/Application Configuration
 	 *
 	 * Example usage:
-	 * Service::Configuration()->set('sef', 1);
+	 * Services::Configuration()->set('sef', 1);
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value
@@ -171,7 +170,7 @@ Class ConfigurationService
 	 * @param string $configuration_file optional
 	 *
 	 * @return object
-	 * @throws RuntimeException
+	 * @throws Exception
 	 * @since  1.0
 	 */
 	protected function getSite($configuration_file = null)
@@ -184,13 +183,13 @@ Class ConfigurationService
 		if (file_exists($configuration_file)) {
 			require_once $configuration_file;
 		} else {
-			throw new Exception('Fatal error - Application-Site Configuration File does not exist');
+			throw new Exception('Fatal error - Application-Site Configuration File does not exist', 100);
 		}
 
 		if (class_exists($configuration_class)) {
 			$site = new $configuration_class();
 		} else {
-			throw new Exception('Fatal error - Configuration Class does not exist');
+			throw new Exception('Fatal error - Configuration Class does not exist', 100);
 		}
 
 		return $site;
@@ -220,12 +219,11 @@ Class ConfigurationService
 
 		} else {
 
-			$class = 'Molajo\\Application\\MVC\\Model\\ApplicationsModel';
-			$m = new $class();
-			var_dump($m);
-			die;
+			$m = new ApplicationsModel();
+
 			$m->query->where($m->db->qn('name') .
 				' = ' . $m->db->q(MOLAJO_APPLICATION));
+
 			$result = $m->loadObject();
 
 			$row->id = $result->id;
@@ -246,4 +244,3 @@ Class ConfigurationService
 		return $row;
 	}
 }
-

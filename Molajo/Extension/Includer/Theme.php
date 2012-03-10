@@ -65,7 +65,7 @@ Class ThemeIncluder extends Includer
     /**
      * _loadMetadata
      *
-     * Loads Metadata values into Service::Document Metadata array
+     * Loads Metadata values into Services::Document Metadata array
      *
      * @return  null
      * @since   1.0
@@ -74,31 +74,31 @@ Class ThemeIncluder extends Includer
     {
         if (Molajo::Request()->get('status_error') == true) {
 
-            Service::Document()->set_metadata('title',
-                Service::Language()->translate('ERROR_FOUND'));
+            Services::Document()->set_metadata('title',
+                Services::Language()->translate('ERROR_FOUND'));
 
-            Service::Document()->set_metadata('description', '');
-            Service::Document()->set_metadata('keywords', '');
-            Service::Document()->set_metadata('robots', '');
-            Service::Document()->set_metadata('author', '');
-            Service::Document()->set_metadata('content_rights', '');
+            Services::Document()->set_metadata('description', '');
+            Services::Document()->set_metadata('keywords', '');
+            Services::Document()->set_metadata('robots', '');
+            Services::Document()->set_metadata('author', '');
+            Services::Document()->set_metadata('content_rights', '');
 
         } else {
 
-            Service::Document()->set_metadata('title',
+            Services::Document()->set_metadata('title',
                 Molajo::Request()->get('metadata_title'));
-            Service::Document()->set_metadata('description',
+            Services::Document()->set_metadata('description',
                 Molajo::Request()->get('metadata_description'));
-            Service::Document()->set_metadata('keywords',
+            Services::Document()->set_metadata('keywords',
                 Molajo::Request()->get('metadata_keywords'));
-            Service::Document()->set_metadata('robots',
+            Services::Document()->set_metadata('robots',
                 Molajo::Request()->get('metadata_robots'));
-            Service::Document()->set_metadata('author',
+            Services::Document()->set_metadata('author',
                 Molajo::Request()->get('metadata_author'));
-            Service::Document()->set_metadata('content_rights',
+            Services::Document()->set_metadata('content_rights',
                 Molajo::Request()->get('metadata_content_rights'));
 
-            Service::Document()->set_last_modified(
+            Services::Document()->set_last_modified(
                 Molajo::Request()->get('source_last_modified'));
         }
     }
@@ -136,17 +136,17 @@ Class ThemeIncluder extends Includer
     {
         /**  Site */
         $this->_loadMediaPlus('',
-            Service::Configuration()->get('media_priority_site', 100));
+            Services::Configuration()->get('media_priority_site', 100));
 
         /** Application */
         $this->_loadMediaPlus('/application' . MOLAJO_APPLICATION,
-            Service::Configuration()->get('media_priority_application', 200));
+            Services::Configuration()->get('media_priority_application', 200));
 
         /** User */
         $this->_loadMediaPlus('/user' .
-                Service::User()
+                Services::User()
                     ->get('id'),
-            Service::Configuration()->get('media_priority_user', 300));
+            Services::Configuration()->get('media_priority_user', 300));
 
         /** Theme Helper Load Media */
         $helperClass = 'Molajo' .
@@ -166,24 +166,24 @@ Class ThemeIncluder extends Includer
 
         /** Theme */
         $this->_loadMediaPlus('',
-            Service::Configuration()->get('media_priority_site', 100));
+            Services::Configuration()->get('media_priority_site', 100));
 
-        $priority = Service::Configuration()->get('media_priority_theme', 600);
+        $priority = Services::Configuration()->get('media_priority_theme', 600);
         $file_path = MOLAJO_EXTENSIONS_THEMES . '/' .
             Molajo::Request()->get('theme_name');
         $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' .
             Molajo::Request()->get('theme_name');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Page */
-        $priority = Service::Configuration()->get('media_priority_theme', 600);
+        $priority = Services::Configuration()->get('media_priority_theme', 600);
         $file_path = Molajo::Request()->get('page_view_path');
         $url_path = Molajo::Request()->get('page_view_path_url');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         return;
     }
@@ -201,30 +201,30 @@ Class ThemeIncluder extends Includer
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . $plus;
         $url_path = SITE_MEDIA_URL . '/' . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, false);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         return;
     }

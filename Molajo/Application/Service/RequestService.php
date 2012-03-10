@@ -95,11 +95,11 @@ Class RequestService extends Request
 
     public function setSessionStorageData()
     {
-        $save_path = Service::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache');
+        $save_path = Services::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache');
         $options = array();
-        $options['cookie_lifetime'] = Service::Configuration()->get('lifetime', 15);
-        $options['cookie_domain'] = $cookie_domain = Service::Configuration()->get('cookie_domain', '');
-        $options['cookie_path'] = $cookie_path = Service::Configuration()->get('cookie_path', '');
+        $options['cookie_lifetime'] = Services::Configuration()->get('lifetime', 15);
+        $options['cookie_domain'] = $cookie_domain = Services::Configuration()->get('cookie_domain', '');
+        $options['cookie_path'] = $cookie_path = Services::Configuration()->get('cookie_path', '');
 
         $sessionStorage = new NativeFileSessionStorage ($save_path, $options);
         return $sessionStorage;

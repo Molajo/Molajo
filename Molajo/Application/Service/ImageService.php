@@ -166,10 +166,10 @@ Class ImageService
             return $this->fileNameNew;
         }
 
-        $db = Service::DB();
+        $db = Services::DB();
         $query = $db->getQuery(true);
 
-        $date = Service::Date()
+        $date = Services::Date()
             ->format('Y-m-d-H-i-s');
 
         $now = $date->toSql();
@@ -196,17 +196,17 @@ Class ImageService
         }
 
         /** retrieve image folder for original images */
-        $images = Service::Configuration()->get('media_path', 'media/images');
+        $images = Services::Configuration()->get('media_path', 'media/images');
 
         /** folders */
-        if (Service::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
+        if (Services::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            Service::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
+            Services::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** make certain original image exists */
         $this->fileNameOriginal = SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
-        if (Service::File()->exists($this->fileNameOriginal)) {
+        if (Services::File()->exists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
             return false;
@@ -221,17 +221,17 @@ Class ImageService
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = Service::Configuration()->get('thumb_folder', '/media/images/thumbs');
+        $images = Services::Configuration()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
-        if (Service::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
+        if (Services::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            Service::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
+            Services::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** if resized image already exists, return it */
         $this->fileNameNew = SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
-        if (Service::File()->exists($this->fileNameNew)) {
+        if (Services::File()->exists($this->fileNameNew)) {
             return true;
         }
 
@@ -247,15 +247,15 @@ Class ImageService
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 1) {
-            $dimensions = Service::Configuration()->get('image_xsmall', 50);
+            $dimensions = Services::Configuration()->get('image_xsmall', 50);
         } else if ($this->size == 2) {
-            $dimensions = Service::Configuration()->get('image_small', 75);
+            $dimensions = Services::Configuration()->get('image_small', 75);
         } else if ($this->size == 3) {
-            $dimensions = Service::Configuration()->get('image_medium', 150);
+            $dimensions = Services::Configuration()->get('image_medium', 150);
         } else if ($this->size == 4) {
-            $dimensions = Service::Configuration()->get('image_large', 300);
+            $dimensions = Services::Configuration()->get('image_large', 300);
         } else if ($this->size == 5) {
-            $dimensions = Service::Configuration()->get('image_xlarge', 500);
+            $dimensions = Services::Configuration()->get('image_xlarge', 500);
         } else {
             $dimensions = 100;
         }

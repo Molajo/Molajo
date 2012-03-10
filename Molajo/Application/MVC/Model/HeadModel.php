@@ -1,7 +1,6 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Model
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -49,7 +48,7 @@ Class HeadModel extends Model
         /** get metadata (part used in base) */
         if ($defer == 1) {
         } else {
-            $metadata = Service::Document()->get_metadata();
+            $metadata = Services::Document()->get_metadata();
 
             if (count($metadata) > 0) {
                 $row = new \stdClass();
@@ -57,23 +56,23 @@ Class HeadModel extends Model
 
                 $title = $metadata['standard']['title'];
                 if (trim($title) == '') {
-                    $title = Service::Configuration()->get('metadata_title', 'Molajo');
+                    $title = Services::Configuration()->get('metadata_title', 'Molajo');
                 }
-                $row->title = Service::Security()->escape_text($title);
+                $row->title = Services::Security()->escape_text($title);
 
-                $mimetype = Service::Document()->get_mime_encoding();
+                $mimetype = Services::Document()->get_mime_encoding();
                 if (trim($mimetype) == '') {
                     $mimetype = 'text/html';
                 }
-                $row->mimetype = Service::Security()->escape_text($mimetype);
+                $row->mimetype = Services::Security()->escape_text($mimetype);
 
                 $row->base = Molajo::Request()->get('url_base');
 
                 $last_modified = Molajo::Request()->get('source_last_modified');
                 if (trim($last_modified) == '') {
-                    $last_modified = $this->now;
+                    $last_modified = Services::Date()->getDate()->toSql();
                 }
-                $row->last_modified = Service::Security()->escape_text($last_modified);
+                $row->last_modified = Services::Security()->escape_text($last_modified);
 
                 $this->query_results[] = $row;
             }
@@ -91,8 +90,8 @@ Class HeadModel extends Model
                         } else {
                             $row = new \stdClass();
                             $row->type = 'metadata';
-                            $row->name = Service::Security()->escape_text($name);
-                            $row->content = Service::Security()->escape_text($content);
+                            $row->name = Services::Security()->escape_text($name);
+                            $row->content = Services::Security()->escape_text($content);
                             $this->query_results[] = $row;
                         }
         //				}
@@ -112,7 +111,7 @@ Class HeadModel extends Model
             $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
             $this->query_results[] = $row;
 
-            $list = Service::Document()->get_links();
+            $list = Services::Document()->get_links();
 
             if (count($list) > 0) {
                 foreach ($list as $item) {
@@ -120,10 +119,10 @@ Class HeadModel extends Model
 
                     $row->type = 'links';
                     $row->url = $item['url'];
-                    $row->relation = Service::Security()->escape_text(
+                    $row->relation = Services::Security()->escape_text(
                         $item['relation']
                     );
-                    $row->relation_type = Service::Security()->escape_text(
+                    $row->relation_type = Services::Security()->escape_text(
                         $item['relation_type']
                     );
 
@@ -138,7 +137,7 @@ Class HeadModel extends Model
                             $split = explode(',',$pair);
                             $row->attributes .= ' ' . $split[0]
                                 . '="'
-                                . Service::Security()->escape_text($split[1])
+                                . Services::Security()->escape_text($split[1])
                                 . '"';
                         }
                     }
@@ -150,7 +149,7 @@ Class HeadModel extends Model
         /** type: css */
         if ($defer == 1) {
         } else {
-            $list = Service::Document()->get_css();
+            $list = Services::Document()->get_css();
 
             if (count($list) > 0) {
                 foreach ($list as $item) {
@@ -168,7 +167,7 @@ Class HeadModel extends Model
             }
 
             /** type: css_declarations */
-            $list = Service::Document()->get_css_declarations();
+            $list = Services::Document()->get_css_declarations();
 
             foreach ($list as $item) {
                 $row = new \stdClass();
@@ -182,7 +181,7 @@ Class HeadModel extends Model
         }
 
         /** type: js */
-        $list = Service::Document()->get_js($defer);
+        $list = Services::Document()->get_js($defer);
 
         foreach ($list as $item) {
             $row = new \stdClass();
@@ -198,7 +197,7 @@ Class HeadModel extends Model
         }
 
         /** type: js_declarations */
-        $list = Service::Document()->get_js_declarations($defer);
+        $list = Services::Document()->get_js_declarations($defer);
 
         foreach ($list as $item) {
             $row = new \stdClass();

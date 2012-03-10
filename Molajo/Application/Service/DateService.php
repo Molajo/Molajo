@@ -1,10 +1,12 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package	 	Molajo
+ * @copyright	Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
+use Joomla\registry\Registry;
+use Molajo\Application\MVC\Model\ApplicationsModel;
 
 defined('MOLAJO') or die;
 
@@ -66,7 +68,7 @@ Class DateService
      */
     public function getDate($time = 'now', $tzOffset = null)
     {
-        $locale = Service::Language()->get('tag', 'en-GB');
+        $locale = Services::Language()->get('tag', 'en-GB');
 
         $classname = str_replace('-', '_', $locale) . 'Date';
         if (class_exists($classname)) {
@@ -128,10 +130,10 @@ Class DateService
     public function prettydate($source_date)
     {
         /** user time zone */
-        $source_date = Service::Date()->getUTCDate(
+        $source_date = Services::Date()->getUTCDate(
             $source_date, 'system'
         );
-        $current_date = Service::Date()->getUTCDate(
+        $current_date = Services::Date()->getUTCDate(
             date('m/d/Y h:i:s a', time()), 'system'
         );
 
@@ -202,12 +204,12 @@ Class DateService
         }
 
         /** format pretty date */
-        $prettyDate = Service::Date()->prettyDateFormat($years, 'YEAR_SINGULAR', 'YEAR_PLURAL');
-        $prettyDate .= Service::Date()->prettyDateFormat($months, 'MONTH_SINGULAR', 'MONTH_PLURAL');
-        $prettyDate .= Service::Date()->prettyDateFormat($days, 'DAY_SINGULAR', 'DAY_PLURAL');
-        $prettyDate .= Service::Date()->prettyDateFormat($hours, 'HOUR_SINGULAR', 'HOUR_PLURAL');
-        $prettyDate .= Service::Date()->prettyDateFormat($minutes, 'MINUTE_SINGULAR', 'MINUTE_PLURAL');
-        $prettyDate .= Service::Date()->prettyDateFormat($seconds, 'SECOND_SINGULAR', 'SECOND_PLURAL');
+        $prettyDate = Services::Date()->prettyDateFormat($years, 'YEAR_SINGULAR', 'YEAR_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($months, 'MONTH_SINGULAR', 'MONTH_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($days, 'DAY_SINGULAR', 'DAY_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($hours, 'HOUR_SINGULAR', 'HOUR_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($minutes, 'MINUTE_SINGULAR', 'MINUTE_PLURAL');
+        $prettyDate .= Services::Date()->prettyDateFormat($seconds, 'SECOND_SINGULAR', 'SECOND_PLURAL');
 
         /** remove leading comma */
         return trim(substr($prettyDate, 1, strlen($prettyDate) - 1));
@@ -229,11 +231,11 @@ Class DateService
 
         if ($numeric_value == 1) {
             return ', ' . $numeric_value . ' ' .
-                strtolower(Service::Language()->translate($singular_literal));
+                strtolower(Services::Language()->translate($singular_literal));
         }
 
         return ', ' . $numeric_value . ' ' .
-            strtolower(Service::Language()->translate($plural_literal));
+            strtolower(Services::Language()->translate($plural_literal));
     }
 
     /**
@@ -247,7 +249,7 @@ Class DateService
      * $dateComponents = getdate();
      * $month = $dateComponents['mon'];
      * $year = $dateComponents['year'];
-     * echo Service::Date()->buildCalendar ($month,$year,$dateArray);
+     * echo Services::Date()->buildCalendar ($month,$year,$dateArray);
      */
 //todo: Amy - redo to generate a set of dates, combine with other data, pass to a view for rendering
 
@@ -312,8 +314,8 @@ Class DateService
 //todo: amy fix user
 
         $server_or_user_UTC = 'SERVER_UTC';
-        $config = Service::Configuration();
-        $user = Service::User();
+        $config = Services::Configuration();
+        $user = Services::User();
 
         // If a known filter is given use it.
         switch (strtoupper((string)$server_or_user_UTC))

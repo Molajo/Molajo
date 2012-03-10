@@ -68,7 +68,7 @@ class Application
     public function process()
     {
         Molajo::Request()->process();
-        if (Service::Configuration()->get('debug', 0) == 1) {
+        if (Services::Configuration()->get('debug', 0) == 1) {
             PhpConsole\debug('Application::process Molajo::Request()->process()');
         }
 
@@ -91,15 +91,15 @@ class Application
 
         if (Molajo::Request()->get('mvc_controller') == 'display') {
             $content = Molajo::Parse();
-            if (Service::Configuration()->get('debug', 0) == 1) {
+            if (Services::Configuration()->get('debug', 0) == 1) {
                 PhpConsole\debug('Application::process Molajo::Parse() completed');
             }
 
             /** response */
-            Service::Response()->setContent($content);
-            Service::Response()->setStatusCode(200);
-            Service::Response()->prepare(Service::Request()->request);
-            Service::Response()->send();
+            Services::Response()->setContent($content);
+            Services::Response()->setStatusCode(200);
+            Services::Response()->prepare(Services::Request()->request);
+            Services::Response()->send();
 
         } else {
 
@@ -109,8 +109,8 @@ class Application
             //$this->_processTask();
         }
 
-        if (Service::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('Application::process Service::Response()->respond() completed');
+        if (Services::Configuration()->get('debug', 0) == 1) {
+            PhpConsole\debug('Application::process Services::Response()->respond() completed');
         }
         return;
     }

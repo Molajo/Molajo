@@ -75,9 +75,9 @@ Class ResponseService extends Response
      */
     public function isRedirect($location = null)
     {
-        if (Service::Configuration()->get('sef', 1) == 1) {
+        if (Services::Configuration()->get('sef', 1) == 1) {
 
-            if (Service::Configuration()->get('sef_rewrite', 0) == 0) {
+            if (Services::Configuration()->get('sef_rewrite', 0) == 0) {
                 $location = MOLAJO_BASE_URL
                     . MOLAJO_APPLICATION_URL_PATH
                     . 'index.php/' . $location;
@@ -87,11 +87,11 @@ Class ResponseService extends Response
                     . $location;
             }
 
-            if ((int)Service::Configuration()->get('sef_suffix', 0) == 1) {
+            if ((int)Services::Configuration()->get('sef_suffix', 0) == 1) {
                 $location .= '.html';
             }
         }
-        if (Service::Configuration()->get('debug', 0) == 1) {
+        if (Services::Configuration()->get('debug', 0) == 1) {
             PhpConsole\debug('Response::isRedirect redirect to: ' . $location);
         }
 

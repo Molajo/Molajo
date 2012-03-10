@@ -1,130 +1,141 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package	 	Molajo
+ * @copyright 	Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
 use Joomla\registry\Registry;
-use Molajo\Application\MVC\Model\ItemModel;
 
 defined('MOLAJO') or die;
 
 /**
  * Load
  *
- * @package     Molajo
+ * @package	 Molajo
  * @subpackage  Model
- * @since       1.0
+ * @since	   1.0
  */
-Class LoadModel extends ItemModel
+Class LoadModel extends Model
 {
-    /**
-     * load
-     *
-     * Method to load a specific item from a specific model.
-     * Creates and runs the database query, allows for additional data,
-     * and returns integrated data as the item requested
-     *
-     * @return  object
-     * @since   1.0
-     */
-    public function load()
-    {
-		echo 'here in LoadModel Model';
-        $this->_setLoadQuery();
+	/**
+	 * __construct
+	 *
+	 * Constructor.
+	 *
+	 * @param  $id
+	 * @since  1.0
+	 */
+	public function __construct($id = null)
+	{
+		return parent::__construct($id);
+	}
 
-        $this->_runLoadQuery();
-        if (empty($this->query_results)) {
-            return false;
-        }
+	/**
+	 * load
+	 *
+	 * Method to load a specific item from a specific model.
+	 * Creates and runs the database query, allows for additional data,
+	 * and returns integrated data as the item requested
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	public function load()
+	{
+		$this->_setLoadQuery();
 
-        $this->_getLoadAdditionalData();
+		$this->_runLoadQuery();
+		if (empty($this->query_results)) {
+			return false;
+		}
 
-        return $this->query_results;
-    }
+		$this->_getLoadAdditionalData();
 
-    /**
-     * _setLoadQuery
-     *
-     * Retrieve all elements of the specific table for a specific item
-     *
-     * @return  object
-     * @since   1.0
-     */
-    protected function _setLoadQuery()
-    {
-        $this->query = $this->db->getQuery(true);
+		return $this->query_results;
+	}
 
-        $this->query->select(' * ');
-        $this->query->from($this->db->qn($this->table_name));
-        $this->query->where($this->primary_key
-            . ' = '
-            . $this->db->q($this->id));
+	/**
+	 * _setLoadQuery
+	 *
+	 * Retrieve all elements of the specific table for a specific item
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	protected function _setLoadQuery()
+	{
+		$this->query = $this->db->getQuery(true);
 
-        $this->db->setQuery($this->query->__toString());
-    }
+		$this->query->select(' * ');
+		$this->query->from($this->db->qn($this->table_name));
+		$this->query->where($this->primary_key
+			. ' = '
+			. $this->db->q($this->id));
 
-    /**
-     * _runLoadQuery
-     *
-     * Execute query and returns an associative array of data elements
-     *
-     * @return  array
-     * @since   1.0
-     */
-    protected function _runLoadQuery()
-    {
-        $this->query_results = $this->db->loadAssoc();
+		$this->db->setQuery($this->query->__toString());
+	}
 
-        if (empty($this->query_results)) {
-            return false;
-        }
+	/**
+	 * _runLoadQuery
+	 *
+	 * Execute query and returns an associative array of data elements
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	protected function _runLoadQuery()
+	{
+		$this->query_results = $this->db->loadAssoc();
 
-        if (key_exists('custom_fields', $this->query_results)
-            && is_array($this->query_results['custom_fields'])
-        ) {
-            $registry = new Registry();
-            $registry->loadString($this->query_results['custom_fields']);
-            $this->query_results['custom_fields'] = (string)$registry;
-        }
+		if (empty($this->query_results)) {
+			return false;
+		}
 
-        if (key_exists('parameters', $this->query_results)
-            && is_array($this->query_results['parameters'])
-        ) {
-            $registry = new Registry();
-            $registry->loadString($this->query_results['parameters']);
-            $this->query_results['parameters'] = (string)$registry;
-        }
+		if (key_exists('custom_fields', $this->query_results)
+			&& is_array($this->query_results['custom_fields'])
+		) {
+			$registry = new Registry();
+			$registry->loadString($this->query_results['custom_fields']);
+			$this->query_results['custom_fields'] = (string)$registry;
+		}
 
-        if (key_exists('metadata', $this->query_results)
-            && is_array($this->query_results['metadata'])
-        ) {
-            $registry = new Registry();
-            $registry->loadString($this->query_results['metadata']);
-            $this->query_results['metadata'] = (string)$registry;
-        }
+		if (key_exists('parameters', $this->query_results)
+			&& is_array($this->query_results['parameters'])
+		) {
+			$registry = new Registry();
+			$registry->loadString($this->query_results['parameters']);
+			$this->query_results['parameters'] = (string)$registry;
+		}
 
-        if ($this->db->getErrorNum()) {
-			throw new \Exception('Application Instantiation Error '.$this->db->getErrorNum(), 500);
-        }
+		if (key_exists('metadata', $this->query_results)
+			&& is_array($this->query_results['metadata'])
+		) {
+			$registry = new Registry();
+			$registry->loadString($this->query_results['metadata']);
+			$this->query_results['metadata'] = (string)$registry;
+		}
 
-        return $this->query_results;
-    }
+		if ($this->db->getErrorNum()) {
+			throw new \Exception('Application Instantiation Error ' . $this->db->getErrorNum(), 500);
+		}
 
-    /**
-     * _getAdditionalData
-     *
-     * Method to append additional data elements needed to the standard
-     * array of elements provided by the data source
-     *
-     * @return array
-     * @since  1.0
-     */
-    protected function _getLoadAdditionalData()
-    {
-        return $this->query_results;
-    }
+		return $this->query_results;
+	}
+
+	/**
+	 * _getAdditionalData
+	 *
+	 * Method to append additional data elements needed to the standard
+	 * array of elements provided by the data source
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected function _getLoadAdditionalData()
+	{
+		return $this->query_results;
+	}
 }
 

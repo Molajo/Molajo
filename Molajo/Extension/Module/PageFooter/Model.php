@@ -47,27 +47,27 @@ Class ModulePagefooterModel extends DisplayModel
     {
         $this->items = array();
 
-        $date = Service::Date()
+        $date = Services::Date()
             ->getDate()
             ->format('Y-m-d-H-i-s');
 
         $row = new \stdClass();
 
-        $row->current_year = Service::Date()
+        $row->current_year = Services::Date()
             ->getDate()
             ->format('Y');
 
-        $row->site_name = Service::Configuration()
+        $row->site_name = Services::Configuration()
             ->get('site_name', 'Molajo');
 
         $row->link = 'http://molajo.org/';
 
         $row->linked_text = 'Molajo' . '&reg;';
 
-        $row->remaining_text = ' ' . Service::Language()
+        $row->remaining_text = ' ' . Services::Language()
             ->_('MOLAJO_IS_FREE_SOFTWARE');
 
-        $row->version = Service::Language()
+        $row->version = Services::Language()
             ->_(MOLAJOVERSION);
 
         /** save recordset */

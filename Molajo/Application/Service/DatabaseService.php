@@ -6,7 +6,6 @@
  */
 namespace Molajo\Application\Service;
 use Joomla\registry\Registry;
-use Joomla\database\JDatabase;
 
 defined('MOLAJO') or die;
 
@@ -109,9 +108,11 @@ Class DatabaseService
 
         /** connect */
         $connectDBClass = $site->$namespace;
+
 //        $this->db = JDatabase::getInstance($options);
         $this->db = $connectDBClass::getInstance($options);
-
+		var_dump($this->db);
+		die;
         if ($this->db == null
            //|| $this->db->getErrorNum() > 0
         ) {

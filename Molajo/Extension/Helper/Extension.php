@@ -93,7 +93,7 @@ abstract class ExtensionHelper
         );
 
         /** Assets Join and View Access Check */
-        Service::Access()->setQueryViewAccess(
+        Services::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',
@@ -276,12 +276,12 @@ abstract class ExtensionHelper
     {
         $path .= '/language';
 
-        if (Service::Folder()->exists($path)) {
+        if (Services::Folder()->exists($path)) {
         } else {
             return false;
         }
 
-        Service::Language()
-            ->load($path, Service::Language()->get('tag'), false, false);
+        Services::Language()
+            ->load($path, Services::Language()->get('tag'), false, false);
     }
 }

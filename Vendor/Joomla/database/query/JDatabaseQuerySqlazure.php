@@ -1,9 +1,4 @@
 <?php
-namespace Joomla\database\query;
-
-use Joomla\database\JDatabaseQuery;
-use Joomla\database\query\JDatabaseQuerySqlsrv;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

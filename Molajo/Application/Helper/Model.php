@@ -81,7 +81,7 @@ class ModelHelper
         $prefix = 'a',
         $db)
     {
-        $now = Service::Date()->getDate()->toSql();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->where(
@@ -208,7 +208,7 @@ class ModelHelper
         $tasksArray = explode(',', $tasks);
 
         /** User Permissions */
-        $permissions = Service::Access()
+        $permissions = Services::Access()
             ->authoriseTaskList($tasksArray, $item->asset_id);
 
         /** Append onto row */
@@ -401,19 +401,19 @@ class ModelHelper
 
         $newField = $fieldname . '_ccyymmdd';
         $item->$newField =
-            Service::Date()
+            Services::Date()
                 ->convertCCYYMMDD($item->$fieldname);
         $item->$newField =
             str_replace('-', '', $item->$newField);
 
         $newField = $fieldname . '_n_days_ago';
         $item->$newField =
-            Service::Date()
+            Services::Date()
                 ->differenceDays(date('Y-m-d'), $item->$fieldname);
 
         $newField = $fieldname . '_pretty_date';
         $item->$newField =
-            Service::Date()
+            Services::Date()
                 ->prettydate($item->$fieldname);
 
         return $item;
@@ -570,7 +570,7 @@ class ModelHelper
         }
 
         if ((int)$viewaccess == 1) {
-            Service::Access()->setQueryViewAccess(
+            Services::Access()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => 'a',
@@ -597,7 +597,7 @@ class ModelHelper
      */
     public function getLanguageList()
     {
-        return Service::Language()->createLanguageList();
+        return Services::Language()->createLanguageList();
     }
 
     /**
@@ -612,37 +612,37 @@ class ModelHelper
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_ARCHIVED;
-        $obj->value = Service::Language()->translate('STATUS_ARCHIVED');
+        $obj->value = Services::Language()->translate('STATUS_ARCHIVED');
         $rowset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_PUBLISHED;
-        $obj->value = Service::Language()->translate('STATUS_PUBLISHED');
+        $obj->value = Services::Language()->translate('STATUS_PUBLISHED');
         $rowset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_UNPUBLISHED;
-        $obj->value = Service::Language()->translate('STATUS_UNPUBLISHED');
+        $obj->value = Services::Language()->translate('STATUS_UNPUBLISHED');
         $rowset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_TRASHED;
-        $obj->value = Service::Language()->translate('STATUS_TRASHED');
+        $obj->value = Services::Language()->translate('STATUS_TRASHED');
         $rowset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_SPAMMED;
-        $obj->value = Service::Language()->translate('STATUS_SPAMMED');
+        $obj->value = Services::Language()->translate('STATUS_SPAMMED');
         $rowset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_DRAFT;
-        $obj->value = Service::Language()->translate('STATUS_DRAFT');
+        $obj->value = Services::Language()->translate('STATUS_DRAFT');
         $rowset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_VERSION;
-        $obj->value = Service::Language()->translate('STATUS_VERSION');
+        $obj->value = Services::Language()->translate('STATUS_VERSION');
         $rowset[] = $obj;
 
         return $rowset;

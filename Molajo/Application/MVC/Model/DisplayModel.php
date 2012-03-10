@@ -1,15 +1,14 @@
 <?php
 /**
- * @package     Molajo
+ * @package	 Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
-use Molajo\Application\MVC\Model\LoadModel;
 use Molajo\Extension\Helper\ExtensionHelper;
 use Molajo\Application\Request;
-use Molajo\Application\Service\AccessService;
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -22,7 +21,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class DisplayModel extends LoadModel
+class DisplayModel extends ItemModel
 {
     /**
      * __construct
@@ -53,7 +52,9 @@ class DisplayModel extends LoadModel
         $extensionName = ExtensionHelper::formatNameForClass(
             $this->get('extension_instance_name')
         );
-        $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
+
+
+        $helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . 'ModelHelper';
         if (class_exists($helperClass)) {
         } else {
             $helperClass = 'ModelHelper';
@@ -122,7 +123,7 @@ class DisplayModel extends LoadModel
         if (isset($parameterArray['disable_view_access_check'])
             && $parameterArray['disable_view_access_check'] == 0
         ) {
-            Service::Access()->setQueryViewAccess(
+            Services::Access()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => $this->primary_prefix,
@@ -269,7 +270,8 @@ class DisplayModel extends LoadModel
         $extensionName = ExtensionHelper::formatNameForClass(
             $this->get('extension_instance_name')
         );
-        $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
+
+		$helperClass = 'Molajo\\Extension\\Component\\'. $extensionName . 'ModelHelper';
         if (class_exists($helperClass)) {
         } else {
             $helperClass = 'ModelHelper';
@@ -355,8 +357,8 @@ class DisplayModel extends LoadModel
 
         /** pagination object **/
         $limit = (int)$this->getState('list.limit') - (int)$this->getState('list.links');
-        $page = new JPagination($this->getTotal(), $this->getStart(), $limit);
-
+//        $page = new JPagination($this->getTotal(), $this->getStart(), $limit);
+$page = '';
         /** load cache **/
         $this->cache[$store] = $page;
 

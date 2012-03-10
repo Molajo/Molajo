@@ -109,7 +109,7 @@ class Controller
         || $this->get('task_plugin_type') == ''
         ) {
         } else {
-        $this->dispatcher = Service::Dispatcher();
+        $this->dispatcher = Services::Dispatcher();
         MolajoPluginHelper::importPlugin($this->get('task_plugin_type'));
         }
          */
@@ -193,7 +193,7 @@ class Controller
         $results = $this->model->checkin($this->get('id'));
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(Service::Language()->translate('MOLAJO_CHECK_IN_FAILED'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_CHECK_IN_FAILED'));
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -221,11 +221,11 @@ class Controller
         }
 
         if ($this->model->checked_out
-            == Service::User()->get('id')) {
+            == Services::User()->get('id')) {
 
         } else {
             $this->redirectClass->setRedirectMessage(
-                Service::Language()->translate('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')
+                Services::Language()->translate('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')
                     . ' '
                     . $this->getTask()
             );
@@ -258,7 +258,7 @@ class Controller
         $results = $this->model->checkout($this->get('id'));
         if ($results === false) {
             $this->redirectClass->setRedirectMessage
-            (Service::Language()->translate('MOLAJO_ERROR_CHECKOUT_FAILED'));
+            (Services::Language()->translate('MOLAJO_ERROR_CHECKOUT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -298,7 +298,7 @@ class Controller
         /** error processing **/
         if ($versionKey === false) {
             $this->redirectClass->setRedirectMessage(
-                Service::Language()->translate('MOLAJO_ERROR_VERSION_SAVE_FAILED')
+                Services::Language()->translate('MOLAJO_ERROR_VERSION_SAVE_FAILED')
             );
             $this->redirectClass->setRedirectMessageType('error');
             return false;
@@ -307,7 +307,7 @@ class Controller
         /** Trigger_Event: onContentCreateVersion
         $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->get('id'), $versionKey));
         if (count($results) && in_array(false, $results, true)) {
-        $this->redirectClass->setRedirectMessage(Service::Language()->translate('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
+        $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
         $this->redirectClass->setRedirectMessageType('error');
         return false;
         }
@@ -354,7 +354,7 @@ class Controller
         /** version delete failed **/
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(
-                Service::Language()->translate('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' .
+                Services::Language()->translate('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' .
                     $this->model->getError()
             );
             $this->redirectClass->setRedirectMessageType('warning');

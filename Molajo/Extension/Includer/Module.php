@@ -37,7 +37,7 @@ abstract class ModuleHelper
         $results = parent::_getExtension();
 
         if ($results === false) {
-            if (Service::Configuration()->get('debug', 0) == 1) {
+            if (Services::Configuration()->get('debug', 0) == 1) {
                 PhpConsole\debug('ModuleIncluder::_getExtension');
                 PhpConsole\debug('Module not found: '.$this->get('extension_instance_name'));
             }
@@ -99,7 +99,7 @@ abstract class ModuleHelper
         parent::_loadMedia(
             MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
             SITE_MEDIA_URL . '/' . $this->get('extension_instance_name'),
-            Service::Configuration()->get('media_priority_module', 400)
+            Services::Configuration()->get('media_priority_module', 400)
         );
     }
 }

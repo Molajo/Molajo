@@ -77,7 +77,7 @@ Class UserService
     protected function __construct($id = 0)
     {
         $this->id = (int) $id;
-//        $this->storage = Service::Request()->getSession();
+//        $this->storage = Services::Request()->getSession();
         $this->storage = new Registry;
         if ((int) $id == 0) {
             return $this->_loadGuest();
@@ -185,7 +185,7 @@ Class UserService
 
         $parameters = new Registry;
         $parameters->loadString(
-            Service::Configuration()->get('guest_parameters', '{}')
+            Services::Configuration()->get('guest_parameters', '{}')
         );
 
         $this->set('applications', array());

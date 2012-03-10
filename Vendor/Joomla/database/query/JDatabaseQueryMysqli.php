@@ -1,7 +1,4 @@
 <?php
-namespace Joomla\database\query;
-use Joomla\database\query\JDatabaseQueryMySql;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -19,6 +16,6 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Database
  * @since       11.1
  */
-class JDatabaseQueryMySqli extends JDatabaseQueryMySql
+class JDatabaseQueryMysqli extends JDatabaseQueryMysql
 {
 }

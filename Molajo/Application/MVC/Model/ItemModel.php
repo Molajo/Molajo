@@ -1,11 +1,10 @@
 <?php
 /**
- * @package     Molajo
+ * @package	 Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
-use Molajo\Application\MVC\Model\Model;
 
 defined('MOLAJO') or die;
 
@@ -16,8 +15,21 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-Class ItemModel extends Model
+class ItemModel extends LoadModel
 {
+	/**
+	 * __construct
+	 *
+	 * Constructor.
+	 *
+	 * @param  $id
+	 * @since  1.0
+	 */
+	public function __construct($id = null)
+	{
+		return parent::__construct($id);
+	}
+
     /**
      * store
      *

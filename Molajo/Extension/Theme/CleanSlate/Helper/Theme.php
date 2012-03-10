@@ -29,6 +29,6 @@ Class ThemeCleanSlateHelper extends ThemeHelper
      */
     public function hello()
     {
-        return 'Hello '.Service::User()->get('name').'!';
+        return 'Hello '.Services::User()->get('name').'!';
     }
 }

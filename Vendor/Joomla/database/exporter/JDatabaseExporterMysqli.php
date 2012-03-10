@@ -1,9 +1,4 @@
 <?php
-namespace Joomla\database\database;
-
-use Joomla\database\database\JDatabaseMySqli;
-use Joomla\database\database\JDatabaseExporterMySql;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -14,8 +9,6 @@ use Joomla\database\database\JDatabaseExporterMySql;
 
 defined('JPATH_PLATFORM') or die;
 
-//require_once __DIR__ . '/mysqlexporter.php';
-
 /**
  * MySQL export driver.
  *
@@ -23,12 +16,12 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Database
  * @since       11.1
  */
-class JDatabaseExporterMySqli extends JDatabaseExporterMySql
+class JDatabaseExporterMysqli extends JDatabaseExporterMysql
 {
 	/**
 	 * Checks if all data and options are in order prior to exporting.
 	 *
-	 * @return  JDatabaseExporterMySqli  Method supports chaining.
+	 * @return  JDatabaseExporterMysqli  Method supports chaining.
 	 *
 	 * @since   11.1
 	 * @throws  Exception if an error is encountered.
@@ -36,7 +29,7 @@ class JDatabaseExporterMySqli extends JDatabaseExporterMySql
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabaseMySqli))
+		if (!($this->db instanceof JDatabaseDriverMysqli))
 		{
 			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
@@ -53,13 +46,13 @@ class JDatabaseExporterMySqli extends JDatabaseExporterMySql
 	/**
 	 * Sets the database connector to use for exporting structure and/or data from MySQL.
 	 *
-	 * @param   JDatabaseMySqli  $db  The database connector.
+	 * @param   JDatabaseDriverMysqli  $db  The database connector.
 	 *
-	 * @return  JDatabaseExporterMySqli  Method supports chaining.
+	 * @return  JDatabaseExporterMysqli  Method supports chaining.
 	 *
 	 * @since   11.1
 	 */
-	public function setDbo(JDatabaseMySqli $db)
+	public function setDbo(JDatabaseDriverMysqli $db)
 	{
 		$this->db = $db;
 

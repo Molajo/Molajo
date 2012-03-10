@@ -181,7 +181,7 @@ class ComponentIncluder extends Includer
                 $name . 'Controller'
             );
         }
-        $files = Service::Folder()->files($this->get('extension_path') . '/controllers', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile(
@@ -192,7 +192,7 @@ class ComponentIncluder extends Includer
         }
 
         /** Helpers */
-        $files = Service::Folder()->files($this->get('extension_path') . '/helpers', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/helpers/' . $file,
@@ -202,7 +202,7 @@ class ComponentIncluder extends Includer
         }
 
         /** Models */
-        $files = Service::Folder()->files($this->get('extension_path') . '/models', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/models/' . $file,
@@ -212,7 +212,7 @@ class ComponentIncluder extends Includer
         }
 
         /** Tables */
-        $files = Service::Folder()->files($this->get('extension_path') . '/tables', '\.php$', false, false);
+        $files = Services::Folder()->files($this->get('extension_path') . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/tables/' . $file,
@@ -222,10 +222,10 @@ class ComponentIncluder extends Includer
         }
 
         /** Views */
-        $folders = Service::Folder()->folders($this->get('extension_path') . '/views', false, false);
+        $folders = Services::Folder()->folders($this->get('extension_path') . '/views', false, false);
         if ($folders) {
             foreach ($folders as $folder) {
-                $files = Service::Folder()->files($this->get('extension_path') . '/views/' . $folder, false, false);
+                $files = Services::Folder()->files($this->get('extension_path') . '/views/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
                         $load->requireClassFile($this->get('extension_path') . '/views/' . $folder . '/' . $file,
@@ -248,19 +248,19 @@ class ComponentIncluder extends Includer
     {
         /**  Primary Category */
         $this->_loadMediaPlus('/category' . $this->get('category_id'),
-            Service::Configuration()->get('media_priority_primary_category', 700));
+            Services::Configuration()->get('media_priority_primary_category', 700));
 
         /** Menu Item */
         $this->_loadMediaPlus('/menuitem' . $this->get('menu_item_id'),
-            Service::Configuration()->get('media_priority_menu_item', 800));
+            Services::Configuration()->get('media_priority_menu_item', 800));
 
         /** Source */
         $this->_loadMediaPlus('/source' . $this->get('id'),
-            Service::Configuration()->get('media_priority_source_data', 900));
+            Services::Configuration()->get('media_priority_source_data', 900));
 
         /** Component */
         $this->_loadMediaPlus('/component' . $this->get('extension_instance_name'),
-            Service::Configuration()->get('media_priority_source_data', 900));
+            Services::Configuration()->get('media_priority_source_data', 900));
 
         return true;
     }
@@ -278,9 +278,9 @@ class ComponentIncluder extends Includer
         /** Theme */
         $file_path = MOLAJO_EXTENSIONS_THEMES . '/' . $this->get('theme_name');
         $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->get('theme_name');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -288,9 +288,9 @@ class ComponentIncluder extends Includer
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $url_path = SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -298,9 +298,9 @@ class ComponentIncluder extends Includer
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, false);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -308,9 +308,9 @@ class ComponentIncluder extends Includer
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -318,9 +318,9 @@ class ComponentIncluder extends Includer
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

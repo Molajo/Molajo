@@ -62,10 +62,10 @@ Class Request
      * 6. Hard-coded defaults
      *
      * Interface options:
-     * Service::Parameters()->get('key', 'default')
-     * Service::Parameters()->set('key, 'value')
-     * Service::Parameters()->get('all')
-     * Service::Parameters()->get('keys')
+     * Services::Parameters()->get('key', 'default')
+     * Services::Parameters()->set('key, 'value')
+     * Services::Parameters()->get('all')
+     * Services::Parameters()->get('keys')
      *
      * @var    object
      * @since  1.0
@@ -136,12 +136,12 @@ Class Request
         }
 
         /** duplicate content: URLs without the .html */
-        if ((int)Service::Configuration()->get('sef_suffix', 1) == 1
+        if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
             && substr($path, -11) == '/index.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 11));
         }
-        if ((int)Service::Configuration()->get('sef_suffix', 1) == 1
+        if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
             && substr($path, -5) == '.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 5));
@@ -164,7 +164,7 @@ Class Request
             && (int)$this->get('request_asset_id', 0) == 0
         ) {
             $this->set('request_asset_id',
-                Service::Configuration()->get('home_asset_id', 0));
+                Services::Configuration()->get('home_asset_id', 0));
             $this->set('request_url_home', true);
         }
 
@@ -278,7 +278,7 @@ Class Request
             $temp->loadArray($this->parameters);
             $this->parameters = $temp;
 
-            if (Service::Configuration()->get('sef', 1) == 0) {
+            if (Services::Configuration()->get('sef', 1) == 0) {
                 $link = $this->page_request->get('request_url_sef');
             } else {
                 $link = $this->page_request->get('request_url');
@@ -311,9 +311,9 @@ Class Request
     protected function _getRequest()
     {
 
-// echo 'Ajax ' . Service::Request()->request->isXmlHttpRequest().'<br />';
+// echo 'Ajax ' . Services::Request()->request->isXmlHttpRequest().'<br />';
 
-        $queryString = Service::Request()->request->getQueryString();
+        $queryString = Services::Request()->request->getQueryString();
         $pair = explode('&', $queryString);
         foreach ($pair as $item) {
             $kv = explode('=', $item);
@@ -408,7 +408,7 @@ Class Request
         }
 
         /** 403: _authoriseTask handles redirecting to error page */
-        if (in_array($row->view_group_id, Service::User()->get('view_groups'))) {
+        if (in_array($row->view_group_id, Services::User()->get('view_groups'))) {
             $this->set('status_authorised', true);
         } else {
             return $this->set('status_authorised', false);
@@ -422,7 +422,7 @@ Class Request
 
         /** home */
         if ((int)$this->get('request_asset_id', 0)
-            == Service::Configuration()->get('home_asset_id', null)
+            == Services::Configuration()->get('home_asset_id', null)
         ) {
             $this->set('request_url_home', true);
         } else {
@@ -438,7 +438,7 @@ Class Request
         $this->set('mvc_id', (int)$row->source_id);
 
         $this->set('mvc_controller',
-            Service::Access()
+            Services::Access()
                 ->getTaskController($this->get('mvc_task'))
         );
 
@@ -498,7 +498,7 @@ Class Request
 
         /** verify other tasks */
         $this->set('status_authorised',
-            Service::Access()
+            Services::Access()
                 ->authoriseTask(
                 $this->get('mvc_task'),
                 $this->get('request_asset_id')
@@ -541,13 +541,13 @@ Class Request
         }
 
         /** must be logged on */
-        if (Service::Configuration()->get('logon_requirement', 0) > 0
-            && Service::User()->get('guest', true) === true
+        if (Services::Configuration()->get('logon_requirement', 0) > 0
+            && Services::User()->get('guest', true) === true
             && $this->get('request_asset_id')
-                <> Service::Configuration()->get('logon_requirement', 0)
+                <> Services::Configuration()->get('logon_requirement', 0)
         ) {
             Molajo::Responder()
-                ->redirect(Service::Configuration()
+                ->redirect(Services::Configuration()
                 ->get('logon_requirement', 0), 303);
         }
 
@@ -671,9 +671,9 @@ Class Request
         //        if (count($row) == 0) {
         //            /** 500: Source Content not found */
         //            $this->set('status_found', false);
-        //            Service::Message()
+        //            Services::Message()
         //                ->set(
-        //                $message = Service::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
+        //                $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
         //                $type = MOLAJO_MESSAGE_TYPE_ERROR,
         //                $code = 500,
         //                $debug_location = 'MolajoRequest::_getSource',
@@ -760,9 +760,9 @@ Class Request
         if (count($row) == 0) {
             /** 500: Category not found */
             $this->set('status_found', false);
-            Service::Message()
+            Services::Message()
                 ->set(
-                $message = Service::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
+                $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getPrimaryCategory',
@@ -820,9 +820,9 @@ Class Request
         ) {
 
             /** 500: Extension not found */
-            Service::Message()
+            Services::Message()
                 ->set(
-                $message = Service::Language()->translate('ERROR_EXTENSION_NOT_FOUND'),
+                $message = Services::Language()->translate('ERROR_EXTENSION_NOT_FOUND'),
                 $type = MOLAJO_MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::_getExtension',
@@ -1020,32 +1020,32 @@ Class Request
         /** metadata  */
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_title', ''));
         }
         if ($this->get('metadata_description', '') == '') {
             $this->set('metadata_description',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_description', ''));
         }
         if ($this->get('metadata_keywords', '') == '') {
             $this->set('metadata_keywords',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_keywords', ''));
         }
         if ($this->get('metadata_author', '') == '') {
             $this->set('metadata_author',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_author', ''));
         }
         if ($this->get('metadata_content_rights', '') == '') {
             $this->set('metadata_content_rights',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_content_rights', ''));
         }
         if ($this->get('metadata_robots', '') == '') {
             $this->set('metadata_robots',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_robots', ''));
         }
 
@@ -1069,7 +1069,7 @@ Class Request
     {
         $parameters = new Registry;
         $parameters->loadString(
-            Service::User()
+            Services::User()
                 ->get('parameters')
         );
 
@@ -1095,13 +1095,13 @@ Class Request
     {
         if ($this->get('theme_id', 0) == 0) {
             $this->set('theme_id',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('default_theme_id', ''));
         }
 
         if ($this->get('page_view_id', 0) == 0) {
             $this->set('page_view_id',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('default_page_view_id', ''));
         }
 
@@ -1123,32 +1123,32 @@ Class Request
         /** metadata  */
         if ($this->get('metadata_title', '') == '') {
             $this->set('metadata_title',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_title', ''));
         }
         if ($this->get('metadata_description', '') == '') {
             $this->set('metadata_description',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_description', ''));
         }
         if ($this->get('metadata_keywords', '') == '') {
             $this->set('metadata_keywords',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_keywords', ''));
         }
         if ($this->get('metadata_author', '') == '') {
             $this->set('metadata_author',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_author', ''));
         }
         if ($this->get('metadata_content_rights', '') == '') {
             $this->set('metadata_content_rights',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_content_rights', ''));
         }
         if ($this->get('metadata_robots', '') == '') {
             $this->set('metadata_robots',
-                Service::Configuration()
+                Services::Configuration()
                     ->get('metadata_robots', ''));
         }
         return;
@@ -1319,11 +1319,11 @@ Class Request
 
         /** default error theme and page */
         $this->set('theme_id',
-            Service::Configuration()
+            Services::Configuration()
                 ->get('error_theme_id', 'system')
         );
         $this->set('page_view_id',
-            Service::Configuration()
+            Services::Configuration()
                 ->get('error_page_view_id', 'error')
         );
 
@@ -1345,7 +1345,7 @@ Class Request
                 'true'
             );
 
-            Service::Message()->set($message,
+            Services::Message()->set($message,
                 MOLAJO_MESSAGE_TYPE_ERROR,
                 500
             );
@@ -1369,8 +1369,8 @@ Class Request
             'true'
         );
 
-        Service::Message()->set(
-            Service::Configuration()->get('offline_message',
+        Services::Message()->set(
+            Services::Configuration()->get('offline_message',
                 'This site is not available.<br /> Please check back again soon.'
             ),
             MOLAJO_MESSAGE_TYPE_WARNING,
@@ -1378,12 +1378,12 @@ Class Request
         );
 
         $this->set('theme_id',
-            Service::Configuration()
+            Services::Configuration()
                 ->get('offline_theme_id', 'system')
         );
 
         $this->set('page_view_id',
-            Service::Configuration()
+            Services::Configuration()
                 ->get('offline_page_view_id', 'offline')
         );
 
@@ -1406,8 +1406,8 @@ Class Request
             'true'
         );
 
-        Service::Message()->set(
-            Service::Configuration()->get('error_403_message', 'Not Authorised.'),
+        Services::Message()->set(
+            Services::Configuration()->get('error_403_message', 'Not Authorised.'),
             MOLAJO_MESSAGE_TYPE_ERROR,
             403
         );
@@ -1431,8 +1431,8 @@ Class Request
             'true'
         );
 
-        Service::Message()->set(
-            Service::Configuration()->get('error_404_message', 'Page not found.'),
+        Services::Message()->set(
+            Services::Configuration()->get('error_404_message', 'Page not found.'),
             MOLAJO_MESSAGE_TYPE_ERROR,
             404
         );

@@ -1,6 +1,6 @@
 <?php
-namespace phpConsole;
-use phpConsole\PhpConsoleEvent;
+namespace PhpConsole;
+
 /**
  *
  * @see http://code.google.com/p/php-console
