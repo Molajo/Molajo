@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\database\driver;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -271,7 +273,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 		// Make sure the PDO extension for PHP is installed and enabled.
 		if (!self::isSupported())
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_PDO'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_PDO'));
 		}
 
 		try
@@ -285,7 +287,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 		}
 		catch (PDOException $e)
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_CONNECT_PDO') . ': ' . $e->getMessage());
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_CONNECT_PDO') . ': ' . $e->getMessage());
 		}
 	}
 
@@ -348,7 +350,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 
 		if (!is_object($this->connection))
 		{
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -396,7 +398,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 			$this->errorNum = (int) $this->connection->errorCode();
 			$this->errorMsg = (string) 'SQL: ' . implode(", ", $this->connection->errorInfo());
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		return $this->prepared;

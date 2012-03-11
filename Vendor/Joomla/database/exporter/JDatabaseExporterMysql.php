@@ -1,4 +1,8 @@
 <?php
+namespace Joomla\database\driver;
+
+use Joomla\database\JDatabaseExporter;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

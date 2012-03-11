@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\database\driver;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -94,7 +96,7 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 		// Make sure the MySQLi extension for PHP is installed and enabled.
 		if (!function_exists('mysqli_connect'))
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_MYSQLI'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_MYSQLI'));
 		}
 
 		$this->connection = @mysqli_connect(
@@ -104,7 +106,7 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 		// Attempt to connect to the server.
 		if (!$this->connection)
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_CONNECT_MYSQL'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_CONNECT_MYSQL'));
 		}
 
 		// Set sql_mode to non_strict mode
@@ -256,7 +258,7 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 
 		if (!is_object($this->connection))
 		{
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -288,7 +290,7 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 		{
 			$this->errorNum = (int) mysqli_errno($this->connection);
 			$this->errorMsg = (string) mysqli_error($this->connection) . ' SQL=' . $sql;
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		return $this->cursor;
@@ -315,7 +317,7 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 
 		if (!mysqli_select_db($this->connection, $database))
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT'));
 		}
 
 		return true;

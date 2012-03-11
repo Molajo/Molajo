@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\database\query;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

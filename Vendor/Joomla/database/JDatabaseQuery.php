@@ -736,7 +736,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->getDateFormat();
@@ -804,7 +804,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->escape($text, $extra);
@@ -867,7 +867,7 @@ abstract class JDatabaseQuery
 			{
 				if (is_null($subQueryAlias))
 				{
-					throw new RuntimeException('JLIB_DATABASE_ERROR_NULL_SUBQUERY_ALIAS');
+					throw new \RuntimeException('JLIB_DATABASE_ERROR_NULL_SUBQUERY_ALIAS');
 				}
 
 				$tables = '( ' . (string) $tables . ' ) AS ' . $this->quoteName($subQueryAlias);
@@ -1165,7 +1165,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		$result = $this->db->getNullDate($quoted);
@@ -1248,7 +1248,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->quote(($escape ? $this->db->escape($text) : $text));
@@ -1281,7 +1281,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->quoteName($name, $as);

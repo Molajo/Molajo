@@ -1,6 +1,6 @@
 <?php
 namespace Joomla\database;
-namespace Joomla\filesystem;
+use Joomla\filesystem\Folder;
 
 /**
  * @package     Joomla.Platform
@@ -194,7 +194,8 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 			}
 
 			// Derive the class name from the type.
-			$class = str_ireplace('.php', '', 'JDatabaseDriver' . ucfirst(trim($type)));
+			$class = 'Joomla\\database\\driver\\';
+			$class .= str_ireplace('.php', '', 'JDatabaseDriver' . ucfirst(trim($type)));
 
 			// If the class doesn't exist we have nothing left to do but look at the next type.  We did our best.
 			if (!class_exists($class))
@@ -245,12 +246,13 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		{
 
 			// Derive the class name from the driver.
-			$class = 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
+			$class = 'Joomla\\database\\driver\\';
+			$class .= 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
 
 			// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
 			if (!class_exists($class))
 			{
-				throw new RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+				throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
 			}
 
 			// Create our new JDatabaseDriver connector based on the options given.
@@ -258,9 +260,9 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 			{
 				$instance = new $class($options);
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
-				throw new RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
+				throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
 			}
 
 			// Set the new connector to the global instances based on signature.
@@ -602,13 +604,14 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	public function getExporter()
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseExporter' . ucfirst($this->name);
+		$class = 'Joomla\\database\\exporter\\';
+		$class .= 'JDatabaseExporter' . ucfirst($this->name);
 
 		// Make sure we have an exporter class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
 		}
 
 		$o = new $class;
@@ -628,13 +631,14 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	public function getImporter()
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseImporter' . ucfirst($this->name);
+		$class = 'Joomla\\database\\importer\\';
+		$class .= 'JDatabaseImporter' . ucfirst($this->name);
 
 		// Make sure we have an importer class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
 		}
 
 		$o = new $class;
@@ -658,13 +662,14 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		if ($new)
 		{
 			// Derive the class name from the driver.
-			$class = 'JDatabaseQuery' . ucfirst($this->name);
+			$class = 'Joomla\\database\\query\\';
+			$class .= 'JDatabaseQuery' . ucfirst($this->name);
 
 			// Make sure we have a query class for this driver.
 			if (!class_exists($class))
 			{
 				// If it doesn't exist we are at an impasse so throw an exception.
-				throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
+				throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
 			}
 
 			return new $class($this);
@@ -721,20 +726,6 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	 * @throws  RuntimeException
 	 */
 	abstract public function getTableList();
-
-	/**
-	 * Determine whether or not the database engine supports UTF-8 character encoding.
-	 *
-	 * @return  boolean  True if the database engine supports UTF-8 character encoding.
-	 *
-	 * @since   11.1
-	 * @deprecated 12.3 Use hasUTFSupport() instead
-	 */
-	public function getUTFSupport()
-	{
-		JLog::add('JDatabase::getUTFSupport() is deprecated. Use JDatabase::hasUTFSupport() instead.', JLog::WARNING, 'deprecated');
-		return $this->hasUTFSupport();
-	}
 
 	/**
 	 * Determine whether or not the database engine supports UTF-8 character encoding.

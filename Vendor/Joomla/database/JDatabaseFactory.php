@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package	 Joomla.Platform
  * @subpackage  Database
  *
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license	 GNU General Public License version 2 or later; see LICENSE
  */
 
 defined('JPATH_PLATFORM') or die;
@@ -12,16 +12,16 @@ defined('JPATH_PLATFORM') or die;
 /**
  * Joomla Platform Database Factory class
  *
- * @package     Joomla.Platform
+ * @package	 Joomla.Platform
  * @subpackage  Database
- * @since       12.1
+ * @since	   12.1
  */
 class JDatabaseFactory
 {
 	/**
 	 * Contains the current JDatabaseFactory instance
 	 *
-	 * @var    JDatabaseFactory
+	 * @var	JDatabaseFactory
 	 * @since  12.1
 	 */
 	private static $_instance = null;
@@ -36,7 +36,7 @@ class JDatabaseFactory
 	 * Instances are unique to the given options and new objects are only created when a unique options array is
 	 * passed into the method.  This ensures that we don't end up with unnecessary database connection resources.
 	 *
-	 * @param   string  $name     Name of the database driver you'd like to instantiate
+	 * @param   string  $name	 Name of the database driver you'd like to instantiate
 	 * @param   array   $options  Parameters to be passed to the database driver.
 	 *
 	 * @return  JDatabaseDriver  A database driver object.
@@ -51,12 +51,11 @@ class JDatabaseFactory
 		$options['select'] = (isset($options['select'])) ? $options['select'] : true;
 
 		// Derive the class name from the driver.
-		$class = 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
+		$class = 'Joomla//database//JDatabaseDriver' . ucfirst(strtolower($options['driver']));
 
 		// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
-		if (!class_exists($class))
-		{
-			throw new RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+		if (!class_exists($class)) {
+			throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
 		}
 
 		// Create our new JDatabaseDriver connector based on the options given.
@@ -64,9 +63,9 @@ class JDatabaseFactory
 		{
 			$instance = new $class($options);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
-			throw new RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
+			throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
 		}
 
 		return $instance;
@@ -75,8 +74,8 @@ class JDatabaseFactory
 	/**
 	 * Gets an exporter class object.
 	 *
-	 * @param   string           $name  Name of the driver you want an exporter for.
-	 * @param   JDatabaseDriver  $db    Optional JDatabaseDriver instance
+	 * @param   string		   $name  Name of the driver you want an exporter for.
+	 * @param   JDatabaseDriver  $db	Optional JDatabaseDriver instance
 	 *
 	 * @return  JDatabaseExporter  An exporter object.
 	 *
@@ -89,16 +88,14 @@ class JDatabaseFactory
 		$class = 'JDatabaseExporter' . ucfirst(strtolower($name));
 
 		// Make sure we have an exporter class for this driver.
-		if (!class_exists($class))
-		{
+		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
 		}
 
 		$o = new $class;
 
-		if ($db instanceof JDatabaseDriver)
-		{
+		if ($db instanceof JDatabaseDriver) {
 			$o->setDbo($db);
 		}
 
@@ -108,8 +105,8 @@ class JDatabaseFactory
 	/**
 	 * Gets an importer class object.
 	 *
-	 * @param   string           $name  Name of the driver you want an importer for.
-	 * @param   JDatabaseDriver  $db    Optional JDatabaseDriver instance
+	 * @param   string		   $name  Name of the driver you want an importer for.
+	 * @param   JDatabaseDriver  $db	Optional JDatabaseDriver instance
 	 *
 	 * @return  JDatabaseImporter  An importer object.
 	 *
@@ -122,16 +119,14 @@ class JDatabaseFactory
 		$class = 'JDatabaseImporter' . ucfirst(strtolower($name));
 
 		// Make sure we have an importer class for this driver.
-		if (!class_exists($class))
-		{
+		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
 		}
 
 		$o = new $class;
 
-		if ($db instanceof JDatabaseDriver)
-		{
+		if ($db instanceof JDatabaseDriver) {
 			$o->setDbo($db);
 		}
 
@@ -153,8 +148,8 @@ class JDatabaseFactory
 	/**
 	 * Get the current query object or a new JDatabaseQuery object.
 	 *
-	 * @param   string           $name  Name of the driver you want an importer for.
-	 * @param   JDatabaseDriver  $db    Optional JDatabaseDriver instance
+	 * @param   string		   $name  Name of the driver you want an importer for.
+	 * @param   JDatabaseDriver  $db	Optional JDatabaseDriver instance
 	 *
 	 * @return  JDatabaseQuery  The current query object or a new object extending the JDatabaseQuery class.
 	 *
@@ -167,10 +162,9 @@ class JDatabaseFactory
 		$class = 'JDatabaseQuery' . ucfirst(strtolower($name));
 
 		// Make sure we have a query class for this driver.
-		if (!class_exists($class))
-		{
+		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
 		}
 
 		return new $class($db);
@@ -181,16 +175,21 @@ class JDatabaseFactory
 	 * the table include paths.  To add include paths for searching for JTable
 	 * classes @see JTable::addIncludePath().
 	 *
-	 * @param   string  $type    The type (name) of the JTable class to get an instance of.
+	 * @param   string  $type	The type (name) of the JTable class to get an instance of.
 	 * @param   string  $prefix  An optional prefix for the table class name.
 	 * @param   array   $config  An optional array of configuration values for the JTable object.
 	 *
-	 * @return  mixed    A JTable object if found or boolean false if one could not be found.
+	 * @return  mixed	A JTable object if found or boolean false if one could not be found.
 	 *
 	 * @since   12.1
 	 */
 	public function getTable($type, $prefix = 'JTable', $config = array())
 	{
+		$string = $stuff
+			. $on
+			. $many
+			. $lines;
+
 		return JTable::getInstance($type, $prefix, $config);
 	}
 

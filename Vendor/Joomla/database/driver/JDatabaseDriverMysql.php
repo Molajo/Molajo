@@ -1,4 +1,8 @@
 <?php
+namespace Joomla\database\driver;
+
+use Joomla\database\JDatabaseDriver;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -91,13 +95,13 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		// Make sure the MySQL extension for PHP is installed and enabled.
 		if (!function_exists('mysql_connect'))
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_MYSQL'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_MYSQL'));
 		}
 
 		// Attempt to connect to the server.
 		if (!($this->connection = @ mysql_connect($this->options['host'], $this->options['user'], $this->options['password'], true)))
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_CONNECT_MYSQL'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_CONNECT_MYSQL'));
 		}
 
 		// Set sql_mode to non_strict mode
@@ -422,7 +426,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 		if (!is_resource($this->connection))
 		{
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -455,8 +459,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 			$this->errorNum = (int) mysql_errno($this->connection);
 			$this->errorMsg = (string) mysql_error($this->connection) . ' SQL=' . $sql;
 
-			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		return $this->cursor;
@@ -503,7 +506,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 		if (!mysql_select_db($database, $this->connection))
 		{
-			throw new RuntimeException(JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT'));
+			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT'));
 		}
 
 		return true;

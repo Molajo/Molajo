@@ -1,4 +1,5 @@
 <?php
+namespace Joomla\database\driver;
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
