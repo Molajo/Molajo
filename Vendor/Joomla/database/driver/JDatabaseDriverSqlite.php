@@ -1,5 +1,8 @@
 <?php
 namespace Joomla\database\driver;
+
+use Joomla\database\driver\JDatabaseDriverPdo;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

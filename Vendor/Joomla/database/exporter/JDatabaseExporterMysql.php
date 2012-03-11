@@ -1,7 +1,9 @@
 <?php
 namespace Joomla\database\driver;
 
+use Joomla\object;
 use Joomla\database\JDatabaseExporter;
+use Joomla\database\driver\JDatabaseDriverMysql;
 
 /**
  * @package     Joomla.Platform
@@ -209,13 +211,13 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 		// Check if the db connector has been set.
 		if (!($this->db instanceof JDatabaseDriverMysql))
 		{
-			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
 		if (empty($this->from))
 		{
-			throw new Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
 		return $this;
@@ -263,7 +265,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 		}
 		else
 		{
-			throw new Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
+			throw new \Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
 		}
 
 		return $this;

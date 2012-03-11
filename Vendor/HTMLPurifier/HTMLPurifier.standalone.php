@@ -903,7 +903,7 @@ class HTMLPurifier_Bootstrap
                     // places where we need to error out
                     $reflector = new ReflectionMethod($func[0], $func[1]);
                     if (!$reflector->isStatic()) {
-                        throw new Exception('
+                        throw new \Exception('
                             HTML Purifier autoloader registrar is not compatible
                             with non-static object methods due to PHP Bug #44144;
                             Please do not use HTMLPurifier.autoload.php (or any

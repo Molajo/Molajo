@@ -1,4 +1,8 @@
 <?php
+namespace Joomla\database;
+
+use Joomla\database\JDatabaseDriver;
+
 /**
  * @package	 Joomla.Platform
  * @subpackage  Database
@@ -51,11 +55,11 @@ class JDatabaseFactory
 		$options['select'] = (isset($options['select'])) ? $options['select'] : true;
 
 		// Derive the class name from the driver.
-		$class = 'Joomla//database//JDatabaseDriver' . ucfirst(strtolower($options['driver']));
+		$class = 'Joomla\\database\\driver\\JDatabaseDriver' . ucfirst(strtolower($options['driver']));
 
 		// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
 		if (!class_exists($class)) {
-			throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER: '.$options['driver']);
 		}
 
 		// Create our new JDatabaseDriver connector based on the options given.
@@ -65,7 +69,7 @@ class JDatabaseFactory
 		}
 		catch (\RuntimeException $e)
 		{
-			throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_CONNECT_DATABASE: '.$e->getMessage());
 		}
 
 		return $instance;
@@ -85,12 +89,13 @@ class JDatabaseFactory
 	public function getExporter($name, JDatabaseDriver $db = null)
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseExporter' . ucfirst(strtolower($name));
+		$class = 'Joomla\\database\\exporter\\';
+		$class .= 'JDatabaseExporter' . ucfirst(strtolower($name));
 
 		// Make sure we have an exporter class for this driver.
 		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_MISSING_EXPORTER');
 		}
 
 		$o = new $class;
@@ -116,12 +121,13 @@ class JDatabaseFactory
 	public function getImporter($name, JDatabaseDriver $db = null)
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseImporter' . ucfirst(strtolower($name));
+		$class = 'Joomla\\database\\importer\\';
+		$class .= 'JDatabaseImporter' . ucfirst(strtolower($name));
 
 		// Make sure we have an importer class for this driver.
 		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_MISSING_IMPORTER');
 		}
 
 		$o = new $class;
@@ -159,12 +165,14 @@ class JDatabaseFactory
 	public function getQuery($name, JDatabaseDriver $db = null)
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseQuery' . ucfirst(strtolower($name));
+		// Derive the class name from the driver.
+		$class = 'Joomla\\database\\query\\';
+		$class .= 'JDatabaseQuery' . ucfirst(strtolower($name));
 
 		// Make sure we have a query class for this driver.
 		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_MISSING_QUERY');
 		}
 
 		return new $class($db);
@@ -182,16 +190,12 @@ class JDatabaseFactory
 	 * @return  mixed	A JTable object if found or boolean false if one could not be found.
 	 *
 	 * @since   12.1
-	 */
+
 	public function getTable($type, $prefix = 'JTable', $config = array())
 	{
-		$string = $stuff
-			. $on
-			. $many
-			. $lines;
-
 		return JTable::getInstance($type, $prefix, $config);
 	}
+	 */
 
 	/**
 	 * Gets an instance of a factory object to return on subsequent calls of getInstance.

@@ -86,6 +86,7 @@ $s->registerNamespace('Joomla\\filesystem\support', VENDOR);
 $s->registerNamespace('Joomla\\log', VENDOR);
 $s->registerNamespace('Joomla\\object', VENDOR);
 $s->registerNamespace('Joomla\\registry', VENDOR);
+$s->registerNamespace('Joomla\\registry\\format', VENDOR);
 $s->registerNamespace('Joomla\\string', VENDOR);
 $s->registerNamespace('Joomla\\utilities', VENDOR);
 

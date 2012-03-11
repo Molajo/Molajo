@@ -1,11 +1,6 @@
 <?php
 namespace Joomla\registry;
 
-use Joomla\registry\format\RegistryFormatINI;
-use Joomla\registry\format\RegistryFormatJSON;
-use Joomla\registry\format\RegistryFormatPHP;
-use Joomla\registry\format\RegistryFormatXML;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Registry
@@ -50,17 +45,10 @@ abstract class JRegistryFormat
         // Only instantiate the object if it doesn't already exist.
         if (!isset(self::$instances[$type])) {
             // Only load the file the class does not exist.
-            $class = 'JRegistryFormat' . $type;
+			$class = 'Joomla\\registry\\format\\';
+            $class .= 'JRegistryFormat' . $type;
             if (!class_exists($class)) {
-                $path = dirname(__FILE__) . '/format/' . $type . '.php';
-                if (is_file($path)) {
-                    include_once $path;
-                }
-                else
-                {
-//throw new JException(JText::_('JLIB_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS'), 500, E_ERROR);
-                    throw new Exception('JLIB_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS', 500, E_ERROR);
-                }
+				throw new \Exception('JLIB_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS', 500, E_ERROR);
             }
 
             self::$instances[$type] = new $class;
@@ -92,4 +80,3 @@ abstract class JRegistryFormat
      */
     abstract public function stringToObject($data, $options = null);
 }
-abstract class RegistryFormat extends JRegistryFormat {}

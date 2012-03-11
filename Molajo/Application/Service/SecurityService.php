@@ -262,14 +262,14 @@ Class SecurityService
             if ($test == $field_value) {
                 return $test;
             } else {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
         }
 
         if ($field_value == null
             && $null == 0
         ) {
-            throw new Exception('FILTER_VALUE_REQUIRED');
+            throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
         return $field_value;
@@ -308,21 +308,21 @@ Class SecurityService
 
             if (checkdate((int)$mm, (int)$dd, (int)$ccyy)) {
             } else {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
             $test = $ccyy . '-' . $mm . '-' . $dd;
 
             if ($test == substr($field_value, 0, 10)) {
                 return $field_value;
             } else {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
         }
 
         if ($field_value == null
             && $null == 0
         ) {
-            throw new Exception('FILTER_VALUE_REQUIRED');
+            throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
         return $field_value;
@@ -353,14 +353,14 @@ Class SecurityService
             if ($test == $field_value) {
                 return $test;
             } else {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
         }
 
         if ($field_value == null
             && $null == 0
         ) {
-            throw new Exception('FILTER_VALUE_REQUIRED');
+            throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
         return $field_value;
@@ -391,14 +391,14 @@ Class SecurityService
             if (filter_var($test, FILTER_VALIDATE_EMAIL)) {
                 return $test;
             } else {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
         }
 
         if ($field_value == null
             && $null == 0
         ) {
-            throw new Exception('FILTER_VALUE_REQUIRED');
+            throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
         return $field_value;
@@ -429,14 +429,14 @@ Class SecurityService
             if (filter_var($test, FILTER_VALIDATE_URL)) {
                 return $test;
             } else {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
         }
 
         if ($field_value == null
             && $null == 0
         ) {
-            throw new Exception('FILTER_VALUE_REQUIRED');
+            throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
         return $field_value;
@@ -469,7 +469,7 @@ Class SecurityService
         if ($field_value == null
             && $null == 0
         ) {
-            throw new Exception('FILTER_VALUE_REQUIRED');
+            throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
         return $field_value;
@@ -530,7 +530,7 @@ Class SecurityService
 
         foreach ($headers as $header) {
             if (strpos($content, $header) !== false) {
-                throw new Exception('FILTER_INVALID_VALUE');
+                throw new \Exception('FILTER_INVALID_VALUE');
             }
         }
 

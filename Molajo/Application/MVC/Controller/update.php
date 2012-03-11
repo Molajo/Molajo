@@ -298,7 +298,7 @@ class UpdateController extends Controller
 
         if (method_exists($helperClass, $method)) {
         } else {
-            throw new Exception('VALIDATE_HELPER_FUNCTION_NOT_FOUND');
+            throw new \Exception('VALIDATE_HELPER_FUNCTION_NOT_FOUND');
         }
 
         $h = new $helperClass();
@@ -306,7 +306,7 @@ class UpdateController extends Controller
         $return = $h->$method();
         //get your helper class data back
         if ($return === false) {
-            throw new Exception('VALIDATE_HELPER_FUNCTION');
+            throw new \Exception('VALIDATE_HELPER_FUNCTION');
         }
     }
 
@@ -355,7 +355,7 @@ class UpdateController extends Controller
             }
         }
 
-        throw new Exception('VALIDATE_FOREIGN_KEY');
+        throw new \Exception('VALIDATE_FOREIGN_KEY');
     }
 
     /**

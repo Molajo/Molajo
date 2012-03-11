@@ -182,7 +182,7 @@ class JLoggerFormattedText extends JLogger
 		// Write the new entry to the file.
 		if (!fputs($this->file, $line . "\n"))
 		{
-			throw new LogException;
+			throw new \LogException;
 		}
 	}
 
@@ -253,7 +253,7 @@ class JLoggerFormattedText extends JLogger
 		{
 			if (!fputs($this->file, $head))
 			{
-				throw new LogException;
+				throw new \LogException;
 			}
 		}
 	}

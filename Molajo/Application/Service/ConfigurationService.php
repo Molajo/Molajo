@@ -107,6 +107,9 @@ Class ConfigurationService
 		$this->custom_fields = new Registry;
 		$this->custom_fields->loadString($appConfig->custom_fields);
 
+		$parameters = new Registry;
+		$parameters->loadString($appConfig->parameters);
+
 		// todo: amy check this after the interface is working and not test data
 		$parameters = substr($appConfig->parameters, 1, strlen($appConfig->parameters) - 2);
 		$parameters = substr($parameters, 0, strlen($parameters) - 1);
@@ -115,6 +118,7 @@ Class ConfigurationService
 		foreach ($parmArray as $entry) {
 			$pair = explode(':', $entry);
 			$key = substr(trim($pair[0]), 1, strlen(trim($pair[0])) - 2);
+
 			if (trim($pair[0]) == '') {
 			} else {
 				$value = substr(trim($pair[1]), 1, strlen(trim($pair[1])) - 2);
@@ -183,13 +187,13 @@ Class ConfigurationService
 		if (file_exists($configuration_file)) {
 			require_once $configuration_file;
 		} else {
-			throw new Exception('Fatal error - Application-Site Configuration File does not exist', 100);
+			throw new \Exception('Fatal error - Application-Site Configuration File does not exist', 100);
 		}
 
 		if (class_exists($configuration_class)) {
 			$site = new $configuration_class();
 		} else {
-			throw new Exception('Fatal error - Configuration Class does not exist', 100);
+			throw new \Exception('Fatal error - Configuration Class does not exist', 100);
 		}
 
 		return $site;

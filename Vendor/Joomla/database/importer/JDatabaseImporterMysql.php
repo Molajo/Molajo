@@ -1,4 +1,10 @@
 <?php
+namespace Joomla\database\importer;
+
+use Joomla\object;
+use Joomla\database\JDatabaseImporter;
+use Joomla\database\driver\JDatabaseDriverMysql;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -107,13 +113,13 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 		// Check if the db connector has been set.
 		if (!($this->db instanceof JDatabaseDriverMysql))
 		{
-			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
 		if (empty($this->from))
 		{
-			throw new Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
 		return $this;
@@ -590,7 +596,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 						if (!$this->db->execute())
 						{
 							$this->addLog('Fail: ' . $this->db->getQuery());
-							throw new Exception($this->db->getErrorMsg());
+							throw new \Exception($this->db->getErrorMsg());
 						}
 						else
 						{
@@ -609,7 +615,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 				if (!$this->db->execute())
 				{
 					$this->addLog('Fail: ' . $this->db->getQuery());
-					throw new Exception($this->db->getErrorMsg());
+					throw new \Exception($this->db->getErrorMsg());
 				}
 				else
 				{

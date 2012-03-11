@@ -196,7 +196,7 @@ class PhpConsole {
 
 	protected static function setCookie($name, $value) {
 		if(headers_sent($file, $line)) {
-			throw new Exception('setcookie() failed because haders are sent (' . $file . ':' . $line . '). Try to use ob_start()');
+			throw new \Exception('setcookie() failed because haders are sent (' . $file . ':' . $line . '). Try to use ob_start()');
 		}
 		setcookie($name, $value, null, '/');
 	}

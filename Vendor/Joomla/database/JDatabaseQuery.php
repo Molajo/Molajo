@@ -1,4 +1,10 @@
 <?php
+namespace Joomla\database;
+
+use Joomla\database\query\JDatabaseQueryLimitable;
+use Joomla\database\JDatabaseDriver;
+use Joomla\filesystem\Folder;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

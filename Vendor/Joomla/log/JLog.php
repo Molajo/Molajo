@@ -373,7 +373,7 @@ class JLog
 				}
 				else
 				{
-					throw new LogException(JText::_('Unable to create a JLogger instance: '));
+					throw new \LogException(JText::_('Unable to create a JLogger instance: '));
 				}
 			}
 

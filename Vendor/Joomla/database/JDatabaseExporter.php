@@ -1,4 +1,6 @@
 <?php
+namespace Joomla\database;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

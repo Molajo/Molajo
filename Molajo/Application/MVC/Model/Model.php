@@ -8,9 +8,7 @@
 namespace Molajo\Application\MVC\Model;
 
 use Joomla\registry\Registry;
-use Joomla\database\JDatabase;
-use Joomla\database\database\JDatabaseMySql;
-use Joomla\database\database\JDatabaseMySqli;
+use Joomla\database\JDatabaseFactory;
 use Molajo\Application\Services; //Date, DB, Language, Message
 
 defined('MOLAJO') or die;
@@ -195,6 +193,7 @@ class Model
 		$this->query = $this->db->getQuery(true);
 
 		$this->nullDate = $this->db->getNullDate();
+
 		$this->primary_prefix = 'a';
 	}
 
@@ -296,9 +295,9 @@ class Model
 	 */
 	public function getFieldDatatypes()
 	{
-		echo 'in getFieldDatatypes'.$this->table_name;
 		$fields = array();
 		$fieldDefinitions = $this->getFields();
+
 		if (count($fieldDefinitions) > 0) {
 			foreach ($fieldDefinitions as $fieldDefinition) {
 
@@ -354,11 +353,13 @@ class Model
 	 */
 	public function getFields()
 	{
+
 		if ($this->table_name == '') {
 			return array();
 		}
 
-		$list = $this->db->getTableColumns($this->table_name, false);
+		return $this->db->getTableColumns($this->table_name, false);
+
 	}
 
 	/**
@@ -703,7 +704,7 @@ class Model
 						. $this->db->qn($name));
 			}
 		}
-		echo $this->query->__toString();
+
 		if ($this->query->from == null) {
 			$this->query->from(
 				$this->db->qn($this->table_name)
@@ -711,7 +712,7 @@ class Model
 					. $this->db->qn($this->primary_prefix)
 			);
 		}
-		echo $this->query->__toString();
+
 		$this->db->setQuery($this->query->__toString());
 		/**
 		echo '<pre>';

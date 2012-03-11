@@ -6,6 +6,7 @@
  */
 namespace Molajo\Application\Service;
 use Joomla\registry\Registry;
+use Joomla\database\JDatabaseFactory;
 
 defined('MOLAJO') or die;
 
@@ -68,7 +69,7 @@ Class DatabaseService
      * @throws Exception
      * @since 1.0
      */
-    public function connect($database_class = 'JDatabase',
+    public function connect($database_class = 'JDatabaseFactory',
                             $configuration_file = null)
     {
         if ($configuration_file === null) {
@@ -79,13 +80,13 @@ Class DatabaseService
         if (file_exists($configuration_file)) {
             require_once $configuration_file;
         } else {
-            throw new Exception('Fatal error - Application-Site Configuration File does not exist');
+            throw new \Exception('Fatal error - Application-Site Configuration File does not exist');
         }
 
         if (class_exists($configuration_class)) {
             $site = new $configuration_class();
         } else {
-            throw new Exception('Fatal error - Configuration Class does not exist');
+            throw new \Exception('Fatal error - Configuration Class does not exist');
         }
 
         /** database connection specific elements */
@@ -109,16 +110,13 @@ Class DatabaseService
         /** connect */
         $connectDBClass = $site->$namespace;
 
-//        $this->db = JDatabase::getInstance($options);
-        $this->db = $connectDBClass::getInstance($options);
-		var_dump($this->db);
-		die;
-        if ($this->db == null
-           //|| $this->db->getErrorNum() > 0
-        ) {
-            header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Connection Failed.');
-        }
+		try {
+			$this->db = $connectDBClass::getDriver($site->$database_type, $options);
+
+		} catch (\RuntimeException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+   			jexit('Database Connection Failed.');
+		}
 
         $this->db->debug($site->debug);
 

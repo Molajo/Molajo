@@ -1,6 +1,8 @@
 <?php
 namespace Joomla\database\query;
 
+use Joomla\database\query\JDatabaseQueryMysql;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

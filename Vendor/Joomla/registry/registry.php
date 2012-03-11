@@ -2,7 +2,7 @@
 namespace Joomla\registry;
 
 use Joomla\utilities\ArrayHelper;
-use Joomla\registry\RegistryFormat;
+use Joomla\registry\JRegistryFormat;
 use Joomla\filesystem\File;
 
 /**

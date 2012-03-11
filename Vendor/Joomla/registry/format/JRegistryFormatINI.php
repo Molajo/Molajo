@@ -1,5 +1,8 @@
 <?php
-namespace Joomla\registry;
+namespace Joomla\registry\format;
+
+use Joomla\registry\JRegistryFormat;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Registry
@@ -229,4 +232,3 @@ class JRegistryFormatINI extends JRegistryFormat
         return $string;
     }
 }
-class RegistryFormatINI extends JRegistryFormatINI {}

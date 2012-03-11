@@ -1,6 +1,10 @@
 <?php
 namespace Joomla\database\query;
 
+use Joomla\database\query\JDatabaseQueryPdo;
+use Joomla\database\query\JDatabaseQueryPreparable;
+use Joomla\database\query\JDatabaseQueryLimitable;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database
@@ -79,7 +83,7 @@ class JDatabaseQueryOracle extends JDatabaseQueryPdo implements JDatabaseQueryPr
 			return $this;
 		}
 
-		$obj = new stdClass;
+		$obj = new \stdClass;
 
 		$obj->value = &$value;
 		$obj->dataType = $dataType;

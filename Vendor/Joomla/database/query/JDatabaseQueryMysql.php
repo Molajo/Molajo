@@ -1,6 +1,9 @@
 <?php
 namespace Joomla\database\query;
 
+use Joomla\database\JDatabaseQuery;
+use Joomla\database\query\JDatabaseQueryLimitable;
+
 /**
  * @package     Joomla.Platform
  * @subpackage  Database

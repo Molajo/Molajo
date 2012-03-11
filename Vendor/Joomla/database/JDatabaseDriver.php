@@ -1,5 +1,6 @@
 <?php
 namespace Joomla\database;
+
 use Joomla\filesystem\Folder;
 
 /**
@@ -252,7 +253,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 			// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
 			if (!class_exists($class))
 			{
-				throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+				throw new \RuntimeException('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER: '. $options['driver']);
 			}
 
 			// Create our new JDatabaseDriver connector based on the options given.
@@ -262,7 +263,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 			}
 			catch (\RuntimeException $e)
 			{
-				throw new \RuntimeException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
+				throw new \RuntimeException('JLIB_DATABASE_ERROR_CONNECT_DATABASE: '. $e->getMessage());
 			}
 
 			// Set the new connector to the global instances based on signature.
@@ -611,7 +612,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_MISSING_EXPORTER');
 		}
 
 		$o = new $class;
@@ -638,7 +639,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_MISSING_IMPORTER');
 		}
 
 		$o = new $class;
@@ -669,7 +670,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 			if (!class_exists($class))
 			{
 				// If it doesn't exist we are at an impasse so throw an exception.
-				throw new \RuntimeException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
+				throw new \RuntimeException('JLIB_DATABASE_ERROR_MISSING_QUERY');
 			}
 
 			return new $class($this);

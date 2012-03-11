@@ -17,7 +17,7 @@ class TestErrorBacktrace {
 	}
 	static function oops() {
 		file_get_contents('oops.txt');
-		throw new Exception('Exception with call backtrace');
+		throw new \Exception('Exception with call backtrace');
 	}
 }
 

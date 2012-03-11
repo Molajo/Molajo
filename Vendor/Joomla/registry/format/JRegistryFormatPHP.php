@@ -1,6 +1,7 @@
 <?php
-namespace Joomla\registry;
-use Joomla\registry\JRegistryFormat;
+namespace Joomla\registry\format;
+
+use Joomla\registry\RegistryFormat;
 
 /**
  * @package     Joomla.Platform

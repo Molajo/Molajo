@@ -151,14 +151,14 @@ class JLoggerDatabase extends JLogger
 		{
 			$db = JDatabase::getInstance($options);
 
-			if ($db instanceof Exception)
+			if ($db instanceof \Exception)
 			{
-				throw new LogException('Database Error: ' . (string) $db);
+				throw new \LogException('Database Error: ' . (string) $db);
 			}
 
 			if ($db->getErrorNum() > 0)
 			{
-				throw new LogException(JText::sprintf('JLIB_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
+				throw new \LogException(JText::sprintf('JLIB_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
 			}
 
 			// Assign the database connector to the class.
@@ -166,7 +166,7 @@ class JLoggerDatabase extends JLogger
 		}
 		catch (RuntimeException $e)
 		{
-			throw new LogException($e->getMessage());
+			throw new \LogException($e->getMessage());
 		}
 	}
 }
