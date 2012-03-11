@@ -127,9 +127,9 @@ class UpdateController extends Controller
             } catch (Exception $e) {
                 $valid = false;
                 if (Services::Configuration()->get('debug', 0) == 1) {
-                    PhpConsole\debug(' ');
-                    PhpConsole\debug('UpdateController::load Failed');
-                    PhpConsole\debug('Model: ' . $this->model->name . ' ID: ' . $this->id);
+                    Services::Debug()->set(' ');
+                    Services::Debug()->set('UpdateController::load Failed');
+                    Services::Debug()->set('Model: ' . $this->model->name . ' ID: ' . $this->id);
                     debug(Services::Language()->translate($e->getMessage()));
                 }
                 Services::Message()
@@ -203,16 +203,16 @@ class UpdateController extends Controller
                             $type = MOLAJO_MESSAGE_TYPE_ERROR
                         );
                         if (Services::Configuration()->get('debug', 0) == 1) {
-                            PhpConsole\debug(' ');
-                            PhpConsole\debug('UpdateController::_filter_and_validate Filter Failed'.' '.$message);
+                            Services::Debug()->set(' ');
+                            Services::Debug()->set('UpdateController::_filter_and_validate Filter Failed'.' '.$message);
                         }
                     }
                 }
             }
         }
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug(' ');
-            PhpConsole\debug('UpdateController::_filter_and_validate Filter::Success: ' . $valid);
+            Services::Debug()->set(' ');
+            Services::Debug()->set('UpdateController::_filter_and_validate Filter::Success: ' . $valid);
         }
 
         /** Helper Functions */
@@ -231,15 +231,15 @@ class UpdateController extends Controller
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
                     if (Services::Configuration()->get('debug', 0) == 1) {
-                        PhpConsole\debug(' ');
-                        PhpConsole\debug('UpdateController::_filter_and_validate Helper Failed'.' '.$message);
+                        Services::Debug()->set(' ');
+                        Services::Debug()->set('UpdateController::_filter_and_validate Helper Failed'.' '.$message);
                     }
                 }
             }
         }
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug(' ');
-            PhpConsole\debug('UpdateController::_filter_and_validate Helper::Success: ' . $valid);
+            Services::Debug()->set(' ');
+            Services::Debug()->set('UpdateController::_filter_and_validate Helper::Success: ' . $valid);
         }
 
         /** Foreign Keys */
@@ -263,15 +263,15 @@ class UpdateController extends Controller
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
                     if (Services::Configuration()->get('debug', 0) == 1) {
-                        PhpConsole\debug(' ');
-                        PhpConsole\debug('UpdateController::_filter_and_validate FKs Failed'.' '.$message);
+                        Services::Debug()->set(' ');
+                        Services::Debug()->set('UpdateController::_filter_and_validate FKs Failed'.' '.$message);
                     }
                 }
             }
         }
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug(' ');
-            PhpConsole\debug('UpdateController::Validate FK::Success: ' . $valid);
+            Services::Debug()->set(' ');
+            Services::Debug()->set('UpdateController::Validate FK::Success: ' . $valid);
         }
 
         return $valid;
@@ -326,8 +326,8 @@ class UpdateController extends Controller
                                            $required, $message)
     {
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug(' ');
-            PhpConsole\debug('UpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
+            Services::Debug()->set(' ');
+            Services::Debug()->set('UpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
         }
 
         if ($this->model->row->$name == 0

@@ -6,6 +6,11 @@
  */
 namespace Molajo\Application\Service;
 
+use HTMLPurifier\HTMLPurifier;
+use HTMLPurifier\HTMLPurifier_Config;
+use Molajo\Application\Services;
+use Joomla\registry\Registry;
+
 defined('MOLAJO') or die;
 
 /**
@@ -84,7 +89,10 @@ Class SecurityService
      */
     protected function initialise_filtering()
     {
-        $config = HTMLPurifier_Config::createDefault();
+		return;
+
+        $config = HTMLPurifier\HTMLPurifier_Config::createDefault();
+		var_dump($config);
 
         if ((int)Services::Configuration()->get('html5', 1) == 1) {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
@@ -95,9 +103,10 @@ Class SecurityService
         $config->set('URI.Host', MOLAJO_BASE_URL);
 
         /** Custom Filters */
-        $files = Services::Folder()->files(MOLAJO_APPLICATIONS . '/filters', '\.php$', false, false);
+        $files = Services::Folder()->files(HTMPURIFIER_FILTERS, '\.php$', false, false);
         foreach ($files as $file) {
-            $class = 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Filter';
+			$class = 'HTMLPurifier\\filters\\';
+            $class .= substr($file, 0, strpos($file, '.'));
             $config->set('Filter.Custom', array(new $class()));
         }
 
@@ -609,9 +618,9 @@ Class SecurityService
     public function escape_url($url)
     {
         if (Services::Configuration()->get('unicode_slugs') == 1) {
-            return FilterOutput::stringURLUnicodeSlug($url);
+//            return FilterOutput::stringURLUnicodeSlug($url);
         } else {
-            return FilterOutput::stringURLSafe($url);
+//            return FilterOutput::stringURLSafe($url);
         }
     }
 }

@@ -6,6 +6,10 @@
  */
 namespace Molajo\Application\Service;
 
+use Molajo\Application\MVC\Model\UsersModel;
+use Molajo\Application\Services;
+use Joomla\registry\Registry;
+
 defined('MOLAJO') or die;
 
 /**
@@ -53,7 +57,6 @@ Class UserService
     {
         if ((int) $id == 0) {
         } else {
-            $id = UserHelper::getId($id);
             $m = new UsersModel();
             $m->query->where('(' . $m->db->qn('id') . ' = ' . (int)$id .
                 ' OR ' . $m->db->qn('username') . ' = ' . $m->db->q($id) . ')');
@@ -78,7 +81,9 @@ Class UserService
     {
         $this->id = (int) $id;
 //        $this->storage = Services::Request()->getSession();
+
         $this->storage = new Registry;
+
         if ((int) $id == 0) {
             return $this->_loadGuest();
         } else {
@@ -156,6 +161,7 @@ Class UserService
         $parameters = new Registry;
         $parameters->loadString($this->get('parameters'));
         $this->set('parameters', $parameters);
+
 /**
         echo '<pre>';
         var_dump($this->parameters);

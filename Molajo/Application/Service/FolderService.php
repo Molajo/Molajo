@@ -5,6 +5,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
+use Joomla\filesystem\Folder;
 
 defined('MOLAJO') or die;
 

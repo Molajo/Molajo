@@ -13,16 +13,16 @@ use Joomla\filesystem\File;
 defined('JPATH_PLATFORM') or die;
 
 // Define a boolean constant as true if a Windows based host
-define('JPATH_ISWIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
+//define('JPATH_ISWIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
 
 // Define a boolean constant as true if a Mac based host
-define('JPATH_ISMAC', (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC'));
+//define('JPATH_ISMAC', (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC'));
 
-if (!defined('JPATH_ROOT'))
-{
+//if (!defined('JPATH_ROOT'))
+//{
 	// Define a string constant for the root directory of the file system in native format
-	define('JPATH_ROOT', JPath::clean(JPATH_SITE));
-}
+//	define('JPATH_ROOT', JPath::clean(JPATH_SITE));
+//}
 
 /**
  * A Path handling class
@@ -31,7 +31,7 @@ if (!defined('JPATH_ROOT'))
  * @subpackage  FileSystem
  * @since       11.1
  */
-class JPath
+class Path
 {
 	/**
 	 * Checks if a path's permissions can be changed.
@@ -171,7 +171,7 @@ class JPath
 		if (strpos($path, '..') !== false)
 		{
 			// Don't translate
-			JError::raiseError(20, 'JPath::check Use of relative paths not permitted');
+			//JError::raiseError(20, 'Path::check Use of relative paths not permitted');
 			jexit();
 		}
 
@@ -179,7 +179,7 @@ class JPath
 		if ((JPATH_ROOT != '') && strpos($path, self::clean(JPATH_ROOT)) !== 0)
 		{
 			// Don't translate
-			JError::raiseError(20, 'JPath::check Snooping out of bounds @ ' . $path);
+			//JError::raiseError(20, 'Path::check Snooping out of bounds @ ' . $path);
 			jexit();
 		}
 
@@ -307,4 +307,4 @@ class JPath
 		return false;
 	}
 }
-class Path extends JPath {}
+class JPath extends Path {}

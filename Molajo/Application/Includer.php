@@ -748,12 +748,12 @@ class Includer
         $this->set('task', $task);
 
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug(' ');
-            PhpConsole\debug('Includer::_invokeMVC');
-            PhpConsole\debug('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
-            PhpConsole\debug('Extension: '.$this->get('extension_instance_name').' ID: '.$this->get('id').'');
-            PhpConsole\debug('Template: '.$this->get('template_view_path').'');
-            PhpConsole\debug('Wrap: '.$this->get('wrap_view_path').'');
+            Services::Debug()->set(' ');
+            Services::Debug()->set('Includer::_invokeMVC');
+            Services::Debug()->set('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
+            Services::Debug()->set('Extension: '.$this->get('extension_instance_name').' ID: '.$this->get('id').'');
+            Services::Debug()->set('Template: '.$this->get('template_view_path').'');
+            Services::Debug()->set('Wrap: '.$this->get('wrap_view_path').'');
         }
 
         /** instantiate controller  */

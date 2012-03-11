@@ -5,8 +5,8 @@ PhpConsole::start(true, true, dirname(__FILE__));
 
 // test
 
-PhpConsole\debug('debug message');
-PhpConsole\debug('SELECT * FROM users', 'db');
+Services::Debug()->set('debug message');
+Services::Debug()->set('SELECT * FROM users', 'db');
 
 class TestErrorBacktrace {
 	function __construct() {

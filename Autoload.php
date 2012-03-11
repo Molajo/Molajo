@@ -94,18 +94,15 @@ $s->registerNamespace('Joomla\\utilities', VENDOR);
 $s->registerNamespace('Mustache', VENDOR);
 $s->registerNamespace('PhpConsole', VENDOR);
 $s->registerNamespace('HTMLPurifier', VENDOR);
+$s->registerNamespace('HTMLPurifier\\filters', VENDOR);
 $s->registerNamespace('phpmailer', VENDOR);
 $s->registerNamespace('phputf8', VENDOR);
 $s->registerNamespace('Simplepie', VENDOR);
+if (defined('HTMPURIFIER_FILTERS')) {
+} else {
+	define('HTMPURIFIER_FILTERS', VENDOR.'/HTMLPurifier/filters');
+}
 
-
-/** Not namedspaced */
-//require_once VENDOR . '/HTMLPurifier/HTMLPurifier.standalone.php';
-//require_once VENDOR . '/Mustache/Mustache.php';
-//require_once VENDOR . '/PhpConsole/PhpConsole.php';
-//require_once VENDOR . '/phpmailer/phpmailer.php';
-//require_once VENDOR . '/phputf8/phputf8.php';
-//require_once VENDOR . '/Simplepie/simplepie.php';
 use PhpConsole\PhpConsole;
 PhpConsole::start(true, true, VENDOR . '/PhpConsole');
 /** Joomla */

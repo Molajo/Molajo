@@ -191,7 +191,7 @@ class Model
 		}
 
 		$this->query = $this->db->getQuery(true);
-
+		$this->query->clear();
 		$this->nullDate = $this->db->getNullDate();
 
 		$this->primary_prefix = 'a';

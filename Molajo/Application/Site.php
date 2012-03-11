@@ -100,7 +100,7 @@ Class Site
         $sv = Molajo::Services()->startServices();
 
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('Application::initialize Start Services');
+            Services::Debug()->set('Application::initialize Start Services');
         }
 
         /** offline */
@@ -129,7 +129,7 @@ Class Site
         //        Services::Session()->getHash(get_class($this))
         //  );
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('Application::initialize Services::Session()');
+            Services::Debug()->set('Application::initialize Services::Session()');
         }
 
         /** return to Molajo::Site */
@@ -191,7 +191,7 @@ Class Site
 
         /** Application Complete */
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('MolajoSite::load End');
+            Services::Debug()->set('MolajoSite::load End');
         }
 
         exit(0);

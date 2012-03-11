@@ -21,6 +21,10 @@
         <serviceClass>ConfigurationService</serviceClass>
     </service>
     <service>
+        <name>Debug</name>
+        <serviceClass>DebugService</serviceClass>
+    </service>
+    <service>
         <name>Request</name>
         <serviceClass>RequestService</serviceClass>
     </service>

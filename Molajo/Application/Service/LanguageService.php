@@ -5,9 +5,9 @@
  * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
+
 use Joomla\registry\Registry;
 use Molajo\Application\Services; // Folder, User
-use Molajo\Application\MVC\Model\ApplicationsModel;
 
 defined('MOLAJO') or die;
 /**
@@ -206,9 +206,8 @@ Class LanguageService
     {
         $loaded = $this->_loadLanguage($path, $this->language . '.ini');
         if ($loaded === false) {
-            PhpConsole\debug('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
+            Services::Debug()->set('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
         } else {
-            echo 'true';
             return true;
         }
 
@@ -219,7 +218,7 @@ Class LanguageService
 
         $loaded = $this->_loadLanguage($path, $default . '.ini');
         if ($loaded === false) {
-            PhpConsole\debug('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
+            Services::Debug()->set('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
             return false;
         }
         return $loaded;
@@ -237,6 +236,7 @@ Class LanguageService
      */
     public function get($key, $default = null)
     {
+
         if (isset($this->$key)) {
             return $this->$key;
         } else {
@@ -278,7 +278,7 @@ Class LanguageService
             return $this->loaded_strings[$key];
 
         } else {
-            PhpConsole\debug('MolajoLanguage: Missing language key: '.$key);
+            Services::Debug()->set('MolajoLanguage: Missing language key: '.$key);
             return $key;
         }
     }
@@ -542,6 +542,7 @@ Class LanguageService
     public function getLanguagesCore()
     {
         $subfolders = Services::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
+
         $languages = array();
 
         foreach ($subfolders as $path) {

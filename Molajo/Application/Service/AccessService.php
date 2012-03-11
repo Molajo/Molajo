@@ -256,7 +256,7 @@ Class AccessService
 
         if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
             if (Services::Configuration()->get('debug', 0) == 1) {
-                PhpConsole\debug('AccessServices::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
+                Services::Debug()->set('AccessServices::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
         }
         //todo: amy fill database with real sample action permissions
@@ -278,7 +278,7 @@ Class AccessService
             return true;
         } else {
             if (Services::Configuration()->get('debug', 0) == 1) {
-                PhpConsole\debug('AccessServices::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
+                Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
             return false;
         }

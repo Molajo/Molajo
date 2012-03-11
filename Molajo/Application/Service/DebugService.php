@@ -6,8 +6,6 @@
  */
 namespace Molajo\Application\Service;
 
-use Joomla\registry\Registry;
-
 defined('MOLAJO') or die;
 
 /**
@@ -17,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class ParameterService
+Class DebugService
 {
     /**
      * Static instance
@@ -26,36 +24,6 @@ Class ParameterService
      * @since  1.0
      */
     protected static $instance;
-
-    /**
-     * $page_parameters
-     *
-     * Parameters specific to the extension for the URL request
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $page_parameters;
-
-    /**
-     * $extension_parameters
-     *
-     * Parameters specific to the current extension
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $extension_parameters;
-
-    /**
-     * $theme_parameters
-     *
-     * Parameters specific to the current theme
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $theme_parameters;
 
     /**
      * getInstance
@@ -67,7 +35,7 @@ Class ParameterService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new ParameterService();
+            self::$instance = new DebugService();
         }
         return self::$instance;
     }
@@ -81,9 +49,7 @@ Class ParameterService
      */
     public function __construct()
     {
-        $this->request_parameters = new Registry();
-        $this->theme_parameters = new Registry();
-        $this->page_parameters = new Registry();
+
     }
 
     /**
@@ -97,9 +63,9 @@ Class ParameterService
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default = null, $type = 'request')
+    public function get()
     {
-        return $this->request_parameters->get($key, $default);
+
     }
 
     /**
@@ -113,8 +79,11 @@ Class ParameterService
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null, $type = 'request')
+    public function set($message)
     {
-        return $this->request_parameters->set($key, $value);
+		if (Services::Configuration()->get('debug', false) === true) {
+			debug($message);
+		}
+		return $this;
     }
 }

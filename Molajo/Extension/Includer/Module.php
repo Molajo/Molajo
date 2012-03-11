@@ -38,8 +38,8 @@ abstract class ModuleHelper
 
         if ($results === false) {
             if (Services::Configuration()->get('debug', 0) == 1) {
-                PhpConsole\debug('ModuleIncluder::_getExtension');
-                PhpConsole\debug('Module not found: '.$this->get('extension_instance_name'));
+                Services::Debug()->set('ModuleIncluder::_getExtension');
+                Services::Debug()->set('Module not found: '.$this->get('extension_instance_name'));
             }
             return false;
         }

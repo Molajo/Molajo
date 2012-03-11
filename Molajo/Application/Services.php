@@ -97,7 +97,7 @@ Class Services
 	{
 		if (!(is_object($value)) || $value == null) {
 			echo 'failed' . '<br />';
-			//PhpConsole\debug('Services::set Service failed to start: ' . $key);
+			//Services::Debug()->set('Services::set Service failed to start: ' . $key);
 		} else {
 			$this->service_connection->set($key, $value);
 			echo 'Key ' . $key . ' succeeded' . '<br />';
@@ -135,13 +135,14 @@ Class Services
 
 			} catch (Exception $e) {
 				echo 'Fatal Error: ' . $e->getMessage() . ' ' . $serviceName;
-				//PhpConsole\debug('Services::startServices Service Failed' . ' ' . $serviceName);
+				//Services::Debug()->set('Services::startServices Service Failed' . ' ' . $serviceName);
 				exit(0);
 			}
 
 			$this->set($serviceName, $connection);
-			//PhpConsole\debug('Services::startServices Service Connection' . ' ' . $serviceName);
+			//Services::Debug()->set('Services::startServices Service Connection' . ' ' . $serviceName);
 		}
+
 		return;
 	}
 

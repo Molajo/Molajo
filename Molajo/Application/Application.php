@@ -69,7 +69,7 @@ class Application
     {
         Molajo::Request()->process();
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('Application::process Molajo::Request()->process()');
+            Services::Debug()->set('Application::process Molajo::Request()->process()');
         }
 
         /**
@@ -92,7 +92,7 @@ class Application
         if (Molajo::Request()->get('mvc_controller') == 'display') {
             $content = Molajo::Parse();
             if (Services::Configuration()->get('debug', 0) == 1) {
-                PhpConsole\debug('Application::process Molajo::Parse() completed');
+                Services::Debug()->set('Application::process Molajo::Parse() completed');
             }
 
             /** response */
@@ -110,7 +110,7 @@ class Application
         }
 
         if (Services::Configuration()->get('debug', 0) == 1) {
-            PhpConsole\debug('Application::process Services::Response()->respond() completed');
+            Services::Debug()->set('Application::process Services::Response()->respond() completed');
         }
         return;
     }

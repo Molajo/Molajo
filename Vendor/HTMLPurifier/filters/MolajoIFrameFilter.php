@@ -1,4 +1,8 @@
 <?php
+namespace HTMLPurifier\filters;
+
+use HTMLPurifier\HTMLPurifier;
+
 /**
  * @package     Molajo
  * @subpackage  Filter
@@ -14,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Helper
  * @since       1.0
  */
-class MolajoIframeFilter extends HTMLPurifier_Filter
+class MolajoIFrameFilter extends HTMLPurifier_Filter
 {
 
     /**
