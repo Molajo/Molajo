@@ -265,8 +265,6 @@ Class Application
 	 *
 	 * - create an autoloadoverride.php file to replace the
 	 * Molajo/Common/Autoload.php file defining the namespaces
-	 * and the splClassLoader in these locations and the location
-	 * of VENDOR
 	 *
 	 * SITES contains content that must be accessible by the
 	 * Website and thus cannot be moved
