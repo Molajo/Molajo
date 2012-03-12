@@ -5,6 +5,7 @@
  * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
+
 use Joomla\registry\Registry;
 use Molajo\Application\MVC\Model\ApplicationsModel;
 
@@ -177,7 +178,7 @@ Class ConfigurationService
 	 * @throws Exception
 	 * @since  1.0
 	 */
-	protected function getSite($configuration_file = null)
+	public function getSite($configuration_file = null)
 	{
 		if ($configuration_file === null) {
 			$configuration_file = SITE_FOLDER_PATH . '/configuration.php';

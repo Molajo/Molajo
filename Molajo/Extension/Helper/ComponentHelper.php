@@ -6,9 +6,9 @@
  */
 namespace Molajo\Extension\Helper;
 
-defined('MOLAJO') or die;
-
 use Molajo\Extension\Helper\ExtensionHelper;
+
+defined('MOLAJO') or die;
 
 /**
  * Component

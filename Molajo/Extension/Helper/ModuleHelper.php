@@ -4,7 +4,9 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Include;
+namespace Molajo\Application\Helper;
+
+use Molajo\Extension\Helper\ExtensionHelper;
 
 defined('MOLAJO') or die;
 

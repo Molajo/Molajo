@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>
+        <name>Version</name>
+        <serviceClass>VersionService</serviceClass>
+    </service>
+    <service>
         <name>File</name>
         <serviceClass>FileService</serviceClass>
     </service>

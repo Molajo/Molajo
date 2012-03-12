@@ -7,7 +7,7 @@
  */
 namespace Molajo\Theme\Helper;
 defined('MOLAJO') or die;
-use Molajo\Extension\Helper\ThemeHelper;
+use Molajo\Extension\Helper\MustacheHelper;
 
 /**
  * Helper
@@ -16,7 +16,7 @@ use Molajo\Extension\Helper\ThemeHelper;
  * @subpackage  Helper
  * @since       1.0
  */
-Class ThemeFoundationHelper extends ThemeHelper
+Class ThemeFoundationHelper extends MustacheHelper
 {
     /**
      * hello

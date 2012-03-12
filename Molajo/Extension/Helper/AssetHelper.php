@@ -4,12 +4,12 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Application\Helper;
-
-defined('MOLAJO') or die;
+namespace Molajo\Extension\Helper;
 
 use Molajo\Application\MVC\Model\AssetsModel;
-use Molajo\Application\Service;
+use Molajo\Application\Services;
+
+defined('MOLAJO') or die;
 
 /**
  * Asset
@@ -196,6 +196,7 @@ abstract class AssetHelper
         }
 
         $m = new AssetsModel();
+
         if (Services::Configuration()->get('sef', 1) == 0) {
             $m->query->select($m->db->qn('sef_request'));
         } else {

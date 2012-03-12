@@ -9,7 +9,7 @@ namespace Molajo\Application\MVC\Model;
 
 defined('MOLAJO') or die;
 
-use Molajo\Application\MVC\DisplayModel;
+use Molajo\Application\MVC\Model\DisplayModel;
 
 /**
  * Sites

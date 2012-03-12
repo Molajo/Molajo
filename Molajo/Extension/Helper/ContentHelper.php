@@ -4,12 +4,13 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Application\Helper;
+namespace Molajo\Extension\Helper;
 
-defined('MOLAJO') or die;
-
+use Molajo\Extension\Helper\ExtensionHelper;
 use Molajo\Application\MVC\Model\DisplayModel;
 use Molajo\Application\Service;
+
+defined('MOLAJO') or die;
 
 /**
  * Content

@@ -163,7 +163,7 @@ Class AccessService
         $m->query->where($m->db->qn('site_id') . ' = ' . (int)SITE_ID);
         $m->query->where($m->db->qn('application_id') . ' = ' . (int)MOLAJO_APPLICATION_ID);
 
-        $application_id = $m->getResult();
+        $application_id = $m->loadResult();
 
         if ($application_id === false) {
     //todo: finish the response action/test

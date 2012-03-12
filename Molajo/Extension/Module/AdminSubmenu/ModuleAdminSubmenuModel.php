@@ -1,17 +1,17 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Module
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application\MVC\Model;
 namespace Molajo\Extension\Module;
+
+use Molajo\Application\MVC\Model\DisplayModel;
 
 defined('MOLAJO') or die;
 
 /**
- * AdminSubmenu
+ * ModuleAdminSubmenuModel
  *
  * @package     Molajo
  * @subpackage  Model
@@ -44,9 +44,8 @@ Class ModuleAdminSubmenuModel extends DisplayModel
     public function getData()
     {
         $links =
-            Molajo::Request()
-                ->parameters
-                ->get('submenu_items');
+            Services::Parameter()
+                ->get('submenu_items', 'Request');
 
         $linksArray = explode(',', $links);
 

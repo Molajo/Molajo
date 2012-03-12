@@ -8,7 +8,7 @@ namespace Molajo\Extension\Helper;
 
 defined('MOLAJO') or die;
 
-use Molajo\Application\Service;
+use Molajo\Application\Services;
 use Molajo\Extension\Helper\ModuleHelper;
 
 /**

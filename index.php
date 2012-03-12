@@ -13,5 +13,4 @@ define('MOLAJO_BASE_FOLDER', __DIR__);
 
 require_once MOLAJO_BASE_FOLDER . '/Autoload.php';
 
-use Molajo\Application\Molajo;
-Molajo::Site();
+Molajo\Application\Molajo::Application()->initialise()->request()->response();

@@ -6,14 +6,15 @@
  */
 namespace Molajo\Extension\Helper;
 
-defined('MOLAJO') or die;
-
 use Molajo\Application\MVC\Model\DisplayModel;
-use Molajo\Application\Service;
+use Molajo\Application\MVC\Model\ExtensionInstancesModel;
+use Molajo\Application\Services;
 use Molajo\Extension\Helper\ComponentHelper;
 use Molajo\Extension\Helper\ModuleHelper;
-use Molajo\Extension\Helper\ThemeHelper;
+use Molajo\Extension\Helper\MustacheHelper;
 use Molajo\Extension\Helper\PluginHelper;
+
+defined('MOLAJO') or die;
 
 /**
  * Extension
@@ -138,6 +139,7 @@ abstract class ExtensionHelper
          *  Run Query
          */
         $extensions = $m->runQuery();
+
         return $extensions;
     }
 
@@ -258,7 +260,7 @@ abstract class ExtensionHelper
         } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_MODULE) {
             return ModuleHelper::getPath($name);
         } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_THEME) {
-            return ThemeHelper::getPath($name);
+            return MustacheHelper::getPath($name);
         } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN) {
             return PluginHelper::getPath($name);
         }

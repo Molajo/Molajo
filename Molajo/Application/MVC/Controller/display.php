@@ -187,6 +187,8 @@ class DisplayController extends Controller
     }
 
     /**
+	 * todo: create a plugin action here to invoke template tools, like mustache.
+	 *
      * processRenderedOutput
      *
      * Passes the rendered output and the entire rowset into the
@@ -209,15 +211,8 @@ class DisplayController extends Controller
         $m = new Mustache;
 
         /** Theme Helper */
-        $helperClass = 'Molajo' .
-            ucfirst(Molajo::Request()->get('theme_name'))
-            . 'ThemeHelper';
-
-        if (class_exists($helperClass)) {
-            $h = new $helperClass();
-        } else {
-            $h = new MolajoThemeHelper();
-        }
+        $helperClass = 'Extension\\Helper\\MustacheHelper\\MustacheHelper';
+        $h = new $helperClass();
 
         /** create input dataset */
         $totalRows = count($this->rowset);

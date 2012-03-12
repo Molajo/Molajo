@@ -8,7 +8,6 @@ namespace Molajo\Application;
 
 defined('MOLAJO') or die;
 
-Use Molajo\Application\Site;
 Use Molajo\Application\Application;
 Use Molajo\Application\Services;
 Use Molajo\Application\Request;
@@ -22,14 +21,6 @@ Use Molajo\Application\Service\RequestService;
  */
 class Molajo
 {
-    /**
-     * Molajo::Site
-     *
-     * @var    object Site
-     * @since  1.0
-     */
-    protected static $site = null;
-
     /**
      * Molajo::Application
      *
@@ -71,22 +62,6 @@ class Molajo
     protected static $request_service = null;
 
     /**
-     * Molajo::Site
-     *
-     * @static
-     * @return  Site
-     * @since   1.0
-     */
-    public static function Site()
-    {
-        if (self::$site) {
-        } else {
-            self::$site = Site::getInstance();
-        }
-        return self::$site;
-    }
-
-    /**
      * Molajo::Application
      *
      * @static
@@ -99,6 +74,7 @@ class Molajo
         } else {
             self::$application = Application::getInstance();
         }
+
         return self::$application;
     }
 

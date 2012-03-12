@@ -7,6 +7,10 @@
  */
 namespace Molajo\Application\Helper;
 
+use Molajo\Extension\Helper\AssetHelper;
+use Molajo\Application\Services;
+use Joomla\registry\Registry;
+
 defined('MOLAJO') or die;
 
 /**
@@ -489,7 +493,8 @@ class ModelHelper
                     $method = '';
                 }
                 if (isset($l['model'])) {
-                    $model = (string)$l['model'];
+					$model = 'Molajo\\Application\\MVC\\Model\\';
+                    $model .= (string)$l['model'];
                 } else {
                     $model = '';
                 }

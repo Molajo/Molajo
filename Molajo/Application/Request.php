@@ -1164,14 +1164,14 @@ Class Request
      */
     protected function _getTheme()
     {
-        $row = ThemeHelper::get($this->get('theme_id'));
+        $row = MustacheHelper::get($this->get('theme_id'));
 
         if (count($row) == 0) {
             if ($this->set('theme_name') == 'system') {
                 // error
             } else {
                 $this->set('theme_name', 'system');
-                $row = ThemeHelper::get($this->get('theme_name'));
+                $row = MustacheHelper::get($this->get('theme_name'));
                 if (count($row) > 0) {
                     // error
                 }
@@ -1197,11 +1197,11 @@ Class Request
         }
 
         $this->set('theme_path',
-            ThemeHelper::getPath($this->get('theme_name')));
+            MustacheHelper::getPath($this->get('theme_name')));
         $this->set('theme_path_url',
-            ThemeHelper::getPathURL($this->get('theme_name')));
+            MustacheHelper::getPathURL($this->get('theme_name')));
         $this->set('theme_favicon',
-            ThemeHelper::getFavicon($this->get('theme_name')));
+            MustacheHelper::getFavicon($this->get('theme_name')));
 
         return;
     }

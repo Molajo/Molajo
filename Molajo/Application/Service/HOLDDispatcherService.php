@@ -43,7 +43,7 @@ Class DispatcherService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new MolajoDispatcher();
+            self::$instance = new DispatcherService();
         }
         return self::$instance;
     }

@@ -1,11 +1,14 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Helper;
+namespace Molajo\Application\Helper;
+
+use Mustache;
+use Molajo\Application\Services;
+use Molajo\Extension\Helper\ExtensionHelper;
 
 defined('MOLAJO') or die;
 
@@ -16,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Helper
  * @since       1.0
  */
-class ThemeHelper extends Mustache
+class MustacheHelper extends Mustache
 {
     /**
      * $data
@@ -63,7 +66,7 @@ class ThemeHelper extends Mustache
     public function items()
     {
         $this->rows++;
-        return new ArrayIterator($this->data);
+        return new \ArrayIterator($this->data);
     }
 
     /**
@@ -78,8 +81,12 @@ class ThemeHelper extends Mustache
     public function gravatar()
     {
         $this->analytics();
-        $ret = new UrlService();
-        return $ret->getGravatar('AmyStephen@gmail.com');
+
+		return Services::URL()
+			->getGravatar(
+			$email = 'AmyStephen@gmail.com',
+			$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
+		);
     }
 
     /**
@@ -158,7 +165,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
      */
     public function profile()
     {
-        $rc = new MolajoModuleIncluder ('profile', '');
+        $rc = new Molajo\Extension\Includer\ModuleIncluder ('profile', '');
         $attributes = array();
         $attributes['name'] = 'dashboard';
         $attributes['template'] = 'dashboard';

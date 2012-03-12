@@ -172,7 +172,7 @@ Class Parse
 
             $helperClass = 'Molajo' .
                 ucfirst(Molajo::Request()->get('theme_name'))
-                . 'ThemeHelper';
+                . 'MustacheHelper';
         }
 
         /** Before Event */

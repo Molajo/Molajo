@@ -6,6 +6,9 @@
  */
 namespace Molajo\Extension\Helper;
 
+use Molajo\Application\MVC\Model\DisplayModel;
+use Molajo\Application\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -31,7 +34,7 @@ abstract class MenuItemHelper
      */
     public static function get($menu_item_id)
     {
-        $m = new DisplayModel ();
+        $m = new DisplayModel();
 
         /**
          *  a. Content Table
