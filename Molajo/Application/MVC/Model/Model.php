@@ -1,15 +1,16 @@
 <?php
 /**
- * @package	 Molajo
- * @subpackage  Model
+ * @package	 	Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
 use Joomla\registry\Registry;
 use Joomla\database\JDatabaseFactory;
+use Joomla\database\driver\JDatabaseDriverMysqli;
 use Molajo\Application\Services; //Date, DB, Language, Message
+use Molajo\Application\Service\DatabaseService;
 
 defined('MOLAJO') or die;
 
@@ -107,7 +108,7 @@ class Model
 	 *
 	 * Single row for $table_name
 	 *
-	 * @var	stdClass
+	 * @var	\stdClass
 	 * @since  1.0
 	 */
 	public $row;
@@ -185,16 +186,14 @@ class Model
 			$this->primary_key = 'id';
 		}
 
-		if (isset($this->db)) {
-		} else {
-			$this->db = Services::Database();
-		}
-
+		$this->db = Services::Database();
 		$this->query = $this->db->getQuery(true);
 		$this->query->clear();
 		$this->nullDate = $this->db->getNullDate();
 
 		$this->primary_prefix = 'a';
+
+		return $this;
 	}
 
 

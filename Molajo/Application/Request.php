@@ -8,7 +8,7 @@ namespace Molajo\Application;
 
 defined('MOLAJO') or die;
 
-use Molajo\Application\Service;
+use Molajo\Application\Services;
 
 /**
  * Request

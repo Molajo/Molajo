@@ -83,6 +83,81 @@ Class Services
 	}
 
 	/**
+	 * startServices
+	 *
+	 * loads all services defined in the services.xml file
+	 *
+	 * @param null|Registry $config
+	 *
+	 * @return boolean
+	 * @since 1.0
+	 */
+	public function startServices()
+	{
+		/** store connection messages */
+		$this->message = array();
+
+		/** store service connections  */
+		$this->service_connection = new Registry();
+
+		/** start services in this sequence */
+		$xml = MOLAJO_APPLICATIONS . '/Configuration/services.xml';
+		if (is_file($xml)) {
+		} else {
+			return false;
+		}
+		$services = simplexml_load_file($xml, 'SimpleXMLElement');
+
+		foreach ($services->service as $item) {
+			$try = true;
+			$connection = '';
+
+			/** class name */
+			$entry = (string)$item . 'Service';
+			$serviceClass = 'Molajo\\Application\\Service\\' . $entry;
+
+			/** method name */
+			if ($entry == 'DatabaseService'
+			) {
+				$serviceMethod = 'connect';
+			} else {
+				$serviceMethod = 'getInstance';
+			}
+
+			/** trap errors for missing class or method */
+			if (class_exists($serviceClass)) {
+				if (method_exists($serviceClass, $serviceMethod)) {
+				} else {
+					$try = false;
+					$connection = $serviceClass . '::' . $serviceMethod . ' Class does not exist';
+				}
+			} else {
+				$try = false;
+				$connection = $serviceClass . ' Class does not exist';
+			}
+
+			/** make service connection */
+			if ($try === true) {
+				try {
+					$connection = $serviceClass::$serviceMethod();
+
+				} catch (\Exception $e) {
+					$connection = 'Fatal Error: ' . $e->getMessage();
+				}
+			}
+
+			/** store connection or error message */
+			$this->set($entry, $connection, $try);
+		}
+
+		foreach ($this->message as $message) {
+			Services::Debug()->set($message);
+		}
+
+		return true;
+	}
+
+	/**
 	 * set
 	 *
 	 * Stores the service connection
@@ -93,182 +168,18 @@ Class Services
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function set($key, $value = null)
+	private function set($key, $value = null, $try = true)
 	{
-		if (!(is_object($value)) || $value == null) {
-			echo 'failed' . '<br />';
-			//Services::Debug()->set('Services::set Service failed to start: ' . $key);
+		$i = count($this->message);
+
+		if ($value == null
+			|| $try == false
+		) {
+			$this->message[$i] = 'Service: ' . $key . ' failed to start ' . $value;
+
 		} else {
 			$this->service_connection->set($key, $value);
-			echo 'Key ' . $key . ' succeeded' . '<br />';
-			//			echo '<pre>';
-			//			var_dump($value);
-			//			echo '</pre>';
+			$this->message[$i] = 'Service: ' . $key . ' started successfully. ';
 		}
-	}
-
-	/**
-	 * startServices
-	 *
-	 * loads all services defined in the services.xml file
-	 *
-	 * @param null|Registry $config
-	 *
-	 * @return mixed
-	 * @since 1.0
-	 */
-	public function startServices()
-	{
-		$services = simplexml_load_file(
-			MOLAJO_APPLICATIONS . '/Configuration/services.xml'
-		);
-		if (count($services) == 0) {
-			return;
-		}
-
-		$this->service_connection = new Registry();
-		foreach ($services->service as $s) {
-			$serviceName = (string)$s->name . 'Service';
-
-			try {
-				$connection = $this->_connectService($s);
-
-			} catch (Exception $e) {
-				echo 'Fatal Error: ' . $e->getMessage() . ' ' . $serviceName;
-				//Services::Debug()->set('Services::startServices Service Failed' . ' ' . $serviceName);
-				exit(0);
-			}
-
-			$this->set($serviceName, $connection);
-			//Services::Debug()->set('Services::startServices Service Connection' . ' ' . $serviceName);
-		}
-
-		return;
-	}
-
-	/**
-	 * connectService
-	 *
-	 * @param   $service
-	 * @return  bool
-	 * @since   1.0
-	 */
-	protected function _connectService($service)
-	{
-		$serviceName = (string)$service->name;
-		if (substr($serviceName, 0, 4) == 'HOLD') {
-			return false;
-		}
-
-		$serviceClass = (string)$service->serviceClass;
-		if (trim($serviceClass == '')) {
-			$serviceClass = ucfirst($serviceName);
-		}
-
-		/** execute the getInstance method */
-		$getInstanceConnection = false;
-		$serviceClass = 'Molajo\\Application\\Service\\' . $serviceClass;
-		if (method_exists($serviceClass, 'getInstance')) {
-
-			/** connect Method Parameters */
-			$getInstanceParameters = array();
-			if (isset($service->getInstance->parameters->parameter)) {
-				foreach ($service->getInstance->parameters->parameter as $p) {
-					$name = (string)$p['key'];
-					$value = (string)$p['value'];
-					$getInstanceParameters[$name] = $value;
-				}
-			}
-
-			$getInstanceConnection = $this->_connectServiceMethod(
-				null,
-				$serviceClass,
-				'getInstance',
-				$getInstanceParameters
-			);
-
-			if ($getInstanceConnection == false) {
-				return false;
-			}
-		}
-
-		/** execute the connect method */
-		if (method_exists($serviceClass, 'connect')) {
-
-			/** connect Method Parameters */
-			$connectParameters = array();
-			if (isset($service->connect->parameters->parameter)) {
-				foreach ($service->connect->parameters->parameter as $p) {
-					$name = (string)$p['key'];
-					$value = (string)$p['value'];
-					$connectParameters[$name] = $value;
-				}
-			}
-
-			$connection = $this->_connectServiceMethod(
-				$getInstanceConnection,
-				$serviceClass,
-				'connect',
-				$connectParameters
-			);
-
-			if ($connection == false) {
-				return false;
-			} else {
-				return $connection;
-			}
-		} else {
-			return $getInstanceConnection;
-		}
-	}
-
-	/**
-	 * _connectServiceMethod
-	 *
-	 * Execute the Service Method
-	 *
-	 * $param $objectContext
-	 * @param $serviceClass
-	 * @param $serviceMethod
-	 * @param $connectParameters
-	 *
-	 * @since 1.0
-	 */
-	protected function _connectServiceMethod(
-		$objectContext = null,
-		$serviceClass,
-		$serviceMethod,
-		$connectParameters)
-	{
-		/** parameters from array to string */
-		$parms = '';
-		if (count($connectParameters) == 0) {
-		} else {
-			foreach ($connectParameters as $key => $value) {
-				if ($parms !== '') {
-					$parms .= ',';
-				}
-				if ($value == '{{userid}}') {
-					$value = 42;
-				}
-				$parms .= '$' . $key . '="' . $value . '"';
-			}
-		}
-
-		/** execute method */
-		$connection = '';
-		if ($serviceMethod == 'getInstance') {
-			$execute = '$connection = $serviceClass::getInstance ' .
-				'(' . $parms . ');';
-		} else {
-			$execute = '$connection = $objectContext->' .
-				$serviceMethod .
-				'(' . $parms . ');';
-		}
-
-		$ret = call_user_func(array($serviceClass, 'getInstance'));
-		eval($execute);
-
-		return $connection;
 	}
 }

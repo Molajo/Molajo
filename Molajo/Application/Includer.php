@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 
 use Molajo\Application\Request;
 use Molajo\Application\Parse;
-use Molajo\Application\Service;
+use Molajo\Application\Services;
 use Molajo\Extension\Helper\ExtensionHelper;
-
+use Joomla\registry\Registry;
 /**
  * Includer
  *
@@ -60,7 +60,7 @@ class Includer
     /**
      * $extension_required
      *
-     * Some renderers (ex. head, messages, defer), do not require
+     * Some includes (ex. head, messages, defer), do not require
      * an extension for further processing. In those cases, this
      * indicator is set to false.
      *
@@ -74,7 +74,7 @@ class Includer
      *
      * Building this object is the primary purpose of the Includers
      * classes. It contains the instructions needed for the MVC to
-     * fulfill this renderer request
+     * fulfill this include request
      *
      * @var    object
      * @since  1.0
@@ -119,7 +119,7 @@ class Includer
      *
      * @param  string $name
      * @param  string $type
-     * @param  array  $items (used for event processing renderers, only)
+     * @param  array  $items (used for event processing includes, only)
      *
      * @return  null
      * @since   1.0
@@ -141,7 +141,7 @@ class Includer
      * Loads page metadata (only invoked for Theme Includer)
      * Loads language files for extension.
      * Loads media files for extension
-     * Calls the controller->task which processes renderer request
+     * Calls the controller->task which processes include request
      * Captures rendered output for possible post-processing
      * Returns rendered output to Molajo::Parse to use for replacing
      *  with <include:type />
@@ -167,7 +167,7 @@ class Includer
         /** extension MVC classes are loaded */
         $this->_importClasses();
 
-        /** theme renderer, only - loads metadata for the page */
+        /** theme include, only - loads metadata for the page */
         $this->_loadMetadata();
 
         /** language must be there before the extension runs */
@@ -321,7 +321,7 @@ class Includer
         $this->set('category_id', 0);
         $this->set('suppress_no_results', false);
 
-        /** for event processing renderers, only */
+        /** for event processing includes, only */
         $this->set('event_items', 0);
 
         return;

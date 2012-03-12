@@ -270,10 +270,6 @@ Class LanguageService
      */
     public function translate($key)
      {
-         return $this->_($key);
-     }
-    public function _($key)
-    {
         if (isset($this->loaded_strings[$key])) {
             return $this->loaded_strings[$key];
 
@@ -281,11 +277,6 @@ Class LanguageService
             Services::Debug()->set('MolajoLanguage: Missing language key: '.$key);
             return $key;
         }
-    }
-
-    public function sprintf()
-    {
-        //use the php sprintf and printf
     }
 
     /**
@@ -583,3 +574,17 @@ Class LanguageService
     }
 }
 
+
+abstract class JText
+{
+
+    public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
+    {
+        return Services::Language()->translate($string, $jsSafe, $interpretBackSlashes, $script);
+    }
+
+    public static function sprintf($string)
+    {
+        sprintf($string);
+    }
+}

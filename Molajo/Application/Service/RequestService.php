@@ -6,9 +6,9 @@
  */
 namespace Molajo\Application\Service;
 
-defined('MOLAJO') or die;
-
 use Symfony\Component\HttpFoundation\Request;
+
+defined('MOLAJO') or die;
 
 /**
  * Request
@@ -85,7 +85,6 @@ Class RequestService extends Request
     {
         /** Session */
         if (parent::hasPreviousSession() === false) {
-            echo 'false';
             $this->session = parent::setSession($this->setSessionStorageData());
         } else {
             $this->session = $this->request->getSession()->start();

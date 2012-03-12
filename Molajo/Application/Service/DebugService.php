@@ -62,6 +62,7 @@ Class DebugService
 	{
 		$config = new Registry();
 		$this->on = (int) Services::Configuration()->get('debug', 0);
+
 		return $this;
 	}
 

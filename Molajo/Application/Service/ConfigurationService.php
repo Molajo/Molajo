@@ -76,19 +76,7 @@ Class ConfigurationService
 	 * @return  object
 	 * @since   1.0
 	 */
-	protected function __construct()
-	{
-		return $this->connect();
-	}
-
-	/**
-	 * connect
-	 *
-	 * @return mixed
-	 * @throws Exception
-	 * @since 1.0
-	 */
-	public function connect($configuration_file = null)
+	public function __construct($configuration_file = null)
 	{
 		$this->configuration = new Registry();
 		$siteData = new Registry();
@@ -126,6 +114,7 @@ Class ConfigurationService
 				$this->set($key, $value);
 			}
 		}
+
 		return $this;
 	}
 
@@ -175,7 +164,7 @@ Class ConfigurationService
 	 * @param string $configuration_file optional
 	 *
 	 * @return object
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since  1.0
 	 */
 	public function getSite($configuration_file = null)

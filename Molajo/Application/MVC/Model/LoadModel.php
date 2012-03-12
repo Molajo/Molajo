@@ -117,10 +117,6 @@ Class LoadModel extends Model
 			$this->query_results['metadata'] = (string)$registry;
 		}
 
-		if ($this->db->getErrorNum()) {
-			throw new \Exception('Application Instantiation Error ' . $this->db->getErrorNum(), 500);
-		}
-
 		return $this->query_results;
 	}
 

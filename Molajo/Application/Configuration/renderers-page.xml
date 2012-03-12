@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<sequence>
-    <renderer>request:component</renderer>
-    <renderer>formfield</renderer>
-    <renderer>module</renderer>
-    <renderer>tag</renderer>
-    <renderer>component</renderer>
-</sequence>

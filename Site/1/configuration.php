@@ -48,5 +48,4 @@ Class SiteConfiguration
 
     /* Debug */
     public $debug = '1';
-    public $debug_language = '0';
 }

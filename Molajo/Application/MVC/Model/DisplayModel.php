@@ -1,13 +1,13 @@
 <?php
 /**
- * @package	 Molajo
+ * @package	 	Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
 use Molajo\Extension\Helper\ExtensionHelper;
-use Molajo\Application\Request;
+use Molajo\Application\Molajo;
 use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
@@ -53,11 +53,10 @@ class DisplayModel extends ItemModel
             $this->get('extension_instance_name')
         );
 
-
-        $helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . 'ModelHelper';
+        $helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . '\\Helper\\ModelHelper';
         if (class_exists($helperClass)) {
         } else {
-            $helperClass = 'ModelHelper';
+            $helperClass = 'Molajo\\Extension\\Helper\\' . 'ModelHelper';
         }
         $h = new $helperClass();
 

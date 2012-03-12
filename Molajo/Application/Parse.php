@@ -40,7 +40,7 @@ Class Parse
     /**
      * $sequence
      *
-     * System defined order for processing renderers
+     * System defined order for processing includes
      * stored in the sequence.xml file
      *
      * @var array
@@ -51,7 +51,7 @@ Class Parse
     /**
      * $final
      *
-     * Indicator of final processing for renderers
+     * Indicator of final processing for includes
      * (which means clean up of unfound includes can take place)
      *
      * @var boolean
@@ -79,16 +79,14 @@ Class Parse
     protected $rendered_output = array();
 
     /**
-     * $renderers
+     * $includes
      *
-     * Parsing process retrieves input:renderer statements from the theme and
-     * rendered output, loading the requests for renderers (and associated attributes)
-     * in this array
+     * Parsing process retrieves include statements from the theme and rendered output
      *
      * @var string
      * @since 1.0
      */
-    protected $renderers = array();
+    protected $includes = array();
 
     /**
      * getInstance
@@ -123,7 +121,7 @@ Class Parse
      * Invoke Theme Includer to load page metadata, and theme language and media resources
      *
      * Retrieve Theme and Page View to initiate the iterative process of parsing rendered output
-     * for <include:type/> statements and then looping through all renderer requests
+     * for <include:type/> statements and then looping through all include requests
      *
      * When no more <include:type/> statements are found in the rendered output,
      * process sets the Responder body and completes
@@ -135,11 +133,11 @@ Class Parse
     {
         /**
          *  Body Includers: processed recursively until no more <include: found
-         *      for the set of includes defined in the renderers-page.xml
+         *      for the set of includes defined in the includes-page.xml
          */
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS . '/Configuration/renderers-page.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/Configuration/includes-page.xml';
         }
 
         if (Services::File()->exists($formatXML)) {
@@ -149,7 +147,7 @@ Class Parse
         }
 
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
-        foreach ($sequence->renderer as $next) {
+        foreach ($sequence->include as $next) {
             $this->sequence[] = (string)$next;
         }
 
@@ -182,12 +180,12 @@ Class Parse
         $body = $this->_renderLoop();
 
         /**
-         *  Final Includers: Now, the theme, head, messages, and defer renderers run
+         *  Final Includers: Now, the theme, head, messages, and defer includes run
          *      and any cleanup of unfound <include values can take place
          */
         $formatXML = '';
         if ($formatXML == '') {
-            $formatXML = MOLAJO_APPLICATIONS . '/Configuration/renderers-final.xml';
+            $formatXML = MOLAJO_APPLICATIONS . '/Configuration/includes-final.xml';
         }
 
         if (Services::File()->exists($formatXML)) {
@@ -198,7 +196,7 @@ Class Parse
 
         $this->sequence = array();
         $sequence = simplexml_load_file($formatXML, 'SimpleXMLElement');
-        foreach ($sequence->renderer as $next) {
+        foreach ($sequence->include as $next) {
             if ($next == 'message') {
                 $messages = Services::Message()->get();
                 if (count($messages) == 0) {
@@ -216,7 +214,7 @@ Class Parse
             $results = $rc->process();
 
         } else {
-            echo 'failed renderer = ' . 'IncluderTheme' . '<br />';
+            echo 'failed include = ' . 'IncluderTheme' . '<br />';
             // ERROR
         }
 

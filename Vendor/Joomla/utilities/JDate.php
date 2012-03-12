@@ -70,7 +70,6 @@ class JDate extends DateTime
      */
     public function __construct($date = 'now', $tz = null)
     {
-		echo $date.' '.$tz.' in JDate';
         // Create the base GMT and server time zone objects.
         if (empty(self::$gmt) || empty(self::$stz)) {
             self::$gmt = new \DateTimeZone('GMT');

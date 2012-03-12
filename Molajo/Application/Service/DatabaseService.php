@@ -22,52 +22,10 @@ defined('MOLAJO') or die;
 Class DatabaseService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * Database connection
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $db;
-
-    /**
-     * getInstance
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new DatabaseService();
-        }
-        return self::$instance;
-    }
-
-    /**
      * __construct
      *
      * @return object
      * @since  1.0
-     */
-    public function __construct()
-    {
-        return $this->connect();
-    }
-
-    /**
-     * connect
-     *
-     * @return mixed
-     * @throws Exception
-     * @since 1.0
      */
     public function connect($database_class = 'JDatabaseFactory',
                             $configuration_file = null)

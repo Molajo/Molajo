@@ -7,9 +7,6 @@
  */
 namespace Molajo\Application\MVC\Model;
 
-use Molajo\Application\MVC\Model\UserApplicationsModel;
-use Molajo\Application\MVC\Model\UserGroupsModel;
-
 defined('MOLAJO') or die;
 
 /**
