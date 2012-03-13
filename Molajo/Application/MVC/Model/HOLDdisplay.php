@@ -504,7 +504,7 @@ class DisplayModel extends Model
                 foreach ($jsonFields as $name) {
                     $attribute = $name->value;
                     if (property_exists($items[$i], $attribute)) {
-                        $registry = new Registry;
+                        $registry = Services::Registry()->initialise();
                         $registry->loadJSON($items[$i]->$attribute);
                         $items[$i]->$attribute = $registry->toArray();
                     }

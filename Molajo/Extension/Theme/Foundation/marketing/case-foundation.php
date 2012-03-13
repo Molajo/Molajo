@@ -1,6 +1,6 @@
 <? $page_title = "Foundation Case Study" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container hide-on-phones">
     <div class="white-fade"></div>
@@ -9,12 +9,12 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="index.php" class="back two columns hide-on-phones">&larr; Home</a>
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	    	<nav class="on-page hide-on-phones">
@@ -39,7 +39,7 @@
 	    </div>
 	  </div>
 	  <br /><br />
-	  
+
 	  <div class="row">
 	  	<div class="four columns">
 	  		<h5>Showing the Grid</h5>
@@ -57,8 +57,8 @@
 	  		<p>Are you using Foundation? We'd love to hear about it! Let us know how you're using Foundation and we might feature you as a case study for the framework. Just <a href="mailto:foundation@zurb.com?subject=I'm%20using%20Foundation">let us know via email &rarr;</a></p>
 	  	</div>
 	  </div>
-	 
-	 
+
+
 	  <br><br>
 	  <div class="row">
 	    <div class="twelve columns">
@@ -75,7 +75,7 @@
   	    </ul>
   	  </nav>
 	  </div>
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+
+<?php include("includes/_Footer.php");  ?>

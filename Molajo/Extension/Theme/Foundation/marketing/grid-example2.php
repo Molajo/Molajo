@@ -1,20 +1,20 @@
 <? $page_title = "Nesting the Grid" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <style>
-  
+
   	.example .row, .example .row .column, .example .row .columns { border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
   	.example .row { margin-bottom: 10px; }
   	.example .row .column, .example .row .columns { background: #eee; }
-  	
+
   	@media handheld, only screen and (max-width: 767px) {
 		.example .row { height: auto; }
 		.example .row .column, .example .row .columns { margin-bottom: 10px; }
 		.example .row .column:last-child, .example .row .columns:last-child { margin-bottom: 0; }
 	}
-  
+
   </style>
-  
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container hide-on-phones">
     <div class="white-fade"></div>
@@ -23,7 +23,7 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="grid.php" class="back two columns hide-on-phones">&larr; About the Grid</a>
@@ -37,13 +37,13 @@
   	  	</nav>
 	    <!-- / Nav -->
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	      <h1 class="light-weight">Nesting the Grid</h1>
 	    </div>
 	  </div>
-	  
+
 	  <section class="example">
 		 <div class="row">
 		 	<div class="twelve columns">
@@ -105,9 +105,9 @@
 		 </div>
 	  </section>
 	 </div>
-	   	  
-	 <div class="container">  
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+	 <div class="container">
+
+
+
+<?php include("includes/_Footer.php");  ?>

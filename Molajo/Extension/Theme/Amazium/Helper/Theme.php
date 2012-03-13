@@ -18,7 +18,7 @@ use Molajo\Extension\Helper\MustacheHelper;
  * @subpackage  Helper
  * @since       1.0
  */
-Class AmaziumMustacheHelper extends MustacheHelper
+Class AmaziumThemeHelper extends MustacheHelper
 {
     /**
      * hello

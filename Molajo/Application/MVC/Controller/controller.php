@@ -1,11 +1,12 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
+
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -86,14 +87,13 @@ class Controller
      */
     public function __construct($task_request, $parameters)
     {
-        $this->task_request = new Registry;
+        $this->task_request = Services::Registry()->initialise();
         $this->task_request->loadString($task_request);
 
-        $this->parameters = new Registry;
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->loadString($parameters);
 
         // todo: amy look at redirect
-//        $this->redirectClass = new MolajoRedirectController($this->task);
 
         /** model */
         $mc = (string)$this->get('model');
@@ -102,17 +102,6 @@ class Controller
         $this->model->task_request = $this->task_request;
         $this->model->parameters = $this->parameters;
         $this->model->id = $this->task_request->get('id');
-//        $this->model->load((int)$this->get('id'));
-
-        /** dispatch events
-        if ($this->dispatcher
-        || $this->get('task_plugin_type') == ''
-        ) {
-        } else {
-        $this->dispatcher = Services::Dispatcher();
-        MolajoPluginHelper::importPlugin($this->get('task_plugin_type'));
-        }
-         */
 
         /** success **/
         return true;
@@ -136,7 +125,6 @@ class Controller
     }
     public function display()
     {
-
     }
 
     /**
@@ -168,7 +156,6 @@ class Controller
      */
     public function set($key, $value = null)
     {
-        //echo 'Set '.$key.' '.$value.'<br />';
         return $this->task_request->set($key, $value);
     }
 
@@ -193,9 +180,7 @@ class Controller
         $results = $this->model->checkin($this->get('id'));
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_CHECK_IN_FAILED'));
-            $this->redirectClass->setRedirectMessageType('warning');
-            return false;
+            // redirect
         }
 
         return true;
@@ -219,17 +204,12 @@ class Controller
         } else {
             return true;
         }
-
+// or super admin
         if ($this->model->checked_out
             == Services::User()->get('id')) {
 
         } else {
-            $this->redirectClass->setRedirectMessage(
-                Services::Language()->translate('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER')
-                    . ' '
-                    . $this->getTask()
-            );
-            $this->redirectClass->setRedirectMessageType('warning');
+            // redirect error
             return false;
         }
 
@@ -257,9 +237,7 @@ class Controller
 
         $results = $this->model->checkout($this->get('id'));
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage
-            (Services::Language()->translate('MOLAJO_ERROR_CHECKOUT_FAILED'));
-            $this->redirectClass->setRedirectMessageType('error');
+            // redirect error
             return false;
         }
         return true;
@@ -297,20 +275,11 @@ class Controller
 
         /** error processing **/
         if ($versionKey === false) {
-            $this->redirectClass->setRedirectMessage(
-                Services::Language()->translate('MOLAJO_ERROR_VERSION_SAVE_FAILED')
-            );
-            $this->redirectClass->setRedirectMessageType('error');
+            // redirect error
             return false;
         }
 
         /** Trigger_Event: onContentCreateVersion
-        $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->get('id'), $versionKey));
-        if (count($results) && in_array(false, $results, true)) {
-        $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
-        $this->redirectClass->setRedirectMessageType('error');
-        return false;
-        }
          **/
         return true;
     }
@@ -346,24 +315,15 @@ class Controller
 
         /** delete extra versions **/
         $results = $this->model
-            ->maintainVersionCount(
-            $this->get('id'),
-            $maintainVersions
-        );
+            ->maintainVersionCount($this->get('id'), $maintainVersions);
 
         /** version delete failed **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(
-                Services::Language()->translate('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' .
-                    $this->model->getError()
-            );
-            $this->redirectClass->setRedirectMessageType('warning');
+            // redirect false
             return false;
         }
 
         /** Trigger_Event: onContentMaintainVersions
-        return $this->dispatcher->trigger('onContentMaintainVersions',
-         * array($context, $this->get('id'), $maintainVersions));
          **/
     }
 

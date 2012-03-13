@@ -9,7 +9,6 @@ namespace Molajo\Application\Service;
 use HTMLPurifier\HTMLPurifier;
 use HTMLPurifier\HTMLPurifier_Config;
 use Molajo\Application\Services;
-use Joomla\registry\Registry;
 
 defined('MOLAJO') or die;
 
@@ -103,7 +102,7 @@ Class SecurityService
         $config->set('URI.Host', MOLAJO_BASE_URL);
 
         /** Custom Filters */
-        $files = Services::Folder()->files(HTMPURIFIER_FILTERS, '\.php$', false, false);
+        $files = Services::Filesystem()->folderFiles(HTMPURIFIER_FILTERS, '\.php$', false, false);
         foreach ($files as $file) {
 			$class = 'HTMLPurifier\\filters\\';
             $class .= substr($file, 0, strpos($file, '.'));

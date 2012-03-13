@@ -26,7 +26,6 @@ defined('MOLAJO') or die;
  */
 class UpdateController extends Controller
 {
-
     /**
      * cancelItem
      *
@@ -59,10 +58,9 @@ class UpdateController extends Controller
         }
 
         /** success message **/
-        $this->redirectClass->setRedirectMessage(
-            Services::Language()->translate('MOLAJO_CANCEL_SUCCESSFUL')
-        );
-        $this->redirectClass->setSuccessIndicator(true);
+
+		// successful redirect
+
     }
 
     /**

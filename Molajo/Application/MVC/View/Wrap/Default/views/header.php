@@ -1,7 +1,6 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Wrap
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -31,8 +30,14 @@ if ($headerClass == '') :
 else :
     $headerClass = ' class="' . $headerClass . '"';
 endif;
+
+$headerRole = trim($this->parameters->get('wrap_view_css_role', ''));
+if ($headerRole == '') :
+else :
+    $headerRole = ' role="' . $headerRole . '"';
+endif;
 ?>
-<<?php echo trim($headerType.$headerId.$headerClass);?>>
+<<?php echo trim($headerType.$headerId.$headerClass.$headerRole);?>>
 <?php
 $headingLevel = $this->parameters->get('wrap_view_header_level', 3);
 if ((int) Services::Configuration()->get('html5', 1) == 1):

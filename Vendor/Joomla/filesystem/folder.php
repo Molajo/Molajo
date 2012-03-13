@@ -539,6 +539,7 @@ abstract class JFolder
 
 		// Sort the folders
 		asort($arr);
+
 		return array_values($arr);
 	}
 

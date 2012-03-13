@@ -1,6 +1,6 @@
 <? $page_title = "ZURBsoapbox Case Study" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container hide-on-phones">
     <div class="white-fade"></div>
@@ -9,12 +9,12 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="index.php" class="back two columns hide-on-phones">&larr; Home</a>
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	    	<nav class="on-page hide-on-phones">
@@ -39,7 +39,7 @@
 	    </div>
 	  </div>
 	  <br /><br />
-	  
+
 	  <div class="row">
 	  	<div class="four columns">
 	  		<h5>Instant Mobile Site</h5>
@@ -57,8 +57,8 @@
 	  		<p>We practice what we preach, and we're always iterating on Foundation-based sites. Our next step is to implement a more mobile-friendly image solution, so devices don't have to load quite as much data.</p>
 	  	</div>
 	  </div>
-	 
-	 
+
+
 	  <br><br>
 	  <div class="row">
 	    <div class="twelve columns">
@@ -75,7 +75,7 @@
   	    </ul>
   	  </nav>
 	  </div>
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+
+<?php include("includes/_Footer.php");  ?>

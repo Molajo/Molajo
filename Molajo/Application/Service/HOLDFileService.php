@@ -12,16 +12,16 @@ defined('MOLAJO') or die;
 /**
  * File
  *
- * Services::File()->exists
- * Services::File()->getName
- * Services::File()->read
- * Services::File()->write
- * Services::File()->delete
- * Services::File()->copy
- * Services::File()->move
- * Services::File()->get_ext
- * Services::File()->remove_ext
- * Services::File()->upload
+ * Services::Filesystem()->fileExists
+ * Services::Filesystem()->fileName
+ * Services::Filesystem()->fileRead
+ * Services::Filesystem()->fileWrite
+ * Services::Filesystem()->fileDelete
+ * Services::Filesystem()->fileCopy
+ * Services::Filesystem()->fileMove
+ * Services::Filesystem()->fileExtension
+ * Services::Filesystem()->fileNameNoExtension
+ * Services::Filesystem()->fileUpload
  *
  * @package     Molajo
  * @subpackage  Services
@@ -70,7 +70,7 @@ class FileService
      * Returns true if the file exists
      *
      * Example usage:
-     * if (Services::File()->exists($formatXML)) {
+     * if (Services::Filesystem()->fileExists($formatXML)) {
      *
      * @param   string  $file  path and file name
      *
@@ -88,7 +88,7 @@ class FileService
      * Returns the name of the file, without any path.
      *
      * Example usage:
-     * echo Services::File()->getName(MOLAJO_BASE_FOLDER.'/autoload.php');
+     * echo Services::Filesystem()->fileName(MOLAJO_BASE_FOLDER.'/autoload.php');
      *
      * @param   string  $file  path and file name
      *

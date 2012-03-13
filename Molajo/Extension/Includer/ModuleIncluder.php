@@ -58,9 +58,7 @@ abstract class ModuleHelper
     /**
      * import
      *
-     * lazy load imports of extension folders and files
-     * Files and classes do not have to exist if system
-     * defaults can be used
+     * Extension classes, if existing
      *
      * @since 1.0
      */

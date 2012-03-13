@@ -124,7 +124,7 @@ class ViewHelper
         $this->view_path = false;
 
         /** Remaining portion of path for all locations */
-        $plus = '/views/' . $this->view_type . '/' . $this->view;
+        $plus = '/View/' . $this->view_type . '/' . $this->view;
 
         /** 1. Theme */
         $theme = MOLAJO_EXTENSIONS_THEMES . '/' . $this->theme_name;

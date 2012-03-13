@@ -6,11 +6,7 @@
  */
 namespace Molajo\Application\MVC\Model;
 
-use Joomla\registry\Registry;
-use Joomla\database\JDatabaseFactory;
-use Joomla\database\driver\JDatabaseDriverMysqli;
 use Molajo\Application\Services; //Date, DB, Language, Message
-use Molajo\Application\Service\DatabaseService;
 
 defined('MOLAJO') or die;
 
@@ -19,9 +15,9 @@ defined('MOLAJO') or die;
  *
  * Base Molajo Model
  *
- * @package	   Molajo
+ * @package	   	Molajo
  * @subpackage	Model
- * @since 1.0
+ * @since 		1.0
  */
 class Model
 {
@@ -171,8 +167,8 @@ class Model
 	 */
 	public function __construct($id = null)
 	{
-		$this->task_request = new Registry();
-		$this->state = new Registry();
+		$this->task_request = Services::Registry()->initialise();
+		$this->state = Services::Registry()->initialise();
 		$this->query_results = array();
 		$this->pagination = array();
 

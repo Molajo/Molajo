@@ -1,11 +1,12 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
+
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -107,11 +108,11 @@ class DisplayController extends Controller
     /**
      * renderView
      *
-     * Depending on the files within view/view-type/view-name/views/*.*:
+     * Depending on the files within view/view-type/view-name/View/*.*:
      *
-     * 1. Include a single custom.php file to process all query results in $this->rowset
+     * 1. Include a single Custom.php file to process all query results in $this->rowset
      *
-     * 2. Include header.php, body.php, and/or footer.php views for Molajo to
+     * 2. Include Header.php, Body.php, and/or Footer.php views for Molajo to
      *  perform the looping, sending $row into the views
      *
      * @return string
@@ -126,8 +127,8 @@ class DisplayController extends Controller
         ob_start();
 
         /** 1. view handles loop and event processing */
-        if (file_exists($this->view_path . '/views/custom.php')) {
-            include $this->view_path . '/views/custom.php';
+        if (file_exists($this->view_path . '/View/Custom.php')) {
+            include $this->view_path . '/View/Custom.php';
 
         } else {
 
@@ -142,8 +143,8 @@ class DisplayController extends Controller
                         echo $this->row->event->beforeRenderView;
                     }
 
-                    if (file_exists($this->view_path . '/views/header.php')) {
-                        include $this->view_path . '/views/header.php';
+                    if (file_exists($this->view_path . '/View/Header.php')) {
+                        include $this->view_path . '/View/Header.php';
                     }
                 }
 
@@ -155,8 +156,8 @@ class DisplayController extends Controller
                         echo $this->row->event->beforeRenderViewItem;
                     }
 
-                    if (file_exists($this->view_path . '/views/body.php')) {
-                        include $this->view_path . '/views/body.php';
+                    if (file_exists($this->view_path . '/View/Body.php')) {
+                        include $this->view_path . '/View/Body.php';
                     }
 
                     if (isset($this->row->event->afterRenderViewItem)) {
@@ -170,8 +171,8 @@ class DisplayController extends Controller
             /** footer: after all rows are processed */
             if ($rowCount > $totalRows) {
 
-                if (file_exists($this->view_path . '/views/footer.php')) {
-                    include $this->view_path . '/views/footer.php';
+                if (file_exists($this->view_path . '/View/Footer.php')) {
+                    include $this->view_path . '/View/Footer.php';
 
                     if (isset($this->row->event->afterRenderView)) {
                         echo $this->row->event->afterRenderView;

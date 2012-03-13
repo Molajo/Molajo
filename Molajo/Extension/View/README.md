@@ -84,9 +84,9 @@ A View is organized in the following way:
         ... ... ... ... en-GB.view-name.sys.ini
         ... ... views
         ... ... ... top.php
-        ... ... ... header.php
-        ... ... ... body.php
-        ... ... ... footer.php
+        ... ... ... Header.php
+        ... ... ... Body.php
+        ... ... ... Footer.php
         ... ... ... bottom.php
         ... ... view-name.xml
 
@@ -98,7 +98,7 @@ Views can be found in four places in a Molajo website, as defined below.
 
 1. Views stored in the platforms/molajo/mvc/views folder are available for any extension. These are the default views that do not override any other location. These are also the only views that are upgraded by Molajo.
 
-2. Views stored in the extensions/views/view-type/view-name folder override the views above and are available for any extension. It is acceptable to customize these views as views located here will never be upgraded by Molajo.
+2. Views stored in the extensions/View/view-type/view-name folder override the views above and are available for any extension. It is acceptable to customize these views as views located here will never be upgraded by Molajo.
 
 3. Views stored with in the views folder for the extension itself can only be used by that extension, overriding each of the previous locations. It is acceptable to customize these views as views located here will never be upgraded by Molajo.
 
@@ -136,7 +136,7 @@ Molajo searches for Views using the first found with the view name, in this orde
 
 * extensions/component/view-type/view-name (also for the module and plugin folders)
 
-* extensions/views/view-type/view-name
+* extensions/View/view-type/view-name
 
 * platforms/molajo/mvc/views
 
@@ -216,7 +216,7 @@ For extensions (components, modules, and plugins), content items and items for a
 
 CSS and JS files located within the view-name/css and view-name/js folders are loaded for the view. To override the CSS and JS for a view, one must override the entire view. See topics above for how to override a view and the sequence used to select the view used.
 
-      => selected-view-locate/views/view-type/view-name/css[js]/XYZ.css[js]
+      => selected-view-locate/View/view-type/view-name/css[js]/XYZ.css[js]
 
 ---
 
@@ -226,27 +226,27 @@ CSS and JS files located within the view-name/css and view-name/js folders are l
 
 There are two options for using query results:
 
-#### To process the recordset within your view file, include the custom.php view file. ####
+#### To process the recordset within your view file, include the Custom.php view file. ####
 
-When Molajo finds a custom.php file, it pushes the $this->rowset object into the file.
+When Molajo finds a Custom.php file, it pushes the $this->rowset object into the file.
 
 The view must handle it's own loop processing for the recordset.
 
-#### To allow Molajo to handle recordset process, don't include the custom.php file. ####
+#### To allow Molajo to handle recordset process, don't include the Custom.php file. ####
 
 Instead, use the:
 
  1. top.php
- 2. header.php
- 3. body.php
- 4. footer.php
+ 2. Header.php
+ 3. Body.php
+ 4. Footer.php
  5. bottom.php
 
 #### How does the Molajo View process the recordset and render the view files? ####
 
 The Molajo View loops through each row, one at a time.
 
-The following view-type/view-name/views/ files are included, if existing:
+The following view-type/view-name/View/ files are included, if existing:
 
 ##### Before any rows and if there is a top.php file: #####
 
@@ -255,12 +255,12 @@ The following view-type/view-name/views/ files are included, if existing:
 
 ##### Each row is processed one at a time, as follows: #####
 
-* if there is a **header.php** file, it is included and event **afterDisplayTitle** output is rendered.
-* if there is a **body.php** file, it is included.
-* if there is a **footer.php** file, it is included.
+* if there is a **Header.php** file, it is included and event **afterDisplayTitle** output is rendered.
+* if there is a **Body.php** file, it is included.
+* if there is a **Footer.php** file, it is included.
 
-##### After all rows have been processed, and if there is a footer.php file: #####
-* the *footer.php* file is included;
+##### After all rows have been processed, and if there is a Footer.php file: #####
+* the *Footer.php* file is included;
 * *afterDisplayContent* output is rendered;
 
 ---

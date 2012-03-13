@@ -8,7 +8,6 @@ namespace Molajo\Application\Service;
 
 use Molajo\Application\MVC\Model\UsersModel;
 use Molajo\Application\Services;
-use Joomla\registry\Registry;
 
 defined('MOLAJO') or die;
 
@@ -82,7 +81,7 @@ Class UserService
         $this->id = (int) $id;
 //        $this->storage = Services::Request()->getSession();
 
-        $this->storage = new Registry;
+        $this->storage = Services::Registry()->initialise();
 
         if ((int) $id == 0) {
             return $this->_loadGuest();
@@ -150,15 +149,15 @@ Class UserService
             $this->set($name, $value);
         }
 
-        $custom_fields = new Registry;
+        $custom_fields = Services::Registry()->initialise();
         $custom_fields->loadString($this->get('custom_fields', array()));
         $this->set('custom_fields', $custom_fields);
 
-        $metadata = new Registry;
+        $metadata = Services::Registry()->initialise();
         $metadata->loadString($this->get('metadata', array()));
         $this->set('metadata', $metadata);
 
-        $parameters = new Registry;
+        $parameters = Services::Registry()->initialise();
         $parameters->loadString($this->get('parameters'));
         $this->set('parameters', $parameters);
 
@@ -189,7 +188,7 @@ Class UserService
         $this->set('id', 0);
         $this->set('asset_type_id', MOLAJO_ASSET_TYPE_USER);
 
-        $parameters = new Registry;
+        $parameters = Services::Registry()->initialise();
         $parameters->loadString(
             Services::Configuration()->get('guest_parameters', '{}')
         );

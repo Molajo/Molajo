@@ -54,7 +54,7 @@ abstract ClassPluginHelper extends JEvent
             if ($config['parameters'] instanceof Registry) {
                 $this->parameters = $config['parameters'];
             } else {
-                $this->parameters = new Registry;
+                $this->parameters = Services::Registry()->initialise();
                 $this->parameters->loadString($config['parameters']);
             }
         }

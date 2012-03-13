@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 use Molajo\Application\Services;
 use Molajo\Application\Request;
 use Molajo\Extension\Helper\ExtensionHelper;
-use Molajo\Extension\Helper\MustacheHelper;
+use Molajo\Extension\Helper\ThemeHelper;
 
 /**
  * Theme
@@ -39,7 +39,7 @@ Class ThemeIncluder extends Includer
         $this->name = $name;
         $this->type = $type;
 
-        $this->parameters = new Registry;
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 0);
     }
 
@@ -151,12 +151,12 @@ Class ThemeIncluder extends Includer
         /** Theme Helper Load Media */
         $helperClass = 'Molajo' .
             ucfirst(Molajo::Request()->get('theme_name'))
-            . 'MustacheHelper';
+            . 'ThemeHelper';
 
         if (class_exists($helperClass)) {
             $h = new $helperClass();
         } else {
-            $helperClass = 'MolajoMustacheHelper';
+            $helperClass = 'MolajoThemeHelper';
         }
         $h = new $helperClass();
 

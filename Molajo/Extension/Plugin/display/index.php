@@ -58,7 +58,7 @@ class DisplayAdapter
         if ($parameters instanceof JRegistry) {
             $this->_parameters = $parameters;
         } else {
-            $this->_parameters = new Registry;
+            $this->_parameters = Services::Registry()->initialise();
         }
 
         return;

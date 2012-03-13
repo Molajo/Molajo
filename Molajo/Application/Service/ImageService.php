@@ -199,14 +199,14 @@ Class ImageService
         $images = Services::Configuration()->get('media_path', 'media/images');
 
         /** folders */
-        if (Services::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
+        if (Services::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            Services::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
+            Services::Filesystem()->folderCreate(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** make certain original image exists */
         $this->fileNameOriginal = SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
-        if (Services::File()->exists($this->fileNameOriginal)) {
+        if (Services::Filesystem()->fileExists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
             return false;
@@ -224,14 +224,14 @@ Class ImageService
         $images = Services::Configuration()->get('thumb_folder', '/media/images/thumbs');
 
         /** folders */
-        if (Services::Folder()->exists(SITE_FOLDER_PATH . '/' . $images)) {
+        if (Services::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
         } else {
-            Services::Folder()->create(SITE_FOLDER_PATH . '/' . $images);
+            Services::Filesystem()->folderCreate(SITE_FOLDER_PATH . '/' . $images);
         }
 
         /** if resized image already exists, return it */
         $this->fileNameNew = SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
-        if (Services::File()->exists($this->fileNameNew)) {
+        if (Services::Filesystem()->fileExists($this->fileNameNew)) {
             return true;
         }
 

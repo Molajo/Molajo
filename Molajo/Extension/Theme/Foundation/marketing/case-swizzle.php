@@ -1,6 +1,6 @@
 <? $page_title = "Swizzle Case Study" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container hide-on-phones">
     <div class="white-fade"></div>
@@ -9,13 +9,13 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="index.php" class="back two columns hide-on-phones">&larr; Home</a>
 	    <!-- / Nav -->
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	    	<nav class="on-page hide-on-phones">
@@ -40,7 +40,7 @@
 	    </div>
 	  </div>
 	  <br /><br />
-	  
+
 	  <div class="row">
 	  	<div class="four columns">
 	  		<h5>Built in the Browser</h5>
@@ -58,8 +58,8 @@
 	  		<p>What's next is to switch our client portal over to using Foundation. We've got lots of forms in our client portal, and until now they've been a real headache to style. We're also going to use Reveal for some great interactive features.</p>
 	  	</div>
 	  </div>
-	 
-	 
+
+
 	  <br><br>
 	  <div class="row">
 	    <div class="twelve columns">
@@ -76,7 +76,7 @@
   	    </ul>
   	  </nav>
 	  </div>
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+
+<?php include("includes/_Footer.php");  ?>

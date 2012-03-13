@@ -1,6 +1,6 @@
 <? $page_title = "Mobile Visibility" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container">
     <div class="white-fade hide-on-phones"></div>
@@ -9,7 +9,7 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="mobile.php" class="back two columns hide-on-phones">&larr; About Mobile</a>
@@ -23,14 +23,14 @@
   	  	</nav>
 	    <!-- / Nav -->
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	      <h1 class="light-weight">Mobile Visibility</h1>
 	      <p>Foundation is designed to quickly prototype, and one thing we've found very helpful is a series of visibility classes that can be applied to turn things on and off for different devices. On this page, you'll see slightly different interfaces on each class of device (desktop, tablet, and phone).</p>
 	    </div>
 	  </div>
-	  
+
 	  <div class="row show-on-desktops">
 	  	<div class="twelve columns">
 	  		<h3>Desktop Interface</h3><br />
@@ -65,7 +65,7 @@
 	  		</div>
 	  	</div>
 	  </div>
-	  
+
 	  <div class="row show-on-tablets">
 	  	<div class="twelve columns">
 	  		<h3>Tablet Interface</h3><br />
@@ -93,10 +93,10 @@
 	  		</div>
 	  	</div>
 	  </div>
-	  
+
 	  <div class="row show-on-phones">
 	  	<div class="twelve columns">
-	  		
+
 	  		<h3>Phone Interface</h3><br />
 	  		<p>As an example, you'll only see this interface if you're on a phone (something with a resolution lower than desktops or tablets). On a phone our columns will all stack, and we would place navigation at the bottom of the page.</p>
 	  		<ul class="block-grid three-up">
@@ -109,7 +109,7 @@
 	  		</ul>
 	  	</div>
 	  </div>
-	  
+
 	  <div class="row show-on-phones">
 	  	<div class="twelve columns">
 	  		<dl class="nice mobile tabs">
@@ -119,11 +119,11 @@
 	  		</dl>
 	  	</div>
 	  </div>
-	  
-	  
-	  
+
+
+
 	 </div>
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+
+<?php include("includes/_Footer.php");  ?>

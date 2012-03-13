@@ -140,7 +140,7 @@ Class Parse
             $formatXML = MOLAJO_APPLICATIONS . '/Configuration/includes-page.xml';
         }
 
-        if (Services::File()->exists($formatXML)) {
+        if (Services::Filesystem()->fileExists($formatXML)) {
         } else {
             //error
             return false;
@@ -152,7 +152,7 @@ Class Parse
         }
 
         /** Theme Parameters */
-        $this->parameters = new Registry;
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->loadArray(
             array(
                 'theme' => Molajo::Request()->get('theme_name'),
@@ -170,7 +170,7 @@ Class Parse
 
             $helperClass = 'Molajo' .
                 ucfirst(Molajo::Request()->get('theme_name'))
-                . 'MustacheHelper';
+                . 'ThemeHelper';
         }
 
         /** Before Event */
@@ -188,7 +188,7 @@ Class Parse
             $formatXML = MOLAJO_APPLICATIONS . '/Configuration/includes-final.xml';
         }
 
-        if (Services::File()->exists($formatXML)) {
+        if (Services::Filesystem()->fileExists($formatXML)) {
         } else {
             //error
             return false;

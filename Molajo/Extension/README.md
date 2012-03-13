@@ -20,7 +20,7 @@ The following links contain information designed to help you learn how to create
 
 2. [**Languages**](https://github.com/Molajo/Molajo/blob/core/extensions/languages/README.md)
 
-3. [**Views**](https://github.com/Molajo/Molajo/blob/core/extensions/views/README.md)
+3. [**Views**](https://github.com/Molajo/Molajo/blob/core/extensions/View/README.md)
 
 4. [**Modules**](https://github.com/Molajo/Molajo/blob/core/extensions/modules/README.md)
 

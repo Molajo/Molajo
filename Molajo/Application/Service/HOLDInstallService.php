@@ -180,7 +180,7 @@ Class InstallService
       */
      public static function parseManifestXML($path)
      {
-         if (Services::Folder()->exists($path)) {
+         if (Services::Filesystem()->folderExists($path)) {
          } else {
              return false;
          }
@@ -268,7 +268,7 @@ Class InstallService
           }
 
           // Write buffer to file
-          Services::File()->write($target, $contents);
+          Services::Filesystem()->fileWrite($target, $contents);
 
           // Close file pointer resource
           fclose($inputHandle);
@@ -326,10 +326,10 @@ Class InstallService
              * List all the items in the installation directory.  If there is only one, and
              * it is a folder, then we will set that folder to be the installation folder.
              */
-          $dirList = array_merge(Services::Folder()->files($extractdir, ''), Services::Folder()->folders($extractdir, ''));
+          $dirList = array_merge(Services::Filesystem()->folderFiles($extractdir, ''), Services::Folder()->folders($extractdir, ''));
 
           if (count($dirList) == 1) {
-              if (Services::Folder()->exists($extractdir . '/' . $dirList[0])) {
+              if (Services::Filesystem()->folderExists($extractdir . '/' . $dirList[0])) {
                   $extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
               }
           }
@@ -365,7 +365,7 @@ Class InstallService
       public static function detectType($p_dir)
       {
           // Search the install dir for an XML file
-          $files = Services::Folder()->files($p_dir, '\.xml$', 1, true);
+          $files = Services::Filesystem()->folderFiles($p_dir, '\.xml$', 1, true);
 
           if (!count($files)) {
               MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
@@ -431,17 +431,17 @@ Class InstallService
 
           // Does the unpacked extension directory exist?
           if (is_dir($resultdir)) {
-              Services::Folder()->delete($resultdir);
+              Services::Filesystem()->folderDelete($resultdir);
           }
 
           // Is the package file a valid file?
           if (is_file($package)) {
-              Services::File()->delete($package);
+              Services::Filesystem()->fileDelete($package);
           }
           elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package)))
           {
               // It might also be just a base filename
-              Services::File()->delete(JPath::clean($config->get('temp_path') . '/' . $package));
+              Services::Filesystem()->fileDelete(JPath::clean($config->get('temp_path') . '/' . $package));
           }
       }
 

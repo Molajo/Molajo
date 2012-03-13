@@ -294,12 +294,12 @@ Class DocumentService
      */
     public function add_css_folder($file_path, $url_path, $priority = 500)
     {
-        if (Services::Folder()->exists($file_path . '/css')) {
+        if (Services::Filesystem()->folderExists($file_path . '/css')) {
         } else {
             return;
         }
 
-        $files = Services::Folder()->files($file_path . '/css', '\.css$', false, false);
+        $files = Services::Filesystem()->folderFiles($file_path . '/css', '\.css$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -430,12 +430,12 @@ Class DocumentService
             $extra = '/js';
             $defer = 0;
         }
-        if (Services::Folder()->exists($file_path . $extra)) {
+        if (Services::Filesystem()->folderExists($file_path . $extra)) {
         } else {
             return;
         }
 
-        $files = Services::Folder()->files($file_path . $extra, '\.js$', false, false);
+        $files = Services::Filesystem()->folderFiles($file_path . $extra, '\.js$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {

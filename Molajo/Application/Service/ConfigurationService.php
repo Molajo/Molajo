@@ -6,7 +6,7 @@
  */
 namespace Molajo\Application\Service;
 
-use Joomla\registry\Registry;
+use Molajo\Application\Services;
 use Molajo\Application\MVC\Model\ApplicationsModel;
 
 defined('MOLAJO') or die;
@@ -78,8 +78,8 @@ Class ConfigurationService
 	 */
 	public function __construct($configuration_file = null)
 	{
-		$this->configuration = new Registry();
-		$siteData = new Registry();
+		$this->configuration = Services::Registry()->initialise();
+		$siteData = Services::Registry()->initialise();
 
 		/** Site Configuration: php file */
 		$siteData = $this->getSite($configuration_file);
@@ -90,13 +90,13 @@ Class ConfigurationService
 		/** Application Table entry for each application - parameters field has config */
 		$appConfig = $this->getApplicationInfo();
 
-		$this->metadata = new Registry();
+		$this->metadata = Services::Registry()->initialise();
 		$this->metadata->loadString($appConfig->metadata);
 
-		$this->custom_fields = new Registry;
+		$this->custom_fields = Services::Registry()->initialise();
 		$this->custom_fields->loadString($appConfig->custom_fields);
 
-		$parameters = new Registry;
+		$parameters = Services::Registry()->initialise();
 		$parameters->loadString($appConfig->parameters);
 
 		// todo: amy check this after the interface is working and not test data

@@ -1,11 +1,12 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
+
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -54,23 +55,22 @@ class LoginController
         /**
          *  Authenticate, Authorize and Execute After Login Plugins
          */
-        $molajoAuth = MolajoAuthentication::getInstance();
+        $userObject = Services::Authentication()->authenticate($credentials, $options);
 
-        $userObject = $molajoAuth->authenticate($credentials, $options);
-        if ($userObject->status === MolajoAuthentication::STATUS_SUCCESS) {
+        if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
             $this->_loginFailed('authenticate', $userObject, $options);
             return;
         }
 
-        $molajoAuth->authorise($userObject, (array)$options);
-        if ($userObject->status === MolajoAuthentication::STATUS_SUCCESS) {
+		Services::Authentication()->authorise($userObject, (array)$options);
+        if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
             $this->_loginFailed('authorise', $userObject, $options);
             return;
         }
 
-        $molajoAuth->onUserLogin($userObject, (array)$options);
+		Services::Authentication()->onUserLogin($userObject, (array)$options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
@@ -94,8 +94,7 @@ class LoginController
         }
 
         /** success message */
-        $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_SUCCESSFUL_LOGON'));
-        $this->redirectClass->setSuccessIndicator(true);
+        // success redirect
     }
 
     /**
@@ -116,12 +115,7 @@ class LoginController
 //            Services::Dispatcher()->trigger('onUserAuthorisationFailure', array($response, $options));
 //        }
 
-        if (isset($options['silent']) && $options['silent']) {
-        } else {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('JLIB_LOGIN_AUTHORIZED'));
-            $this->redirectClass->setRedirectMessageType(Services::Language()->translate('warning'));
-        }
-        return $this->redirectClass->setSuccessIndicator(false);
+        //redirect false;
     }
 
     /**

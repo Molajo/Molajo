@@ -6,8 +6,7 @@
  */
 namespace Molajo\Application\Service;
 
-use Joomla\registry\Registry;
-use Molajo\Application\Services; // Folder, User
+use Molajo\Application\Services; // Registry, Folder, User
 
 defined('MOLAJO') or die;
 /**
@@ -503,7 +502,7 @@ Class LanguageService
 
         $languages = array();
 
-        $files = Services::Folder()->files($path . '/language', '\.ini', false, false);
+        $files = Services::Filesystem()->folderFiles($path . '/language', '\.ini', false, false);
         if (count($files) == 0) {
             return false;
         }
@@ -532,7 +531,7 @@ Class LanguageService
      */
     public function getLanguagesCore()
     {
-        $subfolders = Services::Folder()->folders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $subfolders = Services::Filesystem()->folderFolders(MOLAJO_EXTENSIONS_LANGUAGES);
 
         $languages = array();
 

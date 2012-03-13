@@ -1,6 +1,6 @@
 <? $page_title = "ZURBjobs Case Study" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container hide-on-phones">
     <div class="white-fade"></div>
@@ -9,12 +9,12 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="index.php" class="back two columns hide-on-phones">&larr; Home</a>
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	    	<nav class="on-page hide-on-phones">
@@ -41,7 +41,7 @@
 	    </div>
 	  </div>
 	  <br /><br />
-	  
+
 	  <div class="row">
 	  	<div class="four columns">
 	  		<h5>Minimal Code Required</h5>
@@ -59,8 +59,8 @@
 	  		<p>Like any project there's more to do and more to refine. Up next, we'll be fleshing out the customer admin tools so people can create, modify, and close out their own postings.</p>
 	  	</div>
 	  </div>
-	 
-	 
+
+
 	  <br><br>
 	  <div class="row">
 	    <div class="twelve columns">
@@ -77,7 +77,7 @@
   	    </ul>
   	  </nav>
 	  </div>
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+
+<?php include("includes/_Footer.php");  ?>

@@ -7,7 +7,6 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
-use Joomla\registry\Registry;
 
 defined('MOLAJO') or die;
 

@@ -6,7 +6,6 @@
  */
 namespace Molajo\Application\Service;
 
-use Joomla\registry\Registry;
 use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
@@ -60,7 +59,7 @@ Class DebugService
 	 */
 	public function __construct()
 	{
-		$config = new Registry();
+		$config = Services::Registry()->initialise();
 		$this->on = (int) Services::Configuration()->get('debug', 0);
 
 		return $this;

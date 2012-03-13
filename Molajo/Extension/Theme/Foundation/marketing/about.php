@@ -1,6 +1,6 @@
 <? $page_title = "Goodies" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container">
     <div class="white-fade hide-on-phones"></div>
@@ -9,12 +9,12 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="index.php" class="back two columns hide-on-phones">&larr; Home</a>
 	  </div>
-	  
+
 
 	 <div class="row">
 	 	<div class="two columns">
@@ -27,7 +27,7 @@
 	 </div>
 	 <br />
 	 <br />
-	 
+
 	 <div class="row">
 	 	<div class="four columns">
 	 		<h4>Why build it?</h4>
@@ -42,11 +42,11 @@
 	 		<p>So tell us! File it on <a href="http://www.github.com/zurb/foundation">Github</a> or simply <a href="mailto:foundation@zurb.com">email us</a>. We crave feedback, and we want to keep polishing Foundation until it's the best, most badass code framework you've ever seen.</p>
 	 	</div>
 	 </div>
-	 
+
 	 <div class="row">
 	 	<hr /><br /><br />
 	 </div>
-	 
+
 	 <div class="row">
 	 	<div class="six columns">
 	 		<h2>Why a yeti?</h2>
@@ -94,10 +94,10 @@
 	 		</ul>
 	 	</div>
 	 </div>
-	 
 
-	 
-	 
+
+
+
 	  <br><br>
 	  <div class="row">
 	    <nav class="ten columns hide-on-desktops">
@@ -109,6 +109,6 @@
   	  </nav>
 	  </div>
 	</div>
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+<?php include("includes/_Footer.php");  ?>

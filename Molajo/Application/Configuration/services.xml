@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>Version</service>
-    <service>File</service>
-    <service>Folder</service>
+    <service>Registry</service>
+    <service>Filesystem</service>
     <service>Message</service>
     <service>Database</service>
     <service>Configuration</service>

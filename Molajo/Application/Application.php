@@ -6,10 +6,6 @@
  */
 namespace Molajo\Application;
 
-use Joomla\registry\Registry;
-use Molajo\Application\Services;
-use Molajo\Application\Request;
-use Molajo\Application\Parse;
 use Molajo\Application\MVC\Model\SitesModel;
 
 defined('MOLAJO') or die;
@@ -151,13 +147,13 @@ Class Application
 			die;
 		}
 
-		$this->site_custom_fields = new Registry;
+		$this->site_custom_fields = Services::Registry()->initialise();
 		$this->site_custom_fields->loadString($info->site_custom_fields);
 
-		$this->site_parameters = new Registry;
+		$this->site_parameters = Services::Registry()->initialise();
 		$this->site_parameters->loadString($info->parameters);
 
-		$this->site_metadata = new Registry;
+		$this->site_metadata = Services::Registry()->initialise();
 		$this->site_metadata->loadString($info->metadata);
 
 		$this->base_url = $info->base_url;

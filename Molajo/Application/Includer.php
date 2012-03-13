@@ -6,13 +6,10 @@
  */
 namespace Molajo\Application;
 
+use Molajo\Extension\Helper\ExtensionHelper;
+
 defined('MOLAJO') or die;
 
-use Molajo\Application\Request;
-use Molajo\Application\Parse;
-use Molajo\Application\Services;
-use Molajo\Extension\Helper\ExtensionHelper;
-use Joomla\registry\Registry;
 /**
  * Includer
  *
@@ -130,7 +127,7 @@ class Includer
         $this->type = $type;
         $this->items = $items;
 
-        $this->parameters = new Registry;
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 0);
     }
 
@@ -272,7 +269,7 @@ class Includer
      */
     protected function _initializeRequest()
     {
-        $this->task_request = new Registry();
+        $this->task_request = Services::Registry()->initialise();
 
         /** extension */
         $this->set('extension_instance_id', 0);
@@ -445,7 +442,7 @@ class Includer
         $this->set('extension_view_group_id', $row->view_group_id);
         $this->set('extension_type', $row->asset_type_title);
 
-        $this->parameters = new Registry;
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->loadString($row->parameters);
 
         $this->set('source_asset_type_id',

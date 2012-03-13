@@ -1,5 +1,5 @@
 <? $page_title = "Rapid Prototyping and Building Framework from ZURB" ?>
-<?php include("includes/_header.php"); ?>
+<?php include("includes/_Header.php"); ?>
 
   <!-- Grid BG -->
   <div id="gridBg" class="container">
@@ -8,7 +8,7 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
   <!-- Header -->
 	<div class="container">
 		<div class="row">
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<!-- /Header -->
-	
+
 	<!-- Main Container -->
 	<div id="main" class="container">
 	  <!-- Update Bar -->
@@ -49,7 +49,7 @@
 	    </section>
 	  </div>
 	  <!-- /Update Bar -->
-	  
+
 	  <!-- Value Props -->
 	  <section id="valueProps" class="row">
 	    <article class="four columns">
@@ -66,7 +66,7 @@
 	    </article>
 	  </section>
 	  <!-- /Value Props -->
-	  
+
 	  <!-- Who's Using Foundation? -->
 	  <section id="logos" class="row">
 	    <article class="twelve columns">
@@ -81,7 +81,7 @@
 	    </article>
 	  </section>
 	  <!-- /Who's Using -->
-	  
+
 	  <!-- Case Studies > Desktop -->
 	  <section class="row hide-on-phones">
 	  	<div class="twelve columns">
@@ -116,8 +116,8 @@
 	  	</div>
 	  </section>
 	  <!-- /Case Studies > Desktop -->
-	  
-	  <!-- Case Studies Mobile -->	  
+
+	  <!-- Case Studies Mobile -->
 	  <section id="swipeArea" class="row show-on-phones">
       <div class="twelve columns">
         <h5>Case Studies <!-- <small>Swipe to see more</small> --></h5>
@@ -154,5 +154,5 @@
 	    </ul>
 	  </section>
 	  <!-- /Case Studies Mobile -->
-	
-<?php include("includes/_footer.php");  ?>
+
+<?php include("includes/_Footer.php");  ?>

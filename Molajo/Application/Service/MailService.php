@@ -132,7 +132,7 @@ Class MailService
             return true;
         }
 
-        $this->configuration = new Registry();
+        $this->configuration = Services::Registry()->initialise();
 
         $results = $this->permission();
         if ($results === true) {

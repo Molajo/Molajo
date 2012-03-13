@@ -40,7 +40,7 @@ class ComponentIncluder extends Includer
 
         $this->parameters = Molajo::Request()->parameters;
 
-        $this->task_request = new Registry();
+        $this->task_request = Services::Registry()->initialise();
 
         /** extension */
         $this->set('extension_instance_id',
@@ -180,7 +180,7 @@ class ComponentIncluder extends Includer
                 $name . 'Controller'
             );
         }
-        $files = Services::Folder()->files($this->get('extension_path') . '/controllers', '\.php$', false, false);
+        $files = Services::Filesystem()->folderFiles($this->get('extension_path') . '/controllers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile(
@@ -191,7 +191,7 @@ class ComponentIncluder extends Includer
         }
 
         /** Helpers */
-        $files = Services::Folder()->files($this->get('extension_path') . '/helpers', '\.php$', false, false);
+        $files = Services::Filesystem()->folderFiles($this->get('extension_path') . '/helpers', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/helpers/' . $file,
@@ -201,7 +201,7 @@ class ComponentIncluder extends Includer
         }
 
         /** Models */
-        $files = Services::Folder()->files($this->get('extension_path') . '/models', '\.php$', false, false);
+        $files = Services::Filesystem()->folderFiles($this->get('extension_path') . '/models', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/models/' . $file,
@@ -211,7 +211,7 @@ class ComponentIncluder extends Includer
         }
 
         /** Tables */
-        $files = Services::Folder()->files($this->get('extension_path') . '/tables', '\.php$', false, false);
+        $files = Services::Filesystem()->folderFiles($this->get('extension_path') . '/tables', '\.php$', false, false);
         if ($files) {
             foreach ($files as $file) {
                 $load->requireClassFile($this->get('extension_path') . '/tables/' . $file,
@@ -221,13 +221,13 @@ class ComponentIncluder extends Includer
         }
 
         /** Views */
-        $folders = Services::Folder()->folders($this->get('extension_path') . '/views', false, false);
+        $folders = Services::Filesystem()->folderFolders($this->get('extension_path') . '/views', false, false);
         if ($folders) {
             foreach ($folders as $folder) {
-                $files = Services::Folder()->files($this->get('extension_path') . '/views/' . $folder, false, false);
+                $files = Services::Filesystem()->folderFiles($this->get('extension_path') . '/View/' . $folder, false, false);
                 if ($files) {
                     foreach ($files as $file) {
-                        $load->requireClassFile($this->get('extension_path') . '/views/' . $folder . '/' . $file,
+                        $load->requireClassFile($this->get('extension_path') . '/View/' . $folder . '/' . $file,
                             $name . 'View' . ucfirst($folder));
                     }
                 }

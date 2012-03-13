@@ -1,11 +1,12 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
+
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 

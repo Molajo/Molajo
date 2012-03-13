@@ -51,7 +51,7 @@ Class MessageIncluder extends Includer
         $this->set('model', 'MessagesModel');
         $this->set('task', 'display');
 
-        $this->parameters = new Registry();
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 1);
 
         if ((int)$this->get('template_view_id', 0) == 0) {

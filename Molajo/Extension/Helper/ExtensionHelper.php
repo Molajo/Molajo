@@ -11,7 +11,7 @@ use Molajo\Application\MVC\Model\ExtensionInstancesModel;
 use Molajo\Application\Services;
 use Molajo\Extension\Helper\ComponentHelper;
 use Molajo\Extension\Helper\ModuleHelper;
-use Molajo\Extension\Helper\MustacheHelper;
+use Molajo\Extension\Helper\ThemeHelper;
 use Molajo\Extension\Helper\PluginHelper;
 
 defined('MOLAJO') or die;
@@ -260,7 +260,7 @@ abstract class ExtensionHelper
         } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_MODULE) {
             return ModuleHelper::getPath($name);
         } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_THEME) {
-            return MustacheHelper::getPath($name);
+            return ThemeHelper::getPath($name);
         } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN) {
             return PluginHelper::getPath($name);
         }
@@ -278,7 +278,7 @@ abstract class ExtensionHelper
     {
         $path .= '/language';
 
-        if (Services::Folder()->exists($path)) {
+        if (Services::Filesystem()->folderExists($path)) {
         } else {
             return false;
         }

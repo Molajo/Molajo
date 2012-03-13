@@ -6,14 +6,11 @@
  */
 namespace Molajo\Application\Service;
 
-use Joomla\registry\Registry;
-use Molajo\Application\MVC\Model\ActionTypesModel;
-// Configuration, Response, Message
 use Molajo\Application\Services;
+use Molajo\Application\MVC\Model\ActionTypesModel;
 use Molajo\Application\MVC\Model\SiteApplicationsModel;
 use Molajo\Application\MVC\Model\GroupPermissionsModel;
 use Molajo\Application\MVC\Model\UserApplicationsModel;
-use PhpConsole\PhpConsole;
 
 defined('MOLAJO') or die;
 
@@ -112,8 +109,8 @@ Class AccessService
             return;
         }
 
-        $this->task_to_action = new Registry();
-        $this->action_to_controller = new Registry();
+        $this->task_to_action = Services::Registry()->initialise();
+        $this->action_to_controller = Services::Registry()->initialise();
 
         foreach ($tasks->task as $t) {
             $this->task_to_action
@@ -129,7 +126,7 @@ Class AccessService
         }
 
         /** action text to database key */
-        $this->action_to_action_id = new Registry();
+        $this->action_to_action_id = Services::Registry()->initialise();
 
         /** retrieve database keys for actions */
         $m = new ActionTypesModel();

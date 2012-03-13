@@ -1773,7 +1773,7 @@ class PHPMailer {
   /**
    * Correctly encodes and Wrap long multibyte strings for mail headers
    * without breaking lines within a character.
-   * Adapted from a function by paravoid at http://uk.php.net/manual/en/function.mb-encode-mimeheader.php
+   * Adapted from a function by paravoid at http://uk.php.net/manual/en/function.mb-encode-mimeHeader.php
    * @access public
    * @param string $str multi-byte text to wrap encode
    * @return string

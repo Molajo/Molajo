@@ -1,6 +1,6 @@
 <? $page_title = "Mobile Development" ?>
-<?php include("includes/_header.php"); ?>
-  
+<?php include("includes/_Header.php"); ?>
+
   <!-- Grid BG -->
   <div id="gridBgShort" class="container hide-on-phones">
     <div class="white-fade"></div>
@@ -9,12 +9,12 @@
     </div>
   </div>
   <!-- /Grid BG -->
-  
+
 	<div id="insideContainer" class="container">
 	  <div class="row hide-on-phones">
 	    <a href="index.php" class="back two columns hide-on-phones">&larr; Home</a>
 	  </div>
-	  
+
 	  <div class="row">
 	    <div class="twelve columns">
 	    	<nav class="on-page hide-on-phones">
@@ -66,7 +66,7 @@
   	    </ul>
   	  </nav>
 	  </div>
-	   	  
-	   	  
-	
-<?php include("includes/_footer.php");  ?>
+
+
+
+<?php include("includes/_Footer.php");  ?>

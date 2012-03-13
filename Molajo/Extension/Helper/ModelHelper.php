@@ -9,7 +9,6 @@ namespace Molajo\Application\Helper;
 
 use Molajo\Extension\Helper\AssetHelper;
 use Molajo\Application\Services;
-use Joomla\registry\Registry;
 
 defined('MOLAJO') or die;
 
@@ -445,7 +444,7 @@ class ModelHelper
         foreach ($jsonfields as $name) {
             $name = trim($name);
             if (property_exists($item, $name)) {
-                $registry = new Registry;
+                $registry = Services::Registry()->initialise();
                 $registry->loadString($item->$name);
                 $fields = $registry->toArray();
 
