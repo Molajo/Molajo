@@ -8,7 +8,6 @@ namespace Molajo\Application\Helper;
 
 use Mustache;
 use Molajo\Application\Services;
-use Molajo\Extension\Helper\ExtensionHelper;
 
 defined('MOLAJO') or die;
 

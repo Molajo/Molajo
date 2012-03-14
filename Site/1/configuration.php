@@ -47,5 +47,5 @@ Class SiteConfiguration
     public $mail_class = 'JMail';
 
     /* Debug */
-    public $debug = '1';
+    public $debug = '0';
 }

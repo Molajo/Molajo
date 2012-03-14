@@ -170,7 +170,6 @@ Class Services
 	 */
 	private function set($key, $value = null, $try = true)
 	{
-		echo $key.'<br />';
 		$i = count($this->message);
 
 		if ($value == null

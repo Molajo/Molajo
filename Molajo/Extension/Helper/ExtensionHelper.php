@@ -9,10 +9,6 @@ namespace Molajo\Extension\Helper;
 use Molajo\Application\MVC\Model\DisplayModel;
 use Molajo\Application\MVC\Model\ExtensionInstancesModel;
 use Molajo\Application\Services;
-use Molajo\Extension\Helper\ComponentHelper;
-use Molajo\Extension\Helper\ModuleHelper;
-use Molajo\Extension\Helper\ThemeHelper;
-use Molajo\Extension\Helper\PluginHelper;
 
 defined('MOLAJO') or die;
 

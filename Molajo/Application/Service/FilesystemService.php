@@ -9,7 +9,42 @@ namespace Molajo\Application\Service;
 defined('MOLAJO') or die;
 
 /**
+ * Filesystem
+ *
+ * API for File, Folder, and Path Operations
+ *
+ * Usage:
+ *
  * File
+ * Services::Filesystem()->fileExists
+ * Services::Filesystem()->fileName
+ * Services::Filesystem()->fileRead
+ * Services::Filesystem()->fileWrite
+ * Services::Filesystem()->fileDelete
+ * Services::Filesystem()->fileCopy
+ * Services::Filesystem()->fileMove
+ * Services::Filesystem()->fileExtension
+ * Services::Filesystem()->fileNameNoExtension
+ * Services::Filesystem()->fileUpload
+ *
+ * Folder
+ * Services::Filesystem()->folderExists
+ * Services::Filesystem()->folderName
+ * Services::Filesystem()->folderCreate
+ * Services::Filesystem()->folderDelete
+ * Services::Filesystem()->folderCopy
+ * Services::Filesystem()->folderMove
+ * Services::Filesystem()->folderFiles
+ * Services::Filesystem()->folderFolders
+ * Services::Filesystem()->folderlistFolderTree
+ *
+ * Path
+ * Services::Filesystem()->pathSetPermissions
+ * Services::Filesystem()->pathGetPermissions
+ * Services::Filesystem()->pathCheck
+ * Services::Filesystem()->pathClean
+ * Services::Filesystem()->pathIsOwner
+ * Services::Filesystem()->pathFind
  *
  * @package     Molajo
  * @subpackage  Services
@@ -17,7 +52,6 @@ defined('MOLAJO') or die;
  */
 class FilesystemService
 {
-
     /**
      * Static instance
      *
@@ -41,53 +75,12 @@ class FilesystemService
         return self::$instance;
     }
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-    }
-
 	/**
-	 * __callStatic
+	 * processCall
 	 *
-	 * File, folder, path
-	 *
-	 * Services::Filesystem()->fileExists
-	 * Services::Filesystem()->fileName
-	 * Services::Filesystem()->fileRead
-	 * Services::Filesystem()->fileWrite
-	 * Services::Filesystem()->fileDelete
-	 * Services::Filesystem()->fileCopy
-	 * Services::Filesystem()->fileMove
-	 * Services::Filesystem()->fileExtension
-	 * Services::Filesystem()->fileNameNoExtension
-	 * Services::Filesystem()->fileUpload
-	 *
-	 * Folder
-	 *
-	 * Services::Filesystem()->folderExists
-	 * Services::Filesystem()->folderName
-	 * Services::Filesystem()->folderCreate
-	 * Services::Filesystem()->folderDelete
-	 * Services::Filesystem()->folderCopy
-	 * Services::Filesystem()->folderMove
-	 * Services::Filesystem()->folderFiles
-	 * Services::Filesystem()->folderFolders
-	 * Services::Filesystem()->folderlistFolderTree
-	 *
-	 * Path
-	 *
-	 * pathSetPermissions
-	 * pathGetPermissions
-	 * pathCheck
-	 * pathClean
-	 * pathIsOwner
-	 * pathFind
+	 * Magic methods __call and __callStatic
+	 * intercept calls and act as a proxy to
+	 * Joomla JFile, JFolder, and JPath Classes
 	 *
 	 * @static
 	 * @param $name
@@ -106,7 +99,6 @@ class FilesystemService
 	}
 	public function processCall($name, $arguments)
 	{
-		echo '$name '.$name.' '.var_dump($arguments).'<br />';
 		if (strtolower(substr($name, 0, 4)) == 'file') {
 			$class = 'Joomla\\filesystem\\File';
 			$method = substr($name, 4, strlen($name) - 4);

@@ -39,7 +39,6 @@ class ModelHelper
      */
     public function __construct()
     {
-
     }
 
     /**

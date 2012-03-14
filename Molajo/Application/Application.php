@@ -84,17 +84,34 @@ Class Application
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 		}
 
-		Molajo::RequestService();
-
+		/** HTTP Class */
+		//Molajo::RequestService();
 		$this->_setBaseURL();
 
+		/** PHP Constants */
 		$this->_setDefines();
 
+		/** Site determination and paths */
 		$this->_setSite();
 
+		/** Application determination and paths */
 		$this->_setApplication();
 
+		/** Connect Application Services */
 		$sv = Molajo::Services()->startServices();
+
+		Services::Registry()->set('dog\\bone', 'hard');
+		Services::Registry()->set('dog\\bed', 'soft');
+		Services::Registry()->set('dog\\fido', 'woof');
+		Services::Registry()->set('dog\\fido', 'name');
+		Services::Registry()->set('cat\\says', 'meow');
+		echo Services::Registry()->get('dog\\fido');
+
+		$test1 = Services::Registry()->getArray('dog');
+		$test2 = Services::Registry()->getKeys('cat');
+		 var_dump($test1);
+		var_dump($test2);
+		die;
 
 		Services::Debug()->set('Application::initialize Start Services');
 

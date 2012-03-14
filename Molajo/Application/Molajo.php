@@ -1,18 +1,15 @@
 <?php
 /**
- * @package     Molajo
+ * @package	 Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
 defined('MOLAJO') or die;
 
-Use Molajo\Application\Application;
-Use Molajo\Application\Services;
-Use Molajo\Application\Request;
-Use Molajo\Application\Includer;
 Use Molajo\Application\Service\RequestService;
+use Molajo\Extension\Helper\Helper;
 
 /**
  * Molajo
@@ -21,134 +18,159 @@ Use Molajo\Application\Service\RequestService;
  */
 class Molajo
 {
-    /**
-     * Molajo::Application
-     *
-     * @var    object Application
-     * @since  1.0
-     */
-    protected static $application = null;
+	/**
+	 * Molajo::Application
+	 *
+	 * @var	object Application
+	 * @since  1.0
+	 */
+	protected static $application = null;
 
-    /**
-     * Molajo::Request
-     *
-     * @var    object Request
-     * @since  1.0
-     */
-    protected static $request = null;
+	/**
+	 * Molajo::Request
+	 *
+	 * @var	object Request
+	 * @since  1.0
+	 */
+	protected static $request = null;
 
-    /**
-     * Molajo::Service
-     *
-     * @var    object Service
-     * @since  1.0
-     */
-    protected static $services = null;
+	/**
+	 * Molajo::Service
+	 *
+	 * @var	object Service
+	 * @since  1.0
+	 */
+	protected static $services = null;
 
-    /**
-     * Molajo::Parse
-     *
-     * @var    object Parse
-     * @since  1.0
-     */
-    protected static $parse = null;
+	/**
+	 * Molajo::Parse
+	 *
+	 * @var	object Parse
+	 * @since  1.0
+	 */
+	protected static $parse = null;
 
-    /**
-     * Molajo::RequestService
-     *
-     * @var    object Parse
-     * @since  1.0
-     */
-    protected static $request_service = null;
+	/**
+	 * Molajo::Helper
+	 *
+	 * @var	object Helper
+	 * @since  1.0
+	 */
+	protected static $helper = null;
 
-    /**
-     * Molajo::Application
-     *
-     * @static
-     * @return  Application
-     * @since   1.0
-     */
-    public static function Application()
-    {
-        if (self::$application) {
-        } else {
-            self::$application = Application::getInstance();
-        }
+	/**
+	 * Molajo::RequestService
+	 *
+	 * @var	object Parse
+	 * @since  1.0
+	 */
+	protected static $request_service = null;
 
-        return self::$application;
-    }
+	/**
+	 * Molajo::Application
+	 *
+	 * @static
+	 * @return  Application
+	 * @since   1.0
+	 */
+	public static function Application()
+	{
+		if (self::$application) {
+		} else {
+			self::$application = Application::getInstance();
+		}
 
-    /**
-     * Molajo::Services
-     *
-     * @static
-     * @return  Services
-     * @since   1.0
-     */
-    public static function Services()
-    {
-        if (self::$services) {
-        } else {
-            self::$services = Services::getInstance();
-        }
-        return self::$services;
-    }
+		return self::$application;
+	}
 
-    /**
-     * Molajo::Request
-     *
-     * @static
-     * @param null $request
-     * @param string $override_request_url
-     * @param string $override_asset_id
-     *
-     * @return Request
-     * @since 1.0
-     */
-    public static function Request($override_request_url = null,
-                                      $override_asset_id = null)
-    {
-        if (self::$request) {
-        } else {
-            self::$request = Request::getInstance(
-                $override_request_url,
-                $override_asset_id);
-        }
-        return self::$request;
-    }
+	/**
+	 * Molajo::Services
+	 *
+	 * @static
+	 * @return  Services
+	 * @since   1.0
+	 */
+	public static function Services()
+	{
+		if (self::$services) {
+		} else {
+			self::$services = Services::getInstance();
+		}
+		return self::$services;
+	}
 
-    /**
-     * Molajo::Parse
-     *
-     * @static
-     * @return  Parse
-     * @since   1.0
-     */
-    public static function Parse()
-    {
-        if (self::$parse) {
-        } else {
-            self::$parse = Parse::getInstance();
-        }
-        return self::$parse;
-    }
+	/**
+	 * Molajo::Request
+	 *
+	 * @static
+	 * @param null $request
+	 * @param string $override_request_url
+	 * @param string $override_asset_id
+	 *
+	 * @return Request
+	 * @since 1.0
+	 */
+	public static function Request($override_request_url = null,
+								   $override_asset_id = null)
+	{
+		if (self::$request) {
+		} else {
+			self::$request = Request::getInstance(
+				$override_request_url,
+				$override_asset_id);
+		}
+		return self::$request;
+	}
 
-    /**
-     * Molajo::RequestService
-     *
-     * @static
-     * @return  Parse
-     * @since   1.0
-     */
-    public static function RequestService()
-    {
-        if (self::$request_service) {
-        } else {
-            self::$request_service = RequestService::getInstance();
-        }
-        return self::$request_service;
-    }
+	/**
+	 * Molajo::Parse
+	 *
+	 * @static
+	 * @return  Parse
+	 * @since   1.0
+	 */
+	public static function Parse()
+	{
+		if (self::$parse) {
+		} else {
+			self::$parse = Parse::getInstance();
+		}
+		return self::$parse;
+	}
+
+	/**
+	 * Molajo::Helper
+	 *
+	 * @static
+	 * @return  Parse
+	 * @since   1.0
+	 */
+	public static function Helper()
+	{
+		if (self::$helper) {
+		} else {
+			self::$helper = Helper::getInstance();
+		}
+		return self::$helper;
+	}
+
+	/**
+	 * Molajo::RequestService
+	 *
+	 * @static
+	 * @return  Parse
+	 * @since   1.0
+	 */
+	public static function RequestService()
+	{
+		if (self::$request_service) {
+		} else {
+			self::$request_service = RequestService::getInstance();
+		}
+		return self::$request_service;
+	}
 }
+
 abstract class JFactory extends Molajo
 {
 }

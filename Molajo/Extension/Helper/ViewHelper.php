@@ -1,11 +1,13 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Includer
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Includer;
+namespace Molajo\Extension\Helper;
+
+use Molajo\Application\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -78,31 +80,10 @@ class ViewHelper
      * @return  array
      * @since   1.0
      */
-    public function __construct($view, $view_type, $extension_name,
-                                $extension_type, $theme_name)
+    public function __construct()
     {
-        $this->view = strtolower($view);
-        if (strtolower($view_type) == 'Page'
-            || strtolower($view_type) == 'Wrap'
-        ) {
-        } else {
-            $view_type = 'Template';
-        }
-        $this->view_type = strtolower($view_type);
-        $this->extension_name = strtolower($extension_name);
-        $this->extension_type = strtolower($extension_type);
-        $this->theme_name = strtolower($theme_name);
 
-        $results = $this->_findPath();
-
-        if ($results === false) {
-            return false;
-        }
-
-        //$this->_loadLanguage();
-
-        return array($this->view_path, $this->view_path_url);
-    }
+	}
 
     /**
      * _findPath
@@ -118,10 +99,22 @@ class ViewHelper
      *
      * @return bool|string
      */
-    protected function _findPath()
+    public function findPath($view, $view_type, $extension_name,
+                                    $extension_type, $theme_name)
     {
         /** initialise */
         $this->view_path = false;
+		$this->view = strtolower($view);
+		if (strtolower($view_type) == 'Page'
+			|| strtolower($view_type) == 'Wrap'
+		) {
+		} else {
+			$view_type = 'Template';
+		}
+		$this->view_type = strtolower($view_type);
+		$this->extension_name = strtolower($extension_name);
+		$this->extension_type = strtolower($extension_type);
+		$this->theme_name = strtolower($theme_name);
 
         /** Remaining portion of path for all locations */
         $plus = '/View/' . $this->view_type . '/' . $this->view;
@@ -192,7 +185,11 @@ class ViewHelper
             $this->view_path_url = false;
         }
 
-        return $found;
+		if ($found === false) {
+			return false;
+		} else {
+			return array($this->view_path, $this->view_path_url);
+		}
     }
 
     /**
