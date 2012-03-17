@@ -1,65 +1,40 @@
 <?php
 /**
- * @package	 	Molajo
+ * @package		 Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license		 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
 defined('MOLAJO') or die;
 
 use Molajo\Application\Services;
-use Molajo\Extension\Helper\Helper;
+use Molajo\Extension\Helper;
 
 /**
  * Request
  *
- * @package	 Molajo
+ * Establishes parameter values given inheritence chain:
+ * 1. Menu Item
+ *   -or - Detail source content
+ * 2. Extension for content
+ * 3. Primary category of content
+ * 4. Application
+ * 5. Hard-coded defaults
+ *
+ * @package		 Molajo
  * @subpackage  Request
- * @since	   1.0
+ * @since		   1.0
  */
 Class Request
 {
 	/**
 	 * $instance
 	 *
-	 * @var	object
-	 * @since  1.0
+	 * @var		object
+	 * @since	  1.0
 	 */
 	protected static $instance;
-
-	/**
-	 * $redirect_to_id
-	 *
-	 * Redirect the Request URL to Asset ID
-	 *
-	 * @var	object
-	 * @since  1.0
-	 */
-	protected $redirect_to_id;
-
-	/**
-	 * $parameters
-	 *
-	 * Inheritence chain:
-	 * 1. Menu Item
-	 *   -or - Detail source content
-	 * 2. Extension for content
-	 * 3. Primary category of content
-	 * 4. Application
-	 * 5. Hard-coded defaults
-	 *
-	 * Interface options:
-	 *
-	 * Services::Parameters()->get('key', 'default', 'request')
-	 * Services::Parameters()->set('key, 'value', 'request')
-	 * Services::Parameters()->getAll('request')
-	 * Services::Parameters()->getKeys('request')
-	 *
-	 * @var	object
-	 * @since  1.0
-	 */
-	public $parameters;
 
 	/**
 	 * getInstance
@@ -68,21 +43,16 @@ Class Request
 	 *  only creating it if it doesn't already exist.
 	 *
 	 * @static
-	 * @param  string  $override_request_url
-	 * @param  string  $override_asset_id
+	 * @param	  string  $override_request_url
+	 * @param	  string  $override_asset_id
 	 *
-	 * @return object
-	 * @since  1.0
+	 * @return	 object
+	 * @since	  1.0
 	 */
-	public static function getInstance($override_request_url = null,
-									   $override_asset_id = null)
+	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance =
-				new Request(
-					$override_request_url,
-					$override_asset_id
-				);
+			self::$instance = new Request();
 		}
 		return self::$instance;
 	}
@@ -92,70 +62,12 @@ Class Request
 	 *
 	 * Class constructor
 	 *
-	 * @static
-	 * @param  string $override_request_url
-	 * @param  string $override_asset_id
-	 *
-	 * @return mixed
-	 * @since  1.0
+	 * @return	 mixed
+	 * @since	  1.0
 	 */
-	public function __construct($override_request_url = null,
-								$override_asset_id = null)
+	public function __construct()
 	{
 		$this->_initialize();
-
-		$this->redirect_to_id = 0;
-
-		/** Specific asset */
-		if ((int)$override_asset_id == 0) {
-			Services::Registry()->set('request\\request_asset_id', 0);
-		} else {
-			Services::Registry()->set('request\\request_asset_id', $override_asset_id);
-		}
-
-		/**
-		 * Specific URL path
-		 *  Request is stripped of Host, Folder, and Application
-		 *  Path ex. index.php?option=login or access/groups
-		 */
-		if ($override_request_url == null) {
-			$path = MOLAJO_PAGE_REQUEST;
-		} else {
-			$path = $override_request_url;
-		}
-
-		/** duplicate content: URLs without the .html */
-		if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
-			&& substr($path, -11) == '/index.html'
-		) {
-			$path = substr($path, 0, (strlen($path) - 11));
-		}
-		if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
-			&& substr($path, -5) == '.html'
-		) {
-			$path = substr($path, 0, (strlen($path) - 5));
-		}
-
-		/** populate value used in query  */
-		Services::Registry()->set('request\\request_url_query', $path);
-
-		/** home: duplicate content - redirect */
-		if (Services::Registry()->get('request\\request_url_query', '') == 'index.php'
-			|| Services::Registry()->get('request\\request_url_query', '') == 'index.php/'
-			|| Services::Registry()->get('request\\request_url_query', '') == 'index.php?'
-			|| Services::Registry()->get('request\\request_url_query', '') == '/index.php/'
-		) {
-			Molajo::Responder()->setStatus(301)->isRedirect();
-		}
-
-		/** Home */
-		if (Services::Registry()->get('request\\request_url_query', '') == ''
-			&& (int)Services::Registry()->get('request\\request_asset_id', 0) == 0
-		) {
-			Services::Registry()->set('request\\request_asset_id',
-				Services::Configuration()->get('home_asset_id', 0));
-			Services::Registry()->set('request\\request_url_home', true);
-		}
 
 		return $this;
 	}
@@ -175,7 +87,7 @@ Class Request
 	 */
 	public function get($key, $default = null)
 	{
-		return Services::Registry()->get('page_request\\'.$key, $default);
+		return Services::Registry()->get('page_request\\' . $key, $default);
 	}
 
 	/**
@@ -192,7 +104,7 @@ Class Request
 	 */
 	public function set($key, $value = null)
 	{
-		return Services::Registry()->set('page_request\\'.$key, $value);
+		return Services::Registry()->set('page_request\\' . $key, $value);
 	}
 
 	/**
@@ -203,11 +115,35 @@ Class Request
 	 *  set the variables needed to render output,
 	 *  execute document renders and MVC
 	 *
-	 * @return  null
-	 * @since   1.0
+	 * @param null $override_request_url
+	 * @param null $override_asset_id
+	 * @return mixed
+	 * @since 1.0
 	 */
-	public function process()
+	public function process($override_request_url = null, $override_asset_id = null)
 	{
+		/** Specific asset */
+		if ((int)$override_asset_id == 0) {
+			Services::Registry()->set('request\\request_asset_id', 0);
+		} else {
+			Services::Registry()->set('request\\request_asset_id', $override_asset_id);
+		}
+
+		/** Check for home duplicate content and redirect */
+		$this->_checkHome($override_request_url);
+
+		if (Services::Redirect()->url === null
+			&& (int) Services::Redirect()->code == 0) {
+		} else {
+			return;
+		}
+
+		/** Offline Mode */
+		if (Services::Configuration()->get('offline', 0) == 1) {
+			// redirect to offline
+			$this->_error(503);
+		}
+
 		/** URL parameters */
 		$this->_getRequest();
 
@@ -266,12 +202,72 @@ Class Request
 	}
 
 	/**
+	 * _checkHome
+	 *
+	 * @param $override_request_url
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	protected function _checkHome($override_request_url)
+	{
+		echo 'in checkHome';
+		/**
+		 * Specific URL path
+		 *  Request is stripped of Host, Folder, and Application
+		 *  Path ex. index.php?option=login or access/groups
+		 */
+		if ($override_request_url == null) {
+			$path = MOLAJO_PAGE_REQUEST;
+		} else {
+			$path = $override_request_url;
+		}
+
+		/** duplicate content: URLs without the .html */
+		if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
+			&& substr($path, -11) == '/index.html'
+		) {
+			$path = substr($path, 0, (strlen($path) - 11));
+		}
+		if ((int)Services::Configuration()->get('sef_suffix', 1) == 1
+			&& substr($path, -5) == '.html'
+		) {
+			$path = substr($path, 0, (strlen($path) - 5));
+		}
+
+		/** populate value used in query  */
+		Services::Registry()->set('request\\request_url_query', $path);
+
+		/** home: duplicate content - redirect */
+		if (Services::Registry()->get('request\\request_url_query', '') == 'index.php'
+			|| Services::Registry()->get('request\\request_url_query', '') == 'index.php/'
+			|| Services::Registry()->get('request\\request_url_query', '') == 'index.php?'
+			|| Services::Registry()->get('request\\request_url_query', '') == '/index.php/'
+		) {
+			return Services::Redirect()->set('', 301);
+		}
+//		echo 'Past it' . Services::Registry()->get('request\\request_url_query', '');
+//		die;
+
+		$array = Services::Registry()->getArray('request');
+		/** Home */
+		if (Services::Registry()->get('request\\request_url_query', '') == ''
+			&& (int)Services::Registry()->get('request\\request_asset_id', 0) == 0
+		) {
+			Services::Registry()->set('request\\request_asset_id',
+				Services::Configuration()->get('home_asset_id', 0));
+			Services::Registry()->set('request\\request_url_home', true);
+		}
+
+	}
+
+	/**
 	 * _getRequest
 	 *
 	 * Retrieve URL contents
 	 *
-	 * @return null
-	 * @since  1.0
+	 * @return	 null
+	 * @since	  1.0
 	 */
 	protected function _getRequest()
 	{
@@ -346,7 +342,7 @@ Class Request
 	 * Retrieve Asset and Asset Type data for a specific asset id
 	 * or query request
 	 *
-	 * @return   boolean
+	 * @return	boolean
 	 * @since	1.0
 	 */
 	protected function _getAsset()
@@ -446,8 +442,8 @@ Class Request
 	 *
 	 * Verify user authorization for task
 	 *
-	 * @return  boolean
-	 * @since   1.0
+	 * @return	boolean
+	 * @since	1.0
 	 */
 	protected function _authoriseTask()
 	{
@@ -488,8 +484,8 @@ Class Request
 	 * are then set in the request object to be processed when the application is being
 	 * dispatched.
 	 *
-	 * @return  void;
-	 * @since  1.0
+	 * @return	void
+	 * @since	1.0
 	 */
 	protected function _routeRequest()
 	{
@@ -501,7 +497,7 @@ Class Request
 		/** redirect */
 		if ($this->redirect_to_id == 0) {
 		} else {
-			Molajo::Responder()->redirect(
+			Services::Response()->redirect(
 				Molajo::Helper()->getURL('Asset', $this->redirect_to_id),
 				301
 			);
@@ -513,7 +509,7 @@ Class Request
 			&& Services::Registry()->get('request\\request_asset_id')
 				<> Services::Configuration()->get('logon_requirement', 0)
 		) {
-			Molajo::Responder()
+			Services::Response()
 				->redirect(Services::Configuration()
 				->get('logon_requirement', 0), 303);
 		}
@@ -631,8 +627,8 @@ Class Request
 	{
 		$row = Molajo::Helper()
 			->get('Content',
-				(int)Services::Registry()->get('request\\source_id'),
-				Services::Registry()->get('request\\source_table')
+			(int)Services::Registry()->get('request\\source_id'),
+			Services::Registry()->get('request\\source_table')
 		);
 
 		if (count($row) == 0) {
@@ -771,8 +767,8 @@ Class Request
 	 *
 	 * Retrieve extension information for Component Request
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getExtension()
 	{
@@ -792,12 +788,12 @@ Class Request
 			/** 500: Extension not found */
 			Services::Message()
 				->set(
-					$message = Services::Language()
-						->translate('ERROR_EXTENSION_NOT_FOUND'),
-					$type = MOLAJO_MESSAGE_TYPE_ERROR,
-					$code = 500,
-					$debug_location = 'MolajoRequest::_getExtension',
-					$debug_object = $this->page_request
+				$message = Services::Language()
+					->translate('ERROR_EXTENSION_NOT_FOUND'),
+				$type = MOLAJO_MESSAGE_TYPE_ERROR,
+				$code = 500,
+				$debug_location = 'MolajoRequest::_getExtension',
+				$debug_object = $this->page_request
 			);
 			return Services::Registry()->set('request\\status_found', false);
 		}
@@ -879,11 +875,11 @@ Class Request
 	 * Called by content item and menu item methods
 	 * Set the values needed to generate the page (theme, page, view, wrap, and various metadata)
 	 *
-	 * @param null $sourceParameters
-	 * @param null $sourceMetadata
+	 * @param	 null	$sourceParameters
+	 * @param	 null	$sourceMetadata
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _setPageValues($parameters = null, $metadata = null)
 	{
@@ -955,8 +951,8 @@ Class Request
 	 *
 	 *  Called by Category and Extension Methods
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _setPageValuesDefaults($parameters = null, $metadata = null)
 	{
@@ -1033,8 +1029,8 @@ Class Request
 	 *
 	 * Get Theme Name using either the Theme ID or the Theme Name
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getUser()
 	{
@@ -1059,8 +1055,8 @@ Class Request
 	 *
 	 *  Retrieve Theme and Page from the final level of default values, if needed
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getApplicationDefaults()
 	{
@@ -1130,8 +1126,8 @@ Class Request
 	 *
 	 * Get Theme Name using either the Theme ID or the Theme Name
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getTheme()
 	{
@@ -1182,8 +1178,8 @@ Class Request
 	 *
 	 * Get Page Name using either the Page ID or the Page Name
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getPage()
 	{
@@ -1216,14 +1212,15 @@ Class Request
 	 *
 	 * Get Template View Paths
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getTemplateView()
 	{
 		$this->set(
 			'template_view_name',
-			Molajo::Helper()->getInstanceTitle('Extension', (
+			Molajo::Helper()->getInstanceTitle(
+				'Extension',
 				Services::Registry()->get('request\\template_view_id')
 			)
 		);
@@ -1246,8 +1243,8 @@ Class Request
 	 *
 	 * Get View Paths
 	 *
-	 * @return bool
-	 * @since 1.0
+	 * @return	bool
+	 * @since	1.0
 	 */
 	protected function _getWrapView()
 	{
@@ -1281,6 +1278,7 @@ Class Request
 	 *
 	 * @param   $code
 	 * @param   null $message
+	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
@@ -1313,7 +1311,7 @@ Class Request
 
 		} else {
 
-			Molajo::Responder()
+			Services::Response()
 				->setHeader('Status',
 				'500 Internal server error',
 				'true'
@@ -1337,7 +1335,7 @@ Class Request
 	 */
 	protected function _503error()
 	{
-		Molajo::Responder()
+		Services::Response()
 			->setHeader('Status',
 			'503 Service Temporarily Unavailable',
 			'true'
@@ -1374,7 +1372,7 @@ Class Request
 	 */
 	protected function _403error()
 	{
-		Molajo::Responder()
+		Services::Response()
 			->setHeader('Status',
 			'403 Not Authorised',
 			'true'
@@ -1399,7 +1397,7 @@ Class Request
 	 */
 	protected function _404error()
 	{
-		Molajo::Responder()
+		Services::Response()
 			->setHeader('Status',
 			'404 Not Found',
 			'true'
@@ -1424,17 +1422,17 @@ Class Request
 	 * Request Object which can be accessed by other classes
 	 *
 	 * @static
-	 * @return array
-	 * @since 1.0
+	 * @return	array
+	 * @since	1.0
 	 */
 	protected function _initialize()
 	{
-		$this->parameters = array();
-
+		Services::Registry()->create('parameters');
 		Services::Registry()->create('request');
 
 		/** request */
-		Services::Registry()->set('request\\request_url_base', MOLAJO_BASE_URL);
+		Services::Registry()->set('request\\request_url_base',
+			MOLAJO_BASE_URL);
 		Services::Registry()->set('request\\request_asset_id', 0);
 		Services::Registry()->set('request\\request_asset_type_id', 0);
 		Services::Registry()->set('request\\request_url_query', '');

@@ -134,7 +134,7 @@ abstract class ExtensionHelper
         /**
          *  Run Query
          */
-        $extensions = $m->runQuery();
+        $extensions = $m->loadObject();
 
         return $extensions;
     }

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package	 Molajo
+ * @package		Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license		GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -13,17 +13,17 @@ defined('MOLAJO') or die;
 /**
  * Request
  *
- * @package	 Molajo
+ * @package		Molajo
  * @subpackage  Services
- * @since	   1.0
+ * @since		1.0
  */
 Class RegistryService
 {
 	/**
 	 * Static instance
 	 *
-	 * @var	object
-	 * @since  1.0
+	 * @var		object
+	 * @since	  1.0
 	 */
 	protected static $instance;
 
@@ -43,7 +43,6 @@ Class RegistryService
 		}
 		return self::$instance;
 	}
-
 
 	/**
 	 * __construct
@@ -90,6 +89,7 @@ Class RegistryService
 	public function create($name)
 	{
 		$this->parameters[$name] = new Registry();
+
 		return;
 	}
 
@@ -139,9 +139,50 @@ Class RegistryService
 	}
 
 	/**
-	 * getAll
+	 * merge
 	 *
-	 * Returns an array containing the key and name pairs for a specified parameter set
+	 * Sets a Parameter property for a specific item and parameter set
+	 *
+	 * Usage:
+	 * Services::Registry()->set('request\\parameter_name', $value);
+	 *
+	 * @param   string  $key
+	 * @param   mixed   $value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function merge($set1, $set2)
+	{
+		$mergeInto = array();
+		if ($set1 instanceof Registry) {
+			$mergeInto = $this->getArray($set1);
+		} else {
+			//error
+		}
+		$mergeIn = array();
+		if ($set2 instanceof Registry) {
+		} else {
+			$mergeIn = $this->getArray($set2);
+		}
+
+		foreach ($mergeIn as $k => $v) {
+			if ($v == null) {
+			} else {
+				$mergeInto->$k = $v;
+			}
+		}
+
+		$temp = $this->initialise();
+		foreach ($mergeInto as $key => $value) {
+			$this->set($set1.'//'.$key, $value = null);
+		}
+	}
+
+	/**
+	 * getArray
+	 *
+	 * Returns an array containing key and name pairs for a specified parameter set
 	 *
 	 * Usage:
 	 * Services::Registry()->getArray('request');
@@ -154,19 +195,17 @@ Class RegistryService
 	 */
 	public function getArray($name, $keyOnly = false)
 	{
-		$r = new Registry($this->parameters[$name]);
-		$temp = $r->toArray();
-		$newArray = array();
-		foreach ($temp as $item) {
-			foreach ($item as $key => $value) {
+		$a = array();
+		while (list($k, $v) = each($this->parameters[$name])) {
+			while (list($key, $value) = each($v)) {
 				if ($keyOnly === false) {
-					$newArray[$key] = $value;
+					$a[$key] = $value;
 				} else {
-					$newArray[] = $key;
+					$a[] = $key;
 				}
 			}
 		}
-		return $newArray;
+		return $a;
 	}
 
 	/**

@@ -27,17 +27,13 @@ abstract class ComponentHelper
      */
     static public function get($name)
     {
-        $rows = ExtensionHelper::get(
+        $row = ExtensionHelper::get(
             MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT,
             $name
         );
-        if (count($rows) == 0) {
+        if (count($row) == 0) {
             return array();
         }
-
-        foreach ($rows as $row) {
-        }
-
         return $row;
     }
 

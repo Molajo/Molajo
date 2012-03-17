@@ -40,16 +40,16 @@ class Model
 	/**
 	 * Primary Prefix
 	 *
-	 * @var	string
-	 * @since  1.0
+	 * @var		string
+	 * @since  	1.0
 	 */
 	public $primary_prefix;
 
 	/**
 	 * Database query object
 	 *
-	 * @var	object
-	 * @since  1.0
+	 * @var		object
+	 * @since  	1.0
 	 */
 	public $query;
 
@@ -68,24 +68,24 @@ class Model
 	 *
 	 * Results from various model queries
 	 *
-	 * @var	object
-	 * @since  1.0
+	 * @var		object
+	 * @since  	1.0
 	 */
 	protected $query_results;
 
 	/**
 	 * Used by setter/getter to store model state
 	 *
-	 * @var	Registry
-	 * @since  1.0
+	 * @var		object
+	 * @since  	1.0
 	 */
 	protected $state;
 
 	/**
 	 * Pagination object from display query
 	 *
-	 * @var	array
-	 * @since  1.0
+	 * @var		array
+	 * @since  	1.0
 	 */
 	protected $pagination;
 
@@ -94,8 +94,8 @@ class Model
 	 *
 	 * Name of the database table for the model
 	 *
-	 * @var	string
-	 * @since  1.0
+	 * @var		string
+	 * @since  	1.0
 	 */
 	public $table_name;
 
@@ -144,8 +144,8 @@ class Model
 	 *
 	 * Processing instructions for the MVC set by the renderer
 	 *
-	 * @var	Registry
-	 * @since  1.0
+	 * @var		Registry
+	 * @since  	1.0
 	 */
 	public $task_request;
 
@@ -154,8 +154,8 @@ class Model
 	 *
 	 * Parameters
 	 *
-	 * @var	Registry
-	 * @since  1.0
+	 * @var		Registry
+	 * @since  	1.0
 	 */
 	public $parameters;
 

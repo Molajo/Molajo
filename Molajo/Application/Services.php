@@ -180,6 +180,7 @@ Class Services
 		} else {
 			$this->service_connection->set($key, $value);
 			$this->message[$i] = 'Service: ' . $key . ' started successfully. ';
+			echo '<br/>' . $this->message[$i] . '<br/>';
 		}
 	}
 }

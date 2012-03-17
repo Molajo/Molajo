@@ -52,6 +52,14 @@ Class Application
 	protected $site_custom_fields = null;
 
 	/**
+	 * $rendered_output
+	 *
+	 * @var	string
+	 * @since  1.0
+	 */
+	protected $rendered_output = null;
+
+	/**
 	 * getInstance
 	 *
 	 * Returns the global site object, creating if not existing
@@ -85,7 +93,6 @@ Class Application
 		}
 
 		/** HTTP Class */
-		//Molajo::RequestService();
 		$this->_setBaseURL();
 
 		/** PHP Constants */
@@ -98,29 +105,11 @@ Class Application
 		$this->_setApplication();
 
 		/** Connect Application Services */
-		$sv = Molajo::Services()->startServices();
+		Molajo::Services()->startServices();
+		echo 'after start';
+		Services::Debug()->set('Molajo::Services()->startServices() complete');
 
-		Services::Registry()->set('dog\\bone', 'hard');
-		Services::Registry()->set('dog\\bed', 'soft');
-		Services::Registry()->set('dog\\fido', 'woof');
-		Services::Registry()->set('dog\\fido', 'name');
-		Services::Registry()->set('cat\\says', 'meow');
-		echo Services::Registry()->get('dog\\fido');
-
-		$test1 = Services::Registry()->getArray('dog');
-		$test2 = Services::Registry()->getKeys('cat');
-		 var_dump($test1);
-		var_dump($test2);
-		die;
-
-		Services::Debug()->set('Application::initialize Start Services');
-
-		if (Services::Configuration()->get('offline', 0) == 1) {
-			// redirect to offline
-			$this->_error(503);
-		}
-
-		if (Services::Configuration()->get('force_ssl') >= 1) {
+		if (Services::Configuration()->get('force_ssl') > 0) {
 			if ((Services::Request()->isSecure() === true)) {
 			} else {
 
@@ -129,9 +118,7 @@ Class Application
 					MOLAJO_APPLICATION_URL_PATH .
 					'/' . MOLAJO_PAGE_REQUEST;
 
-				Services::Response()
-					->setStatusCode(301)
-					->isRedirect($redirectTo);
+				return Services::Redirect()->set($redirectTo, 301);
 			}
 		}
 
@@ -139,31 +126,27 @@ Class Application
 		//Services::Session()->create(
 		//        Services::Session()->getHash(get_class($this))
 		//  );
-		Services::Debug()->set('Application::initialize Services::Session()');
 
-		/** Set Site Paths */
+		Services::Debug()->set('Services::Session()->create complete');
+
+		/** Site Paths, Custom Fields, and Authorisation */
 		$this->_setSitePaths();
 
-		/** Site Parameters */
 		$m = new SitesModel ();
 		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
-		$results = $m->runQuery();
-
-		foreach ($results as $info)
-		{
-		}
+		$info = $m->loadObject();
 		if ($info === false) {
 			return;
 		}
 
-		/** is site authorised for this Application? */
 		$authorise = Services::Access()->authoriseSiteApplication();
 		if ($authorise === false) {
 			$message = '304: ' . MOLAJO_BASE_URL;
 			echo $message;
 			die;
 		}
-
+echo 'fasdfasdf';
+		die;
 		$this->site_custom_fields = Services::Registry()->initialise();
 		$this->site_custom_fields->loadString($info->site_custom_fields);
 
@@ -175,20 +158,27 @@ Class Application
 
 		$this->base_url = $info->base_url;
 
+		Services::Debug()->set('Molajo::Application()->initialise() complete');
+
 		return $this;
 	}
 
 	/**
-	 *	 process
+	 * request
 	 *
+	 * @param null $override_request_url
+	 * @param null $override_asset_id
+	 *
+	 * @return Application
+	 * @since  1.0
 	 */
-	public function request()
+	public function request($override_request_url = null,
+							$override_asset_id = null)
 	{
-		//Molajo::Request()->process();
-
-		if (Services::Configuration()->get('debug', 0) == 1) {
-			Services::Debug()->set('Application::process Molajo::Request()->process()');
-		}
+		Molajo::Request()->process(
+			$override_request_url = null,
+			$override_asset_id = null
+		);
 
 		return $this;
 	}
@@ -209,19 +199,19 @@ Class Application
 	 * Steps 1-3 continue until no more <include:type statements are
 	 *	found in the Theme and rendered output
 	 */
-	public function response()
+	public function process()
 	{
-		if (Molajo::Request()->get('mvc_controller') == 'display') {
-			$content = Molajo::Parse();
-			if (Services::Configuration()->get('debug', 0) == 1) {
-				Services::Debug()->set('Application::process Molajo::Parse() completed');
-			}
+		if (Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
+		) {
+		} else {
+			return;
+		}
 
-			/** response */
-			Services::Response()->setContent($content);
-			Services::Response()->setStatusCode(200);
-			Services::Response()->prepare(Services::Request()->request);
-			Services::Response()->send();
+		if (Molajo::Request()->get('mvc_controller') == 'display') {
+
+			$this->rendered_output = Molajo::Parse();
+			Services::Debug()->set('Molajo::Parse() complete');
 
 		} else {
 
@@ -231,15 +221,44 @@ Class Application
 			//$this->_processTask();
 		}
 
-		if (Services::Configuration()->get('debug', 0) == 1) {
-			Services::Debug()->set('Application::process Services::Response()->respond() completed');
+		Services::Debug()->set('Molajo::Application()->process() Complete');
+	}
+
+	/**
+	 * Display Task
+	 *
+	 * 1. Parse: recursively parses theme and then rendered output
+	 *	  for <include:type statements
+	 *
+	 * 2. Includer: each include statement is processed by the
+	 *	  associated extension includer in order, collecting
+	 *	  rendering data needed by the MVC
+	 *
+	 * 3. MVC: executes controller task, invoking model processing and
+	 *	rendering of template and wrap views
+	 *
+	 * Steps 1-3 continue until no more <include:type statements are
+	 *	found in the Theme and rendered output
+	 */
+	public function response()
+	{
+		if (Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
+		) {
+		} else {
+			return Services::Redirect()->redirect()->send();
+			Services::Debug()->set('Molajo::Redirect() complete');
 		}
 
+		/** response */
+		Services::Response()->setContent($this->rendered_output);
+		Services::Response()->setStatusCode(200);
+		Services::Response()->prepare(Services::Request()->request);
+		Services::Response()->send();
 
-		/** Application Complete */
-		if (Services::Configuration()->get('debug', 0) == 1) {
-			Services::Debug()->set('MolajoSite::load End');
-		}
+		Services::Debug()->set('Services::Response() complete');
+
+		Services::Debug()->set('Molajo::Application()->response End');
 
 		exit(0);
 	}
@@ -261,7 +280,7 @@ Class Application
 
 		if (defined('MOLAJO_BASE_URL')) {
 		} else {
-			define('MOLAJO_BASE_URL', $baseURL);
+			define('MOLAJO_BASE_URL', $baseURL . '/');
 		}
 		return;
 	}
@@ -318,7 +337,7 @@ Class Application
 		}
 		if (defined('MOLAJO_APPLICATIONS_MVC_URL')) {
 		} else {
-			define('MOLAJO_APPLICATIONS_MVC_URL', MOLAJO_BASE_URL . '/Molajo/Application/MVC');
+			define('MOLAJO_APPLICATIONS_MVC_URL', MOLAJO_BASE_URL . 'Molajo/Application/MVC');
 		}
 
 		/**
@@ -355,27 +374,27 @@ Class Application
 
 		if (defined('MOLAJO_EXTENSIONS_COMPONENTS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_COMPONENTS_URL', MOLAJO_BASE_URL . '/Molajo/Extension/Component');
+			define('MOLAJO_EXTENSIONS_COMPONENTS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Component');
 		}
 		if (defined('MOLAJO_EXTENSIONS_FORMFIELDS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_FORMFIELDS_URL', MOLAJO_BASE_URL . '/Molajo/Extension/Formfield');
+			define('MOLAJO_EXTENSIONS_FORMFIELDS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Formfield');
 		}
 		if (defined('MOLAJO_EXTENSIONS_MODULES_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_MODULES_URL', MOLAJO_BASE_URL . '/Molajo/Extension/Module');
+			define('MOLAJO_EXTENSIONS_MODULES_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Module');
 		}
 		if (defined('MOLAJO_EXTENSIONS_PLUGINS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_PLUGINS_URL', MOLAJO_BASE_URL . '/Molajo/Extension/Plugin');
+			define('MOLAJO_EXTENSIONS_PLUGINS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Plugin');
 		}
 		if (defined('MOLAJO_EXTENSIONS_THEMES_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_THEMES_URL', MOLAJO_BASE_URL . '/Molajo/Extension/Theme');
+			define('MOLAJO_EXTENSIONS_THEMES_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Theme');
 		}
 		if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . '/Molajo/Extension/View');
+			define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/View');
 		}
 
 		/**
@@ -431,7 +450,7 @@ Class Application
 			define('SITES_TEMP_URL', MOLAJO_BASE_URL . 'site/temp');
 		}
 
-		$scheme = '://' . Molajo::RequestService()->request->getScheme();
+		$scheme = Molajo::RequestService()->request->getScheme() . '://';
 		$siteBase = substr(MOLAJO_BASE_URL, strlen($scheme), 999);
 
 		if (defined('SITE_BASE_URL')) {

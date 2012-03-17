@@ -79,6 +79,7 @@ Class ConfigurationService
 	public function __construct($configuration_file = null)
 	{
 		$this->configuration = Services::Registry()->initialise();
+
 		$siteData = Services::Registry()->initialise();
 
 		/** Site Configuration: php file */
@@ -214,21 +215,10 @@ Class ConfigurationService
 		} else {
 
 			$m = new ApplicationsModel();
-
 			$m->query->where($m->db->qn('name') .
-				' = ' . $m->db->q(MOLAJO_APPLICATION));
-
-			$result = $m->loadObject();
-
-			$row->id = $result->id;
-			$id = $result->id;
-			$row->name = $result->name;
-			$row->path = $result->path;
-			$row->asset_type_id = $result->asset_type_id;
-			$row->description = $result->description;
-			$row->custom_fields = $result->custom_fields;
-			$row->parameters = $result->parameters;
-			$row->metadata = $result->metadata;
+				' = ' . $m->db->quote(MOLAJO_APPLICATION));
+			$row = $m->loadObject();
+			$id = $row->id;
 		}
 
 		if (defined('MOLAJO_APPLICATION_ID')) {

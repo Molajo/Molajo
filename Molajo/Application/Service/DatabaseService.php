@@ -48,6 +48,7 @@ Class DatabaseService
             throw new \Exception('Fatal error - Configuration Class does not exist');
         }
 
+
         /** database connection specific elements */
         $database_type = strtolower($database_class) . '_dbtype';
         $host = strtolower($database_class) . '_host';
@@ -74,7 +75,7 @@ Class DatabaseService
 
 		} catch (\RuntimeException $e) {
 			header('HTTP/1.1 500 Internal Server Error');
-   			jexit('Database Connection Failed.');
+   			exit(0);
 		}
 
         $this->db->debug($site->debug);

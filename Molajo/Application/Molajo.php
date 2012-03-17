@@ -1,15 +1,15 @@
 <?php
 /**
- * @package	 Molajo
+ * @package	 	Molajo
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
-defined('MOLAJO') or die;
+use Molajo\Application\Service\RequestService;
+use Molajo\Extension\Helper;
 
-Use Molajo\Application\Service\RequestService;
-use Molajo\Extension\Helper\Helper;
+defined('MOLAJO') or die;
 
 /**
  * Molajo
@@ -110,14 +110,11 @@ class Molajo
 	 * @return Request
 	 * @since 1.0
 	 */
-	public static function Request($override_request_url = null,
-								   $override_asset_id = null)
+	public static function Request()
 	{
 		if (self::$request) {
 		} else {
-			self::$request = Request::getInstance(
-				$override_request_url,
-				$override_asset_id);
+			self::$request = Request::getInstance();
 		}
 		return self::$request;
 	}

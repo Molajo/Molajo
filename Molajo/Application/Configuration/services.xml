@@ -11,6 +11,7 @@
     <service>Cookie</service>
     <service>Session</service>
     <service>Response</service>
+    <service>Redirect</service>
     <service>User</service>
     <service>Language</service>
     <service>Date</service>
@@ -21,5 +22,4 @@
     <service>Security</service>
     <service>Url</service>
     <service>Text</service>
-    <service>Parameter</service>
 </services>

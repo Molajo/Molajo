@@ -81,9 +81,9 @@ Class TextService
         $buffer = preg_replace(
             $change_from,
             $change_to,
-            Molajo::Responder()->getBody()
+            Services::Response()->getBody()
         );
-        Molajo::Responder()->setContent($buffer);
+        Services::Response()->setContent($buffer);
     }
 
     /**

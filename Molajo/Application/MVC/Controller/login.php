@@ -138,7 +138,7 @@ class LoginController
         if (!MolajoError::isError($result)) {
             $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
-            Molajo::Responder()->redirect($return);
+            Services::Response()->redirect($return);
         }
 
         parent::display();

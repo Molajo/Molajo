@@ -129,7 +129,7 @@ class ThemeHelper
         }
         $path = MOLAJO_BASE_FOLDER;
         if (file_exists($path . 'favicon.ico')) {
-            return MOLAJO_BASE_URL . '/' . $theme_name . '/images/favicon.ico';
+            return MOLAJO_BASE_URL . '' . $theme_name . '/images/favicon.ico';
         }
 
         return false;

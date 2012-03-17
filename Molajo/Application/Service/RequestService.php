@@ -13,6 +13,8 @@ defined('MOLAJO') or die;
 /**
  * Request
  *
+ * @url http://symfony.com/doc/current/components/http_foundation.html#accessing-request-data
+ *
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0

@@ -51,11 +51,11 @@ class UpdateController extends Controller
         if ($valid === true) {
             if ($this->model->row->id == 0
                 || $this->model->row->status == 0) {
-                Molajo::Responder()->redirect(
+                Services::Response()->redirect(
                     $this->task_request->get('redirect_on_success'),
                     301);
             } else {
-                Molajo::Responder()->redirect(
+                Services::Response()->redirect(
                      AssetHelper::getURL(
                          $this->task_request->get('request_asset_id')),
                      301
@@ -68,7 +68,7 @@ class UpdateController extends Controller
             } else {
                 $link .= '&task=edit';
             }
-            Molajo::Responder()
+            Services::Response()
                 ->redirect($link, 301);
         }
 

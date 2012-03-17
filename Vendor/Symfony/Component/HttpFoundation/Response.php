@@ -316,6 +316,7 @@ class Response
         }
 
         $this->statusText = false === $text ? '' : (null === $text ? self::$statusTexts[$this->statusCode] : $text);
+		return $this;
     }
 
     /**
