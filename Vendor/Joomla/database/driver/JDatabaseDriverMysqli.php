@@ -108,7 +108,6 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 		// Attempt to connect to the server.
 		if (!$this->connection)
 		{
-			echo  'failed connection';
 			throw new \RuntimeException('JLIB_DATABASE_ERROR_CONNECT_MYSQL');
 		}
 
