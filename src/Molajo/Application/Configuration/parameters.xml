@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+    <parameter name="tag" />
+    <parameter name="return" />
+    <parameter name="date" />
+    <parameter name="category" />
+    <parameter name="author" />
+    <parameter name="page" />
+    <parameter name="next" />
+    <parameter name="prev" />
+    <parameter name="count" />
+</parameters>

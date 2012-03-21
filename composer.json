@@ -1,0 +1,34 @@
+{
+    "name": "molajo/molajo",
+    "type": "library",
+    "description": "Molajo Web Application Development Platform",
+    "keywords": ["framework"],
+    "homepage": "http://molajo.org",
+    "license": "GPL v 2, or later",
+    "authors": [
+        {
+            "name": "Amy Stephen",
+            "email": "AmyStephen@Molajo.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/class-loader": "self.version",
+        "symfony/http-foundation": "self.version"
+    },
+    "replace": {
+        "molajo/application": "self.version",
+        "molajo/extension": "self.version"
+    },
+    "autoload": {
+        "psr-0": {
+            "Symfony": "src/",
+            "SessionHandlerInterface": "src/Symfony/Component/HttpFoundation/Resources/stubs"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1-dev"
+        }
+    }
+}
