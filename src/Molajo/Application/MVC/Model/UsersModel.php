@@ -83,6 +83,7 @@ Class UsersModel extends DisplayModel
         $this->query_results['public'] = 1;
         $this->query_results['guest'] = 0;
         $this->query_results['registered'] = 1;
+
         if (in_array(MOLAJO_SYSTEM_GROUP_ADMINISTRATOR, $this->query_results['groups'])) {
             $this->query_results['administrator'] = 1;
         }

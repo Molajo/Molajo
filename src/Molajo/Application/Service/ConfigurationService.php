@@ -211,11 +211,13 @@ Class ConfigurationService
 			$row->metadata = '';
 
 		} else {
-
 			$m = new ApplicationsModel();
+
 			$m->query->where($m->db->qn('name') .
 				' = ' . $m->db->quote(MOLAJO_APPLICATION));
+
 			$row = $m->loadObject();
+
 			$id = $row->id;
 		}
 

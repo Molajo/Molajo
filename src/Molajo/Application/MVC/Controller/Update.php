@@ -51,12 +51,14 @@ class UpdateController extends Controller
         if ($valid === true) {
             if ($this->model->row->id == 0
                 || $this->model->row->status == 0) {
-                Services::Response()->redirect(
+                Services::Response()
+                    ->redirect(
                     $this->task_request->get('redirect_on_success'),
                     301);
             } else {
-                Services::Response()->redirect(
-                     AssetHelper::getURL(
+                Services::Response()
+                    ->redirect(
+                    AssetHelper::getURL(
                          $this->task_request->get('request_asset_id')),
                      301
                  );
@@ -158,7 +160,7 @@ class UpdateController extends Controller
 
         $v = simplexml_load_file(
             MOLAJO_APPLICATIONS_MVC
-                . '/models/tables/'
+                . '/Model/Table/'
                 . substr($this->model->table_name, 3, 99)
                 . '.xml'
         );
@@ -174,7 +176,7 @@ class UpdateController extends Controller
             foreach ($v->filters->filter as $f) {
 
                 $name = (string)$f['name'];
-                $datatype = (string)$f['filter'];
+                $dataType = (string)$f['filter'];
                 $null = (string)$f['null'];
                 $default = (string)$f['default'];
 
@@ -184,9 +186,9 @@ class UpdateController extends Controller
                     $value = null;
                 }
 
-                if ($datatype == null) {
+                if ($dataType == null) {
                     // no filter defined
-                } else if ($datatype == 'html'
+                } else if ($dataType == 'html'
                         && $userHTMLFilter === false) {
                         // user does not require HTML filtering
 
@@ -194,7 +196,7 @@ class UpdateController extends Controller
 
                     try {
                         $value = Services::Security()->filter(
-                                $value, $datatype, $null, $default);
+                                $value, $dataType, $null, $default);
 
                     } catch (Exception $e) {
                         $valid = false;

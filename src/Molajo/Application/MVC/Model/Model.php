@@ -22,12 +22,20 @@ defined('MOLAJO') or die;
 class Model
 {
 	/**
-	 * Model Name
+	 * Name-spaced Model Name
 	 *
 	 * @var	string
 	 * @since  1.0
 	 */
 	protected $name = '';
+
+    /**
+     * Model Name
+     *
+     * @var	string
+     * @since  1.0
+     */
+    protected $model_name = '';
 
 	/**
 	 * Database connection
@@ -201,6 +209,14 @@ class Model
 
 		$this->primary_prefix = 'a';
 
+        $this->model_name = substr($this->name, strlen('Molajo\\Application\\MVC\\Model\\'), strlen($this->name) - strlen('Molajo\\Application\\MVC\\Model\\') - strlen('Model'));
+
+        /**
+        if ((int) Molajo::Services()->get('DebugService', 0) == 0) {
+        } else {
+            Services::Debug()->set('Model Construct '.$this->name. ' '.$this->model_name);
+        }
+        */
 		return $this;
 	}
 
@@ -252,17 +268,17 @@ class Model
 	}
 
 	/**
-	 * getFieldnames
+	 * getFieldNames
 	 *
 	 * Retrieves column names, only, for the database table
 	 *
 	 * @return array
 	 * @since  1.0
 	 */
-	public function getFieldnames()
+	public function getFieldNames()
 	{
 		$fields = array();
-		$fieldDefinitions = $this->getFields();
+		$fieldDefinitions = $this->getFieldDefinitions();
 		if (count($fieldDefinitions) > 0) {
 			foreach ($fieldDefinitions as $fieldDefinition) {
 				$fields[] = $fieldDefinition->Field;
@@ -282,73 +298,125 @@ class Model
 	public function getFieldDatatypes()
 	{
 		$fields = array();
-		$fieldDefinitions = $this->getFields();
+		$fieldDefinitions = $this->getFieldDefinitions();
 
 		if (count($fieldDefinitions) > 0) {
 			foreach ($fieldDefinitions as $fieldDefinition) {
 
-				$datatype = '';
+				$dataType = '';
 
 				/* basic datatype */
 				if (stripos($fieldDefinition->Type, 'int') !== false) {
-					$datatype = 'int';
+					$dataType = 'int';
 				} else if (stripos($fieldDefinition->Type, 'date') !== false) {
-					$datatype = 'date';
+					$dataType = 'date';
 				} else if (stripos($fieldDefinition->Type, 'text') !== false) {
-					$datatype = 'text';
+					$dataType = 'text';
 				} else {
-					$datatype = 'char';
+					$dataType = 'char';
 				}
 
 				/* null */
 				if ((strtolower($fieldDefinition->Null)) == 'yes') {
-					$datatype .= ',1';
+					$dataType .= ',1';
 				} else {
-					$datatype .= ',0';
+					$dataType .= ',0';
 				}
 
 				/* default */
 				if ((strtolower($fieldDefinition->Extra)) == 'auto_increment') {
-					$datatype .= ',auto_increment';
+					$dataType .= ',auto_increment';
 				} else if ((strtolower($fieldDefinition->Default)) == ' ') {
-					$datatype .= ', ';
+					$dataType .= ', ';
 				} else if ((strtolower($fieldDefinition->Default)) == '0') {
-					$datatype .= ',0';
+					$dataType .= ',0';
 				} else if ($fieldDefinition->Default == NULL) {
-					$datatype .= ',';
+					$dataType .= ',';
 				} else {
-					$datatype .= ',' . trim($fieldDefinition->Default);
+					$dataType .= ',' . trim($fieldDefinition->Default);
 				}
 
 				/* save it to array */
-				$fields[$fieldDefinition->Field] = $datatype;
+				$fields[$fieldDefinition->Field] = $dataType;
 			}
 		}
 
 		return $fields;
 	}
 
-
 	/**
-	 * getFields
+	 * getFieldDefinitions
 	 *
 	 * Retrieves column names and definitions from the database table
 	 *
 	 * @return array
 	 * @since  1.0
 	 */
-	public function getFields()
+	public function getFieldDefinitions()
 	{
 
 		if ($this->table_name == '') {
 			return array();
 		}
-
 		return $this->db->getTableColumns($this->table_name, false);
 
 	}
 
-	/**
+    /**
+     * getCustomfieldFieldNames
+     *
+     * Retrieves custom_field column names for specific model
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getCustomfieldFieldNames()
+    {
+
+        if ($this->name == '') {
+            return array();
+        }
+
+
+    }
+
+    /**
+     * getMetadataFieldNames
+     *
+     * Retrieves metadata column names for specific model
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getMetadataFieldNames()
+    {
+
+        if ($this->name == '') {
+            return array();
+        }
+
+
+    }
+
+    /**
+     * getParameterFieldNames
+     *
+     * Retrieves parameter column names for specific model
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getParameterFieldNames()
+    {
+
+        if ($this->name == '') {
+            return array();
+        }
+
+
+    }
+
+    /**
 	 * getProperties
 	 *
 	 * Returns an associative array of object properties.

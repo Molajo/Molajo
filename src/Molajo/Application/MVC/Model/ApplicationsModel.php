@@ -30,6 +30,7 @@ Class ApplicationsModel extends DisplayModel
         $this->name = get_class($this);
         $this->table_name = '#__applications';
         $this->primary_key = 'id';
+
         return parent::__construct($id);
     }
 }

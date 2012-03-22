@@ -158,8 +158,8 @@ class DisplayModel extends ItemModel
 
                         if (trim($value == '')) {
                         } else {
-                            $datatype = explode(',', $this->fields[$field]);
-                            if ($datatype[0] == 'int') {
+                            $dataType = explode(',', $this->fields[$field]);
+                            if ($dataType[0] == 'int') {
                                 $v = (int)$value;
                             } else {
                                 $v = $this->db->q($value);

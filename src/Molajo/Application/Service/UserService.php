@@ -6,7 +6,6 @@
  */
 namespace Molajo\Application\Service;
 
-use Molajo\Application\MVC\Model\UsersModel;
 use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
@@ -29,20 +28,12 @@ Class UserService
     protected static $instances = array();
 
     /**
-     * $storage
-     *
-     * @since  1.0
-     * @var object
-     */
-    protected $storage;
-
-    /**
      * $model
      *
      * @since  1.0
      * @var object
      */
-    protected $model = 'UsersModel';
+    protected $model = 'Molajo\\Application\\MVC\\Model\\UsersModel';
 
     /**
      * getInstance
@@ -52,17 +43,11 @@ Class UserService
      * @return  object  User
      * @since   1.0
      */
-    public static function getInstance($id = 0)
+    public static function getInstance($id = 0, $model = null)
     {
-        if ((int) $id == 0) {
-        } else {
-            $m = new UsersModel();
-            $m->query->where('(' . $m->db->qn('id') . ' = ' . (int)$id .
-                ' OR ' . $m->db->qn('username') . ' = ' . $m->db->q($id) . ')');
-            $id = $m->loadResult();
-        }
+        $id = 42;
         if (empty(self::$instances[$id])) {
-            $user = new UserService($id);
+            $user = new UserService($id, $model);
             self::$instances[$id] = $user;
         }
         return self::$instances[$id];
@@ -76,53 +61,20 @@ Class UserService
      * @return  object
      * @since   1.0
      */
-    protected function __construct($id = 0)
+    protected function __construct($id = 0, $model = null)
     {
-        $id = 42;
-        $this->id = (int) $id;
+        $this->id = (int)$id;
+        if ($model === null) {
+        } else {
+            $this->model = $model;
+        }
 //        $this->storage = Services::Request()->getSession();
 
-        $this->storage = Services::Registry()->initialise();
-
-        if ((int) $this->id == 0) {
+        if ((int)$this->id == 0) {
             return $this->_loadGuest();
         } else {
             return $this->_load();
         }
-    }
-
-    /**
-     * get
-     *
-     * Retrieves values, or establishes the value with a default,
-     * if not available
-     *
-     * @param  string  $key
-     * @param  string  $default
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function get($key, $default = null)
-    {
-        return $this->storage->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * Modifies a property, creating it and establishing
-     * a default if not existing
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function set($key, $value)
-    {
-        return $this->storage->set($key, $value);
     }
 
     /**
@@ -137,22 +89,62 @@ Class UserService
      */
     protected function _load()
     {
-        $this->model = new UsersModel ($this->id);
+        $m = new $this->model ($this->id);
 
-        $results = $this->model->load();
+        $results = $m->load();
         if ($results == false) {
             $this->guest = true;
             return $this->_loadGuest();
         }
-        $columns = $this->model->getFields();
 
-        foreach ($results as $name => $value) {
-            $this->set($name, $value);
+        /** User Table Columns */
+        $columns = $m->getFieldNames();
+
+        for ($i=0; $i < count($columns); $i++) {
+
+            if ($columns[$i] == 'parameters'
+                || $columns[$i] == 'custom_fields'
+                || $columns[$i] == 'metadata')  {
+
+            } else {
+                Services::Registry()->set('User\\' . $columns[$i], $results[$columns[$i]]);
+            }
         }
 
-        $custom_fields = Services::Registry()->initialise();
-        $custom_fields->loadString($this->get('custom_fields', array()));
-        $this->set('custom_fields', $custom_fields);
+        /** Validations Table */
+        $v = simplexml_load_file(
+            MOLAJO_APPLICATIONS_MVC
+                . '/Model/Table/'
+                . substr($m->table_name, 3, 99)
+                . '.xml'
+        );
+
+        /** $custom_fields */
+       $custom_fields = Services::Registry()->initialise();
+       $custom_fields->loadJSON($results['custom_fields'], array());
+
+        if (isset($v->custom_fields->custom_field)) {
+            foreach ($v->custom_fields->custom_field as $cf) {
+
+                $name = (string)$cf['name'];
+                $dataType = (string)$cf['filter'];
+                $null = (string)$cf['null'];
+                $default = (string)$cf['default'];
+                $values = (string)$cf['values'];
+
+                if ($default == '') {
+                    $val = $custom_fields->get($name, null);
+                } else {
+                    $val = $custom_fields->get($name, $default);
+                }
+
+//                $val = Services::Security()
+//                ->filter(
+//                    $val, $dataType, $null, $default, $values);
+
+                Services::Registry()->set('UserCustomFields\\' . $name, $v);
+            }
+        }
 
         $metadata = Services::Registry()->initialise();
         $metadata->loadString($this->get('metadata', array()));
@@ -160,6 +152,10 @@ Class UserService
 
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($this->get('parameters'));
+
+        var_dump($this->get('parameters'));
+        die;
+
         $this->set('parameters', $parameters);
 
         return $this;
@@ -175,9 +171,9 @@ Class UserService
      */
     protected function _loadGuest()
     {
-        $this->model = new UsersModel (0);
+        $m = new $this->model (0);
 
-        $columns = $this->model->getFields();
+        $columns = $m->getFieldNames();
 
         foreach ($columns as $name => $value) {
             $this->set($name, '');

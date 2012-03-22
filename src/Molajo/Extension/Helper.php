@@ -92,11 +92,10 @@ Class Helper
 		}
 
 		if (method_exists($class, $method)) {
-            echo '<br />'.$class.' '.$method.'<br />';
 			return call_user_func_array (array($class, $method), $arg);
 		}
 
-		Services::Debug()->set('Invalid Extension Helper Method: '. $name);
+		Services::Debug()->set('Invalid Helper Class Method: '. $class.' '.$method);
 		return false;
 	}
 }

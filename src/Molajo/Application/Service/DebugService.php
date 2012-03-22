@@ -76,8 +76,11 @@ Class DebugService
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function get()
+	public function get($key, $value)
 	{
+        if ($key == 'on') {
+            return $this->on;
+        }
 
 	}
 

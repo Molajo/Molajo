@@ -247,8 +247,8 @@ Class MailService
         /** From Email Address */
         $name = 'from_email';
         $value = $this->get('from_email');
-        $datatype = 'email';
-        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        $dataType = 'email';
+        $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
            return false;
         }
@@ -257,8 +257,8 @@ Class MailService
         /** From Name */
         $name = 'from_name';
         $value = $this->get('from_name', Services::Configuration()->get('site_name'));
-        $datatype = 'char';
-        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        $dataType = 'char';
+        $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
            return false;
         }
@@ -267,7 +267,7 @@ Class MailService
         /** Send to Email Address */
         $name = 'send_to_email';
         $values = $this->get('send_to_email');
-        $datatype = 'email';
+        $dataType = 'email';
         if (is_array($value)) {
         } else {
             $values = array($value);
@@ -275,7 +275,7 @@ Class MailService
         $validated = array();
         if (count($values) > 0) {
             foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
                    return false;
                 } else {
@@ -288,8 +288,8 @@ Class MailService
         /** Subject */
         $name = 'subject';
         $value = $this->get('subject', Services::Configuration()->get('site_name'));
-        $datatype = 'char';
-        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        $dataType = 'char';
+        $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
            return false;
         }
@@ -299,11 +299,11 @@ Class MailService
         $name = 'body';
         $value = $this->get('body');
         if ($this->get('mode', 'text') == 'html') {
-            $datatype = 'html';
+            $dataType = 'html';
         } else {
-            $datatype = 'text';
+            $dataType = 'text';
         }
-        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
            return false;
         }
@@ -312,7 +312,7 @@ Class MailService
         /** Copy Email Address */
         $name = 'cc_email';
         $values = $this->get('cc_email');
-        $datatype = 'email';
+        $dataType = 'email';
         if (is_array($value)) {
         } else {
             $values = array($value);
@@ -320,7 +320,7 @@ Class MailService
         $validated = array();
         if (count($values) > 0) {
             foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
                    return false;
                 } else {
@@ -333,7 +333,7 @@ Class MailService
         /** Blind Copy Email Address */
         $name = 'bcc_email';
         $values = $this->get('bcc_email');
-        $datatype = 'email';
+        $dataType = 'email';
         if (is_array($value)) {
         } else {
             $values = array($value);
@@ -341,7 +341,7 @@ Class MailService
         $validated = array();
         if (count($values) > 0) {
             foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
                    return false;
                 } else {
@@ -354,7 +354,7 @@ Class MailService
         /** Attachment */
         $name = 'attachment';
         $values = $this->get('attachment');
-        $datatype = 'file';
+        $dataType = 'file';
         if (is_array($value)) {
         } else {
             $values = array($value);
@@ -362,7 +362,7 @@ Class MailService
         $validated = array();
         if (count($values) > 0) {
             foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $datatype);
+                $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
                    return false;
                 } else {
@@ -375,8 +375,8 @@ Class MailService
         /** Reply to Email Address */
         $name = 'reply_to_email';
         $value = $this->get('reply_to_email');
-        $datatype = 'email';
-        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        $dataType = 'email';
+        $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
            return false;
         }
@@ -385,8 +385,8 @@ Class MailService
         /** Reply to Name */
         $name = 'reply_to_name';
         $value = $this->get('reply_to_name');
-        $datatype = 'char';
-        $results = $this->edit_and_filter_input($name, $value, $datatype);
+        $dataType = 'char';
+        $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
            return false;
         }
@@ -400,7 +400,7 @@ Class MailService
      *
      * @param   string  $name         Name of input field
      * @param   string  $field_value  Value of input field
-     * @param   string  $datatype     Datatype of input field
+     * @param   string  $dataType     Datatype of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
      *
@@ -408,11 +408,11 @@ Class MailService
      * @since   1.0
      */
     protected function call_security_filter(
-        $name, $value, $datatype, $null = null, $default = null)
+        $name, $value, $dataType, $null = null, $default = null)
     {
         try {
            $value = Services::Security()->filter(
-                   $value, $datatype, $null, $default);
+                   $value, $dataType, $null, $default);
 
         } catch (Exception $e) {
            $value = false;

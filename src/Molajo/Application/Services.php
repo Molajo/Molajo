@@ -174,7 +174,7 @@ Class Services
         if ($value == null
             || $try == false
         ) {
-            $this->message[$i] = 'Service: ' . $key . ' failed to start ' . $value;
+            $this->message[$i] = 'Service: ' . $key . ' FAILED' . $value;
 
         } else {
             $this->service_connection->set($key, $value);

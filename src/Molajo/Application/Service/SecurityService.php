@@ -128,25 +128,27 @@ Class SecurityService
      * Filter input, default value, edit
      *
      * @param   string  $field_value  Value of input field
-     * @param   string  $datatype     Datatype of input field
+     * @param   string  $dataType     Datatype of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
+     * @param   array   $values       Set of values of which the field must contain
      *
      * @return  mixed
      * @since   1.0
      */
     public function filter($field_value,
-                           $datatype = 'char',
+                           $dataType = 'char',
                            $null = 1,
-                           $default = null)
+                           $default = null,
+                           $values = array())
     {
 
-        switch (strtolower($datatype)) {
+        switch (strtolower($dataType)) {
             case 'int':
             case 'boolean':
             case 'float':
                 return $this->filter_numeric(
-                    $field_value, $datatype, $null, $default
+                    $field_value, $dataType, $null, $default
                 );
                 break;
 
@@ -219,7 +221,7 @@ Class SecurityService
      * filter_numeric
      *
      * @param   string  $field_value  Value of input field
-     * @param   string  $datatype     Datatype of input field
+     * @param   string  $dataType     Datatype of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
      *
@@ -227,7 +229,7 @@ Class SecurityService
      * @since   1.0
      */
     public function filter_numeric($field_value,
-                                   $datatype = 'int',
+                                   $dataType = 'int',
                                    $null = 1,
                                    $default = null)
     {
@@ -238,7 +240,7 @@ Class SecurityService
 
         if ($field_value == null) {
         } else {
-            switch ($datatype) {
+            switch ($dataType) {
 
                 case 'boolean':
                     $test = filter_var(

@@ -70,20 +70,8 @@ Class RequestService extends Request
     public function __construct($query = null, $request = null, $attributes = null, $cookies = null, $files = null, $server = null, $content = null)
     {
         parent::__construct();
-
         $this->request = Request::createFromGlobals();
-
-        echo 'baseURL: '.$this->request->getScheme()
-            .'://'.
-            $this->request->getHttpHost()
-            .$this->request->getBaseUrl()
-		.'<br />';
-
-		echo 'getPathInfo: '. $this->request->getPathInfo()
-			.'<br />';
-
-		echo 'getQueryString: '. $this->request->getQueryString()
-			.'<br />';
+        return $this;
 	}
 
 	/**

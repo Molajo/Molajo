@@ -162,7 +162,6 @@ Class Request
             $this->_getApplicationDefaults();
             $this->_getTheme();
             $this->_getPage();
-            echo 'ok';
             $this->_getTemplateView();
             $this->_getWrapView();
 
@@ -925,10 +924,13 @@ Class Request
             );
         }
 
-        $this->parameters = Molajo::Helper()->mergeParameters('Extension',
-            $parameters,
-            $this->parameters
-        );
+        $this->parameters =
+            Molajo::Helper()
+                ->mergeParameters(
+                    'Extension',
+                    $parameters,
+                    $this->parameters
+                );
 
         /** merge meta data */
         if (Services::Registry()->get('request\\metadata_title', '') == '') {
@@ -1046,7 +1048,7 @@ Class Request
     /**
      * _getUser
      *
-     * Get Theme Name using either the Theme ID or the Theme Name
+     * Retrieve theme for user (if theme and/or page view not available)
      *
      * @return    bool
      * @since    1.0
@@ -1054,11 +1056,14 @@ Class Request
     protected function _getUser()
     {
         $parameters = Services::Registry()->initialise();
+
         $parameters->loadString(
             Services::User()
-                ->get('parameters')
+                ->get('gender')
         );
 
+var_dump($parameters);
+        die;
         if (Services::Registry()->get('request\\theme_id', 0) == 0) {
             Services::Registry()->set('request\\theme_id',
                 $parameters->get('user_theme_id', 0));
@@ -1271,6 +1276,7 @@ Class Request
                     Services::Registry()->get('request\\template_view_id')
                 )
             );
+echo Services::Registry()->get('request\\template_view_name');
 
         /** Page Path */
         $paths = Molajo::Helper()

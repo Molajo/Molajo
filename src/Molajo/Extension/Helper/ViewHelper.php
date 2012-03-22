@@ -256,10 +256,8 @@ class ViewHelper
      * @return bool
      * @since 1.0
      */
-    static public function getViewDefaultsOther($type = 'template',
-                                           $task = null,
-                                           $id = 0,
-                                           $parameters)
+    static public function getViewDefaultsOther
+        ($type = 'template', $task = null, $id = 0, $parameters)
     {
         $view = 0;
         if ($type == 'template') {
