@@ -63,6 +63,16 @@ class Model
 	 */
 	public $nullDate;
 
+    /**
+     * $now
+     *
+     * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
+     *
+     * @var	object
+     * @since  1.0
+     */
+    public $now;
+
 	/**
 	 * $query_results
 	 *
@@ -186,6 +196,8 @@ class Model
 		$this->query = $this->db->getQuery(true);
 		$this->query->clear();
 		$this->nullDate = $this->db->getNullDate();
+
+        $this->now = date("Y-m-d").' 00:00:00';
 
 		$this->primary_prefix = 'a';
 

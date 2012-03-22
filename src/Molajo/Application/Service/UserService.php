@@ -78,12 +78,13 @@ Class UserService
      */
     protected function __construct($id = 0)
     {
+        $id = 42;
         $this->id = (int) $id;
 //        $this->storage = Services::Request()->getSession();
 
         $this->storage = Services::Registry()->initialise();
 
-        if ((int) $id == 0) {
+        if ((int) $this->id == 0) {
             return $this->_loadGuest();
         } else {
             return $this->_load();
@@ -104,7 +105,7 @@ Class UserService
      */
     public function get($key, $default = null)
     {
-        $this->storage->get($key, $default);
+        return $this->storage->get($key, $default);
     }
 
     /**

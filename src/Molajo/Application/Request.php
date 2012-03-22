@@ -162,6 +162,7 @@ Class Request
             $this->_getApplicationDefaults();
             $this->_getTheme();
             $this->_getPage();
+            echo 'ok';
             $this->_getTemplateView();
             $this->_getWrapView();
 
@@ -364,26 +365,19 @@ Class Request
 
         $row = Molajo::Helper()
             ->get('Asset',
-            (int)Services::Registry()->get('request\\request_asset_id'),
-            Services::Registry()->get('request\\request_url_query'),
-            Services::Registry()->get('request\\mvc_option'),
-            Services::Registry()->get('request\\mvc_id')
-        );
+                (int)Services::Registry()->get('request\\request_asset_id'),
+                Services::Registry()->get('request\\request_url_query'),
+                Services::Registry()->get('request\\mvc_option'),
+                Services::Registry()->get('request\\mvc_id')
+            );
 
-        $row = Molajo::Helper()
-            ->get('Extension',
-            MOLAJO_ASSET_TYPE_EXTENSION_THEME,
-            'Bootstrap'
-        );
-var_dump($row);
-        die;
         /** 404: _routeRequest handles redirecting to error page */
         if (count($row) == 0
             || (int)$row->routable == 0
         ) {
             return Services::Registry()->set('request\\status_found', false);
         }
-        echo 'before get extension';
+
         /** Redirect: _routeRequest handles rerouting the request */
         if ((int)$row->redirect_to_id == 0) {
         } else {
@@ -1159,12 +1153,11 @@ var_dump($row);
     protected function _getTheme()
     {
         $row = Molajo::Helper()
-            ->get('Theme',
-                Services::Registry()
-                    ->get('request\\theme_id')
+            ->get('Extension',
+                MOLAJO_ASSET_TYPE_EXTENSION_THEME,
+                Services::Registry()->get('request\\theme_id')
             );
-        var_dump($row);
-        die;
+
         if (count($row) == 0) {
             if (Services::Registry()->set('request\\theme_name') == 'system') {
                 // error
@@ -1172,7 +1165,9 @@ var_dump($row);
                 Services::Registry()
                     ->set('request\\theme_name', 'system');
                 $row = Molajo::Helper()
-                    ->get('Theme', Services::Registry()->get('request\\theme_name'));
+                    ->get('Theme',
+                        Services::Registry()->get('request\\theme_name')
+                    );
                 if (count($row) > 0) {
                     // error
                 }
@@ -1199,15 +1194,21 @@ var_dump($row);
 
         Services::Registry()->set('request\\theme_path',
             Molajo::Helper()
-                ->getPath('Theme', Services::Registry()->get('request\\theme_name')));
+                ->getPath('Theme',
+                    Services::Registry()->get('request\\theme_name'))
+            );
 
         Services::Registry()->set('request\\theme_path_url',
             Molajo::Helper()
-                ->getPathURL('Theme', Services::Registry()->get('request\\theme_name')));
+                ->getPathURL('Theme',
+                    Services::Registry()->get('request\\theme_name'))
+            );
 
         Services::Registry()->set('request\\theme_favicon',
             Molajo::Helper()
-                ->getFavicon('Theme', Services::Registry()->get('request\\theme_name')));
+                ->getFavicon('Theme',
+                    Services::Registry()->get('request\\theme_name'))
+            );
 
         return;
     }
@@ -1224,24 +1225,30 @@ var_dump($row);
     {
         /** Get Name */
         Services::Registry()->set('request\\page_view_name',
-            ExtensionHelper::getInstanceTitle(
-                Services::Registry()->get('request\\page_view_id'),
-                MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW,
-                'Page'
+            Molajo::Helper()
+                ->getInstanceTitle(
+                'Extension',
+                Services::Registry()->get('request\\template_view_id')
             )
         );
 
         /** Page Path */
-        $viewHelper = new ViewHelper(
-            Services::Registry()->get('request\\page_view_name'),
-            'Page',
-            Services::Registry()->get('request\\extension_instance_name'),
-            Services::Registry()->get('request\\extension_type'),
-            Services::Registry()->get('request\\theme_name')
-        );
-        Services::Registry()->set('request\\page_view_path', $viewHelper->view_path);
-        Services::Registry()->set('request\\page_view_path_url', $viewHelper->view_path_url);
-        Services::Registry()->set('request\\page_view_include', $viewHelper->view_path . '/index.php');
+        $paths = Molajo::Helper()
+                    ->get('View',
+                        Services::Registry()->get('request\\page_view_name'),
+                        'Page',
+                        Services::Registry()->get('request\\extension_instance_name'),
+                        Services::Registry()->get('request\\extension_type'),
+                        Services::Registry()->get('request\\theme_name')
+                    );
+
+        if ($paths === false) {
+            return false;
+        }
+
+        Services::Registry()->set('request\\page_view_path', $paths[0]);
+        Services::Registry()->set('request\\page_view_path_url', $paths[1]);
+        Services::Registry()->set('request\\page_view_include', $paths[0] . '/index.php');
 
         return;
     }
@@ -1256,24 +1263,34 @@ var_dump($row);
      */
     protected function _getTemplateView()
     {
-        $this->set(
-            'template_view_name',
-            Molajo::Helper()->getInstanceTitle(
-                'Extension',
-                Services::Registry()->get('request\\template_view_id')
-            )
-        );
+        /** Get Name */
+        Services::Registry()->set('request\\template_view_name',
+            Molajo::Helper()
+                ->getInstanceTitle(
+                    'Extension',
+                    Services::Registry()->get('request\\template_view_id')
+                )
+            );
 
-        $viewHelper = Molajo::Helper()->findPath('View',
+        /** Page Path */
+        $paths = Molajo::Helper()
+            ->get('View',
             Services::Registry()->get('request\\template_view_name'),
-            Services::Registry()->get('request\\view_type'),
-            Services::Registry()->get('request\\extension_title'),
+            'Template',
             Services::Registry()->get('request\\extension_instance_name'),
+            Services::Registry()->get('request\\extension_type'),
             Services::Registry()->get('request\\theme_name')
         );
-        Services::Registry()->set('request\\template_view_path', $viewHelper->view_path);
-        Services::Registry()->set('request\\template_view_path_url', $viewHelper->view_path_url);
+var_dump($paths);
+        die;
+        if ($paths === false) {
+            return false;
+        }
 
+        Services::Registry()->set('request\\template_view_path', $paths[0]);
+        Services::Registry()->set('request\\template_view_path_url', $paths[1]);
+echo 'getTemplateView';
+        die;
         return;
     }
 
@@ -1290,10 +1307,11 @@ var_dump($row);
         $this->set(
             'wrap_view_name',
             Molajo::Helper()
-                ->getInstanceTitle('Extension',
+                ->getInstanceTitle(
+                'Extension',
                 Services::Registry()->get('request\\wrap_view_id')
-            )
-        );
+                )
+            );
 
         $wrapHelper = Molajo::Helper()->findPath('View',
             Services::Registry()->get('request\\wrap_view_name'),

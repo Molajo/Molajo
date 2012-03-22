@@ -92,6 +92,7 @@ Class Helper
 		}
 
 		if (method_exists($class, $method)) {
+            echo '<br />'.$class.' '.$method.'<br />';
 			return call_user_func_array (array($class, $method), $arg);
 		}
 

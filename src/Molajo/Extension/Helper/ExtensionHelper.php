@@ -57,6 +57,7 @@ abstract class ExtensionHelper
         $m->query->select('a.' . $m->db->qn('language'));
 
         $m->query->from($m->db->qn('#__extension_instances') . ' as a');
+
         $m->query->where('a.' . $m->db->qn('extension_id') . ' > 0 ');
 
         /** extension specified by id, title or request for list */
@@ -90,15 +91,16 @@ abstract class ExtensionHelper
         );
 
         /** Assets Join and View Access Check */
-        Services::Access()->setQueryViewAccess(
-            $m->query,
-            $m->db,
-            array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
-                'select' => true
-            )
-        );
+        Services::Access()
+            ->setQueryViewAccess(
+                $m->query,
+                $m->db,
+                array('join_to_prefix' => 'a',
+                    'join_to_primary_key' => 'id',
+                    'asset_prefix' => 'b_assets',
+                    'select' => true
+                )
+            );
 
         /** b_asset_types. Asset Types Table  */
         $m->query->select($m->db->qn('b_asset_types.title') . ' as asset_type_title');
@@ -135,7 +137,6 @@ abstract class ExtensionHelper
          *  Run Query
          */
         $extensions = $m->loadObject();
-
         return $extensions;
     }
 

@@ -6,7 +6,6 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Application\Services;
 use Molajo\Extension\Helper;
 
 defined('MOLAJO') or die;
@@ -64,9 +63,9 @@ class ThemeHelper
     {
         return Molajo::Helper()
             ->get('Extension',
-            MOLAJO_ASSET_TYPE_EXTENSION_THEME,
-            $theme
-        );
+                MOLAJO_ASSET_TYPE_EXTENSION_THEME,
+                $theme
+            );
     }
 
     /**

@@ -99,8 +99,8 @@ class ViewHelper
      *
      * @return bool|string
      */
-    public function findPath($view, $view_type, $extension_name,
-                                    $extension_type, $theme_name)
+    public function findPath
+        ($view, $view_type, $extension_name, $extension_type, $theme_name)
     {
         /** initialise */
         $this->view_path = false;
@@ -218,9 +218,8 @@ class ViewHelper
      * @return bool
      * @since 1.0
      */
-    static public function getViewDefaultsApplication($type = 'template',
-                                           $task = null,
-                                           $id = 0)
+    static public function getViewDefaultsApplication
+        ($type = 'template', $task = null, $id = 0)
     {
         $view = 0;
         if ($type == 'template') {
