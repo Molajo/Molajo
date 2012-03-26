@@ -1,5 +1,5 @@
-  $(window).load(function() {
+$(window).load(function () {
     $('#orbitDemo').orbit({
-         animation: 'horizontal-push'
-     });
-     });
+        animation:'horizontal-push'
+    });
+});

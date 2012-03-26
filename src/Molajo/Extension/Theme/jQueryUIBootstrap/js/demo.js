@@ -2,7 +2,7 @@ $(function () {
 
     // Accordion
     $("#accordion").accordion({
-        header: "h3"
+        header:"h3"
     });
 
     // Tabs
@@ -21,13 +21,13 @@ $(function () {
 
     // Dialog
     $('#dialog').dialog({
-        autoOpen: false,
-        width: 600,
-        buttons: {
-            "Ok": function () {
+        autoOpen:false,
+        width:600,
+        buttons:{
+            "Ok":function () {
                 $(this).dialog("close");
             },
-            "Cancel": function () {
+            "Cancel":function () {
                 $(this).dialog("close");
             }
         }
@@ -47,43 +47,43 @@ $(function () {
 
     // Datepicker
     $('#datepicker').datepicker({
-        inline: true
+        inline:true
     });
 
     // Slider
     $('#slider').slider({
-        range: true,
-        values: [17, 67]
+        range:true,
+        values:[17, 67]
     });
 
     // Progressbar
     $("#progressbar").progressbar({
-        value: 20
+        value:20
     });
 
     //hover states on the static widgets
     $('#dialog_link, #modal_link, ul#icons li').hover(
 
-    function () {
-        $(this).addClass('ui-state-hover');
-    }, function () {
-        $(this).removeClass('ui-state-hover');
-    });
+        function () {
+            $(this).addClass('ui-state-hover');
+        }, function () {
+            $(this).removeClass('ui-state-hover');
+        });
 
     // Autocomplete
     var availableTags = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"];
 
     $("#tags").autocomplete({
-        source: availableTags
+        source:availableTags
     });
 
 
     // Dialogs
     $("#dialog-message").dialog({
-        autoOpen: false,
-        modal: true,
-        buttons: {
-            Ok: function () {
+        autoOpen:false,
+        modal:true,
+        buttons:{
+            Ok:function () {
                 $(this).dialog("close");
             }
         }
@@ -94,15 +94,14 @@ $(function () {
     $('.ui-dialog :button').blur();
 
 
-
     // Vertical slider
     $("#slider-vertical").slider({
-        orientation: "vertical",
-        range: "min",
-        min: 0,
-        max: 100,
-        value: 60,
-        slide: function (event, ui) {
+        orientation:"vertical",
+        range:"min",
+        min:0,
+        max:100,
+        value:60,
+        slide:function (event, ui) {
             $("#amount").val(ui.value);
         }
     });
@@ -110,16 +109,18 @@ $(function () {
 
 
     // Split button
-    $("#rerun").button().click(function () {
-        alert("Running the last action");
-    }).next().button({
-        text: false,
-        icons: {
-            primary: "ui-icon-triangle-1-s"
-        }
-    }).click(function () {
-        alert("Could display a menu to select an action");
-    }).parent().buttonset();
+    $("#rerun").button().click(
+        function () {
+            alert("Running the last action");
+        }).next().button({
+            text:false,
+            icons:{
+                primary:"ui-icon-triangle-1-s"
+            }
+        }).click(
+        function () {
+            alert("Could display a menu to select an action");
+        }).parent().buttonset();
 
 
     var $tab_title_input = $("#tab_title"),
@@ -128,8 +129,8 @@ $(function () {
 
     // tabs init with a custom tab template and an "add" callback filling in the content
     var $tabs = $("#tabs2").tabs({
-        tabTemplate: "<li><a href='#{href}'>#{label}</a></li>",
-        add: function (event, ui) {
+        tabTemplate:"<li><a href='#{href}'>#{label}</a></li>",
+        add:function (event, ui) {
             var tab_content = $tab_content_input.val() || "Tab " + tab_counter + " content.";
             $(ui.panel).append("<p>" + tab_content + "</p>");
         }
@@ -137,21 +138,21 @@ $(function () {
 
     // modal dialog init: custom buttons and a "close" callback reseting the form inside
     var $dialog = $("#dialog2").dialog({
-        autoOpen: false,
-        modal: true,
-        buttons: {
-            Add: function () {
+        autoOpen:false,
+        modal:true,
+        buttons:{
+            Add:function () {
                 addTab();
                 $(this).dialog("close");
             },
-            Cancel: function () {
+            Cancel:function () {
                 $(this).dialog("close");
             }
         },
-        open: function () {
+        open:function () {
             $tab_title_input.focus();
         },
-        close: function () {
+        close:function () {
             $form[0].reset();
         }
     });
@@ -196,8 +197,8 @@ $(function () {
 
     // tabs init with a custom tab template and an "add" callback filling in the content
     var $tabs = $("#tabs2").tabs({
-        tabTemplate: "<li><a href='#{href}'>#{label}</a></li>",
-        add: function (event, ui) {
+        tabTemplate:"<li><a href='#{href}'>#{label}</a></li>",
+        add:function (event, ui) {
             var tab_content = $tab_content_input.val() || "Tab " + tab_counter + " content.";
             $(ui.panel).append("<p>" + tab_content + "</p>");
         }
@@ -205,21 +206,21 @@ $(function () {
 
     // modal dialog init: custom buttons and a "close" callback reseting the form inside
     var $dialog = $("#dialog2").dialog({
-        autoOpen: false,
-        modal: true,
-        buttons: {
-            Add: function () {
+        autoOpen:false,
+        modal:true,
+        buttons:{
+            Add:function () {
                 addTab();
                 $(this).dialog("close");
             },
-            Cancel: function () {
+            Cancel:function () {
                 $(this).dialog("close");
             }
         },
-        open: function () {
+        open:function () {
             $tab_title_input.focus();
         },
-        close: function () {
+        close:function () {
             $form[0].reset();
         }
     });
@@ -254,12 +255,12 @@ $(function () {
 
     // File input (using http://filamentgroup.com/lab/jquery_custom_file_input_book_designing_with_progressive_enhancement/)
     $('#file').customFileInput({
-        button_position : 'right'
+        button_position:'right'
     });
 
 
     //Wijmo
-    $("#menu1").wijmenu({ trigger: ".wijmo-wijmenu-item", triggerEvent: "click" });
+    $("#menu1").wijmenu({ trigger:".wijmo-wijmenu-item", triggerEvent:"click" });
     //$(".wijmo-wijmenu-text").parent().bind("click", function () {
     //    $("#menu1").wijmenu("hideAllMenus");
     //});

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Head
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
@@ -43,7 +43,7 @@ Class HeadModel extends Model
     {
         $this->query_results = array();
 
-        $defer = (int) $this->parameters->get('defer');
+        $defer = (int)$this->parameters->get('defer');
 
         /** get metadata (part used in base) */
         if ($defer == 1) {
@@ -82,10 +82,10 @@ Class HeadModel extends Model
 
                 foreach ($metadata as $type => $tag) {
                     foreach ($tag as $name => $content) {
-        //				if ($type == 'http-equiv') {
-        //					$content .= '; charset=' . $document->getCharset();
-        //					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
-        //				} else {
+                        //				if ($type == 'http-equiv') {
+                        //					$content .= '; charset=' . $document->getCharset();
+                        //					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
+                        //				} else {
                         if (trim($content) == '') {
                         } else {
                             $row = new \stdClass();
@@ -94,7 +94,7 @@ Class HeadModel extends Model
                             $row->content = Services::Security()->escape_text($content);
                             $this->query_results[] = $row;
                         }
-        //				}
+                        //				}
                     }
                 }
             }
@@ -134,7 +134,7 @@ Class HeadModel extends Model
                     }
                     if (is_array($temp) && count($temp) > 0) {
                         foreach ($temp as $pair) {
-                            $split = explode(',',$pair);
+                            $split = explode(',', $pair);
                             $row->attributes .= ' ' . $split[0]
                                 . '="'
                                 . Services::Security()->escape_text($split[1])

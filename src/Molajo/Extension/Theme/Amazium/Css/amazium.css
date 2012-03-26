@@ -4,142 +4,439 @@
 * www.amazium.co.uk
 */
 
-
 /***** Standard 960px *****/
 
-	.row 								{ margin:0 auto; width:960px; overflow:hidden; }
-	.row .row 							{ margin:0 -16px 0 -16px; width:auto; display:inline-block; }
+.row {
+    margin: 0 auto;
+    width: 960px;
+    overflow: hidden;
+}
 
-	.grid_1								{ width:48px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_2 							{ width:128px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_3 							{ width:208px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_4 							{ width:288px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_5 							{ width:368px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }		
-	.grid_6 							{ width:448px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_7 							{ width:528px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_8 							{ width:608px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_9								{ width:688px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_10							{ width:768px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_11							{ width:848px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	.grid_12							{ width:928px; margin:0 16px 0 16px; overflow:hidden; float:left; display:inline; }
-	
-	.space_1							{ margin-left:96px; }
-	.space_2							{ margin-left:176px; }
-	.space_3 							{ margin-left:256px; }
-	.space_4 							{ margin-left:336px; }
-	.space_5 							{ margin-left:416px; }
-	.space_6 							{ margin-left:496px; }
-	.space_7 							{ margin-left:576px; }
-	.space_8 							{ margin-left:656px; }
-	.space_9							{ margin-left:736px; }
-	.space_10							{ margin-left:816px; }
-	.space_11							{ margin-left:896px; }
+.row .row {
+    margin: 0 -16px 0 -16px;
+    width: auto;
+    display: inline-block;
+}
 
+.grid_1 {
+    width: 48px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_2 {
+    width: 128px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_3 {
+    width: 208px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_4 {
+    width: 288px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_5 {
+    width: 368px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_6 {
+    width: 448px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_7 {
+    width: 528px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_8 {
+    width: 608px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_9 {
+    width: 688px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_10 {
+    width: 768px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_11 {
+    width: 848px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.grid_12 {
+    width: 928px;
+    margin: 0 16px 0 16px;
+    overflow: hidden;
+    float: left;
+    display: inline;
+}
+
+.space_1 {
+    margin-left: 96px;
+}
+
+.space_2 {
+    margin-left: 176px;
+}
+
+.space_3 {
+    margin-left: 256px;
+}
+
+.space_4 {
+    margin-left: 336px;
+}
+
+.space_5 {
+    margin-left: 416px;
+}
+
+.space_6 {
+    margin-left: 496px;
+}
+
+.space_7 {
+    margin-left: 576px;
+}
+
+.space_8 {
+    margin-left: 656px;
+}
+
+.space_9 {
+    margin-left: 736px;
+}
+
+.space_10 {
+    margin-left: 816px;
+}
+
+.space_11 {
+    margin-left: 896px;
+}
 
 /***** iPad Smaller than 959px *****/
 @media only screen and (min-width: 768px) and (max-width: 959px) {
 
-	.row 								{ margin:0 auto; width:768px; overflow:hidden; }
-	.row .row 							{ margin:0 -14px 0 -14px; width:auto; display:inline-block; }
-		
-	.grid_1								{ width:36px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_2 							{ width:100px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_3 							{ width:164px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_4 							{ width:228px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_5 							{ width:292px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }		
-	.grid_6 							{ width:356px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_7 							{ width:420px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_8 							{ width:484px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_9								{ width:548px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_10							{ width:612px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_11							{ width:676px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-	.grid_12							{ width:740px; margin:0 14px 0 14px; overflow:hidden; float:left; display:inline; }
-		
-	.space_1							{ margin-left:78px; }
-	.space_2							{ margin-left:142px; }
-	.space_3 							{ margin-left:206px; }
-	.space_4 							{ margin-left:270px; }
-	.space_5 							{ margin-left:334px; }
-	.space_6 							{ margin-left:398px; }
-	.space_7 							{ margin-left:462px; }
-	.space_8 							{ margin-left:526px; }
-	.space_9							{ margin-left:590px; }
-	.space_10							{ margin-left:654px; }
-	.space_11							{ margin-left:718px; }
-	
+    .row {
+        margin: 0 auto;
+        width: 768px;
+        overflow: hidden;
+    }
+
+    .row .row {
+        margin: 0 -14px 0 -14px;
+        width: auto;
+        display: inline-block;
+    }
+
+    .grid_1 {
+        width: 36px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_2 {
+        width: 100px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_3 {
+        width: 164px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_4 {
+        width: 228px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_5 {
+        width: 292px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_6 {
+        width: 356px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_7 {
+        width: 420px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_8 {
+        width: 484px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_9 {
+        width: 548px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_10 {
+        width: 612px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_11 {
+        width: 676px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .grid_12 {
+        width: 740px;
+        margin: 0 14px 0 14px;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
+    .space_1 {
+        margin-left: 78px;
+    }
+
+    .space_2 {
+        margin-left: 142px;
+    }
+
+    .space_3 {
+        margin-left: 206px;
+    }
+
+    .space_4 {
+        margin-left: 270px;
+    }
+
+    .space_5 {
+        margin-left: 334px;
+    }
+
+    .space_6 {
+        margin-left: 398px;
+    }
+
+    .space_7 {
+        margin-left: 462px;
+    }
+
+    .space_8 {
+        margin-left: 526px;
+    }
+
+    .space_9 {
+        margin-left: 590px;
+    }
+
+    .space_10 {
+        margin-left: 654px;
+    }
+
+    .space_11 {
+        margin-left: 718px;
+    }
+
 }
-
-
 
 /***** iPhone (landscape) *****/
 @media only screen and (max-width: 767px) {
 
-	.row 								{ margin:0 auto; width:300px; overflow:hidden; }
-	.row .row 							{ margin:0; width:auto; display:inline-block; }
-		
-	.grid_1,
-	.grid_2,
-	.grid_3,
-	.grid_4,
-	.grid_5,
-	.grid_6,
-	.grid_7,
-	.grid_8,
-	.grid_9,
-	.grid_10,
-	.grid_11,
-	.grid_12							{ width:300px; margin:10px 0 0 0; overflow:hidden; float:left; display:inline; }
+    .row {
+        margin: 0 auto;
+        width: 300px;
+        overflow: hidden;
+    }
 
-	.space_1,
-	.space_2,
-	.space_3,
-	.space_4,
-	.space_5,
-	.space_6,
-	.space_7,
-	.space_8,
-	.space_9,
-	.space_10,
-	.space_11,							{ margin-left:0; }
-				
-}	 
+    .row .row {
+        margin: 0;
+        width: auto;
+        display: inline-block;
+    }
 
+    .grid_1,
+    .grid_2,
+    .grid_3,
+    .grid_4,
+    .grid_5,
+    .grid_6,
+    .grid_7,
+    .grid_8,
+    .grid_9,
+    .grid_10,
+    .grid_11,
+    .grid_12 {
+        width: 300px;
+        margin: 10px 0 0 0;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
 
+    .space_1,
+    .space_2,
+    .space_3,
+    .space_4,
+    .space_5,
+    .space_6,
+    .space_7,
+    .space_8,
+    .space_9,
+    .space_10,
+    .space_11, {
+        margin-left: 0;
+    }
 
+}
 
 /***** iPhone (portrait) *****/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
-	.row 								{ margin:0 auto; width:456px; overflow:hidden; }
-	.row .row 							{ margin:0; width:auto; display:inline-block; }
-	
-	.grid_1,
-	.grid_2,
-	.grid_3,
-	.grid_4,
-	.grid_5,
-	.grid_6,
-	.grid_7,
-	.grid_8,
-	.grid_9,
-	.grid_10,
-	.grid_11,
-	.grid_12							{ width:456px; margin:10px 0 0 0; overflow:hidden; float:left; display:inline; }
-	
+    .row {
+        margin: 0 auto;
+        width: 456px;
+        overflow: hidden;
+    }
+
+    .row .row {
+        margin: 0;
+        width: auto;
+        display: inline-block;
+    }
+
+    .grid_1,
+    .grid_2,
+    .grid_3,
+    .grid_4,
+    .grid_5,
+    .grid_6,
+    .grid_7,
+    .grid_8,
+    .grid_9,
+    .grid_10,
+    .grid_11,
+    .grid_12 {
+        width: 456px;
+        margin: 10px 0 0 0;
+        overflow: hidden;
+        float: left;
+        display: inline;
+    }
+
 }
-
-
 
 /***** Clean up on isle 6 *****/
 
-	.container:after 					{ content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; } 
-	
-	.clearfix:before,
-	.clearfix:after,
-	.row:before,
-	.row:after 							{ content:'\0020'; display:block; overflow:hidden; visibility:hidden; width:0; height:0; }
-	
-	.row:after,	.clearfix:after 		{ clear:both; }
-	.row, 
-	.clearfix 							{ zoom:1; }
-	.clear 								{ clear:both; display:block; overflow:hidden; visibility:hidden; width:0; height:0;	}
+.container:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after,
+.row:before,
+.row:after {
+    content: '\0020';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.row:after, .clearfix:after {
+    clear: both;
+}
+
+.row,
+.clearfix {
+    zoom: 1;
+}
+
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}

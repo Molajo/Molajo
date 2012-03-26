@@ -12,10 +12,10 @@
     <parameters>
         <fieldset name="extension">
             <paginationoptions>
-                 <paginationoption name="displayrows" display="1" rows="10"/>
-                 <paginationoption name="direction-buttons" display="1" />
-                 <paginationoption name="buttons" display="1" />
-             </paginationoptions>
+                <paginationoption name="displayrows" display="1" rows="10"/>
+                <paginationoption name="direction-buttons" display="1"/>
+                <paginationoption name="buttons" display="1"/>
+            </paginationoptions>
         </fieldset>
         <include fieldset="advanced"/>
     </parameters>

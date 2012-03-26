@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * This class has influences and some method logic from the Horde Auth package
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * User
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -34,7 +34,7 @@ abstract ClassUserService
 
         $query->select($db->qn('id'));
         $query->from($db->qn('#__users'));
-        $query->where($db->qn('username').' = ' . $db->q($username));
+        $query->where($db->qn('username') . ' = ' . $db->q($username));
 
         $db->setQuery($query->__toString());
 
@@ -62,8 +62,8 @@ abstract ClassUserService
             $db = Services::DB();
             $db->setQuery(
                 'SELECT `title`' .
-                ' FROM `#__content`' .
-                ' WHERE `id` = ' . (int)$group_id
+                    ' FROM `#__content`' .
+                    ' WHERE `id` = ' . (int)$group_id
             );
             $title = $db->loadResult();
 
@@ -147,8 +147,8 @@ abstract ClassUserService
         $db = Services::DB();
         $db->setQuery(
             'SELECT `id`, `title`' .
-            ' FROM `#__content`' .
-            ' WHERE `id` = ' . implode(' OR `id` = ', $user->groups)
+                ' FROM `#__content`' .
+                ' WHERE `id` = ' . implode(' OR `id` = ', $user->groups)
         );
         $results = $db->loadObjectList();
 
@@ -195,10 +195,10 @@ abstract ClassUserService
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'
-                 . ' FROM #__users'
-                 . ' WHERE activated = ' . $db->q($activation)
-                 . ' AND block = 1'
-                 . ' AND last_visit_datetime = ' . $db->q('0000-00-00 00:00:00');
+            . ' FROM #__users'
+            . ' WHERE activated = ' . $db->q($activation)
+            . ' AND block = 1'
+            . ' AND last_visit_datetime = ' . $db->q('0000-00-00 00:00:00');
 
         $db->setQuery($query->__toString());
         $id = intval($db->loadResult());
@@ -244,8 +244,7 @@ abstract ClassUserService
         $salt = UserServices::getSalt($encryption, $salt, $plaintext);
 
         // Encrypt the password.
-        switch ($encryption)
-        {
+        switch ($encryption) {
             case 'plain' :
                 return $plaintext;
 
@@ -335,8 +334,7 @@ abstract ClassUserService
     public static function getSalt($encryption = 'md5-hex', $seed = '', $plaintext = '')
     {
         // Encrypt the password.
-        switch ($encryption)
-        {
+        switch ($encryption) {
             case 'crypt' :
             case 'crypt-des' :
                 if ($seed) {

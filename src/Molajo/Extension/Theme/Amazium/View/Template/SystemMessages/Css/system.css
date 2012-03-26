@@ -4,17 +4,17 @@
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 #system-message dd.message ul {
-	background-image: url(../Image/notice-info.png);
+    background-image: url(../Image/notice-info.png);
 }
 
 #system-message dd.error ul {
-	background-image: url(../Image/notice-alert.png);
+    background-image: url(../Image/notice-alert.png);
 }
 
 #system-message dd.warning ul {
-	background-image: url(../Image/notice-note.png);
+    background-image: url(../Image/notice-note.png);
 }
 
 #system-message dd.notice ul {
-	background-image: url(../Image/notice-note.png);
+    background-image: url(../Image/notice-note.png);
 }

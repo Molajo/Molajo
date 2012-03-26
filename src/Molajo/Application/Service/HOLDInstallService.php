@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Install
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Install
  * @since       1.0
  */
@@ -50,18 +50,17 @@ Class InstallService
      */
     public function __construct()
     {
-        $this->_initialize();
+        $this->_initialise();
     }
 
-    public function _initialize()
+    public function _initialise()
     {
 
         if ($element && is_a($element, 'SimpleXMLElement')) {
             $this->type = (string)$element->attributes()->type;
             $this->id = (string)$element->attributes()->id;
 
-            switch ($this->type)
-            {
+            switch ($this->type) {
                 case 'component':
                     break;
 
@@ -170,295 +169,290 @@ Class InstallService
 
     }
 
-	/**
-      * parseManifestXML
-      *
-      * @param string $xml path to the XML file
-      *
-      * @return array|bool XML metadata.
-      * @since   1.0
-      */
-     public static function parseManifestXML($path)
-     {
-         if (Services::Filesystem()->folderExists($path)) {
-         } else {
-             return false;
-         }
+    /**
+     * parseManifestXML
+     *
+     * @param string $xml path to the XML file
+     *
+     * @return array|bool XML metadata.
+     * @since   1.0
+     */
+    public static function parseManifestXML($path)
+    {
+        if (Services::Filesystem()->folderExists($path)) {
+        } else {
+            return false;
+        }
 
-         $xml = simplexml_load_file($path.'/manifest.xml');
-         if ($xml === false) {
-             return false;
-         }
+        $xml = simplexml_load_file($path . '/manifest.xml');
+        if ($xml === false) {
+            return false;
+        }
 
-         $data = array();
+        $data = array();
 
-         $data['type']           = (string)$xml->type;
-         $data['name']           = (string)$xml->name;
-         $data['author']         = (string)$xml->author();
-         $data['create_date']    = (string)$xml->create_date();
-         $data['copyright']      = (string)$xml->copyright;
-         $data['license']        = (string)$xml->license;
-         $data['author_email']   = (string)$xml->author_email;
-         $data['author_url']     = (string)$xml->author_url;
-         $data['version']        = (string)$xml->version;
-         $data['description']    = (string)$xml->description;
+        $data['type'] = (string)$xml->type;
+        $data['name'] = (string)$xml->name;
+        $data['author'] = (string)$xml->author();
+        $data['create_date'] = (string)$xml->create_date();
+        $data['copyright'] = (string)$xml->copyright;
+        $data['license'] = (string)$xml->license;
+        $data['author_email'] = (string)$xml->author_email;
+        $data['author_url'] = (string)$xml->author_url;
+        $data['version'] = (string)$xml->version;
+        $data['description'] = (string)$xml->description;
 
-         return $data;
-     }
-     /**
-       * Downloads a package
-       *
-       * @param   string  $url     URL of file to download
-       * @param   string  $target  Download target filename [optional]
-       *
-       * @return  mixed  Path to downloaded package or boolean false on failure
-       *
-       * @since   1.0
-       */
-      public static function downloadPackage($url, $target = false)
-      {
-          $config = Services::Configuration();
+        return $data;
+    }
 
-          // Capture PHP errors
-          $php_errormsg = 'Error Unknown';
-          $track_errors = ini_get('track_errors');
-          ini_set('track_errors', true);
+    /**
+     * Downloads a package
+     *
+     * @param   string  $url     URL of file to download
+     * @param   string  $target  Download target filename [optional]
+     *
+     * @return  mixed  Path to downloaded package or boolean false on failure
+     *
+     * @since   1.0
+     */
+    public static function downloadPackage($url, $target = false)
+    {
+        $config = Services::Configuration();
 
-          // Set user agent
-          jimport('joomla.version');
-          $version = new JVersion;
-          ini_set('user_agent', $version->getUserAgent('Installer'));
+        // Capture PHP errors
+        $php_errormsg = 'Error Unknown';
+        $track_errors = ini_get('track_errors');
+        ini_set('track_errors', true);
 
-          // Open the remote server socket for reading
-          //turn on furl amd then off
-          $inputHandle = fopen($url, "r");
-          $error = strstr($php_errormsg, 'failed to open stream:');
-          if (!$inputHandle) {
-              MolajoError::raiseWarning(42, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
-              return false;
-          }
+        // Set user agent
+        jimport('joomla.version');
+        $version = new JVersion;
+        ini_set('user_agent', $version->getUserAgent('Installer'));
 
-          $meta_data = stream_get_meta_data($inputHandle);
-          foreach ($meta_data['wrapper_data'] as $wrapper_data)
-          {
-              if (substr($wrapper_data, 0, strlen("Content-Disposition")) == "Content-Disposition") {
-                  $contentfilename = explode("\"", $wrapper_data);
-                  $target = $contentfilename[1];
-              }
-          }
+        // Open the remote server socket for reading
+        //turn on furl amd then off
+        $inputHandle = fopen($url, "r");
+        $error = strstr($php_errormsg, 'failed to open stream:');
+        if (!$inputHandle) {
+            MolajoError::raiseWarning(42, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
+            return false;
+        }
 
-          // Set the target path if not given
-          if (!$target) {
-              $target = $config->get('temp_path') . '/' . self::getFilenameFromURL($url);
-          }
-          else
-          {
-              $target = $config->get('temp_path') . '/' . basename($target);
-          }
+        $meta_data = stream_get_meta_data($inputHandle);
+        foreach ($meta_data['wrapper_data'] as $wrapper_data) {
+            if (substr($wrapper_data, 0, strlen("Content-Disposition")) == "Content-Disposition") {
+                $contentfilename = explode("\"", $wrapper_data);
+                $target = $contentfilename[1];
+            }
+        }
 
-          // Initialise contents buffer
-          $contents = null;
+        // Set the target path if not given
+        if (!$target) {
+            $target = $config->get('temp_path') . '/' . self::getFilenameFromURL($url);
+        }
+        else {
+            $target = $config->get('temp_path') . '/' . basename($target);
+        }
 
-          while (!feof($inputHandle))
-          {
-              $contents .= fread($inputHandle, 4096);
-              if ($contents === false) {
-                  MolajoError::raiseWarning(44, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
-                  return false;
-              }
-          }
+        // Initialise contents buffer
+        $contents = null;
 
-          // Write buffer to file
-          Services::Filesystem()->fileWrite($target, $contents);
+        while (!feof($inputHandle)) {
+            $contents .= fread($inputHandle, 4096);
+            if ($contents === false) {
+                MolajoError::raiseWarning(44, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
+                return false;
+            }
+        }
 
-          // Close file pointer resource
-          fclose($inputHandle);
+        // Write buffer to file
+        Services::Filesystem()->fileWrite($target, $contents);
 
-          // Restore error tracking to what it was before
-          ini_set('track_errors', $track_errors);
+        // Close file pointer resource
+        fclose($inputHandle);
 
-          // bump the max execution time because not using built in php zip libs are slow
-          set_time_limit(ini_get('max_execution_time'));
+        // Restore error tracking to what it was before
+        ini_set('track_errors', $track_errors);
 
-          // Return the name of the downloaded package
-          return basename($target);
-      }
+        // bump the max execution time because not using built in php zip libs are slow
+        set_time_limit(ini_get('max_execution_time'));
 
-      /**
-       * Unpacks a file and verifies it as a Joomla element package
-       * Supports .gz .tar .tar.gz and .zip
-       *
-       * @param   string  $p_filename  The uploaded package filename or install directory
-       *
-       * @return  array  Two elements: extractdir and packagefile
-       *
-       * @since   1.0
-       */
-      public static function unpack($p_filename)
-      {
-          // Path to the archive
-          $archivename = $p_filename;
+        // Return the name of the downloaded package
+        return basename($target);
+    }
 
-          // Temporary folder to extract the archive into
-          $tmpdir = uniqid('install_');
+    /**
+     * Unpacks a file and verifies it as a Joomla element package
+     * Supports .gz .tar .tar.gz and .zip
+     *
+     * @param   string  $p_filename  The uploaded package filename or install directory
+     *
+     * @return  array  Two elements: extractdir and packagefile
+     *
+     * @since   1.0
+     */
+    public static function unpack($p_filename)
+    {
+        // Path to the archive
+        $archivename = $p_filename;
 
-          // Clean the paths to use for archive extraction
-          $extractdir = JPath::clean(dirname($p_filename) . '/' . $tmpdir);
-          $archivename = JPath::clean($archivename);
+        // Temporary folder to extract the archive into
+        $tmpdir = uniqid('install_');
 
-          // Do the unpacking of the archive
-          $result = JArchive::extract($archivename, $extractdir);
+        // Clean the paths to use for archive extraction
+        $extractdir = JPath::clean(dirname($p_filename) . '/' . $tmpdir);
+        $archivename = JPath::clean($archivename);
 
-          if ($result === false) {
-              return false;
-          }
+        // Do the unpacking of the archive
+        $result = JArchive::extract($archivename, $extractdir);
 
-          /*
-             * Let's set the extraction directory and package file in the result array so we can
-             * cleanup everything properly later on.
-             */
-          $retval['extractdir'] = $extractdir;
-          $retval['packagefile'] = $archivename;
+        if ($result === false) {
+            return false;
+        }
 
-          /*
-             * Try to find the correct install directory.  In case the package is inside a
-             * subdirectory detect this and set the install directory to the correct path.
-             *
-             * List all the items in the installation directory.  If there is only one, and
-             * it is a folder, then we will set that folder to be the installation folder.
-             */
-          $dirList = array_merge(Services::Filesystem()->folderFiles($extractdir, ''), Services::Folder()->folders($extractdir, ''));
+        /*
+        * Let's set the extraction directory and package file in the result array so we can
+        * cleanup everything properly later on.
+        */
+        $retval['extractdir'] = $extractdir;
+        $retval['packagefile'] = $archivename;
 
-          if (count($dirList) == 1) {
-              if (Services::Filesystem()->folderExists($extractdir . '/' . $dirList[0])) {
-                  $extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
-              }
-          }
+        /*
+        * Try to find the correct install directory.  In case the package is inside a
+        * subdirectory detect this and set the install directory to the correct path.
+        *
+        * List all the items in the installation directory.  If there is only one, and
+        * it is a folder, then we will set that folder to be the installation folder.
+        */
+        $dirList = array_merge(Services::Filesystem()->folderFiles($extractdir, ''), Services::Folder()->folders($extractdir, ''));
 
-          /*
-             * We have found the install directory so lets set it and then move on
-             * to detecting the extension type.
-             */
-          $retval['dir'] = $extractdir;
+        if (count($dirList) == 1) {
+            if (Services::Filesystem()->folderExists($extractdir . '/' . $dirList[0])) {
+                $extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
+            }
+        }
 
-          /*
-             * Get the extension type and return the directory/type array on success or
-             * false on fail.
-             */
-          if ($retval['type'] = self::detectType($extractdir)) {
-              return $retval;
-          }
-          else
-          {
-              return false;
-          }
-      }
+        /*
+        * We have found the install directory so lets set it and then move on
+        * to detecting the extension type.
+        */
+        $retval['dir'] = $extractdir;
 
-      /**
-       * Method to detect the extension type from a package directory
-       *
-       * @param   string  $p_dir  Path to package directory
-       *
-       * @return  mixed  Extension type string or boolean false on fail
-       *
-       * @since   1.0
-       */
-      public static function detectType($p_dir)
-      {
-          // Search the install dir for an XML file
-          $files = Services::Filesystem()->folderFiles($p_dir, '\.xml$', 1, true);
+        /*
+        * Get the extension type and return the directory/type array on success or
+        * false on fail.
+        */
+        if ($retval['type'] = self::detectType($extractdir)) {
+            return $retval;
+        }
+        else {
+            return false;
+        }
+    }
 
-          if (!count($files)) {
-              MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
-              return false;
-          }
+    /**
+     * Method to detect the extension type from a package directory
+     *
+     * @param   string  $p_dir  Path to package directory
+     *
+     * @return  mixed  Extension type string or boolean false on fail
+     *
+     * @since   1.0
+     */
+    public static function detectType($p_dir)
+    {
+        // Search the install dir for an XML file
+        $files = Services::Filesystem()->folderFiles($p_dir, '\.xml$', 1, true);
 
-          foreach ($files as $file)
-          {
-              $xml = simplexml_load_file($file);
-              if (!$xml) {
-                  continue;
-              }
+        if (!count($files)) {
+            MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+            return false;
+        }
 
-              if ($xml->getName() == 'extension') {
-              } else {
-                  unset($xml);
-                  continue;
-              }
+        foreach ($files as $file) {
+            $xml = simplexml_load_file($file);
+            if (!$xml) {
+                continue;
+            }
 
-              $type = (string)$xml->attributes()->type;
-              // Free up memory
-              unset($xml);
-              return $type;
-          }
+            if ($xml->getName() == 'extension') {
+            } else {
+                unset($xml);
+                continue;
+            }
 
-          MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
-          // Free up memory.
-          unset($xml);
-          return false;
-      }
+            $type = (string)$xml->attributes()->type;
+            // Free up memory
+            unset($xml);
+            return $type;
+        }
 
-      /**
-       * Gets a file name out of a url
-       *
-       * @param   string  $url  URL to get name from
-       *
-       * @return  mixed   String filename or boolean false if failed
-       *
-       * @since   1.0
-       */
-      public static function getFilenameFromURL($url)
-      {
-          if (is_string($url)) {
-              $parts = explode('/', $url);
-              return $parts[count($parts) - 1];
-          }
-          return false;
-      }
+        MolajoError::raiseWarning(1, Services::Language()->translate('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+        // Free up memory.
+        unset($xml);
+        return false;
+    }
 
-      /**
-       * Clean up temporary uploaded package and unpacked extension
-       *
-       * @param   string  $package    Path to the uploaded package file
-       * @param   string  $resultdir  Path to the unpacked extension
-       *
-       * @return  boolean  True on success
-       *
-       * @since   1.0
-       */
-      public static function cleanupInstall($package, $resultdir)
-      {
-          $config = Services::Configuration();
+    /**
+     * Gets a file name out of a url
+     *
+     * @param   string  $url  URL to get name from
+     *
+     * @return  mixed   String filename or boolean false if failed
+     *
+     * @since   1.0
+     */
+    public static function getFilenameFromURL($url)
+    {
+        if (is_string($url)) {
+            $parts = explode('/', $url);
+            return $parts[count($parts) - 1];
+        }
+        return false;
+    }
 
-          // Does the unpacked extension directory exist?
-          if (is_dir($resultdir)) {
-              Services::Filesystem()->folderDelete($resultdir);
-          }
+    /**
+     * Clean up temporary uploaded package and unpacked extension
+     *
+     * @param   string  $package    Path to the uploaded package file
+     * @param   string  $resultdir  Path to the unpacked extension
+     *
+     * @return  boolean  True on success
+     *
+     * @since   1.0
+     */
+    public static function cleanupInstall($package, $resultdir)
+    {
+        $config = Services::Configuration();
 
-          // Is the package file a valid file?
-          if (is_file($package)) {
-              Services::Filesystem()->fileDelete($package);
-          }
-          elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package)))
-          {
-              // It might also be just a base filename
-              Services::Filesystem()->fileDelete(JPath::clean($config->get('temp_path') . '/' . $package));
-          }
-      }
+        // Does the unpacked extension directory exist?
+        if (is_dir($resultdir)) {
+            Services::Filesystem()->folderDelete($resultdir);
+        }
 
-      /**
-       * splitSql
-       *
-       * Splits sql file into array of discreet queries separated by ';'.
-       *
-       * @param   string  $sql  The SQL statement.
-       *
-       * @return  array  Array of queries
-       * @since   1.0
-       */
-      public static function splitSql($sql)
-      {
-          return Services::DB()->splitSql($sql);
-      }
+        // Is the package file a valid file?
+        if (is_file($package)) {
+            Services::Filesystem()->fileDelete($package);
+        }
+        elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package))) {
+            // It might also be just a base filename
+            Services::Filesystem()->fileDelete(JPath::clean($config->get('temp_path') . '/' . $package));
+        }
+    }
+
+    /**
+     * splitSql
+     *
+     * Splits sql file into array of discreet queries separated by ';'.
+     *
+     * @param   string  $sql  The SQL statement.
+     *
+     * @return  array  Array of queries
+     * @since   1.0
+     */
+    public static function splitSql($sql)
+    {
+        return Services::DB()->splitSql($sql);
+    }
 }
 

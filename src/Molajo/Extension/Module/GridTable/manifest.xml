@@ -24,7 +24,7 @@
                 <column name="language"/>
             </columns>
         </fieldset>
-        <include fieldset="advanced" />
+        <include fieldset="advanced"/>
     </parameters>
 </extension>
 

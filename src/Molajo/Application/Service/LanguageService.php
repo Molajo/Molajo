@@ -1,8 +1,8 @@
 <?php
 /**
- * @package	 	Molajo
- * @copyright	Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Language
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Language
  * @since       1.0
  */
@@ -169,7 +169,7 @@ Class LanguageService
         }
         if (isset($metadata['rtl'])) {
             $this->rtl = $metadata['rtl'];
-            if ((int) $this->rtl == 0) {
+            if ((int)$this->rtl == 0) {
                 $this->direction = 'ltr';
             } else {
                 $this->direction = 'rtl';
@@ -268,12 +268,12 @@ Class LanguageService
      * @since  1.0
      */
     public function translate($key)
-     {
+    {
         if (isset($this->loaded_strings[$key])) {
             return $this->loaded_strings[$key];
 
         } else {
-            Services::Debug()->set('MolajoLanguage: Missing language key: '.$key);
+            Services::Debug()->set('MolajoLanguage: Missing language key: ' . $key);
             return $key;
         }
     }
@@ -344,11 +344,11 @@ Class LanguageService
                     $override_strings
                 );
         }
-/**
+        /**
         echo '<pre>';
         var_dump($this->loaded_strings);
         echo '</pre>';
-*/
+         */
         return true;
     }
 
@@ -387,6 +387,7 @@ Class LanguageService
 
         return $strings;
     }
+
     /**
      * getDefault
      *
@@ -415,7 +416,7 @@ Class LanguageService
         }
 
         /** 2. user  */
-        $language = Services::User()->get('language', '');
+        $language = Services::Registry()->get('User\\language');
         if ($language === false) {
         } elseif (in_array($language, $installed)) {
             return $language;
@@ -472,8 +473,7 @@ Class LanguageService
         $languages = $this->getLanguages($path);
 
         $list = array();
-        foreach ($languages as $language)
-        {
+        foreach ($languages as $language) {
             $listItem = new \stdClass();
 
             $listItem->key = $language->title;

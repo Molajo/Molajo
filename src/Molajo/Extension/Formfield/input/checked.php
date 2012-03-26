@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Attributes
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * Populate Checked Attribute
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Attributes
  * @since       1.0
  */
@@ -24,18 +24,18 @@ class CheckedControllerFormfield extends InputControllerFormfield
      * Method to instantiate the Checked object.
      *
      * @param array $input
-     * @param array $rowset
+     * @param array $resultset
      *
      * @return  void
      *
      * @since   1.0
      */
-    public function __construct($input = array(), $rowset = array())
+    public function __construct($input = array(), $resultset = array())
     {
         parent::__construct();
         parent::__set('name', 'Checked');
         parent::__set('input', $input);
-        parent::__set('rowset', $rowset);
+        parent::__set('resultset', $resultset);
     }
 
     /**
@@ -43,7 +43,7 @@ class CheckedControllerFormfield extends InputControllerFormfield
      *
      * Method to set the Attribute Value
      *
-     * @return  array   $rowset
+     * @return  array   $resultset
      *
      * @since   1.1
      */
@@ -54,11 +54,11 @@ class CheckedControllerFormfield extends InputControllerFormfield
 
         parent::__set('value', $value);
 
-        /** $this->rowset */
-        $this->rowset[0]['checked'] = $this->value;
+        /** $this->resultset */
+        $this->resultset[0]['checked'] = $this->value;
 
         /** return array of attributes */
-        return $this->rowset;
+        return $this->resultset;
     }
 
     /**
@@ -66,7 +66,7 @@ class CheckedControllerFormfield extends InputControllerFormfield
      *
      * Method to determine whether or not the Checked exists
      *
-     * @return  array   $rowset
+     * @return  array   $resultset
      *
      * @since   1.1
      */

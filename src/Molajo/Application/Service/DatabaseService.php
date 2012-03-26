@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -23,14 +23,53 @@ defined('MOLAJO') or die;
 Class DatabaseService
 {
     /**
-     * __construct
+     * Static instance
      *
-     * @return object
+     * @var    object
      * @since  1.0
      */
-    public function connect($database_class = 'JDatabaseFactory',
-                            $configuration_file = null)
+    protected static $instance;
+
+    /**
+     * $action_to_action_id
+     *
+     * ACL Action literal to database pk
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    protected $action_to_action_id;
+
+    /**
+     * $task_to_action
+     *
+     * Task to ACL Action list
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    protected $task_to_action;
+
+    /**
+     * $action_to_controller
+     *
+     * ACL Action to Molajo Controller list
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    protected $action_to_controller;
+
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance($database_class = 'JDatabaseFactory', $configuration_file = null)
     {
+
         if ($configuration_file === null) {
             $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
         }
@@ -47,7 +86,6 @@ Class DatabaseService
         } else {
             throw new \Exception('Fatal error - Configuration Class does not exist');
         }
-
 
         /** database connection specific elements */
         $database_type = strtolower($database_class) . '_dbtype';
@@ -70,16 +108,17 @@ Class DatabaseService
         /** connect */
         $connectDBClass = $site->$namespace;
 
-		try {
-			$this->db = $connectDBClass::getDriver($site->$database_type, $options);
+        try {
+            $connect = $connectDBClass::getInstance();
+            $db = $connect->getDriver($site->$database_type, $options);
 
-		} catch (\RuntimeException $e) {
-			header('HTTP/1.1 500 Internal Server Error');
-   			exit(0);
-		}
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Internal Server Error');
+            exit(0);
+        }
 
-        $this->db->debug($site->debug);
+        $db->debug($site->debug);
 
-        return $this->db;
+        return $db;
     }
 }

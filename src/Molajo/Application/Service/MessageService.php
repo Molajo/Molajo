@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Message
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -72,10 +72,10 @@ Class MessageService
      * @since   1.0
      */
     public function set($message = null,
-                          $type = 'message',
-                          $code = null,
-                          $debug_location = null,
-                          $debug_object = null)
+                        $type = 'message',
+                        $code = null,
+                        $debug_location = null,
+                        $debug_object = null)
     {
         if ($message == null
             && $code == null

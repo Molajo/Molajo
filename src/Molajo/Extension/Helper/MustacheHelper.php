@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\Helper;
@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 /**
  * Theme
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -57,7 +57,7 @@ class MustacheHelper extends Mustache
      * Returns a single row of information to mustache
      * around the {# item } {/ item } controlbreak
      *
-     * tracks row number in #this->rows so that rowset can be exploited
+     * tracks row number in #this->rows so that resultset can be exploited
      *
      * @return ArrayIterator
      * @since  1.0
@@ -81,11 +81,11 @@ class MustacheHelper extends Mustache
     {
         $this->analytics();
 
-		return Services::URL()
-			->getGravatar(
-			$email = 'AmyStephen@gmail.com',
-			$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
-		);
+        return Services::URL()
+            ->getGravatar(
+            $email = 'AmyStephen@gmail.com',
+            $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
+        );
     }
 
     /**
@@ -97,13 +97,13 @@ class MustacheHelper extends Mustache
      */
     public function analytics()
     {
-        $code = Services::Configuration()->get('google_analytics_code','UA-1682054-15');
+        $code = Services::Configuration()->get('google_analytics_code', 'UA-1682054-15');
         if (trim($code) == '') {
             return;
         }
         $analytics = "
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '".$code."']);
+_gaq.push(['_setAccount', '" . $code . "']);
 _gaq.push(['_trackPageview']);
 
 (function() {

@@ -12,14 +12,14 @@
     <parameters>
         <fieldset name="extension">
             <filters>
-                 <filter name="search"/>
-                 <filter name="author"/>
-                 <filter name="category"/>
-                 <filter name="group"/>
-                 <filter name="language"/>
-                 <filter name="status"/>
-                 <filter name="tag"/>
-             </filters>
+                <filter name="search"/>
+                <filter name="author"/>
+                <filter name="category"/>
+                <filter name="group"/>
+                <filter name="language"/>
+                <filter name="status"/>
+                <filter name="tag"/>
+            </filters>
         </fieldset>
         <include fieldset="advanced"/>
     </parameters>

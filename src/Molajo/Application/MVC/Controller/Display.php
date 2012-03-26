@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Display
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Controller
  * @since       1.0
  */
@@ -41,7 +41,7 @@ class DisplayController extends Controller
 
         /** Set Criteria and Run Query */
 
-        $this->rowset = $this->model->getData();
+        $this->resultset = $this->model->getData();
         $this->pagination = $this->model->getPagination();
         $this->model_state = $this->model->getState();
 
@@ -51,13 +51,13 @@ class DisplayController extends Controller
          *      extensions. MolajoRequestModel retrieves data.
          */
         if ($this->get('extension_primary') === true) {
-            Molajo::Request()->set('query_rowset', $this->rowset);
+            Molajo::Request()->set('query_resultset', $this->resultset);
             Molajo::Request()->set('query_pagination', $this->pagination);
             Molajo::Request()->set('query_state', $this->model_state);
         }
 
         /** no results */
-        if (count($this->rowset) == 0
+        if (count($this->resultset) == 0
             && $this->parameters->get('suppress_no_results') == 1
         ) {
             return '';
@@ -88,14 +88,14 @@ class DisplayController extends Controller
      */
     public function wrapView($view, $renderedOutput)
     {
-        $this->rowset = array();
+        $this->resultset = array();
 
         $temp = new \stdClass();
         $temp->wrap_view_css_id = $this->get('wrap_view_css_id');
         $temp->wrap_view_css_class = $this->get('wrap_view_css_class');
         $temp->content = $renderedOutput;
 
-        $this->rowset[] = $temp;
+        $this->resultset[] = $temp;
 
         /** paths */
         $this->view_path = $this->get('wrap_view_path');
@@ -110,7 +110,7 @@ class DisplayController extends Controller
      *
      * Depending on the files within view/view-type/view-name/View/*.*:
      *
-     * 1. Include a single Custom.php file to process all query results in $this->rowset
+     * 1. Include a single Custom.php file to process all query results in $this->resultset
      *
      * 2. Include Header.php, Body.php, and/or Footer.php views for Molajo to
      *  perform the looping, sending $row into the views
@@ -133,8 +133,8 @@ class DisplayController extends Controller
         } else {
 
             /** 2. controller manages loop and event processing */
-            $totalRows = count($this->rowset);
-            foreach ($this->rowset as $this->row) {
+            $totalRows = count($this->resultset);
+            foreach ($this->resultset as $this->row) {
 
                 /** header: before any rows are processed */
                 if ($rowCount == 1) {
@@ -188,11 +188,11 @@ class DisplayController extends Controller
     }
 
     /**
-	 * todo: create a plugin action here to invoke template tools, like mustache.
-	 *
+     * todo: create a plugin action here to invoke template tools, like mustache.
+     *
      * processRenderedOutput
      *
-     * Passes the rendered output and the entire rowset into the
+     * Passes the rendered output and the entire resultset into the
      * Theme Helper and Mustache for processing.
      *
      * @param $template
@@ -216,10 +216,10 @@ class DisplayController extends Controller
         $h = new $helperClass();
 
         /** create input dataset */
-        $totalRows = count($this->rowset);
+        $totalRows = count($this->resultset);
         $row = 0;
         if ($totalRows > 0) {
-            foreach ($this->rowset as $this->row) {
+            foreach ($this->resultset as $this->row) {
                 $item = new \stdClass ();
                 $pairs = get_object_vars($this->row);
                 foreach ($pairs as $key => $value) {

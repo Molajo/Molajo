@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Theme
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -63,9 +63,9 @@ class ThemeHelper
     {
         return Molajo::Helper()
             ->get('Extension',
-                MOLAJO_ASSET_TYPE_EXTENSION_THEME,
-                $theme
-            );
+            MOLAJO_ASSET_TYPE_EXTENSION_THEME,
+            $theme
+        );
     }
 
     /**

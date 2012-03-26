@@ -1,8 +1,8 @@
 <?php
 /**
- * @package         Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license         GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Application
  *
- * @package        Molajo
+ * @package   Molajo
  * @subpackage  Application
  * @since        1.0
  */
@@ -141,8 +141,7 @@ Class Application
         $m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
         $info = $m->loadObject();
         if ($info === false) {
-            //error!
-            return $this;
+            //error! die!
         }
 
         $authorise = Services::Access()
@@ -154,7 +153,7 @@ Class Application
         }
 
         $this->site_custom_fields = Services::Registry()->initialise();
-        $this->site_custom_fields->loadString($info->site_custom_fields);
+        $this->site_custom_fields->loadString($info->custom_fields);
 
         $this->site_parameters = Services::Registry()->initialise();
         $this->site_parameters->loadString($info->parameters);
@@ -219,7 +218,8 @@ Class Application
     public function process($override_sequenceXML = null, $override_finalXML = null)
     {
         if (Services::Redirect()->url === null
-            && (int)Services::Redirect()->code == 0) {
+            && (int)Services::Redirect()->code == 0
+        ) {
         } else {
             return $this;
         }
@@ -328,10 +328,13 @@ Class Application
         } else {
             define('SITES', MOLAJO_BASE_FOLDER . '/site');
         }
+        if (defined('MOLAJO_CONFIGURATION_FOLDER')) {
+        } else {
+            define('MOLAJO_CONFIGURATION_FOLDER', MOLAJO_BASE_FOLDER . '/Molajo/Application/Configuration');
+        }
 
         /** Define PHP constants for application variables */
-        $defines = simplexml_load_file(MOLAJO_APPLICATIONS
-            . '/Configuration/defines.xml', 'SimpleXMLElement');
+        $defines = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER. '/defines.xml');
 
         foreach ($defines->define as $item) {
             if (defined((string)$item['name'])) {
@@ -469,9 +472,7 @@ Class Application
 
         if (defined('SITE_BASE_URL')) {
         } else {
-
-            $sites = simplexml_load_file(MOLAJO_APPLICATIONS
-                . '/Configuration/sites.xml', 'SimpleXMLElement');
+            $sites = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER. '/sites.xml');
 
             foreach ($sites->site as $single) {
                 if ($single->base == $siteBase) {
@@ -523,8 +524,7 @@ Class Application
         if (defined('MOLAJO_APPLICATION')) {
             /* must also define MOLAJO_PAGE_REQUEST */
         } else {
-            $apps = simplexml_load_file(MOLAJO_APPLICATIONS
-                . '/Configuration/applications.xml', 'SimpleXMLElement');
+            $apps = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER. '/applications.xml');
 
             foreach ($apps->application as $app) {
 

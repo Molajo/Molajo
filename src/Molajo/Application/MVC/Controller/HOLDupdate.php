@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Controller
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  *
  * Called from the Multiple Controller for batch (copy, move) and delete
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Controller
  * @since       1.0
  */
@@ -59,7 +59,7 @@ class UpdateController extends Controller
 
         /** success message **/
 
-		// successful redirect
+        // successful redirect
 
     }
 
@@ -280,8 +280,8 @@ class UpdateController extends Controller
                     );
                 }
             }
-            Services::User()
-                ->setUserState(JRequest::getInt('datakey'), $data);
+            // Services::Registry()->get('UserState\\id')
+            //     ->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
@@ -332,7 +332,7 @@ class UpdateController extends Controller
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        $this->get('id', (int) $results);
+        $this->get('id', (int)$results);
         $validData->id = $this->get('id');
 
         /** Event: onContentSaveForm **/

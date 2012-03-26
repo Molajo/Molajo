@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
 /**
  * Security
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  *
@@ -88,10 +88,10 @@ Class SecurityService
      */
     protected function initialise_filtering()
     {
-		return;
+        return;
 
         $config = HTMLPurifier\HTMLPurifier_Config::createDefault();
-		var_dump($config);
+        var_dump($config);
 
         if ((int)Services::Configuration()->get('html5', 1) == 1) {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
@@ -104,13 +104,13 @@ Class SecurityService
         /** Custom Filters */
         $files = Services::Filesystem()->folderFiles(HTMPURIFIER_FILTERS, '\.php$', false, false);
         foreach ($files as $file) {
-			$class = 'HTMLPurifier\\filters\\';
+            $class = 'HTMLPurifier\\filters\\';
             $class .= substr($file, 0, strpos($file, '.'));
             $config->set('Filter.Custom', array(new $class()));
         }
 
         /** Configured Options */
-        $options = simplexml_load_file(MOLAJO_APPLICATIONS . '/Configuration/htmlpurifier.xml');
+        $options = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/htmlpurifier.xml');
         $options = array();
         if (count($options) > 0) {
             foreach ($options->option as $o) {
@@ -531,7 +531,7 @@ Class SecurityService
      */
     public function filter_header_injection_test($content)
     {
-        $headers = array ( 'Content-Type:',
+        $headers = array('Content-Type:',
             'MIME-Version:',
             'Content-Transfer-Encoding:',
             'bcc:',

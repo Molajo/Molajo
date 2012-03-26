@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Image
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -284,8 +284,7 @@ Class ImageService
     {
         $ext = strtolower(strrchr($this->fileNameOriginal, '.'));
 
-        switch ($ext)
-        {
+        switch ($ext) {
             case '.jpg':
             case '.jpeg':
                 $this->image = imagecreatefromjpeg($this->fileNameOriginal);
@@ -342,8 +341,7 @@ Class ImageService
      */
     protected function getDimensions($newWidth, $newHeight)
     {
-        switch ($this->type)
-        {
+        switch ($this->type) {
             case 'exact':
                 $optimalWidth = $newWidth;
                 $optimalHeight = $newHeight;
@@ -502,8 +500,7 @@ Class ImageService
         $ext = strrchr($this->fileNameNew, '.');
         $ext = strtolower($ext);
 
-        switch ($ext)
-        {
+        switch ($ext) {
             case '.jpg':
             case '.jpeg':
                 if (imagetypes() & IMG_JPG) {

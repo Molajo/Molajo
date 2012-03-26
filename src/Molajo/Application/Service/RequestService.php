@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  *
  * @url http://symfony.com/doc/current/components/http_foundation.html#accessing-request-data
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Services
  * @since       1.0
  */
@@ -72,12 +72,12 @@ Class RequestService extends Request
         parent::__construct();
         $this->request = Request::createFromGlobals();
         return $this;
-	}
+    }
 
-	/**
-	 * getSession
-	 *
-	 */
+    /**
+     * getSession
+     *
+     */
     public function getSession()
     {
         /** Session */
@@ -89,11 +89,11 @@ Class RequestService extends Request
     }
 
 
-	/**
-	 * setSessionStorageData
-	 *
-	 * @return NativeFileSessionStorage
-	 */
+    /**
+     * setSessionStorageData
+     *
+     * @return NativeFileSessionStorage
+     */
     public function setSessionStorageData()
     {
         $save_path = Services::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache');

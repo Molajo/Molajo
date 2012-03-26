@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
@@ -63,14 +63,14 @@ class LoginController
             return;
         }
 
-		Services::Authentication()->authorise($userObject, (array)$options);
+        Services::Authentication()->authorise($userObject, (array)$options);
         if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
             $this->_loginFailed('authorise', $userObject, $options);
             return;
         }
 
-		Services::Authentication()->onUserLogin($userObject, (array)$options);
+        Services::Authentication()->onUserLogin($userObject, (array)$options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
@@ -188,12 +188,12 @@ class LoginController
 
 //        if (in_array(false, $results, true)) {
 //        } else {
-            // Use domain and path set in config for cookie if it exists.
-            $cookie_domain = $this->getConfig('cookie_domain', '');
-            $cookie_path = $this->getConfig('cookie_path', '/');
-            setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+        // Use domain and path set in config for cookie if it exists.
+        $cookie_domain = $this->getConfig('cookie_domain', '');
+        $cookie_path = $this->getConfig('cookie_path', '/');
+        setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
-            return true;
+        return true;
 //        }
 
         // Trigger onUserLoginFailure Event.

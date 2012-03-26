@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 /**
  * Asset
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -140,7 +140,7 @@ abstract class AssetHelper
             ' = ' . (int)$source_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
-                implode(',', Services::User()->get('view_groups')) . ')'
+                implode(',', Services::Registry()->get('User\\view_groups')) . ')'
         );
 
         return $m->loadResult();
@@ -173,7 +173,7 @@ abstract class AssetHelper
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$asset_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
-                implode(',', Services::User()->get('view_groups')) . ')'
+                implode(',', Services::Registry()->get('User\\view_groups')) . ')'
         );
 
         return $m->loadResult();

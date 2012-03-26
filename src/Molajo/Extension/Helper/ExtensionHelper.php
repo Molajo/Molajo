@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
 /**
  * Extension
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -93,14 +93,14 @@ abstract class ExtensionHelper
         /** Assets Join and View Access Check */
         Services::Access()
             ->setQueryViewAccess(
-                $m->query,
-                $m->db,
-                array('join_to_prefix' => 'a',
-                    'join_to_primary_key' => 'id',
-                    'asset_prefix' => 'b_assets',
-                    'select' => true
-                )
-            );
+            $m->query,
+            $m->db,
+            array('join_to_prefix' => 'a',
+                'join_to_primary_key' => 'id',
+                'asset_prefix' => 'b_assets',
+                'select' => true
+            )
+        );
 
         /** b_asset_types. Asset Types Table  */
         $m->query->select($m->db->qn('b_asset_types.title') . ' as asset_type_title');

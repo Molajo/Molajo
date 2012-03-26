@@ -4,9 +4,9 @@ namespace HTMLPurifier\filters;
 use HTMLPurifier\HTMLPurifier;
 
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoIframeFilter
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */

@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 /**
  * Content
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helpers
  * @since       1.0
  */
@@ -33,7 +33,7 @@ abstract class ContentHelper
         $m = new DisplayModel();
 
         $m->query->select('a.*');
-        $m->query->from($m->db->qn($content_table).' as a ');
+        $m->query->from($m->db->qn($content_table) . ' as a ');
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$id);
         $m->query->where('a.' . $m->db->qn('status') .
             ' > ' . MOLAJO_STATUS_UNPUBLISHED);

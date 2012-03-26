@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Text
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -186,7 +186,7 @@ Class TextService
 }
 
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Platform
  * @copyright   Copyright (c) 2009, Mathew Tinsley (tinsley@tinsology.net) All rights reserved.
  */
@@ -415,8 +415,7 @@ class LoremIpsumGenerator
         if ($count <= 0)
             return '';
 
-        switch ($format)
-        {
+        switch ($format) {
             case 'txt':
                 return $this->getText($count, $loremipsum);
             case 'plain':
@@ -442,8 +441,7 @@ class LoremIpsumGenerator
             $arr[1] = 'ipsum';
         }
 
-        for ($i; $i < $count; $i++)
-        {
+        for ($i; $i < $count; $i++) {
             $index = array_rand($this->words);
             $word = $this->words[$index];
 
@@ -471,8 +469,7 @@ class LoremIpsumGenerator
         $delta = $count;
         $curr = 0;
         $sentences = array();
-        while ($delta > 0)
-        {
+        while ($delta > 0) {
             $senSize = $this->gaussianSentence();
             if (($delta - $senSize) < 4)
                 $senSize = $delta;
@@ -514,8 +511,7 @@ class LoremIpsumGenerator
         $paragraphs = $this->getParagraphArr($sentences);
 
         $paragraphStr = array();
-        foreach ($paragraphs as $p)
-        {
+        foreach ($paragraphs as $p) {
             $paragraphStr[] = $this->paragraphToString($p);
         }
 
@@ -541,8 +537,7 @@ class LoremIpsumGenerator
         $currCount = 0;
         $curr = array();
 
-        for ($i = 0; $i < $total; $i++)
-        {
+        for ($i = 0; $i < $total; $i++) {
             $s = $sentences[$i];
             $currCount += count($s);
             $curr[] = $s;
@@ -570,8 +565,7 @@ class LoremIpsumGenerator
         $paragraphs = $this->getParagraphArr($sentences);
 
         $paragraphStr = array();
-        foreach ($paragraphs as $p)
-        {
+        foreach ($paragraphs as $p) {
             $paragraphStr[] = "<p>\n" . $this->paragraphToString($p, true) . '</p>';
         }
 
@@ -590,8 +584,7 @@ class LoremIpsumGenerator
     private function paragraphToString($paragraph, $htmlCleanCode = false)
     {
         $paragraphStr = '';
-        foreach ($paragraph as $sentence)
-        {
+        foreach ($paragraph as $sentence) {
             foreach ($sentence as $word)
                 $paragraphStr .= $word . ' ';
 
@@ -601,14 +594,14 @@ class LoremIpsumGenerator
         return $paragraphStr;
     }
 
-   /**
-    * punctuate
-    *
-    * Inserts commas and periods in word array.
-    *
-    * @param $sentence
-    * @return array
-    */
+    /**
+     * punctuate
+     *
+     * Inserts commas and periods in word array.
+     *
+     * @param $sentence
+     * @return array
+     */
     private function punctuate(& $sentence)
     {
         $count = count($sentence);
@@ -619,8 +612,7 @@ class LoremIpsumGenerator
 
         $commas = $this->numberOfCommas($count);
 
-        for ($i = 1; $i <= $commas; $i++)
-        {
+        for ($i = 1; $i <= $commas; $i++) {
             $index = (int)round($i * $count / ($commas + 1));
 
             if ($index < ($count - 1) && $index > 0) {
@@ -654,9 +646,9 @@ class LoremIpsumGenerator
      * based on the average word length of an english
      * sentence.
      * Statistics Source:
-     *	http://hearle.nahoo.net/Academic/Maths/Sentence.html
-     *	Average: 24.46
-     *	Standard Deviation: 5.08
+     *    http://hearle.nahoo.net/Academic/Maths/Sentence.html
+     *    Average: 24.46
+     *    Standard Deviation: 5.08
      */
     private function gaussianSentence()
     {
@@ -672,7 +664,7 @@ class LoremIpsumGenerator
      * The following three functions are used to
      * compute numbers with a guassian cmsbution
      * Source:
-     * 	http://us.php.net/manual/en/function.rand.php#53784
+     *     http://us.php.net/manual/en/function.rand.php#53784
      */
     private function gauss()
     { // N(0,1)

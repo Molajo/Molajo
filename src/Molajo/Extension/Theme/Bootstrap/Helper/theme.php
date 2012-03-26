@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Theme
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Theme;
@@ -12,7 +12,7 @@ use Molajo\Extension\Helper\MustacheHelper;
 /**
  * Helper
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -28,6 +28,6 @@ Class BootstrapHelper extends MustacheHelper
      */
     public function hello()
     {
-        return 'Hello '.Services::User()->get('name').'!';
+        return 'Hello ' . Services::User()->get('name') . '!';
     }
 }

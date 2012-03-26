@@ -5,7 +5,7 @@ Class SiteConfiguration
     public $site_name = 'Molajo';
 
     /* Database Settings */
-    public $jdatabasefactory_dbtype = 'mysql';
+    public $jdatabasefactory_dbtype = 'mysqli';
     public $jdatabasefactory_host = 'localhost';
     public $jdatabasefactory_user = 'root';
     public $jdatabasefactory_password = 'root';

@@ -4,6 +4,16 @@
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-.toolbar ul {margin: 0; padding: 0; list-style-type: none }
-.toolbar ul li {display: inline-block; }
-.toolbar ul li a {text-decoration: none}
+.toolbar ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none
+}
+
+.toolbar ul li {
+    display: inline-block;
+}
+
+.toolbar ul li a {
+    text-decoration: none
+}

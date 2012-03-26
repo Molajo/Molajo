@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension;
 
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Helper
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -42,60 +42,62 @@ Class Helper
         return self::$instance;
     }
 
-	/**
-	 * processCall
-	 *
-	 * Magic methods __call acts as a proxy to Extension Helpers
-	 *
-	 * Usage
-	 * Services::Extension()->asset
-	 * Services::Extension()->component ... etc.
-	 *
-	 * @static
-	 * @param $name
-	 * @param $arguments
-	 *
-	 * @return mixed
-	 * @since 1.0
-	 */
-	public function __call($name, $arguments)
-	{
-		return $this->processCall($name, $arguments);
-	}
-	public static function __callStatic($name, $arguments)
-	{
-		return $this->processCall($name, $arguments);
-	}
-	public function processCall($name, $arguments)
-	{
-		$class = 'Molajo\\Extension\\Helper\\';
-		$method = $name;
+    /**
+     * processCall
+     *
+     * Magic methods __call acts as a proxy to Extension Helpers
+     *
+     * Usage
+     * Services::Extension()->asset
+     * Services::Extension()->component ... etc.
+     *
+     * @static
+     * @param $name
+     * @param $arguments
+     *
+     * @return mixed
+     * @since 1.0
+     */
+    public function __call($name, $arguments)
+    {
+        return $this->processCall($name, $arguments);
+    }
 
-		$arg = array();
-		$i = 0;
-		$count = count($arguments);
-		if ($count > 0) {
-			foreach ($arguments as $item) {
-				if ($i == 0) {
-					$class .= ucfirst(strtolower($arguments[$i])).'Helper';
-				} else {
-					$arg[] = $arguments[$i];
-				}
-				$i++;
-			}
-		}
+    public static function __callStatic($name, $arguments)
+    {
+        return $this->processCall($name, $arguments);
+    }
 
-		if (class_exists($class)) {
-		} else {
-			Services::Debug()->set('Invalid Extension Helper Class: '. $class);
-			return false;
-		}
+    public function processCall($name, $arguments)
+    {
+        $class = 'Molajo\\Extension\\Helper\\';
+        $method = $name;
 
-		if (method_exists($class, $method)) {
-			return call_user_func_array (array($class, $method), $arg);
-		}
+        $arg = array();
+        $i = 0;
+        $count = count($arguments);
+        if ($count > 0) {
+            foreach ($arguments as $item) {
+                if ($i == 0) {
+                    $class .= ucfirst(strtolower($arguments[$i])) . 'Helper';
+                } else {
+                    $arg[] = $arguments[$i];
+                }
+                $i++;
+            }
+        }
 
-		Services::Debug()->set('Invalid Helper Class Method: '. $class.' '.$method);
-		return false;
-	}
+        if (class_exists($class)) {
+        } else {
+            Services::Debug()->set('Invalid Extension Helper Class: ' . $class);
+            return false;
+        }
+
+        if (method_exists($class, $method)) {
+            return call_user_func_array(array($class, $method), $arg);
+        }
+
+        Services::Debug()->set('Invalid Helper Class Method: ' . $class . ' ' . $method);
+        return false;
+    }
 }

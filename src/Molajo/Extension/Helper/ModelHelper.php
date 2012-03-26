@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  API
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\Helper;
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
 /**
  * Model
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -470,9 +470,7 @@ class ModelHelper
      */
     public function getList($field)
     {
-        $lists = simplexml_load_file(
-            MOLAJO_APPLICATIONS . '/Configuration/lists.xml'
-        );
+        $lists = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/lists.xml');
         if (count($lists) == 0) {
             return false;
         }
@@ -491,7 +489,7 @@ class ModelHelper
                     $method = '';
                 }
                 if (isset($l['model'])) {
-					$model = 'Molajo\\Application\\MVC\\Model\\';
+                    $model = 'Molajo\\Application\\MVC\\Model\\';
                     $model .= (string)$l['model'];
                 } else {
                     $model = '';
@@ -611,44 +609,44 @@ class ModelHelper
      */
     public function getStatusList()
     {
-        $rowset = array();
+        $resultset = array();
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_ARCHIVED;
         $obj->value = Services::Language()->translate('STATUS_ARCHIVED');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_PUBLISHED;
         $obj->value = Services::Language()->translate('STATUS_PUBLISHED');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_UNPUBLISHED;
         $obj->value = Services::Language()->translate('STATUS_UNPUBLISHED');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_TRASHED;
         $obj->value = Services::Language()->translate('STATUS_TRASHED');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_SPAMMED;
         $obj->value = Services::Language()->translate('STATUS_SPAMMED');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_DRAFT;
         $obj->value = Services::Language()->translate('STATUS_DRAFT');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = MOLAJO_STATUS_VERSION;
         $obj->value = Services::Language()->translate('STATUS_VERSION');
-        $rowset[] = $obj;
+        $resultset[] = $obj;
 
-        return $rowset;
+        return $resultset;
     }
 
     /**
@@ -689,6 +687,7 @@ class ModelHelper
     {
 
     }
+
     /**
      * updateDates
      *

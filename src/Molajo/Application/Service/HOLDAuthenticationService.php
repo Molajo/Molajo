@@ -150,8 +150,7 @@ Class AuthenticationService
            * Any errors raised in the plugin should be returned via the MolajoAuthenticationResponse
            * and handled appropriately.
            */
-        foreach ($plugins as $plugin)
-        {
+        foreach ($plugins as $plugin) {
             $className = 'plg' . $plugin->type . $plugin->name;
             if (class_exists($className)) {
                 $plugin = new $className($this, (array)$plugin);
@@ -208,8 +207,7 @@ Class AuthenticationService
            * Any errors raised in the plugin should be returned via the JAuthenticationResponse
            * and handled appropriately.
            */
-        foreach ($plugins as $plugin)
-        {
+        foreach ($plugins as $plugin) {
             $className = 'plg' . ucfirst($plugin->type) . ucfirst($plugin->name);
             if (class_exists($className)) {
                 $plugin = new $className($this, (array)$plugin);
@@ -256,8 +254,7 @@ Class AuthenticationService
 
                 } else {
 
-                    switch ($authorisation->status)
-                    {
+                    switch ($authorisation->status) {
                         case MolajoAuthentication::STATUS_EXPIRED:
                             $response->status = STATUS_EXPIRED;
                             return MolajoError::raiseWarning('102002', Services::Language()->translate('JLIB_LOGIN_EXPIRED'));

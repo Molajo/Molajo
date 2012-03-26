@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
@@ -44,12 +44,12 @@ class Controller
     protected $model;
 
     /**
-     * $rowset
+     * $resultset
      *
      * @var    object
      * @since  1.0
      */
-    protected $rowset;
+    protected $resultset;
 
     /**
      * $pagination
@@ -119,10 +119,12 @@ class Controller
     {
         return $this->display();
     }
+
     public function edit()
     {
         return $this->display();
     }
+
     public function display()
     {
     }
@@ -206,7 +208,8 @@ class Controller
         }
 // or super admin
         if ($this->model->checked_out
-            == Services::User()->get('id')) {
+            == Services::Registry()->get('User\\id')
+        ) {
 
         } else {
             // redirect error

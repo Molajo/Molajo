@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Includer;
@@ -16,7 +16,7 @@ use Molajo\Extension\Helper\ThemeHelper;
 /**
  * Theme
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Includer
  * @since       1.0
  */

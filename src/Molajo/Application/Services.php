@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
@@ -10,10 +10,11 @@ use Joomla\registry\Registry;
 use Molajo\Application\Molajo;
 
 defined('MOLAJO') or die;
+
 /**
  * Service
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Services
  * @since       1.0
  */
@@ -100,12 +101,12 @@ Class Services
         $this->service_connection = new Registry();
 
         /** start services in this sequence */
-        $xml = MOLAJO_APPLICATIONS . '/Configuration/services.xml';
+        $xml = MOLAJO_CONFIGURATION_FOLDER . '/services.xml';
         if (is_file($xml)) {
         } else {
             return false;
         }
-        $services = simplexml_load_file($xml, 'SimpleXMLElement');
+        $services = simplexml_load_file($xml);
 
         foreach ($services->service as $item) {
             $try = true;
@@ -116,12 +117,7 @@ Class Services
             $serviceClass = 'Molajo\\Application\\Service\\' . $entry;
 
             /** method name */
-            if ($entry == 'DatabaseService'
-            ) {
-                $serviceMethod = 'connect';
-            } else {
-                $serviceMethod = 'getInstance';
-            }
+            $serviceMethod = 'getInstance';
 
             /** trap errors for missing class or method */
             if (class_exists($serviceClass)) {

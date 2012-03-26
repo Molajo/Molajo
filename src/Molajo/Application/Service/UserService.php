@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * User Class
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -45,7 +45,6 @@ Class UserService
      */
     public static function getInstance($id = 0, $model = null)
     {
-        $id = 42;
         if (empty(self::$instances[$id])) {
             $user = new UserService($id, $model);
             self::$instances[$id] = $user;
@@ -68,50 +67,35 @@ Class UserService
         } else {
             $this->model = $model;
         }
-//        $this->storage = Services::Request()->getSession();
 
-        if ((int)$this->id == 0) {
-            return $this->_loadGuest();
-        } else {
-            return $this->_load();
-        }
+        return $this->load();
     }
 
     /**
      * load
      *
-     * Retrieve User or Guest Information
+     * Retrieve User Information (both authenticated and guest)
      *
-     * @param   mixed  $id either the numeric userid or character username
-     *
-     * @return  boolean
+     * @return  User
      * @since   1.0
      */
-    protected function _load()
+    protected function load()
     {
+
         $m = new $this->model ($this->id);
-
         $results = $m->load();
-        if ($results == false) {
-            $this->guest = true;
-            return $this->_loadGuest();
-        }
 
-        /** User Table Columns */
-        $columns = $m->getFieldNames();
+        while (list($name, $value) = each($results)) {
 
-        for ($i=0; $i < count($columns); $i++) {
-
-            if ($columns[$i] == 'parameters'
-                || $columns[$i] == 'custom_fields'
-                || $columns[$i] == 'metadata')  {
-
+            if ($name == 'parameters'
+                || $name == 'custom_fields'
+                || $name == 'metadata'
+            ) {
             } else {
-                Services::Registry()->set('User\\' . $columns[$i], $results[$columns[$i]]);
+                Services::Registry()->set('User\\' . $name, $value);
             }
         }
 
-        /** Validations Table */
         $v = simplexml_load_file(
             MOLAJO_APPLICATIONS_MVC
                 . '/Model/Table/'
@@ -119,12 +103,29 @@ Class UserService
                 . '.xml'
         );
 
-        /** $custom_fields */
-       $custom_fields = Services::Registry()->initialise();
-       $custom_fields->loadJSON($results['custom_fields'], array());
+        $this->registry('UserCustomFields\\', $results, 'custom_fields', 'custom_field', $v);
+        $this->registry('UserMetadata\\', $results, 'metadata', 'meta', $v);
+        $this->registry('UserParameters\\', $results, 'parameters', 'parameter', $v);
 
-        if (isset($v->custom_fields->custom_field)) {
-            foreach ($v->custom_fields->custom_field as $cf) {
+        return $this;
+    }
+
+    /**
+     * registry
+     *
+     * @param $namespace
+     * @param $source
+     * @param $field_group
+     * @param $field_name
+     * @param $v
+     */
+    protected function registry($namespace, $source, $field_group, $field_name, $v)
+    {
+        $registry = Services::Registry()->initialise();
+        $registry->loadJSON($source[$field_group], array());
+
+        if (isset($v->$field_group->$field_name)) {
+            foreach ($v->$field_group->$field_name as $cf) {
 
                 $name = (string)$cf['name'];
                 $dataType = (string)$cf['filter'];
@@ -133,67 +134,13 @@ Class UserService
                 $values = (string)$cf['values'];
 
                 if ($default == '') {
-                    $val = $custom_fields->get($name, null);
+                    $val = $registry->get($name, null);
                 } else {
-                    $val = $custom_fields->get($name, $default);
+                    $val = $registry->get($name, $default);
                 }
 
-//                $val = Services::Security()
-//                ->filter(
-//                    $val, $dataType, $null, $default, $values);
-
-                Services::Registry()->set('UserCustomFields\\' . $name, $v);
+                Services::Registry()->set($namespace . $name, $val);
             }
         }
-
-        $metadata = Services::Registry()->initialise();
-        $metadata->loadString($this->get('metadata', array()));
-        $this->set('metadata', $metadata);
-
-        $parameters = Services::Registry()->initialise();
-        $parameters->loadString($this->get('parameters'));
-
-        var_dump($this->get('parameters'));
-        die;
-
-        $this->set('parameters', $parameters);
-
-        return $this;
-    }
-
-    /**
-     * _loadGuest
-     *
-     * Set values for visitor not logged on
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function _loadGuest()
-    {
-        $m = new $this->model (0);
-
-        $columns = $m->getFieldNames();
-
-        foreach ($columns as $name => $value) {
-            $this->set($name, '');
-        }
-        $this->set('id', 0);
-        $this->set('asset_type_id', MOLAJO_ASSET_TYPE_USER);
-
-        $parameters = Services::Registry()->initialise();
-        $parameters->loadString(
-            Services::Configuration()->get('guest_parameters', '{}')
-        );
-
-        $this->set('applications', array());
-        $this->set('groups', array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST));
-        $this->set('view_groups', array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST));
-        $this->set('public', 1);
-        $this->set('guest', 1);
-        $this->set('registered', 0);
-        $this->set('administrator', 0);
-
-        return $this;
     }
 }

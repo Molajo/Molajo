@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -14,7 +14,7 @@ use Molajo\Extension\Helper\ModuleHelper;
 /**
  * Module
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -39,7 +39,7 @@ abstract class ModuleHelper
         if ($results === false) {
             if (Services::Configuration()->get('debug', 0) == 1) {
                 Services::Debug()->set('ModuleIncluder::_getExtension');
-                Services::Debug()->set('Module not found: '.$this->get('extension_instance_name'));
+                Services::Debug()->set('Module not found: ' . $this->get('extension_instance_name'));
             }
             return false;
         }

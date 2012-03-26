@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Document
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -144,34 +144,34 @@ Class DocumentService
     }
 
     /**
-   	 * set_mime_encoding
+     * set_mime_encoding
      *
      * Sets the document MIME encoding that is sent to the browser.
-   	 *
-\  	 * @param   string   $type
      *
-   	 * @return void
-   	 * @since   1.0
-   	 */
-   	public function set_mime_encoding($type = 'text/html')
-   	{
-   		$this->mime_encoding = strtolower($type);
-   	}
+    \  	 * @param   string   $type
+     *
+     * @return void
+     * @since   1.0
+     */
+    public function set_mime_encoding($type = 'text/html')
+    {
+        $this->mime_encoding = strtolower($type);
+    }
 
     /**
-   	 * get_mime_encoding
+     * get_mime_encoding
      *
      * Sets the document MIME encoding that is sent to the browser.
-   	 *
-\  	 * @param   string   $type
      *
-   	 * @return string
-   	 * @since   1.0
-   	 */
-   	public function get_mime_encoding()
-   	{
-   		return $this->mime_encoding;
-   	}
+    \  	 * @param   string   $type
+     *
+     * @return string
+     * @since   1.0
+     */
+    public function get_mime_encoding()
+    {
+        return $this->mime_encoding;
+    }
 
     /**
      * set_metadata
@@ -180,7 +180,7 @@ Class DocumentService
      *
      * Example usage:
      * Services::Document()->set_metadata
-                 ('viewport', 'width=device-width, initial-scale=1, maximum-scale=1')
+    ('viewport', 'width=device-width, initial-scale=1, maximum-scale=1')
      *
      * @param   string  $name
      * @param   string  $content
@@ -371,7 +371,7 @@ Class DocumentService
      *
      * Example usage:
      * Services::Document()->add_css_declaration
-             ($css_in_here, 'text/css');
+    ($css_in_here, 'text/css');
      *
      * @param   string  $content
      * @param   string  $format

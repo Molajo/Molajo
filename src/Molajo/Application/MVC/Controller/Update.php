@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Application\MVC\Controller;
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Update
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Controller
  * @since       1.0
  */
@@ -23,7 +23,7 @@ class UpdateController extends Controller
     /**
      *  save
      */
-    function save()
+    public function save()
     {
         /** Test */
         $this->id = 113;
@@ -31,15 +31,15 @@ class UpdateController extends Controller
 
         /** load data into model */
         $valid = $this->load();
-/**
+        /**
         $this->id = 0;
         $this->model->id = 0;
         $this->model->row->id = 0;
-*/
+         */
         $this->model->row->title = 'Puff it up.';
         /** filter input, validate values and foreign keys */
         if ($valid === true) {
-            $valid = $this->_filter_and_validate($this->model->row);
+            $valid = $this->filter_and_validate($this->model->row);
         }
 
         /** insert or update model data */
@@ -50,7 +50,8 @@ class UpdateController extends Controller
         /** redirect */
         if ($valid === true) {
             if ($this->model->row->id == 0
-                || $this->model->row->status == 0) {
+                || $this->model->row->status == 0
+            ) {
                 Services::Response()
                     ->redirect(
                     $this->task_request->get('redirect_on_success'),
@@ -59,13 +60,13 @@ class UpdateController extends Controller
                 Services::Response()
                     ->redirect(
                     AssetHelper::getURL(
-                         $this->task_request->get('request_asset_id')),
-                     301
-                 );
+                        $this->task_request->get('request_asset_id')),
+                    301
+                );
             }
         } else {
             $link = $this->task_request->get('redirect_on_failure');
-            if ((int) $this->id == 0) {
+            if ((int)$this->id == 0) {
                 $link .= '&task=add';
             } else {
                 $link .= '&task=edit';
@@ -95,7 +96,7 @@ class UpdateController extends Controller
      * @return boolean
      * @since  1.0
      */
-    function load()
+    public function load()
     {
         $valid = true;
 
@@ -118,6 +119,7 @@ class UpdateController extends Controller
             $this->model->row->modified_by = 42;
 
             return $valid;
+
         } else {
 
             try {
@@ -128,12 +130,10 @@ class UpdateController extends Controller
 
             } catch (Exception $e) {
                 $valid = false;
-                if (Services::Configuration()->get('debug', 0) == 1) {
-                    Services::Debug()->set(' ');
-                    Services::Debug()->set('UpdateController::load Failed');
-                    Services::Debug()->set('Model: ' . $this->model->name . ' ID: ' . $this->id);
-                    debug(Services::Language()->translate($e->getMessage()));
-                }
+
+                Services::Debug()->set('UpdateController::load Failed');
+                Services::Debug()->set('Model: ' . $this->model->name . ' ID: ' . $this->id);
+
                 Services::Message()
                     ->set(
                     $message =
@@ -147,14 +147,14 @@ class UpdateController extends Controller
     }
 
     /**
-     * _filter_and_validate
+     * filter_and_validate
      *
      * Runs custom validation methods
      *
      * @return  object
      * @since   1.0
      */
-    protected function _filter_and_validate()
+    protected function filter_and_validate()
     {
         $valid = true;
 
@@ -189,14 +189,15 @@ class UpdateController extends Controller
                 if ($dataType == null) {
                     // no filter defined
                 } else if ($dataType == 'html'
-                        && $userHTMLFilter === false) {
-                        // user does not require HTML filtering
+                    && $userHTMLFilter === false
+                ) {
+                    // user does not require HTML filtering
 
                 } else {
 
                     try {
                         $value = Services::Security()->filter(
-                                $value, $dataType, $null, $default);
+                            $value, $dataType, $null, $default);
 
                     } catch (Exception $e) {
                         $valid = false;
@@ -204,18 +205,15 @@ class UpdateController extends Controller
                             $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                             $type = MOLAJO_MESSAGE_TYPE_ERROR
                         );
-                        if (Services::Configuration()->get('debug', 0) == 1) {
-                            Services::Debug()->set(' ');
-                            Services::Debug()->set('UpdateController::_filter_and_validate Filter Failed'.' '.$message);
-                        }
+
+                        Services::Debug()->set('UpdateController::filter_and_validate Filter Failed' . ' ' . $message);
+
                     }
                 }
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            Services::Debug()->set(' ');
-            Services::Debug()->set('UpdateController::_filter_and_validate Filter::Success: ' . $valid);
-        }
+
+        Services::Debug()->set('UpdateController::filter_and_validate Filter::Success: ' . $valid);
 
         /** Helper Functions */
         if (isset($v->helpers->helper)) {
@@ -224,7 +222,7 @@ class UpdateController extends Controller
                 $name = (string)$h['name'];
 
                 try {
-                    $this->_validateHelperFunction($name);
+                    $this->validateHelperFunction($name);
 
                 } catch (Exception $e) {
                     $valid = false;
@@ -232,17 +230,14 @@ class UpdateController extends Controller
                         $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
-                    if (Services::Configuration()->get('debug', 0) == 1) {
-                        Services::Debug()->set(' ');
-                        Services::Debug()->set('UpdateController::_filter_and_validate Helper Failed'.' '.$message);
-                    }
+
+                    Services::Debug()->set('UpdateController::filter_and_validate Helper Failed' . ' ' . $message);
+
                 }
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            Services::Debug()->set(' ');
-            Services::Debug()->set('UpdateController::_filter_and_validate Helper::Success: ' . $valid);
-        }
+
+        Services::Debug()->set('UpdateController::filter_and_validate Helper::Success: ' . $valid);
 
         /** Foreign Keys */
         if (isset($v->fks->fk)) {
@@ -255,7 +250,7 @@ class UpdateController extends Controller
                 $message = (string)$f['message'];
 
                 try {
-                    $this->_validateForeignKey($name, $source_id,
+                    $this->validateForeignKey($name, $source_id,
                         $source_model, $required, $message);
 
                 } catch (Exception $e) {
@@ -264,30 +259,26 @@ class UpdateController extends Controller
                         $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                         $type = MOLAJO_MESSAGE_TYPE_ERROR
                     );
-                    if (Services::Configuration()->get('debug', 0) == 1) {
-                        Services::Debug()->set(' ');
-                        Services::Debug()->set('UpdateController::_filter_and_validate FKs Failed'.' '.$message);
-                    }
+
+                    Services::Debug()->set('UpdateController::filter_and_validate FKs Failed' . ' ' . $message);
                 }
             }
         }
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            Services::Debug()->set(' ');
-            Services::Debug()->set('UpdateController::Validate FK::Success: ' . $valid);
-        }
+
+        Services::Debug()->set('UpdateController::Validate FK::Success: ' . $valid);
 
         return $valid;
     }
 
     /**
-     * _validateHelperFunction
+     * validateHelperFunction
      *
      * @param $method
      *
      * @return  boolean
      * @since   1.0
      */
-    protected function _validateHelperFunction($method)
+    protected function validateHelperFunction($method)
     {
         $helperClass = 'Molajo'
             . ucfirst(substr($this->model->table_name, 3, 999))
@@ -304,7 +295,9 @@ class UpdateController extends Controller
         }
 
         $h = new $helperClass();
+
         $h->row = $this->model->row;
+
         $return = $h->$method();
         //get your helper class data back
         if ($return === false) {
@@ -313,7 +306,7 @@ class UpdateController extends Controller
     }
 
     /**
-     * _validateForeignKey
+     * validateForeignKey
      *
      * @param $name
      * @param $source_id
@@ -324,13 +317,11 @@ class UpdateController extends Controller
      * @return  boolean
      * @since   1.0
      */
-    protected function _validateForeignKey($name, $source_id, $source_model,
-                                           $required, $message)
+    protected function validateForeignKey($name, $source_id, $source_model,
+                                          $required, $message)
     {
-        if (Services::Configuration()->get('debug', 0) == 1) {
-            Services::Debug()->set(' ');
-            Services::Debug()->set('UpdateController::_validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
-        }
+
+        Services::Debug()->set('UpdateController::validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
 
         if ($this->model->row->$name == 0
             && $required == 0
@@ -361,7 +352,7 @@ class UpdateController extends Controller
     }
 
     /**
-     * _storeRelated
+     * storeRelated
      *
      * Method to store a row in the related table
      *
@@ -370,7 +361,7 @@ class UpdateController extends Controller
      * @return bool
      * @since   1.0
      */
-    private function _storeRelated()
+    private function storeRelated()
     {
         $asset = new AssetModel();
 

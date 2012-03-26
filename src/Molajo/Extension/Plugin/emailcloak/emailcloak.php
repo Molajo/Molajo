@@ -43,7 +43,7 @@ class plgContentEmailcloak extends MolajoPluginHelper
     protected function _getPattern($link, $text)
     {
         $pattern = '~(?:<a [\w "\'=\@\.\-]*href\s*=\s*"mailto:'
-                   . $link . '"[\w "\'=\@\.\-]*)>' . $text . '</a>~i';
+            . $link . '"[\w "\'=\@\.\-]*)>' . $text . '</a>~i';
         return $pattern;
     }
 

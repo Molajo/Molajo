@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Module
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 namespace Molajo\Extension\Module;
@@ -11,7 +11,7 @@ namespace Molajo\Extension\Module;
 /**
  * GridTable
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
@@ -43,7 +43,7 @@ Class ModelGridTableModule extends DisplayModel
      */
     public function getData()
     {
-        $this->items = Services::Registry()->get('request\\query_rowset');
+        $this->items = Services::Registry()->get('request\\query_resultset');
         return $this->items;
     }
 }

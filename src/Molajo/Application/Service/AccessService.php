@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -16,8 +16,6 @@ defined('MOLAJO') or die;
 
 /**
  * Access
- *
- * Permissioning
  *
  * @package     Molajo
  * @subpackage  Services
@@ -34,8 +32,6 @@ Class AccessService
     protected static $instance;
 
     /**
-     * $action_to_action_id
-     *
      * ACL Action literal to database pk
      *
      * @var    Registry
@@ -44,8 +40,6 @@ Class AccessService
     protected $action_to_action_id;
 
     /**
-     * $task_to_action
-     *
      * Task to ACL Action list
      *
      * @var    Registry
@@ -54,8 +48,6 @@ Class AccessService
     protected $task_to_action;
 
     /**
-     * $action_to_controller
-     *
      * ACL Action to Molajo Controller list
      *
      * @var    Registry
@@ -79,32 +71,25 @@ Class AccessService
     }
 
     /**
-     * __construct
-     *
      * Class constructor.
      *
      * @since  1.0
      */
     public function __construct()
     {
-        $this->_initialize();
+        $this->_initialise();
     }
 
     /**
-     * _initialize
-     *
      * Load lists of ACL-related data needed by this method
      * and other classes within the application
      *
      * @return null
      * @since  1.0
      */
-    protected function _initialize()
+    protected function _initialise()
     {
-        /** load task to action and controller data */
-        $tasks = simplexml_load_file(
-            MOLAJO_APPLICATIONS . '/Configuration/tasks.xml'
-        );
+        $tasks = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/tasks.xml');
         if (count($tasks) == 0) {
             return;
         }
@@ -163,7 +148,7 @@ Class AccessService
         $application_id = $m->loadResult();
 
         if ($application_id === false) {
-    //todo: finish the response action/test
+            //todo: finish the response action/test
             Services::Response()
                 ->setHeader('Status', '403 Not Authorised', 'true'
             );
@@ -266,7 +251,7 @@ Class AccessService
         $m->query->where($m->db->qn('asset_id') . ' = ' . (int)$asset_id);
         $m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
         $m->query->where($m->db->qn('group_id')
-                . ' IN (' . implode(',', Services::User()->get('groups')) . ')'
+                . ' IN (' . implode(',', Services::Registry()->get('User\\groups')) . ')'
         );
 
         $count = $m->loadResult();
@@ -389,9 +374,8 @@ Class AccessService
                 '.' .
                 $db->qn('view_group_id') .
                 ' IN (' . implode(',',
-                Services::User()
-                    ->get('view_groups')) .
-                ')'
+                Services::Registry()->get('User\\view_groups') .
+                    ')')
         );
 
         $query->where(
@@ -420,7 +404,7 @@ Class AccessService
     {
         $groups = Services::Configuration()->get('disable_filter_for_groups');
         $groupArray = explode(',', $groups);
-        $userGroups = Services::User()->get('groups');
+        $userGroups = Services::Registry()->get('User\\groups');
 
         foreach ($groupArray as $single) {
 

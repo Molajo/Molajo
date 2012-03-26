@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 /**
  * MenuItem
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -73,10 +73,10 @@ abstract class MenuItemHelper
          *  b. Extensions Instances Table
          */
         $m->query->select('b.' . $m->db->qn('id') . ' as menu_id');
-        $m->query->select('b.' . $m->db->qn('asset_type_id'). 'as menu_asset_type_id');
-        $m->query->select('b.' . $m->db->qn('title'). ' as menu_title');
-        $m->query->select('b.' . $m->db->qn('parameters'). 'as menu_parameters');
-        $m->query->select('b.' . $m->db->qn('metadata'). 'as menu_metadata');
+        $m->query->select('b.' . $m->db->qn('asset_type_id') . 'as menu_asset_type_id');
+        $m->query->select('b.' . $m->db->qn('title') . ' as menu_title');
+        $m->query->select('b.' . $m->db->qn('parameters') . 'as menu_parameters');
+        $m->query->select('b.' . $m->db->qn('metadata') . 'as menu_metadata');
 
         $m->query->select('b_assets.' . $m->db->qn('id') . ' as menu_asset_id');
         $m->query->select('b_assets.' . $m->db->qn('view_group_id') . ' as menu_view_group_id');
@@ -117,7 +117,7 @@ abstract class MenuItemHelper
          *  d. Site Table
          *      Extension Instances must be enabled for the Site
          */
-        $m->query->from($m->db->qn('#__site_extension_instances') .' as d');
+        $m->query->from($m->db->qn('#__site_extension_instances') . ' as d');
         $m->query->where('d.' . $m->db->qn('extension_instance_id') .
             ' = b.' . $m->db->qn('id'));
         $m->query->where('d.' . $m->db->qn('site_id') .
@@ -128,7 +128,8 @@ abstract class MenuItemHelper
          */
         $menuitems = $m->runQuery();
         $menuitem = array();
-        foreach ($menuitems as $menuitem) {}
+        foreach ($menuitems as $menuitem) {
+        }
         return $menuitem;
     }
 }

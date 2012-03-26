@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Module
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 namespace Molajo\Extension\Module;
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Blockquote
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
@@ -84,7 +84,7 @@ Class ModuleBlockquoteModel extends DisplayModel
             $item = array();
             $item->cite = $cite;
             $item->excerpt = $excerpt;
-$renderedLayout = '';
+            $renderedLayout = '';
             /** replace **/
             $workText = str_replace($matches[0][$i], $renderedLayout, $workText);
         }

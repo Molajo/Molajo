@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Application" tests="2276" assertions="4833" failures="0" errors="0" time="16.285511">
+  <testsuite name="JDatabaseMysqlTest" file="/Users/amystephen/Sites/joomla-platform/tests/suites/database/driver/mysql/JDatabaseMySQLTest.php" fullPackage="Joomla.UnitTest.Database" package="Joomla.UnitTest" subpackage="Database" tests="0" assertions="0" failures="0" errors="0" time="0.000000">
+  <testsuite name="JDatabaseMysqlTest::testEscape" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/></testsuite>
+
+  </testsuite>
+</testsuites>

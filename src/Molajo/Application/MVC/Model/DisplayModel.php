@@ -1,8 +1,8 @@
 <?php
 /**
- * @package	 	Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  *
  * Abstracted class used as the parent class for common display views
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
@@ -270,7 +270,7 @@ class DisplayModel extends ItemModel
             $this->get('extension_instance_name')
         );
 
-		$helperClass = 'Molajo\\Extension\\Component\\'. $extensionName . 'ModelHelper';
+        $helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . 'ModelHelper';
         if (class_exists($helperClass)) {
         } else {
             $helperClass = 'ModelHelper';
@@ -357,7 +357,7 @@ class DisplayModel extends ItemModel
         /** pagination object **/
         $limit = (int)$this->getState('list.limit') - (int)$this->getState('list.links');
 //        $page = new JPagination($this->getTotal(), $this->getStart(), $limit);
-$page = '';
+        $page = '';
         /** load cache **/
         $this->cache[$store] = $page;
 

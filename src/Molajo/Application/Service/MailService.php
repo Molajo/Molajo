@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\Service;
 
@@ -35,7 +35,7 @@ defined('MOLAJO') or die;
  * mode - html or default (plain text)
  * attachment - file name of attachment
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -159,8 +159,7 @@ Class MailService
         $mail = $mailClass::getInstance();
 
         /** Set type of email */
-        switch (Services::Configuration()->get('mailer'))
-        {
+        switch (Services::Configuration()->get('mailer')) {
             case 'smtp':
                 $mail->useSMTP(
                     Services::Configuration()->get('smtpauth'),
@@ -250,7 +249,7 @@ Class MailService
         $dataType = 'email';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
-           return false;
+            return false;
         }
         $this->set('from_email', $results);
 
@@ -260,7 +259,7 @@ Class MailService
         $dataType = 'char';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
-           return false;
+            return false;
         }
         $this->set('from_name', $results);
 
@@ -277,7 +276,7 @@ Class MailService
             foreach ($values as $value) {
                 $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
-                   return false;
+                    return false;
                 } else {
                     $validated[] = $results;
                 }
@@ -291,7 +290,7 @@ Class MailService
         $dataType = 'char';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
-           return false;
+            return false;
         }
         $this->set('subject', $results);
 
@@ -305,7 +304,7 @@ Class MailService
         }
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
-           return false;
+            return false;
         }
         $this->set('body', $results);
 
@@ -322,7 +321,7 @@ Class MailService
             foreach ($values as $value) {
                 $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
-                   return false;
+                    return false;
                 } else {
                     $validated[] = $results;
                 }
@@ -343,7 +342,7 @@ Class MailService
             foreach ($values as $value) {
                 $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
-                   return false;
+                    return false;
                 } else {
                     $validated[] = $results;
                 }
@@ -364,7 +363,7 @@ Class MailService
             foreach ($values as $value) {
                 $results = $this->edit_and_filter_input($name, $value, $dataType);
                 if ($results === false) {
-                   return false;
+                    return false;
                 } else {
                     $validated[] = $results;
                 }
@@ -378,7 +377,7 @@ Class MailService
         $dataType = 'email';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
-           return false;
+            return false;
         }
         $this->set('reply_to_email', $results);
 
@@ -388,7 +387,7 @@ Class MailService
         $dataType = 'char';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
-           return false;
+            return false;
         }
         $this->set('reply_to_name', $results);
 
@@ -411,18 +410,18 @@ Class MailService
         $name, $value, $dataType, $null = null, $default = null)
     {
         try {
-           $value = Services::Security()->filter(
-                   $value, $dataType, $null, $default);
+            $value = Services::Security()->filter(
+                $value, $dataType, $null, $default);
 
         } catch (Exception $e) {
-           $value = false;
-           Services::Message()->set(
-               $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-               $type = MOLAJO_MESSAGE_TYPE_ERROR
-           );
-           if (Services::Configuration()->get('debug', 0) == 1) {
-               Services::Debug()->set('Services::mail Filter Failed'.' '.$message);
-           }
+            $value = false;
+            Services::Message()->set(
+                $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
+                $type = MOLAJO_MESSAGE_TYPE_ERROR
+            );
+            if (Services::Configuration()->get('debug', 0) == 1) {
+                Services::Debug()->set('Services::mail Filter Failed' . ' ' . $message);
+            }
         }
 
         return $value;

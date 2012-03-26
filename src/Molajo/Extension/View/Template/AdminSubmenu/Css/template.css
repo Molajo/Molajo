@@ -4,6 +4,16 @@
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-.submenu ul {margin: 0; padding: 0; list-style-type: none }
-.submenu ul li {display: inline; }
-.submenu ul li a {text-decoration: none}
+.submenu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none
+}
+
+.submenu ul li {
+    display: inline;
+}
+
+.submenu ul li a {
+    text-decoration: none
+}

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application;
 
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Includer
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Application
  * @since       1.0
  */
@@ -153,7 +153,7 @@ class Includer
         /** attributes from <include:type */
         $this->attributes = $attributes;
 
-        /** initializes and populates the MVC request */
+        /** initialises and populates the MVC request */
         $this->_setRenderCriteria();
         if ($this->extension_required === true) {
             if ($this->get('extension_instance_id', 0) == 0) {
@@ -175,7 +175,8 @@ class Includer
 
         /** only load media if there was rendered output */
         if ($this->rendered_output == ''
-            && $this->parameters->get('suppress_no_results') == 0) {
+            && $this->parameters->get('suppress_no_results') == 0
+        ) {
         } else {
             $this->_loadMedia();
             $this->_loadViewMedia();
@@ -229,8 +230,8 @@ class Includer
      */
     protected function _setRenderCriteria()
     {
-        /** creates mvc object and initializes settings */
-        $this->_initializeRequest();
+        /** creates mvc object and initialises settings */
+        $this->_initialiseRequest();
 
         /** establish values needed for MVC */
         $this->_getAttributes();
@@ -260,14 +261,14 @@ class Includer
     }
 
     /**
-     * _initializeRequest
+     * _initialiseRequest
      *
      * Initialize the request object for MVC values
      *
      * @return  null
      * @since   1.0
      */
-    protected function _initializeRequest()
+    protected function _initialiseRequest()
     {
         $this->task_request = Services::Registry()->initialise();
 
@@ -426,7 +427,8 @@ class Includer
 
         /** Extension not found */
         if (($this->get('extension_instance_id', 0) == 0)
-            && (count($rows) == 0)) {
+            && (count($rows) == 0)
+        ) {
             return $this->set('status_found', false);
         }
 
@@ -449,17 +451,17 @@ class Includer
             $this->parameters->get('source_asset_type_id'));
 
         if ((int)$this->get('template_view_id', 0) == 0) {
-             $this->set('template_view_id',
-                 $this->parameters->get('template_view_id')
-             );
-         }
+            $this->set('template_view_id',
+                $this->parameters->get('template_view_id')
+            );
+        }
 
-         /** wrap */
-         if ((int)$this->get('wrap_view_id', 0) == 0) {
-             $this->set('wrap_view_id',
-                 $this->parameters->get('wrap_view_id')
-             );
-         }
+        /** wrap */
+        if ((int)$this->get('wrap_view_id', 0) == 0) {
+            $this->set('wrap_view_id',
+                $this->parameters->get('wrap_view_id')
+            );
+        }
 
         /** mvc */
         if ($this->get('controller', '') == '') {
@@ -747,10 +749,10 @@ class Includer
         if (Services::Configuration()->get('debug', 0) == 1) {
             Services::Debug()->set(' ');
             Services::Debug()->set('Includer::_invokeMVC');
-            Services::Debug()->set('Controller: '.$cc.' Task: '.$task.' Model: '.$model.' ');
-            Services::Debug()->set('Extension: '.$this->get('extension_instance_name').' ID: '.$this->get('id').'');
-            Services::Debug()->set('Template: '.$this->get('template_view_path').'');
-            Services::Debug()->set('Wrap: '.$this->get('wrap_view_path').'');
+            Services::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');
+            Services::Debug()->set('Extension: ' . $this->get('extension_instance_name') . ' ID: ' . $this->get('id') . '');
+            Services::Debug()->set('Template: ' . $this->get('template_view_path') . '');
+            Services::Debug()->set('Wrap: ' . $this->get('wrap_view_path') . '');
         }
 
         /** instantiate controller  */

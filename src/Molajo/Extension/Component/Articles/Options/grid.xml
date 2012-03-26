@@ -11,16 +11,16 @@
             <criteria name="tag"/>
         </criterion>
         <selectfields>
-            <select name="title" />
-            <select name="status" />
-            <select name="featured" />
-            <select name="primary_category" />
-            <select name="ordering" />
-            <select name="view_group_id" />
-            <select name="created_by" />
-            <select name="start_publishing_datetime" />
-            <select name="visits" />
-            <select name="language" />
+            <select name="title"/>
+            <select name="status"/>
+            <select name="featured"/>
+            <select name="primary_category"/>
+            <select name="ordering"/>
+            <select name="view_group_id"/>
+            <select name="created_by"/>
+            <select name="start_publishing_datetime"/>
+            <select name="visits"/>
+            <select name="language"/>
         </selectfields>
     </component>
     <toolbar>
@@ -39,18 +39,18 @@
         </buttons>
     </toolbar>
     <submenuitems>
-        <submenuitem name="items" display="Items" />
-        <submenuitem name="categories" display="Categories" />
-        <submenuitem name="tags" display="Tags" />
-        <submenuitem name="featured" display="Featured" />
-        <submenuitem name="drafts"  display="Drafts" />
-        <submenuitem name="trash" display="Trash" />
+        <submenuitem name="items" display="Items"/>
+        <submenuitem name="categories" display="Categories"/>
+        <submenuitem name="tags" display="Tags"/>
+        <submenuitem name="featured" display="Featured"/>
+        <submenuitem name="drafts" display="Drafts"/>
+        <submenuitem name="trash" display="Trash"/>
     </submenuitems>
 
     <paginationoptions>
         <paginationoption name="displayrows" display="1" rows="10"/>
-        <paginationoption name="direction-buttons" display="1" />
-        <paginationoption name="buttons" display="1" />
+        <paginationoption name="direction-buttons" display="1"/>
+        <paginationoption name="buttons" display="1"/>
     </paginationoptions>
     <batchoptions>
         <batchoption name="display" value="1"/>

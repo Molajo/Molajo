@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <validations>
     <filters>
-        <filter name="id" filter="int" null="1" default="0" />
-        <filter name="asset_type_id" filter="int" null="0" default="500" values="500" />
-        <filter name="username" filter="char" null="0" default="" unique="1" />
-        <filter name="first_name" filter="char" null="0" default="" />
-        <filter name="last_name" filter="char" null="0" default="" />
-        <filter name="content_text" filter="text" null="1" default="" />
-        <filter name="email" filter="char" null="0" default=" " />
-        <filter name="password" filter="char" null="0" default=" " />
-        <filter name="block" filter="boolean" null="0" default="0" />
-        <filter name="activation" filter="boolean" null="0" default="0" />
-        <filter name="send_email" filter="boolean" null="0" default="0" />
-        <filter name="register_datetime" filter="date" null="0" default="0000-00-00 00:00:00" />
-        <filter name="last_visit_datetime" filter="date" null="0" default="0000-00-00 00:00:00" />
-        <filter name="custom_fields" filter="" null="1" default="" />
-        <filter name="parameters" filter="" null="1" default="" />
-        <filter name="metadata" filter="" null="1" default="" />
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="asset_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="username" filter="char" null="0" default="" unique="1"/>
+        <filter name="first_name" filter="char" null="0" default=""/>
+        <filter name="last_name" filter="char" null="0" default=""/>
+        <filter name="content_text" filter="text" null="1" default=""/>
+        <filter name="email" filter="char" null="0" default=" "/>
+        <filter name="password" filter="char" null="0" default=" "/>
+        <filter name="block" filter="boolean" null="0" default="0"/>
+        <filter name="activation" filter="boolean" null="0" default="0"/>
+        <filter name="send_email" filter="boolean" null="0" default="0"/>
+        <filter name="register_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="last_visit_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="custom_fields" filter="" null="1" default=""/>
+        <filter name="parameters" filter="" null="1" default=""/>
+        <filter name="metadata" filter="" null="1" default=""/>
     </filters>
     <helpers>
         <helper name="updateUsername"/>
@@ -37,23 +37,26 @@
                 />
     </fks>
     <custom_fields>
-        <custom_field name="gender" filter="char" null="1" default="" values="M,F" />
-        <custom_field name="about_me" filter="text" null="1" default="" />
-        <custom_field name="twitter" filter="url" null="1" default="0" />
-        <custom_field name="date_of_birth" filter="date" null="1" default="" />
+        <custom_field name="gender" filter="char" null="1" default="" values="M,F"/>
+        <custom_field name="about_me" filter="text" null="1" default=""/>
+        <custom_field name="twitter" filter="url" null="1" default=""/>
+        <custom_field name="date_of_birth" filter="date" null="1" default=""/>
     </custom_fields>
     <parameters>
-        <parameter name="display_gravatar" filter="boolean" null="0" default="1" />
-        <parameter name="display_birthdate" filter="boolean" null="0" default="0" />
-        <parameter name="display_email" filter="boolean" null="0" default="0" />
+        <parameter name="display_gravatar" filter="boolean" null="0" default="1"/>
+        <parameter name="display_birthdate" filter="boolean" null="0" default="0"/>
+        <parameter name="display_email" filter="boolean" null="0" default="0"/>
+        <parameter name="user_page_view_id" filter="integer" null="1" default="0"/>
+        <parameter name="user_theme_id" filter="integer" null="1" default="0"/>
     </parameters>
     <metadata>
-        <meta name="metadata_title" filter="char" null="0" default="" />
-        <meta name="metadata_description" filter="text" null="0" default="" />
-        <meta name="metadata_keywords" filter="char" null="1" default="" />
-        <meta name="metadata_robots" filter="char" null="0" default="follow,index" values="follow,nofollow,index,noindex" />
-        <meta name="metadata_author" filter="char" null="1" default="" />
-        <meta name="metadata_content_rights" filter="char" null="1" default="" />
+        <meta name="metadata_title" filter="char" null="0" default=""/>
+        <meta name="metadata_description" filter="text" null="0" default=""/>
+        <meta name="metadata_keywords" filter="char" null="1" default=""/>
+        <meta name="metadata_robots" filter="char" null="0" default="follow,index"
+              values="follow,nofollow,index,noindex"/>
+        <meta name="metadata_author" filter="char" null="1" default=""/>
+        <meta name="metadata_content_rights" filter="char" null="1" default=""/>
     </metadata>
 </validations>
 

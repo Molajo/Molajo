@@ -1,8 +1,8 @@
 <?php
 /**
- * @package	 Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license	 GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
@@ -11,24 +11,24 @@ defined('MOLAJO') or die;
 /**
  * Item
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
 class ItemModel extends LoadModel
 {
-	/**
-	 * __construct
-	 *
-	 * Constructor.
-	 *
-	 * @param  $id
-	 * @since  1.0
-	 */
-	public function __construct($id = null)
-	{
-		return parent::__construct($id);
-	}
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct($id = null)
+    {
+        return parent::__construct($id);
+    }
 
     /**
      * store
@@ -46,13 +46,13 @@ class ItemModel extends LoadModel
         echo '<pre>';
         var_dump($this->row);
         echo '</pre>';
-        */
-        if ((int) $this->id == 0) {
+         */
+        if ((int)$this->id == 0) {
             $stored = $this->db->insertObject(
-                    $this->table_name, $this->row, $this->primary_key);
+                $this->table_name, $this->row, $this->primary_key);
         } else {
             $stored = $this->db->updateObject(
-                    $this->table_name, $this->row, $this->primary_key);
+                $this->table_name, $this->row, $this->primary_key);
         }
 
         if ($stored) {

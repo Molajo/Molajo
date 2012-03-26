@@ -4,15 +4,68 @@
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 @link        https://mikewest.org/2010/02/an-accessible-pagination-pattern
 */
-.audible{left:-999em;position:absolute}
-ul{display:inline;position:relative}
-li{border-width:0;display:inline;margin:0 2px}
-li a,.prev,.next{border:1px solid #EEE;color:#369;padding:2px 5px;text-decoration:none}
-li a:hover,a:hover .prev,a:hover .next,li a:focus,a:focus .prev,a:focus .next{background:#0063DC;border-color:#FFF;color:#FFF}
-.prev{_left:-5em;left:-7em;position:absolute;top:-3px}
-.prev:before{content:"← "}
-.next{_right:-4em;position:absolute;right:-5em;top:-3px}
-.next:after{content:" →"}
-p{border:1px solid #EEE;color:#FF0084;display:inline;padding:2px 4px}
-ul,li,a,p{_zoom:1px}
-.prev,.next{_top:0}
+.audible {
+    left: -999em;
+    position: absolute
+}
+
+ul {
+    display: inline;
+    position: relative
+}
+
+li {
+    border-width: 0;
+    display: inline;
+    margin: 0 2px
+}
+
+li a, .prev, .next {
+    border: 1px solid #EEE;
+    color: #369;
+    padding: 2px 5px;
+    text-decoration: none
+}
+
+li a:hover, a:hover .prev, a:hover .next, li a:focus, a:focus .prev, a:focus .next {
+    background: #0063DC;
+    border-color: #FFF;
+    color: #FFF
+}
+
+.prev {
+    _left: -5em;
+    left: -7em;
+    position: absolute;
+    top: -3px
+}
+
+.prev:before {
+    content: "← "
+}
+
+.next {
+    _right: -4em;
+    position: absolute;
+    right: -5em;
+    top: -3px
+}
+
+.next:after {
+    content: " →"
+}
+
+p {
+    border: 1px solid #EEE;
+    color: #FF0084;
+    display: inline;
+    padding: 2px 4px
+}
+
+ul, li, a, p {
+    _zoom: 1px
+}
+
+.prev, .next {
+    _top: 0
+}

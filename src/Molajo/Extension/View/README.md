@@ -35,9 +35,9 @@ A Model retrieves data as instructed by the controller.
 
 Rowsets are collections of data retrieved by the Model at the instruction of the Controller.
 
-The Controller processes each rowset, one at a time in a loop, passing data into the View.
+The Controller processes each resultset, one at a time in a loop, passing data into the View.
 
-The View formats and displays data from the rowset.
+The View formats and displays data from the resultset.
 
 ### What is a row? ###
 
@@ -228,7 +228,7 @@ There are two options for using query results:
 
 #### To process the recordset within your view file, include the Custom.php view file. ####
 
-When Molajo finds a Custom.php file, it pushes the $this->rowset object into the file.
+When Molajo finds a Custom.php file, it pushes the $this->resultset object into the file.
 
 The view must handle it's own loop processing for the recordset.
 
@@ -309,7 +309,7 @@ Extension, Theme
 
 All rows
 
-    <?php echo '<pre>'; var_dump($this->rowset); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump($this->resultset); echo '</pre>';  ?>
 
 Single Row
 

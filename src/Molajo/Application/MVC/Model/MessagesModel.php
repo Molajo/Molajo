@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Application\MVC\Model;
 
@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Messages
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
@@ -48,7 +48,7 @@ Class MessagesModel extends Model
             return array();
         }
 
-        foreach($messages as $message) {
+        foreach ($messages as $message) {
             $row = new \stdClass();
             $row->content_text = $message['message'];
             $row->title = $message['type'];

@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Molajo
- * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * View
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -83,7 +83,7 @@ class ViewHelper
     public function __construct()
     {
 
-	}
+    }
 
     /**
      * _findPath
@@ -100,21 +100,21 @@ class ViewHelper
      * @return bool|string
      */
     public function findPath
-        ($view, $view_type, $extension_name, $extension_type, $theme_name)
+    ($view, $view_type, $extension_name, $extension_type, $theme_name)
     {
         /** initialise */
         $this->view_path = false;
-		$this->view = strtolower($view);
-		if (strtolower($view_type) == 'Page'
-			|| strtolower($view_type) == 'Wrap'
-		) {
-		} else {
-			$view_type = 'Template';
-		}
-		$this->view_type = strtolower($view_type);
-		$this->extension_name = strtolower($extension_name);
-		$this->extension_type = strtolower($extension_type);
-		$this->theme_name = strtolower($theme_name);
+        $this->view = strtolower($view);
+        if (strtolower($view_type) == 'Page'
+            || strtolower($view_type) == 'Wrap'
+        ) {
+        } else {
+            $view_type = 'Template';
+        }
+        $this->view_type = strtolower($view_type);
+        $this->extension_name = strtolower($extension_name);
+        $this->extension_type = strtolower($extension_type);
+        $this->theme_name = strtolower($theme_name);
 
         /** Remaining portion of path for all locations */
         $plus = '/View/' . $this->view_type . '/' . $this->view;
@@ -185,11 +185,11 @@ class ViewHelper
             $this->view_path_url = false;
         }
 
-		if ($found === false) {
-			return false;
-		} else {
-			return array($this->view_path, $this->view_path_url);
-		}
+        if ($found === false) {
+            return false;
+        } else {
+            return array($this->view_path, $this->view_path_url);
+        }
     }
 
     /**
@@ -219,12 +219,13 @@ class ViewHelper
      * @since 1.0
      */
     static public function getViewDefaultsApplication
-        ($type = 'template', $task = null, $id = 0)
+    ($type = 'template', $task = null, $id = 0)
     {
         $view = 0;
         if ($type == 'template') {
             if ($task == 'add' || $task == 'edit') {
-                $view = (int)Services::Configuration()->get('default_edit_template_view_id', 0);;
+                $view = (int)Services::Configuration()->get('default_edit_template_view_id', 0);
+                ;
 
             } else if ((int)$id == 0) {
                 $view = (int)Services::Configuration()->get('default_items_template_view_id', 0);
@@ -257,7 +258,7 @@ class ViewHelper
      * @since 1.0
      */
     static public function getViewDefaultsOther
-        ($type = 'template', $task = null, $id = 0, $parameters)
+    ($type = 'template', $task = null, $id = 0, $parameters)
     {
         $view = 0;
         if ($type == 'template') {
