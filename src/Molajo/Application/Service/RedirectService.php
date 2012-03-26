@@ -71,9 +71,9 @@ Class RedirectService
      */
     public function set($url = null, $code = 302)
     {
-        if (Services::Configuration()->get('sef', 1) == 1) {
+        if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
 
-            if (Services::Configuration()->get('sef_rewrite', 0) == 0) {
+            if (Services::Registry()->get('Configuration\\sef_rewrite', 0) == 0) {
                 $url = MOLAJO_BASE_URL
                     . MOLAJO_APPLICATION_URL_PATH
                     . 'index.php/' . $url;
@@ -83,7 +83,7 @@ Class RedirectService
                     . $url;
             }
 
-            if ((int)Services::Configuration()->get('sef_suffix', 0) == 1) {
+            if ((int)Services::Registry()->get('Configuration\\sef_suffix', 0) == 1) {
                 $url .= '.html';
             }
         }

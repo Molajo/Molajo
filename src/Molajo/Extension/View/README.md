@@ -279,7 +279,7 @@ To display all of the options available:
 
 To display one item:
 
-    <?php echo Services::Configuration()->get('sef'); ?>
+    <?php echo Services::Registry()->get('Configuration\\sef'); ?>
 
 ### User ###
 

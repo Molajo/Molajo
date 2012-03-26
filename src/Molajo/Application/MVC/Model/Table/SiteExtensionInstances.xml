@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<validations>
+    <filters>
+        <filter name="site_id" filter="int" null="0" default=""/>
+        <filter name="extension_instance_id" filter="int" null="0" default=""/>
+    </filters>
+    <fks>
+        <fk name="site_id"
+            source_id="id"
+            source_model="SitesModel"
+            required="1"
+                />
+        <fk name="application_id"
+            source_id="id"
+            source_model="SiteExtensionInstances"
+            required="1"
+                />
+    </fks>
+</validations>
+

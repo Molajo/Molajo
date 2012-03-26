@@ -89,7 +89,7 @@ abstract class AssetHelper
 
         } else if ((int)$asset_id == 0) {
 
-            if (Services::Configuration()->get('sef', 1) == 1) {
+            if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
                 if ($row->sef_request == $query_request) {
 
                 } else {
@@ -105,12 +105,12 @@ abstract class AssetHelper
             }
 
             if ($row->asset_id ==
-                Services::Configuration()->get('home_asset_id', 0)
+                Services::Registry()->get('Configuration\\home_asset_id', 0)
             ) {
                 if ($query_request == '') {
                 } else {
                     $row->redirect_to_id =
-                        Services::Configuration()->get('home_asset_id', 0);
+                        Services::Registry()->get('Configuration\\home_asset_id', 0);
                 }
             }
         }
@@ -159,13 +159,13 @@ abstract class AssetHelper
     public static function getURL($asset_id)
     {
         /** home */
-        if ($asset_id == Services::Configuration()->get('home_asset_id', 0)) {
+        if ($asset_id == Services::Registry()->get('Configuration\\home_asset_id', 0)) {
             return '';
         }
 
         $m = new AssetsModel();
 
-        if (Services::Configuration()->get('sef', 1) == 1) {
+        if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
             $m->query->select('a.' . $m->db->qn('sef_request'));
         } else {
             $m->query->select('a.' . $m->db->qn('request'));
@@ -190,14 +190,14 @@ abstract class AssetHelper
     public static function getRedirectURL($asset_id)
     {
         if ((int)$asset_id
-            == Services::Configuration()->get('home_asset_id', 0)
+            == Services::Registry()->get('Configuration\\home_asset_id', 0)
         ) {
             return '';
         }
 
         $m = new AssetsModel();
 
-        if (Services::Configuration()->get('sef', 1) == 0) {
+        if (Services::Registry()->get('Configuration\\sef', 1) == 0) {
             $m->query->select($m->db->qn('sef_request'));
         } else {
             $m->query->select($m->db->qn('request'));

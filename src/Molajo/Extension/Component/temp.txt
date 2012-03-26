@@ -16,7 +16,7 @@ search
 sites
 users (profiles)
 
-echo Services::Configuration()->get('custom_field1', '', 'custom');
+echo Services::Registry()->get('Configuration\\custom_field1', '', 'custom');
 
 MENU ITEMS and Components
 

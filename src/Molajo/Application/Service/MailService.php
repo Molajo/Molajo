@@ -128,7 +128,7 @@ Class MailService
      */
     public function send()
     {
-        if (Services::Configuration()->get('disable_sending', 1) == 1) {
+        if (Services::Registry()->get('Configuration\\disable_sending', 1) == 1) {
             return true;
         }
 
@@ -139,7 +139,7 @@ Class MailService
             return $results;
         }
 
-        $only_deliver_to = Services::Configuration()->get('only_deliver_to', '');
+        $only_deliver_to = Services::Registry()->get('Configuration\\only_deliver_to', '');
         if (trim($only_deliver_to) == '') {
         } else {
             $this->set('cc_email', array());
@@ -159,15 +159,15 @@ Class MailService
         $mail = $mailClass::getInstance();
 
         /** Set type of email */
-        switch (Services::Configuration()->get('mailer')) {
+        switch (Services::Registry()->get('Configuration\\mailer')) {
             case 'smtp':
                 $mail->useSMTP(
-                    Services::Configuration()->get('smtpauth'),
-                    Services::Configuration()->get('smtphost'),
-                    Services::Configuration()->get('smtpuser'),
-                    Services::Configuration()->get('smtppass'),
-                    Services::Configuration()->get('smtpsecure'),
-                    Services::Configuration()->get('smtpport')
+                    Services::Registry()->get('Configuration\\smtpauth'),
+                    Services::Registry()->get('Configuration\\smtphost'),
+                    Services::Registry()->get('Configuration\\smtpuser'),
+                    Services::Registry()->get('Configuration\\smtppass'),
+                    Services::Registry()->get('Configuration\\smtpsecure'),
+                    Services::Registry()->get('Configuration\\smtpport')
                 );
                 break;
 
@@ -255,7 +255,7 @@ Class MailService
 
         /** From Name */
         $name = 'from_name';
-        $value = $this->get('from_name', Services::Configuration()->get('site_name'));
+        $value = $this->get('from_name', Services::Registry()->get('Configuration\\site_name'));
         $dataType = 'char';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
@@ -286,7 +286,7 @@ Class MailService
 
         /** Subject */
         $name = 'subject';
-        $value = $this->get('subject', Services::Configuration()->get('site_name'));
+        $value = $this->get('subject', Services::Registry()->get('Configuration\\site_name'));
         $dataType = 'char';
         $results = $this->edit_and_filter_input($name, $value, $dataType);
         if ($results === false) {
@@ -419,7 +419,7 @@ Class MailService
                 $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
                 $type = MOLAJO_MESSAGE_TYPE_ERROR
             );
-            if (Services::Configuration()->get('debug', 0) == 1) {
+            if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
                 Services::Debug()->set('Services::mail Filter Failed' . ' ' . $message);
             }
         }

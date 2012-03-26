@@ -112,7 +112,7 @@ Class Application
         Services::Debug()
             ->set('Molajo::Services()->startServices() complete');
 
-        if (Services::Configuration()->get('force_ssl') > 0) {
+        if (Services::Registry()->get('Configuration\\force_ssl') > 0) {
             if ((Services::Request()->isSecure() === true)) {
             } else {
 
@@ -224,9 +224,10 @@ Class Application
             return $this;
         }
 
-        if (Services::Registry()->get('request\\mvc_controller') == 'display') {
-            $this->rendered_output = Molajo::Parse()
-                ->process($override_sequenceXML = null, $override_finalXML = null);
+        if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
+            $this->rendered_output =
+                Molajo::Parse()
+                    ->process($override_sequenceXML = null, $override_finalXML = null);
             Services::Debug()
                 ->set('Molajo::Parse() complete');
 
@@ -250,7 +251,8 @@ Class Application
      */
     public function response()
     {
-        if (Services::Redirect()->url === null && (int)Services::Redirect()->code == 0) {
+        if (Services::Redirect()->url === null
+            && (int)Services::Redirect()->code == 0) {
 
             Services::Debug()
                 ->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200');
@@ -262,6 +264,7 @@ Class Application
                 ->send();
 
         } else {
+
             Services::Debug()
                 ->set('Services::Redirect()->redirect()->send() for ' . Services::Redirect()->url . ' Code: ' . Services::Redirect()->code);
 
@@ -604,37 +607,37 @@ Class Application
     {
         if (defined('SITE_NAME')) {
         } else {
-            define('SITE_NAME', Services::Configuration()->get('site_name', SITE_ID));
+            define('SITE_NAME', Services::Registry()->get('Configuration\\site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
-            define('SITE_CACHE_FOLDER', Services::Configuration()->get('cache_path', SITE_FOLDER_PATH . '/cache'));
+            define('SITE_CACHE_FOLDER', Services::Registry()->get('Configuration\\cache_path', SITE_FOLDER_PATH . '/cache'));
         }
 
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
-            define('SITE_LOGS_FOLDER', Services::Configuration()->get('logs_path', SITE_FOLDER_PATH . '/logs'));
+            define('SITE_LOGS_FOLDER', Services::Registry()->get('Configuration\\logs_path', SITE_FOLDER_PATH . '/logs'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
-            define('SITE_MEDIA_FOLDER', Services::Configuration()->get('media_path', SITE_FOLDER_PATH . '/media'));
+            define('SITE_MEDIA_FOLDER', Services::Registry()->get('Configuration\\media_path', SITE_FOLDER_PATH . '/media'));
         }
 
         if (defined('SITE_MEDIA_URL')) {
         } else {
-            define('SITE_MEDIA_URL', MOLAJO_BASE_URL . Services::Configuration()->get('media_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media'));
+            define('SITE_MEDIA_URL', MOLAJO_BASE_URL . Services::Registry()->get('Configuration\\media_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
-            define('SITE_TEMP_FOLDER', Services::Configuration()->get('temp_path', SITE_FOLDER_PATH . '/temp'));
+            define('SITE_TEMP_FOLDER', Services::Registry()->get('Configuration\\temp_path', SITE_FOLDER_PATH . '/temp'));
         }
         if (defined('SITE_TEMP_URL')) {
         } else {
-            define('SITE_TEMP_URL', MOLAJO_BASE_URL . Services::Configuration()->get('temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
+            define('SITE_TEMP_URL', MOLAJO_BASE_URL . Services::Registry()->get('Configuration\\temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
         }
         return;
     }

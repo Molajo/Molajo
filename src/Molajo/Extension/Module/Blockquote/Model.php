@@ -45,7 +45,7 @@ Class ModuleBlockquoteModel extends DisplayModel
      */
     public function getData()
     {
-        $rows = Services::Registry()->get('request\\query_results');
+        $rows = Services::Registry()->get('Request\\query_results');
         if (count($rows) == 0) {
             return array();
         }

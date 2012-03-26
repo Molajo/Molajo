@@ -224,26 +224,26 @@ class ViewHelper
         $view = 0;
         if ($type == 'template') {
             if ($task == 'add' || $task == 'edit') {
-                $view = (int)Services::Configuration()->get('default_edit_template_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration\\default_edit_template_view_id', 0);
                 ;
 
             } else if ((int)$id == 0) {
-                $view = (int)Services::Configuration()->get('default_items_template_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration\\default_items_template_view_id', 0);
 
             } else {
-                $view = (int)Services::Configuration()->get('default_item_template_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration\\default_item_template_view_id', 0);
             }
         }
 
         if ($type == 'wrap') {
             if ($task == 'add' || $task == 'edit') {
-                $view = (int)Services::Configuration()->get('default_edit_wrap_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration\\default_edit_wrap_view_id', 0);
 
             } else if ((int)$id == 0) {
-                $view = (int)Services::Configuration()->get('default_items_wrap_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration\\default_items_wrap_view_id', 0);
 
             } else {
-                $view = (int)Services::Configuration()->get('default_item_wrap_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration\\default_item_wrap_view_id', 0);
             }
         }
         return $view;

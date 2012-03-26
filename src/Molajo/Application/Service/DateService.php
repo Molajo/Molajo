@@ -469,7 +469,7 @@ Class DateService
         //todo: amy fix user
 
         $server_or_user_UTC = 'SERVER_UTC';
-        $config = Services::Configuration();
+        //fix$config = Services::Configuration();
         $user = Services::User();
 
         // If a known filter is given use it.

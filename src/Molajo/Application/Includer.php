@@ -713,7 +713,7 @@ class Includer
      */
     protected function _loadViewMedia()
     {
-        $priority = Services::Configuration()->get('media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('Configuration\\media_priority_other_extension', 400);
 
         $file_path = $this->get('template_view_path');
         $url_path = $this->get('template_view_path_url');
@@ -746,7 +746,7 @@ class Includer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        if (Services::Configuration()->get('debug', 0) == 1) {
+        if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
             Services::Debug()->set(' ');
             Services::Debug()->set('Includer::_invokeMVC');
             Services::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');

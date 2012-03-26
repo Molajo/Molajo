@@ -81,7 +81,6 @@ Class UserService
      */
     protected function load()
     {
-
         $m = new $this->model ($this->id);
         $results = $m->load();
 

@@ -10,7 +10,7 @@ $defer = (int)$this->parameters->get('defer');
 if ($defer == 1) {
 } else {
 
-    if ((int)Services::Configuration()->get('html5', 1) == 1):
+    if ((int)Services::Registry()->get('Configuration\\html5', 1) == 1):
         $end = '>' . chr(10) . chr(13); ?>
     <!DOCTYPE html>
         <?php else :
@@ -22,7 +22,7 @@ if ($defer == 1) {
       lang="<?php echo Services::Language()->get('tag'); ?>">
 <head>
 <base href="<?php echo MOLAJO_BASE_URL . '"' . $end; ?>
-<?php if ((int)Services::Configuration()->get('html5', 1) == 1): ?>
+<?php if ((int)Services::Registry()->get('Configuration\\html5', 1) == 1): ?>
     <meta charset="UTF-8"<?php echo $end; ?>
     <?php else : ?>
     <meta http-equiv="Content-Type" content="<?php echo $page_mimetype; ?>; charset=UTF-8"<?php echo $end; ?>

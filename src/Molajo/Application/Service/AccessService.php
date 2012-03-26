@@ -153,7 +153,7 @@ Class AccessService
                 ->setHeader('Status', '403 Not Authorised', 'true'
             );
             Services::Message()->set(
-                Services::Configuration()->get('error_403_message', 'Not Authorised.'),
+                Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
                 MOLAJO_MESSAGE_TYPE_ERROR,
                 403
             );
@@ -237,7 +237,7 @@ Class AccessService
         $action_id = (int)$this->action_to_action_id->get($action);
 
         if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-            if (Services::Configuration()->get('debug', 0) == 1) {
+            if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
                 Services::Debug()->set('AccessServices::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
         }
@@ -259,7 +259,7 @@ Class AccessService
         if ($count > 0) {
             return true;
         } else {
-            if (Services::Configuration()->get('debug', 0) == 1) {
+            if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
                 Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
             }
             return false;
@@ -402,7 +402,7 @@ Class AccessService
      */
     public function setHTMLFilter()
     {
-        $groups = Services::Configuration()->get('disable_filter_for_groups');
+        $groups = Services::Registry()->get('Configuration\\disable_filter_for_groups');
         $groupArray = explode(',', $groups);
         $userGroups = Services::Registry()->get('User\\groups');
 

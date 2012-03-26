@@ -78,62 +78,81 @@ Class ConfigurationService
      */
     public function __construct($configuration_file = null)
     {
+        $this->configuration = Services::Registry()->initialise();
+
+        /** Site Configuration: php file */
         $siteData = $this->getSite($configuration_file);
         foreach ($siteData as $key => $value) {
-            echo $key.' '.$value.'<br />';
-            Services::Registry()->set('Configuration\\' . $key, $value);
+            $this->set($key, $value);
         }
 
-        $test = Services::Registry()->getArray('Configuration');
+        /** Application Table entry for each application - parameters field has config */
+        $appConfig = $this->getApplicationInfo();
 
-        $results = $this->getApplicationInfo();
+        $this->metadata = Services::Registry()->initialise();
+        $this->metadata->loadString($appConfig->metadata);
 
-        $v = simplexml_load_file(MOLAJO_APPLICATIONS_MVC . '/Model/Table/Applications.xml');
+        $this->custom_fields = Services::Registry()->initialise();
+        $this->custom_fields->loadString($appConfig->custom_fields);
 
-        echo '<pre>';
-        var_dump($test);
-        echo '</pre>';
-        die;
+        $parameters = Services::Registry()->initialise();
+        $parameters->loadString($appConfig->parameters);
 
-        $this->registry('ApplicationCustomFields\\', $results, 'custom_fields', 'custom_field', $v);
-        $this->registry('ApplicationMetadata\\', $results, 'metadata', 'meta', $v);
-        $this->registry('Configuration\\', $results, 'parameters', 'parameter', $v);
+        // todo: amy check this after the interface is working and not test data
+        $parameters = substr($appConfig->parameters, 1, strlen($appConfig->parameters) - 2);
+        $parameters = substr($parameters, 0, strlen($parameters) - 1);
+        $parmArray = array();
+        $parmArray = explode(',', $parameters);
+        foreach ($parmArray as $entry) {
+            $pair = explode(':', $entry);
+            $key = substr(trim($pair[0]), 1, strlen(trim($pair[0])) - 2);
+
+            if (trim($pair[0]) == '') {
+            } else {
+                $value = substr(trim($pair[1]), 1, strlen(trim($pair[1])) - 2);
+                $this->set($key, $value);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * registry
+     * get
      *
-     * @param $namespace
-     * @param $source
-     * @param $field_group
-     * @param $field_name
-     * @param $v
+     * Retrieves a parameter value from the site/application configuration file
+     *
+     * Example usage:
+     * $row->title = Services::Registry()->get('Configuration\\site_title', 'Molajo');
+     *
+     * @param  string  $key
+     * @param  string  $default
+     *
+     * @return  mixed
+     * @since   1.0
      */
-    protected function registry($namespace, $source, $field_group, $field_name, $v)
+    public function get($key, $default = null)
     {
-        $registry = Services::Registry()->initialise();
-        $registry->loadJSON($source[$field_group], array());
+        return $this->configuration->get($key, $default);
+    }
 
-        if (isset($v->$field_group->$field_name)) {
-            foreach ($v->$field_group->$field_name as $cf) {
-
-                $name = (string)$cf['name'];
-                $dataType = (string)$cf['filter'];
-                $null = (string)$cf['null'];
-                $default = (string)$cf['default'];
-                $values = (string)$cf['values'];
-
-                if ($default == '') {
-                    $val = $registry->get($name, null);
-                } else {
-                    $val = $registry->get($name, $default);
-                }
-
-                Services::Registry()->set($namespace . $name, $val);
-            }
-        }
+    /**
+     * set
+     *
+     * Sets a value in the Site/Application Configuration
+     *
+     * Example usage:
+     * Services::Configuration()->set('sef', 1);
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->configuration->set($key, $value);
     }
 
     /**

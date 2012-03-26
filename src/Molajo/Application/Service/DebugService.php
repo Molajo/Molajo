@@ -60,7 +60,7 @@ Class DebugService
     public function __construct()
     {
         $config = Services::Registry()->initialise();
-        $this->on = (int)Services::Configuration()->get('debug', 0);
+        $this->on = (int)Services::Registry()->get('Configuration\\debug', 0);
 
         return $this;
     }

@@ -150,26 +150,26 @@ Class Parse
         /** Theme Parameters */
         Services::Registry()->create('theme');
 
-        $themeParameters = Services::Registry()->get('request\\theme_parameters');
+        $themeParameters = Services::Registry()->get('Request\\theme_parameters');
         var_dump($themeParameters);
         die;
         Services::Registry()->loadArray('theme',
             array(
-                'theme' => Services::Registry()->get('request\\theme_name'),
-                'theme_path' => Services::Registry()->get('request\\theme_path') . '/' . 'index.php',
-                'page' => Services::Registry()->get('request\\page_view_include'),
-                'parameters' => Services::Registry()->get('request\\theme_parameters')
+                'theme' => Services::Registry()->get('Request\\theme_name'),
+                'theme_path' => Services::Registry()->get('Request\\theme_path') . '/' . 'index.php',
+                'page' => Services::Registry()->get('Request\\page_view_include'),
+                'parameters' => Services::Registry()->get('Request\\theme_parameters')
             )
         );
         echo 'done';
-        $helperFile = Services::Registry()->get('request\\theme_path')
+        $helperFile = Services::Registry()->get('Request\\theme_path')
             . '/helpers/theme.php';
 
         if (file_exists($helperFile)) {
             require_once $helperFile;
 
             $helperClass = 'Molajo' .
-                ucfirst(Services::Registry()->get('request\\theme_name'))
+                ucfirst(Services::Registry()->get('Request\\theme_name'))
                 . 'ThemeHelper';
         }
 

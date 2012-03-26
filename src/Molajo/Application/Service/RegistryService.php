@@ -105,7 +105,7 @@ Class RegistryService
      * Sets a Parameter property for a specific item and parameter set
      *
      * Usage:
-     * Services::Registry()->set('request\\parameter_name', $value);
+     * Services::Registry()->set('Request\\parameter_name', $value);
      *
      * @param   string  $key
      * @param   mixed   $value
@@ -129,7 +129,7 @@ Class RegistryService
      * Returns a Parameter property for a specific item and parameter set
      *
      * Usage:
-     * Services::Registry()->get('request\\parameter_name');
+     * Services::Registry()->get('Request\\parameter_name');
      *
      * @param   string  $key
      * @param   mixed   $default
@@ -150,7 +150,7 @@ Class RegistryService
      * Sets a Parameter property for a specific item and parameter set
      *
      * Usage:
-     * Services::Registry()->set('request\\parameter_name', $value);
+     * Services::Registry()->set('Request\\parameter_name', $value);
      *
      * @param   string  $key
      * @param   mixed   $value
