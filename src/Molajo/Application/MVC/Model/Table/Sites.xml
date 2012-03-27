@@ -11,11 +11,11 @@
         <filter name="parameters" filter="" null="1" default=""/>
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
-    <helpers>
-        <helper name="updateCustomFields"/>
-        <helper name="updateMetadata"/>
-        <helper name="updateParameters"/>
-    </helpers>
+    <triggers>
+        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0" />
+    </triggers>
     <fks>
         <fk name="asset_type_id"
             source_id="id"

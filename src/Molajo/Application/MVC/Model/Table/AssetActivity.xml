@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<validations>
+    <filters>
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="asset_id" filter="int" null="0" default="" values=""/>
+        <filter name="user_id" filter="int" null="0" default="0" values=""/>
+        <filter name="rating" filter="int" null="1" default="" values=""/>
+        <filter name="activity_datetime" filter="datetime" null="0" default="" />
+        <filter name="ip_address" filter="char" null="0" default=""/>
+        <filter name="custom_fields" filter="" null="1" default=""/>
+    </filters>
+
+    <triggers>
+        <trigger name="triggerIPAddress" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="Language" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="ApplicationViews" c="0,0" r="0,0" u="0,0" d="0,0" />
+    </triggers>
+
+    <fks>
+        <fk name="asset_type_id"
+            source_id="id"
+            source_model="MolajoAssetTypesModel"
+            required="1"
+            message="APPLICATIONS_FK_ASSET_TYPE"
+                />
+        <fk name="home_asset_id"
+            source_id="parameters\\home_asset_id"
+            source_model="MolajoAssetTypesModel"
+            required="1"
+            message="APPLICATIONS_FK_ASSET_TYPE"
+                />
+    </fks>
+</validations>
+

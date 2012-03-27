@@ -10,14 +10,14 @@
         <filter name="parameters" filter="" null="1" default=""/>
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
-    <helpers>
-        <helper name="updateContentText"/>
-        <helper name="updateCustomFields"/>
-        <helper name="updateMetadata"/>
-        <helper name="updateParameters"/>
-        <helper name="updateLanguage" />
-        <helper name="updateApplicationViews" />
-    </helpers>
+    <triggers>
+        <trigger name="ContentText" c="0,0" r="0,0" u="0,0" d="0,0"/>
+        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0"/>
+        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0"/>
+        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0"/>
+        <trigger name="Language" c="0,0" r="0,0" u="0,0" d="0,0"/>
+        <trigger name="ApplicationViews" c="0,0" r="0,0" u="0,0" d="0,0"/>
+    </triggers>
     <fks>
         <fk name="asset_type_id"
             source_id="id"
@@ -38,7 +38,7 @@
     <parameters>
         <parameter name="application_name" filter="char" null="1" default="" values=""/>
         <parameter name="html_display_filter" filter="binary" null="1" default="1" values="0,1"/>
-        <parameter name="caching"  filter="binary" null="1" default="1" values="0,1"/>
+        <parameter name="caching" filter="binary" null="1" default="1" values="0,1"/>
         <parameter name="cache_time" filter="integer" null="1" default="15" values=""/>
         <parameter name="cache_handler" filter="char" null="1" default="" values=""/>
         <parameter name="sef" filter="binary" null="1" default="1" values="0,1"/>
