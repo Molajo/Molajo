@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<validations>
+    <filters>
+        <filter name="asset_id" filter="int" null="0" default=""/>
+        <filter name="category_id" filter="int" null="0" default=""/>
+    </filters>
+    <fks>
+        <fk name="asset_id"
+            source_id="id"
+            source_model="AssetsModel"
+            required="1"
+                />
+        <fk name="category_id"
+            source_id="id"
+            source_model="ContentModel"
+            required="1"
+                />
+    </fks>
+</validations>
+
