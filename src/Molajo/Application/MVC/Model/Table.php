@@ -9,13 +9,13 @@ namespace Molajo\Application\MVC\Model;
 defined('MOLAJO') or die;
 
 /**
- * Action Types
+ * Actions
  *
  * @package   Molajo
  * @subpackage  Model
  * @since       1.0
  */
-Class ActionTypesModel extends DisplayModel
+Class Table extends DisplayModel
 {
     /**
      * __construct
@@ -25,10 +25,10 @@ Class ActionTypesModel extends DisplayModel
      * @param  $id
      * @since  1.0
      */
-    public function __construct($id = null)
+    public function __construct($table = null, $id = null)
     {
         $this->name = get_class($this);
-        $this->table_name = '#__action_types';
+        $this->table_name = '#__actions';
         $this->primary_key = 'id';
 
         return parent::__construct($id);

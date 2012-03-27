@@ -2,13 +2,13 @@
 <defines>
     <define name="MOLAJO_STOP_LOOP" value="100"/>
 
-    <define name="MOLAJO_ACTION_TYPE_LOGIN" value="login"/>
-    <define name="MOLAJO_ACTION_TYPE_CREATE" value="create"/>
-    <define name="MOLAJO_ACTION_TYPE_VIEW" value="view"/>
-    <define name="MOLAJO_ACTION_TYPE_EDIT" value="edit"/>
-    <define name="MOLAJO_ACTION_TYPE_PUBLISH" value="publish"/>
-    <define name="MOLAJO_ACTION_TYPE_DELETE" value="delete"/>
-    <define name="MOLAJO_ACTION_TYPE_ADMIN" value="admin"/>
+    <define name="MOLAJO_ACTION_LOGIN" value="login"/>
+    <define name="MOLAJO_ACTION_CREATE" value="create"/>
+    <define name="MOLAJO_ACTION_VIEW" value="view"/>
+    <define name="MOLAJO_ACTION_EDIT" value="edit"/>
+    <define name="MOLAJO_ACTION_PUBLISH" value="publish"/>
+    <define name="MOLAJO_ACTION_DELETE" value="delete"/>
+    <define name="MOLAJO_ACTION_ADMIN" value="admin"/>
 
     <define name="MOLAJO_ASSET_TYPE_BASE_BEGIN" value="0"/>
     <define name="MOLAJO_ASSET_TYPE_BASE_CORE" value="1"/>

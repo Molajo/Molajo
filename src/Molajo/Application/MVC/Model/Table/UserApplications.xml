@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="UserApplications">
+    <filters>
+        <filter name="user_id" filter="int" null="0" default=""/>
+        <filter name="application_id" filter="int" null="0" default=""/>
+    </filters>
+    <fks>
+        <fk name="user_id" source_id="id" source_model="Users" required="1" />
+        <fk name="application_id" source_id="id" source_model="Applications" required="1" />
+    </fks>
+</model>
+
