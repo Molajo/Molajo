@@ -10,9 +10,9 @@
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
     <triggers>
-        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="CustomFields"  />
+        <trigger name="Metadata"  />
+        <trigger name="Parameters"  />
     </triggers>
 </model>
 

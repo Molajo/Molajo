@@ -10,12 +10,11 @@
         <filter name="custom_fields" filter="" null="1" default=""/>
     </filters>
     <triggers>
-        <trigger name="triggerIPAddress" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Language" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="ApplicationViews" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="IPAddress" />
+        <trigger name="CustomFields"  />
+        <trigger name="Metadata"  />
+        <trigger name="Parameters"  />
+        <trigger name="Language"  />
     </triggers>
     <fks>
         <fk name="asset_id" source_id="id" source_model="Asset" required="1" />

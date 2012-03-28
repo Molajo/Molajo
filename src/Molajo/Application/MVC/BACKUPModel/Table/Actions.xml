@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model name="Actions">
-<filters>
-    <filter name="id" filter="" null="0" default="" identity="1" />
-    <filter name="title" filter="char" null="0" default="" unique="1"/>
-    <filter name="protected" filter="boolean" null="0" default="1" />
-</filters>
-</model>

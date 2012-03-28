@@ -22,11 +22,11 @@
         <trigger name="Username"/>
         <trigger name="Email"/>
         <trigger name="Password"/>
-        <trigger name="ContentText" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Dates"/>
-        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="ContentText"  />
+        <trigger name="DateFields"/>
+        <trigger name="CustomFields"  />
+        <trigger name="Metadata"  />
+        <trigger name="Parameters"  />
     </triggers>
     <fks>
         <fk name="asset_type_id"

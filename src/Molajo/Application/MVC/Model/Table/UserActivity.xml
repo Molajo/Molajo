@@ -8,7 +8,7 @@
         <filter name="activity_datetime" filter="datetime" null="0" default=""/>
     </filters>
     <triggers>
-        <trigger name="Actions" c="0,0" r="0,0" u="0,0" d="1,1"/>
+        <trigger name="Action" />
     </triggers>
     <fks>
         <fk name="user_id" source_id="id" source_model="Users" required="1" />

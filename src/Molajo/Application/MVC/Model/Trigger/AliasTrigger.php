@@ -9,15 +9,13 @@ namespace Molajo\Model\Trigger;
 defined('MOLAJO') or die;
 
 /**
- * Trigger
- *
- * Base class for Model Triggers
+ * Alias
  *
  * @package     Molajo
- * @subpackage  Model
+ * @subpackage  Trigger
  * @since       1.0
  */
-class Trigger
+class AliasTrigger extends Trigger
 {
     /**
      * __construct

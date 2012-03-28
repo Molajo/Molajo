@@ -45,10 +45,10 @@ $s->register();
 /** Molajo namespaces */
 $s->registerNamespace('Molajo', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\Helper', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\Controller', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\Model', MOLAJO_BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC\\Model\\Trigger', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\View', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\Service', MOLAJO_BASE_FOLDER);
 $s->registerNamespace('Molajo\\Common', MOLAJO_BASE_FOLDER);

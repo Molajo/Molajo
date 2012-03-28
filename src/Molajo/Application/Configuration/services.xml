@@ -22,4 +22,5 @@
     <service>Security</service>
     <service>Url</service>
     <service>Text</service>
+    <service>Broadcast</service>
 </services>

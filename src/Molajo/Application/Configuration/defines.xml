@@ -51,13 +51,6 @@
     <define name="MOLAJO_ASSET_TYPE_CATEGORY_TAG" value="3500"/>
     <define name="MOLAJO_ASSET_TYPE_CATEGORY_END" value="3999"/>
 
-    <define name="MOLAJO_ASSET_TYPE_CONTENT_BEGIN" value="10000"/>
-    <define name="MOLAJO_ASSET_TYPE_CONTENT_ARTICLE" value="10000"/>
-    <define name="MOLAJO_ASSET_TYPE_CONTENT_CONTACT" value="20000"/>
-    <define name="MOLAJO_ASSET_TYPE_CONTENT_COMMENT" value="30000"/>
-    <define name="MOLAJO_ASSET_TYPE_CONTENT_MEDIA" value="40000"/>
-    <define name="MOLAJO_ASSET_TYPE_CONTENT_END" value="999999"/>
-
     <define name="MOLAJO_SYSTEM_GROUP_PUBLIC" value="1"/>
     <define name="MOLAJO_SYSTEM_GROUP_GUEST" value="2"/>
     <define name="MOLAJO_SYSTEM_GROUP_REGISTERED" value="3"/>

@@ -21,7 +21,7 @@
                 <column name="created_by"/>
                 <column name="start_publishing_datetime"/>
                 <column name="visits"/>
-                <column name="Language" c="0,0" r="0,0" u="0,0" d="0,0" />
+                <column name="Language"  />
             </columns>
         </fieldset>
         <include fieldset="advanced"/>

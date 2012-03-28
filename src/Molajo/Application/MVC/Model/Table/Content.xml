@@ -37,15 +37,15 @@
         <filter name="ordering" filter="int" null="0" default="0"/>
     </filters>
     <triggers>
-        <trigger name="Alias" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="AssetTypeId" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="ContentText" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Dates" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="User" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Status" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="CustomFields" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Metadata" c="0,0" r="0,0" u="0,0" d="0,0" />
-        <trigger name="Parameters" c="0,0" r="0,0" u="0,0" d="0,0" />
+        <trigger name="Alias"  />
+        <trigger name="AssetTypeId"  />
+        <trigger name="ContentText"  />
+        <trigger name="DateFields"  />
+        <trigger name="UserFields"  />
+        <trigger name="Status"  />
+        <trigger name="CustomFields"  />
+        <trigger name="Metadata"  />
+        <trigger name="Parameters"  />
     </triggers>
     <fks>
         <fk name="asset_type_id" source_id="id" source_model="AssetTypes" required="1" />
