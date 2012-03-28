@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class BroadcastService
+Class BroadcastService extends BaseService
 {
     /**
      * Static instance

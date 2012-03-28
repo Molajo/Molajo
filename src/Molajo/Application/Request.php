@@ -26,7 +26,7 @@ defined('MOLAJO') or die;
  * @subpackage Request
  * @since      1.0
  */
-Class Request
+Class Request extends Molajo
 {
     /**
      * $instance

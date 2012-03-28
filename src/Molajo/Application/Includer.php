@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Application
  * @since       1.0
  */
-class Includer
+class Includer extends Molajo
 {
     /**
      * $name

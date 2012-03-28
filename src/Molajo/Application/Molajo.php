@@ -67,6 +67,76 @@ class Molajo
     protected static $request_service = null;
 
     /**
+     * Default code if lookup value does not exist
+     *
+     * @var    integer  constant
+     * @since  1.0
+     */
+    const DEFAULT_CODE = 100000;
+
+    /**
+     * Default message if no message is provided
+     *
+     * @var    string  Constant
+     * @since  12.1
+     */
+    const DEFAULT_MESSAGE = 'Undefined Message';
+
+
+    /**
+     * Return message given message code
+     *
+     * @param   string  $code  Numeric value associated with message
+     *
+     * @return  mixed  Array or String
+     *
+     * @since   12.1
+     */
+    public function getMessage($code = 0)
+    {
+        $message = array(
+            300100 => 'Invalid key of type. Expected simple.',
+            300200 => 'The mcrypt extension is not available.',
+            300300 => 'Invalid JCryptKey used with Mcrypt decryption.',
+            300400 => 'Invalid JCryptKey used with Mcrypt encryption.',
+            300500 => 'Invalid JCryptKey used with Simple decryption.',
+            300600 => 'Invalid JCryptKey used with Simple encryption.',
+        );
+
+        if ($code == 0) {
+            return $message;
+        }
+
+        if (isset($message[$code])) {
+            return $message[$code];
+        }
+
+        return self::DEFAULT_MESSAGE;
+    }
+
+    /**
+     * Return code given message
+     *
+     * @param   string  $code  Numeric value associated with message
+     *
+     * @return  mixed  Array or String
+     *
+     * @since   12.1
+     */
+    public function getMessageCode($message = null)
+    {
+        $messageArray = self::get(0);
+
+        $code = array_search($message, $messageArray);
+
+        if ((int)$code == 0) {
+            $code = self::DEFAULT_CODE;
+        }
+
+        return $code;
+    }
+
+    /**
      * Molajo::Application
      *
      * @static
@@ -79,7 +149,9 @@ class Molajo
         } else {
             self::$application = Application::getInstance();
         }
-
+        if (!is_callable('mcrypt_encrypt')) {
+            throw new RuntimeException(JCryptMessage::get(300200), 300200);
+        }
         return self::$application;
     }
 
@@ -87,7 +159,8 @@ class Molajo
      * Molajo::Services
      *
      * @static
-     * @return  Services
+     * @return  null|object
+     * @throws  InvalidArgumentException
      * @since   1.0
      */
     public static function Services()
@@ -96,7 +169,12 @@ class Molajo
         } else {
             self::$services = Services::getInstance();
         }
-        return self::$services;
+
+        if (self::$services) {
+            return self::$services;
+        } else {
+            throw new InvalidArgumentException(JCryptMessage::get(300600), 300600);
+        }
     }
 
     /**

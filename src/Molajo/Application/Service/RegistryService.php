@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since        1.0
  */
-Class RegistryService
+Class RegistryService extends BaseService
 {
     /**
      * @instance

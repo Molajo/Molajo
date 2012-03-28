@@ -50,7 +50,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-class FilesystemService
+class FilesystemService  extends BaseService
 {
     /**
      * Static instance

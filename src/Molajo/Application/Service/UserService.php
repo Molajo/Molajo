@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class UserService
+Class UserService extends BaseService
 {
     /**
      * Instance

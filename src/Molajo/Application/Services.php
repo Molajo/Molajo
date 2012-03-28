@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class Services
+Class Services extends Molajo
 {
     /**
      * Static instance

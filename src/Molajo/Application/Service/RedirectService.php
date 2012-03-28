@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @subpackage  Services
  * @since           1.0
  */
-Class RedirectService
+Class RedirectService extends BaseService
 {
     /**
      * Response instance

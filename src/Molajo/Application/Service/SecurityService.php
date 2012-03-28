@@ -21,7 +21,7 @@ defined('MOLAJO') or die;
  *
  * http://docs.joomla.org/Secure_coding_guidelines
  */
-Class SecurityService
+Class SecurityService extends BaseService
 {
     /**
      * Instance

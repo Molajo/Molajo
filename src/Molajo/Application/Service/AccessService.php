@@ -7,10 +7,7 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
-use Molajo\Application\MVC\Model\ActionTypesModel;
-use Molajo\Application\MVC\Model\SiteApplicationsModel;
-use Molajo\Application\MVC\Model\GroupPermissionsModel;
-use Molajo\Application\MVC\Model\UserApplicationsModel;
+use Molajo\Application\MVC\Model\TableModel;
 
 defined('MOLAJO') or die;
 
@@ -21,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class AccessService
+Class AccessService extends BaseService
 {
     /**
      * Static instance

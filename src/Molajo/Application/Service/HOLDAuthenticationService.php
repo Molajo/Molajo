@@ -33,7 +33,7 @@ define('JAUTHENTICATE_STATUS_FAILURE', 4);
  * @subpackage  User
  * @since       11.1
  */
-Class AuthenticationService
+Class AuthenticationService extends BaseService
 {
     // Shared success status
     /**

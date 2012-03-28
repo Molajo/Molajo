@@ -158,24 +158,20 @@ class Model
     public $id = 0;
 
     /**
-     * $task_request
+     * Default code if lookup value does not exist
      *
-     * Processing instructions for the MVC set by the renderer
-     *
-     * @var        Registry
-     * @since      1.0
+     * @var    integer  constant
+     * @since  1.0
      */
-    public $task_request;
+    const DEFAULT_CODE = 300000;
 
     /**
-     * $parameters
+     * Default message if no message is provided
      *
-     * Parameters
-     *
-     * @var        Registry
-     * @since      1.0
+     * @var    string  Constant
+     * @since  12.1
      */
-    public $parameters;
+    const DEFAULT_MESSAGE = 'Undefined Message';
 
     /**
      * __construct
@@ -218,6 +214,59 @@ class Model
         }
          */
         return $this;
+    }
+
+    /**
+     * Return message given message code
+     *
+     * @param   string  $code  Numeric value associated with message
+     *
+     * @return  mixed  Array or String
+     *
+     * @since   12.1
+     */
+    public function getMessage($code = 0)
+    {
+        $message = array(
+            300100 => 'Invalid key of type. Expected simple.',
+            300200 => 'The mcrypt extension is not available.',
+            300300 => 'Invalid JCryptKey used with Mcrypt decryption.',
+            300400 => 'Invalid JCryptKey used with Mcrypt encryption.',
+            300500 => 'Invalid JCryptKey used with Simple decryption.',
+            300600 => 'Invalid JCryptKey used with Simple encryption.',
+        );
+
+        if ($code == 0) {
+            return $message;
+        }
+
+        if (isset($message[$code])) {
+            return $message[$code];
+        }
+
+        return self::DEFAULT_MESSAGE;
+    }
+
+    /**
+     * Return code given message
+     *
+     * @param   string  $code  Numeric value associated with message
+     *
+     * @return  mixed  Array or String
+     *
+     * @since   12.1
+     */
+    public function getMessageCode($message = null)
+    {
+        $messageArray = self::get(0);
+
+        $code = array_search($message, $messageArray);
+
+        if ((int)$code == 0) {
+            $code = self::DEFAULT_CODE;
+        }
+
+        return $code;
     }
 
     /**
@@ -372,12 +421,9 @@ class Model
      */
     public function getCustomfieldFieldNames()
     {
-
         if ($this->name == '') {
             return array();
         }
-
-
     }
 
     /**
@@ -390,12 +436,9 @@ class Model
      */
     public function getMetadataFieldNames()
     {
-
         if ($this->name == '') {
             return array();
         }
-
-
     }
 
     /**
@@ -408,12 +451,9 @@ class Model
      */
     public function getParameterFieldNames()
     {
-
         if ($this->name == '') {
             return array();
         }
-
-
     }
 
     /**
@@ -838,5 +878,4 @@ class Model
     {
         return $this->pagination;
     }
-
 }
