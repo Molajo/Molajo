@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="articles">
+    <model name="Articles" table="#__content" primary_key="id">
+        <filters extend="Content">
+        </filters>
+        <triggers extend="Content">
+        </triggers>
+        <fks extend="Content">
+        </fks>
+    </model>
+    <acl extend="Global">
+    </acl>
+    <options>
+
+    </options>
+</component>
+

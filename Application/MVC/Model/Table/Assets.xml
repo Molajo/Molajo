@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Assets">
+    <filters>
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="asset_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="source_id" filter="int" null="0" default="" values=""/>
+        <filter name="routable" filter="boolean" null="0" default="0"/>
+        <filter name="sef_request" filter="char" null="0" default=" "/>
+        <filter name="request" filter="char" null="0" default=" "/>
+        <filter name="request_option" filter="char" null="1" default=" "/>
+        <filter name="request_model" filter="char" null="1" default=" "/>
+        <filter name="redirect_to_id" filter="int" null="1" default=""/>
+        <filter name="view_group_id" filter="int" null="1" default=""/>
+        <filter name="primary_category_id" filter="int" null="1" default=""/>
+    </filters>
+    <fks>
+        <fk name="asset_type_id" source_id="id" source_model="AssetTypes" required="1" />
+        <fk name="source_id" source_id="id" source_model="Content" required="1" />
+        <fk name="redirect_to_id" source_id="id" source_model="Assets" required="1" />
+        <fk name="view_group_id" source_id="id" source_model="GroupViewGroups" required="1" />
+        <fk name="primary_category_id" source_id="id" source_model="AssetCategories" required="1" />
+    </fks>
+</model>
+

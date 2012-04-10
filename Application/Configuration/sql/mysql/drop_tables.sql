@@ -1,0 +1,26 @@
+DROP TABLE IF EXISTS `molajo_asset_categories` ;
+DROP TABLE IF EXISTS `molajo_group_permissions` ;
+DROP TABLE IF EXISTS `molajo_view_group_permissions` ;
+DROP TABLE IF EXISTS `molajo_user_view_groups` ;
+DROP TABLE IF EXISTS `molajo_group_view_groups` ;
+DROP TABLE IF EXISTS `molajo_view_groups` ;
+DROP TABLE IF EXISTS `molajo_user_groups` ;
+DROP TABLE IF EXISTS `molajo_user_applications` ;
+DROP TABLE IF EXISTS `molajo_sessions` ;
+DROP TABLE IF EXISTS `molajo_application_extension_instances` ;
+DROP TABLE IF EXISTS `molajo_site_extension_instances`;
+DROP TABLE IF EXISTS `molajo_site_applications` ;
+DROP TABLE IF EXISTS `molajo_user_activity` ;
+DROP TABLE IF EXISTS `molajo_users` ;
+DROP TABLE IF EXISTS `molajo_content` ;
+DROP TABLE IF EXISTS `molajo_sites` ;
+DROP TABLE IF EXISTS `molajo_asset_activity` ;
+DROP TABLE IF EXISTS `molajo_assets` ;
+DROP TABLE IF EXISTS `molajo_extension_options` ;
+DROP TABLE IF EXISTS `molajo_extension_instances` ;
+DROP TABLE IF EXISTS `molajo_extensions` ;
+DROP TABLE IF EXISTS `molajo_extension_sites`;
+DROP TABLE IF EXISTS `molajo_action_types` ;
+DROP TABLE IF EXISTS `molajo_applications` ;
+DROP TABLE IF EXISTS `molajo_asset_types` ;
+

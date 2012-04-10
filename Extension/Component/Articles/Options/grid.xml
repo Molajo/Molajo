@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <component>
+        <criterion>
+            <criteria name="search"/>
+            <criteria name="author"/>
+            <criteria name="category"/>
+            <criteria name="group"/>
+            <criteria name="language"/>
+            <criteria name="status"/>
+            <criteria name="tag"/>
+        </criterion>
+        <selectfields>
+            <select name="title"/>
+            <select name="status"/>
+            <select name="featured"/>
+            <select name="primary_category"/>
+            <select name="ordering"/>
+            <select name="view_group_id"/>
+            <select name="created_by"/>
+            <select name="start_publishing_datetime"/>
+            <select name="visits"/>
+            <select name="language"/>
+        </selectfields>
+    </component>
+    <toolbar>
+        <title>Articles Manager</title>
+        <buttons>
+            <button>new</button>
+            <button>edit</button>
+            <button>publish</button>
+            <button>feature</button>
+            <button>archive</button>
+            <button>checkin</button>
+            <button>restore</button>
+            <button>delete</button>
+            <button>trash</button>
+            <button>options</button>
+        </buttons>
+    </toolbar>
+    <submenuitems>
+        <submenuitem name="items" display="Items"/>
+        <submenuitem name="categories" display="Categories"/>
+        <submenuitem name="tags" display="Tags"/>
+        <submenuitem name="featured" display="Featured"/>
+        <submenuitem name="drafts" display="Drafts"/>
+        <submenuitem name="trash" display="Trash"/>
+    </submenuitems>
+
+    <paginationoptions>
+        <paginationoption name="displayrows" display="1" rows="10"/>
+        <paginationoption name="direction-buttons" display="1"/>
+        <paginationoption name="buttons" display="1"/>
+    </paginationoptions>
+    <batchoptions>
+        <batchoption name="display" value="1"/>
+    </batchoptions>
+</configuration>

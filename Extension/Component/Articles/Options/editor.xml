@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <title>Article Manager</title>
+    <subtitle>
+        <add>Add New Article</add>
+        <edit>Edit Article</edit>
+    </subtitle>
+    <buttonbar>
+        <add>
+            <button>save</button>
+            <button>save_and_close</button>
+            <button>save_and_new</button>
+            <button>cancel</button>
+            <button>help</button>
+        </add>
+        <edit>
+            <button>save</button>
+            <button>save_and_close</button>
+            <button>save_and_new</button>
+            <button>save_as_copy</button>
+            <button>close</button>
+            <button>help</button>
+        </edit>
+    </buttonbar>
+    <sections>
+        <section name="editor">
+            <editor_buttons>
+                <button>article_link</button>
+                <button>media</button>
+                <button>page_break</button>
+                <button>read_more</button>
+                <button>toggle_editor</button>
+            </editor_buttons>
+            <column name="title">
+                <sortable>true</sortable>
+                <function>editLink</function>
+            </column>
+            <column name="status">
+                <sortable>true</sortable>
+                <function>statusIcon</function>
+            </column>
+        </section>
+        <section name="access_control">
+            <column name="title">
+                <sortable>true</sortable>
+                <function>editLink</function>
+            </column>
+            <column name="status">
+                <sortable>true</sortable>
+                <function>statusIcon</function>
+            </column>
+        </section>
+        <section name="publishing">
+            <column name="title">
+                <sortable>true</sortable>
+                <function>editLink</function>
+            </column>
+            <column name="status">
+                <sortable>true</sortable>
+                <function>statusIcon</function>
+            </column>
+        </section>
+        <section name="custom_fields">
+            <column name="cu">
+                <sortable>true</sortable>
+                <function>editLink</function>
+            </column>
+            <column name="status">
+                <sortable>true</sortable>
+                <function>statusIcon</function>
+            </column>
+        </section>
+        <section name="parameters">
+            <column name="title">
+                <sortable>true</sortable>
+                <function>editLink</function>
+            </column>
+            <column name="status">
+                <sortable>true</sortable>
+                <function>statusIcon</function>
+            </column>
+        </section>
+        <section name="metadata">
+            <column name="title">
+                <sortable>true</sortable>
+                <function>editLink</function>
+            </column>
+            <column name="status">
+                <sortable>true</sortable>
+                <function>statusIcon</function>
+            </column>
+        </section>
+    </sections>
+</configuration>
