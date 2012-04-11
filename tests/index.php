@@ -11,10 +11,10 @@ ini_set('magic_quotes_runtime', 0);
 ini_set('zend.ze1_compatibility_mode', 0);
 
 $f = substr(__DIR__, 0, strlen(__DIR__) - 6);
-define('MOLAJO_CONFIGURATION_FOLDER', $f . '/Tests/Molajo/Application/Configuration');
-define('MOLAJO_BASE_FOLDER', $f.'/source');
+define('CONFIGURATION_FOLDER', $f . '/Tests/Molajo/Application/Configuration');
+define('BASE_FOLDER', $f.'/source');
 
-require_once MOLAJO_BASE_FOLDER . '/Autoload.php';
+require_once BASE_FOLDER . '/Autoload.php';
 
 Molajo\Application\Molajo::Application()
     ->initialise()

@@ -1,10 +1,4 @@
 <?php
-namespace Joomla\filesystem;
-
-use Joomla\filesystem\Path;
-use Joomla\filesystem\Folder;
-use Joomla\filesystem\streams\JStreamString;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -15,8 +9,8 @@ use Joomla\filesystem\streams\JStreamString;
 
 defined('JPATH_PLATFORM') or die;
 
-//jimport('joomla.filesystem.file');
-//jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
 
 /**
  * File system helper
@@ -293,4 +287,3 @@ class JFilesystemHelper
 		return in_array($streamname, self::getJStreams());
 	}
 }
-class FilesystemHelper extends JFilesystemHelper {}

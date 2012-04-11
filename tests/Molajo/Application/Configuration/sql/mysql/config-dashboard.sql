@@ -6,7 +6,7 @@ SELECT @id;
 
 # DEFAULT
 
-# 100 MOLAJO_EXTENSION_OPTION_ID_TABLE
+# 100 EXTENSION_OPTION_ID_TABLE
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES

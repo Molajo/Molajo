@@ -85,7 +85,7 @@ Class UserService extends BaseService
         }
 
         $v = simplexml_load_file(
-            MOLAJO_APPLICATIONS_MVC
+            APPLICATIONS_MVC
                 . '/Model/Table/'
                 . substr($m->table_name, 3, 99)
                 . '.xml'
@@ -99,8 +99,8 @@ Class UserService extends BaseService
 if ((int)$this->id == 0) {
 $this->query_results['name'] = '';
 $this->query_results['applications'] = array();
-$this->query_results['groups'] = array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST);
-$this->query_results['view_groups'] = array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST);
+$this->query_results['groups'] = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
+$this->query_results['view_groups'] = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 $this->query_results['public'] = 1;
 $this->query_results['guest'] = 1;
 $this->query_results['registered'] = 0;

@@ -91,7 +91,7 @@ class ModelHelper
                 . '.'
                 . $db->qn('status')
                 . ' > '
-                . (int)MOLAJO_STATUS_UNPUBLISHED
+                . (int)STATUS_UNPUBLISHED
         );
 
         $query->where('('
@@ -470,7 +470,7 @@ class ModelHelper
      */
     public function getList($field)
     {
-        $lists = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/lists.xml');
+        $lists = simplexml_load_file(CONFIGURATION_FOLDER . '/lists.xml');
         if (count($lists) == 0) {
             return false;
         }
@@ -567,7 +567,7 @@ class ModelHelper
 
         if ((int)$status == 1) {
             $m->query->where($m->db->qn('status')
-                . ' > ' . (int)MOLAJO_STATUS_UNPUBLISHED);
+                . ' > ' . (int)STATUS_UNPUBLISHED);
         }
 
         if ((int)$viewaccess == 1) {
@@ -612,37 +612,37 @@ class ModelHelper
         $resultset = array();
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_ARCHIVED;
+        $obj->key = STATUS_ARCHIVED;
         $obj->value = Services::Language()->translate('STATUS_ARCHIVED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_PUBLISHED;
+        $obj->key = STATUS_PUBLISHED;
         $obj->value = Services::Language()->translate('STATUS_PUBLISHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_UNPUBLISHED;
+        $obj->key = STATUS_UNPUBLISHED;
         $obj->value = Services::Language()->translate('STATUS_UNPUBLISHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_TRASHED;
+        $obj->key = STATUS_TRASHED;
         $obj->value = Services::Language()->translate('STATUS_TRASHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_SPAMMED;
+        $obj->key = STATUS_SPAMMED;
         $obj->value = Services::Language()->translate('STATUS_SPAMMED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_DRAFT;
+        $obj->key = STATUS_DRAFT;
         $obj->value = Services::Language()->translate('STATUS_DRAFT');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
-        $obj->key = MOLAJO_STATUS_VERSION;
+        $obj->key = STATUS_VERSION;
         $obj->value = Services::Language()->translate('STATUS_VERSION');
         $resultset[] = $obj;
 

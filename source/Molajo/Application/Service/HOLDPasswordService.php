@@ -60,7 +60,7 @@ Class PasswordService extends BaseService
                 return false;
             }
         } else {
-            MolajoError::raiseWarning("SOME_ERROR_CODE", Services::Language()->translate('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
+            MolajoError::raiseWarning("SOME_ERROR_CODE", Services::Language()->translate('USER_ERROR_UNABLE_TO_FIND_USER'));
             return false;
         }
 

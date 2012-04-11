@@ -60,7 +60,7 @@ class ItemModel extends LoadModel
         } else {
 
 //			throw new \Exception(
-//				MOLAJO_DB_ERROR_STORE_FAILED . ' ' . $this->name
+//				DB_ERROR_STORE_FAILED . ' ' . $this->name
 //				. ' '. $this->db->getErrorMsg()
 //			);
         }

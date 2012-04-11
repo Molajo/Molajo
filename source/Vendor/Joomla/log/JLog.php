@@ -7,16 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\log;
+
 defined('JPATH_PLATFORM') or die;
-
-jimport('joomla.log.logger');
-
-JLoader::register('LogException', JPATH_PLATFORM . '/joomla/log/logexception.php');
-
-JLoader::discover('JLogger', __DIR__ . '/loggers');
-
-// @deprecated  12.1
-jimport('joomla.filesystem.path');
 
 /**
  * Joomla! Log Class
@@ -172,8 +165,7 @@ class JLog
 	}
 
 	/**
-	 * Method to set the way the JError will handle different error levels.
-	 * Use this if you want to override the default settings.
+	 * Add a logger to the JLog instance.  Loggers route log entries to the correct files/systems to be logged.
 	 *
 	 * @param   array    $options     The object configuration array.
 	 * @param   integer  $priorities  Message priority
@@ -373,7 +365,7 @@ class JLog
 				}
 				else
 				{
-					throw new \LogException(JText::_('Unable to create a JLogger instance: '));
+					throw new LogException(JText::_('Unable to create a JLogger instance: '));
 				}
 			}
 

@@ -6,24 +6,24 @@
  */
 defined('MOLAJO') or die;
 
-if (file_exists(MOLAJO_BASE_FOLDER . '/autoloadoverride.php')) {
-    include_once MOLAJO_BASE_FOLDER . '/autoloadoverride.php';
+if (file_exists(BASE_FOLDER . '/autoloadoverride.php')) {
+    include_once BASE_FOLDER . '/autoloadoverride.php';
     return;
 }
 
 /** used in this script */
-if (defined('MOLAJO_APPLICATIONS')) {
+if (defined('APPLICATIONS')) {
 } else {
-    define('MOLAJO_APPLICATIONS', MOLAJO_BASE_FOLDER . '/Molajo/Application');
+    define('APPLICATIONS', BASE_FOLDER . '/Molajo/Application');
 }
 if (defined('VENDOR')) {
 } else {
-    define('VENDOR', MOLAJO_BASE_FOLDER . '/Vendor');
+    define('VENDOR', BASE_FOLDER . '/Vendor');
 }
 
 if (defined('JPATH_SITE')) {
 } else {
-    define('JPATH_SITE', MOLAJO_BASE_FOLDER);
+    define('JPATH_SITE', BASE_FOLDER);
 }
 if (defined('JPATH_PLATFORM')) {
 } else {
@@ -35,7 +35,7 @@ if (defined('JPATH_LIBRARIES')) {
 }
 
 /** Use Symfony ClassLoader for Autoload */
-require_once MOLAJO_BASE_FOLDER . '/Vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once BASE_FOLDER . '/Vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 $s = new UniversalClassLoader();
 
@@ -43,25 +43,25 @@ $s = new UniversalClassLoader();
 $s->register();
 
 /** Molajo namespaces */
-$s->registerNamespace('Molajo', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\MVC', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\MVC\\Controller', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\MVC\\Model', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\MVC\\Model\\Trigger', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\MVC\\View', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Application\\Service', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Common', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Includer', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Component', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Formfield', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Helper', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Language', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Module', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Plugin', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Theme', MOLAJO_BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\View', MOLAJO_BASE_FOLDER);
+$s->registerNamespace('Molajo', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC\\Controller', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC\\Model', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC\\Model\\Trigger', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\MVC\\View', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Application\\Service', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Common', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Includer', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Component', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Formfield', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Helper', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Language', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Module', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Plugin', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Theme', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\View', BASE_FOLDER);
 
 /** Symfony namespaces */
 $s->registerNamespace('Symfony\\Component\\HttpFoundation', VENDOR);
@@ -80,10 +80,13 @@ $s->registerNamespace('Joomla\\database\\exporter', VENDOR);
 $s->registerNamespace('Joomla\\database\\importer', VENDOR);
 $s->registerNamespace('Joomla\\database\\iterator', VENDOR);
 $s->registerNamespace('Joomla\\database\\query', VENDOR);
+
 $s->registerNamespace('Joomla\\filesystem', VENDOR);
 $s->registerNamespace('Joomla\\filesystem\streams', VENDOR);
 $s->registerNamespace('Joomla\\filesystem\support', VENDOR);
+
 $s->registerNamespace('Joomla\\log', VENDOR);
+$s->registerNamespace('Joomla\\log\\loggers', VENDOR);
 $s->registerNamespace('Joomla\\object', VENDOR);
 $s->registerNamespace('Joomla\\registry', VENDOR);
 $s->registerNamespace('Joomla\\registry\\format', VENDOR);
@@ -106,4 +109,4 @@ if (defined('HTMPURIFIER_FILTERS')) {
 //use PhpConsole\PhpConsole;
 //PhpConsole::start(true, true, VENDOR . '/PhpConsole');
 /** Joomla */
-//require_once MOLAJO_BASE_FOLDER . '/Molajo/Common/platforms-joomla.php';
+//require_once BASE_FOLDER . '/Molajo/Common/platforms-joomla.php';

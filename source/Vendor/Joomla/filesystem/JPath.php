@@ -1,7 +1,4 @@
 <?php
-namespace Joomla\filesystem;
-use Joomla\filesystem\File;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -13,16 +10,16 @@ use Joomla\filesystem\File;
 defined('JPATH_PLATFORM') or die;
 
 // Define a boolean constant as true if a Windows based host
-//define('JPATH_ISWIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
+define('JPATH_ISWIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
 
 // Define a boolean constant as true if a Mac based host
-//define('JPATH_ISMAC', (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC'));
+define('JPATH_ISMAC', (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC'));
 
-//if (!defined('JPATH_ROOT'))
-//{
+if (!defined('JPATH_ROOT'))
+{
 	// Define a string constant for the root directory of the file system in native format
-//	define('JPATH_ROOT', JPath::clean(JPATH_SITE));
-//}
+	define('JPATH_ROOT', JPath::clean(JPATH_SITE));
+}
 
 /**
  * A Path handling class
@@ -31,7 +28,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  FileSystem
  * @since       11.1
  */
-class Path
+class JPath
 {
 	/**
 	 * Checks if a path's permissions can be changed.
@@ -165,22 +162,21 @@ class Path
 	 * @return  string  A cleaned version of the path or exit on error.
 	 *
 	 * @since   11.1
+	 * @throws  Exception
 	 */
 	public static function check($path, $ds = DIRECTORY_SEPARATOR)
 	{
 		if (strpos($path, '..') !== false)
 		{
 			// Don't translate
-			//JError::raiseError(20, 'Path::check Use of relative paths not permitted');
-			jexit();
+			throw new Exception('JPath::check Use of relative paths not permitted', 20);
 		}
 
 		$path = self::clean($path);
 		if ((JPATH_ROOT != '') && strpos($path, self::clean(JPATH_ROOT)) !== 0)
 		{
 			// Don't translate
-			//JError::raiseError(20, 'Path::check Snooping out of bounds @ ' . $path);
-			jexit();
+			throw new Exception('JPath::check Snooping out of bounds @ ' . $path, 20);
 		}
 
 		return $path;
@@ -224,10 +220,9 @@ class Path
 	 */
 	public static function isOwner($path)
 	{
-//jimport('joomla.filesystem.file');
+		jimport('joomla.filesystem.file');
 
-//		$tmp = md5(JUserHelper::genRandomPassword(16));
-        $tmp = md5(mt_rand());
+		$tmp = md5(mt_rand());
 		$ssp = ini_get('session.save_path');
 		$jtp = JPATH_SITE . '/tmp';
 
@@ -307,4 +302,3 @@ class Path
 		return false;
 	}
 }
-class JPath extends Path {}

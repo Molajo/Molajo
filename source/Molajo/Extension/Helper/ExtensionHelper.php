@@ -79,7 +79,7 @@ abstract class ExtensionHelper
         }
 
         $m->query->where('a.' . $m->db->qn('status') .
-                ' > ' . MOLAJO_STATUS_UNPUBLISHED
+                ' > ' . STATUS_UNPUBLISHED
         );
         $m->query->where('(a.start_publishing_datetime = ' .
                 $m->db->q($m->nullDate) .
@@ -120,7 +120,7 @@ abstract class ExtensionHelper
         $m->query->where('c.' . $m->db->qn('extension_instance_id') .
             ' = a.' . $m->db->qn('id'));
         $m->query->where('c.' . $m->db->qn('application_id') .
-            ' = ' . MOLAJO_APPLICATION_ID);
+            ' = ' . APPLICATION_ID);
 
         /**
          *  d. Site Table
@@ -252,13 +252,13 @@ abstract class ExtensionHelper
      */
     static public function getPath($asset_type_id, $name)
     {
-        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT) {
+        if ($asset_type_id == ASSET_TYPE_EXTENSION_COMPONENT) {
             return ComponentHelper::getPath($name);
-        } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_MODULE) {
+        } else if ($asset_type_id == ASSET_TYPE_EXTENSION_MODULE) {
             return ModuleHelper::getPath($name);
-        } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_THEME) {
+        } else if ($asset_type_id == ASSET_TYPE_EXTENSION_THEME) {
             return ThemeHelper::getPath($name);
-        } else if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN) {
+        } else if ($asset_type_id == ASSET_TYPE_EXTENSION_PLUGIN) {
             return PluginHelper::getPath($name);
         }
         return false;

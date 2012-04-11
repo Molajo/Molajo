@@ -293,7 +293,7 @@ class Includer extends Molajo
         $this->set('template_view_css_id', '');
         $this->set('template_view_css_class', '');
         $this->set('template_view_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
+            ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
         $this->set('template_view_asset_id', 0);
         $this->set('template_view_path', '');
         $this->set('template_view_path_url', '');
@@ -304,7 +304,7 @@ class Includer extends Molajo
         $this->set('wrap_view_css_id', '');
         $this->set('wrap_view_css_class', '');
         $this->set('wrap_view_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW);
+            ASSET_TYPE_EXTENSION_WRAP_VIEW);
         $this->set('wrap_view_asset_id', 0);
         $this->set('wrap_view_path', '');
         $this->set('wrap_view_path_url', '');
@@ -379,7 +379,7 @@ class Includer extends Molajo
             } else {
                 $this->set('template_view_id',
                     ExtensionHelper::getInstanceID(
-                        MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
+                        ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
                         $this->get('template_view_name')
                     )
                 );
@@ -392,7 +392,7 @@ class Includer extends Molajo
             } else {
                 $this->set('wrap_view_id',
                     ExtensionHelper::getInstanceID(
-                        MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW,
+                        ASSET_TYPE_EXTENSION_WRAP_VIEW,
                         $this->get('wrap_view_name')
                     )
                 );
@@ -595,7 +595,7 @@ class Includer extends Molajo
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
                 ExtensionHelper::getInstanceID(
-                    MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
+                    ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
                     $this->get('template_view_name'),
                     'Template'
                 )
@@ -625,7 +625,7 @@ class Includer extends Molajo
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
                 ExtensionHelper::getInstanceID(
-                    MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW,
+                    ASSET_TYPE_EXTENSION_WRAP_VIEW,
                     $this->get('wrap_view_name'),
                     'Wrap'
                 )

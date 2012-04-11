@@ -101,7 +101,7 @@ Class Services extends Molajo
         $this->service_connection = new Registry();
 
         /** start services in this sequence */
-        $xml = MOLAJO_CONFIGURATION_FOLDER . '/services.xml';
+        $xml = CONFIGURATION_FOLDER . '/services.xml';
         if (is_file($xml)) {
         } else {
             return false;

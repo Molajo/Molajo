@@ -417,7 +417,7 @@ Class MailService extends BaseService
             $value = false;
             Services::Message()->set(
                 $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                $type = MOLAJO_MESSAGE_TYPE_ERROR
+                $type = MESSAGE_TYPE_ERROR
             );
             if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
                 Services::Debug()->set('Services::mail Filter Failed' . ' ' . $message);

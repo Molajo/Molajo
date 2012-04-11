@@ -32,7 +32,7 @@ abstract class ModuleHelper
     {
         $this->set(
             'extension_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_MODULE
+            ASSET_TYPE_EXTENSION_MODULE
         );
         $results = parent::_getExtension();
 
@@ -95,7 +95,7 @@ abstract class ModuleHelper
     protected function _loadMedia()
     {
         parent::_loadMedia(
-            MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
+            EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
             SITE_MEDIA_URL . '/' . $this->get('extension_instance_name'),
             Services::Registry()->get('Configuration\\media_priority_module', 400)
         );

@@ -28,7 +28,7 @@ abstract class ComponentHelper
     static public function get($name)
     {
         $row = ExtensionHelper::get(
-            MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT,
+            ASSET_TYPE_EXTENSION_COMPONENT,
             $name
         );
         if (count($row) == 0) {
@@ -47,6 +47,6 @@ abstract class ComponentHelper
      */
     static public function getPath($name)
     {
-        return MOLAJO_EXTENSIONS_COMPONENTS . '/' . $name;
+        return EXTENSIONS_COMPONENTS . '/' . $name;
     }
 }

@@ -211,7 +211,7 @@ Class LoadModel extends Model
 		$this->query_results['guest'] = 0;
 		$this->query_results['registered'] = 1;
 
-		if (in_array(MOLAJO_SYSTEM_GROUP_ADMINISTRATOR, $this->query_results['groups'])) {
+		if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $this->query_results['groups'])) {
 			$this->query_results['administrator'] = 1;
 		}
 

@@ -66,7 +66,7 @@ Class Request extends Molajo
     }
 
     /**
-     * Using the MOLAJO_PAGE_REQUEST value,
+     * Using the PAGE_REQUEST value,
      *  retrieve the asset record,
      *  set the variables needed to render output,
      *  execute document renders and MVC
@@ -174,7 +174,7 @@ Class Request extends Molajo
          *  Path ex. index.php?option=login or access/groups
          */
         if ($override_request_url == null) {
-            $path = MOLAJO_PAGE_REQUEST;
+            $path = PAGE_REQUEST;
         } else {
             $path = $override_request_url;
         }
@@ -234,7 +234,7 @@ Class Request extends Molajo
         $extra = array();
 
         if (count($pairs) > 0) {
-            $xml = MOLAJO_CONFIGURATION_FOLDER . '/parameters.xml';
+            $xml = CONFIGURATION_FOLDER . '/parameters.xml';
             if (is_file($xml)) {
             } else {
                 return false;
@@ -381,7 +381,7 @@ Class Request extends Molajo
         }
 
         if (Services::Registry()->get('Request\\request_asset_type_id')
-            == MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT
+            == ASSET_TYPE_MENU_ITEM_COMPONENT
         ) {
             Services::Registry()->set('Request\\menu_item_id', $row->source_id);
             $this->getMenuItem();
@@ -603,7 +603,7 @@ Class Request extends Molajo
         //            Services::Message()
         //                ->set(
         //                $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
-        //                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+        //                $type = MESSAGE_TYPE_ERROR,
         //                $code = 500,
         //                $debug_location = 'MolajoRequest::getSource',
         //                $debug_object = $this->page_request
@@ -693,7 +693,7 @@ Class Request extends Molajo
             Services::Message()
                 ->set(
                 $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $type = MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::getPrimaryCategory',
                 $debug_object = $this->page_request
@@ -751,7 +751,7 @@ Class Request extends Molajo
                 ->set(
                 $message = Services::Language()
                     ->translate('ERROR_EXTENSION_NOT_FOUND'),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $type = MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = 'MolajoRequest::getExtension',
                 $debug_object = $this->page_request
@@ -1075,7 +1075,7 @@ Class Request extends Molajo
     {
         $row = Molajo::Helper()
             ->get('Extension',
-            MOLAJO_ASSET_TYPE_EXTENSION_THEME,
+            ASSET_TYPE_EXTENSION_THEME,
             Services::Registry()->get('Request\\theme_id')
         );
 
@@ -1097,7 +1097,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\theme_name', $row->title);
         Services::Registry()->set('Request\\theme_id', $row->extension_instance_id);
 
-        Services::Registry()->set('Request\\theme_asset_type_id', MOLAJO_ASSET_TYPE_EXTENSION_THEME);
+        Services::Registry()->set('Request\\theme_asset_type_id', ASSET_TYPE_EXTENSION_THEME);
         Services::Registry()->set('Request\\theme_asset_id', $row->asset_id);
         Services::Registry()->set('Request\\theme_view_group_id', $row->view_group_id);
         Services::Registry()->set('Request\\theme_language', $row->language);
@@ -1274,7 +1274,7 @@ Class Request extends Molajo
                 ->setHeader('Status', '500 Internal server error', 'true');
 
             Services::Message()
-                ->set($message, MOLAJO_MESSAGE_TYPE_ERROR, 500);
+                ->set($message, MESSAGE_TYPE_ERROR, 500);
         }
         return;
     }
@@ -1294,7 +1294,7 @@ Class Request extends Molajo
             ->set(Services::Registry()->get('Configuration\\offline_message',
                 'This site is not available.<br /> Please check back again soon.'
             ),
-            MOLAJO_MESSAGE_TYPE_WARNING,
+            MESSAGE_TYPE_WARNING,
             503
         );
 
@@ -1322,7 +1322,7 @@ Class Request extends Molajo
 
         Services::Message()->set(
             Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
-            MOLAJO_MESSAGE_TYPE_ERROR,
+            MESSAGE_TYPE_ERROR,
             403
         );
 
@@ -1342,7 +1342,7 @@ Class Request extends Molajo
 
         Services::Message()->set
         (Services::Registry()->get('Configuration\\error_404_message', 'Page not found.'),
-            MOLAJO_MESSAGE_TYPE_ERROR,
+            MESSAGE_TYPE_ERROR,
             404);
 
         return;
@@ -1366,7 +1366,7 @@ Class Request extends Molajo
 
         /** request */
         Services::Registry()->set('Request\\request_url_base',
-            MOLAJO_BASE_URL);
+            BASE_URL);
         Services::Registry()->set('Request\\request_asset_id', 0);
         Services::Registry()->set('Request\\request_asset_type_id', 0);
         Services::Registry()->set('Request\\request_url_query', '');
@@ -1378,7 +1378,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\menu_item_id', 0);
         Services::Registry()->set('Request\\menu_item_title', '');
         Services::Registry()->set('Request\\menu_item_asset_type_id',
-            MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT);
+            ASSET_TYPE_MENU_ITEM_COMPONENT);
         Services::Registry()->set('Request\\menu_item_asset_id', 0);
         Services::Registry()->set('Request\\menu_item_view_group_id', 0);
         Services::Registry()->set('Request\\menu_item_custom_fields', array());
@@ -1418,7 +1418,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\category_id', 0);
         Services::Registry()->set('Request\\category_title', '');
         Services::Registry()->set('Request\\category_asset_type_id',
-            MOLAJO_ASSET_TYPE_CATEGORY_LIST);
+            ASSET_TYPE_CATEGORY_LIST);
         Services::Registry()->set('Request\\category_asset_id', 0);
         Services::Registry()->set('Request\\category_view_group_id', 0);
         Services::Registry()->set('Request\\category_custom_fields', array());
@@ -1440,7 +1440,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\theme_id', 0);
         Services::Registry()->set('Request\\theme_name', '');
         Services::Registry()->set('Request\\theme_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_THEME);
+            ASSET_TYPE_EXTENSION_THEME);
         Services::Registry()->set('Request\\theme_asset_id', 0);
         Services::Registry()->set('Request\\theme_view_group_id', 0);
         Services::Registry()->set('Request\\theme_custom_fields', array());
@@ -1457,7 +1457,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\page_view_css_id', '');
         Services::Registry()->set('Request\\page_view_css_class', '');
         Services::Registry()->set('Request\\page_view_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_PAGE_VIEW);
+            ASSET_TYPE_EXTENSION_PAGE_VIEW);
         Services::Registry()->set('Request\\page_view_asset_id', 0);
         Services::Registry()->set('Request\\page_view_path', '');
         Services::Registry()->set('Request\\page_view_path_url', '');
@@ -1469,7 +1469,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\template_view_css_id', '');
         Services::Registry()->set('Request\\template_view_css_class', '');
         Services::Registry()->set('Request\\template_view_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
+            ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
         Services::Registry()->set('Request\\template_view_asset_id', 0);
         Services::Registry()->set('Request\\template_view_path', '');
         Services::Registry()->set('Request\\template_view_path_url', '');
@@ -1480,7 +1480,7 @@ Class Request extends Molajo
         Services::Registry()->set('Request\\wrap_view_css_id', '');
         Services::Registry()->set('Request\\wrap_view_css_class', '');
         Services::Registry()->set('Request\\wrap_view_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_WRAP_VIEW);
+            ASSET_TYPE_EXTENSION_WRAP_VIEW);
         Services::Registry()->set('Request\\wrap_view_asset_id', 0);
         Services::Registry()->set('Request\\wrap_view_path', '');
         Services::Registry()->set('Request\\wrap_view_path_url', '');

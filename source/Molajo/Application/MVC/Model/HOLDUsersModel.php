@@ -50,8 +50,8 @@ Class UsersModel extends DisplayModel
         if ((int)$this->id == 0) {
             $this->query_results['name'] = '';
             $this->query_results['applications'] = array();
-            $this->query_results['groups'] = array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST);
-            $this->query_results['view_groups'] = array(MOLAJO_SYSTEM_GROUP_PUBLIC, MOLAJO_SYSTEM_GROUP_GUEST);
+            $this->query_results['groups'] = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
+            $this->query_results['view_groups'] = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
             $this->query_results['public'] = 1;
             $this->query_results['guest'] = 1;
             $this->query_results['registered'] = 0;
@@ -94,7 +94,7 @@ Class UsersModel extends DisplayModel
             $this->query_results['guest'] = 0;
             $this->query_results['registered'] = 1;
 
-            if (in_array(MOLAJO_SYSTEM_GROUP_ADMINISTRATOR, $this->query_results['groups'])) {
+            if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $this->query_results['groups'])) {
                 $this->query_results['administrator'] = 1;
             }
 

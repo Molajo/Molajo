@@ -50,7 +50,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 
         /** Favicons */
         Services::Document()->add_link(
-            $url = MOLAJO_EXTENSIONS_THEMES_URL
+            $url = EXTENSIONS_THEMES_URL
                 . '/' . Services::Registry()->get('request\\theme_name')
                 . '/' . 'images/apple-touch-icon.png',
             $relation = 'apple-touch-icon-precomposed',
@@ -58,7 +58,7 @@ Class ThemeFoundationHelper extends MustacheHelper
             $attributes = array()
         );
         Services::Document()->add_link(
-            $url = MOLAJO_EXTENSIONS_THEMES_URL
+            $url = EXTENSIONS_THEMES_URL
                 . '/' . Services::Registry()->get('request\\theme_name')
                 . '/' . 'images/apple-touch-icon-72x72.png',
             $relation = 'apple-touch-icon-precomposed',
@@ -66,7 +66,7 @@ Class ThemeFoundationHelper extends MustacheHelper
             $attributes = array('sizes,72x72')
         );
         Services::Document()->add_link(
-            $url = MOLAJO_EXTENSIONS_THEMES_URL
+            $url = EXTENSIONS_THEMES_URL
                 . '/' . Services::Registry()->get('request\\theme_name')
                 . '/' . 'images/apple-touch-icon-114x114.png',
             $relation = 'apple-touch-icon-precomposed',
@@ -82,7 +82,7 @@ Class ThemeFoundationHelper extends MustacheHelper
         Services::Document()->add_js
         ('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
 
-        $url = MOLAJO_EXTENSIONS_THEMES_URL
+        $url = EXTENSIONS_THEMES_URL
             . '/' . Services::Registry()->get('request\\theme_name')
             . '/' . 'js/fallback/jquery-1.7.1.min.js';
 

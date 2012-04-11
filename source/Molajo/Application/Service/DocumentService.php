@@ -227,7 +227,7 @@ Class DocumentService extends BaseService
      *
      * Example usage:
      * Services::Document()->add_link(
-     *   $url = MOLAJO_EXTENSIONS_THEMES_URL
+     *   $url = EXTENSIONS_THEMES_URL
      *      . '/' . Services::Registry()->get('Request\\theme_name')
      *      . '/' . 'images/apple-touch-icon-114x114.png',
      *   $relation = 'apple-touch-icon-precomposed',

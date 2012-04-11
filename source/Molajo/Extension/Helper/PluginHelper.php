@@ -29,7 +29,7 @@ abstract class PluginHelper
     static public function get($name)
     {
         $rows = ExtensionHelper::get(
-            MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN,
+            ASSET_TYPE_EXTENSION_PLUGIN,
             $name
         );
         if (count($rows) == 0) {
@@ -52,6 +52,6 @@ abstract class PluginHelper
      */
     static public function getPath($name)
     {
-        return MOLAJO_EXTENSIONS_PLUGINS . '/' . $name;
+        return EXTENSIONS_PLUGINS . '/' . $name;
     }
 }

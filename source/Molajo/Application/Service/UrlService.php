@@ -138,10 +138,10 @@ Class UrlService extends BaseService
      */
     function checkURLExternal($option_URL)
     {
-        if (substr($option_URL, 0, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER) {
+        if (substr($option_URL, 0, strlen(BASE_FOLDER)) == BASE_FOLDER) {
             return false;
         } elseif ((strtolower(substr($option_URL, 0, 3)) == 'www')
-            && (substr($option_URL, 3, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER)
+            && (substr($option_URL, 3, strlen(BASE_FOLDER)) == BASE_FOLDER)
         ) {
             return false;
         } else {

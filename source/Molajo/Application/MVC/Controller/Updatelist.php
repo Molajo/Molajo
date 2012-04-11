@@ -216,7 +216,7 @@ class UpdatelistController extends UpdateController
         $idArray = JRequest::getVar('cid', array(), '', 'array');
         JArrayHelper::toInteger($idArray);
         if (empty($idArray)) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_BATCH_SELECT_ITEMS_TASK'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('BATCH_SELECT_ITEMS_TASK'));
             $this->redirectClass->setRedirectMessageType('message');
             $this->redirectClass->setSuccessIndicator(false);
         }
@@ -225,7 +225,7 @@ class UpdatelistController extends UpdateController
         if ($task == 'copy' || $task == 'delete') {
             $this->batch_category_id = JRequest::getInt('batch_category_id');
             if ((int)$this->batch_category_id == 0) {
-                $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
+                $this->redirectClass->setRedirectMessage(Services::Language()->translate('BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
                 $this->redirectClass->setRedirectMessageType('message');
                 return $this->redirectClass->setSuccessIndicator(false);
             }
@@ -308,11 +308,11 @@ class UpdatelistController extends UpdateController
 //        $results = $this->cleanCache();
 
         if ($errorFoundForBatch === false) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->plural('MOLAJO_N_ITEMS_' . strtoupper($task), count($idArray)));
+            $this->redirectClass->setRedirectMessage(Services::Language()->plural('N_ITEMS_' . strtoupper($task), count($idArray)));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('message'));
             return $this->redirectClass->setSuccessIndicator(true);
         } else {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_ERROR_PROCESSING_ITEMS'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('ERROR_PROCESSING_ITEMS'));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('warning'));
             return $this->redirectClass->setSuccessIndicator(false);
         }

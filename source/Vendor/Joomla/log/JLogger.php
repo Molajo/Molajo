@@ -1,6 +1,4 @@
 <?php
-namespace Joomla\log;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  Log

@@ -1,6 +1,4 @@
 <?php
-namespace Joomla\filesystem\support;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -71,4 +69,3 @@ class JStringController
 		}
 	}
 }
-class StringController extends JStringController {}

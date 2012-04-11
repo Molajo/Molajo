@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\crypt;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -44,11 +46,11 @@ interface JCryptCipher
 
 	/**
 	 * Method to generate a new encryption key[/pair] object.
-	 * 
+	 *
 	 * @param   array  $options  Key generation options.
-	 * 
+	 *
 	 * @return  JCryptKey
-	 * 
+	 *
 	 * @since   12.1
 	 */
 	public function generateKey(array $options = array());

@@ -1,8 +1,4 @@
 <?php
-namespace Joomla\filesystem;
-use Joomla\filesystem\Path;
-use Joomla\filesystem\Folder;
-
 /**
  * @package     Joomla.Platform
  * @subpackage  FileSystem
@@ -11,9 +7,11 @@ use Joomla\filesystem\Folder;
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+namespace Joomla\filesystem;
 
-//jimport('joomla.filesystem.path');
+use Joomla\log\JFile;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * A File handling class
@@ -94,8 +92,7 @@ class JFile
 		// Check src path
 		if (!is_readable($src))
 		{
-			JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_FIND_COPY', $src));
-
+			JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_FIND_COPY', $src), JLog::WARNING, 'jerror');
 			return false;
 		}
 
@@ -105,8 +102,7 @@ class JFile
 
 			if (!$stream->copy($src, $dest))
 			{
-				JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_STREAMS', $src, $dest, $stream->getError()));
-
+				JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_STREAMS', $src, $dest, $stream->getError()), JLog::WARNING, 'jerror');
 				return false;
 			}
 
@@ -143,8 +139,7 @@ class JFile
 			{
 				if (!@ copy($src, $dest))
 				{
-					JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_COPY_FAILED'));
-
+					JLog::add(JText::_('JLIB_FILESYSTEM_ERROR_COPY_FAILED'), JLog::WARNING, 'jerror');
 					return false;
 				}
 				$ret = true;
@@ -211,8 +206,7 @@ class JFile
 			else
 			{
 				$filename = basename($file);
-				JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_FILESYSTEM_DELETE_FAILED', $filename));
-
+				JLog::add(JText::sprintf('JLIB_FILESYSTEM_DELETE_FAILED', $filename), JLog::WARNING, 'jerror');
 				return false;
 			}
 		}
@@ -253,8 +247,7 @@ class JFile
 
 			if (!$stream->move($src, $dest))
 			{
-				JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_MOVE_STREAMS', $stream->getError()));
-
+				JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_JFILE_MOVE_STREAMS', $stream->getError()), JLog::WARNING, 'jerror');
 				return false;
 			}
 
@@ -277,8 +270,7 @@ class JFile
 				// Use FTP rename to simulate move
 				if (!$ftp->rename($src, $dest))
 				{
-					JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_RENAME_FILE'));
-
+					JLog::add(JText::_('JLIB_FILESYSTEM_ERROR_RENAME_FILE'), JLog::WARNING, 'jerror');
 					return false;
 				}
 			}
@@ -286,8 +278,7 @@ class JFile
 			{
 				if (!@ rename($src, $dest))
 				{
-					JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_RENAME_FILE'));
-
+					JLog::add(JText::_('JLIB_FILESYSTEM_ERROR_RENAME_FILE'), JLog::WARNING, 'jerror');
 					return false;
 				}
 			}
@@ -320,8 +311,7 @@ class JFile
 
 		if (false === $fh = fopen($filename, 'rb', $incpath))
 		{
-			JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_READ_UNABLE_TO_OPEN_FILE', $filename));
-
+			JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_READ_UNABLE_TO_OPEN_FILE', $filename), JLog::WARNING, 'jerror');
 			return false;
 		}
 
@@ -394,7 +384,7 @@ class JFile
 
 			if (!$stream->writeFile($file, $buffer))
 			{
-				JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_WRITE_STREAMS', $file, $stream->getError()));
+				JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_WRITE_STREAMS', $file, $stream->getError()), JLog::WARNING, 'jerror');
 				return false;
 			}
 
@@ -455,7 +445,7 @@ class JFile
 
 			if (!$stream->upload($src, $dest))
 			{
-				JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_UPLOAD', $stream->getError()));
+				JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_UPLOAD', $stream->getError()), JLog::WARNING, 'jerror');
 				return false;
 			}
 
@@ -483,7 +473,7 @@ class JFile
 				}
 				else
 				{
-					JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR02'));
+					JLog::add(JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR02'), JLog::WARNING, 'jerror');
 				}
 			}
 			else
@@ -497,12 +487,12 @@ class JFile
 					}
 					else
 					{
-						JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR01'));
+						JLog::add(JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR01'), JLog::WARNING, 'jerror');
 					}
 				}
 				else
 				{
-					JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR02'));
+					JLog::add(JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR02'), JLog::WARNING, 'jerror');
 				}
 			}
 
@@ -550,4 +540,3 @@ class JFile
 		}
 	}
 }
-class file extends JFile {}

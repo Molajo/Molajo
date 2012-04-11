@@ -133,7 +133,7 @@ Class Parse extends Molajo
         if (Services::Filesystem()->fileExists($sequenceXML)) {
             $formatXML = $sequenceXML;
         } else {
-            $formatXML = MOLAJO_CONFIGURATION_FOLDER. '/includes-page.xml';
+            $formatXML = CONFIGURATION_FOLDER. '/includes-page.xml';
         }
 
         if (Services::Filesystem()->fileExists($formatXML)) {
@@ -187,7 +187,7 @@ Class Parse extends Molajo
         if (Services::Filesystem()->fileExists($finalXML)) {
             $formatXML = $finalXML;
         } else {
-            $formatXML = MOLAJO_CONFIGURATION_FOLDER . '/includes-final.xml';
+            $formatXML = CONFIGURATION_FOLDER . '/includes-final.xml';
         }
         if (Services::Filesystem()->fileExists($formatXML)) {
         } else {
@@ -265,7 +265,7 @@ Class Parse extends Molajo
                 $this->rendered_output = $this->_callIncluder();
             }
 
-            if ($loop > MOLAJO_STOP_LOOP) {
+            if ($loop > STOP_LOOP) {
                 break;
             }
             continue;

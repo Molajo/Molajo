@@ -64,7 +64,7 @@ Class ModulePagefooterModel extends DisplayModel
         $row->linked_text = 'Molajo' . '&reg;';
 
         $row->remaining_text = ' ' . Services::Language()
-            ->_('MOLAJO_IS_FREE_SOFTWARE');
+            ->_('IS_FREE_SOFTWARE');
 
         $row->version = Services::Language()
             ->_(MOLAJOVERSION);

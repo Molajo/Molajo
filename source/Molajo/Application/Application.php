@@ -117,9 +117,9 @@ Class Application extends Molajo
 			} else {
 
 				$redirectTo = (string)'https' .
-					substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) .
-					MOLAJO_APPLICATION_URL_PATH .
-					'/' . MOLAJO_PAGE_REQUEST;
+					substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
+					APPLICATION_URL_PATH .
+					'/' . PAGE_REQUEST;
 
 				return Services::Redirect()
 					->set($redirectTo, 301);
@@ -149,7 +149,7 @@ Class Application extends Molajo
 		$authorise = Services::Access()
 			->authoriseSiteApplication();
 		if ($authorise === false) {
-			$message = '304: ' . MOLAJO_BASE_URL;
+			$message = '304: ' . BASE_URL;
 			echo $message;
 			die;
 		}
@@ -298,9 +298,9 @@ Class Application extends Molajo
 			. Molajo::RequestService()->request->getHttpHost()
 			. Molajo::RequestService()->request->getBaseUrl();
 
-		if (defined('MOLAJO_BASE_URL')) {
+		if (defined('BASE_URL')) {
 		} else {
-			define('MOLAJO_BASE_URL', $baseURL . '/');
+			define('BASE_URL', $baseURL . '/');
 		}
 		return;
 	}
@@ -308,7 +308,7 @@ Class Application extends Molajo
 	/**
 	 *  _setDefines
 	 *
-	 * The MOLAJO_APPLICATIONS, MOLAJO_EXTENSIONS and VENDOR
+	 * The APPLICATIONS, EXTENSIONS and VENDOR
 	 * folders and subfolders can be relocated outside of the
 	 * Apache htdocs folder for increased security. To do so:
 	 *
@@ -323,25 +323,25 @@ Class Application extends Molajo
 	 */
 	protected function _setDefines()
 	{
-		if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
-			include_once MOLAJO_BASE_FOLDER . '/defines.php';
+		if (file_exists(BASE_FOLDER . '/defines.php')) {
+			include_once BASE_FOLDER . '/defines.php';
 		}
 
-		if (defined('MOLAJO_EXTENSIONS')) {
+		if (defined('EXTENSIONS')) {
 		} else {
-			define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER . '/Molajo/Extension');
+			define('EXTENSIONS', BASE_FOLDER . '/Molajo/Extension');
 		}
 		if (defined('SITES')) {
 		} else {
-			define('SITES', MOLAJO_BASE_FOLDER . '/site');
+			define('SITES', BASE_FOLDER . '/site');
 		}
-		if (defined('MOLAJO_CONFIGURATION_FOLDER')) {
+		if (defined('CONFIGURATION_FOLDER')) {
 		} else {
-			define('MOLAJO_CONFIGURATION_FOLDER', MOLAJO_BASE_FOLDER . '/Molajo/Application/Configuration');
+			define('CONFIGURATION_FOLDER', BASE_FOLDER . '/Molajo/Application/Configuration');
 		}
 
 		/** Define PHP constants for application variables */
-		$defines = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/defines.xml');
+		$defines = simplexml_load_file(CONFIGURATION_FOLDER . '/defines.xml');
 
 		foreach ($defines->define as $item) {
 			if (defined((string)$item['name'])) {
@@ -354,78 +354,78 @@ Class Application extends Molajo
 		/**
 		 *  Applications
 		 */
-		if (defined('MOLAJO_APPLICATIONS_MVC')) {
+		if (defined('APPLICATIONS_MVC')) {
 		} else {
-			define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS . '/MVC');
+			define('APPLICATIONS_MVC', APPLICATIONS . '/MVC');
 		}
-		if (defined('MOLAJO_APPLICATIONS_MVC_URL')) {
+		if (defined('APPLICATIONS_MVC_URL')) {
 		} else {
-			define('MOLAJO_APPLICATIONS_MVC_URL', MOLAJO_BASE_URL . 'Molajo/Application/MVC');
+			define('APPLICATIONS_MVC_URL', BASE_URL . 'Molajo/Application/MVC');
 		}
 
 		/**
 		 *  Extensions
 		 */
-		if (defined('MOLAJO_EXTENSIONS_COMPONENTS')) {
+		if (defined('EXTENSIONS_COMPONENTS')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_COMPONENTS', MOLAJO_EXTENSIONS . '/Component');
+			define('EXTENSIONS_COMPONENTS', EXTENSIONS . '/Component');
 		}
-		if (defined('MOLAJO_EXTENSIONS_FORMFIELDS')) {
+		if (defined('EXTENSIONS_FORMFIELDS')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_FORMFIELDS', MOLAJO_EXTENSIONS . '/Formfield');
+			define('EXTENSIONS_FORMFIELDS', EXTENSIONS . '/Formfield');
 		}
-		if (defined('MOLAJO_EXTENSIONS_LANGUAGES')) {
+		if (defined('EXTENSIONS_LANGUAGES')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_LANGUAGES', MOLAJO_EXTENSIONS . '/Language');
+			define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
 		}
-		if (defined('MOLAJO_EXTENSIONS_MODULES')) {
+		if (defined('EXTENSIONS_MODULES')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_MODULES', MOLAJO_EXTENSIONS . '/Module');
+			define('EXTENSIONS_MODULES', EXTENSIONS . '/Module');
 		}
-		if (defined('MOLAJO_EXTENSIONS_PLUGINS')) {
+		if (defined('EXTENSIONS_PLUGINS')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_PLUGINS', MOLAJO_EXTENSIONS . '/Plugin');
+			define('EXTENSIONS_PLUGINS', EXTENSIONS . '/Plugin');
 		}
-		if (defined('MOLAJO_EXTENSIONS_THEMES')) {
+		if (defined('EXTENSIONS_THEMES')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_THEMES', MOLAJO_EXTENSIONS . '/Theme');
+			define('EXTENSIONS_THEMES', EXTENSIONS . '/Theme');
 		}
-		if (defined('MOLAJO_EXTENSIONS_VIEWS')) {
+		if (defined('EXTENSIONS_VIEWS')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_VIEWS', MOLAJO_EXTENSIONS . '/View');
+			define('EXTENSIONS_VIEWS', EXTENSIONS . '/View');
 		}
 
-		if (defined('MOLAJO_EXTENSIONS_COMPONENTS_URL')) {
+		if (defined('EXTENSIONS_COMPONENTS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_COMPONENTS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Component');
+			define('EXTENSIONS_COMPONENTS_URL', BASE_URL . 'Molajo/Extension/Component');
 		}
-		if (defined('MOLAJO_EXTENSIONS_FORMFIELDS_URL')) {
+		if (defined('EXTENSIONS_FORMFIELDS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_FORMFIELDS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Formfield');
+			define('EXTENSIONS_FORMFIELDS_URL', BASE_URL . 'Molajo/Extension/Formfield');
 		}
-		if (defined('MOLAJO_EXTENSIONS_MODULES_URL')) {
+		if (defined('EXTENSIONS_MODULES_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_MODULES_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Module');
+			define('EXTENSIONS_MODULES_URL', BASE_URL . 'Molajo/Extension/Module');
 		}
-		if (defined('MOLAJO_EXTENSIONS_PLUGINS_URL')) {
+		if (defined('EXTENSIONS_PLUGINS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_PLUGINS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Plugin');
+			define('EXTENSIONS_PLUGINS_URL', BASE_URL . 'Molajo/Extension/Plugin');
 		}
-		if (defined('MOLAJO_EXTENSIONS_THEMES_URL')) {
+		if (defined('EXTENSIONS_THEMES_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_THEMES_URL', MOLAJO_BASE_URL . 'Molajo/Extension/Theme');
+			define('EXTENSIONS_THEMES_URL', BASE_URL . 'Molajo/Extension/Theme');
 		}
-		if (defined('MOLAJO_EXTENSIONS_VIEWS_URL')) {
+		if (defined('EXTENSIONS_VIEWS_URL')) {
 		} else {
-			define('MOLAJO_EXTENSIONS_VIEWS_URL', MOLAJO_BASE_URL . 'Molajo/Extension/View');
+			define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Molajo/Extension/View');
 		}
 
 		/**
 		 *  Allows for quoting in language .ini files.
 		 */
-		if (defined('MOLAJO_LANGUAGE_QUOTE_REPLACEMENT')) {
+		if (defined('LANGUAGE_QUOTE_REPLACEMENT')) {
 		} else {
-			define('MOLAJO_LANGUAGE_QUOTE_REPLACEMENT', '"');
+			define('LANGUAGE_QUOTE_REPLACEMENT', '"');
 		}
 
 		/**
@@ -433,10 +433,10 @@ Class Application extends Molajo
 		 *
 		 *  TO BE REMOVED
 		 */
-		define('MOLAJO_EXTENSION_OPTION_ID_MIMES_AUDIO', 400);
-		define('MOLAJO_EXTENSION_OPTION_ID_MIMES_IMAGE', 410);
-		define('MOLAJO_EXTENSION_OPTION_ID_MIMES_TEXT', 420);
-		define('MOLAJO_EXTENSION_OPTION_ID_MIMES_VIDEO', 430);
+		define('EXTENSION_OPTION_ID_MIMES_AUDIO', 400);
+		define('EXTENSION_OPTION_ID_MIMES_IMAGE', 410);
+		define('EXTENSION_OPTION_ID_MIMES_TEXT', 420);
+		define('EXTENSION_OPTION_ID_MIMES_VIDEO', 430);
 
 		return;
 	}
@@ -454,7 +454,7 @@ Class Application extends Molajo
 	{
 		if (defined('SITES')) {
 		} else {
-			define('SITES', MOLAJO_BASE_FOLDER . '/Site');
+			define('SITES', BASE_FOLDER . '/Site');
 		}
 		if (defined('SITES_MEDIA_FOLDER')) {
 		} else {
@@ -462,7 +462,7 @@ Class Application extends Molajo
 		}
 		if (defined('SITES_MEDIA_URL')) {
 		} else {
-			define('SITES_MEDIA_URL', MOLAJO_BASE_URL . 'site/media');
+			define('SITES_MEDIA_URL', BASE_URL . 'site/media');
 		}
 		if (defined('SITES_TEMP_FOLDER')) {
 		} else {
@@ -470,16 +470,16 @@ Class Application extends Molajo
 		}
 		if (defined('SITES_TEMP_URL')) {
 		} else {
-			define('SITES_TEMP_URL', MOLAJO_BASE_URL . 'site/temp');
+			define('SITES_TEMP_URL', BASE_URL . 'site/temp');
 		}
 
 		$scheme = Molajo::RequestService()
 			->request->getScheme() . '://';
-		$siteBase = substr(MOLAJO_BASE_URL, strlen($scheme), 999);
+		$siteBase = substr(BASE_URL, strlen($scheme), 999);
 
 		if (defined('SITE_BASE_URL')) {
 		} else {
-			$sites = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/sites.xml');
+			$sites = simplexml_load_file(CONFIGURATION_FOLDER . '/sites.xml');
 
 			foreach ($sites->site as $single) {
 				if ($single->base == $siteBase) {
@@ -528,42 +528,42 @@ Class Application extends Molajo
 		}
 
 		$pageRequest = '';
-		if (defined('MOLAJO_APPLICATION')) {
-			/* must also define MOLAJO_PAGE_REQUEST */
+		if (defined('APPLICATION')) {
+			/* must also define PAGE_REQUEST */
 		} else {
-			$apps = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/applications.xml');
+			$apps = simplexml_load_file(CONFIGURATION_FOLDER . '/applications.xml');
 
 			foreach ($apps->application as $app) {
 
 				if ($app->name == $applicationTest) {
 
-					define('MOLAJO_APPLICATION', $app->name);
-					define('MOLAJO_APPLICATION_URL_PATH', MOLAJO_APPLICATION . '/');
+					define('APPLICATION', $app->name);
+					define('APPLICATION_URL_PATH', APPLICATION . '/');
 
 					$pageRequest = substr(
 						$requestURI,
-						strlen(MOLAJO_APPLICATION) + 1,
-						strlen($requestURI) - strlen(MOLAJO_APPLICATION) + 1
+						strlen(APPLICATION) + 1,
+						strlen($requestURI) - strlen(APPLICATION) + 1
 					);
 					break;
 				}
 			}
 
-			if (defined('MOLAJO_APPLICATION')) {
+			if (defined('APPLICATION')) {
 			} else {
-				define('MOLAJO_APPLICATION', $apps->default->name);
-				define('MOLAJO_APPLICATION_URL_PATH', '');
+				define('APPLICATION', $apps->default->name);
+				define('APPLICATION_URL_PATH', '');
 				$pageRequest = $requestURI;
 			}
 		}
 
 		/*  Page Request used in Molajo::Request                */
-		if (defined('MOLAJO_PAGE_REQUEST')) {
+		if (defined('PAGE_REQUEST')) {
 		} else {
 			if (strripos($pageRequest, '/') == (strlen($pageRequest) - 1)) {
 				$pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/'));
 			}
-			define('MOLAJO_PAGE_REQUEST', $pageRequest);
+			define('PAGE_REQUEST', $pageRequest);
 		}
 	}
 
@@ -577,13 +577,13 @@ Class Application extends Molajo
 	 */
 	protected function _installCheck()
 	{
-		if (defined('MOLAJO_INSTALL_CHECK')) {
+		if (defined('INSTALL_CHECK')) {
 		} else {
-			define('MOLAJO_INSTALL_CHECK', false);
+			define('INSTALL_CHECK', false);
 		}
 
-		if (MOLAJO_APPLICATION == 'installation'
-			|| (MOLAJO_INSTALL_CHECK === false
+		if (APPLICATION == 'installation'
+			|| (INSTALL_CHECK === false
 				&& file_exists(SITE_FOLDER_PATH . '/configuration.php'))
 		) {
 
@@ -592,7 +592,7 @@ Class Application extends Molajo
 				|| filesize(SITE_FOLDER_PATH . '/configuration.php' < 10)
 			) {
 				//todo: use HTTPFoundation redirect
-				$redirect = MOLAJO_BASE_URL . 'installation/';
+				$redirect = BASE_URL . 'installation/';
 				header('Location: ' . $redirect);
 				exit();
 			}
@@ -632,7 +632,7 @@ Class Application extends Molajo
 
 		if (defined('SITE_MEDIA_URL')) {
 		} else {
-			define('SITE_MEDIA_URL', MOLAJO_BASE_URL . Services::Registry()->get('Configuration\\media_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/media'));
+			define('SITE_MEDIA_URL', BASE_URL . Services::Registry()->get('Configuration\\media_url', BASE_URL . 'sites/' . SITE_ID . '/media'));
 		}
 
 		if (defined('SITE_TEMP_FOLDER')) {
@@ -641,7 +641,7 @@ Class Application extends Molajo
 		}
 		if (defined('SITE_TEMP_URL')) {
 		} else {
-			define('SITE_TEMP_URL', MOLAJO_BASE_URL . Services::Registry()->get('Configuration\\temp_url', MOLAJO_BASE_URL . 'sites/' . SITE_ID . '/temp'));
+			define('SITE_TEMP_URL', BASE_URL . Services::Registry()->get('Configuration\\temp_url', BASE_URL . 'sites/' . SITE_ID . '/temp'));
 		}
 		return;
 	}

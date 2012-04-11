@@ -80,7 +80,7 @@ class UpdateController extends Controller
         die;
 
 
-        $hash = Services::Security()->getHash(MOLAJO_APPLICATION.get_class($this));
+        $hash = Services::Security()->getHash(APPLICATION.get_class($this));
 
         $session = Services::Session()->create($hash);
         var_dump($session);
@@ -138,7 +138,7 @@ class UpdateController extends Controller
                     ->set(
                     $message =
                         Services::Language()->translate($e->getMessage()),
-                    $type = MOLAJO_MESSAGE_TYPE_ERROR
+                    $type = MESSAGE_TYPE_ERROR
                 );
             }
         }
@@ -159,7 +159,7 @@ class UpdateController extends Controller
         $valid = true;
 
         $v = simplexml_load_file(
-            MOLAJO_APPLICATIONS_MVC
+            APPLICATIONS_MVC
                 . '/Model/Table/'
                 . substr($this->model->table_name, 3, 99)
                 . '.xml'
@@ -203,7 +203,7 @@ class UpdateController extends Controller
                         $valid = false;
                         Services::Message()->set(
                             $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                            $type = MOLAJO_MESSAGE_TYPE_ERROR
+                            $type = MESSAGE_TYPE_ERROR
                         );
 
                         Services::Debug()->set('UpdateController::filter_and_validate Filter Failed' . ' ' . $message);
@@ -228,7 +228,7 @@ class UpdateController extends Controller
                     $valid = false;
                     Services::Message()->set(
                         $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
+                        $type = MESSAGE_TYPE_ERROR
                     );
 
                     Services::Debug()->set('UpdateController::filter_and_validate Helper Failed' . ' ' . $message);
@@ -257,7 +257,7 @@ class UpdateController extends Controller
                     $valid = false;
                     Services::Message()->set(
                         $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                        $type = MOLAJO_MESSAGE_TYPE_ERROR
+                        $type = MESSAGE_TYPE_ERROR
                     );
 
                     Services::Debug()->set('UpdateController::filter_and_validate FKs Failed' . ' ' . $message);
@@ -401,7 +401,7 @@ class UpdateController extends Controller
 
         //			if ($this->db->query()) {
         //            } else {
-        //				$e = new MolajoException(Services::Language()->sprintf('MOLAJO_DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->db->getErrorMsg()));
+        //				$e = new MolajoException(Services::Language()->sprintf('DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->db->getErrorMsg()));
         //				$this->setError($e);
         //				return false;
         //			}

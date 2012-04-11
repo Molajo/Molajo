@@ -175,7 +175,7 @@ class LoginController
 
         // Set clientid in the options array if it hasn't been set already.
         if (!isset($options['application_id'])) {
-            $options['application_id'] = MOLAJO_APPLICATION_ID;
+            $options['application_id'] = APPLICATION_ID;
         }
 
         // Import the user plugin group.
