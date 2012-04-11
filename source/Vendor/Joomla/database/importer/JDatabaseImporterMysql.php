@@ -144,13 +144,13 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	 * Get the SQL syntax to add a column.
 	 *
 	 * @param   string            $table  The table name.
-	 * @param   SimpleXMLElement  $field  The XML field definition.
+	 * @param   \SimpleXMLElement  $field  The XML field definition.
 	 *
 	 * @return  string
 	 *
 	 * @since   11.1
 	 */
-	protected function getAddColumnSQL($table, SimpleXMLElement $field)
+	protected function getAddColumnSQL($table, \SimpleXMLElement $field)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ADD COLUMN ' . $this->getColumnSQL($field);
 
@@ -177,13 +177,13 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	/**
 	 * Get alters for table if there is a difference.
 	 *
-	 * @param   SimpleXMLElement  $structure  The XML structure pf the table.
+	 * @param   \SimpleXMLElement  $structure  The XML structure pf the table.
 	 *
 	 * @return  array
 	 *
 	 * @since   11.1
 	 */
-	protected function getAlterTableSQL(SimpleXMLElement $structure)
+	protected function getAlterTableSQL(\SimpleXMLElement $structure)
 	{
 		// Initialise variables.
 		$table = $this->getRealTableName($structure['name']);
@@ -328,13 +328,13 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	 * Get the syntax to alter a column.
 	 *
 	 * @param   string            $table  The name of the database table to alter.
-	 * @param   SimpleXMLElement  $field  The XML definition for the field.
+	 * @param   \SimpleXMLElement  $field  The XML definition for the field.
 	 *
 	 * @return  string
 	 *
 	 * @since   11.1
 	 */
-	protected function getChangeColumnSQL($table, SimpleXMLElement $field)
+	protected function getChangeColumnSQL($table, \SimpleXMLElement $field)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' CHANGE COLUMN ' . $this->db->quoteName((string) $field['Field']) . ' '
 			. $this->getColumnSQL($field);
@@ -345,13 +345,13 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	/**
 	 * Get the SQL syntax for a single column that would be included in a table create or alter statement.
 	 *
-	 * @param   SimpleXMLElement  $field  The XML field definition.
+	 * @param   \SimpleXMLElement  $field  The XML field definition.
 	 *
 	 * @return  string
 	 *
 	 * @since   11.1
 	 */
-	protected function getColumnSQL(SimpleXMLElement $field)
+	protected function getColumnSQL(\SimpleXMLElement $field)
 	{
 		// Initialise variables.
 		// TODO Incorporate into parent class and use $this.
@@ -464,7 +464,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 		$lookup = array();
 		foreach ($keys as $key)
 		{
-			if ($key instanceof SimpleXMLElement)
+			if ($key instanceof \SimpleXMLElement)
 			{
 				$kName = (string) $key['Key_name'];
 			}
@@ -485,7 +485,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	/**
 	 * Get the SQL syntax for a key.
 	 *
-	 * @param   array  $columns  An array of SimpleXMLElement objects comprising the key.
+	 * @param   array  $columns  An array of \SimpleXMLElement objects comprising the key.
 	 *
 	 * @return  string
 	 *
@@ -565,13 +565,13 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 		$prefix = $this->db->getPrefix();
 		$tables = $this->db->getTableList();
 
-		if ($this->from instanceof SimpleXMLElement)
+		if ($this->from instanceof \SimpleXMLElement)
 		{
 			$xml = $this->from;
 		}
 		else
 		{
-			$xml = new SimpleXMLElement($this->from);
+			$xml = new \SimpleXMLElement($this->from);
 		}
 
 		// Get all the table definitions.

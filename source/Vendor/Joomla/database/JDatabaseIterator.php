@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -16,7 +18,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Database
  * @since       12.1
  */
-abstract class JDatabaseIterator implements Countable, Iterator
+abstract class JDatabaseIterator implements \Countable, \Iterator
 {
 	/**
 	 * The database cursor.
@@ -53,7 +55,7 @@ abstract class JDatabaseIterator implements Countable, Iterator
 	/**
 	 * A numeric or string key for the current database record.
 	 *
-	 * @var    scalar
+	 * @var    /scalar
 	 * @since  12.1
 	 */
 	private $_key;
@@ -118,7 +120,7 @@ abstract class JDatabaseIterator implements Countable, Iterator
 	/**
 	 * The key of the current element in the iterator.
 	 *
-	 * @return  scalar
+	 * @return  /scalar
 	 *
 	 * @see     Iterator::key()
 	 * @since   12.1

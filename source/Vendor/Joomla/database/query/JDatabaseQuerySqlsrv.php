@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\query;
+
+use Joomla\database\JDatabaseQuery;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

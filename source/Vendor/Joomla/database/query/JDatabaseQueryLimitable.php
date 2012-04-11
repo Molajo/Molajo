@@ -9,6 +9,8 @@
 
 namespace Joomla\database\query;
 
+use Joomla\database\JDatabaseQuery;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

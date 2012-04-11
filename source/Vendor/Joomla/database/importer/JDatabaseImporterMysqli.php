@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\importer;
+
+use Joomla\database\driver\JDatabaseDriverMysqli;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

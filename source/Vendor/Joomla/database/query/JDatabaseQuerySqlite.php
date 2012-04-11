@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\query;
+
+use Joomla\database\JDatabaseQuery;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -97,7 +101,7 @@ class JDatabaseQuerySqlite extends JDatabaseQueryPdo implements JDatabaseQueryPr
 	 *
 	 * @param   mixed  $key  The bounded variable key to retrieve
 	 *
-	 * @return array|stdClass
+	 * @return array|/stdClass
 	 *
 	 * @since 12.1
 	 */

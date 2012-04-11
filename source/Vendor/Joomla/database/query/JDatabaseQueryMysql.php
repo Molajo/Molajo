@@ -23,7 +23,7 @@ defined('JPATH_PLATFORM') or die;
 class JDatabaseQueryMysql extends JDatabaseQuery implements JDatabaseQueryLimitable
 {
 	/**
-	 * @var    interger  The offset for the result set.
+	 * @var    integer  The offset for the result set.
 	 * @since  12.1
 	 */
 	protected $offset;

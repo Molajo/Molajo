@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\importer;
+
+use Joomla\database\JDatabaseImporter;
+use Joomla\database\driver\JDatabaseDriverPostgresql;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -139,13 +144,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 * Get the SQL syntax to add a column.
 	 *
 	 * @param   string            $table  The table name.
-	 * @param   SimpleXMLElement  $field  The XML field definition.
+	 * @param   \SimpleXMLElement  $field  The XML field definition.
 	 *
 	 * @return  string
 	 *
 	 * @since   12.1
 	 */
-	protected function getAddColumnSQL($table, SimpleXMLElement $field)
+	protected function getAddColumnSQL($table, \SimpleXMLElement $field)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ADD COLUMN ' . $this->getColumnSQL($field);
 
@@ -155,13 +160,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * Get the SQL syntax to add an index.
 	 *
-	 * @param   SimpleXMLElement  $field  The XML index definition.
+	 * @param   \SimpleXMLElement  $field  The XML index definition.
 	 *
 	 * @return  string
 	 *
 	 * @since   12.1
 	 */
-	protected function getAddIndexSQL(SimpleXMLElement $field)
+	protected function getAddIndexSQL(\SimpleXMLElement $field)
 	{
 		return (string) $field['Query'];
 	}
@@ -169,13 +174,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * Get alters for table if there is a difference.
 	 *
-	 * @param   SimpleXMLElement  $structure  The XML structure of the table.
+	 * @param   \SimpleXMLElement  $structure  The XML structure of the table.
 	 *
 	 * @return  array
 	 *
 	 * @since   12.1
 	 */
-	protected function getAlterTableSQL(SimpleXMLElement $structure)
+	protected function getAlterTableSQL(\SimpleXMLElement $structure)
 	{
 		// Initialise variables.
 		$table = $this->getRealTableName($structure['name']);
@@ -362,7 +367,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * Get the syntax to add a sequence.
 	 *
-	 * @param   SimpleXMLElement  $field  The XML definition for the sequence.
+	 * @param   \SimpleXMLElement  $field  The XML definition for the sequence.
 	 *
 	 * @return  string
 	 *
@@ -393,7 +398,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * Get the syntax to alter a sequence.
 	 *
-	 * @param   SimpleXMLElement  $field  The XML definition for the sequence.
+	 * @param   \SimpleXMLElement  $field  The XML definition for the sequence.
 	 *
 	 * @return  string
 	 *
@@ -424,13 +429,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 * Get the syntax to alter a column.
 	 *
 	 * @param   string            $table  The name of the database table to alter.
-	 * @param   SimpleXMLElement  $field  The XML definition for the field.
+	 * @param   \SimpleXMLElement  $field  The XML definition for the field.
 	 *
 	 * @return  string
 	 *
 	 * @since   12.1
 	 */
-	protected function getChangeColumnSQL($table, SimpleXMLElement $field)
+	protected function getChangeColumnSQL($table, \SimpleXMLElement $field)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ALTER COLUMN ' . $this->db->quoteName((string) $field['Field']) . ' '
 			. $this->getAlterColumnSQL($table, $field);
@@ -442,7 +447,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 * Get the SQL syntax for a single column that would be included in a table create statement.
 	 *
 	 * @param   string            $table  The name of the database table to alter.
-	 * @param   SimpleXMLElement  $field  The XML field definition.
+	 * @param   \SimpleXMLElement  $field  The XML field definition.
 	 *
 	 * @return  string
 	 *
@@ -497,13 +502,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * Get the SQL syntax for a single column that would be included in a table create statement.
 	 *
-	 * @param   SimpleXMLElement  $field  The XML field definition.
+	 * @param   \SimpleXMLElement  $field  The XML field definition.
 	 *
 	 * @return  string
 	 *
 	 * @since   12.1
 	 */
-	protected function getColumnSQL(SimpleXMLElement $field)
+	protected function getColumnSQL(\SimpleXMLElement $field)
 	{
 		// Initialise variables.
 		// TODO Incorporate into parent class and use $this.
@@ -614,7 +619,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		$lookup = array();
 		foreach ($keys as $key)
 		{
-			if ($key instanceof SimpleXMLElement)
+			if ($key instanceof \SimpleXMLElement)
 			{
 				$kName = (string) $key['Index'];
 			}
@@ -648,7 +653,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		$lookup = array();
 		foreach ($sequences as $seq)
 		{
-			if ($seq instanceof SimpleXMLElement)
+			if ($seq instanceof \SimpleXMLElement)
 			{
 				$sName = (string) $seq['Name'];
 			}
@@ -702,13 +707,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		$prefix = $this->db->getPrefix();
 		$tables = $this->db->getTableList();
 
-		if ($this->from instanceof SimpleXMLElement)
+		if ($this->from instanceof \SimpleXMLElement)
 		{
 			$xml = $this->from;
 		}
 		else
 		{
-			$xml = new SimpleXMLElement($this->from);
+			$xml = new \SimpleXMLElement($this->from);
 		}
 
 		// Get all the table definitions.

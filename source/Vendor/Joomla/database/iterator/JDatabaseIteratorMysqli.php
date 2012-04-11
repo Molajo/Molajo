@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\iterator;
+
+use Joomla\database\JDatabaseIterator;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
