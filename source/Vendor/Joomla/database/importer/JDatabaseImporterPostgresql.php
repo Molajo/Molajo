@@ -27,7 +27,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * The database connector to use for exporting structure and/or data.
 	 *
-	 * @var    JDatabasePostgresql
+	 * @var    JDatabaseDriverPostgresql
 	 * @since  12.1
 	 */
 	protected $db = null;
@@ -65,7 +65,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 */
 	public function __construct()
 	{
-		$this->options = new stdClass;
+		$this->options = new \stdClass;
 
 		$this->cache = array('columns' => array(), 'keys' => array());
 
@@ -100,20 +100,20 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 * @return  JDatabaseImporterPostgresql  Method supports chaining.
 	 *
 	 * @since   12.1
-	 * @throws  Exception if an error is encountered.
+	 * @throws  \Exception if an error is encountered.
 	 */
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabasePostgresql))
+		if (!($this->db instanceof JDatabaseDriverPostgresql))
 		{
-			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
 		if (empty($this->from))
 		{
-			throw new Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
 		return $this;
@@ -606,7 +606,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 * @return  array  The lookup array. array({key name} => array(object, ...))
 	 *
 	 * @since   12.1
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function getIdxLookup($keys)
 	{
@@ -640,7 +640,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 * @return  array  The lookup array. array({key name} => array(object, ...))
 	 *
 	 * @since   12.1
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function getSeqLookup($sequences)
 	{
@@ -693,7 +693,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 *
 	 * @note    Currently only supports XML format.
 	 * @since   12.1
-	 * @throws  Exception on error.
+	 * @throws  \Exception on error.
 	 * @todo    If it's not XML convert to XML first.
 	 */
 	protected function mergeStructure()
@@ -732,7 +732,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 						if (!$this->db->query())
 						{
 							$this->addLog('Fail: ' . $this->db->getQuery());
-							throw new Exception($this->db->getErrorMsg());
+							throw new \Exception($this->db->getErrorMsg());
 						}
 						else
 						{
@@ -751,7 +751,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 				if (!$this->db->query())
 				{
 					$this->addLog('Fail: ' . $this->db->getQuery());
-					throw new Exception($this->db->getErrorMsg());
+					throw new \Exception($this->db->getErrorMsg());
 				}
 				else
 				{
@@ -764,13 +764,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	/**
 	 * Sets the database connector to use for exporting structure and/or data from PostgreSQL.
 	 *
-	 * @param   JDatabasePostgresql  $db  The database connector.
+	 * @param   JDatabaseDriverPostgresql  $db  The database connector.
 	 *
 	 * @return  JDatabaseImporterPostgresql  Method supports chaining.
 	 *
 	 * @since   12.1
 	 */
-	public function setDbo(JDatabasePostgresql $db)
+	public function setDbo(JDatabaseDriverPostgresql $db)
 	{
 		$this->db = $db;
 

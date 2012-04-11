@@ -73,13 +73,13 @@ abstract class JDatabaseIterator implements Countable, Iterator
 	 * @param   string  $column  An option column to use as the iterator key.
 	 * @param   string  $class   The class of object that is returned.
 	 *
-	 * @throws  InvalidArgumentException
+	 * @throws  \InvalidArgumentException
 	 */
 	public function __construct($cursor, $column = null, $class = 'stdClass')
 	{
 		if (!class_exists($class))
 		{
-			throw new InvalidArgumentException(sprintf('new %s(*%s*, cursor)', get_class($this), gettype($class)));
+			throw new \InvalidArgumentException(sprintf('new %s(*%s*, cursor)', get_class($this), gettype($class)));
 		}
 
 		$this->cursor = $cursor;

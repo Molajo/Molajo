@@ -77,7 +77,7 @@ class JDatabaseQuerySqlite extends JDatabaseQueryPdo implements JDatabaseQueryPr
 			return $this;
 		}
 
-		$obj = new stdClass;
+		$obj = new \stdClass;
 
 		$obj->value = &$value;
 		$obj->dataType = $dataType;

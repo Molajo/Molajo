@@ -7,9 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+namespace Joomla\database;
 
-jimport('joomla.filesystem.folder');
+use Joomla\filesystem\JFile;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Joomla Platform Database Interface
@@ -40,7 +42,7 @@ interface JDatabaseInterface
  * @method      string  q()   q($text, $escape)  Alias for quote method
  * @method      string  qn()  qs($name, $as)     Alias for quoteName method
  */
-abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
+abstract class JDatabaseDriver implements JDatabaseInterface
 {
 	/**
 	 * The name of the database.
@@ -181,7 +183,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 		$connectors = array();
 
 		// Get an iterator and loop trough the driver classes.
-		$iterator = new DirectoryIterator(__DIR__ . '/driver');
+		$iterator = new \DirectoryIterator(__DIR__ . '/driver');
 
 		foreach ($iterator as $file)
 		{
@@ -195,7 +197,8 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 			}
 
 			// Derive the class name from the type.
-			$class = str_ireplace('.php', '', 'JDatabaseDriver' . ucfirst(trim($fileName)));
+			$class = str_ireplace('.php', '', trim($fileName));
+			$class = 'Joomla\\database\\driver\\' . $class;
 
 			// If the class doesn't exist we have nothing left to do but look at the next type.  We did our best.
 			if (!class_exists($class))
@@ -246,12 +249,13 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 		{
 
 			// Derive the class name from the driver.
-			$class = 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
+			$class = 'Joomla\\database\\driver\\';
+			$class .= 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
 
 			// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
 			if (!class_exists($class))
 			{
-				throw new RuntimeException(sprintf('Unable to load Database Driver: %s', $options['driver']));
+				throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $options['driver']));
 			}
 
 			// Create our new JDatabaseDriver connector based on the options given.
@@ -259,9 +263,9 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 			{
 				$instance = new $class($options);
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
-				throw new RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
+				throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
 			}
 
 			// Set the new connector to the global instances based on signature.
@@ -383,7 +387,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  void  Returns void if the database connected successfully.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function connect();
 
@@ -405,7 +409,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public abstract function dropTable($table, $ifExists = true);
 
@@ -598,18 +602,19 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabaseExporter  An exporter object.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getExporter()
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseExporter' . ucfirst($this->name);
+		$class = 'Joomla\\database\\exporter\\';
+		$class .= 'JDatabaseExporter' . ucfirst($this->name);
 
 		// Make sure we have an exporter class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException('Database Exporter not found.');
+			throw new \RuntimeException('Database Exporter not found.');
 		}
 
 		$o = new $class;
@@ -624,18 +629,19 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabaseImporter  An importer object.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getImporter()
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseImporter' . ucfirst($this->name);
+		$class = 'Joomla\\database\\importer\\';
+		$class .= 'JDatabaseImporter' . ucfirst($this->name);
 
 		// Make sure we have an importer class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException('Database Importer not found');
+			throw new \RuntimeException('Database Importer not found');
 		}
 
 		$o = new $class;
@@ -652,20 +658,21 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabaseQuery  The current query object or a new object extending the JDatabaseQuery class.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getQuery($new = false)
 	{
 		if ($new)
 		{
 			// Derive the class name from the driver.
-			$class = 'JDatabaseQuery' . ucfirst($this->name);
+			$class = 'Joomla\\database\\query\\';
+			$class .= 'JDatabaseQuery' . ucfirst($this->name);
 
 			// Make sure we have a query class for this driver.
 			if (!class_exists($class))
 			{
 				// If it doesn't exist we are at an impasse so throw an exception.
-				throw new RuntimeException('Database Query Class not found.');
+				throw new \RuntimeException('Database Query Class not found.');
 			}
 
 			return new $class($this);
@@ -685,18 +692,19 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabaseIterator  A new database iterator.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getIterator($column = null, $class = 'stdClass')
 	{
 		// Derive the class name from the driver.
-		$iteratorClass = 'JDatabaseIterator' . ucfirst($this->name);
+		$iteratorClass = 'Joomla\\database\\iterator\\';
+		$iteratorClass .= 'JDatabaseIterator' . ucfirst($this->name);
 
 		// Make sure we have an iterator class for this driver.
 		if (!class_exists($iteratorClass))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException(sprintf('class *%s* is not defined', $iteratorClass));
+			throw new \RuntimeException(sprintf('class *%s* is not defined', $iteratorClass));
 		}
 
 		// Return a new iterator
@@ -712,7 +720,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  array  An array of fields by table.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function getTableColumns($table, $typeOnly = true);
 
@@ -724,7 +732,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  array  A list of the create SQL for the tables.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function getTableCreate($tables);
 
@@ -736,7 +744,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  array  An array of keys for the table(s).
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function getTableKeys($tables);
 
@@ -746,23 +754,9 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  array  An array of all the tables in the database.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function getTableList();
-
-	/**
-	 * Determine whether or not the database engine supports UTF-8 character encoding.
-	 *
-	 * @return  boolean  True if the database engine supports UTF-8 character encoding.
-	 *
-	 * @since   11.1
-	 * @deprecated 12.3 Use hasUTFSupport() instead
-	 */
-	public function getUTFSupport()
-	{
-		JLog::add('JDatabase::getUTFSupport() is deprecated. Use JDatabase::hasUTFSupport() instead.', JLog::WARNING, 'deprecated');
-		return $this->hasUTFSupport();
-	}
 
 	/**
 	 * Determine whether or not the database engine supports UTF-8 character encoding.
@@ -792,7 +786,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 *
 	 * @since   11.1
 	 */
-	abstract public function insertid();
+	abstract public function insertId();
 
 	/**
 	 * Inserts a row into a table based on an object's properties.
@@ -804,7 +798,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  boolean    True on success.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function insertObject($table, &$object, $key = null)
 	{
@@ -843,7 +837,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 		}
 
 		// Update the primary key if it exists.
-		$id = $this->insertid();
+		$id = $this->insertId();
 		if ($key && $id)
 		{
 			$object->$key = $id;
@@ -871,7 +865,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed  The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadAssoc()
 	{
@@ -913,7 +907,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed   The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadAssocList($key = null, $column = null)
 	{
@@ -957,7 +951,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed    The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadColumn($offset = 0)
 	{
@@ -992,7 +986,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed   The result of the query as an array, false if there are no more rows.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadNextObject($class = 'stdClass')
 	{
@@ -1029,7 +1023,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed  The result of the query as an array, false if there are no more rows.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadNextRow()
 	{
@@ -1068,7 +1062,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed   The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadObject($class = 'stdClass')
 	{
@@ -1108,7 +1102,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed   The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadObjectList($key = '', $class = 'stdClass')
 	{
@@ -1148,7 +1142,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed  The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadResult()
 	{
@@ -1182,7 +1176,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed  The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadRow()
 	{
@@ -1221,7 +1215,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed   The return value or null if the query failed.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadRowList($key = null)
 	{
@@ -1263,7 +1257,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public abstract function lockTable($tableName);
 
@@ -1474,7 +1468,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public abstract function renameTable($oldTable, $newTable, $backup = null, $prefix = null);
 
@@ -1486,7 +1480,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  boolean  True if the database was successfully selected.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function select($database);
 
@@ -1542,7 +1536,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function transactionCommit();
 
@@ -1552,7 +1546,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function transactionRollback();
 
@@ -1562,7 +1556,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function transactionStart();
 
@@ -1574,7 +1568,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  void
 	 *
 	 * @since   11.3
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function truncateTable($table)
 	{
@@ -1593,7 +1587,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function updateObject($table, &$object, $key, $nulls = false)
 	{
@@ -1661,7 +1655,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	abstract public function execute();
 
@@ -1671,7 +1665,7 @@ abstract class JDatabaseDriver extends JDatabase implements JDatabaseInterface
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public abstract function unlockTables();
 }

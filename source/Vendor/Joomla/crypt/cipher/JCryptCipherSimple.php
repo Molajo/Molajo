@@ -1,5 +1,4 @@
 <?php
-namespace Joomla;
 /**
  * @package     Joomla.Platform
  * @subpackage  Crypt
@@ -8,7 +7,7 @@ namespace Joomla;
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * JCrypt cipher for Simple encryption, decryption and key generation.
@@ -28,6 +27,7 @@ class JCryptCipherSimple implements JCryptCipher
 	 * @return  string  The decrypted data string.
 	 *
 	 * @since   12.1
+	 * @throws  InvalidArgumentException
 	 */
 	public function decrypt($data, JCryptKey $key)
 	{
@@ -69,6 +69,7 @@ class JCryptCipherSimple implements JCryptCipher
 	 * @return  string  The encrypted data string.
 	 *
 	 * @since   12.1
+	 * @throws  InvalidArgumentException
 	 */
 	public function encrypt($data, JCryptKey $key)
 	{

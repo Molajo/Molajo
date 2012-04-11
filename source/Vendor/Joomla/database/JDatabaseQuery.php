@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database;
+
+use Joomla\database\query\JDatabaseQueryLimitable;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -740,7 +744,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->getDateFormat();
@@ -802,13 +806,13 @@ abstract class JDatabaseQuery
 	 * @return  string  The escaped string.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException if the internal db property is not a valid object.
+	 * @throws  \RuntimeException if the internal db property is not a valid object.
 	 */
 	public function escape($text, $extra = false)
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->escape($text, $extra);
@@ -871,7 +875,7 @@ abstract class JDatabaseQuery
 			{
 				if (is_null($subQueryAlias))
 				{
-					throw new RuntimeException('JLIB_DATABASE_ERROR_NULL_SUBQUERY_ALIAS');
+					throw new \RuntimeException('JLIB_DATABASE_ERROR_NULL_SUBQUERY_ALIAS');
 				}
 
 				$tables = '( ' . (string) $tables . ' ) AS ' . $this->quoteName($subQueryAlias);
@@ -1169,7 +1173,7 @@ abstract class JDatabaseQuery
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		$result = $this->db->getNullDate($quoted);
@@ -1246,13 +1250,13 @@ abstract class JDatabaseQuery
 	 * @return  string  The quoted input string.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException if the internal db property is not a valid object.
+	 * @throws  \RuntimeException if the internal db property is not a valid object.
 	 */
 	public function quote($text, $escape = true)
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->quote(($escape ? $this->db->escape($text) : $text));
@@ -1279,13 +1283,13 @@ abstract class JDatabaseQuery
 	 * @return  mixed  The quote wrapped name, same type of $name.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException if the internal db property is not a valid object.
+	 * @throws  \RuntimeException if the internal db property is not a valid object.
 	 */
 	public function quoteName($name, $as = null)
 	{
 		if (!($this->db instanceof JDatabaseDriver))
 		{
-			throw new RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->quoteName($name, $as);

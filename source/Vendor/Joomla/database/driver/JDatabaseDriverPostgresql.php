@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\driver;
+
+use Joomla\database\JDatabaseDriver;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -83,7 +87,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  void  Returns void if the database connected successfully.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function connect()
 	{
@@ -95,7 +99,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		// Make sure the postgresql extension for PHP is installed and enabled.
 		if (!function_exists('pg_connect'))
 		{
-			throw new RuntimeException('PHP extension pg_connect is not available.');
+			throw new \RuntimeException('PHP extension pg_connect is not available.');
 		}
 
 		// Build the DSN for the connection.
@@ -104,7 +108,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		// Attempt to connect to the server.
 		if (!($this->connection = @pg_connect($dsn)))
 		{
-			throw new RuntimeException('Error connecting to PGSQL database.');
+			throw new \RuntimeException('Error connecting to PGSQL database.');
 		}
 
 		pg_set_error_verbosity($this->connection, PGSQL_ERRORS_DEFAULT);
@@ -186,7 +190,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  boolean	true
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function dropTable($tableName, $ifExists = true)
 	{
@@ -218,7 +222,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  mixed  The collation in use by the database or boolean false if not supported.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getCollation()
 	{
@@ -254,7 +258,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  JDatabaseQuery  The current query object or a new object extending the JDatabaseQuery class.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getQuery($new = false, $asObj = false)
 	{
@@ -263,7 +267,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 			// Make sure we have a query class for this driver.
 			if (!class_exists('JDatabaseQueryPostgresql'))
 			{
-				throw new RuntimeException('JDatabaseQueryPostgresql Class not found.');
+				throw new \RuntimeException('JDatabaseQueryPostgresql Class not found.');
 			}
 
 			$this->queryObject = new JDatabaseQueryPostgresql($this);
@@ -292,7 +296,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  char  An empty char because this function is not supported by PostgreSQL.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableCreate($tables)
 	{
@@ -308,7 +312,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  array  An array of fields for the database table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableColumns($table, $typeOnly = true)
 	{
@@ -372,7 +376,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  array  An array of the column specification for the table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableKeys($table)
 	{
@@ -409,7 +413,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  array  An array of all the tables in the database.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableList()
 	{
@@ -438,7 +442,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  array  An array of sequences specification for the table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableSequences($table)
 	{
@@ -500,14 +504,14 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * To get the auto incremented value it's possible to call this function after
 	 * INSERT INTO query, or use INSERT INTO with RETURNING clause.
 	 *
-	 * @example with insertid() call:
+	 * @example with insertId() call:
 	 *		$query = $this->getQuery(true);
 	 *		$query->insert('jos_dbtest')
 	 *				->columns('title,start_date,description')
 	 *				->values("'testTitle2nd','1971-01-01','testDescription2nd'");
 	 *		$this->setQuery($query);
 	 *		$this->execute();
-	 *		$id = $this->insertid();
+	 *		$id = $this->insertId();
 	 *
 	 * @example with RETURNING clause:
 	 *		$query = $this->getQuery(true);
@@ -522,7 +526,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 *
 	 * @since   12.1
 	 */
-	public function insertid()
+	public function insertId()
 	{
 		$this->connect();
 		$insertQuery = $this->getQuery(false, true);
@@ -543,9 +547,9 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		$colName = $this->loadRow();
 		$changedColName = str_replace('nextval', 'currval', $colName);
 
-		$insertidQuery = $this->getQuery(true);
-		$insertidQuery->select($changedColName);
-		$this->setQuery($insertidQuery);
+		$insertIdQuery = $this->getQuery(true);
+		$insertIdQuery->select($changedColName);
+		$this->setQuery($insertIdQuery);
 		$insertVal = $this->loadRow();
 
 		return $insertVal[0];
@@ -559,7 +563,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function lockTable($tableName)
 	{
@@ -575,7 +579,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function execute()
 	{
@@ -584,7 +588,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		if (!is_resource($this->connection))
 		{
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -624,7 +628,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 					$this->connect();
 				}
 				// If connect fails, ignore that exception and throw the normal exception.
-				catch (RuntimeException $e)
+				catch (\RuntimeException $e)
 				{
 					// Get the error number and message.
 					$this->errorNum = (int) pg_result_error_field($this->cursor, PGSQL_DIAG_SQLSTATE) . ' ';
@@ -632,7 +636,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 
 					// Throw the normal query exception.
 					JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-					throw new RuntimeException($this->errorMsg);
+					throw new \RuntimeException($this->errorMsg);
 				}
 
 				// Since we were able to reconnect, run the query again.
@@ -647,7 +651,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 
 				// Throw the normal query exception.
 				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-				throw new RuntimeException($this->errorMsg);
+				throw new \RuntimeException($this->errorMsg);
 			}
 		}
 
@@ -665,7 +669,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function renameTable($oldTable, $newTable, $backup = null, $prefix = null)
 	{
@@ -678,7 +682,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		if ( !in_array($oldTable, $tableList) )
 		{
 			// Origin Table not found
-			throw new RuntimeException('Table not found in Postgresql database.');
+			throw new \RuntimeException('Table not found in Postgresql database.');
 		}
 		else
 		{
@@ -763,7 +767,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionCommit()
 	{
@@ -781,7 +785,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionRollback($toSavepoint = null)
 	{
@@ -803,7 +807,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionStart()
 	{
@@ -879,7 +883,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  boolean    True on success.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function insertObject($table, &$object, $key = null)
 	{
@@ -924,7 +928,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		}
 
 		// Update the primary key if it exists.
-		$id = $this->insertid();
+		$id = $this->insertId();
 		if ($key && $id)
 		{
 			$object->$key = $id;
@@ -1151,7 +1155,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   11.4
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function unlockTables()
 	{
@@ -1170,7 +1174,7 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function updateObject($table, &$object, $key, $nulls = false)
 	{

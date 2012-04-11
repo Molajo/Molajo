@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\driver;
+
+use Joomla\database\JDatabaseDriver;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -89,7 +93,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  void  Returns void if the database connected successfully.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function connect()
 	{
@@ -271,7 +275,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 		// Make sure the PDO extension for PHP is installed and enabled.
 		if (!self::isSupported())
 		{
-			throw new RuntimeException('PDO Extension is not available.', 1);
+			throw new \RuntimeException('PDO Extension is not available.', 1);
 		}
 
 		try
@@ -283,9 +287,9 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 				$this->options['driverOptions']
 			);
 		}
-		catch (PDOException $e)
+		catch (\PDOException $e)
 		{
-			throw new RuntimeException('Could not connect to PDO' . ': ' . $e->getMessage(), 2);
+			throw new \RuntimeException('Could not connect to PDO' . ': ' . $e->getMessage(), 2);
 		}
 	}
 
@@ -339,8 +343,8 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
-	 * @throws  Exception
+	 * @throws  \RuntimeException
+	 * @throws  \Exception
 	 */
 	public function execute()
 	{
@@ -349,7 +353,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 		if (!is_object($this->connection))
 		{
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -404,7 +408,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 					$this->connect();
 				}
 				// If connect fails, ignore that exception and throw the normal exception.
-				catch (RuntimeException $e)
+				catch (\RuntimeException $e)
 				{
 					// Get the error number and message.
 					$this->errorNum = (int) $this->connection->errorCode();
@@ -412,7 +416,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 
 					// Throw the normal query exception.
 					JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-					throw new RuntimeException($this->errorMsg, $this->errorNum);
+					throw new \RuntimeException($this->errorMsg, $this->errorNum);
 				}
 
 				// Since we were able to reconnect, run the query again.
@@ -427,7 +431,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 
 				// Throw the normal query exception.
 				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-				throw new RuntimeException($this->errorMsg, $this->errorNum);
+				throw new \RuntimeException($this->errorMsg, $this->errorNum);
 			}
 		}
 
@@ -510,7 +514,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 			$status = (bool) $this->loadResult();
 		}
 		// If we catch an exception here, we must not be connected.
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$status = false;
 		}
@@ -580,7 +584,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 *
 	 * @since   12.1
 	 */
-	public function insertid()
+	public function insertId()
 	{
 		$this->connect();
 
@@ -595,7 +599,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  boolean  True if the database was successfully selected.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function select($database)
 	{
@@ -661,7 +665,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  bool
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionCommit()
 	{
@@ -676,7 +680,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  bool
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionRollback()
 	{
@@ -691,7 +695,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  bool
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionStart()
 	{
@@ -797,7 +801,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  mixed   The result of the query as an array, false if there are no more rows.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadNextObject($class = 'stdClass')
 	{
@@ -830,7 +834,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  mixed  The result of the query as an array, false if there are no more rows.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadNextAssoc()
 	{
@@ -863,7 +867,7 @@ abstract class JDatabaseDriverPdo extends JDatabaseDriver
 	 * @return  mixed  The result of the query as an array, false if there are no more rows.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadNextRow()
 	{

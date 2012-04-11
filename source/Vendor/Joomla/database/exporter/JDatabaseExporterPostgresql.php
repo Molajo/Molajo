@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\exporter;
+
+use Joomla\database\JDatabaseExporter;
+use Joomla\database\driver\JDatabaseDriverPostgresql;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -29,7 +34,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	/**
 	 * The database connector to use for exporting structure and/or data.
 	 *
-	 * @var    JDatabasePostgresql
+	 * @var    JDatabaseDriverPostgresql
 	 * @since  12.1
 	 */
 	protected $db = null;
@@ -67,7 +72,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 */
 	public function __construct()
 	{
-		$this->options = new stdClass;
+		$this->options = new \stdClass;
 
 		$this->cache = array('columns' => array(), 'keys' => array());
 
@@ -88,7 +93,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 * @return  string
 	 *
 	 * @since   12.1
-	 * @throws  Exception if an error is encountered.
+	 * @throws  \Exception if an error is encountered.
 	 */
 	public function __toString()
 	{
@@ -129,7 +134,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 * @return  string  An XML string
 	 *
 	 * @since   12.1
-	 * @throws  Exception if an error occurs.
+	 * @throws  \Exception if an error occurs.
 	 */
 	protected function buildXml()
 	{
@@ -153,7 +158,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 * @return  array  An array of XML lines (strings).
 	 *
 	 * @since   12.1
-	 * @throws  Exception if an error occurs.
+	 * @throws  \Exception if an error occurs.
 	 */
 	protected function buildXmlStructure()
 	{
@@ -212,20 +217,20 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 *
 	 * @since   12.1
 	 *
-	 * @throws  Exception if an error is encountered.
+	 * @throws  \Exception if an error is encountered.
 	 */
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabasePostgresql))
+		if (!($this->db instanceof JDatabaseDriverPostgresql))
 		{
-			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
 		if (empty($this->from))
 		{
-			throw new Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
 		return $this;
@@ -259,7 +264,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 * @return  JDatabaseExporterPostgresql  Method supports chaining.
 	 *
 	 * @since   12.1
-	 * @throws  Exception if input is not a string or array.
+	 * @throws  \Exception if input is not a string or array.
 	 */
 	public function from($from)
 	{
@@ -273,7 +278,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 		}
 		else
 		{
-			throw new Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
+			throw new \Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
 		}
 
 		return $this;
@@ -282,13 +287,13 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	/**
 	 * Sets the database connector to use for exporting structure and/or data from PostgreSQL.
 	 *
-	 * @param   JDatabasePostgresql  $db  The database connector.
+	 * @param   JDatabaseDriverPostgresql  $db  The database connector.
 	 *
 	 * @return  JDatabaseExporterPostgresql  Method supports chaining.
 	 *
 	 * @since   12.1
 	 */
-	public function setDbo(JDatabasePostgresql $db)
+	public function setDbo(JDatabaseDriverPostgresql $db)
 	{
 		$this->db = $db;
 

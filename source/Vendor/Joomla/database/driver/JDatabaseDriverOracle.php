@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\driver;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -69,7 +71,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  void  Returns void if the database connected successfully.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function connect()
 	{
@@ -161,7 +163,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  array  A list of the create SQL for the tables.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableCreate($tables)
 	{
@@ -198,7 +200,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  array  An array of fields for the database table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableColumns($table, $typeOnly = true)
 	{
@@ -249,7 +251,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  array  An array of the column specification for the table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableKeys($table)
 	{
@@ -286,7 +288,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  array    An array of all the tables in the database.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableList($databaseName = null, $includeDatabaseName = false)
 	{
@@ -351,7 +353,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  boolean  True if the database was successfully selected.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function select($database)
 	{
@@ -414,7 +416,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function lockTable($table)
 	{
@@ -434,7 +436,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function renameTable($oldTable, $newTable, $backup = null, $prefix = null)
 	{
@@ -449,7 +451,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function unlockTables()
 	{

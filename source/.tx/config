@@ -4,7 +4,7 @@ lang_map = af_ZA: af-ZA, am_ET: am-ET, ar_AE: ar-AE, ar_BH: ar-BH, ar_DZ: ar-DZ,
 type = INI
 
 [molajo.core]
-file_filter = src/Molajo/extensions/languages/<lang>/<lang>.ini
-source_file = src/Molajo/extensions/languages/en-GB/en-GB.ini
+file_filter = source/Molajo/extensions/languages/<lang>/<lang>.ini
+source_file = source/Molajo/extensions/languages/en-GB/en-GB.ini
 source_lang = en_GB
 minimum_perc = 100

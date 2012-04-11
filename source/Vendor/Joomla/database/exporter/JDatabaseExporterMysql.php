@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\exporter;
+
+use Joomla\database\JDatabaseExporter;
+use Joomla\database\driver\JDatabaseDriverMysql;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -67,7 +72,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 */
 	public function __construct()
 	{
-		$this->options = new stdClass;
+		$this->options = new \stdClass;
 
 		$this->cache = array('columns' => array(), 'keys' => array());
 
@@ -88,7 +93,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 * @return  string
 	 *
 	 * @since   11.1
-	 * @throws  Exception if an error is encountered.
+	 * @throws  \Exception if an error is encountered.
 	 */
 	public function __toString()
 	{
@@ -129,7 +134,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 * @return  string  An XML string
 	 *
 	 * @since   11.1
-	 * @throws  Exception if an error occurs.
+	 * @throws  \Exception if an error occurs.
 	 */
 	protected function buildXml()
 	{
@@ -153,7 +158,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 * @return  array  An array of XML lines (strings).
 	 *
 	 * @since   11.1
-	 * @throws  Exception if an error occurs.
+	 * @throws  \Exception if an error occurs.
 	 */
 	protected function buildXmlStructure()
 	{
@@ -198,20 +203,20 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 *
 	 * @since   11.1
 	 *
-	 * @throws  Exception if an error is encountered.
+	 * @throws  \Exception if an error is encountered.
 	 */
 	public function check()
 	{
 		// Check if the db connector has been set.
 		if (!($this->db instanceof JDatabaseDriverMysql))
 		{
-			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
 		if (empty($this->from))
 		{
-			throw new Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
 		return $this;
@@ -245,7 +250,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 * @return  JDatabaseExporterMysql  Method supports chaining.
 	 *
 	 * @since   11.1
-	 * @throws  Exception if input is not a string or array.
+	 * @throws  \Exception if input is not a string or array.
 	 */
 	public function from($from)
 	{
@@ -259,7 +264,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 		}
 		else
 		{
-			throw new Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
+			throw new \Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
 		}
 
 		return $this;

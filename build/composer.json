@@ -22,8 +22,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Symfony": "src/",
-            "SessionHandlerInterface": "src/Symfony/Component/HttpFoundation/Resources/stubs"
+            "Symfony": "source/",
+            "SessionHandlerInterface": "source/Symfony/Component/HttpFoundation/Resources/stubs"
         }
     },
     "extra": {

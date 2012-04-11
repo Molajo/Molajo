@@ -73,12 +73,12 @@ if (interface_exists('SessionHandlerInterface')) {
 
 /** Joomla namespaces */
 $s->registerNamespace('Joomla', VENDOR);
-$s->registerNamespace('Joomla\\client', VENDOR);
 $s->registerNamespace('Joomla\\crypt', VENDOR);
 $s->registerNamespace('Joomla\\database', VENDOR);
 $s->registerNamespace('Joomla\\database\\driver', VENDOR);
 $s->registerNamespace('Joomla\\database\\exporter', VENDOR);
 $s->registerNamespace('Joomla\\database\\importer', VENDOR);
+$s->registerNamespace('Joomla\\database\\iterator', VENDOR);
 $s->registerNamespace('Joomla\\database\\query', VENDOR);
 $s->registerNamespace('Joomla\\filesystem', VENDOR);
 $s->registerNamespace('Joomla\\filesystem\streams', VENDOR);

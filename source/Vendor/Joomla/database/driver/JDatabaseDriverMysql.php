@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\driver;
+
+use Joomla\database\JDatabaseDriver;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -79,7 +83,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  void  Returns void if the database connected successfully.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function connect()
 	{
@@ -91,13 +95,13 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		// Make sure the MySQL extension for PHP is installed and enabled.
 		if (!function_exists('mysql_connect'))
 		{
-			throw new RuntimeException('Could not connect to MySQL.');
+			throw new \RuntimeException('Could not connect to MySQL.');
 		}
 
 		// Attempt to connect to the server.
 		if (!($this->connection = @ mysql_connect($this->options['host'], $this->options['user'], $this->options['password'], true)))
 		{
-			throw new RuntimeException('Could not connect to MySQL.');
+			throw new \RuntimeException('Could not connect to MySQL.');
 		}
 
 		// Set sql_mode to non_strict mode
@@ -188,7 +192,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  JDatabaseDriverMysql  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function dropTable($tableName, $ifExists = true)
 	{
@@ -223,7 +227,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  mixed  The collation in use by the database (string) or boolean false if not supported.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getCollation()
 	{
@@ -258,7 +262,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  array  A list of the create SQL for the tables.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableCreate($tables)
 	{
@@ -291,7 +295,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  array  An array of fields for the database table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableColumns($table, $typeOnly = true)
 	{
@@ -331,7 +335,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  array  An array of the column specification for the table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableKeys($table)
 	{
@@ -350,7 +354,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  array  An array of all the tables in the database.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableList()
 	{
@@ -384,7 +388,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 *
 	 * @since   12.1
 	 */
-	public function insertid()
+	public function insertId()
 	{
 		$this->connect();
 
@@ -399,7 +403,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  JDatabaseMySQL  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function lockTable($table)
 	{
@@ -414,7 +418,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function execute()
 	{
@@ -423,7 +427,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		if (!is_resource($this->connection))
 		{
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -463,7 +467,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 					$this->connect();
 				}
 				// If connect fails, ignore that exception and throw the normal exception.
-				catch (RuntimeException $e)
+				catch (\RuntimeException $e)
 				{
 					// Get the error number and message.
 					$this->errorNum = (int) mysql_errno($this->connection);
@@ -471,7 +475,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 					// Throw the normal query exception.
 					JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-					throw new RuntimeException($this->errorMsg, $this->errorNum);
+					throw new \RuntimeException($this->errorMsg, $this->errorNum);
 				}
 
 				// Since we were able to reconnect, run the query again.
@@ -486,7 +490,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 				// Throw the normal query exception.
 				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-				throw new RuntimeException($this->errorMsg, $this->errorNum);
+				throw new \RuntimeException($this->errorMsg, $this->errorNum);
 			}
 		}
 
@@ -504,7 +508,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function renameTable($oldTable, $newTable, $backup = null, $prefix = null)
 	{
@@ -521,7 +525,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  boolean  True if the database was successfully selected.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function select($database)
 	{
@@ -534,7 +538,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 		if (!mysql_select_db($database, $this->connection))
 		{
-			throw new RuntimeException('Could not connect to database');
+			throw new \RuntimeException('Could not connect to database');
 		}
 
 		return true;
@@ -560,7 +564,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionCommit()
 	{
@@ -576,7 +580,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionRollback()
 	{
@@ -592,7 +596,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionStart()
 	{
@@ -665,7 +669,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 * @return  JDatabaseMySQL  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function unlockTables()
 	{

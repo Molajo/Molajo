@@ -1,5 +1,4 @@
 <?php
-namespace Joomla;
 /**
  * @package     Joomla.Platform
  * @subpackage  Crypt

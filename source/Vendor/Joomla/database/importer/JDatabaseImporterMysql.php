@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\importer;
+
+use Joomla\database\JDatabaseImporter;
+use Joomla\database\driver\JDatabaseDriverMysql;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -65,7 +70,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	 */
 	public function __construct()
 	{
-		$this->options = new stdClass;
+		$this->options = new \stdClass;
 
 		$this->cache = array('columns' => array(), 'keys' => array());
 
@@ -100,20 +105,20 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	 * @return  JDatabaseImporterMysql  Method supports chaining.
 	 *
 	 * @since   11.1
-	 * @throws  Exception if an error is encountered.
+	 * @throws  \Exception if an error is encountered.
 	 */
 	public function check()
 	{
 		// Check if the db connector has been set.
 		if (!($this->db instanceof JDatabaseDriverMysql))
 		{
-			throw new Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
 		if (empty($this->from))
 		{
-			throw new Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
 		return $this;
@@ -451,7 +456,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	 * @return  array  The lookup array. array({key name} => array(object, ...))
 	 *
 	 * @since   11.1
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function getKeyLookup($keys)
 	{
@@ -551,7 +556,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 	 *
 	 * @note    Currently only supports XML format.
 	 * @since   11.1
-	 * @throws  Exception on error.
+	 * @throws  \Exception on error.
 	 * @todo    If it's not XML convert to XML first.
 	 */
 	protected function mergeStructure()
@@ -590,7 +595,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 						if (!$this->db->execute())
 						{
 							$this->addLog('Fail: ' . $this->db->getQuery());
-							throw new Exception($this->db->getErrorMsg());
+							throw new \Exception($this->db->getErrorMsg());
 						}
 						else
 						{
@@ -609,7 +614,7 @@ class JDatabaseImporterMysql extends JDatabaseImporter
 				if (!$this->db->execute())
 				{
 					$this->addLog('Fail: ' . $this->db->getQuery());
-					throw new Exception($this->db->getErrorMsg());
+					throw new \Exception($this->db->getErrorMsg());
 				}
 				else
 				{

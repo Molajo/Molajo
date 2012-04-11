@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database\driver;
+
+use Joomla\database\JDatabaseDriver;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -91,7 +95,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  void  Returns void if the database connected successfully.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function connect()
 	{
@@ -111,13 +115,13 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		// Make sure the SQLSRV extension for PHP is installed and enabled.
 		if (!function_exists('sqlsrv_connect'))
 		{
-			throw new RuntimeException('PHP extension sqlsrv_connect is not available.');
+			throw new \RuntimeException('PHP extension sqlsrv_connect is not available.');
 		}
 
 		// Attempt to connect to the server.
 		if (!($this->connection = @ sqlsrv_connect($this->options['host'], $config)))
 		{
-			throw new RuntimeException('Database sqlsrv_connect failed');
+			throw new \RuntimeException('Database sqlsrv_connect failed');
 		}
 
 		// Make sure that DB warnings are not returned as errors.
@@ -313,7 +317,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  array  An array of fields.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableColumns($table, $typeOnly = true)
 	{
@@ -359,7 +363,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  array  A list of the create SQL for the tables.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableCreate($tables)
 	{
@@ -376,7 +380,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  array  An array of the column specification for the table.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableKeys($table)
 	{
@@ -392,7 +396,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  array  An array of all the tables in the database.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getTableList()
 	{
@@ -430,7 +434,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  boolean    True on success.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function insertObject($table, &$object, $key = null)
 	{
@@ -465,7 +469,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		{
 			return false;
 		}
-		$id = $this->insertid();
+		$id = $this->insertId();
 		if ($key && $id)
 		{
 			$object->$key = $id;
@@ -480,7 +484,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 *
 	 * @since   12.1
 	 */
-	public function insertid()
+	public function insertId()
 	{
 		$this->connect();
 
@@ -495,7 +499,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  mixed  The return value or null if the query failed.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function loadResult()
 	{
@@ -528,8 +532,8 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
-	 * @throws  Exception
+	 * @throws  \RuntimeException
+	 * @throws  \Exception
 	 */
 	public function execute()
 	{
@@ -538,7 +542,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		if (!is_resource($this->connection))
 		{
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
-			throw new RuntimeException($this->errorMsg, $this->errorNum);
+			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
@@ -589,7 +593,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 					$this->connect();
 				}
 				// If connect fails, ignore that exception and throw the normal exception.
-				catch (RuntimeException $e)
+				catch (\RuntimeException $e)
 				{
 					// Get the error number and message.
 					$errors = sqlsrv_errors();
@@ -598,7 +602,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 
 					// Throw the normal query exception.
 					JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-					throw new RuntimeException($this->errorMsg, $this->errorNum);
+					throw new \RuntimeException($this->errorMsg, $this->errorNum);
 				}
 
 				// Since we were able to reconnect, run the query again.
@@ -614,7 +618,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 
 				// Throw the normal query exception.
 				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-				throw new RuntimeException($this->errorMsg, $this->errorNum);
+				throw new \RuntimeException($this->errorMsg, $this->errorNum);
 			}
 		}
 
@@ -726,7 +730,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  boolean  True if the database was successfully selected.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function select($database)
 	{
@@ -739,7 +743,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 
 		if (!sqlsrv_query($this->connection, 'USE ' . $database, null, array('scrollable' => SQLSRV_CURSOR_STATIC)))
 		{
-			throw new RuntimeException('Could not connect to database');
+			throw new \RuntimeException('Could not connect to database');
 		}
 
 		return true;
@@ -763,7 +767,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionCommit()
 	{
@@ -779,7 +783,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionRollback()
 	{
@@ -795,7 +799,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  void
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function transactionStart()
 	{
@@ -930,7 +934,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function renameTable($oldTable, $newTable, $backup = null, $prefix = null)
 	{
@@ -958,7 +962,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function lockTable($tableName)
 	{
@@ -971,7 +975,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 * @return  JDatabase  Returns this object to support chaining.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function unlockTables()
 	{

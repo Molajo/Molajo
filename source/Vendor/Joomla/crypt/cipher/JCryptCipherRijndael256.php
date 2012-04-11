@@ -1,5 +1,4 @@
 <?php
-namespace Joomla;
 /**
  * @package     Joomla.Platform
  * @subpackage  Crypt
@@ -11,20 +10,20 @@ namespace Joomla;
 defined('JPATH_PLATFORM') or die;
 
 /**
- * JCrypt cipher for Blowfish encryption, decryption and key generation.
+ * JCrypt cipher for Rijndael 256 encryption, decryption and key generation.
  *
  * @package     Joomla.Platform
  * @subpackage  Crypt
  * @since       12.1
  */
-class JCryptCipherBlowfish extends JCryptCipherMcrypt
+class JCryptCipherRijndael256 extends JCryptCipherMcrypt
 {
 	/**
 	 * @var    integer  The mcrypt cipher constant.
 	 * @see    http://www.php.net/manual/en/mcrypt.ciphers.php
 	 * @since  12.1
 	 */
-	protected $type = MCRYPT_BLOWFISH;
+	protected $type = MCRYPT_RIJNDAEL_256;
 
 	/**
 	 * @var    integer  The mcrypt block cipher mode.
@@ -37,5 +36,5 @@ class JCryptCipherBlowfish extends JCryptCipherMcrypt
 	 * @var    string  The JCrypt key type for validation.
 	 * @since  12.1
 	 */
-	protected $keyType = 'blowfish';
+	protected $keyType = 'rijndael256';
 }

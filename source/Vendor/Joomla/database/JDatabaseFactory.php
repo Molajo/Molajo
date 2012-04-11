@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\database;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -51,12 +53,13 @@ class JDatabaseFactory
 		$options['select'] = (isset($options['select'])) ? $options['select'] : true;
 
 		// Derive the class name from the driver.
-		$class = 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
+		$class = 'Joomla\\database\\driver\\';
+		$class .= 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
 
 		// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
 		if (!class_exists($class))
 		{
-			throw new RuntimeException(sprintf('Unable to load Database Driver: %s', $options['driver']));
+			throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $options['driver']));
 		}
 
 		// Create our new JDatabaseDriver connector based on the options given.
@@ -64,9 +67,9 @@ class JDatabaseFactory
 		{
 			$instance = new $class($options);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
-			throw new RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
+			throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
 		}
 
 		return $instance;
@@ -81,18 +84,19 @@ class JDatabaseFactory
 	 * @return  JDatabaseExporter  An exporter object.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getExporter($name, JDatabaseDriver $db = null)
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseExporter' . ucfirst(strtolower($name));
+		$class = 'Joomla\\database\\exporter\\';
+		$class .= 'JDatabaseExporter' . ucfirst(strtolower($name));
 
 		// Make sure we have an exporter class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException('Database Exporter not found.');
+			throw new \RuntimeException('Database Exporter not found.');
 		}
 
 		$o = new $class;
@@ -114,18 +118,19 @@ class JDatabaseFactory
 	 * @return  JDatabaseImporter  An importer object.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getImporter($name, JDatabaseDriver $db = null)
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseImporter' . ucfirst(strtolower($name));
+		$class = 'Joomla\\database\\importer\\';
+		$class .= 'JDatabaseImporter' . ucfirst(strtolower($name));
 
 		// Make sure we have an importer class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException('Database importer not found.');
+			throw new \RuntimeException('Database importer not found.');
 		}
 
 		$o = new $class;
@@ -159,18 +164,19 @@ class JDatabaseFactory
 	 * @return  JDatabaseQuery  The current query object or a new object extending the JDatabaseQuery class.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function getQuery($name, JDatabaseDriver $db = null)
 	{
 		// Derive the class name from the driver.
-		$class = 'JDatabaseQuery' . ucfirst(strtolower($name));
+		$class = 'Joomla\\database\\query\\';
+		$class .= 'JDatabaseQuery' . ucfirst(strtolower($name));
 
 		// Make sure we have a query class for this driver.
 		if (!class_exists($class))
 		{
 			// If it doesn't exist we are at an impasse so throw an exception.
-			throw new RuntimeException('Database Query class not found');
+			throw new \RuntimeException('Database Query class not found');
 		}
 
 		return new $class($db);
