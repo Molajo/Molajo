@@ -99,7 +99,7 @@ Class SecurityService extends BaseService
         } else {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
         }
-        $config->set('URI.Host', MOLAJO_BASE_URL);
+        $config->set('URI.Host', BASE_URL);
 
         /** Custom Filters */
         $files = Services::Filesystem()->folderFiles(HTMPURIFIER_FILTERS, '\.php$', false, false);
@@ -110,7 +110,7 @@ Class SecurityService extends BaseService
         }
 
         /** Configured Options */
-        $options = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/htmlpurifier.xml');
+        $options = simplexml_load_file(CONFIGURATION_FOLDER . '/htmlpurifier.xml');
         $options = array();
         if (count($options) > 0) {
             foreach ($options->option as $o) {

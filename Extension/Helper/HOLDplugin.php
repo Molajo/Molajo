@@ -81,11 +81,11 @@ abstract ClassPluginHelper extends JEvent
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0
      */
-    public function loadLanguage($extension = '', $basePath = MOLAJO_EXTENSIONS_PLUGINS)
+    public function loadLanguage($extension = '', $basePath = EXTENSIONS_PLUGINS)
     {
         if (empty($extension)) {
             $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
         }
-        Services::Language()->load(strtolower($extension), MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
+        Services::Language()->load(strtolower($extension), EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
     }
 }

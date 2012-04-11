@@ -87,7 +87,7 @@ Class ConfigurationService extends BaseService
 
         $data = $this->getApplicationInfo();
 
-        $xml = simplexml_load_file(MOLAJO_APPLICATIONS_MVC . '/Model/Table/Applications.xml');
+        $xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Applications.xml');
 
         $this->registry('ApplicationCustomFields\\', $data, 'custom_fields', 'custom_field', $xml);
         $this->registry('ApplicationMetadata\\', $data, 'metadata', 'meta', $xml);
@@ -174,13 +174,13 @@ Class ConfigurationService extends BaseService
     {
         $row = new \stdClass();
 
-        if (MOLAJO_APPLICATION == 'installation') {
+        if (APPLICATION == 'installation') {
 
             $id = 0;
             $row->id = 0;
-            $row->name = MOLAJO_APPLICATION;
-            $row->path = MOLAJO_APPLICATION;
-            $row->asset_type_id = MOLAJO_ASSET_TYPE_BASE_APPLICATION;
+            $row->name = APPLICATION;
+            $row->path = APPLICATION;
+            $row->asset_type_id = ASSET_TYPE_BASE_APPLICATION;
             $row->description = '';
             $row->custom_fields = '';
             $row->parameters = '';
@@ -191,7 +191,7 @@ Class ConfigurationService extends BaseService
 			try {
 				$m = new TableModel('Applications');
 				$m->query->where($m->db->qn('name') .
-					' = ' . $m->db->quote(MOLAJO_APPLICATION));
+					' = ' . $m->db->quote(APPLICATION));
 				$row = $m->loadObject();
 
 				$id = $row->id;
@@ -202,9 +202,9 @@ Class ConfigurationService extends BaseService
 			}
         }
 
-        if (defined('MOLAJO_APPLICATION_ID')) {
+        if (defined('APPLICATION_ID')) {
         } else {
-            define('MOLAJO_APPLICATION_ID', $id);
+            define('APPLICATION_ID', $id);
         }
 
         return $row;

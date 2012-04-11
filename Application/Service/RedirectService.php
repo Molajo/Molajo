@@ -74,12 +74,12 @@ Class RedirectService extends BaseService
         if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
 
             if (Services::Registry()->get('Configuration\\sef_rewrite', 0) == 0) {
-                $url = MOLAJO_BASE_URL
-                    . MOLAJO_APPLICATION_URL_PATH
+                $url = BASE_URL
+                    . APPLICATION_URL_PATH
                     . 'index.php/' . $url;
             } else {
-                $url = MOLAJO_BASE_URL
-                    . MOLAJO_APPLICATION_URL_PATH
+                $url = BASE_URL
+                    . APPLICATION_URL_PATH
                     . $url;
             }
 

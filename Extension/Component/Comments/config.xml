@@ -152,14 +152,14 @@
 
     <fieldset
             name="filters"
-            label="MOLAJO_FILTERS_LABEL"
-            description="MOLAJO_FILTERS_DESC"
+            label="FILTERS_LABEL"
+            description="FILTERS_DESC"
             >
 
         <field
                 name="filters"
                 type="filters"
-                label="MOLAJO_FILTERS_LABEL"
+                label="FILTERS_LABEL"
                 class="inputbox"
                 filter=""
                 />
@@ -559,7 +559,7 @@
 
     <fieldset
             name="component_administrator_list_options"
-            label="MOLAJO_ADMINISTRATOR_LABEL">
+            label="ADMINISTRATOR_LABEL">
 
         <field
                 name="config_manager_list"
@@ -575,14 +575,14 @@
                 type="spacer"
                 class="spacer"
                 hr="true"
-                label="MOLAJO_TITLE_DISPLAY_OPTIONS_LABEL"
-                description="MOLAJO_TITLE_DISPLAY_OPTIONS_DESC"
+                label="TITLE_DISPLAY_OPTIONS_LABEL"
+                description="TITLE_DISPLAY_OPTIONS_DESC"
                 />
 
         <field name="config_manager_title"
                type="radio"
-               label="MOLAJO_TITLE_LABEL"
-               description="MOLAJO_TITLE_DESC"
+               label="TITLE_LABEL"
+               description="TITLE_DESC"
                default="1"
                 >
             <option value="0">NO</option>
@@ -594,8 +594,8 @@
                 type="spacer"
                 class="spacer"
                 hr="true"
-                label="MOLAJO_TOOLBAR_BUTTON_OPTIONS_LABEL"
-                description="MOLAJO_TOOLBAR_BUTTON_OPTIONS_DESC"
+                label="TOOLBAR_BUTTON_OPTIONS_LABEL"
+                description="TOOLBAR_BUTTON_OPTIONS_DESC"
                 />
 
         <field name="config_manager_button_bar_option1"
@@ -605,8 +605,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="new"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION1_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION1_DESC"
+               label="TOOLBAR_BUTTON_OPTION1_LABEL"
+               description="TOOLBAR_BUTTON_OPTION1_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -618,8 +618,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="edit"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION2_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION2_DESC"
+               label="TOOLBAR_BUTTON_OPTION2_LABEL"
+               description="TOOLBAR_BUTTON_OPTION2_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -631,8 +631,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="checkin"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION3_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION3_DESC"
+               label="TOOLBAR_BUTTON_OPTION3_LABEL"
+               description="TOOLBAR_BUTTON_OPTION3_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -644,8 +644,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="separator"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION4_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION4_DESC"
+               label="TOOLBAR_BUTTON_OPTION4_LABEL"
+               description="TOOLBAR_BUTTON_OPTION4_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -657,8 +657,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="publish"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION5_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION5_DESC"
+               label="TOOLBAR_BUTTON_OPTION5_LABEL"
+               description="TOOLBAR_BUTTON_OPTION5_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -670,8 +670,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="unpublish"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION6_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION6_DESC"
+               label="TOOLBAR_BUTTON_OPTION6_LABEL"
+               description="TOOLBAR_BUTTON_OPTION6_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -683,8 +683,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="feature"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION7_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION7_DESC"
+               label="TOOLBAR_BUTTON_OPTION7_LABEL"
+               description="TOOLBAR_BUTTON_OPTION7_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -696,8 +696,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="sticky"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION8_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION8_DESC"
+               label="TOOLBAR_BUTTON_OPTION8_LABEL"
+               description="TOOLBAR_BUTTON_OPTION8_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -709,8 +709,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="archive"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION9_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION9_DESC"
+               label="TOOLBAR_BUTTON_OPTION9_LABEL"
+               description="TOOLBAR_BUTTON_OPTION9_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -722,8 +722,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="separator"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION10_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION10_DESC"
+               label="TOOLBAR_BUTTON_OPTION10_LABEL"
+               description="TOOLBAR_BUTTON_OPTION10_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -735,8 +735,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="spam"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION11_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION11_DESC"
+               label="TOOLBAR_BUTTON_OPTION11_LABEL"
+               description="TOOLBAR_BUTTON_OPTION11_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -748,8 +748,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="trash"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION12_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION12_DESC"
+               label="TOOLBAR_BUTTON_OPTION12_LABEL"
+               description="TOOLBAR_BUTTON_OPTION12_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -761,8 +761,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="delete"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION13_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION13_DESC"
+               label="TOOLBAR_BUTTON_OPTION13_LABEL"
+               description="TOOLBAR_BUTTON_OPTION13_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -774,8 +774,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="restore"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION14_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION14_DESC"
+               label="TOOLBAR_BUTTON_OPTION14_LABEL"
+               description="TOOLBAR_BUTTON_OPTION14_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -787,8 +787,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="separator"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION15_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION15_DESC"
+               label="TOOLBAR_BUTTON_OPTION15_LABEL"
+               description="TOOLBAR_BUTTON_OPTION15_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -800,8 +800,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="options"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION16_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION16_DESC"
+               label="TOOLBAR_BUTTON_OPTION16_LABEL"
+               description="TOOLBAR_BUTTON_OPTION16_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -813,8 +813,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="separator"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION17_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION17_DESC"
+               label="TOOLBAR_BUTTON_OPTION17_LABEL"
+               description="TOOLBAR_BUTTON_OPTION17_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -826,8 +826,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="help"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION18_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION18_DESC"
+               label="TOOLBAR_BUTTON_OPTION18_LABEL"
+               description="TOOLBAR_BUTTON_OPTION18_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -839,8 +839,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="0"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION19_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION19_DESC"
+               label="TOOLBAR_BUTTON_OPTION19_LABEL"
+               description="TOOLBAR_BUTTON_OPTION19_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -852,8 +852,8 @@
                key_field="option_value"
                value_field="option_value_literal"
                default="0"
-               label="MOLAJO_TOOLBAR_BUTTON_OPTION20_LABEL"
-               description="MOLAJO_TOOLBAR_BUTTON_OPTION20_DESC"
+               label="TOOLBAR_BUTTON_OPTION20_LABEL"
+               description="TOOLBAR_BUTTON_OPTION20_DESC"
                 >
             <option value="0">MANAGER_OPTION_HIDE</option>
         </field>
@@ -1382,7 +1382,7 @@
 
     <fieldset
             name="component_administrator_editor_options"
-            label="MOLAJO_EDITOR_LABEL">
+            label="EDITOR_LABEL">
 
         <field
                 name="config_manager_editor"

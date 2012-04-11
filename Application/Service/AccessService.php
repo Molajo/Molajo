@@ -86,7 +86,7 @@ Class AccessService extends BaseService
      */
     protected function _initialise()
     {
-        $tasks = simplexml_load_file(MOLAJO_CONFIGURATION_FOLDER . '/tasks.xml');
+        $tasks = simplexml_load_file(CONFIGURATION_FOLDER . '/tasks.xml');
         if (count($tasks) == 0) {
             return;
         }
@@ -140,7 +140,7 @@ Class AccessService extends BaseService
 
         $m->query->select($m->db->qn('application_id'));
         $m->query->where($m->db->qn('site_id') . ' = ' . (int)SITE_ID);
-        $m->query->where($m->db->qn('application_id') . ' = ' . (int)MOLAJO_APPLICATION_ID);
+        $m->query->where($m->db->qn('application_id') . ' = ' . (int)APPLICATION_ID);
 
         $application_id = $m->loadResult();
 
@@ -151,7 +151,7 @@ Class AccessService extends BaseService
             );
             Services::Message()->set(
                 Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
-                MOLAJO_MESSAGE_TYPE_ERROR,
+                MESSAGE_TYPE_ERROR,
                 403
             );
         }
@@ -285,7 +285,7 @@ Class AccessService extends BaseService
 
         $m = new UserApplicationsModel();
 
-        $m->query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
+        $m->query->where('application_id = ' . (int)APPLICATION_ID);
         $m->query->where('user_id = ' . (int)$user_id);
 
         $count = $m->loadResult();

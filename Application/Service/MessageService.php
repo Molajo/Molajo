@@ -84,12 +84,12 @@ Class MessageService extends BaseService
         }
 
         $type = strtolower($type);
-        if ($type == MOLAJO_MESSAGE_TYPE_NOTICE
-            || $type == MOLAJO_MESSAGE_TYPE_WARNING
-            || $type == MOLAJO_MESSAGE_TYPE_ERROR
+        if ($type == MESSAGE_TYPE_NOTICE
+            || $type == MESSAGE_TYPE_WARNING
+            || $type == MESSAGE_TYPE_ERROR
         ) {
         } else {
-            $type = MOLAJO_MESSAGE_TYPE_MESSAGE;
+            $type = MESSAGE_TYPE_MESSAGE;
         }
 
         /** load session messages into messages array */

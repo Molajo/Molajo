@@ -4,14 +4,14 @@
 
 # DEFAULT
 
-# 100 MOLAJO_EXTENSION_OPTION_ID_TABLE
+# 100 EXTENSION_OPTION_ID_TABLE
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 100, '', '', 0),
       (1, 0, 100, '__content', '__content', 1);
 
-# 200 MOLAJO_EXTENSION_OPTION_ID_FIELDS
+# 200 EXTENSION_OPTION_ID_FIELDS
 
 # 200 BASE
 INSERT INTO `molajo_extension_options`
@@ -111,7 +111,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 200, 'group_id_list_delete_action', 'FIELD_GROUP_ID_LIST_DELETE_ACTION', 61),
       (1, 0, 200, 'group_id_list_administer_action', 'FIELD_GROUP_ID_LIST_ADMINISTER_ACTION', 62);
 
-# 205 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_ONLY_FIELDS
+# 205 EXTENSION_OPTION_ID_DISPLAY_ONLY_FIELDS
 
 # 205 Assets
 INSERT INTO `molajo_extension_options`
@@ -139,7 +139,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 205, 'asset_types_source_table', 'FIELD_ASSET_TYPES_SOURCE_TABLE', 79),
       (1, 0, 205, 'asset_types_title', 'FIELD_ASSET_TYPES_TITLE', 80);
 
-# 210 MOLAJO_EXTENSION_OPTION_ID_PUBLISH_FIELDS
+# 210 EXTENSION_OPTION_ID_PUBLISH_FIELDS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -157,7 +157,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 210, 'stickied', 'FIELD_STICKIED', 11),
       (1, 0, 210, 'stop_publishing_datetime', 'FIELD_STOP_PUBLISHING_DATETIME', 12);
 
-# 220 MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS
+# 220 EXTENSION_OPTION_ID_JSON_FIELDS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -166,55 +166,55 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 220, 'metadata', 'FIELD_JSON_METADATA', 2),
       (1, 0, 220, 'parameters', 'FIELD_JSON_PARAMETERS', 3);
 
-# 250 MOLAJO_EXTENSION_OPTION_ID_STATUS
+# 250 EXTENSION_OPTION_ID_STATUS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 250, '', '', 0),
-      (1, 0, 250, '2', 'MOLAJO_OPTION_STATUS_ARCHIVED', 1),
-      (1, 0, 250, '1', 'MOLAJO_OPTION_STATUS_PUBLISHED', 2),
-      (1, 0, 250, '0', 'MOLAJO_OPTION_STATUS_UNPUBLISHED', 3),
-      (1, 0, 250, '-1', 'MOLAJO_OPTION_STATUS_TRASHED', 4),
-      (1, 0, 250, '-2', 'MOLAJO_OPTION_STATUS_SPAMMED', 5),
-      (1, 0, 250, '-10', 'MOLAJO_OPTION_STATUS_VERSION', 6),
-      (1, 0, 250, '-11', 'MOLAJO_OPTION_STATUS_DRAFT', 7);
+      (1, 0, 250, '2', 'OPTION_STATUS_ARCHIVED', 1),
+      (1, 0, 250, '1', 'OPTION_STATUS_PUBLISHED', 2),
+      (1, 0, 250, '0', 'OPTION_STATUS_UNPUBLISHED', 3),
+      (1, 0, 250, '-1', 'OPTION_STATUS_TRASHED', 4),
+      (1, 0, 250, '-2', 'OPTION_STATUS_SPAMMED', 5),
+      (1, 0, 250, '-10', 'OPTION_STATUS_VERSION', 6),
+      (1, 0, 250, '-11', 'OPTION_STATUS_DRAFT', 7);
 
 # USER INTERFACE
 
-# 300 MOLAJO_EXTENSION_OPTION_ID_TOOLBAR_LIST
+# 300 EXTENSION_OPTION_ID_TOOLBAR_LIST
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 300, '', '', 0),
-      (1, 0, 300, 'archive', 'MOLAJO_OPTION_TOOLBAR_BUTTON_ARCHIVE', 1),
-      (1, 0, 300, 'checkin', 'MOLAJO_OPTION_TOOLBAR_BUTTON_CHECKIN', 2),
-      (1, 0, 300, 'delete', 'MOLAJO_OPTION_TOOLBAR_BUTTON_DELETE', 3),
-      (1, 0, 300, 'edit', 'MOLAJO_OPTION_TOOLBAR_BUTTON_EDIT', 4),
-      (1, 0, 300, 'feature', 'MOLAJO_OPTION_TOOLBAR_BUTTON_FEATURE', 5),
-      (1, 0, 300, 'help', 'MOLAJO_OPTION_TOOLBAR_BUTTON_HELP', 6),
-      (1, 0, 300, 'new', 'MOLAJO_OPTION_TOOLBAR_BUTTON_NEW', 7),
-      (1, 0, 300, 'publish', 'MOLAJO_OPTION_TOOLBAR_BUTTON_PUBLISH', 8),
-      (1, 0, 300, 'restore', 'MOLAJO_OPTION_TOOLBAR_BUTTON_RESTORE', 9),
-      (1, 0, 300, 'separator', 'MOLAJO_OPTION_TOOLBAR_BUTTON_SEPARATOR', 10),
-      (1, 0, 300, 'spam', 'MOLAJO_OPTION_TOOLBAR_BUTTON_SPAM', 11),
-      (1, 0, 300, 'sticky', 'MOLAJO_OPTION_TOOLBAR_BUTTON_STICKY', 12),
-      (1, 0, 300, 'trash', 'MOLAJO_OPTION_TOOLBAR_BUTTON_TRASH', 13),
-      (1, 0, 300, 'unpublish', 'MOLAJO_OPTION_TOOLBAR_BUTTON_UNPUBLISH', 14);
+      (1, 0, 300, 'archive', 'OPTION_TOOLBAR_BUTTON_ARCHIVE', 1),
+      (1, 0, 300, 'checkin', 'OPTION_TOOLBAR_BUTTON_CHECKIN', 2),
+      (1, 0, 300, 'delete', 'OPTION_TOOLBAR_BUTTON_DELETE', 3),
+      (1, 0, 300, 'edit', 'OPTION_TOOLBAR_BUTTON_EDIT', 4),
+      (1, 0, 300, 'feature', 'OPTION_TOOLBAR_BUTTON_FEATURE', 5),
+      (1, 0, 300, 'help', 'OPTION_TOOLBAR_BUTTON_HELP', 6),
+      (1, 0, 300, 'new', 'OPTION_TOOLBAR_BUTTON_NEW', 7),
+      (1, 0, 300, 'publish', 'OPTION_TOOLBAR_BUTTON_PUBLISH', 8),
+      (1, 0, 300, 'restore', 'OPTION_TOOLBAR_BUTTON_RESTORE', 9),
+      (1, 0, 300, 'separator', 'OPTION_TOOLBAR_BUTTON_SEPARATOR', 10),
+      (1, 0, 300, 'spam', 'OPTION_TOOLBAR_BUTTON_SPAM', 11),
+      (1, 0, 300, 'sticky', 'OPTION_TOOLBAR_BUTTON_STICKY', 12),
+      (1, 0, 300, 'trash', 'OPTION_TOOLBAR_BUTTON_TRASH', 13),
+      (1, 0, 300, 'unpublish', 'OPTION_TOOLBAR_BUTTON_UNPUBLISH', 14);
 
-# 310 MOLAJO_EXTENSION_OPTION_ID_SUBMENU_LIST
+# 310 EXTENSION_OPTION_ID_SUBMENU_LIST
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 310, '', '', 0),
-      (1, 0, 310, 'default', 'MOLAJO_SUBMENU_DEFAULT', 1),
-      (1, 0, 310, 'drafts', 'MOLAJO_SUBMENU_DRAFTS', 2),
-      (1, 0, 310, 'featured', 'MOLAJO_SUBMENU_FEATURED', 3),
-      (1, 0, 310, 'versions', 'MOLAJO_SUBMENU_VERSIONS', 4),
-      (1, 0, 310, 'stickied', 'MOLAJO_SUBMENU_STICKIED', 5),
-      (1, 0, 310, 'published', 'MOLAJO_SUBMENU_STICKIED', 6),
-      (1, 0, 310, 'unpublished', 'MOLAJO_SUBMENU_UNPUBLISHED', 7);
+      (1, 0, 310, 'default', 'SUBMENU_DEFAULT', 1),
+      (1, 0, 310, 'drafts', 'SUBMENU_DRAFTS', 2),
+      (1, 0, 310, 'featured', 'SUBMENU_FEATURED', 3),
+      (1, 0, 310, 'versions', 'SUBMENU_VERSIONS', 4),
+      (1, 0, 310, 'stickied', 'SUBMENU_STICKIED', 5),
+      (1, 0, 310, 'published', 'SUBMENU_STICKIED', 6),
+      (1, 0, 310, 'unpublished', 'SUBMENU_UNPUBLISHED', 7);
 
-# 320 MOLAJO_EXTENSION_OPTION_ID_FILTERS_LIST
+# 320 EXTENSION_OPTION_ID_FILTERS_LIST
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -244,21 +244,21 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 320, 'subtitle', 'FIELD_SUBTITLE_LABEL', 23),
       (1, 0, 320, 'title', 'FIELD_TITLE_LABEL', 24);
 
-# 330 MOLAJO_EXTENSION_OPTION_ID_TOOLBAR_EDIT
+# 330 EXTENSION_OPTION_ID_TOOLBAR_EDIT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 330, '', '', 0),
-      (1, 0, 330, 'apply', 'MOLAJO_OPTION_TOOLBAR_BUTTON_APPLY', 1),
-      (1, 0, 330, 'close', 'MOLAJO_OPTION_TOOLBAR_BUTTON_CLOSE', 2),
-      (1, 0, 330, 'help', 'MOLAJO_OPTION_TOOLBAR_BUTTON_HELP', 3),
-      (1, 0, 330, 'restore', 'MOLAJO_OPTION_TOOLBAR_BUTTON_RESTORE', 4),
-      (1, 0, 330, 'save', 'MOLAJO_OPTION_TOOLBAR_BUTTON_SAVE', 5),
-      (1, 0, 330, 'saveandnew', 'MOLAJO_OPTION_TOOLBAR_BUTTON_SAVEANDNEW', 6),
-      (1, 0, 330, 'saveascopy', 'MOLAJO_OPTION_TOOLBAR_BUTTON_SAVEASCOPY', 7),
-      (1, 0, 330, 'separator', 'MOLAJO_OPTION_TOOLBAR_BUTTON_SEPARATOR', 8);
+      (1, 0, 330, 'apply', 'OPTION_TOOLBAR_BUTTON_APPLY', 1),
+      (1, 0, 330, 'close', 'OPTION_TOOLBAR_BUTTON_CLOSE', 2),
+      (1, 0, 330, 'help', 'OPTION_TOOLBAR_BUTTON_HELP', 3),
+      (1, 0, 330, 'restore', 'OPTION_TOOLBAR_BUTTON_RESTORE', 4),
+      (1, 0, 330, 'save', 'OPTION_TOOLBAR_BUTTON_SAVE', 5),
+      (1, 0, 330, 'saveandnew', 'OPTION_TOOLBAR_BUTTON_SAVEANDNEW', 6),
+      (1, 0, 330, 'saveascopy', 'OPTION_TOOLBAR_BUTTON_SAVEASCOPY', 7),
+      (1, 0, 330, 'separator', 'OPTION_TOOLBAR_BUTTON_SEPARATOR', 8);
 
-# 340 MOLAJO_EXTENSION_OPTION_ID_EDITOR_BUTTONS
+# 340 EXTENSION_OPTION_ID_EDITOR_BUTTONS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -274,7 +274,7 @@ INSERT INTO `molajo_extension_options`
 
 # MIME from ftp://ftp.iana.org/assignments/media-types/
 
-# 400 MOLAJO_EXTENSION_OPTION_ID_MIMES_AUDIO
+# 400 EXTENSION_OPTION_ID_MIMES_AUDIO
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -320,7 +320,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 400, 'vnd.sealedmedia.softseal-mpeg', 'vnd.sealedmedia.softseal-mpeg', 39),
       (1, 0, 400, 'vnd.vmx.cvsd', 'vnd.vmx.cvsd', 40);
 
-# 410 MOLAJO_EXTENSION_OPTION_ID_MIMES_IMAGE
+# 410 EXTENSION_OPTION_ID_MIMES_IMAGE
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -358,7 +358,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 410, 'vnd.sealedmedia.softseal-jpg', 'vnd.sealedmedia.softseal-jpg', 31),
       (1, 0, 410, 'vnd.xiff', 'vnd.xiff', 32);
 
-# 420 MOLAJO_EXTENSION_OPTION_ID_MIMES_TEXT
+# 420 EXTENSION_OPTION_ID_MIMES_TEXT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -394,7 +394,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 420, 'vnd.wap.si', 'vnd.wap.si', 29),
       (1, 0, 420, 'vnd.wap.wmlscript', 'vnd.wap.wmlscript', 30);
 
-# 430 MOLAJO_EXTENSION_OPTION_ID_MIMES_VIDEO
+# 430 EXTENSION_OPTION_ID_MIMES_VIDEO
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES

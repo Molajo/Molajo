@@ -21,7 +21,7 @@ if ($defer == 1) {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo Services::Language()->get('direction'); ?>"
       lang="<?php echo Services::Language()->get('tag'); ?>">
 <head>
-<base href="<?php echo MOLAJO_BASE_URL . '"' . $end; ?>
+<base href="<?php echo BASE_URL . '"' . $end; ?>
 <?php if ((int)Services::Registry()->get('Configuration\\html5', 1) == 1): ?>
     <meta charset="UTF-8"<?php echo $end; ?>
     <?php else : ?>

@@ -158,7 +158,7 @@ Class LanguageService extends BaseService
     protected function load_core_files()
     {
         /** load metadata */
-        $xmlFile = MOLAJO_EXTENSIONS_LANGUAGES . '/' . $this->language . '/' . 'manifest.xml';
+        $xmlFile = EXTENSIONS_LANGUAGES . '/' . $this->language . '/' . 'manifest.xml';
         $metadata = $this->get_metadata($xmlFile);
 
         if (isset($metadata['name'])) {
@@ -184,7 +184,7 @@ Class LanguageService extends BaseService
         }
 
         /** load language strings */
-        $path = MOLAJO_EXTENSIONS_LANGUAGES . '/' . $this->language;
+        $path = EXTENSIONS_LANGUAGES . '/' . $this->language;
         $this->load($path);
 
         return;
@@ -374,7 +374,7 @@ Class LanguageService extends BaseService
 
         if ($contents) {
             $contents = str_replace('"', '', $contents);
-            $contents = str_replace(MOLAJO_LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
+            $contents = str_replace(LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
             $strings = parse_ini_string($contents);
         } else {
             $strings = array();
@@ -400,7 +400,7 @@ Class LanguageService extends BaseService
     {
         /** Installed Languages */
         $languages = $this->getLanguages(
-            MOLAJO_EXTENSIONS_LANGUAGES
+            EXTENSIONS_LANGUAGES
         );
 
         $installed = array();
@@ -454,12 +454,12 @@ Class LanguageService extends BaseService
      */
     public function createLanguageList($path = null)
     {
-        if (MOLAJO_APPLICATION_ID == 0) {
-            $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . 'installer';
+        if (APPLICATION_ID == 0) {
+            $path = EXTENSIONS_COMPONENTS . '/' . 'installer';
 
         } else {
             if ($path == null) {
-                $path = MOLAJO_EXTENSIONS_LANGUAGES;
+                $path = EXTENSIONS_LANGUAGES;
             }
         }
 
@@ -495,9 +495,9 @@ Class LanguageService extends BaseService
      * @return  object
      * @since   1.0
      */
-    public function getLanguages($path = MOLAJO_EXTENSIONS_LANGUAGES)
+    public function getLanguages($path = EXTENSIONS_LANGUAGES)
     {
-        if ($path == MOLAJO_EXTENSIONS_LANGUAGES) {
+        if ($path == EXTENSIONS_LANGUAGES) {
             return $this->getLanguagesCore();
         }
 
@@ -532,7 +532,7 @@ Class LanguageService extends BaseService
      */
     public function getLanguagesCore()
     {
-        $subfolders = Services::Filesystem()->folderFolders(MOLAJO_EXTENSIONS_LANGUAGES);
+        $subfolders = Services::Filesystem()->folderFolders(EXTENSIONS_LANGUAGES);
 
         $languages = array();
 

@@ -138,7 +138,7 @@ class ComponentIncluder extends Includer
     {
         $this->set(
             'extension_asset_type_id',
-            MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT
+            ASSET_TYPE_EXTENSION_COMPONENT
         );
 
         $results = parent::_getExtension();
@@ -275,8 +275,8 @@ class ComponentIncluder extends Includer
     protected function _loadMediaPlus($plus = '', $priority = 500)
     {
         /** Theme */
-        $file_path = MOLAJO_EXTENSIONS_THEMES . '/' . $this->get('theme_name');
-        $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->get('theme_name');
+        $file_path = EXTENSIONS_THEMES . '/' . $this->get('theme_name');
+        $url_path = EXTENSIONS_THEMES_URL . '/' . $this->get('theme_name');
         $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
         $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
@@ -285,8 +285,8 @@ class ComponentIncluder extends Includer
         }
 
         /** Site Specific: Application */
-        $file_path = SITE_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $url_path = SITE_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $file_path = SITE_MEDIA_FOLDER . '/' . APPLICATION . $plus;
+        $url_path = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
         $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
         $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
@@ -305,8 +305,8 @@ class ComponentIncluder extends Includer
         }
 
         /** All Sites: Application */
-        $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
+        $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
         $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
         $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);

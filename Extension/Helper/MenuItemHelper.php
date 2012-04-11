@@ -83,7 +83,7 @@ abstract class MenuItemHelper
 
         $m->query->from($m->db->qn('#__extension_instances') . ' as b');
 
-        $m->query->where('b.' . $m->db->qn('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
+        $m->query->where('b.' . $m->db->qn('status') . ' = ' . STATUS_PUBLISHED);
         $m->query->where('(b.start_publishing_datetime = ' .
                 $m->db->q($m->nullDate) .
                 ' OR b.start_publishing_datetime <= ' . $m->db->q($m->now) . ')'
@@ -111,7 +111,7 @@ abstract class MenuItemHelper
         $m->query->where('c.' . $m->db->qn('extension_instance_id') .
             ' = b.' . $m->db->qn('id'));
         $m->query->where('c.' . $m->db->qn('application_id') .
-            ' = ' . MOLAJO_APPLICATION_ID);
+            ' = ' . APPLICATION_ID);
 
         /**
          *  d. Site Table

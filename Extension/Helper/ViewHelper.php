@@ -120,23 +120,23 @@ class ViewHelper
         $plus = '/View/' . $this->view_type . '/' . $this->view;
 
         /** 1. Theme */
-        $theme = MOLAJO_EXTENSIONS_THEMES . '/' . $this->theme_name;
+        $theme = EXTENSIONS_THEMES . '/' . $this->theme_name;
         $themeViewPath = $theme . $plus;
-        $themeViewPathURL = MOLAJO_EXTENSIONS_THEMES_URL . '/' . $this->theme_name . $plus;
+        $themeViewPathURL = EXTENSIONS_THEMES_URL . '/' . $this->theme_name . $plus;
 
         /** 2. Extension */
         $extensionPath = '';
         if ($this->extension_type == 'plugin') {
-            $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_PLUGINS_URL . '/' . $this->extension_name . $plus;
+            $extensionPath = EXTENSIONS_PLUGINS . '/' . $this->extension_name . $plus;
+            $extensionPathURL = EXTENSIONS_PLUGINS_URL . '/' . $this->extension_name . $plus;
 
         } else if ($this->extension_type == 'component') {
-            $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_COMPONENTS_URL . '/' . $this->extension_name . $plus;
+            $extensionPath = EXTENSIONS_COMPONENTS . '/' . $this->extension_name . $plus;
+            $extensionPathURL = EXTENSIONS_COMPONENTS_URL . '/' . $this->extension_name . $plus;
 
         } else if ($this->extension_type == 'module') {
-            $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->extension_name . $plus;
-            $extensionPathURL = MOLAJO_EXTENSIONS_MODULES_URL . '/' . $this->extension_name . $plus;
+            $extensionPath = EXTENSIONS_MODULES . '/' . $this->extension_name . $plus;
+            $extensionPathURL = EXTENSIONS_MODULES_URL . '/' . $this->extension_name . $plus;
 
         } else {
             $extensionPath = '';
@@ -144,12 +144,12 @@ class ViewHelper
         }
 
         /** 3. Views */
-        $corePath = MOLAJO_EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view;
-        $corePathURL = MOLAJO_EXTENSIONS_VIEWS_URL . '/' . $this->view_type . '/' . $this->view;
+        $corePath = EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view;
+        $corePathURL = EXTENSIONS_VIEWS_URL . '/' . $this->view_type . '/' . $this->view;
 
         /** 4. MVC */
-        $mvcPath = MOLAJO_APPLICATIONS_MVC . $plus;
-        $mvcPathURL = MOLAJO_APPLICATIONS_MVC_URL . $plus;
+        $mvcPath = APPLICATIONS_MVC . $plus;
+        $mvcPathURL = APPLICATIONS_MVC_URL . $plus;
 
         /**
          * Determine path in order of priority
@@ -204,7 +204,7 @@ class ViewHelper
     {
         Services::Language()
             ->load(
-            MOLAJO_EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view,
+            EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view,
             Services::Language()->get('tag'),
             false,
             false);

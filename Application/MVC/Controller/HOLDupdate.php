@@ -77,7 +77,7 @@ class UpdateController extends Controller
     {
         if ($this->parameters->get('version_management', 1) == 1) {
         } else {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_RESTORE_DISABLED_IN_CONFIGURATION'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('RESTORE_DISABLED_IN_CONFIGURATION'));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -215,23 +215,23 @@ class UpdateController extends Controller
 
         /** Edit: Must have data from form input, copy or restore task **/
         if (empty($data)) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('warning'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Edit: check for valid status **/
-        if ($this->model->status == MOLAJO_STATUS_ARCHIVED) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
+        if ($this->model->status == STATUS_ARCHIVED) {
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('ARCHIVED_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
-        if ($this->model->status == MOLAJO_STATUS_TRASHED) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
+        if ($this->model->status == STATUS_TRASHED) {
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('TRASHED_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
-        if ($this->model->status == MOLAJO_STATUS_VERSION) {
+        if ($this->model->status == STATUS_VERSION) {
             $this->redirectClass->setRedirectMessage(Services::Language()->translate('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
             return $this->redirectClass->setSuccessIndicator(false);
@@ -373,9 +373,9 @@ class UpdateController extends Controller
         }
 
         if ($task == 'restore') {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_RESTORE_SUCCESSFUL'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('RESTORE_SUCCESSFUL'));
         } else {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MOLAJO_SAVE_SUCCESSFUL'));
+            $this->redirectClass->setRedirectMessage(Services::Language()->translate('SAVE_SUCCESSFUL'));
         }
 
         JRequest::setVar('id', $this->get('id'));
@@ -405,9 +405,9 @@ class UpdateController extends Controller
         $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
-        if ($this->model->status == MOLAJO_STATUS_TRASHED || $this->model->status == MOLAJO_STATUS_VERSION) {
+        if ($this->model->status == STATUS_TRASHED || $this->model->status == STATUS_VERSION) {
         } else {
-//MOLAJO_ERROR_VERSION_SAVE_FAILED
+//ERROR_VERSION_SAVE_FAILED
             return false;
         }
 

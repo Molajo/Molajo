@@ -191,7 +191,7 @@ class Model
 		}
 
 		if ($path === null) {
-			$path = MOLAJO_APPLICATIONS_MVC . '/Model/Table';
+			$path = APPLICATIONS_MVC . '/Model/Table';
 		}
 
 		$file = $path . '/' . ucfirst(strtolower($table)) . '.xml';
@@ -880,7 +880,7 @@ class Model
                     ->_('ERROR_DATABASE_QUERY') . ' ' .
                     $this->db->getErrorNum() . ' ' .
                     $this->db->getErrorMsg(),
-                $type = MOLAJO_MESSAGE_TYPE_ERROR,
+                $type = MESSAGE_TYPE_ERROR,
                 $code = 500,
                 $debug_location = $this->name . ':' . $location,
                 $debug_object = $this->db

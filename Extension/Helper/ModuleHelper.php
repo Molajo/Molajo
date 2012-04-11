@@ -30,7 +30,7 @@ abstract class ModuleHelper
     static public function get($name)
     {
         $rows = ExtensionHelper::get(
-            MOLAJO_ASSET_TYPE_EXTENSION_MODULE,
+            ASSET_TYPE_EXTENSION_MODULE,
             $name
         );
         if (count($rows) == 0) {
@@ -53,6 +53,6 @@ abstract class ModuleHelper
      */
     static public function getPath($name)
     {
-        return MOLAJO_EXTENSIONS_MODULES . '/' . $name;
+        return EXTENSIONS_MODULES . '/' . $name;
     }
 }

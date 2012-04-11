@@ -36,7 +36,7 @@ abstract class ContentHelper
         $m->query->from($m->db->qn($content_table) . ' as a ');
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$id);
         $m->query->where('a.' . $m->db->qn('status') .
-            ' > ' . MOLAJO_STATUS_UNPUBLISHED);
+            ' > ' . STATUS_UNPUBLISHED);
 
         $m->query->where('(a.start_publishing_datetime = ' .
                 $m->db->q($m->nullDate) .

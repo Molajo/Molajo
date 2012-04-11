@@ -63,7 +63,7 @@ class ThemeHelper
     {
         return Molajo::Helper()
             ->get('Extension',
-            MOLAJO_ASSET_TYPE_EXTENSION_THEME,
+            ASSET_TYPE_EXTENSION_THEME,
             $theme
         );
     }
@@ -79,8 +79,8 @@ class ThemeHelper
      */
     public static function getPath($theme_name)
     {
-        if (file_exists(MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
-            return MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name;
+        if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
+            return EXTENSIONS_THEMES . '/' . $theme_name;
         }
         return false;
     }
@@ -96,8 +96,8 @@ class ThemeHelper
      */
     public static function getPathURL($theme_name)
     {
-        if (file_exists(MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
-            return MOLAJO_EXTENSIONS_THEMES_URL . '/' . $theme_name;
+        if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
+            return EXTENSIONS_THEMES_URL . '/' . $theme_name;
         }
         return false;
     }
@@ -117,13 +117,13 @@ class ThemeHelper
      */
     public static function getFavicon($theme_name)
     {
-        $path = MOLAJO_EXTENSIONS_THEMES . '/' . $theme_name . '/images/';
+        $path = EXTENSIONS_THEMES . '/' . $theme_name . '/images/';
         if (file_exists($path . 'favicon.ico')) {
-            return MOLAJO_EXTENSIONS_THEMES_URL . '/' . $theme_name . '/images/favicon.ico';
+            return EXTENSIONS_THEMES_URL . '/' . $theme_name . '/images/favicon.ico';
         }
-        $path = MOLAJO_BASE_FOLDER;
+        $path = BASE_FOLDER;
         if (file_exists($path . 'favicon.ico')) {
-            return MOLAJO_BASE_URL . $theme_name . '/images/favicon.ico';
+            return BASE_URL . $theme_name . '/images/favicon.ico';
         }
 
         return false;

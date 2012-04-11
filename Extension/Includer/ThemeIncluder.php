@@ -115,7 +115,7 @@ Class ThemeIncluder extends Includer
     {
         /** theme */
         ExtensionHelper::loadLanguage(
-            MOLAJO_EXTENSIONS_THEMES . '/'
+            EXTENSIONS_THEMES . '/'
                 . Services::Registry()->get('Request\\theme_name')
         );
         /** Page view */
@@ -139,7 +139,7 @@ Class ThemeIncluder extends Includer
             Services::Registry()->get('Configuration\\media_priority_site', 100));
 
         /** Application */
-        $this->_loadMediaPlus('/application' . MOLAJO_APPLICATION,
+        $this->_loadMediaPlus('/application' . APPLICATION,
             Services::Registry()->get('Configuration\\media_priority_application', 200));
 
         /** User */
@@ -169,9 +169,9 @@ Class ThemeIncluder extends Includer
             Services::Registry()->get('Configuration\\media_priority_site', 100));
 
         $priority = Services::Registry()->get('Configuration\\media_priority_theme', 600);
-        $file_path = MOLAJO_EXTENSIONS_THEMES . '/' .
+        $file_path = EXTENSIONS_THEMES . '/' .
             Services::Registry()->get('Request\\theme_name');
-        $url_path = MOLAJO_EXTENSIONS_THEMES_URL . '/' .
+        $url_path = EXTENSIONS_THEMES_URL . '/' .
             Services::Registry()->get('Request\\theme_name');
         $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
@@ -213,8 +213,8 @@ Class ThemeIncluder extends Includer
         $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Application */
-        $file_path = SITES_MEDIA_FOLDER . '/' . MOLAJO_APPLICATION . $plus;
-        $url_path = SITES_MEDIA_URL . '/' . MOLAJO_APPLICATION . $plus;
+        $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
+        $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
         $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
         $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
