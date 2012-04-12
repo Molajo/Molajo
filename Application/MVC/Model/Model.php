@@ -184,7 +184,6 @@ class Model
      */
     public function __construct($table = null, $id = null, $path = null)
     {
-
 		/** Retrieve XML for Table */
 		if (trim($table) === null) {
 			$table = 'Content';
@@ -233,9 +232,9 @@ class Model
             $this->primary_key = 'id';
         }
 
-        $this->db = Services::Database();
+        $this->db = Services::Database()->get('db');
 
-		$this->query = $this->db->getQuery('Mysqli', $this->db);
+		$this->query = Services::Database()->getQuery();
 		$this->query->clear();
 
         $this->nullDate = $this->db->getNullDate();
