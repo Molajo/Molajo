@@ -5,13 +5,13 @@ Class SiteConfiguration
     public $site_name = 'Molajo';
 
     /* JDatabaseFactory Settings */
-    public $jdatabasefactory_dbtype = 'mysqli';
-    public $jdatabasefactory_host = 'localhost';
-    public $jdatabasefactory_user = 'root';
-    public $jdatabasefactory_password = 'root';
-    public $jdatabasefactory_db = 'molajo';
-    public $jdatabasefactory_dbprefix = 'molajo_';
-    public $jdatabasefactory_namespace = 'Joomla\\database\\JDatabaseFactory';
+    public $jdatabase_dbtype = 'mysqli';
+    public $jdatabase_host = 'localhost';
+    public $jdatabase_user = 'root';
+    public $jdatabase_password = 'root';
+    public $jdatabase_db = 'molajo';
+    public $jdatabase_dbprefix = 'molajo_';
+    public $jdatabase_namespace = 'Joomla\\database\\JDatabaseFactory';
 
     /** disable html filters */
     public $disable_filter_for_groups = '4';

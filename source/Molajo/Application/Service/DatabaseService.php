@@ -7,7 +7,6 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
-use Joomla\database\JDatabaseFactory;
 
 defined('MOLAJO') or die;
 
@@ -30,95 +29,192 @@ Class DatabaseService extends BaseService
      */
     protected static $instance;
 
-    /**
-     * $action_to_action_id
-     *
-     * ACL Action literal to database pk
-     *
-     * @var    Registry
-     * @since  1.0
-     */
-    protected $action_to_action_id;
+	/**
+	 * Name
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $name;
 
-    /**
-     * $task_to_action
-     *
-     * Task to ACL Action list
-     *
-     * @var    Registry
-     * @since  1.0
-     */
-    protected $task_to_action;
+	/**
+	 * Options
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected $options;
 
-    /**
-     * $action_to_controller
-     *
-     * ACL Action to Molajo Controller list
-     *
-     * @var    Registry
-     * @since  1.0
-     */
-    protected $action_to_controller;
+	/**
+	 * DB Connection
+	 *
+	 * @var    Joomla\database\JDatabaseDriver
+	 * @since  1.0
+	 */
+	protected $db;
 
-    /**
+	/**
      * getInstance
      *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance($database_class = 'JDatabaseFactory', $configuration_file = null)
+	 * @static
+	 * @param   null  $configuration_file
+	 * @return  string
+	 * @throws  \Exception
+	 */
+    public static function getInstance($configuration_file = null)
     {
+		return self::$instance ? self::$instance : new DatabaseService($configuration_file);
+	}
 
+	/**
+	 * Class constructor.
+	 *
+	 * @param   string  $name     Name of the database driver you'd like to instantiate
+	 * @param   array   $options  Parameters to be passed to the database driver
+	 *
+	 * @since   11.3
+	 */
+	public function __construct($configuration_file = null)
+	{
         if ($configuration_file === null) {
             $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
         }
-        $configuration_class = 'SiteConfiguration';
-
         if (file_exists($configuration_file)) {
             require_once $configuration_file;
         } else {
             throw new \Exception('Fatal error - Application-Site Configuration File does not exist');
         }
 
-        if (class_exists($configuration_class)) {
-            $site = new $configuration_class();
-        } else {
-            throw new \Exception('Fatal error - Configuration Class does not exist');
-        }
-
-        /** database connection specific elements */
-        $database_type = strtolower($database_class) . '_dbtype';
-        $host = strtolower($database_class) . '_host';
-        $user = strtolower($database_class) . '_user';
-        $password = strtolower($database_class) . '_password';
-        $db = strtolower($database_class) . '_db';
-        $dbprefix = strtolower($database_class) . '_dbprefix';
-        $namespace = strtolower($database_class) . '_namespace';
+        $site = new \SiteConfiguration();
 
         /** set connection options */
-        $options = array(
-            'driver' => $site->$database_type,
-            'host' => $site->$host,
-            'user' => $site->$user,
-            'password' => $site->$password,
-            'database' => $site->$db,
-            'prefix' => $site->$dbprefix);
+		$this->options = array(
+			'driver' => preg_replace('/[^A-Z0-9_\.-]/i', '', $site->jdatabase_dbtype),
+			'host' => $site->jdatabase_host,
+			'user' => $site->jdatabase_user,
+			'password' => $site->jdatabase_password,
+			'database' => $site->jdatabase_db,
+			'prefix' => $site->jdatabase_dbprefix,
+			'select' => true
+		);
+
+		$this->name = $site->jdatabase_dbtype;
 
         /** connect */
-        $connectDBClass = $site->$namespace;
+		$class = 'Joomla\\database\\driver\\JDatabaseDriver' . ucfirst(strtolower($this->options['driver']));
+		if (class_exists($class)) {
+		} else {
+			throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
+		}
 
-        try {
-            $connect = $connectDBClass::getInstance();
-            $db = $connect->getDriver($site->$database_type, $options);
+		try {
+			$this->db = new $class($this->options);
+		} catch (\Exception $e)	{
+			throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
+		}
 
-        } catch (\Exception $e) {
-            header('HTTP/1.1 500 Internal Server Error');
-            exit(0);
-        }
+        $this->db->debug($site->debug);
 
-        $db->debug($site->debug);
+		return $this;
+	}
 
-        return $db;
-    }
+	/**
+	 * get
+	 *
+	 * @param   $value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function get($value)
+	{
+		return $this->$value;
+	}
+
+	/**
+	 * Get the current query object or a new JDatabaseQuery object.
+	 *
+	 * @return  JDatabaseQuery  The current query object or a new object extending the JDatabaseQuery class.
+	 *
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public function getQuery()
+	{
+		$class = 'Joomla\\database\\query\\JDatabaseQuery' . ucfirst(strtolower($this->name));
+		if (class_exists($class)) {
+		} else {
+			throw new \RuntimeException('Database Query class not found');
+		}
+
+		return new $class($this->db);
+	}
+
+	/**
+	 * Gets an exporter class object.
+	 *
+	 * @return  JDatabaseExporter  An exporter object.
+	 *
+	 * @since   12.1
+	 * @throws  \RuntimeException
+	 */
+	public function getExporter()
+	{
+		$class = 'Joomla\\database\\exporter\\JDatabaseExporter' . ucfirst(strtolower($this->name));
+		if (class_exists($class)) {
+		} else {
+			throw new \RuntimeException('Database Query class not found');
+		}
+
+		$exporter = new $class();
+		$exporter->setDbo($this->db);
+		return $exporter;
+	}
+
+	/**
+	 * Gets an importer class object.
+	 *
+	 * @return  JDatabaseImporter  An importer object.
+	 *
+	 * @since   12.1
+	 * @throws  \RuntimeException
+	 */
+	public function getImporter()
+	{
+		$class = 'Joomla\\database\\exporter\\JDatabaseImporter' . ucfirst(strtolower($this->name));
+		if (class_exists($class)) {
+		} else {
+			throw new \RuntimeException('Database Query class not found');
+		}
+
+		$importer = new $class();
+		$importer->setDbo($this->db);
+		return $importer;
+	}
+
+	/**
+	 * Get a new iterator on the current query.
+	 *
+	 * @param   string  $column  An option column to use as the iterator key.
+	 * @param   string  $class   The class of object that is returned.
+	 *
+	 * @return  JDatabaseIterator  A new database iterator.
+	 *
+	 * @since   12.1
+	 * @throws  \RuntimeException
+	 */
+	public function getIterator($column = null, $class = 'stdClass')
+	{
+		// Derive the class name from the driver.
+		$iteratorClass = 'Joomla\\database\\iterator\\';
+		$iteratorClass .= 'JDatabaseIterator' . ucfirst($this->name);
+
+		// Make sure we have an iterator class for this driver.
+		if (class_exists($iteratorClass)) {
+		} else {
+			throw new \RuntimeException(sprintf('class *%s* is not defined', $iteratorClass));
+		}
+
+		return new $iteratorClass($this->execute(), $column, $class);
+	}
 }

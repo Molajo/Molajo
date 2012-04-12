@@ -100,6 +100,6 @@ class JLogEntry
 		}
 
 		// Get the date as a JDate object.
-		$this->date = new JDate($date ? $date : 'now');
+		$this->date = new \Datetime($date ? $date : 'now');
 	}
 }
