@@ -9,7 +9,7 @@ namespace Molajo\Application\MVC\Model;
 defined('MOLAJO') or die;
 
 /**
- * Actions
+ * Table
  *
  * @package     Molajo
  * @subpackage  Model
