@@ -111,16 +111,12 @@ Class AccessService extends BaseService
         $this->action_to_action_id = Services::Registry()->initialise();
 
         /** retrieve database keys for actions */
-        $m = new ActionTypesModel();
+        $m = new TableModel('Actions');
         $actionsList = $m->loadObjectList();
 
         foreach ($actionsList as $actionDefinition) {
-
             $this->action_to_action_id
-                ->set(
-                $actionDefinition->title,
-                (int)$actionDefinition->id
-            );
+                ->set($actionDefinition->title, (int)$actionDefinition->id);
         }
 
         return;
@@ -136,7 +132,7 @@ Class AccessService extends BaseService
      */
     public function authoriseSiteApplication()
     {
-        $m = new SiteApplicationsModel();
+        $m = new TableModel('SiteApplications');
 
         $m->query->select($m->db->qn('application_id'));
         $m->query->where($m->db->qn('site_id') . ' = ' . (int)SITE_ID);
@@ -147,8 +143,7 @@ Class AccessService extends BaseService
         if ($application_id === false) {
             //todo: finish the response action/test
             Services::Response()
-                ->setHeader('Status', '403 Not Authorised', 'true'
-            );
+                ->setHeader('Status', '403 Not Authorised', 'true');
             Services::Message()->set(
                 Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
                 MESSAGE_TYPE_ERROR,
@@ -176,6 +171,7 @@ Class AccessService extends BaseService
     {
         $action = $this->task_to_action->get($task);
         $controller = $this->action_to_controller->get($action);
+
         return $controller;
     }
 
@@ -203,7 +199,8 @@ Class AccessService extends BaseService
         $taskPermissions = array();
         foreach ($tasklist as $task) {
             $taskPermissions[$task] =
-                Services::Access()->authoriseTask($task, $asset_id);
+                Services::Access()
+					->authoriseTask($task, $asset_id);
         }
         return $taskPermissions;
     }
@@ -243,7 +240,7 @@ Class AccessService extends BaseService
         /** check for permission */
         $action_id = 3;
 
-        $m = new GroupPermissionsModel();
+        $m = new TableModel('GroupPermissions');
 
         $m->query->where($m->db->qn('asset_id') . ' = ' . (int)$asset_id);
         $m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
@@ -283,7 +280,7 @@ Class AccessService extends BaseService
             return false;
         }
 
-        $m = new UserApplicationsModel();
+        $m = new TableModel('UserApplications');
 
         $m->query->where('application_id = ' . (int)APPLICATION_ID);
         $m->query->where('user_id = ' . (int)$user_id);

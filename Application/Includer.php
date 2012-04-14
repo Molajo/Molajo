@@ -154,7 +154,7 @@ class Includer extends Molajo
         $this->attributes = $attributes;
 
         /** initialises and populates the MVC request */
-        $this->_setRenderCriteria();
+        $this->setRenderCriteria();
         if ($this->extension_required === true) {
             if ($this->get('extension_instance_id', 0) == 0) {
                 return $this->set('status_found', false);
@@ -171,7 +171,7 @@ class Includer extends Molajo
         $this->_loadLanguage();
 
         /** instantiate MVC and render output */
-        $this->rendered_output = $this->_invokeMVC();
+        $this->rendered_output = $this->invokeMVC();
 
         /** only load media if there was rendered output */
         if ($this->rendered_output == ''
@@ -221,14 +221,14 @@ class Includer extends Molajo
     }
 
     /**
-     * _setRenderCriteria
+     * setRenderCriteria
      *
      * Initialize the request object for MVC values
      *
      * @return  bool
      * @since   1.0
      */
-    protected function _setRenderCriteria()
+    protected function setRenderCriteria()
     {
         /** creates mvc object and initialises settings */
         $this->_initialiseRequest();
@@ -255,7 +255,7 @@ class Includer extends Molajo
         $this->_getApplicationDefaults();
 
         /** gets paths for template and wrap views */
-        $this->_setPaths();
+        $this->setPaths();
 
         return $this->set('status_found', true);
     }
@@ -578,7 +578,7 @@ class Includer extends Molajo
     }
 
     /**
-     *  _setPaths
+     *  setPaths
      *
      *  Using default ordering (Theme, Extension, View, Core MVC)
      *  this method identifies the file and URL paths for
@@ -587,7 +587,7 @@ class Includer extends Molajo
      * @return  null
      * @since   1.0
      */
-    protected function _setPaths()
+    protected function setPaths()
     {
         /** template view */
 
@@ -729,18 +729,18 @@ class Includer extends Molajo
     }
 
     /**
-     * _invokeMVC
+     * invokeMVC
      *
      * Instantiate the Controller and fire off the task, returns rendered output
      *
      * @return mixed
      */
-    protected function _invokeMVC()
+    protected function invokeMVC()
     {
-        $model = (string)$this->_setModel();
+        $model = (string)$this->setModel();
         $this->set('model', $model);
 
-        $cc = (string)$this->_setController();
+        $cc = (string)$this->setController();
         $this->set('controller', $cc);
 
         $task = (string)$this->get('task', 'display');
@@ -748,7 +748,7 @@ class Includer extends Molajo
 
         if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
             Services::Debug()->set(' ');
-            Services::Debug()->set('Includer::_invokeMVC');
+            Services::Debug()->set('Includer::invokeMVC');
             Services::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');
             Services::Debug()->set('Extension: ' . $this->get('extension_instance_name') . ' ID: ' . $this->get('id') . '');
             Services::Debug()->set('Template: ' . $this->get('template_view_path') . '');
@@ -771,14 +771,14 @@ class Includer extends Molajo
     }
 
     /**
-     * _setModel
+     * setModel
      *
      * Set the name of the Model
      *
      * @return  string
      * @since   1.0
      */
-    protected function _setModel()
+    protected function setModel()
     {
         /** Extension Name */
         $extension = (string)ucfirst($this->get('extension_instance_name'));
@@ -827,14 +827,14 @@ class Includer extends Molajo
     }
 
     /**
-     * _setController
+     * setController
      *
      * Set the name of the Controller
      *
      * @return  string
      * @since   1.0
      */
-    protected function _setController()
+    protected function setController()
     {
         /** Extension Name */
         $extension = (string)ucfirst($this->get('extension_instance_name'));

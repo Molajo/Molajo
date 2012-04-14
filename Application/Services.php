@@ -115,7 +115,7 @@ Class Services extends Molajo
             /** class name */
             $entry = (string)$item . 'Service';
             $serviceClass = 'Molajo\\Application\\Service\\' . $entry;
-
+echo $serviceClass.'<br />';
             /** method name */
             $serviceMethod = 'getInstance';
 
