@@ -7,9 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+namespace Joomla\filesystem;
 
-jimport('joomla.filesystem.path');
+use Joomla\log\JLog;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * A Folder handling class
@@ -53,17 +55,17 @@ abstract class JFolder
 
 		if (!self::exists($src))
 		{
-			throw new RuntimeException('Source folder not found', -1);
+			throw new \RuntimeException('Source folder not found', -1);
 		}
 		if (self::exists($dest) && !$force)
 		{
-			throw new RuntimeException('Destination folder not found', -1);
+			throw new \RuntimeException('Destination folder not found', -1);
 		}
 
 		// Make sure the destination exists
 		if (!self::create($dest))
 		{
-			throw new RuntimeException('Cannot create destination folder', -1);
+			throw new \RuntimeException('Cannot create destination folder', -1);
 		}
 
 		// If we're using ftp and don't have streams enabled
@@ -74,7 +76,7 @@ abstract class JFolder
 
 			if (!($dh = @opendir($src)))
 			{
-				throw new RuntimeException('Cannot open source folder', -1);
+				throw new \RuntimeException('Cannot open source folder', -1);
 			}
 			// Walk through the directory copying files and recursing into folders.
 			while (($file = readdir($dh)) !== false)
@@ -99,7 +101,7 @@ abstract class JFolder
 						$dfid = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $dfid), '/');
 						if (!$ftp->store($sfid, $dfid))
 						{
-							throw new RuntimeException('Copy file failed', -1);
+							throw new \RuntimeException('Copy file failed', -1);
 						}
 						break;
 				}
@@ -109,7 +111,7 @@ abstract class JFolder
 		{
 			if (!($dh = @opendir($src)))
 			{
-				throw new RuntimeException('Cannot open source folder', -1);
+				throw new \RuntimeException('Cannot open source folder', -1);
 			}
 			// Walk through the directory copying files and recursing into folders.
 			while (($file = readdir($dh)) !== false)
@@ -135,14 +137,14 @@ abstract class JFolder
 							$stream = JFactory::getStream();
 							if (!$stream->copy($sfid, $dfid))
 							{
-								throw new RuntimeException('Cannot copy file: ' . $stream->getError(), -1);
+								throw new \RuntimeException('Cannot copy file: ' . $stream->getError(), -1);
 							}
 						}
 						else
 						{
 							if (!@copy($sfid, $dfid))
 							{
-								throw new RuntimeException('Copy file failed', -1);
+								throw new \RuntimeException('Copy file failed', -1);
 							}
 						}
 						break;
@@ -324,7 +326,6 @@ abstract class JFolder
 			if (is_link($folder))
 			{
 				// Don't descend into linked directories, just delete the link.
-				jimport('joomla.filesystem.file');
 				if (JFile::delete($folder) !== true)
 				{
 					// JFile::delete throws an error

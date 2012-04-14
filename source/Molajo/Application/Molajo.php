@@ -177,7 +177,7 @@ class Molajo
 		if (self::$services) {
 			return self::$services;
 		} else {
-			throw new InvalidArgumentException(Molajo::get(300600), 300600);
+			throw new \InvalidArgumentException(Molajo::get(300600), 300600);
 		}
 	}
 

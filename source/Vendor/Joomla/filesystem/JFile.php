@@ -9,7 +9,7 @@
 
 namespace Joomla\filesystem;
 
-use Joomla\log\JFile;
+use Joomla\log\JLog;
 
 defined('JPATH_PLATFORM') or die;
 

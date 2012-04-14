@@ -4,9 +4,10 @@
  * @copyright Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+
 namespace Molajo\Application\Service;
 
-use Molajo\Application\Services; // Registry, Folder, User
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 /**
@@ -21,12 +22,12 @@ Class LanguageService extends BaseService
     /**
      * Instance of each specific language
      *
-     * $_languages
+     * $languages
      *
      * @var array
      * @since 1.0
      */
-    protected static $_languages = array();
+    protected static $languages = array();
 
     /**
      * Language
@@ -101,7 +102,7 @@ Class LanguageService extends BaseService
     protected $loaded_strings;
 
     /**
-     * Overrides loaded
+     * :paOverrides loaded
      *
      * @var    array
      * @since  1.0
@@ -120,11 +121,11 @@ Class LanguageService extends BaseService
      */
     public static function getInstance($language = null)
     {
-        if (isset(self::$_languages[$language])) {
+        if (isset(self::$languages[$language])) {
         } else {
-            self::$_languages[$language] = new LanguageService($language);
+            self::$languages[$language] = new LanguageService($language);
         }
-        return self::$_languages[$language];
+        return self::$languages[$language];
     }
 
     /**
@@ -140,6 +141,7 @@ Class LanguageService extends BaseService
         if ($language == null || $language == '') {
             $language = $this->getDefault();
         }
+
         $this->language = $language;
         $this->loaded_override_strings = array();
         $this->loaded_strings = array();
@@ -399,9 +401,7 @@ Class LanguageService extends BaseService
     public function getDefault()
     {
         /** Installed Languages */
-        $languages = $this->getLanguages(
-            EXTENSIONS_LANGUAGES
-        );
+        $languages = $this->getLanguages(EXTENSIONS_LANGUAGES);
 
         $installed = array();
         foreach ($languages as $language) {

@@ -1,7 +1,11 @@
+/**
+ * Molajo Hacks
+ *
+ * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ */
 Added namespaces to all classes.
 Added use statements for all classes used in the class.
 Commented out all JImports, JLoader, includes, requires, imports, etc.
-Changed all stdClass to /stdClass.
-Added class file to each class that matched the file name and extended the JClass name.
-Commented out all JLog deprecation statements (those methods are not used.)
-Removed all JText::_() calls and simply allowed the untranslated error to return (uncouple translation)
+Changed all PHP classes to default (ex. stdClass to /stdClass, Exception to /Exception, etc).
+Added phpConsole logger

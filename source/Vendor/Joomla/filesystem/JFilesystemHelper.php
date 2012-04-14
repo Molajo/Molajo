@@ -7,10 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+namespace Joomla\filesystem;
 
-jimport('joomla.filesystem.file');
-jimport('joomla.filesystem.folder');
+defined('JPATH_PLATFORM') or die;
 
 /**
  * File system helper

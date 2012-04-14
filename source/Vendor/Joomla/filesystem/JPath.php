@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\filesystem;
+
 defined('JPATH_PLATFORM') or die;
 
 // Define a boolean constant as true if a Windows based host
@@ -169,14 +171,14 @@ class JPath
 		if (strpos($path, '..') !== false)
 		{
 			// Don't translate
-			throw new Exception('JPath::check Use of relative paths not permitted', 20);
+			throw new \Exception('JPath::check Use of relative paths not permitted', 20);
 		}
 
 		$path = self::clean($path);
 		if ((JPATH_ROOT != '') && strpos($path, self::clean(JPATH_ROOT)) !== 0)
 		{
 			// Don't translate
-			throw new Exception('JPath::check Snooping out of bounds @ ' . $path, 20);
+			throw new \Exception('JPath::check Snooping out of bounds @ ' . $path, 20);
 		}
 
 		return $path;
@@ -220,7 +222,6 @@ class JPath
 	 */
 	public static function isOwner($path)
 	{
-		jimport('joomla.filesystem.file');
 
 		$tmp = md5(mt_rand());
 		$ssp = ini_get('session.save_path');
@@ -264,7 +265,7 @@ class JPath
 	public static function find($paths, $file)
 	{
 		// Force to array
-		if (!is_array($paths) && !($paths instanceof Iterator))
+		if (!is_array($paths) && !($paths instanceof \Iterator))
 		{
 			settype($paths, 'array');
 		}

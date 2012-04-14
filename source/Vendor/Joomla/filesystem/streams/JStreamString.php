@@ -7,9 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+namespace Joomla\filesystem\streams;
 
-jimport('joomla.filesystem.support.stringcontroller');
+use Joomla\filesystem\support\JStringController;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * String Stream Wrapper

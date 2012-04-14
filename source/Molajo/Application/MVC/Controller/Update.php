@@ -363,7 +363,7 @@ class UpdateController extends Controller
      */
     private function storeRelated()
     {
-        $asset = new AssetModel();
+        $asset = new TableModel('Assets');
 
         $asset->asset_type_id = $this->model->table_name->asset_type_id;
 
