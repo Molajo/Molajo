@@ -318,7 +318,6 @@ class JDatabaseDriverMysqli extends JDatabaseDriverMysql
 			{
 				$this->errorNum = (int) mysqli_errno($this->connection);
 				$this->errorMsg = (string) mysqli_error($this->connection) . ' SQL=' . $sql;
-
 				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
 				throw new \RuntimeException($this->errorMsg, $this->errorNum);
 			}

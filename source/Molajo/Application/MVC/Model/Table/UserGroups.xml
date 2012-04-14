@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="UserGroups">
+<model name="UserGroups" table="#__user_groups" primary_key="id">
     <filters>
         <filter name="user_id" filter="int" null="0" default=""/>
         <filter name="group_id" filter="int" null="0" default=""/>
