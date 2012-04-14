@@ -7,7 +7,7 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
-use Molajo\Application\MVC\Model\LoadModel;
+use Molajo\Application\MVC\Model\ItemModel;
 
 defined('MOLAJO') or die;
 
@@ -70,7 +70,7 @@ Class UserService extends BaseService
 	 */
 	protected function load()
 	{
-		$m = new LoadModel ('Users', $this->id);
+		$m = new ItemModel ('Users', $this->id);
 		$results = $m->load();
 
 		$first_name = '';

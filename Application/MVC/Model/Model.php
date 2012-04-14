@@ -517,7 +517,7 @@ class Model
 	 * Creates and runs the database query, allow for additional data,
 	 * and returns the integrated data for the item requested
 	 *
-	 * Implemented by LoadModel, can be overridden by child
+	 * Implemented by ItemModel, can be overridden by child
 	 *
 	 * @return  object
 	 * @since   1.0
