@@ -201,7 +201,6 @@ Class RegistryService extends BaseService
      */
     public function loadArray($name, $array = array())
     {
-        var_dump($array);
         foreach ($array as $key => $value) {
             if ($value === null) {
             } else {

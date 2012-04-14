@@ -151,8 +151,7 @@ Class Parse extends Molajo
         Services::Registry()->create('theme');
 
         $themeParameters = Services::Registry()->get('Request\\theme_parameters');
-        var_dump($themeParameters);
-        die;
+
         Services::Registry()->loadArray('theme',
             array(
                 'theme' => Services::Registry()->get('Request\\theme_name'),
