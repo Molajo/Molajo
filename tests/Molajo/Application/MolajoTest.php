@@ -59,7 +59,7 @@ class TestMolajo
     protected static $helper = null;
 
     /**
-     * Molajo::RequestService
+     * Molajo::Request
      *
      * @var	object Parse
      * @since  1.0
@@ -152,7 +152,7 @@ class TestMolajo
     }
 
     /**
-     * Molajo::RequestService
+     * Molajo::Request
      *
      * @static
      * @return  Parse

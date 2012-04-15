@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Application
  * @since       1.0
  */
-Class Application extends Molajo
+Class Application
 {
 	/**
 	 * $instance
@@ -26,30 +26,6 @@ Class Application extends Molajo
 	 * @since      1.0
 	 */
 	protected static $instance = null;
-
-	/**
-	 * $config
-	 *
-	 * @var        integer
-	 * @since      1.0
-	 */
-	protected $site_config = null;
-
-	/**
-	 * $site_parameters
-	 *
-	 * @var        array
-	 * @since      1.0
-	 */
-	protected $site_parameters = null;
-
-	/**
-	 * $site_custom_fields
-	 *
-	 * @var        array
-	 * @since      1.0
-	 */
-	protected $site_custom_fields = null;
 
 	/**
 	 * $rendered_output
@@ -94,26 +70,34 @@ Class Application extends Molajo
 		}
 
 		/** HTTP Class */
-		$this->_setBaseURL();
+		$this->setBaseURL();
 
 		/** PHP Constants */
-		$this->_setDefines();
+		$this->setDefines();
 
 		/** Site determination and paths */
-		$this->_setSite();
+		$this->setSite();
 
 		/** Application determination and paths */
-		$this->_setApplication();
+		$this->setApplication();
+
+		/** Application installation check */
+		$continue = $this->installCheck();
+		if ($continue == false) {
+			return $this;
+		}
 
 		/** Connect Application Services */
-		Molajo::Services()
-			->startServices();
+		Molajo::Services()->startServices();
 
 		Services::Debug()
 			->set('Molajo::Services()->startServices() complete');
 
+		/** Secure Access Check */
 		if (Services::Registry()->get('Configuration\\force_ssl') > 0) {
-			if ((Services::Request()->isSecure() === true)) {
+
+			if ((Services::Request()->connection->isSecure() === true)) {
+
 			} else {
 
 				$redirectTo = (string)'https' .
@@ -135,7 +119,7 @@ Class Application extends Molajo
 			->set('Services::Session()->create complete');
 
 		/** Site Paths, Custom Fields, and Authorisation */
-		$this->_setSitePaths();
+		$this->setSitePaths();
 
 		$m = new TableModel ('Sites', SITE_ID);
 
@@ -172,18 +156,16 @@ Class Application extends Molajo
 	}
 
 	/**
-	 * request
-	 *
 	 * @param null $override_request_url
 	 * @param null $override_asset_id
 	 *
 	 * @return Application
 	 * @since  1.0
 	 */
-	public static function request($override_request_url = null,
-								   $override_asset_id = null)
+	public function route($override_request_url = null,
+						  $override_asset_id = null)
 	{
-		Molajo::Request()
+		Molajo::Route()
 			->process(
 			$override_request_url = null,
 			$override_asset_id = null
@@ -193,8 +175,6 @@ Class Application extends Molajo
 	}
 
 	/**
-	 * process
-	 *
 	 * Executes a display or action task
 	 *
 	 * Display Task
@@ -218,7 +198,7 @@ Class Application extends Molajo
 	 * @param string $override_finalXML
 	 * @return Application
 	 */
-	public function process($override_sequenceXML = null, $override_finalXML = null)
+	public function execute($override_sequenceXML = null, $override_finalXML = null)
 	{
 		if (Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
@@ -230,7 +210,9 @@ Class Application extends Molajo
 		if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
 			$this->rendered_output =
 				Molajo::Parse()
-					->process($override_sequenceXML = null, $override_finalXML = null);
+					->process($override_sequenceXML = null,
+					$override_finalXML = null
+				);
 			Services::Debug()
 				->set('Molajo::Parse() complete');
 
@@ -239,11 +221,12 @@ Class Application extends Molajo
 			/**
 			 * Action Task
 			 */
-			//$this->_processTask();
+			//$this->processTask();
 		}
 
 		Services::Debug()
 			->set('Molajo::Application()->process() Complete');
+
 		return $this;
 	}
 
@@ -291,12 +274,12 @@ Class Application extends Molajo
 	 * @return  void
 	 * @since   1.0
 	 */
-	protected function _setBaseURL()
+	protected function setBaseURL()
 	{
-		$baseURL = Molajo::RequestService()->request->getScheme()
+		$baseURL = Molajo::Request()->request->getScheme()
 			. '://'
-			. Molajo::RequestService()->request->getHttpHost()
-			. Molajo::RequestService()->request->getBaseUrl();
+			. Molajo::Request()->request->getHttpHost()
+			. Molajo::Request()->request->getBaseUrl();
 
 		if (defined('BASE_URL')) {
 		} else {
@@ -306,8 +289,6 @@ Class Application extends Molajo
 	}
 
 	/**
-	 *  _setDefines
-	 *
 	 * The APPLICATIONS, EXTENSIONS and VENDOR
 	 * folders and subfolders can be relocated outside of the
 	 * Apache htdocs folder for increased security. To do so:
@@ -321,7 +302,7 @@ Class Application extends Molajo
 	 * SITES contains content that must be accessible by the
 	 * Website and thus cannot be moved
 	 */
-	protected function _setDefines()
+	protected function setDefines()
 	{
 		if (file_exists(BASE_FOLDER . '/defines.php')) {
 			include_once BASE_FOLDER . '/defines.php';
@@ -442,15 +423,13 @@ Class Application extends Molajo
 	}
 
 	/**
-	 * _setSite
-	 *
 	 * Identifies the specific site and sets site paths
 	 * for use in the application
 	 *
 	 * @return  void
 	 * @since   1.0
 	 */
-	protected function _setSite()
+	protected function setSite()
 	{
 		if (defined('SITES')) {
 		} else {
@@ -473,8 +452,7 @@ Class Application extends Molajo
 			define('SITES_TEMP_URL', BASE_URL . 'site/temp');
 		}
 
-		$scheme = Molajo::RequestService()
-			->request->getScheme() . '://';
+		$scheme = Molajo::Request()->request->getScheme() . '://';
 		$siteBase = substr(BASE_URL, strlen($scheme), 999);
 
 		if (defined('SITE_BASE_URL')) {
@@ -499,18 +477,16 @@ Class Application extends Molajo
 	}
 
 	/**
-	 *  _setApplication
-	 *
-	 *  Identify current application and page request
+	 * Identify current application and page request
 	 *
 	 * @return  void
 	 * @since   1.0
 	 */
-	protected function _setApplication()
+	protected function setApplication()
 	{
 		/** ex. /molajo/administrator/index.php?option=login    */
-		$p1 = Molajo::RequestService()->request->getPathInfo();
-		$t2 = Molajo::RequestService()->request->getQueryString();
+		$p1 = Molajo::Request()->request->getPathInfo();
+		$t2 = Molajo::Request()->request->getQueryString();
 		if (trim($t2) == '') {
 			$requestURI = $p1;
 		} else {
@@ -568,46 +544,40 @@ Class Application extends Molajo
 	}
 
 	/**
-	 * _installCheck
-	 *
 	 * Determine if the site has already been installed
 	 *
-	 * return  void
+	 * return  boolean
 	 * @since  1.0
 	 */
-	protected function _installCheck()
+	protected function installCheck()
 	{
-		if (defined('INSTALL_CHECK')) {
-		} else {
-			define('INSTALL_CHECK', false);
+		if (defined('SKIP_INSTALL_CHECK')) {
+			return true;
 		}
 
-		if (APPLICATION == 'installation'
-			|| (INSTALL_CHECK === false
-				&& file_exists(SITE_FOLDER_PATH . '/configuration.php'))
+		if (APPLICATION == 'installation') {
+			return true;
+		}
+
+		if (file_exists(SITE_FOLDER_PATH . '/configuration.php')
+			&& filesize(SITE_FOLDER_PATH . '/configuration.php') > 10
 		) {
-
-		} else {
-			if (!file_exists(SITE_FOLDER_PATH . '/configuration.php')
-				|| filesize(SITE_FOLDER_PATH . '/configuration.php' < 10)
-			) {
-				//todo: use HTTPFoundation redirect
-				$redirect = BASE_URL . 'installation/';
-				header('Location: ' . $redirect);
-				exit();
-			}
+			return true;
 		}
+
+		/** Redirect to Installation Application */
+		$redirect = BASE_URL . 'installation/';
+		header('Location: ' . $redirect);
+		exit();
 	}
 
 	/**
-	 * _setSitePaths
-	 *
 	 * Establish media, cache, log, etc., locations for site for application use
 	 *
 	 * @return mixed
 	 * @since  1.0
 	 */
-	protected function _setSitePaths()
+	protected function setSitePaths()
 	{
 		if (defined('SITE_NAME')) {
 		} else {
@@ -639,10 +609,13 @@ Class Application extends Molajo
 		} else {
 			define('SITE_TEMP_FOLDER', Services::Registry()->get('Configuration\\temp_path', SITE_FOLDER_PATH . '/temp'));
 		}
+
 		if (defined('SITE_TEMP_URL')) {
 		} else {
 			define('SITE_TEMP_URL', BASE_URL . Services::Registry()->get('Configuration\\temp_url', BASE_URL . 'sites/' . SITE_ID . '/temp'));
 		}
+
 		return;
 	}
+
 }

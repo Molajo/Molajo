@@ -11,7 +11,6 @@ Class SiteConfiguration
     public $jdatabase_password = 'root';
     public $jdatabase_db = 'molajo';
     public $jdatabase_dbprefix = 'molajo_';
-    public $jdatabase_namespace = 'Joomla\\database\\JDatabaseFactory';
 
     /** disable html filters */
     public $disable_filter_for_groups = '4';

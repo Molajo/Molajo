@@ -12,7 +12,7 @@ use Molajo\Extension\Helper;
 defined('MOLAJO') or die;
 
 /**
- * Request
+ * Route
  *
  * Establishes parameter values given inheritance chain:
  * 1. Menu Item
@@ -23,47 +23,35 @@ defined('MOLAJO') or die;
  * 5. Hard-coded defaults
  *
  * @package    Molajo
- * @subpackage Request
+ * @subpackage Route
  * @since      1.0
  */
-Class Request extends Molajo
+Class Route
 {
-    /**
-     * $instance
-     *
-     * @var        object
-     * @since      1.0
-     */
-    protected static $instance;
+	/**
+	 * $instance
+	 *
+	 * @var        object
+	 * @since      1.0
+	 */
+	protected static $instance = null;
 
-    /**
-     * Returns a reference to the global request object,
-     *  only creating it if it doesn't already exist.
-     *
-     * @static
-     * @return  object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new Request();
-        }
-        return self::$instance;
-    }
-
-    /**
-     * Class constructor
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function __construct()
-    {
-        $this->initialise();
-
-        return $this;
-    }
+	/**
+	 * getInstance
+	 *
+	 * Returns the global site object, creating if not existing
+	 *
+	 * @return  Application  object
+	 * @since   1.0
+	 */
+	public static function getInstance()
+	{
+		if (self::$instance) {
+		} else {
+			self::$instance = new Route();
+		}
+		return self::$instance;
+	}
 
     /**
      * Using the PAGE_REQUEST value,
@@ -79,6 +67,8 @@ Class Request extends Molajo
      */
     public function process($override_request_url = null, $override_asset_id = null)
     {
+		$this->initialise();
+
         /** Specific asset */
         if ((int)$override_asset_id == 0) {
             Services::Registry()->set('Request\\request_asset_id', 0);
@@ -113,7 +103,29 @@ Class Request extends Molajo
         }
 
         /** Route */
-        $this->routeRequest();
+		if (Services::Registry()->get('Request\\status_found') === false) {
+			$this->error(404);
+		}
+
+		/** redirect */
+		if ($this->redirect_to_id == 0) {
+		} else {
+			Services::Response()->redirect(
+				Molajo::Helper()->getURL('Asset', $this->redirect_to_id),
+				301
+			);
+		}
+
+		/** must be logged on */
+		if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
+			&& Services::Registry()->get('User\\guest', true) === true
+			&& Services::Registry()->get('Request\\request_asset_id')
+				<> Services::Registry()->get('Configuration\\logon_requirement', 0)
+		) {
+			Services::Response()->redirect(
+				Services::Registry()->get('Configuration\\logon_requirement', 0), 303
+			);
+		}
 
         /** Action: Render Page */
         if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
@@ -443,43 +455,6 @@ Class Request extends Molajo
         }
 
         return true;
-    }
-
-    /**
-     * Route the application.
-     *
-     * @return    void
-     * @since    1.0
-     */
-    protected function routeRequest()
-    {
-        /** not found */
-        if (Services::Registry()->get('Request\\status_found') === false) {
-            $this->error(404);
-        }
-
-        /** redirect */
-        if ($this->redirect_to_id == 0) {
-        } else {
-            Services::Response()->redirect(
-                Molajo::Helper()->getURL('Asset', $this->redirect_to_id),
-                301
-            );
-        }
-
-        /** must be logged on */
-        if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
-            && Services::Registry()->get('User\\guest', true) === true
-            && Services::Registry()->get('Request\\request_asset_id')
-                <> Services::Registry()->get('Configuration\\logon_requirement', 0)
-        ) {
-            Services::Response()->redirect(
-                Services::Registry()->get('Configuration\\logon_requirement', 0), 303
-            );
-        }
-
-
-        return;
     }
 
     /**

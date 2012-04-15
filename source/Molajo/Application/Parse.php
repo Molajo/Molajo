@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Parse
  * @since       1.0
  */
-Class Parse extends Molajo
+Class Parse
 {
     /**
      * $instance

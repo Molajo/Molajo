@@ -6,7 +6,7 @@
  */
 namespace Molajo\Application\Service;
 
-use Joomla\registry\Registry;
+use Joomla\registry\JRegistry;
 
 defined('MOLAJO') or die;
 
@@ -20,18 +20,18 @@ defined('MOLAJO') or die;
 Class RegistryService extends BaseService
 {
     /**
-     * @instance
+     * $instance
      *
-     * @var        object
-     * @since   1.0
+     * @var    object
+     * @since  1.0
      */
     protected static $instance;
 
     /**
      * $parameters
      *
-     * @var     array
-     * @since   1.0
+     * @var    array
+     * @since  1.0
      */
     protected $parameters;
 
@@ -39,8 +39,8 @@ Class RegistryService extends BaseService
      * getInstance
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -65,17 +65,17 @@ Class RegistryService extends BaseService
     /**
      * initialise
      *
-     * Create new Registry object that can be used locally
+     * Create new JRegistry object that can be used locally
      *
      * Usage:
-     * $local = Services::Registry()->initalise();
+     * $local = Services::Registry()->initialise();
      *
      *
-     * @return \Joomla\registry\Registry
+     * @return \Joomla\registry\JRegistry
      */
     public function initialise()
     {
-        return new Registry();
+        return new JRegistry();
     }
 
     /**
@@ -94,9 +94,8 @@ Class RegistryService extends BaseService
      */
     public function create($name)
     {
-        $this->parameters[$name] = new Registry();
-
-        return;
+        $this->parameters[$name] = new JRegistry();
+        return $this;
     }
 
     /**
@@ -107,8 +106,8 @@ Class RegistryService extends BaseService
      * Usage:
      * Services::Registry()->set('Request\\parameter_name', $value);
      *
-     * @param   string  $key
-     * @param   mixed   $value
+     * @param  string  $key
+     * @param  mixed   $value
      *
      * @return  mixed
      * @since   1.0
@@ -131,9 +130,9 @@ Class RegistryService extends BaseService
      * Usage:
      * Services::Registry()->get('Request\\parameter_name');
      *
-     * @param   string  $key
-     * @param   mixed   $default
-     * @param    string    $type
+     * @param  string  $key
+     * @param  mixed   $default
+     * @param  string  $type
      *
      * @return  mixed
      * @since   1.0
@@ -150,10 +149,10 @@ Class RegistryService extends BaseService
      * Sets a Parameter property for a specific item and parameter set
      *
      * Usage:
-     * Services::Registry()->set('Request\\parameter_name', $value);
+     * Services::Registry()->merge('Menu', 'Component');
      *
-     * @param   string  $key
-     * @param   mixed   $value
+	 * @param $set1
+	 * @param $set2
      *
      * @return  mixed
      * @since   1.0
@@ -161,13 +160,13 @@ Class RegistryService extends BaseService
     public function merge($set1, $set2)
     {
         $mergeInto = array();
-        if ($set1 instanceof Registry) {
+        if ($set1 instanceof JRegistry) {
             $mergeInto = $this->getArray($set1);
         } else {
             //error
         }
         $mergeIn = array();
-        if ($set2 instanceof Registry) {
+        if ($set2 instanceof JRegistry) {
         } else {
             $mergeIn = $this->getArray($set2);
         }
@@ -204,7 +203,6 @@ Class RegistryService extends BaseService
         foreach ($array as $key => $value) {
             if ($value === null) {
             } else {
-                echo $key . ' ' . $value . '<br />';
                 $this->set($name . '//' . $key, $value);
             }
         }

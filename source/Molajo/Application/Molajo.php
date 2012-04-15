@@ -29,10 +29,18 @@ class Molajo
 	/**
 	 * Molajo::Request
 	 *
-	 * @var    object Request
+	 * @var    object Parse
 	 * @since  1.0
 	 */
 	protected static $request = null;
+
+	/**
+	 * Molajo::Route
+	 *
+	 * @var    object Route
+	 * @since  1.0
+	 */
+	protected static $route = null;
 
 	/**
 	 * Molajo::Service
@@ -57,14 +65,6 @@ class Molajo
 	 * @since  1.0
 	 */
 	protected static $helper = null;
-
-	/**
-	 * Molajo::RequestService
-	 *
-	 * @var    object Parse
-	 * @since  1.0
-	 */
-	protected static $request_service = null;
 
 	/**
 	 * Default code if lookup value does not exist
@@ -150,7 +150,7 @@ class Molajo
 			try {
 				self::$application = Application::getInstance();
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				echo 'Instantiate Application Exception : ', $e->getMessage(), "\n";
 				die;
 			}
@@ -160,11 +160,34 @@ class Molajo
 	}
 
 	/**
+	 * Molajo::Request
+	 *
+	 * @static
+	 * @return  Parse
+	 * @since   1.0
+	 */
+	public static function Request()
+	{
+		if (self::$request) {
+		} else {
+			try {
+				self::$request = RequestService::getInstance();
+			}
+			catch (\Exception $e) {
+				echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";
+				die;
+			}
+		}
+
+		return self::$request;
+	}
+
+	/**
 	 * Molajo::Services
 	 *
 	 * @static
 	 * @return  null|object
-	 * @throws  InvalidArgumentException
+	 * @throws  \InvalidArgumentException
 	 * @since   1.0
 	 */
 	public static function Services()
@@ -182,29 +205,28 @@ class Molajo
 	}
 
 	/**
-	 * Molajo::Request
+	 * Molajo::Route
 	 *
 	 * @static
-	 * @param null $request
 	 * @param string $override_request_url
 	 * @param string $override_asset_id
 	 *
-	 * @return Request
+	 * @return Route
 	 * @since 1.0
 	 */
-	public static function Request()
+	public static function Route()
 	{
-		if (self::$request) {
+		if (self::$route) {
 		} else {
 			try {
-				self::$request = Request::getInstance();
+				self::$route = Route::getInstance();
 			}
-			catch (Exception $e) {
-				echo 'Instantiate Request Exception : ', $e->getMessage(), "\n";
+			catch (\Exception $e) {
+				echo 'Instantiate Route Exception : ', $e->getMessage(), "\n";
 				die;
 			}
 		}
-		return self::$request;
+		return self::$route;
 	}
 
 	/**
@@ -221,7 +243,7 @@ class Molajo
 			try {
 				self::$parse = Parse::getInstance();
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				echo 'Instantiate Parse Exception : ', $e->getMessage(), "\n";
 				die;
 			}
@@ -244,35 +266,12 @@ class Molajo
 			try {
 				self::$helper = Helper::getInstance();
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				echo 'Instantiate Helper Exception : ', $e->getMessage(), "\n";
 				die;
 			}
 		}
 		return self::$helper;
-	}
-
-	/**
-	 * Molajo::RequestService
-	 *
-	 * @static
-	 * @return  Parse
-	 * @since   1.0
-	 */
-	public static function RequestService()
-	{
-		if (self::$request_service) {
-		} else {
-			try {
-				self::$request_service = RequestService::getInstance();
-			}
-			catch (Exception $e) {
-				echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";
-				die;
-			}
-		}
-
-		return self::$request_service;
 	}
 }
 

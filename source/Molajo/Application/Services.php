@@ -6,7 +6,7 @@
  */
 namespace Molajo\Application;
 
-use Joomla\registry\Registry;
+use Joomla\registry\JRegistry;
 use Molajo\Application\Molajo;
 
 defined('MOLAJO') or die;
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class Services extends Molajo
+Class Services
 {
     /**
      * Static instance
@@ -52,8 +52,6 @@ Class Services extends Molajo
     }
 
     /**
-     * get
-     *
      * Retrieves service key value pair
      *
      * @param  string  $key
@@ -69,13 +67,11 @@ Class Services extends Molajo
     }
 
     /**
-     * __callStatic
-     *
      * Used to connect to services
      *
      * @static
-     * @param $name
-     * @param $arguments
+     * @param  $name
+     * @param  $arguments
      */
     public static function __callStatic($name, $arguments)
     {
@@ -83,11 +79,7 @@ Class Services extends Molajo
     }
 
     /**
-     * startServices
-     *
      * loads all services defined in the services.xml file
-     *
-     * @param   null|Registry $config
      *
      * @return  boolean
      * @since   1.0
@@ -98,7 +90,7 @@ Class Services extends Molajo
         $this->message = array();
 
         /** store service connections  */
-        $this->service_connection = new Registry();
+        $this->service_connection = new JRegistry();
 
         /** start services in this sequence */
         $xml = CONFIGURATION_FOLDER . '/services.xml';
@@ -115,7 +107,7 @@ Class Services extends Molajo
             /** class name */
             $entry = (string)$item . 'Service';
             $serviceClass = 'Molajo\\Application\\Service\\' . $entry;
-echo $serviceClass.'<br />';
+
             /** method name */
             $serviceMethod = 'getInstance';
 

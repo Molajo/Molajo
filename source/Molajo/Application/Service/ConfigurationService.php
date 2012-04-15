@@ -89,9 +89,10 @@ Class ConfigurationService extends BaseService
 
         $xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Applications.xml');
 
-        $this->registry('ApplicationCustomFields\\', $data, 'custom_fields', 'custom_field', $xml);
-        $this->registry('ApplicationMetadata\\', $data, 'metadata', 'meta', $xml);
+//        $this->registry('ApplicationCustomFields\\', $data, 'custom_fields', 'custom_field', $xml);
+//        $this->registry('ApplicationMetadata\\', $data, 'metadata', 'meta', $xml);
         $this->registry('Configuration\\', $data, 'parameters', 'parameter', $xml);
+
 
         return $this;
     }
@@ -108,10 +109,9 @@ Class ConfigurationService extends BaseService
     protected function registry($namespace, $data, $field_group, $field_name, $xml)
     {
         $registry = Services::Registry()->initialise();
+        $registry->loadString($data->$field_group, 'JSON');
 
-        $registry->loadJson($data->$field_group, array());
-
-        if (isset($xml->$field_group->$field_name)) {
+		if (isset($xml->$field_group->$field_name)) {
             foreach ($xml->$field_group->$field_name as $cf) {
 
                 $name = (string)$cf['name'];

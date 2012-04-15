@@ -4,6 +4,7 @@
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
 Added namespaces to all classes.
 Added use statements for all classes used in the class.
 Commented out all JImports, JLoader, includes, requires, imports, etc.
