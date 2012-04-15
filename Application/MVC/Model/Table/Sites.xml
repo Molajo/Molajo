@@ -21,10 +21,10 @@
         <fk name="asset_type_id" source_id="id" source_model="MolajoAssetTypes" required="1" />
     </fks>
     <custom_fields>
-        <custom_field name="custom_field1" filter="char" null="1" default="" values=""/>
+        <custom_field name="custom_field1" filter="char" null="0" default="Molajo Site"/>
     </custom_fields>
     <metadata>
-        <meta name="metadata_title" filter="char" null="0" default="Molajo Site"/>
+        <meta name="metadata_title" filter="char" null="0" default=""/>
         <meta name="metadata_description" filter="text" null="0" default=""/>
         <meta name="metadata_keywords" filter="char" null="1" default=""/>
         <meta name="metadata_robots" filter="char" null="0" default="follow,index"

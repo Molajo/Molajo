@@ -121,33 +121,11 @@ Class Application
 		/** Site Paths, Custom Fields, and Authorisation */
 		$this->setSitePaths();
 
-		$m = new TableModel ('Sites', SITE_ID);
+		/** Retrieve Site data and save in registry */
+		$this->setSiteData();
 
-		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
-
-		$info = $m->loadObject();
-		if ($info === false) {
-			//error! die!
-		}
-
-		$authorise = Services::Access()
-			->authoriseSiteApplication();
-		if ($authorise === false) {
-			$message = '304: ' . BASE_URL;
-			echo $message;
-			die;
-		}
-
-		$this->site_custom_fields = Services::Registry()->initialise();
-		$this->site_custom_fields->loadString($info->custom_fields);
-
-		$this->site_parameters = Services::Registry()->initialise();
-		$this->site_parameters->loadString($info->parameters);
-
-		$this->site_metadata = Services::Registry()->initialise();
-		$this->site_metadata->loadString($info->metadata);
-
-		$this->base_url = $info->base_url;
+		/** Verify that this site is authorised to access this application */
+		$this->getSiteApplicationAuthorisation();
 
 		Services::Debug()
 			->set('Molajo::Application()->initialise() complete');
@@ -156,20 +134,21 @@ Class Application
 	}
 
 	/**
+	 * route application
+	 *
 	 * @param null $override_request_url
 	 * @param null $override_asset_id
 	 *
 	 * @return Application
 	 * @since  1.0
 	 */
-	public function route($override_request_url = null,
-						  $override_asset_id = null)
+	public function route($override_request_url = null, $override_asset_id = null)
 	{
 		Molajo::Route()
 			->process(
-			$override_request_url = null,
-			$override_asset_id = null
-		);
+				$override_request_url = null,
+				$override_asset_id = null
+			);
 
 		return $this;
 	}
@@ -618,4 +597,48 @@ Class Application
 		return;
 	}
 
+	/**
+	 * Retrieve Site data and save in registry
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 * @throws \RuntimeException
+	 */
+	protected function setSiteData()
+	{
+		$m = new TableModel ('Sites', SITE_ID);
+
+		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
+
+		$results = $m->loadAssoc();
+		if ($results === false) {
+			throw new \RuntimeException ('setSiteData query problem');
+		}
+
+		/** Registry for Custom Fields and Metadata */
+		$xml = simplexml_load_file( APPLICATIONS_MVC . '/Model/Table/Sites.xml');
+		Services::Registry()->loadField('SiteCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
+		Services::Registry()->loadField('SiteMetadata\\', 'meta', $results['metadata'], $xml->metadata);
+
+		$this->base_url = $results['base_url'];
+
+		return;
+	}
+
+	/**
+	 * Verify that this site is authorised to access this application
+	 *
+	 * @returns boolean
+	 * @since   1.0
+	 */
+	protected function getSiteApplicationAuthorisation()
+	{
+		$authorise = Services::Access()->authoriseSiteApplication();
+		if ($authorise === false) {
+			$message = '304: ' . BASE_URL;
+			echo $message;
+			die;
+		}
+		return true;
+	}
 }

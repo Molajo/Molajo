@@ -106,16 +106,11 @@ Class UserService extends BaseService
 			Services::Registry()->set('User\\registered', 1);
 		}
 
-		$v = simplexml_load_file(
-			APPLICATIONS_MVC
-				. '/Model/Table/'
-				. substr($m->table_name, 3, 99)
-				. '.xml'
-		);
+		$xml = simplexml_load_file(APPLICATIONS_MVC. '/Model/Table/Users.xml');
 
-		$this->registry('UserCustomFields\\', $results, 'custom_fields', 'custom_field', $v);
-		$this->registry('UserMetadata\\', $results, 'metadata', 'meta', $v);
-		$this->registry('UserParameters\\', $results, 'parameters', 'parameter', $v);
+		Services::Registry()->loadField('UserCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
+		Services::Registry()->loadField('UserMetadata\\', 'meta', $results['metadata'], $xml->metadata);
+		Services::Registry()->loadField('UserParameters\\', 'parameters', $results['parameters'], $xml->parameter);
 
 		/** User Applications */
 		$temp = array();
@@ -160,8 +155,8 @@ Class UserService extends BaseService
 
 		/** User View Groups */
 		$temp = array();
-		$vgroups = $results['Model\\UserViewGroups'];
-		while (list($name, $value) = each($vgroups)) {
+		$view_groups = $results['Model\\UserViewGroups'];
+		while (list($name, $value) = each($view_groups)) {
 			if ($name == 'view_group_id') {
 				$temp[] = $value;
 			}
@@ -175,39 +170,5 @@ Class UserService extends BaseService
 		$temp = Services::Registry()->getArray('User');
 
 		return $this;
-	}
-
-	/**
-	 * registry
-	 *
-	 * @param $namespace
-	 * @param $source
-	 * @param $field_group
-	 * @param $field_name
-	 * @param $v
-	 */
-	protected function registry($namespace, $source, $field_group, $field_name, $v)
-	{
-		$registry = Services::Registry()->initialise();
-		$registry->loadString($source[$field_group], 'JSON');
-
-		if (isset($v->$field_group->$field_name)) {
-			foreach ($v->$field_group->$field_name as $cf) {
-
-				$name = (string)$cf['name'];
-				$dataType = (string)$cf['filter'];
-				$null = (string)$cf['null'];
-				$default = (string)$cf['default'];
-				$values = (string)$cf['values'];
-
-				if ($default == '') {
-					$val = $registry->get($name, null);
-				} else {
-					$val = $registry->get($name, $default);
-				}
-
-				Services::Registry()->set($namespace . $name, $val);
-			}
-		}
 	}
 }
