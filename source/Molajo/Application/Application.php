@@ -53,9 +53,25 @@ Class Application
 	}
 
 	/**
-	 *  execute application
+	 * Execute the Application
+	 *
+	 * @param string $override_request_url
+	 * @param string $override_asset_id
+	 * @param string $override_sequenceXML
+	 * @param string $override_finalXML
+	 *
+	 *    1. Initialise
+	 *  2. Route
+	 *  3. Action (Display or Other)
+	 *  4. Response
+	 *
+	 * todo: Add events
+	 *
+	 * @return  mixed
+	 * @since   1.0
 	 */
-	public function execute()
+	public function execute($override_request_url = null, $override_asset_id = null,
+							$override_sequence_xml = null, $override_final_xml = null)
 	{
 		/** Initialise Site, Application, and Services */
 		$continue = $this->initialise();
@@ -63,17 +79,21 @@ Class Application
 			return;
 		}
 
+		/** Override values */
+		Services::Registry()->set('Override\\request_url', $override_request_url);
+		Services::Registry()->set('Override\\asset_id', $override_asset_id);
+		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
+		Services::Registry()->set('Override\\final_xml', $override_final_xml);
+
 		/** Route Application */
 		$continue = $this->route();
 		if ($continue == false) {
 			return;
 		}
 
-		/** Render Application */
+		/** Action */
 		if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
-			$continue = $this->displayAction();
-
-		/** Actions other than Display Task */
+			$continue = $this->display();
 		} else {
 			$continue = $this->action();
 		}
@@ -84,18 +104,15 @@ Class Application
 
 		/** Application Response */
 		$this->response();
+
+		return;
 	}
 
 	/**
-	 * initialise
+	 * Initialise Site, Application, and Services
 	 *
-	 * Retrieves the configuration information,
-	 * loads language files, editor, triggers onAfterInitialise
-	 *
-	 * @param    array
-	 *
-	 * @return null
-	 * @since 1.0
+	 * @return  boolean
+	 * @since   1.0
 	 */
 	protected function initialise()
 	{
@@ -103,17 +120,29 @@ Class Application
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 		}
 
-		/** HTTP Class */
-		$this->setBaseURL();
+		/** HTTP class */
+		$continue = $this->setBaseURL();
+		if ($continue == false) {
+			return false;
+		}
 
-		/** PHP Constants */
-		$this->setDefines();
+		/** PHP constants */
+		$continue = $this->setDefines();
+		if ($continue == false) {
+			return false;
+		}
 
 		/** Site determination and paths */
-		$this->setSite();
+		$continue = $this->setSite();
+		if ($continue == false) {
+			return false;
+		}
 
 		/** Application determination and paths */
-		$this->setApplication();
+		$continue = $this->setApplication();
+		if ($continue == false) {
+			return false;
+		}
 
 		/** Application installation check */
 		$continue = $this->installCheck();
@@ -122,68 +151,60 @@ Class Application
 		}
 
 		/** Connect Application Services */
-		Molajo::Services()->startServices();
+		$continue = Molajo::Services()->startServices();
+		if ($continue == false) {
+			return false;
+		}
 
 		Services::Debug()
 			->set('Molajo::Services()->startServices() complete');
 
-		/** Secure Access Check */
-		if (Services::Registry()->get('Configuration\\force_ssl') > 0) {
-
-			if ((Services::Request()->connection->isSecure() === true)) {
-
-			} else {
-
-				$redirectTo = (string)'https' .
-					substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
-					APPLICATION_URL_PATH .
-					'/' . PAGE_REQUEST;
-
-				Services::Redirect()
-					->set($redirectTo, 301);
-
-				return false;
-			}
+		/** SSL Check */
+		$continue = $this->sslCheck();
+		if ($continue == false) {
+			return false;
 		}
 
-		/** establish the session */
-		//Services::Session()->create(
-		//        Services::Session()->getHash(get_class($this))
-		//  );
-
-		Services::Debug()
-			->set('Services::Session()->create complete');
-
 		/** Site Paths, Custom Fields, and Authorisation */
-		$this->setSitePaths();
+		$continue = $this->setSitePaths();
+		if ($continue == false) {
+			return false;
+		}
 
 		/** Retrieve Site data and save in registry */
-		$this->setSiteData();
+		$continue = $this->setSiteData();
+		if ($continue == false) {
+			return false;
+		}
 
 		/** Verify that this site is authorised to access this application */
-		$this->getSiteApplicationAuthorisation();
+		$continue = $this->getSiteApplicationAuthorisation();
+		if ($continue == false) {
+			return false;
+		}
 
 		Services::Debug()
 			->set('Molajo::Application()->initialise() complete');
 
-		return $this;
+		/** Session */
+		//Services::Session()->create(
+		//        Services::Session()->getHash(get_class($this))
+		//  );
+		// Services::Debug()
+		// ->set('Services::Session()->create complete');
+
+		return true;
 	}
 
 	/**
 	 * route application
 	 *
-	 * @param null $override_request_url
-	 * @param null $override_asset_id
-	 *
-	 * @return Application
+	 * @return boolean
 	 * @since  1.0
 	 */
-	protected function route($override_request_url = null, $override_asset_id = null)
+	protected function route()
 	{
-		Molajo::Route()->process(
-				$override_request_url = null,
-				$override_asset_id = null
-			);
+		Molajo::Route()->process();
 
 		if (Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
@@ -192,7 +213,7 @@ Class Application
 			return false;
 		}
 
-		return $this;
+		return true;
 	}
 
 	/**
@@ -213,25 +234,19 @@ Class Application
 	 * Steps 1-3 continue until no more <include:type statements are
 	 *    found in the Theme and rendered output
 	 *
-	 * Action Task
+	 * @param  string $override_sequenceXML
+	 * @param  string $override_finalXML
 	 *
-	 * @param   string  $override_sequenceXML
-	 * @param   string  $override_finalXML
 	 * @return  Application
 	 */
-	protected function displayAction($override_sequenceXML = null, $override_finalXML = null)
+	protected function display($override_sequenceXML = null, $override_finalXML = null)
 	{
-		$this->rendered_output =
-				Molajo::Parse()
-					->process($override_sequenceXML = null,
-					$override_finalXML = null
-				);
+		$this->rendered_output = Molajo::Parse()->process();
 
 		Services::Debug()
 			->set('Molajo::Parse() complete');
 
 		return $this;
-
 	}
 
 	/**
@@ -239,7 +254,7 @@ Class Application
 	 *
 	 * @return false
 	 */
-	protected function processAction()
+	protected function action()
 	{
 		/**
 		 * Action Task
@@ -249,13 +264,14 @@ Class Application
 		Services::Debug()
 			->set('Molajo::Application()->process() Complete');
 
-		return false;
+		return true;
 	}
 
 	/**
-	 * response
+	 * Return HTTP response
 	 *
-	 * @return mixed
+	 * @return object
+	 * @since  1.0
 	 */
 	protected function response()
 	{
@@ -289,11 +305,9 @@ Class Application
 	}
 
 	/**
-	 * _setBaseURL
+	 * Populate BASE_URL using scheme, host, and base URL
 	 *
-	 * Class constructor.
-	 *
-	 * @return  void
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setBaseURL()
@@ -307,7 +321,8 @@ Class Application
 		} else {
 			define('BASE_URL', $baseURL . '/');
 		}
-		return;
+
+		return true;
 	}
 
 	/**
@@ -323,6 +338,9 @@ Class Application
 	 *
 	 * SITES contains content that must be accessible by the
 	 * Website and thus cannot be moved
+	 *
+	 * @return  boolean
+	 * @since   1.0
 	 */
 	protected function setDefines()
 	{
@@ -441,14 +459,14 @@ Class Application
 		define('EXTENSION_OPTION_ID_MIMES_TEXT', 420);
 		define('EXTENSION_OPTION_ID_MIMES_VIDEO', 430);
 
-		return;
+		return true;
 	}
 
 	/**
 	 * Identifies the specific site and sets site paths
 	 * for use in the application
 	 *
-	 * @return  void
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setSite()
@@ -496,12 +514,14 @@ Class Application
 				die;
 			}
 		}
+
+		return true;
 	}
 
 	/**
 	 * Identify current application and page request
 	 *
-	 * @return  void
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setApplication()
@@ -526,6 +546,7 @@ Class Application
 		}
 
 		$pageRequest = '';
+
 		if (defined('APPLICATION')) {
 			/* must also define PAGE_REQUEST */
 		} else {
@@ -563,6 +584,8 @@ Class Application
 			}
 			define('PAGE_REQUEST', $pageRequest);
 		}
+
+		return true;
 	}
 
 	/**
@@ -591,6 +614,35 @@ Class Application
 		$redirect = BASE_URL . 'installation/';
 		header('Location: ' . $redirect);
 		exit();
+	}
+
+	/**
+	 * Check to see if the secure access to the application is required
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function sslCheck()
+	{
+		if ((int)Services::Registry()->get('Configuration\\force_ssl', 0) > 0) {
+
+			if ((Services::Request()->connection->isSecure() === true)) {
+
+			} else {
+
+				$redirectTo = (string)'https' .
+					substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
+					APPLICATION_URL_PATH .
+					'/' . PAGE_REQUEST;
+
+				Services::Redirect()
+					->set($redirectTo, 301);
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -659,7 +711,7 @@ Class Application
 		}
 
 		/** Registry for Custom Fields and Metadata */
-		$xml = simplexml_load_file( APPLICATIONS_MVC . '/Model/Table/Sites.xml');
+		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Sites.xml');
 		Services::Registry()->loadField('SiteCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
 		Services::Registry()->loadField('SiteMetadata\\', 'meta', $results['metadata'], $xml->metadata);
 

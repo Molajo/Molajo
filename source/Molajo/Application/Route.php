@@ -54,22 +54,22 @@ Class Route
 	}
 
     /**
-     * Using the PAGE_REQUEST value,
-     *  retrieve the asset record,
-     *  set the variables needed to render output,
-     *  execute document renders and MVC
-     *
-     * @param null $override_request_url
-     * @param null $override_asset_id
+     * Using the PAGE_REQUEST value:
+     *  - retrieve the asset record
+     *  - set registry values needed to render output
      *
      * @return mixed
      * @since 1.0
      */
-    public function process($override_request_url = null, $override_asset_id = null)
+    public function process()
     {
 		$this->initialise();
 
-        /** Specific asset */
+        /** Retrieve overrides */
+		$override_request_url = Services::Registry()->get('Override\\request_url', '');
+		$override_asset_id = (int) Services::Registry()->get('Override\\asset_id', 0);
+
+		/** Specific asset */
         if ((int)$override_asset_id == 0) {
             Services::Registry()->set('Request\\request_asset_id', 0);
         } else {

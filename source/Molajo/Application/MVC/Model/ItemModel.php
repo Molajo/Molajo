@@ -96,6 +96,8 @@ class ItemModel extends Model
 			}
 		}
 
+		//todo: abstract out names of fields instead of hardcoding custom_fields, parameters, and metadata
+
 		if (key_exists('custom_fields', $this->query_results)
 			&& is_array($this->query_results['custom_fields'])
 		) {

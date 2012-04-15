@@ -7,36 +7,37 @@
 defined('MOLAJO') or die;
 
 if (file_exists(BASE_FOLDER . '/autoloadoverride.php')) {
-    include_once BASE_FOLDER . '/autoloadoverride.php';
-    return;
+	include_once BASE_FOLDER . '/autoloadoverride.php';
+	return;
 }
 
 /** used in this script */
 if (defined('APPLICATIONS')) {
 } else {
-    define('APPLICATIONS', BASE_FOLDER . '/Molajo/Application');
+	define('APPLICATIONS', BASE_FOLDER . '/Molajo/Application');
 }
 if (defined('VENDOR')) {
 } else {
-    define('VENDOR', BASE_FOLDER . '/Vendor');
+	define('VENDOR', BASE_FOLDER . '/Vendor');
 }
 
 if (defined('JPATH_SITE')) {
 } else {
-    define('JPATH_SITE', BASE_FOLDER);
+	define('JPATH_SITE', BASE_FOLDER);
 }
 if (defined('JPATH_PLATFORM')) {
 } else {
-    define('JPATH_PLATFORM', VENDOR . '/Joomla');
+	define('JPATH_PLATFORM', VENDOR . '/Joomla');
 }
 if (defined('JPATH_LIBRARIES')) {
 } else {
-    define('JPATH_LIBRARIES', VENDOR . '/Joomla');
+	define('JPATH_LIBRARIES', VENDOR . '/Joomla');
 }
 
 /** Use Symfony ClassLoader for Autoload */
-require_once BASE_FOLDER . '/Vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once VENDOR . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 use Symfony\Component\ClassLoader\UniversalClassLoader;
+
 $s = new UniversalClassLoader();
 
 /** register the loader */
@@ -44,6 +45,7 @@ $s->register();
 
 /** Molajo namespaces */
 $s->registerNamespace('Molajo', BASE_FOLDER);
+
 $s->registerNamespace('Molajo\\Application', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\Controller', BASE_FOLDER);
@@ -51,12 +53,11 @@ $s->registerNamespace('Molajo\\Application\\MVC\\Model', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\Model\\Trigger', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\MVC\\View', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Application\\Service', BASE_FOLDER);
-$s->registerNamespace('Molajo\\Common', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension', BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Includer', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Component', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Formfield', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Helper', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Includer', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Language', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Module', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Plugin', BASE_FOLDER);
@@ -68,33 +69,28 @@ $s->registerNamespace('Symfony\\Component\\HttpFoundation', VENDOR);
 $s->registerNamespace('Symfony\\Component\\HttpFoundation\\Session', VENDOR);
 if (interface_exists('SessionHandlerInterface')) {
 } else {
-    $s->registerPrefixFallback(VENDOR . '/Symfony/Component/HttpFoundation/Resources/stubs');
+	$s->registerPrefixFallback(VENDOR . '/Symfony/Component/HttpFoundation/Resources/stubs');
 }
 
 /** Joomla namespaces */
 $s->registerNamespace('Joomla', VENDOR);
 $s->registerNamespace('Joomla\\crypt', VENDOR);
 $s->registerNamespace('Joomla\\crypt\\cipher', VENDOR);
-
 $s->registerNamespace('Joomla\\database', VENDOR);
 $s->registerNamespace('Joomla\\database\\driver', VENDOR);
 $s->registerNamespace('Joomla\\database\\exporter', VENDOR);
 $s->registerNamespace('Joomla\\database\\importer', VENDOR);
 $s->registerNamespace('Joomla\\database\\iterator', VENDOR);
 $s->registerNamespace('Joomla\\database\\query', VENDOR);
-
+$s->registerNamespace('Joomla\\date', VENDOR);
 $s->registerNamespace('Joomla\\filesystem', VENDOR);
 $s->registerNamespace('Joomla\\filesystem\streams', VENDOR);
 $s->registerNamespace('Joomla\\filesystem\support', VENDOR);
-
 $s->registerNamespace('Joomla\\log', VENDOR);
 $s->registerNamespace('Joomla\\log\\loggers', VENDOR);
-
 $s->registerNamespace('Joomla\\object', VENDOR);
-
 $s->registerNamespace('Joomla\\registry', VENDOR);
 $s->registerNamespace('Joomla\\registry\\format', VENDOR);
-
 $s->registerNamespace('Joomla\\string', VENDOR);
 $s->registerNamespace('Joomla\\utilities', VENDOR);
 
@@ -108,7 +104,7 @@ $s->registerNamespace('phputf8', VENDOR);
 $s->registerNamespace('Simplepie', VENDOR);
 if (defined('HTMPURIFIER_FILTERS')) {
 } else {
-	define('HTMPURIFIER_FILTERS', VENDOR.'/HTMLPurifier/filters');
+	define('HTMPURIFIER_FILTERS', VENDOR . '/HTMLPurifier/filters');
 }
 
 //use PhpConsole\PhpConsole;

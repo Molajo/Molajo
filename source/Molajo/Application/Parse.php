@@ -118,13 +118,15 @@ Class Parse
      * When no more <include:type/> statements are found in the rendered output,
      * process sets the Responder body and completes
      *
-     * @param     null     $sequenceXML
-     * @param     null     $finalXML
-     * @return     string
-     * @since     1.0
+     * @return  string
+     * @since   1.0
      */
-    public function process($sequenceXML = null, $finalXML = null)
+    public function process()
     {
+		/** Retrieve overrides */
+		$sequenceXML = Services::Registry()->set('Override\\sequence_xml', '');
+		$finalXML = Services::Registry()->set('Override\\final_xml', '');
+
         /**
          *  Body Includers: processed recursively until no more <include: found
          *      for the set of includes defined in the includes-page.xml

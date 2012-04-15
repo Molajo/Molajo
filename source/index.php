@@ -11,7 +11,21 @@ ini_set('zend.ze1_compatibility_mode', 0);
 
 define('BASE_FOLDER', __DIR__);
 
+/** Initialize Optional Parameters */
+$override_request_url = null;
+$override_asset_id = null;
+$override_sequenceXML = null;
+$override_finalXML = null;
+
+/** Autoload, Namespaces and Overrides */
 require_once BASE_FOLDER . '/Autoload.php';
 
-$app = Molajo\Application\Molajo::Application()->execute();
+/** Fire off Application */
+$app = Molajo\Application\Molajo::Application()
+	->execute(
+		$override_request_url,
+		$override_asset_id,
+		$override_sequenceXML,
+		$override_finalXML
+	);
 
