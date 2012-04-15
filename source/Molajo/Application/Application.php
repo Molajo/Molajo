@@ -53,6 +53,40 @@ Class Application
 	}
 
 	/**
+	 *  execute application
+	 */
+	public function execute()
+	{
+		/** Initialise Site, Application, and Services */
+		$continue = $this->initialise();
+		if ($continue == false) {
+			return;
+		}
+
+		/** Route Application */
+		$continue = $this->route();
+		if ($continue == false) {
+			return;
+		}
+
+		/** Render Application */
+		if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
+			$continue = $this->displayAction();
+
+		/** Actions other than Display Task */
+		} else {
+			$continue = $this->action();
+		}
+
+		if ($continue == false) {
+			return;
+		}
+
+		/** Application Response */
+		$this->response();
+	}
+
+	/**
 	 * initialise
 	 *
 	 * Retrieves the configuration information,
@@ -63,7 +97,7 @@ Class Application
 	 * @return null
 	 * @since 1.0
 	 */
-	public function initialise()
+	protected function initialise()
 	{
 		if (version_compare(PHP_VERSION, '5.3', '<')) {
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
@@ -84,7 +118,7 @@ Class Application
 		/** Application installation check */
 		$continue = $this->installCheck();
 		if ($continue == false) {
-			return $this;
+			return false;
 		}
 
 		/** Connect Application Services */
@@ -105,8 +139,10 @@ Class Application
 					APPLICATION_URL_PATH .
 					'/' . PAGE_REQUEST;
 
-				return Services::Redirect()
+				Services::Redirect()
 					->set($redirectTo, 301);
+
+				return false;
 			}
 		}
 
@@ -142,13 +178,19 @@ Class Application
 	 * @return Application
 	 * @since  1.0
 	 */
-	public function route($override_request_url = null, $override_asset_id = null)
+	protected function route($override_request_url = null, $override_asset_id = null)
 	{
-		Molajo::Route()
-			->process(
+		Molajo::Route()->process(
 				$override_request_url = null,
 				$override_asset_id = null
 			);
+
+		if (Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
+		) {
+		} else {
+			return false;
+		}
 
 		return $this;
 	}
@@ -173,40 +215,41 @@ Class Application
 	 *
 	 * Action Task
 	 *
-	 * @param string $override_sequenceXML
-	 * @param string $override_finalXML
-	 * @return Application
+	 * @param   string  $override_sequenceXML
+	 * @param   string  $override_finalXML
+	 * @return  Application
 	 */
-	public function execute($override_sequenceXML = null, $override_finalXML = null)
+	protected function displayAction($override_sequenceXML = null, $override_finalXML = null)
 	{
-		if (Services::Redirect()->url === null
-			&& (int)Services::Redirect()->code == 0
-		) {
-		} else {
-			return $this;
-		}
-
-		if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
-			$this->rendered_output =
+		$this->rendered_output =
 				Molajo::Parse()
 					->process($override_sequenceXML = null,
 					$override_finalXML = null
 				);
-			Services::Debug()
-				->set('Molajo::Parse() complete');
 
-		} else {
+		Services::Debug()
+			->set('Molajo::Parse() complete');
 
-			/**
-			 * Action Task
-			 */
-			//$this->processTask();
-		}
+		return $this;
+
+	}
+
+	/**
+	 * Execute action (other than Display)
+	 *
+	 * @return false
+	 */
+	protected function processAction()
+	{
+		/**
+		 * Action Task
+		 */
+		//$this->processTask();
 
 		Services::Debug()
 			->set('Molajo::Application()->process() Complete');
 
-		return $this;
+		return false;
 	}
 
 	/**
@@ -214,7 +257,7 @@ Class Application
 	 *
 	 * @return mixed
 	 */
-	public function response()
+	protected function response()
 	{
 		if (Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
