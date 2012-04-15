@@ -6,39 +6,39 @@
  */
 namespace Molajo\Application\Service;
 
-use Molajo\Application\Services;
-
 defined('MOLAJO') or die;
 
+use Molajo\Application\Services;
+
 /**
- * Broadcast
- *
- * Establish and utilize broadcast agents
+ * BroadcastService
  *
  * @package     Molajo
- * @subpackage  Service
+ * @subpackage  Services
  * @since       1.0
  */
 Class BroadcastService extends BaseService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Response instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    // Register broadcasting agents: email, call, text, ping, tweet, etc.
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-    }
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new BroadcastService();
+		}
+		return self::$instance;
+	}
 }

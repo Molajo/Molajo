@@ -35,7 +35,7 @@
         <parameter name="sef_rewrite" filter="binary" null="1" default="1" values="0,1"/>
         <parameter name="sef_suffix" filter="binary" null="1" default="1" values="0,1"/>
         <parameter name="unicode_slugs" filter="binary" null="1" default="1" values="0,1"/>
-        <parameter name="force_ssl" filter="binary" null="1" default="1" values="0,1"/>
+        <parameter name="force_ssl" filter="binary" null="1" default="0" values="0,1"/>
         <parameter name="language" filter="char" null="1" default="en-GB" values=""/>
         <parameter name="direction" filter="char" null="1" default="rtl" values="ltr,rtl"/>
         <parameter name="offset" filter="char" null="1" default="UTC" values=""/>

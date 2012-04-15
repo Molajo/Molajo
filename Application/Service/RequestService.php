@@ -6,8 +6,6 @@
  */
 namespace Molajo\Application\Service;
 
-use Symfony\Component\HttpFoundation\Request;
-
 defined('MOLAJO') or die;
 
 /**
@@ -19,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class RequestService extends Request
+Class RequestService extends BaseService
 {
     /**
      * Static instance
@@ -29,28 +27,28 @@ Class RequestService extends Request
      */
     protected static $instance;
 
-    /**
+	/**
+	 * Request Connection
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $connection;
+
+	/**
      * Request
      *
      * @var    object
-     * @since  1.0
+	 * @since  1.0
      */
     public $request;
-
-    /**
-     * Session
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $session;
 
     /**
      * getInstance
      *
      * @static
      * @return bool|object
-     * @since  1.0
+	 * @since  1.0
      */
     public static function getInstance()
     {
@@ -67,42 +65,29 @@ Class RequestService extends Request
      *
      * @since  1.0
      */
-    public function __construct($query = null, $request = null, $attributes = null, $cookies = null, $files = null, $server = null, $content = null)
+    public function __construct()
     {
-        parent::__construct();
-        $this->request = Request::createFromGlobals();
-        return $this;
+		$class = 'Symfony\\Component\\HttpFoundation\\Request';
+		$this->connection = new $class();
+
+		$this->request = $this->connection->createFromGlobals();
+
+		return $this;
     }
 
-    /**
-     * getSession
-     *
-     */
-    public function getSession()
-    {
-        /** Session */
-        if (parent::hasPreviousSession() === false) {
-            $this->session = parent::setSession($this->setSessionStorageData());
-        } else {
-            $this->session = $this->request->getSession()->start();
-        }
-    }
-
-
-    /**
-     * setSessionStorageData
-     *
-     * @return NativeFileSessionStorage
-     */
-    public function setSessionStorageData()
-    {
-        $save_path = Services::Registry()->get('Configuration\\cache_path', SITE_FOLDER_PATH . '/cache');
-        $options = array();
-        $options['cookie_lifetime'] = Services::Registry()->get('Configuration\\lifetime', 15);
-        $options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration\\cookie_domain', '');
-        $options['cookie_path'] = $cookie_path = Services::Registry()->get('Configuration\\cookie_path', '');
-
-        $sessionStorage = new NativeFileSessionStorage ($save_path, $options);
-        return $sessionStorage;
-    }
+	/**
+	 * Used to connect to services
+	 *
+	 * @static
+	 * @param $name
+	 * @param $arguments
+	 */
+	public function __call($name, $arguments)
+	{
+echo 'Nmae '.$name.'<br />';
+		echo '<pre>';
+		var_dump($arguments);
+echo '</pre>';
+		return $this->connection->$name($arguments);
+	}
 }

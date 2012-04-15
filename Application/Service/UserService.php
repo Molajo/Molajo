@@ -189,7 +189,7 @@ Class UserService extends BaseService
 	protected function registry($namespace, $source, $field_group, $field_name, $v)
 	{
 		$registry = Services::Registry()->initialise();
-		$registry->loadJSON($source[$field_group], array());
+		$registry->loadString($source[$field_group], 'JSON');
 
 		if (isset($v->$field_group->$field_name)) {
 			foreach ($v->$field_group->$field_name as $cf) {

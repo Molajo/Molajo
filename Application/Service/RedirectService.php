@@ -71,25 +71,31 @@ Class RedirectService extends BaseService
      */
     public function set($url = null, $code = 302)
     {
-        if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
+		/** Installation redirect */
+		if ($code == 999) {
+			$code = 302;
+			$this->url = $url;
+			$this->code = $code;
+			return;
+		}
 
-            if (Services::Registry()->get('Configuration\\sef_rewrite', 0) == 0) {
-                $url = BASE_URL
-                    . APPLICATION_URL_PATH
-                    . 'index.php/' . $url;
-            } else {
-                $url = BASE_URL
-                    . APPLICATION_URL_PATH
-                    . $url;
-            }
+		/** Configuration Service is available */
+		if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
 
-            if ((int)Services::Registry()->get('Configuration\\sef_suffix', 0) == 1) {
-                $url .= '.html';
-            }
-        }
+			if (Services::Registry()->get('Configuration\\sef_rewrite', 0) == 0) {
+				$url = BASE_URL
+					. APPLICATION_URL_PATH
+					. 'index.php/' . $url;
+			} else {
+				$url = BASE_URL
+					. APPLICATION_URL_PATH
+					. $url;
+			}
 
-        $this->url = $url;
-        $this->code = $code;
+			if ((int)Services::Registry()->get('Configuration\\sef_suffix', 0) == 1) {
+				$url .= '.html';
+			}
+		}
 
         Services::Debug()->set('RedirectService::set URL: ' . $this->url . ' Status Code: ' . $this->code);
 
