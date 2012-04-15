@@ -13,8 +13,8 @@ define('BASE_FOLDER', __DIR__);
 
 require_once BASE_FOLDER . '/Autoload.php';
 
-$app = Molajo\Application\Molajo::Application()
-	->initialise()
-	->route()
-	->execute()
-	->response();
+$app = Molajo\Application\Molajo::Application();
+$app->initialise();
+$app->route();
+$app->execute();
+$app->response();

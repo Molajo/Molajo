@@ -62,9 +62,50 @@ Class RegistryService extends BaseService
         $this->parameters = array();
     }
 
+	/**
+	 * Loads JSON data from a field given the field xml definition
+	 * 	(can be used for fields like parameters, custom fields, metadata, etc.)
+	 *
+	 * Usage:
+	 * Services::Registry()->loadField('Namespace\\', 'field_name', $results['field_name'], $xml->field_group);
+	 *
+	 * @param $namespace
+	 * @param $field_name
+	 * @param $data
+	 * @param $xml
+	 *
+	 * @return null
+	 * @since  1.0
+	 */
+	public function loadField($namespace, $field_name, $data, $xml)
+	{
+		$temp = $this->initialise();
+		$temp->loadString($data, 'JSON');
+
+		if (isset($xml->$field_name)) {
+
+			foreach ($xml->$field_name as $cf) {
+
+				$name = (string)$cf['name'];
+				$dataType = (string)$cf['filter'];
+				$null = (string)$cf['null'];
+				$default = (string)$cf['default'];
+				$values = (string)$cf['values'];
+
+				//todo: filter given XML field definitions
+
+				if ($default == '') {
+					$val = $temp->get($name, null);
+				} else {
+					$val = $temp->get($name, $default);
+				}
+
+				$this->set($namespace . $name, $val);
+			}
+		}
+	}
+
     /**
-     * initialise
-     *
      * Create new JRegistry object that can be used locally
      *
      * Usage:
@@ -79,8 +120,6 @@ Class RegistryService extends BaseService
     }
 
     /**
-     * create
-     *
      * Create new parameter set that is stored within the RegistryService
      * class and can accessed globally throughout the application
      *
@@ -99,8 +138,6 @@ Class RegistryService extends BaseService
     }
 
     /**
-     * set
-     *
      * Sets a Parameter property for a specific item and parameter set
      *
      * Usage:
@@ -123,8 +160,6 @@ Class RegistryService extends BaseService
     }
 
     /**
-     * get
-     *
      * Returns a Parameter property for a specific item and parameter set
      *
      * Usage:
@@ -144,8 +179,6 @@ Class RegistryService extends BaseService
     }
 
     /**
-     * merge
-     *
      * Sets a Parameter property for a specific item and parameter set
      *
      * Usage:
@@ -185,8 +218,6 @@ Class RegistryService extends BaseService
     }
 
     /**
-     * loadArray
-     *
      * Returns an array containing key and name pairs for a specified parameter set
      *
      * Usage:
