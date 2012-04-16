@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Cookie;
  * @subpackage  Services
  * @since           1.0
  */
-Class CookieService extends BaseService
+Class CookieService
 {
     /**
      * Response instance

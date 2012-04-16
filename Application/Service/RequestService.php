@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class RequestService extends BaseService
+Class RequestService
 {
     /**
      * Static instance

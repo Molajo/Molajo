@@ -4,6 +4,7 @@
  * @copyright Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
@@ -11,98 +12,120 @@ use Molajo\Application\Services;
 defined('MOLAJO') or die;
 
 /**
- * Parameter
+ * Debug
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
-Class DebugService extends BaseService
+Class DebugService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * $on Switch
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $on;
+	/**
+	 * $on Switch
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $on;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new DebugService();
-        }
-        return self::$instance;
-    }
+	/**
+	 * Log Type
+	 *
+	 * @var   string
+	 * @since 1.0
+	 */
+	const log_type = 'debugservice';
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-        $config = Services::Registry()->initialise();
-        $this->on = (int)Services::Registry()->get('Configuration\\debug', 0);
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new DebugService();
+		}
+		return self::$instance;
+	}
 
-        return $this;
-    }
+	/**
+	 * Class constructor.
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function __construct()
+	{
+		/** Set debugging on or off */
+		$this->on = (int)Services::Registry()->get('Configuration\\debug', 0);
+		if ($this->on == 0) {
+			return true;
+		}
 
-    /**
-     * get
-     *
-     * Returns a property of the Request Parameter object
-     *
-     * @param   string  $key
-     * @param   mixed   $default
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function get($key, $value)
-    {
-        if ($key == 'on') {
-            return $this->on;
-        }
+		/** $options array */
+		$options = array();
 
-    }
+		/** Options based on Logger Type */
+		$options['logger'] = Services::Registry()->get('Configuration\\debug_log', 'echo');
 
-    /**
-     * set
-     *
-     * Modifies a property of the Request Parameter object
-     *
-     * @param   string  $key
-     * @param   mixed   $value
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function set($message)
-    {
-        if ((int)$this->on == 0) {
-            return $this;
-        }
+		if ($options['logger'] == 'email') {
 
-        echo $message . '<br />';
+		} elseif ($options['logger'] == 'text') {
+			$options['logger'] = 'formattedtext';
+			$options['text_file'] = 'debug.php';
+	 		$options['text_file_path'] = SITE_LOGS_FOLDER;
+	 		$options['text_file_no_php'] = false;
 
-        return $this;
-    }
+		} elseif ($options['logger'] == 'database') {
+			$options['dbo'] = Services::Database()->get('db');
+			$options['db_table'] = '#__log_entries';
+
+		} elseif ($options['logger'] == 'messages') {
+
+		} elseif ($options['logger'] == 'registry') {
+
+		} else {
+			$options['logger'] = 'echo';
+		}
+
+		/** Establish log for activated debug option */
+		Services::Log()->setLog($options, LOG_TYPE_DEBUG, self::log_type);
+
+		return $this;
+	}
+
+	/**
+	 * Modifies a property of the Request Parameter object
+	 *
+	 * @param   string  $message
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function set($message)
+	{
+		if ((int)$this->on == 0) {
+			return true;
+		}
+
+		try {
+			Services::Log()->addEntry($message, LOG_TYPE_DEBUG, self::log_type, Services::Date()->getDate('now'));
+		}
+		catch (\Exception $e) {
+			throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
+		}
+
+		return true;
+	}
 }

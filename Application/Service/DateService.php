@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since           1.0
  */
-Class DateService extends BaseService
+Class DateService
 {
     /**
      * Static instance
@@ -68,15 +68,18 @@ Class DateService extends BaseService
      */
     public function getDate($time = 'now', $tzOffset = null)
     {
+		if ($time == '') {
+			$time = 'now';
+		}
         $locale = Services::Language()->get('tag', 'en-GB');
 
-        $classname = str_replace('-', '_', $locale) . 'Date';
-        if (class_exists($classname)) {
+        $class = str_replace('-', '_', $locale) . 'Date';
+        if (class_exists($class)) {
         } else {
-            $classname = 'Joomla\\utilities\\JDate';
+            $class = 'Joomla\\date\\JDate';
         }
 
-        return new $classname($time, $tzOffset);
+        return new $class($time, $tzOffset);
     }
 
     /**

@@ -6,6 +6,7 @@
     <service>Message</service>
     <service>Database</service>
     <service>Configuration</service>
+    <service>Log</service>
     <service>Debug</service>
     <service>Request</service>
     <service>Cookie</service>

@@ -17,7 +17,7 @@ use Molajo\Application\Services;
  * @subpackage  Services
  * @since       1.0
  */
-Class BroadcastService extends BaseService
+Class BroadcastService
 {
 	/**
 	 * Response instance

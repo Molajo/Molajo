@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Language
  * @since       1.0
  */
-Class LanguageService extends BaseService
+Class LanguageService
 {
     /**
      * Instance of each specific language
