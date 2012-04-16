@@ -7,6 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\date;
+
+use Joomla\filesystem\JFile;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -30,7 +34,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Date
  * @since       11.1
  */
-class JDate extends DateTime
+class JDate extends \DateTime
 {
 	const DAY_ABBR = "\x021\x03";
 	const DAY_NAME = "\x022\x03";
@@ -65,7 +69,7 @@ class JDate extends DateTime
 	/**
 	 * The DateTimeZone object for usage in rending dates as strings.
 	 *
-	 * @var    DateTimeZone
+	 * @var    \DateTimeZone
 	 * @since  12.1
 	 */
 	protected $tz;
@@ -83,12 +87,12 @@ class JDate extends DateTime
 		// Create the base GMT and server time zone objects.
 		if (empty(self::$gmt) || empty(self::$stz))
 		{
-			self::$gmt = new DateTimeZone('GMT');
-			self::$stz = new DateTimeZone(@date_default_timezone_get());
+			self::$gmt = new \DateTimeZone('GMT');
+			self::$stz = new \DateTimeZone(@date_default_timezone_get());
 		}
 
 		// If the time zone object is not set, attempt to build it.
-		if (!($tz instanceof DateTimeZone))
+		if (!($tz instanceof \DateTimeZone))
 		{
 			if ($tz === null)
 			{
@@ -96,7 +100,7 @@ class JDate extends DateTime
 			}
 			elseif (is_string($tz))
 			{
-				$tz = new DateTimeZone($tz);
+				$tz = new \DateTimeZone($tz);
 			}
 		}
 
@@ -104,7 +108,7 @@ class JDate extends DateTime
 		date_default_timezone_set('UTC');
 		$date = is_numeric($date) ? date('c', $date) : $date;
 
-		// Call the DateTime constructor.
+		// Call the \DateTime constructor.
 		parent::__construct($date, $tz);
 
 		// Reset the timezone for 3rd party libraries/extension that does not use JDate
@@ -384,7 +388,7 @@ class JDate extends DateTime
 	/**
 	 * Method to wrap the setTimezone() function and set the internal time zone object.
 	 *
-	 * @param   DateTimeZone  $tz  The new DateTimeZone object.
+	 * @param   \DateTimeZone  $tz  The new \DateTimeZone object.
 	 *
 	 * @return  JDate
 	 *
@@ -409,27 +413,42 @@ class JDate extends DateTime
 	 */
 	public function toISO8601($local = false)
 	{
-		return $this->format(DateTime::RFC3339, $local, false);
+		return $this->format(\DateTime::RFC3339, $local, false);
 	}
 
 	/**
+	 * Molajo Hack: PR submitted https://github.com/joomla/joomla-platform/pull/1155
+	 *
 	 * Gets the date as an SQL datetime string.
 	 *
 	 * @param   boolean    $local  True to return the date string in the local time zone, false to return it in GMT.
 	 * @param   JDatabase  $dbo    The database driver or null to use JFactory::getDbo()
+	 * @param   string	   $format Date format (defaults to 'Y-m-d H:i:s')
 	 *
 	 * @return  string     The date string in SQL datetime format.
 	 *
 	 * @link http://dev.mysql.com/doc/refman/5.0/en/datetime.html
 	 * @since   11.4
 	 */
-	public function toSql($local = false, JDatabase $dbo = null)
+	public function toSql($local = false, JDatabase $dbo = null, $format = null)
 	{
-		if ($dbo === null)
+		if ($format === null)
 		{
-			$dbo = JFactory::getDbo();
+			if ($dbo === null)
+			{
+				$format = 'Y-m-d H:i:s';
+			}
+			else
+			{
+				$dbo = JFactory::getDbo();
+				$format = $dbo->getDateFormat();
+			}
 		}
-		return $this->format($dbo->getDateFormat(), $local, false);
+		else
+		{
+			$format = 'Y-m-d H:i:s';
+		}
+		return $this->format($format, $local, false);
 	}
 
 	/**
@@ -445,7 +464,7 @@ class JDate extends DateTime
 	 */
 	public function toRFC822($local = false)
 	{
-		return $this->format(DateTime::RFC2822, $local, false);
+		return $this->format(\DateTime::RFC2822, $local, false);
 	}
 
 	/**
