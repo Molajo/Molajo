@@ -432,6 +432,11 @@ class JDate extends \DateTime
 	 */
 	public function toSql($local = false, JDatabase $dbo = null, $format = null)
 	{
+		if ($format === null && $dbo === null && class_exists('JFactory'))
+		{
+			$dbo = JFactory::getDbo();
+		}
+
 		if ($format === null)
 		{
 			if ($dbo === null)
@@ -440,14 +445,10 @@ class JDate extends \DateTime
 			}
 			else
 			{
-				$dbo = JFactory::getDbo();
 				$format = $dbo->getDateFormat();
 			}
 		}
-		else
-		{
-			$format = 'Y-m-d H:i:s';
-		}
+
 		return $this->format($format, $local, false);
 	}
 
