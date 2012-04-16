@@ -7,9 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+namespace Joomla\log\loggers;
 
-jimport('joomla.log.logger');
+use Joomla\log\JLogger;
+use Joomla\log\JLogEntry;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Joomla! MySQL Database Log class
@@ -61,7 +64,7 @@ class JLoggerDatabase extends JLogger
 	protected $table = 'jos_';
 
 	/**
-	 * @var    JDatabaseDriver  The database driver object for the logger.
+	 * @var    Object	The database driver object for the logger.
 	 * @since  11.1
 	 */
 	protected $dbo;
@@ -72,7 +75,6 @@ class JLoggerDatabase extends JLogger
 	 * @param   array  &$options  Log object options.
 	 *
 	 * @since   11.1
-	 * @throws  LogException
 	 */
 	public function __construct(array &$options)
 	{
@@ -80,7 +82,7 @@ class JLoggerDatabase extends JLogger
 		parent::__construct($options);
 
 		// If both the database object and driver options are empty we want to use the system database connection.
-		if (empty($this->options['db_object']) && empty($this->options['db_driver']))
+		if (empty($this->options['dbo']) && empty($this->options['db_driver']))
 		{
 			$this->dbo = JFactory::getDBO();
 			$this->driver = JFactory::getConfig()->get('dbtype');
@@ -93,6 +95,7 @@ class JLoggerDatabase extends JLogger
 		// We need to get the database connection settings from the configuration options.
 		else
 		{
+			$this->dbo = (empty($this->options['dbo'])) ? null : $this->options['dbo'];
 			$this->driver = (empty($this->options['db_driver'])) ? 'mysql' : $this->options['db_driver'];
 			$this->host = (empty($this->options['db_host'])) ? '127.0.0.1' : $this->options['db_host'];
 			$this->user = (empty($this->options['db_user'])) ? 'root' : $this->options['db_user'];
@@ -122,7 +125,6 @@ class JLoggerDatabase extends JLogger
 			$this->connect();
 		}
 
-		// Convert the date.
 		$entry->date = $entry->date->toSql();
 
 		$this->dbo->insertObject($this->table, $entry);
@@ -134,7 +136,7 @@ class JLoggerDatabase extends JLogger
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  LogException
+	 * @throws  \RuntimeException
 	 */
 	protected function connect()
 	{
@@ -151,17 +153,12 @@ class JLoggerDatabase extends JLogger
 		{
 			$db = JDatabase::getInstance($options);
 
-			if ($db instanceof Exception)
-			{
-				throw new LogException('Database Error: ' . (string) $db);
-			}
-
 			// Assign the database connector to the class.
 			$this->dbo = $db;
 		}
-		catch (RuntimeException $e)
+		catch (\Exception $e)
 		{
-			throw new LogException($e->getMessage());
+			throw new \RuntimeException($e->getMessage());
 		}
 	}
 }

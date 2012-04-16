@@ -10,13 +10,13 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Image Filter class to make an image appear "sketchy".
+ * Image Filter class adjust the contrast of an image.
  *
  * @package     Joomla.Platform
  * @subpackage  Image
  * @since       11.3
  */
-class JImageFilterSketchy extends JImageFilter
+class JImageFilterContrast extends JImageFilter
 {
 	/**
 	 * Method to apply a filter to an image resource.
@@ -26,18 +26,28 @@ class JImageFilterSketchy extends JImageFilter
 	 * @return  void
 	 *
 	 * @since   11.3
-	 * @throws  RuntimeException
+	 * @throws  \InvalidArgumentException
+	 * @throws  \RuntimeException
 	 */
 	public function execute(array $options = array())
 	{
 		// Verify that image filter support for PHP is available.
 		if (!function_exists('imagefilter'))
 		{
+			// @codeCoverageIgnoreStart
 			JLog::add('The imagefilter function for PHP is not available.', JLog::ERROR);
-			throw new RuntimeException('The imagefilter function for PHP is not available.');
+			throw new \RuntimeException('The imagefilter function for PHP is not available.');
+
+			// @codeCoverageIgnoreEnd
 		}
 
-		// Perform the sketchy filter.
-		imagefilter($this->handle, IMG_FILTER_MEAN_REMOVAL);
+		// Validate that the contrast value exists and is an integer.
+		if (!isset($options[IMG_FILTER_CONTRAST]) || !is_int($options[IMG_FILTER_CONTRAST]))
+		{
+			throw new \InvalidArgumentException('No valid contrast value was given.  Expected integer.');
+		}
+
+		// Perform the contrast filter.
+		imagefilter($this->handle, IMG_FILTER_CONTRAST, $options[IMG_FILTER_CONTRAST]);
 	}
 }

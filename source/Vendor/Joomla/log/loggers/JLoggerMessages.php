@@ -15,16 +15,16 @@ use Joomla\log\JLogEntry;
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Joomla Echo logger class.
+ * Joomla Messages logger class.
  *
  * @package     Joomla.Platform
  * @subpackage  Log
  * @since       11.1
  */
-class JLoggerEcho extends JLogger
+class JLoggerMessages extends JLogger
 {
 	/**
-	 * Method to add an entry to the log.
+	 * Method to add an entry to a registry message queue.
 	 *
 	 * @param   JLogEntry  $entry  The log entry object to add to the log.
 	 *

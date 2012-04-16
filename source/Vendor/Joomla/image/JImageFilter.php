@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\image;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -30,7 +32,7 @@ abstract class JImageFilter
 	 * @param   resource  $handle  The image resource on which to apply the filter.
 	 *
 	 * @since   11.3
-	 * @throws  InvalidArgumentException
+	 * @throws  \InvalidArgumentException
 	 */
 	public function __construct($handle)
 	{
@@ -38,7 +40,7 @@ abstract class JImageFilter
 		if (!is_resource($handle) || (get_resource_type($handle) != 'gd'))
 		{
 			JLog::add('The image handle is invalid for the image filter.', JLog::ERROR);
-			throw new InvalidArgumentException('The image handle is invalid for the image filter.');
+			throw new \InvalidArgumentException('The image handle is invalid for the image filter.');
 		}
 
 		$this->handle = $handle;

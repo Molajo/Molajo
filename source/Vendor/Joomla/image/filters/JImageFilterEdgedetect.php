@@ -26,7 +26,7 @@ class JImageFilterEdgedetect extends JImageFilter
 	 * @return  void
 	 *
 	 * @since   11.3
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function execute(array $options = array())
 	{
@@ -35,7 +35,7 @@ class JImageFilterEdgedetect extends JImageFilter
 		{
 			// @codeCoverageIgnoreStart
 			JLog::add('The imagefilter function for PHP is not available.', JLog::ERROR);
-			throw new RuntimeException('The imagefilter function for PHP is not available.');
+			throw new \RuntimeException('The imagefilter function for PHP is not available.');
 
 			// @codeCoverageIgnoreEnd
 		}

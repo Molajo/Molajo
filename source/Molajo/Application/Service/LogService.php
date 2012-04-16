@@ -4,7 +4,10 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+
 namespace Molajo\Application\Service;
+
+use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
@@ -15,126 +18,196 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class LogService extends BaseService
+Class LogService
 {
-
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
 	/**
-	 * Application responsible for log entry.
-	 * @var    string
-	 * @since  11.1
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
 	 */
-	public $category;
+	protected static $instance;
 
 	/**
-	 * The date the message was logged.
-	 * @var    /Date
-	 * @since  11.1
+	 * Valid Priorities
+	 *
+	 * @var    object
+	 * @since  1.0
 	 */
-	public $date;
+	protected $priorities;
 
 	/**
-	 * Message to be logged.
-	 * @var    string
-	 * @since  11.1
-	 */
-	public $message;
-
-	/**
-	 * The priority of the message to be logged.
-	 * @var    string
-	 * @since  11.1
-	 * @see    $priorities
-	 */
-	public $priority = LOG_TYPE_INFO;
-
-	/**
-	 * List of available log priority levels [Based on the SysLog default levels].
+	 * Options
+	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
-	protected $priorities = array(
-		LOG_TYPE_EMERGENCY,
-		LOG_TYPE_ALERT,
-		LOG_TYPE_CRITICAL,
-		LOG_TYPE_ERROR,
-		LOG_TYPE_WARNING,
-		LOG_TYPE_NOTICE,
-		LOG_TYPE_INFO,
-		LOG_TYPE_DEBUG
-	);
-
+	protected $options;
 
 	/**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new LogService();
-        }
-        return self::$instance;
-    }
-
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-
-
-// Initialise a basic logger with no options (once only).
-		JLog::addLogger(array());
-
-// Add a message.
-JLog::add(&apos;Logged&apos;);
-
-
+	 * Valid Loggers
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $loggers;
 
 	/**
-	 * Add a logger to the JLog instance.  Loggers route log entries to the correct files/systems to be logged.
+	 * getInstance
 	 *
-	 * @param   array    $options     The object configuration array.
-	 * @param   integer  $priorities  Message priority
-	 * @param   array    $categories  Types of entry
-	 *
-	 * @return  void
-	 *
-	 * @since   11.1
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
 	 */
-
-
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new LogService();
+		}
+		return self::$instance;
 	}
 
 	/**
-	 * Method to add an entry to the log.
+	 * Class constructor
 	 *
-	 * @param   mixed    $entry     The JLogEntry object to add to the log or the message for a new JLogEntry object.
-	 * @param   integer  $priority  Message priority.
-	 * @param   string   $category  Type of entry
-	 * @param   string   $date      Date of entry (defaults to now if not specified or blank)
-	 *
-	 * @return  void
-	 *
-	 * @since   11.1
+	 * @return  boolean
+	 * @since   1.0
 	 */
-	public static function add($entry, $priority = self::INFO, $category = '', $date = null)
+	public function __construct()
 	{
+		/** Valid Priorities */
+		$this->priorities = array();
 
+		$this->priorities[] = LOG_TYPE_EMERGENCY;
+		$this->priorities[] = LOG_TYPE_ALERT;
+		$this->priorities[] = LOG_TYPE_CRITICAL;
+		$this->priorities[] = LOG_TYPE_ERROR;
+		$this->priorities[] = LOG_TYPE_WARNING;
+		$this->priorities[] = LOG_TYPE_NOTICE;
+		$this->priorities[] = LOG_TYPE_INFO;
+		$this->priorities[] = LOG_TYPE_DEBUG;
+		$this->priorities[] = LOG_TYPE_ALL;
+
+		/** Valid Loggers */
+		$this->loggers = array();
+
+		/** Provided with JPlatform */
+		$this->loggers[] = 'text';
+		$this->loggers[] = 'echo';
+		$this->loggers[] = 'database';
+
+		/** Custom Molajo loggers */
+		$this->loggers[] = 'messages';
+		$this->loggers[] = 'email';
+		$this->loggers[] = 'phpconsole';
+
+		return true;
+	}
+
+	/**
+	 * Initiate a logging activity and define logging options
+	 *
+	 * @param   array   $options   Configuration array
+	 * @param   integer $priority  Valid priority for log
+	 * @param   array   $types     Valid types for log
+	 *
+	 * $options array
+	 *
+	 * 0. All options
+	 *
+	 * $options['logger'] valid values include: echo, text, database, messages, email, phpconsole
+	 *
+	 * 1. Echo
+	 *
+	 * No additional options
+	 *
+	 * 2. Text
+	 *
+	 * $options['text_file'] ex. error.php (default)
+	 * $options['text_file_path'] ex. /users/amystephen/sites/molajo/source/site/1/logs (default SITES_LOGS_FOLDER)
+	 * $options['text_file_no_php'] false - adds die('Forbidden') to top of file (true prevents the precaution)
+	 * $options['text_entry_format'] - can be used to specify a custom log format
+	 *
+	 * 3. Database
+	 *
+	 * $options['dbo'] - Services::Database();
+	 * $options['db_table'] - #__log_entries
+	 *
+	 * +++ Molajo custom loggers
+	 *
+	 * 4. Messages
+	 * $this->options['namespace']
+	 *
+	 * 5. Email
+	 * $this->options['sender'] - array(
+	 *     Services::Registry()->get('Configuration\\mail_from_email_address'),
+	 *  Services::Registry()->get('Configuration\\mail_from_name')
+	 * };
+	 * $this->options['recipient'] = Services::Registry()->get('Configuration\\mail_from_email_address');
+	 * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
+	 * $this->options['mailer'] = Services::Mail();
+	 *
+	 * 6. PHP Console
+	 * No addition $option[] values. However, this option requires using Google Chrome and installing this
+	 * Google Chrome extension: https://chrome.google.com/extensions/detail/nfhmhhlpfleoednkpnnnkolmclajemef
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public function setLog($options = array(), $priority = LOG_TYPE_ALL, $types = array())
+	{
+		try {
+			$class = 'Joomla\\log\\JLog';
+			$class::addLogger($options, $priority, $types);
+		}
+		catch (\Exception $e) {
+			throw new \RuntimeException('Unable to set Log: ' . $e->getMessage());
+		}
+
+		return true;
+	}
+
+	/**
+	 * Method to add an entry to a Log
+	 *
+	 * @param  string   $message
+	 * @param  integer  $priority
+	 * @param  array    $type
+	 * @param  string   $date
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.0
+	 * @throws \RuntimeException
+	 */
+	public function addEntry($message, $priority = 0, $type = '', $date = '')
+	{
+		/** Message */
+		$message = (string)$message;
+
+		/** Priority */
+		if (in_array($priority, $this->priorities, true)) {
+		} else {
+			$priority = LOG_TYPE_INFO;
+		}
+
+		/** Type */
+		$type = (string)strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $type));
+
+		/** Date */
+		$date = Services::Date()->getDate($date);
+
+		/** Log it */
+		try {
+			$class = 'Joomla\\log\\JLog';
+			$class::add($message, $priority, $type, $date);
+		}
+		catch (\Exception $e) {
+			throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
+		}
+
+		return true;
 	}
 }

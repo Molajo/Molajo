@@ -11,17 +11,21 @@ namespace Joomla\log\loggers;
 
 use Joomla\log\JLogger;
 use Joomla\log\JLogEntry;
+use PhpConsole\PhpConsole;
 
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Joomla Email logger class.
+ * Joomla Php Console logger class.
+ *
+ * Note: requires Google Chrome and installing this Google Chrome extension:
+ * https://chrome.google.com/extensions/detail/nfhmhhlpfleoednkpnnnkolmclajemef
  *
  * @package     Joomla.Platform
  * @subpackage  Log
  * @since       11.1
  */
-class JLoggerEmail extends JLogger
+class JLoggerPhpconsole extends JLogger
 {
 	/**
 	 * Method to add an entry to the log.
@@ -34,6 +38,6 @@ class JLoggerEmail extends JLogger
 	 */
 	public function addEntry(JLogEntry $entry)
 	{
-		echo $this->priorities[$entry->priority] . ': ' . $entry->message . (empty($entry->category) ? '' : ' [' . $entry->category . ']') . "<br />";
+		console($this->priorities[$entry->priority] . ': ' . $entry->message . (empty($entry->category) ? '' : ' [' . $entry->category . ']'));
 	}
 }

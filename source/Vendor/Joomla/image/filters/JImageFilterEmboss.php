@@ -10,13 +10,13 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Image Filter class to negate the colors of an image.
+ * Image Filter class to emboss an image.
  *
  * @package     Joomla.Platform
  * @subpackage  Image
  * @since       11.3
  */
-class JImageFilterNegate extends JImageFilter
+class JImageFilterEmboss extends JImageFilter
 {
 	/**
 	 * Method to apply a filter to an image resource.
@@ -26,7 +26,7 @@ class JImageFilterNegate extends JImageFilter
 	 * @return  void
 	 *
 	 * @since   11.3
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function execute(array $options = array())
 	{
@@ -34,10 +34,10 @@ class JImageFilterNegate extends JImageFilter
 		if (!function_exists('imagefilter'))
 		{
 			JLog::add('The imagefilter function for PHP is not available.', JLog::ERROR);
-			throw new RuntimeException('The imagefilter function for PHP is not available.');
+			throw new \RuntimeException('The imagefilter function for PHP is not available.');
 		}
 
-		// Perform the negative filter.
-		imagefilter($this->handle, IMG_FILTER_NEGATE);
+		// Perform the emboss filter.
+		imagefilter($this->handle, IMG_FILTER_EMBOSS);
 	}
 }

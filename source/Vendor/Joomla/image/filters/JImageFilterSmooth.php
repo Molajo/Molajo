@@ -10,13 +10,13 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Image Filter class adjust the contrast of an image.
+ * Image Filter class adjust the smoothness of an image.
  *
  * @package     Joomla.Platform
  * @subpackage  Image
  * @since       11.3
  */
-class JImageFilterContrast extends JImageFilter
+class JImageFilterSmooth extends JImageFilter
 {
 	/**
 	 * Method to apply a filter to an image resource.
@@ -26,28 +26,25 @@ class JImageFilterContrast extends JImageFilter
 	 * @return  void
 	 *
 	 * @since   11.3
-	 * @throws  InvalidArgumentException
-	 * @throws  RuntimeException
+	 * @throws  \InvalidArgumentException
+	 * @throws  \RuntimeException
 	 */
 	public function execute(array $options = array())
 	{
 		// Verify that image filter support for PHP is available.
 		if (!function_exists('imagefilter'))
 		{
-			// @codeCoverageIgnoreStart
 			JLog::add('The imagefilter function for PHP is not available.', JLog::ERROR);
-			throw new RuntimeException('The imagefilter function for PHP is not available.');
-
-			// @codeCoverageIgnoreEnd
+			throw new \RuntimeException('The imagefilter function for PHP is not available.');
 		}
 
-		// Validate that the contrast value exists and is an integer.
-		if (!isset($options[IMG_FILTER_CONTRAST]) || !is_int($options[IMG_FILTER_CONTRAST]))
+		// Validate that the smoothing value exists and is an integer.
+		if (!isset($options[IMG_FILTER_SMOOTH]) || !is_int($options[IMG_FILTER_SMOOTH]))
 		{
-			throw new InvalidArgumentException('No valid contrast value was given.  Expected integer.');
+			throw new \InvalidArgumentException('No valid smoothing value was given.  Expected integer.');
 		}
 
-		// Perform the contrast filter.
-		imagefilter($this->handle, IMG_FILTER_CONTRAST, $options[IMG_FILTER_CONTRAST]);
+		// Perform the smoothing filter.
+		imagefilter($this->handle, IMG_FILTER_SMOOTH, $options[IMG_FILTER_SMOOTH]);
 	}
 }

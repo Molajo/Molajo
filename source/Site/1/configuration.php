@@ -11,6 +11,7 @@ Class SiteConfiguration
     public $jdatabase_password = 'root';
     public $jdatabase_db = 'molajo';
     public $jdatabase_dbprefix = 'molajo_';
+	public $jdatabase_debug = '0';
 
     /** disable html filters */
     public $disable_filter_for_groups = '4';
@@ -33,18 +34,15 @@ Class SiteConfiguration
     public $cookie_path = '';
 
     /* Mail Settings */
-    public $disable_sending = true;
+    public $disable_sending = 0;
     public $only_deliver_to = 'AmyStephen@gmail.com';
     public $mailer = 'mail';
-    public $mail_from_email_address = '';
-    public $mail_from_name = '';
+    public $mail_from_email_address = 'AmyStephen@gmail.com';
+    public $mail_from_name = 'Amy Stephen';
     public $send_mail = '/usr/sbin/send_mail';
     public $smtpauth = '0';
     public $smtpuser = '';
     public $smtppass = '';
     public $smtphost = 'localhost';
     public $mail_class = 'JMail';
-
-    /* Debug */
-    public $debug = '1';
 }

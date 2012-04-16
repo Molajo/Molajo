@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class DatabaseService extends BaseService
+Class DatabaseService
 {
     /**
      * Static instance
@@ -113,7 +113,7 @@ Class DatabaseService extends BaseService
 			throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
 		}
 
-        $this->db->debug($site->debug);
+        $this->db->debug($site->jdatabase_debug);
 
 		return $this;
 	}

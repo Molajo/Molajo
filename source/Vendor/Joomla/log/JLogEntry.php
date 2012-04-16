@@ -7,13 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
-
-jimport('joomla.utilities.date');
-
 namespace Joomla\log;
 
-use Joomla\filesystem\JPath;
+use Joomla\date\JDate;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Joomla! Log Entry class
@@ -87,7 +85,7 @@ class JLogEntry
 		$this->message = (string) $message;
 
 		// Sanitize the priority.
-		if (!in_array($priority, $this->priorities, true))
+		if (!in_array($priority, $this->priorities))
 		{
 			$priority = JLog::INFO;
 		}
@@ -100,6 +98,6 @@ class JLogEntry
 		}
 
 		// Get the date as a JDate object.
-		$this->date = new \Datetime($date ? $date : 'now');
+		$this->date = new JDate($date ? $date : 'now');
 	}
 }

@@ -39,7 +39,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class MailService extends BaseService
+Class MailService
 {
     /**
      * Static instance

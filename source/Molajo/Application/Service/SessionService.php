@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session;
  * @subpackage  Services
  * @since           1.0
  */
-Class SessionService extends BaseService
+Class SessionService
 {
     /**
      * Response instance

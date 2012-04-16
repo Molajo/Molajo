@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 
-Class PasswordService extends BaseService
+Class PasswordService
 {
 
     /**

@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Install
  * @since       1.0
  */
-Class InstallService extends BaseService
+Class InstallService
 {
 
     /**

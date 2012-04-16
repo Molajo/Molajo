@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\log;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -27,6 +29,20 @@ abstract class JLogger
 	 * @since  11.1
 	 */
 	protected $options = array();
+
+	/**
+	 * @var    array  Translation array for JLogEntry priorities to text strings.
+	 * @since  11.1
+	 */
+	protected $priorities = array(
+		JLog::EMERGENCY => 'EMERGENCY',
+		JLog::ALERT => 'ALERT',
+		JLog::CRITICAL => 'CRITICAL',
+		JLog::ERROR => 'ERROR',
+		JLog::WARNING => 'WARNING',
+		JLog::NOTICE => 'NOTICE',
+		JLog::INFO => 'INFO',
+		JLog::DEBUG => 'DEBUG');
 
 	/**
 	 * Constructor.

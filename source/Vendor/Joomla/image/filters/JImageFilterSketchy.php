@@ -10,13 +10,13 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Image Filter class to emboss an image.
+ * Image Filter class to make an image appear "sketchy".
  *
  * @package     Joomla.Platform
  * @subpackage  Image
  * @since       11.3
  */
-class JImageFilterEmboss extends JImageFilter
+class JImageFilterSketchy extends JImageFilter
 {
 	/**
 	 * Method to apply a filter to an image resource.
@@ -26,7 +26,7 @@ class JImageFilterEmboss extends JImageFilter
 	 * @return  void
 	 *
 	 * @since   11.3
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function execute(array $options = array())
 	{
@@ -34,10 +34,10 @@ class JImageFilterEmboss extends JImageFilter
 		if (!function_exists('imagefilter'))
 		{
 			JLog::add('The imagefilter function for PHP is not available.', JLog::ERROR);
-			throw new RuntimeException('The imagefilter function for PHP is not available.');
+			throw new \RuntimeException('The imagefilter function for PHP is not available.');
 		}
 
-		// Perform the emboss filter.
-		imagefilter($this->handle, IMG_FILTER_EMBOSS);
+		// Perform the sketchy filter.
+		imagefilter($this->handle, IMG_FILTER_MEAN_REMOVAL);
 	}
 }

@@ -60,7 +60,7 @@ Class Application
 	 * @param string $override_sequenceXML
 	 * @param string $override_finalXML
 	 *
-	 *    1. Initialise
+	 *  1. Initialise
 	 *  2. Route
 	 *  3. Action (Display or Other)
 	 *  4. Response
@@ -120,6 +120,7 @@ Class Application
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 		}
 
+
 		/** HTTP class */
 		$continue = $this->setBaseURL();
 		if ($continue == false) {
@@ -156,9 +157,6 @@ Class Application
 			return false;
 		}
 
-		Services::Debug()
-			->set('Molajo::Services()->startServices() complete');
-
 		/** SSL Check */
 		$continue = $this->sslCheck();
 		if ($continue == false) {
@@ -170,6 +168,8 @@ Class Application
 		if ($continue == false) {
 			return false;
 		}
+
+		Services::Debug()->set('Molajo::Services()->startServices() and Site Paths complete');
 
 		/** Retrieve Site data and save in registry */
 		$continue = $this->setSiteData();
@@ -183,8 +183,7 @@ Class Application
 			return false;
 		}
 
-		Services::Debug()
-			->set('Molajo::Application()->initialise() complete');
+
 
 		/** Session */
 		//Services::Session()->create(
@@ -252,7 +251,7 @@ Class Application
 	/**
 	 * Execute action (other than Display)
 	 *
-	 * @return false
+	 * @return boolean
 	 */
 	protected function action()
 	{
