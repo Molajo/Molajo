@@ -19,9 +19,9 @@
     <service>Document</service>
     <service>Access</service>
     <service>Image</service>
-    <service>Mail</service>
     <service>Security</service>
     <service>Url</service>
     <service>Text</service>
+    <service>Mail</service>
     <service>Broadcast</service>
 </services>

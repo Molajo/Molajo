@@ -109,7 +109,6 @@ if (defined('HTMPURIFIER_FILTERS')) {
 	define('HTMPURIFIER_FILTERS', VENDOR . '/HTMLPurifier/filters');
 }
 
-//use PhpConsole\PhpConsole;
-//PhpConsole::start(true, true, VENDOR . '/PhpConsole');
+
 /** Joomla */
 //require_once BASE_FOLDER . '/Molajo/Common/platforms-joomla.php';

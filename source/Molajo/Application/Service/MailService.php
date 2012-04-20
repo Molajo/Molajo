@@ -6,6 +6,8 @@
  */
 namespace Molajo\Application\Service;
 
+use Molajo\Application\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -16,26 +18,20 @@ defined('MOLAJO') or die;
  * Example usage:
  *
  * $results = Services::Mail()
- *  ->set('send_to_email', 'person@example.com')
- *  ->set('from_email', 'admin@example.com')
+ *  ->set('send_to_email', 'person@example.com[,person@example.com,etc.]')
+ *  ->set('from_email', 'admin@example.com[,person@example.com,etc.]')
+ *  ->set('from_name', 'Person A, Person B')
+ *  ->set('reply_to_email', 'admin@example.com')
+ *  ->set('reply_to_name', 'Person A')
+ *  ->set('cc_email', 'admin@example.com[,person@example.com,etc.]')
+ *  ->set('bcc_email', 'admin@example.com[,person@example.com,etc.]')
  *  ->set('subject', 'Welcome to our Site')
  *  ->set('body', $bodyofemail)
+ *  ->set('model', 'html') plain text - default
+ *  ->set('attachment', $filename)
  *  ->send($message);
  *
- * Valid parameters:
- * send_to_email - array of email addresses for recipients
- * cc_email - array of email_addresses to blind copy
- * bcc_email - array of email_addresses to blind copy
- * from_email - email_address to use as the from address
- * from_name - name to use as the from name
- * reply_to_email - email_address to which this email is a response
- * reply_to_name - name to use as the reply to
- * subject - title of email
- * body - email contents
- * mode - html or default (plain text)
- * attachment - file name of attachment
- *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -82,7 +78,8 @@ Class MailService
      */
     public function __construct()
     {
-
+		$this->configuration = Services::Registry()->initialise();
+		return $this;
     }
 
     /**
@@ -98,7 +95,8 @@ Class MailService
      */
     public function get($key, $default = null)
     {
-        return $this->configuration->get($key, $default);
+        $this->configuration->get($key, $default);
+		return $this;
     }
 
     /**
@@ -115,7 +113,9 @@ Class MailService
      */
     public function set($key, $value = null)
     {
-        return $this->configuration->set($key, $value);
+		echo $key.' '.$value.'<br />';
+        $this->configuration->set($key, $value);
+		return $this;
     }
 
     /**
@@ -128,14 +128,13 @@ Class MailService
      */
     public function send()
     {
-        if (Services::Registry()->get('Configuration\\disable_sending', 1) == 1) {
-            return true;
-        }
-
-        $this->configuration = Services::Registry()->initialise();
-
+        //if (Services::Registry()->get('Configuration\\disable_sending', 1) == 1) {
+        //    return true;
+        //}
+		echo 'in send';
         $results = $this->permission();
-        if ($results === true) {
+        if ($results == true) {
+		} else {
             return $results;
         }
 
@@ -144,18 +143,20 @@ Class MailService
         } else {
             $this->set('cc_email', array());
             $this->set('bcc_email', array());
-            $this->set('reply_to_email', '');
+            $this->set('reply_to_email', $only_deliver_to);
             $this->set('send_to_email', $only_deliver_to);
         }
 
-        $results = $this->edit_and_filter_input();
-        if ($results === true) {
-        } else {
-            return false;
-        }
+        //$results = $this->edit_and_filter_input();
+        //if ($results === true) {
+        //} else {
+        //    return false;
+        //}
 
         /** Get instance */
-        $mailClass = $this->get('mail_class', 'JMail');
+		$mailClass = Services::Registry()->get('Configuration\\mail_class', 'JMail');
+		echo $mailClass;
+		die;
         $mail = $mailClass::getInstance();
 
         /** Set type of email */
@@ -413,7 +414,7 @@ Class MailService
             $value = Services::Security()->filter(
                 $value, $dataType, $null, $default);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $value = false;
             Services::Message()->set(
                 $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,

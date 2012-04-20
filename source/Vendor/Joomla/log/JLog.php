@@ -9,6 +9,8 @@
 
 namespace Joomla\log;
 
+use Joomla\filesystem\JPath;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -16,8 +18,8 @@ defined('JPATH_PLATFORM') or die;
  *
  * This class hooks into the global log configuration settings to allow for user configured
  * logging events to be sent to where the user wishes them to be sent. On high load sites
- * SysLog is probably the best (pure PHP function), then the text file based loggers (CSV, W3C
- * or plain FormattedText) and finally MySQL offers the most features (e.g. rapid searching)
+ * Syslog is probably the best (pure PHP function), then the text file based loggers (CSV, W3c
+ * or plain Formattedtext) and finally MySQL offers the most features (e.g. rapid searching)
  * but will incur a performance hit due to INSERT being issued.
  *
  * @package     Joomla.Platform
@@ -95,6 +97,15 @@ class JLog
 	 * @since  11.1
 	 */
 	protected static $instance;
+
+	/**
+	 * The array of instances created through the deprecated getInstance method.
+	 * @var         array
+	 * @since       11.1
+	 * @see         JLog::getInstance()
+	 * @deprecated  12.1
+	 */
+	public static $legacy = array();
 
 	/**
 	 * Container for JLogger configurations.
@@ -221,7 +232,7 @@ class JLog
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  \InvalidArgumentException
+	 * @throws  \RuntimeException
 	 */
 	protected function addLogEntry(JLogEntry $entry)
 	{
@@ -233,15 +244,15 @@ class JLog
 			// Attempt to instantiate the logger object if it doesn't already exist.
 			if (empty($this->loggers[$signature]))
 			{
-
-				$class = 'Joomla\\log\\loggers\\JLogger' . ucfirst(strtolower($this->configurations[$signature]['logger']));
+				$class = 'Joomla\\log\\loggers\\';
+				$class .= 'JLogger' . ucfirst($this->configurations[$signature]['logger']);
 				if (class_exists($class))
 				{
 					$this->loggers[$signature] = new $class($this->configurations[$signature]);
 				}
 				else
 				{
-					throw new \InvalidArgumentException('Unable to create a JLogger instance: '.$class);
+					throw new \RuntimeException('Unable to create a JLogger instance: ' . $class);
 				}
 			}
 
@@ -273,11 +284,11 @@ class JLog
 		foreach ((array) $this->lookup as $signature => $rules)
 		{
 			// Check to make sure the priority matches the logger.
-			if ($priority == $rules->priorities || $rules->priorities == JLog::ALL)
+			if ($priority & $rules->priorities)
 			{
+
 				// If either there are no set categories (meaning all) or the specific category is set, add this logger.
-				if (count($rules->categories) == 0
-					|| in_array($category, $rules->categories))
+				if (empty($category) || empty($rules->categories) || in_array($category, $rules->categories))
 				{
 					$loggers[] = $signature;
 				}

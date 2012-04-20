@@ -10,6 +10,7 @@
 namespace Joomla\date;
 
 use Joomla\filesystem\JFile;
+use Joomla\database\JDatabaseDriver;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -50,7 +51,7 @@ class JDate extends \DateTime
 	public static $format = 'Y-m-d H:i:s';
 
 	/**
-	 * Placeholder for a DateTimeZone object with GMT as the time zone.
+	 * Placeholder for a \DateTimeZone object with GMT as the time zone.
 	 *
 	 * @var    object
 	 * @since  11.1
@@ -58,7 +59,7 @@ class JDate extends \DateTime
 	protected static $gmt;
 
 	/**
-	 * Placeholder for a DateTimeZone object with the default server
+	 * Placeholder for a \DateTimeZone object with the default server
 	 * time zone as the time zone.
 	 *
 	 * @var    object
@@ -67,7 +68,7 @@ class JDate extends \DateTime
 	protected static $stz;
 
 	/**
-	 * The DateTimeZone object for usage in rending dates as strings.
+	 * The \DateTimeZone object for usage in rending dates as strings.
 	 *
 	 * @var    \DateTimeZone
 	 * @since  12.1
@@ -78,7 +79,7 @@ class JDate extends \DateTime
 	 * Constructor.
 	 *
 	 * @param   string  $date  String in a format accepted by strtotime(), defaults to "now".
-	 * @param   mixed   $tz    Time zone to be used for the date. Might be a string or a DateTimeZone object.
+	 * @param   mixed   $tz    Time zone to be used for the date. Might be a string or a \DateTimeZone object.
 	 *
 	 * @since   11.1
 	 */
@@ -417,39 +418,23 @@ class JDate extends \DateTime
 	}
 
 	/**
-	 * Molajo Hack: PR submitted https://github.com/joomla/joomla-platform/pull/1155
-	 *
 	 * Gets the date as an SQL datetime string.
 	 *
-	 * @param   boolean    $local  True to return the date string in the local time zone, false to return it in GMT.
-	 * @param   JDatabase  $dbo    The database driver or null to use JFactory::getDbo()
-	 * @param   string	   $format Date format (defaults to 'Y-m-d H:i:s')
+	 * @param   boolean          $local  True to return the date string in the local time zone, false to return it in GMT.
+	 * @param   JDatabaseDriver  $dbo    The database driver or null to use JFactory::getDbo()
 	 *
 	 * @return  string     The date string in SQL datetime format.
 	 *
 	 * @link http://dev.mysql.com/doc/refman/5.0/en/datetime.html
 	 * @since   11.4
 	 */
-	public function toSql($local = false, JDatabase $dbo = null, $format = null)
+	public function toSql($local = false, JDatabaseDriver $dbo = null)
 	{
-		if ($format === null && $dbo === null && class_exists('JFactory'))
+		if ($dbo === null)
 		{
 			$dbo = JFactory::getDbo();
 		}
-
-		if ($format === null)
-		{
-			if ($dbo === null)
-			{
-				$format = 'Y-m-d H:i:s';
-			}
-			else
-			{
-				$format = $dbo->getDateFormat();
-			}
-		}
-
-		return $this->format($format, $local, false);
+		return $this->format($dbo->getDateFormat(), $local, false);
 	}
 
 	/**

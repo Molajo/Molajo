@@ -10,9 +10,13 @@
 namespace Joomla\log\loggers;
 
 use Joomla\log\JLogger;
+
 use Joomla\log\JLogEntry;
 
+use Joomla\log\JLog;
+
 defined('JPATH_PLATFORM') or die;
+
 
 /**
  * Joomla! Syslog Log class
@@ -28,6 +32,19 @@ defined('JPATH_PLATFORM') or die;
  */
 class JLoggerSyslog extends JLogger
 {
+	/**
+	 * @var array Translation array for JLogEntry priorities to SysLog priority names.
+	 * @since 11.1
+	 */
+	protected $priorities = array(
+		JLog::EMERGENCY => 'EMERG',
+		JLog::ALERT => 'ALERT',
+		JLog::CRITICAL => 'CRIT',
+		JLog::ERROR => 'ERR',
+		JLog::WARNING => 'WARNING',
+		JLog::NOTICE => 'NOTICE',
+		JLog::INFO => 'INFO',
+		JLog::DEBUG => 'DEBUG');
 
 	/**
 	 * Constructor.

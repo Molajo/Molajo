@@ -10,8 +10,9 @@
 namespace Joomla\log\loggers;
 
 use Joomla\log\JLogger;
+
 use Joomla\log\JLogEntry;
-use Joomla\filesystem\JFolder;
+
 use Joomla\JPlatform;
 
 defined('JPATH_PLATFORM') or die;
@@ -20,13 +21,13 @@ defined('JPATH_PLATFORM') or die;
  * Joomla! Formatted Text File Log class
  *
  * This class is designed to use as a base for building formatted text files for output. By
- * default it emulates the SysLog style format output. This is a disk based output format.
+ * default it emulates the Syslog style format output. This is a disk based output format.
  *
  * @package     Joomla.Platform
  * @subpackage  Log
  * @since       11.1
  */
-class JLoggerFormattedText extends JLogger
+class JLoggerFormattedtext extends JLogger
 {
 	/**
 	 * @var    resource  The file pointer for the log file.
@@ -117,7 +118,7 @@ class JLoggerFormattedText extends JLogger
 	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function addEntry(JLogEntry $entry)
 	{
@@ -170,7 +171,7 @@ class JLoggerFormattedText extends JLogger
 		}
 
 		// Write the new entry to the file.
-		if (!fputs($this->file, $line . "\n"))
+		if (!\fputs($this->file, $line . "\n"))
 		{
 			throw new \RuntimeException('Cannot write to log file.');
 		}
@@ -216,7 +217,6 @@ class JLoggerFormattedText extends JLogger
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  \RuntimeException
 	 */
 	protected function initFile()
 	{
@@ -242,7 +242,7 @@ class JLoggerFormattedText extends JLogger
 		}
 		if ($head)
 		{
-			if (!fputs($this->file, $head))
+			if (!\fputs($this->file, $head))
 			{
 				throw new \RuntimeException('Cannot fput file for log');
 			}

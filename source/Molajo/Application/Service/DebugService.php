@@ -93,7 +93,7 @@ Class DebugService
 
 		} elseif ($options['logger'] == 'messages') {
 
-		} elseif ($options['logger'] == 'registry') {
+		} elseif ($options['logger'] == 'phpconsole') {
 
 		} else {
 			$options['logger'] = 'echo';

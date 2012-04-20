@@ -6,10 +6,14 @@
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
 namespace Joomla\log\loggers;
 
 use Joomla\log\JLogger;
-use Joomla\log\loggers\JLoggerFormattedText;
+
+use Joomla\log\JLogEntry;
+
+use Joomla\log\logger\JLoggerFormattedtext;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -23,7 +27,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Log
  * @since       11.1
  */
-class JLoggerW3c extends JLoggerFormattedText
+class JLoggerW3c extends JLoggerFormattedtext
 {
 	/**
 	 * @var    string  The format which each entry follows in the log file.  All fields must be
