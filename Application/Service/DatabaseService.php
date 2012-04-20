@@ -7,6 +7,7 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
+use Joomla\date\JDate;
 
 defined('MOLAJO') or die;
 
@@ -114,6 +115,18 @@ Class DatabaseService
 		}
 
         $this->db->debug($site->jdatabase_debug);
+
+		echo '<pre>';
+		//var_dump($this->db);
+
+
+		$date = null;
+		$dateFromJDate = new JDate($date ? $date : 'now');
+		$dateFromJDate = $dateFromJDate->toSql(false, $this->db);
+
+		echo 'AFTER<br /><pre>';
+		var_dump($dateFromJDate);
+		echo '</pre>';
 
 		return $this;
 	}

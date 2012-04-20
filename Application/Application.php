@@ -120,7 +120,6 @@ Class Application
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 		}
 
-
 		/** HTTP class */
 		$continue = $this->setBaseURL();
 		if ($continue == false) {
@@ -156,6 +155,19 @@ Class Application
 		if ($continue == false) {
 			return false;
 		}
+
+		$bodyofemail = 'Stuff goes here';
+
+		Services::Mail()->set('send_to_email', 'AmyStephen@gmail.com');
+		Services::Mail()->set('from_email', 'AmyStephen@gmail.com');
+		Services::Mail()->set('from_name', 'Amy Stephen');
+		Services::Mail()->set('reply_to_email', 'AmyStephen@example.com');
+		Services::Mail()->set('reply_to_name', 'Person A');
+		Services::Mail()->set('subject', 'Welcome to our Site');
+		Services::Mail()->set('body', $bodyofemail) ;
+		Services::Mail()->send();
+		echo 'after email';
+		die;
 
 		/** SSL Check */
 		$continue = $this->sslCheck();
