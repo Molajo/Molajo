@@ -43,4 +43,13 @@ Class SiteConfiguration
     public $smtpuser = '';
     public $smtppass = '';
     public $smtphost = 'localhost';
+
+	/* FTP Settings */
+	public $ftp_host = 'localhost';
+	public $ftp_port = '21';
+	public $ftp_user = 'admin';
+	public $ftp_pass = 'admin';
+	public $ftp_root = '/';
+	public $ftp_enable = '1';
+
 }
