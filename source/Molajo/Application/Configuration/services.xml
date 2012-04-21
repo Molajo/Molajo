@@ -24,4 +24,5 @@
     <service>Text</service>
     <service>Mail</service>
     <service>Broadcast</service>
+    <service>Editor</service>
 </services>

@@ -43,6 +43,8 @@
  * @todo phpDoc comments
  */
 
+namespace Simplepie;
+
 /**
  * SimplePie Name
  */

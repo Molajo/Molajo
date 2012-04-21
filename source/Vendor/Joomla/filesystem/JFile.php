@@ -12,6 +12,8 @@ namespace Joomla\filesystem;
 use Joomla\log\JLog;
 
 use Joomla\JText;
+use Joomla\client\JClientHelper;
+use Joomla\client\JClientFtp;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -123,7 +125,6 @@ class JFile
 				// If the parent folder doesn't exist we must create it
 				if (!file_exists(dirname($dest)))
 				{
-					jimport('joomla.filesystem.folder');
 					JFolder::create(dirname($dest));
 				}
 

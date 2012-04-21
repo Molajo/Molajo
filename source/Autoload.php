@@ -105,6 +105,7 @@ $s->registerNamespace('HTMLPurifier\\filters', VENDOR);
 $s->registerNamespace('phpmailer', VENDOR);
 $s->registerNamespace('phputf8', VENDOR);
 $s->registerNamespace('Simplepie', VENDOR);
+
 if (defined('HTMPURIFIER_FILTERS')) {
 } else {
 	define('HTMPURIFIER_FILTERS', VENDOR . '/HTMLPurifier/filters');

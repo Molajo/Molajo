@@ -25,6 +25,6 @@ abstract class JText
 
 	public static function sprintf($string)
 	{
-		sprintf($string);
+		return sprintf($string);
 	}
 }
