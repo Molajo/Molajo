@@ -11,6 +11,8 @@ namespace Joomla\filesystem;
 
 use Joomla\log\JLog;
 
+use Joomla\JText;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

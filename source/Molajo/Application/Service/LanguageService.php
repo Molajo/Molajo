@@ -573,18 +573,3 @@ Class LanguageService
 		return $metadata;
 	}
 }
-
-
-abstract class JText
-{
-
-	public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
-	{
-		return Services::Language()->translate($string, $jsSafe, $interpretBackSlashes, $script);
-	}
-
-	public static function sprintf($string)
-	{
-		sprintf($string);
-	}
-}

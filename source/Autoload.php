@@ -74,6 +74,7 @@ if (interface_exists('SessionHandlerInterface')) {
 
 /** Joomla namespaces */
 $s->registerNamespace('Joomla', VENDOR);
+$s->registerNamespace('Joomla\\client', VENDOR);
 $s->registerNamespace('Joomla\\crypt', VENDOR);
 $s->registerNamespace('Joomla\\crypt\\cipher', VENDOR);
 $s->registerNamespace('Joomla\\database', VENDOR);

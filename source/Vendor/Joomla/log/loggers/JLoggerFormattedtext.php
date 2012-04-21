@@ -13,6 +13,8 @@ use Joomla\log\JLogger;
 
 use Joomla\log\JLogEntry;
 
+use Joomla\filesystem\JFolder;
+
 use Joomla\JPlatform;
 
 defined('JPATH_PLATFORM') or die;

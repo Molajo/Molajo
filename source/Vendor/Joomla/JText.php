@@ -1,0 +1,30 @@
+<?php
+/**
+ * @package    Joomla.Platform
+ *
+ * @copyright  Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
+
+namespace Joomla;
+
+use Molajo\Application\Services;
+
+defined('JPATH_PLATFORM') or die;
+
+/**
+ * JText shell for aliasing to Molajo Language Service
+ */
+abstract class JText
+{
+
+	public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
+	{
+		return Services::Language()->translate($string, $jsSafe, $interpretBackSlashes, $script);
+	}
+
+	public static function sprintf($string)
+	{
+		sprintf($string);
+	}
+}

@@ -11,6 +11,8 @@ namespace Joomla\database\driver;
 
 use Joomla\database\JDatabaseDriver;
 
+use Joomla\JText;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

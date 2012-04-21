@@ -85,7 +85,7 @@ class JLoggerDatabase extends JLogger
 		parent::__construct($options);
 
 		// If both the database object and driver options are empty we want to use the system database connection.
-		if (empty($this->options['db_driver']))
+		if (empty($this->options['dbo']) && empty($this->options['db_driver']))
 		{
 			$this->dbo = JFactory::getDBO();
 			$this->driver = null;
@@ -95,7 +95,7 @@ class JLoggerDatabase extends JLogger
 			$this->database = null;
 			$this->prefix = null;
 		}
-		else
+		else if (empty($this->options['dbo']))
 		{
 			$this->dbo = null;
 			$this->driver = (empty($this->options['db_driver'])) ? 'mysql' : $this->options['db_driver'];
@@ -104,6 +104,10 @@ class JLoggerDatabase extends JLogger
 			$this->password = (empty($this->options['db_pass'])) ? '' : $this->options['db_pass'];
 			$this->database = (empty($this->options['db_database'])) ? 'logging' : $this->options['db_database'];
 			$this->prefix = (empty($this->options['db_prefix'])) ? 'jos_' : $this->options['db_prefix'];
+		}
+		else
+		{
+			$this->dbo = $this->options['dbo'];
 		}
 
 		// The table name is independent of how we arrived at the connection object.

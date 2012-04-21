@@ -1,5 +1,5 @@
 <?php
-namespace Joomla;
+namespace Joomla\utilities;
 /**
  * @package     Joomla.Platform
  * @subpackage  Utilities

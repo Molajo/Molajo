@@ -10,7 +10,10 @@
 namespace Joomla\date;
 
 use Joomla\filesystem\JFile;
+
 use Joomla\database\JDatabaseDriver;
+
+use Joomla\JText;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -414,16 +417,16 @@ class JDate extends \DateTime
 	 */
 	public function toISO8601($local = false)
 	{
-		return $this->format(\DateTime::RFC3339, $local, false);
+		return $this->format(DateTime::RFC3339, $local, false);
 	}
 
 	/**
-	 * Gets the date as an SQL datetime string.
+	 * Gets the date as an SQL \DateTime string.
 	 *
 	 * @param   boolean          $local  True to return the date string in the local time zone, false to return it in GMT.
 	 * @param   JDatabaseDriver  $dbo    The database driver or null to use JFactory::getDbo()
 	 *
-	 * @return  string     The date string in SQL datetime format.
+	 * @return  string     The date string in SQL \DateTime format.
 	 *
 	 * @link http://dev.mysql.com/doc/refman/5.0/en/datetime.html
 	 * @since   11.4
@@ -450,7 +453,7 @@ class JDate extends \DateTime
 	 */
 	public function toRFC822($local = false)
 	{
-		return $this->format(\DateTime::RFC2822, $local, false);
+		return $this->format(DateTime::RFC2822, $local, false);
 	}
 
 	/**

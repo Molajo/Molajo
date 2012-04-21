@@ -124,10 +124,6 @@ Class DatabaseService
 		$dateFromJDate = new JDate($date ? $date : 'now');
 		$dateFromJDate = $dateFromJDate->toSql(false, $this->db);
 
-		echo 'AFTER<br /><pre>';
-		var_dump($dateFromJDate);
-		echo '</pre>';
-
 		return $this;
 	}
 

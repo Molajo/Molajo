@@ -11,6 +11,8 @@ namespace Joomla\filesystem\streams;
 
 use Joomla\filesystem\support\JStringController;
 
+use Joomla\JText;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -297,4 +299,4 @@ class JStreamString
 	}
 }
 
-stream_wrapper_register('string', 'JStreamString') or die(JText::_('JLIB_FILESYSTEM_STREAM_FAILED'));
+stream_wrapper_register('string', 'JStreamString') or die('JStreamString Wrapper Registration Failed');

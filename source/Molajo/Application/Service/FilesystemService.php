@@ -6,6 +6,8 @@
  */
 namespace Molajo\Application\Service;
 
+use Molajo\Application\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -76,13 +78,9 @@ class FilesystemService
 	}
 
 	/**
-	 * processCall
-	 *
-	 * Magic methods __call and __callStatic
-	 * intercept calls and act as a proxy to
+	 * Magic method __call intercepts calls and act as a proxy to
 	 * Joomla JFile, JFolder, and JPath Classes
 	 *
-	 * @static
 	 * @param $name
 	 * @param $arguments
 	 *
@@ -94,11 +92,29 @@ class FilesystemService
 		return $this->processCall($name, $arguments);
 	}
 
+	/**
+	 * Magic method __callStatic intercepts calls and act as a proxy to
+	 * Joomla JFile, JFolder, and JPath Classes
+	 *
+	 * @static
+	 * @param $name
+	 * @param $arguments
+	 *
+	 * @return mixed
+	 * @since 1.0
+	 */
 	public static function __callStatic($name, $arguments)
 	{
-		return $this->processCall($name, $arguments);
+		return Services::Filesystem()->processCall($name, $arguments);
 	}
 
+	/**
+	 * proxy to JFile, JFolder, and JPath Classes
+	 *
+	 * @param $name
+	 * @param $arguments
+	 * @return bool|mixed
+	 */
 	public function processCall($name, $arguments)
 	{
 		if (strtolower(substr($name, 0, 4)) == 'file') {
@@ -119,11 +135,13 @@ class FilesystemService
 		}
 
 		$method = strtolower($method);
+
 		if (method_exists($class, $method)) {
 			return call_user_func_array(array($class, $method), $arguments);
 		}
 
 		Services::Debug()->set('Invalid Filesystem Method: ' . $name);
+
 		return false;
 	}
 }
