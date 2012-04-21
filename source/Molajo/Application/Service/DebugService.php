@@ -77,29 +77,70 @@ Class DebugService
 		$options = array();
 
 		/** Logger Type */
-		$options['logger'] = Services::Registry()->get('Configuration\\debug_log', 'echo');
+		$options['logger'] = Services::Registry()->get('Configuration\\debug_logger', 'echo');
+		$loggerOptions = array();
+		$loggerOptions[] = 'echo';
+		$loggerOptions[] = 'formattedtext';
+		$loggerOptions[] = 'database';
+		/** Molajo-specific */
+		$loggerOptions[] = 'email';
+		$loggerOptions[] = 'console';
+		$loggerOptions[] = 'messages';
 
-		$options['logger'] = 'text';
-
-		if ($options['logger'] == 'email') {
-
-		} elseif ($options['logger'] == 'text') {
-			$options['logger'] = 'formattedtext';
-			$options['text_file'] = 'debug.php';
-			$options['text_file_path'] = SITE_LOGS_FOLDER;
-			$options['text_file_no_php'] = false;
-
-		} elseif ($options['logger'] == 'database') {
-			$options['dbo'] = Services::Database()->get('db');
-			$options['db_table'] = '#__log';
-
-		} elseif ($options['logger'] == 'messages') {
-
-		} elseif ($options['logger'] == 'phpconsole') {
-
+		if (in_array($options['logger'], $loggerOptions)) {
 		} else {
 			$options['logger'] = 'echo';
-			$options['line_separator'] = '<br />';
+		}
+
+		$loggerSelected = false;
+
+		if ($options['logger'] == 'email') {
+			echo 'in here';
+			$options['mailer'] == Services::Registry()->get('Configuration\\mailer', 'mailer');
+			$options['mode'] == Services::Registry()->get('Configuration\\mailer', 'mail_mode');
+			$options['reply_to'] == Services::Registry()->get('Configuration\\mailer', 'mail_reply_to');
+			$options['from'] == Services::Registry()->get('Configuration\\mailer', 'mail_from');
+			$options['subject'] == Services::Registry()->get('Configuration\\mailer', 'debug_email_subject');
+			$options['to'] == Services::Registry()->get('Configuration\\mailer', 'debug_email_to');
+		}
+var_dump($options);
+		die;
+		if ($options['logger'] == 'formattedtext') {
+			$options['logger'] = 'formattedtext';
+			$options['text_file']  = Services::Registry()->get('Configuration\\debug_text_file', 'debug.php');
+			$temp  = Services::Registry()->get('Configuration\\debug_text_file_path', 'SITE_LOGS_FOLDER');
+			if ($temp == 'SITE_LOGS_FOLDER') {
+				$options['text_file_path'] = SITE_LOGS_FOLDER;
+			} else {
+				$options['text_file_path'] = $temp;
+			}
+			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file'])) {
+				$options['text_file_no_php'] = (int) Services::Registry()->get('Configuration\\debug_text_file_no_php', false);
+				$loggerSelected = true;
+			} else {
+				$options = array();
+				$options['logger'] = 'echo';
+			}
+		}
+
+		if ($options['logger'] == 'database') {
+			$options['dbo'] = Services::Database()->get('db');
+			$options['db_table'] = Services::Registry()->get('Configuration\\debug_database_table', '#__log');
+			$loggerSelected = true;
+		}
+
+		if ($options['logger'] == 'messages') {
+			$options['messages_namespace'] = Services::Registry()->get('Configuration\\debug_messages_namespace', 'debug');
+			$loggerSelected = true;
+		}
+
+		if ($options['logger'] == 'console') {
+			//$loggerSelected = true;
+		}
+
+		if ($loggerSelected == false) {
+			$options['logger'] = 'echo';
+			$options['line_separator'] = Services::Registry()->get('Configuration\\debug_line_separator', '<br />');
 		}
 
 		/** Establish log for activated debug option */

@@ -96,6 +96,25 @@ Class MailService
 	}
 
 	/**
+	 * Interface to Joomla Services, like logging, which use Mail Services
+	 *
+	 * @static
+	 * @param  string $name
+	 * @param  array $arguments
+	 */
+	public static function __callStatic($name, $arguments)
+	{
+		echo 'name'.$name.$arguments[0].'<br />';
+
+		if (substr($name, 0, 3) == 'set') {
+			$rest = substr($name, 3, strlen($name) - 3);
+			if (count($arguments) == 1) {
+				return Molajo::Services()->set($name, $arguments[0]);
+			}
+		}
+	}
+
+	/**
 	 * get
 	 *
 	 * Returns a set property or it's default for the mail object

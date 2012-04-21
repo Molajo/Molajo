@@ -37,8 +37,9 @@ Class SiteConfiguration
     public $disable_sending = 0;
     public $only_deliver_to = 'AmyStephen@gmail.com,Amy Stephen';
     public $mailer = 'mail';
-    public $mail_from = 'AmyStephen@gmail.com,Amy Stephen';
-    public $send_mail = '/usr/sbin/send_mail';
+    public $mail_from = 'AmyStephen@gmail.com,From Amy Stephen';
+	public $mail_reply_to = 'AmyStephen@gmail.com,Reply to Amy Stephen';
+	public $send_mail = '/usr/sbin/send_mail';
     public $smtpauth = '0';
     public $smtpuser = '';
     public $smtppass = '';
@@ -51,5 +52,19 @@ Class SiteConfiguration
 	public $ftp_pass = 'admin';
 	public $ftp_root = '/';
 	public $ftp_enable = '1';
+
+	/* Debug Logging */
+	public $debug_logger = 'email';
+	/* Text */
+	public $debug_text_file = 'debug.php';
+	public $debug_text_file_path = 'SITE_LOGS_FOLDER';
+	public $debug_text_file_no_php = false;
+	/* Database */
+	public $debug_database_table = '#__log';
+	/* Messages */
+	public $debug_messages_namespace = 'debug';
+	/* Email */
+    public $debug_email_subject = 'Debug Messages';
+	public $debug_email_to = 'AmyStephen@gmail.com';
 
 }

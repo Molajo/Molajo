@@ -7,6 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\string;
+
+use phputf8\utf8;
+use phputf8\strcasecmp;
+
+jimport('phputf8.str_ireplace');
 defined('JPATH_PLATFORM') or die;
 
 // PHP mbstring and iconv local configuration
@@ -28,12 +34,6 @@ if (function_exists('iconv'))
 	iconv_set_encoding("input_encoding", "UTF-8");
 	iconv_set_encoding("output_encoding", "UTF-8");
 }
-
-/**
- * Include the utf8 package
- */
-jimport('phputf8.utf8');
-jimport('phputf8.strcasecmp');
 
 /**
  * String handling class for utf-8 data
@@ -285,7 +285,7 @@ abstract class JString
 	 */
 	public static function str_ireplace($search, $replace, $str, $count = null)
 	{
-		jimport('phputf8.str_ireplace');
+
 		if ($count === false)
 		{
 			return utf8_ireplace($search, $replace, $str);

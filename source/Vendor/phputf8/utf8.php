@@ -20,6 +20,8 @@
 * @package utf8
 */
 
+namespace phputf8;
+
 /**
 * Put the current directory in this constant
 */

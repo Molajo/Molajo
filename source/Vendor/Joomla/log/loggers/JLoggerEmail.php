@@ -13,6 +13,8 @@ use Joomla\log\JLogger;
 
 use Joomla\log\JLogEntry;
 
+use Joomla\JFactory;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -31,19 +33,19 @@ class JLoggerEmail extends JLogger
 	protected $mailer;
 
 	/**
-	 * @var    string  Name of the sender
+	 * @var    string  Sender email
 	 * @since  12.1
 	 */
 	protected $sender;
 
 	/**
-	 * @var    string  Name of the recipient
+	 * @var    string  Recipient email list
 	 * @since  12.1
 	 */
 	protected $recipient;
 
 	/**
-	 * @var    string  Email subject
+	 * @var    string  Email Subject
 	 * @since  12.1
 	 */
 	protected $subject;
@@ -61,32 +63,46 @@ class JLoggerEmail extends JLogger
 		parent::__construct($options);
 
 		// If both the database object and driver options are empty we want to use the system database connection.
-		if (empty($this->options['sender']) && empty($this->options['recipient']) && empty($this->options['mailer']))
+		if (empty($this->options['sender']))
 		{
 			$this->sender = array(JFactory::getConfig()->get('mailfrom'), JFactory::getConfig()->get('fromname'));
-			$this->recipient = JFactory::getConfig()->get('mailfrom');
-			if (isset($this->options['subject']))
-			{
-				if (is_array($this->options['category']))
-				{
-					$this->subject = trim(implode(' ', $this->options['category']));
-				}
-				else
-				{
-					$this->subject = trim($this->options['category']);
-				}
-			}
-			else
-			{
-				$this->subject = JFactory::getConfig()->get('sitename') . ' Alert';
-			}
-			$this->mailer = JFactory::getMailer();
 		}
 		else
 		{
 			$this->sender = $this->options['sender'];
+		}
+
+		if (empty($this->options['recipient']))
+		{
+			$this->recipient = JFactory::getConfig()->get('mailfrom');
+		}
+		else
+		{
 			$this->recipient = $this->options['recipient'];
-			$this->subject = $this->options['subject'];
+		}
+
+		if (isset($this->options['subject']))
+		{
+			if (is_array($this->options['category']))
+			{
+				$this->subject = trim(implode(' ', $this->options['category']));
+			}
+			else
+			{
+				$this->subject = trim($this->options['category']);
+			}
+		}
+		else
+		{
+			$this->subject = JFactory::getConfig()->get('sitename');
+		}
+
+		if (empty($this->options['recipient']))
+		{
+			$this->mailer = JFactory::getMailer();
+		}
+		else
+		{
 			$this->mailer = $this->options['mailer'];
 		}
 	}
@@ -115,7 +131,7 @@ class JLoggerEmail extends JLogger
 
 		$results = $this->mailer->Send();
 
-		if ($results == true)
+		if ($results == false)
 		{
 			throw new \RuntimeException('Email log entry not sent');
 		}

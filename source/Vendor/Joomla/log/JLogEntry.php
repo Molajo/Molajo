@@ -85,9 +85,9 @@ class JLogEntry
 	public function __construct($message, $priority = JLog::INFO, $category = '', $date = null)
 	{
 		$this->message = (string) $message;
-;
+
 		// Sanitize the priority.
-		if (!in_array($priority, $this->priorities, true))
+		if (!in_array($priority, $this->priorities))  //amy removed true
 		{
 			$priority = JLog::INFO;
 		}
