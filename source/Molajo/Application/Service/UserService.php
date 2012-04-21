@@ -106,7 +106,7 @@ Class UserService
 			Services::Registry()->set('User\\registered', 1);
 		}
 
-		$xml = simplexml_load_file(APPLICATIONS_MVC. '/Model/Table/Users.xml');
+		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Users.xml');
 
 		Services::Registry()->loadField('UserCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
 		Services::Registry()->loadField('UserMetadata\\', 'meta', $results['metadata'], $xml->metadata);

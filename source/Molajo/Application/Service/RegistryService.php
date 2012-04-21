@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Request
  *
- * @package   	Molajo
+ * @package       Molajo
  * @subpackage  Services
  * @since       1.0
  */

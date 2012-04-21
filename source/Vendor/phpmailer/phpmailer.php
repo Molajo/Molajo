@@ -21,6 +21,7 @@
 | FITNESS FOR A PARTICULAR PURPOSE.                                         |
 '---------------------------------------------------------------------------'
 */
+namespace phpmailer;
 
 /**
  * PHPMailer - PHP email transport class
@@ -2523,7 +2524,7 @@ class PHPMailer {
   }
 }
 
-class phpmailerException extends Exception {
+class phpmailerException extends \Exception {
   public function errorMessage() {
     $errorMsg = '<strong>' . $this->getMessage() . "</strong><br />\n";
     return $errorMsg;

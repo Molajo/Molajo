@@ -140,7 +140,7 @@ Class LogService
 	 *
 	 * 5. Email
 	 * $this->options['sender'] - array(
-	 *     Services::Registry()->get('Configuration\\mail_from_email_address'),
+	 *     Services::Registry()->get('Configuration\\mail_from'),
 	 *  Services::Registry()->get('Configuration\\mail_from_name')
 	 * };
 	 * $this->options['recipient'] = Services::Registry()->get('Configuration\\mail_from_email_address');

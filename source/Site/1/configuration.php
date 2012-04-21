@@ -35,14 +35,12 @@ Class SiteConfiguration
 
     /* Mail Settings */
     public $disable_sending = 0;
-    public $only_deliver_to = 'AmyStephen@gmail.com';
+    public $only_deliver_to = 'AmyStephen@gmail.com,Amy Stephen';
     public $mailer = 'mail';
-    public $mail_from_email_address = 'AmyStephen@gmail.com';
-    public $mail_from_name = 'Amy Stephen';
+    public $mail_from = 'AmyStephen@gmail.com,Amy Stephen';
     public $send_mail = '/usr/sbin/send_mail';
     public $smtpauth = '0';
     public $smtpuser = '';
     public $smtppass = '';
     public $smtphost = 'localhost';
-    public $mail_class = 'JMail';
 }

@@ -84,8 +84,8 @@ Class DebugService
 		} elseif ($options['logger'] == 'text') {
 			$options['logger'] = 'formattedtext';
 			$options['text_file'] = 'debug.php';
-	 		$options['text_file_path'] = SITE_LOGS_FOLDER;
-	 		$options['text_file_no_php'] = false;
+			$options['text_file_path'] = SITE_LOGS_FOLDER;
+			$options['text_file_no_php'] = false;
 
 		} elseif ($options['logger'] == 'database') {
 			$options['dbo'] = Services::Database()->get('db');

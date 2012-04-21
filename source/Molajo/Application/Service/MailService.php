@@ -13,23 +13,20 @@ defined('MOLAJO') or die;
 /**
  * Mail
  *
- * Edits, filters input, sends email
+ * Edits, filters input, and sends email
  *
  * Example usage:
  *
- * $results = Services::Mail()
- *  ->set('send_to_email', 'person@example.com[,person@example.com,etc.]')
- *  ->set('from_email', 'admin@example.com[,person@example.com,etc.]')
- *  ->set('from_name', 'Person A, Person B')
- *  ->set('reply_to_email', 'admin@example.com')
- *  ->set('reply_to_name', 'Person A')
- *  ->set('cc_email', 'admin@example.com[,person@example.com,etc.]')
- *  ->set('bcc_email', 'admin@example.com[,person@example.com,etc.]')
- *  ->set('subject', 'Welcome to our Site')
- *  ->set('body', $bodyofemail)
- *  ->set('model', 'html') plain text - default
- *  ->set('attachment', $filename)
- *  ->send($message);
+ * Services::Mail()->set('to', 'AmyStephen@gmail.com,Amy Stephen');
+ * Services::Mail()->set('from', 'AmyStephen@gmail.ORG,ORG Stephen');
+ * Services::Mail()->set('reply_to', 'Person@example.com,Person A');
+ * Services::Mail()->set('cc', 'AmyStephen@gmail.cc,CC Stephen');
+ * Services::Mail()->set('bcc', 'AmyStephen@gmail.bcc,BCC Stephen');
+ * Services::Mail()->set('subject', 'Welcome to our Site');
+ * Services::Mail()->set('body', '<h2>Stuff goes here</h2>') ;
+ * Services::Mail()->set('mode', 'html') ;
+ * Services::Mail()->set('attachment', SITE_MEDIA_FOLDER.'/molajo.sql') ;
+ * Services::Mail()->send();
  *
  * @package     Molajo
  * @subpackage  Service
@@ -37,394 +34,363 @@ defined('MOLAJO') or die;
  */
 Class MailService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * Configuration
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $configuration;
+	/**
+	 * Configuration
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $configuration;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new MailService();
-        }
-        return self::$instance;
-    }
+	/**
+	 * Mail Instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $mailInstance;
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    public function __construct()
-    {
+	/**
+	 *     Error Count
+	 *
+	 * @var   integer
+	 * @since 1.0
+	 */
+	protected $error_count = 0;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new MailService();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * __construct
+	 *
+	 * Class constructor.
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
 		$this->configuration = Services::Registry()->initialise();
 		return $this;
-    }
+	}
 
-    /**
-     * get
-     *
-     * Returns a set property or it's default for the mail object
-     *
-     * @param   string  $key
-     * @param   mixed   $default
-     *
-     * @return  mixed   The value of the configuration.
-     * @since   1.0
-     */
-    public function get($key, $default = null)
-    {
-        $this->configuration->get($key, $default);
+	/**
+	 * get
+	 *
+	 * Returns a set property or it's default for the mail object
+	 *
+	 * @param   string  $key
+	 * @param   mixed   $default
+	 *
+	 * @return  mixed   The value of the configuration.
+	 * @since   1.0
+	 */
+	public function get($key, $default = null)
+	{
+		return $this->configuration->get($key, $default);
+	}
+
+	/**
+	 * set
+	 *
+	 * Modifies a property of the mail object
+	 *
+	 * @param   string  $key
+	 * @param   mixed   $value
+	 *
+	 * @return  mixed   Previous value of the property
+	 *
+	 * @since   1.0
+	 */
+	public function set($key, $value = null)
+	{
+		$this->configuration->set($key, $value);
 		return $this;
-    }
+	}
 
-    /**
-     * set
-     *
-     * Modifies a property of the mail object
-     *
-     * @param   string  $key
-     * @param   mixed   $value
-     *
-     * @return  mixed   Previous value of the property
-     *
-     * @since   1.0
-     */
-    public function set($key, $value = null)
-    {
-		echo $key.' '.$value.'<br />';
-        $this->configuration->set($key, $value);
-		return $this;
-    }
+	/**
+	 * send
+	 *
+	 * Checks permissions, validates data elements, and sends email
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.0
+	 */
+	public function send()
+	{
+		/** Email disabled */
+		if (Services::Registry()->get('Configuration\\disable_sending', 1) == 1) {
+			return true;
+		}
 
-    /**
-     * send
-     *
-     * Checks permissions, validates data elements, and sends email
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function send()
-    {
-        //if (Services::Registry()->get('Configuration\\disable_sending', 1) == 1) {
-        //    return true;
-        //}
-		echo 'in send';
-        $results = $this->permission();
-        if ($results == true) {
+		/** ACL Check */
+		$results = $this->permission();
+		if ($results == true) {
 		} else {
-            return $results;
-        }
+			return $results;
+		}
 
-        $only_deliver_to = Services::Registry()->get('Configuration\\only_deliver_to', '');
-        if (trim($only_deliver_to) == '') {
-        } else {
-            $this->set('cc_email', array());
-            $this->set('bcc_email', array());
-            $this->set('reply_to_email', $only_deliver_to);
-            $this->set('send_to_email', $only_deliver_to);
-        }
+		/** For development only deliver to values */
+		$only_deliver_to = Services::Registry()->get('Configuration\\only_deliver_to', '');
 
-        //$results = $this->edit_and_filter_input();
-        //if ($results === true) {
-        //} else {
-        //    return false;
-        //}
+		if (trim($only_deliver_to) == '') {
+		} else {
+			$this->set('reply_to', $only_deliver_to);
+			$this->set('from', $only_deliver_to);
+			$this->set('to', $only_deliver_to);
+			$this->set('cc', '');
+			$this->set('bcc', '');
+		}
 
-        /** Get instance */
-		$mailClass = Services::Registry()->get('Configuration\\mail_class', 'JMail');
-		echo $mailClass;
-		die;
-        $mail = $mailClass::getInstance();
+		/** Instantiate Mailer */
+		$mailClass = 'phpmailer\\PHPMailer';
+		$this->mailInstance = new $mailClass ();
 
-        /** Set type of email */
-        switch (Services::Registry()->get('Configuration\\mailer')) {
-            case 'smtp':
-                $mail->useSMTP(
-                    Services::Registry()->get('Configuration\\smtpauth'),
-                    Services::Registry()->get('Configuration\\smtphost'),
-                    Services::Registry()->get('Configuration\\smtpuser'),
-                    Services::Registry()->get('Configuration\\smtppass'),
-                    Services::Registry()->get('Configuration\\smtpsecure'),
-                    Services::Registry()->get('Configuration\\smtpport')
-                );
-                break;
+		/** Edit input */
+		$this->editInput();
 
-            case 'sendmail':
-                $mail->IsSendmail();
-                break;
+		/** Type of email */
+		switch (Services::Registry()->get('Configuration\\mailer')) {
 
-            default:
-                $mail->IsMail();
-                break;
-        }
+			case 'smtp':
+				$this->mailInstance->smtpauth = Services::Registry()->get('Configuration\\smtpauth');
+				$this->mailInstance->smtphost = Services::Registry()->get('Configuration\\smtphost');
+				$this->mailInstance->smtpuser = Services::Registry()->get('Configuration\\smtpuser');
+				$this->mailInstance->smtppass = Services::Registry()->get('Configuration\\smtppass');
+				$this->mailInstance->smtpsecure = Services::Registry()->get('Configuration\\smtpsecure');
+				$this->mailInstance->smtpport = Services::Registry()->get('Configuration\\smtpport');
 
-        $mail->SetFrom(
-            $this->get('from_email'),
-            $this->get('from_name'),
-            0
-        );
+				$this->mailInstance->IsSMTP();
+				break;
 
-        $results = $mail->sendMail(
-            $this->get('from_email'),
-            $this->get('from_name'),
-            $this->get('send_to_email'),
-            $this->get('subject'),
-            $this->get('body'),
-            $this->get('mode'),
-            $this->get('cc_email'),
-            $this->get('bcc_email'),
-            $this->get('attachment'),
-            $this->get('reply_to_email'),
-            $this->get('reply_to_name')
-        );
+			case 'sendmail':
+				$this->mailInstance->smtpauth = Services::Registry()->get('Configuration\\sendmail_path');
 
-        return $results;
-    }
+				$this->mailInstance->IsSendmail();
+				break;
 
-    /**
-     * permission
-     *
-     * Verify user and extension have permission to send email
-     *
-     * @return bool
-     * @since  1.0
-     */
-    protected function permission()
-    {
-        $permission = true;
+			default:
+				$this->mailInstance->IsMail();
+				break;
+		}
 
-        /** Component (authorises any user) */
+		/** Send */
+		try {
+			$this->mailInstance->Send();
+		}
+		catch (\Exception $e) {
+			Services::Message()->set($e->getMessage(), MESSAGE_TYPE_ERROR);
+			return false;
+		}
 
-        /** User */
+		return true;
+	}
 
-        /** authorization event */
-        //todo: what is the asset id of a service?
-        //$results = Services::Access()->authoriseTask('email', $asset_id);
+	/**
+	 * permission
+	 *
+	 * Verify user and extension have permission to send email
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	protected function permission()
+	{
+		$permission = true;
 
-        return $permission;
-    }
+		/** Component (authorises any user) */
 
-    /**
-     * edit_and_filter_input
-     *
-     * Verify all data required is available and filter input for security
-     *
-     * @return bool|int
-     */
-    protected function edit_and_filter_input()
-    {
-        $error = '';
+		/** User */
 
-        /** Permission */
-        $results = $this->permission();
-        if ($results == false) {
-            return 304;
-        }
+		/** authorization event */
+		//todo: what is the asset id of a service?
+		//$results = Services::Access()->authoriseTask('email', $asset_id);
 
-        /** From Email Address */
-        $name = 'from_email';
-        $value = $this->get('from_email');
-        $dataType = 'email';
-        $results = $this->edit_and_filter_input($name, $value, $dataType);
-        if ($results === false) {
-            return false;
-        }
-        $this->set('from_email', $results);
+		return $permission;
+	}
 
-        /** From Name */
-        $name = 'from_name';
-        $value = $this->get('from_name', Services::Registry()->get('Configuration\\site_name'));
-        $dataType = 'char';
-        $results = $this->edit_and_filter_input($name, $value, $dataType);
-        if ($results === false) {
-            return false;
-        }
-        $this->set('from_name', $results);
+	/**
+	 * Verify all data required is available and filter input for security
+	 *
+	 * @return bool|int
+	 */
+	protected function editInput()
+	{
+		$this->error_count = 0;
 
-        /** Send to Email Address */
-        $name = 'send_to_email';
-        $values = $this->get('send_to_email');
-        $dataType = 'email';
-        if (is_array($value)) {
-        } else {
-            $values = array($value);
-        }
-        $validated = array();
-        if (count($values) > 0) {
-            foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $dataType);
-                if ($results === false) {
-                    return false;
-                } else {
-                    $validated[] = $results;
-                }
-            }
-        }
-        $this->set('send_to_email', $validated);
+		/** Recipients */
+		$this->recipient('reply_to');
+		$this->recipient('from');
+		$this->recipient('to');
+		$this->recipient('cc');
+		$this->recipient('bcc');
 
-        /** Subject */
-        $name = 'subject';
-        $value = $this->get('subject', Services::Registry()->get('Configuration\\site_name'));
-        $dataType = 'char';
-        $results = $this->edit_and_filter_input($name, $value, $dataType);
-        if ($results === false) {
-            return false;
-        }
-        $this->set('subject', $results);
+		/** Subject */
+		$value = $this->get('subject', '');
+		if ($value == '') {
+			$value = Services::Registry()->get('Configuration\\site_name', '');
+		}
+		$value = $this->filter('subject', $value, 'char');
+		$this->mailInstance->set('Subject', $value);
 
-        /** Body */
-        $name = 'body';
-        $value = $this->get('body');
-        if ($this->get('mode', 'text') == 'html') {
-            $dataType = 'html';
-        } else {
-            $dataType = 'text';
-        }
-        $results = $this->edit_and_filter_input($name, $value, $dataType);
-        if ($results === false) {
-            return false;
-        }
-        $this->set('body', $results);
+		/** Body */
+		if ($this->get('mode', 'text') == 'html') {
+			$mode = 'text';
+		} else {
+			$mode = 'char';
+		}
+		$value = $this->filter('body', $value = $this->get('body'), $mode);
+		$this->mailInstance->set('Body', $value);
+		if ($mode == 'html') {
+			$this->mailInstance->IsHTML(true);
+		}
 
-        /** Copy Email Address */
-        $name = 'cc_email';
-        $values = $this->get('cc_email');
-        $dataType = 'email';
-        if (is_array($value)) {
-        } else {
-            $values = array($value);
-        }
-        $validated = array();
-        if (count($values) > 0) {
-            foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $dataType);
-                if ($results === false) {
-                    return false;
-                } else {
-                    $validated[] = $results;
-                }
-            }
-        }
-        $this->set('cc_email', $validated);
+		/** Attachment */
+		$attachment = $this->get('attachment', '');
+		if ($attachment == '') {
+		} else {
+			$attachment = $this->filter('attachment', $attachment, 'file');
+		}
+		if ($attachment === false || $attachment == '') {
+		} else {
+			$this->mailInstance->AddAttachment($attachment, $name = 'Attachment', $encoding = 'base64', $type = 'application/octet-stream');
+		}
 
-        /** Blind Copy Email Address */
-        $name = 'bcc_email';
-        $values = $this->get('bcc_email');
-        $dataType = 'email';
-        if (is_array($value)) {
-        } else {
-            $values = array($value);
-        }
-        $validated = array();
-        if (count($values) > 0) {
-            foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $dataType);
-                if ($results === false) {
-                    return false;
-                } else {
-                    $validated[] = $results;
-                }
-            }
-        }
-        $this->set('bcc_email', $validated);
+		return true;
+	}
 
-        /** Attachment */
-        $name = 'attachment';
-        $values = $this->get('attachment');
-        $dataType = 'file';
-        if (is_array($value)) {
-        } else {
-            $values = array($value);
-        }
-        $validated = array();
-        if (count($values) > 0) {
-            foreach ($values as $value) {
-                $results = $this->edit_and_filter_input($name, $value, $dataType);
-                if ($results === false) {
-                    return false;
-                } else {
-                    $validated[] = $results;
-                }
-            }
-        }
-        $this->set('attachment', $validated);
+	/**
+	 *     Filter and edit email and name parameters, sending filtered values to phpMail
+	 *
+	 * @param  string $parameter
+	 *
+	 * @return null
+	 * @since  1.0
+	 */
+	protected function recipient($parameter)
+	{
+		echo $parameter."<br />";
 
-        /** Reply to Email Address */
-        $name = 'reply_to_email';
-        $value = $this->get('reply_to_email');
-        $dataType = 'email';
-        $results = $this->edit_and_filter_input($name, $value, $dataType);
-        if ($results === false) {
-            return false;
-        }
-        $this->set('reply_to_email', $results);
+		/** extract all pairs of email addresses and names for this parameter */
+		$x = explode(';', $this->get($parameter));
 
-        /** Reply to Name */
-        $name = 'reply_to_name';
-        $value = $this->get('reply_to_name');
-        $dataType = 'char';
-        $results = $this->edit_and_filter_input($name, $value, $dataType);
-        if ($results === false) {
-            return false;
-        }
-        $this->set('reply_to_name', $results);
+		if (is_array($x)) {
+			$y = $x;
+		} else {
+			$y = array($x);
+		}
 
-        return true;
-    }
+		if (count($y) > 0) {
 
-    /**
-     * call_security_filter
-     *
-     * @param   string  $name         Name of input field
-     * @param   string  $field_value  Value of input field
-     * @param   string  $dataType     Datatype of input field
-     * @param   int     $null         0 or 1 - is null allowed
-     * @param   string  $default      Default value, optional
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    protected function call_security_filter(
-        $name, $value, $dataType, $null = null, $default = null)
-    {
-        try {
-            $value = Services::Security()->filter(
-                $value, $dataType, $null, $default);
+			/** process each pair of email addresses and names */
+			foreach ($y as $z) {
 
-        } catch (\Exception $e) {
-            $value = false;
-            Services::Message()->set(
-                $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                $type = MESSAGE_TYPE_ERROR
-            );
-            if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
-                Services::Debug()->set('Services::mail Filter Failed' . ' ' . $message);
-            }
-        }
+				/** split pair by comma */
+				$extract = explode(',', $z);
+				if (count($extract) == 0) {
+					break;
+				}
 
-        return $value;
-    }
+				/** email address */
+				$z = $this->filter($parameter, $extract[0], 'email');
+				if ($z === false || $z == '') {
+					break;
+				}
+				$useEmail = $z;
+
+				/** name */
+				$useName = '';
+				if (count($extract) > 1) {
+					$z = $this->filter($parameter, $extract[1], 'char');
+					if ($z === false || $z == '') {
+					} else {
+						$useName = $z;
+					}
+				}
+
+				if ($parameter == 'reply_to') {
+					$this->mailInstance->AddReplyTo($useEmail, $useName);
+
+				} elseif ($parameter == 'from') {
+					$this->mailInstance->SetFrom($useEmail, $useName);
+
+				} elseif ($parameter == 'reply_to') {
+					$this->mailInstance->SetFrom($useEmail, $useName);
+
+				} elseif ($parameter == 'cc') {
+					$this->mailInstance->AddCC($useEmail, $useName);
+
+				} elseif ($parameter == 'bcc') {
+					$this->mailInstance->AddBCC($useEmail, $useName);
+
+				} else {
+					$this->mailInstance->AddAddress($useEmail, $useName);
+				}
+			}
+		}
+	}
+
+	/**
+	 * filter
+	 *
+	 * @param   string  $name         Name of input field
+	 * @param   string  $field_value  Value of input field
+	 * @param   string  $dataType     Datatype of input field
+	 * @param   int     $null         0 or 1 - is null allowed
+	 * @param   string  $default      Default value, optional
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	protected function filter(
+		$name, $value, $dataType, $null = null, $default = null)
+	{
+		try {
+			$value = Services::Security()
+				->filter(
+				$value,
+				$dataType,
+				$null,
+				$default
+			);
+
+		} catch (\Exception $e) {
+
+			$this->error_count++;
+
+			Services::Message()
+				->set(
+				$e->getMessage() . ' ' . $name,
+				MESSAGE_TYPE_ERROR
+			);
+
+			Services::Debug()->set('Services::mail Filter Failed' . ' ' . $e->getMessage() . ' ' . $name);
+
+			return false;
+		}
+
+		return $value;
+	}
 }

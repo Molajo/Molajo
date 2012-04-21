@@ -22,13 +22,13 @@ defined('MOLAJO') or die;
  */
 Class DatabaseService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
 	/**
 	 * Name
@@ -55,15 +55,15 @@ Class DatabaseService
 	protected $db;
 
 	/**
-     * getInstance
-     *
+	 * getInstance
+	 *
 	 * @static
 	 * @param   null  $configuration_file
 	 * @return  string
 	 * @throws  \Exception
 	 */
-    public static function getInstance($configuration_file = null)
-    {
+	public static function getInstance($configuration_file = null)
+	{
 		return self::$instance ? self::$instance : new DatabaseService($configuration_file);
 	}
 
@@ -77,18 +77,18 @@ Class DatabaseService
 	 */
 	public function __construct($configuration_file = null)
 	{
-        if ($configuration_file === null) {
-            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
-        }
-        if (file_exists($configuration_file)) {
-            require_once $configuration_file;
-        } else {
-            throw new \Exception('Fatal error - Application-Site Configuration File does not exist');
-        }
+		if ($configuration_file === null) {
+			$configuration_file = SITE_FOLDER_PATH . '/configuration.php';
+		}
+		if (file_exists($configuration_file)) {
+			require_once $configuration_file;
+		} else {
+			throw new \Exception('Fatal error - Application-Site Configuration File does not exist');
+		}
 
-        $site = new \SiteConfiguration();
+		$site = new \SiteConfiguration();
 
-        /** set connection options */
+		/** set connection options */
 		$this->options = array(
 			'driver' => preg_replace('/[^A-Z0-9_\.-]/i', '', $site->jdatabase_dbtype),
 			'host' => $site->jdatabase_host,
@@ -101,7 +101,7 @@ Class DatabaseService
 
 		$this->name = $site->jdatabase_dbtype;
 
-        /** connect */
+		/** connect */
 		$class = 'Joomla\\database\\driver\\JDatabaseDriver' . ucfirst(strtolower($this->options['driver']));
 		if (class_exists($class)) {
 		} else {
@@ -110,11 +110,11 @@ Class DatabaseService
 
 		try {
 			$this->db = new $class($this->options);
-		} catch (\Exception $e)	{
+		} catch (\Exception $e) {
 			throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
 		}
 
-        $this->db->debug($site->jdatabase_debug);
+		$this->db->debug($site->jdatabase_debug);
 
 		echo '<pre>';
 		//var_dump($this->db);
