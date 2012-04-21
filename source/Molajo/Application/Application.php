@@ -156,8 +156,7 @@ Class Application
 		}
 
 		/** Connect Application Services */
-		$continue = Molajo::Services()
-			->startServices();
+		$continue = Molajo::Services()->startServices();
 		if ($continue == false) {
 			return false;
 		}
@@ -605,6 +604,7 @@ Class Application
 		/** Redirect to Installation Application */
 		$redirect = BASE_URL . 'installation/';
 		header('Location: ' . $redirect);
+
 		exit();
 	}
 
@@ -695,7 +695,8 @@ Class Application
 				BASE_URL . Services::Registry()->get('Configuration\\temp_url',
 					BASE_URL . 'sites/' . SITE_ID . '/temp')
 			);
-		};
+		}
+		;
 
 		return true;
 	}
