@@ -95,16 +95,14 @@ Class DebugService
 		$loggerSelected = false;
 
 		if ($options['logger'] == 'email') {
-			echo 'in here';
-			$options['mailer'] == Services::Registry()->get('Configuration\\mailer', 'mailer');
-			$options['mode'] == Services::Registry()->get('Configuration\\mailer', 'mail_mode');
-			$options['reply_to'] == Services::Registry()->get('Configuration\\mailer', 'mail_reply_to');
-			$options['from'] == Services::Registry()->get('Configuration\\mailer', 'mail_from');
-			$options['subject'] == Services::Registry()->get('Configuration\\mailer', 'debug_email_subject');
-			$options['to'] == Services::Registry()->get('Configuration\\mailer', 'debug_email_to');
+			$options['mailer'] = Services::Mail();
+			$options['reply_to'] = Services::Registry()->get('Configuration\\mail_reply_to', '');
+			$options['from'] = Services::Registry()->get('Configuration\\mail_from', '');
+			$options['subject'] = Services::Registry()->get('Configuration\\debug_email_subject', '');
+			$options['to'] = Services::Registry()->get('Configuration\\debug_email_to', '');
+			$loggerSelected = true;
 		}
-var_dump($options);
-		die;
+
 		if ($options['logger'] == 'formattedtext') {
 			$options['logger'] = 'formattedtext';
 			$options['text_file']  = Services::Registry()->get('Configuration\\debug_text_file', 'debug.php');
