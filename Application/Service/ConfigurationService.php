@@ -7,6 +7,9 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
+
+use Molajo\Application\Molajo;
+
 use Molajo\Application\MVC\Model\TableModel;
 
 defined('MOLAJO') or die;
@@ -73,6 +76,8 @@ Class ConfigurationService
 	/**
 	 * __construct
 	 *
+	 * setSitePaths executed after ConfigurationService startup to make paths available to other services
+	 *
 	 * @return  object
 	 * @since   1.0
 	 */
@@ -93,6 +98,8 @@ Class ConfigurationService
 //        $this->registry('ApplicationMetadata\\', $data, 'metadata', 'meta', $xml);
 		$this->registry('Configuration\\', $data, 'parameters', 'parameter', $xml);
 
+		/** Site Paths, Custom Fields, and Authorisation */
+		Molajo::Application()->setSitePaths();
 
 		return $this;
 	}

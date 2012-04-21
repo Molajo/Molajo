@@ -162,12 +162,6 @@ Class Application
 			return false;
 		}
 
-		/** Site Paths, Custom Fields, and Authorisation */
-		$continue = $this->setSitePaths();
-		if ($continue == false) {
-			return false;
-		}
-
 		Services::Debug()->set('Molajo::Services()->startServices() and Site Paths complete');
 
 		/** Retrieve Site data and save in registry */
@@ -646,10 +640,12 @@ Class Application
 	/**
 	 * Establish media, cache, log, etc., locations for site for application use
 	 *
+	 * Called out of the ConfigurationServices Class construct - paths needed in startup process for other services
+	 *
 	 * @return mixed
 	 * @since  1.0
 	 */
-	protected function setSitePaths()
+	public function setSitePaths()
 	{
 		if (defined('SITE_NAME')) {
 		} else {
@@ -718,13 +714,16 @@ Class Application
 		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
 
 		$results = $m->loadAssoc();
+
 		if ($results === false) {
 			throw new \RuntimeException ('setSiteData query problem');
 		}
 
 		/** Registry for Custom Fields and Metadata */
 		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Sites.xml');
+
 		Services::Registry()->loadField('SiteCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
+
 		Services::Registry()->loadField('SiteMetadata\\', 'meta', $results['metadata'], $xml->metadata);
 
 		$this->base_url = $results['base_url'];

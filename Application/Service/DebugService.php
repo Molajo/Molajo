@@ -76,8 +76,10 @@ Class DebugService
 		/** $options array */
 		$options = array();
 
-		/** Options based on Logger Type */
+		/** Logger Type */
 		$options['logger'] = Services::Registry()->get('Configuration\\debug_log', 'echo');
+
+		$options['logger'] = 'text';
 
 		if ($options['logger'] == 'email') {
 
@@ -89,7 +91,7 @@ Class DebugService
 
 		} elseif ($options['logger'] == 'database') {
 			$options['dbo'] = Services::Database()->get('db');
-			$options['db_table'] = '#__log_entries';
+			$options['db_table'] = '#__log';
 
 		} elseif ($options['logger'] == 'messages') {
 
@@ -97,6 +99,7 @@ Class DebugService
 
 		} else {
 			$options['logger'] = 'echo';
+			$options['line_separator'] = '<br />';
 		}
 
 		/** Establish log for activated debug option */

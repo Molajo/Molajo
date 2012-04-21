@@ -188,7 +188,7 @@ Class LogService
 		$message = (string)$message;
 
 		/** Priority */
-		if (in_array($priority, $this->priorities, true)) {
+		if (in_array($priority, $this->priorities)) {
 		} else {
 			$priority = LOG_TYPE_INFO;
 		}
