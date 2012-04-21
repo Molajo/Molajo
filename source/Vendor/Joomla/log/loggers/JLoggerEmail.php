@@ -63,38 +63,31 @@ class JLoggerEmail extends JLogger
 		parent::__construct($options);
 
 		// If both the database object and driver options are empty we want to use the system database connection.
-		if (empty($this->options['sender']))
+		if (empty($this->options['from']))
 		{
-			$this->sender = array(JFactory::getConfig()->get('mailfrom'), JFactory::getConfig()->get('fromname'));
+			$this->from = array(JFactory::getConfig()->get('mailfrom'), JFactory::getConfig()->get('fromname'));
 		}
 		else
 		{
-			$this->sender = $this->options['sender'];
+			$this->from = $this->options['from'];
 		}
 
-		if (empty($this->options['recipient']))
+		if (empty($this->options['to']))
 		{
-			$this->recipient = JFactory::getConfig()->get('mailfrom');
+			$this->to = JFactory::getConfig()->get('mailfrom');
 		}
 		else
 		{
-			$this->recipient = $this->options['recipient'];
+			$this->to = $this->options['to'];
 		}
 
-		if (isset($this->options['subject']))
-		{
-			if (is_array($this->options['category']))
-			{
-				$this->subject = trim(implode(' ', $this->options['category']));
-			}
-			else
-			{
-				$this->subject = trim($this->options['category']);
-			}
-		}
-		else
+		if (empty($this->options['subject']))
 		{
 			$this->subject = JFactory::getConfig()->get('sitename');
+		}
+		else
+		{
+			$this->subject = $this->options['subject'];
 		}
 
 		if (empty($this->options['recipient']))
@@ -119,8 +112,9 @@ class JLoggerEmail extends JLogger
 	 */
 	public function addEntry(JLogEntry $entry)
 	{
-		$this->mailer->setSender($this->sender);
-		$this->mailer->setRecipient($this->recipient);
+		echo 'in JLoggerEmail::addEntry';
+		$this->mailer->setSender($this->from);
+		$this->mailer->setRecipient($this->to);
 		$this->mailer->setSubject($this->subject);
 		$this->mailer->setBody(
 				$this->priorities[$entry->priority]

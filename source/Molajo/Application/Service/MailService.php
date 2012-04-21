@@ -98,18 +98,27 @@ Class MailService
 	/**
 	 * Interface to Joomla Services, like logging, which use Mail Services
 	 *
-	 * @static
 	 * @param  string $name
 	 * @param  array $arguments
 	 */
-	public static function __callStatic($name, $arguments)
+	public function __call($name, $arguments)
 	{
-		echo 'name'.$name.$arguments[0].'<br />';
+		$name = strtolower($name);
 
 		if (substr($name, 0, 3) == 'set') {
 			$rest = substr($name, 3, strlen($name) - 3);
 			if (count($arguments) == 1) {
-				return Molajo::Services()->set($name, $arguments[0]);
+				if ($name == 'sender') {
+					$name = 'from';
+				}
+				if ($name == 'recipient') {
+					$name = 'to';
+				}
+				return $this->set($name, $arguments[0]);
+			}
+		} else {
+			if ($name == 'send') {
+				return $this->send();
 			}
 		}
 	}
@@ -188,7 +197,7 @@ Class MailService
 		$this->mailInstance = new $mailClass ();
 
 		/** Edit input */
-		$this->editInput();
+		$this->processInput();
 
 		/** Type of email */
 		switch (Services::Registry()->get('Configuration\\mailer')) {
@@ -255,23 +264,23 @@ Class MailService
 	 *
 	 * @return bool|int
 	 */
-	protected function editInput()
+	protected function processInput()
 	{
 		$this->error_count = 0;
 
 		/** Recipients */
-		$this->recipient('reply_to');
-		$this->recipient('from');
-		$this->recipient('to');
-		$this->recipient('cc');
-		$this->recipient('bcc');
+		$this->processRecipient('reply_to');
+		$this->processRecipient('from');
+		$this->processRecipient('to');
+		$this->processRecipient('cc');
+		$this->processRecipient('bcc');
 
 		/** Subject */
 		$value = $this->get('subject', '');
 		if ($value == '') {
 			$value = Services::Registry()->get('Configuration\\site_name', '');
 		}
-		$value = $this->filter('subject', $value, 'char');
+		$value = $this->filterInput('subject', $value, 'char');
 		$this->mailInstance->set('Subject', $value);
 
 		/** Body */
@@ -280,7 +289,7 @@ Class MailService
 		} else {
 			$mode = 'char';
 		}
-		$value = $this->filter('body', $value = $this->get('body'), $mode);
+		$value = $this->filterInput('body', $value = $this->get('body'), $mode);
 		$this->mailInstance->set('Body', $value);
 		if ($mode == 'html') {
 			$this->mailInstance->IsHTML(true);
@@ -290,7 +299,7 @@ Class MailService
 		$attachment = $this->get('attachment', '');
 		if ($attachment == '') {
 		} else {
-			$attachment = $this->filter('attachment', $attachment, 'file');
+			$attachment = $this->filterInput('attachment', $attachment, 'file');
 		}
 		if ($attachment === false || $attachment == '') {
 		} else {
@@ -308,10 +317,8 @@ Class MailService
 	 * @return null
 	 * @since  1.0
 	 */
-	protected function recipient($parameter)
+	protected function processRecipient($parameter)
 	{
-		echo $parameter."<br />";
-
 		/** extract all pairs of email addresses and names for this parameter */
 		$x = explode(';', $this->get($parameter));
 
@@ -333,7 +340,7 @@ Class MailService
 				}
 
 				/** email address */
-				$z = $this->filter($parameter, $extract[0], 'email');
+				$z = $this->filterInput($parameter, $extract[0], 'email');
 				if ($z === false || $z == '') {
 					break;
 				}
@@ -342,7 +349,7 @@ Class MailService
 				/** name */
 				$useName = '';
 				if (count($extract) > 1) {
-					$z = $this->filter($parameter, $extract[1], 'char');
+					$z = $this->filterInput($parameter, $extract[1], 'char');
 					if ($z === false || $z == '') {
 					} else {
 						$useName = $z;
@@ -353,9 +360,6 @@ Class MailService
 					$this->mailInstance->AddReplyTo($useEmail, $useName);
 
 				} elseif ($parameter == 'from') {
-					$this->mailInstance->SetFrom($useEmail, $useName);
-
-				} elseif ($parameter == 'reply_to') {
 					$this->mailInstance->SetFrom($useEmail, $useName);
 
 				} elseif ($parameter == 'cc') {
@@ -372,7 +376,7 @@ Class MailService
 	}
 
 	/**
-	 * filter
+	 * filterInput
 	 *
 	 * @param   string  $name         Name of input field
 	 * @param   string  $field_value  Value of input field
@@ -383,9 +387,10 @@ Class MailService
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	protected function filter(
+	protected function filterInput(
 		$name, $value, $dataType, $null = null, $default = null)
 	{
+
 		try {
 			$value = Services::Security()
 				->filter(

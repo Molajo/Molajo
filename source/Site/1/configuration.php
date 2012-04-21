@@ -27,24 +27,6 @@ Class SiteConfiguration
     public $media_path = 'media';
     public $media_url = 'media';
 
-    /* Session settings */
-    public $lifetime = '15';
-    public $session_handler = 'database';
-    public $cookie_domain = '';
-    public $cookie_path = '';
-
-    /* Mail Settings */
-    public $disable_sending = 0;
-    public $only_deliver_to = 'AmyStephen@gmail.com,Amy Stephen';
-    public $mailer = 'mail';
-    public $mail_from = 'AmyStephen@gmail.com,From Amy Stephen';
-	public $mail_reply_to = 'AmyStephen@gmail.com,Reply to Amy Stephen';
-	public $send_mail = '/usr/sbin/send_mail';
-    public $smtpauth = '0';
-    public $smtpuser = '';
-    public $smtppass = '';
-    public $smtphost = 'localhost';
-
 	/* FTP Settings */
 	public $ftp_host = 'localhost';
 	public $ftp_port = '21';
@@ -52,6 +34,27 @@ Class SiteConfiguration
 	public $ftp_pass = 'admin';
 	public $ftp_root = '/';
 	public $ftp_enable = '1';
+
+    /* Session settings */
+    public $lifetime = '15';
+    public $session_handler = 'database';
+    public $cookie_domain = '';
+    public $cookie_path = '';
+
+    /* Mail Settings */
+	public $mailer = 'mail';
+	public $mailer_mode = 'text';
+	public $disable_sending = 0;
+    public $only_deliver_to = 'AmyStephen@gmail.com,Amy Stephen';
+    public $mail_from = 'AmyStephen@gmail.com,From Amy Stephen';
+	public $mail_reply_to = 'AmyStephen@gmail.com,Reply to Amy Stephen';
+	/* mailer: mail */
+	public $send_mail = '/usr/sbin/send_mail';
+	/* mailer: smtp */
+    public $smtpauth = '0';
+    public $smtpuser = '';
+    public $smtppass = '';
+    public $smtphost = 'localhost';
 
 	/* Debug Logging */
 	public $debug_logger = 'email';
