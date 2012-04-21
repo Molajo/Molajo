@@ -13,6 +13,12 @@ use Joomla\log\JLog;
 
 use Joomla\JText;
 
+use Joomla\JFactory;
+
+use Joomla\client\JClientHelper;
+
+use Joomla\client\JClientFtp;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

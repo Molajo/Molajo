@@ -7,6 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\client;
+
+use Joomla\log\JLog;
+
+use Joomla\JText;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

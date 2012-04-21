@@ -58,7 +58,7 @@ abstract class JFactory
 	 */
 	public static function getConfig($file = null, $type = 'PHP')
 	{
-		return Services::Registry()->getArray('Configuration');
+		return Services::Registry()->get('Configuration');
 	}
 
 	/**

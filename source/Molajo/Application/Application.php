@@ -8,6 +8,8 @@ namespace Molajo\Application;
 
 use Molajo\Application\MVC\Model\TableModel;
 
+use Joomla\JFactory;
+
 defined('MOLAJO') or die;
 
 /**
@@ -82,6 +84,31 @@ Class Application
 			return;
 		}
 
+		$config = JFactory::getConfig();
+
+		$client = 'ftp';
+		// Fetch the client layer configuration options for the specific client
+		switch ($client)
+		{
+			case 'ftp':
+				$options = array(
+					'enabled' => $config->get('ftp_enable'),
+					'host' => $config->get('ftp_host'),
+					'port' => $config->get('ftp_port'),
+					'user' => $config->get('ftp_user'),
+					'pass' => $config->get('ftp_pass'),
+					'root' => $config->get('ftp_root'));
+				break;
+
+			default:
+				$options = array('enabled' => false, 'host' => '', 'port' => '', 'user' => '', 'pass' => '', 'root' => '');
+				break;
+		}
+
+		echo '<pre>';
+		var_dump($options);
+		echo '</pre>';
+die;
 		/** Override values */
 		Services::Registry()->set('Override\\request_url', $override_request_url);
 		Services::Registry()->set('Override\\asset_id', $override_asset_id);

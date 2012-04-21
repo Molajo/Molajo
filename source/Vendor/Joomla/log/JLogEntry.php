@@ -85,18 +85,11 @@ class JLogEntry
 	public function __construct($message, $priority = JLog::INFO, $category = '', $date = null)
 	{
 		$this->message = (string) $message;
-$priority = JLog::DEBUG;
-echo $priority.'<br />';
-echo '<pre>';
-var_dump($this->priorities);
-echo '</pre>';
+;
 		// Sanitize the priority.
 		if (!in_array($priority, $this->priorities, true))
 		{
-			echo 'no match <br />';
 			$priority = JLog::INFO;
-		} else {
-			echo 'match<br/>';
 		}
 		$this->priority = $priority;
 

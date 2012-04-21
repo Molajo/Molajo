@@ -15,6 +15,8 @@ use Joomla\database\JDatabaseDriver;
 
 use Joomla\JText;
 
+use Joomla\JFactory;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -417,7 +419,7 @@ class JDate extends \DateTime
 	 */
 	public function toISO8601($local = false)
 	{
-		return $this->format(DateTime::RFC3339, $local, false);
+		return $this->format(\DateTime::RFC3339, $local, false);
 	}
 
 	/**
@@ -453,7 +455,7 @@ class JDate extends \DateTime
 	 */
 	public function toRFC822($local = false)
 	{
-		return $this->format(DateTime::RFC2822, $local, false);
+		return $this->format(\DateTime::RFC2822, $local, false);
 	}
 
 	/**

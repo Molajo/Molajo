@@ -13,6 +13,10 @@ use Joomla\log\JLog;
 
 use Joomla\JText;
 
+use Joomla\JFactory;
+
+use Joomla\client\JClientFtp;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -46,7 +50,7 @@ class JClientHelper
 		{
 			// Initialise variables.
 			$config = JFactory::getConfig();
-
+var_dump($config);
 			// Fetch the client layer configuration options for the specific client
 			switch ($client)
 			{
