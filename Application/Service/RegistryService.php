@@ -180,6 +180,13 @@ Class RegistryService
 	{
 		$split = explode('\\', $key);
 
+		/** Works with calls from JFactory::getConfig() */
+		if (count($split) == 1) {
+			$this->create($split[0]);
+			$this->loadArray($split[0], $this->getArray[$split[0]]);
+			return $this;
+		}
+
 		return $this->parameters[$split[0]]->get($split[1], $default);
 	}
 
@@ -237,6 +244,7 @@ Class RegistryService
 	public function loadArray($name, $array = array())
 	{
 		foreach ($array as $key => $value) {
+			echo $key.' '.$value.'<br />';
 			if ($value === null) {
 			} else {
 				$this->set($name . '//' . $key, $value);
