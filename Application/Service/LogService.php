@@ -92,14 +92,14 @@ Class LogService
 		$this->loggers = array();
 
 		/** Provided with JPlatform */
-		$this->loggers[] = 'text';
+		$this->loggers[] = 'formattedtext';
 		$this->loggers[] = 'echo';
 		$this->loggers[] = 'database';
 
 		/** Custom Molajo loggers */
 		$this->loggers[] = 'messages';
 		$this->loggers[] = 'email';
-		$this->loggers[] = 'phpconsole';
+		$this->loggers[] = 'console';
 
 		return true;
 	}
