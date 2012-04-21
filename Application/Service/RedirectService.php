@@ -22,55 +22,55 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 Class RedirectService
 {
-    /**
-     * Response instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Response instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * $url
-     *
-     * @var        string
-     * @since      1.0
-     */
-    public $url = null;
+	/**
+	 * $url
+	 *
+	 * @var        string
+	 * @since      1.0
+	 */
+	public $url = null;
 
-    /**
-     * $code
-     *
-     * @var        integer
-     * @since      1.0
-     */
-    public $code = 0;
+	/**
+	 * $code
+	 *
+	 * @var        integer
+	 * @since      1.0
+	 */
+	public $code = 0;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return object
-     * @since  1.0
-     */
-    public static function getInstance($content = '', $status = 200, $headers = array())
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new RedirectService($content, $status, $headers);
-        }
-        return self::$instance;
-    }
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return object
+	 * @since  1.0
+	 */
+	public static function getInstance($content = '', $status = 200, $headers = array())
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new RedirectService($content, $status, $headers);
+		}
+		return self::$instance;
+	}
 
-    /**
-     * set
-     *
-     * @param null $url
-     * @param $code
-     * @return mixed
-     * @since 1.0
-     */
-    public function set($url = null, $code = 302)
-    {
+	/**
+	 * set
+	 *
+	 * @param null $url
+	 * @param $code
+	 * @return mixed
+	 * @since 1.0
+	 */
+	public function set($url = null, $code = 302)
+	{
 		/** Installation redirect */
 		if ($code == 999) {
 			$code = 302;
@@ -97,21 +97,21 @@ Class RedirectService
 			}
 		}
 
-        Services::Debug()->set('RedirectService::set URL: ' . $this->url . ' Status Code: ' . $this->code);
+		Services::Debug()->set('RedirectService::set URL: ' . $this->url . ' Status Code: ' . $this->code);
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * redirect
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @since  1.0
-     */
-    public function redirect()
-    {
-        Services::Debug()->set('RedirectService::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
+	/**
+	 * redirect
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 * @since  1.0
+	 */
+	public function redirect()
+	{
+		Services::Debug()->set('RedirectService::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
 
-        return new RedirectResponse($this->url, $this->code);
-    }
+		return new RedirectResponse($this->url, $this->code);
+	}
 }

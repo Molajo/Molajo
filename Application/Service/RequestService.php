@@ -19,13 +19,13 @@ defined('MOLAJO') or die;
  */
 Class RequestService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
 	/**
 	 * Request Connection
@@ -36,44 +36,44 @@ Class RequestService
 	public $connection;
 
 	/**
-     * Request
-     *
-     * @var    object
+	 * Request
+	 *
+	 * @var    object
 	 * @since  1.0
-     */
-    public $request;
+	 */
+	public $request;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
 	 * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new RequestService();
-        }
-        return self::$instance;
-    }
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new RequestService();
+		}
+		return self::$instance;
+	}
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
+	/**
+	 * __construct
+	 *
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
 		$class = 'Symfony\\Component\\HttpFoundation\\Request';
 		$this->connection = new $class();
 
 		$this->request = $this->connection->createFromGlobals();
 
 		return $this;
-    }
+	}
 
 	/**
 	 * Used to connect to services
@@ -84,10 +84,10 @@ Class RequestService
 	 */
 	public function __call($name, $arguments)
 	{
-echo 'Nmae '.$name.'<br />';
+		echo 'Nmae ' . $name . '<br />';
 		echo '<pre>';
 		var_dump($arguments);
-echo '</pre>';
+		echo '</pre>';
 		return $this->connection->$name($arguments);
 	}
 }

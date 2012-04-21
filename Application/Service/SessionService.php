@@ -22,13 +22,13 @@ use Symfony\Component\HttpFoundation\Session;
  */
 Class SessionService
 {
-    /**
-     * Response instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Response instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
 	/**
 	 * Session
@@ -38,20 +38,20 @@ Class SessionService
 	 */
 	public $session;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new SessionService();
-        }
-        return self::$instance;
-    }
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new SessionService();
+		}
+		return self::$instance;
+	}
 
 
 	/**

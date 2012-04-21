@@ -136,11 +136,10 @@ class UpdateController extends Controller
 
                 Services::Message()
                     ->set(
-                    $message =
-                        Services::Language()->translate($e->getMessage()),
-                    $type = MESSAGE_TYPE_ERROR
-                );
-            }
+							Services::Language()->translate($e->getMessage()),
+							$type = MESSAGE_TYPE_ERROR
+                		);
+					}
         }
 
         return $valid;

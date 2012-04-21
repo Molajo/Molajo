@@ -156,19 +156,6 @@ Class Application
 			return false;
 		}
 
-		$bodyofemail = 'Stuff goes here';
-
-		Services::Mail()->set('send_to_email', 'AmyStephen@gmail.com');
-		Services::Mail()->set('from_email', 'AmyStephen@gmail.com');
-		Services::Mail()->set('from_name', 'Amy Stephen');
-		Services::Mail()->set('reply_to_email', 'AmyStephen@example.com');
-		Services::Mail()->set('reply_to_name', 'Person A');
-		Services::Mail()->set('subject', 'Welcome to our Site');
-		Services::Mail()->set('body', $bodyofemail) ;
-		Services::Mail()->send();
-		echo 'after email';
-		die;
-
 		/** SSL Check */
 		$continue = $this->sslCheck();
 		if ($continue == false) {
@@ -676,31 +663,45 @@ Class Application
 
 		if (defined('SITE_LOGS_FOLDER')) {
 		} else {
-			define('SITE_LOGS_FOLDER', Services::Registry()->get('Configuration\\logs_path', SITE_FOLDER_PATH . '/logs'));
+			define('SITE_LOGS_FOLDER',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration\\logs_path',
+					SITE_FOLDER_PATH . '/logs')
+			);
 		}
 
 		/** following must be within the web document folder */
 		if (defined('SITE_MEDIA_FOLDER')) {
 		} else {
-			define('SITE_MEDIA_FOLDER', Services::Registry()->get('Configuration\\media_path', SITE_FOLDER_PATH . '/media'));
+			define('SITE_MEDIA_FOLDER',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration\\media_path',
+					SITE_FOLDER_PATH . '/media')
+			);
 		}
-
 		if (defined('SITE_MEDIA_URL')) {
 		} else {
-			define('SITE_MEDIA_URL', BASE_URL . Services::Registry()->get('Configuration\\media_url', BASE_URL . 'sites/' . SITE_ID . '/media'));
+			define('SITE_MEDIA_URL',
+				BASE_URL . Services::Registry()->get('Configuration\\media_url',
+					BASE_URL . 'sites/' . SITE_ID . '/media')
+			);
 		}
 
+		/** following must be within the web document folder */
 		if (defined('SITE_TEMP_FOLDER')) {
 		} else {
-			define('SITE_TEMP_FOLDER', Services::Registry()->get('Configuration\\temp_path', SITE_FOLDER_PATH . '/temp'));
+			define('SITE_TEMP_FOLDER',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration\\temp_path',
+					SITE_FOLDER_PATH . '/temp')
+			);
 		}
-
 		if (defined('SITE_TEMP_URL')) {
 		} else {
-			define('SITE_TEMP_URL', BASE_URL . Services::Registry()->get('Configuration\\temp_url', BASE_URL . 'sites/' . SITE_ID . '/temp'));
-		}
+			define('SITE_TEMP_URL',
+				BASE_URL . Services::Registry()->get('Configuration\\temp_url',
+					BASE_URL . 'sites/' . SITE_ID . '/temp')
+			);
+		};
 
-		return;
+		return true;
 	}
 
 	/**
