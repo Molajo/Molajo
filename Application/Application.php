@@ -75,6 +75,9 @@ Class Application
 	{
 		/** Initialise Site, Application, and Services */
 		$continue = $this->initialise();
+
+		Services::Debug()->set('Molajo::Application()->initialise() complete');
+
 		if ($continue == false) {
 			return;
 		}
@@ -162,8 +165,6 @@ Class Application
 			return false;
 		}
 
-		Services::Debug()->set('Molajo::Services()->startServices() and Site Paths complete');
-
 		/** Retrieve Site data and save in registry */
 		$continue = $this->setSiteData();
 		if ($continue == false) {
@@ -175,8 +176,6 @@ Class Application
 		if ($continue == false) {
 			return false;
 		}
-
-
 
 		/** Session */
 		//Services::Session()->create(
