@@ -84,31 +84,6 @@ Class Application
 			return;
 		}
 
-		$config = JFactory::getConfig();
-
-		$client = 'ftp';
-		// Fetch the client layer configuration options for the specific client
-		switch ($client)
-		{
-			case 'ftp':
-				$options = array(
-					'enabled' => $config->get('ftp_enable'),
-					'host' => $config->get('ftp_host'),
-					'port' => $config->get('ftp_port'),
-					'user' => $config->get('ftp_user'),
-					'pass' => $config->get('ftp_pass'),
-					'root' => $config->get('ftp_root'));
-				break;
-
-			default:
-				$options = array('enabled' => false, 'host' => '', 'port' => '', 'user' => '', 'pass' => '', 'root' => '');
-				break;
-		}
-
-		echo '<pre>';
-		var_dump($options);
-		echo '</pre>';
-die;
 		/** Override values */
 		Services::Registry()->set('Override\\request_url', $override_request_url);
 		Services::Registry()->set('Override\\asset_id', $override_asset_id);
@@ -181,7 +156,8 @@ die;
 		}
 
 		/** Connect Application Services */
-		$continue = Molajo::Services()->startServices();
+		$continue = Molajo::Services()
+			->startServices();
 		if ($continue == false) {
 			return false;
 		}
@@ -261,8 +237,7 @@ die;
 	{
 		$this->rendered_output = Molajo::Parse()->process();
 
-		Services::Debug()
-			->set('Molajo::Parse() complete');
+		Services::Debug()->set('Molajo::Parse() complete');
 
 		return $this;
 	}
@@ -279,8 +254,7 @@ die;
 		 */
 		//$this->processTask();
 
-		Services::Debug()
-			->set('Molajo::Application()->process() Complete');
+		Services::Debug()->set('Molajo::Application()->process() Complete');
 
 		return true;
 	}
@@ -742,7 +716,7 @@ die;
 		$results = $m->loadAssoc();
 
 		if ($results === false) {
-			throw new \RuntimeException ('setSiteData query problem');
+			throw new \RuntimeException ('Molajo::Application()->setSiteData() query problem');
 		}
 
 		/** Registry for Custom Fields and Metadata */
@@ -754,7 +728,7 @@ die;
 
 		$this->base_url = $results['base_url'];
 
-		return;
+		return true;
 	}
 
 	/**

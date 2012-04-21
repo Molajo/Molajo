@@ -88,8 +88,6 @@ Class ConfigurationService
 			Services::Registry()->set('Configuration\\' . $key, $value);
 		}
 
-		$test = Services::Registry()->getArray('Configuration');
-
 		$data = $this->getApplicationInfo();
 
 		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Applications.xml');
