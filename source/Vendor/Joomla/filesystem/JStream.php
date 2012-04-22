@@ -497,7 +497,7 @@ class JStream extends JObject
 		switch ($this->processingmethod)
 		{
 			case 'gz':
-				$res = $length ? gzgets($this->fh, $length) : gzgets($this->fh);
+				$res = $length ? gzgets($this->fh, $length) : gzgets($this->fh, 4096);
 				break;
 
 			case 'bz':
