@@ -116,10 +116,6 @@ Class DatabaseService
 
 		$this->db->debug($site->jdatabase_debug);
 
-		echo '<pre>';
-		//var_dump($this->db);
-
-
 		$date = null;
 		$dateFromJDate = new JDate($date ? $date : 'now');
 		$dateFromJDate = $dateFromJDate->toSql(false, $this->db);

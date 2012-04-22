@@ -121,11 +121,13 @@ class FilesystemService
 			$class = 'Joomla\\filesystem\\JFile';
 			$method = substr($name, 4, strlen($name) - 4);
 
-		} elseif (strtolower(substr($name, 0, 6)) == 'folder') {
+		}
+		elseif (strtolower(substr($name, 0, 6)) == 'folder') {
 			$class = 'Joomla\\filesystem\\JFolder';
 			$method = substr($name, 6, strlen($name) - 6);
 
-		} elseif (strtolower(substr($name, 0, 4)) == 'path') {
+		}
+		elseif (strtolower(substr($name, 0, 4)) == 'path') {
 			$class = 'Joomla\\filesystem\\JPath';
 			$method = substr($name, 4, strlen($name) - 4);
 
@@ -135,7 +137,6 @@ class FilesystemService
 		}
 
 		$method = strtolower($method);
-
 		if (method_exists($class, $method)) {
 			return call_user_func_array(array($class, $method), $arguments);
 		}

@@ -113,13 +113,13 @@ Class LogService
 	 *
 	 * $options array
 	 *
-	 * 0. All options
+	 * 0. logger is a required option
 	 *
-	 * $options['logger'] valid values include: echo, text, database, messages, email, phpconsole
+	 * $options['logger'] valid values include: console, echo (default), database, formattedtext, messages
 	 *
 	 * 1. Echo
 	 *
-	 * No additional options
+	 * $options['line_separator'] <br /> or /n (default)
 	 *
 	 * 2. Text
 	 *
@@ -131,7 +131,7 @@ Class LogService
 	 * 3. Database
 	 *
 	 * $options['dbo'] - Services::Database();
-	 * $options['db_table'] - #__log_entries
+	 * $options['db_table'] - #__log
 	 *
 	 * +++ Molajo custom loggers
 	 *
@@ -139,17 +139,18 @@ Class LogService
 	 * $this->options['namespace']
 	 *
 	 * 5. Email
-	 * $this->options['sender'] - array(
-	 *     Services::Registry()->get('Configuration\\mail_from'),
-	 *  Services::Registry()->get('Configuration\\mail_from_name')
-	 * };
+	 * $this->options['sender'] = array(
+	 *     		Services::Registry()->get('Configuration\\mail_from'),
+	 *  		Services::Registry()->get('Configuration\\mail_from_name')
+	 * 		};
 	 * $this->options['recipient'] = Services::Registry()->get('Configuration\\mail_from_email_address');
 	 * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
 	 * $this->options['mailer'] = Services::Mail();
 	 *
-	 * 6. PHP Console
+	 * 6. ChromePHP
 	 * No addition $option[] values. However, this option requires using Google Chrome and installing this
-	 * Google Chrome extension: https://chrome.google.com/extensions/detail/nfhmhhlpfleoednkpnnnkolmclajemef
+	 * Google Chrome extension: https://chrome.google.com/webstore/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
+	 * and https://github.com/ccampbell/chromephp
 	 *
 	 * @return  boolean
 	 *
