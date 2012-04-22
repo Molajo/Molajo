@@ -69,74 +69,93 @@ Class DebugService
 	{
 		/** Set debugging on or off */
 		$this->on = (int)Services::Registry()->get('Configuration\\debug', 0);
-		if ($this->on == 0) {
+		if ($this->on == 0)
+		{
 			return true;
 		}
 
-		/** $options array */
-		$options = array();
+		/** Valid Logger Options */
 
-		/** Logger Type */
-		$options['logger'] = Services::Registry()->get('Configuration\\debug_logger', 'echo');
 		$loggerOptions = array();
 		$loggerOptions[] = 'echo';
 		$loggerOptions[] = 'formattedtext';
 		$loggerOptions[] = 'database';
-		/** Molajo-specific */
 		$loggerOptions[] = 'email';
-		$loggerOptions[] = 'console';
+		$loggerOptions[] = 'chromephp';
 		$loggerOptions[] = 'messages';
 
-		if (in_array($options['logger'], $loggerOptions)) {
-		} else {
+		/** @var $options */
+		$options = array();
+
+		/** Logger Type */
+		$options['logger'] = Services::Registry()->get('Configuration\\debug_logger', 'echo');
+
+		$options['logger'] = 'chromephp';
+
+		if (!in_array($options['logger'], $loggerOptions))
+		{
 			$options['logger'] = 'echo';
 		}
 
-		$loggerSelected = false;
-
-		if ($options['logger'] == 'email') {
+		/** Email */
+		if ($options['logger'] == 'email')
+		{
 			$options['mailer'] = Services::Mail();
 			$options['reply_to'] = Services::Registry()->get('Configuration\\mail_reply_to', '');
 			$options['from'] = Services::Registry()->get('Configuration\\mail_from', '');
 			$options['subject'] = Services::Registry()->get('Configuration\\debug_email_subject', '');
 			$options['to'] = Services::Registry()->get('Configuration\\debug_email_to', '');
-			$loggerSelected = true;
 		}
 
-		if ($options['logger'] == 'formattedtext') {
+		/** Formatted Text */
+		if ($options['logger'] == 'formattedtext')
+		{
 			$options['logger'] = 'formattedtext';
 			$options['text_file']  = Services::Registry()->get('Configuration\\debug_text_file', 'debug.php');
 			$temp  = Services::Registry()->get('Configuration\\debug_text_file_path', 'SITE_LOGS_FOLDER');
-			if ($temp == 'SITE_LOGS_FOLDER') {
+			if ($temp == 'SITE_LOGS_FOLDER')
+			{
 				$options['text_file_path'] = SITE_LOGS_FOLDER;
-			} else {
+			}
+			else
+			{
 				$options['text_file_path'] = $temp;
 			}
-			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file'])) {
-				$options['text_file_no_php'] = (int) Services::Registry()->get('Configuration\\debug_text_file_no_php', false);
+			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file']))
+			{
+				$options['text_file_no_php']
+					= (int) Services::Registry()->get('Configuration\\debug_text_file_no_php', false);
 				$loggerSelected = true;
-			} else {
+			}
+			else
+			{
 				$options = array();
 				$options['logger'] = 'echo';
 			}
 		}
 
-		if ($options['logger'] == 'database') {
+		/** Database */
+		if ($options['logger'] == 'database')
+		{
 			$options['dbo'] = Services::Database()->get('db');
 			$options['db_table'] = Services::Registry()->get('Configuration\\debug_database_table', '#__log');
 			$loggerSelected = true;
 		}
 
-		if ($options['logger'] == 'messages') {
-			$options['messages_namespace'] = Services::Registry()->get('Configuration\\debug_messages_namespace', 'debug');
+		/** Messages */
+		if ($options['logger'] == 'messages')
+		{
+			$options['messages_namespace']
+				= Services::Registry()->get('Configuration\\debug_messages_namespace', 'debug');
 			$loggerSelected = true;
 		}
 
-		if ($options['logger'] == 'console') {
-			//$loggerSelected = true;
+		/** Console */
+		if ($options['logger'] == 'chromephp') {
 		}
 
-		if ($loggerSelected == false) {
+		/** Echo */
+		if ($options['logger'] == 'echo') {
 			$options['logger'] = 'echo';
 			$options['line_separator'] = Services::Registry()->get('Configuration\\debug_line_separator', '<br />');
 		}

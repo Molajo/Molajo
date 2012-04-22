@@ -99,6 +99,7 @@ $s->registerNamespace('Joomla\\utilities', VENDOR);
 
 /** Other */
 $s->registerNamespace('Mustache', VENDOR);
+$s->registerNamespace('ChromePHP', VENDOR);
 $s->registerNamespace('PhpConsole', VENDOR);
 $s->registerNamespace('HTMLPurifier', VENDOR);
 $s->registerNamespace('HTMLPurifier\\filters', VENDOR);

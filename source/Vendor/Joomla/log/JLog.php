@@ -286,7 +286,6 @@ class JLog
 			// Check to make sure the priority matches the logger.
 			if ($priority & $rules->priorities)
 			{
-
 				// If either there are no set categories (meaning all) or the specific category is set, add this logger.
 				if (empty($category) || empty($rules->categories) || in_array($category, $rules->categories))
 				{
