@@ -123,6 +123,7 @@ class JLoggerEmail extends JLogger
 			);
 
 		$results = $this->mailer->Send();
+
 		if ($results == false)
 		{
 			throw new \RuntimeException('Email log entry not sent');

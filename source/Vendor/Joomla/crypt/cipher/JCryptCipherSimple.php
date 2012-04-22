@@ -9,6 +9,10 @@
 
 namespace Joomla\crypt\cipher;
 
+use Joomla\crypt\JCryptCipher;
+
+use Joomla\crypt\JCryptKey;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -29,7 +33,7 @@ class JCryptCipherSimple implements JCryptCipher
 	 * @return  string  The decrypted data string.
 	 *
 	 * @since   12.1
-	 * @throws  InvalidArgumentException
+	 * @throws  \InvalidArgumentException
 	 */
 	public function decrypt($data, JCryptKey $key)
 	{
@@ -71,7 +75,7 @@ class JCryptCipherSimple implements JCryptCipher
 	 * @return  string  The encrypted data string.
 	 *
 	 * @since   12.1
-	 * @throws  InvalidArgumentException
+	 * @throws  \InvalidArgumentException
 	 */
 	public function encrypt($data, JCryptKey $key)
 	{

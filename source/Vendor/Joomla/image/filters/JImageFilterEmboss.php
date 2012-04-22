@@ -7,6 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Joomla\Image\filters;
+
+use Joomla\image\JImageFilter;
+
+use Joomla\log\JLog;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

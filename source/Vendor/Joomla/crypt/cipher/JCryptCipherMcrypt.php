@@ -9,6 +9,10 @@
 
 namespace Joomla\crypt\cipher;
 
+use Joomla\crypt\JCryptCipher;
+
+use Joomla\crypt\JCryptKey;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -44,7 +48,7 @@ abstract class JCryptCipherMcrypt implements JCryptCipher
 	 * Constructor.
 	 *
 	 * @since   12.1
-	 * @throws  RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	public function __construct()
 	{

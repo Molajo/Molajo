@@ -9,6 +9,8 @@
 
 namespace Joomla\image;
 
+use Joomla\log\JLog;
+
 defined('JPATH_PLATFORM') or die;
 
 /**

@@ -7,10 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-
 namespace Joomla\image;
 
 use Joomla\filesystem\JFile;
+
+use Joomla\log\JLog;
 
 defined('JPATH_PLATFORM') or die;
 

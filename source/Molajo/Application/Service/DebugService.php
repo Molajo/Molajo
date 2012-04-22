@@ -82,6 +82,7 @@ Class DebugService
 		$loggerOptions[] = 'database';
 		$loggerOptions[] = 'email';
 		$loggerOptions[] = 'chromephp';
+		$loggerOptions[] = 'firephp';
 		$loggerOptions[] = 'messages';
 
 		/** @var $options */
@@ -90,7 +91,7 @@ Class DebugService
 		/** Logger Type */
 		$options['logger'] = Services::Registry()->get('Configuration\\debug_logger', 'echo');
 
-		$options['logger'] = 'chromephp';
+		$options['logger'] = 'firephp';
 
 		if (!in_array($options['logger'], $loggerOptions))
 		{
@@ -150,8 +151,13 @@ Class DebugService
 			$loggerSelected = true;
 		}
 
-		/** Console */
+		/** Chrome Console */
 		if ($options['logger'] == 'chromephp') {
+		}
+
+
+		/** Firefox Console */
+		if ($options['logger'] == 'firephp') {
 		}
 
 		/** Echo */
