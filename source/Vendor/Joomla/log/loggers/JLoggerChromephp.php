@@ -22,9 +22,13 @@ defined('JPATH_PLATFORM') or die;
 /**
  * Joomla Echo logger class.
  *
+ * Works in concert with ChromePHP Class https://github.com/ccampbell/chromephp http://www.chromephp.com/
+ *
+ * Download the Chrome extension from: https://chrome.google.com/extensions/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
+ *
  * @package     Joomla.Platform
  * @subpackage  Log
- * @since       11.1
+ * @since       12.1
  */
 class JLoggerChromephp extends JLogger
 {
