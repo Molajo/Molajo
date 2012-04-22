@@ -472,7 +472,7 @@ Class DateService
 		//todo: amy fix user
 
 		$server_or_user_UTC = 'SERVER_UTC';
-		//fix$config = Services::Configuration();
+		$config = Services::Registry()->get('Configuration');
 		$user = Services::User();
 
 		// If a known filter is given use it.
@@ -482,7 +482,7 @@ Class DateService
 				if (intval($input_date)) {
 					// Get a date object based on the correct timezone.
 					$date = $this->getDate($input_date, 'UTC');
-					$date->setTimezone(new DateTimeZone($config->get('offset')));
+					$date->setTimezone(new \DateTimeZone($config->get('offset')));
 
 					// Transform the date string.
 					return $date->toSql(true);
@@ -494,7 +494,7 @@ Class DateService
 				if (intval($input_date)) {
 					// Get a date object based on the correct timezone.
 					$date = $this->getDate($input_date, 'UTC');
-					$date->setTimezone(new DateTimeZone($user->get('timezone', $config->get('offset'))));
+					$date->setTimezone(new \DateTimeZone($user->get('timezone', $config->get('offset'))));
 
 					// Transform the date string.
 					return $date->toSql(true);

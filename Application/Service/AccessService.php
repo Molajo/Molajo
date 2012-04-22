@@ -7,6 +7,7 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
+
 use Molajo\Application\MVC\Model\TableModel;
 
 defined('MOLAJO') or die;
@@ -142,8 +143,10 @@ Class AccessService
 
 		if ($application_id === false) {
 			//todo: finish the response action/test
+
 			Services::Response()
 				->setHeader('Status', '403 Not Authorised', 'true');
+
 			Services::Message()->set(
 				Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
 				MESSAGE_TYPE_ERROR,
@@ -197,6 +200,7 @@ Class AccessService
 		}
 
 		$taskPermissions = array();
+
 		foreach ($tasklist as $task) {
 			$taskPermissions[$task] =
 				Services::Access()
@@ -232,7 +236,9 @@ Class AccessService
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
 			if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
-				Services::Debug()->set('AccessServices::authoriseTask Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
+				Services::Debug()
+					->set('AccessServices::authoriseTask Task: ' . $task
+					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
 		}
 		//todo: amy fill database with real sample action permissions
@@ -254,7 +260,8 @@ Class AccessService
 			return true;
 		} else {
 			if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
-				Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task . ' Action: ' . $action . ' Action ID: ' . $action_id);
+				Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task
+					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
 			return false;
 		}
@@ -317,10 +324,7 @@ Class AccessService
 	 * @return     boolean
 	 * @since      1.0
 	 */
-	public function setQueryViewAccess(
-		$query = array(),
-		$db = array(),
-		$parameters = array())
+	public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
 	{
 		if ($parameters['select'] === true) {
 			$query->select(
