@@ -38,8 +38,6 @@ Class Application
 	protected $rendered_output = null;
 
 	/**
-	 * getInstance
-	 *
 	 * Returns the global site object, creating if not existing
 	 *
 	 * @return  Application  object
@@ -75,40 +73,65 @@ Class Application
 	public function execute($override_request_url = null, $override_asset_id = null,
 							$override_sequence_xml = null, $override_final_xml = null)
 	{
-		/** Initialise Site, Application, and Services */
+		/**
+		 * 	Initialise
+		 */
 		$continue = $this->initialise();
 
-		Services::Debug()->set('Molajo::Application()->initialise() complete');
-
 		if ($continue == false) {
+			Services::Debug()->set('Molajo::Application()->initialise() failed');
 			return;
+		} else {
+			Services::Debug()->set('Molajo::Application()->initialise() succeeded');
 		}
 
-		/** Override values */
 		Services::Registry()->set('Override\\request_url', $override_request_url);
 		Services::Registry()->set('Override\\asset_id', $override_asset_id);
 		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
 		Services::Registry()->set('Override\\final_xml', $override_final_xml);
 
-		/** Route Application */
+		/**
+		 * 	Route
+		 */
 		$continue = $this->route();
+
 		if ($continue == false) {
+			Services::Debug()->set('Molajo::Application()->route() failed');
 			return;
+		} else {
+			Services::Debug()->set('Molajo::Application()->route() succeeded');
 		}
 
-		/** Action */
-		if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
+		/**
+		 * 	Action
+		 */
+		$action = Services::Registry()->get('Request\\mvc_controller', 'display');
+
+		if ($action == 'display') {
 			$continue = $this->display();
 		} else {
+			$action = 'action';
 			$continue = $this->action();
 		}
 
 		if ($continue == false) {
+			Services::Debug()->set('Molajo::Application()->'. $action . ' failed');
 			return;
+		} else {
+			Services::Debug()->set('Molajo::Application()->'. $action . ' succeeded');
 		}
 
-		/** Application Response */
-		$this->response();
+		/**
+		 * 	Response
+		 */
+		$continue = $this->response();
+
+		if ($continue == false) {
+			Services::Debug()->set('Molajo::Application()->response() failed');
+			return;
+		} else {
+			Services::Debug()->set('Molajo::Application()->response() succeeded');
+		}
 
 		return;
 	}

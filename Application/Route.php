@@ -137,6 +137,7 @@ Class Route
             $this->getWrapView();
 
             $temp = Services::Registry()->initialise();
+
             $temp->loadArray($this->parameters);
             $this->parameters = $temp;
 

@@ -180,7 +180,7 @@ Class DocumentService
 	 *
 	 * Example usage:
 	 * Services::Document()->set_metadata
-	('viewport', 'width=device-width, initial-scale=1, maximum-scale=1')
+	 *    ('viewport', 'width=device-width, initial-scale=1, maximum-scale=1')
 	 *
 	 * @param   string  $name
 	 * @param   string  $content

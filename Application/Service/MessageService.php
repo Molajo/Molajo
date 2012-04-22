@@ -161,4 +161,16 @@ Class MessageService
 
 		}
 	}
+
+/**
+use Symfony\Component\HttpFoundation\Session\Session;
+http://symfony.com/doc/master/components/http_foundation/sessions.html
+$session = new Session();
+$session->start();
+
+// add flash messages
+$session->getFlashBag()->add('warning', 'Your config file is writable, it should be set read-only');
+$session->getFlashBag()->add('error', 'Failed to update name');
+$session->getFlashBag()->add('error', 'Another error');
+ */
 }

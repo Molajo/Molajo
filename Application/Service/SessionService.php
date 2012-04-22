@@ -9,7 +9,11 @@ namespace Molajo\Application\Service;
 defined('MOLAJO') or die;
 
 use Molajo\Application\Services;
-use Symfony\Component\HttpFoundation\Session;
+
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
+
 
 /**
  * Redirect
@@ -53,6 +57,25 @@ Class SessionService
 		return self::$instance;
 	}
 
+	protected function __construct()
+	{
+		$session = new Session();
+		$session->start();
+
+		// set and get session attributes
+		$session->set('name', 'Drak');
+		$session->get('name');
+
+		// set flash messages
+		$session->getFlashBag()->add('notice', 'Profile updated');
+
+		// retrieve messages
+		foreach ($session->getFlashBag()->get('notice', array()) as $message) {
+		echo "<div class='flash-notice'>$message</div>";
+			die;
+		}
+	}
+
 
 	/**
 	 * getSession
@@ -60,12 +83,10 @@ Class SessionService
 	 */
 	public function getSession()
 	{
-		/** Session */
-		if (parent::hasPreviousSession() === false) {
-			$this->session = parent::setSession($this->setSessionStorageData());
-		} else {
-			$this->session = $this->request->getSession()->start();
-		}
+
+		$storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
+		$session = new Session($storage);
+		var_dump($session);
 	}
 
 
