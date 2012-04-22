@@ -92,8 +92,6 @@ Class ConfigurationService
 
 		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Applications.xml');
 
-//        $this->registry('ApplicationCustomFields\\', $data, 'custom_fields', 'custom_field', $xml);
-//        $this->registry('ApplicationMetadata\\', $data, 'metadata', 'meta', $xml);
 		$this->registry('Configuration\\', $data, 'parameters', 'parameter', $xml);
 
 		/** Site Paths, Custom Fields, and Authorisation */
@@ -103,7 +101,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * registry
+	 * Initialise and populate registry object with xml
 	 *
 	 * @param $namespace
 	 * @param $source

@@ -12,6 +12,8 @@ use Molajo\Application\Services;
 
 use TwitterOAuth\Twitter;
 
+//todo: move to event
+
 /**
  * BroadcastService
  *
@@ -51,8 +53,6 @@ Class BroadcastService
 		}
 		return self::$instance;
 	}
-
-
 
 	/**
 	 * Class constructor.

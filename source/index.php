@@ -28,4 +28,3 @@ $app = Molajo\Application\Molajo::Application()
 		$override_sequenceXML,
 		$override_finalXML
 	);
-
