@@ -35,8 +35,6 @@ defined('MOLAJO') or die;
 Class MailService
 {
 	/**
-	 * Static instance
-	 *
 	 * @var    object
 	 * @since  1.0
 	 */
@@ -106,16 +104,19 @@ Class MailService
 		$name = strtolower($name);
 
 		if (substr($name, 0, 3) == 'set') {
+
 			$rest = substr($name, 3, strlen($name) - 3);
+
 			if (count($arguments) == 1) {
-				if ($name == 'sender') {
-					$name = 'from';
+				if ($rest == 'sender') {
+					$rest = 'from';
 				}
-				if ($name == 'recipient') {
-					$name = 'to';
+				if ($rest == 'recipient') {
+					$rest = 'to';
 				}
-				return $this->set($name, $arguments[0]);
+				return $this->set($rest, $arguments[0]);
 			}
+
 		} else {
 			if ($name == 'send') {
 				return $this->send();
@@ -194,7 +195,7 @@ Class MailService
 
 		/** Instantiate Mailer */
 		$mailClass = 'phpmailer\\PHPMailer';
-		$this->mailInstance = new $mailClass ();
+		$this->mailInstance = new $mailClass();
 
 		/** Edit input */
 		$this->processInput();
@@ -225,13 +226,7 @@ Class MailService
 		}
 
 		/** Send */
-		try {
-			$this->mailInstance->Send();
-		}
-		catch (\Exception $e) {
-			Services::Message()->set($e->getMessage(), MESSAGE_TYPE_ERROR);
-			return false;
-		}
+		$this->mailInstance->Send();
 
 		return true;
 	}
@@ -328,49 +323,53 @@ Class MailService
 			$y = array($x);
 		}
 
-		if (count($y) > 0) {
+		if (count($y) == 0) {
+			return;
+		}
 
-			/** process each pair of email addresses and names */
-			foreach ($y as $z) {
+		/** process each pair of email addresses and names */
+		foreach ($y as $z) {
 
-				/** split pair by comma */
-				$extract = explode(',', $z);
-				if (count($extract) == 0) {
-					break;
-				}
+			/** split pair by comma */
+			$extract = explode(',', $z);
+			if (count($extract) == 0) {
+				break;
+			}
 
-				/** email address */
-				$z = $this->filterInput($parameter, $extract[0], 'email');
+			/** email address */
+			if ($z === false || $z == '') {
+				break;
+			}
+			$z = $this->filterInput($parameter, $extract[0], 'email');
+			if ($z === false || $z == '') {
+				break;
+			}
+			$useEmail = $z;
+
+			/** name */
+			$useName = '';
+			if (count($extract) > 1) {
+				$z = $this->filterInput($parameter, $extract[1], 'char');
 				if ($z === false || $z == '') {
-					break;
-				}
-				$useEmail = $z;
-
-				/** name */
-				$useName = '';
-				if (count($extract) > 1) {
-					$z = $this->filterInput($parameter, $extract[1], 'char');
-					if ($z === false || $z == '') {
-					} else {
-						$useName = $z;
-					}
-				}
-
-				if ($parameter == 'reply_to') {
-					$this->mailInstance->AddReplyTo($useEmail, $useName);
-
-				} elseif ($parameter == 'from') {
-					$this->mailInstance->SetFrom($useEmail, $useName);
-
-				} elseif ($parameter == 'cc') {
-					$this->mailInstance->AddCC($useEmail, $useName);
-
-				} elseif ($parameter == 'bcc') {
-					$this->mailInstance->AddBCC($useEmail, $useName);
-
 				} else {
-					$this->mailInstance->AddAddress($useEmail, $useName);
+					$useName = $z;
 				}
+			}
+
+			if ($parameter == 'reply_to') {
+				$this->mailInstance->AddReplyTo($useEmail, $useName);
+
+			} elseif ($parameter == 'from') {
+				$this->mailInstance->SetFrom($useEmail, $useName);
+
+			} elseif ($parameter == 'cc') {
+				$this->mailInstance->AddCC($useEmail, $useName);
+
+			} elseif ($parameter == 'bcc') {
+				$this->mailInstance->AddBCC($useEmail, $useName);
+
+			} else {
+				$this->mailInstance->AddAddress($useEmail, $useName);
 			}
 		}
 	}
@@ -394,25 +393,17 @@ Class MailService
 		try {
 			$value = Services::Security()
 				->filter(
-				$value,
-				$dataType,
-				$null,
-				$default
-			);
+					$value,
+					$dataType,
+					$null,
+					$default
+				);
 
 		} catch (\Exception $e) {
 
 			$this->error_count++;
 
-			Services::Message()
-				->set(
-				$e->getMessage() . ' ' . $name,
-				MESSAGE_TYPE_ERROR
-			);
-
-			Services::Debug()->set('Services::mail Filter Failed' . ' ' . $e->getMessage() . ' ' . $name);
-
-			return false;
+			echo $e->getMessage() . ' ' . $name;
 		}
 
 		return $value;

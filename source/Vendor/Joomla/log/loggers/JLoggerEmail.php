@@ -27,28 +27,28 @@ defined('JPATH_PLATFORM') or die;
 class JLoggerEmail extends JLogger
 {
 	/**
+	 * @var    string  From email address
+	 * @since  12.1
+	 */
+	protected $from;
+
+	/**
+	 * @var    string  To email address list
+	 * @since  12.1
+	 */
+	protected $to;
+
+	/**
+	 * @var    string  Subject
+	 * @since  12.1
+	 */
+	protected $subject;
+
+	/**
 	 * @var    string  Mailer Object
 	 * @since  12.1
 	 */
 	protected $mailer;
-
-	/**
-	 * @var    string  Sender email
-	 * @since  12.1
-	 */
-	protected $sender;
-
-	/**
-	 * @var    string  Recipient email list
-	 * @since  12.1
-	 */
-	protected $recipient;
-
-	/**
-	 * @var    string  Email Subject
-	 * @since  12.1
-	 */
-	protected $subject;
 
 	/**
 	 * Constructor.
@@ -65,7 +65,7 @@ class JLoggerEmail extends JLogger
 		// If both the database object and driver options are empty we want to use the system database connection.
 		if (empty($this->options['from']))
 		{
-			$this->from = array(JFactory::getConfig()->get('mailfrom'), JFactory::getConfig()->get('fromname'));
+			$this->from = JFactory::getConfig()->get('mailfrom');
 		}
 		else
 		{
@@ -90,7 +90,7 @@ class JLoggerEmail extends JLogger
 			$this->subject = $this->options['subject'];
 		}
 
-		if (empty($this->options['recipient']))
+		if (empty($this->options['mailer']))
 		{
 			$this->mailer = JFactory::getMailer();
 		}
@@ -112,7 +112,6 @@ class JLoggerEmail extends JLogger
 	 */
 	public function addEntry(JLogEntry $entry)
 	{
-		echo 'in JLoggerEmail::addEntry';
 		$this->mailer->setSender($this->from);
 		$this->mailer->setRecipient($this->to);
 		$this->mailer->setSubject($this->subject);
@@ -124,7 +123,6 @@ class JLoggerEmail extends JLogger
 			);
 
 		$results = $this->mailer->Send();
-
 		if ($results == false)
 		{
 			throw new \RuntimeException('Email log entry not sent');
