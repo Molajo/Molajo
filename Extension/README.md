@@ -24,7 +24,7 @@ The following links contain information designed to help you learn how to create
 
 4. [**Modules**](https://github.com/Molajo/Molajo/blob/core/extensions/modules/README.md)
 
-5. [**Plugins**](https://github.com/Molajo/Molajo/blob/core/extensions/plugins/README.md)
+5. [**Triggers**](https://github.com/Molajo/Molajo/blob/core/extensions/triggers/README.md)
 
 6. [**Themes**](https://github.com/Molajo/Molajo/blob/core/extensions/themes/README.md)
 

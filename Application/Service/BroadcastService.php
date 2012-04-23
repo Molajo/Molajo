@@ -1,4 +1,30 @@
 <?php
+// Event Manager, Events, Registrations, Notifications, Triggers, and Services
+//
+// Events are specific points in time, like "Before saving data" or "After querying the data"
+// Services are technology utilities available to the application, including such items as
+//		database drivers, image processors, and content filters.
+// The Event Manager can register triggers to fire off specific Service methods when an event occur.
+// 		(Triggers are triggers - xml only)
+// Events notify the Even Manager when the occur.
+// The Event Manager reviews the registration information for that event and fires the associated triggers.
+// The triggers fire off specific Service Methods to respond.
+// The Service responds to the Trigger, and the Trigger back to the Event Manager, when processing
+//    is complete.
+// The Event Manager responds back to the process that initated the event regarding the results
+//
+// broadcast should go away (become an event)
+//
+// registerEvent with dispatcher (event manager)
+// triggerEvent with dispatcher (event manager)
+//
+// these are services:
+// twitter class
+// email
+// ping
+// alert
+// ... should be services
+
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
@@ -133,7 +159,7 @@ Class BroadcastService
 		$twitter->oAuthRequestToken();
 
 		// authorize
-		if(!isset($_GET['oauth_token'])) $twitter->oAuthAuthorize();
+		//if(!isset($_GET['oauth_token'])) $twitter->oAuthAuthorize();
 
 		// get tokens
 		$response = $twitter->oAuthAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);

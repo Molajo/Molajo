@@ -9,17 +9,17 @@
 defined('MOLAJO') or die;
 
 /**
- * Email cloack plugin class.
+ * Email cloack trigger class.
  *
- * @package        Joomla.Plugin
+ * @package        Joomla.Trigger
  * @subpackage    Content.emailcloak
  */
-class plgContentEmailcloak extends MolajoPluginHelper
+class plgContentEmailcloak extends MolajoTriggerHelper
 {
     /**
-     * Plugin that cloaks all emails in content from spambots via Javascript.
+     * Trigger that cloaks all emails in content from spambots via Javascript.
      *
-     * @param    string    The context of the content being passed to the plugin.
+     * @param    string    The context of the content being passed to the trigger.
      * @param    mixed    An object with a "text" property or the string to be cloaked.
      * @param    array    Additional parameters. See {@see plgEmailCloak()}.
      * @param    int        Optional page number. Unused. Defaults to zero.

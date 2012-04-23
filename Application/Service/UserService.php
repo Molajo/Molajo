@@ -7,14 +7,15 @@
 namespace Molajo\Application\Service;
 
 use Molajo\Application\Services;
+
 use Molajo\Application\MVC\Model\ItemModel;
 
 defined('MOLAJO') or die;
 
 /**
- * User Class
+ * User
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -70,6 +71,19 @@ Class UserService
 	 */
 	protected function load()
 	{
+
+/**
+ get the editor and language
+ and session?
+ 		$user	 =& JFactory::getUser();
+		$editor	 = $user->getParam('editor', $this->getCfg('editor'));
+		$editor = JTriggerHelper::isEnabled('editors', $editor) ? $editor : $this->getCfg('editor');
+		$config->setValue('config.editor', $editor);
+getUserState , setUserState  , getUserStateFromRequest
+login and logout
+registration
+
+*/
 		$m = new ItemModel ('Users', $this->id);
 		$results = $m->load();
 
@@ -108,7 +122,7 @@ Class UserService
 
 		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Users.xml');
 
-		Services::Registry()->loadField('UserCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
+		Services::Registry()->loadField('UserCustomfields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
 		Services::Registry()->loadField('UserMetadata\\', 'meta', $results['metadata'], $xml->metadata);
 		Services::Registry()->loadField('UserParameters\\', 'parameters', $results['parameters'], $xml->parameter);
 

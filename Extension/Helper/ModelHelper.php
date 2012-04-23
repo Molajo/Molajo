@@ -741,14 +741,14 @@ class ModelHelper
     }
 
     /**
-     * updateCustomFields
+     * updateCustomfields
      *
      * Verify and set values for Custom Fields
      *
      * @return  boolean
      * @since   1.0
      */
-    public function updateCustomFields()
+    public function updateCustomfields()
     {
 
     }

@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class CustomFieldsTrigger extends Trigger
+class CustomfieldsTrigger extends Trigger
 {
     /**
      * __construct

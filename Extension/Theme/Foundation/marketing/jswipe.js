@@ -1,6 +1,6 @@
 /*
- * touchSwipe - jQuery Plugin
- * http://plugins.jquery.com/project/touchSwipe
+ * touchSwipe - jQuery Trigger
+ * http://triggers.jquery.com/project/touchSwipe
  * http://labs.skinkers.com/touchSwipe/
  *
  * Copyright (c) 2010 Matt Bryson (www.skinkers.com)
@@ -10,7 +10,7 @@
  *
  * Changelog
  * $Date: 2010-12-12 (Wed, 12 Dec 2010) $
- * $version: 1.0.0 
+ * $version: 1.0.0
  * $version: 1.0.1 - removed multibyte comments
  *
  * $Date: 2011-21-02 (Mon, 21 Feb 2011) $
@@ -18,15 +18,15 @@
  *					- changed handler signatures so one handler can be used for multiple events
  * $Date: 2011-23-02 (Wed, 23 Feb 2011) $
  * $version: 1.2.0 	- added click handler. This is fired if the user simply clicks and does not swipe. The event object and click target are passed to handler.
- *					- If you use the http://code.google.com/p/jquery-ui-for-ipad-and-iphone/ plugin, you can also assign jQuery mouse events to children of a touchSwipe object.
+ *					- If you use the http://code.google.com/p/jquery-ui-for-ipad-and-iphone/ trigger, you can also assign jQuery mouse events to children of a touchSwipe object.
  * $version: 1.2.1 	- removed console log!
  *
- * $version: 1.2.2 	- Fixed bug where scope was not preserved in callback methods. 
+ * $version: 1.2.2 	- Fixed bug where scope was not preserved in callback methods.
  *
  * $Date: 2011-28-04 (Thurs, 28 April 2011) $
  * $version: 1.2.4 	- Changed licence terms to be MIT or GPL inline with jQuery. Added check for support of touch events to stop non compatible browsers erroring.
  *
- * A jQuery plugin to capture left, right, up and down swipes on touch devices.
+ * A jQuery trigger to capture left, right, up and down swipes on touch devices.
  * You can capture 2 finger or 1 finger swipes, set the threshold and define either a catch all handler, or individual direction handlers.
  * Options:
  * 		swipe 		Function 	A catch all handler that is triggered for all swipe directions. Handler is passed 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
@@ -40,13 +40,13 @@
  * 		fingers 	int 		Default 1. 	The number of fingers to trigger the swipe, 1 or 2.
  * 		threshold 	int  		Default 75.	The number of pixels that the user must move their finger by before it is considered a swipe.
  *		triggerOnTouchEnd Boolean Default true If true, the swipe events are triggered when the touch end event is received (user releases finger).  If false, it will be triggered on reaching the threshold, and then cancel the touch event automatically.
- *		allowPageScroll String Default "auto". How the browser handles page scrolls when the user is swiping on a touchSwipe object. 
+ *		allowPageScroll String Default "auto". How the browser handles page scrolls when the user is swiping on a touchSwipe object.
  *										"auto" : all undefined swipes will cause the page to scroll in that direction.
  *										"none" : the page will not scroll when user swipes.
  *										"horizontal" : will force page to scroll on horizontal swipes.
  *										"vertical" : will force page to scroll on vertical swipes.
  *
- * This jQuery plugin will only run on devices running Mobile Webkit based browsers (iOS 2.0+, android 2.2+)
+ * This jQuery trigger will only run on devices running Mobile Webkit based browsers (iOS 2.0+, android 2.2+)
  */
 (function ($) {
 

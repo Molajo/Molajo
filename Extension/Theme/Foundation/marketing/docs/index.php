@@ -68,7 +68,7 @@
                                 image or content sliders on your page, is packaged in with Foundation. It even works on
                                 mobile.
                             </li>
-                            <li><h5><a href="reveal.php">Reveal</a></h5> Finally, we've created a whole new plugin for
+                            <li><h5><a href="reveal.php">Reveal</a></h5> Finally, we've created a whole new trigger for
                                 modal dialogs in Foundation. Reveal is easy to call, supports several intro animations
                                 right out of the box, and is completely stylable. It also works on mobile.
                             </li>
@@ -82,7 +82,7 @@
                 <h5>2.2
                     <small>February 21, 2012</small>
                 </h5>
-                <p>Added breadcrumbs to UI, and made numerous changes to the JS plugins for stability and cross-browser
+                <p>Added breadcrumbs to UI, and made numerous changes to the JS triggers for stability and cross-browser
                     behaviour. Numerous bug fixes both in JS and CSS.</p>
 
                 <h5>2.1.5
@@ -186,6 +186,6 @@
                 </dl>
             </div>
         </div>
-		
-		
+
+
 <?php include("includes/_documentation_foot.php");  ?>

@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------
- * jQuery-Plugin "daterangepicker.jQuery.js"
+ * jQuery-Trigger "daterangepicker.jQuery.js"
  * by Scott Jehl, scott@filamentgroup.com
  * reference article: http://www.filamentgroup.com/lab/update_date_range_picker_with_jquery_ui/
  * demo page: http://www.filamentgroup.com/examples/daterangepicker/

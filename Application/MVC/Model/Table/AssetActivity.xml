@@ -11,7 +11,7 @@
     </filters>
     <triggers>
         <trigger name="IPAddress" />
-        <trigger name="CustomFields"  />
+        <trigger name="Customfields"  />
         <trigger name="Metadata"  />
         <trigger name="Parameters"  />
         <trigger name="Language"  />

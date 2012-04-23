@@ -129,6 +129,19 @@ class Includer
 
         $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 0);
+
+//setViewRegistries
+		$this->setViewRegistries();
+			$this->getUser();
+			$this->getApplicationDefaults();
+			$this->getTheme();
+			$this->getPageView();
+			$this->getTemplateView();
+			$this->getWrapView();
+			$temp = Services::Registry()->initialise();
+
+			$temp->loadArray($this->parameters);
+			$this->parameters = $temp;
     }
 
     /**
@@ -490,7 +503,7 @@ class Includer
         }
 
         $this->set('extension_event_type',
-            $this->parameters->get('plugin_type', array('content'))
+            $this->parameters->get('event_type', array('content'))
         );
 
         $this->set('extension_path',

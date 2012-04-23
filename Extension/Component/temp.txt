@@ -53,7 +53,7 @@ Configure
 - Checkin - 1
 - Clean Cache - 1
 - Redirects - 17 (Should this just be in assets?) (Table 404's?)
-- Plugins (Extensions - 8)
+- Triggers (Extensions - 8)
 
 Extend
 - Install (10 - Installer)

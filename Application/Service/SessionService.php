@@ -16,7 +16,9 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSess
 
 
 /**
- * Redirect
+ * Session
+ *
+ * http://symfony.com/doc/master/components/http_foundation/sessions.html
  *
  * http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/Session.html
  *
@@ -78,19 +80,16 @@ Class SessionService
 		*/
 	}
 
-
 	/**
 	 * getSession
 	 *
 	 */
 	public function getSession()
 	{
-
 		$storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
 		$session = new Session($storage);
 		var_dump($session);
 	}
-
 
 	/**
 	 * setSessionStorageData

@@ -10,18 +10,18 @@ namespace Molajo\Application\Helper;
 defined('MOLAJO') or die;
 
 /**
- * Plugin
+ * Trigger
  *
  * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
-abstract class PluginHelper
+abstract class TriggerHelper
 {
     /**
      * get
      *
-     * Retrieve plugin data
+     * Retrieve trigger data
      *
      * @return  array
      * @since   1.0
@@ -45,13 +45,13 @@ abstract class PluginHelper
     /**
      * getPath
      *
-     * Return path for selected plugin
+     * Return path for selected trigger
      *
      * @return bool|string
      * @since 1.0
      */
     static public function getPath($name)
     {
-        return EXTENSIONS_PLUGINS . '/' . $name;
+        return EXTENSIONS_TRIGGERS . '/' . $name;
     }
 }

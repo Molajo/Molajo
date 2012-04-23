@@ -53,7 +53,7 @@ class LoginController
         }
 
         /**
-         *  Authenticate, Authorize and Execute After Login Plugins
+         *  Authenticate, Authorize and Execute After Login Triggers
          */
         $userObject = Services::Authentication()->authenticate($credentials, $options);
 
@@ -108,7 +108,7 @@ class LoginController
      */
     protected function _loginFailed($type, $response, $options = Array())
     {
-//        MolajoPluginHelper::getPlugin('user');
+//        MolajoTriggerHelper::getTrigger('user');
 //        if ($type == 'authenticate') {
 //            Services::Dispatcher()->trigger('onUserLoginFailure', array($response, $options));
 //        } else {
@@ -149,9 +149,9 @@ class LoginController
      *
      * Passed the current user information to the onUserLogout event and reverts the current
      * session record back to 'anonymous' parameters.
-     * If any of the authentication plugins did not successfully complete
+     * If any of the authentication triggers did not successfully complete
      * the logout routine then the whole method fails.  Any errors raised
-     * should be done in the plugin as this provides the ability to give
+     * should be done in the trigger as this provides the ability to give
      * much more information about why the routine may have failed.
      *
      * @param   integer  $user_id   The user to load - Can be an integer or string - If string, it is converted to ID automatically
@@ -178,13 +178,13 @@ class LoginController
             $options['application_id'] = APPLICATION_ID;
         }
 
-        // Import the user plugin group.
-//        MolajoPluginHelper::importPlugin('user');
+        // Import the user trigger group.
+//        MolajoTriggerHelper::importTrigger('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
 //        $results = Services::Dispatcher()->notify('onUserLogout', array($parameters, $options));
 
-        // Check if any of the plugins failed. If none did, success.
+        // Check if any of the triggers failed. If none did, success.
 
 //        if (in_array(false, $results, true)) {
 //        } else {

@@ -20,7 +20,7 @@ logout
 members
 menu
 pagination-widget
-plugins
+triggers
 quicklinks
 search
 submenu (admin)

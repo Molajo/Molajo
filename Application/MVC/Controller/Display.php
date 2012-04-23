@@ -188,7 +188,7 @@ class DisplayController extends Controller
     }
 
     /**
-     * todo: create a plugin action here to invoke template tools, like mustache.
+     * todo: create a trigger action here to invoke template tools, like mustache.
      *
      * processRenderedOutput
      *

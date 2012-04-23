@@ -30,7 +30,7 @@
                 of device. <strong>Start here, build everywhere.</strong></h2>
             <a id="mainDownload" href="files/foundation-download-<?= $version ?>.zip"
                class="nice blue button src-download">Download Foundation 2.2<br>
-                <small>Boilerplate &bull; CSS &bull; JS &bull; Plugins</small>
+                <small>Boilerplate &bull; CSS &bull; JS &bull; Triggers</small>
                 <img src="images/homepage-yeti.png" class="show-on-desktops"/></a>
 
             <p><a href="docs/">View the Documentation &raquo;</a><a href="http://github.com/zurb/foundation">View on

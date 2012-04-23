@@ -89,7 +89,7 @@ Class AuthenticationService
 	 */
 	public function __construct()
 	{
-		$isLoaded = MolajoPluginHelper::importPlugin('authentication');
+		$isLoaded = MolajoTriggerHelper::importTrigger('authentication');
 
 		if ($isLoaded) {
 		} else {
@@ -128,7 +128,7 @@ Class AuthenticationService
 	 * @param   array  $options      Array holding user options
 	 *
 	 * @return  MolajoAuthenticationResponse Response object with status variable filled
-	 *                                 in for last plugin or first successful plugin
+	 *                                 in for last trigger or first successful trigger
 	 * @see     MolajoAuthenticationResponse
 	 * @since   1.0
 	 */
@@ -137,37 +137,37 @@ Class AuthenticationService
 		// Initialise variables.
 		$auth = false;
 
-		// Get plugins
-		$plugins = MolajoPluginHelper::getPlugin('authentication');
+		// Get triggers
+		$triggers = MolajoTriggerHelper::getTrigger('authentication');
 
 		// Create authentication response
 		$response = new MolajoAuthenticationResponse;
 
 		/*
-* Loop through the plugins and check of the credentials can be used to authenticate
+* Loop through the triggers and check of the credentials can be used to authenticate
 * the user
 *
-* Any errors raised in the plugin should be returned via the MolajoAuthenticationResponse
+* Any errors raised in the trigger should be returned via the MolajoAuthenticationResponse
 * and handled appropriately.
 */
-		foreach ($plugins as $plugin) {
-			$className = 'plg' . $plugin->type . $plugin->name;
+		foreach ($triggers as $trigger) {
+			$className = 'plg' . $trigger->type . $trigger->name;
 			if (class_exists($className)) {
-				$plugin = new $className($this, (array)$plugin);
+				$trigger = new $className($this, (array)$trigger);
 			}
 			else {
-				// Bail here if the plugin can't be created
+				// Bail here if the trigger can't be created
 				MolajoError::raiseWarning(50, Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
 
 			// Try to authenticate
-			$plugin->onUserAuthenticate($credentials, $options, $response);
+			$trigger->onUserAuthenticate($credentials, $options, $response);
 
 			// If authentication is successful break out of the loop
 			if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
 				if (empty($response->type)) {
-					$response->type = isset($plugin->_name) ? $plugin->_name : $plugin->name;
+					$response->type = isset($trigger->_name) ? $trigger->_name : $trigger->name;
 				}
 				break;
 			}
@@ -197,28 +197,28 @@ Class AuthenticationService
 	 */
 	public function onUserLogin($user, $options = array())
 	{
-		/** user plugins */
-		$plugins = MolajoPluginHelper::getPlugin('user');
+		/** user triggers */
+		$triggers = MolajoTriggerHelper::getTrigger('user');
 
 		/*
-* Loop through the plugins and check of the creditials can be used to authenticate
+* Loop through the triggers and check of the creditials can be used to authenticate
 * the user
 *
-* Any errors raised in the plugin should be returned via the JAuthenticationResponse
+* Any errors raised in the trigger should be returned via the JAuthenticationResponse
 * and handled appropriately.
 */
-		foreach ($plugins as $plugin) {
-			$className = 'plg' . ucfirst($plugin->type) . ucfirst($plugin->name);
+		foreach ($triggers as $trigger) {
+			$className = 'plg' . ucfirst($trigger->type) . ucfirst($trigger->name);
 			if (class_exists($className)) {
-				$plugin = new $className($this, (array)$plugin);
+				$trigger = new $className($this, (array)$trigger);
 			}
 			else {
-				// Bail here if the plugin can't be created
+				// Bail here if the trigger can't be created
 				MolajoError::raiseWarning(50, Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
 
-			$response = $plugin->onUserLogin($user, $options);
+			$response = $trigger->onUserLogin($user, $options);
 
 			if ($response === true) {
 			} else {
@@ -240,7 +240,7 @@ Class AuthenticationService
 	 */
 	public static function authorise($response, $options = Array())
 	{
-//        MolajoPluginHelper::getPlugin('authentication');
+//        MolajoTriggerHelper::getTrigger('authentication');
 //        $dispatcher = Services::Dispatcher();
 //        $authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
 

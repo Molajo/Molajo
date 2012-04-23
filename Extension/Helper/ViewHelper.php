@@ -126,9 +126,9 @@ class ViewHelper
 
         /** 2. Extension */
         $extensionPath = '';
-        if ($this->extension_type == 'plugin') {
-            $extensionPath = EXTENSIONS_PLUGINS . '/' . $this->extension_name . $plus;
-            $extensionPathURL = EXTENSIONS_PLUGINS_URL . '/' . $this->extension_name . $plus;
+        if ($this->extension_type == 'trigger') {
+            $extensionPath = EXTENSIONS_TRIGGERS . '/' . $this->extension_name . $plus;
+            $extensionPathURL = EXTENSIONS_TRIGGERS_URL . '/' . $this->extension_name . $plus;
 
         } else if ($this->extension_type == 'component') {
             $extensionPath = EXTENSIONS_COMPONENTS . '/' . $this->extension_name . $plus;

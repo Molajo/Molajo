@@ -259,7 +259,7 @@ abstract class ExtensionHelper
         } else if ($asset_type_id == ASSET_TYPE_EXTENSION_THEME) {
             return ThemeHelper::getPath($name);
         } else if ($asset_type_id == ASSET_TYPE_EXTENSION_PLUGIN) {
-            return PluginHelper::getPath($name);
+            return TriggerHelper::getPath($name);
         }
         return false;
     }

@@ -441,7 +441,7 @@
     }
 })(jQuery);
 /*!
- * jQuery imageready Plugin
+ * jQuery imageready Trigger
  * http://www.zurb.com/playground/
  *
  * Copyright 2011, ZURB

@@ -11,6 +11,28 @@ defined('MOLAJO') or die;
 /**
  * Dispatcher
  *
+ * Events
+ *
+ * Initialisation
+ *
+ * .. Services
+ * .. .. Initiate
+ * .. .. .. User
+ * .. .. .. .. Session
+ * .. .. .. .. Authenticate
+ * .. .. .. .. Logout
+ * Route
+ * Authorise
+ * Action
+ * .. Display
+ * .. .. Parse
+ * .. .. Include
+ * .. .. .. Controller
+ * .. .. .. Query
+ * .. .. .. Render
+ * .. .. .. .. Template
+ * .. .. .. .. Wrap
+ *
  * @package   Molajo
  * @subpackage  Service
  * @since       1.0
