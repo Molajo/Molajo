@@ -2,7 +2,7 @@
         name="request">
 
     <field
-            name="asset"
+            name="catalog"
             type="internal_link"
             description="MENU_ITEM_TYPE_INTERNAL_LINK_DESC"
             label="MENU_ITEM_TYPE_INTERNAL_LINK_LABEL"

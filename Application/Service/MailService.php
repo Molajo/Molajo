@@ -248,7 +248,7 @@ Class MailService
 		/** User */
 
 		/** authorization event */
-		//todo: what is the asset id of a service?
+		//todo: what is the catalog id of a service?
 		//$results = Services::Access()->authoriseTask('email', $catalog_id);
 
 		return $permission;

@@ -48,7 +48,7 @@ Class Route
 	/**
 	 * Using the PAGE_REQUEST constant:
 	 *
-	 *  - retrieve the asset record
+	 *  - retrieve the catalog record
 	 *  - set registry values needed to render output
 	 *
 	 * @return mixed
@@ -298,7 +298,7 @@ Class Route
 		/** option */
 		Services::Registry()->set('Request\\mvc_option', (string)$pairs['option']);
 
-		/** asset information */
+		/** catalog information */
 		Services::Registry()->set('Request\\mvc_id', (int)$pairs['id']);
 
 		Services::Debug()->set('Molajo::Request()->getRequest()');
@@ -307,7 +307,7 @@ Class Route
 	}
 
 	/**
-	 * Retrieve Catalog and Catalog Type data for a specific asset id
+	 * Retrieve Catalog and Catalog Type data for a specific catalog id
 	 * or query request
 	 *
 	 * @return    boolean

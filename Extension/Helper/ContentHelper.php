@@ -55,7 +55,7 @@ abstract class ContentHelper
             $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_catalog',
+                'catalog_prefix' => 'b_catalog',
                 'select' => true
             )
         );

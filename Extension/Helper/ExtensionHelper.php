@@ -97,7 +97,7 @@ abstract class ExtensionHelper
             $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_catalog',
+                'catalog_prefix' => 'b_catalog',
                 'select' => true
             )
         );
@@ -258,7 +258,7 @@ abstract class ExtensionHelper
             return ModuleHelper::getPath($name);
         } else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
             return ThemeHelper::getPath($name);
-        } else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PLUGIN) {
+        } else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
             return TriggerHelper::getPath($name);
         }
         return false;

@@ -55,7 +55,7 @@ Class Route
 
     /**
      * Using the PAGE_REQUEST value:
-     *  - retrieve the asset record
+     *  - retrieve the catalog record
      *  - set registry values needed to render output
      *
      * @return mixed
@@ -69,7 +69,7 @@ Class Route
 		$override_request_url = Services::Registry()->get('Override\\request_url', '');
 		$override_catalog_id = (int) Services::Registry()->get('Override\\catalog_id', 0);
 
-		/** Specific asset */
+		/** Specific catalog */
         if ((int)$override_catalog_id == 0) {
             Services::Registry()->set('Request\\request_catalog_id', 0);
         } else {
@@ -312,7 +312,7 @@ Class Route
         /** option */
         Services::Registry()->set('Request\\mvc_option', (string)$pairs['option']);
 
-        /** asset information */
+        /** catalog information */
         Services::Registry()->set('Request\\mvc_id', (int)$pairs['id']);
 
         Services::Debug()->set('Molajo::Request()->getRequest()');
@@ -321,7 +321,7 @@ Class Route
     }
 
     /**
-     * Retrieve Catalog and Catalog Type data for a specific asset id
+     * Retrieve Catalog and Catalog Type data for a specific catalog id
      * or query request
      *
      * @return    boolean
@@ -477,7 +477,7 @@ Class Route
          *  If the menu item doesn't return, it's likely that the user, application
          *  or site do not have access to the menu (extension_instance).
          *
-         *  Since the asset record was found, it is likely not a 404
+         *  Since the catalog record was found, it is likely not a 404
          *
          *  Will be treating like a 404 for now
          *

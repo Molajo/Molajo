@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `molajo_asset_categories` ;
+DROP TABLE IF EXISTS `molajo_catalog_categories` ;
 DROP TABLE IF EXISTS `molajo_group_permissions` ;
 DROP TABLE IF EXISTS `molajo_view_group_permissions` ;
 DROP TABLE IF EXISTS `molajo_user_view_groups` ;
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `molajo_user_activity` ;
 DROP TABLE IF EXISTS `molajo_users` ;
 DROP TABLE IF EXISTS `molajo_content` ;
 DROP TABLE IF EXISTS `molajo_sites` ;
-DROP TABLE IF EXISTS `molajo_asset_activity` ;
+DROP TABLE IF EXISTS `molajo_catalog_activity` ;
 DROP TABLE IF EXISTS `molajo_catalog` ;
 DROP TABLE IF EXISTS `molajo_extension_options` ;
 DROP TABLE IF EXISTS `molajo_extension_instances` ;

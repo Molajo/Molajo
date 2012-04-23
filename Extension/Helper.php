@@ -48,7 +48,7 @@ Class Helper
      * Magic methods __call acts as a proxy to Extension Helpers
      *
      * Usage
-     * Services::Extension()->asset
+     * Services::Extension()->catalog
      * Services::Extension()->component ... etc.
      *
      * @static
