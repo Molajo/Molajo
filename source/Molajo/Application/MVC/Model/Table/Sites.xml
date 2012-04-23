@@ -12,7 +12,7 @@
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
     <triggers>
-        <trigger name="CustomFields"  />
+        <trigger name="Customfields"  />
         <trigger name="Metadata"  />
         <trigger name="Parameters"  />
         <trigger name="Sites"  />

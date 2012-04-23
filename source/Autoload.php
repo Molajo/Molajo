@@ -60,7 +60,7 @@ $s->registerNamespace('Molajo\\Extension\\Helper', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Includer', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Language', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Module', BASE_FOLDER);
-$s->registerNamespace('Molajo\\Extension\\Plugin', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Trigger', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Theme', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\View', BASE_FOLDER);
 

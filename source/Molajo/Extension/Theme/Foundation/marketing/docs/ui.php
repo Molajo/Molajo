@@ -1,6 +1,6 @@
 <? $page_title = "UI Elements"; ?>
 <?php include("includes/_documentation_head.php"); ?>
-	
+
 	<div class="container">
     <div class="row">
         <div class="twelve columns">
@@ -100,7 +100,7 @@
     <h4>Tooltips</h4>
 
     <p>Tooltips are a quick way to provide extended information on a term or action on a page. They work cross browser
-        and cross platfrom and are easily added to a page by including the jquery.tooltip.js plugin. You can apply the
+        and cross platfrom and are easily added to a page by including the jquery.tooltip.js trigger. You can apply the
         <strong>has-tip</strong> class to any element, as long as you assign it a unique ID.</p>
 
     <p>By default the tooltip takes the width of the element that it is applied to, but you can override this behavior
@@ -492,7 +492,7 @@
     <h4>Microformats</h4>
 
     <p>Microformats are formats for data objects represented on the page using standard HTML. By applying specific
-        classes to objects parsers like the operator plugin can detect relevant data and display it. This can be
+        classes to objects parsers like the operator trigger can detect relevant data and display it. This can be
         especially handy for contact info, events, locations and news articles. We've supplied some base styling for
         microformats, as well as the relevant markup.</p>
 

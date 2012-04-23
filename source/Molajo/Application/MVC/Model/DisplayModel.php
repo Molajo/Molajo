@@ -308,7 +308,7 @@ class DisplayModel extends ItemModel
 
             // $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
-            /** process content plugins */
+            /** process content triggers */
             //                $this->dispatcher->trigger('contentPrepare', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
             //$item->event = new \stdClass();
 

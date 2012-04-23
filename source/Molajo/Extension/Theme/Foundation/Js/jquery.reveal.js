@@ -1,5 +1,5 @@
 /*
- * jQuery Reveal Plugin 1.0
+ * jQuery Reveal Trigger 1.0
  * www.ZURB.com
  * Copyright 2010, ZURB
  * Free to use under the MIT license.

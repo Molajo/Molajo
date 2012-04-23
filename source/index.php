@@ -22,7 +22,7 @@ require_once BASE_FOLDER . '/Autoload.php';
 
 /** Fire off Application */
 $app = Molajo\Application\Molajo::Application()
-	->execute(
+	->load(
 		$override_request_url,
 		$override_asset_id,
 		$override_sequenceXML,

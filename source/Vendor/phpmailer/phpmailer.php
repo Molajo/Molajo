@@ -157,11 +157,11 @@ class PHPMailer {
   public $Sendmail          = '/usr/sbin/sendmail';
 
   /**
-   * Path to PHPMailer plugins.  Useful if the SMTP class
+   * Path to PHPMailer triggers.  Useful if the SMTP class
    * is in a different directory than the PHP include path.
    * @var string
    */
-  public $PluginDir         = '';
+  public $TriggerDir         = '';
 
   /**
    * Sets the email address that a reading confirmation will be sent.
@@ -792,7 +792,7 @@ class PHPMailer {
    * @return bool
    */
   protected function SmtpSend($header, $body) {
-    require_once $this->PluginDir . 'smtp.php';
+    require_once $this->TriggerDir . 'smtp.php';
     $bad_rcpt = array();
 
     if(!$this->SmtpConnect()) {
@@ -2306,7 +2306,7 @@ class PHPMailer {
       'aifc'  =>  'audio/x-aiff',
       'ram'   =>  'audio/x-pn-realaudio',
       'rm'    =>  'audio/x-pn-realaudio',
-      'rpm'   =>  'audio/x-pn-realaudio-plugin',
+      'rpm'   =>  'audio/x-pn-realaudio-trigger',
       'ra'    =>  'audio/x-realaudio',
       'rv'    =>  'video/vnd.rn-realvideo',
       'wav'   =>  'audio/x-wav',

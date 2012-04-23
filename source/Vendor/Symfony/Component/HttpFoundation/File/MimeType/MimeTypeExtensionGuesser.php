@@ -596,7 +596,7 @@ class MimeTypeExtensionGuesser implements ExtensionGuesserInterface
         'audio/x-ms-wax' => 'wax',
         'audio/x-ms-wma' => 'wma',
         'audio/x-pn-realaudio' => 'ram',
-        'audio/x-pn-realaudio-plugin' => 'rmp',
+        'audio/x-pn-realaudio-trigger' => 'rmp',
         'audio/x-wav' => 'wav',
         'chemical/x-cdx' => 'cdx',
         'chemical/x-cif' => 'cif',

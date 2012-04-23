@@ -13,7 +13,7 @@
     <triggers>
         <trigger name="Application" />
         <trigger name="ContentText" />
-        <trigger name="CustomFields" />
+        <trigger name="Customfields" />
         <trigger name="Metadata" />
         <trigger name="Parameters" />
         <trigger name="Language" />

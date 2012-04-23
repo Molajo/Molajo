@@ -1,4 +1,4 @@
-# Working with Molajo Plugins #
+# Working with Molajo Triggers #
 
 
 ## Need more information? ##

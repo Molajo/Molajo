@@ -24,7 +24,7 @@
         <trigger name="Password"/>
         <trigger name="ContentText"  />
         <trigger name="DateFields"/>
-        <trigger name="CustomFields"  />
+        <trigger name="Customfields"  />
         <trigger name="Metadata"  />
         <trigger name="Parameters"  />
     </triggers>

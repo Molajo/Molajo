@@ -1,6 +1,6 @@
 <? $page_title = "Reveal"; ?>
 <?php include("includes/_documentation_head.php"); ?>
-	
+
 	<div class="container">
         <div class="row">
             <div class="twelve columns">
@@ -28,7 +28,7 @@
             </div>
             <div class="six columns">
                 <h3>Reveal</h3>
-                <h4 class="subheader">Reveal is our new modal plugin. We kept it light-weight, simple, and totally
+                <h4 class="subheader">Reveal is our new modal trigger. We kept it light-weight, simple, and totally
                     flexible (there's a 'your mom' joke in there somewhere). Go ahead, <a href=""
                                                                                           data-reveal-id="testModal">see
                         what a default Reveal modal looks like.</a></h4>
@@ -38,7 +38,7 @@
 
                 <p>Reveal is a cinch to hook up - just include the JS and CSS. You can either call it in the JS or just
                     include a new "data-reveal-id" parameter. If you need detailed steps check out the <a
-                        href="http://www.zurb.com/playground/reveal-modal-plugin">playground for Reveal</a>, but here
+                        href="http://www.zurb.com/playground/reveal-modal-trigger">playground for Reveal</a>, but here
                     are the steps to get it started:</p>
                 <ol>
                     <li>The markup goes something like this:<br/><br/>
@@ -55,7 +55,7 @@
                         <script src="http://snipt.net/embed/896416888c9bf045d01aca39f64df7b7"></script>
                         <br/>
                         This will launch the modal with the ID "myModal2" without attaching a handler or calling the
-                        plugin (since the plugin is always listening for this). You can also pass any of the parameters
+                        trigger (since the trigger is always listening for this). You can also pass any of the parameters
                         simply by putting a data-nameOfParameter="value" (i.e. data-animation="fade")
                     </li>
                 </ol>
@@ -101,5 +101,5 @@
             <a class="close-reveal-modal">&#215;</a>
             <a href="" class="nice radius button">This is a Button</a>
         </div>
-	
+
 <?php include("includes/_documentation_foot.php");  ?>

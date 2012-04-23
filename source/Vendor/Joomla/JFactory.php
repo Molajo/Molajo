@@ -228,7 +228,7 @@ abstract class JFactory
 	/**
 	 * Get an editor object.
 	 *
-	 * @param   string  $editor  The editor to load, depends on the editor plugins that are installed
+	 * @param   string  $editor  The editor to load, depends on the editor triggers that are installed
 	 *
 	 * @return  JEditor object
 	 *

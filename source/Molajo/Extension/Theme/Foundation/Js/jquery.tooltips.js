@@ -1,5 +1,5 @@
 /*
- * jQuery Foundation Tooltip Plugin 1.0
+ * jQuery Foundation Tooltip Trigger 1.0
  * http://foundation.zurb.com
  * Copyright 2012, ZURB
  * Free to use under the MIT license.

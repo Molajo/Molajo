@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------
- * jQuery customfileinput plugin
+ * jQuery customfileinput trigger
  * Author: Scott Jehl, scott@filamentgroup.com
  * Copyright (c) 2009 Filament Group. Updated 2012.
  * licensed under MIT (filamentgroup.com/examples/mit-license.txt)

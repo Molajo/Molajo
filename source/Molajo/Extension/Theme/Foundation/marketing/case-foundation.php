@@ -71,9 +71,9 @@
                 <img src="images/case-foundation-2.jpg">
 
                 <p>The case studies slider on the homepage is powered by <a href="docs/orbit.php">Orbit</a>, a jQuery
-                    plugin we created to quickly create image or content sliders. On mobile devices we swap that out in
+                    trigger we created to quickly create image or content sliders. On mobile devices we swap that out in
                     favor of a slider you can actually swipe with gestures, powered by <a
-                        href="http://plugins.jquery.com/project/swipe" rel="nofollow">jQuery Swipe</a>.</p>
+                        href="http://triggers.jquery.com/project/swipe" rel="nofollow">jQuery Swipe</a>.</p>
             </div>
             <div class="four columns">
                 <h5>Next Steps: Case Studies</h5>

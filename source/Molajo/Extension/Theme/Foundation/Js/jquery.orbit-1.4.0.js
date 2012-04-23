@@ -1,5 +1,5 @@
 /*
- * jQuery Orbit Plugin 1.4.0
+ * jQuery Orbit Trigger 1.4.0
  * www.ZURB.com/playground
  * Copyright 2010, ZURB
  * Free to use under the MIT license.
@@ -569,7 +569,7 @@
 })(jQuery);
 
 /*!
- * jQuery imageready Plugin
+ * jQuery imageready Trigger
  * http://www.zurb.com/playground/
  *
  * Copyright 2011, ZURB

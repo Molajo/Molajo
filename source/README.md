@@ -27,7 +27,7 @@ There is more information about [**about extensions**](https://github.com/Molajo
  [**Languages**](https://github.com/Molajo/Molajo/blob/core/extensions/languages/README.md),
  [**Views**](https://github.com/Molajo/Molajo/blob/core/extensions/View/README.md),
  [**Modules**](https://github.com/Molajo/Molajo/blob/core/extensions/modules/README.md),
- [**Plugins**](https://github.com/Molajo/Molajo/blob/core/extensions/plugins/README.md),
+ [**Triggers**](https://github.com/Molajo/Molajo/blob/core/extensions/triggers/README.md),
  and [**Themes**](https://github.com/Molajo/Molajo/blob/core/extensions/themes/README.md).
 
 ## What if I encounter problems? ##

@@ -53,7 +53,7 @@ Class Application
 	}
 
 	/**
-	 * Execute the Application
+	 * Execute Application
 	 *
 	 * @param string $override_request_url
 	 * @param string $override_asset_id
@@ -70,7 +70,7 @@ Class Application
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function execute($override_request_url = null, $override_asset_id = null,
+	public function load($override_request_url = null, $override_asset_id = null,
 							$override_sequence_xml = null, $override_final_xml = null)
 	{
 		/**
@@ -90,8 +90,10 @@ Class Application
 		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
 		Services::Registry()->set('Override\\final_xml', $override_final_xml);
 
+		$list = Services::Registry()->listRegistry(1);
+
 		/**
-		 * 	Route
+		 * 	Route (picks a component)
 		 */
 		$continue = $this->route();
 
@@ -103,22 +105,29 @@ Class Application
 		}
 
 		/**
-		 * 	Action
+		 * 	Authorise
 		 */
-		$action = Services::Registry()->get('Request\\mvc_controller', 'display');
-
-		if ($action == 'display') {
-			$continue = $this->display();
-		} else {
-			$action = 'action';
-			$continue = $this->action();
+		if (Services::Registry()->get('Request\\status_found') === true) {
+			$continue = Services::Access()->authoriseTask();
 		}
 
 		if ($continue == false) {
-			Services::Debug()->set('Molajo::Application()->'. $action . ' failed');
+			Services::Debug()->set('Molajo::Application()->execute() failed');
 			return;
 		} else {
-			Services::Debug()->set('Molajo::Application()->'. $action . ' succeeded');
+			Services::Debug()->set('Molajo::Application()->execute() succeeded');
+		}
+
+		/**
+		 * 	Execute
+		 */
+		$continue = $this->execute();
+
+		if ($continue == false) {
+			Services::Debug()->set('Molajo::Application()->execute() failed');
+			return;
+		} else {
+			Services::Debug()->set('Molajo::Application()->execute() succeeded');
 		}
 
 		/**
@@ -233,7 +242,42 @@ Class Application
 	}
 
 	/**
-	 * Executes a display or action task
+	 * execute the action requested
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	protected function execute()
+	{
+		$action = Services::Registry()->get('Request\\mvc_controller', 'display');
+
+		/** Display Action */
+		if ($action == 'display') {
+			$continue = $this->display();
+
+			if ($continue == false) {
+				Services::Debug()->set('Molajo::Application()->display failed');
+				return false;
+			} else {
+				Services::Debug()->set('Molajo::Application()->display succeeded');
+				return true;
+			}
+		}
+
+		/** Non-Display Actions */
+		$continue = $this->action();
+
+		if ($continue == false) {
+			Services::Debug()->set('Molajo::Application()->'. $action . ' failed');
+			return false;
+		} else {
+			Services::Debug()->set('Molajo::Application()->'. $action . ' succeeded');
+			return true;
+		}
+	}
+
+	/**
+	 * Executes a display task
 	 *
 	 * Display Task
 	 *
@@ -271,12 +315,33 @@ Class Application
 	 */
 	protected function action()
 	{
-		/**
-		 * Action Task
-		 */
-		//$this->processTask();
+		/** Action: Database action */
+		$temp = Services::Registry()->initialise();
+		$temp->loadArray($this->parameters);
+		$this->parameters = $temp;
+
+		if (Services::Registry()->get('Configuration\\sef', 1) == 0) {
+			$link = $this->page_request->get('request_url_sef');
+		} else {
+			$link = $this->page_request->get('request_url');
+		}
+		Services::Registry()->set('Request\\redirect_on_failure', $link);
+
+		Services::Registry()->set('Request\\model',
+			ucfirst(trim(Services::Registry()->get('Request\\mvc_model'))) . 'Model');
+		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request\\mvc_controller')) . 'Controller';
+		Services::Registry()->set('Request\\controller', $cc);
+		$task = Services::Registry()->get('Request\\mvc_task');
+		Services::Registry()->set('Request\\task', $task);
+		Services::Registry()->set('Request\\id', Services::Registry()->get('Request\\mvc_id'));
+		$controller = new $cc($this->page_request, $this->parameters);
+
+		/** execute task: non-display, edit, or add tasks */
+		$continue = $controller->$task();
 
 		Services::Debug()->set('Molajo::Application()->process() Complete');
+
+		//redirect
 
 		return true;
 	}
@@ -417,9 +482,9 @@ Class Application
 		} else {
 			define('EXTENSIONS_MODULES', EXTENSIONS . '/Module');
 		}
-		if (defined('EXTENSIONS_PLUGINS')) {
+		if (defined('EXTENSIONS_TRIGGERS')) {
 		} else {
-			define('EXTENSIONS_PLUGINS', EXTENSIONS . '/Plugin');
+			define('EXTENSIONS_TRIGGERS', EXTENSIONS . '/Trigger');
 		}
 		if (defined('EXTENSIONS_THEMES')) {
 		} else {
@@ -442,9 +507,9 @@ Class Application
 		} else {
 			define('EXTENSIONS_MODULES_URL', BASE_URL . 'Molajo/Extension/Module');
 		}
-		if (defined('EXTENSIONS_PLUGINS_URL')) {
+		if (defined('EXTENSIONS_TRIGGERS_URL')) {
 		} else {
-			define('EXTENSIONS_PLUGINS_URL', BASE_URL . 'Molajo/Extension/Plugin');
+			define('EXTENSIONS_TRIGGERS_URL', BASE_URL . 'Molajo/Extension/Trigger');
 		}
 		if (defined('EXTENSIONS_THEMES_URL')) {
 		} else {
@@ -746,7 +811,7 @@ Class Application
 		/** Registry for Custom Fields and Metadata */
 		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Sites.xml');
 
-		Services::Registry()->loadField('SiteCustomFields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
+		Services::Registry()->loadField('SiteCustomfields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
 
 		Services::Registry()->loadField('SiteMetadata\\', 'meta', $results['metadata'], $xml->metadata);
 

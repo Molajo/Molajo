@@ -36,7 +36,7 @@
         <trigger name="DateFields"  />
         <trigger name="UserFields"  />
         <trigger name="Status"  />
-        <trigger name="CustomFields"  />
+        <trigger name="Customfields"  />
         <trigger name="Metadata"  />
         <trigger name="Parameters"  />
     </triggers>

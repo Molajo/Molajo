@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="plugin" group="content">
+<extension version="1.0" type="trigger" group="content">
     <name>plg_content_emailcloak</name>
     <author>Molajo Project</author>
     <create_date>November 2005</create_date>
@@ -10,7 +10,7 @@
     <version>1.0</version>
     <description>PLG_CONTENT_EMAILCLOAK_DESCRIPTION</description>
     <files>
-        <filename plugin="emailcloak">emailcloak.php</filename>
+        <filename trigger="emailcloak">emailcloak.php</filename>
         <filename>index.html</filename>
     </files>
     <languages>

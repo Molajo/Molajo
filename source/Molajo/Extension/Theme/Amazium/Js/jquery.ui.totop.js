@@ -1,7 +1,7 @@
 /*
  |--------------------------------------------------------------------------
- | UItoTop jQuery Plugin 1.1
- | http://www.mattvarone.com/web-design/uitotop-jquery-plugin/
+ | UItoTop jQuery Trigger 1.1
+ | http://www.mattvarone.com/web-design/uitotop-jquery-trigger/
  |--------------------------------------------------------------------------
  */
 

@@ -9,30 +9,30 @@
 defined('MOLAJO') or die;
 
 /**
- * Plugin Class
+ * Trigger Class
  *
  * @package   Molajo
- * @subpackage  Plugin
+ * @subpackage  Trigger
  * @since       11.1
  */
-abstract ClassPluginHelper extends JEvent
+abstract ClassTriggerHelper extends JEvent
 {
     /**
-     * Plugin Parameters
+     * Trigger Parameters
      *
      * @var    string
      */
     public $parameters = null;
 
     /**
-     * The name of the plugin
+     * The name of the trigger
      *
      * @var    sring
      */
     protected $_name = null;
 
     /**
-     * The plugin type
+     * The trigger type
      *
      * @var    string
      */
@@ -73,7 +73,7 @@ abstract ClassPluginHelper extends JEvent
     /**
      * loadLanguage
      *
-     * Loads the plugin language file
+     * Loads the trigger language file
      *
      * @param   string   $extension    The extension for which a language file should be loaded
      * @param   string   $basePath    The basepath to use
@@ -81,11 +81,11 @@ abstract ClassPluginHelper extends JEvent
      * @return  boolean  True, if the file has successfully loaded.
      * @since   1.0
      */
-    public function loadLanguage($extension = '', $basePath = EXTENSIONS_PLUGINS)
+    public function loadLanguage($extension = '', $basePath = EXTENSIONS_TRIGGERS)
     {
         if (empty($extension)) {
             $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
         }
-        Services::Language()->load(strtolower($extension), EXTENSIONS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
+        Services::Language()->load(strtolower($extension), EXTENSIONS_TRIGGERS . '/' . $this->_type . '/' . $extension, null, false, false);
     }
 }

@@ -40,7 +40,7 @@ INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `c
   (1250, 'Wrap View', 1, '__extension_instances', 'extensions'),
   (1300, 'Menus', 1, '__extension_instances', 'extensions'),
   (1350, 'Modules', 1, '__extension_instances', 'extensions'),
-  (1450, 'Plugins', 1, '__extension_instances', 'extensions'),
+  (1450, 'Triggers', 1, '__extension_instances', 'extensions'),
   (1500, 'Themes', 1, '__extension_instances', 'extensions'),
 
   (2000, 'Component', 1, '__content', 'menus'),
@@ -562,7 +562,7 @@ INSERT INTO `molajo_application_extension_instances`
     WHERE a.asset_type_id = 1350
       AND b.id = 2;
 
-##  8. plugins
+##  8. triggers
 INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
@@ -990,7 +990,7 @@ INSERT INTO `molajo_content`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
-  SELECT 125, 125, 'Plugins', 'configure', 'plugins', 101, 19, 46, 47, 2,
+  SELECT 125, 125, 'Triggers', 'configure', 'triggers', 101, 19, 46, 47, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -1206,7 +1206,7 @@ INSERT INTO `molajo_assets`
   (2000, 122, 'Checkin', 'index.php?option=maintain&view=checkin', 'configure/checkin', 1, 'en-GB', 0, 0, 3),
   (2000, 123, 'Clean Cache', 'index.php?option=maintain&view=cleancache', 'configure/cleancache', 1, 'en-GB', 0, 0, 3),
   (2000, 124, 'Redirects', 'index.php?option=maintain&view=redirects', 'configure/redirects', 1, 'en-GB', 0, 0, 3),
-  (2000, 125, 'Plugins', 'index.php?option=extensions&view=plugins', 'configure/plugins', 1, 'en-GB', 0, 0, 3),
+  (2000, 125, 'Triggers', 'index.php?option=extensions&view=triggers', 'configure/triggers', 1, 'en-GB', 0, 0, 3),
 
   (2000, 126, 'Extend', 'index.php?option=dashboard&view=extend', 'extend', 1, 'en-GB', 0, 0, 3),
   (2000, 127, 'Create', 'index.php?option=installer&view=install', 'extend/install', 1, 'en-GB', 0, 0, 3),
