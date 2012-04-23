@@ -58,13 +58,13 @@ Class HeadModel extends Model
                 if (trim($title) == '') {
                     $title = Services::Registry()->get('Configuration\\metadata_title', 'Molajo');
                 }
-                $row->title = Services::Security()->escape_text($title);
+                $row->title = Services::Filter()->escape_text($title);
 
                 $mimetype = Services::Document()->get_mime_encoding();
                 if (trim($mimetype) == '') {
                     $mimetype = 'text/html';
                 }
-                $row->mimetype = Services::Security()->escape_text($mimetype);
+                $row->mimetype = Services::Filter()->escape_text($mimetype);
 
                 $row->base = Services::Registry()->get('Request\\url_base');
 
@@ -72,7 +72,7 @@ Class HeadModel extends Model
                 if (trim($last_modified) == '') {
                     $last_modified = Services::Date()->getDate()->toSql();
                 }
-                $row->last_modified = Services::Security()->escape_text($last_modified);
+                $row->last_modified = Services::Filter()->escape_text($last_modified);
 
                 $this->query_results[] = $row;
             }
@@ -90,8 +90,8 @@ Class HeadModel extends Model
                         } else {
                             $row = new \stdClass();
                             $row->type = 'metadata';
-                            $row->name = Services::Security()->escape_text($name);
-                            $row->content = Services::Security()->escape_text($content);
+                            $row->name = Services::Filter()->escape_text($name);
+                            $row->content = Services::Filter()->escape_text($content);
                             $this->query_results[] = $row;
                         }
                         //				}
@@ -119,10 +119,10 @@ Class HeadModel extends Model
 
                     $row->type = 'links';
                     $row->url = $item['url'];
-                    $row->relation = Services::Security()->escape_text(
+                    $row->relation = Services::Filter()->escape_text(
                         $item['relation']
                     );
-                    $row->relation_type = Services::Security()->escape_text(
+                    $row->relation_type = Services::Filter()->escape_text(
                         $item['relation_type']
                     );
 
@@ -137,7 +137,7 @@ Class HeadModel extends Model
                             $split = explode(',', $pair);
                             $row->attributes .= ' ' . $split[0]
                                 . '="'
-                                . Services::Security()->escape_text($split[1])
+                                . Services::Filter()->escape_text($split[1])
                                 . '"';
                         }
                     }

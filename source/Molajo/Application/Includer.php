@@ -779,7 +779,7 @@ class Includer
         if ($this->parameters->get('html_display_filter', true) == false) {
             return $results;
         } else {
-            return Services::Security()->filter_html($results);
+            return Services::Filter()->filter_html($results);
         }
     }
 

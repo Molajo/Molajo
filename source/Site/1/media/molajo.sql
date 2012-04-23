@@ -1104,7 +1104,7 @@ INSERT INTO `molajo_log_entries` VALUES(17, 128, 'Service: DocumentService start
 INSERT INTO `molajo_log_entries` VALUES(18, 128, 'Service: AccessService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(19, 128, 'Service: ImageService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(20, 128, 'Service: MailService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(21, 128, 'Service: SecurityService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
+INSERT INTO `molajo_log_entries` VALUES(21, 128, 'Service: FilterService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(22, 128, 'Service: UrlService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(23, 128, 'Service: TextService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(24, 128, 'Service: BroadcastService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
@@ -1128,7 +1128,7 @@ INSERT INTO `molajo_log_entries` VALUES(41, 128, 'Service: DocumentService start
 INSERT INTO `molajo_log_entries` VALUES(42, 128, 'Service: AccessService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(43, 128, 'Service: ImageService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(44, 128, 'Service: MailService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(45, 128, 'Service: SecurityService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
+INSERT INTO `molajo_log_entries` VALUES(45, 128, 'Service: FilterService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(46, 128, 'Service: UrlService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(47, 128, 'Service: TextService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(48, 128, 'Service: BroadcastService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
@@ -1152,7 +1152,7 @@ INSERT INTO `molajo_log_entries` VALUES(65, 128, 'Service: DocumentService start
 INSERT INTO `molajo_log_entries` VALUES(66, 128, 'Service: AccessService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(67, 128, 'Service: ImageService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(68, 128, 'Service: MailService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(69, 128, 'Service: SecurityService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
+INSERT INTO `molajo_log_entries` VALUES(69, 128, 'Service: FilterService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(70, 128, 'Service: UrlService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(71, 128, 'Service: TextService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(72, 128, 'Service: BroadcastService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
@@ -1176,7 +1176,7 @@ INSERT INTO `molajo_log_entries` VALUES(89, 128, 'Service: DocumentService start
 INSERT INTO `molajo_log_entries` VALUES(90, 128, 'Service: AccessService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(91, 128, 'Service: ImageService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(92, 128, 'Service: MailService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(93, 128, 'Service: SecurityService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
+INSERT INTO `molajo_log_entries` VALUES(93, 128, 'Service: FilterService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(94, 128, 'Service: UrlService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(95, 128, 'Service: TextService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
 INSERT INTO `molajo_log_entries` VALUES(96, 128, 'Service: BroadcastService started successfully. ', '2012-04-17 04:09:02', 'debugservice');

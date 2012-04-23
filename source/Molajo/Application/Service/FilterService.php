@@ -13,15 +13,15 @@ use Molajo\Application\Services;
 defined('MOLAJO') or die;
 
 /**
- * Security
+ * Filter
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  *
  * http://docs.joomla.org/Secure_coding_guidelines
  */
-Class SecurityService
+Class FilterService
 {
 	/**
 	 * Instance
@@ -57,7 +57,7 @@ Class SecurityService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new SecurityService ();
+			self::$instance = new FilterService ();
 		}
 		return self::$instance;
 	}
@@ -528,7 +528,7 @@ Class SecurityService
 	 * @param   string  $content  The content to test.
 	 *
 	 * @return mixed
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function filter_header_injection_test($content)
 	{
