@@ -18,7 +18,7 @@ namespace Symfony\Component\HttpFoundation;
  *
  * @api
  */
-class ParameterBag
+class ParameterBag implements \IteratorAggregate, \Countable
 {
     /**
      * Parameter storage.
@@ -277,5 +277,25 @@ class ParameterBag
         }
 
         return filter_var($value, $filter, $options);
+    }
+
+    /**
+     * Returns an iterator for parameters.
+     *
+     * @return \ArrayIterator An \ArrayIterator instance
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->parameters);
+    }
+
+    /**
+     * Returns the number of parameters.
+     *
+     * @return int The number of parameters
+     */
+    public function count()
+    {
+        return count($this->parameters);
     }
 }
