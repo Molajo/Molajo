@@ -70,10 +70,12 @@ Class SessionService
 		$session->getFlashBag()->add('notice', 'Profile updated');
 
 		// retrieve messages
+		/*
 		foreach ($session->getFlashBag()->get('notice', array()) as $message) {
 		echo "<div class='flash-notice'>$message</div>";
 			die;
 		}
+		*/
 	}
 
 
