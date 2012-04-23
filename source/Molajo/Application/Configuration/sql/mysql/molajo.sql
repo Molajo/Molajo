@@ -16,9 +16,9 @@ INSERT INTO `molajo_action_types` (`id` , `title` , `protected`)
     (7, 'administer', 1);
 
 #
-# Asset Types
+# Catalog Types
 #
-INSERT INTO `molajo_asset_types` (`id`, `title`, `protected`, `source_table`, `component_option`)
+INSERT INTO `molajo_catalog_types` (`id`, `title`, `protected`, `source_table`, `component_option`)
   VALUES
   (1, 'System', 1, '', ''),
 
@@ -72,11 +72,11 @@ INSERT INTO `molajo_extension_sites`
 
 # Components
 INSERT INTO `molajo_extensions`
-  (`id`,  `extension_site_id`,  `name`, `asset_type_id`)
+  (`id`,  `extension_site_id`,  `name`, `catalog_type_id`)
   VALUES
     (1, 1, 'applications', '', 1050),
     (2, 1, 'articles', '', 1050),
-    (3, 1, 'assets', '', 1050),
+    (3, 1, 'catalog', '', 1050),
     (4, 1, 'categories', '', 1050),
     (5, 1, 'comments', '', 1050),
     (6, 1, 'contacts', '''', 1050),
@@ -93,7 +93,7 @@ INSERT INTO `molajo_extensions`
     (17, 1, 'redirects', '', 1050);
 
 INSERT INTO `molajo_extensions`
-  (`id`,  `extension_site_id`,  `name`, `subtype`, `asset_type_id`)
+  (`id`,  `extension_site_id`,  `name`, `subtype`, `catalog_type_id`)
   VALUES
     (0, 1, 'core', '', 1050);
 UPDATE `molajo_extensions`
@@ -101,7 +101,7 @@ UPDATE `molajo_extensions`
   WHERE `name` = 'core';
 
 INSERT INTO `molajo_extension_instances`
-  (`id`, `extension_id`, `asset_type_id`,
+  (`id`, `extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -109,7 +109,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `id`, `asset_type_id`,
+  SELECT `id`, `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -118,19 +118,19 @@ INSERT INTO `molajo_extension_instances`
         '0000-00-00 00:00:00', 0, '{}', '{}',
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1050;
+    WHERE `catalog_type_id` = 1050;
 UPDATE `molajo_extension_instances`
   SET `id` = 0
   WHERE `title` = 'core';
 
 # LANGUAGES
 INSERT INTO `molajo_extensions`
-  (`id`,  `extension_site_id`,  `name`, `subtype`, `asset_type_id`)
+  (`id`,  `extension_site_id`,  `name`, `subtype`, `catalog_type_id`)
   VALUES
     (18, 1, 'English (UK)', 'en-GB', 1100);
 
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -138,7 +138,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -147,11 +147,11 @@ INSERT INTO `molajo_extension_instances`
         '0000-00-00 00:00:00', 0, '{}', '{}',
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1100;
+    WHERE `catalog_type_id` = 1100;
 
 # VIEWS
 INSERT INTO `molajo_extensions`
-    (`name`,`asset_type_id`, `subtype`, `extension_site_id`)
+    (`name`,`catalog_type_id`, `subtype`, `extension_site_id`)
   VALUES
     ('Dashboard', 1150, 'Template', 1),
     ('DashboardModule', 1150, 'Template', 1),
@@ -213,7 +213,7 @@ INSERT INTO `molajo_extensions`
     ('Section', 1150, 'Wrap', 1);
 
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -221,7 +221,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -230,16 +230,16 @@ INSERT INTO `molajo_extension_instances`
         '0000-00-00 00:00:00', 0, '{}', '{}',
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1150;
+    WHERE `catalog_type_id` = 1150;
 
 # LISTENERS
 INSERT INTO `molajo_extensions`
-    (`name`, `asset_type_id`, `extension_site_id`)
+    (`name`, `catalog_type_id`, `extension_site_id`)
   VALUES
     ('example', 1450, 'acl', 1);
 
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -247,7 +247,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -256,18 +256,18 @@ INSERT INTO `molajo_extension_instances`
         '0000-00-00 00:00:00', 0, '{}', '{}',
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1450;
+    WHERE `catalog_type_id` = 1450;
 
 # THEMES
 INSERT INTO `molajo_extensions`
-    (`name`, `asset_type_id`, `extension_site_id`)
+    (`name`, `catalog_type_id`, `extension_site_id`)
   VALUES
     ('cleanslate', 1500, 1),
     ('molajito', 1500, 1),
     ('system', 1500, 1);
 
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -275,7 +275,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -284,17 +284,17 @@ INSERT INTO `molajo_extension_instances`
         '0000-00-00 00:00:00', 0, '{}', '{}',
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1500;
+    WHERE `catalog_type_id` = 1500;
 
 ## MENU
 INSERT INTO `molajo_extensions`
-    (`name`, `asset_type_id`, `extension_site_id`)
+    (`name`, `catalog_type_id`, `extension_site_id`)
   VALUES
     ('Administrator Menu', 1300, 1),
     ('Main Menu', 1300, 1);
 
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -302,7 +302,7 @@ INSERT INTO `molajo_extension_instances`
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `catalog_type_id`,
         `name`, '', '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -311,11 +311,11 @@ INSERT INTO `molajo_extension_instances`
         '0000-00-00 00:00:00', 0, '{}', '{}',
         '', 'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1300;
+    WHERE `catalog_type_id` = 1300;
 
 # Modules
 INSERT INTO `molajo_extensions`
-    (`name`, `asset_type_id`, `extension_site_id`)
+    (`name`, `catalog_type_id`, `extension_site_id`)
   VALUES
     ('assetwidget', 1350, 1),
     ('aclwidget', 1350, 1),
@@ -335,7 +335,7 @@ INSERT INTO `molajo_extensions`
     ('SystemMessages', 1350, 1);
 
 INSERT INTO `molajo_extension_instances`
-  (`extension_id`, `asset_type_id`,
+  (`extension_id`, `catalog_type_id`,
     `title`, `subtitle`, `alias`, `content_text`,
     `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -344,7 +344,7 @@ INSERT INTO `molajo_extension_instances`
     `checked_out_datetime`, `checked_out_by`,
     `position`, `custom_fields`, `parameters`,
     `language`, `translation_of_id`, `ordering`)
-  SELECT `id`, `asset_type_id`,
+  SELECT `id`, `catalog_type_id`,
         `name`, '', '', '',
         1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
@@ -354,13 +354,13 @@ INSERT INTO `molajo_extension_instances`
         SUBSTRING(`name`, 5, 99), '{}', '{}',
         'en-GB', 0, `id`
     FROM `molajo_extensions`
-    WHERE `asset_type_id` = 1350;
+    WHERE `catalog_type_id` = 1350;
 
 #
 # SITES
 #
 INSERT INTO `molajo_sites`
-  (`id`, `asset_type_id`, `name`, `path`, `base_url`, `description`, `parameters`, `custom_fields`)
+  (`id`, `catalog_type_id`, `name`, `path`, `base_url`, `description`, `parameters`, `custom_fields`)
   VALUES
     (1, 10, 'Molajo', '', '', 'Primary Site', '{}', '{}');
 
@@ -369,7 +369,7 @@ INSERT INTO `molajo_sites`
 # Note: after menus are defined, update applications for home
 #
 INSERT INTO `molajo_applications`
-  (`id`, `asset_type_id`, `name`, `path`, `description`, `parameters`, `custom_fields`)
+  (`id`, `catalog_type_id`, `name`, `path`, `description`, `parameters`, `custom_fields`)
   VALUES
     (1, 50, 'site', '', 'Primary application for site visitors', '{}', '{}'),
     (2, 50, 'administrator', 'administrator', 'Administrative site area for site construction', '{}', '{}');
@@ -381,7 +381,7 @@ SET @id = (SELECT MIN(id) FROM `molajo_extension_instances` WHERE `title` = 'Sys
 
 INSERT INTO `molajo_content`
   (`id`, `title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
-  `extension_instance_id`, `asset_type_id`,
+  `extension_instance_id`, `catalog_type_id`,
   `version`, `root`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
   VALUES
     (1, 'ROOT', '', 'root', '<p>Root Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00',
@@ -398,7 +398,7 @@ UPDATE `molajo_content`
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'groups');
 
 INSERT INTO `molajo_content`
-  (`id`, `extension_instance_id`, `title`, `path`, `alias`, `content_text`, `asset_type_id`,
+  (`id`, `extension_instance_id`, `title`, `path`, `alias`, `content_text`, `catalog_type_id`,
    `root`, `parent_id`, `lft`, `rgt`, `lvl`, `ordering`,
    `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`, `language`, `translation_of_id`)
    VALUES
@@ -427,11 +427,11 @@ INSERT INTO `molajo_group_view_groups`
     (4, 5);
 
 ##  Administrator
-INSERT INTO `molajo_users` (`id`, `asset_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 500, 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', '{}', '{}');
+INSERT INTO `molajo_users` (`id`, `catalog_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 500, 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', '{}', '{}');
 INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (42, 1), (42, 2);
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'groups');
 INSERT INTO `molajo_content`
-  (`extension_instance_id`, `title`, `path`, `alias`, `content_text`, `asset_type_id`,
+  (`extension_instance_id`, `title`, `path`, `alias`, `content_text`, `catalog_type_id`,
    `parent_id`, `lft`, `rgt`, `lvl`, `ordering`,
    `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`, `language`, `translation_of_id`)
   SELECT @id, CONCAT(`first_name`, ' ', `last_name`), 'groups', `username`, '', 120, `id`, 0, 0, 0, 1, 0, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '{}', 'en-GB', 0
@@ -439,11 +439,11 @@ INSERT INTO `molajo_content`
 INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (42, 3), (42, 4);
 
 ##  Sample Registered User
-INSERT INTO `molajo_users` (`id`, `asset_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('100', 500, 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{}', '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}');
+INSERT INTO `molajo_users` (`id`, `catalog_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('100', 500, 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{}', '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}');
 INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (100, 1);
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'groups');
 INSERT INTO `molajo_content`
-  (`extension_instance_id`, `title`, `path`, `alias`, `content_text`, `asset_type_id`,
+  (`extension_instance_id`, `title`, `path`, `alias`, `content_text`, `catalog_type_id`,
    `parent_id`, `lft`, `rgt`, `lvl`, `ordering`,
    `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`, `language`, `translation_of_id`)
   SELECT @id, CONCAT(`first_name`, ' ', `last_name`), 'groups', `username`, '', 120, `id`, 0, 0, 0, 1, 0, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '{}', 'en-GB', 0
@@ -451,14 +451,14 @@ INSERT INTO `molajo_content`
 INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (100, 3);
 
 ##  Authorize Users for their own group
-INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) SELECT parent_id, id FROM `molajo_content` WHERE asset_type_id = 120;
+INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) SELECT parent_id, id FROM `molajo_content` WHERE catalog_type_id = 120;
 
 ##  user private view groups
 INSERT INTO `molajo_view_groups`
   (`view_group_name_list`, `view_group_id_list`)
   SELECT 'Private', `id`
     FROM `molajo_content`
-   WHERE `asset_type_id` = 120;
+   WHERE `catalog_type_id` = 120;
 
 ##  user private view group permission
 INSERT INTO `molajo_group_view_groups` ( `group_id` , `view_group_id` )
@@ -492,7 +492,7 @@ INSERT INTO `molajo_application_extension_instances`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE b.id = 1
-      AND a.asset_type_id = 1050
+      AND a.catalog_type_id = 1050
        AND a.title IN
         ('articles',
           'comments',
@@ -508,7 +508,7 @@ INSERT INTO `molajo_application_extension_instances`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE b.id = 2
-      AND a.asset_type_id = 1050;
+      AND a.catalog_type_id = 1050;
 
 ##  2. language
 INSERT INTO `molajo_application_extension_instances`
@@ -516,7 +516,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1100;
+    WHERE a.catalog_type_id = 1100;
 
 ##  3. views
 INSERT INTO `molajo_application_extension_instances`
@@ -524,7 +524,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1150;
+    WHERE a.catalog_type_id = 1150;
 
 ##  5. menus
 INSERT INTO `molajo_application_extension_instances`
@@ -532,7 +532,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1300
+    WHERE a.catalog_type_id = 1300
       AND NOT(a.title = 'Admin')
       AND b.id = 1;
 
@@ -541,7 +541,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1300
+    WHERE a.catalog_type_id = 1300
       AND a.title = 'Admin'
       AND b.id = 2;
 
@@ -551,7 +551,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1350
+    WHERE a.catalog_type_id = 1350
       AND b.id = 1;
 
 INSERT INTO `molajo_application_extension_instances`
@@ -559,7 +559,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1350
+    WHERE a.catalog_type_id = 1350
       AND b.id = 2;
 
 ##  8. triggers
@@ -568,7 +568,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1450;
+    WHERE a.catalog_type_id = 1450;
 
 ##  9. themes
 INSERT INTO `molajo_application_extension_instances`
@@ -576,7 +576,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1500
+    WHERE a.catalog_type_id = 1500
       AND a.title IN ('cleanslate', 'system')
       AND b.id = 1;
 
@@ -585,7 +585,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE a.asset_type_id = 1500
+    WHERE a.catalog_type_id = 1500
       AND a.title IN ('molajito', 'system')
       AND b.id IN (2);
 
@@ -603,7 +603,7 @@ INSERT INTO `molajo_site_extension_instances`
 ## ## Admin: Root
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`,
+    `extension_instance_id`, `catalog_type_id`,
     `parameters`, `metadata`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -617,12 +617,12 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## Admin: Content
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`,
+    `extension_instance_id`, `catalog_type_id`,
     `parameters`, `metadata`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -637,11 +637,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 /**
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`,
+    `extension_instance_id`, `catalog_type_id`,
     `parameters`, `metadata`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -656,11 +656,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -672,11 +672,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -688,11 +688,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -704,13 +704,13 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## ## Admin: Access
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -722,11 +722,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -738,11 +738,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -754,11 +754,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -770,28 +770,28 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
-  SELECT 112, 112, 'Assets', 'access', 'assets', 101, 8, 20, 21, 2,
+  SELECT 112, 112, 'Catalog', 'access', 'catalog', 101, 8, 20, 21, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## Admin: Build
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -803,11 +803,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -819,11 +819,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -835,11 +835,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -851,11 +851,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -867,11 +867,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -883,13 +883,13 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## ## Admin: Configure
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `paCrent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -901,11 +901,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -917,11 +917,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -933,11 +933,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -949,11 +949,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -965,11 +965,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -981,11 +981,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -997,12 +997,12 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## Admin: Extend
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -1014,11 +1014,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -1030,11 +1030,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -1046,11 +1046,11 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -1062,12 +1062,12 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## Admin: Search
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -1079,12 +1079,12 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 ## ## Site: Main Menu
 INSERT INTO `molajo_content`
   (`id`, `ordering`, `title`, `path`, `alias`, `root`, `parent_id`,`lft`, `rgt`, `lvl`,
-    `extension_instance_id`, `asset_type_id`, `parameters`,
+    `extension_instance_id`, `catalog_type_id`, `parameters`,
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
@@ -1096,7 +1096,7 @@ INSERT INTO `molajo_content`
         1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `asset_type_id` = 1300 AND `title` = 'Administrator Menu';
+    WHERE `catalog_type_id` = 1300 AND `title` = 'Administrator Menu';
 
 # Menu Item Home
 UPDATE `molajo_content`
@@ -1106,7 +1106,7 @@ UPDATE `molajo_content`
 # Site Home
 /*
 todo: amy update configuration file
-SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Home' AND `asset_type_id` = 2000);
+SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Home' AND `catalog_type_id` = 2000);
 UPDATE `molajo_content`
   SET `home` = 1
   WHERE `id` = @id;
@@ -1116,7 +1116,7 @@ UPDATE `molajo_applications`
 */
 # Application Home
 /*
-SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 2000);
+SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `catalog_type_id` = 2000);
 UPDATE `molajo_content`
   SET `home` = 1
   WHERE `id` = @id;
@@ -1126,54 +1126,54 @@ UPDATE `molajo_applications`
 */
 
 #
-# ASSETS
+# CATALOG
 #
 
 # Sites
-INSERT INTO `molajo_assets`
- (`asset_type_id`, `source_id`, `routable`, `sef_request`,
+INSERT INTO `molajo_catalog`
+ (`catalog_type_id`, `source_id`, `routable`, `sef_request`,
  `request`, `request_option`, `request_model`, `redirect_to_id`,
  `view_group_id`, `primary_category_id`)
-  SELECT `asset_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
+  SELECT `catalog_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
     FROM `molajo_sites`;
 
 # Application
-INSERT INTO `molajo_assets`
- (`asset_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
-  SELECT `asset_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
+INSERT INTO `molajo_catalog`
+ (`catalog_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
+  SELECT `catalog_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
     FROM  molajo_applications;
 
 # Groups
-INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `routable`,
+INSERT INTO `molajo_catalog`
+  (`catalog_type_id`, `source_id`, `routable`,
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
-SELECT a.`asset_type_id`, a.`id`, true,
+SELECT a.`catalog_type_id`, a.`id`, true,
     CONCAT('group/', a.`id`),
     CONCAT('index.php?option=groups&model=group&id=', a.`id`),
     'groups', 'group',
     0, 1, 0
     FROM `molajo_content` a,
-        `molajo_asset_types` b
-    WHERE a.`asset_type_id` = b.`id`
-      AND a.`asset_type_id` BETWEEN 100 AND 120 ;
+        `molajo_catalog_types` b
+    WHERE a.`catalog_type_id` = b.`id`
+      AND a.`catalog_type_id` BETWEEN 100 AND 120 ;
 
 # Extension Instances
-INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `routable`,
+INSERT INTO `molajo_catalog`
+  (`catalog_type_id`, `source_id`, `routable`,
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
-SELECT a.`asset_type_id`, a.`id`, true,
+SELECT a.`catalog_type_id`, a.`id`, true,
     CONCAT(b.`component_option`, '/', LOWER(b.`title`), '/', a.`id`),
     CONCAT('index.php?option=extensions', '&model=', lower(b.`title`), '&id=', a.`id`),
     'extension', b.`title`, 0, 1, 0
     FROM `molajo_extension_instances` a,
-        `molajo_asset_types` b
-    WHERE a.`asset_type_id` = b.`id`;
+        `molajo_catalog_types` b
+    WHERE a.`catalog_type_id` = b.`id`;
 
 # Menu Items
-INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `routable`,
+INSERT INTO `molajo_catalog`
+  (`catalog_type_id`, `source_id`, `routable`,
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   VALUES
@@ -1191,7 +1191,7 @@ INSERT INTO `molajo_assets`
   (2000, 109, 'Profile', 'index.php?option=profile', 'access/profiles', 1, 'en-GB', 0, 0, 3),
   (2000, 110, 'Users', 'index.php?option=users', 'access/users', 1, 'en-GB', 0, 0, 3),
   (2000, 111, 'Groups', 'index.php?option=groups', 'access/groups', 1, 'en-GB', 0, 0, 3),
-  (2000, 112, 'Assets', 'index.php?option=assets&view=users', 'access/assets', 1, 'en-GB', 0, 0, 3),
+  (2000, 112, 'Catalog', 'index.php?option=catalog&view=users', 'access/catalog', 1, 'en-GB', 0, 0, 3),
 
   (2000, 113, 'Build', 'index.php?option=dashboard&view=build', 'build', 1, 'en-GB', 0, 0, 3),
   (2000, 114, 'Categories', 'index.php?option=categories', 'build/categories', 1, 'en-GB', 0, 0, 3),
@@ -1217,19 +1217,19 @@ INSERT INTO `molajo_assets`
 
   (2000, 131, 'Home', 'index.php?option=views', 'home', 1, 'en-GB', 0, 0, 1);
 **/
-# Asset Categories
+# Catalog Categories
 
 INSERT INTO `molajo_asset_categories`
-  (`asset_id`, `category_id`)
+  (`catalog_id`, `category_id`)
   SELECT `id`, `primary_category_id`
-    FROM `molajo_assets`
+    FROM `molajo_catalog`
     WHERE `primary_category_id` > 10;
 
 # View Group Permissions
 INSERT INTO `molajo_view_group_permissions`
-  (`view_group_id`, `asset_id`, `action_id`)
-  SELECT DISTINCT `view_group_id`, `id` as asset_id, 3 as `action_id`
-    FROM `molajo_assets`;
+  (`view_group_id`, `catalog_id`, `action_id`)
+  SELECT DISTINCT `view_group_id`, `id` as catalog_id, 3 as `action_id`
+    FROM `molajo_catalog`;
 
 # Group Permissions (other than view)
 # molajo_group_permissions;

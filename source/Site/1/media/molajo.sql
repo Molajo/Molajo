@@ -3,11 +3,17 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 20, 2012 at 07:51 PM
+-- Generation Time: Apr 23, 2012 at 03:58 PM
 -- Server version: 5.5.9
 -- PHP Version: 5.3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `molajo`
@@ -47,7 +53,7 @@ INSERT INTO `molajo_actions` VALUES(7, 'administer', 1);
 
 CREATE TABLE `molajo_applications` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Application Primary Key',
-  `asset_type_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `catalog_type_id` int(11) unsigned NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `path` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `description` mediumtext,
@@ -55,15 +61,15 @@ CREATE TABLE `molajo_applications` (
   `parameters` mediumtext COMMENT 'Configurable Parameter Values',
   `metadata` mediumtext,
   PRIMARY KEY (`id`),
-  KEY `fk_applications_asset_types_index` (`asset_type_id`)
+  KEY `fk_applications_catalog_types_index` (`catalog_type_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `molajo_applications`
 --
 
-INSERT INTO `molajo_applications` VALUES(1, 50, 'site', '', 'Primary application for site visitors', '{}', '{"application_name":"Site Application",\r\n"html_display_filter":"0",\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file",\r\n"sef":"1",\r\n"sef_rewrite":"1",\r\n"sef_suffix":"0",\r\n"unicode_slugs":"0",\r\n"force_ssl":"0",\r\n"language":"en-GB",\r\n"direction":"ltr",\r\n"offset":"UTC",\r\n"offset_user":"UTC",\r\n"multilingual":"0",\r\n"list_limit":"20",\r\n"html5":"1",\r\n"image_xsmall":"50",\r\n"image_small":"75",\r\n"image_medium":"150",\r\n"image_large":"300",\r\n"image_xlarge":"500",\r\n"image_folder":"images",\r\n"thumb_folder":"thumbs",\r\n"editor":"none",\r\n"view_access":"1",\r\n"home_asset_id":"142",\r\n"logon_requirement":"139",\r\n"default_theme_id":"97",\r\n"default_page_view_id":"21",\r\n"default_items_template_view_id":"33",\r\n"default_items_wrap_view_id":"61",\r\n"default_item_template_view_id":"21",\r\n"default_item_wrap_view_id":"61",\r\n"default_edit_template_view_id":"25",\r\n"default_edit_wrap_view_id":"61",\r\n"head_template_view_id":"23",\r\n"head_wrap_view_id":"66",\r\n"message_template_view_id":"56",\r\n"message_wrap_view_id":"66",\r\n"offline":"0",\r\n"offline_message":"This site is not available.<br /> Please check back again soon.",\r\n"offline_theme_id":"99",\r\n"offline_page_view_id":"81",\r\n"error_404_message":"Page not found",\r\n"error_403_message":"Not authorised",\r\n"error_theme_id":"99",\r\n"error_page_view_id":"56",\r\n"feed_theme_id":"99",\r\n"feed_page_view_id":"81",\r\n"feed_limit":"10",\r\n"feed_email":"author",\r\n"media_priority_site":"100",\r\n"media_priority_application":"200",\r\n"media_priority_user":"300",\r\n"media_priority_other_extension":"400",\r\n"media_priority_request_extension":"500",\r\n"media_priority_theme":"600",\r\n"media_priority_primary_category":"700",\r\n"media_priority_menu_item":"800",\r\n"media_priority_source_data":"900",\r\n"debug":"1",\r\n"debug_log":"phpconsole"}', '{"metadata_title":"Molajo Site Application", "metadata_description":"Welcome to the Molajo Site Application", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
-INSERT INTO `molajo_applications` VALUES(2, 50, 'admin', 'admin', 'Administrative site area for site construction', '{"custom_field1":"I am a custom field for the application object, specifically the administrator application."}', '{"application_name":"Molajo",\r\n"html_display_filter":"0",\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file",\r\n"sef":"1",\r\n"sef_rewrite":"1",\r\n"sef_suffix":"0",\r\n"unicode_slugs":"0",\r\n"force_ssl":"0",\r\n"language":"en-GB",\r\n"direction":"ltr",\r\n"offset":"UTC",\r\n"offset_user":"UTC",\r\n"multilingual":"0",\r\n"list_limit":"20",\r\n"html5":"1",\r\n"image_xsmall":"50",\r\n"image_small":"75",\r\n"image_medium":"150",\r\n"image_large":"300",\r\n"image_xlarge":"500",\r\n"image_folder":"images",\r\n"thumb_folder":"thumbs",\r\n"editor":"none",\r\n"view_access":"1",\r\n"home_asset_id":"139",\r\n"logon_requirement":"139",\r\n"default_theme_id":"243",\r\n"default_page_view_id":"55",\r\n"default_items_template_view_id":"33",\r\n"default_items_wrap_view_id":"61",\r\n"default_item_template_view_id":"21",\r\n"default_item_wrap_view_id":"61",\r\n"default_edit_template_view_id":"25",\r\n"default_edit_wrap_view_id":"61",\r\n"head_template_view_id":"23",\r\n"head_wrap_view_id":"66",\r\n"message_template_view_id":"56",\r\n"message_wrap_view_id":"66",\r\n"offline":"0",\r\n"offline_message":"This site is not available.<br /> Please check back again soon.",\r\n"offline_theme_id":"99",\r\n"offline_page_view_id":"81",\r\n"error_404_message":"Page not found",\r\n"error_403_message":"Not authorised",\r\n"error_theme_id":"99",\r\n"error_page_view_id":"56",\r\n"feed_theme_id":"99",\r\n"feed_page_view_id":"81",\r\n"feed_limit":"10",\r\n"feed_email":"author",\r\n"media_priority_site":"100",\r\n"media_priority_application":"200",\r\n"media_priority_user":"300",\r\n"media_priority_other_extension":"400",\r\n"media_priority_request_extension":"500",\r\n"media_priority_theme":"600",\r\n"media_priority_primary_category":"700",\r\n"media_priority_menu_item":"800",\r\n"media_priority_source_data":"900",\r\n"debug":"1",\r\n"debug_log":"echo"}', '{"metadata_title":"Molajo Administrator Application", "metadata_description":"Welcome to the Molajo Administrator Application", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
+INSERT INTO `molajo_applications` VALUES(1, 50, 'site', '', 'Primary application for site visitors', '{}', '{"application_name":"Site Application",\r\n"html_display_filter":"0",\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file",\r\n"sef":"1",\r\n"sef_rewrite":"1",\r\n"sef_suffix":"0",\r\n"unicode_slugs":"0",\r\n"force_ssl":"0",\r\n"language":"en-GB",\r\n"direction":"ltr",\r\n"offset":"UTC",\r\n"offset_user":"UTC",\r\n"multilingual":"0",\r\n"list_limit":"20",\r\n"html5":"1",\r\n"image_xsmall":"50",\r\n"image_small":"75",\r\n"image_medium":"150",\r\n"image_large":"300",\r\n"image_xlarge":"500",\r\n"image_folder":"images",\r\n"thumb_folder":"thumbs",\r\n"editor":"none",\r\n"view_access":"1",\r\n"home_catalog_id":"142",\r\n"logon_requirement":"139",\r\n"default_theme_id":"97",\r\n"default_page_view_id":"21",\r\n"default_items_template_view_id":"33",\r\n"default_items_wrap_view_id":"61",\r\n"default_item_template_view_id":"21",\r\n"default_item_wrap_view_id":"61",\r\n"default_edit_template_view_id":"25",\r\n"default_edit_wrap_view_id":"61",\r\n"head_template_view_id":"23",\r\n"head_wrap_view_id":"66",\r\n"message_template_view_id":"56",\r\n"message_wrap_view_id":"66",\r\n"offline":"0",\r\n"offline_message":"This site is not available.<br /> Please check back again soon.",\r\n"offline_theme_id":"99",\r\n"offline_page_view_id":"81",\r\n"error_404_message":"Page not found",\r\n"error_403_message":"Not authorised",\r\n"error_theme_id":"99",\r\n"error_page_view_id":"56",\r\n"feed_theme_id":"99",\r\n"feed_page_view_id":"81",\r\n"feed_limit":"10",\r\n"feed_email":"author",\r\n"media_priority_site":"100",\r\n"media_priority_application":"200",\r\n"media_priority_user":"300",\r\n"media_priority_other_extension":"400",\r\n"media_priority_request_extension":"500",\r\n"media_priority_theme":"600",\r\n"media_priority_primary_category":"700",\r\n"media_priority_menu_item":"800",\r\n"media_priority_source_data":"900",\r\n"debug":"0",\r\n"debug_log":"phpconsole"}', '{"metadata_title":"Molajo Site Application", "metadata_description":"Welcome to the Molajo Site Application", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
+INSERT INTO `molajo_applications` VALUES(2, 50, 'admin', 'admin', 'Administrative site area for site construction', '{"custom_field1":"I am a custom field for the application object, specifically the administrator application."}', '{"application_name":"Molajo",\r\n"html_display_filter":"0",\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file",\r\n"sef":"1",\r\n"sef_rewrite":"1",\r\n"sef_suffix":"0",\r\n"unicode_slugs":"0",\r\n"force_ssl":"0",\r\n"language":"en-GB",\r\n"direction":"ltr",\r\n"offset":"UTC",\r\n"offset_user":"UTC",\r\n"multilingual":"0",\r\n"list_limit":"20",\r\n"html5":"1",\r\n"image_xsmall":"50",\r\n"image_small":"75",\r\n"image_medium":"150",\r\n"image_large":"300",\r\n"image_xlarge":"500",\r\n"image_folder":"images",\r\n"thumb_folder":"thumbs",\r\n"editor":"none",\r\n"view_access":"1",\r\n"home_catalog_id":"139",\r\n"logon_requirement":"139",\r\n"default_theme_id":"243",\r\n"default_page_view_id":"55",\r\n"default_items_template_view_id":"33",\r\n"default_items_wrap_view_id":"61",\r\n"default_item_template_view_id":"21",\r\n"default_item_wrap_view_id":"61",\r\n"default_edit_template_view_id":"25",\r\n"default_edit_wrap_view_id":"61",\r\n"head_template_view_id":"23",\r\n"head_wrap_view_id":"66",\r\n"message_template_view_id":"56",\r\n"message_wrap_view_id":"66",\r\n"offline":"0",\r\n"offline_message":"This site is not available.<br /> Please check back again soon.",\r\n"offline_theme_id":"99",\r\n"offline_page_view_id":"81",\r\n"error_404_message":"Page not found",\r\n"error_403_message":"Not authorised",\r\n"error_theme_id":"99",\r\n"error_page_view_id":"56",\r\n"feed_theme_id":"99",\r\n"feed_page_view_id":"81",\r\n"feed_limit":"10",\r\n"feed_email":"author",\r\n"media_priority_site":"100",\r\n"media_priority_application":"200",\r\n"media_priority_user":"300",\r\n"media_priority_other_extension":"400",\r\n"media_priority_request_extension":"500",\r\n"media_priority_theme":"600",\r\n"media_priority_primary_category":"700",\r\n"media_priority_menu_item":"800",\r\n"media_priority_source_data":"900",\r\n"debug":"0",\r\n"debug_log":"echo"}', '{"metadata_title":"Molajo Administrator Application", "metadata_description":"Welcome to the Molajo Administrator Application", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
 
 -- --------------------------------------------------------
 
@@ -272,12 +278,12 @@ INSERT INTO `molajo_application_extension_instances` VALUES(243, 2);
 -- --------------------------------------------------------
 
 --
--- Table structure for table `molajo_assets`
+-- Table structure for table `molajo_catalog`
 --
 
-CREATE TABLE `molajo_assets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Assets Primary Key',
-  `asset_type_id` int(11) unsigned NOT NULL DEFAULT '0',
+CREATE TABLE `molajo_catalog` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'catalog Primary Key',
+  `catalog_type_id` int(11) unsigned NOT NULL DEFAULT '0',
   `source_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Content Primary Key',
   `routable` tinyint(1) NOT NULL DEFAULT '0',
   `sef_request` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'URL',
@@ -290,194 +296,194 @@ CREATE TABLE `molajo_assets` (
   PRIMARY KEY (`id`),
   KEY `sef_request` (`sef_request`(255)),
   KEY `request` (`request`(255)),
-  KEY `index_assets_asset_types` (`asset_type_id`),
+  KEY `index_catalog_catalog_types` (`catalog_type_id`),
   KEY `parameters` (`request_option`,`request_model`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=169 ;
 
 --
--- Dumping data for table `molajo_assets`
+-- Dumping data for table `molajo_catalog`
 --
 
-INSERT INTO `molajo_assets` VALUES(1, 10, 1, 0, '', '', '', '', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(2, 50, 1, 0, '', '', '', '', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(3, 50, 2, 0, 'administrator', '', '', '', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(5, 100, 1, 1, 'group/1', 'index.php?option=groups&model=group&id=1', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(6, 100, 2, 1, 'group/2', 'index.php?option=groups&model=group&id=2', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(7, 100, 3, 1, 'group/3', 'index.php?option=groups&model=group&id=3', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(8, 100, 4, 1, 'group/4', 'index.php?option=groups&model=group&id=4', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(9, 120, 5, 1, 'group/5', 'index.php?option=groups&model=group&id=5', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(10, 120, 6, 1, 'group/6', 'index.php?option=groups&model=group&id=6', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(12, 1050, 0, 1, 'extensions/components/0', 'index.php?option=extensions&model=components&id=0', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(13, 1050, 1, 1, 'extensions/components/1', 'index.php?option=extensions&model=components&id=1', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(14, 1050, 2, 1, 'extensions/components/2', 'index.php?option=extensions&model=components&id=2', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(15, 1050, 3, 1, 'extensions/components/3', 'index.php?option=extensions&model=components&id=3', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(16, 1050, 4, 1, 'extensions/components/4', 'index.php?option=extensions&model=components&id=4', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(17, 1050, 5, 1, 'extensions/components/5', 'index.php?option=extensions&model=components&id=5', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(18, 1050, 6, 1, 'extensions/components/6', 'index.php?option=extensions&model=components&id=6', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(19, 1050, 7, 1, 'extensions/components/7', 'index.php?option=extensions&model=components&id=7', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(20, 1050, 8, 1, 'extensions/components/8', 'index.php?option=extensions&model=components&id=8', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(21, 1050, 9, 1, 'extensions/components/9', 'index.php?option=extensions&model=components&id=9', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(22, 1050, 10, 1, 'extensions/components/10', 'index.php?option=extensions&model=components&id=10', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(23, 1050, 11, 1, 'extensions/components/11', 'index.php?option=extensions&model=components&id=11', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(24, 1050, 12, 1, 'extensions/components/12', 'index.php?option=extensions&model=components&id=12', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(25, 1050, 13, 1, 'extensions/components/13', 'index.php?option=extensions&model=components&id=13', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(26, 1050, 14, 1, 'extensions/components/14', 'index.php?option=extensions&model=components&id=14', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(27, 1050, 15, 1, 'extensions/components/15', 'index.php?option=extensions&model=components&id=15', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(28, 1050, 16, 1, 'extensions/components/16', 'index.php?option=extensions&model=components&id=16', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(29, 1050, 17, 1, 'extensions/components/17', 'index.php?option=extensions&model=components&id=17', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(30, 1100, 18, 1, 'extensions/languages/18', 'index.php?option=extensions&model=languages&id=18', 'extension', 'Languages', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(31, 1150, 19, 1, 'extensions/views/19', 'index.php?option=extensions&model=views&id=19', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(32, 1150, 20, 1, 'extensions/views/20', 'index.php?option=extensions&model=views&id=20', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(33, 1150, 21, 1, 'extensions/views/21', 'index.php?option=extensions&model=views&id=21', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(34, 1150, 22, 1, 'extensions/views/22', 'index.php?option=extensions&model=views&id=22', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(35, 1150, 23, 1, 'extensions/views/23', 'index.php?option=extensions&model=views&id=23', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(36, 1150, 24, 1, 'extensions/views/24', 'index.php?option=extensions&model=views&id=24', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(37, 1150, 25, 1, 'extensions/views/25', 'index.php?option=extensions&model=views&id=25', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(38, 1150, 26, 1, 'extensions/views/26', 'index.php?option=extensions&model=views&id=26', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(39, 1150, 27, 1, 'extensions/views/27', 'index.php?option=extensions&model=views&id=27', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(40, 1150, 28, 1, 'extensions/views/28', 'index.php?option=extensions&model=views&id=28', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(41, 1150, 29, 1, 'extensions/views/29', 'index.php?option=extensions&model=views&id=29', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(42, 1150, 30, 1, 'extensions/views/30', 'index.php?option=extensions&model=views&id=30', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(43, 1150, 31, 1, 'extensions/views/31', 'index.php?option=extensions&model=views&id=31', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(44, 1150, 32, 1, 'extensions/views/32', 'index.php?option=extensions&model=views&id=32', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(45, 1200, 33, 1, 'extensions/views/33', 'index.php?option=extensions&model=views&id=33', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(46, 1200, 34, 1, 'extensions/views/34', 'index.php?option=extensions&model=views&id=34', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(47, 1200, 35, 1, 'extensions/views/35', 'index.php?option=extensions&model=views&id=35', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(48, 1200, 36, 1, 'extensions/views/36', 'index.php?option=extensions&model=views&id=36', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(49, 1200, 37, 1, 'extensions/views/37', 'index.php?option=extensions&model=views&id=37', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(50, 1200, 38, 1, 'extensions/views/38', 'index.php?option=extensions&model=views&id=38', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(51, 1200, 39, 1, 'extensions/views/39', 'index.php?option=extensions&model=views&id=39', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(52, 1200, 40, 1, 'extensions/views/40', 'index.php?option=extensions&model=views&id=40', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(53, 1150, 41, 1, 'extensions/views/41', 'index.php?option=extensions&model=views&id=41', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(54, 1150, 42, 1, 'extensions/views/42', 'index.php?option=extensions&model=views&id=42', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(55, 1150, 43, 1, 'extensions/views/43', 'index.php?option=extensions&model=views&id=43', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(56, 1150, 44, 1, 'extensions/views/44', 'index.php?option=extensions&model=views&id=44', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(67, 1150, 55, 1, 'extensions/views/55', 'index.php?option=extensions&model=views&id=55', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(68, 1150, 56, 1, 'extensions/views/56', 'index.php?option=extensions&model=views&id=56', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(69, 1150, 57, 1, 'extensions/views/57', 'index.php?option=extensions&model=views&id=57', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(70, 1150, 58, 1, 'extensions/views/58', 'index.php?option=extensions&model=views&id=58', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(71, 1150, 59, 1, 'extensions/views/59', 'index.php?option=extensions&model=views&id=59', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(72, 1150, 60, 1, 'extensions/views/60', 'index.php?option=extensions&model=views&id=60', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(73, 1150, 61, 1, 'extensions/views/61', 'index.php?option=extensions&model=views&id=61', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(74, 1150, 62, 1, 'extensions/views/62', 'index.php?option=extensions&model=views&id=62', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(75, 1150, 63, 1, 'extensions/views/63', 'index.php?option=extensions&model=views&id=63', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(76, 1150, 64, 1, 'extensions/views/64', 'index.php?option=extensions&model=views&id=64', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(77, 1150, 65, 1, 'extensions/views/65', 'index.php?option=extensions&model=views&id=65', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(78, 1150, 66, 1, 'extensions/views/66', 'index.php?option=extensions&model=views&id=66', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(79, 1150, 67, 1, 'extensions/views/67', 'index.php?option=extensions&model=views&id=67', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(80, 1450, 82, 1, 'extensions/triggers/82', 'index.php?option=extensions&model=triggers&id=82', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(81, 1450, 83, 1, 'extensions/triggers/83', 'index.php?option=extensions&model=triggers&id=83', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(82, 1450, 84, 1, 'extensions/triggers/84', 'index.php?option=extensions&model=triggers&id=84', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(83, 1450, 85, 1, 'extensions/triggers/85', 'index.php?option=extensions&model=triggers&id=85', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(84, 1450, 86, 1, 'extensions/triggers/86', 'index.php?option=extensions&model=triggers&id=86', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(85, 1450, 87, 1, 'extensions/triggers/87', 'index.php?option=extensions&model=triggers&id=87', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(86, 1450, 88, 1, 'extensions/triggers/88', 'index.php?option=extensions&model=triggers&id=88', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(87, 1450, 89, 1, 'extensions/triggers/89', 'index.php?option=extensions&model=triggers&id=89', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(88, 1450, 90, 1, 'extensions/triggers/90', 'index.php?option=extensions&model=triggers&id=90', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(89, 1450, 91, 1, 'extensions/triggers/91', 'index.php?option=extensions&model=triggers&id=91', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(90, 1450, 92, 1, 'extensions/triggers/92', 'index.php?option=extensions&model=triggers&id=92', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(91, 1450, 93, 1, 'extensions/triggers/93', 'index.php?option=extensions&model=triggers&id=93', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(92, 1450, 94, 1, 'extensions/triggers/94', 'index.php?option=extensions&model=triggers&id=94', 'extension', 'Triggers', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(93, 1500, 97, 1, 'extensions/templates/97', 'index.php?option=extensions&model=templates&id=97', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(94, 1500, 98, 1, 'extensions/templates/98', 'index.php?option=extensions&model=templates&id=98', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(95, 1500, 99, 1, 'extensions/templates/99', 'index.php?option=extensions&model=templates&id=99', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(96, 1300, 100, 1, 'extensions/menus/100', 'index.php?option=extensions&model=menus&id=100', 'extension', 'Menus', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(97, 1300, 101, 1, 'extensions/menus/101', 'index.php?option=extensions&model=menus&id=101', 'extension', 'Menus', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(98, 1350, 103, 1, 'extensions/modules/103', 'index.php?option=extensions&model=modules&id=103', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(99, 1350, 104, 1, 'extensions/modules/104', 'index.php?option=extensions&model=modules&id=104', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(100, 1350, 105, 1, 'extensions/modules/105', 'index.php?option=extensions&model=modules&id=105', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(101, 1350, 106, 1, 'extensions/modules/106', 'index.php?option=extensions&model=modules&id=106', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(102, 1350, 107, 1, 'extensions/modules/107', 'index.php?option=extensions&model=modules&id=107', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(103, 1350, 108, 1, 'extensions/modules/108', 'index.php?option=extensions&model=modules&id=108', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(104, 1350, 109, 1, 'extensions/modules/109', 'index.php?option=extensions&model=modules&id=109', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(105, 1350, 110, 1, 'extensions/modules/110', 'index.php?option=extensions&model=modules&id=110', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(106, 1350, 111, 1, 'extensions/modules/111', 'index.php?option=extensions&model=modules&id=111', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(107, 1350, 112, 1, 'extensions/modules/112', 'index.php?option=extensions&model=modules&id=112', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(108, 1350, 113, 1, 'extensions/modules/113', 'index.php?option=extensions&model=modules&id=113', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(109, 1350, 114, 1, 'extensions/modules/114', 'index.php?option=extensions&model=modules&id=114', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(110, 1350, 115, 1, 'extensions/modules/115', 'index.php?option=extensions&model=modules&id=115', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(111, 1350, 116, 1, 'extensions/modules/116', 'index.php?option=extensions&model=modules&id=116', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(112, 1350, 117, 1, 'extensions/modules/117', 'index.php?option=extensions&model=modules&id=117', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(113, 1350, 118, 1, 'extensions/modules/118', 'index.php?option=extensions&model=modules&id=118', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(139, 2000, 102, 1, 'content', 'index.php?option=menuitems&id=102', 'menuitems', '', 0, 1, 3);
-INSERT INTO `molajo_assets` VALUES(140, 2000, 114, 1, 'articles', 'index.php?option=menuitems&id=114', 'menuitems', '', 0, 1, 3);
-INSERT INTO `molajo_assets` VALUES(141, 3000, 103, 1, 'category/content', 'index.php?option=categories&id=103', 'categories', 'category', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(142, 10000, 104, 1, 'articles/article-alias-here', 'index.php?option=articles&id=104', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(143, 10000, 105, 1, 'articles/second-alias', 'index.php?option=articles&id=105', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(144, 10000, 106, 1, 'articles/article-three', 'index.php?option=articles&id=106', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(145, 10000, 107, 1, 'articles/article-4', 'index.php?option=articles&id=107', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(146, 10000, 108, 1, 'articles/article-5', 'index.php?option=articles&id=108', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(147, 10000, 109, 1, 'articles/article-6', 'index.php?option=articles&id=109', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(148, 10000, 110, 1, 'articles/article-7', 'index.php?option=articles&id=110', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(149, 10000, 111, 1, 'articles/article-8', 'index.php?option=articles&id=111', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(150, 10000, 112, 1, 'articles/article-9', 'index.php?option=articles&id=112', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(151, 10000, 113, 1, 'articles/article-10', 'index.php?option=articles&id=113', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_assets` VALUES(152, 1500, 119, 1, 'extensions/templates/119', 'index.php?option=extensions&model=templates&id=119', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(153, 1500, 120, 1, 'extensions/templates/120', 'index.php?option=extensions&model=templates&id=120', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(154, 1500, 121, 1, 'extensions/templates/121', 'index.php?option=extensions&model=templates&id=121', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(155, 1150, 122, 1, 'extensions/views/122', 'index.php?option=extensions&model=views&id=122', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(156, 1150, 123, 1, 'extensions/views/123', 'index.php?option=extensions&model=views&id=123', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(157, 1150, 124, 1, 'extensions/views/124', 'index.php?option=extensions&model=views&id=124', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(158, 1150, 125, 1, 'extensions/views/125', 'index.php?option=extensions&model=views&id=125', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(159, 1200, 236, 0, 'extensions/template_view/236', 'index.php?option=extensions&model=template_view&id=236', 'extension', 'template_view', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(160, 10000, 104, 1, 'articles/article-1', '', 'articles', 'content', 142, 1, 103);
-INSERT INTO `molajo_assets` VALUES(161, 1350, 237, 1, 'extensions/modules/237', 'index.php?option=extensions&id=237', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(162, 1350, 238, 1, 'extensions/modules/238', 'index.php?option=extensions&id=238', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(163, 1350, 239, 1, 'extensions/modules/239', 'index.php?option=extensions&id=239', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(164, 1350, 240, 1, 'extensions/modules/240', 'index.php?option=extensions&id=240', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(165, 1350, 241, 1, 'extensions/modules/241', 'index.php?option=extensions&id=241', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(166, 1350, 242, 1, 'extensions/modules/242', 'index.php?option=extensions&id=242', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_assets` VALUES(168, 1500, 243, 1, 'extensions/themes/243', 'index.php?option=extensions&model=themes&id=243', 'extensions', 'themes', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(1, 10, 1, 0, '', '', '', '', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(2, 50, 1, 0, '', '', '', '', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(3, 50, 2, 0, 'administrator', '', '', '', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(5, 100, 1, 1, 'group/1', 'index.php?option=groups&model=group&id=1', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(6, 100, 2, 1, 'group/2', 'index.php?option=groups&model=group&id=2', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(7, 100, 3, 1, 'group/3', 'index.php?option=groups&model=group&id=3', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(8, 100, 4, 1, 'group/4', 'index.php?option=groups&model=group&id=4', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(9, 120, 5, 1, 'group/5', 'index.php?option=groups&model=group&id=5', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(10, 120, 6, 1, 'group/6', 'index.php?option=groups&model=group&id=6', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(12, 1050, 0, 1, 'extensions/components/0', 'index.php?option=extensions&model=components&id=0', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(13, 1050, 1, 1, 'extensions/components/1', 'index.php?option=extensions&model=components&id=1', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(14, 1050, 2, 1, 'extensions/components/2', 'index.php?option=extensions&model=components&id=2', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(15, 1050, 3, 1, 'extensions/components/3', 'index.php?option=extensions&model=components&id=3', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(16, 1050, 4, 1, 'extensions/components/4', 'index.php?option=extensions&model=components&id=4', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(17, 1050, 5, 1, 'extensions/components/5', 'index.php?option=extensions&model=components&id=5', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(18, 1050, 6, 1, 'extensions/components/6', 'index.php?option=extensions&model=components&id=6', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(19, 1050, 7, 1, 'extensions/components/7', 'index.php?option=extensions&model=components&id=7', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(20, 1050, 8, 1, 'extensions/components/8', 'index.php?option=extensions&model=components&id=8', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(21, 1050, 9, 1, 'extensions/components/9', 'index.php?option=extensions&model=components&id=9', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(22, 1050, 10, 1, 'extensions/components/10', 'index.php?option=extensions&model=components&id=10', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(23, 1050, 11, 1, 'extensions/components/11', 'index.php?option=extensions&model=components&id=11', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(24, 1050, 12, 1, 'extensions/components/12', 'index.php?option=extensions&model=components&id=12', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(25, 1050, 13, 1, 'extensions/components/13', 'index.php?option=extensions&model=components&id=13', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(26, 1050, 14, 1, 'extensions/components/14', 'index.php?option=extensions&model=components&id=14', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(27, 1050, 15, 1, 'extensions/components/15', 'index.php?option=extensions&model=components&id=15', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(28, 1050, 16, 1, 'extensions/components/16', 'index.php?option=extensions&model=components&id=16', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(29, 1050, 17, 1, 'extensions/components/17', 'index.php?option=extensions&model=components&id=17', 'extension', 'Components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(30, 1100, 18, 1, 'extensions/languages/18', 'index.php?option=extensions&model=languages&id=18', 'extension', 'Languages', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(31, 1150, 19, 1, 'extensions/views/19', 'index.php?option=extensions&model=views&id=19', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(32, 1150, 20, 1, 'extensions/views/20', 'index.php?option=extensions&model=views&id=20', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(33, 1150, 21, 1, 'extensions/views/21', 'index.php?option=extensions&model=views&id=21', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(34, 1150, 22, 1, 'extensions/views/22', 'index.php?option=extensions&model=views&id=22', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(35, 1150, 23, 1, 'extensions/views/23', 'index.php?option=extensions&model=views&id=23', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(36, 1150, 24, 1, 'extensions/views/24', 'index.php?option=extensions&model=views&id=24', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(37, 1150, 25, 1, 'extensions/views/25', 'index.php?option=extensions&model=views&id=25', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(38, 1150, 26, 1, 'extensions/views/26', 'index.php?option=extensions&model=views&id=26', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(39, 1150, 27, 1, 'extensions/views/27', 'index.php?option=extensions&model=views&id=27', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(40, 1150, 28, 1, 'extensions/views/28', 'index.php?option=extensions&model=views&id=28', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(41, 1150, 29, 1, 'extensions/views/29', 'index.php?option=extensions&model=views&id=29', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(42, 1150, 30, 1, 'extensions/views/30', 'index.php?option=extensions&model=views&id=30', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(43, 1150, 31, 1, 'extensions/views/31', 'index.php?option=extensions&model=views&id=31', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(44, 1150, 32, 1, 'extensions/views/32', 'index.php?option=extensions&model=views&id=32', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(45, 1200, 33, 1, 'extensions/views/33', 'index.php?option=extensions&model=views&id=33', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(46, 1200, 34, 1, 'extensions/views/34', 'index.php?option=extensions&model=views&id=34', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(47, 1200, 35, 1, 'extensions/views/35', 'index.php?option=extensions&model=views&id=35', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(48, 1200, 36, 1, 'extensions/views/36', 'index.php?option=extensions&model=views&id=36', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(49, 1200, 37, 1, 'extensions/views/37', 'index.php?option=extensions&model=views&id=37', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(50, 1200, 38, 1, 'extensions/views/38', 'index.php?option=extensions&model=views&id=38', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(51, 1200, 39, 1, 'extensions/views/39', 'index.php?option=extensions&model=views&id=39', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(52, 1200, 40, 1, 'extensions/views/40', 'index.php?option=extensions&model=views&id=40', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(53, 1150, 41, 1, 'extensions/views/41', 'index.php?option=extensions&model=views&id=41', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(54, 1150, 42, 1, 'extensions/views/42', 'index.php?option=extensions&model=views&id=42', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(55, 1150, 43, 1, 'extensions/views/43', 'index.php?option=extensions&model=views&id=43', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(56, 1150, 44, 1, 'extensions/views/44', 'index.php?option=extensions&model=views&id=44', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(67, 1150, 55, 1, 'extensions/views/55', 'index.php?option=extensions&model=views&id=55', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(68, 1150, 56, 1, 'extensions/views/56', 'index.php?option=extensions&model=views&id=56', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(69, 1150, 57, 1, 'extensions/views/57', 'index.php?option=extensions&model=views&id=57', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(70, 1150, 58, 1, 'extensions/views/58', 'index.php?option=extensions&model=views&id=58', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(71, 1150, 59, 1, 'extensions/views/59', 'index.php?option=extensions&model=views&id=59', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(72, 1150, 60, 1, 'extensions/views/60', 'index.php?option=extensions&model=views&id=60', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(73, 1150, 61, 1, 'extensions/views/61', 'index.php?option=extensions&model=views&id=61', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(74, 1150, 62, 1, 'extensions/views/62', 'index.php?option=extensions&model=views&id=62', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(75, 1150, 63, 1, 'extensions/views/63', 'index.php?option=extensions&model=views&id=63', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(76, 1150, 64, 1, 'extensions/views/64', 'index.php?option=extensions&model=views&id=64', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(77, 1150, 65, 1, 'extensions/views/65', 'index.php?option=extensions&model=views&id=65', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(78, 1150, 66, 1, 'extensions/views/66', 'index.php?option=extensions&model=views&id=66', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(79, 1150, 67, 1, 'extensions/views/67', 'index.php?option=extensions&model=views&id=67', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(80, 1450, 82, 1, 'extensions/plugins/82', 'index.php?option=extensions&model=plugins&id=82', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(81, 1450, 83, 1, 'extensions/plugins/83', 'index.php?option=extensions&model=plugins&id=83', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(82, 1450, 84, 1, 'extensions/plugins/84', 'index.php?option=extensions&model=plugins&id=84', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(83, 1450, 85, 1, 'extensions/plugins/85', 'index.php?option=extensions&model=plugins&id=85', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(84, 1450, 86, 1, 'extensions/plugins/86', 'index.php?option=extensions&model=plugins&id=86', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(85, 1450, 87, 1, 'extensions/plugins/87', 'index.php?option=extensions&model=plugins&id=87', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(86, 1450, 88, 1, 'extensions/plugins/88', 'index.php?option=extensions&model=plugins&id=88', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(87, 1450, 89, 1, 'extensions/plugins/89', 'index.php?option=extensions&model=plugins&id=89', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(88, 1450, 90, 1, 'extensions/plugins/90', 'index.php?option=extensions&model=plugins&id=90', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(89, 1450, 91, 1, 'extensions/plugins/91', 'index.php?option=extensions&model=plugins&id=91', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(90, 1450, 92, 1, 'extensions/plugins/92', 'index.php?option=extensions&model=plugins&id=92', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(91, 1450, 93, 1, 'extensions/plugins/93', 'index.php?option=extensions&model=plugins&id=93', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(92, 1450, 94, 1, 'extensions/plugins/94', 'index.php?option=extensions&model=plugins&id=94', 'extension', 'Plugins', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(93, 1500, 97, 1, 'extensions/templates/97', 'index.php?option=extensions&model=templates&id=97', 'extension', 'Templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(94, 1500, 98, 1, 'extensions/templates/98', 'index.php?option=extensions&model=templates&id=98', 'extension', 'Templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(95, 1500, 99, 1, 'extensions/templates/99', 'index.php?option=extensions&model=templates&id=99', 'extension', 'Templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(96, 1300, 100, 1, 'extensions/menus/100', 'index.php?option=extensions&model=menus&id=100', 'extension', 'Menus', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(97, 1300, 101, 1, 'extensions/menus/101', 'index.php?option=extensions&model=menus&id=101', 'extension', 'Menus', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(98, 1350, 103, 1, 'extensions/modules/103', 'index.php?option=extensions&model=modules&id=103', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(99, 1350, 104, 1, 'extensions/modules/104', 'index.php?option=extensions&model=modules&id=104', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(100, 1350, 105, 1, 'extensions/modules/105', 'index.php?option=extensions&model=modules&id=105', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(101, 1350, 106, 1, 'extensions/modules/106', 'index.php?option=extensions&model=modules&id=106', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(102, 1350, 107, 1, 'extensions/modules/107', 'index.php?option=extensions&model=modules&id=107', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(103, 1350, 108, 1, 'extensions/modules/108', 'index.php?option=extensions&model=modules&id=108', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(104, 1350, 109, 1, 'extensions/modules/109', 'index.php?option=extensions&model=modules&id=109', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(105, 1350, 110, 1, 'extensions/modules/110', 'index.php?option=extensions&model=modules&id=110', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(106, 1350, 111, 1, 'extensions/modules/111', 'index.php?option=extensions&model=modules&id=111', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(107, 1350, 112, 1, 'extensions/modules/112', 'index.php?option=extensions&model=modules&id=112', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(108, 1350, 113, 1, 'extensions/modules/113', 'index.php?option=extensions&model=modules&id=113', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(109, 1350, 114, 1, 'extensions/modules/114', 'index.php?option=extensions&model=modules&id=114', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(110, 1350, 115, 1, 'extensions/modules/115', 'index.php?option=extensions&model=modules&id=115', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(111, 1350, 116, 1, 'extensions/modules/116', 'index.php?option=extensions&model=modules&id=116', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(112, 1350, 117, 1, 'extensions/modules/117', 'index.php?option=extensions&model=modules&id=117', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(113, 1350, 118, 1, 'extensions/modules/118', 'index.php?option=extensions&model=modules&id=118', 'extension', 'Modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(139, 2000, 102, 1, 'content', 'index.php?option=menuitems&id=102', 'menuitems', '', 0, 1, 3);
+INSERT INTO `molajo_catalog` VALUES(140, 2000, 114, 1, 'articles', 'index.php?option=menuitems&id=114', 'menuitems', '', 0, 1, 3);
+INSERT INTO `molajo_catalog` VALUES(141, 3000, 103, 1, 'category/content', 'index.php?option=categories&id=103', 'categories', 'category', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(142, 10000, 104, 1, 'articles/article-alias-here', 'index.php?option=articles&id=104', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(143, 10000, 105, 1, 'articles/second-alias', 'index.php?option=articles&id=105', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(144, 10000, 106, 1, 'articles/article-three', 'index.php?option=articles&id=106', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(145, 10000, 107, 1, 'articles/article-4', 'index.php?option=articles&id=107', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(146, 10000, 108, 1, 'articles/article-5', 'index.php?option=articles&id=108', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(147, 10000, 109, 1, 'articles/article-6', 'index.php?option=articles&id=109', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(148, 10000, 110, 1, 'articles/article-7', 'index.php?option=articles&id=110', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(149, 10000, 111, 1, 'articles/article-8', 'index.php?option=articles&id=111', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(150, 10000, 112, 1, 'articles/article-9', 'index.php?option=articles&id=112', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(151, 10000, 113, 1, 'articles/article-10', 'index.php?option=articles&id=113', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(152, 1500, 119, 1, 'extensions/templates/119', 'index.php?option=extensions&model=templates&id=119', 'extension', 'Templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(153, 1500, 120, 1, 'extensions/templates/120', 'index.php?option=extensions&model=templates&id=120', 'extension', 'Templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(154, 1500, 121, 1, 'extensions/templates/121', 'index.php?option=extensions&model=templates&id=121', 'extension', 'Templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(155, 1150, 122, 1, 'extensions/views/122', 'index.php?option=extensions&model=views&id=122', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(156, 1150, 123, 1, 'extensions/views/123', 'index.php?option=extensions&model=views&id=123', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(157, 1150, 124, 1, 'extensions/views/124', 'index.php?option=extensions&model=views&id=124', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(158, 1150, 125, 1, 'extensions/views/125', 'index.php?option=extensions&model=views&id=125', 'extension', 'Views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(159, 1200, 236, 0, 'extensions/template_view/236', 'index.php?option=extensions&model=template_view&id=236', 'extension', 'template_view', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(160, 10000, 104, 1, 'articles/article-1', '', 'articles', 'content', 142, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(161, 1350, 237, 1, 'extensions/modules/237', 'index.php?option=extensions&id=237', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(162, 1350, 238, 1, 'extensions/modules/238', 'index.php?option=extensions&id=238', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(163, 1350, 239, 1, 'extensions/modules/239', 'index.php?option=extensions&id=239', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(164, 1350, 240, 1, 'extensions/modules/240', 'index.php?option=extensions&id=240', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(165, 1350, 241, 1, 'extensions/modules/241', 'index.php?option=extensions&id=241', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(166, 1350, 242, 1, 'extensions/modules/242', 'index.php?option=extensions&id=242', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(168, 1500, 243, 1, 'extensions/themes/243', 'index.php?option=extensions&model=themes&id=243', 'extensions', 'themes', 0, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `molajo_asset_activity`
+-- Table structure for table `molajo_catalog_activity`
 --
 
-CREATE TABLE `molajo_asset_activity` (
+CREATE TABLE `molajo_catalog_activity` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `asset_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `catalog_id` int(11) unsigned NOT NULL DEFAULT '0',
   `user_id` int(11) unsigned NOT NULL DEFAULT '0',
   `rating` tinyint(4) unsigned DEFAULT NULL,
   `activity_datetime` datetime DEFAULT NULL,
   `ip_address` varchar(15) NOT NULL DEFAULT '',
   `custom_fields` mediumtext,
   PRIMARY KEY (`id`),
-  KEY `asset_activity_assets_index` (`asset_id`)
+  KEY `catalog_activity_catalog_index` (`catalog_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `molajo_asset_activity`
+-- Dumping data for table `molajo_catalog_activity`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `molajo_asset_categories`
+-- Table structure for table `molajo_catalog_categories`
 --
 
-CREATE TABLE `molajo_asset_categories` (
-  `asset_id` int(11) unsigned NOT NULL DEFAULT '0',
+CREATE TABLE `molajo_catalog_categories` (
+  `catalog_id` int(11) unsigned NOT NULL DEFAULT '0',
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`asset_id`,`category_id`),
-  KEY `fk_asset_categories_assets_index` (`asset_id`),
-  KEY `fk_asset_categories_categories_index` (`category_id`)
+  PRIMARY KEY (`catalog_id`,`category_id`),
+  KEY `fk_catalog_categories_catalog_index` (`catalog_id`),
+  KEY `fk_catalog_categories_categories_index` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `molajo_asset_categories`
+-- Dumping data for table `molajo_catalog_categories`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `molajo_asset_types`
+-- Table structure for table `molajo_catalog_types`
 --
 
-CREATE TABLE `molajo_asset_types` (
+CREATE TABLE `molajo_catalog_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key',
   `title` varchar(255) NOT NULL DEFAULT ' ',
   `protected` tinyint(4) unsigned NOT NULL DEFAULT '0',
@@ -488,38 +494,38 @@ CREATE TABLE `molajo_asset_types` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60001 ;
 
 --
--- Dumping data for table `molajo_asset_types`
+-- Dumping data for table `molajo_catalog_types`
 --
 
-INSERT INTO `molajo_asset_types` VALUES(1, 'system', 1, '', '', '');
-INSERT INTO `molajo_asset_types` VALUES(10, 'sites', 1, '#__sites', 'sites', '');
-INSERT INTO `molajo_asset_types` VALUES(50, 'applications', 1, '#__applications', 'applications', '');
-INSERT INTO `molajo_asset_types` VALUES(100, 'system', 1, '#__content', 'groups', '');
-INSERT INTO `molajo_asset_types` VALUES(110, 'normal', 1, '#__content', 'groups', '');
-INSERT INTO `molajo_asset_types` VALUES(120, 'user', 1, '#__content', 'groups', '');
-INSERT INTO `molajo_asset_types` VALUES(130, 'friend', 1, '#__content', 'groups', '');
-INSERT INTO `molajo_asset_types` VALUES(500, 'users', 1, '#__users', 'users', '');
-INSERT INTO `molajo_asset_types` VALUES(1050, 'components', 1, '#__extension_instances', 'extensions', '');
-INSERT INTO `molajo_asset_types` VALUES(1100, 'languages', 1, '#__extension_instances', 'extensions', '');
-INSERT INTO `molajo_asset_types` VALUES(1150, 'page_view', 1, '#__extension_instances', 'extensions', 'pages');
-INSERT INTO `molajo_asset_types` VALUES(1200, 'template_view', 1, '#__extension_instances', 'extensions', 'templates');
-INSERT INTO `molajo_asset_types` VALUES(1250, 'wrap_view', 1, '#__extension_instances', 'extensions', 'wraps');
-INSERT INTO `molajo_asset_types` VALUES(1300, 'menus', 1, '#__extension_instances', 'extensions', '');
-INSERT INTO `molajo_asset_types` VALUES(1350, 'modules', 1, '#__extension_instances', 'extensions', '');
-INSERT INTO `molajo_asset_types` VALUES(1450, 'triggers', 1, '#__extension_instances', 'extensions', 'render');
-INSERT INTO `molajo_asset_types` VALUES(1500, 'templates', 1, '#__extension_instances', 'extensions', '');
-INSERT INTO `molajo_asset_types` VALUES(2000, 'component', 1, '#__content', 'menuitems', '');
-INSERT INTO `molajo_asset_types` VALUES(2100, 'link', 1, '#__content', 'menuitems', '');
-INSERT INTO `molajo_asset_types` VALUES(2200, 'module', 1, '#__content', 'menuitems', '');
-INSERT INTO `molajo_asset_types` VALUES(2300, 'separator', 1, '#__content', 'menuitems', '');
-INSERT INTO `molajo_asset_types` VALUES(3000, 'list', 0, '#__content', 'categories', '');
-INSERT INTO `molajo_asset_types` VALUES(3500, 'tags', 0, '#__content', 'categories', '');
-INSERT INTO `molajo_asset_types` VALUES(10000, 'articles', 0, '#__content', 'articles', '');
-INSERT INTO `molajo_asset_types` VALUES(20000, 'contacts', 0, '#__content', 'contacts', '');
-INSERT INTO `molajo_asset_types` VALUES(30000, 'comments', 0, '#__content', 'comments', '');
-INSERT INTO `molajo_asset_types` VALUES(40000, 'dashboard', 0, '', 'dashboard', '');
-INSERT INTO `molajo_asset_types` VALUES(50000, 'media', 0, '#__content', 'media', '');
-INSERT INTO `molajo_asset_types` VALUES(60000, 'views', 0, '#__content', 'views', '');
+INSERT INTO `molajo_catalog_types` VALUES(1, 'system', 1, '', '', '');
+INSERT INTO `molajo_catalog_types` VALUES(10, 'sites', 1, '#__sites', 'sites', '');
+INSERT INTO `molajo_catalog_types` VALUES(50, 'applications', 1, '#__applications', 'applications', '');
+INSERT INTO `molajo_catalog_types` VALUES(100, 'system', 1, '#__content', 'groups', '');
+INSERT INTO `molajo_catalog_types` VALUES(110, 'normal', 1, '#__content', 'groups', '');
+INSERT INTO `molajo_catalog_types` VALUES(120, 'user', 1, '#__content', 'groups', '');
+INSERT INTO `molajo_catalog_types` VALUES(130, 'friend', 1, '#__content', 'groups', '');
+INSERT INTO `molajo_catalog_types` VALUES(500, 'users', 1, '#__users', 'users', '');
+INSERT INTO `molajo_catalog_types` VALUES(1050, 'components', 1, '#__extension_instances', 'extensions', '');
+INSERT INTO `molajo_catalog_types` VALUES(1100, 'languages', 1, '#__extension_instances', 'extensions', '');
+INSERT INTO `molajo_catalog_types` VALUES(1150, 'page_view', 1, '#__extension_instances', 'extensions', 'pages');
+INSERT INTO `molajo_catalog_types` VALUES(1200, 'template_view', 1, '#__extension_instances', 'extensions', 'templates');
+INSERT INTO `molajo_catalog_types` VALUES(1250, 'wrap_view', 1, '#__extension_instances', 'extensions', 'wraps');
+INSERT INTO `molajo_catalog_types` VALUES(1300, 'menus', 1, '#__extension_instances', 'extensions', '');
+INSERT INTO `molajo_catalog_types` VALUES(1350, 'modules', 1, '#__extension_instances', 'extensions', '');
+INSERT INTO `molajo_catalog_types` VALUES(1450, 'plugins', 1, '#__extension_instances', 'extensions', 'render');
+INSERT INTO `molajo_catalog_types` VALUES(1500, 'templates', 1, '#__extension_instances', 'extensions', '');
+INSERT INTO `molajo_catalog_types` VALUES(2000, 'component', 1, '#__content', 'menuitems', '');
+INSERT INTO `molajo_catalog_types` VALUES(2100, 'link', 1, '#__content', 'menuitems', '');
+INSERT INTO `molajo_catalog_types` VALUES(2200, 'module', 1, '#__content', 'menuitems', '');
+INSERT INTO `molajo_catalog_types` VALUES(2300, 'separator', 1, '#__content', 'menuitems', '');
+INSERT INTO `molajo_catalog_types` VALUES(3000, 'list', 0, '#__content', 'categories', '');
+INSERT INTO `molajo_catalog_types` VALUES(3500, 'tags', 0, '#__content', 'categories', '');
+INSERT INTO `molajo_catalog_types` VALUES(10000, 'articles', 0, '#__content', 'articles', '');
+INSERT INTO `molajo_catalog_types` VALUES(20000, 'contacts', 0, '#__content', 'contacts', '');
+INSERT INTO `molajo_catalog_types` VALUES(30000, 'comments', 0, '#__content', 'comments', '');
+INSERT INTO `molajo_catalog_types` VALUES(40000, 'dashboard', 0, '', 'dashboard', '');
+INSERT INTO `molajo_catalog_types` VALUES(50000, 'media', 0, '#__content', 'media', '');
+INSERT INTO `molajo_catalog_types` VALUES(60000, 'views', 0, '#__content', 'views', '');
 
 -- --------------------------------------------------------
 
@@ -530,7 +536,7 @@ INSERT INTO `molajo_asset_types` VALUES(60000, 'views', 0, '#__content', 'views'
 CREATE TABLE `molajo_content` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `extension_instance_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `asset_type_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `catalog_type_id` int(11) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `subtitle` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Subtitle',
   `path` varchar(2048) NOT NULL DEFAULT ' ',
@@ -591,7 +597,7 @@ INSERT INTO `molajo_content` VALUES(110, 2, 10000, 'Article 7', '', 'articles', 
 INSERT INTO `molajo_content` VALUES(111, 2, 10000, 'Article 8', '', 'articles', 'article-8', '<p>Shiznit interdizzle. Suspendisse potenti. Fo shizzle my nizzle nisl. Brizzle things ante, ullamcorper pimpin'', ullamcorpizzle go to hizzle, check out this phat, leo. Yo mamma egizzle that''s the shizzle.</p>', 0, 0, 0, 1, '2012-01-28 00:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-01-28 00:00:00', 100, '2012-01-28 00:00:00', 100, '0000-00-00 00:00:00', 0, 0, 0, 0, 0, 0, 0, '{"image1_caption":"Caption",\r\n"image1_credit":"Credit to you",\r\n"image1_xsmall":"http://dummyimage.com/50x50/000/fff&text=xsmall",\r\n"image1_small":"http://dummyimage.com/75x75/000/fff&text=small",\r\n"image1_medium":"http://dummyimage.com/150x150/000/fff&text=medium",\r\n"image1_large":"http://dummyimage.com/300x300/000/fff&text=large",\r\n"image1_xlarge":"http://dummyimage.com/500x500/000/fff&text=xlarge",\r\n"link1":"https://twitter.com/Molajo",\r\n"link2":"https://github.com/Molajo/Molajo",\r\n"link3":"https://www.ohloh.net/p/Molajo",\r\n"video1":"http://t.co/QW4M4Ux3"}', NULL, '{"metadata_title":"Article 8", "metadata_description":"This is Article 8.", "metadata_keywords":"article, content", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}', 'en-GB', 0, 8);
 INSERT INTO `molajo_content` VALUES(112, 2, 10000, 'Article 9', '', 'articles', 'article-9', '<p>Yo, yo, yo. Nam egestas, metizzle phat laorizzle shiz, nisl ghetto aliquizzle urna, vulputate phat velit rizzle izzle pimpin''.Pimpin'' ac i''m in the shizzle et its fo rizzle euismizzle for sure. Phasellizzle shut the shizzle up lorizzle. Bizzle velit. Own yo'' izzle nibh.</p>', 0, 0, 0, 1, '2012-01-28 00:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-01-28 00:00:00', 100, '2012-01-28 00:00:00', 100, '0000-00-00 00:00:00', 0, 0, 0, 0, 0, 0, 0, '{"image1_caption":"Caption",\r\n"image1_credit":"Credit to you",\r\n"image1_xsmall":"http://dummyimage.com/50x50/000/fff&text=xsmall",\r\n"image1_small":"http://dummyimage.com/75x75/000/fff&text=small",\r\n"image1_medium":"http://dummyimage.com/150x150/000/fff&text=medium",\r\n"image1_large":"http://dummyimage.com/300x300/000/fff&text=large",\r\n"image1_xlarge":"http://dummyimage.com/500x500/000/fff&text=xlarge",\r\n"link1":"https://twitter.com/Molajo",\r\n"link2":"https://github.com/Molajo/Molajo",\r\n"link3":"https://www.ohloh.net/p/Molajo",\r\n"video1":"http://t.co/QW4M4Ux3"}', '', '{"metadata_title":"Article 9", "metadata_description":"This is Article 9.", "metadata_keywords":"article, content", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}', 'en-GB', 0, 9);
 INSERT INTO `molajo_content` VALUES(113, 2, 10000, 'One long summer', '', 'articles', 'article-10', '<p>Phasellizzle check it out i''m in the shizzle tellus. Ut we gonna chung adipiscing lorizzle. Donizzle nizzle est. That''s the shizzle sapizzle massa, ultrices nizzle, accumsizzle dizzle, fo shizzle quis, pede. Duis nec shiznit. Etizzle rutrizzle ornare ante. Maurizzle fo shizzle.</p> \r\n<hr id="system-readmore" />\r\n<p>Vestibulizzle izzle pede fo shizzle nibh commodo commodo. Lorem ipsum dolizzle sizzle gangster, gangster adipiscing elit. Shizzle my nizzle crocodizzle phat mi. Check it out phat black, sodalizzle et, shiznit a, eleifend a, elit.</p>', 0, 0, 0, 1, '2012-01-28 00:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-01-28 00:00:00', 100, '2012-01-28 00:00:00', 100, '0000-00-00 00:00:00', 0, 0, 0, 0, 0, 0, 0, '{"image1_caption":"Caption",\r\n"image1_credit":"Credit to you",\r\n"image1_xsmall":"http://dummyimage.com/50x50/000/fff&text=xsmall",\r\n"image1_small":"http://dummyimage.com/75x75/000/fff&text=small",\r\n"image1_medium":"http://dummyimage.com/150x150/000/fff&text=medium",\r\n"image1_large":"http://dummyimage.com/300x300/000/fff&text=large",\r\n"image1_xlarge":"http://dummyimage.com/500x500/000/fff&text=xlarge",\r\n"link1":"https://twitter.com/Molajo",\r\n"link2":"https://github.com/Molajo/Molajo",\r\n"link3":"https://www.ohloh.net/p/Molajo",\r\n"video1":"http://t.co/QW4M4Ux3"}', NULL, '{"metadata_title":"Article 10", "metadata_description":"This is Article 10.", "metadata_keywords":"article, content", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}', 'en-GB', 0, 10);
-INSERT INTO `molajo_content` VALUES(114, 100, 2000, 'Articles', '', '', 'articles', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, 101, 101, 1, 12, 1, 0, '{}', '{"display_title":"Article Manager",\r\n"display_suppress_no_results":"1",\r\n"disable_view_access_check":"0",\r\n"display_extension_instance_id":"2",\r\n"display_extension_asset_id":"14",\r\n"display_extension_option":"articles",\r\n"criteria_asset_type_id":"10000",\r\n"search":"1",\r\n"filters":"author,status,language",\r\n"select":"id,title,content_text,featured,Primarycategory,Author,start_publishing_datetime,ordering,language",\r\n"ordering":"a.start_publishing_datetime DESC",\r\n"item_methods":"itemExpandjsonfields,itemSplittext,itemSnippet,itemURL,itemDateformats,itemUserPermission",\r\n"toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",\r\n"submenu_items":"items,categories,drafts",\r\n"columns":"id,featured,title,created_by_name,start_publishing_datetime,ordering",\r\n"pagination":"",\r\n"batch":"",\r\n"theme_id":"",\r\n"page_view_id":"",\r\n"template_view_id":"33",\r\n"wrap_view_id":"61",\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file"}', '{"metadata_title":"Articles", "metadata_description":"Article Grid", "metadata_keywords":"articles, grid", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}', 'en-GB', 0, 103);
+INSERT INTO `molajo_content` VALUES(114, 100, 2000, 'Articles', '', '', 'articles', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, 101, 101, 1, 12, 1, 0, '{}', '{"display_title":"Article Manager",\r\n"display_suppress_no_results":"1",\r\n"disable_view_access_check":"0",\r\n"display_extension_instance_id":"2",\r\n"display_extension_catalog_id":"14",\r\n"display_extension_option":"articles",\r\n"criteria_catalog_type_id":"10000",\r\n"search":"1",\r\n"filters":"author,status,language",\r\n"select":"id,title,content_text,featured,Primarycategory,Author,start_publishing_datetime,ordering,language",\r\n"ordering":"a.start_publishing_datetime DESC",\r\n"item_methods":"itemExpandjsonfields,itemSplittext,itemSnippet,itemURL,itemDateformats,itemUserPermission",\r\n"toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",\r\n"submenu_items":"items,categories,drafts",\r\n"columns":"id,featured,title,created_by_name,start_publishing_datetime,ordering",\r\n"pagination":"",\r\n"batch":"",\r\n"theme_id":"",\r\n"page_view_id":"",\r\n"template_view_id":"33",\r\n"wrap_view_id":"61",\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file"}', '{"metadata_title":"Articles", "metadata_description":"Article Grid", "metadata_keywords":"articles, grid", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}', 'en-GB', 0, 103);
 
 -- --------------------------------------------------------
 
@@ -602,7 +608,7 @@ INSERT INTO `molajo_content` VALUES(114, 100, 2000, 'Articles', '', '', 'article
 CREATE TABLE `molajo_extensions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `extension_site_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `asset_type_id` int(11) unsigned NOT NULL,
+  `catalog_type_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT ' ',
   PRIMARY KEY (`id`),
   KEY `extensions_extension_sites_index` (`extension_site_id`)
@@ -615,7 +621,7 @@ CREATE TABLE `molajo_extensions` (
 INSERT INTO `molajo_extensions` VALUES(0, 1, 1050, 'core');
 INSERT INTO `molajo_extensions` VALUES(1, 1, 1050, 'applications');
 INSERT INTO `molajo_extensions` VALUES(2, 1, 1050, 'articles');
-INSERT INTO `molajo_extensions` VALUES(3, 1, 1050, 'assets');
+INSERT INTO `molajo_extensions` VALUES(3, 1, 1050, 'catalog');
 INSERT INTO `molajo_extensions` VALUES(4, 1, 1050, 'categories');
 INSERT INTO `molajo_extensions` VALUES(5, 1, 1050, 'comments');
 INSERT INTO `molajo_extensions` VALUES(6, 1, 1050, 'contacts');
@@ -688,7 +694,7 @@ INSERT INTO `molajo_extensions` VALUES(82, 1, 1500, 'molajito');
 INSERT INTO `molajo_extensions` VALUES(83, 1, 1500, 'system');
 INSERT INTO `molajo_extensions` VALUES(84, 1, 1300, 'Administrator Menu');
 INSERT INTO `molajo_extensions` VALUES(85, 1, 1300, 'Main Menu');
-INSERT INTO `molajo_extensions` VALUES(86, 1, 1350, 'assetwidget');
+INSERT INTO `molajo_extensions` VALUES(86, 1, 1350, 'catalogwidget');
 INSERT INTO `molajo_extensions` VALUES(87, 1, 1350, 'aclwidget');
 INSERT INTO `molajo_extensions` VALUES(88, 1, 1350, 'breadcrumbs');
 INSERT INTO `molajo_extensions` VALUES(89, 1, 1350, 'categorywidget');
@@ -729,7 +735,7 @@ INSERT INTO `molajo_extensions` VALUES(243, 1, 1500, 'amazium');
 CREATE TABLE `molajo_extension_instances` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
   `extension_id` int(11) unsigned NOT NULL,
-  `asset_type_id` int(11) unsigned NOT NULL,
+  `catalog_type_id` int(11) unsigned NOT NULL,
   `title` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `subtitle` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Subtitle',
   `alias` varchar(255) NOT NULL DEFAULT ' ',
@@ -765,8 +771,8 @@ CREATE TABLE `molajo_extension_instances` (
 
 INSERT INTO `molajo_extension_instances` VALUES(0, 0, 1050, 'core', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 0);
 INSERT INTO `molajo_extension_instances` VALUES(1, 1, 1050, 'applications', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 1);
-INSERT INTO `molajo_extension_instances` VALUES(2, 2, 1050, 'articles', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{"display_title":"Articles",\r\n"display_suppress_no_results":"1",\r\n"disable_view_access_check":"0",\r\n"criteria_asset_type_id":"10000",\r\n"criteria_search":"",\r\n"criteria_author":"",\r\n"criteria_category":"",\r\n"criteria_group":"",\r\n"criteria_language":"",\r\n"criteria_tag":"",\r\n"criteria_status":"",\r\n"select":"id,extension_instance_id,asset_type_id,title,subtitle,path,alias,content_text,protected,featured,stickied,status,start_publishing_datetime,stop_publishing_datetime,version,version_of_id,status_prior_to_version,created_datetime,created_by,modified_datetime,modified_by,checked_out_datetime,checked_out_by,root,parent_id,lft,rgt,lvl,home,custom_fields,parameters,metadata,language,translation_of_id,ordering,queryPrimarycategory",\r\n"ordering":"a.start_publishing_datetime DESC",\r\n"item_methods":"itemExpandjsonfields,itemSplittext,itemSnippet,itemURL,itemDateformats",\r\n"toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",\r\n"submenu_items":"items,categories,tags,featured,drafts,trash",\r\n"pagination":"",\r\n"batch":"",\r\n"default_theme_id":"",\r\n"default_page_view_id":"",\r\n"default_items_template_view_id":"33",\r\n"default_items_wrap_view_id":"61",\r\n"default_item_template_view_id":"236",\r\n"default_item_wrap_view_id":"58",\r\n"default_edit_template_view_id":"25",\r\n"default_edit_wrap_view_id":"61" ,\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file"}', '{"metadata_title":"Molajo Article Component", "metadata_description":"Welcome to the Molajo Article Component", "metadata_keywords":"articles, molajo", "metadata_robots":"follow, index", "metadata_author":"Amy Stephen", "metadata_content_rights":"CC"}', 'en-GB', 0, 2);
-INSERT INTO `molajo_extension_instances` VALUES(3, 3, 1050, 'assets', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 3);
+INSERT INTO `molajo_extension_instances` VALUES(2, 2, 1050, 'articles', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{"display_title":"Articles",\r\n"display_suppress_no_results":"1",\r\n"disable_view_access_check":"0",\r\n"criteria_catalog_type_id":"10000",\r\n"criteria_search":"",\r\n"criteria_author":"",\r\n"criteria_category":"",\r\n"criteria_group":"",\r\n"criteria_language":"",\r\n"criteria_tag":"",\r\n"criteria_status":"",\r\n"select":"id,extension_instance_id,catalog_type_id,title,subtitle,path,alias,content_text,protected,featured,stickied,status,start_publishing_datetime,stop_publishing_datetime,version,version_of_id,status_prior_to_version,created_datetime,created_by,modified_datetime,modified_by,checked_out_datetime,checked_out_by,root,parent_id,lft,rgt,lvl,home,custom_fields,parameters,metadata,language,translation_of_id,ordering,queryPrimarycategory",\r\n"ordering":"a.start_publishing_datetime DESC",\r\n"item_methods":"itemExpandjsonfields,itemSplittext,itemSnippet,itemURL,itemDateformats",\r\n"toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",\r\n"submenu_items":"items,categories,tags,featured,drafts,trash",\r\n"pagination":"",\r\n"batch":"",\r\n"default_theme_id":"",\r\n"default_page_view_id":"",\r\n"default_items_template_view_id":"33",\r\n"default_items_wrap_view_id":"61",\r\n"default_item_template_view_id":"236",\r\n"default_item_wrap_view_id":"58",\r\n"default_edit_template_view_id":"25",\r\n"default_edit_wrap_view_id":"61" ,\r\n"caching":"0",\r\n"cache_time":"15",\r\n"cache_handler":"file"}', '{"metadata_title":"Molajo Article Component", "metadata_description":"Welcome to the Molajo Article Component", "metadata_keywords":"articles, molajo", "metadata_robots":"follow, index", "metadata_author":"Amy Stephen", "metadata_content_rights":"CC"}', 'en-GB', 0, 2);
+INSERT INTO `molajo_extension_instances` VALUES(3, 3, 1050, 'catalog', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 3);
 INSERT INTO `molajo_extension_instances` VALUES(4, 4, 1050, 'categories', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 4);
 INSERT INTO `molajo_extension_instances` VALUES(5, 5, 1050, 'comments', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 5);
 INSERT INTO `molajo_extension_instances` VALUES(6, 6, 1050, 'contacts', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 6);
@@ -839,7 +845,7 @@ INSERT INTO `molajo_extension_instances` VALUES(98, 82, 1500, 'molajito', '', ''
 INSERT INTO `molajo_extension_instances` VALUES(99, 83, 1500, 'system', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 83);
 INSERT INTO `molajo_extension_instances` VALUES(100, 84, 1300, 'Administrator Menu', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 84);
 INSERT INTO `molajo_extension_instances` VALUES(101, 85, 1300, 'Main Menu', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 85);
-INSERT INTO `molajo_extension_instances` VALUES(103, 86, 1350, 'assetwidget', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 86);
+INSERT INTO `molajo_extension_instances` VALUES(103, 86, 1350, 'catalogwidget', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 86);
 INSERT INTO `molajo_extension_instances` VALUES(104, 87, 1350, 'aclwidget', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 87);
 INSERT INTO `molajo_extension_instances` VALUES(105, 88, 1350, 'breadcrumbs', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 88);
 INSERT INTO `molajo_extension_instances` VALUES(106, 89, 1350, 'categorywidget', '', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{}', NULL, 'en-GB', 0, 89);
@@ -904,12 +910,12 @@ INSERT INTO `molajo_extension_sites` VALUES(2, 'Molajo Directory', 1, 'http://up
 CREATE TABLE `molajo_group_permissions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `group_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to #_groups.id',
-  `asset_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_assets.id',
+  `catalog_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_catalog.id',
   `action_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_actions.id',
   PRIMARY KEY (`id`),
   KEY `fk_group_permissions_actions_index` (`action_id`),
   KEY `fk_group_permissions_content_index` (`group_id`),
-  KEY `fk_group_permissions_assets_index` (`asset_id`)
+  KEY `fk_group_permissions_catalog_index` (`catalog_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=122 ;
 
 --
@@ -1067,119 +1073,23 @@ INSERT INTO `molajo_group_view_groups` VALUES(6, 7);
 -- --------------------------------------------------------
 
 --
--- Table structure for table `molajo_log_entries`
+-- Table structure for table `molajo_log`
 --
 
-CREATE TABLE `molajo_log_entries` (
+CREATE TABLE `molajo_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Log Primary Key',
   `priority` int(11) DEFAULT NULL,
-  `message` varchar(512) DEFAULT NULL,
+  `message` MEDIUMTEXT DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_category_date_priority` (`category`,`date`,`priority`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `molajo_log_entries`
+-- Dumping data for table `molajo_log`
 --
 
-INSERT INTO `molajo_log_entries` VALUES(1, 128, 'Service: VersionService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(2, 128, 'Service: RegistryService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(3, 128, 'Service: FilesystemService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(4, 128, 'Service: MessageService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(5, 128, 'Service: DatabaseService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(6, 128, 'Service: ConfigurationService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(7, 128, 'Service: LogService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(8, 128, 'Service: DebugService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(9, 128, 'Service: RequestService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(10, 128, 'Service: CookieService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(11, 128, 'Service: SessionService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(12, 128, 'Service: ResponseService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(13, 128, 'Service: RedirectService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(14, 128, 'Service: UserService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(15, 128, 'Service: LanguageService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(16, 128, 'Service: DateService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(17, 128, 'Service: DocumentService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(18, 128, 'Service: AccessService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(19, 128, 'Service: ImageService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(20, 128, 'Service: MailService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(21, 128, 'Service: FilterService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(22, 128, 'Service: UrlService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(23, 128, 'Service: TextService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(24, 128, 'Service: BroadcastService started successfully. ', '2012-04-16 23:03:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(25, 128, 'Service: VersionService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(26, 128, 'Service: RegistryService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(27, 128, 'Service: FilesystemService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(28, 128, 'Service: MessageService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(29, 128, 'Service: DatabaseService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(30, 128, 'Service: ConfigurationService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(31, 128, 'Service: LogService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(32, 128, 'Service: DebugService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(33, 128, 'Service: RequestService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(34, 128, 'Service: CookieService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(35, 128, 'Service: SessionService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(36, 128, 'Service: ResponseService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(37, 128, 'Service: RedirectService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(38, 128, 'Service: UserService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(39, 128, 'Service: LanguageService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(40, 128, 'Service: DateService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(41, 128, 'Service: DocumentService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(42, 128, 'Service: AccessService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(43, 128, 'Service: ImageService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(44, 128, 'Service: MailService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(45, 128, 'Service: FilterService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(46, 128, 'Service: UrlService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(47, 128, 'Service: TextService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(48, 128, 'Service: BroadcastService started successfully. ', '2012-04-16 23:20:23', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(49, 128, 'Service: VersionService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(50, 128, 'Service: RegistryService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(51, 128, 'Service: FilesystemService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(52, 128, 'Service: MessageService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(53, 128, 'Service: DatabaseService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(54, 128, 'Service: ConfigurationService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(55, 128, 'Service: LogService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(56, 128, 'Service: DebugService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(57, 128, 'Service: RequestService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(58, 128, 'Service: CookieService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(59, 128, 'Service: SessionService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(60, 128, 'Service: ResponseService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(61, 128, 'Service: RedirectService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(62, 128, 'Service: UserService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(63, 128, 'Service: LanguageService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(64, 128, 'Service: DateService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(65, 128, 'Service: DocumentService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(66, 128, 'Service: AccessService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(67, 128, 'Service: ImageService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(68, 128, 'Service: MailService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(69, 128, 'Service: FilterService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(70, 128, 'Service: UrlService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(71, 128, 'Service: TextService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(72, 128, 'Service: BroadcastService started successfully. ', '2012-04-17 04:08:26', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(73, 128, 'Service: VersionService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(74, 128, 'Service: RegistryService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(75, 128, 'Service: FilesystemService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(76, 128, 'Service: MessageService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(77, 128, 'Service: DatabaseService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(78, 128, 'Service: ConfigurationService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(79, 128, 'Service: LogService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(80, 128, 'Service: DebugService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(81, 128, 'Service: RequestService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(82, 128, 'Service: CookieService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(83, 128, 'Service: SessionService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(84, 128, 'Service: ResponseService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(85, 128, 'Service: RedirectService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(86, 128, 'Service: UserService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(87, 128, 'Service: LanguageService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(88, 128, 'Service: DateService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(89, 128, 'Service: DocumentService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(90, 128, 'Service: AccessService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(91, 128, 'Service: ImageService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(92, 128, 'Service: MailService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(93, 128, 'Service: FilterService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(94, 128, 'Service: UrlService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(95, 128, 'Service: TextService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
-INSERT INTO `molajo_log_entries` VALUES(96, 128, 'Service: BroadcastService started successfully. ', '2012-04-17 04:09:02', 'debugservice');
 
 -- --------------------------------------------------------
 
@@ -1210,7 +1120,7 @@ CREATE TABLE `molajo_sessions` (
 
 CREATE TABLE `molajo_sites` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Application Primary Key',
-  `asset_type_id` int(11) unsigned NOT NULL,
+  `catalog_type_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `path` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `base_url` varchar(2048) NOT NULL DEFAULT ' ',
@@ -1382,7 +1292,7 @@ INSERT INTO `molajo_site_extension_instances` VALUES(1, 243);
 
 CREATE TABLE `molajo_users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `asset_type_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `catalog_type_id` int(11) unsigned NOT NULL DEFAULT '0',
   `username` varchar(255) NOT NULL,
   `first_name` varchar(100) DEFAULT '',
   `last_name` varchar(150) DEFAULT '',
@@ -1420,11 +1330,11 @@ CREATE TABLE `molajo_user_activity` (
   `id` int(11) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000' COMMENT 'Foreign Key to molajo_users.id',
   `action_id` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000',
-  `asset_id` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000',
+  `catalog_id` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000',
   `activity_datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_activity_user_index` (`user_id`),
-  KEY `user_activity_assets_index` (`asset_id`),
+  KEY `user_activity_catalog_index` (`catalog_id`),
   KEY `user_activity_action_index` (`action_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -1541,12 +1451,12 @@ INSERT INTO `molajo_view_groups` VALUES(7, 'Private', '6');
 CREATE TABLE `molajo_view_group_permissions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `view_group_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_groups.id',
-  `asset_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_assets.id',
+  `catalog_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_catalog.id',
   `action_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_actions.id',
   PRIMARY KEY (`id`),
   KEY `fk_view_group_permissions_view_groups_index` (`view_group_id`),
   KEY `fk_view_group_permissions_actions_index` (`action_id`),
-  KEY `fk_view_group_permissions_assets_index` (`asset_id`)
+  KEY `fk_view_group_permissions_catalog_index` (`catalog_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=122 ;
 
 --
@@ -1687,23 +1597,23 @@ ALTER TABLE `molajo_application_extension_instances`
   ADD CONSTRAINT `fk_application_extension_instances_extension_instances` FOREIGN KEY (`extension_instance_id`) REFERENCES `molajo_extension_instances` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `molajo_assets`
+-- Constraints for table `molajo_catalog`
 --
-ALTER TABLE `molajo_assets`
-  ADD CONSTRAINT `fk_assets_asset_types` FOREIGN KEY (`asset_type_id`) REFERENCES `molajo_asset_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `molajo_catalog`
+  ADD CONSTRAINT `fk_catalog_catalog_types` FOREIGN KEY (`catalog_type_id`) REFERENCES `molajo_catalog_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `molajo_asset_activity`
+-- Constraints for table `molajo_catalog_activity`
 --
-ALTER TABLE `molajo_asset_activity`
-  ADD CONSTRAINT `fk_asset_activity_assets` FOREIGN KEY (`asset_id`) REFERENCES `molajo_assets` (`asset_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `molajo_catalog_activity`
+  ADD CONSTRAINT `fk_catalog_activity_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`catalog_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `molajo_asset_categories`
+-- Constraints for table `molajo_catalog_categories`
 --
-ALTER TABLE `molajo_asset_categories`
-  ADD CONSTRAINT `fk_asset_categories_assets` FOREIGN KEY (`asset_id`) REFERENCES `molajo_assets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_asset_categories_categories` FOREIGN KEY (`category_id`) REFERENCES `molajo_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `molajo_catalog_categories`
+  ADD CONSTRAINT `fk_catalog_categories_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_catalog_categories_categories` FOREIGN KEY (`category_id`) REFERENCES `molajo_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `molajo_content`
@@ -1728,7 +1638,7 @@ ALTER TABLE `molajo_extension_instances`
 --
 ALTER TABLE `molajo_group_permissions`
   ADD CONSTRAINT `fk_group_permissions_actions` FOREIGN KEY (`action_id`) REFERENCES `molajo_actions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_group_permissions_assets` FOREIGN KEY (`asset_id`) REFERENCES `molajo_assets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_group_permissions_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_group_permissions_content` FOREIGN KEY (`group_id`) REFERENCES `molajo_content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -1763,7 +1673,7 @@ ALTER TABLE `molajo_site_extension_instances`
 --
 ALTER TABLE `molajo_user_activity`
   ADD CONSTRAINT `fk_user_activity_stream_action_types_fk'` FOREIGN KEY (`action_id`) REFERENCES `molajo_actions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_activity_stream_assets_fk` FOREIGN KEY (`asset_id`) REFERENCES `molajo_assets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_user_activity_stream_catalog_fk` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_user_applications_users_fk` FOREIGN KEY (`user_id`) REFERENCES `molajo_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -1792,5 +1702,5 @@ ALTER TABLE `molajo_user_view_groups`
 --
 ALTER TABLE `molajo_view_group_permissions`
   ADD CONSTRAINT `fk_view_group_permissions_actions` FOREIGN KEY (`action_id`) REFERENCES `molajo_actions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_view_group_permissions_assets` FOREIGN KEY (`asset_id`) REFERENCES `molajo_assets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_view_group_permissions_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_view_group_permissions_view_groups` FOREIGN KEY (`view_group_id`) REFERENCES `molajo_view_groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

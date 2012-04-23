@@ -2,7 +2,7 @@
 <model name="Sites" table="#__sites" primary_key="id">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="asset_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
         <filter name="name" filter="char" null="0" default="" unique="1"/>
         <filter name="path" filter="char" null="0" default=""/>
         <filter name="base_url" filter="url" null="0" default=""/>
@@ -18,7 +18,7 @@
         <trigger name="Sites"  />
     </triggers>
     <fks>
-        <fk name="asset_type_id" source_id="id" source_model="MolajoAssetTypes" required="1" />
+        <fk name="catalog_type_id" source_id="id" source_model="MolajoCatalogTypes" required="1" />
     </fks>
     <custom_fields>
         <custom_field name="custom_field1" filter="char" null="0" default="Molajo Site"/>

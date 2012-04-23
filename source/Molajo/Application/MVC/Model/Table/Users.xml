@@ -2,7 +2,7 @@
 <model name="Users" table="#__users" primary_key="id">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="asset_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
         <filter name="username" filter="char" null="0" default="" unique="1"/>
         <filter name="first_name" filter="char" null="0" default=""/>
         <filter name="last_name" filter="char" null="0" default=""/>
@@ -29,11 +29,11 @@
         <trigger name="Parameters"  />
     </triggers>
     <fks>
-        <fk name="asset_type_id"
+        <fk name="catalog_type_id"
             source_id="id"
-            source_model="MolajoAssetTypesModel"
+            source_model="MolajoCatalogTypesModel"
             required="1"
-            message="USER_FK_ASSET_TYPE"
+            message="USER_FK_CATALOG_TYPE"
                 />
     </fks>
     <custom_fields>

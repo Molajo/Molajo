@@ -81,7 +81,7 @@ defined('MOLAJO') or die;
  *  .. .. MenuParameters
  *  .. Override
  *  .. Request
- *  .. .. RequestAsset
+ *  .. .. RequestCatalog
  *  .. .. RequestExtension
  *  .. .. .. RequestExtensionCustomfields
  *  .. .. .. RequestExtensionMetadata
@@ -94,14 +94,14 @@ defined('MOLAJO') or die;
  *  .. .. RequestTemplate
  *  .. .. RequestWrap
  *  .. Theme
- *  .. .. ThemeAssets
+ *  .. .. ThemeCatalog
  *  .. .. ThemeCustomfields
  *  .. .. ThemeMetadata
  *  .. .. ThemeParameters
  *  .. Page
  *
  * Include
- *  .. Asset
+ *  .. Catalog
  *  .. Extension
  *  .. .. ExtensionCustomfields
  *  .. .. ExtensionMetadata

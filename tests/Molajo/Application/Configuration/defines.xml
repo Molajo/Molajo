@@ -10,53 +10,53 @@
     <define name="ACTION_DELETE" value="delete"/>
     <define name="ACTION_ADMIN" value="admin"/>
 
-    <define name="ASSET_TYPE_BASE_BEGIN" value="0"/>
-    <define name="ASSET_TYPE_BASE_CORE" value="1"/>
-    <define name="ASSET_TYPE_BASE_SITE" value="10"/>
-    <define name="ASSET_TYPE_BASE_APPLICATION" value="50"/>
-    <define name="ASSET_TYPE_BASE_END" value="99"/>
+    <define name="CATALOG_TYPE_BASE_BEGIN" value="0"/>
+    <define name="CATALOG_TYPE_BASE_CORE" value="1"/>
+    <define name="CATALOG_TYPE_BASE_SITE" value="10"/>
+    <define name="CATALOG_TYPE_BASE_APPLICATION" value="50"/>
+    <define name="CATALOG_TYPE_BASE_END" value="99"/>
 
-    <define name="ASSET_TYPE_GROUP_BEGIN" value="100"/>
-    <define name="ASSET_TYPE_GROUP_SYSTEM" value="100"/>
-    <define name="ASSET_TYPE_GROUP_NORMAL" value="110"/>
-    <define name="ASSET_TYPE_GROUP_USER" value="120"/>
-    <define name="ASSET_TYPE_GROUP_FRIEND" value="130"/>
-    <define name="ASSET_TYPE_GROUP_END" value="199"/>
+    <define name="CATALOG_TYPE_GROUP_BEGIN" value="100"/>
+    <define name="CATALOG_TYPE_GROUP_SYSTEM" value="100"/>
+    <define name="CATALOG_TYPE_GROUP_NORMAL" value="110"/>
+    <define name="CATALOG_TYPE_GROUP_USER" value="120"/>
+    <define name="CATALOG_TYPE_GROUP_FRIEND" value="130"/>
+    <define name="CATALOG_TYPE_GROUP_END" value="199"/>
 
-    <define name="ASSET_TYPE_USER_BEGIN" value="500"/>
-    <define name="ASSET_TYPE_USER" value="500"/>
-    <define name="ASSET_TYPE_USER_END" value="599"/>
+    <define name="CATALOG_TYPE_USER_BEGIN" value="500"/>
+    <define name="CATALOG_TYPE_USER" value="500"/>
+    <define name="CATALOG_TYPE_USER_END" value="599"/>
 
-    <define name="ASSET_TYPE_EXTENSION_BEGIN" value="1000"/>
-    <define name="ASSET_TYPE_EXTENSION_COMPONENT" value="1050"/>
-    <define name="ASSET_TYPE_EXTENSION_LANGUAGE" value="1100"/>
-    <define name="ASSET_TYPE_EXTENSION_PAGE_VIEW" value="1150"/>
-    <define name="ASSET_TYPE_EXTENSION_TEMPLATE_VIEW" value="1200"/>
-    <define name="ASSET_TYPE_EXTENSION_WRAP_VIEW" value="1250"/>
-    <define name="ASSET_TYPE_EXTENSION_MENU" value="1300"/>
-    <define name="ASSET_TYPE_EXTENSION_MODULE" value="1350"/>
-    <define name="ASSET_TYPE_EXTENSION_PLUGIN" value="1450"/>
-    <define name="ASSET_TYPE_EXTENSION_THEME" value="1500"/>
-    <define name="ASSET_TYPE_EXTENSION_END" value="1999"/>
+    <define name="CATALOG_TYPE_EXTENSION_BEGIN" value="1000"/>
+    <define name="CATALOG_TYPE_EXTENSION_COMPONENT" value="1050"/>
+    <define name="CATALOG_TYPE_EXTENSION_LANGUAGE" value="1100"/>
+    <define name="CATALOG_TYPE_EXTENSION_PAGE_VIEW" value="1150"/>
+    <define name="CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW" value="1200"/>
+    <define name="CATALOG_TYPE_EXTENSION_WRAP_VIEW" value="1250"/>
+    <define name="CATALOG_TYPE_EXTENSION_MENU" value="1300"/>
+    <define name="CATALOG_TYPE_EXTENSION_MODULE" value="1350"/>
+    <define name="CATALOG_TYPE_EXTENSION_PLUGIN" value="1450"/>
+    <define name="CATALOG_TYPE_EXTENSION_THEME" value="1500"/>
+    <define name="CATALOG_TYPE_EXTENSION_END" value="1999"/>
 
-    <define name="ASSET_TYPE_MENU_ITEM_BEGIN" value="2000"/>
-    <define name="ASSET_TYPE_MENU_ITEM_COMPONENT" value="2000"/>
-    <define name="ASSET_TYPE_MENU_ITEM_LINK" value="2100"/>
-    <define name="ASSET_TYPE_MENU_ITEM_MODULE" value="2200"/>
-    <define name="ASSET_TYPE_MENU_ITEM_SEPARATOR" value="2300"/>
-    <define name="ASSET_TYPE_MENU_ITEM_END" value="2999"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_BEGIN" value="2000"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_COMPONENT" value="2000"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_LINK" value="2100"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_MODULE" value="2200"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_SEPARATOR" value="2300"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_END" value="2999"/>
 
-    <define name="ASSET_TYPE_CATEGORY_BEGIN" value="3000"/>
-    <define name="ASSET_TYPE_CATEGORY_LIST" value="3000"/>
-    <define name="ASSET_TYPE_CATEGORY_TAG" value="3500"/>
-    <define name="ASSET_TYPE_CATEGORY_END" value="3999"/>
+    <define name="CATALOG_TYPE_CATEGORY_BEGIN" value="3000"/>
+    <define name="CATALOG_TYPE_CATEGORY_LIST" value="3000"/>
+    <define name="CATALOG_TYPE_CATEGORY_TAG" value="3500"/>
+    <define name="CATALOG_TYPE_CATEGORY_END" value="3999"/>
 
-    <define name="ASSET_TYPE_CONTENT_BEGIN" value="10000"/>
-    <define name="ASSET_TYPE_CONTENT_ARTICLE" value="10000"/>
-    <define name="ASSET_TYPE_CONTENT_CONTACT" value="20000"/>
-    <define name="ASSET_TYPE_CONTENT_COMMENT" value="30000"/>
-    <define name="ASSET_TYPE_CONTENT_MEDIA" value="40000"/>
-    <define name="ASSET_TYPE_CONTENT_END" value="999999"/>
+    <define name="CATALOG_TYPE_CONTENT_BEGIN" value="10000"/>
+    <define name="CATALOG_TYPE_CONTENT_ARTICLE" value="10000"/>
+    <define name="CATALOG_TYPE_CONTENT_CONTACT" value="20000"/>
+    <define name="CATALOG_TYPE_CONTENT_COMMENT" value="30000"/>
+    <define name="CATALOG_TYPE_CONTENT_MEDIA" value="40000"/>
+    <define name="CATALOG_TYPE_CONTENT_END" value="999999"/>
 
     <define name="SYSTEM_GROUP_PUBLIC" value="1"/>
     <define name="SYSTEM_GROUP_GUEST" value="2"/>

@@ -13,13 +13,13 @@
 # Content Categories
 #
 INSERT INTO `molajo_content`
-    (`title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `asset_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
+    (`title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `catalog_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
  VALUES
    ('Content', '', 'content', '<p>Category for Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 3000, 0, 0, 0, 0, 0, 'en-GB', 1);
 
-# Asset records for Assets
-INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `routable`,
+# Catalog records for Catalog
+INSERT INTO `molajo_catalog`
+  (`catalog_type_id`, `source_id`, `routable`,
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   SELECT 3000, `id`, true,
@@ -28,13 +28,13 @@ INSERT INTO `molajo_assets`
     'categories', 'category',
     0, 3, 0
     FROM `molajo_content`
-        WHERE `asset_type_id` = 3000;
+        WHERE `catalog_type_id` = 3000;
 
 # ARTICLES
-SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'articles' AND `asset_type_id` = 1050);
-SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 3000);
+SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'articles' AND `catalog_type_id` = 1050);
+SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `catalog_type_id` = 3000);
 INSERT INTO `molajo_content`
-    (`title`, `subtitle`, `alias`, `path`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `asset_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
+    (`title`, `subtitle`, `alias`, `path`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `catalog_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
   VALUES
     ('Article 1', '', 'article-1', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', @id, 10000, 0, 0, 0, 0, 0, 'en-GB', 1),
     ('Article 2', '', 'article-2', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', @id, 10000, 0, 0, 0, 0, 0, 'en-GB', 2),
@@ -47,10 +47,10 @@ INSERT INTO `molajo_content`
     ('Article 9', '', 'article-9', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', @id, 10000, 0, 0, 0, 0, 0, 'en-GB', 9),
     ('Article 10', '', 'article-10', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', @id, 10000, 0, 0, 0, 0, 0, 'en-GB', 10);
 
-# Asset records for Assets
-SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 3000);
-INSERT INTO `molajo_assets`
-  (`asset_type_id`, `source_id`, `routable`,
+# Catalog records for Catalog
+SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `catalog_type_id` = 3000);
+INSERT INTO `molajo_catalog`
+  (`catalog_type_id`, `source_id`, `routable`,
   `sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   SELECT 10000, `id`, true,
@@ -59,4 +59,4 @@ INSERT INTO `molajo_assets`
     'articles', 'article',
     0, 3, @category_id
     FROM `molajo_content`
-        WHERE `asset_type_id` = 10000;
+        WHERE `catalog_type_id` = 10000;

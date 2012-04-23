@@ -63,7 +63,7 @@ class ThemeHelper
     {
         return Molajo::Helper()
             ->get('Extension',
-            ASSET_TYPE_EXTENSION_THEME,
+            CATALOG_TYPE_EXTENSION_THEME,
             $theme
         );
     }

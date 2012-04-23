@@ -105,7 +105,7 @@ class TestMolajo
      * @static
      * @param null $request
      * @param string $override_request_url
-     * @param string $override_asset_id
+     * @param string $override_catalog_id
      *
      * @return Request
      * @since 1.0

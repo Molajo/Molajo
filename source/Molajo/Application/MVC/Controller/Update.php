@@ -59,8 +59,8 @@ class UpdateController extends Controller
             } else {
                 Services::Response()
                     ->redirect(
-                    AssetHelper::getURL(
-                        $this->task_request->get('request_asset_id')),
+                    CatalogHelper::getURL(
+                        $this->task_request->get('request_catalog_id')),
                     301
                 );
             }
@@ -111,7 +111,7 @@ class UpdateController extends Controller
             $this->model->row->id = 0;
             $this->model->row->title = 'One long summer';
             $this->model->row->protected = 0;
-            $this->model->row->asset_type_id = 10000;
+            $this->model->row->catalog_type_id = 10000;
             $this->model->row->checked_out_by = 0;
             $this->model->row->created_datetime = '2012-02-14';
             $this->model->row->created_by = 42;
@@ -362,11 +362,11 @@ class UpdateController extends Controller
      */
     private function storeRelated()
     {
-        $asset = new TableModel('Assets');
+        $asset = new TableModel('Catalog');
 
-        $asset->asset_type_id = $this->model->table_name->asset_type_id;
+        $asset->catalog_type_id = $this->model->table_name->catalog_type_id;
 
-        $this->asset_id = $asset->save();
+        $this->catalog_id = $asset->save();
 
         $asset->load();
         if ($asset->getError()) {
@@ -381,7 +381,7 @@ class UpdateController extends Controller
 
         //       if ((int) $this->access == 0) {
         //            $asset->content_table = $this->model->table_name;
-        //            $this->asset_id = $asset->save();
+        //            $this->catalog_id = $asset->save();
         //        } else {
         //            $asset->load();
         //        }
@@ -391,16 +391,16 @@ class UpdateController extends Controller
         //            return false;
         //       }
 
-        //        if ((int) $this->asset_id == 0) {
+        //        if ((int) $this->catalog_id == 0) {
         //			$this->query = $this->db->getQuery(true);
         //			$this->query->update($this->db->qn($this->model->table_name));
-        //			$this->query->set('asset_id = '.(int) $this->asset_id);
+        //			$this->query->set('catalog_id = '.(int) $this->catalog_id);
         //			$this->query->where($this->db->qn($k).' = '.(int) $this->$k);
         //			$this->db->setQuery($this->query->__toString());
 
         //			if ($this->db->query()) {
         //            } else {
-        //				$e = new MolajoException(Services::Language()->sprintf('DB_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->db->getErrorMsg()));
+        //				$e = new MolajoException(Services::Language()->sprintf('DB_ERROR_STORE_FAILED_UPDATE_CATALOG_ID', $this->db->getErrorMsg()));
         //				$this->setError($e);
         //				return false;
         //			}

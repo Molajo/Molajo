@@ -57,7 +57,7 @@ Class ModuleAdminToolbarModel extends DisplayModel
                 $buttonArray,
                 Molajo::Request()
                     ->parameters
-                    ->get('display_extension_asset_id')
+                    ->get('display_extension_catalog_id')
             );
 
         $this->data = array();

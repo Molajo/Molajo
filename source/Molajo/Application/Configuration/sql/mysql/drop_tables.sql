@@ -15,12 +15,12 @@ DROP TABLE IF EXISTS `molajo_users` ;
 DROP TABLE IF EXISTS `molajo_content` ;
 DROP TABLE IF EXISTS `molajo_sites` ;
 DROP TABLE IF EXISTS `molajo_asset_activity` ;
-DROP TABLE IF EXISTS `molajo_assets` ;
+DROP TABLE IF EXISTS `molajo_catalog` ;
 DROP TABLE IF EXISTS `molajo_extension_options` ;
 DROP TABLE IF EXISTS `molajo_extension_instances` ;
 DROP TABLE IF EXISTS `molajo_extensions` ;
 DROP TABLE IF EXISTS `molajo_extension_sites`;
 DROP TABLE IF EXISTS `molajo_action_types` ;
 DROP TABLE IF EXISTS `molajo_applications` ;
-DROP TABLE IF EXISTS `molajo_asset_types` ;
+DROP TABLE IF EXISTS `molajo_catalog_types` ;
 

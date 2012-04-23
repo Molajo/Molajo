@@ -48,9 +48,9 @@ DEFAULT CHARACTER SET = utf8;
 CREATE UNIQUE INDEX `idx_actions_table_title` ON `molajo_action_types` (`title` ASC) ;
 
 -- -----------------------------------------------------
--- Table 02 `molajo_asset_types`
+-- Table 02 `molajo_catalog_types`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_asset_types` (
+CREATE  TABLE IF NOT EXISTS `molajo_catalog_types` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key' ,
   `title` VARCHAR(255) NOT NULL DEFAULT ' ',
   `protected` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
@@ -78,11 +78,11 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table 04 `molajo_assets`
+-- Table 04 `molajo_catalog`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_assets` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Assets Primary Key' ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+CREATE  TABLE IF NOT EXISTS `molajo_catalog` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Catalog Primary Key' ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `source_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Content Primary Key' ,
   `routable` TINYINT(1)  NOT NULL DEFAULT 0 ,
   `sef_request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL' ,
@@ -93,22 +93,22 @@ CREATE  TABLE IF NOT EXISTS `molajo_assets` (
   `view_group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the molajo_groupings table' ,
   `primary_category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_assets_asset_types`
-    FOREIGN KEY (`asset_type_id` )
-    REFERENCES `molajo_asset_types` (`id` )
+  CONSTRAINT `fk_catalog_catalog_types`
+    FOREIGN KEY (`catalog_type_id` )
+    REFERENCES `molajo_catalog_types` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `sef_request` ON `molajo_assets` (`sef_request` ASC) ;
+CREATE INDEX `sef_request` ON `molajo_catalog` (`sef_request` ASC) ;
 
-CREATE INDEX `request` ON `molajo_assets` (`request` ASC) ;
+CREATE INDEX `request` ON `molajo_catalog` (`request` ASC) ;
 
-CREATE INDEX `index_assets_asset_types` ON `molajo_assets` (`asset_type_id` ASC) ;
+CREATE INDEX `index_catalog_catalog_types` ON `molajo_catalog` (`catalog_type_id` ASC) ;
 
-CREATE INDEX `parameters` ON `molajo_assets` (`request_option` ASC, `request_model` ASC) ;
+CREATE INDEX `parameters` ON `molajo_catalog` (`request_option` ASC, `request_model` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 05 `molajo_extensions`
@@ -118,7 +118,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_extensions` (
   `extension_site_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `name` VARCHAR(255) NOT NULL DEFAULT '' ,
   `subtype` VARCHAR(255) NOT NULL DEFAULT '' ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_extensions_extension_sites`
     FOREIGN KEY (`extension_site_id` )
@@ -137,7 +137,7 @@ CREATE INDEX `extensions_extension_sites_index` ON `molajo_extensions` (`extensi
 CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
   `extension_id` INT(11) UNSIGNED NOT NULL ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL ,
   `title` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title' ,
   `subtitle` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Subtitle' ,
   `alias` VARCHAR(255) NOT NULL DEFAULT ' ' ,
@@ -179,7 +179,7 @@ CREATE INDEX `fk_extension_instances_extensions_index` ON `molajo_extension_inst
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_sites` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Application Primary Key' ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL ,
   `name` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title' ,
   `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias' ,
   `base_url` VARCHAR(2048) NOT NULL DEFAULT ' ' ,
@@ -198,7 +198,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_applications` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Application Primary Key' ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `name` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title' ,
   `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias' ,
   `description` MEDIUMTEXT NULL DEFAULT NULL ,
@@ -210,7 +210,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_applications_asset_types_index` ON `molajo_applications` (`asset_type_id` ASC) ;
+CREATE INDEX `fk_applications_catalog_types_index` ON `molajo_applications` (`catalog_type_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 09 `molajo_content`
@@ -218,7 +218,7 @@ CREATE INDEX `fk_applications_asset_types_index` ON `molajo_applications` (`asse
 CREATE  TABLE IF NOT EXISTS `molajo_content` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
   `extension_instance_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `title` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title' ,
   `subtitle` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Subtitle' ,
   `path` VARCHAR(2048) NOT NULL DEFAULT ' ',
@@ -267,7 +267,7 @@ CREATE INDEX `fk_content_extension_instances_index` ON `molajo_content` (`extens
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_users` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `asset_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `catalog_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `username` VARCHAR(255) NOT NULL ,
   `first_name` VARCHAR(100) NULL DEFAULT '' ,
   `last_name` VARCHAR(150) NULL DEFAULT '' ,
@@ -497,7 +497,7 @@ CREATE INDEX `fk_user_view_groups_view_groups_index` ON `molajo_user_view_groups
 CREATE  TABLE IF NOT EXISTS `molajo_view_group_permissions` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_groups.id' ,
-  `asset_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_assets.id' ,
+  `catalog_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_catalog.id' ,
   `action_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_actions.id' ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_view_group_permissions_view_groups`
@@ -510,9 +510,9 @@ CREATE  TABLE IF NOT EXISTS `molajo_view_group_permissions` (
     REFERENCES `molajo_action_types` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_view_group_permissions_assets`
-    FOREIGN KEY (`asset_id` )
-    REFERENCES `molajo_assets` (`id` )
+  CONSTRAINT `fk_view_group_permissions_catalog`
+    FOREIGN KEY (`catalog_id` )
+    REFERENCES `molajo_catalog` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -522,7 +522,7 @@ CREATE INDEX `fk_view_group_permissions_view_groups_index` ON `molajo_view_group
 
 CREATE INDEX `fk_view_group_permissions_actions_index` ON `molajo_view_group_permissions` (`action_id` ASC) ;
 
-CREATE INDEX `fk_view_group_permissions_assets_index` ON `molajo_view_group_permissions` (`asset_id` ASC) ;
+CREATE INDEX `fk_view_group_permissions_catalog_index` ON `molajo_view_group_permissions` (`catalog_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 21 `molajo_group_permissions`
@@ -530,7 +530,7 @@ CREATE INDEX `fk_view_group_permissions_assets_index` ON `molajo_view_group_perm
 CREATE  TABLE IF NOT EXISTS `molajo_group_permissions` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #_groups.id' ,
-  `asset_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_assets.id' ,
+  `catalog_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_catalog.id' ,
   `action_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to molajo_actions.id' ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_group_permissions_actions`
@@ -543,9 +543,9 @@ CREATE  TABLE IF NOT EXISTS `molajo_group_permissions` (
     REFERENCES `molajo_content` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group_permissions_assets`
-    FOREIGN KEY (`asset_id` )
-    REFERENCES `molajo_assets` (`id` )
+  CONSTRAINT `fk_group_permissions_catalog`
+    FOREIGN KEY (`catalog_id` )
+    REFERENCES `molajo_catalog` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -555,18 +555,18 @@ CREATE INDEX `fk_group_permissions_actions_index` ON `molajo_group_permissions` 
 
 CREATE INDEX `fk_group_permissions_content_index` ON `molajo_group_permissions` (`group_id` ASC) ;
 
-CREATE INDEX `fk_group_permissions_assets_index` ON `molajo_group_permissions` (`asset_id` ASC) ;
+CREATE INDEX `fk_group_permissions_catalog_index` ON `molajo_group_permissions` (`catalog_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 22 `molajo_asset_categories`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_asset_categories` (
-  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `catalog_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  PRIMARY KEY (`asset_id`, `category_id`) ,
-  CONSTRAINT `fk_asset_categories_assets`
-    FOREIGN KEY (`asset_id` )
-    REFERENCES `molajo_assets` (`id` )
+  PRIMARY KEY (`catalog_id`, `category_id`) ,
+  CONSTRAINT `fk_asset_categories_catalog`
+    FOREIGN KEY (`catalog_id` )
+    REFERENCES `molajo_catalog` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_asset_categories_categories`
@@ -578,7 +578,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_asset_categories_assets_index` ON `molajo_asset_categories` (`asset_id` ASC) ;
+CREATE INDEX `fk_asset_categories_catalog_index` ON `molajo_asset_categories` (`catalog_id` ASC) ;
 
 CREATE INDEX `fk_asset_categories_categories_index` ON `molajo_asset_categories` (`category_id` ASC) ;
 
@@ -588,23 +588,23 @@ CREATE INDEX `fk_asset_categories_categories_index` ON `molajo_asset_categories`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_asset_activity` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `catalog_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `rating` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   `activity_datetime` DATETIME NULL ,
   `ip_address` VARCHAR(15) NOT NULL DEFAULT '' ,
   `custom_fields` MEDIUMTEXT NULL ,
   PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_asset_activity_assets`
-    FOREIGN KEY (`asset_id` )
-    REFERENCES `molajo_assets` (`asset_type_id` )
+  CONSTRAINT `fk_asset_activity_catalog`
+    FOREIGN KEY (`catalog_id` )
+    REFERENCES `molajo_catalog` (`catalog_type_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `asset_activity_assets_index` ON `molajo_asset_activity` (`asset_id` ASC) ;
+CREATE INDEX `asset_activity_catalog_index` ON `molajo_asset_activity` (`catalog_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 24 `molajo_user_activity`
@@ -613,7 +613,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_user_activity` (
   `id` INT(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
   `user_id` INT(11) UNSIGNED ZEROFILL NOT NULL DEFAULT 0 COMMENT 'Foreign Key to molajo_users.id' ,
   `action_id` INT(11) UNSIGNED ZEROFILL NOT NULL DEFAULT 0 ,
-  `asset_id` INT(11) UNSIGNED ZEROFILL NOT NULL DEFAULT 0 ,
+  `catalog_id` INT(11) UNSIGNED ZEROFILL NOT NULL DEFAULT 0 ,
   `activity_datetime` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_user_applications_users_fk`
@@ -621,9 +621,9 @@ CREATE  TABLE IF NOT EXISTS `molajo_user_activity` (
     REFERENCES `molajo_users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_activity_stream_assets_fk`
-    FOREIGN KEY (`asset_id` )
-    REFERENCES `molajo_assets` (`id` )
+  CONSTRAINT `fk_user_activity_stream_catalog_fk`
+    FOREIGN KEY (`catalog_id` )
+    REFERENCES `molajo_catalog` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_activity_stream_action_types_fk'`
@@ -636,6 +636,6 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `user_activity_user_index` ON `molajo_user_activity` (`user_id` ASC) ;
 
-CREATE INDEX `user_activity_assets_index` ON `molajo_user_activity` (`asset_id` ASC) ;
+CREATE INDEX `user_activity_catalog_index` ON `molajo_user_activity` (`catalog_id` ASC) ;
 
 CREATE INDEX `user_activity_action_index` ON `molajo_user_activity` (`action_id` ASC) ;

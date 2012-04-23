@@ -2,7 +2,7 @@ COMPONENTS - 1050
 
 applications
 articles
-assets (redirects)
+catalog (redirects)
 categories (tags and lists)
 comments
 contacts
@@ -34,7 +34,7 @@ Access
 - Profile - 13
 - Users - 15
 - Groups - 9
-- Assets - 3
+- Catalog - 3
 - Access Listeners
 
 Build
@@ -52,7 +52,7 @@ Configure
 - Applications - 1
 - Checkin - 1
 - Clean Cache - 1
-- Redirects - 17 (Should this just be in assets?) (Table 404's?)
+- Redirects - 17 (Should this just be in catalog?) (Table 404's?)
 - Triggers (Extensions - 8)
 
 Extend

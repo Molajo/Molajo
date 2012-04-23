@@ -19,7 +19,7 @@ INSERT INTO `molajo_extension_options`
     VALUES
       (1, 0, 200, '', '', 0),
       (1, 0, 200, 'alias', 'FIELD_ALIAS_LABEL', 1),
-      (1, 0, 200, 'asset_type_id', 'FIELD_ASSET_TYPE_ID_LABEL', 2),
+      (1, 0, 200, 'catalog_type_id', 'FIELD_catalog_type_id_LABEL', 2),
       (1, 0, 200, 'checked_out_by', 'FIELD_CHECKED_OUT_BY_LABEL', 3),
       (1, 0, 200, 'checked_out_datetime', 'FIELD_CHECKED_OUT_DATETIME_LABEL', 4),
       (1, 0, 200, 'content_text', 'FIELD_CONTENT_TEXT_LABEL', 5),
@@ -113,31 +113,31 @@ INSERT INTO `molajo_extension_options`
 
 # 205 EXTENSION_OPTION_ID_DISPLAY_ONLY_FIELDS
 
-# 205 Assets
+# 205 Catalog
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
-      (1, 0, 205, 'assets_id', 'FIELD_ASSETS_ID', 63),
-      (1, 0, 205, 'assets_asset_type_id', 'FIELD_ASSET_TYPE_ID', 64),
-      (1, 0, 205, 'assets_source_id', 'FIELD_ASSETS_SOURCE_ID', 65),
-      (1, 0, 205, 'assets_routable', 'FIELD_ASSETS_ROUTABLE', 66),
-      (1, 0, 205, 'assets_sef_request', 'FIELD_ASSETS_SEF_REQUEST', 67),
-      (1, 0, 205, 'assets_request', 'FIELD_ASSETS_REQUEST', 68),
-      (1, 0, 205, 'assets_request_option', 'FIELD_ASSETS_OPTION', 69),
-      (1, 0, 205, 'assets_request_model', 'FIELD_ASSETS_MODEL', 70),
-      (1, 0, 205, 'assets_redirect_to_id', 'FIELD_ASSETS_REDIRECT_TO_ID', 71),
-      (1, 0, 205, 'assets_view_group_id', 'FIELD_ASSETS_VIEW_GROUP_ID', 72),
-      (1, 0, 205, 'assets_primary_category_id', 'FIELD_ASSETS_PRIMARY_CATEGORY_ID', 73);
+      (1, 0, 205, 'catalog_id', 'FIELD_CATALOG_ID', 63),
+      (1, 0, 205, 'catalog_catalog_type_id', 'FIELD_catalog_type_id', 64),
+      (1, 0, 205, 'catalog_source_id', 'FIELD_CATALOG_SOURCE_ID', 65),
+      (1, 0, 205, 'catalog_routable', 'FIELD_CATALOG_ROUTABLE', 66),
+      (1, 0, 205, 'catalog_sef_request', 'FIELD_CATALOG_SEF_REQUEST', 67),
+      (1, 0, 205, 'catalog_request', 'FIELD_CATALOG_REQUEST', 68),
+      (1, 0, 205, 'catalog_request_option', 'FIELD_CATALOG_OPTION', 69),
+      (1, 0, 205, 'catalog_request_model', 'FIELD_CATALOG_MODEL', 70),
+      (1, 0, 205, 'catalog_redirect_to_id', 'FIELD_CATALOG_REDIRECT_TO_ID', 71),
+      (1, 0, 205, 'catalog_view_group_id', 'FIELD_CATALOG_VIEW_GROUP_ID', 72),
+      (1, 0, 205, 'catalog_primary_category_id', 'FIELD_CATALOG_PRIMARY_CATEGORY_ID', 73);
 
-# 205 Asset Types
+# 205 Catalog Types
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
-      (1, 0, 205, 'asset_types_component_option', 'FIELD_ASSET_TYPES_COMPONENT_OPTION', 76),
-      (1, 0, 205, 'asset_types_id', 'FIELD_ASSET_TYPES_ID', 77),
-      (1, 0, 205, 'asset_types_protected', 'FIELD_ASSET_TYPES_PROTECTED', 78),
-      (1, 0, 205, 'asset_types_source_table', 'FIELD_ASSET_TYPES_SOURCE_TABLE', 79),
-      (1, 0, 205, 'asset_types_title', 'FIELD_ASSET_TYPES_TITLE', 80);
+      (1, 0, 205, 'catalog_types_component_option', 'FIELD_CATALOG_TYPES_COMPONENT_OPTION', 76),
+      (1, 0, 205, 'catalog_types_id', 'FIELD_CATALOG_TYPES_ID', 77),
+      (1, 0, 205, 'catalog_types_protected', 'FIELD_CATALOG_TYPES_PROTECTED', 78),
+      (1, 0, 205, 'catalog_types_source_table', 'FIELD_CATALOG_TYPES_SOURCE_TABLE', 79),
+      (1, 0, 205, 'catalog_types_title', 'FIELD_CATALOG_TYPES_TITLE', 80);
 
 # 210 EXTENSION_OPTION_ID_PUBLISH_FIELDS
 INSERT INTO `molajo_extension_options`

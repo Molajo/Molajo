@@ -149,7 +149,7 @@ For example, if you are trying to override a view located in platforms/molajo/mv
 
 ---
 
-## SECTION VII. Working with CSS, JS, and other media assets ##
+## SECTION VII. Working with CSS, JS, and other media catalog ##
 
 ### How do I add CSS for a View?
 
@@ -203,7 +203,7 @@ System-wide CSS and JS are always loaded, regardless of content:
 
       => media/system/[application-name]/css[js]/XYZ.css[js]
 
-##### Asset ID #####
+##### Catalog ID #####
 
 For extensions (components, modules, and triggers), content items and items for a specific primary categories, the asset id can be used as a folder name to load CSS and JS files. This can be further refined by placing the asset id folder beneath the application name folder.
 

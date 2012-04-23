@@ -23,10 +23,10 @@
             />
 
     <field
-            name="asset_type_id"
-            type="asset_type"
-            label="FIELD_ASSET_TYPE_LABEL"
-            description="FIELD_ASSET_TYPE_DESC"
+            name="catalog_type_id"
+            type="catalog_type"
+            label="FIELD_CATALOG_TYPE_LABEL"
+            description="FIELD_CATALOG_TYPE_DESC"
             readonly="true"
             />
 

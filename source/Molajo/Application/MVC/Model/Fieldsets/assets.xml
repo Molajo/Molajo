@@ -13,7 +13,7 @@
                 />
 
         <field
-                name="asset_type_id"
+                name="catalog_type_id"
                 type="hidden"
                 filter="unset"
                 />
@@ -85,7 +85,7 @@
     <fields name="parameters">
     </fields>
 
-    <fields name="assets">
+    <fields name="catalog">
 
         <field
                 name="path"

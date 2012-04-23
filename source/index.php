@@ -13,7 +13,7 @@ define('BASE_FOLDER', __DIR__);
 
 /** Initialize Optional Parameters */
 $override_request_url = null;
-$override_asset_id = null;
+$override_catalog_id = null;
 $override_sequenceXML = null;
 $override_finalXML = null;
 
@@ -24,7 +24,7 @@ require_once BASE_FOLDER . '/Autoload.php';
 $app = Molajo\Application\Molajo::Application()
 	->process(
 		$override_request_url,
-		$override_asset_id,
+		$override_catalog_id,
 		$override_sequenceXML,
 		$override_finalXML
 	);

@@ -13,13 +13,13 @@ use Molajo\Application\MVC\Model\TableModel;
 defined('MOLAJO') or die;
 
 /**
- * Asset
+ * Catalog
  *
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
-Class AssetService
+Class CatalogService
 {
 	/**
 	 * Static instance
@@ -39,7 +39,7 @@ Class AssetService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new AssetService();
+			self::$instance = new CatalogService();
 		}
 		return self::$instance;
 	}

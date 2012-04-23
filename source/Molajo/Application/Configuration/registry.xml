@@ -19,14 +19,14 @@
     <registry>UserLanguage</registry>
 
     <registry>Theme</registry>
-    <registry>ThemeAssets</registry>
+    <registry>ThemeCatalog</registry>
     <registry>ThemeCustomfields</registry>
     <registry>ThemeMetadata</registry>
     <registry>ThemeParameters</registry>
     <registry>Page</registry>
 
     <registry>Request</registry>
-    <registry>RequestAsset</registry>
+    <registry>RequestCatalog</registry>
     <registry>RequestExtension</registry>
     <registry>RequestExtensionCustomfields</registry>
     <registry>RequestExtensionMetadata</registry>
@@ -39,7 +39,7 @@
     <registry>RequestTemplate</registry>
     <registry>RequestWrap</registry>
 
-    <registry>Asset</registry>
+    <registry>Catalog</registry>
     <registry>Extension</registry>
     <registry>ExtensionCustomfields</registry>
     <registry>ExtensionMetadata</registry>

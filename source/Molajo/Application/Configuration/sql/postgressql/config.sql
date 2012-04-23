@@ -14,7 +14,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 200, '', '', 0),
 (1, 200, 'access', 'FIELD_ACCESS_LABEL', 1),
 (1, 200, 'alias', 'FIELD_ALIAS_LABEL', 2),
-(1, 200, 'asset_id', 'FIELD_ASSET_ID_LABEL', 3),
+(1, 200, 'catalog_id', 'FIELD_CATALOG_ID_LABEL', 3),
 (1, 200, 'attribs', 'FIELD_ATTRIBS_LABEL', 4),
 (1, 200, 'category_id', 'FIELD_CATID_LABEL', 5),
 (1, 200, 'checked_out', 'FIELD_CHECKED_OUT_LABEL', 6),
@@ -26,7 +26,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 200, 'content_link', 'FIELD_CONTENT_LINK_LABEL', 12),
 (1, 200, 'content_numeric_value', 'FIELD_CONTENT_NUMERIC_VALUE_LABEL', 13),
 (1, 200, 'content_text', 'FIELD_CONTENT_TEXT_LABEL', 14),
-(1, 200, 'asset_type_id', 'FIELD_ASSET_TYPE_LABEL', 15),
+(1, 200, 'catalog_type_id', 'FIELD_CATALOG_TYPE_LABEL', 15),
 (1, 200, 'created', 'FIELD_CREATED_LABEL', 16),
 (1, 200, 'created_by', 'FIELD_CREATED_BY_LABEL', 17),
 (1, 200, 'created_by_alias', 'FIELD_CREATED_BY_ALIAS_LABEL', 18),
@@ -79,10 +79,10 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 220, 'metadata', 'FIELD_METADATA_LABEL', 2),
 (1, 220, 'parameters', 'FIELD_PARAMETERS_LABEL', 3);
 
-/* 230 EXTENSION_OPTION_ID_ASSET_TYPES */
+/* 230 EXTENSION_OPTION_ID_CATALOG_TYPES */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 230, '', '', 0),
-(1, 230, 'asset_type_id', 'Content Type', 1);
+(1, 230, 'catalog_type_id', 'Content Type', 1);
 
 /* 250 EXTENSION_OPTION_ID_STATUS */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -144,7 +144,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 330, 'alias', 'MANAGER_OPTION_FILTER_ALIAS', 2),
 (1, 330, 'created_by', 'MANAGER_OPTION_FILTER_AUTHOR', 3),
 (1, 330, 'category_id', 'MANAGER_OPTION_FILTER_CATEGORY', 4),
-(1, 330, 'asset_type_id', 'MANAGER_OPTION_FILTER_ASSET_TYPE', 5),
+(1, 330, 'catalog_type_id', 'MANAGER_OPTION_FILTER_CATALOG_TYPE', 5),
 (1, 330, 'created', 'MANAGER_OPTION_FILTER_CREATE_DATE', 6),
 (1, 330, 'featured', 'MANAGER_OPTION_FILTER_FEATURED', 7),
 (1, 330, 'language', 'MANAGER_OPTION_FILTER_LANGUAGE', 9),

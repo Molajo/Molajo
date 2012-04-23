@@ -56,7 +56,7 @@ Class Application
 	 * process the application logic
 	 *
 	 * @param string $override_request_url
-	 * @param string $override_asset_id
+	 * @param string $override_catalog_id
 	 * @param string $override_sequenceXML
 	 * @param string $override_finalXML
 	 *
@@ -70,16 +70,16 @@ Class Application
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function process($override_request_url = null, $override_asset_id = null,
+	public function process($override_request_url = null, $override_catalog_id = null,
 							$override_sequence_xml = null, $override_final_xml = null)
 	{
 		/**
-		 * 	Initialise
+		 *     Initialise
 		 */
 		$continue = $this->initialise();
 
 		Services::Registry()->set('Override\\request_url', $override_request_url);
-		Services::Registry()->set('Override\\asset_id', $override_asset_id);
+		Services::Registry()->set('Override\\catalog_id', $override_catalog_id);
 		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
 		Services::Registry()->set('Override\\final_xml', $override_final_xml);
 
@@ -100,7 +100,7 @@ Class Application
 		 */
 
 		/**
-		 * 	Route
+		 *     Route
 		 */
 		$continue = $this->route();
 
@@ -112,7 +112,7 @@ Class Application
 		}
 
 		/**
-		 * 	Authorise
+		 *     Authorise
 		 */
 		if (Services::Registry()->get('Request\\status_found') === true) {
 			$continue = $this->authorise();
@@ -126,7 +126,7 @@ Class Application
 		}
 
 		/**
-		 * 	Execute
+		 *     Execute
 		 */
 		$continue = $this->execute();
 
@@ -138,7 +138,7 @@ Class Application
 		}
 
 		/**
-		 * 	Response
+		 *     Response
 		 */
 		$continue = $this->response();
 
@@ -257,7 +257,7 @@ Class Application
 	 */
 	protected function authorise()
 	{
-		/** display view verified in getAsset */
+		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Request\\mvc_task') == 'display'
 			&& Services::Registry()->get('Request\\status_authorised') === true
 		) {
@@ -274,7 +274,7 @@ Class Application
 		Services::Registry()->set('Request\\status_authorised',
 			Services::Access()->authoriseTask(
 				Services::Registry()->get('Request\\mvc_task'),
-				Services::Registry()->get('Request\\asset_id')
+				Services::Registry()->get('Request\\catalog_id')
 			)
 		);
 
@@ -314,10 +314,10 @@ Class Application
 		$continue = $this->action();
 
 		if ($continue == false) {
-			Services::Debug()->set('Molajo::Application()->execute '. $action . ' failed');
+			Services::Debug()->set('Molajo::Application()->execute ' . $action . ' failed');
 			return false;
 		} else {
-			Services::Debug()->set('Molajo::Application()->execute '. $action . ' succeeded');
+			Services::Debug()->set('Molajo::Application()->execute ' . $action . ' succeeded');
 			return true;
 		}
 	}
@@ -875,6 +875,7 @@ Class Application
 			echo $message;
 			die;
 		}
+
 		return true;
 	}
 }

@@ -47,10 +47,10 @@ class ComponentIncluder extends Includer
             (int)Services::Registry()->get('Request\\extension_instance_id'));
         $this->set('extension_instance_name',
             Services::Registry()->get('Request\\extension_instance_name'));
-        $this->set('extension_asset_type_id',
-            (int)Services::Registry()->get('Request\\extension_asset_type_id'));
-        $this->set('extension_asset_id',
-            (int)Services::Registry()->get('Request\\extension_asset_id'));
+        $this->set('extension_catalog_type_id',
+            (int)Services::Registry()->get('Request\\extension_catalog_type_id'));
+        $this->set('extension_catalog_id',
+            (int)Services::Registry()->get('Request\\extension_catalog_id'));
         $this->set('extension_view_group_id',
             (int)Services::Registry()->get('Request\\extension_view_group_id'));
         $this->set('extension_custom_fields',
@@ -63,8 +63,8 @@ class ComponentIncluder extends Includer
             Services::Registry()->get('Request\\extension_path'));
         $this->set('extension_type',
             Services::Registry()->get('Request\\extension_type'));
-        $this->set('source_asset_type_id',
-            Services::Registry()->get('Request\\source_asset_type_id'));
+        $this->set('source_catalog_type_id',
+            Services::Registry()->get('Request\\source_catalog_type_id'));
 
         $this->set('extension_primary', true);
 
@@ -80,10 +80,10 @@ class ComponentIncluder extends Includer
             Services::Registry()->get('Request\\template_view_css_id'));
         $this->set('template_view_css_class',
             Services::Registry()->get('Request\\template_view_css_class'));
-        $this->set('template_view_asset_type_id',
-            Services::Registry()->get('Request\\template_view_asset_type_id'));
-        $this->set('template_view_asset_id',
-            (int)Services::Registry()->get('Request\\template_view_asset_id'));
+        $this->set('template_view_catalog_type_id',
+            Services::Registry()->get('Request\\template_view_catalog_type_id'));
+        $this->set('template_view_catalog_id',
+            (int)Services::Registry()->get('Request\\template_view_catalog_id'));
         $this->set('template_view_path',
             Services::Registry()->get('Request\\template_view_path'));
         $this->set('template_view_path_url',
@@ -98,10 +98,10 @@ class ComponentIncluder extends Includer
             Services::Registry()->get('Request\\wrap_view_css_id'));
         $this->set('wrap_view_css_class',
             Services::Registry()->get('Request\\wrap_view_css_class'));
-        $this->set('wrap_view_asset_type_id',
-            Services::Registry()->get('Request\\wrap_view_asset_type_id'));
-        $this->set('wrap_view_asset_id',
-            (int)Services::Registry()->get('Request\\wrap_view_asset_id'));
+        $this->set('wrap_view_catalog_type_id',
+            Services::Registry()->get('Request\\wrap_view_catalog_type_id'));
+        $this->set('wrap_view_catalog_id',
+            (int)Services::Registry()->get('Request\\wrap_view_catalog_id'));
         $this->set('wrap_view_path',
             Services::Registry()->get('Request\\wrap_view_path'));
         $this->set('wrap_view_path_url',
@@ -137,8 +137,8 @@ class ComponentIncluder extends Includer
     protected function _getExtension()
     {
         $this->set(
-            'extension_asset_type_id',
-            ASSET_TYPE_EXTENSION_COMPONENT
+            'extension_catalog_type_id',
+            CATALOG_TYPE_EXTENSION_COMPONENT
         );
 
         $results = parent::_getExtension();
