@@ -78,17 +78,17 @@ Class Application
 		 */
 		$continue = $this->initialise();
 
+		Services::Registry()->set('Override\\request_url', $override_request_url);
+		Services::Registry()->set('Override\\asset_id', $override_asset_id);
+		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
+		Services::Registry()->set('Override\\final_xml', $override_final_xml);
+
 		if ($continue == false) {
 			Services::Debug()->set('Molajo::Application()->initialise() failed');
 			return;
 		} else {
 			Services::Debug()->set('Molajo::Application()->initialise() succeeded');
 		}
-
-		Services::Registry()->set('Override\\request_url', $override_request_url);
-		Services::Registry()->set('Override\\asset_id', $override_asset_id);
-		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
-		Services::Registry()->set('Override\\final_xml', $override_final_xml);
 
 		/**
 		$list = Services::Registry()->listRegistry(1);
@@ -115,7 +115,7 @@ Class Application
 		 * 	Authorise
 		 */
 		if (Services::Registry()->get('Request\\status_found') === true) {
-			$this->authorise();
+			$continue = $this->authorise();
 		}
 
 		if ($continue == false) {
@@ -302,10 +302,10 @@ Class Application
 			$continue = $this->display();
 
 			if ($continue == false) {
-				Services::Debug()->set('Molajo::Application()->display failed');
+				Services::Debug()->set('Molajo::Application()->execute Display failed');
 				return false;
 			} else {
-				Services::Debug()->set('Molajo::Application()->display succeeded');
+				Services::Debug()->set('Molajo::Application()->execute Display succeeded');
 				return true;
 			}
 		}
@@ -314,10 +314,10 @@ Class Application
 		$continue = $this->action();
 
 		if ($continue == false) {
-			Services::Debug()->set('Molajo::Application()->'. $action . ' failed');
+			Services::Debug()->set('Molajo::Application()->execute '. $action . ' failed');
 			return false;
 		} else {
-			Services::Debug()->set('Molajo::Application()->'. $action . ' succeeded');
+			Services::Debug()->set('Molajo::Application()->execute '. $action . ' succeeded');
 			return true;
 		}
 	}
@@ -348,9 +348,6 @@ Class Application
 	protected function display($override_sequenceXML = null, $override_finalXML = null)
 	{
 		$this->rendered_output = Molajo::Parse()->process();
-
-		Services::Debug()->set('Molajo::Parse() complete');
-
 		return $this;
 	}
 
@@ -384,8 +381,6 @@ Class Application
 
 		/** execute task: non-display, edit, or add tasks */
 		$continue = $controller->$task();
-
-		Services::Debug()->set('Molajo::Application()->process() Complete');
 
 		//redirect
 
