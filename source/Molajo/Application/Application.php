@@ -53,7 +53,7 @@ Class Application
 	}
 
 	/**
-	 * Execute Application
+	 * process the application logic
 	 *
 	 * @param string $override_request_url
 	 * @param string $override_asset_id
@@ -70,7 +70,7 @@ Class Application
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function load($override_request_url = null, $override_asset_id = null,
+	public function process($override_request_url = null, $override_asset_id = null,
 							$override_sequence_xml = null, $override_final_xml = null)
 	{
 		/**
@@ -100,7 +100,7 @@ Class Application
 		 */
 
 		/**
-		 * 	Route (picks a component)
+		 * 	Route
 		 */
 		$continue = $this->route();
 

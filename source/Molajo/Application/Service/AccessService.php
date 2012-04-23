@@ -226,31 +226,6 @@ Class AccessService
 	 */
 	public function authoriseTask($task, $asset_id)
 	{
-		// below came from route
-
-		/** display view verified in getAsset */
-		if (Services::Registry()->get('Request\\mvc_task') == 'display'
-			&& Services::Registry()->get('Request\\status_authorised') === true
-		) {
-			return true;
-		}
-		if (Services::Registry()->get('Request\\mvc_task') == 'display'
-			&& Services::Registry()->get('Request\\status_authorised') === false
-		) {
-			Services::Error()->set(403);
-			return false;
-		}
-
-		/** verify other tasks */
-		Services::Registry()->set('Request\\status_authorised',
-			Services::Access()->authoriseTask(
-				Services::Registry()->get('Request\\mvc_task'),
-				Services::Registry()->get('Request\\asset_id')
-			)
-		);
-
-		// above came from route
-
 		if ($task == 'login') {
 			return Services::Access()->authoriseLogin('login', $asset_id);
 		}
@@ -290,8 +265,37 @@ Class AccessService
 			}
 			return false;
 		}
+	}
 
-		//below came from route
+	/**
+	 * Verify user authorization for task
+	 *
+	 * @return   boolean
+	 * @since    1.0
+	 */
+	protected function authoriseTask()
+	{
+		/** display view verified in getAsset */
+		if (Services::Registry()->get('Request\\mvc_task') == 'display'
+			&& Services::Registry()->get('Request\\status_authorised') === true
+		) {
+			return true;
+		}
+		if (Services::Registry()->get('Request\\mvc_task') == 'display'
+			&& Services::Registry()->get('Request\\status_authorised') === false
+		) {
+			Services::Error()->set(403);
+			return false;
+		}
+
+		/** verify other tasks */
+		Services::Registry()->set('Request\\status_authorised',
+			Services::Access()->authoriseTask(
+				Services::Registry()->get('Request\\mvc_task'),
+				Services::Registry()->get('Request\\asset_id')
+			)
+		);
+
 		if (Services::Registry()->get('Request\\status_authorised') === true) {
 		} else {
 			Services::Error()->set(403);
