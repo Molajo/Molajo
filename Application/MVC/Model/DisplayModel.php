@@ -127,7 +127,7 @@ class DisplayModel extends ItemModel
                 $this->db,
                 array('join_to_prefix' => $this->primary_prefix,
                     'join_to_primary_key' => $this->primary_key,
-                    'asset_prefix' => $this->primary_prefix . '_assets',
+                    'asset_prefix' => $this->primary_prefix . '_catalog',
                     'select' => true
                 )
             );
@@ -190,15 +190,15 @@ class DisplayModel extends ItemModel
             );
         }
 
-        if (isset($parameterArray['asset_type_id'])
-            && (int)$parameterArray['asset_type_id'] > 0
+        if (isset($parameterArray['catalog_type_id'])
+            && (int)$parameterArray['catalog_type_id'] > 0
         ) {
             $this->query->where(
                 $this->db->qn($this->primary_prefix)
                     . '.'
-                    . $this->db->qn('asset_type_id')
+                    . $this->db->qn('catalog_type_id')
                     . ' = '
-                    . (int)$parameterArray['asset_type_id']
+                    . (int)$parameterArray['catalog_type_id']
             );
         }
 

@@ -28,7 +28,7 @@ abstract class ComponentHelper
     static public function get($name)
     {
         $row = ExtensionHelper::get(
-            ASSET_TYPE_EXTENSION_COMPONENT,
+            CATALOG_TYPE_EXTENSION_COMPONENT,
             $name
         );
         if (count($row) == 0) {

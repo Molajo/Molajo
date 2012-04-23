@@ -31,8 +31,8 @@ abstract class ModuleHelper
     protected function _getExtension()
     {
         $this->set(
-            'extension_asset_type_id',
-            ASSET_TYPE_EXTENSION_MODULE
+            'extension_catalog_type_id',
+            CATALOG_TYPE_EXTENSION_MODULE
         );
         $results = parent::_getExtension();
 

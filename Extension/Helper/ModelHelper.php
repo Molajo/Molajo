@@ -7,7 +7,7 @@
  */
 namespace Molajo\Application\Helper;
 
-use Molajo\Extension\Helper\AssetHelper;
+use Molajo\Extension\Helper\CatalogHelper;
 use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
@@ -154,7 +154,7 @@ class ModelHelper
     /**
      * queryPrimaryCategory
      *
-     * Note: Assumes a join is in place to the assets table on a_assets
+     * Note: Assumes a join is in place to the catalog table on a_catalog
      *
      * sets the select, table, and where clause to retrieve
      * the primary category and description with content
@@ -169,11 +169,11 @@ class ModelHelper
         $prefix = 'a',
         $db)
     {
-        $query->select($db->qn('a_assets') . '.' . $db->qn('primary_category_id'));
+        $query->select($db->qn('a_catalog') . '.' . $db->qn('primary_category_id'));
         $query->select($db->qn('pcat') . '.title' . ' as ' . $db->qn('category_title'));
         $query->from($db->qn('#__content') . ' as ' . $db->qn('pcat'));
         $query->where($db->qn('pcat') . '.' . $db->qn('id')
-            . ' = ' . $db->qn('a_assets') . '.' . $db->qn('primary_category_id'));
+            . ' = ' . $db->qn('a_catalog') . '.' . $db->qn('primary_category_id'));
 
         return $query;
 
@@ -184,7 +184,7 @@ class ModelHelper
      *
      * Validate task-level user permissions on each row
      *
-     * Note: Must request content asset_id in order to use this method
+     * Note: Must request content catalog_id in order to use this method
      *
      * @param array $item
      * @param array $parameters
@@ -196,7 +196,7 @@ class ModelHelper
         $item = array(),
         $parameters = array())
     {
-        if (isset($item->asset_id)) {
+        if (isset($item->catalog_id)) {
         } else {
             return $item;
         }
@@ -211,7 +211,7 @@ class ModelHelper
 
         /** User Permissions */
         $permissions = Services::Access()
-            ->authoriseTaskList($tasksArray, $item->asset_id);
+            ->authoriseTaskList($tasksArray, $item->catalog_id);
 
         /** Append onto row */
         foreach ($tasksArray as $task) {
@@ -309,13 +309,13 @@ class ModelHelper
         $item = array(),
         $parameters = array())
     {
-        if (isset($item->asset_id)) {
+        if (isset($item->catalog_id)) {
         } else {
             $item->url = '';
             return $item;
         }
 
-        $item->url = AssetHelper::getURL($item->asset_id);
+        $item->url = CatalogHelper::getURL($item->catalog_id);
 
         return $item;
     }
@@ -561,7 +561,7 @@ class ModelHelper
         } else {
             $m->query->where($m->db->qn('a')
                 . '.'
-                . $m->db->qn('asset_type_id')
+                . $m->db->qn('catalog_type_id')
                 . ' IN (' . $assettypes . ')');
         }
 
@@ -576,7 +576,7 @@ class ModelHelper
                 $this->db,
                 array('join_to_prefix' => 'a',
                     'join_to_primary_key' => 'id',
-                    'asset_prefix' => 'a_assets',
+                    'asset_prefix' => 'a_catalog',
                     'select' => false
                 )
             );
@@ -663,14 +663,14 @@ class ModelHelper
     }
 
     /**
-     * updateAssetTypeId
+     * updateCatalogTypeId
      *
-     * Ensure the correct asset_type_id has been defined
+     * Ensure the correct catalog_type_id has been defined
      *
      * @return  boolean
      * @since   1.0
      */
-    public function updateAssetTypeId()
+    public function updateCatalogTypeId()
     {
 
     }

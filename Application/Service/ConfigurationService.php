@@ -183,7 +183,7 @@ Class ConfigurationService
 			$row->id = 0;
 			$row->name = APPLICATION;
 			$row->path = APPLICATION;
-			$row->asset_type_id = ASSET_TYPE_BASE_APPLICATION;
+			$row->catalog_type_id = CATALOG_TYPE_BASE_APPLICATION;
 			$row->description = '';
 			$row->custom_fields = '';
 			$row->parameters = '';

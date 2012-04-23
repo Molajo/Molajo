@@ -4,7 +4,7 @@
         <filter name="id" filter="" null="0" default="" identity="1"/>
         <filter name="user_id" filter="int" null="0" default="" />
         <filter name="action_id" filter="int" null="0" default="" />
-        <filter name="asset_id" filter="int" null="0" default="" />
+        <filter name="catalog_id" filter="int" null="0" default="" />
         <filter name="activity_datetime" filter="datetime" null="0" default=""/>
     </filters>
     <triggers>
@@ -13,7 +13,7 @@
     <fks>
         <fk name="user_id" source_id="id" source_model="Users" required="1" />
         <fk name="action_id" source_id="id" source_model="Actions" required="1" />
-        <fk name="asset_id" source_id="id" source_model="Assets" required="1" />
+        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1" />
     </fks>
 </model>
 

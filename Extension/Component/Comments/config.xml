@@ -867,10 +867,10 @@
                 description="MANAGER_SUBMENUS_DESC"
                 />
 
-        <field name="config_manager_submenu_for_asset_type_ids"
+        <field name="config_manager_submenu_for_catalog_type_ids"
                type="radio"
-               label="MANAGER_SUBMENU_FOR_ASSET_TYPES_LABEL"
-               description="MANAGER_SUBMENU_FOR_ASSET_TYPES_DESC"
+               label="MANAGER_SUBMENU_FOR_CATALOG_TYPES_LABEL"
+               description="MANAGER_SUBMENU_FOR_CATALOG_TYPES_DESC"
                default="0"
                 >
             <option value="0">NO</option>

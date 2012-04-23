@@ -3,7 +3,7 @@
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="extension_instance_id" filter="int" null="0" default="0"/>
-        <filter name="asset_type_id" filter="int" null="0" default="0"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="0"/>
         <filter name="title" filter="char" null="0" default=" "/>
         <filter name="subtitle" filter="char" null="1" default=" "/>
         <filter name="path" filter="char" null="1" default=" "/>
@@ -38,7 +38,7 @@
     </filters>
     <triggers>
         <trigger name="Alias"  />
-        <trigger name="AssetTypeId"  />
+        <trigger name="CatalogTypeId"  />
         <trigger name="ContentText"  />
         <trigger name="DateFields"  />
         <trigger name="UserFields"  />
@@ -48,12 +48,12 @@
         <trigger name="Parameters"  />
     </triggers>
     <fks>
-        <fk name="asset_type_id" source_id="id" source_model="AssetTypes" required="1" />
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1" />
         <fk name="checked_out_by" source_id="id" source_model="Users" required="1" />
         <fk name="created_by" source_id="id" source_model="Users" required="1" />
         <fk name="modified_by" source_id="id" source_model="Users" required="1" />
         <fk name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1" />
-        <fk name="asset_type_id" source_id="id" source_model="AssetTypes" required="1" />
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1" />
     </fks>
 </model>
 

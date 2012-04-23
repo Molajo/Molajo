@@ -67,13 +67,13 @@ Class Route
 
         /** Retrieve overrides */
 		$override_request_url = Services::Registry()->get('Override\\request_url', '');
-		$override_asset_id = (int) Services::Registry()->get('Override\\asset_id', 0);
+		$override_catalog_id = (int) Services::Registry()->get('Override\\catalog_id', 0);
 
 		/** Specific asset */
-        if ((int)$override_asset_id == 0) {
-            Services::Registry()->set('Request\\request_asset_id', 0);
+        if ((int)$override_catalog_id == 0) {
+            Services::Registry()->set('Request\\request_catalog_id', 0);
         } else {
-            Services::Registry()->set('Request\\request_asset_id', $override_asset_id);
+            Services::Registry()->set('Request\\request_catalog_id', $override_catalog_id);
         }
 
         /** Check for home duplicate content and redirect */
@@ -94,8 +94,8 @@ Class Route
         /** URL parameters */
         $this->getRequest();
 
-        /** Asset, Access Control, links to source, menus, extensions, etc. */
-        $this->getAsset();
+        /** Catalog, Access Control, links to source, menus, extensions, etc. */
+        $this->getCatalog();
 
         /** Authorise */
         if (Services::Registry()->get('Request\\status_found')) {
@@ -111,7 +111,7 @@ Class Route
 		if ($this->redirect_to_id == 0) {
 		} else {
 			Services::Response()->redirect(
-				Molajo::Helper()->getURL('Asset', $this->redirect_to_id),
+				Molajo::Helper()->getURL('Catalog', $this->redirect_to_id),
 				301
 			);
 		}
@@ -119,7 +119,7 @@ Class Route
 		/** must be logged on */
 		if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
 			&& Services::Registry()->get('User\\guest', true) === true
-			&& Services::Registry()->get('Request\\request_asset_id')
+			&& Services::Registry()->get('Request\\request_catalog_id')
 				<> Services::Registry()->get('Configuration\\logon_requirement', 0)
 		) {
 			Services::Response()->redirect(
@@ -218,10 +218,10 @@ Class Route
 
         /** Home */
         if (Services::Registry()->get('Request\\request_url_query', '') == ''
-            && (int)Services::Registry()->get('Request\\request_asset_id', 0) == 0
+            && (int)Services::Registry()->get('Request\\request_catalog_id', 0) == 0
         ) {
-            Services::Registry()->set('Request\\request_asset_id',
-                Services::Registry()->get('Configuration\\home_asset_id', 0));
+            Services::Registry()->set('Request\\request_catalog_id',
+                Services::Registry()->get('Configuration\\home_catalog_id', 0));
             Services::Registry()->set('Request\\request_url_home', true);
         }
 
@@ -321,18 +321,18 @@ Class Route
     }
 
     /**
-     * Retrieve Asset and Asset Type data for a specific asset id
+     * Retrieve Catalog and Catalog Type data for a specific asset id
      * or query request
      *
      * @return    boolean
      * @since    1.0
      */
-    protected function getAsset()
+    protected function getCatalog()
     {
 
         $row = Molajo::Helper()
-            ->get('Asset',
-            (int)Services::Registry()->get('Request\\request_asset_id'),
+            ->get('Catalog',
+            (int)Services::Registry()->get('Request\\request_catalog_id'),
             Services::Registry()->get('Request\\request_url_query'),
             Services::Registry()->get('Request\\mvc_option'),
             Services::Registry()->get('Request\\mvc_id')
@@ -360,14 +360,14 @@ Class Route
         }
 
         /** request url */
-        Services::Registry()->set('Request\\request_asset_id', (int)$row->asset_id);
-        Services::Registry()->set('Request\\request_asset_type_id', (int)$row->asset_type_id);
+        Services::Registry()->set('Request\\request_catalog_id', (int)$row->catalog_id);
+        Services::Registry()->set('Request\\request_catalog_type_id', (int)$row->catalog_type_id);
         Services::Registry()->set('Request\\request_url', $row->request);
         Services::Registry()->set('Request\\request_url_sef', $row->sef_request);
 
         /** home */
-        if ((int)Services::Registry()->get('Request\\request_asset_id', 0)
-            == Services::Registry()->get('Configuration\\home_asset_id', null)
+        if ((int)Services::Registry()->get('Request\\request_catalog_id', 0)
+            == Services::Registry()->get('Configuration\\home_catalog_id', null)
         ) {
             Services::Registry()->set('Request\\request_url_home', true);
         } else {
@@ -393,8 +393,8 @@ Class Route
             return Services::Registry()->set('Request\\status_found', true);
         }
 
-        if (Services::Registry()->get('Request\\request_asset_type_id')
-            == ASSET_TYPE_MENU_ITEM_COMPONENT
+        if (Services::Registry()->get('Request\\request_catalog_type_id')
+            == CATALOG_TYPE_MENU_ITEM_COMPONENT
         ) {
             Services::Registry()->set('Request\\menu_item_id', $row->source_id);
             $this->getMenuItem();
@@ -428,7 +428,7 @@ Class Route
      */
     protected function authoriseTask()
     {
-        /** display view verified in getAsset */
+        /** display view verified in getCatalog */
         if (Services::Registry()->get('Request\\mvc_task') == 'display'
             && Services::Registry()->get('Request\\status_authorised') === true
         ) {
@@ -445,7 +445,7 @@ Class Route
         Services::Registry()->set('Request\\status_authorised',
             Services::Access()->authoriseTask(
                 Services::Registry()->get('Request\\mvc_task'),
-                Services::Registry()->get('Request\\request_asset_id')
+                Services::Registry()->get('Request\\request_catalog_id')
             )
         );
 
@@ -489,14 +489,14 @@ Class Route
         }
 
         Services::Registry()->set('Request\\menu_item_title', $row->menu_item_title);
-        Services::Registry()->set('Request\\menu_item_asset_type_id', $row->menu_item_asset_type_id);
-        Services::Registry()->set('Request\\menu_item_asset_id', $row->menu_item_asset_id);
+        Services::Registry()->set('Request\\menu_item_catalog_type_id', $row->menu_item_catalog_type_id);
+        Services::Registry()->set('Request\\menu_item_catalog_id', $row->menu_item_catalog_id);
         Services::Registry()->set('Request\\menu_item_view_group_id', $row->menu_item_view_group_id);
 
         Services::Registry()->set('Request\\extension_instance_id', $row->menu_id);
         Services::Registry()->set('Request\\extension_instance_name', $row->menu_title);
-        Services::Registry()->set('Request\\extension_instance_asset_type_id', $row->menu_asset_type_id);
-        Services::Registry()->set('Request\\extension_instance_asset_id', $row->menu_asset_id);
+        Services::Registry()->set('Request\\extension_instance_catalog_type_id', $row->menu_catalog_type_id);
+        Services::Registry()->set('Request\\extension_instance_catalog_id', $row->menu_catalog_id);
         Services::Registry()->set('Request\\extension_instance_view_group_id', $row->menu_view_group_id);
 
         $parameters = Services::Registry()->initialise();
@@ -589,8 +589,8 @@ Class Route
 
         /** match found */
         Services::Registry()->set('Request\\source_title', $row->title);
-        Services::Registry()->set('Request\\source_asset_type_id', $row->asset_type_id);
-        Services::Registry()->set('Request\\source_asset_id', $row->asset_id);
+        Services::Registry()->set('Request\\source_catalog_type_id', $row->catalog_type_id);
+        Services::Registry()->set('Request\\source_catalog_id', $row->catalog_id);
         Services::Registry()->set('Request\\source_view_group_id', $row->view_group_id);
         Services::Registry()->set('Request\\source_language', $row->language);
         Services::Registry()->set('Request\\source_translation_of_id', $row->translation_of_id);
@@ -609,7 +609,7 @@ Class Route
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($row->parameters);
         $parameters->set('id', $row->id);
-        $parameters->set('asset_type_id', $row->asset_type_id);
+        $parameters->set('catalog_type_id', $row->catalog_type_id);
         Services::Registry()->set('Request\\source_parameters', $parameters);
 
         $this->setPageValues($parameters, $metadata);
@@ -678,8 +678,8 @@ Class Route
         }
 
         Services::Registry()->set('Request\\category_title', $row->title);
-        Services::Registry()->set('Request\\category_asset_type_id', $row->asset_type_id);
-        Services::Registry()->set('Request\\category_asset_id', $row->asset_id);
+        Services::Registry()->set('Request\\category_catalog_type_id', $row->catalog_type_id);
+        Services::Registry()->set('Request\\category_catalog_id', $row->catalog_id);
         Services::Registry()->set('Request\\category_view_group_id', $row->view_group_id);
         Services::Registry()->set('Request\\category_language', $row->language);
         Services::Registry()->set('Request\\category_translation_of_id', $row->translation_of_id);
@@ -741,10 +741,10 @@ Class Route
         }
 
         Services::Registry()->set('Request\\extension_instance_name', $row->title);
-        Services::Registry()->set('Request\\extension_asset_id', $row->asset_id);
-        Services::Registry()->set('Request\\extension_asset_type_id', $row->asset_type_id);
+        Services::Registry()->set('Request\\extension_catalog_id', $row->catalog_id);
+        Services::Registry()->set('Request\\extension_catalog_type_id', $row->catalog_type_id);
         Services::Registry()->set('Request\\extension_view_group_id', $row->view_group_id);
-        Services::Registry()->set('Request\\extension_type', $row->asset_type_title);
+        Services::Registry()->set('Request\\extension_type', $row->catalog_type_title);
 
         $custom_fields = Services::Registry()->initialise();
         $custom_fields->loadString($row->custom_fields);
@@ -798,7 +798,7 @@ Class Route
 
         Services::Registry()->set('Request\\extension_path',
             Molajo::Helper()->getPath('Extension',
-                Services::Registry()->get('Request\\extension_asset_type_id'),
+                Services::Registry()->get('Request\\extension_catalog_type_id'),
                 Services::Registry()->get('Request\\extension_instance_name')
             )
         );
@@ -1051,7 +1051,7 @@ Class Route
     {
         $row = Molajo::Helper()
             ->get('Extension',
-            ASSET_TYPE_EXTENSION_THEME,
+            CATALOG_TYPE_EXTENSION_THEME,
             Services::Registry()->get('Request\\theme_id')
         );
 
@@ -1073,8 +1073,8 @@ Class Route
         Services::Registry()->set('Request\\theme_name', $row->title);
         Services::Registry()->set('Request\\theme_id', $row->extension_instance_id);
 
-        Services::Registry()->set('Request\\theme_asset_type_id', ASSET_TYPE_EXTENSION_THEME);
-        Services::Registry()->set('Request\\theme_asset_id', $row->asset_id);
+        Services::Registry()->set('Request\\theme_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
+        Services::Registry()->set('Request\\theme_catalog_id', $row->catalog_id);
         Services::Registry()->set('Request\\theme_view_group_id', $row->view_group_id);
         Services::Registry()->set('Request\\theme_language', $row->language);
 
@@ -1343,8 +1343,8 @@ Class Route
 		/** request */
 		Services::Registry()->set('Request\\request_url_base',
 			BASE_URL);
-		Services::Registry()->set('Request\\request_asset_id', 0);
-		Services::Registry()->set('Request\\request_asset_type_id', 0);
+		Services::Registry()->set('Request\\request_catalog_id', 0);
+		Services::Registry()->set('Request\\request_catalog_type_id', 0);
 		Services::Registry()->set('Request\\request_url_query', '');
 		Services::Registry()->set('Request\\request_url', '');
 		Services::Registry()->set('Request\\request_url_sef', '');
@@ -1353,9 +1353,9 @@ Class Route
 		/** menu item data */
 		Services::Registry()->set('Request\\menu_item_id', 0);
 		Services::Registry()->set('Request\\menu_item_title', '');
-		Services::Registry()->set('Request\\menu_item_asset_type_id',
-			ASSET_TYPE_MENU_ITEM_COMPONENT);
-		Services::Registry()->set('Request\\menu_item_asset_id', 0);
+		Services::Registry()->set('Request\\menu_item_catalog_type_id',
+			CATALOG_TYPE_MENU_ITEM_COMPONENT);
+		Services::Registry()->set('Request\\menu_item_catalog_id', 0);
 		Services::Registry()->set('Request\\menu_item_view_group_id', 0);
 		Services::Registry()->set('Request\\menu_item_custom_fields', array());
 		Services::Registry()->set('Request\\menu_item_parameters', array());
@@ -1366,8 +1366,8 @@ Class Route
 		/** source data */
 		Services::Registry()->set('Request\\source_id', 0);
 		Services::Registry()->set('Request\\source_title', '');
-		Services::Registry()->set('Request\\source_asset_type_id', 0);
-		Services::Registry()->set('Request\\source_asset_id', 0);
+		Services::Registry()->set('Request\\source_catalog_type_id', 0);
+		Services::Registry()->set('Request\\source_catalog_id', 0);
 		Services::Registry()->set('Request\\source_view_group_id', 0);
 		Services::Registry()->set('Request\\source_custom_fields', array());
 		Services::Registry()->set('Request\\source_parameters', array());
@@ -1380,8 +1380,8 @@ Class Route
 		/** extension */
 		Services::Registry()->set('Request\\extension_instance_id', 0);
 		Services::Registry()->set('Request\\extension_instance_name', '');
-		Services::Registry()->set('Request\\extension_asset_type_id', 0);
-		Services::Registry()->set('Request\\extension_asset_id', 0);
+		Services::Registry()->set('Request\\extension_catalog_type_id', 0);
+		Services::Registry()->set('Request\\extension_catalog_id', 0);
 		Services::Registry()->set('Request\\extension_view_group_id', 0);
 		Services::Registry()->set('Request\\extension_custom_fields', array());
 		Services::Registry()->set('Request\\extension_metadata', array());
@@ -1393,9 +1393,9 @@ Class Route
 		/** primary category */
 		Services::Registry()->set('Request\\category_id', 0);
 		Services::Registry()->set('Request\\category_title', '');
-		Services::Registry()->set('Request\\category_asset_type_id',
-			ASSET_TYPE_CATEGORY_LIST);
-		Services::Registry()->set('Request\\category_asset_id', 0);
+		Services::Registry()->set('Request\\category_catalog_type_id',
+			CATALOG_TYPE_CATEGORY_LIST);
+		Services::Registry()->set('Request\\category_catalog_id', 0);
 		Services::Registry()->set('Request\\category_view_group_id', 0);
 		Services::Registry()->set('Request\\category_custom_fields', array());
 		Services::Registry()->set('Request\\category_parameters', array());
@@ -1415,9 +1415,9 @@ Class Route
 		/** theme */
 		Services::Registry()->set('Request\\theme_id', 0);
 		Services::Registry()->set('Request\\theme_name', '');
-		Services::Registry()->set('Request\\theme_asset_type_id',
-			ASSET_TYPE_EXTENSION_THEME);
-		Services::Registry()->set('Request\\theme_asset_id', 0);
+		Services::Registry()->set('Request\\theme_catalog_type_id',
+			CATALOG_TYPE_EXTENSION_THEME);
+		Services::Registry()->set('Request\\theme_catalog_id', 0);
 		Services::Registry()->set('Request\\theme_view_group_id', 0);
 		Services::Registry()->set('Request\\theme_custom_fields', array());
 		Services::Registry()->set('Request\\theme_metadata', array());
@@ -1432,9 +1432,9 @@ Class Route
 		Services::Registry()->set('Request\\page_view_name', '');
 		Services::Registry()->set('Request\\page_view_css_id', '');
 		Services::Registry()->set('Request\\page_view_css_class', '');
-		Services::Registry()->set('Request\\page_view_asset_type_id',
-			ASSET_TYPE_EXTENSION_PAGE_VIEW);
-		Services::Registry()->set('Request\\page_view_asset_id', 0);
+		Services::Registry()->set('Request\\page_view_catalog_type_id',
+			CATALOG_TYPE_EXTENSION_PAGE_VIEW);
+		Services::Registry()->set('Request\\page_view_catalog_id', 0);
 		Services::Registry()->set('Request\\page_view_path', '');
 		Services::Registry()->set('Request\\page_view_path_url', '');
 		Services::Registry()->set('Request\\page_view_include', '');
@@ -1444,9 +1444,9 @@ Class Route
 		Services::Registry()->set('Request\\template_view_name', '');
 		Services::Registry()->set('Request\\template_view_css_id', '');
 		Services::Registry()->set('Request\\template_view_css_class', '');
-		Services::Registry()->set('Request\\template_view_asset_type_id',
-			ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
-		Services::Registry()->set('Request\\template_view_asset_id', 0);
+		Services::Registry()->set('Request\\template_view_catalog_type_id',
+			CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW);
+		Services::Registry()->set('Request\\template_view_catalog_id', 0);
 		Services::Registry()->set('Request\\template_view_path', '');
 		Services::Registry()->set('Request\\template_view_path_url', '');
 
@@ -1455,9 +1455,9 @@ Class Route
 		Services::Registry()->set('Request\\wrap_view_name', '');
 		Services::Registry()->set('Request\\wrap_view_css_id', '');
 		Services::Registry()->set('Request\\wrap_view_css_class', '');
-		Services::Registry()->set('Request\\wrap_view_asset_type_id',
-			ASSET_TYPE_EXTENSION_WRAP_VIEW);
-		Services::Registry()->set('Request\\wrap_view_asset_id', 0);
+		Services::Registry()->set('Request\\wrap_view_catalog_type_id',
+			CATALOG_TYPE_EXTENSION_WRAP_VIEW);
+		Services::Registry()->set('Request\\wrap_view_catalog_id', 0);
 		Services::Registry()->set('Request\\wrap_view_path', '');
 		Services::Registry()->set('Request\\wrap_view_path_url', '');
 

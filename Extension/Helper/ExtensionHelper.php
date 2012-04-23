@@ -27,13 +27,13 @@ abstract class ExtensionHelper
      * Retrieves Extension data from the extension and extension instances
      * Verifies access for user, application and site
      *
-     * @param   $asset_type_id
+     * @param   $catalog_type_id
      * @param   $extension
      *
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function get($asset_type_id = 0, $extension = null)
+    public static function get($catalog_type_id = 0, $extension = null)
     {
         $m = new DisplayModel();
 
@@ -41,7 +41,7 @@ abstract class ExtensionHelper
          *  a. Extensions Instances Table
          */
         $m->query->select('a.' . $m->db->qn('id') . ' as extension_instance_id');
-        $m->query->select('a.' . $m->db->qn('asset_type_id'));
+        $m->query->select('a.' . $m->db->qn('catalog_type_id'));
         $m->query->select('a.' . $m->db->qn('title'));
         $m->query->select('a.' . $m->db->qn('subtitle'));
         $m->query->select('a.' . $m->db->qn('alias'));
@@ -72,9 +72,9 @@ abstract class ExtensionHelper
             );
 
         }
-        if ((int)$asset_type_id > 0) {
-            $m->query->where('a.' . $m->db->qn('asset_type_id') .
-                    ' = ' . (int)$asset_type_id
+        if ((int)$catalog_type_id > 0) {
+            $m->query->where('a.' . $m->db->qn('catalog_type_id') .
+                    ' = ' . (int)$catalog_type_id
             );
         }
 
@@ -90,23 +90,23 @@ abstract class ExtensionHelper
                 ' OR a.stop_publishing_datetime >= ' . $m->db->q($m->now) . ')'
         );
 
-        /** Assets Join and View Access Check */
+        /** Catalog Join and View Access Check */
         Services::Access()
             ->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
+                'asset_prefix' => 'b_catalog',
                 'select' => true
             )
         );
 
-        /** b_asset_types. Asset Types Table  */
-        $m->query->select($m->db->qn('b_asset_types.title') . ' as asset_type_title');
-        $m->query->from($m->db->qn('#__asset_types') . ' as b_asset_types');
-        $m->query->where('b_assets.asset_type_id = b_asset_types.id');
-        $m->query->where('b_asset_types.' .
+        /** b_catalog_types. Catalog Types Table  */
+        $m->query->select($m->db->qn('b_catalog_types.title') . ' as catalog_type_title');
+        $m->query->from($m->db->qn('#__catalog_types') . ' as b_catalog_types');
+        $m->query->where('b_catalog.catalog_type_id = b_catalog_types.id');
+        $m->query->where('b_catalog_types.' .
                 $m->db->qn('component_option') .
                 ' = ' . $m->db->q('extensions')
         );
@@ -147,21 +147,21 @@ abstract class ExtensionHelper
      *
      * @static
      *
-     * @param  $asset_type_id
+     * @param  $catalog_type_id
      * @param  $title
      *
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function getInstanceID($asset_type_id, $title)
+    public static function getInstanceID($catalog_type_id, $title)
     {
         $m = new TableModel('ExtensionInstances');
 
         $m->query->select('a.' . $m->db->qn('id'));
         $m->query->where('a.' . $m->db->qn('title') . ' = ' .
             $m->db->q($title));
-        $m->query->where('a.' . $m->db->qn('asset_type_id') .
-            ' = ' . (int)$asset_type_id);
+        $m->query->where('a.' . $m->db->qn('catalog_type_id') .
+            ' = ' . (int)$catalog_type_id);
 
         return $m->loadResult();
     }
@@ -250,15 +250,15 @@ abstract class ExtensionHelper
      * @return mixed
      * @since 1.0
      */
-    static public function getPath($asset_type_id, $name)
+    static public function getPath($catalog_type_id, $name)
     {
-        if ($asset_type_id == ASSET_TYPE_EXTENSION_COMPONENT) {
+        if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
             return ComponentHelper::getPath($name);
-        } else if ($asset_type_id == ASSET_TYPE_EXTENSION_MODULE) {
+        } else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
             return ModuleHelper::getPath($name);
-        } else if ($asset_type_id == ASSET_TYPE_EXTENSION_THEME) {
+        } else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
             return ThemeHelper::getPath($name);
-        } else if ($asset_type_id == ASSET_TYPE_EXTENSION_PLUGIN) {
+        } else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PLUGIN) {
             return TriggerHelper::getPath($name);
         }
         return false;

@@ -30,7 +30,7 @@ abstract class ModuleHelper
     static public function get($name)
     {
         $rows = ExtensionHelper::get(
-            ASSET_TYPE_EXTENSION_MODULE,
+            CATALOG_TYPE_EXTENSION_MODULE,
             $name
         );
         if (count($rows) == 0) {

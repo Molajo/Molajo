@@ -2,7 +2,7 @@
 <model name="Applications" table="#__applications" primary_key="id">
     <filters>
         <filter name="id" filter="int" null="1" default="0" identity="1"/>
-        <filter name="asset_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
         <filter name="name" filter="char" null="0" default="" unique="1"/>
         <filter name="path" filter="char" null="0" default=""/>
         <filter name="description" filter="text" null="1" default=""/>
@@ -19,8 +19,8 @@
         <trigger name="Language" />
     </triggers>
     <fks>
-        <fk name="asset_type_id" source_id="id" source_model="AssetTypes" required="1" />
-        <fk name="home_asset_id" source_id="id" source_model="Assets" required="1" />
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1" />
+        <fk name="home_catalog_id" source_id="id" source_model="Catalog" required="1" />
     </fks>
     <custom_fields>
         <custom_field name="custom_field1" filter="char" null="1" default="" values=""/>
@@ -52,7 +52,7 @@
         <parameter name="thumb_folder" filter="char" null="1" default="" values=""/>
         <parameter name="editor" filter="binary" null="1" default="1" values="0,1"/>
         <parameter name="view_access" filter="binary" null="1" default="1" values="0,1"/>
-        <parameter name="home_asset_id" filter="integer" null="0" default="" values=""/>
+        <parameter name="home_catalog_id" filter="integer" null="0" default="" values=""/>
         <parameter name="logon_requirement" filter="binary" null="1" default="1" values="0,1"/>
         <parameter name="default_theme_id" filter="integer" null="1" default="" values=""/>
         <parameter name="default_page_view_id" filter="integer" null="1" default="" values=""/>

@@ -26,7 +26,7 @@ abstract class MenuItemHelper
      * Retrieves Menu item data and verifies access for the extension instances
      * user, application and site
      *
-     * @param   $asset_type_id
+     * @param   $catalog_type_id
      * @param   $extension
      *
      * @return  bool|mixed
@@ -41,7 +41,7 @@ abstract class MenuItemHelper
          *      Menu Items
          */
         $m->query->select('a.' . $m->db->qn('id') . ' as menu_item_id');
-        $m->query->select('a.' . $m->db->qn('asset_type_id') . ' as menu_item_asset_type_id');
+        $m->query->select('a.' . $m->db->qn('catalog_type_id') . ' as menu_item_catalog_type_id');
         $m->query->select('a.' . $m->db->qn('title') . ' as menu_item_title');
         $m->query->select('a.' . $m->db->qn('custom_fields') . ' as menu_item_custom_fields');
         $m->query->select('a.' . $m->db->qn('parameters') . ' as menu_item_parameters');
@@ -49,8 +49,8 @@ abstract class MenuItemHelper
         $m->query->select('a.' . $m->db->qn('translation_of_id') . ' as menu_item_translation_of_id');
         $m->query->select('a.' . $m->db->qn('language') . ' as menu_item_language');
 
-        $m->query->select('a_assets.' . $m->db->qn('id') . ' as menu_item_asset_id');
-        $m->query->select('a_assets.' . $m->db->qn('view_group_id') . ' as menu_item_view_group_id');
+        $m->query->select('a_catalog.' . $m->db->qn('id') . ' as menu_item_catalog_id');
+        $m->query->select('a_catalog.' . $m->db->qn('view_group_id') . ' as menu_item_view_group_id');
 
         $m->query->from($m->db->qn('#__content') . ' as a');
 
@@ -58,13 +58,13 @@ abstract class MenuItemHelper
             ' = b.' . $m->db->qn('id'));
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$menu_item_id);
 
-        /** Assets Join and View Access Check */
+        /** Catalog Join and View Access Check */
         Services::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
-                'asset_prefix' => 'a_assets',
+                'asset_prefix' => 'a_catalog',
                 'select' => false
             )
         );
@@ -73,13 +73,13 @@ abstract class MenuItemHelper
          *  b. Extensions Instances Table
          */
         $m->query->select('b.' . $m->db->qn('id') . ' as menu_id');
-        $m->query->select('b.' . $m->db->qn('asset_type_id') . 'as menu_asset_type_id');
+        $m->query->select('b.' . $m->db->qn('catalog_type_id') . 'as menu_catalog_type_id');
         $m->query->select('b.' . $m->db->qn('title') . ' as menu_title');
         $m->query->select('b.' . $m->db->qn('parameters') . 'as menu_parameters');
         $m->query->select('b.' . $m->db->qn('metadata') . 'as menu_metadata');
 
-        $m->query->select('b_assets.' . $m->db->qn('id') . ' as menu_asset_id');
-        $m->query->select('b_assets.' . $m->db->qn('view_group_id') . ' as menu_view_group_id');
+        $m->query->select('b_catalog.' . $m->db->qn('id') . ' as menu_catalog_id');
+        $m->query->select('b_catalog.' . $m->db->qn('view_group_id') . ' as menu_view_group_id');
 
         $m->query->from($m->db->qn('#__extension_instances') . ' as b');
 
@@ -98,7 +98,7 @@ abstract class MenuItemHelper
             $m->db,
             array('join_to_prefix' => 'b',
                 'join_to_primary_key' => 'id',
-                'asset_prefix' => 'b_assets',
+                'asset_prefix' => 'b_catalog',
                 'select' => false
             )
         );

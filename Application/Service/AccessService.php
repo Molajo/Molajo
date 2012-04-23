@@ -182,20 +182,20 @@ Class AccessService
 	 * authoriseTaskList
 	 *
 	 * Example usage:
-	 * $permissions = Services::Access()->authoriseTaskList($tasksArray, $item->asset_id);
+	 * $permissions = Services::Access()->authoriseTaskList($tasksArray, $item->catalog_id);
 	 *
 	 * @param  array   $tasklist
-	 * @param  string  $asset_id
+	 * @param  string  $catalog_id
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function authoriseTaskList($tasklist = array(), $asset_id = 0)
+	public function authoriseTaskList($tasklist = array(), $catalog_id = 0)
 	{
 		if (count($tasklist) == 0) {
 			return false;
 		}
-		if ($asset_id == 0) {
+		if ($catalog_id == 0) {
 			return false;
 		}
 
@@ -204,7 +204,7 @@ Class AccessService
 		foreach ($tasklist as $task) {
 			$taskPermissions[$task] =
 				Services::Access()
-					->authoriseTask($task, $asset_id);
+					->authoriseTask($task, $catalog_id);
 		}
 		return $taskPermissions;
 	}
@@ -216,18 +216,18 @@ Class AccessService
 	 * on a specific asset
 	 *
 	 * Example usage:
-	 * Services::Access()->authoriseTask($task, $asset_id);
+	 * Services::Access()->authoriseTask($task, $catalog_id);
 	 *
 	 * @param  string  $task
-	 * @param  string  $asset_id
+	 * @param  string  $catalog_id
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function authoriseTask($task, $asset_id)
+	public function authoriseTask($task, $catalog_id)
 	{
 		if ($task == 'login') {
-			return Services::Access()->authoriseLogin('login', $asset_id);
+			return Services::Access()->authoriseLogin('login', $catalog_id);
 		}
 
 		/** Retrieve ACL Action for this Task */
@@ -248,7 +248,7 @@ Class AccessService
 
 		$m = new TableModel('GroupPermissions');
 
-		$m->query->where($m->db->qn('asset_id') . ' = ' . (int)$asset_id);
+		$m->query->where($m->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
 		$m->query->where($m->db->qn('group_id')
 				. ' IN (' . implode(',', Services::Registry()->get('User\\groups')) . ')'
@@ -273,7 +273,7 @@ Class AccessService
 	 * Verifies permission for a user to logon to a specific application
 	 *
 	 * Example usage:
-	 * Services::Access()->authoriseLogin('login', $asset_id);
+	 * Services::Access()->authoriseLogin('login', $catalog_id);
 	 *
 	 * @param $key
 	 * @param $action
@@ -312,7 +312,7 @@ Class AccessService
 	 *     $this->db,
 	 *     array('join_to_prefix' => $this->primary_prefix,
 	 *         'join_to_primary_key' => $this->primary_key,
-	 *         'asset_prefix' => $this->primary_prefix . '_assets',
+	 *         'asset_prefix' => $this->primary_prefix . '_catalog',
 	 *         'select' => true
 	 *     )
 	 * );
@@ -338,12 +338,12 @@ Class AccessService
 					'.' .
 					$db->qn('id') .
 					' as ' .
-					$db->qn('asset_id')
+					$db->qn('catalog_id')
 			);
 		}
 
 		$query->from(
-			$db->qn('#__assets') .
+			$db->qn('#__catalog') .
 				' as ' .
 				$db->qn($parameters['asset_prefix'])
 		);
@@ -360,11 +360,11 @@ Class AccessService
 
 		$query->where(
 			$db->qn($parameters['asset_prefix']) .
-				'.' . $db->qn('asset_type_id') .
+				'.' . $db->qn('catalog_type_id') .
 				' = ' .
 				$db->qn($parameters['join_to_prefix']) .
 				'.' .
-				$db->qn('asset_type_id')
+				$db->qn('catalog_type_id')
 		);
 
 		$query->where(

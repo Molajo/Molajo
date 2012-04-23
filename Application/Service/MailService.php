@@ -249,7 +249,7 @@ Class MailService
 
 		/** authorization event */
 		//todo: what is the asset id of a service?
-		//$results = Services::Access()->authoriseTask('email', $asset_id);
+		//$results = Services::Access()->authoriseTask('email', $catalog_id);
 
 		return $permission;
 	}

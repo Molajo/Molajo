@@ -209,7 +209,7 @@ class Molajo
 	 *
 	 * @static
 	 * @param string $override_request_url
-	 * @param string $override_asset_id
+	 * @param string $override_catalog_id
 	 *
 	 * @return Route
 	 * @since 1.0

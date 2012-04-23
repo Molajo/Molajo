@@ -13,34 +13,34 @@ use Molajo\Application\Services;
 defined('MOLAJO') or die;
 
 /**
- * Asset
+ * Catalog
  *
  * @package   	Molajo
  * @subpackage  Helper
  * @since       1.0
  */
-abstract class AssetHelper
+abstract class CatalogHelper
 {
     /**
-     * getAsset
+     * getCatalog
      *
-     * Retrieve Asset and Asset Type for specific id or query request
+     * Retrieve Catalog and Catalog Type for specific id or query request
      *
      * View Access is verified in Molajo::Request to identify 403 errors
      *
-     * @param    int  $asset_id
+     * @param    int  $catalog_id
      * @param    null $query_request
      *
      * @results  object
      * @since    1.0
      */
-    public static function get($asset_id = 0, $query_request = null,
+    public static function get($catalog_id = 0, $query_request = null,
                                $request_option = '', $source_id = 0)
     {
-        $m = new TableModel('Assets');
+        $m = new TableModel('Catalog');
 
-        $m->query->select('a.' . $m->db->qn('id') . ' as asset_id');
-        $m->query->select('a.' . $m->db->qn('asset_type_id'));
+        $m->query->select('a.' . $m->db->qn('id') . ' as catalog_id');
+        $m->query->select('a.' . $m->db->qn('catalog_type_id'));
         $m->query->select('a.' . $m->db->qn('source_id'));
         $m->query->select('a.' . $m->db->qn('routable'));
         $m->query->select('a.' . $m->db->qn('sef_request'));
@@ -52,16 +52,16 @@ abstract class AssetHelper
         $m->query->select('a.' . $m->db->qn('primary_category_id'));
         $m->query->select('b.' . $m->db->qn('source_table'));
 
-        $m->query->from($m->db->qn('#__assets') . ' as a');
-        $m->query->from($m->db->qn('#__asset_types') . ' as b');
+        $m->query->from($m->db->qn('#__catalog') . ' as a');
+        $m->query->from($m->db->qn('#__catalog_types') . ' as b');
 
-        $m->query->where('a.' . $m->db->qn('asset_type_id') .
+        $m->query->where('a.' . $m->db->qn('catalog_type_id') .
             ' = b.' . $m->db->qn('id'));
 
-        if ((int)$asset_id > 0) {
+        if ((int)$catalog_id > 0) {
 
             $m->query->where('a.' . $m->db->qn('id') . ' = ' .
-                (int)$asset_id);
+                (int)$catalog_id);
 
         } else if ((int)$source_id > 0) {
 
@@ -88,30 +88,30 @@ abstract class AssetHelper
 
         if ((int)$source_id > 0) {
 
-        } else if ((int)$asset_id == 0) {
+        } else if ((int)$catalog_id == 0) {
 
             if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
                 if ($row->sef_request == $query_request) {
 
                 } else {
-                    $row->redirect_to_id = (int)$row->asset_id;
+                    $row->redirect_to_id = (int)$row->catalog_id;
                 }
 
             } else {
                 if ($row->request == $query_request) {
 
                 } else {
-                    $row->redirect_to_id = (int)$row->asset_id;
+                    $row->redirect_to_id = (int)$row->catalog_id;
                 }
             }
 
-            if ($row->asset_id ==
-                Services::Registry()->get('Configuration\\home_asset_id', 0)
+            if ($row->catalog_id ==
+                Services::Registry()->get('Configuration\\home_catalog_id', 0)
             ) {
                 if ($query_request == '') {
                 } else {
                     $row->redirect_to_id =
-                        Services::Registry()->get('Configuration\\home_asset_id', 0);
+                        Services::Registry()->get('Configuration\\home_catalog_id', 0);
                 }
             }
         }
@@ -122,21 +122,21 @@ abstract class AssetHelper
     /**
      * getID
      *
-     * Retrieves Asset ID
+     * Retrieves Catalog ID
      *
-     * @param  null $asset_type_id
+     * @param  null $catalog_type_id
      * @param  null $source_id
      *
      * @return bool|mixed
      * @since  1.0
      */
-    public static function getID($asset_type_id, $source_id)
+    public static function getID($catalog_type_id, $source_id)
     {
-        $m = new TableModel('Assets');
+        $m = new TableModel('Catalog');
 
-        $m->query->select('a.' . $m->db->qn('id') . ' as asset_id');
-        $m->query->where('a.' . $m->db->qn('asset_type_id') .
-            ' = ' . (int)$asset_type_id);
+        $m->query->select('a.' . $m->db->qn('id') . ' as catalog_id');
+        $m->query->where('a.' . $m->db->qn('catalog_type_id') .
+            ' = ' . (int)$catalog_type_id);
         $m->query->where('a.' . $m->db->qn('source_id') .
             ' = ' . (int)$source_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .
@@ -150,28 +150,28 @@ abstract class AssetHelper
     /**
      * getURL
      *
-     * Retrieves URL based on Asset ID
+     * Retrieves URL based on Catalog ID
      *
-     * @param  null $asset_id
+     * @param  null $catalog_id
      *
      * @return string
      * @since  1.0
      */
-    public static function getURL($asset_id)
+    public static function getURL($catalog_id)
     {
         /** home */
-        if ($asset_id == Services::Registry()->get('Configuration\\home_asset_id', 0)) {
+        if ($catalog_id == Services::Registry()->get('Configuration\\home_catalog_id', 0)) {
             return '';
         }
 
-        $m = new TableModel('Assets');
+        $m = new TableModel('Catalog');
 
         if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
             $m->query->select('a.' . $m->db->qn('sef_request'));
         } else {
             $m->query->select('a.' . $m->db->qn('request'));
         }
-        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$asset_id);
+        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .
                 ' IN (' .
                 implode(',', Services::Registry()->get('User\\view_groups')) . ')'
@@ -183,27 +183,27 @@ abstract class AssetHelper
     /**
      * getRedirectURL
      *
-     * Function to retrieve asset information for the Request or Asset ID
+     * Function to retrieve asset information for the Request or Catalog ID
      *
      * @return  string url
      * @since   1.0
      */
-    public static function getRedirectURL($asset_id)
+    public static function getRedirectURL($catalog_id)
     {
-        if ((int)$asset_id
-            == Services::Registry()->get('Configuration\\home_asset_id', 0)
+        if ((int)$catalog_id
+            == Services::Registry()->get('Configuration\\home_catalog_id', 0)
         ) {
             return '';
         }
 
-        $m = new TableModel('Assets');
+        $m = new TableModel('Catalog');
 
         if (Services::Registry()->get('Configuration\\sef', 1) == 0) {
             $m->query->select($m->db->qn('sef_request'));
         } else {
             $m->query->select($m->db->qn('request'));
         }
-        $m->query->where($m->db->qn('id') . ' = ' . (int)$asset_id);
+        $m->query->where($m->db->qn('id') . ' = ' . (int)$catalog_id);
 
         return $m->loadResult();
     }

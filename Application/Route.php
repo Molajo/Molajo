@@ -60,11 +60,11 @@ Class Route
 		/**
 		 * 	Dependency Injection
 		 */
-		if ((int)Services::Registry()->get('Override\\asset_id', 0) == 0) {
-			Services::Registry()->set('Request\\asset_id', 0);
+		if ((int)Services::Registry()->get('Override\\catalog_id', 0) == 0) {
+			Services::Registry()->set('Request\\catalog_id', 0);
 		} else {
-			Services::Registry()->set('Request\\asset_id',
-				(int)Services::Registry()->get('Override\\asset_id', 0));
+			Services::Registry()->set('Request\\catalog_id',
+				(int)Services::Registry()->get('Override\\catalog_id', 0));
 		}
 		if (Services::Registry()->get('Override\\request_url', '') == '') {
 			$path = PAGE_REQUEST;
@@ -108,15 +108,15 @@ Class Route
 		}
 
 		/**
-		 * 	Get Asset Data
+		 * 	Get Catalog Data
 		 */
-		$continue = $this->getAsset();
+		$continue = $this->getCatalog();
 
 		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getAsset() Failed');
+			Services::Debug()->set('Molajo::Route()->getCatalog() Failed');
 			return false;
 		} else {
-			Services::Debug()->set('Molajo::Route()->getAsset() Successful');
+			Services::Debug()->set('Molajo::Route()->getCatalog() Successful');
 		}
 
 		/**
@@ -129,12 +129,12 @@ Class Route
 		}
 
 		/**
-		 * 	Asset Redirect
+		 * 	Catalog Redirect
 		 */
 		if ($this->redirect_to_id == 0) {
 		} else {
 			Services::Response()->redirect(
-				Molajo::Helper()->getURL('Asset', $this->redirect_to_id), 301
+				Molajo::Helper()->getURL('Catalog', $this->redirect_to_id), 301
 			);
 			Services::Debug()->set('Molajo::Route() Redirect');
 			return false;
@@ -145,7 +145,7 @@ Class Route
 		 */
 		if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
 			&& Services::Registry()->get('User\\guest', true) === true
-			&& Services::Registry()->get('Request\\asset_id')
+			&& Services::Registry()->get('Request\\catalog_id')
 				<> Services::Registry()->get('Configuration\\logon_requirement', 0)
 		) {
 			Services::Response()->redirect(
@@ -199,10 +199,10 @@ Class Route
 
 		/** Home */
 		if (Services::Registry()->get('Request\\request_url_query', '') == ''
-			&& (int)Services::Registry()->get('Request\\asset_id', 0) == 0
+			&& (int)Services::Registry()->get('Request\\catalog_id', 0) == 0
 		) {
-			Services::Registry()->set('Request\\asset_id',
-				Services::Registry()->get('Configuration\\home_asset_id', 0));
+			Services::Registry()->set('Request\\catalog_id',
+				Services::Registry()->get('Configuration\\home_catalog_id', 0));
 			Services::Registry()->set('Request\\request_url_home', true);
 		}
 
@@ -307,18 +307,18 @@ Class Route
 	}
 
 	/**
-	 * Retrieve Asset and Asset Type data for a specific asset id
+	 * Retrieve Catalog and Catalog Type data for a specific asset id
 	 * or query request
 	 *
 	 * @return    boolean
 	 * @since    1.0
 	 */
-	protected function getAsset()
+	protected function getCatalog()
 	{
 		/** Retrieve the query results */
 		$row = Molajo::Helper()
-			->get('Asset',
-				(int)Services::Registry()->get('Request\\asset_id'),
+			->get('Catalog',
+				(int)Services::Registry()->get('Request\\catalog_id'),
 				Services::Registry()->get('Request\\request_url_query'),
 				Services::Registry()->get('Request\\mvc_option'),
 				Services::Registry()->get('Request\\mvc_id')
@@ -345,18 +345,18 @@ Class Route
 			return Services::Registry()->set($ns . '\\status_authorised', false);
 		}
 
-		$continue = $this->setRegistryValues('Asset', $row);
+		$continue = $this->setRegistryValues('Catalog', $row);
 		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getData() for Asset failed');
+			Services::Debug()->set('Molajo::Route()->getData() for Catalog failed');
 			return;
 		} else {
-			Services::Debug()->set('Molajo::Route()->getData() for Asset succeeded');
+			Services::Debug()->set('Molajo::Route()->getData() for Catalog succeeded');
 		}
 
 ///////
 
-		if (Services::Registry()->get($ns . '\\request_asset_type_id')
-			== ASSET_TYPE_MENU_ITEM_COMPONENT
+		if (Services::Registry()->get($ns . '\\request_catalog_type_id')
+			== CATALOG_TYPE_MENU_ITEM_COMPONENT
 		) {
 			Services::Registry()->set($ns . '\\menu_item_id', $row->source_id);
 			$this->setRegistryValues('Menuitem', $row);
@@ -374,7 +374,7 @@ Class Route
 		/** Menu Item */
 		$row = Molajo::Helper()
 			->get('Menuitem',
-				(int)Services::Registry()->get('Request\\asset_id'),
+				(int)Services::Registry()->get('Request\\catalog_id'),
 				Services::Registry()->get('Request\\request_url_query'),
 				Services::Registry()->get('Request\\mvc_option'),
 				Services::Registry()->get('Request\\mvc_id')
@@ -391,7 +391,7 @@ Class Route
 		/** Source */
 		$row = Molajo::Helper()
 			->get('Source',
-				(int)Services::Registry()->get('Request\\asset_id'),
+				(int)Services::Registry()->get('Request\\catalog_id'),
 				Services::Registry()->get('Request\\request_url_query'),
 				Services::Registry()->get('Request\\mvc_option'),
 				Services::Registry()->get('Request\\mvc_id')
@@ -408,7 +408,7 @@ Class Route
 		/** Category */
 		$row = Molajo::Helper()
 			->get('Category',
-				(int)Services::Registry()->get('Request\\asset_id'),
+				(int)Services::Registry()->get('Request\\catalog_id'),
 				Services::Registry()->get('Request\\request_url_query'),
 				Services::Registry()->get('Request\\mvc_option'),
 				Services::Registry()->get('Request\\mvc_id')
@@ -426,7 +426,7 @@ Class Route
 		/** Extension */
 		$row = Molajo::Helper()
 			->get('Extension',
-				(int)Services::Registry()->get('Request\\asset_id'),
+				(int)Services::Registry()->get('Request\\catalog_id'),
 				Services::Registry()->get('Request\\request_url_query'),
 				Services::Registry()->get('Request\\mvc_option'),
 				Services::Registry()->get('Request\\mvc_id')
@@ -446,7 +446,7 @@ Class Route
 	}
 
 	/**
-	 * Process the output from assets, menu items, content, categories, and
+	 * Process the output from catalog, menu items, content, categories, and
 	 * extensions to establish registry values to be used in task execution
 	 *
 	 * @param $ns  - namespace for registry
@@ -461,8 +461,8 @@ Class Route
 		Services::Registry()->set($ns . '\\id', (int)$row->id);
 		Services::Registry()->set($ns . '\\title', (string)$row->title);
 		Services::Registry()->set($ns . '\\alias', (string)$row->alias);
-		Services::Registry()->set($ns . '\\asset_type_id', (int)$row->asset_type_id);
-		Services::Registry()->set($ns . '\\asset_id', (int)$row->asset_id);
+		Services::Registry()->set($ns . '\\catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set($ns . '\\catalog_id', (int)$row->catalog_id);
 		Services::Registry()->set($ns . '\\view_group_id', (int)$row->view_group_id);
 		Services::Registry()->set($ns . '\\language', (int)$row->language);
 		Services::Registry()->set($ns . '\\translation_of_id', (int)$row->translation_of_id);
@@ -473,13 +473,13 @@ Class Route
 		Services::Registry()->loadField($ns . 'Metadata\\', 'meta', $row->metadata, $xml->metadata);
 		Services::Registry()->loadField($ns . 'Parameters\\', 'parameters', $row->parameters, $xml->parameter);
 
-		if ($ns == 'Asset') {
+		if ($ns == 'Catalog') {
 			Services::Registry()->set($ns . '\\request_url', $row->request);
 			Services::Registry()->set($ns . '\\request_url_sef', $row->sef_request);
 
 			/** home */
-			if ((int)Services::Registry()->get($ns . '\\asset_id', 0)
-				== Services::Registry()->get('Configuration\\home_asset_id', null)
+			if ((int)Services::Registry()->get($ns . '\\catalog_id', 0)
+				== Services::Registry()->get('Configuration\\home_catalog_id', null)
 			) {
 				Services::Registry()->set($ns . '\\request_url_home', true);
 			} else {
@@ -543,7 +543,7 @@ Class Route
 	 */
 	protected function copyRequestRegistry()
 	{
-		Services::Registry()->copy('Asset', 'RequestAsset');
+		Services::Registry()->copy('Catalog', 'RequestCatalog');
 		Services::Registry()->copy('Menuitem', 'RequestMenuitem');
 		Services::Registry()->copy('Source', 'RequestSource');
 		Services::Registry()->copy('Category', 'RequestCategory');
@@ -560,8 +560,8 @@ Class Route
 
 		/** request */
 		Services::Registry()->set($ns . '\\request_url_base', BASE_URL);
-		Services::Registry()->set($ns . '\\request_asset_id', 0);
-		Services::Registry()->set($ns . '\\request_asset_type_id', 0);
+		Services::Registry()->set($ns . '\\request_catalog_id', 0);
+		Services::Registry()->set($ns . '\\request_catalog_type_id', 0);
 		Services::Registry()->set($ns . '\\request_url_query', '');
 		Services::Registry()->set($ns . '\\request_url', '');
 		Services::Registry()->set($ns . '\\request_url_sef', '');

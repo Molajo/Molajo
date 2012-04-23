@@ -184,9 +184,9 @@ Class ImageService
 			' OR a.' . $db->qn('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')');
 		$query->where('a.id = ' . (int)$this->id);
 
-		$query->from($db->qn('#__assets') . 'as b');
+		$query->from($db->qn('#__catalog') . 'as b');
 		$query->where('b.' . $db->qn('source_id') . ' = ' . $db->qn('id'));
-		$query->where('b.' . $db->qn('asset_type_id') . ' = ' . $db->qn('asset_type_id'));
+		$query->where('b.' . $db->qn('catalog_type_id') . ' = ' . $db->qn('catalog_type_id'));
 
 		$db->setQuery($query->__toString());
 

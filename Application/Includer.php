@@ -288,8 +288,8 @@ class Includer
         /** extension */
         $this->set('extension_instance_id', 0);
         $this->set('extension_instance_name', '');
-        $this->set('extension_asset_type_id', 0);
-        $this->set('extension_asset_id', 0);
+        $this->set('extension_catalog_type_id', 0);
+        $this->set('extension_catalog_id', 0);
         $this->set('extension_view_group_id', 0);
         $this->set('extension_path', '');
         $this->set('extension_type', $this->name);
@@ -305,9 +305,9 @@ class Includer
         $this->set('template_view_name', '');
         $this->set('template_view_css_id', '');
         $this->set('template_view_css_class', '');
-        $this->set('template_view_asset_type_id',
-            ASSET_TYPE_EXTENSION_TEMPLATE_VIEW);
-        $this->set('template_view_asset_id', 0);
+        $this->set('template_view_catalog_type_id',
+            CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW);
+        $this->set('template_view_catalog_id', 0);
         $this->set('template_view_path', '');
         $this->set('template_view_path_url', '');
 
@@ -316,14 +316,14 @@ class Includer
         $this->set('wrap_view_name', '');
         $this->set('wrap_view_css_id', '');
         $this->set('wrap_view_css_class', '');
-        $this->set('wrap_view_asset_type_id',
-            ASSET_TYPE_EXTENSION_WRAP_VIEW);
-        $this->set('wrap_view_asset_id', 0);
+        $this->set('wrap_view_catalog_type_id',
+            CATALOG_TYPE_EXTENSION_WRAP_VIEW);
+        $this->set('wrap_view_catalog_id', 0);
         $this->set('wrap_view_path', '');
         $this->set('wrap_view_path_url', '');
 
         /** mvc parameters */
-        $this->set('source_asset_type_id', 0);
+        $this->set('source_catalog_type_id', 0);
         $this->set('controller', '');
         $this->set('task', '');
         $this->set('model', '');
@@ -392,7 +392,7 @@ class Includer
             } else {
                 $this->set('template_view_id',
                     ExtensionHelper::getInstanceID(
-                        ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
+                        CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
                         $this->get('template_view_name')
                     )
                 );
@@ -405,7 +405,7 @@ class Includer
             } else {
                 $this->set('wrap_view_id',
                     ExtensionHelper::getInstanceID(
-                        ASSET_TYPE_EXTENSION_WRAP_VIEW,
+                        CATALOG_TYPE_EXTENSION_WRAP_VIEW,
                         $this->get('wrap_view_name')
                     )
                 );
@@ -427,13 +427,13 @@ class Includer
     {
         if ($this->get('extension_instance_id', 0) == 0) {
             $rows = ExtensionHelper::get(
-                (int)$this->get('extension_asset_type_id'),
+                (int)$this->get('extension_catalog_type_id'),
                 $this->get('extension_instance_name')
             );
 
         } else {
             $rows = ExtensionHelper::get(
-                (int)$this->get('extension_asset_type_id'),
+                (int)$this->get('extension_catalog_type_id'),
                 (int)$this->get('extension_instance_id')
             );
         }
@@ -452,16 +452,16 @@ class Includer
 
         $this->set('extension_instance_id', $row->extension_instance_id);
         $this->set('extension_instance_name', $row->title);
-        $this->set('extension_asset_id', $row->asset_id);
-        $this->set('extension_asset_type_id', $row->asset_type_id);
+        $this->set('extension_catalog_id', $row->catalog_id);
+        $this->set('extension_catalog_type_id', $row->catalog_type_id);
         $this->set('extension_view_group_id', $row->view_group_id);
-        $this->set('extension_type', $row->asset_type_title);
+        $this->set('extension_type', $row->catalog_type_title);
 
         $this->parameters = Services::Registry()->initialise();
         $this->parameters->loadString($row->parameters);
 
-        $this->set('source_asset_type_id',
-            $this->parameters->get('source_asset_type_id'));
+        $this->set('source_catalog_type_id',
+            $this->parameters->get('source_catalog_type_id'));
 
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
@@ -508,7 +508,7 @@ class Includer
 
         $this->set('extension_path',
             ExtensionHelper::getPath(
-                $this->get('extension_asset_type_id'),
+                $this->get('extension_catalog_type_id'),
                 $this->get('extension_instance_name')
             )
         );
@@ -608,7 +608,7 @@ class Includer
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
                 ExtensionHelper::getInstanceID(
-                    ASSET_TYPE_EXTENSION_TEMPLATE_VIEW,
+                    CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
                     $this->get('template_view_name'),
                     'Template'
                 )
@@ -638,7 +638,7 @@ class Includer
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
                 ExtensionHelper::getInstanceID(
-                    ASSET_TYPE_EXTENSION_WRAP_VIEW,
+                    CATALOG_TYPE_EXTENSION_WRAP_VIEW,
                     $this->get('wrap_view_name'),
                     'Wrap'
                 )

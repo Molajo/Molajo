@@ -9,13 +9,13 @@ namespace Molajo\Model\Trigger;
 defined('MOLAJO') or die;
 
 /**
- * AssetSource Trigger
+ * CatalogTypeID
  *
  * @package     Molajo
- * @subpackage  Model
+ * @subpackage  Trigger
  * @since       1.0
  */
-class AssetSourceTrigger extends Trigger
+class CatalogTypeIDTrigger extends Trigger
 {
     /**
      * __construct
