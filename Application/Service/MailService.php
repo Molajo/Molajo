@@ -391,7 +391,7 @@ Class MailService
 	{
 
 		try {
-			$value = Services::Security()
+			$value = Services::Filter()
 				->filter(
 					$value,
 					$dataType,

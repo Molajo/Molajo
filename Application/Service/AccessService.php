@@ -268,44 +268,6 @@ Class AccessService
 	}
 
 	/**
-	 * Verify user authorization for task
-	 *
-	 * @return   boolean
-	 * @since    1.0
-	 */
-	protected function authoriseTask()
-	{
-		/** display view verified in getAsset */
-		if (Services::Registry()->get('Request\\mvc_task') == 'display'
-			&& Services::Registry()->get('Request\\status_authorised') === true
-		) {
-			return true;
-		}
-		if (Services::Registry()->get('Request\\mvc_task') == 'display'
-			&& Services::Registry()->get('Request\\status_authorised') === false
-		) {
-			Services::Error()->set(403);
-			return false;
-		}
-
-		/** verify other tasks */
-		Services::Registry()->set('Request\\status_authorised',
-			Services::Access()->authoriseTask(
-				Services::Registry()->get('Request\\mvc_task'),
-				Services::Registry()->get('Request\\asset_id')
-			)
-		);
-
-		if (Services::Registry()->get('Request\\status_authorised') === true) {
-		} else {
-			Services::Error()->set(403);
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * authoriseLogin
 	 *
 	 * Verifies permission for a user to logon to a specific application

@@ -80,7 +80,7 @@ class UpdateController extends Controller
         die;
 
 
-        $hash = Services::Security()->getHash(APPLICATION.get_class($this));
+        $hash = Services::Filter()->getHash(APPLICATION.get_class($this));
 
         $session = Services::Session()->create($hash);
         var_dump($session);
@@ -195,7 +195,7 @@ class UpdateController extends Controller
                 } else {
 
                     try {
-                        $value = Services::Security()->filter(
+                        $value = Services::Filter()->filter(
                             $value, $dataType, $null, $default);
 
                     } catch (Exception $e) {
