@@ -90,7 +90,14 @@ Class Application
 		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
 		Services::Registry()->set('Override\\final_xml', $override_final_xml);
 
+		/**
 		$list = Services::Registry()->listRegistry(1);
+
+		echo '<pre>';
+		var_dump($list);
+		echo '</pre>';
+		die;
+		 */
 
 		/**
 		 * 	Route (picks a component)

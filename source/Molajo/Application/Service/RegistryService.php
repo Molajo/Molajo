@@ -69,8 +69,6 @@ defined('MOLAJO') or die;
  *  .. UserCustomfields
  *  .. UserMetadata
  *  .. UserParameters
- *  .. Client
- *  .. Identification
  *
  *  Document
  *  .. DocumentCustomfields
@@ -162,6 +160,20 @@ Class RegistryService
 	{
 		$this->parameters = array();
 
+		/** initialise known namespaces for application */
+		$xml = CONFIGURATION_FOLDER . '/registry.xml';
+		if (is_file($xml)) {
+		} else {
+			return false;
+		}
+
+		$list = simplexml_load_file($xml);
+
+		foreach ($list->registry as $item) {
+			$ns = (string)$item;
+			$this->create($ns, true);
+		}
+
 		return $this;
 	}
 
@@ -221,10 +233,17 @@ Class RegistryService
 
 			if ($all == false) {
 				$registry[] = $name;
+
 			} else {
+
 				while (list($k, $v) = each($this->parameters[$name])) {
+					$i = 0;
 					while (list($key, $value) = each($v)) {
+						$i++;
 						$registry[$name . '\\' . $key] = $value;
+					}
+					if ($i == 0) {
+						$registry[$name] = null;
 					}
 				}
 			}

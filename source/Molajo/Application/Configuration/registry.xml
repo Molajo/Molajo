@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list>
+    <registry>Override</registry>
+
+    <registry>Application</registry>
+    <registry>ApplicationCustomfields</registry>
+    <registry>ApplicationMetadata</registry>
+
+    <registry>Site</registry>
+    <registry>SiteCustomfields</registry>
+    <registry>SiteMetadata</registry>
+
+    <registry>Configuration</registry>
+
+    <registry>User</registry>
+    <registry>UserCustomfields</registry>
+    <registry>UserMetadata</registry>
+    <registry>UserParameters</registry>
+    <registry>UserLanguage</registry>
+
+    <registry>Theme</registry>
+    <registry>ThemeAssets</registry>
+    <registry>ThemeCustomfields</registry>
+    <registry>ThemeMetadata</registry>
+    <registry>ThemeParameters</registry>
+    <registry>Page</registry>
+
+    <registry>Request</registry>
+    <registry>RequestAsset</registry>
+    <registry>RequestExtension</registry>
+    <registry>RequestExtensionCustomfields</registry>
+    <registry>RequestExtensionMetadata</registry>
+    <registry>RequestExtensionParameters</registry>
+    <registry>RequestSource</registry>
+    <registry>RequestSourceCustomfields</registry>
+    <registry>RequestSourceMetadata</registry>
+    <registry>RequestSourceParameters</registry>
+    <registry>RequestMVC</registry>
+    <registry>RequestTemplate</registry>
+    <registry>RequestWrap</registry>
+
+    <registry>Asset</registry>
+    <registry>Extension</registry>
+    <registry>ExtensionCustomfields</registry>
+    <registry>ExtensionMetadata</registry>
+    <registry>ExtensionParameters</registry>
+    <registry>Source</registry>
+    <registry>SourceCustomfields</registry>
+    <registry>SourceMetadata</registry>
+    <registry>SourceParameters</registry>
+    <registry>MVC</registry>
+    <registry>MVCParameters</registry>
+    <registry>Template</registry>
+    <registry>Wrap</registry>
+</list>
