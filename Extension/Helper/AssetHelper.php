@@ -2,11 +2,12 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 
 use Molajo\Application\MVC\Model\TableModel;
+
 use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
@@ -14,7 +15,7 @@ defined('MOLAJO') or die;
 /**
  * Asset
  *
- * @package   Molajo
+ * @package   	Molajo
  * @subpackage  Helper
  * @since       1.0
  */

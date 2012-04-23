@@ -15,14 +15,6 @@ defined('MOLAJO') or die;
 /**
  * Route
  *
- * Establishes parameter values given inheritance chain:
- * 1. Menu Item
- *   -or - Detail source content
- * 2. Extension for content
- * 3. Primary category of content
- * 4. Application
- * 5. Hard-coded defaults
- *
  * @package    Molajo
  * @subpackage Route
  * @since      1.0
@@ -65,10 +57,9 @@ Class Route
 	 */
 	public function process()
 	{
-		/** initialise */
-		$this->initialise();
-
-		/** asset id */
+		/**
+		 * 	Dependency Injection
+		 */
 		if ((int)Services::Registry()->get('Override\\asset_id', 0) == 0) {
 			Services::Registry()->set('Request\\asset_id', 0);
 		} else {
@@ -81,42 +72,77 @@ Class Route
 			$path = Services::Registry()->get('Override\\request_url', '');
 		}
 
-		/** redirect home duplicate content */
-		$this->checkHome();
+		/**
+		 * 	Check for duplicate content URL for Home (and redirect, if found)
+		 */
+		$continue = $this->checkHome($path);
 
-		if (Services::Redirect()->url === null
-			&& (int)Services::Redirect()->code == 0
-		) {
-		} else {
+		if ($continue == false) {
+			Services::Debug()->set('Molajo::Route()->checkHome() Redirect to Real Home');
 			return false;
+		} else {
+			Services::Debug()->set('Molajo::Route()->checkHome() No Redirect needed');
 		}
 
-		/** Offline Mode */
+		/**
+		 * 	See if Application is in Offline Mode
+		 */
 		if (Services::Registry()->get('Configuration\\offline', 1) == 0) {
 			Services::Error()->set(503);
+			Services::Debug()->set('Molajo::Route() Direct to Offline Mode');
+			return false;
+		} else {
+			Services::Debug()->set('Molajo::Route() Not in Offline Mode');
+		}
+
+		/**
+		 * 	Get Request Object
+		 */
+		$continue = $this->getRequest();
+
+		if ($continue == false) {
+			Services::Debug()->set('Molajo::Route()->getRequest() Failed');
+			return false;
+		} else {
+			Services::Debug()->set('Molajo::Route()->getRequest() Successful');
+		}
+
+		/**
+		 * 	Get Asset Data
+		 */
+		$continue = $this->getAsset();
+
+		if ($continue == false) {
+			Services::Debug()->set('Molajo::Route()->getAsset() Failed');
+			return false;
+		} else {
+			Services::Debug()->set('Molajo::Route()->getAsset() Successful');
+		}
+
+		/**
+		 * 	404
+		 */
+		if (Services::Registry()->get('Request\\status_found') === false) {
+			Services::Error()->set(404);
+			Services::Debug()->set('Molajo::Route() 404');
 			return false;
 		}
 
-		/** URL parameters */
-		$this->getRequest();
-
-		/** Asset, Access Control, links to source, menus, extensions, etc. */
-		$this->getAsset();
-
-		/** 404 Not Found Error */
-		if (Services::Registry()->get('Request\\status_found') === false) {
-			Services::Error()->set(404);
-		}
-
-		/** Redirect */
+		/**
+		 * 	Asset Redirect
+		 */
 		if ($this->redirect_to_id == 0) {
 		} else {
 			Services::Response()->redirect(
 				Molajo::Helper()->getURL('Asset', $this->redirect_to_id), 301
 			);
+			Services::Debug()->set('Molajo::Route() Redirect');
+			return false;
 		}
 
-		/** Redirect if must be logged on */
+		/**
+		 * 	Redirect to Logon
+		 */
 		if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
 			&& Services::Registry()->get('User\\guest', true) === true
 			&& Services::Registry()->get('Request\\asset_id')
@@ -125,57 +151,26 @@ Class Route
 			Services::Response()->redirect(
 				Services::Registry()->get('Configuration\\logon_requirement', 0), 303
 			);
+			Services::Debug()->set('Molajo::Route() Redirect to Logon');
+			return false;
 		}
 
-		/** Action: Render Page */
-		$this->copyRequestRegistry ();
-
+		/**
+		 * 	Return to Application Object
+		 */
 		return $this;
-	}
-
-	/**
-	 * Create and Initialize the request and establish other
-	 * properties needed by this method and downstream in the
-	 * application
-	 *
-	 * Request Object which can be accessed by other classes
-	 *
-	 * @return    array
-	 * @since    1.0
-	 */
-	protected function initialise()
-	{
-		Services::Registry()->create('Request');
-		Services::Registry()->create('RequestParameters');
-		Services::Registry()->create('RequestMetadata');
-		Services::Registry()->create('RequestExtension');
-		Services::Registry()->create('RequestTemplate');
-		Services::Registry()->create('RequestWrap');
-		Services::Registry()->create('RequestMVC');
-
-		Services::Registry()->create('Asset');
-		Services::Registry()->create('Menuitem');
-		Services::Registry()->create('Source');
-		Services::Registry()->create('Category');
-		Services::Registry()->create('Extension');
-		Services::Registry()->create('MVC');
-
-		Services::Registry()->create('Theme');
-		Services::Registry()->create('Page');
-		Services::Registry()->create('Template');
-		Services::Registry()->create('Wrap');
 	}
 
 	/**
 	 * Determine if URL is duplicate content for home (and issue redirect, if necessary)
 	 *
-	 * Request is stripped of Host, Folder, and Application
-	 * Path ex. index.php?option=login or access/groups
+	 * @param string $path Stripped of Host, Folder, and Application
+	 * 						ex. index.php?option=login or access/groups
 	 *
-	 * @return mixed
+	 * @return boolean
 	 * @since  1.0
 	 */
-	protected function checkHome()
+	protected function checkHome($path)
 	{
 		/** duplicate content: URLs without the .html */
 		if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
@@ -198,7 +193,8 @@ Class Route
 			|| Services::Registry()->get('Request\\request_url_query', '') == 'index.php?'
 			|| Services::Registry()->get('Request\\request_url_query', '') == '/index.php/'
 		) {
-			return Services::Redirect()->set('', 301);
+			Services::Redirect()->set('', 301);
+			return false;
 		}
 
 		/** Home */
@@ -209,8 +205,6 @@ Class Route
 				Services::Registry()->get('Configuration\\home_asset_id', 0));
 			Services::Registry()->set('Request\\request_url_home', true);
 		}
-
-		Services::Debug()->set('Molajo::Request()->checkHome complete');
 
 		return true;
 	}
