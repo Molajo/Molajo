@@ -183,7 +183,7 @@ abstract class CatalogHelper
     /**
      * getRedirectURL
      *
-     * Function to retrieve asset information for the Request or Catalog ID
+     * Function to retrieve catalog information for the Request or Catalog ID
      *
      * @return  string url
      * @since   1.0

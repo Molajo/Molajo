@@ -362,15 +362,15 @@ class UpdateController extends Controller
      */
     private function storeRelated()
     {
-        $asset = new TableModel('Catalog');
+        $catalog = new TableModel('Catalog');
 
-        $asset->catalog_type_id = $this->model->table_name->catalog_type_id;
+        $catalog->catalog_type_id = $this->model->table_name->catalog_type_id;
 
-        $this->catalog_id = $asset->save();
+        $this->catalog_id = $catalog->save();
 
-        $asset->load();
-        if ($asset->getError()) {
-            $this->setError($asset->getError());
+        $catalog->load();
+        if ($catalog->getError()) {
+            $this->setError($catalog->getError());
             return false;
         }
 
@@ -380,14 +380,14 @@ class UpdateController extends Controller
         //		$grouping = Model::getInstance('Grouping');
 
         //       if ((int) $this->access == 0) {
-        //            $asset->content_table = $this->model->table_name;
-        //            $this->catalog_id = $asset->save();
+        //            $catalog->content_table = $this->model->table_name;
+        //            $this->catalog_id = $catalog->save();
         //        } else {
-        //            $asset->load();
+        //            $catalog->load();
         //        }
 
-        //        if ($asset->getError()) {
-        //            $this->setError($asset->getError());
+        //        if ($catalog->getError()) {
+        //            $this->setError($catalog->getError());
         //            return false;
         //       }
 

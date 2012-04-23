@@ -205,11 +205,11 @@ System-wide CSS and JS are always loaded, regardless of content:
 
 ##### Catalog ID #####
 
-For extensions (components, modules, and triggers), content items and items for a specific primary categories, the asset id can be used as a folder name to load CSS and JS files. This can be further refined by placing the asset id folder beneath the application name folder.
+For extensions (components, modules, and triggers), content items and items for a specific primary categories, the catalog id can be used as a folder name to load CSS and JS files. This can be further refined by placing the catalog id folder beneath the application name folder.
 
-      => media/system/[asset-id]/css[js]/XYZ.css[js]
+      => media/system/[catalog-id]/css[js]/XYZ.css[js]
 
-      => media/system/[application-name]/[asset-id]/css[js]/XYZ.css[js]
+      => media/system/[application-name]/[catalog-id]/css[js]/XYZ.css[js]
 
 
 ##### View #####

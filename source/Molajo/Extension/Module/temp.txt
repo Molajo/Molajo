@@ -1,5 +1,5 @@
 acl-widget
-asset-widget
+catalog-widget
 breadcrumbs
 category-widget
 content-widget

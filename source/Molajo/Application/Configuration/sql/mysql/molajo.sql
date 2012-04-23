@@ -317,7 +317,7 @@ INSERT INTO `molajo_extension_instances`
 INSERT INTO `molajo_extensions`
     (`name`, `catalog_type_id`, `extension_site_id`)
   VALUES
-    ('assetwidget', 1350, 1),
+    ('catalogwidget', 1350, 1),
     ('aclwidget', 1350, 1),
     ('breadcrumbs', 1350, 1),
     ('categorywidget', 1350, 1),
@@ -1219,7 +1219,7 @@ INSERT INTO `molajo_catalog`
 **/
 # Catalog Categories
 
-INSERT INTO `molajo_asset_categories`
+INSERT INTO `molajo_catalog_categories`
   (`catalog_id`, `category_id`)
   SELECT `id`, `primary_category_id`
     FROM `molajo_catalog`

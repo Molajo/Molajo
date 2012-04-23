@@ -509,10 +509,10 @@ class ModelHelper
                 } else {
                     $ordering = '';
                 }
-                if (isset($l['assettypes'])) {
-                    $assettypes = (string)$l['assettypes'];
+                if (isset($l['catalogtypes'])) {
+                    $catalogtypes = (string)$l['catalogtypes'];
                 } else {
-                    $assettypes = '';
+                    $catalogtypes = '';
                 }
                 if (isset($l['viewaccess'])) {
                     $viewaccess = (string)$l['viewaccess'];
@@ -557,12 +557,12 @@ class ModelHelper
         $m->query->from($m->db->qn(trim($m->table_name))
             . ' as ' . $m->db->qn('a'));
 
-        if ((int)$assettypes == '0') {
+        if ((int)$catalogtypes == '0') {
         } else {
             $m->query->where($m->db->qn('a')
                 . '.'
                 . $m->db->qn('catalog_type_id')
-                . ' IN (' . $assettypes . ')');
+                . ' IN (' . $catalogtypes . ')');
         }
 
         if ((int)$status == 1) {
@@ -576,7 +576,7 @@ class ModelHelper
                 $this->db,
                 array('join_to_prefix' => 'a',
                     'join_to_primary_key' => 'id',
-                    'asset_prefix' => 'a_catalog',
+                    'catalog_prefix' => 'a_catalog',
                     'select' => false
                 )
             );

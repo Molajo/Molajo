@@ -127,7 +127,7 @@ class DisplayModel extends ItemModel
                 $this->db,
                 array('join_to_prefix' => $this->primary_prefix,
                     'join_to_primary_key' => $this->primary_key,
-                    'asset_prefix' => $this->primary_prefix . '_catalog',
+                    'catalog_prefix' => $this->primary_prefix . '_catalog',
                     'select' => true
                 )
             );

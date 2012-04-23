@@ -213,7 +213,7 @@ Class AccessService
 	 * authoriseTask
 	 *
 	 * Verifies permission for a user to perform a specific task
-	 * on a specific asset
+	 * on a specific catalog
 	 *
 	 * Example usage:
 	 * Services::Access()->authoriseTask($task, $catalog_id);
@@ -278,7 +278,7 @@ Class AccessService
 	 * @param $key
 	 * @param $action
 	 *
-	 * @param null $asset
+	 * @param null $catalog
 	 * @return bool
 	 */
 	public function authoriseLogin($user_id)
@@ -312,7 +312,7 @@ Class AccessService
 	 *     $this->db,
 	 *     array('join_to_prefix' => $this->primary_prefix,
 	 *         'join_to_primary_key' => $this->primary_key,
-	 *         'asset_prefix' => $this->primary_prefix . '_catalog',
+	 *         'catalog_prefix' => $this->primary_prefix . '_catalog',
 	 *         'select' => true
 	 *     )
 	 * );
@@ -328,13 +328,13 @@ Class AccessService
 	{
 		if ($parameters['select'] === true) {
 			$query->select(
-				$db->qn($parameters['asset_prefix']) .
+				$db->qn($parameters['catalog_prefix']) .
 					'.' .
 					$db->qn('view_group_id')
 			);
 
 			$query->select(
-				$db->qn($parameters['asset_prefix']) .
+				$db->qn($parameters['catalog_prefix']) .
 					'.' .
 					$db->qn('id') .
 					' as ' .
@@ -345,11 +345,11 @@ Class AccessService
 		$query->from(
 			$db->qn('#__catalog') .
 				' as ' .
-				$db->qn($parameters['asset_prefix'])
+				$db->qn($parameters['catalog_prefix'])
 		);
 
 		$query->where(
-			$db->qn($parameters['asset_prefix']) .
+			$db->qn($parameters['catalog_prefix']) .
 				'.' .
 				$db->qn('source_id') .
 				' = ' .
@@ -359,7 +359,7 @@ Class AccessService
 		);
 
 		$query->where(
-			$db->qn($parameters['asset_prefix']) .
+			$db->qn($parameters['catalog_prefix']) .
 				'.' . $db->qn('catalog_type_id') .
 				' = ' .
 				$db->qn($parameters['join_to_prefix']) .
@@ -368,7 +368,7 @@ Class AccessService
 		);
 
 		$query->where(
-			$db->qn($parameters['asset_prefix']) .
+			$db->qn($parameters['catalog_prefix']) .
 				'.' .
 				$db->qn('view_group_id') .
 				' IN (' . implode(',',
@@ -377,7 +377,7 @@ Class AccessService
 		);
 
 		$query->where(
-			$db->qn($parameters['asset_prefix']) .
+			$db->qn($parameters['catalog_prefix']) .
 				'.' .
 				$db->qn('redirect_to_id') .
 				' = 0');

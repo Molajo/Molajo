@@ -29,7 +29,7 @@ abstract class TriggerHelper
     static public function get($name)
     {
         $rows = ExtensionHelper::get(
-            CATALOG_TYPE_EXTENSION_PLUGIN,
+            CATALOG_TYPE_EXTENSION_TRIGGER,
             $name
         );
         if (count($rows) == 0) {
