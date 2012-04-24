@@ -4,6 +4,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+
 namespace Molajo\Application\Service;
 
 use Joomla\registry\JRegistry;
@@ -17,103 +18,6 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  *
- * listRegistry - retrieves a list of Registries and optionally keys and/or values
- *   Usage: Services::Registry()->listRegistry(true);
- * 		true - lists all registries and key/value pairs
- * 		false - only lists names of registries
- *
- * initialise - create a new Registry to be used locally by the caller
- *   Usage: $local = Services::Registry()->initialise();
- *
- * create - Create new global parameter set stored within RegistryService
- *   Usage:  Services::Registry()->create('request');
- *
- * get - returns a Parameter property for a specific item and parameter set
- *   Alias for JFactory::getConfig, returning full registry set for local use
- *   Usage: Services::Registry()->get('Request\\parameter_name');
- *
- * set - sets a Parameter property for a specific item and parameter set
- *   Usage: Services::Registry()->set('Request\\parameter_name', $value);
- *
- * copy - Copy one global registry to a new registry
- *   Usage: Services::Registry()->copy('x', 'y');
- *
- * getArray - Returns an array containing key and name pairs for a registry
- *   Usage: Services::Registry()->getArray('request');
- *
- * loadArray - Populates a registry with an array of key and name pairs
- *   Usage: Services::Registry()->loadArray('request', $array);
- *
- * getKeys - Returns all key names for the specified parameter set
- *   Usage: Services::Registry()->getKeys('request');
- *
- * loadField - Loads JSON data from a field given the field xml definition
- *   (used for fields like parameters, custom fields, metadata, etc.)
- *   Usage: Services::Registry()->loadField('Namespace\\', 'field_name',
- *         $results['field_name'], $xml->field_group);
- *
- * listRegistry
- *
- * Standard Molajo Registry namespaces:
- *
- *  Application
- *  .. Configuration
- *  .. Site
- *  .. .. SiteCustomfields
- *  .. .. SiteMetadata
- *  .. Application
- *  .. .. ApplicationCustomfields
- *  .. .. ApplicationMetadata
- *
- *  User
- *  .. UserCustomfields
- *  .. UserMetadata
- *  .. UserParameters
- *
- *  Document
- *  .. DocumentCustomfields
- *  .. DocumentMetadata
- *  .. DocumentParameters
- *  .. DocumentLanguage
- *  .. Menu
- *  .. .. MenuCustomfields
- *  .. .. MenuMetadata
- *  .. .. MenuParameters
- *  .. Override
- *  .. Request
- *  .. .. RequestCatalog
- *  .. .. RequestExtension
- *  .. .. .. RequestExtensionCustomfields
- *  .. .. .. RequestExtensionMetadata
- *  .. .. .. RequestExtensionParameters
- *  .. .. RequestSource
- *  .. .. .. RequestSourceCustomfields
- *  .. .. .. RequestSourceMetadata
- *  .. .. .. RequestSourceParameters
- *  .. .. RequestMVC
- *  .. .. RequestTemplate
- *  .. .. RequestWrap
- *  .. Theme
- *  .. .. ThemeCatalog
- *  .. .. ThemeCustomfields
- *  .. .. ThemeMetadata
- *  .. .. ThemeParameters
- *  .. Page
- *
- * Include
- *  .. Catalog
- *  .. Extension
- *  .. .. ExtensionCustomfields
- *  .. .. ExtensionMetadata
- *  .. .. ExtensionParameters
- *  .. Source
- *  .. .. SourceCustomfields
- *  .. .. SourceMetadata
- *  .. .. SourceParameters
- *  .. MVC
- *  .. .. MVCParameters
- *  .. Template
- *  .. Wrap
  */
 Class RegistryService
 {
@@ -126,14 +30,12 @@ Class RegistryService
 	protected static $instance;
 
 	/**
-	 * $parameters
+	 * Object containing all globally defined $registry objects
 	 *
-	 * Array of all registries
-	 *
-	 * @var    array
+	 * @var    Object Registry
 	 * @since  1.0
 	 */
-	protected $parameters;
+	protected $registry;
 
 	/**
 	 * getInstance
@@ -158,7 +60,8 @@ Class RegistryService
 	 */
 	public function __construct()
 	{
-		$this->parameters = array();
+		/** store all registries in this object  */
+		$this->registry = new JRegistry();
 
 		/** initialise known namespaces for application */
 		$xml = CONFIGURATION_FOLDER . '/registry.xml';
@@ -178,6 +81,34 @@ Class RegistryService
 	}
 
 	/**
+	 * Retrieves registry requested
+	 *
+	 * @param  string  $key
+	 *
+	 * @return  mixed
+	 *
+	 * @since   1.0
+	 */
+	public function getRegistry($namespace)
+	{
+		return $this->registry->get($namespace);
+	}
+
+	/**
+	 * Saves registry requested
+	 *
+	 * @param  string  $key
+	 *
+	 * @return  mixed
+	 *
+	 * @since   1.0
+	 */
+	public function setRegistry($namespace)
+	{
+		return $this->registry->set($namespace, '');
+	}
+
+	/**
 	 * Create new Registry object to be used locally
 	 *
 	 * Usage:
@@ -192,30 +123,35 @@ Class RegistryService
 	}
 
 	/**
-	 * Create new global parameter set stored within RegistryService
+	 * Create new name-spaced global registry stored within the Registry Object
 	 *
 	 * Usage:
-	 * Services::Registry()->create('request');
+	 * Services::Registry()->create('request', true);
 	 *
-	 * @param   string  $name
-	 * @param    boolean $force recreate, if already exists
+	 * @param   string  $namespace
+	 * @param   boolean $force recreate, if exists (true) or use what exists (false)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function create($name, $force = false)
+	public function create($namespace, $force = false)
 	{
-		if (isset($this->parameters[$name]))  {
-			if ($force === false) {
-				return $this;
+		/** See if name spaced registry exists */
+		$temp = $this->getRegistry($namespace, null);
+		if ($temp instanceof JRegistry) {
+			if ($force == false) {
+				return $this->getRegistry($namespace);
 			}
 		}
-		$this->parameters[$name] = new JRegistry();
-		return $this;
+
+		/** Create (or recreate) */
+		$new = new JRegistry();
+		$this->setRegistry($namespace, $new);
+		return $this->getRegistry($namespace);
 	}
 
 	/**
-	 * Retrieves a list of Registries and optionally keys and/or values
+	 * Retrieves a list of named spaced registries and optionally keys/values
 	 *
 	 * Usage:
 	 * Services::Registry()->listRegistry(1);
@@ -228,86 +164,75 @@ Class RegistryService
 	 */
 	public function listRegistry($all = false)
 	{
-		if (count($this->parameters) == 0) {
-			return false;
+		$nsNames = array();
+
+		while (list($k, $v) = each($this->registry)) {
+			while (list($key, $value) = each($v)) {
+				$nsNames[] = $key;
+			}
 		}
 
-		$registry = array();
-
-		foreach ($this->parameters as $name => $object) {
-			$registry[] = $name;
+		if ($all == false) {
+			return $nsNames;
 		}
 
-		asort($registry);
+		$nsAll = array();
+		$total = count($nsAll);
+		foreach ($nsNames as $ns) {
 
-			return $registry;
+			$elements = $this->getArray($ns, $keyOnly = false);
+
+			foreach ($elements as $key => $value) {
+				$nsAll[$ns . '\\' . $key] = $value;
+			}
+		}
+
+		return $nsAll;
 	}
 
 	/**
-	 * Returns a Parameter property for a specific item and parameter set
+	 * Returns a Parameter property for a specific item and namespace registry
 	 *   Alias for JFactory::getConfig, returning full registry set for local use
 	 *
 	 * Usage:
-	 * Services::Registry()->get('Request\\parameter_name');
+	 * Services::Registry()->get('Request', 'parameter_name');
 	 *
+	 * @param  string  $namespace
 	 * @param  string  $key
 	 * @param  mixed   $default
-	 * @param  string  $type
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function get($key, $default = null)
+	public function get($namespace, $key, $default = null)
 	{
-		$split = explode('\\', $key);
-
-		if (count($split) == 1) {
-			$local = $this->initialise();
-
-			$array = $this->getArray($split[0]);
-
-			foreach ($array as $key => $value) {
-
-
-				if ($value === null) {
-				} else {
-					$local->set($key, $value);
-				}
-			}
-
-			return $local;
-		}
-
-		/** Normal single value get */
-		if (isset($this->parameters[$split[0]])) {
-		} else {
-			$this->parameters[$split[0]]->set($split[1], $default);
-		}
-		return $this->parameters[$split[0]]->get($split[1], $default);
+		$temp = $this->getRegistry($namespace, null);
+		return $temp->get($key, $default);
 	}
 
 	/**
 	 * Sets a Parameter property for a specific item and parameter set
 	 *
 	 * Usage:
-	 * Services::Registry()->set('Request\\parameter_name', $value);
+	 * Services::Registry()->set('Request', 'parameter_name', $value);
 	 *
+	 * @param  string  $namespace
 	 * @param  string  $key
-	 * @param  mixed   $value
+	 * @param  mixed   $default
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function set($key, $value = null)
+	public function set($namespace, $key, $value = null)
 	{
-		$split = explode('\\', $key);
-
-		if (isset($this->parameters[$split[0]])) {
+		$temp = $this->getRegistry($namespace, null);
+		if ($temp instanceof JRegistry) {
 		} else {
-			$this->create($split[0]);
+			$temp = new JRegistry();
 		}
 
-		return $this->parameters[$split[0]]->set($split[1], $value);
+		$temp->set($key, $value);
+		return $this;
 	}
 
 	/**
@@ -316,64 +241,70 @@ Class RegistryService
 	 * Usage:
 	 * Services::Registry()->copy('x', 'y');
 	 *
-	 * @param $set1
-	 * @param $set2
+	 * @param  $copyThis
+	 * @param  $intoThis
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
 	public function copy($copyThis, $intoThis)
 	{
-		$this->create($intoThis);
+		$into = $this->getRegistry($intoThis, null);
+		if ($into instanceof JRegistry) {
+		} else {
+			$into = new JRegistry();
+		}
+
+		$copy = $this->getRegistry($copyThis, null);
 
 		$a = array();
-		while (list($k, $v) = each($this->parameters[$copyThis])) {
+		while (list($k, $v) = each($copy)) {
 			while (list($key, $value) = each($v)) {
-				$this->set($intoThis . '\\' . $key, $value);
+				$into->set($key, $value);
 			}
 		}
+
 		return $this;
 	}
 
 	/**
-	 * Returns an array containing key and name pairs for a specified parameter set
+	 * Returns an array containing key and name pairs for a namespace registry
 	 *
 	 * Usage:
 	 * Services::Registry()->getArray('request');
 	 *
-	 * @param   string  $name
-	 * @param   boolean @keyOnly set to true to retrieve keynames
+	 * @param   string  $namespace
+	 * @param   boolean @keyOnly set to true to retrieve key names
 	 *
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function getArray($name, $keyOnly = false)
+	public function getArray($namespace, $keyOnly = false)
 	{
 		$a = array();
 
-		while (list($k, $v) = each($this->parameters[$name])) {
-
-			while (list($key, $value) = each($v)) {
-				if ($keyOnly === false) {
-					$a[$key] = $value;
-				} else {
-					$a[] = $key;
-				}
-			}
-		}
-
-		if (count($a) == 0) {
-			return array();
+		$temp = $this->getRegistry($namespace, null);
+		if ($temp instanceof JRegistry) {
 		} else {
 			return $a;
 		}
+
+		while (list($key, $value) = each($temp)) {
+			if ($keyOnly === false) {
+				$a[$key] = $value;
+			} else {
+				$a[] = $key;
+			}
+		}
+
+		return $a;
 	}
 
 	/**
 	 * Populates a registry with an array of key and name pairs
 	 *
 	 * Usage:
-	 * Services::Registry()->loadArray('request', $array);
+	 * Services::Registry()->loadArray('Request', $array);
 	 *
 	 * @param   string  $name  name of registry to use or create
 	 * @param   boolean $array key and value pairs to load
@@ -381,12 +312,19 @@ Class RegistryService
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function loadArray($name, $array = array())
+	public function loadArray($namespace, $array = array())
 	{
+		$load = $this->getRegistry($namespace, null);
+
+		if ($load instanceof JRegistry) {
+		} else {
+			$load = new JRegistry();
+		}
+
 		foreach ($array as $key => $value) {
 			if ($value === null) {
 			} else {
-				$this->set($name . '//' . $key, $value);
+				$load->set($key, $value);
 			}
 		}
 		return;
@@ -396,24 +334,31 @@ Class RegistryService
 	 * Returns all key names for the specified parameter set
 	 *
 	 * Usage:
-	 * Services::Registry()->getKeys('request');
+	 * Services::Registry()->getKeys('Request');
 	 *
 	 * @param   string  $name
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function getKeys($name)
+	public function getKeys($namespace)
 	{
-		return $this->getArray($name, true);
+		$load = $this->getRegistry($namespace, null);
+
+		if ($load instanceof JRegistry) {
+		} else {
+			$load = new JRegistry();
+		}
+
+		return $load->getArray($namespace, true);
 	}
 
 	/**
 	 * Loads JSON data from a field given the field xml definition
-	 *     (can be used for fields like parameters, custom fields, metadata, etc.)
+	 *     (can be used for fields like registry, custom fields, metadata, etc.)
 	 *
 	 * Usage:
-	 * Services::Registry()->loadField('Namespace\\', 'field_name', $results['field_name'], $xml->field_group);
+	 * Services::Registry()->loadField('Namespace', 'field_name', $results['field_name'], $xml->field_group);
 	 *
 	 * @param $namespace
 	 * @param $field_name
@@ -425,8 +370,14 @@ Class RegistryService
 	 */
 	public function loadField($namespace, $field_name, $data, $xml)
 	{
-		$temp = $this->initialise();
-		$temp->loadString($data, 'JSON');
+		$load = $this->getRegistry($namespace, null);
+
+		if ($load instanceof JRegistry) {
+		} else {
+			$load = new JRegistry();
+		}
+
+		$load->loadString($data, 'JSON');
 
 		if (isset($xml->$field_name)) {
 
@@ -441,12 +392,10 @@ Class RegistryService
 				//todo: filter given XML field definitions
 
 				if ($default == '') {
-					$val = $temp->get($name, null);
+					$val = $load->get($name, null);
 				} else {
-					$val = $temp->get($name, $default);
+					$val = $load->get($name, $default);
 				}
-
-				$this->set($namespace . $name, $val);
 			}
 		}
 	}
