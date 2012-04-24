@@ -123,12 +123,13 @@ Class Parse
      */
     public function process()
     {
+
 		/** Retrieve overrides */
-		$sequenceXML = Services::Registry()->set('DependencyInjection\\sequence_xml', '');
-		$finalXML = Services::Registry()->set('DependencyInjection\\final_xml', '');
+		$sequenceXML = Services::Registry()->get('DependencyInjection\\sequence_xml', '');
+		$finalXML = Services::Registry()->get('DependencyInjection\\final_xml', '');
 
         /**
-         *  Body Includers: processed recursively until no more <include: found
+         *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
         $formatXML = '';
@@ -151,7 +152,8 @@ Class Parse
 
         /** Theme Parameters */
         Services::Registry()->create('theme');
-
+		echo 'adfasdfs';
+		die;
         $themeParameters = Services::Registry()->get('Request\\theme_parameters');
 
         Services::Registry()->loadArray('theme',
@@ -162,7 +164,7 @@ Class Parse
                 'parameters' => Services::Registry()->get('Request\\theme_parameters')
             )
         );
-        echo 'done';
+
         $helperFile = Services::Registry()->get('Request\\theme_path')
             . '/helpers/theme.php';
 

@@ -118,12 +118,8 @@ Class Application
 
 
 		/**      */
-		$list = Services::Registry()->listRegistry(1);
+		//$list = Services::Registry()->listRegistry(1);
 
-		echo '<pre>';
-		var_dump($list);
-		echo '</pre>';
-		die;
 		/** */
 
 		/**

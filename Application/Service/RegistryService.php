@@ -205,6 +205,11 @@ Class RegistryService
 	 */
 	public function create($name, $force = false)
 	{
+		if (isset($this->parameters[$name]))  {
+			if ($force === false) {
+				return $this;
+			}
+		}
 		$this->parameters[$name] = new JRegistry();
 		return $this;
 	}
@@ -230,26 +235,12 @@ Class RegistryService
 		$registry = array();
 
 		foreach ($this->parameters as $name => $object) {
-
-			if ($all == false) {
-				$registry[] = $name;
-
-			} else {
-
-				while (list($k, $v) = each($this->parameters[$name])) {
-					$i = 0;
-					while (list($key, $value) = each($v)) {
-						$i++;
-						$registry[$name . '\\' . $key] = $value;
-					}
-					if ($i == 0) {
-						$registry[$name] = null;
-					}
-				}
-			}
+			$registry[] = $name;
 		}
 
-		return $registry;
+		asort($registry);
+
+			return $registry;
 	}
 
 	/**
@@ -277,6 +268,7 @@ Class RegistryService
 
 			foreach ($array as $key => $value) {
 
+
 				if ($value === null) {
 				} else {
 					$local->set($key, $value);
@@ -287,6 +279,10 @@ Class RegistryService
 		}
 
 		/** Normal single value get */
+		if (isset($this->parameters[$split[0]])) {
+		} else {
+			$this->parameters[$split[0]]->set($split[1], $default);
+		}
 		return $this->parameters[$split[0]]->get($split[1], $default);
 	}
 
@@ -331,9 +327,9 @@ Class RegistryService
 		$this->create($intoThis);
 
 		$a = array();
-		while (list($k, $v) = each($this->parameters[$intoThis])) {
+		while (list($k, $v) = each($this->parameters[$copyThis])) {
 			while (list($key, $value) = each($v)) {
-				$this->set($intoThis . '//' . $key, $value);
+				$this->set($intoThis . '\\' . $key, $value);
 			}
 		}
 		return $this;
@@ -354,7 +350,9 @@ Class RegistryService
 	public function getArray($name, $keyOnly = false)
 	{
 		$a = array();
+
 		while (list($k, $v) = each($this->parameters[$name])) {
+
 			while (list($key, $value) = each($v)) {
 				if ($keyOnly === false) {
 					$a[$key] = $value;
@@ -363,7 +361,12 @@ Class RegistryService
 				}
 			}
 		}
-		return $a;
+
+		if (count($a) == 0) {
+			return array();
+		} else {
+			return $a;
+		}
 	}
 
 	/**

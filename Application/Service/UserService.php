@@ -182,7 +182,9 @@ registration
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
 		Services::Registry()->set('User\\ViewGroups', $temp);
-		$temp = Services::Registry()->getArray('User');
+
+		/**      */
+		$list = Services::Registry()->listRegistry(1);
 
 		return $this;
 	}
