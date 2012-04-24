@@ -20,6 +20,7 @@ defined('MOLAJO') or die;
 Class ErrorService
 {
 	/**
+	 * @static
 	 * @var    object
 	 * @since  1.0
 	 */
@@ -39,12 +40,13 @@ Class ErrorService
 	}
 
 	/**
-	 * Set routing for an error condition
+	 * 500 Set routing for an error condition
 	 *
 	 * @param   $code
 	 * @param   null|string $message
 	 *
-	 * @return  mixed
+	 * @return  null
+	 *
 	 * @since   1.0
 	 */
 	public function set($code, $message = 'Internal server error')
@@ -56,10 +58,10 @@ Class ErrorService
 
 		/** default error theme and page */
 		Services::Registry()->set('Request\\theme_id',
-			Services::Registry()->get('Configuration\\error_theme_id', 'system')
+			Services::Registry()->get('Configuration\\error_theme_id', 0)
 		);
 		Services::Registry()->set('Request\\page_view_id',
-			Services::Registry()->get('Configuration\\error_page_view_id', 'error')
+			Services::Registry()->get('Configuration\\error_page_view_id', 0)
 		);
 
 		/** set header status, message and override default theme/page, if needed */
@@ -75,17 +77,15 @@ Class ErrorService
 		} else {
 
 			Services::Response()
-				->setHeader('Status', '500 Internal server error', 'true');
+				->setHeader('Status', '500 Internal server error', true);
 
 			Services::Message()
 				->set($message, MESSAGE_TYPE_ERROR, 500);
 		}
-
-		return;
 	}
 
 	/**
-	 * Offline
+	 * 503 Offline
 	 *
 	 * @return  null
 	 *
@@ -106,18 +106,16 @@ Class ErrorService
 		);
 
 		Services::Registry()->set('Request\\theme_id',
-			Services::Registry()->get('Configuration\\offline_theme_id', 'system')
+			Services::Registry()->get('Configuration\\offline_theme_id', 0)
 		);
 
 		Services::Registry()->set('Request\\page_view_id',
-			Services::Registry()->get('Configuration\\offline_page_view_id', 'offline')
+			Services::Registry()->get('Configuration\\offline_page_view_id', 0)
 		);
-
-		return;
 	}
 
 	/**
-	 * Not Authorised
+	 * 403 Not Authorised
 	 *
 	 * @return  null
 	 *
@@ -134,12 +132,10 @@ Class ErrorService
 				MESSAGE_TYPE_ERROR,
 				403
 			);
-
-		return;
 	}
 
 	/**
-	 * Page Not Found
+	 * 404 Page Not Found
 	 *
 	 * @return  null
 	 *

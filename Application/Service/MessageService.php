@@ -4,6 +4,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+
 namespace Molajo\Application\Service;
 
 defined('MOLAJO') or die;
@@ -11,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Message
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -31,7 +32,7 @@ Class MessageService
 	 * @var    array
 	 * @since  1.0
 	 */
-	protected $_messages = array();
+	protected $messages = array();
 
 	/**
 	 * getInstance
@@ -49,8 +50,6 @@ Class MessageService
 	}
 
 	/**
-	 * __construct
-	 *
 	 * Class constructor.
 	 *
 	 * @return boolean
@@ -61,29 +60,35 @@ Class MessageService
 	}
 
 	/**
-	 * set
+	 * get application messages
 	 *
+	 * @return  array  Application messages
+	 *
+	 * @since   1.0
+	 */
+	public function get()
+	{
+		return $this->messages;
+	}
+
+	/**
 	 * Set the system message.
 	 *
-	 * @param   string  $message
-	 * @param   string  $type      message, notice, warning, and error
+	 * @param  string  $message
+	 * @param  string  $type      message, notice, warning, and error
+	 * @param  integer $code
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	public function set($message = null,
-						$type = 'message',
-						$code = null,
-						$debug_location = null,
-						$debug_object = null)
+	public function set($message = null, $type = 'message', $code = null)
 	{
-		if ($message == null
-			&& $code == null
-		) {
+		if ($message == null && $code == null) {
 			return false;
 		}
 
 		$type = strtolower($type);
+
 		if ($type == MESSAGE_TYPE_NOTICE
 			|| $type == MESSAGE_TYPE_WARNING
 			|| $type == MESSAGE_TYPE_ERROR
@@ -92,85 +97,12 @@ Class MessageService
 			$type = MESSAGE_TYPE_MESSAGE;
 		}
 
-		/** load session messages into messages array */
-		//$this->_getSessionMessages();
+		$count = count($this->messages);
 
-		/** add new message */
-		$count = count($this->_messages);
-
-		$this->_messages[$count]['message'] = $message;
-		$this->_messages[$count]['type'] = $type;
-		$this->_messages[$count]['code'] = $code;
-		$this->_messages[$count]['debug_location'] = $debug_location;
-		$this->_messages[$count]['debug_object'] = $debug_object;
+		$this->messages[$count]['message'] = $message;
+		$this->messages[$count]['type'] = $type;
+		$this->messages[$count]['code'] = $code;
 
 		return true;
 	}
-
-	/**
-	 * get
-	 *
-	 * @return  array  Application messages
-	 * @since   1.0
-	 */
-	public function get()
-	{
-//        $this->_getSessionMessages();
-		return $this->_messages;
-	}
-
-	/**
-	 *  _getSessionMessages
-	 *
-	 * Retrieve messages in _session and load into Application messages array
-	 *
-	 * @return  void
-	 * @since   1.0
-	 */
-	private function _getSessionMessages()
-	{
-		$_session = $this->getSession();
-		$_getSessionMessages = $_session->get('application.messages');
-
-		if (count($_getSessionMessages) > 0) {
-			$count = count($this->_messages);
-			foreach ($_getSessionMessages as $_sessionMessage) {
-				$this->_messages[$count] = $_sessionMessage;
-				$count++;
-			}
-			$_session->set('application.messages', null);
-		}
-	}
-
-	/**
-	 * _setSessionMessages
-	 *
-	 * Store system messages in Session variable
-	 *
-	 * @return  array  System messages
-	 * @since   1.0
-	 */
-	private function _setSessionMessages()
-	{
-		$_session = $this->getSession();
-
-		if (count($this->_messages) > 0) {
-			$_session->set('application.messages', $this->_messages);
-		} else {
-			$_session->set('application.messages', null);
-
-		}
-	}
-
-/**
-use Symfony\Component\HttpFoundation\Session\Session;
-http://symfony.com/doc/master/components/http_foundation/sessions.html
-$session = new Session();
-$session->start();
-
-// add flash messages
-$session->getFlashBag()->add('warning', 'Your config file is writable, it should be set read-only');
-$session->getFlashBag()->add('error', 'Failed to update name');
-$session->getFlashBag()->add('error', 'Another error');
- */
 }

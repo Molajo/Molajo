@@ -57,8 +57,9 @@ Class Route
 	 */
 	public function process()
 	{
+
 		/**
-		 * 	Dependency Injection
+		 *     Dependency Injection
 		 */
 		if ((int)Services::Registry()->get('Override\\catalog_id', 0) == 0) {
 			Services::Registry()->set('Request\\catalog_id', 0);
@@ -73,7 +74,7 @@ Class Route
 		}
 
 		/**
-		 * 	Check for duplicate content URL for Home (and redirect, if found)
+		 *     Check for duplicate content URL for Home (and redirect, if found)
 		 */
 		$continue = $this->checkHome($path);
 
@@ -85,30 +86,30 @@ Class Route
 		}
 
 		/**
-		 * 	See if Application is in Offline Mode
+		 *     See if Application is in Offline Mode
 		 */
-		if (Services::Registry()->get('Configuration\\offline', 1) == 0) {
+		if (Services::Registry()->get('Configuration\\offline', 0) == 1) {
 			Services::Error()->set(503);
 			Services::Debug()->set('Molajo::Route() Direct to Offline Mode');
-			return false;
+			return true;
 		} else {
 			Services::Debug()->set('Molajo::Route() Not in Offline Mode');
 		}
 
 		/**
-		 * 	Get Request Object
+		 *     Remove Nonroutable Parameters from path and save for later use
 		 */
-		$continue = $this->getRequest();
+		$continue = $this->getNonRoutableParameters();
 
 		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getRequest() Failed');
+			Services::Debug()->set('Molajo::Route()->getNonRoutableParameters() Failed');
 			return false;
 		} else {
-			Services::Debug()->set('Molajo::Route()->getRequest() Successful');
+			Services::Debug()->set('Molajo::Route()->getNonRoutableParameters() Successful');
 		}
 
 		/**
-		 * 	Get Catalog Data
+		 *     Get Catalog Data
 		 */
 		$continue = $this->getCatalog();
 
@@ -120,7 +121,7 @@ Class Route
 		}
 
 		/**
-		 * 	404
+		 *     404
 		 */
 		if (Services::Registry()->get('Request\\status_found') === false) {
 			Services::Error()->set(404);
@@ -129,7 +130,7 @@ Class Route
 		}
 
 		/**
-		 * 	Catalog Redirect
+		 *     URL Change Redirect from Catalog
 		 */
 		if ($this->redirect_to_id == 0) {
 		} else {
@@ -141,7 +142,7 @@ Class Route
 		}
 
 		/**
-		 * 	Redirect to Logon
+		 *     Redirect to Logon
 		 */
 		if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
 			&& Services::Registry()->get('User\\guest', true) === true
@@ -156,7 +157,7 @@ Class Route
 		}
 
 		/**
-		 * 	Return to Application Object
+		 *     Return to Application Object
 		 */
 		return $this;
 	}
@@ -165,23 +166,31 @@ Class Route
 	 * Determine if URL is duplicate content for home (and issue redirect, if necessary)
 	 *
 	 * @param string $path Stripped of Host, Folder, and Application
-	 * 						ex. index.php?option=login or access/groups
+	 *                         ex. index.php?option=login or access/groups
 	 *
 	 * @return boolean
 	 * @since  1.0
 	 */
-	protected function checkHome($path)
+	protected function checkHome($path = '')
 	{
-		/** duplicate content: URLs without the .html */
-		if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
-			&& substr($path, -11) == '/index.html'
-		) {
-			$path = substr($path, 0, (strlen($path) - 11));
-		}
-		if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
-			&& substr($path, -5) == '.html'
-		) {
-			$path = substr($path, 0, (strlen($path) - 5));
+
+		if (strlen($path) == 0) {
+
+
+		} else {
+
+			/** duplicate content: URLs without the .html */
+			if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
+				&& substr($path, -11) == '/index.html'
+			) {
+				$path = substr($path, 0, (strlen($path) - 11));
+			}
+
+			if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
+				&& substr($path, -5) == '.html'
+			) {
+				$path = substr($path, 0, (strlen($path) - 5));
+			}
 		}
 
 		/** populate value used in query  */
@@ -210,81 +219,90 @@ Class Route
 	}
 
 	/**
-	 * Retrieve URL contents
+	 * Retrieve the non routable parameter values and remove from path
 	 *
-	 * @return bool
+	 * Note: $path has already been stripped of Host, Folder, and Application
+	 *
+	 *   ex. index.php?option=article&tag=XYZ&prev=6
+	 * 	 ex. access/groups/tag/XYZ/prev/6
+	 *
+	 * todo: remove tag/value if SEF URL
 	 *
 	 * @since 1.0
 	 */
-	protected function getRequest()
+	protected function getNonRoutableParameters()
 	{
-		/**
-		echo 'Ajax ' . Services::Request()->request->isXmlHttpRequest().'<br />';
-		$queryString = Services::Request()->get('option');
-		 */
-
-		$queryString = Services::Request()->request->getQueryString();
-		$pair = explode('&', $queryString);
-		$pairs = array();
-		$extra = array();
-
-		if (count($pairs) > 0) {
-			$xml = CONFIGURATION_FOLDER . '/parameters.xml';
-			if (is_file($xml)) {
-			} else {
-				return false;
-			}
-			$parameters = simplexml_load_file($xml);
-			foreach ($parameters->parameter as $item) {
-				$extra[(string)$item] = null;
-			}
-		}
-
-		foreach ($pair as $item) {
-			$kv = explode('=', $item);
-			$pairs[$kv[0]] = $kv[1];
-		}
-
-		/** todo: input is not filtered yet */
-
-		if (count($pairs) > 0
-			&& isset($pairs['task'])
-		) {
-			Services::Registry()->set('Request\\mvc_task', $pairs['task']);
-		} else {
-			Services::Registry()->set('Request\\mvc_task', 'display');
-		}
-
-		if (Services::Registry()->get('Request\\mvc_task', '') == ''
-			|| Services::Registry()->get('Request\\mvc_task', 'display') == 'display'
-		) {
-			$pageRequest = Services::Registry()->get('Request\\request_url_query');
-
-			if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
-				$pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/edit'));
-				Services::Registry()->set('Request\\request_url_query', $pageRequest);
-				Services::Registry()->set('Request\\mvc_task', 'edit');
-
-			} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
-				$pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/add'));
-				Services::Registry()->set('Request\\request_url_query', $pageRequest);
-				Services::Registry()->set('Request\\mvc_task', 'add');
-
-			} else {
-				Services::Debug()->set('Molajo::Request()->getRequest() complete Display Task');
-				Services::Registry()->set('Request\\mvc_task', 'display');
-			}
-
+		$path = Services::Registry()->get('Request\\request_url_query');
+		if ($path == '') {
+			Services::Registry()->get('Request\\non_routable_parameters', array());
 			return true;
 		}
 
-		/** return */
-		if (isset($pairs['return'])) {
-			$return = $pairs['return'];
+		/** save non-routable parameter pairs in array */
+		$use = array();
+
+		/** XML with system defined nonroutable pairs */
+		$xml = CONFIGURATION_FOLDER . '/nonroutable.xml';
+		if (is_file($xml)) {
 		} else {
-			$return = '';
+			//todo: throw exception
 		}
 
+		$list = simplexml_load_file($xml);
+
+		foreach ($list->parameter as $item) {
+
+			$key = (string)$item['name'];
+
+			$filter = (string)$item['filter'];
+			if ($filter === null) {
+				$filter = 'char';
+			}
+
+			$value = Services::Request()->get('request')->get($key);
+
+			if ($value === null) {
+			} else {
+
+				/** remove non-routable parameter - as it is - from the routeable path */
+				$remove = $key . '='. $value;
+
+				$path = substr($path, 0, strpos($path, $remove))
+					. substr($path, strpos($path, $remove) + 1 + strlen($remove), 999);
+
+				/** filter input */
+				$value = $this->filterInput($key, $value, $filter, 1, null);
+
+				if ($value === false) {
+				} else {
+					$use[$key] = $value;
+				}
+			}
+		}
+
+		/** Remove trailing ? or & */
+		if (trim($path) == '') {
+		} else {
+			if (strrpos($path, '&') == (strlen($path) - 1)
+				|| strrpos($path, '?') == (strlen($path) - 1)
+			) {
+				$path = substr($path, 0, strlen($path) - 1);
+			}
+		}
+
+		/** Update Path and store Non-routable parameters for Extension Use */
+		Services::Registry()->set('Request\\request_url_query', $path);
+		Services::Registry()->set('Request\\non_routable_parameters', $use);
+
+		/** add Edit and Add later
+
+			if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
+			} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
+				Services::Registry()->set('Request\\mvc_task', 'add');
+	  	*/
+
+		/**
+look up the URL in the catalog first to determine if it's internal
 		if (trim($return) == '') {
 			Services::Registry()->set('Request\\redirect_on_success', '');
 
@@ -294,16 +312,35 @@ Class Route
 		} else {
 			Services::Registry()->set('Request\\redirect_on_success', '');
 		}
-
-		/** option */
-		Services::Registry()->set('Request\\mvc_option', (string)$pairs['option']);
-
-		/** catalog information */
-		Services::Registry()->set('Request\\mvc_id', (int)$pairs['id']);
-
-		Services::Debug()->set('Molajo::Request()->getRequest()');
-
+		 */
 		return true;
+	}
+
+	/**
+	 * filterInput
+	 *
+	 * @param   string  $name         Name of input field
+	 * @param   string  $field_value  Value of input field
+	 * @param   string  $dataType     Datatype of input field
+	 * @param   int     $null         0 or 1 - is null allowed
+	 * @param   string  $default      Default value, optional
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 *
+	 * @throws  /Exception
+	 */
+	protected function filterInput($name, $value, $dataType, $null, $default)
+	{
+		try {
+			$value = Services::Filter()->filter($value, $dataType, $null, $default);
+
+		} catch (\Exception $e) {
+			//echo $e->getMessage() . ' ' . $name;
+			return false;
+		}
+
+		return $value;
 	}
 
 	/**
@@ -318,31 +355,39 @@ Class Route
 		/** Retrieve the query results */
 		$row = Molajo::Helper()
 			->get('Catalog',
-				(int)Services::Registry()->get('Request\\catalog_id'),
-				Services::Registry()->get('Request\\request_url_query'),
-				Services::Registry()->get('Request\\mvc_option'),
-				Services::Registry()->get('Request\\mvc_id')
-			);
+			(int)Services::Registry()->get('Request\\catalog_id'),
+			Services::Registry()->get('Request\\request_url_query'),
+			Services::Registry()->get('Request\\mvc_option'),
+			Services::Registry()->get('Request\\mvc_id')
+		);
 
+		var_dump($row);
+		die;
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0
 			|| (int)$row->routable == 0
 		) {
-			return Services::Registry()->set($ns . '\\status_found', false);
+			return Services::Registry()->set('Request\\status_found', false);
 		}
+
+		echo '<pre>';
+		var_dump($row);
+		echo '</pre>';
+		die;
+
 
 		/** Redirect: routeRequest handles rerouting the request */
 		if ((int)$row->redirect_to_id == 0) {
 		} else {
 			$this->redirect_to_id = (int)$row->redirect_to_id;
-			return Services::Registry()->set($ns . '\\status_found', false);
+			return Services::Registry()->set('Request\\status_found', false);
 		}
 
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array($row->view_group_id, Services::Registry()->get('User\\view_groups'))) {
-			Services::Registry()->set($ns . '\\status_authorised', true);
+			Services::Registry()->set('Request\\status_authorised', true);
 		} else {
-			return Services::Registry()->set($ns . '\\status_authorised', false);
+			return Services::Registry()->set('Request\\status_authorised', false);
 		}
 
 		$continue = $this->setRegistryValues('Catalog', $row);
@@ -374,11 +419,11 @@ Class Route
 		/** Menu Item */
 		$row = Molajo::Helper()
 			->get('Menuitem',
-				(int)Services::Registry()->get('Request\\catalog_id'),
-				Services::Registry()->get('Request\\request_url_query'),
-				Services::Registry()->get('Request\\mvc_option'),
-				Services::Registry()->get('Request\\mvc_id')
-			);
+			(int)Services::Registry()->get('Request\\catalog_id'),
+			Services::Registry()->get('Request\\request_url_query'),
+			Services::Registry()->get('Request\\mvc_option'),
+			Services::Registry()->get('Request\\mvc_id')
+		);
 
 		$continue = $this->setRegistryValues('Menuitem', $row);
 		if ($continue == false) {
@@ -391,11 +436,11 @@ Class Route
 		/** Source */
 		$row = Molajo::Helper()
 			->get('Source',
-				(int)Services::Registry()->get('Request\\catalog_id'),
-				Services::Registry()->get('Request\\request_url_query'),
-				Services::Registry()->get('Request\\mvc_option'),
-				Services::Registry()->get('Request\\mvc_id')
-			);
+			(int)Services::Registry()->get('Request\\catalog_id'),
+			Services::Registry()->get('Request\\request_url_query'),
+			Services::Registry()->get('Request\\mvc_option'),
+			Services::Registry()->get('Request\\mvc_id')
+		);
 
 		$continue = $this->setRegistryValues('Menuitem', $row);
 		if ($continue == false) {
@@ -408,11 +453,11 @@ Class Route
 		/** Category */
 		$row = Molajo::Helper()
 			->get('Category',
-				(int)Services::Registry()->get('Request\\catalog_id'),
-				Services::Registry()->get('Request\\request_url_query'),
-				Services::Registry()->get('Request\\mvc_option'),
-				Services::Registry()->get('Request\\mvc_id')
-			);
+			(int)Services::Registry()->get('Request\\catalog_id'),
+			Services::Registry()->get('Request\\request_url_query'),
+			Services::Registry()->get('Request\\mvc_option'),
+			Services::Registry()->get('Request\\mvc_id')
+		);
 
 		$continue = $this->setRegistryValues('Category', $row);
 
@@ -426,11 +471,11 @@ Class Route
 		/** Extension */
 		$row = Molajo::Helper()
 			->get('Extension',
-				(int)Services::Registry()->get('Request\\catalog_id'),
-				Services::Registry()->get('Request\\request_url_query'),
-				Services::Registry()->get('Request\\mvc_option'),
-				Services::Registry()->get('Request\\mvc_id')
-			);
+			(int)Services::Registry()->get('Request\\catalog_id'),
+			Services::Registry()->get('Request\\request_url_query'),
+			Services::Registry()->get('Request\\mvc_option'),
+			Services::Registry()->get('Request\\mvc_id')
+		);
 
 		$continue = $this->setRegistryValues('Extension', $row);
 
@@ -467,7 +512,7 @@ Class Route
 		Services::Registry()->set($ns . '\\language', (int)$row->language);
 		Services::Registry()->set($ns . '\\translation_of_id', (int)$row->translation_of_id);
 
-		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/'.strtolower($ns).'xml');
+		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/' . strtolower($ns) . 'xml');
 
 		Services::Registry()->loadField($ns . 'Customfields\\', 'custom_fields', $row->custom_fields, $xml->custom_fields);
 		Services::Registry()->loadField($ns . 'Metadata\\', 'meta', $row->metadata, $xml->metadata);

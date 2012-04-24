@@ -135,10 +135,7 @@ Class LogService
 	 *
 	 * +++ Molajo custom loggers
 	 *
-	 * 4. Messages
-	 * $this->options['namespace']
-	 *
-	 * 5. Email
+	 * 4. Email
 	 * $this->options['sender'] = array(
 	 *     		Services::Registry()->get('Configuration\\mail_from'),
 	 *  		Services::Registry()->get('Configuration\\mail_from_name')
@@ -147,7 +144,7 @@ Class LogService
 	 * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
 	 * $this->options['mailer'] = Services::Mail();
 	 *
-	 * 6. ChromePHP
+	 * 5. ChromePHP
 	 * No addition $option[] values. However, this option requires using Google Chrome and installing this
 	 * Google Chrome extension: https://chrome.google.com/webstore/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
 	 * and https://github.com/ccampbell/chromephp

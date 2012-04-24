@@ -405,13 +405,14 @@ Class Application
 			Services::Response()
 				->setContent($this->rendered_output)
 				->setStatusCode(200)
-				->prepare(Services::Request()->request)
+				->prepare(Services::Request()->get('request'))
 				->send();
 
 		} else {
 
 			Services::Debug()
-				->set('Services::Redirect()->redirect()->send() for ' . Services::Redirect()->url . ' Code: ' . Services::Redirect()->code);
+				->set('Services::Redirect()->redirect()->send() for '
+				. Services::Redirect()->url . ' Code: ' . Services::Redirect()->code);
 
 			Services::Redirect()
 				->redirect()
@@ -432,10 +433,10 @@ Class Application
 	 */
 	protected function setBaseURL()
 	{
-		$baseURL = Molajo::Request()->request->getScheme()
+		$baseURL = Molajo::Request()->get('request')->getScheme()
 			. '://'
-			. Molajo::Request()->request->getHttpHost()
-			. Molajo::Request()->request->getBaseUrl();
+			. Molajo::Request()->get('request')->getHttpHost()
+			. Molajo::Request()->get('request')->getBaseUrl();
 
 		if (defined('BASE_URL')) {
 		} else {
@@ -612,7 +613,7 @@ Class Application
 			define('SITES_TEMP_URL', BASE_URL . 'site/temp');
 		}
 
-		$scheme = Molajo::Request()->request->getScheme() . '://';
+		$scheme = Molajo::Request()->get('request')->getScheme() . '://';
 		$siteBase = substr(BASE_URL, strlen($scheme), 999);
 
 		if (defined('SITE_BASE_URL')) {
@@ -647,8 +648,9 @@ Class Application
 	protected function setApplication()
 	{
 		/** ex. /molajo/administrator/index.php?option=login    */
-		$p1 = Molajo::Request()->request->getPathInfo();
-		$t2 = Molajo::Request()->request->getQueryString();
+		$p1 = Molajo::Request()->get('request')->getPathInfo();
+		$t2 = Molajo::Request()->get('request')->getQueryString();
+
 		if (trim($t2) == '') {
 			$requestURI = $p1;
 		} else {
@@ -747,7 +749,7 @@ Class Application
 	{
 		if ((int)Services::Registry()->get('Configuration\\force_ssl', 0) > 0) {
 
-			if ((Services::Request()->connection->isSecure() === true)) {
+			if ((Services::Request()->get('connection')->isSecure() === true)) {
 
 			} else {
 
