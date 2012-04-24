@@ -135,7 +135,7 @@ abstract class CatalogHelper
         $m->query->where('a.' . $m->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
         $m->query->where('a.' . $m->db->qn('source_id') . ' = ' . (int)$source_id);
         $m->query->where('a.' . $m->db->qn('view_group_id')
-				. ' IN (' . implode(',', Services::Registry()->get('User\\view_groups')) . ')');
+				. ' IN (' . implode(',', Services::Registry()->get('User\\ViewGroups')) . ')');
 
         return $m->loadResult();
     }
@@ -167,7 +167,7 @@ abstract class CatalogHelper
 
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .  ' IN (' .
-                implode(',', Services::Registry()->get('User\\view_groups')) . ')'
+                implode(',', Services::Registry()->get('User\\ViewGroups')) . ')'
         );
 
         return $m->loadResult();

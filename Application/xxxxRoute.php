@@ -353,7 +353,7 @@ Class Route
         }
 
         /** 403: authoriseTask handles redirecting to error page */
-        if (in_array($row->view_group_id, Services::Registry()->get('User\\view_groups'))) {
+        if (in_array($row->view_group_id, Services::Registry()->get('User\\ViewGroups'))) {
             Services::Registry()->set('Request\\status_authorised', true);
         } else {
             return Services::Registry()->set('Request\\status_authorised', false);
