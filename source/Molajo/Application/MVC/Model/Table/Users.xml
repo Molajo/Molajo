@@ -43,11 +43,11 @@
         <custom_field name="date_of_birth" filter="date" null="1" default=""/>
     </custom_fields>
     <parameters>
-        <parameter name="display_gravatar" filter="boolean" null="0" default="1"/>
+        <parameter name="display_gravatar" filter="boolean" null="0" default="0"/>
         <parameter name="display_birthdate" filter="boolean" null="0" default="0"/>
         <parameter name="display_email" filter="boolean" null="0" default="0"/>
-        <parameter name="user_page_view_id" filter="integer" null="1" default="0"/>
-        <parameter name="user_theme_id" filter="integer" null="1" default="0"/>
+        <parameter name="page_view_id" filter="integer" null="1" default=""/>
+        <parameter name="theme_id" filter="integer" null="1" default=""/>
     </parameters>
     <metadata>
         <meta name="metadata_title" filter="char" null="0" default=""/>
