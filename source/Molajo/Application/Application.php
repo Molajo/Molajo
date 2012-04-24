@@ -102,16 +102,6 @@ Class Application
 			Services::Debug()->set('Molajo::Application()->route() succeeded');
 		}
 
-
-		/**      */
-		$list = Services::Registry()->listRegistry(1);
-
-		echo '<pre>';
-		var_dump($list);
-		echo '</pre>';
-		die;
-		/** */
-
 		/**
 		 *     Authorise
 		 */
@@ -125,6 +115,16 @@ Class Application
 		} else {
 			Services::Debug()->set('Molajo::Application()->execute() succeeded');
 		}
+
+
+		/**      */
+		$list = Services::Registry()->listRegistry(1);
+
+		echo '<pre>';
+		var_dump($list);
+		echo '</pre>';
+		die;
+		/** */
 
 		/**
 		 *     Execute
@@ -261,8 +261,8 @@ Class Application
 		// stuff to sor thru -
 
 		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Services::Registry()->get('Request\\view_group_id'),
-			Services::Registry()->get('User\\view_groups'))
+		if (in_array(Services::Registry()->get('Catalog\\view_group_id'),
+			Services::Registry()->get('User\\ViewGroups'))
 		) {
 			Services::Registry()->set('Request\\status_authorised', true);
 		} else {
@@ -866,9 +866,12 @@ Class Application
 		/** Registry for Custom Fields and Metadata */
 		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Sites.xml');
 
-		Services::Registry()->loadField('SiteCustomfields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
-
-		Services::Registry()->loadField('SiteMetadata\\', 'meta', $results['metadata'], $xml->metadata);
+		Services::Registry()->loadField('SiteCustomfields\\', 'custom_fields',
+			$results['custom_fields'], $xml->custom_fields);
+		Services::Registry()->loadField('SiteMetadata\\', 'meta',
+			$results['metadata'], $xml->metadata);
+		Services::Registry()->loadField('SiteParameters\\', 'parameters',
+			$results['parameters'], $xml->parameter);
 
 		$this->base_url = $results['base_url'];
 

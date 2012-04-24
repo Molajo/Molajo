@@ -383,11 +383,11 @@ Class Route
 		Services::Registry()->set('Catalog\\source_id', (int)$row->source_id);
 		Services::Registry()->set('Catalog\\view_group_id', (int)$row->view_group_id);
 		Services::Registry()->set('Catalog\\primary_category_id', (int)$row->primary_category_id);
-		Services::Registry()->set('Catalog\\sef_request', (int)$row->sef_request);
-		Services::Registry()->set('Catalog\\request', (int)$row->request);
-		Services::Registry()->set('Catalog\\request_option', (int)$row->request_option);
-		Services::Registry()->set('Catalog\\request_model', (int)$row->request_model);
-		Services::Registry()->set('Catalog\\source_table', (int)$row->source_table);
+		Services::Registry()->set('Catalog\\sef_request', $row->sef_request);
+		Services::Registry()->set('Catalog\\request', $row->request);
+		Services::Registry()->set('Catalog\\request_option', $row->request_option);
+		Services::Registry()->set('Catalog\\request_model', $row->request_model);
+		Services::Registry()->set('Catalog\\source_table', $row->source_table);
 
 		/** home */
 		if ((int)Services::Registry()->get('Catalog\\catalog_id', 0)

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <list>
-    <registry>Override</registry>
+    <registry>Site</registry>
+    <registry>SiteCustomfields</registry>
+    <registry>SiteMetadata</registry>
 
     <registry>Application</registry>
     <registry>ApplicationCustomfields</registry>
     <registry>ApplicationMetadata</registry>
-
-    <registry>Site</registry>
-    <registry>SiteCustomfields</registry>
-    <registry>SiteMetadata</registry>
 
     <registry>Configuration</registry>
 
@@ -16,7 +14,6 @@
     <registry>UserCustomfields</registry>
     <registry>UserMetadata</registry>
     <registry>UserParameters</registry>
-    <registry>UserLanguage</registry>
 
     <registry>Theme</registry>
     <registry>ThemeCatalog</registry>
@@ -36,6 +33,7 @@
     <registry>RequestSourceMetadata</registry>
     <registry>RequestSourceParameters</registry>
     <registry>RequestMVC</registry>
+    <registry>RequestParameters</registry>
     <registry>RequestTemplate</registry>
     <registry>RequestWrap</registry>
 

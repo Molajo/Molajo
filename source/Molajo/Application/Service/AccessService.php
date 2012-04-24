@@ -251,7 +251,7 @@ Class AccessService
 		$m->query->where($m->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
 		$m->query->where($m->db->qn('group_id')
-				. ' IN (' . implode(',', Services::Registry()->get('User\\groups')) . ')'
+				. ' IN (' . implode(',', Services::Registry()->get('User\\Groups')) . ')'
 		);
 
 		$count = $m->loadResult();
@@ -372,7 +372,7 @@ Class AccessService
 				'.' .
 				$db->qn('view_group_id') .
 				' IN (' . implode(',',
-				Services::Registry()->get('User\\view_groups') .
+				Services::Registry()->get('User\\ViewGroups') .
 					')')
 		);
 

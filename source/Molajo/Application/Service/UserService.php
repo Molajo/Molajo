@@ -129,12 +129,14 @@ registration
 		/** User Applications */
 		$temp = array();
 		$applications = $results['Model\\UserApplications'];
+
 		while (list($name, $value) = each($applications)) {
 			if ($name == 'application_id') {
 				$temp[] = $value;
 			}
 		}
-		Services::Registry()->set('User\\applications', $temp);
+
+		Services::Registry()->set('User\\Applications', $temp);
 
 		/** User Groups */
 		$temp = array();
@@ -159,7 +161,7 @@ registration
 			}
 		}
 
-		Services::Registry()->set('User\\groups', $temp);
+		Services::Registry()->set('User\\Groups', $temp);
 
 		if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $temp)) {
 			Services::Registry()->set('User\\administrator', 1);
@@ -179,8 +181,7 @@ registration
 		if (count($temp) == 0) {
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
-		Services::Registry()->set('User\\view_groups', $temp);
-
+		Services::Registry()->set('User\\ViewGroups', $temp);
 		$temp = Services::Registry()->getArray('User');
 
 		return $this;

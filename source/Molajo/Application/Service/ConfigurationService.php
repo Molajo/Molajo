@@ -94,6 +94,13 @@ Class ConfigurationService
 
 		$this->registry('Configuration\\', $data, 'parameters', 'parameter', $xml);
 
+		Services::Registry()->loadField('ApplicationCustomfields\\', 'custom_fields',
+			$data->custom_fields, $xml->custom_fields);
+		Services::Registry()->loadField('ApplicationMetadata\\', 'meta',
+			$data->metadata, $xml->metadata);
+		Services::Registry()->loadField('ApplicationParameters\\', 'parameters',
+			$data->parameters, $xml->parameter);
+
 		/** Site Paths, Custom Fields, and Authorisation */
 		Molajo::Application()->setSitePaths();
 
