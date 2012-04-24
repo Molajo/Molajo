@@ -39,7 +39,7 @@ abstract class CatalogHelper
     {
         $m = new TableModel('Catalog');
 
-        $m->query->select('a.' . $m->db->qn('id') . ' as catalog_id');
+        $m->query->select('a.' . $m->db->qn('id'));
         $m->query->select('a.' . $m->db->qn('catalog_type_id'));
         $m->query->select('a.' . $m->db->qn('source_id'));
         $m->query->select('a.' . $m->db->qn('routable'));
@@ -60,23 +60,20 @@ abstract class CatalogHelper
 
         if ((int)$catalog_id > 0) {
 
-            $m->query->where('a.' . $m->db->qn('id') . ' = ' .
-                (int)$catalog_id);
+            $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
 
         } else if ((int)$source_id > 0) {
 
             $m->query->where('a.' . $m->db->qn('request_option') .
                 ' = ' . $m->db->q($request_option));
             $m->query->where('a.' . $m->db->qn('redirect_to_id') . ' = 0 ');
-            $m->query->where('a.' . $m->db->qn('source_id') . ' = ' .
-                (int)$source_id);
+
+            $m->query->where('a.' . $m->db->qn('source_id') . ' = ' . (int)$source_id);
 
         } else {
 
-            $m->query->where('(a.' . $m->db->qn('sef_request') .
-                    ' = ' . $m->db->q($query_request) .
-                    ' OR a.' . $m->db->qn('request') . ' = ' .
-                    $m->db->q($query_request) . ')'
+            $m->query->where('(a.' . $m->db->qn('sef_request') . ' = ' . $m->db->q($query_request) .
+                    ' OR a.' . $m->db->qn('request') . ' = ' . $m->db->q($query_request) . ')'
             );
         }
 
@@ -94,20 +91,18 @@ abstract class CatalogHelper
                 if ($row->sef_request == $query_request) {
 
                 } else {
-                    $row->redirect_to_id = (int)$row->catalog_id;
+                    $row->redirect_to_id = (int)$row->id;
                 }
 
             } else {
                 if ($row->request == $query_request) {
 
                 } else {
-                    $row->redirect_to_id = (int)$row->catalog_id;
+                    $row->redirect_to_id = (int)$row->id;
                 }
             }
 
-            if ($row->catalog_id ==
-                Services::Registry()->get('Configuration\\home_catalog_id', 0)
-            ) {
+            if ($row->id == Services::Registry()->get('Configuration\\home_catalog_id', 0)) {
                 if ($query_request == '') {
                 } else {
                     $row->redirect_to_id =
@@ -116,6 +111,8 @@ abstract class CatalogHelper
             }
         }
 
+		//todo: remove after testing
+		$row->redirect_to_id = 0;
         return $row;
     }
 
@@ -135,14 +132,10 @@ abstract class CatalogHelper
         $m = new TableModel('Catalog');
 
         $m->query->select('a.' . $m->db->qn('id') . ' as catalog_id');
-        $m->query->where('a.' . $m->db->qn('catalog_type_id') .
-            ' = ' . (int)$catalog_type_id);
-        $m->query->where('a.' . $m->db->qn('source_id') .
-            ' = ' . (int)$source_id);
-        $m->query->where('a.' . $m->db->qn('view_group_id') .
-                ' IN (' .
-                implode(',', Services::Registry()->get('User\\view_groups')) . ')'
-        );
+        $m->query->where('a.' . $m->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
+        $m->query->where('a.' . $m->db->qn('source_id') . ' = ' . (int)$source_id);
+        $m->query->where('a.' . $m->db->qn('view_group_id')
+				. ' IN (' . implode(',', Services::Registry()->get('User\\view_groups')) . ')');
 
         return $m->loadResult();
     }
@@ -171,9 +164,9 @@ abstract class CatalogHelper
         } else {
             $m->query->select('a.' . $m->db->qn('request'));
         }
+
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
-        $m->query->where('a.' . $m->db->qn('view_group_id') .
-                ' IN (' .
+        $m->query->where('a.' . $m->db->qn('view_group_id') .  ' IN (' .
                 implode(',', Services::Registry()->get('User\\view_groups')) . ')'
         );
 
@@ -190,8 +183,7 @@ abstract class CatalogHelper
      */
     public static function getRedirectURL($catalog_id)
     {
-        if ((int)$catalog_id
-            == Services::Registry()->get('Configuration\\home_catalog_id', 0)
+        if ((int)$catalog_id == Services::Registry()->get('Configuration\\home_catalog_id', 0)
         ) {
             return '';
         }
@@ -203,6 +195,7 @@ abstract class CatalogHelper
         } else {
             $m->query->select($m->db->qn('request'));
         }
+
         $m->query->where($m->db->qn('id') . ' = ' . (int)$catalog_id);
 
         return $m->loadResult();

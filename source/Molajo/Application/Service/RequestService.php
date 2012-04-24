@@ -44,6 +44,14 @@ Class RequestService
 	protected $request;
 
 	/**
+	 * Parameters
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $parameters;
+
+	/**
 	 * getInstance
 	 *
 	 * @static
@@ -66,11 +74,15 @@ Class RequestService
 	public function __construct()
 	{
 
+		/** Request */
 		$class = 'Symfony\\Component\\HttpFoundation\\Request';
 		$this->connection = new $class();
+		$this->request = $this->connection->createFromGlobals();
+
 
 		/** Request */
-		$this->request = $this->connection->createFromGlobals();
+		$class2 = 'Symfony\\Component\\HttpFoundation\\ParameterBag';
+		$this->connection2 = new $class2();
 
 		return $this;
 	}

@@ -61,16 +61,16 @@ Class Route
 		/**
 		 *     Dependency Injection
 		 */
-		if ((int)Services::Registry()->get('Override\\catalog_id', 0) == 0) {
+		if ((int)Services::Registry()->get('DependencyInjection\\catalog_id', 0) == 0) {
 			Services::Registry()->set('Request\\catalog_id', 0);
 		} else {
 			Services::Registry()->set('Request\\catalog_id',
-				(int)Services::Registry()->get('Override\\catalog_id', 0));
+				(int)Services::Registry()->get('DependencyInjection\\catalog_id', 0));
 		}
-		if (Services::Registry()->get('Override\\request_url', '') == '') {
+		if (Services::Registry()->get('DependencyInjection\\request_url', '') == '') {
 			$path = PAGE_REQUEST;
 		} else {
-			$path = Services::Registry()->get('Override\\request_url', '');
+			$path = Services::Registry()->get('DependencyInjection\\request_url', '');
 		}
 
 		/**
@@ -132,10 +132,10 @@ Class Route
 		/**
 		 *     URL Change Redirect from Catalog
 		 */
-		if ($this->redirect_to_id == 0) {
+		if ((int) Services::Registry()->get('Catalog\\redirect_to_id', 0) == 0) {
 		} else {
 			Services::Response()->redirect(
-				Molajo::Helper()->getURL('Catalog', $this->redirect_to_id), 301
+				Molajo::Helper()->getURL('Catalog', Services::Registry()->get('Catalog\\redirect_to_id', 0)), 301
 			);
 			Services::Debug()->set('Molajo::Route() Redirect');
 			return false;
@@ -175,7 +175,7 @@ Class Route
 	{
 
 		if (strlen($path) == 0) {
-
+			return true;
 
 		} else {
 
@@ -224,7 +224,7 @@ Class Route
 	 * Note: $path has already been stripped of Host, Folder, and Application
 	 *
 	 *   ex. index.php?option=article&tag=XYZ&prev=6
-	 * 	 ex. access/groups/tag/XYZ/prev/6
+	 *      ex. access/groups/tag/XYZ/prev/6
 	 *
 	 * todo: remove tag/value if SEF URL
 	 *
@@ -265,7 +265,7 @@ Class Route
 			} else {
 
 				/** remove non-routable parameter - as it is - from the routeable path */
-				$remove = $key . '='. $value;
+				$remove = $key . '=' . $value;
 
 				$path = substr($path, 0, strpos($path, $remove))
 					. substr($path, strpos($path, $remove) + 1 + strlen($remove), 999);
@@ -296,21 +296,24 @@ Class Route
 
 		/** add Edit and Add later
 
-			if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
-			} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
-				Services::Registry()->set('Request\\mvc_task', 'add');
-	  	*/
+		2. add /add and /edit
+		3. deal with nonroutable sef
+		 *
+		if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
+		} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
+		Services::Registry()->set('Request\\mvc_task', 'add');
+		 */
 
 		/**
-look up the URL in the catalog first to determine if it's internal
+		look up the URL in the catalog first to determine if it's internal
 		if (trim($return) == '') {
-			Services::Registry()->set('Request\\redirect_on_success', '');
+		Services::Registry()->set('Request\\redirect_on_success', '');
 
 		} else if (JUri::isInternal(base64_decode($return))) {
-			Services::Registry()->set('Request\\redirect_on_success', base64_decode($return));
+		Services::Registry()->set('Request\\redirect_on_success', base64_decode($return));
 
 		} else {
-			Services::Registry()->set('Request\\redirect_on_success', '');
+		Services::Registry()->set('Request\\redirect_on_success', '');
 		}
 		 */
 		return true;
@@ -361,20 +364,10 @@ look up the URL in the catalog first to determine if it's internal
 			Services::Registry()->get('Request\\mvc_id')
 		);
 
-		var_dump($row);
-		die;
 		/** 404: routeRequest handles redirecting to error page */
-		if (count($row) == 0
-			|| (int)$row->routable == 0
-		) {
+		if (count($row) == 0 || (int)$row->routable == 0) {
 			return Services::Registry()->set('Request\\status_found', false);
 		}
-
-		echo '<pre>';
-		var_dump($row);
-		echo '</pre>';
-		die;
-
 
 		/** Redirect: routeRequest handles rerouting the request */
 		if ((int)$row->redirect_to_id == 0) {
@@ -383,249 +376,48 @@ look up the URL in the catalog first to determine if it's internal
 			return Services::Registry()->set('Request\\status_found', false);
 		}
 
-		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array($row->view_group_id, Services::Registry()->get('User\\view_groups'))) {
-			Services::Registry()->set('Request\\status_authorised', true);
-		} else {
-			return Services::Registry()->set('Request\\status_authorised', false);
-		}
+		/** Catalog Registry */
+		Services::Registry()->set('Catalog\\id', (int)$row->id);
+		Services::Registry()->set('Catalog\\redirect_to_id', (int)$row->redirect_to_id);
+		Services::Registry()->set('Catalog\\catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set('Catalog\\source_id', (int)$row->source_id);
+		Services::Registry()->set('Catalog\\view_group_id', (int)$row->view_group_id);
+		Services::Registry()->set('Catalog\\primary_category_id', (int)$row->primary_category_id);
+		Services::Registry()->set('Catalog\\sef_request', (int)$row->sef_request);
+		Services::Registry()->set('Catalog\\request', (int)$row->request);
+		Services::Registry()->set('Catalog\\request_option', (int)$row->request_option);
+		Services::Registry()->set('Catalog\\request_model', (int)$row->request_model);
+		Services::Registry()->set('Catalog\\source_table', (int)$row->source_table);
 
-		$continue = $this->setRegistryValues('Catalog', $row);
-		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getData() for Catalog failed');
-			return;
-		} else {
-			Services::Debug()->set('Molajo::Route()->getData() for Catalog succeeded');
-		}
-
-///////
-
-		if (Services::Registry()->get($ns . '\\request_catalog_type_id')
-			== CATALOG_TYPE_MENU_ITEM_COMPONENT
+		/** home */
+		if ((int)Services::Registry()->get('Catalog\\catalog_id', 0)
+			== Services::Registry()->get('Configuration\\home_catalog_id', null)
 		) {
-			Services::Registry()->set($ns . '\\menu_item_id', $row->source_id);
-			$this->setRegistryValues('Menuitem', $row);
-			if (Services::Registry()->get($ns . '\\status_found') === false) {
-				return Services::Registry()->get($ns . '\\status_found');
-			}
+			Services::Registry()->set('Request\\request_url_home', true);
 		} else {
-			Services::Registry()->set($ns . '\\source_id', $row->source_id);
-
+			Services::Registry()->set('Request\\request_url_home', false);
 		}
 
-//////
+		return true;
+
+		/**
+
+		todo: come back and:
+		1. deal with menu items
 
 
-		/** Menu Item */
-		$row = Molajo::Helper()
-			->get('Menuitem',
-			(int)Services::Registry()->get('Request\\catalog_id'),
-			Services::Registry()->get('Request\\request_url_query'),
-			Services::Registry()->get('Request\\mvc_option'),
-			Services::Registry()->get('Request\\mvc_id')
-		);
 
-		$continue = $this->setRegistryValues('Menuitem', $row);
-		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getData() for Menu Item failed');
-			return;
+		if (Services::Registry()->get('Request\\request_catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+
+		Services::Registry()->set('Request\\menu_item_id', $row->source_id);
+		$this->setRegistryValues('Menuitem', $row);
+		if (Services::Registry()->get('Requst\\status_found') === false) {
+		return Services::Registry()->get('Request\\status_found');
+		}
 		} else {
-			Services::Debug()->set('Molajo::Route()->getData() for Menu Item succeeded');
+		Services::Registry()->set('Request\\source_id', $row->source_id);
+
 		}
-
-		/** Source */
-		$row = Molajo::Helper()
-			->get('Source',
-			(int)Services::Registry()->get('Request\\catalog_id'),
-			Services::Registry()->get('Request\\request_url_query'),
-			Services::Registry()->get('Request\\mvc_option'),
-			Services::Registry()->get('Request\\mvc_id')
-		);
-
-		$continue = $this->setRegistryValues('Menuitem', $row);
-		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getData() for Source failed');
-			return;
-		} else {
-			Services::Debug()->set('Molajo::Route()->getData() for Source succeeded');
-		}
-
-		/** Category */
-		$row = Molajo::Helper()
-			->get('Category',
-			(int)Services::Registry()->get('Request\\catalog_id'),
-			Services::Registry()->get('Request\\request_url_query'),
-			Services::Registry()->get('Request\\mvc_option'),
-			Services::Registry()->get('Request\\mvc_id')
-		);
-
-		$continue = $this->setRegistryValues('Category', $row);
-
-		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getData() for Category failed');
-			return;
-		} else {
-			Services::Debug()->set('Molajo::Route()->getData() for Category succeeded');
-		}
-
-		/** Extension */
-		$row = Molajo::Helper()
-			->get('Extension',
-			(int)Services::Registry()->get('Request\\catalog_id'),
-			Services::Registry()->get('Request\\request_url_query'),
-			Services::Registry()->get('Request\\mvc_option'),
-			Services::Registry()->get('Request\\mvc_id')
-		);
-
-		$continue = $this->setRegistryValues('Extension', $row);
-
-		if ($continue == false) {
-			Services::Debug()->set('Molajo::Route()->getData() for Extension failed');
-			return;
-		} else {
-			Services::Debug()->set('Molajo::Route()->getData() for Extension succeeded');
-		}
-
-
-		return Services::Registry()->get($ns . '\\status_found');
-	}
-
-	/**
-	 * Process the output from catalog, menu items, content, categories, and
-	 * extensions to establish registry values to be used in task execution
-	 *
-	 * @param $ns  - namespace for registry
-	 * @param $row
-	 *
-	 * @return mixed
-	 *
-	 * @since  1.0
-	 */
-	protected function setRegistryValues($ns, $row)
-	{
-		Services::Registry()->set($ns . '\\id', (int)$row->id);
-		Services::Registry()->set($ns . '\\title', (string)$row->title);
-		Services::Registry()->set($ns . '\\alias', (string)$row->alias);
-		Services::Registry()->set($ns . '\\catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set($ns . '\\catalog_id', (int)$row->catalog_id);
-		Services::Registry()->set($ns . '\\view_group_id', (int)$row->view_group_id);
-		Services::Registry()->set($ns . '\\language', (int)$row->language);
-		Services::Registry()->set($ns . '\\translation_of_id', (int)$row->translation_of_id);
-
-		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/' . strtolower($ns) . 'xml');
-
-		Services::Registry()->loadField($ns . 'Customfields\\', 'custom_fields', $row->custom_fields, $xml->custom_fields);
-		Services::Registry()->loadField($ns . 'Metadata\\', 'meta', $row->metadata, $xml->metadata);
-		Services::Registry()->loadField($ns . 'Parameters\\', 'parameters', $row->parameters, $xml->parameter);
-
-		if ($ns == 'Catalog') {
-			Services::Registry()->set($ns . '\\request_url', $row->request);
-			Services::Registry()->set($ns . '\\request_url_sef', $row->sef_request);
-
-			/** home */
-			if ((int)Services::Registry()->get($ns . '\\catalog_id', 0)
-				== Services::Registry()->get('Configuration\\home_catalog_id', null)
-			) {
-				Services::Registry()->set($ns . '\\request_url_home', true);
-			} else {
-				Services::Registry()->set($ns . '\\request_url_home', false);
-			}
-
-			return Services::Registry()->get($ns . '\\status_found');
-		}
-
-		if ($ns == 'Menuitem') {
-		}
-
-		if ($ns == 'Source') {
-			Services::Registry()->set($ns . '\\source_table', $row->view_group_id);
-			Services::Registry()->set($ns . '\\source_last_modified', (int)$row->view_group_id);
-		}
-
-		if ($ns == 'Category') {
-			Services::Registry()->set($ns . '\\category_id', (int)$row->primary_category_id);
-
-			/** primary category */
-			if (Services::Registry()->get($ns . '\\category_id', 0) == 0) {
-			} else {
-				Services::Registry()->set($ns . '\\mvc_category_id',
-					Services::Registry()->get($ns . '\\category_id'));
-
-			}
-		}
-
-		if ($ns == 'Extension') {
-			Services::Registry()->set($ns . '\\extension_path', '');
-			Services::Registry()->set($ns . '\\extension_type', '');
-			Services::Registry()->set($ns . '\\extension_event_type', '');
-
-			/** mvc options and url parameters */
-			Services::Registry()->set($ns . '\\extension_instance_name', $row->request_option);
-			Services::Registry()->set($ns . '\\mvc_model', $row->request_model);
-			Services::Registry()->set($ns . '\\mvc_id', (int)$row->source_id);
-
-			Services::Registry()->set($ns . '\\mvc_controller',
-				Services::Access()
-					->getTaskController(Services::Registry()->get($ns . '\\mvc_task'))
-			);
-
-			/** Action Tasks need no additional information */
-			if (Services::Registry()->get($ns . '\\mvc_controller') == 'display') {
-			} else {
-				return Services::Registry()->set($ns . '\\status_found', true);
-			}
-		}
-
-	}
-
-	/**
-	 * Create and Initialize the request registries so that the data
-	 * for all rendering (or other actions)
-	 *
-	 * @return   null
-	 *
-	 * @since    1.0
-	 */
-	protected function copyRequestRegistry()
-	{
-		Services::Registry()->copy('Catalog', 'RequestCatalog');
-		Services::Registry()->copy('Menuitem', 'RequestMenuitem');
-		Services::Registry()->copy('Source', 'RequestSource');
-		Services::Registry()->copy('Category', 'RequestCategory');
-		Services::Registry()->copy('Extension', 'RequestExtension');
-		Services::Registry()->copy('MVC', 'RequestMVC');
-		Services::Registry()->copy('Template', 'RequestTemplate');
-		Services::Registry()->copy('Wrap', 'RequestWrap');
-		Services::Registry()->copy('Parameters', 'RequestParameters');
-		Services::Registry()->copy('Metadata', 'RequestMetadata');
-	}
-
-	protected function getValues()
-	{
-
-		/** request */
-		Services::Registry()->set($ns . '\\request_url_base', BASE_URL);
-		Services::Registry()->set($ns . '\\request_catalog_id', 0);
-		Services::Registry()->set($ns . '\\request_catalog_type_id', 0);
-		Services::Registry()->set($ns . '\\request_url_query', '');
-		Services::Registry()->set($ns . '\\request_url', '');
-		Services::Registry()->set($ns . '\\request_url_sef', '');
-		Services::Registry()->set($ns . '\\request_url_home', false);
-
-
-		/** mvc parameters */
-		Services::Registry()->set($ns . '\\mvc_controller', '');
-		Services::Registry()->set($ns . '\\mvc_option', '');
-		Services::Registry()->set($ns . '\\mvc_task', '');
-		Services::Registry()->set($ns . '\\mvc_model', '');
-		Services::Registry()->set($ns . '\\mvc_id', 0);
-		Services::Registry()->set($ns . '\\mvc_category_id', 0);
-		Services::Registry()->set($ns . '\\mvc_url_parameters', array());
-		Services::Registry()->set($ns . '\\mvc_suppress_no_results', false);
-
-		/** results */
-		Services::Registry()->set($ns . '\\error_status', false);
-		Services::Registry()->set($ns . '\\status_authorised', false);
-		Services::Registry()->set($ns . '\\status_found', false);
+		 */
 	}
 }

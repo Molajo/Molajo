@@ -78,10 +78,10 @@ Class Application
 		 */
 		$continue = $this->initialise();
 
-		Services::Registry()->set('Override\\request_url', $override_request_url);
-		Services::Registry()->set('Override\\catalog_id', $override_catalog_id);
-		Services::Registry()->set('Override\\sequence_xml', $override_sequence_xml);
-		Services::Registry()->set('Override\\final_xml', $override_final_xml);
+		Services::Registry()->set('DependencyInjection\\request_url', $override_request_url);
+		Services::Registry()->set('DependencyInjection\\catalog_id', $override_catalog_id);
+		Services::Registry()->set('DependencyInjection\\sequence_xml', $override_sequence_xml);
+		Services::Registry()->set('DependencyInjection\\final_xml', $override_final_xml);
 
 		if ($continue == false) {
 			Services::Debug()->set('Molajo::Application()->initialise() failed');
@@ -89,15 +89,6 @@ Class Application
 		} else {
 			Services::Debug()->set('Molajo::Application()->initialise() succeeded');
 		}
-
-		/**
-		$list = Services::Registry()->listRegistry(1);
-
-		echo '<pre>';
-		var_dump($list);
-		echo '</pre>';
-		die;
-		 */
 
 		/**
 		 *     Route
@@ -110,6 +101,16 @@ Class Application
 		} else {
 			Services::Debug()->set('Molajo::Application()->route() succeeded');
 		}
+
+
+		/**      */
+		$list = Services::Registry()->listRegistry(1);
+
+		echo '<pre>';
+		var_dump($list);
+		echo '</pre>';
+		die;
+		/** */
 
 		/**
 		 *     Authorise
@@ -257,6 +258,17 @@ Class Application
 	 */
 	protected function authorise()
 	{
+		// stuff to sor thru -
+
+		/** 403: authoriseTask handles redirecting to error page */
+		if (in_array(Services::Registry()->get('Request\\view_group_id'),
+			Services::Registry()->get('User\\view_groups'))
+		) {
+			Services::Registry()->set('Request\\status_authorised', true);
+		} else {
+			return Services::Registry()->set('Request\\status_authorised', false);
+		}
+
 		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Request\\mvc_task') == 'display'
 			&& Services::Registry()->get('Request\\status_authorised') === true
