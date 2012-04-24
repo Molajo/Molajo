@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sites>
+    <site>
+        <id>1</id>
+        <name>Primary</name>
+        <base></base>
+        <folderpath>/users/amystephen/sites/molajo/tests/site/1</folderpath>
+        <appendtobaseurl>/site/1</appendtobaseurl>
+    </site>
+</sites>

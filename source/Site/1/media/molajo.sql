@@ -3,17 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2012 at 03:58 PM
+-- Generation Time: Apr 24, 2012 at 09:01 AM
 -- Server version: 5.5.9
 -- PHP Version: 5.3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `molajo`
@@ -306,134 +300,134 @@ CREATE TABLE `molajo_catalog` (
 
 INSERT INTO `molajo_catalog` VALUES(1, 10, 1, 0, '', '', '', '', 0, 1, 0);
 INSERT INTO `molajo_catalog` VALUES(2, 50, 1, 0, '', '', '', '', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(3, 50, 2, 0, 'administrator', '', '', '', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(5, 100, 1, 1, 'group/1', 'index.php?option=groups&model=group&id=1', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(6, 100, 2, 1, 'group/2', 'index.php?option=groups&model=group&id=2', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(7, 100, 3, 1, 'group/3', 'index.php?option=groups&model=group&id=3', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(8, 100, 4, 1, 'group/4', 'index.php?option=groups&model=group&id=4', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(9, 120, 5, 1, 'group/5', 'index.php?option=groups&model=group&id=5', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(10, 120, 6, 1, 'group/6', 'index.php?option=groups&model=group&id=6', 'groups', 'group', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(12, 1050, 0, 1, 'extensions/components/0', 'index.php?option=extensions&model=components&id=0', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(13, 1050, 1, 1, 'extensions/components/1', 'index.php?option=extensions&model=components&id=1', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(14, 1050, 2, 1, 'extensions/components/2', 'index.php?option=extensions&model=components&id=2', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(15, 1050, 3, 1, 'extensions/components/3', 'index.php?option=extensions&model=components&id=3', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(16, 1050, 4, 1, 'extensions/components/4', 'index.php?option=extensions&model=components&id=4', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(17, 1050, 5, 1, 'extensions/components/5', 'index.php?option=extensions&model=components&id=5', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(18, 1050, 6, 1, 'extensions/components/6', 'index.php?option=extensions&model=components&id=6', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(19, 1050, 7, 1, 'extensions/components/7', 'index.php?option=extensions&model=components&id=7', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(20, 1050, 8, 1, 'extensions/components/8', 'index.php?option=extensions&model=components&id=8', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(21, 1050, 9, 1, 'extensions/components/9', 'index.php?option=extensions&model=components&id=9', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(22, 1050, 10, 1, 'extensions/components/10', 'index.php?option=extensions&model=components&id=10', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(23, 1050, 11, 1, 'extensions/components/11', 'index.php?option=extensions&model=components&id=11', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(24, 1050, 12, 1, 'extensions/components/12', 'index.php?option=extensions&model=components&id=12', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(25, 1050, 13, 1, 'extensions/components/13', 'index.php?option=extensions&model=components&id=13', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(26, 1050, 14, 1, 'extensions/components/14', 'index.php?option=extensions&model=components&id=14', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(27, 1050, 15, 1, 'extensions/components/15', 'index.php?option=extensions&model=components&id=15', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(28, 1050, 16, 1, 'extensions/components/16', 'index.php?option=extensions&model=components&id=16', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(29, 1050, 17, 1, 'extensions/components/17', 'index.php?option=extensions&model=components&id=17', 'extension', 'Components', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(30, 1100, 18, 1, 'extensions/languages/18', 'index.php?option=extensions&model=languages&id=18', 'extension', 'Languages', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(31, 1150, 19, 1, 'extensions/views/19', 'index.php?option=extensions&model=views&id=19', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(32, 1150, 20, 1, 'extensions/views/20', 'index.php?option=extensions&model=views&id=20', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(33, 1150, 21, 1, 'extensions/views/21', 'index.php?option=extensions&model=views&id=21', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(34, 1150, 22, 1, 'extensions/views/22', 'index.php?option=extensions&model=views&id=22', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(35, 1150, 23, 1, 'extensions/views/23', 'index.php?option=extensions&model=views&id=23', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(36, 1150, 24, 1, 'extensions/views/24', 'index.php?option=extensions&model=views&id=24', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(37, 1150, 25, 1, 'extensions/views/25', 'index.php?option=extensions&model=views&id=25', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(38, 1150, 26, 1, 'extensions/views/26', 'index.php?option=extensions&model=views&id=26', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(39, 1150, 27, 1, 'extensions/views/27', 'index.php?option=extensions&model=views&id=27', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(40, 1150, 28, 1, 'extensions/views/28', 'index.php?option=extensions&model=views&id=28', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(41, 1150, 29, 1, 'extensions/views/29', 'index.php?option=extensions&model=views&id=29', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(42, 1150, 30, 1, 'extensions/views/30', 'index.php?option=extensions&model=views&id=30', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(43, 1150, 31, 1, 'extensions/views/31', 'index.php?option=extensions&model=views&id=31', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(44, 1150, 32, 1, 'extensions/views/32', 'index.php?option=extensions&model=views&id=32', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(45, 1200, 33, 1, 'extensions/views/33', 'index.php?option=extensions&model=views&id=33', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(46, 1200, 34, 1, 'extensions/views/34', 'index.php?option=extensions&model=views&id=34', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(47, 1200, 35, 1, 'extensions/views/35', 'index.php?option=extensions&model=views&id=35', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(48, 1200, 36, 1, 'extensions/views/36', 'index.php?option=extensions&model=views&id=36', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(49, 1200, 37, 1, 'extensions/views/37', 'index.php?option=extensions&model=views&id=37', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(50, 1200, 38, 1, 'extensions/views/38', 'index.php?option=extensions&model=views&id=38', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(51, 1200, 39, 1, 'extensions/views/39', 'index.php?option=extensions&model=views&id=39', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(52, 1200, 40, 1, 'extensions/views/40', 'index.php?option=extensions&model=views&id=40', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(53, 1150, 41, 1, 'extensions/views/41', 'index.php?option=extensions&model=views&id=41', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(54, 1150, 42, 1, 'extensions/views/42', 'index.php?option=extensions&model=views&id=42', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(55, 1150, 43, 1, 'extensions/views/43', 'index.php?option=extensions&model=views&id=43', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(56, 1150, 44, 1, 'extensions/views/44', 'index.php?option=extensions&model=views&id=44', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(67, 1150, 55, 1, 'extensions/views/55', 'index.php?option=extensions&model=views&id=55', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(68, 1150, 56, 1, 'extensions/views/56', 'index.php?option=extensions&model=views&id=56', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(69, 1150, 57, 1, 'extensions/views/57', 'index.php?option=extensions&model=views&id=57', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(70, 1150, 58, 1, 'extensions/views/58', 'index.php?option=extensions&model=views&id=58', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(71, 1150, 59, 1, 'extensions/views/59', 'index.php?option=extensions&model=views&id=59', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(72, 1150, 60, 1, 'extensions/views/60', 'index.php?option=extensions&model=views&id=60', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(73, 1150, 61, 1, 'extensions/views/61', 'index.php?option=extensions&model=views&id=61', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(74, 1150, 62, 1, 'extensions/views/62', 'index.php?option=extensions&model=views&id=62', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(75, 1150, 63, 1, 'extensions/views/63', 'index.php?option=extensions&model=views&id=63', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(76, 1150, 64, 1, 'extensions/views/64', 'index.php?option=extensions&model=views&id=64', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(77, 1150, 65, 1, 'extensions/views/65', 'index.php?option=extensions&model=views&id=65', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(78, 1150, 66, 1, 'extensions/views/66', 'index.php?option=extensions&model=views&id=66', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(79, 1150, 67, 1, 'extensions/views/67', 'index.php?option=extensions&model=views&id=67', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(80, 1450, 82, 1, 'extensions/plugins/82', 'index.php?option=extensions&model=plugins&id=82', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(81, 1450, 83, 1, 'extensions/plugins/83', 'index.php?option=extensions&model=plugins&id=83', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(82, 1450, 84, 1, 'extensions/plugins/84', 'index.php?option=extensions&model=plugins&id=84', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(83, 1450, 85, 1, 'extensions/plugins/85', 'index.php?option=extensions&model=plugins&id=85', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(84, 1450, 86, 1, 'extensions/plugins/86', 'index.php?option=extensions&model=plugins&id=86', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(85, 1450, 87, 1, 'extensions/plugins/87', 'index.php?option=extensions&model=plugins&id=87', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(86, 1450, 88, 1, 'extensions/plugins/88', 'index.php?option=extensions&model=plugins&id=88', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(87, 1450, 89, 1, 'extensions/plugins/89', 'index.php?option=extensions&model=plugins&id=89', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(88, 1450, 90, 1, 'extensions/plugins/90', 'index.php?option=extensions&model=plugins&id=90', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(89, 1450, 91, 1, 'extensions/plugins/91', 'index.php?option=extensions&model=plugins&id=91', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(90, 1450, 92, 1, 'extensions/plugins/92', 'index.php?option=extensions&model=plugins&id=92', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(91, 1450, 93, 1, 'extensions/plugins/93', 'index.php?option=extensions&model=plugins&id=93', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(92, 1450, 94, 1, 'extensions/plugins/94', 'index.php?option=extensions&model=plugins&id=94', 'extension', 'Plugins', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(93, 1500, 97, 1, 'extensions/templates/97', 'index.php?option=extensions&model=templates&id=97', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(94, 1500, 98, 1, 'extensions/templates/98', 'index.php?option=extensions&model=templates&id=98', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(95, 1500, 99, 1, 'extensions/templates/99', 'index.php?option=extensions&model=templates&id=99', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(96, 1300, 100, 1, 'extensions/menus/100', 'index.php?option=extensions&model=menus&id=100', 'extension', 'Menus', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(97, 1300, 101, 1, 'extensions/menus/101', 'index.php?option=extensions&model=menus&id=101', 'extension', 'Menus', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(98, 1350, 103, 1, 'extensions/modules/103', 'index.php?option=extensions&model=modules&id=103', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(99, 1350, 104, 1, 'extensions/modules/104', 'index.php?option=extensions&model=modules&id=104', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(100, 1350, 105, 1, 'extensions/modules/105', 'index.php?option=extensions&model=modules&id=105', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(101, 1350, 106, 1, 'extensions/modules/106', 'index.php?option=extensions&model=modules&id=106', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(102, 1350, 107, 1, 'extensions/modules/107', 'index.php?option=extensions&model=modules&id=107', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(103, 1350, 108, 1, 'extensions/modules/108', 'index.php?option=extensions&model=modules&id=108', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(104, 1350, 109, 1, 'extensions/modules/109', 'index.php?option=extensions&model=modules&id=109', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(105, 1350, 110, 1, 'extensions/modules/110', 'index.php?option=extensions&model=modules&id=110', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(106, 1350, 111, 1, 'extensions/modules/111', 'index.php?option=extensions&model=modules&id=111', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(107, 1350, 112, 1, 'extensions/modules/112', 'index.php?option=extensions&model=modules&id=112', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(108, 1350, 113, 1, 'extensions/modules/113', 'index.php?option=extensions&model=modules&id=113', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(109, 1350, 114, 1, 'extensions/modules/114', 'index.php?option=extensions&model=modules&id=114', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(110, 1350, 115, 1, 'extensions/modules/115', 'index.php?option=extensions&model=modules&id=115', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(111, 1350, 116, 1, 'extensions/modules/116', 'index.php?option=extensions&model=modules&id=116', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(112, 1350, 117, 1, 'extensions/modules/117', 'index.php?option=extensions&model=modules&id=117', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(113, 1350, 118, 1, 'extensions/modules/118', 'index.php?option=extensions&model=modules&id=118', 'extension', 'Modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(139, 2000, 102, 1, 'content', 'index.php?option=menuitems&id=102', 'menuitems', '', 0, 1, 3);
-INSERT INTO `molajo_catalog` VALUES(140, 2000, 114, 1, 'articles', 'index.php?option=menuitems&id=114', 'menuitems', '', 0, 1, 3);
-INSERT INTO `molajo_catalog` VALUES(141, 3000, 103, 1, 'category/content', 'index.php?option=categories&id=103', 'categories', 'category', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(142, 10000, 104, 1, 'articles/article-alias-here', 'index.php?option=articles&id=104', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(143, 10000, 105, 1, 'articles/second-alias', 'index.php?option=articles&id=105', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(144, 10000, 106, 1, 'articles/article-three', 'index.php?option=articles&id=106', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(145, 10000, 107, 1, 'articles/article-4', 'index.php?option=articles&id=107', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(146, 10000, 108, 1, 'articles/article-5', 'index.php?option=articles&id=108', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(147, 10000, 109, 1, 'articles/article-6', 'index.php?option=articles&id=109', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(148, 10000, 110, 1, 'articles/article-7', 'index.php?option=articles&id=110', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(149, 10000, 111, 1, 'articles/article-8', 'index.php?option=articles&id=111', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(150, 10000, 112, 1, 'articles/article-9', 'index.php?option=articles&id=112', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(151, 10000, 113, 1, 'articles/article-10', 'index.php?option=articles&id=113', 'articles', 'content', 0, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(152, 1500, 119, 1, 'extensions/templates/119', 'index.php?option=extensions&model=templates&id=119', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(153, 1500, 120, 1, 'extensions/templates/120', 'index.php?option=extensions&model=templates&id=120', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(154, 1500, 121, 1, 'extensions/templates/121', 'index.php?option=extensions&model=templates&id=121', 'extension', 'Templates', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(155, 1150, 122, 1, 'extensions/views/122', 'index.php?option=extensions&model=views&id=122', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(156, 1150, 123, 1, 'extensions/views/123', 'index.php?option=extensions&model=views&id=123', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(157, 1150, 124, 1, 'extensions/views/124', 'index.php?option=extensions&model=views&id=124', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(158, 1150, 125, 1, 'extensions/views/125', 'index.php?option=extensions&model=views&id=125', 'extension', 'Views', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(159, 1200, 236, 0, 'extensions/template_view/236', 'index.php?option=extensions&model=template_view&id=236', 'extension', 'template_view', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(160, 10000, 104, 1, 'articles/article-1', '', 'articles', 'content', 142, 1, 103);
-INSERT INTO `molajo_catalog` VALUES(161, 1350, 237, 1, 'extensions/modules/237', 'index.php?option=extensions&id=237', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(162, 1350, 238, 1, 'extensions/modules/238', 'index.php?option=extensions&id=238', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(163, 1350, 239, 1, 'extensions/modules/239', 'index.php?option=extensions&id=239', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(164, 1350, 240, 1, 'extensions/modules/240', 'index.php?option=extensions&id=240', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(165, 1350, 241, 1, 'extensions/modules/241', 'index.php?option=extensions&id=241', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(166, 1350, 242, 1, 'extensions/modules/242', 'index.php?option=extensions&id=242', 'extensions', 'modules', 0, 1, 0);
-INSERT INTO `molajo_catalog` VALUES(168, 1500, 243, 1, 'extensions/themes/243', 'index.php?option=extensions&model=themes&id=243', 'extensions', 'themes', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(3, 50, 2, 0, 'admin', '', '', '', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(5, 100, 1, 1, 'group/1', 'index.php?id=5', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(6, 100, 2, 1, 'group/2', 'index.php?id=6', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(7, 100, 3, 1, 'group/3', 'index.php?id=7', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(8, 100, 4, 1, 'group/4', 'index.php?id=8', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(9, 120, 5, 1, 'group/5', 'index.php?id=9', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(10, 120, 6, 1, 'group/6', 'index.php?id=10', 'groups', 'group', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(12, 1050, 0, 1, 'extensions/components/0', 'index.php?id=12', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(13, 1050, 1, 1, 'extensions/components/1', 'index.php?id=13', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(14, 1050, 2, 1, 'extensions/components/2', 'index.php?id=14', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(15, 1050, 3, 1, 'extensions/components/3', 'index.php?id=15', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(16, 1050, 4, 1, 'extensions/components/4', 'index.php?id=16', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(17, 1050, 5, 1, 'extensions/components/5', 'index.php?id=17', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(18, 1050, 6, 1, 'extensions/components/6', 'index.php?id=18', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(19, 1050, 7, 1, 'extensions/components/7', 'index.php?id=19', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(20, 1050, 8, 1, 'extensions/components/8', 'index.php?id=20', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(21, 1050, 9, 1, 'extensions/components/9', 'index.php?id=21', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(22, 1050, 10, 1, 'extensions/components/10', 'index.php?id=22', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(23, 1050, 11, 1, 'extensions/components/11', 'index.php?id=23', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(24, 1050, 12, 1, 'extensions/components/12', 'index.php?id=24', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(25, 1050, 13, 1, 'extensions/components/13', 'index.php?id=25', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(26, 1050, 14, 1, 'extensions/components/14', 'index.php?id=26', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(27, 1050, 15, 1, 'extensions/components/15', 'index.php?id=27', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(28, 1050, 16, 1, 'extensions/components/16', 'index.php?id=28', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(29, 1050, 17, 1, 'extensions/components/17', 'index.php?id=29', 'extension', 'components', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(30, 1100, 18, 1, 'extensions/languages/18', 'index.php?id=30', 'extension', 'languages', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(31, 1150, 19, 1, 'extensions/views/19', 'index.php?id=31', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(32, 1150, 20, 1, 'extensions/views/20', 'index.php?id=32', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(33, 1150, 21, 1, 'extensions/views/21', 'index.php?id=33', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(34, 1150, 22, 1, 'extensions/views/22', 'index.php?id=34', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(35, 1150, 23, 1, 'extensions/views/23', 'index.php?id=35', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(36, 1150, 24, 1, 'extensions/views/24', 'index.php?id=36', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(37, 1150, 25, 1, 'extensions/views/25', 'index.php?id=37', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(38, 1150, 26, 1, 'extensions/views/26', 'index.php?id=38', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(39, 1150, 27, 1, 'extensions/views/27', 'index.php?id=39', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(40, 1150, 28, 1, 'extensions/views/28', 'index.php?id=40', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(41, 1150, 29, 1, 'extensions/views/29', 'index.php?id=41', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(42, 1150, 30, 1, 'extensions/views/30', 'index.php?id=42', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(43, 1150, 31, 1, 'extensions/views/31', 'index.php?id=43', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(44, 1150, 32, 1, 'extensions/views/32', 'index.php?id=44', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(45, 1200, 33, 1, 'extensions/views/33', 'index.php?id=45', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(46, 1200, 34, 1, 'extensions/views/34', 'index.php?id=46', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(47, 1200, 35, 1, 'extensions/views/35', 'index.php?id=47', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(48, 1200, 36, 1, 'extensions/views/36', 'index.php?id=48', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(49, 1200, 37, 1, 'extensions/views/37', 'index.php?id=49', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(50, 1200, 38, 1, 'extensions/views/38', 'index.php?id=50', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(51, 1200, 39, 1, 'extensions/views/39', 'index.php?id=51', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(52, 1200, 40, 1, 'extensions/views/40', 'index.php?id=52', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(53, 1150, 41, 1, 'extensions/views/41', 'index.php?id=53', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(54, 1150, 42, 1, 'extensions/views/42', 'index.php?id=54', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(55, 1150, 43, 1, 'extensions/views/43', 'index.php?id=55', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(56, 1150, 44, 1, 'extensions/views/44', 'index.php?id=56', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(67, 1150, 55, 1, 'extensions/views/55', 'index.php?id=67', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(68, 1150, 56, 1, 'extensions/views/56', 'index.php?id=68', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(69, 1150, 57, 1, 'extensions/views/57', 'index.php?id=69', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(70, 1150, 58, 1, 'extensions/views/58', 'index.php?id=70', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(71, 1150, 59, 1, 'extensions/views/59', 'index.php?id=71', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(72, 1150, 60, 1, 'extensions/views/60', 'index.php?id=72', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(73, 1150, 61, 1, 'extensions/views/61', 'index.php?id=73', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(74, 1150, 62, 1, 'extensions/views/62', 'index.php?id=74', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(75, 1150, 63, 1, 'extensions/views/63', 'index.php?id=75', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(76, 1150, 64, 1, 'extensions/views/64', 'index.php?id=76', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(77, 1150, 65, 1, 'extensions/views/65', 'index.php?id=77', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(78, 1150, 66, 1, 'extensions/views/66', 'index.php?id=78', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(79, 1150, 67, 1, 'extensions/views/67', 'index.php?id=79', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(80, 1450, 82, 1, 'extensions/plugins/82', 'index.php?id=80', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(81, 1450, 83, 1, 'extensions/plugins/83', 'index.php?id=81', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(82, 1450, 84, 1, 'extensions/plugins/84', 'index.php?id=82', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(83, 1450, 85, 1, 'extensions/plugins/85', 'index.php?id=83', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(84, 1450, 86, 1, 'extensions/plugins/86', 'index.php?id=84', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(85, 1450, 87, 1, 'extensions/plugins/87', 'index.php?id=85', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(86, 1450, 88, 1, 'extensions/plugins/88', 'index.php?id=86', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(87, 1450, 89, 1, 'extensions/plugins/89', 'index.php?id=87', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(88, 1450, 90, 1, 'extensions/plugins/90', 'index.php?id=88', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(89, 1450, 91, 1, 'extensions/plugins/91', 'index.php?id=89', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(90, 1450, 92, 1, 'extensions/plugins/92', 'index.php?id=90', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(91, 1450, 93, 1, 'extensions/plugins/93', 'index.php?id=91', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(92, 1450, 94, 1, 'extensions/plugins/94', 'index.php?id=92', 'extension', 'triggers', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(93, 1500, 97, 1, 'extensions/templates/97', 'index.php?id=93', 'extension', 'templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(94, 1500, 98, 1, 'extensions/templates/98', 'index.php?id=94', 'extension', 'templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(95, 1500, 99, 1, 'extensions/templates/99', 'index.php?id=95', 'extension', 'templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(96, 1300, 100, 1, 'extensions/menus/100', 'index.php?id=96', 'extension', 'menus', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(97, 1300, 101, 1, 'extensions/menus/101', 'index.php?id=97', 'extension', 'menus', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(98, 1350, 103, 1, 'extensions/modules/103', 'index.php?id=98', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(99, 1350, 104, 1, 'extensions/modules/104', 'index.php?id=99', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(100, 1350, 105, 1, 'extensions/modules/105', 'index.php?id=100', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(101, 1350, 106, 1, 'extensions/modules/106', 'index.php?id=101', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(102, 1350, 107, 1, 'extensions/modules/107', 'index.php?id=102', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(103, 1350, 108, 1, 'extensions/modules/108', 'index.php?id=103', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(104, 1350, 109, 1, 'extensions/modules/109', 'index.php?id=104', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(105, 1350, 110, 1, 'extensions/modules/110', 'index.php?id=105', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(106, 1350, 111, 1, 'extensions/modules/111', 'index.php?id=106', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(107, 1350, 112, 1, 'extensions/modules/112', 'index.php?id=107', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(108, 1350, 113, 1, 'extensions/modules/113', 'index.php?id=108', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(109, 1350, 114, 1, 'extensions/modules/114', 'index.php?id=109', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(110, 1350, 115, 1, 'extensions/modules/115', 'index.php?id=110', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(111, 1350, 116, 1, 'extensions/modules/116', 'index.php?id=111', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(112, 1350, 117, 1, 'extensions/modules/117', 'index.php?id=112', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(113, 1350, 118, 1, 'extensions/modules/118', 'index.php?id=113', 'extension', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(139, 2000, 102, 1, 'content', 'index.php?id=139', 'menuitems', 'content', 0, 1, 3);
+INSERT INTO `molajo_catalog` VALUES(140, 2000, 114, 1, 'articles', 'index.php?id=140', 'menuitems', 'content', 0, 1, 3);
+INSERT INTO `molajo_catalog` VALUES(141, 3000, 103, 1, 'category/content', 'index.php?id=141', 'categories', 'category', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(142, 10000, 104, 1, 'articles/article-alias-here', 'index.php?id=142', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(143, 10000, 105, 1, 'articles/second-alias', 'index.php?id=143', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(144, 10000, 106, 1, 'articles/article-three', 'index.php?id=144', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(145, 10000, 107, 1, 'articles/article-4', 'index.php?id=145', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(146, 10000, 108, 1, 'articles/article-5', 'index.php?id=146', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(147, 10000, 109, 1, 'articles/article-6', 'index.php?id=147', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(148, 10000, 110, 1, 'articles/article-7', 'index.php?id=148', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(149, 10000, 111, 1, 'articles/article-8', 'index.php?id=149', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(150, 10000, 112, 1, 'articles/article-9', 'index.php?id=150', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(151, 10000, 113, 1, 'articles/article-10', 'index.php?id=151', 'articles', 'content', 0, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(152, 1500, 119, 1, 'extensions/templates/119', 'index.php?id=152', 'extension', 'templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(153, 1500, 120, 1, 'extensions/templates/120', 'index.php?id=153', 'extension', 'templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(154, 1500, 121, 1, 'extensions/templates/121', 'index.php?id=154', 'extension', 'templates', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(155, 1150, 122, 1, 'extensions/views/122', 'index.php?id=155', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(156, 1150, 123, 1, 'extensions/views/123', 'index.php?id=156', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(157, 1150, 124, 1, 'extensions/views/124', 'index.php?id=157', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(158, 1150, 125, 1, 'extensions/views/125', 'index.php?id=158', 'extension', 'views', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(159, 1200, 236, 0, 'extensions/template_view/236', '', 'extension', 'template_view', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(160, 10000, 104, 1, 'articles/article-1', 'index.php?id=160', 'articles', 'content', 142, 1, 103);
+INSERT INTO `molajo_catalog` VALUES(161, 1350, 237, 1, 'extensions/modules/237', 'index.php?id=161', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(162, 1350, 238, 1, 'extensions/modules/238', 'index.php?id=162', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(163, 1350, 239, 1, 'extensions/modules/239', 'index.php?id=163', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(164, 1350, 240, 1, 'extensions/modules/240', 'index.php?id=164', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(165, 1350, 241, 1, 'extensions/modules/241', 'index.php?id=165', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(166, 1350, 242, 1, 'extensions/modules/242', 'index.php?id=166', 'extensions', 'modules', 0, 1, 0);
+INSERT INTO `molajo_catalog` VALUES(168, 1500, 243, 1, 'extensions/themes/243', 'index.php?id=168', 'extensions', 'themes', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -512,7 +506,7 @@ INSERT INTO `molajo_catalog_types` VALUES(1200, 'template_view', 1, '#__extensio
 INSERT INTO `molajo_catalog_types` VALUES(1250, 'wrap_view', 1, '#__extension_instances', 'extensions', 'wraps');
 INSERT INTO `molajo_catalog_types` VALUES(1300, 'menus', 1, '#__extension_instances', 'extensions', '');
 INSERT INTO `molajo_catalog_types` VALUES(1350, 'modules', 1, '#__extension_instances', 'extensions', '');
-INSERT INTO `molajo_catalog_types` VALUES(1450, 'plugins', 1, '#__extension_instances', 'extensions', 'render');
+INSERT INTO `molajo_catalog_types` VALUES(1450, 'triggers', 1, '#__extension_instances', 'extensions', '');
 INSERT INTO `molajo_catalog_types` VALUES(1500, 'templates', 1, '#__extension_instances', 'extensions', '');
 INSERT INTO `molajo_catalog_types` VALUES(2000, 'component', 1, '#__content', 'menuitems', '');
 INSERT INTO `molajo_catalog_types` VALUES(2100, 'link', 1, '#__content', 'menuitems', '');
@@ -1079,7 +1073,7 @@ INSERT INTO `molajo_group_view_groups` VALUES(6, 7);
 CREATE TABLE `molajo_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Log Primary Key',
   `priority` int(11) DEFAULT NULL,
-  `message` MEDIUMTEXT DEFAULT NULL,
+  `message` mediumtext,
   `date` datetime DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1317,8 +1311,8 @@ CREATE TABLE `molajo_users` (
 -- Dumping data for table `molajo_users`
 --
 
-INSERT INTO `molajo_users` VALUES(42, 500, 'admin', 'System', 'Administrator', '', 'admin@example.com', 'admin', 0, '1', 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', '{}', '{"gender":"female"}', NULL);
-INSERT INTO `molajo_users` VALUES(100, 500, 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', 0, '1', 0, '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}', '{}', NULL);
+INSERT INTO `molajo_users` VALUES(42, 500, 'admin', 'System', 'Administrator', '', 'admin@example.com', 'admin', 0, '1', 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', '{"gender":"F",\r\n"about_me":"I am the system administrator on this site, so watch out.",\r\n"twitter":"AmyStephen",\r\n"date_of_birth":"1961-09-17"}', '{"display_gravatar":"1",\r\n"display_birthdate":"1",\r\n"display_email":"1",\r\n"theme_id":"",\r\n"page_view_id":""}', NULL);
+INSERT INTO `molajo_users` VALUES(100, 500, 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', 0, '1', 0, '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{"gender":"M",\r\n"about_me":"No search results about me on Google.",\r\n"twitter":"Test",\r\n"date_of_birth":"1991-01-06"}', '{"display_gravatar":"1",\r\n"display_birthdate":"1",\r\n"display_email":"1",\r\n"theme_id":"",\r\n"page_view_id":""}', NULL);
 
 -- --------------------------------------------------------
 

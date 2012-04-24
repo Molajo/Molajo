@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+    <option key="HTML.Allowed" value="true"/>
+    <option key="URI.DisableExternal" value="true"/>
+</options>

@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Helper
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -63,11 +63,18 @@ Class Helper
         return $this->processCall($name, $arguments);
     }
 
-    public static function __callStatic($name, $arguments)
-    {
-        return $this->processCall($name, $arguments);
-    }
 
+	/**
+	 * The magic __call class invokes this method which calls the requested class
+	 * and method, passing in the array of parameter values
+	 *
+	 * @param $name
+	 * @param $arguments
+	 *
+	 * @return bool|mixed
+	 *
+	 * @since  1.0
+	 */
     public function processCall($name, $arguments)
     {
         $class = 'Molajo\\Extension\\Helper\\';

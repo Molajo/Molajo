@@ -600,6 +600,7 @@ Class Application
 	 */
 	protected function setSite()
 	{
+
 		if (defined('SITES')) {
 		} else {
 			define('SITES', BASE_FOLDER . '/Site');
@@ -608,6 +609,7 @@ Class Application
 		} else {
 			define('SITES_MEDIA_FOLDER', SITES . '/media');
 		}
+
 		if (defined('SITES_MEDIA_URL')) {
 		} else {
 			define('SITES_MEDIA_URL', BASE_URL . 'site/media');
@@ -622,7 +624,7 @@ Class Application
 		}
 
 		$scheme = Molajo::Request()->get('request')->getScheme() . '://';
-		$siteBase = substr(BASE_URL, strlen($scheme), 999);
+		$siteBase = substr(BASE_URL, strlen($scheme), strlen(BASE_URL) - strlen($scheme));
 
 		if (defined('SITE_BASE_URL')) {
 		} else {

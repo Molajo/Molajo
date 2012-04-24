@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<services>
+    <service>Error</service>
+    <service>Version</service>
+    <service>Registry</service>
+    <service>Filesystem</service>
+    <service>Message</service>
+    <service>Database</service>
+    <service>Configuration</service>
+    <service>Log</service>
+    <service>Debug</service>
+    <service>Request</service>
+    <service>Cookie</service>
+    <service>Session</service>
+    <service>Response</service>
+    <service>Redirect</service>
+    <service>User</service>
+    <service>Language</service>
+    <service>Date</service>
+    <service>Document</service>
+    <service>Access</service>
+    <service>Image</service>
+    <service>Filter</service>
+    <service>Url</service>
+    <service>Text</service>
+    <service>Mail</service>
+    <service>Broadcast</service>
+</services>
