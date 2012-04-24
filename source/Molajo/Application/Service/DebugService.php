@@ -93,14 +93,12 @@ Class DebugService
 
 		$options['logger'] = 'firephp';
 
-		if (!in_array($options['logger'], $loggerOptions))
-		{
+		if (!in_array($options['logger'], $loggerOptions)) {
 			$options['logger'] = 'echo';
 		}
 
 		/** Email */
-		if ($options['logger'] == 'email')
-		{
+		if ($options['logger'] == 'email') {
 			$options['mailer'] = Services::Mail();
 			$options['reply_to'] = Services::Registry()->get('Configuration\\mail_reply_to', '');
 			$options['from'] = Services::Registry()->get('Configuration\\mail_from', '');
@@ -109,43 +107,34 @@ Class DebugService
 		}
 
 		/** Formatted Text */
-		if ($options['logger'] == 'formattedtext')
-		{
+		if ($options['logger'] == 'formattedtext') {
 			$options['logger'] = 'formattedtext';
 			$options['text_file']  = Services::Registry()->get('Configuration\\debug_text_file', 'debug.php');
 			$temp  = Services::Registry()->get('Configuration\\debug_text_file_path', 'SITE_LOGS_FOLDER');
-			if ($temp == 'SITE_LOGS_FOLDER')
-			{
+			if ($temp == 'SITE_LOGS_FOLDER') {
 				$options['text_file_path'] = SITE_LOGS_FOLDER;
-			}
-			else
-			{
+			} else {
 				$options['text_file_path'] = $temp;
 			}
-			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file']))
-			{
+			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file'])) {
 				$options['text_file_no_php']
 					= (int) Services::Registry()->get('Configuration\\debug_text_file_no_php', false);
 				$loggerSelected = true;
-			}
-			else
-			{
+			} else {
 				$options = array();
 				$options['logger'] = 'echo';
 			}
 		}
 
 		/** Database */
-		if ($options['logger'] == 'database')
-		{
+		if ($options['logger'] == 'database') {
 			$options['dbo'] = Services::Database()->get('db');
 			$options['db_table'] = Services::Registry()->get('Configuration\\debug_database_table', '#__log');
 			$loggerSelected = true;
 		}
 
 		/** Messages */
-		if ($options['logger'] == 'messages')
-		{
+		if ($options['logger'] == 'messages') {
 			$options['messages_namespace']
 				= Services::Registry()->get('Configuration\\debug_messages_namespace', 'debug');
 			$loggerSelected = true;
@@ -153,11 +142,6 @@ Class DebugService
 
 		/** Chrome Console */
 		if ($options['logger'] == 'chromephp') {
-		}
-
-
-		/** Firefox Console */
-		if ($options['logger'] == 'firephp') {
 		}
 
 		/** Echo */

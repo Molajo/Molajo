@@ -33,7 +33,7 @@ Class RequestService
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $connection;
+	protected $connection;
 
 	/**
 	 * Request
@@ -41,7 +41,7 @@ Class RequestService
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $request;
+	protected $request;
 
 	/**
 	 * getInstance
@@ -59,35 +59,24 @@ Class RequestService
 	}
 
 	/**
-	 * __construct
-	 *
 	 * Class constructor.
 	 *
 	 * @since  1.0
 	 */
 	public function __construct()
 	{
+
 		$class = 'Symfony\\Component\\HttpFoundation\\Request';
 		$this->connection = new $class();
 
+		/** Request */
 		$this->request = $this->connection->createFromGlobals();
 
 		return $this;
 	}
 
-	/**
-	 * Used to connect to services
-	 *
-	 * @static
-	 * @param $name
-	 * @param $arguments
-	 */
-	public function __call($name, $arguments)
+	public function get($key)
 	{
-		echo 'Nmae ' . $name . '<br />';
-		echo '<pre>';
-		var_dump($arguments);
-		echo '</pre>';
-		return $this->connection->$name($arguments);
+		return $this->$key;
 	}
 }

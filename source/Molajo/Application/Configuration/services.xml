@@ -20,7 +20,7 @@
     <service>Document</service>
     <service>Access</service>
     <service>Image</service>
-    <service>Security</service>
+    <service>Filter</service>
     <service>Url</service>
     <service>Text</service>
     <service>Mail</service>

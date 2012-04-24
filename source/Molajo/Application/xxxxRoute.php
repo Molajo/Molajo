@@ -247,7 +247,7 @@ Class Route
         $extra = array();
 
         if (count($pairs) > 0) {
-            $xml = CONFIGURATION_FOLDER . '/parameters.xml';
+            $xml = CONFIGURATION_FOLDER . '/nonroutable.xml';
             if (is_file($xml)) {
             } else {
                 return false;

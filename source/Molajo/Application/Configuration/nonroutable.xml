@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list>
+    <parameter name="author" filter="char"/>
+    <parameter name="category" filter="char"/>
+    <parameter name="count" filter="int"/>
+    <parameter name="date" />
+    <parameter name="next" filter="int" />
+    <parameter name="page" filter="int" />
+    <parameter name="prev" filter="int" />
+    <parameter name="return" filter="int" />
+    <parameter name="tag" filter="char" />
+</list>
