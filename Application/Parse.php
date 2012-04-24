@@ -124,8 +124,8 @@ Class Parse
     public function process()
     {
 		/** Retrieve overrides */
-		$sequenceXML = Services::Registry()->set('Override\\sequence_xml', '');
-		$finalXML = Services::Registry()->set('Override\\final_xml', '');
+		$sequenceXML = Services::Registry()->set('DependencyInjection\\sequence_xml', '');
+		$finalXML = Services::Registry()->set('DependencyInjection\\final_xml', '');
 
         /**
          *  Body Includers: processed recursively until no more <include: found

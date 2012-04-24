@@ -66,8 +66,8 @@ Class Route
 		$this->initialise();
 
         /** Retrieve overrides */
-		$override_request_url = Services::Registry()->get('Override\\request_url', '');
-		$override_catalog_id = (int) Services::Registry()->get('Override\\catalog_id', 0);
+		$override_request_url = Services::Registry()->get('DependencyInjection\\request_url', '');
+		$override_catalog_id = (int) Services::Registry()->get('DependencyInjection\\catalog_id', 0);
 
 		/** Specific catalog */
         if ((int)$override_catalog_id == 0) {
