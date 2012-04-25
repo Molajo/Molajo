@@ -6,7 +6,8 @@
  */
 namespace Molajo\Application\MVC\Model;
 
-use Joomla\database\JDatabaseFactory;
+use Joomla\database\JDatabaseDriver;
+
 use Molajo\Application\Services; //Date, DB, Language, Message, Registry
 
 defined('MOLAJO') or die;
@@ -190,7 +191,7 @@ class Model
 		}
 
 		if ($path === null) {
-			$path = APPLICATIONS_MVC . '/Model/Table';
+			$path = CONFIGURATION_FOLDER . '/Table';
 		}
 
 		$file = $path . '/' . ucfirst(strtolower($table)) . '.xml';

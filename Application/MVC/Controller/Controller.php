@@ -208,7 +208,7 @@ class Controller
         }
 // or super admin
         if ($this->model->checked_out
-            == Services::Registry()->get('User\\id')
+            == Services::Registry()->get('User', 'id')
         ) {
 
         } else {

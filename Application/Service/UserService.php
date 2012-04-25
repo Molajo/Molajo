@@ -98,7 +98,7 @@ registration
 				|| substr($name, 0, 5) == 'Model'
 			) {
 			} else {
-				Services::Registry()->set('User\\' . $name, $value);
+				Services::Registry()->set('User', '' . $name, $value);
 				if ($name == 'first_name') {
 					$first_name = $value;
 				} elseif ($name == 'last_name') {
@@ -107,24 +107,24 @@ registration
 			}
 		}
 
-		Services::Registry()->set('User\\name', $first_name . ' ' . $last_name);
-		Services::Registry()->set('User\\administrator', 0);
+		Services::Registry()->set('User', 'name', $first_name . ' ' . $last_name);
+		Services::Registry()->set('User', 'administrator', 0);
 
 		if ($this->id == 0) {
-			Services::Registry()->set('User\\public', 1);
-			Services::Registry()->set('User\\guest', 1);
-			Services::Registry()->set('User\\registered', 0);
+			Services::Registry()->set('User', 'public', 1);
+			Services::Registry()->set('User', 'guest', 1);
+			Services::Registry()->set('User', 'registered', 0);
 		} else {
-			Services::Registry()->set('User\\public', 1);
-			Services::Registry()->set('User\\guest', 0);
-			Services::Registry()->set('User\\registered', 1);
+			Services::Registry()->set('User', 'public', 1);
+			Services::Registry()->set('User', 'guest', 0);
+			Services::Registry()->set('User', 'registered', 1);
 		}
 
-		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Users.xml');
+		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Users.xml');
 
-		Services::Registry()->loadField('UserCustomfields\\', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
-		Services::Registry()->loadField('UserMetadata\\', 'meta', $results['metadata'], $xml->metadata);
-		Services::Registry()->loadField('UserParameters\\', 'parameters', $results['parameters'], $xml->parameter);
+		Services::Registry()->loadField('UserCustomfields', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
+		Services::Registry()->loadField('UserMetadata', 'meta', $results['metadata'], $xml->metadata);
+		Services::Registry()->loadField('UserParameters', 'parameters', $results['parameters'], $xml->parameter);
 
 		/** User Applications */
 		$temp = array();
@@ -136,7 +136,7 @@ registration
 			}
 		}
 
-		Services::Registry()->set('User\\Applications', $temp);
+		Services::Registry()->set('User', 'Applications', $temp);
 
 		/** User Groups */
 		$temp = array();
@@ -161,12 +161,12 @@ registration
 			}
 		}
 
-		Services::Registry()->set('User\\Groups', $temp);
+		Services::Registry()->set('User', 'Groups', $temp);
 
 		if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $temp)) {
-			Services::Registry()->set('User\\administrator', 1);
+			Services::Registry()->set('User', 'administrator', 1);
 		} else {
-			Services::Registry()->set('User\\administrator', 0);
+			Services::Registry()->set('User', 'administrator', 0);
 		}
 
 		/** User View Groups */
@@ -181,7 +181,7 @@ registration
 		if (count($temp) == 0) {
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
-		Services::Registry()->set('User\\ViewGroups', $temp);
+		Services::Registry()->set('User', 'ViewGroups', $temp);
 
 		/**      */
 		$list = Services::Registry()->listRegistry(1);

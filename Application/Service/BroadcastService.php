@@ -89,7 +89,7 @@ Class BroadcastService
 	public function __construct()
 	{
 		/** Set debugging on or off */
-		$this->on = (int)Services::Registry()->get('Configuration\\Broadcast', 0);
+		$this->on = (int)Services::Registry()->get('Configuration', 'Broadcast', 0);
 		if ($this->on == 0)
 		{
 			return true;
@@ -106,19 +106,19 @@ Class BroadcastService
 
 		/** Logger Type */
 		/** http://classes.verkoyen.eu/twitter_oauth/docs */
-		$options['twitter_tweet'] = Services::Registry()->get('Configuration\\twitter_tweet', 1);
-		$options['twitter_consumer_key'] = Services::Registry()->get('Configuration\\twitter_consumer_key', '5HroaAP3vnOE3Hqkpjh7og');
-		$options['twitter_consumer_secret'] = Services::Registry()->get('Configuration\\twitter_consumer_secret', 'dtEht0raDHQjAvma2AhJCUhzeq5HyU6NPhhWNxo42Y');
+		$options['twitter_tweet'] = Services::Registry()->get('Configuration', 'twitter_tweet', 1);
+		$options['twitter_consumer_key'] = Services::Registry()->get('Configuration', 'twitter_consumer_key', '5HroaAP3vnOE3Hqkpjh7og');
+		$options['twitter_consumer_secret'] = Services::Registry()->get('Configuration', 'twitter_consumer_secret', 'dtEht0raDHQjAvma2AhJCUhzeq5HyU6NPhhWNxo42Y');
 		$this->authenticateTwitter ($options);
 
 		/** Email */
 		if ($options['logger'] == 'email')
 		{
 			$options['mailer'] = Services::Mail();
-			$options['reply_to'] = Services::Registry()->get('Configuration\\mail_reply_to', '');
-			$options['from'] = Services::Registry()->get('Configuration\\mail_from', '');
-			$options['subject'] = Services::Registry()->get('Configuration\\debug_email_subject', '');
-			$options['to'] = Services::Registry()->get('Configuration\\debug_email_to', '');
+			$options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
+			$options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
+			$options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
+			$options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
 		}
 
 		return $this;

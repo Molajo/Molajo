@@ -44,84 +44,84 @@ class ComponentIncluder extends Includer
 
         /** extension */
         $this->set('extension_instance_id',
-            (int)Services::Registry()->get('Request\\extension_instance_id'));
+            (int)Services::Registry()->get('Request', 'extension_instance_id'));
         $this->set('extension_instance_name',
-            Services::Registry()->get('Request\\extension_instance_name'));
+            Services::Registry()->get('Request', 'extension_instance_name'));
         $this->set('extension_catalog_type_id',
-            (int)Services::Registry()->get('Request\\extension_catalog_type_id'));
+            (int)Services::Registry()->get('Request', 'extension_catalog_type_id'));
         $this->set('extension_catalog_id',
-            (int)Services::Registry()->get('Request\\extension_catalog_id'));
+            (int)Services::Registry()->get('Request', 'extension_catalog_id'));
         $this->set('extension_view_group_id',
-            (int)Services::Registry()->get('Request\\extension_view_group_id'));
+            (int)Services::Registry()->get('Request', 'extension_view_group_id'));
         $this->set('extension_custom_fields',
-            Services::Registry()->get('Request\\extension_custom_fields'));
+            Services::Registry()->get('Request', 'extension_custom_fields'));
         $this->set('extension_metadata',
-            Services::Registry()->get('Request\\extension_metadata'));
+            Services::Registry()->get('Request', 'extension_metadata'));
         $this->set('extension_parameters',
-            Services::Registry()->get('Request\\extension_parameters'));
+            Services::Registry()->get('Request', 'extension_parameters'));
         $this->set('extension_path',
-            Services::Registry()->get('Request\\extension_path'));
+            Services::Registry()->get('Request', 'extension_path'));
         $this->set('extension_type',
-            Services::Registry()->get('Request\\extension_type'));
+            Services::Registry()->get('Request', 'extension_type'));
         $this->set('source_catalog_type_id',
-            Services::Registry()->get('Request\\source_catalog_type_id'));
+            Services::Registry()->get('Request', 'source_catalog_type_id'));
 
         $this->set('extension_primary', true);
 
         $this->set('extension_event_type',
-            Services::Registry()->get('Request\\extension_event_type'));
+            Services::Registry()->get('Request', 'extension_event_type'));
 
         /** view */
         $this->set('template_view_id',
-            (int)Services::Registry()->get('Request\\template_view_id'));
+            (int)Services::Registry()->get('Request', 'template_view_id'));
         $this->set('template_view_name',
-            Services::Registry()->get('Request\\template_view_name'));
+            Services::Registry()->get('Request', 'template_view_name'));
         $this->set('template_view_css_id',
-            Services::Registry()->get('Request\\template_view_css_id'));
+            Services::Registry()->get('Request', 'template_view_css_id'));
         $this->set('template_view_css_class',
-            Services::Registry()->get('Request\\template_view_css_class'));
+            Services::Registry()->get('Request', 'template_view_css_class'));
         $this->set('template_view_catalog_type_id',
-            Services::Registry()->get('Request\\template_view_catalog_type_id'));
+            Services::Registry()->get('Request', 'template_view_catalog_type_id'));
         $this->set('template_view_catalog_id',
-            (int)Services::Registry()->get('Request\\template_view_catalog_id'));
+            (int)Services::Registry()->get('Request', 'template_view_catalog_id'));
         $this->set('template_view_path',
-            Services::Registry()->get('Request\\template_view_path'));
+            Services::Registry()->get('Request', 'template_view_path'));
         $this->set('template_view_path_url',
-            Services::Registry()->get('Request\\template_view_path_url'));
+            Services::Registry()->get('Request', 'template_view_path_url'));
 
         /** wrap */
         $this->set('wrap_view_id',
-            (int)Services::Registry()->get('Request\\wrap_view_id'));
+            (int)Services::Registry()->get('Request', 'wrap_view_id'));
         $this->set('wrap_view_name',
-            Services::Registry()->get('Request\\wrap_view_name'));
+            Services::Registry()->get('Request', 'wrap_view_name'));
         $this->set('wrap_view_css_id',
-            Services::Registry()->get('Request\\wrap_view_css_id'));
+            Services::Registry()->get('Request', 'wrap_view_css_id'));
         $this->set('wrap_view_css_class',
-            Services::Registry()->get('Request\\wrap_view_css_class'));
+            Services::Registry()->get('Request', 'wrap_view_css_class'));
         $this->set('wrap_view_catalog_type_id',
-            Services::Registry()->get('Request\\wrap_view_catalog_type_id'));
+            Services::Registry()->get('Request', 'wrap_view_catalog_type_id'));
         $this->set('wrap_view_catalog_id',
-            (int)Services::Registry()->get('Request\\wrap_view_catalog_id'));
+            (int)Services::Registry()->get('Request', 'wrap_view_catalog_id'));
         $this->set('wrap_view_path',
-            Services::Registry()->get('Request\\wrap_view_path'));
+            Services::Registry()->get('Request', 'wrap_view_path'));
         $this->set('wrap_view_path_url',
-            Services::Registry()->get('Request\\wrap_view_path_url'));
+            Services::Registry()->get('Request', 'wrap_view_path_url'));
 
         /** mvc parameters */
         $this->set('controller',
-            Services::Registry()->get('Request\\mvc_controller'));
+            Services::Registry()->get('Request', 'mvc_controller'));
         $this->set('task',
-            Services::Registry()->get('Request\\mvc_task'));
+            Services::Registry()->get('Request', 'mvc_task'));
         $this->set('model',
-            Services::Registry()->get('Request\\mvc_model'));
+            Services::Registry()->get('Request', 'mvc_model'));
         $this->set('table',
-            Services::Registry()->get('Request\\source_table'));
+            Services::Registry()->get('Request', 'source_table'));
         $this->set('id',
-            (int)Services::Registry()->get('Request\\mvc_id'));
+            (int)Services::Registry()->get('Request', 'mvc_id'));
         $this->set('category_id',
-            (int)Services::Registry()->get('Request\\mvc_category_id'));
+            (int)Services::Registry()->get('Request', 'mvc_category_id'));
         $this->set('suppress_no_results',
-            (bool)Services::Registry()->get('Request\\mvc_suppress_no_results'));
+            (bool)Services::Registry()->get('Request', 'mvc_suppress_no_results'));
 
         return;
     }
@@ -247,19 +247,19 @@ class ComponentIncluder extends Includer
     {
         /**  Primary Category */
         $this->_loadMediaPlus('/category' . $this->get('category_id'),
-            Services::Registry()->get('Configuration\\media_priority_primary_category', 700));
+            Services::Registry()->get('Configuration', 'media_priority_primary_category', 700));
 
         /** Menu Item */
         $this->_loadMediaPlus('/menuitem' . $this->get('menu_item_id'),
-            Services::Registry()->get('Configuration\\media_priority_menu_item', 800));
+            Services::Registry()->get('Configuration', 'media_priority_menu_item', 800));
 
         /** Source */
         $this->_loadMediaPlus('/source' . $this->get('id'),
-            Services::Registry()->get('Configuration\\media_priority_source_data', 900));
+            Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
 
         /** Component */
         $this->_loadMediaPlus('/component' . $this->get('extension_instance_name'),
-            Services::Registry()->get('Configuration\\media_priority_source_data', 900));
+            Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
 
         return true;
     }

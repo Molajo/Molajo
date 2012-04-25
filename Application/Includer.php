@@ -131,6 +131,7 @@ class Includer
         $this->parameters->set('suppress_no_results', 0);
 
 //setViewRegistries
+//	This code should be in an extension specific helper
 		$this->setViewRegistries();
 			$this->getUser();
 			$this->getApplicationDefaults();
@@ -726,7 +727,7 @@ class Includer
      */
     protected function _loadViewMedia()
     {
-        $priority = Services::Registry()->get('Configuration\\media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('Configuration', 'media_priority_other_extension', 400);
 
         $file_path = $this->get('template_view_path');
         $url_path = $this->get('template_view_path_url');
@@ -759,7 +760,7 @@ class Includer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
+        if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
             Services::Debug()->set(' ');
             Services::Debug()->set('Includer::invokeMVC');
             Services::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');

@@ -17,7 +17,6 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0
- *
  */
 Class RegistryService
 {
@@ -30,12 +29,20 @@ Class RegistryService
 	protected static $instance;
 
 	/**
-	 * Object containing all globally defined $registry objects
+	 * Array containing all globally defined $registry objects
 	 *
 	 * @var    Object Registry
 	 * @since  1.0
 	 */
 	protected $registry;
+
+	/**
+	 * Array containing the key to each $registry object
+	 *
+	 * @var    Object Registry
+	 * @since  1.0
+	 */
+	protected $registryKeys = array();
 
 	/**
 	 * getInstance
@@ -61,7 +68,8 @@ Class RegistryService
 	public function __construct()
 	{
 		/** store all registries in this object  */
-		$this->registry = new JRegistry();
+		$this->registry = array();
+		$this->registryKeys = array();
 
 		/** initialise known namespaces for application */
 		$xml = CONFIGURATION_FOLDER . '/registry.xml';
@@ -73,39 +81,10 @@ Class RegistryService
 		$list = simplexml_load_file($xml);
 
 		foreach ($list->registry as $item) {
-			$ns = (string)$item;
-			$this->create($ns, true);
+			$this->create( (string)$item );
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Retrieves registry requested
-	 *
-	 * @param  string  $key
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function getRegistry($namespace)
-	{
-		return $this->registry->get($namespace);
-	}
-
-	/**
-	 * Saves registry requested
-	 *
-	 * @param  string  $key
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function setRegistry($namespace)
-	{
-		return $this->registry->set($namespace, '');
 	}
 
 	/**
@@ -123,31 +102,35 @@ Class RegistryService
 	}
 
 	/**
-	 * Create new name-spaced global registry stored within the Registry Object
+	 * getRegistry
 	 *
-	 * Usage:
-	 * Services::Registry()->create('request', true);
+	 * @param $namespace
 	 *
-	 * @param   string  $namespace
-	 * @param   boolean $force recreate, if exists (true) or use what exists (false)
-	 *
-	 * @return  null
-	 * @since   1.0
+	 * @return \Joomla\registry\JRegistry|mixed
 	 */
-	public function create($namespace, $force = false)
+	public function getRegistry($namespace)
 	{
-		/** See if name spaced registry exists */
-		$temp = $this->getRegistry($namespace, null);
-		if ($temp instanceof JRegistry) {
-			if ($force == false) {
-				return $this->getRegistry($namespace);
-			}
+		if (in_array($namespace, $this->registryKeys)) {
+			return $this->registry[$namespace];
+		}  else {
+			return $this->create($namespace);
 		}
+	}
 
-		/** Create (or recreate) */
+
+	/**
+	 * create registry for namespace
+	 *
+	 * @param $namespace
+	 * @return RegistryService
+	 */
+	public function create($namespace)
+	{
 		$new = new JRegistry();
-		$this->setRegistry($namespace, $new);
-		return $this->getRegistry($namespace);
+		$this->registryKeys[] = $namespace;
+		$this->registry[$namespace] = $new;
+
+		return $this->registry[$namespace];
 	}
 
 	/**
@@ -162,32 +145,9 @@ Class RegistryService
 	 * @return  mixed|boolean or array
 	 * @since   1.0
 	 */
-	public function listRegistry($all = false)
+	public function listRegistry()
 	{
-		$nsNames = array();
-
-		while (list($k, $v) = each($this->registry)) {
-			while (list($key, $value) = each($v)) {
-				$nsNames[] = $key;
-			}
-		}
-
-		if ($all == false) {
-			return $nsNames;
-		}
-
-		$nsAll = array();
-		$total = count($nsAll);
-		foreach ($nsNames as $ns) {
-
-			$elements = $this->getArray($ns, $keyOnly = false);
-
-			foreach ($elements as $key => $value) {
-				$nsAll[$ns . '\\' . $key] = $value;
-			}
-		}
-
-		return $nsAll;
+		return $this->registryKeys;
 	}
 
 	/**
@@ -206,7 +166,7 @@ Class RegistryService
 	 */
 	public function get($namespace, $key, $default = null)
 	{
-		$temp = $this->getRegistry($namespace, null);
+		$temp = $this->getRegistry($namespace);
 		return $temp->get($key, $default);
 	}
 
@@ -223,16 +183,10 @@ Class RegistryService
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function set($namespace, $key, $value = null)
+	public function set($namespace, $key, $value = '')
 	{
-		$temp = $this->getRegistry($namespace, null);
-		if ($temp instanceof JRegistry) {
-		} else {
-			$temp = new JRegistry();
-		}
-
-		$temp->set($key, $value);
-		return $this;
+		$temp = $this->getRegistry($namespace);
+		return $temp->set($key, $value);
 	}
 
 	/**
@@ -249,15 +203,16 @@ Class RegistryService
 	 */
 	public function copy($copyThis, $intoThis)
 	{
-		$into = $this->getRegistry($intoThis, null);
+		$into = $this->getRegistry($intoThis);
 		if ($into instanceof JRegistry) {
 		} else {
-			$into = new JRegistry();
+			$into = $this->create($intoThis);
 		}
 
-		$copy = $this->getRegistry($copyThis, null);
+		$copy = $this->registry->get($copyThis);
 
 		$a = array();
+
 		while (list($k, $v) = each($copy)) {
 			while (list($key, $value) = each($v)) {
 				$into->set($key, $value);
@@ -283,13 +238,15 @@ Class RegistryService
 	{
 		$a = array();
 
-		$temp = $this->getRegistry($namespace, null);
+		$temp = $this->create($namespace);
+
 		if ($temp instanceof JRegistry) {
 		} else {
 			return $a;
 		}
 
 		while (list($key, $value) = each($temp)) {
+
 			if ($keyOnly === false) {
 				$a[$key] = $value;
 			} else {
@@ -314,7 +271,7 @@ Class RegistryService
 	 */
 	public function loadArray($namespace, $array = array())
 	{
-		$load = $this->getRegistry($namespace, null);
+		$load = $this->create($namespace);
 
 		if ($load instanceof JRegistry) {
 		} else {
@@ -343,7 +300,7 @@ Class RegistryService
 	 */
 	public function getKeys($namespace)
 	{
-		$load = $this->getRegistry($namespace, null);
+		$load = $this->create($namespace);
 
 		if ($load instanceof JRegistry) {
 		} else {
@@ -370,11 +327,11 @@ Class RegistryService
 	 */
 	public function loadField($namespace, $field_name, $data, $xml)
 	{
-		$load = $this->getRegistry($namespace, null);
+		$load = $this->create($namespace);
 
 		if ($load instanceof JRegistry) {
 		} else {
-			$load = new JRegistry();
+			$load = $this->create($namespace);
 		}
 
 		$load->loadString($data, 'JSON');
@@ -398,5 +355,7 @@ Class RegistryService
 				}
 			}
 		}
+
+		return $this;
 	}
 }

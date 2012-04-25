@@ -228,7 +228,7 @@ Class DocumentService
 	 * Example usage:
 	 * Services::Document()->add_link(
 	 *   $url = EXTENSIONS_THEMES_URL
-	 *      . '/' . Services::Registry()->get('Request\\theme_name')
+	 *      . '/' . Services::Registry()->get('Request', 'theme_name')
 	 *      . '/' . 'images/apple-touch-icon-114x114.png',
 	 *   $relation = 'apple-touch-icon-precomposed',
 	 *   $relation_type = 'rel',

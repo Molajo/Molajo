@@ -20,6 +20,9 @@
     <fks>
         <fk name="catalog_type_id" source_id="id" source_model="MolajoCatalogTypes" required="1" />
     </fks>
+    <parameters>
+        <parameter name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
+    </parameters>
     <custom_fields>
         <custom_field name="custom_field1" filter="char" null="0" default="Molajo Site"/>
     </custom_fields>

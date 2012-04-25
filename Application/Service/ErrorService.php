@@ -51,17 +51,17 @@ Class ErrorService
 	 */
 	public function set($code, $message = 'Internal server error')
 	{
-		Services::Registry()->set('Request\\error_status', true);
-		Services::Registry()->set('Request\\mvc_controller', 'display');
-		Services::Registry()->set('Request\\mvc_task', 'display');
-		Services::Registry()->set('Request\\mvc_model', 'messages');
+		Services::Registry()->set('Request', 'error_status', true);
+		Services::Registry()->set('Request', 'mvc_controller', 'display');
+		Services::Registry()->set('Request', 'mvc_task', 'display');
+		Services::Registry()->set('Request', 'mvc_model', 'messages');
 
 		/** default error theme and page */
-		Services::Registry()->set('Request\\theme_id',
-			Services::Registry()->get('Configuration\\error_theme_id', 0)
+		Services::Registry()->set('Request', 'theme_id',
+			Services::Registry()->get('Configuration', 'error_theme_id', 0)
 		);
-		Services::Registry()->set('Request\\page_view_id',
-			Services::Registry()->get('Configuration\\error_page_view_id', 0)
+		Services::Registry()->set('Request', 'page_view_id',
+			Services::Registry()->get('Configuration', 'error_page_view_id', 0)
 		);
 
 		/** set header status, message and override default theme/page, if needed */
@@ -98,19 +98,19 @@ Class ErrorService
 
 		Services::Message()
 			->set(
-				Services::Registry()->get('Configuration\\offline_message',
+				Services::Registry()->get('Configuration', 'offline_message',
 				'This site is not available.<br /> Please check back again soon.'
 			),
 			MESSAGE_TYPE_WARNING,
 			503
 		);
 
-		Services::Registry()->set('Request\\theme_id',
-			Services::Registry()->get('Configuration\\offline_theme_id', 0)
+		Services::Registry()->set('Request', 'theme_id',
+			Services::Registry()->get('Configuration', 'offline_theme_id', 0)
 		);
 
-		Services::Registry()->set('Request\\page_view_id',
-			Services::Registry()->get('Configuration\\offline_page_view_id', 0)
+		Services::Registry()->set('Request', 'page_view_id',
+			Services::Registry()->get('Configuration', 'offline_page_view_id', 0)
 		);
 	}
 
@@ -128,7 +128,7 @@ Class ErrorService
 
 		Services::Message()
 			->set(
-				Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
+				Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
 				MESSAGE_TYPE_ERROR,
 				403
 			);
@@ -148,7 +148,7 @@ Class ErrorService
 
 		Services::Message()
 			->set(
-				Services::Registry()->get('Configuration\\error_404_message', 'Page not found.'),
+				Services::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
 				MESSAGE_TYPE_ERROR,
 				404
 			);

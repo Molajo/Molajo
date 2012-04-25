@@ -48,7 +48,7 @@ Class ModulePageheaderModel extends DisplayModel
         $this->items = array();
 
         $row = new \stdClass();
-        $row->title = Services::Registry()->get('Configuration\\site_title', 'Molajo');
+        $row->title = Services::Registry()->get('Configuration', 'site_title', 'Molajo');
         $this->items[] = $row;
 
         return $this->items;

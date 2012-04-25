@@ -97,7 +97,7 @@ class MustacheHelper extends Mustache
      */
     public function analytics()
     {
-        $code = Services::Registry()->get('Configuration\\google_analytics_code', 'UA-1682054-15');
+        $code = Services::Registry()->get('Configuration', 'google_analytics_code', 'UA-1682054-15');
         if (trim($code) == '') {
             return;
         }

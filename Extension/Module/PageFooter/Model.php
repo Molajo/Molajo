@@ -57,7 +57,7 @@ Class ModulePagefooterModel extends DisplayModel
             ->getDate()
             ->format('Y');
 
-        $row->site_name = Services::Registry()->get('Configuration\\site_name', 'Molajo');
+        $row->site_name = Services::Registry()->get('Configuration', 'site_name', 'Molajo');
 
         $row->link = 'http://molajo.org/';
 
