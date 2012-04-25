@@ -196,7 +196,7 @@ Class ImageService
 		}
 
 		/** retrieve image folder for original images */
-		$images = Services::Registry()->get('Configuration\\media_path', 'media/images');
+		$images = Services::Registry()->get('Configuration', 'media_path', 'media/images');
 
 		/** folders */
 		if (Services::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
@@ -221,7 +221,7 @@ Class ImageService
 	private function getResizedImage()
 	{
 		/** retrieve image folder for resized images */
-		$images = Services::Registry()->get('Configuration\\thumb_folder', '/media/images/thumbs');
+		$images = Services::Registry()->get('Configuration', 'thumb_folder', '/media/images/thumbs');
 
 		/** folders */
 		if (Services::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
@@ -247,15 +247,15 @@ Class ImageService
 	{
 		/** Options: exact, portrait, landscape, auto, crop and size */
 		if ($this->size == 1) {
-			$dimensions = Services::Registry()->get('Configuration\\image_xsmall', 50);
+			$dimensions = Services::Registry()->get('Configuration', 'image_xsmall', 50);
 		} else if ($this->size == 2) {
-			$dimensions = Services::Registry()->get('Configuration\\image_small', 75);
+			$dimensions = Services::Registry()->get('Configuration', 'image_small', 75);
 		} else if ($this->size == 3) {
-			$dimensions = Services::Registry()->get('Configuration\\image_medium', 150);
+			$dimensions = Services::Registry()->get('Configuration', 'image_medium', 150);
 		} else if ($this->size == 4) {
-			$dimensions = Services::Registry()->get('Configuration\\image_large', 300);
+			$dimensions = Services::Registry()->get('Configuration', 'image_large', 300);
 		} else if ($this->size == 5) {
-			$dimensions = Services::Registry()->get('Configuration\\image_xlarge', 500);
+			$dimensions = Services::Registry()->get('Configuration', 'image_xlarge', 500);
 		} else {
 			$dimensions = 100;
 		}

@@ -68,7 +68,7 @@ Class DebugService
 	public function __construct()
 	{
 		/** Set debugging on or off */
-		$this->on = (int)Services::Registry()->get('Configuration\\debug', 0);
+		$this->on = (int)Services::Registry()->get('Configuration', 'debug', 0);
 		if ($this->on == 0)
 		{
 			return true;
@@ -89,7 +89,7 @@ Class DebugService
 		$options = array();
 
 		/** Logger Type */
-		$options['logger'] = Services::Registry()->get('Configuration\\debug_logger', 'echo');
+		$options['logger'] = Services::Registry()->get('Configuration', 'debug_logger', 'echo');
 
 		$options['logger'] = 'firephp';
 
@@ -100,17 +100,17 @@ Class DebugService
 		/** Email */
 		if ($options['logger'] == 'email') {
 			$options['mailer'] = Services::Mail();
-			$options['reply_to'] = Services::Registry()->get('Configuration\\mail_reply_to', '');
-			$options['from'] = Services::Registry()->get('Configuration\\mail_from', '');
-			$options['subject'] = Services::Registry()->get('Configuration\\debug_email_subject', '');
-			$options['to'] = Services::Registry()->get('Configuration\\debug_email_to', '');
+			$options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
+			$options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
+			$options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
+			$options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
 		}
 
 		/** Formatted Text */
 		if ($options['logger'] == 'formattedtext') {
 			$options['logger'] = 'formattedtext';
-			$options['text_file']  = Services::Registry()->get('Configuration\\debug_text_file', 'debug.php');
-			$temp  = Services::Registry()->get('Configuration\\debug_text_file_path', 'SITE_LOGS_FOLDER');
+			$options['text_file']  = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
+			$temp  = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
 			if ($temp == 'SITE_LOGS_FOLDER') {
 				$options['text_file_path'] = SITE_LOGS_FOLDER;
 			} else {
@@ -118,7 +118,7 @@ Class DebugService
 			}
 			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file'])) {
 				$options['text_file_no_php']
-					= (int) Services::Registry()->get('Configuration\\debug_text_file_no_php', false);
+					= (int) Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
 				$loggerSelected = true;
 			} else {
 				$options = array();
@@ -129,14 +129,14 @@ Class DebugService
 		/** Database */
 		if ($options['logger'] == 'database') {
 			$options['dbo'] = Services::Database()->get('db');
-			$options['db_table'] = Services::Registry()->get('Configuration\\debug_database_table', '#__log');
+			$options['db_table'] = Services::Registry()->get('Configuration', 'debug_database_table', '#__log');
 			$loggerSelected = true;
 		}
 
 		/** Messages */
 		if ($options['logger'] == 'messages') {
 			$options['messages_namespace']
-				= Services::Registry()->get('Configuration\\debug_messages_namespace', 'debug');
+				= Services::Registry()->get('Configuration', 'debug_messages_namespace', 'debug');
 			$loggerSelected = true;
 		}
 
@@ -147,7 +147,7 @@ Class DebugService
 		/** Echo */
 		if ($options['logger'] == 'echo') {
 			$options['logger'] = 'echo';
-			$options['line_separator'] = Services::Registry()->get('Configuration\\debug_line_separator', '<br />');
+			$options['line_separator'] = Services::Registry()->get('Configuration', 'debug_line_separator', '<br />');
 		}
 
 		/** Establish log for activated debug option */

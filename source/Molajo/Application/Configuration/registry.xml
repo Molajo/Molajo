@@ -16,7 +16,6 @@
     <registry>UserParameters</registry>
 
     <registry>Theme</registry>
-    <registry>ThemeCatalog</registry>
     <registry>ThemeCustomfields</registry>
     <registry>ThemeMetadata</registry>
     <registry>ThemeParameters</registry>
@@ -38,6 +37,7 @@
     <registry>RequestWrap</registry>
 
     <registry>Catalog</registry>
+
     <registry>Extension</registry>
     <registry>ExtensionCustomfields</registry>
     <registry>ExtensionMetadata</registry>

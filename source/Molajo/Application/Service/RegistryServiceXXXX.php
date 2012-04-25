@@ -30,10 +30,10 @@ defined('MOLAJO') or die;
  *
  * get - returns a Parameter property for a specific item and parameter set
  *   Alias for JFactory::getConfig, returning full registry set for local use
- *   Usage: Services::Registry()->get('Request\\parameter_name');
+ *   Usage: Services::Registry()->get('Request', 'parameter_name');
  *
  * set - sets a Parameter property for a specific item and parameter set
- *   Usage: Services::Registry()->set('Request\\parameter_name', $value);
+ *   Usage: Services::Registry()->set('Request', 'parameter_name', $value);
  *
  * copy - Copy one global registry to a new registry
  *   Usage: Services::Registry()->copy('x', 'y');
@@ -248,7 +248,7 @@ Class RegistryService
 	 *   Alias for JFactory::getConfig, returning full registry set for local use
 	 *
 	 * Usage:
-	 * Services::Registry()->get('Request\\parameter_name');
+	 * Services::Registry()->get('Request', 'parameter_name');
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $default
@@ -290,7 +290,7 @@ Class RegistryService
 	 * Sets a Parameter property for a specific item and parameter set
 	 *
 	 * Usage:
-	 * Services::Registry()->set('Request\\parameter_name', $value);
+	 * Services::Registry()->set('Request', 'parameter_name', $value);
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value

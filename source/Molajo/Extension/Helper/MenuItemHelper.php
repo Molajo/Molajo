@@ -2,23 +2,25 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
+
 namespace Molajo\Extension\Helper;
 
-use Molajo\Application\MVC\Model\DisplayModel;
+use Molajo\Application\MVC\Model\TableModel;
+
 use Molajo\Application\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * MenuItem
+ * Menuitem
  *
  * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
-abstract class MenuItemHelper
+abstract class MenuitemHelper
 {
     /**
      * get
@@ -34,23 +36,25 @@ abstract class MenuItemHelper
      */
     public static function get($menu_item_id)
     {
-        $m = new DisplayModel();
+		$m = new TableModel('Content');
 
         /**
          *  a. Content Table
          *      Menu Items
          */
-        $m->query->select('a.' . $m->db->qn('id') . ' as menu_item_id');
-        $m->query->select('a.' . $m->db->qn('catalog_type_id') . ' as menu_item_catalog_type_id');
-        $m->query->select('a.' . $m->db->qn('title') . ' as menu_item_title');
-        $m->query->select('a.' . $m->db->qn('custom_fields') . ' as menu_item_custom_fields');
-        $m->query->select('a.' . $m->db->qn('parameters') . ' as menu_item_parameters');
-        $m->query->select('a.' . $m->db->qn('metadata') . ' as menu_item_metadata');
-        $m->query->select('a.' . $m->db->qn('translation_of_id') . ' as menu_item_translation_of_id');
-        $m->query->select('a.' . $m->db->qn('language') . ' as menu_item_language');
+        $m->query->select('a.' . $m->db->qn('id'));
+        $m->query->select('a.' . $m->db->qn('catalog_type_id'));
+        $m->query->select('a.' . $m->db->qn('title'));
+		$m->query->select('a.' . $m->db->qn('alias'));
+		$m->query->select('a.' . $m->db->qn('path'));
+        $m->query->select('a.' . $m->db->qn('custom_fields'));
+        $m->query->select('a.' . $m->db->qn('parameters'));
+        $m->query->select('a.' . $m->db->qn('metadata'));
+        $m->query->select('a.' . $m->db->qn('translation_of_id'));
+        $m->query->select('a.' . $m->db->qn('language'));
 
-        $m->query->select('a_catalog.' . $m->db->qn('id') . ' as menu_item_catalog_id');
-        $m->query->select('a_catalog.' . $m->db->qn('view_group_id') . ' as menu_item_view_group_id');
+        $m->query->select('a_catalog.' . $m->db->qn('id') . ' as catalog_id');
+        $m->query->select('a_catalog.' . $m->db->qn('view_group_id') . ' as view_group_id');
 
         $m->query->from($m->db->qn('#__content') . ' as a');
 
@@ -126,10 +130,12 @@ abstract class MenuItemHelper
         /**
          *  Run Query
          */
-        $menuitems = $m->runQuery();
-        $menuitem = array();
-        foreach ($menuitems as $menuitem) {
-        }
-        return $menuitem;
+		$row = $m->loadObject();
+
+		if (count($row) == 0) {
+			return array();
+		}
+
+        return $row;
     }
 }

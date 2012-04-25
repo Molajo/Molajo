@@ -56,7 +56,7 @@ Class HeadModel extends Model
 
                 $title = $metadata['standard']['title'];
                 if (trim($title) == '') {
-                    $title = Services::Registry()->get('Configuration\\metadata_title', 'Molajo');
+                    $title = Services::Registry()->get('Configuration', 'metadata_title', 'Molajo');
                 }
                 $row->title = Services::Filter()->escape_text($title);
 
@@ -66,9 +66,9 @@ Class HeadModel extends Model
                 }
                 $row->mimetype = Services::Filter()->escape_text($mimetype);
 
-                $row->base = Services::Registry()->get('Request\\url_base');
+                $row->base = Services::Registry()->get('Request', 'url_base');
 
-                $last_modified = Services::Registry()->get('Request\\source_last_modified');
+                $last_modified = Services::Registry()->get('Request', 'source_last_modified');
                 if (trim($last_modified) == '') {
                     $last_modified = Services::Date()->getDate()->toSql();
                 }
@@ -106,7 +106,7 @@ Class HeadModel extends Model
             $row = new \stdClass();
 
             $row->type = 'links';
-            $row->url = Services::Registry()->get('Request\\theme_favicon');
+            $row->url = Services::Registry()->get('Request', 'theme_favicon');
             $row->relation = 'shortcut icon';
             $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
             $this->query_results[] = $row;

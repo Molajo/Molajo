@@ -98,11 +98,11 @@ Class SessionService
 	 */
 	public function setSessionStorageData()
 	{
-		$save_path = Services::Registry()->get('Configuration\\cache_path', SITE_FOLDER_PATH . '/cache');
+		$save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache');
 		$options = array();
-		$options['cookie_lifetime'] = Services::Registry()->get('Configuration\\lifetime', 15);
-		$options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration\\cookie_domain', '');
-		$options['cookie_path'] = $cookie_path = Services::Registry()->get('Configuration\\cookie_path', '');
+		$options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
+		$options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration', 'cookie_domain', '');
+		$options['cookie_path'] = $cookie_path = Services::Registry()->get('Configuration', 'cookie_path', '');
 
 		$sessionStorage = new NativeFileSessionStorage ($save_path, $options);
 		return $sessionStorage;

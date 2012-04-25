@@ -93,6 +93,7 @@ Class AccessService
 		}
 
 		$this->task_to_action = Services::Registry()->initialise();
+
 		$this->action_to_controller = Services::Registry()->initialise();
 
 		foreach ($tasks->task as $t) {
@@ -148,10 +149,11 @@ Class AccessService
 				->setHeader('Status', '403 Not Authorised', 'true');
 
 			Services::Message()->set(
-				Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
-				MESSAGE_TYPE_ERROR,
-				403
-			);
+				Services::Registry()
+					->get('Configuration', 'error_403_message', 'Not Authorised.'),
+							MESSAGE_TYPE_ERROR,
+							403
+						);
 		}
 
 		return $application_id;
@@ -235,7 +237,7 @@ Class AccessService
 		$action_id = (int)$this->action_to_action_id->get($action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-			if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
+			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 				Services::Debug()
 					->set('AccessServices::authoriseTask Task: ' . $task
 					. ' Action: ' . $action . ' Action ID: ' . $action_id);
@@ -251,15 +253,16 @@ Class AccessService
 		$m->query->where($m->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
 		$m->query->where($m->db->qn('group_id')
-				. ' IN (' . implode(',', Services::Registry()->get('User\\Groups')) . ')'
-		);
+				. ' IN (' . implode(',', Services::Registry()->get('User', 'Groups')) . ')'
+				);
 
 		$count = $m->loadResult();
 
 		if ($count > 0) {
 			return true;
+
 		} else {
-			if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
+			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 				Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task
 					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
@@ -326,6 +329,9 @@ Class AccessService
 	 */
 	public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
 	{
+		echo '<pre>';
+		var_dump(Services::Registry()->get('User', 'ViewGroups'));
+		die;
 		if ($parameters['select'] === true) {
 			$query->select(
 				$db->qn($parameters['catalog_prefix']) .
@@ -372,7 +378,7 @@ Class AccessService
 				'.' .
 				$db->qn('view_group_id') .
 				' IN (' . implode(',',
-				Services::Registry()->get('User\\ViewGroups') .
+				Services::Registry()->get('User', 'ViewGroups') .
 					')')
 		);
 
@@ -400,9 +406,9 @@ Class AccessService
 	 */
 	public function setHTMLFilter()
 	{
-		$groups = Services::Registry()->get('Configuration\\disable_filter_for_groups');
+		$groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
 		$groupArray = explode(',', $groups);
-		$userGroups = Services::Registry()->get('User\\groups');
+		$userGroups = Services::Registry()->get('User', 'groups');
 
 		foreach ($groupArray as $single) {
 

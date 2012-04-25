@@ -204,7 +204,3 @@ class Molajo
 		return self::$helper;
 	}
 }
-
-//abstract class JFactory extends Molajo
-//{
-//}

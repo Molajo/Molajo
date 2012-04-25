@@ -66,14 +66,14 @@ Class Route
 		$this->initialise();
 
         /** Retrieve overrides */
-		$override_request_url = Services::Registry()->get('DependencyInjection\\request_url', '');
-		$override_catalog_id = (int) Services::Registry()->get('DependencyInjection\\catalog_id', 0);
+		$override_request_url = Services::Registry()->get('DependencyInjection', 'request_url', '');
+		$override_catalog_id = (int) Services::Registry()->get('DependencyInjection', 'catalog_id', 0);
 
 		/** Specific catalog */
         if ((int)$override_catalog_id == 0) {
-            Services::Registry()->set('Request\\request_catalog_id', 0);
+            Services::Registry()->set('Request', 'request_catalog_id', 0);
         } else {
-            Services::Registry()->set('Request\\request_catalog_id', $override_catalog_id);
+            Services::Registry()->set('Request', 'request_catalog_id', $override_catalog_id);
         }
 
         /** Check for home duplicate content and redirect */
@@ -87,7 +87,7 @@ Class Route
         }
 
         /** Offline Mode */
-        if (Services::Registry()->get('Configuration\\offline', 1) == 0) {
+        if (Services::Registry()->get('Configuration', 'offline', 1) == 0) {
             $this->error(503);
         }
 
@@ -98,12 +98,12 @@ Class Route
         $this->getCatalog();
 
         /** Authorise */
-        if (Services::Registry()->get('Request\\status_found')) {
+        if (Services::Registry()->get('Request', 'status_found')) {
             $this->authoriseTask();
         }
 
         /** Route */
-		if (Services::Registry()->get('Request\\status_found') === false) {
+		if (Services::Registry()->get('Request', 'status_found') === false) {
 			$this->error(404);
 		}
 
@@ -117,18 +117,18 @@ Class Route
 		}
 
 		/** must be logged on */
-		if (Services::Registry()->get('Configuration\\logon_requirement', 0) > 0
-			&& Services::Registry()->get('User\\guest', true) === true
-			&& Services::Registry()->get('Request\\request_catalog_id')
-				<> Services::Registry()->get('Configuration\\logon_requirement', 0)
+		if (Services::Registry()->get('Configuration', 'logon_requirement', 0) > 0
+			&& Services::Registry()->get('User', 'guest', true) === true
+			&& Services::Registry()->get('Request', 'request_catalog_id')
+				<> Services::Registry()->get('Configuration', 'logon_requirement', 0)
 		) {
 			Services::Response()->redirect(
-				Services::Registry()->get('Configuration\\logon_requirement', 0), 303
+				Services::Registry()->get('Configuration', 'logon_requirement', 0), 303
 			);
 		}
 
         /** Action: Render Page */
-        if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
+        if (Services::Registry()->get('Request', 'mvc_controller') == 'display') {
             $this->getUser();
             $this->getApplicationDefaults();
             $this->getTheme();
@@ -148,20 +148,20 @@ Class Route
             $temp->loadArray($this->parameters);
             $this->parameters = $temp;
 
-            if (Services::Registry()->get('Configuration\\sef', 1) == 0) {
+            if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
                 $link = $this->page_request->get('request_url_sef');
             } else {
                 $link = $this->page_request->get('request_url');
             }
-            Services::Registry()->set('Request\\redirect_on_failure', $link);
+            Services::Registry()->set('Request', 'redirect_on_failure', $link);
 
-            Services::Registry()->set('Request\\model',
-                ucfirst(trim(Services::Registry()->get('Request\\mvc_model'))) . 'Model');
-            $cc = 'Molajo' . ucfirst(Services::Registry()->get('Request\\mvc_controller')) . 'Controller';
-            Services::Registry()->set('Request\\controller', $cc);
-            $task = Services::Registry()->get('Request\\mvc_task');
-            Services::Registry()->set('Request\\task', $task);
-            Services::Registry()->set('Request\\id', Services::Registry()->get('Request\\mvc_id'));
+            Services::Registry()->set('Request', 'model',
+                ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
+            $cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
+            Services::Registry()->set('Request', 'controller', $cc);
+            $task = Services::Registry()->get('Request', 'mvc_task');
+            Services::Registry()->set('Request', 'task', $task);
+            Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
             $controller = new $cc($this->page_request, $this->parameters);
 
             /** execute task: non-display, edit, or add tasks */
@@ -193,36 +193,36 @@ Class Route
         }
 
         /** duplicate content: URLs without the .html */
-        if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
+        if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 1) == 1
             && substr($path, -11) == '/index.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 11));
         }
-        if ((int)Services::Registry()->get('Configuration\\sef_suffix', 1) == 1
+        if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 1) == 1
             && substr($path, -5) == '.html'
         ) {
             $path = substr($path, 0, (strlen($path) - 5));
         }
 
         /** populate value used in query  */
-        Services::Registry()->set('Request\\request_url_query', $path);
+        Services::Registry()->set('Request', 'request_url_query', $path);
 
         /** home: duplicate content - redirect */
-        if (Services::Registry()->get('Request\\request_url_query', '') == 'index.php'
-            || Services::Registry()->get('Request\\request_url_query', '') == 'index.php/'
-            || Services::Registry()->get('Request\\request_url_query', '') == 'index.php?'
-            || Services::Registry()->get('Request\\request_url_query', '') == '/index.php/'
+        if (Services::Registry()->get('Request', 'request_url_query', '') == 'index.php'
+            || Services::Registry()->get('Request', 'request_url_query', '') == 'index.php/'
+            || Services::Registry()->get('Request', 'request_url_query', '') == 'index.php?'
+            || Services::Registry()->get('Request', 'request_url_query', '') == '/index.php/'
         ) {
             return Services::Redirect()->set('', 301);
         }
 
         /** Home */
-        if (Services::Registry()->get('Request\\request_url_query', '') == ''
-            && (int)Services::Registry()->get('Request\\request_catalog_id', 0) == 0
+        if (Services::Registry()->get('Request', 'request_url_query', '') == ''
+            && (int)Services::Registry()->get('Request', 'request_catalog_id', 0) == 0
         ) {
-            Services::Registry()->set('Request\\request_catalog_id',
-                Services::Registry()->get('Configuration\\home_catalog_id', 0));
-            Services::Registry()->set('Request\\request_url_home', true);
+            Services::Registry()->set('Request', 'request_catalog_id',
+                Services::Registry()->get('Configuration', 'home_catalog_id', 0));
+            Services::Registry()->set('Request', 'request_url_home', true);
         }
 
         Services::Debug()->set('Molajo::Request()->checkHome complete');
@@ -268,29 +268,29 @@ Class Route
         if (count($pairs) > 0
             && isset($pairs['task'])
         ) {
-            Services::Registry()->set('Request\\mvc_task', $pairs['task']);
+            Services::Registry()->set('Request', 'mvc_task', $pairs['task']);
         } else {
-            Services::Registry()->set('Request\\mvc_task', 'display');
+            Services::Registry()->set('Request', 'mvc_task', 'display');
         }
 
-        if (Services::Registry()->get('Request\\mvc_task', '') == ''
-            || Services::Registry()->get('Request\\mvc_task', 'display') == 'display'
+        if (Services::Registry()->get('Request', 'mvc_task', '') == ''
+            || Services::Registry()->get('Request', 'mvc_task', 'display') == 'display'
         ) {
-            $pageRequest = Services::Registry()->get('Request\\request_url_query');
+            $pageRequest = Services::Registry()->get('Request', 'request_url_query');
 
             if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
                 $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/edit'));
-                Services::Registry()->set('Request\\request_url_query', $pageRequest);
-                Services::Registry()->set('Request\\mvc_task', 'edit');
+                Services::Registry()->set('Request', 'request_url_query', $pageRequest);
+                Services::Registry()->set('Request', 'mvc_task', 'edit');
 
             } else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
                 $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/add'));
-                Services::Registry()->set('Request\\request_url_query', $pageRequest);
-                Services::Registry()->set('Request\\mvc_task', 'add');
+                Services::Registry()->set('Request', 'request_url_query', $pageRequest);
+                Services::Registry()->set('Request', 'mvc_task', 'add');
 
             } else {
                 Services::Debug()->set('Molajo::Request()->getRequest() complete Display Task');
-                Services::Registry()->set('Request\\mvc_task', 'display');
+                Services::Registry()->set('Request', 'mvc_task', 'display');
             }
             return true;
         }
@@ -302,18 +302,18 @@ Class Route
             $return = '';
         }
         if (trim($return) == '') {
-            Services::Registry()->set('Request\\redirect_on_success', '');
+            Services::Registry()->set('Request', 'redirect_on_success', '');
         } else if (JUri::isInternal(base64_decode($return))) {
-            Services::Registry()->set('Request\\redirect_on_success', base64_decode($return));
+            Services::Registry()->set('Request', 'redirect_on_success', base64_decode($return));
         } else {
-            Services::Registry()->set('Request\\redirect_on_success', '');
+            Services::Registry()->set('Request', 'redirect_on_success', '');
         }
 
         /** option */
-        Services::Registry()->set('Request\\mvc_option', (string)$pairs['option']);
+        Services::Registry()->set('Request', 'mvc_option', (string)$pairs['option']);
 
         /** catalog information */
-        Services::Registry()->set('Request\\mvc_id', (int)$pairs['id']);
+        Services::Registry()->set('Request', 'mvc_id', (int)$pairs['id']);
 
         Services::Debug()->set('Molajo::Request()->getRequest()');
 
@@ -332,92 +332,92 @@ Class Route
 
         $row = Molajo::Helper()
             ->get('Catalog',
-            (int)Services::Registry()->get('Request\\request_catalog_id'),
-            Services::Registry()->get('Request\\request_url_query'),
-            Services::Registry()->get('Request\\mvc_option'),
-            Services::Registry()->get('Request\\mvc_id')
+            (int)Services::Registry()->get('Request', 'request_catalog_id'),
+            Services::Registry()->get('Request', 'request_url_query'),
+            Services::Registry()->get('Request', 'mvc_option'),
+            Services::Registry()->get('Request', 'mvc_id')
         );
 
         /** 404: routeRequest handles redirecting to error page */
         if (count($row) == 0
             || (int)$row->routable == 0
         ) {
-            return Services::Registry()->set('Request\\status_found', false);
+            return Services::Registry()->set('Request', 'status_found', false);
         }
 
         /** Redirect: routeRequest handles rerouting the request */
         if ((int)$row->redirect_to_id == 0) {
         } else {
             $this->redirect_to_id = (int)$row->redirect_to_id;
-            return Services::Registry()->set('Request\\status_found', false);
+            return Services::Registry()->set('Request', 'status_found', false);
         }
 
         /** 403: authoriseTask handles redirecting to error page */
-        if (in_array($row->view_group_id, Services::Registry()->get('User\\ViewGroups'))) {
-            Services::Registry()->set('Request\\status_authorised', true);
+        if (in_array($row->view_group_id, Services::Registry()->get('User', 'ViewGroups'))) {
+            Services::Registry()->set('Request', 'status_authorised', true);
         } else {
-            return Services::Registry()->set('Request\\status_authorised', false);
+            return Services::Registry()->set('Request', 'status_authorised', false);
         }
 
         /** request url */
-        Services::Registry()->set('Request\\request_catalog_id', (int)$row->catalog_id);
-        Services::Registry()->set('Request\\request_catalog_type_id', (int)$row->catalog_type_id);
-        Services::Registry()->set('Request\\request_url', $row->request);
-        Services::Registry()->set('Request\\request_url_sef', $row->sef_request);
+        Services::Registry()->set('Request', 'request_catalog_id', (int)$row->catalog_id);
+        Services::Registry()->set('Request', 'request_catalog_type_id', (int)$row->catalog_type_id);
+        Services::Registry()->set('Request', 'request_url', $row->request);
+        Services::Registry()->set('Request', 'request_url_sef', $row->sef_request);
 
         /** home */
-        if ((int)Services::Registry()->get('Request\\request_catalog_id', 0)
-            == Services::Registry()->get('Configuration\\home_catalog_id', null)
+        if ((int)Services::Registry()->get('Request', 'request_catalog_id', 0)
+            == Services::Registry()->get('Configuration', 'home_catalog_id', null)
         ) {
-            Services::Registry()->set('Request\\request_url_home', true);
+            Services::Registry()->set('Request', 'request_url_home', true);
         } else {
-            Services::Registry()->set('Request\\request_url_home', false);
+            Services::Registry()->set('Request', 'request_url_home', false);
         }
 
-        Services::Registry()->set('Request\\source_table', $row->source_table);
-        Services::Registry()->set('Request\\category_id', (int)$row->primary_category_id);
+        Services::Registry()->set('Request', 'source_table', $row->source_table);
+        Services::Registry()->set('Request', 'category_id', (int)$row->primary_category_id);
 
         /** mvc options and url parameters */
-        Services::Registry()->set('Request\\extension_instance_name', $row->request_option);
-        Services::Registry()->set('Request\\mvc_model', $row->request_model);
-        Services::Registry()->set('Request\\mvc_id', (int)$row->source_id);
+        Services::Registry()->set('Request', 'extension_instance_name', $row->request_option);
+        Services::Registry()->set('Request', 'mvc_model', $row->request_model);
+        Services::Registry()->set('Request', 'mvc_id', (int)$row->source_id);
 
-        Services::Registry()->set('Request\\mvc_controller',
+        Services::Registry()->set('Request', 'mvc_controller',
             Services::Access()
-                ->getTaskController(Services::Registry()->get('Request\\mvc_task'))
+                ->getTaskController(Services::Registry()->get('Request', 'mvc_task'))
         );
 
         /** Action Tasks need no additional information */
-        if (Services::Registry()->get('Request\\mvc_controller') == 'display') {
+        if (Services::Registry()->get('Request', 'mvc_controller') == 'display') {
         } else {
-            return Services::Registry()->set('Request\\status_found', true);
+            return Services::Registry()->set('Request', 'status_found', true);
         }
 
-        if (Services::Registry()->get('Request\\request_catalog_type_id')
+        if (Services::Registry()->get('Request', 'request_catalog_type_id')
             == CATALOG_TYPE_MENU_ITEM_COMPONENT
         ) {
-            Services::Registry()->set('Request\\menu_item_id', $row->source_id);
+            Services::Registry()->set('Request', 'menu_item_id', $row->source_id);
             $this->getMenuItem();
-            if (Services::Registry()->get('Request\\status_found') === false) {
-                return Services::Registry()->get('Request\\status_found');
+            if (Services::Registry()->get('Request', 'status_found') === false) {
+                return Services::Registry()->get('Request', 'status_found');
             }
         } else {
-            Services::Registry()->set('Request\\source_id', $row->source_id);
+            Services::Registry()->set('Request', 'source_id', $row->source_id);
             $this->getSource();
         }
 
         /** primary category */
-        if (Services::Registry()->get('Request\\category_id', 0) == 0) {
+        if (Services::Registry()->get('Request', 'category_id', 0) == 0) {
         } else {
-            Services::Registry()->set('Request\\mvc_category_id',
-                Services::Registry()->get('Request\\category_id'));
+            Services::Registry()->set('Request', 'mvc_category_id',
+                Services::Registry()->get('Request', 'category_id'));
             $this->getPrimaryCategory();
         }
 
         /** Extension */
         $this->getExtension();
 
-        return Services::Registry()->get('Request\\status_found');
+        return Services::Registry()->get('Request', 'status_found');
     }
 
     /**
@@ -429,27 +429,27 @@ Class Route
     protected function authoriseTask()
     {
         /** display view verified in getCatalog */
-        if (Services::Registry()->get('Request\\mvc_task') == 'display'
-            && Services::Registry()->get('Request\\status_authorised') === true
+        if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+            && Services::Registry()->get('Request', 'status_authorised') === true
         ) {
             return true;
         }
-        if (Services::Registry()->get('Request\\mvc_task') == 'display'
-            && Services::Registry()->get('Request\\status_authorised') === false
+        if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+            && Services::Registry()->get('Request', 'status_authorised') === false
         ) {
             $this->error(403);
             return false;
         }
 
         /** verify other tasks */
-        Services::Registry()->set('Request\\status_authorised',
+        Services::Registry()->set('Request', 'status_authorised',
             Services::Access()->authoriseTask(
-                Services::Registry()->get('Request\\mvc_task'),
-                Services::Registry()->get('Request\\request_catalog_id')
+                Services::Registry()->get('Request', 'mvc_task'),
+                Services::Registry()->get('Request', 'request_catalog_id')
             )
         );
 
-        if (Services::Registry()->get('Request\\status_authorised') === true) {
+        if (Services::Registry()->get('Request', 'status_authorised') === true) {
         } else {
             $this->error(403);
             return false;
@@ -468,7 +468,7 @@ Class Route
     {
         $row = Molajo::Helper()
             ->get('MenuItem',
-            (int)Services::Registry()->get('Request\\menu_item_id')
+            (int)Services::Registry()->get('Request', 'menu_item_id')
         );
 
         /**
@@ -484,74 +484,74 @@ Class Route
          *  authoriseTask handles redirecting to error page
          */
         if (count($row) == 0) {
-            Services::Registry()->set('Request\\status_authorised', false);
-            return Services::Registry()->set('Request\\status_found', false);
+            Services::Registry()->set('Request', 'status_authorised', false);
+            return Services::Registry()->set('Request', 'status_found', false);
         }
 
-        Services::Registry()->set('Request\\menu_item_title', $row->menu_item_title);
-        Services::Registry()->set('Request\\menu_item_catalog_type_id', $row->menu_item_catalog_type_id);
-        Services::Registry()->set('Request\\menu_item_catalog_id', $row->menu_item_catalog_id);
-        Services::Registry()->set('Request\\menu_item_view_group_id', $row->menu_item_view_group_id);
+        Services::Registry()->set('Request', 'menu_item_title', $row->menu_item_title);
+        Services::Registry()->set('Request', 'menu_item_catalog_type_id', $row->menu_item_catalog_type_id);
+        Services::Registry()->set('Request', 'menu_item_catalog_id', $row->menu_item_catalog_id);
+        Services::Registry()->set('Request', 'menu_item_view_group_id', $row->menu_item_view_group_id);
 
-        Services::Registry()->set('Request\\extension_instance_id', $row->menu_id);
-        Services::Registry()->set('Request\\extension_instance_name', $row->menu_title);
-        Services::Registry()->set('Request\\extension_instance_catalog_type_id', $row->menu_catalog_type_id);
-        Services::Registry()->set('Request\\extension_instance_catalog_id', $row->menu_catalog_id);
-        Services::Registry()->set('Request\\extension_instance_view_group_id', $row->menu_view_group_id);
+        Services::Registry()->set('Request', 'extension_instance_id', $row->menu_id);
+        Services::Registry()->set('Request', 'extension_instance_name', $row->menu_title);
+        Services::Registry()->set('Request', 'extension_instance_catalog_type_id', $row->menu_catalog_type_id);
+        Services::Registry()->set('Request', 'extension_instance_catalog_id', $row->menu_catalog_id);
+        Services::Registry()->set('Request', 'extension_instance_view_group_id', $row->menu_view_group_id);
 
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($row->menu_item_parameters);
-        Services::Registry()->set('Request\\menu_item_parameters', $parameters);
+        Services::Registry()->set('Request', 'menu_item_parameters', $parameters);
 
         $custom_fields = Services::Registry()->initialise();
         $custom_fields->loadString($row->menu_item_custom_fields);
-        Services::Registry()->set('Request\\menu_item_custom_fields', $custom_fields);
+        Services::Registry()->set('Request', 'menu_item_custom_fields', $custom_fields);
 
         $metadata = Services::Registry()->initialise();
         $metadata->loadString($row->menu_item_metadata);
-        Services::Registry()->set('Request\\menu_item_metadata', $metadata);
+        Services::Registry()->set('Request', 'menu_item_metadata', $metadata);
 
         $this->setPageValues($parameters, $metadata);
 
-        Services::Registry()->set('Request\\menu_item_language', $row->menu_item_language);
-        Services::Registry()->set('Request\\menu_item_translation_of_id', $row->menu_item_translation_of_id);
+        Services::Registry()->set('Request', 'menu_item_language', $row->menu_item_language);
+        Services::Registry()->set('Request', 'menu_item_translation_of_id', $row->menu_item_translation_of_id);
 
         /** mvc */
-        if (Services::Registry()->get('Request\\mvc_controller', '') == '') {
-            Services::Registry()->set('Request\\mvc_controller',
+        if (Services::Registry()->get('Request', 'mvc_controller', '') == '') {
+            Services::Registry()->set('Request', 'mvc_controller',
                 $parameters->get('controller', '')
             );
         }
-        if (Services::Registry()->get('Request\\mvc_task', '') == '') {
-            Services::Registry()->set('Request\\mvc_task',
+        if (Services::Registry()->get('Request', 'mvc_task', '') == '') {
+            Services::Registry()->set('Request', 'mvc_task',
                 $parameters->get('task', '')
             );
         }
-        if (Services::Registry()->get('Request\\extension_instance_name', '') == '') {
-            Services::Registry()->set('Request\\extension_instance_name',
+        if (Services::Registry()->get('Request', 'extension_instance_name', '') == '') {
+            Services::Registry()->set('Request', 'extension_instance_name',
                 $parameters->get('option', '')
             );
         }
-        if (Services::Registry()->get('Request\\mvc_model', '') == '') {
-            Services::Registry()->set('Request\\mvc_model',
+        if (Services::Registry()->get('Request', 'mvc_model', '') == '') {
+            Services::Registry()->set('Request', 'mvc_model',
                 $parameters->get('model', '')
             );
         }
-        if ((int)Services::Registry()->get('Request\\mvc_id', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_id', $parameters->get('id', 0));
+        if ((int)Services::Registry()->get('Request', 'mvc_id', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_id', $parameters->get('id', 0));
         }
-        if ((int)Services::Registry()->get('Request\\mvc_category_id', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_category_id',
+        if ((int)Services::Registry()->get('Request', 'mvc_category_id', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_category_id',
                 $parameters->get('category_id', 0)
             );
         }
-        if ((int)Services::Registry()->get('Request\\mvc_suppress_no_results', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_suppress_no_results',
+        if ((int)Services::Registry()->get('Request', 'mvc_suppress_no_results', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_suppress_no_results',
                 $parameters->get('suppress_no_results', 0)
             );
         }
 
-        return Services::Registry()->set('Request\\status_found', true);
+        return Services::Registry()->set('Request', 'status_found', true);
     }
 
     /**
@@ -566,8 +566,8 @@ Class Route
     {
         $row = Molajo::Helper()
             ->get('Content',
-            (int)Services::Registry()->get('Request\\source_id'),
-            Services::Registry()->get('Request\\source_table')
+            (int)Services::Registry()->get('Request', 'source_id'),
+            Services::Registry()->get('Request', 'source_table')
         );
 
         if (count($row) == 0) {
@@ -575,7 +575,7 @@ Class Route
         }
         //        if (count($row) == 0) {
         //            /** 500: Source Content not found */
-        //            Services::Registry()->set('Request\\status_found', false);
+        //            Services::Registry()->set('Request', 'status_found', false);
         //            Services::Message()
         //                ->set(
         //                $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
@@ -584,67 +584,67 @@ Class Route
         //                $debug_location = 'MolajoRequest::getSource',
         //                $debug_object = $this->page_request
         //            );
-        //            return Services::Registry()->set('Request\\status_found', false);
+        //            return Services::Registry()->set('Request', 'status_found', false);
         //        }
 
         /** match found */
-        Services::Registry()->set('Request\\source_title', $row->title);
-        Services::Registry()->set('Request\\source_catalog_type_id', $row->catalog_type_id);
-        Services::Registry()->set('Request\\source_catalog_id', $row->catalog_id);
-        Services::Registry()->set('Request\\source_view_group_id', $row->view_group_id);
-        Services::Registry()->set('Request\\source_language', $row->language);
-        Services::Registry()->set('Request\\source_translation_of_id', $row->translation_of_id);
-        Services::Registry()->set('Request\\source_last_modified', $row->modified_datetime);
+        Services::Registry()->set('Request', 'source_title', $row->title);
+        Services::Registry()->set('Request', 'source_catalog_type_id', $row->catalog_type_id);
+        Services::Registry()->set('Request', 'source_catalog_id', $row->catalog_id);
+        Services::Registry()->set('Request', 'source_view_group_id', $row->view_group_id);
+        Services::Registry()->set('Request', 'source_language', $row->language);
+        Services::Registry()->set('Request', 'source_translation_of_id', $row->translation_of_id);
+        Services::Registry()->set('Request', 'source_last_modified', $row->modified_datetime);
 
-        Services::Registry()->set('Request\\extension_instance_id', $row->extension_instance_id);
+        Services::Registry()->set('Request', 'extension_instance_id', $row->extension_instance_id);
 
         $custom_fields = Services::Registry()->initialise();
         $custom_fields->loadString($row->custom_fields);
-        Services::Registry()->set('Request\\source_custom_fields', $custom_fields);
+        Services::Registry()->set('Request', 'source_custom_fields', $custom_fields);
 
         $metadata = Services::Registry()->initialise();
         $metadata->loadString($row->metadata);
-        Services::Registry()->set('Request\\source_metadata', $metadata);
+        Services::Registry()->set('Request', 'source_metadata', $metadata);
 
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($row->parameters);
         $parameters->set('id', $row->id);
         $parameters->set('catalog_type_id', $row->catalog_type_id);
-        Services::Registry()->set('Request\\source_parameters', $parameters);
+        Services::Registry()->set('Request', 'source_parameters', $parameters);
 
         $this->setPageValues($parameters, $metadata);
 
         /** mvc */
-        if (Services::Registry()->get('Request\\mvc_controller', '') == '') {
-            Services::Registry()->set('Request\\mvc_controller',
+        if (Services::Registry()->get('Request', 'mvc_controller', '') == '') {
+            Services::Registry()->set('Request', 'mvc_controller',
                 $parameters->get('controller', ''));
         }
-        if (Services::Registry()->get('Request\\mvc_task', '') == '') {
-            Services::Registry()->set('Request\\mvc_task',
+        if (Services::Registry()->get('Request', 'mvc_task', '') == '') {
+            Services::Registry()->set('Request', 'mvc_task',
                 $parameters->get('task', ''));
         }
-        if (Services::Registry()->get('Request\\extension_instance_name', '') == '') {
-            Services::Registry()->set('Request\\extension_instance_name',
+        if (Services::Registry()->get('Request', 'extension_instance_name', '') == '') {
+            Services::Registry()->set('Request', 'extension_instance_name',
                 $parameters->get('option', ''));
         }
-        if (Services::Registry()->get('Request\\mvc_model', '') == '') {
-            Services::Registry()->set('Request\\mvc_model',
+        if (Services::Registry()->get('Request', 'mvc_model', '') == '') {
+            Services::Registry()->set('Request', 'mvc_model',
                 $parameters->get('model', ''));
         }
-        if ((int)Services::Registry()->get('Request\\mvc_id', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_id',
+        if ((int)Services::Registry()->get('Request', 'mvc_id', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_id',
                 $parameters->get('id', 0));
         }
-        if ((int)Services::Registry()->get('Request\\mvc_category_id', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_category_id',
+        if ((int)Services::Registry()->get('Request', 'mvc_category_id', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_category_id',
                 $parameters->get('category_id', 0));
         }
-        if ((int)Services::Registry()->get('Request\\mvc_suppress_no_results', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_suppress_no_results',
+        if ((int)Services::Registry()->get('Request', 'mvc_suppress_no_results', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_suppress_no_results',
                 $parameters->get('suppress_no_results', 0));
         }
 
-        return Services::Registry()->set('Request\\status_found', true);
+        return Services::Registry()->set('Request', 'status_found', true);
     }
 
     /**
@@ -659,13 +659,13 @@ Class Route
     {
         $row = Molajo::Helper()
             ->get('Content',
-            (int)Services::Registry()->get('Request\\category_id'),
+            (int)Services::Registry()->get('Request', 'category_id'),
             '#__content'
         );
 
         if (count($row) == 0) {
             /** 500: Category not found */
-            Services::Registry()->set('Request\\status_found', false);
+            Services::Registry()->set('Request', 'status_found', false);
             Services::Message()
                 ->set(
                 $message = Services::Language()->translate('ERROR_SOURCE_ITEM_NOT_FOUND'),
@@ -674,31 +674,31 @@ Class Route
                 $debug_location = 'MolajoRequest::getPrimaryCategory',
                 $debug_object = $this->page_request
             );
-            return Services::Registry()->set('Request\\status_found', false);
+            return Services::Registry()->set('Request', 'status_found', false);
         }
 
-        Services::Registry()->set('Request\\category_title', $row->title);
-        Services::Registry()->set('Request\\category_catalog_type_id', $row->catalog_type_id);
-        Services::Registry()->set('Request\\category_catalog_id', $row->catalog_id);
-        Services::Registry()->set('Request\\category_view_group_id', $row->view_group_id);
-        Services::Registry()->set('Request\\category_language', $row->language);
-        Services::Registry()->set('Request\\category_translation_of_id', $row->translation_of_id);
+        Services::Registry()->set('Request', 'category_title', $row->title);
+        Services::Registry()->set('Request', 'category_catalog_type_id', $row->catalog_type_id);
+        Services::Registry()->set('Request', 'category_catalog_id', $row->catalog_id);
+        Services::Registry()->set('Request', 'category_view_group_id', $row->view_group_id);
+        Services::Registry()->set('Request', 'category_language', $row->language);
+        Services::Registry()->set('Request', 'category_translation_of_id', $row->translation_of_id);
 
         $custom_fields = Services::Registry()->initialise();
         $custom_fields->loadString($row->custom_fields);
-        Services::Registry()->set('Request\\category_custom_fields', $custom_fields);
+        Services::Registry()->set('Request', 'category_custom_fields', $custom_fields);
 
         $metadata = Services::Registry()->initialise();
         $metadata->loadString($row->metadata);
-        Services::Registry()->set('Request\\category_metadata', $metadata);
+        Services::Registry()->set('Request', 'category_metadata', $metadata);
 
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($row->parameters);
-        Services::Registry()->set('Request\\category_parameters', $parameters);
+        Services::Registry()->set('Request', 'category_parameters', $parameters);
 
         $this->setPageValuesDefaults($parameters, $metadata);
 
-        return Services::Registry()->set('Request\\status_found', true);
+        return Services::Registry()->set('Request', 'status_found', true);
     }
 
     /**
@@ -710,16 +710,16 @@ Class Route
     protected function getExtension()
     {
         /** Retrieve Extension Query Results */
-        if (Services::Registry()->get('Request\\extension_instance_id', 0) == 0) {
+        if (Services::Registry()->get('Request', 'extension_instance_id', 0) == 0) {
         } else {
             $rows = Molajo::Helper()
                 ->get('Extension', 0,
-                (int)Services::Registry()->get('Request\\extension_instance_id')
+                (int)Services::Registry()->get('Request', 'extension_instance_id')
             );
         }
 
         /** Fatal error if Extension cannot be found */
-        if ((Services::Registry()->get('Request\\extension_instance_id', 0) == 0)
+        if ((Services::Registry()->get('Request', 'extension_instance_id', 0) == 0)
             || (count($rows) == 0)
         ) {
             /** 500: Extension not found */
@@ -732,7 +732,7 @@ Class Route
                 $debug_location = 'MolajoRequest::getExtension',
                 $debug_object = $this->page_request
             );
-            return Services::Registry()->set('Request\\status_found', false);
+            return Services::Registry()->set('Request', 'status_found', false);
         }
 
         /** Process Results */
@@ -740,70 +740,70 @@ Class Route
         foreach ($rows as $row) {
         }
 
-        Services::Registry()->set('Request\\extension_instance_name', $row->title);
-        Services::Registry()->set('Request\\extension_catalog_id', $row->catalog_id);
-        Services::Registry()->set('Request\\extension_catalog_type_id', $row->catalog_type_id);
-        Services::Registry()->set('Request\\extension_view_group_id', $row->view_group_id);
-        Services::Registry()->set('Request\\extension_type', $row->catalog_type_title);
+        Services::Registry()->set('Request', 'extension_instance_name', $row->title);
+        Services::Registry()->set('Request', 'extension_catalog_id', $row->catalog_id);
+        Services::Registry()->set('Request', 'extension_catalog_type_id', $row->catalog_type_id);
+        Services::Registry()->set('Request', 'extension_view_group_id', $row->view_group_id);
+        Services::Registry()->set('Request', 'extension_type', $row->catalog_type_title);
 
         $custom_fields = Services::Registry()->initialise();
         $custom_fields->loadString($row->custom_fields);
-        Services::Registry()->set('Request\\extension_custom_fields', $custom_fields);
+        Services::Registry()->set('Request', 'extension_custom_fields', $custom_fields);
 
         $metadata = Services::Registry()->initialise();
         $metadata->loadString($row->metadata);
-        Services::Registry()->set('Request\\extension_metadata', $metadata);
+        Services::Registry()->set('Request', 'extension_metadata', $metadata);
 
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($row->parameters);
-        Services::Registry()->set('Request\\extension_parameters', $parameters);
+        Services::Registry()->set('Request', 'extension_parameters', $parameters);
 
         $this->setPageValuesDefaults($parameters, $metadata);
 
         /** mvc */
-        if (Services::Registry()->get('Request\\mvc_controller', '') == '') {
-            Services::Registry()->set('Request\\mvc_controller',
+        if (Services::Registry()->get('Request', 'mvc_controller', '') == '') {
+            Services::Registry()->set('Request', 'mvc_controller',
                 $parameters->get('controller', '')
             );
         }
-        if (Services::Registry()->get('Request\\mvc_task', '') == '') {
-            Services::Registry()->set('Request\\mvc_task',
+        if (Services::Registry()->get('Request', 'mvc_task', '') == '') {
+            Services::Registry()->set('Request', 'mvc_task',
                 $parameters->get('task', 'display')
             );
         }
-        if (Services::Registry()->get('Request\\mvc_model', '') == '') {
-            Services::Registry()->set('Request\\mvc_model',
+        if (Services::Registry()->get('Request', 'mvc_model', '') == '') {
+            Services::Registry()->set('Request', 'mvc_model',
                 $parameters->get('model', 'content')
             );
         }
-        if ((int)Services::Registry()->get('Request\\mvc_id', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_id',
+        if ((int)Services::Registry()->get('Request', 'mvc_id', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_id',
                 $parameters->get('id', 0)
             );
         }
-        if ((int)Services::Registry()->get('Request\\mvc_category_id', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_category_id',
+        if ((int)Services::Registry()->get('Request', 'mvc_category_id', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_category_id',
                 $parameters->get('category_id', 0)
             );
         }
-        if ((int)Services::Registry()->get('Request\\mvc_suppress_no_results', 0) == 0) {
-            Services::Registry()->set('Request\\mvc_suppress_no_results',
+        if ((int)Services::Registry()->get('Request', 'mvc_suppress_no_results', 0) == 0) {
+            Services::Registry()->set('Request', 'mvc_suppress_no_results',
                 $parameters->get('suppress_no_results', 0)
             );
         }
 
-        Services::Registry()->set('Request\\extension_event_type',
+        Services::Registry()->set('Request', 'extension_event_type',
             $parameters->get('event_type', array('content'))
         );
 
-        Services::Registry()->set('Request\\extension_path',
+        Services::Registry()->set('Request', 'extension_path',
             Molajo::Helper()->getPath('Extension',
-                Services::Registry()->get('Request\\extension_catalog_type_id'),
-                Services::Registry()->get('Request\\extension_instance_name')
+                Services::Registry()->get('Request', 'extension_catalog_type_id'),
+                Services::Registry()->get('Request', 'extension_instance_name')
             )
         );
 
-        return Services::Registry()->set('Request\\status_found', true);
+        return Services::Registry()->set('Request', 'status_found', true);
     }
 
     /**
@@ -821,25 +821,25 @@ Class Route
      */
     protected function setPageValues($parameters = null, $metadata = null)
     {
-        if ((int)Services::Registry()->get('Request\\theme_id', 0) == 0) {
-            Services::Registry()->set('Request\\theme_id',
+        if ((int)Services::Registry()->get('Request', 'theme_id', 0) == 0) {
+            Services::Registry()->set('Request', 'theme_id',
                 $parameters->get('theme_id', 0)
             );
         }
-        if ((int)Services::Registry()->get('Request\\page_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\page_view_id',
+        if ((int)Services::Registry()->get('Request', 'page_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'page_view_id',
                 $parameters->get('page_view_id', 0)
             );
         }
 
-        if ((int)Services::Registry()->get('Request\\template_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\template_view_id',
+        if ((int)Services::Registry()->get('Request', 'template_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'template_view_id',
                 $parameters->get('template_view_id', 0)
             );
         }
 
-        if ((int)Services::Registry()->get('Request\\wrap_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\wrap_view_id',
+        if ((int)Services::Registry()->get('Request', 'wrap_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'wrap_view_id',
                 $parameters->get('wrap_view_id', 0)
             );
         }
@@ -853,33 +853,33 @@ Class Route
             );
 
         /** merge meta data */
-        if (Services::Registry()->get('Request\\metadata_title', '') == '') {
-            Services::Registry()->set('Request\\metadata_title',
+        if (Services::Registry()->get('Request', 'metadata_title', '') == '') {
+            Services::Registry()->set('Request', 'metadata_title',
                 $metadata->get('metadata_title', '')
             );
         }
-        if (Services::Registry()->get('Request\\metadata_description', '') == '') {
-            Services::Registry()->set('Request\\metadata_description',
+        if (Services::Registry()->get('Request', 'metadata_description', '') == '') {
+            Services::Registry()->set('Request', 'metadata_description',
                 $metadata->get('metadata_description', '')
             );
         }
-        if (Services::Registry()->get('Request\\metadata_keywords', '') == '') {
-            Services::Registry()->set('Request\\metadata_keywords',
+        if (Services::Registry()->get('Request', 'metadata_keywords', '') == '') {
+            Services::Registry()->set('Request', 'metadata_keywords',
                 $metadata->get('metadata_keywords', '')
             );
         }
-        if (Services::Registry()->get('Request\\metadata_author', '') == '') {
-            Services::Registry()->set('Request\\metadata_author',
+        if (Services::Registry()->get('Request', 'metadata_author', '') == '') {
+            Services::Registry()->set('Request', 'metadata_author',
                 $metadata->get('metadata_author', '')
             );
         }
-        if (Services::Registry()->get('Request\\metadata_content_rights', '') == '') {
-            Services::Registry()->set('Request\\metadata_content_rights',
+        if (Services::Registry()->get('Request', 'metadata_content_rights', '') == '') {
+            Services::Registry()->set('Request', 'metadata_content_rights',
                 $metadata->get('metadata_content_rights', '')
             );
         }
-        if (Services::Registry()->get('Request\\metadata_robots', '') == '') {
-            Services::Registry()->set('Request\\metadata_robots',
+        if (Services::Registry()->get('Request', 'metadata_robots', '') == '') {
+            Services::Registry()->set('Request', 'metadata_robots',
                 $metadata->get('metadata_robots', '')
             );
         }
@@ -897,58 +897,58 @@ Class Route
      */
     protected function setPageValuesDefaults($parameters = null, $metadata = null)
     {
-        if (Services::Registry()->get('Request\\theme_id', 0) == 0) {
-            Services::Registry()->set('Request\\theme_id', $parameters->get('default_theme_id', 0));
+        if (Services::Registry()->get('Request', 'theme_id', 0) == 0) {
+            Services::Registry()->set('Request', 'theme_id', $parameters->get('default_theme_id', 0));
         }
 
-        if (Services::Registry()->get('Request\\page_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\page_view_id', $parameters->get('default_page_view_id', 0));
+        if (Services::Registry()->get('Request', 'page_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'page_view_id', $parameters->get('default_page_view_id', 0));
         }
 
-        if ((int)Services::Registry()->get('Request\\template_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\template_view_id',
+        if ((int)Services::Registry()->get('Request', 'template_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'template_view_id',
                 ViewHelper::getViewDefaultsOther(
                     'template',
-                    Services::Registry()->get('Request\\mvc_task', ''),
-                    (int)Services::Registry()->get('Request\\mvc_id', 0),
+                    Services::Registry()->get('Request', 'mvc_task', ''),
+                    (int)Services::Registry()->get('Request', 'mvc_id', 0),
                     $parameters)
             );
         }
 
-        if ((int)Services::Registry()->get('Request\\wrap_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\wrap_view_id',
+        if ((int)Services::Registry()->get('Request', 'wrap_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'wrap_view_id',
                 ViewHelper::getViewDefaultsOther(
                     'wrap',
-                    Services::Registry()->get('Request\\mvc_task', ''),
-                    (int)Services::Registry()->get('Request\\mvc_id', 0),
+                    Services::Registry()->get('Request', 'mvc_task', ''),
+                    (int)Services::Registry()->get('Request', 'mvc_id', 0),
                     $parameters)
             );
         }
 
         /** metadata  */
-        if (Services::Registry()->get('Request\\metadata_title', '') == '') {
-            Services::Registry()->set('Request\\metadata_title',
-                Services::Registry()->get('Configuration\\metadata_title', ''));
+        if (Services::Registry()->get('Request', 'metadata_title', '') == '') {
+            Services::Registry()->set('Request', 'metadata_title',
+                Services::Registry()->get('Configuration', 'metadata_title', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_description', '') == '') {
-            Services::Registry()->set('Request\\metadata_description',
-                Services::Registry()->get('Configuration\\metadata_description', ''));
+        if (Services::Registry()->get('Request', 'metadata_description', '') == '') {
+            Services::Registry()->set('Request', 'metadata_description',
+                Services::Registry()->get('Configuration', 'metadata_description', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_keywords', '') == '') {
-            Services::Registry()->set('Request\\metadata_keywords',
-                Services::Registry()->get('Configuration\\metadata_keywords', ''));
+        if (Services::Registry()->get('Request', 'metadata_keywords', '') == '') {
+            Services::Registry()->set('Request', 'metadata_keywords',
+                Services::Registry()->get('Configuration', 'metadata_keywords', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_author', '') == '') {
-            Services::Registry()->set('Request\\metadata_author',
-                Services::Registry()->get('Configuration\\metadata_author', ''));
+        if (Services::Registry()->get('Request', 'metadata_author', '') == '') {
+            Services::Registry()->set('Request', 'metadata_author',
+                Services::Registry()->get('Configuration', 'metadata_author', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_content_rights', '') == '') {
-            Services::Registry()->set('Request\\metadata_content_rights',
-                Services::Registry()->get('Configuration\\metadata_content_rights', ''));
+        if (Services::Registry()->get('Request', 'metadata_content_rights', '') == '') {
+            Services::Registry()->set('Request', 'metadata_content_rights',
+                Services::Registry()->get('Configuration', 'metadata_content_rights', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_robots', '') == '') {
-            Services::Registry()->set('Request\\metadata_robots',
-                Services::Registry()->get('Configuration\\metadata_robots', ''));
+        if (Services::Registry()->get('Request', 'metadata_robots', '') == '') {
+            Services::Registry()->set('Request', 'metadata_robots',
+                Services::Registry()->get('Configuration', 'metadata_robots', ''));
         }
 
         $this->parameters = Molajo::Helper()->mergeParameters('Extension',
@@ -968,12 +968,12 @@ Class Route
     protected function getUser()
     {
 
-        if (Services::Registry()->get('Request\\theme_id', 0) == 0) {
-            Services::Registry()->set('Request\\theme_id',
+        if (Services::Registry()->get('Request', 'theme_id', 0) == 0) {
+            Services::Registry()->set('Request', 'theme_id',
                 Services::Registry()->get('UserParameters\\user_theme_id', 0));
         }
-        if (Services::Registry()->get('Request\\page_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\page_view_id',
+        if (Services::Registry()->get('Request', 'page_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'page_view_id',
                 Services::Registry()->get('UserParameters\\user_page_view_id', 0));
         }
 
@@ -988,55 +988,55 @@ Class Route
      */
     protected function getApplicationDefaults()
     {
-        if (Services::Registry()->get('Request\\theme_id', 0) == 0) {
-            Services::Registry()->set('Request\\theme_id',
-                Services::Registry()->get('Configuration\\default_theme_id', ''));
+        if (Services::Registry()->get('Request', 'theme_id', 0) == 0) {
+            Services::Registry()->set('Request', 'theme_id',
+                Services::Registry()->get('Configuration', 'default_theme_id', ''));
         }
 
-        if (Services::Registry()->get('Request\\page_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\page_view_id',
-                Services::Registry()->get('Configuration\\default_page_view_id', ''));
+        if (Services::Registry()->get('Request', 'page_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'page_view_id',
+                Services::Registry()->get('Configuration', 'default_page_view_id', ''));
         }
 
-        if ((int)Services::Registry()->get('Request\\template_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\template_view_id',
+        if ((int)Services::Registry()->get('Request', 'template_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'template_view_id',
                 Molajo::Helper()
                     ->getViewDefaultsApplication('View', 'template',
-                    Services::Registry()->get('Request\\mvc_task', ''),
-                    (int)Services::Registry()->get('Request\\mvc_id', 0))
+                    Services::Registry()->get('Request', 'mvc_task', ''),
+                    (int)Services::Registry()->get('Request', 'mvc_id', 0))
             );
         }
 
-        if ((int)Services::Registry()->get('Request\\wrap_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\wrap_view_id',
-                Molajo::Helper()->getViewDefaultsApplication('View', 'wrap', Services::Registry()->get('Request\\mvc_task', ''), (int)Services::Registry()->get('Request\\mvc_id', 0))
+        if ((int)Services::Registry()->get('Request', 'wrap_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'wrap_view_id',
+                Molajo::Helper()->getViewDefaultsApplication('View', 'wrap', Services::Registry()->get('Request', 'mvc_task', ''), (int)Services::Registry()->get('Request', 'mvc_id', 0))
             );
         }
 
         /** metadata  */
-        if (Services::Registry()->get('Request\\metadata_title', '') == '') {
-            Services::Registry()->set('Request\\metadata_title',
-                Services::Registry()->get('Configuration\\metadata_title', ''));
+        if (Services::Registry()->get('Request', 'metadata_title', '') == '') {
+            Services::Registry()->set('Request', 'metadata_title',
+                Services::Registry()->get('Configuration', 'metadata_title', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_description', '') == '') {
-            Services::Registry()->set('Request\\metadata_description',
-                Services::Registry()->get('Configuration\\metadata_description', ''));
+        if (Services::Registry()->get('Request', 'metadata_description', '') == '') {
+            Services::Registry()->set('Request', 'metadata_description',
+                Services::Registry()->get('Configuration', 'metadata_description', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_keywords', '') == '') {
-            Services::Registry()->set('Request\\metadata_keywords',
-                Services::Registry()->get('Configuration\\metadata_keywords', ''));
+        if (Services::Registry()->get('Request', 'metadata_keywords', '') == '') {
+            Services::Registry()->set('Request', 'metadata_keywords',
+                Services::Registry()->get('Configuration', 'metadata_keywords', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_author', '') == '') {
-            Services::Registry()->set('Request\\metadata_author',
-                Services::Registry()->get('Configuration\\metadata_author', ''));
+        if (Services::Registry()->get('Request', 'metadata_author', '') == '') {
+            Services::Registry()->set('Request', 'metadata_author',
+                Services::Registry()->get('Configuration', 'metadata_author', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_content_rights', '') == '') {
-            Services::Registry()->set('Request\\metadata_content_rights',
-                Services::Registry()->get('Configuration\\metadata_content_rights', ''));
+        if (Services::Registry()->get('Request', 'metadata_content_rights', '') == '') {
+            Services::Registry()->set('Request', 'metadata_content_rights',
+                Services::Registry()->get('Configuration', 'metadata_content_rights', ''));
         }
-        if (Services::Registry()->get('Request\\metadata_robots', '') == '') {
-            Services::Registry()->set('Request\\metadata_robots',
-                Services::Registry()->get('Configuration\\metadata_robots', ''));
+        if (Services::Registry()->get('Request', 'metadata_robots', '') == '') {
+            Services::Registry()->set('Request', 'metadata_robots',
+                Services::Registry()->get('Configuration', 'metadata_robots', ''));
         }
         return;
     }
@@ -1052,53 +1052,53 @@ Class Route
         $row = Molajo::Helper()
             ->get('Extension',
             CATALOG_TYPE_EXTENSION_THEME,
-            Services::Registry()->get('Request\\theme_id')
+            Services::Registry()->get('Request', 'theme_id')
         );
 
         if (count($row) == 0) {
-            if (Services::Registry()->set('Request\\theme_name') == 'system') {
+            if (Services::Registry()->set('Request', 'theme_name') == 'system') {
                 // error
             } else {
                 Services::Registry()
-                    ->set('Request\\theme_name', 'system');
+                    ->set('Request', 'theme_name', 'system');
                 $row = Molajo::Helper()
                     ->get('Theme',
-                    Services::Registry()->get('Request\\theme_name')
+                    Services::Registry()->get('Request', 'theme_name')
                 );
                 if (count($row) > 0) {
                     // error
                 }
             }
         }
-        Services::Registry()->set('Request\\theme_name', $row->title);
-        Services::Registry()->set('Request\\theme_id', $row->extension_instance_id);
+        Services::Registry()->set('Request', 'theme_name', $row->title);
+        Services::Registry()->set('Request', 'theme_id', $row->extension_instance_id);
 
-        Services::Registry()->set('Request\\theme_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
-        Services::Registry()->set('Request\\theme_catalog_id', $row->catalog_id);
-        Services::Registry()->set('Request\\theme_view_group_id', $row->view_group_id);
-        Services::Registry()->set('Request\\theme_language', $row->language);
+        Services::Registry()->set('Request', 'theme_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
+        Services::Registry()->set('Request', 'theme_catalog_id', $row->catalog_id);
+        Services::Registry()->set('Request', 'theme_view_group_id', $row->view_group_id);
+        Services::Registry()->set('Request', 'theme_language', $row->language);
 
-        Services::Registry()->set('Request\\theme_custom_fields', $row->custom_fields);
-        Services::Registry()->set('Request\\theme_metadata', $row->metadata);
+        Services::Registry()->set('Request', 'theme_custom_fields', $row->custom_fields);
+        Services::Registry()->set('Request', 'theme_metadata', $row->metadata);
 
         $parameters = Services::Registry()->initialise();
         $parameters->loadString($row->parameters);
-        Services::Registry()->set('Request\\theme_parameters', $parameters);
+        Services::Registry()->set('Request', 'theme_parameters', $parameters);
 
-        if (Services::Registry()->get('Request\\page_view_id', 0) == 0) {
-            Services::Registry()->set('Request\\page_view_id', $parameters->get('page_view_id', 0));
+        if (Services::Registry()->get('Request', 'page_view_id', 0) == 0) {
+            Services::Registry()->set('Request', 'page_view_id', $parameters->get('page_view_id', 0));
         }
 
-        Services::Registry()->set('Request\\theme_path',
-            Molajo::Helper()->getPath('Theme', Services::Registry()->get('Request\\theme_name'))
+        Services::Registry()->set('Request', 'theme_path',
+            Molajo::Helper()->getPath('Theme', Services::Registry()->get('Request', 'theme_name'))
         );
 
-        Services::Registry()->set('Request\\theme_path_url',
-            Molajo::Helper()->getPathURL('Theme', Services::Registry()->get('Request\\theme_name'))
+        Services::Registry()->set('Request', 'theme_path_url',
+            Molajo::Helper()->getPathURL('Theme', Services::Registry()->get('Request', 'theme_name'))
         );
 
-        Services::Registry()->set('Request\\theme_favicon',
-            Molajo::Helper()->getFavicon('Theme', Services::Registry()->get('Request\\theme_name'))
+        Services::Registry()->set('Request', 'theme_favicon',
+            Molajo::Helper()->getFavicon('Theme', Services::Registry()->get('Request', 'theme_name'))
         );
 
         return;
@@ -1113,9 +1113,9 @@ Class Route
     protected function getPageView()
     {
         /** Get Name */
-        Services::Registry()->set('Request\\page_view_name',
+        Services::Registry()->set('Request', 'page_view_name',
             Molajo::Helper()->getInstanceTitle('Extension',
-                Services::Registry()->get('Request\\template_view_id')
+                Services::Registry()->get('Request', 'template_view_id')
             )
         );
 
@@ -1123,20 +1123,20 @@ Class Route
         $paths = Molajo::Helper()
             ->get(
             'View',
-            Services::Registry()->get('Request\\page_view_name'),
+            Services::Registry()->get('Request', 'page_view_name'),
             'Page',
-            Services::Registry()->get('Request\\extension_instance_name'),
-            Services::Registry()->get('Request\\extension_type'),
-            Services::Registry()->get('Request\\theme_name')
+            Services::Registry()->get('Request', 'extension_instance_name'),
+            Services::Registry()->get('Request', 'extension_type'),
+            Services::Registry()->get('Request', 'theme_name')
         );
 
         if ($paths === false) {
             return false;
         }
 
-        Services::Registry()->set('Request\\page_view_path', $paths[0]);
-        Services::Registry()->set('Request\\page_view_path_url', $paths[1]);
-        Services::Registry()->set('Request\\page_view_include', $paths[0] . '/index.php');
+        Services::Registry()->set('Request', 'page_view_path', $paths[0]);
+        Services::Registry()->set('Request', 'page_view_path_url', $paths[1]);
+        Services::Registry()->set('Request', 'page_view_include', $paths[0] . '/index.php');
 
         return true;
     }
@@ -1150,29 +1150,29 @@ Class Route
     protected function getTemplateView()
     {
         /** Get Name */
-        Services::Registry()->set('Request\\template_view_name',
+        Services::Registry()->set('Request', 'template_view_name',
             Molajo::Helper()->getInstanceTitle('Extension',
-                Services::Registry()->get('Request\\template_view_id')
+                Services::Registry()->get('Request', 'template_view_id')
             )
         );
-        echo Services::Registry()->get('Request\\template_view_name');
+        echo Services::Registry()->get('Request', 'template_view_name');
 
         /** Page Path */
         $paths = Molajo::Helper()->get(
             'View',
-            Services::Registry()->get('Request\\template_view_name'),
+            Services::Registry()->get('Request', 'template_view_name'),
             'Template',
-            Services::Registry()->get('Request\\extension_instance_name'),
-            Services::Registry()->get('Request\\extension_type'),
-            Services::Registry()->get('Request\\theme_name')
+            Services::Registry()->get('Request', 'extension_instance_name'),
+            Services::Registry()->get('Request', 'extension_type'),
+            Services::Registry()->get('Request', 'theme_name')
         );
 
         if ($paths === false) {
             return false;
         }
 
-        Services::Registry()->set('Request\\template_view_path', $paths[0]);
-        Services::Registry()->set('Request\\template_view_path_url', $paths[1]);
+        Services::Registry()->set('Request', 'template_view_path', $paths[0]);
+        Services::Registry()->set('Request', 'template_view_path_url', $paths[1]);
 
         return true;
     }
@@ -1188,24 +1188,24 @@ Class Route
         $this->set('wrap_view_name',
             Molajo::Helper()->getInstanceTitle(
                 'Extension',
-                Services::Registry()->get('Request\\wrap_view_id')
+                Services::Registry()->get('Request', 'wrap_view_id')
             )
         );
 
         $wrapHelper = Molajo::Helper()
             ->findPath(
             'View',
-            Services::Registry()->get('Request\\wrap_view_name'),
+            Services::Registry()->get('Request', 'wrap_view_name'),
             'Wrap',
-            Services::Registry()->get('Request\\extension_title'),
-            Services::Registry()->get('Request\\extension_instance_name'),
-            Services::Registry()->get('Request\\theme_name')
+            Services::Registry()->get('Request', 'extension_title'),
+            Services::Registry()->get('Request', 'extension_instance_name'),
+            Services::Registry()->get('Request', 'theme_name')
         );
 
         Services::Registry()
-            ->set('Request\\wrap_view_path', $wrapHelper->view_path);
+            ->set('Request', 'wrap_view_path', $wrapHelper->view_path);
         Services::Registry()
-            ->set('Request\\wrap_view_path_url', $wrapHelper->view_path_url);
+            ->set('Request', 'wrap_view_path_url', $wrapHelper->view_path_url);
 
         return;
     }
@@ -1221,17 +1221,17 @@ Class Route
      */
     protected function error($code, $message = 'Internal server error')
     {
-        Services::Registry()->set('Request\\error_status', true);
-        Services::Registry()->set('Request\\mvc_controller', 'display');
-        Services::Registry()->set('Request\\mvc_task', 'display');
-        Services::Registry()->set('Request\\mvc_model', 'messages');
+        Services::Registry()->set('Request', 'error_status', true);
+        Services::Registry()->set('Request', 'mvc_controller', 'display');
+        Services::Registry()->set('Request', 'mvc_task', 'display');
+        Services::Registry()->set('Request', 'mvc_model', 'messages');
 
         /** default error theme and page */
-        Services::Registry()->set('Request\\theme_id',
-            Services::Registry()->get('Configuration\\error_theme_id', 'system')
+        Services::Registry()->set('Request', 'theme_id',
+            Services::Registry()->get('Configuration', 'error_theme_id', 'system')
         );
-        Services::Registry()->set('Request\\page_view_id',
-            Services::Registry()->get('Configuration\\error_page_view_id', 'error')
+        Services::Registry()->set('Request', 'page_view_id',
+            Services::Registry()->get('Configuration', 'error_page_view_id', 'error')
         );
 
         /** set header status, message and override default theme/page, if needed */
@@ -1267,19 +1267,19 @@ Class Route
             ->setStatusCode(503);
 
         Services::Message()
-            ->set(Services::Registry()->get('Configuration\\offline_message',
+            ->set(Services::Registry()->get('Configuration', 'offline_message',
                 'This site is not available.<br /> Please check back again soon.'
             ),
             MESSAGE_TYPE_WARNING,
             503
         );
 
-        Services::Registry()->set('Request\\theme_id',
-            Services::Registry()->get('Configuration\\offline_theme_id', 'system')
+        Services::Registry()->set('Request', 'theme_id',
+            Services::Registry()->get('Configuration', 'offline_theme_id', 'system')
         );
 
-        Services::Registry()->set('Request\\page_view_id',
-            Services::Registry()->get('Configuration\\offline_page_view_id', 'offline')
+        Services::Registry()->set('Request', 'page_view_id',
+            Services::Registry()->get('Configuration', 'offline_page_view_id', 'offline')
         );
 
         return;
@@ -1297,7 +1297,7 @@ Class Route
             ->setStatusCode(403);
 
         Services::Message()->set(
-            Services::Registry()->get('Configuration\\error_403_message', 'Not Authorised.'),
+            Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
             MESSAGE_TYPE_ERROR,
             403
         );
@@ -1317,7 +1317,7 @@ Class Route
             ->setStatusCode(404);
 
         Services::Message()->set
-        (Services::Registry()->get('Configuration\\error_404_message', 'Page not found.'),
+        (Services::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
             MESSAGE_TYPE_ERROR,
             404);
 
@@ -1341,148 +1341,148 @@ Class Route
 		Services::Registry()->create('request');
 
 		/** request */
-		Services::Registry()->set('Request\\request_url_base',
+		Services::Registry()->set('Request', 'request_url_base',
 			BASE_URL);
-		Services::Registry()->set('Request\\request_catalog_id', 0);
-		Services::Registry()->set('Request\\request_catalog_type_id', 0);
-		Services::Registry()->set('Request\\request_url_query', '');
-		Services::Registry()->set('Request\\request_url', '');
-		Services::Registry()->set('Request\\request_url_sef', '');
-		Services::Registry()->set('Request\\request_url_home', false);
+		Services::Registry()->set('Request', 'request_catalog_id', 0);
+		Services::Registry()->set('Request', 'request_catalog_type_id', 0);
+		Services::Registry()->set('Request', 'request_url_query', '');
+		Services::Registry()->set('Request', 'request_url', '');
+		Services::Registry()->set('Request', 'request_url_sef', '');
+		Services::Registry()->set('Request', 'request_url_home', false);
 
 		/** menu item data */
-		Services::Registry()->set('Request\\menu_item_id', 0);
-		Services::Registry()->set('Request\\menu_item_title', '');
-		Services::Registry()->set('Request\\menu_item_catalog_type_id',
+		Services::Registry()->set('Request', 'menu_item_id', 0);
+		Services::Registry()->set('Request', 'menu_item_title', '');
+		Services::Registry()->set('Request', 'menu_item_catalog_type_id',
 			CATALOG_TYPE_MENU_ITEM_COMPONENT);
-		Services::Registry()->set('Request\\menu_item_catalog_id', 0);
-		Services::Registry()->set('Request\\menu_item_view_group_id', 0);
-		Services::Registry()->set('Request\\menu_item_custom_fields', array());
-		Services::Registry()->set('Request\\menu_item_parameters', array());
-		Services::Registry()->set('Request\\menu_item_metadata', array());
-		Services::Registry()->set('Request\\menu_item_language', '');
-		Services::Registry()->set('Request\\menu_item_translation_of_id', 0);
+		Services::Registry()->set('Request', 'menu_item_catalog_id', 0);
+		Services::Registry()->set('Request', 'menu_item_view_group_id', 0);
+		Services::Registry()->set('Request', 'menu_item_custom_fields', array());
+		Services::Registry()->set('Request', 'menu_item_parameters', array());
+		Services::Registry()->set('Request', 'menu_item_metadata', array());
+		Services::Registry()->set('Request', 'menu_item_language', '');
+		Services::Registry()->set('Request', 'menu_item_translation_of_id', 0);
 
 		/** source data */
-		Services::Registry()->set('Request\\source_id', 0);
-		Services::Registry()->set('Request\\source_title', '');
-		Services::Registry()->set('Request\\source_catalog_type_id', 0);
-		Services::Registry()->set('Request\\source_catalog_id', 0);
-		Services::Registry()->set('Request\\source_view_group_id', 0);
-		Services::Registry()->set('Request\\source_custom_fields', array());
-		Services::Registry()->set('Request\\source_parameters', array());
-		Services::Registry()->set('Request\\source_metadata', array());
-		Services::Registry()->set('Request\\source_language', '');
-		Services::Registry()->set('Request\\source_translation_of_id', 0);
-		Services::Registry()->set('Request\\source_table', '');
-		Services::Registry()->set('Request\\source_last_modified', '');
+		Services::Registry()->set('Request', 'source_id', 0);
+		Services::Registry()->set('Request', 'source_title', '');
+		Services::Registry()->set('Request', 'source_catalog_type_id', 0);
+		Services::Registry()->set('Request', 'source_catalog_id', 0);
+		Services::Registry()->set('Request', 'source_view_group_id', 0);
+		Services::Registry()->set('Request', 'source_custom_fields', array());
+		Services::Registry()->set('Request', 'source_parameters', array());
+		Services::Registry()->set('Request', 'source_metadata', array());
+		Services::Registry()->set('Request', 'source_language', '');
+		Services::Registry()->set('Request', 'source_translation_of_id', 0);
+		Services::Registry()->set('Request', 'source_table', '');
+		Services::Registry()->set('Request', 'source_last_modified', '');
 
 		/** extension */
-		Services::Registry()->set('Request\\extension_instance_id', 0);
-		Services::Registry()->set('Request\\extension_instance_name', '');
-		Services::Registry()->set('Request\\extension_catalog_type_id', 0);
-		Services::Registry()->set('Request\\extension_catalog_id', 0);
-		Services::Registry()->set('Request\\extension_view_group_id', 0);
-		Services::Registry()->set('Request\\extension_custom_fields', array());
-		Services::Registry()->set('Request\\extension_metadata', array());
-		Services::Registry()->set('Request\\extension_parameters', array());
-		Services::Registry()->set('Request\\extension_path', '');
-		Services::Registry()->set('Request\\extension_type', '');
-		Services::Registry()->set('Request\\extension_event_type', '');
+		Services::Registry()->set('Request', 'extension_instance_id', 0);
+		Services::Registry()->set('Request', 'extension_instance_name', '');
+		Services::Registry()->set('Request', 'extension_catalog_type_id', 0);
+		Services::Registry()->set('Request', 'extension_catalog_id', 0);
+		Services::Registry()->set('Request', 'extension_view_group_id', 0);
+		Services::Registry()->set('Request', 'extension_custom_fields', array());
+		Services::Registry()->set('Request', 'extension_metadata', array());
+		Services::Registry()->set('Request', 'extension_parameters', array());
+		Services::Registry()->set('Request', 'extension_path', '');
+		Services::Registry()->set('Request', 'extension_type', '');
+		Services::Registry()->set('Request', 'extension_event_type', '');
 
 		/** primary category */
-		Services::Registry()->set('Request\\category_id', 0);
-		Services::Registry()->set('Request\\category_title', '');
-		Services::Registry()->set('Request\\category_catalog_type_id',
+		Services::Registry()->set('Request', 'category_id', 0);
+		Services::Registry()->set('Request', 'category_title', '');
+		Services::Registry()->set('Request', 'category_catalog_type_id',
 			CATALOG_TYPE_CATEGORY_LIST);
-		Services::Registry()->set('Request\\category_catalog_id', 0);
-		Services::Registry()->set('Request\\category_view_group_id', 0);
-		Services::Registry()->set('Request\\category_custom_fields', array());
-		Services::Registry()->set('Request\\category_parameters', array());
-		Services::Registry()->set('Request\\category_metadata', array());
-		Services::Registry()->set('Request\\category_language', '');
-		Services::Registry()->set('Request\\category_translation_of_id', 0);
+		Services::Registry()->set('Request', 'category_catalog_id', 0);
+		Services::Registry()->set('Request', 'category_view_group_id', 0);
+		Services::Registry()->set('Request', 'category_custom_fields', array());
+		Services::Registry()->set('Request', 'category_parameters', array());
+		Services::Registry()->set('Request', 'category_metadata', array());
+		Services::Registry()->set('Request', 'category_language', '');
+		Services::Registry()->set('Request', 'category_translation_of_id', 0);
 
 		/** merged */
-		Services::Registry()->set('Request\\metadata_title', '');
-		Services::Registry()->set('Request\\metadata_description', '');
-		Services::Registry()->set('Request\\metadata_keywords', '');
-		Services::Registry()->set('Request\\metadata_author', '');
-		Services::Registry()->set('Request\\metadata_content_rights', '');
-		Services::Registry()->set('Request\\metadata_robots', '');
-		Services::Registry()->set('Request\\metadata_additional_array', array());
+		Services::Registry()->set('Request', 'metadata_title', '');
+		Services::Registry()->set('Request', 'metadata_description', '');
+		Services::Registry()->set('Request', 'metadata_keywords', '');
+		Services::Registry()->set('Request', 'metadata_author', '');
+		Services::Registry()->set('Request', 'metadata_content_rights', '');
+		Services::Registry()->set('Request', 'metadata_robots', '');
+		Services::Registry()->set('Request', 'metadata_additional_array', array());
 
 		/** theme */
-		Services::Registry()->set('Request\\theme_id', 0);
-		Services::Registry()->set('Request\\theme_name', '');
-		Services::Registry()->set('Request\\theme_catalog_type_id',
+		Services::Registry()->set('Request', 'theme_id', 0);
+		Services::Registry()->set('Request', 'theme_name', '');
+		Services::Registry()->set('Request', 'theme_catalog_type_id',
 			CATALOG_TYPE_EXTENSION_THEME);
-		Services::Registry()->set('Request\\theme_catalog_id', 0);
-		Services::Registry()->set('Request\\theme_view_group_id', 0);
-		Services::Registry()->set('Request\\theme_custom_fields', array());
-		Services::Registry()->set('Request\\theme_metadata', array());
-		Services::Registry()->set('Request\\theme_parameters', array());
-		Services::Registry()->set('Request\\theme_path', '');
-		Services::Registry()->set('Request\\theme_path_url', '');
-		Services::Registry()->set('Request\\theme_include', '');
-		Services::Registry()->set('Request\\theme_favicon', '');
+		Services::Registry()->set('Request', 'theme_catalog_id', 0);
+		Services::Registry()->set('Request', 'theme_view_group_id', 0);
+		Services::Registry()->set('Request', 'theme_custom_fields', array());
+		Services::Registry()->set('Request', 'theme_metadata', array());
+		Services::Registry()->set('Request', 'theme_parameters', array());
+		Services::Registry()->set('Request', 'theme_path', '');
+		Services::Registry()->set('Request', 'theme_path_url', '');
+		Services::Registry()->set('Request', 'theme_include', '');
+		Services::Registry()->set('Request', 'theme_favicon', '');
 
 		/** page */
-		Services::Registry()->set('Request\\page_view_id', 0);
-		Services::Registry()->set('Request\\page_view_name', '');
-		Services::Registry()->set('Request\\page_view_css_id', '');
-		Services::Registry()->set('Request\\page_view_css_class', '');
-		Services::Registry()->set('Request\\page_view_catalog_type_id',
+		Services::Registry()->set('Request', 'page_view_id', 0);
+		Services::Registry()->set('Request', 'page_view_name', '');
+		Services::Registry()->set('Request', 'page_view_css_id', '');
+		Services::Registry()->set('Request', 'page_view_css_class', '');
+		Services::Registry()->set('Request', 'page_view_catalog_type_id',
 			CATALOG_TYPE_EXTENSION_PAGE_VIEW);
-		Services::Registry()->set('Request\\page_view_catalog_id', 0);
-		Services::Registry()->set('Request\\page_view_path', '');
-		Services::Registry()->set('Request\\page_view_path_url', '');
-		Services::Registry()->set('Request\\page_view_include', '');
+		Services::Registry()->set('Request', 'page_view_catalog_id', 0);
+		Services::Registry()->set('Request', 'page_view_path', '');
+		Services::Registry()->set('Request', 'page_view_path_url', '');
+		Services::Registry()->set('Request', 'page_view_include', '');
 
 		/** template */
-		Services::Registry()->set('Request\\template_view_id', 0);
-		Services::Registry()->set('Request\\template_view_name', '');
-		Services::Registry()->set('Request\\template_view_css_id', '');
-		Services::Registry()->set('Request\\template_view_css_class', '');
-		Services::Registry()->set('Request\\template_view_catalog_type_id',
+		Services::Registry()->set('Request', 'template_view_id', 0);
+		Services::Registry()->set('Request', 'template_view_name', '');
+		Services::Registry()->set('Request', 'template_view_css_id', '');
+		Services::Registry()->set('Request', 'template_view_css_class', '');
+		Services::Registry()->set('Request', 'template_view_catalog_type_id',
 			CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW);
-		Services::Registry()->set('Request\\template_view_catalog_id', 0);
-		Services::Registry()->set('Request\\template_view_path', '');
-		Services::Registry()->set('Request\\template_view_path_url', '');
+		Services::Registry()->set('Request', 'template_view_catalog_id', 0);
+		Services::Registry()->set('Request', 'template_view_path', '');
+		Services::Registry()->set('Request', 'template_view_path_url', '');
 
 		/** wrap */
-		Services::Registry()->set('Request\\wrap_view_id', 0);
-		Services::Registry()->set('Request\\wrap_view_name', '');
-		Services::Registry()->set('Request\\wrap_view_css_id', '');
-		Services::Registry()->set('Request\\wrap_view_css_class', '');
-		Services::Registry()->set('Request\\wrap_view_catalog_type_id',
+		Services::Registry()->set('Request', 'wrap_view_id', 0);
+		Services::Registry()->set('Request', 'wrap_view_name', '');
+		Services::Registry()->set('Request', 'wrap_view_css_id', '');
+		Services::Registry()->set('Request', 'wrap_view_css_class', '');
+		Services::Registry()->set('Request', 'wrap_view_catalog_type_id',
 			CATALOG_TYPE_EXTENSION_WRAP_VIEW);
-		Services::Registry()->set('Request\\wrap_view_catalog_id', 0);
-		Services::Registry()->set('Request\\wrap_view_path', '');
-		Services::Registry()->set('Request\\wrap_view_path_url', '');
+		Services::Registry()->set('Request', 'wrap_view_catalog_id', 0);
+		Services::Registry()->set('Request', 'wrap_view_path', '');
+		Services::Registry()->set('Request', 'wrap_view_path_url', '');
 
 		/** mvc parameters */
-		Services::Registry()->set('Request\\mvc_controller', '');
-		Services::Registry()->set('Request\\mvc_option', '');
-		Services::Registry()->set('Request\\mvc_task', '');
-		Services::Registry()->set('Request\\mvc_model', '');
-		Services::Registry()->set('Request\\mvc_id', 0);
-		Services::Registry()->set('Request\\mvc_category_id', 0);
-		Services::Registry()->set('Request\\mvc_url_parameters', array());
-		Services::Registry()->set('Request\\mvc_suppress_no_results', false);
+		Services::Registry()->set('Request', 'mvc_controller', '');
+		Services::Registry()->set('Request', 'mvc_option', '');
+		Services::Registry()->set('Request', 'mvc_task', '');
+		Services::Registry()->set('Request', 'mvc_model', '');
+		Services::Registry()->set('Request', 'mvc_id', 0);
+		Services::Registry()->set('Request', 'mvc_category_id', 0);
+		Services::Registry()->set('Request', 'mvc_url_parameters', array());
+		Services::Registry()->set('Request', 'mvc_suppress_no_results', false);
 
 		/** results */
-		Services::Registry()->set('Request\\error_status', false);
-		Services::Registry()->set('Request\\status_authorised', false);
-		Services::Registry()->set('Request\\status_found', false);
+		Services::Registry()->set('Request', 'error_status', false);
+		Services::Registry()->set('Request', 'status_authorised', false);
+		Services::Registry()->set('Request', 'status_found', false);
 
 		/**
 		 *  Display Controller saves the query results for the primary request
 		 *      extension for possible reuse by other extensions. MolajoRequestModel
 		 *      can be used to retrieve the data.
 		 */
-		Services::Registry()->set('Request\\query_resultset', array());
-		Services::Registry()->set('Request\\query_pagination', array());
-		Services::Registry()->set('Request\\query_state', array());
+		Services::Registry()->set('Request', 'query_resultset', array());
+		Services::Registry()->set('Request', 'query_pagination', array());
+		Services::Registry()->set('Request', 'query_state', array());
     }
 }

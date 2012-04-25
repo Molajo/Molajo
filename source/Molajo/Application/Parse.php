@@ -123,17 +123,18 @@ Class Parse
      */
     public function process()
     {
-
 		/** Retrieve overrides */
-		$sequenceXML = Services::Registry()->get('DependencyInjection\\sequence_xml', '');
-		$finalXML = Services::Registry()->get('DependencyInjection\\final_xml', '');
+		$sequenceXML = Services::Registry()->get('DependencyInjection', 'sequence_xml', '');
+		$finalXML = Services::Registry()->get('DependencyInjection', 'final_xml', '');
 
-        /**
+		/**
          *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
-        $formatXML = '';
-        if (Services::Filesystem()->fileExists($sequenceXML)) {
+
+		$formatXML = '';
+
+		if (Services::Filesystem()->fileExists($sequenceXML)) {
             $formatXML = $sequenceXML;
         } else {
             $formatXML = CONFIGURATION_FOLDER. '/includes-page.xml';
@@ -146,48 +147,49 @@ Class Parse
         }
 
         $sequence = simplexml_load_file($formatXML);
-        foreach ($sequence->include as $next) {
+
+		foreach ($sequence->include as $next) {
             $this->sequence[] = (string)$next;
         }
 
         /** Theme Parameters */
         Services::Registry()->create('theme');
-		echo 'adfasdfs';
-		die;
-        $themeParameters = Services::Registry()->get('Request\\theme_parameters');
 
-        Services::Registry()->loadArray('theme',
+		$themeParameters = Services::Registry()->get('Request', 'theme_parameters');
+
+		Services::Registry()->loadArray('theme',
             array(
-                'theme' => Services::Registry()->get('Request\\theme_name'),
-                'theme_path' => Services::Registry()->get('Request\\theme_path') . '/' . 'index.php',
-                'page' => Services::Registry()->get('Request\\page_view_include'),
-                'parameters' => Services::Registry()->get('Request\\theme_parameters')
-            )
+				'theme' => Services::Registry()->get('Request', 'theme_name'),
+				'theme_path' => Services::Registry()->get('Request', 'theme_path') . '/' . 'index.php',
+				'page' => Services::Registry()->get('Request', 'page_view_include'),
+				'parameters' => Services::Registry()->get('Request', 'theme_parameters')
+			)
         );
 
-        $helperFile = Services::Registry()->get('Request\\theme_path')
-            . '/helpers/theme.php';
+		$helperFile = Services::Registry()->get('Request', 'theme_path')
+			. '/helpers/theme.php';
 
         if (file_exists($helperFile)) {
             require_once $helperFile;
 
             $helperClass = 'Molajo' .
-                ucfirst(Services::Registry()->get('Request\\theme_name'))
-                . 'ThemeHelper';
+				ucfirst(Services::Registry()->get('Request', 'theme_name'))
+				. 'ThemeHelper';
         }
 
         /** Before Event */
         // Services::Dispatcher()->notify('onBeforeRender');
 
         $this->final = false;
-        $body = $this->_renderLoop();
+		$body = $this->renderLoop();
 
-        /**
+		/**
          *  Final Includers: Now, the theme, head, messages, and defer includes run
          *      and any cleanup of unfound <include values can take place
          */
         $formatXML = '';
-        if (Services::Filesystem()->fileExists($finalXML)) {
+
+		if (Services::Filesystem()->fileExists($finalXML)) {
             $formatXML = $finalXML;
         } else {
             $formatXML = CONFIGURATION_FOLDER . '/includes-final.xml';
@@ -223,32 +225,33 @@ Class Parse
         }
 
         $this->final = true;
-        $body = $this->_renderLoop($body);
+		$body = $this->renderLoop($body);
 
-        /** after rendering */
+		/** after rendering */
         //        Services::Dispatcher()->notify('onAfterRender');
 
         return $body;
     }
 
     /**
-     *  _renderLoop
-     *
+	 *  renderLoop
+	 *
      * Parse the Theme and Page View, and then rendered output, for
      *  <include:type statements
      *
      * @return string  $body     Rendered output for the Response Head and Body
      * @since  1.0
      */
-    protected function _renderLoop($body = null)
-    {
+	protected function renderLoop($body = null)
+	{
         /** initial run: start with theme and page */
         if ($body == null) {
             ob_start();
             require $this->parameters->get('theme_path');
             $this->rendered_output = ob_get_contents();
             ob_end_clean();
-        } else {
+
+		} else {
             /* final run (for page head): start with rendered body */
             $this->rendered_output = $body;
         }
@@ -260,13 +263,13 @@ Class Parse
 
             $loop++;
 
-            $this->_parseIncludeRequests();
+			$this->parseIncludeRequests();
 
-            if (count($this->include_request) == 0) {
+			if (count($this->include_request) == 0) {
                 break;
             } else {
-                $this->rendered_output = $this->_callIncluder();
-            }
+				$this->rendered_output = $this->callIncluder();
+			}
 
             if ($loop > STOP_LOOP) {
                 break;
@@ -277,16 +280,16 @@ Class Parse
     }
 
     /**
-     * _parseIncludeRequests
-     *
+	 * parseIncludeRequests
+	 *
      * Parse the theme (first) and then rendered output (subsequent calls)
      * in search of include statements
      *
      * @return  array
      * @since   1.0
      */
-    protected function _parseIncludeRequests()
-    {
+	protected function parseIncludeRequests()
+	{
         $matches = array();
         $this->include_request = array();
         $i = 0;
@@ -314,9 +317,11 @@ Class Parse
                     $this->include_request[$i]['name'] = $includerType;
                     $this->include_request[$i]['replace'] = $includeStatement;
 
-                    /** Includer Attributes */
-                } else {
-                    $attributes = str_replace('"', '', $part);
+
+				} else {
+
+					/** Includer Attributes */
+					$attributes = str_replace('"', '', $part);
 
                     if (trim($attributes) == '') {
                     } else {
@@ -333,15 +338,15 @@ Class Parse
     }
 
     /**
-     * _callIncluder
-     *
+	 * callIncluder
+	 *
      * Invoke extension-specific includer for include statement
      *
      * @return  string rendered output
      * @since   1.0
      */
-    protected function _callIncluder()
-    {
+	protected function callIncluder()
+	{
         $replace = array();
         $with = array();
 

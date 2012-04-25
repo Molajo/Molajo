@@ -4,7 +4,7 @@ Class SiteConfiguration
     /* Site Settings */
     public $site_name = 'Molajo';
 
-    /* JDatabaseFactory Settings */
+    /* JDatabaseDriver Settings */
     public $jdatabase_dbtype = 'mysqli';
     public $jdatabase_host = 'localhost';
     public $jdatabase_user = 'root';

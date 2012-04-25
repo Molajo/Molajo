@@ -280,7 +280,7 @@ class UpdateController extends Controller
                     );
                 }
             }
-            // Services::Registry()->get('UserState\\id')
+            // Services::Registry()->get('UserState', 'id')
             //     ->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }

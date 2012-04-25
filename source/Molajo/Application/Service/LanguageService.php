@@ -416,7 +416,7 @@ Class LanguageService
 		}
 
 		/** 2. user  */
-		$language = Services::Registry()->get('User\\language');
+		$language = Services::Registry()->get('User', 'language');
 		if ($language === false) {
 		} elseif (in_array($language, $installed)) {
 			return $language;

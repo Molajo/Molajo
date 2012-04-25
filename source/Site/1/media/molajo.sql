@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2012 at 09:01 AM
+-- Generation Time: Apr 25, 2012 at 07:08 AM
 -- Server version: 5.5.9
 -- PHP Version: 5.3.6
 
@@ -1129,7 +1129,7 @@ CREATE TABLE `molajo_sites` (
 -- Dumping data for table `molajo_sites`
 --
 
-INSERT INTO `molajo_sites` VALUES(1, 10, 'Molajo', '', '', 'Primary Site', '{"custom_field1":"I am a custom field for the site object, specifically the #1 site."}', '{}', '{"metadata_title":"Molajo Site 1", "metadata_description":"Welcome to the Molajo Site 1", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
+INSERT INTO `molajo_sites` VALUES(1, 10, 'Molajo', '', '', 'Primary Site', '{"custom_field1":"I am a custom field for the site object, specifically the #1 site."}', '{"porch_light":"1"}', '{"metadata_title":"Molajo Site 1", "metadata_description":"Welcome to the Molajo Site 1", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
 
 -- --------------------------------------------------------
 

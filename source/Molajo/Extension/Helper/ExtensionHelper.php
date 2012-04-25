@@ -210,7 +210,7 @@ abstract class ExtensionHelper
      * Page Request object that will be populated by this class
      * with overall processing requirements for the page
      *
-     * Access via Services::Registry()->get('Request\\property')
+     * Access via Services::Registry()->get('Request', 'property')
      *
      * @param   Registry $parameters
      *

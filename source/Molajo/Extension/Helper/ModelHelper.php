@@ -192,10 +192,8 @@ class ModelHelper
      * @return  array
      * @since   1.0
      */
-    public function itemUserPermission(
-        $item = array(),
-        $parameters = array())
-    {
+    public function itemUserPermission($item = array(), $parameters = array())
+	{
         if (isset($item->catalog_id)) {
         } else {
             return $item;

@@ -17,9 +17,9 @@ defined('MOLAJO') or die;
 /**
  * Configuration
  *
- * @package   Molajo
+ * @package   	Molajo
  * @subpackage  Service
- * @since           1.0
+ * @since       1.0
  */
 Class ConfigurationService
 {
@@ -30,33 +30,6 @@ Class ConfigurationService
 	 * @since  1.0
 	 */
 	protected static $instance;
-
-	/**
-	 * Configuration for Site and Application
-	 *
-	 * @static
-	 * @var    $connection
-	 * @since  1.0
-	 */
-	protected $configuration = array();
-
-	/**
-	 * Custom Fields
-	 *
-	 * @static
-	 * @var    $custom_fields
-	 * @since  1.0
-	 */
-	protected $custom_fields = array();
-
-	/**
-	 * Metadata
-	 *
-	 * @static
-	 * @var    $metadata
-	 * @since  1.0
-	 */
-	protected $metadata = array();
 
 	/**
 	 * getInstance
@@ -73,6 +46,19 @@ Class ConfigurationService
 		return self::$instance;
 	}
 
+
+	/**
+	 * getConfigurationData
+	 *
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public function getConfigurationData($configuration_file = null)
+	{
+		// todo: move all the XML into here
+		// design a priority arrangement for overrides
+	}
+
 	/**
 	 * __construct
 	 *
@@ -85,60 +71,24 @@ Class ConfigurationService
 	{
 		$siteData = $this->getSite($configuration_file);
 		foreach ($siteData as $key => $value) {
-			Services::Registry()->set('Configuration\\' . $key, $value);
+			Services::Registry()->set('Configuration', '' . $key, $value);
 		}
 
-		$data = $this->getApplicationInfo();
+		$data = $this->getApplication();
 
-		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Applications.xml');
+		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Applications.xml');
 
-		$this->registry('Configuration\\', $data, 'parameters', 'parameter', $xml);
-
-		Services::Registry()->loadField('ApplicationCustomfields\\', 'custom_fields',
+		Services::Registry()->loadField('ApplicationCustomfields', 'custom_fields',
 			$data->custom_fields, $xml->custom_fields);
-		Services::Registry()->loadField('ApplicationMetadata\\', 'meta',
+		Services::Registry()->loadField('ApplicationMetadata', 'meta',
 			$data->metadata, $xml->metadata);
-		Services::Registry()->loadField('ApplicationParameters\\', 'parameters',
+		Services::Registry()->loadField('ApplicationParameters', 'parameters',
 			$data->parameters, $xml->parameter);
 
 		/** Site Paths, Custom Fields, and Authorisation */
 		Molajo::Application()->setSitePaths();
 
 		return $this;
-	}
-
-	/**
-	 * Initialise and populate registry object with xml
-	 *
-	 * @param $namespace
-	 * @param $source
-	 * @param $field_group
-	 * @param $field_name
-	 * @param $xml
-	 */
-	protected function registry($namespace, $data, $field_group, $field_name, $xml)
-	{
-		$registry = Services::Registry()->initialise();
-		$registry->loadString($data->$field_group, 'JSON');
-
-		if (isset($xml->$field_group->$field_name)) {
-			foreach ($xml->$field_group->$field_name as $cf) {
-
-				$name = (string)$cf['name'];
-				$dataType = (string)$cf['filter'];
-				$null = (string)$cf['null'];
-				$default = (string)$cf['default'];
-				$values = (string)$cf['values'];
-
-				if ($default == '') {
-					$val = $registry->get($name, null);
-				} else {
-					$val = $registry->get($name, $default);
-				}
-
-				Services::Registry()->set($namespace . $name, $val);
-			}
-		}
 	}
 
 	/**
@@ -180,7 +130,7 @@ Class ConfigurationService
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getApplicationInfo()
+	protected function getApplication()
 	{
 		$row = new \stdClass();
 

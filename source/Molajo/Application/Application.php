@@ -78,10 +78,10 @@ Class Application
 		 */
 		$continue = $this->initialise();
 
-		Services::Registry()->set('DependencyInjection\\request_url', $override_request_url);
-		Services::Registry()->set('DependencyInjection\\catalog_id', $override_catalog_id);
-		Services::Registry()->set('DependencyInjection\\sequence_xml', $override_sequence_xml);
-		Services::Registry()->set('DependencyInjection\\final_xml', $override_final_xml);
+		Services::Registry()->set('DependencyInjection', 'request_url', $override_request_url);
+		Services::Registry()->set('DependencyInjection', 'catalog_id', $override_catalog_id);
+		Services::Registry()->set('DependencyInjection', 'sequence_xml', $override_sequence_xml);
+		Services::Registry()->set('DependencyInjection', 'final_xml', $override_final_xml);
 
 		if ($continue == false) {
 			Services::Debug()->set('Molajo::Application()->initialise() failed');
@@ -105,7 +105,7 @@ Class Application
 		/**
 		 *     Authorise
 		 */
-		if (Services::Registry()->get('Request\\status_found') === true) {
+		if (Services::Registry()->get('Request', 'status_found') === true) {
 			$continue = $this->authorise();
 		}
 
@@ -257,36 +257,36 @@ Class Application
 		// stuff to sor thru -
 
 		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Services::Registry()->get('Catalog\\view_group_id'),
-			Services::Registry()->get('User\\ViewGroups'))
+		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
+			Services::Registry()->get('User', 'ViewGroups'))
 		) {
-			Services::Registry()->set('Request\\status_authorised', true);
+			Services::Registry()->set('Request', 'status_authorised', true);
 		} else {
-			return Services::Registry()->set('Request\\status_authorised', false);
+			return Services::Registry()->set('Request', 'status_authorised', false);
 		}
 
 		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Request\\mvc_task') == 'display'
-			&& Services::Registry()->get('Request\\status_authorised') === true
+		if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+			&& Services::Registry()->get('Request', 'status_authorised') === true
 		) {
 			return true;
 		}
-		if (Services::Registry()->get('Request\\mvc_task') == 'display'
-			&& Services::Registry()->get('Request\\status_authorised') === false
+		if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+			&& Services::Registry()->get('Request', 'status_authorised') === false
 		) {
 			Services::Error()->set(403);
 			return false;
 		}
 
 		/** verify other tasks */
-		Services::Registry()->set('Request\\status_authorised',
+		Services::Registry()->set('Request', 'status_authorised',
 			Services::Access()->authoriseTask(
-				Services::Registry()->get('Request\\mvc_task'),
-				Services::Registry()->get('Request\\catalog_id')
+				Services::Registry()->get('Request', 'mvc_task'),
+				Services::Registry()->get('Request', 'catalog_id')
 			)
 		);
 
-		if (Services::Registry()->get('Request\\status_authorised') === true) {
+		if (Services::Registry()->get('Request', 'status_authorised') === true) {
 		} else {
 			Services::Error()->set(403);
 			return false;
@@ -303,7 +303,7 @@ Class Application
 	 */
 	protected function execute()
 	{
-		$action = Services::Registry()->get('Request\\mvc_controller', 'display');
+		$action = Services::Registry()->get('Request', 'mvc_controller', 'display');
 
 		/** Display Action */
 		if ($action == 'display') {
@@ -371,20 +371,20 @@ Class Application
 		$temp->loadArray($this->parameters);
 		$this->parameters = $temp;
 
-		if (Services::Registry()->get('Configuration\\sef', 1) == 0) {
+		if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
 			$link = $this->page_request->get('request_url_sef');
 		} else {
 			$link = $this->page_request->get('request_url');
 		}
-		Services::Registry()->set('Request\\redirect_on_failure', $link);
+		Services::Registry()->set('Request', 'redirect_on_failure', $link);
 
-		Services::Registry()->set('Request\\model',
-			ucfirst(trim(Services::Registry()->get('Request\\mvc_model'))) . 'Model');
-		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request\\mvc_controller')) . 'Controller';
-		Services::Registry()->set('Request\\controller', $cc);
-		$task = Services::Registry()->get('Request\\mvc_task');
-		Services::Registry()->set('Request\\task', $task);
-		Services::Registry()->set('Request\\id', Services::Registry()->get('Request\\mvc_id'));
+		Services::Registry()->set('Request', 'model',
+			ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
+		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
+		Services::Registry()->set('Request', 'controller', $cc);
+		$task = Services::Registry()->get('Request', 'mvc_task');
+		Services::Registry()->set('Request', 'task', $task);
+		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);
 
 		/** execute task: non-display, edit, or add tasks */
@@ -757,7 +757,7 @@ Class Application
 	 */
 	protected function sslCheck()
 	{
-		if ((int)Services::Registry()->get('Configuration\\force_ssl', 0) > 0) {
+		if ((int)Services::Registry()->get('Configuration', 'force_ssl', 0) > 0) {
 
 			if ((Services::Request()->get('connection')->isSecure() === true)) {
 
@@ -790,18 +790,20 @@ Class Application
 	{
 		if (defined('SITE_NAME')) {
 		} else {
-			define('SITE_NAME', Services::Registry()->get('Configuration\\site_name', SITE_ID));
+			define('SITE_NAME', Services::Registry()->get('Configuration', 'site_name',
+				SITE_ID));
 		}
 
 		if (defined('SITE_CACHE_FOLDER')) {
 		} else {
-			define('SITE_CACHE_FOLDER', Services::Registry()->get('Configuration\\cache_path', SITE_FOLDER_PATH . '/cache'));
+			define('SITE_CACHE_FOLDER', Services::Registry()->get('Configuration', 'cache_path',
+				SITE_FOLDER_PATH . '/cache'));
 		}
 
 		if (defined('SITE_LOGS_FOLDER')) {
 		} else {
 			define('SITE_LOGS_FOLDER',
-				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration\\logs_path',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'logs_path',
 					SITE_FOLDER_PATH . '/logs')
 			);
 		}
@@ -810,14 +812,14 @@ Class Application
 		if (defined('SITE_MEDIA_FOLDER')) {
 		} else {
 			define('SITE_MEDIA_FOLDER',
-				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration\\media_path',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'media_path',
 					SITE_FOLDER_PATH . '/media')
 			);
 		}
 		if (defined('SITE_MEDIA_URL')) {
 		} else {
 			define('SITE_MEDIA_URL',
-				BASE_URL . Services::Registry()->get('Configuration\\media_url',
+				BASE_URL . Services::Registry()->get('Configuration', 'media_url',
 					BASE_URL . 'sites/' . SITE_ID . '/media')
 			);
 		}
@@ -826,18 +828,17 @@ Class Application
 		if (defined('SITE_TEMP_FOLDER')) {
 		} else {
 			define('SITE_TEMP_FOLDER',
-				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration\\temp_path',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'temp_path',
 					SITE_FOLDER_PATH . '/temp')
 			);
 		}
 		if (defined('SITE_TEMP_URL')) {
 		} else {
 			define('SITE_TEMP_URL',
-				BASE_URL . Services::Registry()->get('Configuration\\temp_url',
+				BASE_URL . Services::Registry()->get('Configuration', 'temp_url',
 					BASE_URL . 'sites/' . SITE_ID . '/temp')
 			);
 		}
-		;
 
 		return true;
 	}
@@ -862,13 +863,13 @@ Class Application
 		}
 
 		/** Registry for Custom Fields and Metadata */
-		$xml = simplexml_load_file(APPLICATIONS_MVC . '/Model/Table/Sites.xml');
+		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Sites.xml');
 
-		Services::Registry()->loadField('SiteCustomfields\\', 'custom_fields',
+		Services::Registry()->loadField('SiteCustomfields', 'custom_fields',
 			$results['custom_fields'], $xml->custom_fields);
-		Services::Registry()->loadField('SiteMetadata\\', 'meta',
+		Services::Registry()->loadField('SiteMetadata', 'meta',
 			$results['metadata'], $xml->metadata);
-		Services::Registry()->loadField('SiteParameters\\', 'parameters',
+		Services::Registry()->loadField('SiteParameters', 'parameters',
 			$results['parameters'], $xml->parameter);
 
 		$this->base_url = $results['base_url'];
