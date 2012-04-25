@@ -1,0 +1,19 @@
+{
+    "hash": "b12aea14c750f7e570ff27bed7c81625",
+    "packages": [
+        {
+            "package": "symfony/class-loader",
+            "version": "dev-master",
+            "source-reference": "4e509e34c7b4238762aa9ea2e24162a4c0444a14",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/http-foundation",
+            "version": "dev-master",
+            "source-reference": "c42a11f51217244a1b57fa45bb2da5f1edcee010",
+            "alias": "2.1.9999999.9999999-dev"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": []
+}
