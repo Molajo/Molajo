@@ -4,7 +4,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -81,9 +81,9 @@ Class TextService
 		$buffer = preg_replace(
 			$change_from,
 			$change_to,
-			Service::Response()->getBody()
+			Services::Response()->getBody()
 		);
-		Service::Response()->setContent($buffer);
+		Services::Response()->setContent($buffer);
 	}
 
 	/**

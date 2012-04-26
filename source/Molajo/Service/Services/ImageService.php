@@ -4,7 +4,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -166,10 +166,10 @@ Class ImageService
 			return $this->fileNameNew;
 		}
 
-		$db = Service::DB();
+		$db = Services::DB();
 		$query = $db->getQuery(true);
 
-		$date = Service::Date()
+		$date = Services::Date()
 			->format('Y-m-d-H-i-s');
 
 		$now = $date->toSql();
@@ -196,17 +196,17 @@ Class ImageService
 		}
 
 		/** retrieve image folder for original images */
-		$images = Service::Registry()->get('Configuration', 'media_path', 'media/images');
+		$images = Services::Registry()->get('Configuration', 'media_path', 'media/images');
 
 		/** folders */
-		if (Service::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
+		if (Services::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
 		} else {
-			Service::Filesystem()->folderCreate(SITE_FOLDER_PATH . '/' . $images);
+			Services::Filesystem()->folderCreate(SITE_FOLDER_PATH . '/' . $images);
 		}
 
 		/** make certain original image exists */
 		$this->fileNameOriginal = SITE_FOLDER_PATH . '/' . $images . '/' . $this->filename;
-		if (Service::Filesystem()->fileExists($this->fileNameOriginal)) {
+		if (Services::Filesystem()->fileExists($this->fileNameOriginal)) {
 			return $this->fileNameOriginal;
 		} else {
 			return false;
@@ -221,17 +221,17 @@ Class ImageService
 	private function getResizedImage()
 	{
 		/** retrieve image folder for resized images */
-		$images = Service::Registry()->get('Configuration', 'thumb_folder', '/media/images/thumbs');
+		$images = Services::Registry()->get('Configuration', 'thumb_folder', '/media/images/thumbs');
 
 		/** folders */
-		if (Service::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
+		if (Services::Filesystem()->folderExists(SITE_FOLDER_PATH . '/' . $images)) {
 		} else {
-			Service::Filesystem()->folderCreate(SITE_FOLDER_PATH . '/' . $images);
+			Services::Filesystem()->folderCreate(SITE_FOLDER_PATH . '/' . $images);
 		}
 
 		/** if resized image already exists, return it */
 		$this->fileNameNew = SITE_FOLDER_PATH . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
-		if (Service::Filesystem()->fileExists($this->fileNameNew)) {
+		if (Services::Filesystem()->fileExists($this->fileNameNew)) {
 			return true;
 		}
 
@@ -247,15 +247,15 @@ Class ImageService
 	{
 		/** Options: exact, portrait, landscape, auto, crop and size */
 		if ($this->size == 1) {
-			$dimensions = Service::Registry()->get('Configuration', 'image_xsmall', 50);
+			$dimensions = Services::Registry()->get('Configuration', 'image_xsmall', 50);
 		} else if ($this->size == 2) {
-			$dimensions = Service::Registry()->get('Configuration', 'image_small', 75);
+			$dimensions = Services::Registry()->get('Configuration', 'image_small', 75);
 		} else if ($this->size == 3) {
-			$dimensions = Service::Registry()->get('Configuration', 'image_medium', 150);
+			$dimensions = Services::Registry()->get('Configuration', 'image_medium', 150);
 		} else if ($this->size == 4) {
-			$dimensions = Service::Registry()->get('Configuration', 'image_large', 300);
+			$dimensions = Services::Registry()->get('Configuration', 'image_large', 300);
 		} else if ($this->size == 5) {
-			$dimensions = Service::Registry()->get('Configuration', 'image_xlarge', 500);
+			$dimensions = Services::Registry()->get('Configuration', 'image_xlarge', 500);
 		} else {
 			$dimensions = 100;
 		}

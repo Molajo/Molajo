@@ -9,7 +9,7 @@ namespace Molajo\Extension\Includer;
 defined('MOLAJO') or die;
 
 use Molajo\Application\Includer;
-use Molajo\Service;
+use Molajo\Service\Services;
 
 /**
  * Message
@@ -51,16 +51,16 @@ Class MessageIncluder extends Includer
         $this->set('model', 'MessagesModel');
         $this->set('task', 'display');
 
-        $this->parameters = Service::Registry()->initialise();
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 1);
 
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                Service::Registry()->get('Configuration', 'message_template_view_id'));
+                Services::Registry()->get('Configuration', 'message_template_view_id'));
         }
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                Service::Registry()->get('Configuration', 'message_wrap_view_id'));
+                Services::Registry()->get('Configuration', 'message_wrap_view_id'));
         }
 
         return true;

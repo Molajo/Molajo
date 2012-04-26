@@ -4,10 +4,9 @@
  * @copyright Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
-
+use Molajo\Service\Services;
 use Molajo\Application\Molajo;
 
 use Molajo\MVC\Model\TableModel;
@@ -48,18 +47,6 @@ Class ConfigurationService
 
 
 	/**
-	 * getConfigurationData
-	 *
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public function getConfigurationData($configuration_file = null)
-	{
-		// todo: move all the XML into here
-		// design a priority arrangement for overrides
-	}
-
-	/**
 	 * __construct
 	 *
 	 * setSitePaths executed after ConfigurationService startup to make paths available to other services
@@ -69,20 +56,31 @@ Class ConfigurationService
 	 */
 	public function __construct($configuration_file = null)
 	{
+		/** Define PHP constants for application variables */
+		$defines = $this->loadFile('defines');
+
+		foreach ($defines->define as $item) {
+			if (defined((string)$item['name'])) {
+			} else {
+				$value = (string)$item['value'];
+				define((string)$item['name'], $value);
+			}
+		}
+
 		$siteData = $this->getSite($configuration_file);
 		foreach ($siteData as $key => $value) {
-			Service::Registry()->set('Configuration', '' . $key, $value);
+			Services::Registry()->set('Configuration', '' . $key, $value);
 		}
 
 		$data = $this->getApplication();
 
-		$xml = Service::Configuration()->loadXML('Applications');
+		$xml = Services::Configuration()->loadFile('Applications');
 
-		Service::Registry()->loadField('ApplicationCustomfields', 'custom_fields',
+		Services::Registry()->loadField('ApplicationCustomfields', 'custom_fields',
 			$data->custom_fields, $xml->custom_fields);
-		Service::Registry()->loadField('ApplicationMetadata', 'meta',
+		Services::Registry()->loadField('ApplicationMetadata', 'meta',
 			$data->metadata, $xml->metadata);
-		Service::Registry()->loadField('ApplicationParameters', 'parameters',
+		Services::Registry()->loadField('ApplicationParameters', 'parameters',
 			$data->parameters, $xml->parameter);
 
 		/** Site Paths, Custom Fields, and Authorisation */
@@ -171,7 +169,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * loadXML
+	 * loadFile
 	 *
 	 * add php spl priority for loading
 	 *
@@ -179,9 +177,9 @@ Class ConfigurationService
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	protected function loadXML($file)
+	public static function loadFile($file)
 	{
-		$path_and_file = CONFIGURATION_FOLDER . '/' . $file . '.xml';
+		$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
 
 		if (file_exists($path_and_file)) {
 		} else {

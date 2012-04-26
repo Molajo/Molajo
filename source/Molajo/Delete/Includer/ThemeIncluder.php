@@ -8,7 +8,7 @@ namespace Molajo\Extension\Includer;
 
 defined('MOLAJO') or die;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 use Molajo\Application\Request;
 use Molajo\Extension\Helper\ExtensionHelper;
 use Molajo\Extension\Helper\ThemeHelper;
@@ -39,7 +39,7 @@ Class ThemeIncluder extends Includer
         $this->name = $name;
         $this->type = $type;
 
-        $this->parameters = Service::Registry()->initialise();
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 0);
     }
 
@@ -65,41 +65,41 @@ Class ThemeIncluder extends Includer
     /**
      * _loadMetadata
      *
-     * Loads Metadata values into Service::Document Metadata array
+     * Loads Metadata values into Services::Document Metadata array
      *
      * @return  null
      * @since   1.0
      */
     protected function _loadMetadata()
     {
-        if (Service::Registry()->get('Request', 'status_error') == true) {
+        if (Services::Registry()->get('Request', 'status_error') == true) {
 
-            Service::Document()->set_metadata('title',
-                Service::Language()->translate('ERROR_FOUND'));
+            Services::Document()->set_metadata('title',
+                Services::Language()->translate('ERROR_FOUND'));
 
-            Service::Document()->set_metadata('description', '');
-            Service::Document()->set_metadata('keywords', '');
-            Service::Document()->set_metadata('robots', '');
-            Service::Document()->set_metadata('author', '');
-            Service::Document()->set_metadata('content_rights', '');
+            Services::Document()->set_metadata('description', '');
+            Services::Document()->set_metadata('keywords', '');
+            Services::Document()->set_metadata('robots', '');
+            Services::Document()->set_metadata('author', '');
+            Services::Document()->set_metadata('content_rights', '');
 
         } else {
 
-            Service::Document()->set_metadata('title',
-                Service::Registry()->get('Request', 'metadata_title'));
-            Service::Document()->set_metadata('description',
-                Service::Registry()->get('Request', 'metadata_description'));
-            Service::Document()->set_metadata('keywords',
-                Service::Registry()->get('Request', 'metadata_keywords'));
-            Service::Document()->set_metadata('robots',
-                Service::Registry()->get('Request', 'metadata_robots'));
-            Service::Document()->set_metadata('author',
-                Service::Registry()->get('Request', 'metadata_author'));
-            Service::Document()->set_metadata('content_rights',
-                Service::Registry()->get('Request', 'metadata_content_rights'));
+            Services::Document()->set_metadata('title',
+                Services::Registry()->get('Request', 'metadata_title'));
+            Services::Document()->set_metadata('description',
+                Services::Registry()->get('Request', 'metadata_description'));
+            Services::Document()->set_metadata('keywords',
+                Services::Registry()->get('Request', 'metadata_keywords'));
+            Services::Document()->set_metadata('robots',
+                Services::Registry()->get('Request', 'metadata_robots'));
+            Services::Document()->set_metadata('author',
+                Services::Registry()->get('Request', 'metadata_author'));
+            Services::Document()->set_metadata('content_rights',
+                Services::Registry()->get('Request', 'metadata_content_rights'));
 
-            Service::Document()->set_last_modified(
-                Service::Registry()->get('Request', 'source_last_modified'));
+            Services::Document()->set_last_modified(
+                Services::Registry()->get('Request', 'source_last_modified'));
         }
     }
 
@@ -116,11 +116,11 @@ Class ThemeIncluder extends Includer
         /** theme */
         ExtensionHelper::loadLanguage(
             EXTENSIONS_THEMES . '/'
-                . Service::Registry()->get('Request', 'theme_name')
+                . Services::Registry()->get('Request', 'theme_name')
         );
         /** Page view */
         ExtensionHelper::loadLanguage(
-            Service::Registry()->get('Request', 'page_view_path')
+            Services::Registry()->get('Request', 'page_view_path')
         );
     }
 
@@ -136,21 +136,21 @@ Class ThemeIncluder extends Includer
     {
         /**  Site */
         $this->_loadMediaPlus('',
-            Service::Registry()->get('Configuration', 'media_priority_site', 100));
+            Services::Registry()->get('Configuration', 'media_priority_site', 100));
 
         /** Application */
         $this->_loadMediaPlus('/application' . APPLICATION,
-            Service::Registry()->get('Configuration', 'media_priority_application', 200));
+            Services::Registry()->get('Configuration', 'media_priority_application', 200));
 
         /** User */
         $this->_loadMediaPlus('/user' .
-                Service::User()
+                Services::User()
                     ->get('id'),
-            Service::Registry()->get('Configuration', 'media_priority_user', 300));
+            Services::Registry()->get('Configuration', 'media_priority_user', 300));
 
         /** Theme Helper Load Media */
         $helperClass = 'Molajo' .
-            ucfirst(Service::Registry()->get('Request', 'theme_name'))
+            ucfirst(Services::Registry()->get('Request', 'theme_name'))
             . 'ThemeHelper';
 
         if (class_exists($helperClass)) {
@@ -166,24 +166,24 @@ Class ThemeIncluder extends Includer
 
         /** Theme */
         $this->_loadMediaPlus('',
-            Service::Registry()->get('Configuration', 'media_priority_site', 100));
+            Services::Registry()->get('Configuration', 'media_priority_site', 100));
 
-        $priority = Service::Registry()->get('Configuration', 'media_priority_theme', 600);
+        $priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
         $file_path = EXTENSIONS_THEMES . '/' .
-            Service::Registry()->get('Request', 'theme_name');
+            Services::Registry()->get('Request', 'theme_name');
         $url_path = EXTENSIONS_THEMES_URL . '/' .
-            Service::Registry()->get('Request', 'theme_name');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+            Services::Registry()->get('Request', 'theme_name');
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Page */
-        $priority = Service::Registry()->get('Configuration', 'media_priority_theme', 600);
-        $file_path = Service::Registry()->get('Request', 'page_view_path');
-        $url_path = Service::Registry()->get('Request', 'page_view_path_url');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
+        $file_path = Services::Registry()->get('Request', 'page_view_path');
+        $url_path = Services::Registry()->get('Request', 'page_view_path_url');
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         return;
     }
@@ -201,30 +201,30 @@ Class ThemeIncluder extends Includer
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . $plus;
         $url_path = SITE_MEDIA_URL . '/' . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, false);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         return;
     }

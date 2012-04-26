@@ -6,10 +6,9 @@ Distro = Change to Extension and Data Layers
 
 * * * * Extension Layer  * * * *
 
-Selection of Components, Modules, Triggers, Themes, Views (Page, Template, and Wrap)
-Helpers
+Selection of Components, Modules, Themes, Views (Page, Template, and Wrap) and Helpers
 
-* * * * Data Layer * * * *
+* * * * Configuration Layer * * * *
 
 Configuration, XML files, Media, Site
 
@@ -21,14 +20,11 @@ index.php (autoexec/namespaces)
 Initialisation
 Route
 Authorisation
-Execute: Action
+Execute: Action =>MC
 -or-
-Execute: Display - Parse, Include, and MVC
+Execute: Display =>MVC
 Response
 Cleanup
-
-Display sublayer: Parse, Include, and MVC - think package
-
 
 * * * * Event Layer * * * *
 
@@ -37,44 +33,41 @@ Events are registered with the Events Service.
 Only the Application and Controller processes can fire events
 
 Extensions schedule events to participate
-Service::Event()->schedule('OnBeforeSave')
+Services::Event()->schedule('OnBeforeSave')
 
 Triggers register for scheduled events.
- Service::Event()->schedule('OnBeforeSave')
+ Services::Event()->schedule('OnBeforeSave')
 
 The Application and Controller classes notify the Event Manager at Event Time
-Service::Event()->notify('OnBeforeSave') -
+Services::Event()->notify('OnBeforeSave') -
 
 The Event Service triggers those registered
-Service::Event()->trigger('OnBeforeSave')
+Services::Event()->trigger('OnBeforeSave')
 
 Typically, triggers interact with Services which interfaces to the Utility layer:
-- Service::Mail()->Send
-- Service::Filter()->text
-- Service::Model()->getItems
+- Services::Mail()->Send
+- Services::Filter()->text
+- Services::Model()->getItems
 
 * * * * Services Layer (Middlware) * * * *
 
-Service::Name()->action('Parameters'):
+Services::Name()->action('Parameters'):
 
 The Molajo API: common interface that provides a DMZ in a sense to underlying change
 
-Important: Service::Registry()->get('Namespace', 'Parameter')
+Important: Services::Registry()->get('Namespace', 'Parameter')
 
 Question: Helper for distro layer -- should it have a service?
 
 Asset Service -
-service to retrieve files, including configuraiton data;
 Specific focus on JS and CSS; interface with minimizers, etc.
 Remove all specifically coded paths from code - instead use the Asset Manager API
-No Service::Filesystem anywhere but the AssetService (Also, see Model)
+No Services::Filesystem anywhere but the AssetService (Also, see Model)
 Same for views
 Bring in the php spl priority
 
 Login - authenticaiton as a service - interfaces to the controller action -
 but no specific model or controller for it.
-
-Services Layer: Thnk package and installer
 
 * * * * Model Service * * * *
 

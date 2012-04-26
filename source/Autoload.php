@@ -36,6 +36,7 @@ $s->registerNamespace('Molajo\\MVC\\View', BASE_FOLDER);
 $s->registerNamespace('Molajo\\MVC\\Controller', BASE_FOLDER);
 
 $s->registerNamespace('Molajo\\Service', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Service\\Services', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Service\\Trigger', BASE_FOLDER);
 
 $s->registerNamespace('Molajo\\Extension', BASE_FOLDER);

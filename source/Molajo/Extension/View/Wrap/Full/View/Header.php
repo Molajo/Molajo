@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-if ((int)Service::Registry()->get('Configuration', 'html5', 1) == 1
+if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1
     && ($this->task->get('wrap_view_name') == 'article'
         || $this->task->get('wrap_view_name') == 'aside'
         || $this->task->get('wrap_view_name') == 'footer'
@@ -36,7 +36,7 @@ endif;
 <<?php echo trim($headerType . $headerId . $headerClass); ?>>
 <?php
 $headingLevel = $this->parameters->get('wrap_view_header_level', 3);
-if ((int)Service::Registry()->get('Configuration', 'html5', 1) == 1):
+if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1):
     if ($this->parameters->get('wrap_view_show_title', false) === true
         && $this->parameters->get('wrap_view_show_subtitle', false) === true
     ) : ?>
@@ -58,7 +58,7 @@ if ($this->parameters->get('wrap_view_show_subtitle', false) === true) :  ?>
     <?php
 endif;
 
-if ((int)Service::Registry()->get('Configuration', 'html5', 1) == 1) :
+if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) :
     if ($this->parameters->get('wrap_view_show_title', false) === true
         && $this->parameters->get('wrap_view_show_subtitle', false) === true
     ) : ?>

@@ -6,7 +6,7 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -55,22 +55,22 @@ class LoginController
         /**
          *  Authenticate, Authorize and Execute After Login Triggers
          */
-        $userObject = Service::Authentication()->authenticate($credentials, $options);
+        $userObject = Services::Authentication()->authenticate($credentials, $options);
 
-        if ($userObject->status === Service::Authentication()->STATUS_SUCCESS) {
+        if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
             $this->_loginFailed('authenticate', $userObject, $options);
             return;
         }
 
-        Service::Authentication()->authorise($userObject, (array)$options);
-        if ($userObject->status === Service::Authentication()->STATUS_SUCCESS) {
+        Services::Authentication()->authorise($userObject, (array)$options);
+        if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
             $this->_loginFailed('authorise', $userObject, $options);
             return;
         }
 
-        Service::Authentication()->onUserLogin($userObject, (array)$options);
+        Services::Authentication()->onUserLogin($userObject, (array)$options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
@@ -110,9 +110,9 @@ class LoginController
     {
 //        MolajoTriggerHelper::getTrigger('user');
 //        if ($type == 'authenticate') {
-//            Service::Dispatcher()->trigger('onUserLoginFailure', array($response, $options));
+//            Services::Dispatcher()->trigger('onUserLoginFailure', array($response, $options));
 //        } else {
-//            Service::Dispatcher()->trigger('onUserAuthorisationFailure', array($response, $options));
+//            Services::Dispatcher()->trigger('onUserAuthorisationFailure', array($response, $options));
 //        }
 
         //redirect false;
@@ -138,7 +138,7 @@ class LoginController
         if (!MolajoError::isError($result)) {
             $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
-            Service::Response()->redirect($return);
+            Services::Response()->redirect($return);
         }
 
         parent::display();
@@ -182,7 +182,7 @@ class LoginController
 //        MolajoTriggerHelper::importTrigger('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
-//        $results = Service::Dispatcher()->notify('onUserLogout', array($parameters, $options));
+//        $results = Services::Dispatcher()->notify('onUserLogout', array($parameters, $options));
 
         // Check if any of the triggers failed. If none did, success.
 
@@ -197,7 +197,7 @@ class LoginController
 //        }
 
         // Trigger onUserLoginFailure Event.
-//        Service::Dispatcher()->notify('onUserLogoutFailure', array($parameters));
+//        Services::Dispatcher()->notify('onUserLogoutFailure', array($parameters));
 
         return false;
     }

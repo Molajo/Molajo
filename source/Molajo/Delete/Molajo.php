@@ -54,7 +54,7 @@ class Molajo
 		if (self::$request) {
 		} else {
 			try {
-				self::$request = RequestService::getInstance();
+				self::$request = RequestServices::getInstance();
 			}
 			catch (\Exception $e) {
 				echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";

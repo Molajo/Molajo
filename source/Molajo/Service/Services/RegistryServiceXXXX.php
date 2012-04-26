@@ -4,7 +4,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 use Joomla\registry\JRegistry;
 
@@ -18,38 +18,38 @@ defined('MOLAJO') or die;
  * @since       1.0
  *
  * listRegistry - retrieves a list of Registries and optionally keys and/or values
- *   Usage: Service::Registry()->listRegistry(true);
+ *   Usage: Services::Registry()->listRegistry(true);
  * 		true - lists all registries and key/value pairs
  * 		false - only lists names of registries
  *
  * initialise - create a new Registry to be used locally by the caller
- *   Usage: $local = Service::Registry()->initialise();
+ *   Usage: $local = Services::Registry()->initialise();
  *
  * create - Create new global parameter set stored within RegistryService
- *   Usage:  Service::Registry()->create('request');
+ *   Usage:  Services::Registry()->create('request');
  *
  * get - returns a Parameter property for a specific item and parameter set
  *   Alias for JFactory::getConfig, returning full registry set for local use
- *   Usage: Service::Registry()->get('Request', 'parameter_name');
+ *   Usage: Services::Registry()->get('Request', 'parameter_name');
  *
  * set - sets a Parameter property for a specific item and parameter set
- *   Usage: Service::Registry()->set('Request', 'parameter_name', $value);
+ *   Usage: Services::Registry()->set('Request', 'parameter_name', $value);
  *
  * copy - Copy one global registry to a new registry
- *   Usage: Service::Registry()->copy('x', 'y');
+ *   Usage: Services::Registry()->copy('x', 'y');
  *
  * getArray - Returns an array containing key and name pairs for a registry
- *   Usage: Service::Registry()->getArray('request');
+ *   Usage: Services::Registry()->getArray('request');
  *
  * loadArray - Populates a registry with an array of key and name pairs
- *   Usage: Service::Registry()->loadArray('request', $array);
+ *   Usage: Services::Registry()->loadArray('request', $array);
  *
  * getKeys - Returns all key names for the specified parameter set
- *   Usage: Service::Registry()->getKeys('request');
+ *   Usage: Services::Registry()->getKeys('request');
  *
  * loadField - Loads JSON data from a field given the field xml definition
  *   (used for fields like parameters, custom fields, metadata, etc.)
- *   Usage: Service::Registry()->loadField('Namespace\\', 'field_name',
+ *   Usage: Services::Registry()->loadField('Namespace\\', 'field_name',
  *         $results['field_name'], $xml->field_group);
  *
  * listRegistry
@@ -181,7 +181,7 @@ Class RegistryService
 	 * Create new Registry object to be used locally
 	 *
 	 * Usage:
-	 * $local = Service::Registry()->initialise();
+	 * $local = Services::Registry()->initialise();
 	 *
 	 * @return JRegistry
 	 * @since  1.0
@@ -195,7 +195,7 @@ Class RegistryService
 	 * Create new global parameter set stored within RegistryService
 	 *
 	 * Usage:
-	 * Service::Registry()->create('request');
+	 * Services::Registry()->create('request');
 	 *
 	 * @param   string  $name
 	 * @param    boolean $force recreate, if already exists
@@ -218,7 +218,7 @@ Class RegistryService
 	 * Retrieves a list of Registries and optionally keys and/or values
 	 *
 	 * Usage:
-	 * Service::Registry()->listRegistry(1);
+	 * Services::Registry()->listRegistry(1);
 	 *
 	 * @param   boolean $all true - returns the entire list and each registry
 	 *                         false - returns a list of registry names, only
@@ -248,7 +248,7 @@ Class RegistryService
 	 *   Alias for JFactory::getConfig, returning full registry set for local use
 	 *
 	 * Usage:
-	 * Service::Registry()->get('Request', 'parameter_name');
+	 * Services::Registry()->get('Request', 'parameter_name');
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $default
@@ -290,7 +290,7 @@ Class RegistryService
 	 * Sets a Parameter property for a specific item and parameter set
 	 *
 	 * Usage:
-	 * Service::Registry()->set('Request', 'parameter_name', $value);
+	 * Services::Registry()->set('Request', 'parameter_name', $value);
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value
@@ -314,7 +314,7 @@ Class RegistryService
 	 * Copy one global registry to another
 	 *
 	 * Usage:
-	 * Service::Registry()->copy('x', 'y');
+	 * Services::Registry()->copy('x', 'y');
 	 *
 	 * @param $set1
 	 * @param $set2
@@ -339,7 +339,7 @@ Class RegistryService
 	 * Returns an array containing key and name pairs for a specified parameter set
 	 *
 	 * Usage:
-	 * Service::Registry()->getArray('request');
+	 * Services::Registry()->getArray('request');
 	 *
 	 * @param   string  $name
 	 * @param   boolean @keyOnly set to true to retrieve keynames
@@ -373,7 +373,7 @@ Class RegistryService
 	 * Populates a registry with an array of key and name pairs
 	 *
 	 * Usage:
-	 * Service::Registry()->loadArray('request', $array);
+	 * Services::Registry()->loadArray('request', $array);
 	 *
 	 * @param   string  $name  name of registry to use or create
 	 * @param   boolean $array key and value pairs to load
@@ -396,7 +396,7 @@ Class RegistryService
 	 * Returns all key names for the specified parameter set
 	 *
 	 * Usage:
-	 * Service::Registry()->getKeys('request');
+	 * Services::Registry()->getKeys('request');
 	 *
 	 * @param   string  $name
 	 *
@@ -413,7 +413,7 @@ Class RegistryService
 	 *     (can be used for fields like parameters, custom fields, metadata, etc.)
 	 *
 	 * Usage:
-	 * Service::Registry()->loadField('Namespace\\', 'field_name', $results['field_name'], $xml->field_group);
+	 * Services::Registry()->loadField('Namespace\\', 'field_name', $results['field_name'], $xml->field_group);
 	 *
 	 * @param $namespace
 	 * @param $field_name

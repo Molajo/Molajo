@@ -93,7 +93,7 @@ Class AuthenticationService
 
 		if ($isLoaded) {
 		} else {
-			MolajoError::raiseWarning('SOME_ERROR_CODE', Service::Language()->translate('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
+			MolajoError::raiseWarning('SOME_ERROR_CODE', Services::Language()->translate('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
 		}
 	}
 
@@ -157,7 +157,7 @@ Class AuthenticationService
 			}
 			else {
 				// Bail here if the trigger can't be created
-				MolajoError::raiseWarning(50, Service::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+				MolajoError::raiseWarning(50, Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
 
@@ -214,7 +214,7 @@ Class AuthenticationService
 			}
 			else {
 				// Bail here if the trigger can't be created
-				MolajoError::raiseWarning(50, Service::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+				MolajoError::raiseWarning(50, Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
 
@@ -241,7 +241,7 @@ Class AuthenticationService
 	public static function authorise($response, $options = Array())
 	{
 //        MolajoTriggerHelper::getTrigger('authentication');
-//        $dispatcher = Service::Dispatcher();
+//        $dispatcher = Services::Dispatcher();
 //        $authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
 
 		$response->status = MolajoAuthentication::STATUS_SUCCESS;
@@ -257,15 +257,15 @@ Class AuthenticationService
 					switch ($authorisation->status) {
 						case MolajoAuthentication::STATUS_EXPIRED:
 							$response->status = STATUS_EXPIRED;
-							return MolajoError::raiseWarning('102002', Service::Language()->translate('JLIB_LOGIN_EXPIRED'));
+							return MolajoError::raiseWarning('102002', Services::Language()->translate('JLIB_LOGIN_EXPIRED'));
 							break;
 						case MolajoAuthentication::STATUS_DENIED:
 							$response->status = STATUS_DENIED;
-							return MolajoError::raiseWarning('102003', Service::Language()->translate('JLIB_LOGIN_DENIED'));
+							return MolajoError::raiseWarning('102003', Services::Language()->translate('JLIB_LOGIN_DENIED'));
 							break;
 						default:
 							$response->status = STATUS_FAILURE;
-							return MolajoError::raiseWarning('102004', Service::Language()->translate('JLIB_LOGIN_AUTHORISATION'));
+							return MolajoError::raiseWarning('102004', Services::Language()->translate('JLIB_LOGIN_AUTHORISATION'));
 							break;
 					}
 				}

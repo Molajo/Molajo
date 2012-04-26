@@ -8,7 +8,7 @@
 
 namespace Joomla;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -20,7 +20,7 @@ abstract class JText
 
 	public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
 	{
-		return Service::Language()->translate($string, $jsSafe, $interpretBackSlashes, $script);
+		return Services::Language()->translate($string, $jsSafe, $interpretBackSlashes, $script);
 	}
 
 	public static function sprintf($string)

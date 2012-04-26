@@ -10,7 +10,7 @@ namespace Joomla;
 
 use Molajo\Application\Molajo;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 use Simplepie\SimplePie;
 
@@ -58,7 +58,7 @@ abstract class JFactory
 	 */
 	public static function getConfig($file = null, $type = 'PHP')
 	{
-		return Service::Registry()->get('Configuration');
+		return Services::Registry()->get('Configuration');
 	}
 
 	/**
@@ -72,7 +72,7 @@ abstract class JFactory
 	 */
 	public static function getSession(array $options = array())
 	{
-		return Service::Session();
+		return Services::Session();
 	}
 
 	/**
@@ -84,7 +84,7 @@ abstract class JFactory
 	 */
 	public static function getLanguage()
 	{
-		return Service::Language();
+		return Services::Language();
 	}
 
 	/**
@@ -96,7 +96,7 @@ abstract class JFactory
 	 */
 	public static function getDocument()
 	{
-		return Service::Response();
+		return Services::Response();
 	}
 
 	/**
@@ -110,7 +110,7 @@ abstract class JFactory
 	 */
 	public static function getUser($id = null)
 	{
-		return Service::User();
+		return Services::User();
 	}
 
 	/**
@@ -126,7 +126,7 @@ abstract class JFactory
 	 */
 	public static function getCache($group = '', $handler = 'callback', $storage = null)
 	{
-		return Service::Cache()->get($group, $handler, $storage);
+		return Services::Cache()->get($group, $handler, $storage);
 	}
 
 	/**
@@ -151,7 +151,7 @@ abstract class JFactory
 	 */
 	public static function getDbo()
 	{
-		return Service::Database();
+		return Services::Database();
 	}
 
 	/**
@@ -163,7 +163,7 @@ abstract class JFactory
 	 */
 	public static function getMailer()
 	{
-		return Service::Mail();
+		return Services::Mail();
 	}
 
 	/**
@@ -236,7 +236,7 @@ abstract class JFactory
 	 */
 	public static function getEditor($editor = null)
 	{
-		return Service::Editor();
+		return Services::Editor();
 	}
 
 	/**

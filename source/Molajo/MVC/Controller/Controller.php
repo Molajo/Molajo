@@ -6,7 +6,7 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -87,10 +87,10 @@ class Controller
      */
     public function __construct($task_request, $parameters)
     {
-        $this->task_request = Service::Registry()->initialise();
+        $this->task_request = Services::Registry()->initialise();
         $this->task_request->loadString($task_request);
 
-        $this->parameters = Service::Registry()->initialise();
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->loadString($parameters);
 
         // todo: amy look at redirect
@@ -208,7 +208,7 @@ class Controller
         }
 // or super admin
         if ($this->model->checked_out
-            == Service::Registry()->get('User', 'id')
+            == Services::Registry()->get('User', 'id')
         ) {
 
         } else {

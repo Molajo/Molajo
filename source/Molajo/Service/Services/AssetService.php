@@ -4,22 +4,20 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
-
-use Molajo\MVC\Model\TableModel;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Catalog
+ * Asset
  *
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
-Class CatalogService
+Class AssetService
 {
 	/**
 	 * Static instance
@@ -39,7 +37,7 @@ Class CatalogService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new CatalogService();
+			self::$instance = new AssetService();
 		}
 		return self::$instance;
 	}

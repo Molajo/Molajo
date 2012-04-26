@@ -7,9 +7,9 @@
  */
 defined('MOLAJO') or die; ?>
 <select name="filter_<?php echo $this->row->name; ?>" class="inputbox">
-    <option value=""><?php echo Service::Language()->translate('SELECT_' . strtoupper($this->row->name)); ?></option>
+    <option value=""><?php echo Services::Language()->translate('SELECT_' . strtoupper($this->row->name)); ?></option>
     <?php
-    $currentSelection = Service::User()->get($this->row->name);
+    $currentSelection = Services::User()->get($this->row->name);
     foreach ($this->row->list as $l) {
         if ($currentSelection == $l->value) {
             $selected = ' selected="selected"';

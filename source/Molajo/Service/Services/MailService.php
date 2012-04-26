@@ -4,9 +4,9 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -17,16 +17,16 @@ defined('MOLAJO') or die;
  *
  * Example usage:
  *
- * Service::Mail()->set('to', 'AmyStephen@gmail.com,Amy Stephen');
- * Service::Mail()->set('from', 'AmyStephen@gmail.ORG,ORG Stephen');
- * Service::Mail()->set('reply_to', 'Person@example.com,Person A');
- * Service::Mail()->set('cc', 'AmyStephen@gmail.cc,CC Stephen');
- * Service::Mail()->set('bcc', 'AmyStephen@gmail.bcc,BCC Stephen');
- * Service::Mail()->set('subject', 'Welcome to our Site');
- * Service::Mail()->set('body', '<h2>Stuff goes here</h2>') ;
- * Service::Mail()->set('mode', 'html') ;
- * Service::Mail()->set('attachment', SITE_MEDIA_FOLDER.'/molajo.sql') ;
- * Service::Mail()->send();
+ * Services::Mail()->set('to', 'AmyStephen@gmail.com,Amy Stephen');
+ * Services::Mail()->set('from', 'AmyStephen@gmail.ORG,ORG Stephen');
+ * Services::Mail()->set('reply_to', 'Person@example.com,Person A');
+ * Services::Mail()->set('cc', 'AmyStephen@gmail.cc,CC Stephen');
+ * Services::Mail()->set('bcc', 'AmyStephen@gmail.bcc,BCC Stephen');
+ * Services::Mail()->set('subject', 'Welcome to our Site');
+ * Services::Mail()->set('body', '<h2>Stuff goes here</h2>') ;
+ * Services::Mail()->set('mode', 'html') ;
+ * Services::Mail()->set('attachment', SITE_MEDIA_FOLDER.'/molajo.sql') ;
+ * Services::Mail()->send();
  *
  * @package     Molajo
  * @subpackage  Service
@@ -89,7 +89,7 @@ Class MailService
 	 */
 	public function __construct()
 	{
-		$this->configuration = Service::Registry()->initialise();
+		$this->configuration = Services::Registry()->initialise();
 		return $this;
 	}
 
@@ -170,7 +170,7 @@ Class MailService
 	public function send()
 	{
 		/** Email disabled */
-		if (Service::Registry()->get('Configuration', 'disable_sending', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'disable_sending', 1) == 1) {
 			return true;
 		}
 
@@ -182,7 +182,7 @@ Class MailService
 		}
 
 		/** For development only deliver to values */
-		$only_deliver_to = Service::Registry()->get('Configuration', 'only_deliver_to', '');
+		$only_deliver_to = Services::Registry()->get('Configuration', 'only_deliver_to', '');
 
 		if (trim($only_deliver_to) == '') {
 		} else {
@@ -201,21 +201,21 @@ Class MailService
 		$this->processInput();
 
 		/** Type of email */
-		switch (Service::Registry()->get('Configuration', 'mailer')) {
+		switch (Services::Registry()->get('Configuration', 'mailer')) {
 
 			case 'smtp':
-				$this->mailInstance->smtpauth = Service::Registry()->get('Configuration', 'smtpauth');
-				$this->mailInstance->smtphost = Service::Registry()->get('Configuration', 'smtphost');
-				$this->mailInstance->smtpuser = Service::Registry()->get('Configuration', 'smtpuser');
-				$this->mailInstance->smtppass = Service::Registry()->get('Configuration', 'smtppass');
-				$this->mailInstance->smtpsecure = Service::Registry()->get('Configuration', 'smtpsecure');
-				$this->mailInstance->smtpport = Service::Registry()->get('Configuration', 'smtpport');
+				$this->mailInstance->smtpauth = Services::Registry()->get('Configuration', 'smtpauth');
+				$this->mailInstance->smtphost = Services::Registry()->get('Configuration', 'smtphost');
+				$this->mailInstance->smtpuser = Services::Registry()->get('Configuration', 'smtpuser');
+				$this->mailInstance->smtppass = Services::Registry()->get('Configuration', 'smtppass');
+				$this->mailInstance->smtpsecure = Services::Registry()->get('Configuration', 'smtpsecure');
+				$this->mailInstance->smtpport = Services::Registry()->get('Configuration', 'smtpport');
 
 				$this->mailInstance->IsSMTP();
 				break;
 
 			case 'sendmail':
-				$this->mailInstance->smtpauth = Service::Registry()->get('Configuration', 'sendmail_path');
+				$this->mailInstance->smtpauth = Services::Registry()->get('Configuration', 'sendmail_path');
 
 				$this->mailInstance->IsSendmail();
 				break;
@@ -249,7 +249,7 @@ Class MailService
 
 		/** authorization event */
 		//todo: what is the catalog id of a service?
-		//$results = Service::Access()->authoriseTask('email', $catalog_id);
+		//$results = Services::Access()->authoriseTask('email', $catalog_id);
 
 		return $permission;
 	}
@@ -273,7 +273,7 @@ Class MailService
 		/** Subject */
 		$value = $this->get('subject', '');
 		if ($value == '') {
-			$value = Service::Registry()->get('Configuration', 'site_name', '');
+			$value = Services::Registry()->get('Configuration', 'site_name', '');
 		}
 		$value = $this->filterInput('subject', $value, 'char');
 		$this->mailInstance->set('Subject', $value);
@@ -391,7 +391,7 @@ Class MailService
 	{
 
 		try {
-			$value = Service::Filter()
+			$value = Services::Filter()
 				->filter(
 					$value,
 					$dataType,

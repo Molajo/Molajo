@@ -47,7 +47,7 @@ Class RequestModel extends DisplayModel
     public function getData()
     {
         /** input for events is stored in the task request object */
-        $this->query_results = Service::Registry()->get('Request', 'query_resultset');
+        $this->query_results = Services::Registry()->get('Request', 'query_resultset');
         return $this->query_results;
     }
 
@@ -61,7 +61,7 @@ Class RequestModel extends DisplayModel
     public function getPagination()
     {
         /** input for events is stored in the task request object */
-        $this->pagination = Service::Registry()->get('Request', 'query_pagination');
+        $this->pagination = Services::Registry()->get('Request', 'query_pagination');
         return $this->pagination;
     }
 
@@ -75,7 +75,7 @@ Class RequestModel extends DisplayModel
     public function getState()
     {
         /** input for events is stored in the task request object */
-        $this->state = Service::Registry()->get('Request', 'query_state');
+        $this->state = Services::Registry()->get('Request', 'query_state');
         return $this->state;
     }
 }

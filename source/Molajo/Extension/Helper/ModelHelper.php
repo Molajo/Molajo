@@ -8,7 +8,7 @@
 namespace Molajo\Application\Helper;
 
 use Molajo\Extension\Helper\CatalogHelper;
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -83,7 +83,7 @@ class ModelHelper
         $prefix = 'a',
         $db)
     {
-        $now = Service::Date()->getDate()->toSql();
+        $now = Services::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->where(
@@ -208,7 +208,7 @@ class ModelHelper
         $tasksArray = explode(',', $tasks);
 
         /** User Permissions */
-        $permissions = Service::Access()
+        $permissions = Services::Access()
             ->authoriseTaskList($tasksArray, $item->catalog_id);
 
         /** Append onto row */
@@ -401,19 +401,19 @@ class ModelHelper
 
         $newField = $fieldname . '_ccyymmdd';
         $item->$newField =
-            Service::Date()
+            Services::Date()
                 ->convertCCYYMMDD($item->$fieldname);
         $item->$newField =
             str_replace('-', '', $item->$newField);
 
         $newField = $fieldname . '_n_days_ago';
         $item->$newField =
-            Service::Date()
+            Services::Date()
                 ->differenceDays(date('Y-m-d'), $item->$fieldname);
 
         $newField = $fieldname . '_pretty_date';
         $item->$newField =
-            Service::Date()
+            Services::Date()
                 ->prettydate($item->$fieldname);
 
         return $item;
@@ -441,7 +441,7 @@ class ModelHelper
         foreach ($jsonfields as $name) {
             $name = trim($name);
             if (property_exists($item, $name)) {
-                $registry = Service::Registry()->initialise();
+                $registry = Services::Registry()->initialise();
                 $registry->loadString($item->$name);
                 $fields = $registry->toArray();
 
@@ -469,7 +469,8 @@ class ModelHelper
     public function getList($field)
     {
 
-		$lists = Service::Configuration()->loadXML('lists');
+		$lists = Services::Configuration()->loadFile('lists');
+
         if (count($lists) == 0) {
             return false;
         }
@@ -570,7 +571,7 @@ class ModelHelper
         }
 
         if ((int)$viewaccess == 1) {
-            Service::Access()->setQueryViewAccess(
+            Services::Access()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => 'a',
@@ -597,7 +598,7 @@ class ModelHelper
      */
     public function getLanguageList()
     {
-        return Service::Language()->createLanguageList();
+        return Services::Language()->createLanguageList();
     }
 
     /**
@@ -612,37 +613,37 @@ class ModelHelper
 
         $obj = new \stdClass();
         $obj->key = STATUS_ARCHIVED;
-        $obj->value = Service::Language()->translate('STATUS_ARCHIVED');
+        $obj->value = Services::Language()->translate('STATUS_ARCHIVED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_PUBLISHED;
-        $obj->value = Service::Language()->translate('STATUS_PUBLISHED');
+        $obj->value = Services::Language()->translate('STATUS_PUBLISHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_UNPUBLISHED;
-        $obj->value = Service::Language()->translate('STATUS_UNPUBLISHED');
+        $obj->value = Services::Language()->translate('STATUS_UNPUBLISHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_TRASHED;
-        $obj->value = Service::Language()->translate('STATUS_TRASHED');
+        $obj->value = Services::Language()->translate('STATUS_TRASHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_SPAMMED;
-        $obj->value = Service::Language()->translate('STATUS_SPAMMED');
+        $obj->value = Services::Language()->translate('STATUS_SPAMMED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_DRAFT;
-        $obj->value = Service::Language()->translate('STATUS_DRAFT');
+        $obj->value = Services::Language()->translate('STATUS_DRAFT');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_VERSION;
-        $obj->value = Service::Language()->translate('STATUS_VERSION');
+        $obj->value = Services::Language()->translate('STATUS_VERSION');
         $resultset[] = $obj;
 
         return $resultset;

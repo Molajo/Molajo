@@ -10,6 +10,7 @@
     <service>Log</service>
     <service>Debug</service>
     <service>Request</service>
+    <service>Route</service>
     <service>Cookie</service>
     <service>Session</service>
     <service>Response</service>
@@ -19,10 +20,10 @@
     <service>Date</service>
     <service>Document</service>
     <service>Access</service>
+    <service>Asset</service>
     <service>Image</service>
     <service>Filter</service>
     <service>Url</service>
     <service>Text</service>
     <service>Mail</service>
-    <service>Broadcast</service>
 </services>

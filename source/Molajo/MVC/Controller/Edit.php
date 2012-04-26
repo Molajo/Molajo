@@ -6,7 +6,7 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -67,7 +67,7 @@ class EditController extends DisplayController
             $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         }
 
-        $this->user = Service::User();
+        $this->user = Services::User();
 
         /** id */
         if ($this->item->id == null) {

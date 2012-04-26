@@ -6,7 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -202,10 +202,10 @@ class ViewHelper
      */
     protected function _loadLanguage()
     {
-        Service::Language()
+        Services::Language()
             ->load(
             EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view,
-            Service::Language()->get('tag'),
+            Services::Language()->get('tag'),
             false,
             false);
     }
@@ -224,26 +224,26 @@ class ViewHelper
         $view = 0;
         if ($type == 'template') {
             if ($task == 'add' || $task == 'edit') {
-                $view = (int)Service::Registry()->get('Configuration', 'default_edit_template_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration', 'default_edit_template_view_id', 0);
                 ;
 
             } else if ((int)$id == 0) {
-                $view = (int)Service::Registry()->get('Configuration', 'default_items_template_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration', 'default_items_template_view_id', 0);
 
             } else {
-                $view = (int)Service::Registry()->get('Configuration', 'default_item_template_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration', 'default_item_template_view_id', 0);
             }
         }
 
         if ($type == 'wrap') {
             if ($task == 'add' || $task == 'edit') {
-                $view = (int)Service::Registry()->get('Configuration', 'default_edit_wrap_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration', 'default_edit_wrap_view_id', 0);
 
             } else if ((int)$id == 0) {
-                $view = (int)Service::Registry()->get('Configuration', 'default_items_wrap_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration', 'default_items_wrap_view_id', 0);
 
             } else {
-                $view = (int)Service::Registry()->get('Configuration', 'default_item_wrap_view_id', 0);
+                $view = (int)Services::Registry()->get('Configuration', 'default_item_wrap_view_id', 0);
             }
         }
         return $view;

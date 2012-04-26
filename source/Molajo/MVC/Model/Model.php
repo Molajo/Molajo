@@ -8,7 +8,7 @@ namespace Molajo\MVC\Model;
 
 use Joomla\database\JDatabaseDriver;
 
-use Molajo\Service; //Date, DB, Language, Message, Registry
+use Molajo\Service\Services; //Date, DB, Language, Message, Registry
 
 defined('MOLAJO') or die;
 
@@ -190,7 +190,7 @@ class Model
 			$table = 'Content';
 		}
 
-		$this->table_xml = Service::Configuration()->loadXML(substr($this->model->table_name, 3, 99));
+		$this->table_xml = Services::Configuration()->loadFile(substr($this->model->table_name, 3, 99));
 
 		$this->model_name = (string)$this->table_xml['name'];
 		if ($this->model_name === '') {
@@ -208,8 +208,8 @@ class Model
 			$this->primary_key = 'id';
 		}
 
-		$this->task_request = Service::Registry()->initialise();
-		$this->state = Service::Registry()->initialise();
+		$this->task_request = Services::Registry()->initialise();
+		$this->state = Services::Registry()->initialise();
 		$this->query_results = array();
 		$this->pagination = array();
 
@@ -223,9 +223,9 @@ class Model
 			$this->primary_key = 'id';
 		}
 
-		$this->db = Service::Database()->get('db');
+		$this->db = Services::Database()->get('db');
 
-		$this->query = Service::Database()->getQuery();
+		$this->query = Services::Database()->getQuery();
 		$this->query->clear();
 
 		$this->nullDate = $this->db->getNullDate();
@@ -237,7 +237,7 @@ class Model
 		/**
 		if ((int) Application::Service()->get('DebugService', 0) == 0) {
 		} else {
-		Service::Debug()->set('Model Construct '.$this->name. ' '.$this->model_name);
+		Services::Debug()->set('Model Construct '.$this->name. ' '.$this->model_name);
 		}
 		 */
 		return $this;
@@ -862,9 +862,9 @@ class Model
 
 		} else {
 
-			Service::Message()
+			Services::Message()
 				->set(
-				$message = Service::Language()
+				$message = Services::Language()
 					->_('ERROR_DATABASE_QUERY') . ' ' .
 					$this->db->getErrorNum() . ' ' .
 					$this->db->getErrorMsg(),
