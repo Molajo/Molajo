@@ -552,7 +552,7 @@ Class FilterService
 	 * encode_link
 	 *
 	 * @param object $option_Link
-	 * $url = ConfigurationServiceURL::encode_link ($option_Link);
+	 * $url = ConfigurationURL::encode_link ($option_Link);
 	 */
 	public function encode_link($option_Link)
 	{
@@ -563,7 +563,7 @@ Class FilterService
 	 * encode_link_text
 	 *
 	 * @param object $option_Text
-	 * $url = ConfigurationServiceURL::encode_link_text ($option_Text);
+	 * $url = ConfigurationURL::encode_link_text ($option_Text);
 	 */
 	public function encode_link_text($option_Text)
 	{

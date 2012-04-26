@@ -7,7 +7,7 @@
 namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
-use Molajo\Application\Molajo;
+use Molajo\Application;
 
 use Molajo\MVC\Model\TableModel;
 
@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class ConfigurationService
+Class Configuration
 {
 	/**
 	 * Static instance
@@ -40,7 +40,7 @@ Class ConfigurationService
 	public static function getInstance($configuration_file = null)
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new ConfigurationService($configuration_file);
+			self::$instance = new Configuration($configuration_file);
 		}
 		return self::$instance;
 	}
@@ -49,7 +49,7 @@ Class ConfigurationService
 	/**
 	 * __construct
 	 *
-	 * setSitePaths executed after ConfigurationService startup to make paths available to other services
+	 * setSitePaths executed after Configuration startup to make paths available to other services
 	 *
 	 * @return  object
 	 * @since   1.0
@@ -155,7 +155,7 @@ Class ConfigurationService
 				$id = $row->id;
 
 			} catch (\Exception $e) {
-				echo 'Application will die. Exception caught in ConfigurationService: ', $e->getMessage(), "\n";
+				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
 				die;
 			}
 		}

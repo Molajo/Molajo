@@ -102,7 +102,7 @@ Class Services
         $this->message = array();
 
         /** start services in this sequence */
-		$services = Services\ConfigurationService::loadFile('Services');
+		$services = Services\Configuration::loadFile('Services');
 
         foreach ($services->service as $item) {
             $try = true;
@@ -138,6 +138,7 @@ Class Services
             }
 
             /** store connection or error message */
+			echo $entry . '<br />';
             $this->set($entry, $connection, $try);
         }
 

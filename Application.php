@@ -7,11 +7,9 @@
 namespace Molajo;
 
 use Molajo\MVC\Model\TableModel;
-
 use Molajo\Service\Services;
-
 use Molajo\Service\Services\RequestService;
-
+use Molajo\Service\Services\Configuration;
 use Joomla\JFactory;
 
 defined('MOLAJO') or die;
@@ -616,7 +614,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = Service\Services\ConfigurationService::loadFile('sites');
+			$sites = Configuration::loadFile('sites');
 
 			foreach ($sites->site as $single) {
 				if ($single->base == $siteBase) {
@@ -671,7 +669,7 @@ Class Application
 			/* must also define PAGE_REQUEST */
 		} else {
 
-			$apps = Service\Services\ConfigurationService::loadFile('applications');
+			$apps = Configuration::loadFile('applications');
 
 			foreach ($apps->application as $app) {
 
@@ -770,7 +768,7 @@ Class Application
 	/**
 	 * Establish media, cache, log, etc., locations for site for application use
 	 *
-	 * Called out of the ConfigurationServices Class construct - paths needed in startup process for other services
+	 * Called out of the Configurations Class construct - paths needed in startup process for other services
 	 *
 	 * @return mixed
 	 * @since  1.0
@@ -897,7 +895,7 @@ Class Application
 		if (self::$services) {
 		} else {
 			try {
-				self::$services = Service\Services::getInstance();
+				self::$services = Services::getInstance();
 			}
 			catch (\RuntimeException $e) {
 				echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
