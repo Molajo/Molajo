@@ -279,17 +279,17 @@ To display all of the options available:
 
 To display one item:
 
-    <?php echo Services::Registry()->get('Configuration', 'sef'); ?>
+    <?php echo Service::Registry()->get('Configuration', 'sef'); ?>
 
 ### User ###
 
 To display all of the options available:
 
-    <?php echo '<pre>'; var_dump(Services::User()); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump(Service::User()); echo '</pre>';  ?>
 
 To display one item:
 
-    <?php echo Services::User()->username; ?>
+    <?php echo Service::User()->username; ?>
 
 ### Input Request ###
 
@@ -354,7 +354,7 @@ Example:
 
 3. How can Joomla's JHtml function be used in a view to format dates?
 
-        $date	= JHtml::_('date', $this->row->created,      Services::Languages()->translate('DATE_FORMAT_LC1'));
+        $date	= JHtml::_('date', $this->row->created,      Service::Languages()->translate('DATE_FORMAT_LC1'));
         $time	= JHtml::_('date', $this->row->checked_out_time, 'H:i');
 
 Options:

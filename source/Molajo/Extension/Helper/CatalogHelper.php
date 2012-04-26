@@ -6,9 +6,9 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Application\MVC\Model\TableModel;
+use Molajo\MVC\Model\TableModel;
 
-use Molajo\Application\Services;
+use Molajo\Services;
 
 defined('MOLAJO') or die;
 
@@ -26,7 +26,7 @@ abstract class CatalogHelper
      *
      * Retrieve Catalog and Catalog Type for specific id or query request
      *
-     * View Access is verified in Molajo::Request to identify 403 errors
+     * View Access is verified in Application::Request to identify 403 errors
      *
      * @param    int  $catalog_id
      * @param    null $query_request
@@ -87,7 +87,7 @@ abstract class CatalogHelper
 
         } else if ((int)$catalog_id == 0) {
 
-            if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+            if (Service::Registry()->get('Configuration', 'sef', 1) == 1) {
                 if ($row->sef_request == $query_request) {
 
                 } else {
@@ -102,11 +102,11 @@ abstract class CatalogHelper
                 }
             }
 
-            if ($row->id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+            if ($row->id == Service::Registry()->get('Configuration', 'home_catalog_id', 0)) {
                 if ($query_request == '') {
                 } else {
                     $row->redirect_to_id =
-                        Services::Registry()->get('Configuration', 'home_catalog_id', 0);
+                        Service::Registry()->get('Configuration', 'home_catalog_id', 0);
                 }
             }
         }
@@ -135,7 +135,7 @@ abstract class CatalogHelper
         $m->query->where('a.' . $m->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
         $m->query->where('a.' . $m->db->qn('source_id') . ' = ' . (int)$source_id);
         $m->query->where('a.' . $m->db->qn('view_group_id')
-				. ' IN (' . implode(',', Services::Registry()->get('User', 'ViewGroups')) . ')');
+				. ' IN (' . implode(',', Service::Registry()->get('User', 'ViewGroups')) . ')');
 
         return $m->loadResult();
     }
@@ -153,13 +153,13 @@ abstract class CatalogHelper
     public static function getURL($catalog_id)
     {
         /** home */
-        if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+        if ($catalog_id == Service::Registry()->get('Configuration', 'home_catalog_id', 0)) {
             return '';
         }
 
         $m = new TableModel('Catalog');
 
-        if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+        if (Service::Registry()->get('Configuration', 'sef', 1) == 1) {
             $m->query->select('a.' . $m->db->qn('sef_request'));
         } else {
             $m->query->select('a.' . $m->db->qn('request'));
@@ -167,7 +167,7 @@ abstract class CatalogHelper
 
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
         $m->query->where('a.' . $m->db->qn('view_group_id') .  ' IN (' .
-                implode(',', Services::Registry()->get('User', 'ViewGroups')) . ')'
+                implode(',', Service::Registry()->get('User', 'ViewGroups')) . ')'
         );
 
         return $m->loadResult();
@@ -183,14 +183,14 @@ abstract class CatalogHelper
      */
     public static function getRedirectURL($catalog_id)
     {
-        if ((int)$catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)
+        if ((int)$catalog_id == Service::Registry()->get('Configuration', 'home_catalog_id', 0)
         ) {
             return '';
         }
 
         $m = new TableModel('Catalog');
 
-        if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
+        if (Service::Registry()->get('Configuration', 'sef', 1) == 0) {
             $m->query->select($m->db->qn('sef_request'));
         } else {
             $m->query->select($m->db->qn('request'));

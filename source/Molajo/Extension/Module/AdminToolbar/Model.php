@@ -5,7 +5,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application\MVC\Model;
+namespace Molajo\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
@@ -44,7 +44,7 @@ Class ModuleAdminToolbarModel extends DisplayModel
     {
         /** Component Buttons */
         $buttons =
-            Molajo::Request()
+            Application::Request()
                 ->parameters
                 ->get('toolbar_buttons');
 
@@ -52,10 +52,10 @@ Class ModuleAdminToolbarModel extends DisplayModel
 
         /** User Permissions */
         $permissions =
-            Services::Access()
+            Service::Access()
                 ->authoriseTaskList(
                 $buttonArray,
-                Molajo::Request()
+                Application::Request()
                     ->parameters
                     ->get('display_extension_catalog_id')
             );
@@ -67,16 +67,16 @@ Class ModuleAdminToolbarModel extends DisplayModel
                 $row = new \stdClass();
 
                 $row->title =
-                    Molajo::Request()
+                    Application::Request()
                         ->parameters
                         ->get('display_title');
 
                 $row->name =
-                    Services::Language()
+                    Service::Language()
                         ->_(strtoupper('TASK_' . $buttonname . '_BUTTON'));
 
                 $row->option =
-                    Molajo::Request()
+                    Application::Request()
                         ->parameters
                         ->get('display_extension_option');
 

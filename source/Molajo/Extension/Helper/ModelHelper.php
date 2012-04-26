@@ -8,7 +8,7 @@
 namespace Molajo\Application\Helper;
 
 use Molajo\Extension\Helper\CatalogHelper;
-use Molajo\Application\Services;
+use Molajo\Services;
 
 defined('MOLAJO') or die;
 
@@ -83,7 +83,7 @@ class ModelHelper
         $prefix = 'a',
         $db)
     {
-        $now = Services::Date()->getDate()->toSql();
+        $now = Service::Date()->getDate()->toSql();
         $nullDate = $db->getNullDate();
 
         $query->where(
@@ -201,14 +201,14 @@ class ModelHelper
 
         /** Component Buttons */
         $tasks =
-            Molajo::Request()
+            Application::Request()
                 ->parameters
                 ->get('toolbar_buttons');
 
         $tasksArray = explode(',', $tasks);
 
         /** User Permissions */
-        $permissions = Services::Access()
+        $permissions = Service::Access()
             ->authoriseTaskList($tasksArray, $item->catalog_id);
 
         /** Append onto row */
@@ -401,19 +401,19 @@ class ModelHelper
 
         $newField = $fieldname . '_ccyymmdd';
         $item->$newField =
-            Services::Date()
+            Service::Date()
                 ->convertCCYYMMDD($item->$fieldname);
         $item->$newField =
             str_replace('-', '', $item->$newField);
 
         $newField = $fieldname . '_n_days_ago';
         $item->$newField =
-            Services::Date()
+            Service::Date()
                 ->differenceDays(date('Y-m-d'), $item->$fieldname);
 
         $newField = $fieldname . '_pretty_date';
         $item->$newField =
-            Services::Date()
+            Service::Date()
                 ->prettydate($item->$fieldname);
 
         return $item;
@@ -441,7 +441,7 @@ class ModelHelper
         foreach ($jsonfields as $name) {
             $name = trim($name);
             if (property_exists($item, $name)) {
-                $registry = Services::Registry()->initialise();
+                $registry = Service::Registry()->initialise();
                 $registry->loadString($item->$name);
                 $fields = $registry->toArray();
 
@@ -487,7 +487,7 @@ class ModelHelper
                     $method = '';
                 }
                 if (isset($l['model'])) {
-                    $model = 'Molajo\\Application\\MVC\\Model\\';
+                    $model = 'Molajo\\MVC\\Model\\';
                     $model .= (string)$l['model'];
                 } else {
                     $model = '';
@@ -569,7 +569,7 @@ class ModelHelper
         }
 
         if ((int)$viewaccess == 1) {
-            Services::Access()->setQueryViewAccess(
+            Service::Access()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => 'a',
@@ -596,7 +596,7 @@ class ModelHelper
      */
     public function getLanguageList()
     {
-        return Services::Language()->createLanguageList();
+        return Service::Language()->createLanguageList();
     }
 
     /**
@@ -611,37 +611,37 @@ class ModelHelper
 
         $obj = new \stdClass();
         $obj->key = STATUS_ARCHIVED;
-        $obj->value = Services::Language()->translate('STATUS_ARCHIVED');
+        $obj->value = Service::Language()->translate('STATUS_ARCHIVED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_PUBLISHED;
-        $obj->value = Services::Language()->translate('STATUS_PUBLISHED');
+        $obj->value = Service::Language()->translate('STATUS_PUBLISHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_UNPUBLISHED;
-        $obj->value = Services::Language()->translate('STATUS_UNPUBLISHED');
+        $obj->value = Service::Language()->translate('STATUS_UNPUBLISHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_TRASHED;
-        $obj->value = Services::Language()->translate('STATUS_TRASHED');
+        $obj->value = Service::Language()->translate('STATUS_TRASHED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_SPAMMED;
-        $obj->value = Services::Language()->translate('STATUS_SPAMMED');
+        $obj->value = Service::Language()->translate('STATUS_SPAMMED');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_DRAFT;
-        $obj->value = Services::Language()->translate('STATUS_DRAFT');
+        $obj->value = Service::Language()->translate('STATUS_DRAFT');
         $resultset[] = $obj;
 
         $obj = new \stdClass();
         $obj->key = STATUS_VERSION;
-        $obj->value = Services::Language()->translate('STATUS_VERSION');
+        $obj->value = Service::Language()->translate('STATUS_VERSION');
         $resultset[] = $obj;
 
         return $resultset;

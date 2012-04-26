@@ -6,8 +6,8 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Application\MVC\Model\DisplayModel;
-use Molajo\Application\Services;
+use Molajo\MVC\Model\DisplayModel;
+use Molajo\Services;
 
 defined('MOLAJO') or die;
 
@@ -50,7 +50,7 @@ abstract class ContentHelper
         );
 
         /** Catalog Join and View Access Check */
-        Services::Access()->setQueryViewAccess(
+        Service::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',

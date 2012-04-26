@@ -6,7 +6,7 @@
  */
 namespace Molajo\Application;
 
-use Molajo\Application\MVC\Model\TableModel;
+use Molajo\MVC\Model\TableModel;
 
 use Joomla\JFactory;
 
