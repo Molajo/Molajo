@@ -8,6 +8,10 @@ namespace Molajo;
 
 use Molajo\MVC\Model\TableModel;
 
+use Molajo\Service\Services;
+
+use Molajo\Service\Services\RequestService;
+
 use Joomla\JFactory;
 
 defined('MOLAJO') or die;
@@ -22,12 +26,12 @@ defined('MOLAJO') or die;
 Class Application
 {
 	/**
-	 * Application::Service
+	 * Application::Services
 	 *
-	 * @var    object Service
+	 * @var    object Services
 	 * @since  1.0
 	 */
-	protected static $service = null;
+	protected static $services = null;
 
 	/**
 	 * Application::Helper
@@ -38,12 +42,12 @@ Class Application
 	protected static $helper = null;
 
 	/**
-	 * Application::Route
+	 * Application::Request
 	 *
-	 * @var    object Route
+	 * @var    object Request
 	 * @since  1.0
 	 */
-	protected static $route = null;
+	protected static $request = null;
 
 	/**
 	 * $rendered_output
@@ -54,59 +58,14 @@ Class Application
 	protected $rendered_output = null;
 
 	/**
-	 * Application::Service
-	 *
-	 * @static
-	 * @return  Service
-	 * @throws  \RuntimeException
-	 * @since   1.0
-	 */
-	public static function Service()
-	{
-		if (self::$service) {
-		} else {
-			try {
-				self::$service = Service::getInstance();
-			}
-			catch (\RuntimeException $e) {
-				echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
-				die;
-			}
-		}
-		return self::$helper;
-	}
-
-	/**
-	 * Application::Helper
-	 *
-	 * @static
-	 * @return  Helper
-	 * @throws  \RuntimeException
-	 * @since   1.0
-	 */
-	public static function Helper()
-	{
-		if (self::$helper) {
-		} else {
-			try {
-				self::$helper = Helper::getInstance();
-			}
-			catch (\Exception $e) {
-				echo 'Instantiate Helper Exception : ', $e->getMessage(), "\n";
-				die;
-			}
-		}
-		return self::$helper;
-	}
-
-	/**
-	 * Molajo Application Controller
+	 * Application Controller
 	 *
 	 * Override normal processing with these parameters
 	 *
 	 * @param string $override_request_url
 	 * @param string $override_catalog_id
-	 * @param string $override_sequenceXML
+	 * @param string
+	 *
 	 * @param string $override_finalXML
 	 *
 	 *  1. Initialise
@@ -126,58 +85,58 @@ Class Application
 		/** Initialise */
 		$continue = $this->initialise();
 
-		Service::Registry()->set('DependencyInjection', 'request_url', $override_request_url);
-		Service::Registry()->set('DependencyInjection', 'catalog_id', $override_catalog_id);
-		Service::Registry()->set('DependencyInjection', 'sequence_xml', $override_sequence_xml);
-		Service::Registry()->set('DependencyInjection', 'final_xml', $override_final_xml);
+		Services::Registry()->set('Override', 'request_url', $override_request_url);
+		Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
+		Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
+		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
 		if ($continue == false) {
-			Service::Debug()->set('Molajo Application Initialise failed');
+			Services::Debug()->set('Application Initialise failed');
 			return;
 		} else {
-			Service::Debug()->set('Molajo Application Initialise succeeded');
+			Services::Debug()->set('Application Initialise succeeded');
 		}
 
 		/** Route */
 		$continue = $this->route();
 
 		if ($continue == false) {
-			Service::Debug()->set('Molajo Application Route failed');
+			Services::Debug()->set('Application Route failed');
 			return;
 		} else {
-			Service::Debug()->set('Molajo Application Route succeeded');
+			Services::Debug()->set('Application Route succeeded');
 		}
 
 		/** Authorise */
-		if (Service::Registry()->get('Request', 'status_found') === true) {
+		if (Services::Registry()->get('Request', 'status_found') === true) {
 			$continue = $this->authorise();
 		}
 
 		if ($continue == false) {
-			Service::Debug()->set('Molajo Application Authorise failed');
+			Services::Debug()->set('Application Authorise failed');
 			return;
 		} else {
-			Service::Debug()->set('Molajo Application Authorise succeeded');
+			Services::Debug()->set('Application Authorise succeeded');
 		}
 
 		/** Execute */
 		$continue = $this->execute();
 
 		if ($continue == false) {
-			Service::Debug()->set('Molajo Application Execute failed');
+			Services::Debug()->set('Application Execute failed');
 			return;
 		} else {
-			Service::Debug()->set('Molajo Application Execute succeeded');
+			Services::Debug()->set('Application Execute succeeded');
 		}
 
 		/** Response */
 		$continue = $this->response();
 
 		if ($continue == false) {
-			Service::Debug()->set('Molajo Application Response failed');
+			Services::Debug()->set('Application Response failed');
 			return;
 		} else {
-			Service::Debug()->set('Molajo Application Response succeeded');
+			Services::Debug()->set('Application Response succeeded');
 		}
 
 		return;
@@ -226,7 +185,8 @@ Class Application
 		}
 
 		/** Connect Application Services */
-		$continue = Application::Service()->startServices();
+		$services = new Service\Services();
+		$continue = $services->StartServices();
 		if ($continue == false) {
 			return false;
 		}
@@ -250,11 +210,11 @@ Class Application
 		}
 
 		/** Session */
-		//Service::Session()->create(
-		//        Service::Session()->getHash(get_class($this))
+		//Services::Session()->create(
+		//        Services::Session()->getHash(get_class($this))
 		//  );
-		// Service::Debug()
-		// ->set('Service::Session()->create complete');
+		// Services::Debug()
+		// ->set('Services::Session()->create complete');
 
 		return true;
 	}
@@ -267,10 +227,10 @@ Class Application
 	 */
 	protected function route()
 	{
-		Application::Route()->process();
+		Services::Route()->process();
 
-		if (Service::Redirect()->url === null
-			&& (int)Service::Redirect()->code == 0
+		if (Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
 		) {
 		} else {
 			return false;
@@ -279,9 +239,8 @@ Class Application
 		return true;
 	}
 
-
 	/**
-	 * Verify user authorization for task
+	 * Verify user authorization
 	 *
 	 * @return   boolean
 	 * @since    1.0
@@ -291,38 +250,38 @@ Class Application
 		// stuff to sor thru -
 
 		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Service::Registry()->get('Catalog', 'view_group_id'),
-			Service::Registry()->get('User', 'ViewGroups'))
+		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
+			Services::Registry()->get('User', 'ViewGroups'))
 		) {
-			Service::Registry()->set('Request', 'status_authorised', true);
+			Services::Registry()->set('Request', 'status_authorised', true);
 		} else {
-			return Service::Registry()->set('Request', 'status_authorised', false);
+			return Services::Registry()->set('Request', 'status_authorised', false);
 		}
 
 		/** display view verified in getCatalog */
-		if (Service::Registry()->get('Request', 'mvc_task') == 'display'
-			&& Service::Registry()->get('Request', 'status_authorised') === true
+		if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+			&& Services::Registry()->get('Request', 'status_authorised') === true
 		) {
 			return true;
 		}
-		if (Service::Registry()->get('Request', 'mvc_task') == 'display'
-			&& Service::Registry()->get('Request', 'status_authorised') === false
+		if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+			&& Services::Registry()->get('Request', 'status_authorised') === false
 		) {
-			Service::Error()->set(403);
+			Services::Error()->set(403);
 			return false;
 		}
 
 		/** verify other tasks */
-		Service::Registry()->set('Request', 'status_authorised',
-			Service::Access()->authoriseTask(
-				Service::Registry()->get('Request', 'mvc_task'),
-				Service::Registry()->get('Request', 'catalog_id')
+		Services::Registry()->set('Request', 'status_authorised',
+			Services::Access()->authoriseTask(
+				Services::Registry()->get('Request', 'mvc_task'),
+				Services::Registry()->get('Request', 'catalog_id')
 			)
 		);
 
-		if (Service::Registry()->get('Request', 'status_authorised') === true) {
+		if (Services::Registry()->get('Request', 'status_authorised') === true) {
 		} else {
-			Service::Error()->set(403);
+			Services::Error()->set(403);
 			return false;
 		}
 
@@ -337,17 +296,17 @@ Class Application
 	 */
 	protected function execute()
 	{
-		$action = Service::Registry()->get('Request', 'mvc_controller', 'display');
+		$action = Services::Registry()->get('Request', 'mvc_controller', 'display');
 
 		/** Display Action */
 		if ($action == 'display') {
 			$continue = $this->display();
 
 			if ($continue == false) {
-				Service::Debug()->set('Molajo Application execute Display failed');
+				Services::Debug()->set('Application execute Display failed');
 				return false;
 			} else {
-				Service::Debug()->set('Molajo Application execute Display succeeded');
+				Services::Debug()->set('Application execute Display succeeded');
 				return true;
 			}
 		}
@@ -356,10 +315,10 @@ Class Application
 		$continue = $this->action();
 
 		if ($continue == false) {
-			Service::Debug()->set('Molajo Application execute ' . $action . ' failed');
+			Services::Debug()->set('Application execute ' . $action . ' failed');
 			return false;
 		} else {
-			Service::Debug()->set('Molajo Application execute ' . $action . ' succeeded');
+			Services::Debug()->set('Application execute ' . $action . ' succeeded');
 			return true;
 		}
 	}
@@ -401,24 +360,24 @@ Class Application
 	protected function action()
 	{
 		/** Action: Database action */
-		$temp = Service::Registry()->initialise();
+		$temp = Services::Registry()->initialise();
 		$temp->loadArray($this->parameters);
 		$this->parameters = $temp;
 
-		if (Service::Registry()->get('Configuration', 'sef', 1) == 0) {
+		if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
 			$link = $this->page_request->get('request_url_sef');
 		} else {
 			$link = $this->page_request->get('request_url');
 		}
-		Service::Registry()->set('Request', 'redirect_on_failure', $link);
+		Services::Registry()->set('Request', 'redirect_on_failure', $link);
 
-		Service::Registry()->set('Request', 'model',
-			ucfirst(trim(Service::Registry()->get('Request', 'mvc_model'))) . 'Model');
-		$cc = 'Molajo' . ucfirst(Service::Registry()->get('Request', 'mvc_controller')) . 'Controller';
-		Service::Registry()->set('Request', 'controller', $cc);
-		$task = Service::Registry()->get('Request', 'mvc_task');
-		Service::Registry()->set('Request', 'task', $task);
-		Service::Registry()->set('Request', 'id', Service::Registry()->get('Request', 'mvc_id'));
+		Services::Registry()->set('Request', 'model',
+			ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
+		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
+		Services::Registry()->set('Request', 'controller', $cc);
+		$task = Services::Registry()->get('Request', 'mvc_task');
+		Services::Registry()->set('Request', 'task', $task);
+		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);
 
 		/** execute task: non-display, edit, or add tasks */
@@ -437,32 +396,32 @@ Class Application
 	 */
 	protected function response()
 	{
-		if (Service::Redirect()->url === null
-			&& (int)Service::Redirect()->code == 0
+		if (Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
 		) {
 
-			Service::Debug()
-				->set('Service::Response()->setContent() for ' . $this->rendered_output . ' Code: 200');
+			Services::Debug()
+				->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200');
 
-			Service::Response()
+			Services::Response()
 				->setContent($this->rendered_output)
 				->setStatusCode(200)
-				->prepare(Service::Request()->get('request'))
+				->prepare(Services::Request()->get('request'))
 				->send();
 
 		} else {
 
-			Service::Debug()
-				->set('Service::Redirect()->redirect()->send() for '
-				. Service::Redirect()->url . ' Code: ' . Service::Redirect()->code);
+			Services::Debug()
+				->set('Services::Redirect()->redirect()->send() for '
+				. Services::Redirect()->url . ' Code: ' . Services::Redirect()->code);
 
-			Service::Redirect()
+			Services::Redirect()
 				->redirect()
 				->send();
 		}
 
-		Service::Debug()
-			->set('Molajo Application response End');
+		Services::Debug()
+			->set('Application response End');
 
 		exit(0);
 	}
@@ -507,6 +466,10 @@ Class Application
 	 */
 	protected function setDefines()
 	{
+
+//todo: now that namespaces are used, how much of this is really needed?
+
+		/** Override Hint */
 		if (file_exists(BASE_FOLDER . '/defines.php')) {
 			include_once BASE_FOLDER . '/defines.php';
 		}
@@ -524,20 +487,6 @@ Class Application
 			define('CONFIGURATION_FOLDER', BASE_FOLDER . '/Molajo/Configuration');
 		}
 
-		/** Define PHP constants for application variables */
-		$defines = Service::Configuration()->loadXML('defines');
-
-		foreach ($defines->define as $item) {
-			if (defined((string)$item['name'])) {
-			} else {
-				$value = (string)$item['value'];
-				define((string)$item['name'], $value);
-			}
-		}
-
-		/**
-		 *  Applications
-		 */
 		if (defined('MVC')) {
 		} else {
 			define('MVC', APPLICATIONS . '/MVC');
@@ -547,9 +496,10 @@ Class Application
 			define('MVC_URL', BASE_URL . 'Molajo/MVC');
 		}
 
-		/**
-		 *  Extensions
-		 */
+		if (defined('EXTENSIONS_HELPER')) {
+		} else {
+			define('EXTENSIONS_HELPER', EXTENSIONS . '/Helper');
+		}
 		if (defined('EXTENSIONS_COMPONENTS')) {
 		} else {
 			define('EXTENSIONS_COMPONENTS', EXTENSIONS . '/Component');
@@ -561,10 +511,6 @@ Class Application
 		if (defined('EXTENSIONS_MODULES')) {
 		} else {
 			define('EXTENSIONS_MODULES', EXTENSIONS . '/Module');
-		}
-		if (defined('EXTENSIONS_TRIGGERS')) {
-		} else {
-			define('EXTENSIONS_TRIGGERS', EXTENSIONS . '/Trigger');
 		}
 		if (defined('EXTENSIONS_THEMES')) {
 		} else {
@@ -587,10 +533,6 @@ Class Application
 		} else {
 			define('EXTENSIONS_MODULES_URL', BASE_URL . 'Molajo/Extension/Module');
 		}
-		if (defined('EXTENSIONS_TRIGGERS_URL')) {
-		} else {
-			define('EXTENSIONS_TRIGGERS_URL', BASE_URL . 'Molajo/Extension/Trigger');
-		}
 		if (defined('EXTENSIONS_THEMES_URL')) {
 		} else {
 			define('EXTENSIONS_THEMES_URL', BASE_URL . 'Molajo/Extension/Theme');
@@ -598,6 +540,16 @@ Class Application
 		if (defined('EXTENSIONS_VIEWS_URL')) {
 		} else {
 			define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Molajo/Extension/View');
+		}
+
+
+		if (defined('SERVICES')) {
+		} else {
+			define('SERVICES', APPLICATIONS . '/Service');
+		}
+		if (defined('TRIGGERS')) {
+		} else {
+			define('TRIGGERS', BASE_URL . 'Service/Trigger');
 		}
 
 		/**
@@ -640,7 +592,6 @@ Class Application
 			define('SITES_MEDIA_FOLDER', SITES . '/media');
 		}
 
-
 		if (defined('SITE_LANGUAGES')) {
 		} else {
 			define('SITE_LANGUAGES', EXTENSIONS . '/Language');
@@ -665,7 +616,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = Service::Configuration()->loadXML('sites');
+			$sites = Service\Services\ConfigurationService::loadFile('sites');
 
 			foreach ($sites->site as $single) {
 				if ($single->base == $siteBase) {
@@ -720,7 +671,7 @@ Class Application
 			/* must also define PAGE_REQUEST */
 		} else {
 
-			$apps = Service::Configuration()->loadXML('applications');
+			$apps = Service\Services\ConfigurationService::loadFile('applications');
 
 			foreach ($apps->application as $app) {
 
@@ -795,9 +746,9 @@ Class Application
 	 */
 	protected function sslCheck()
 	{
-		if ((int)Service::Registry()->get('Configuration', 'force_ssl', 0) > 0) {
+		if ((int)Services::Registry()->get('Configuration', 'force_ssl', 0) > 0) {
 
-			if ((Service::Request()->get('connection')->isSecure() === true)) {
+			if ((Services::Request()->get('connection')->isSecure() === true)) {
 
 			} else {
 
@@ -806,7 +757,7 @@ Class Application
 					APPLICATION_URL_PATH .
 					'/' . PAGE_REQUEST;
 
-				Service::Redirect()
+				Services::Redirect()
 					->set($redirectTo, 301);
 
 				return false;
@@ -828,20 +779,20 @@ Class Application
 	{
 		if (defined('SITE_NAME')) {
 		} else {
-			define('SITE_NAME', Service::Registry()->get('Configuration', 'site_name',
+			define('SITE_NAME', Services::Registry()->get('Configuration', 'site_name',
 				SITE_ID));
 		}
 
 		if (defined('SITE_CACHE_FOLDER')) {
 		} else {
-			define('SITE_CACHE_FOLDER', Service::Registry()->get('Configuration', 'cache_path',
+			define('SITE_CACHE_FOLDER', Services::Registry()->get('Configuration', 'cache_path',
 				SITE_FOLDER_PATH . '/cache'));
 		}
 
 		if (defined('SITE_LOGS_FOLDER')) {
 		} else {
 			define('SITE_LOGS_FOLDER',
-				SITE_FOLDER_PATH . '/' . Service::Registry()->get('Configuration', 'logs_path',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'logs_path',
 					SITE_FOLDER_PATH . '/logs')
 			);
 		}
@@ -850,14 +801,14 @@ Class Application
 		if (defined('SITE_MEDIA_FOLDER')) {
 		} else {
 			define('SITE_MEDIA_FOLDER',
-				SITE_FOLDER_PATH . '/' . Service::Registry()->get('Configuration', 'media_path',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'media_path',
 					SITE_FOLDER_PATH . '/media')
 			);
 		}
 		if (defined('SITE_MEDIA_URL')) {
 		} else {
 			define('SITE_MEDIA_URL',
-				BASE_URL . Service::Registry()->get('Configuration', 'media_url',
+				BASE_URL . Services::Registry()->get('Configuration', 'media_url',
 					BASE_URL . 'sites/' . SITE_ID . '/media')
 			);
 		}
@@ -866,14 +817,14 @@ Class Application
 		if (defined('SITE_TEMP_FOLDER')) {
 		} else {
 			define('SITE_TEMP_FOLDER',
-				SITE_FOLDER_PATH . '/' . Service::Registry()->get('Configuration', 'temp_path',
+				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'temp_path',
 					SITE_FOLDER_PATH . '/temp')
 			);
 		}
 		if (defined('SITE_TEMP_URL')) {
 		} else {
 			define('SITE_TEMP_URL',
-				BASE_URL . Service::Registry()->get('Configuration', 'temp_url',
+				BASE_URL . Services::Registry()->get('Configuration', 'temp_url',
 					BASE_URL . 'sites/' . SITE_ID . '/temp')
 			);
 		}
@@ -897,17 +848,17 @@ Class Application
 		$results = $m->loadAssoc();
 
 		if ($results === false) {
-			throw new \RuntimeException ('Molajo Application setSiteData() query problem');
+			throw new \RuntimeException ('Application setSiteData() query problem');
 		}
 
 		/** Registry for Custom Fields and Metadata */
-		$xml = Service::Configuration()->loadXML('Sites');
+		$xml = Services::Configuration()->loadFile('Sites');
 
-		Service::Registry()->loadField('SiteCustomfields', 'custom_fields',
+		Services::Registry()->loadField('SiteCustomfields', 'custom_fields',
 			$results['custom_fields'], $xml->custom_fields);
-		Service::Registry()->loadField('SiteMetadata', 'meta',
+		Services::Registry()->loadField('SiteMetadata', 'meta',
 			$results['metadata'], $xml->metadata);
-		Service::Registry()->loadField('SiteParameters', 'parameters',
+		Services::Registry()->loadField('SiteParameters', 'parameters',
 			$results['parameters'], $xml->parameter);
 
 		$this->base_url = $results['base_url'];
@@ -923,7 +874,7 @@ Class Application
 	 */
 	protected function getSiteApplicationAuthorisation()
 	{
-		$authorise = Service::Access()->authoriseSiteApplication();
+		$authorise = Services::Access()->authoriseSiteApplication();
 		if ($authorise === false) {
 			$message = '304: ' . BASE_URL;
 			echo $message;
@@ -931,5 +882,74 @@ Class Application
 		}
 
 		return true;
+	}
+
+	/**
+	 * Application::Services
+	 *
+	 * @static
+	 * @return  Services
+	 * @throws  \RuntimeException
+	 * @since   1.0
+	 */
+	public static function Services()
+	{
+		if (self::$services) {
+		} else {
+			try {
+				self::$services = Service\Services::getInstance();
+			}
+			catch (\RuntimeException $e) {
+				echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
+				die;
+			}
+		}
+		return self::$services;
+	}
+
+	/**
+	 * Application::Helper
+	 *
+	 * @static
+	 * @return  Helper
+	 * @throws  \RuntimeException
+	 * @since   1.0
+	 */
+	public static function Helper()
+	{
+		if (self::$helper) {
+		} else {
+			try {
+				self::$helper = Helper::getInstance();
+			}
+			catch (\Exception $e) {
+				echo 'Instantiate Helper Exception : ', $e->getMessage(), "\n";
+				die;
+			}
+		}
+		return self::$helper;
+	}
+
+	/**
+	 * Application::Request
+	 *
+	 * @static
+	 * @return  Request
+	 * @since   1.0
+	 */
+	public static function Request()
+	{
+		if (self::$request) {
+		} else {
+			try {
+				self::$request = RequestService::getInstance();
+			}
+			catch (\Exception $e) {
+				echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";
+				die;
+			}
+		}
+
+		return self::$request;
 	}
 }

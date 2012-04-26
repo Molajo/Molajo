@@ -5,7 +5,7 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 

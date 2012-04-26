@@ -4,11 +4,11 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application;
+namespace Molajo\Service;
 
 use Joomla\registry\JRegistry;
 
-use Molajo\Application\Molajo;
+use Molajo\Application;
 
 defined('MOLAJO') or die;
 
@@ -52,6 +52,17 @@ Class Services
         return self::$instance;
     }
 
+	/**
+	 * __construct
+	 *
+	 * @return null
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+		$this->service_connection = new JRegistry();
+	}
+
     /**
      * Retrieves service key value pair
      *
@@ -76,7 +87,7 @@ Class Services
      */
     public static function __callStatic($name, $arguments)
     {
-        return Application::Service()->get($name . 'Service');
+        return Application::Services()->get($name . 'Service');
     }
 
     /**
@@ -90,11 +101,8 @@ Class Services
         /** store connection messages */
         $this->message = array();
 
-        /** store service connections  */
-        $this->service_connection = new JRegistry();
-
         /** start services in this sequence */
-		$services = Service::Configuration()->loadXML('Services');
+		$services = Services\ConfigurationService::loadFile('Services');
 
         foreach ($services->service as $item) {
             $try = true;
@@ -102,7 +110,7 @@ Class Services
 
             /** class name */
             $entry = (string)$item . 'Service';
-            $serviceClass = 'Molajo\\Service\\' . $entry;
+            $serviceClass = 'Molajo\\Service\\Services\\' . $entry;
 
             /** method name */
             $serviceMethod = 'getInstance';
@@ -134,7 +142,7 @@ Class Services
         }
 
         foreach ($this->message as $message) {
-            Service::Debug()->set($message);
+            Services::Debug()->set($message);
         }
 
         return true;

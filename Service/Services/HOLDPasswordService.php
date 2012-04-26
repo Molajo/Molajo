@@ -35,7 +35,7 @@ Class PasswordService
 	public static function activateUser($activation)
 	{
 		// Initialize some variables.
-		$db = Service::DB();
+		$db = Services::DB();
 
 		// Let's get the id of the user we want to activate
 		$query = 'SELECT id'
@@ -60,7 +60,7 @@ Class PasswordService
 				return false;
 			}
 		} else {
-			MolajoError::raiseWarning("SOME_ERROR_CODE", Service::Language()->translate('USER_ERROR_UNABLE_TO_FIND_USER'));
+			MolajoError::raiseWarning("SOME_ERROR_CODE", Services::Language()->translate('USER_ERROR_UNABLE_TO_FIND_USER'));
 			return false;
 		}
 
@@ -85,7 +85,7 @@ Class PasswordService
 	public static function getCryptedPassword($plaintext, $salt = '', $encryption = 'md5-hex', $show_encrypt = false)
 	{
 		// Get the salt to use.
-		$salt = UserService::getSalt($encryption, $salt, $plaintext);
+		$salt = UserServices::getSalt($encryption, $salt, $plaintext);
 
 		// Encrypt the password.
 		switch ($encryption) {
@@ -117,7 +117,7 @@ Class PasswordService
 			case 'aprmd5' :
 				$length = strlen($plaintext);
 				$context = $plaintext . '$apr1$' . $salt;
-				$binary = UserService::_bin(md5($plaintext . $salt . $plaintext));
+				$binary = UserServices::_bin(md5($plaintext . $salt . $plaintext));
 
 				for ($i = $length; $i > 0; $i -= 16) {
 					$context .= substr($binary, 0, ($i > 16 ? 16 : $i));
@@ -126,7 +126,7 @@ Class PasswordService
 					$context .= ($i & 1) ? chr(0) : $plaintext[0];
 				}
 
-				$binary = UserService::_bin(md5($context));
+				$binary = UserServices::_bin(md5($context));
 
 				for ($i = 0; $i < 1000; $i++) {
 					$new = ($i & 1) ? $plaintext : substr($binary, 0, 16);
@@ -137,7 +137,7 @@ Class PasswordService
 						$new .= $plaintext;
 					}
 					$new .= ($i & 1) ? substr($binary, 0, 16) : $plaintext;
-					$binary = UserService::_bin(md5($new));
+					$binary = UserServices::_bin(md5($new));
 				}
 
 				$p = array();
@@ -147,10 +147,10 @@ Class PasswordService
 					if ($j == 16) {
 						$j = 5;
 					}
-					$p[] = UserService::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
+					$p[] = UserServices::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
 				}
 
-				return '$apr1$' . $salt . '$' . implode('', $p) . UserService::_toAPRMD5(ord($binary[11]), 3);
+				return '$apr1$' . $salt . '$' . implode('', $p) . UserServices::_toAPRMD5(ord($binary[11]), 3);
 
 			case 'md5-hex' :
 			default :

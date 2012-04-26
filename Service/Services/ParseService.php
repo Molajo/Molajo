@@ -4,7 +4,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application;
+namespace Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Parse
  * @since       1.0
  */
-Class Parse
+Class ParseService
 {
     /**
      * $instance
@@ -124,46 +124,46 @@ Class Parse
     public function process()
     {
 		/** Retrieve overrides */
-		$sequenceXML = Service::Registry()->get('DependencyInjection', 'sequence_xml', '');
-		$finalXML = Service::Registry()->get('DependencyInjection', 'final_xml', '');
+		$sequenceXML = Services::Registry()->get('Override', 'sequence_xml', '');
+		$finalXML = Services::Registry()->get('Override', 'final_xml', '');
 
 		/**
          *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
-		$sequence = Service::Configuration()->loadXML('includes-page');
+		$sequence = Services::Configuration()->loadFile('includes-page');
 
 		foreach ($sequence->include as $next) {
             $this->sequence[] = (string)$next;
         }
 
         /** Theme Parameters */
-        Service::Registry()->create('theme');
+        Services::Registry()->create('theme');
 
-		$themeParameters = Service::Registry()->get('Theme', 'Parameters');
+		$themeParameters = Services::Registry()->get('Theme', 'Parameters');
 
-		Service::Registry()->loadArray('theme',
+		Services::Registry()->loadArray('theme',
             array(
-				'theme' => Service::Registry()->get('Request', 'theme_name'),
-				'theme_path' => Service::Registry()->get('Request', 'theme_path') . '/' . 'index.php',
-				'page' => Service::Registry()->get('Request', 'page_view_include'),
-				'parameters' => Service::Registry()->get('Request', 'theme_parameters')
+				'theme' => Services::Registry()->get('Request', 'theme_name'),
+				'theme_path' => Services::Registry()->get('Request', 'theme_path') . '/' . 'index.php',
+				'page' => Services::Registry()->get('Request', 'page_view_include'),
+				'parameters' => Services::Registry()->get('Request', 'theme_parameters')
 			)
         );
 
-		$helperFile = Service::Registry()->get('Request', 'theme_path')
+		$helperFile = Services::Registry()->get('Request', 'theme_path')
 			. '/helpers/theme.php';
 
         if (file_exists($helperFile)) {
             require_once $helperFile;
 
             $helperClass = 'Molajo' .
-				ucfirst(Service::Registry()->get('Request', 'theme_name'))
+				ucfirst(Services::Registry()->get('Request', 'theme_name'))
 				. 'ThemeHelper';
         }
 
         /** Before Event */
-        // Service::Dispatcher()->notify('onBeforeRender');
+        // Services::Dispatcher()->notify('onBeforeRender');
 
         $this->final = false;
 
@@ -173,13 +173,13 @@ Class Parse
          *  Final Includers: Now, the theme, head, messages, and defer includes run
          *      and any cleanup of unfound <include values can take place
          */
-		$sequence = Service::Configuration()->loadXML('includes-final');
+		$sequence = Services::Configuration()->loadFile('includes-final');
 
         $this->sequence = array();
 
         foreach ($sequence->include as $next) {
             if ($next == 'message') {
-                $messages = Service::Message()->get();
+                $messages = Services::Message()->get();
                 if (count($messages) == 0) {
                 } else {
                     $this->sequence[] = (string)$next;
@@ -203,7 +203,7 @@ Class Parse
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
-        //        Service::Dispatcher()->notify('onAfterRender');
+        //        Services::Dispatcher()->notify('onAfterRender');
 
         return $body;
     }

@@ -48,7 +48,7 @@ Class HeadModel extends Model
         /** get metadata (part used in base) */
         if ($defer == 1) {
         } else {
-            $metadata = Service::Document()->get_metadata();
+            $metadata = Services::Document()->get_metadata();
 
             if (count($metadata) > 0) {
                 $row = new \stdClass();
@@ -56,23 +56,23 @@ Class HeadModel extends Model
 
                 $title = $metadata['standard']['title'];
                 if (trim($title) == '') {
-                    $title = Service::Registry()->get('Configuration', 'metadata_title', 'Molajo');
+                    $title = Services::Registry()->get('Configuration', 'metadata_title', 'Molajo');
                 }
-                $row->title = Service::Filter()->escape_text($title);
+                $row->title = Services::Filter()->escape_text($title);
 
-                $mimetype = Service::Document()->get_mime_encoding();
+                $mimetype = Services::Document()->get_mime_encoding();
                 if (trim($mimetype) == '') {
                     $mimetype = 'text/html';
                 }
-                $row->mimetype = Service::Filter()->escape_text($mimetype);
+                $row->mimetype = Services::Filter()->escape_text($mimetype);
 
-                $row->base = Service::Registry()->get('Request', 'url_base');
+                $row->base = Services::Registry()->get('Request', 'url_base');
 
-                $last_modified = Service::Registry()->get('Request', 'source_last_modified');
+                $last_modified = Services::Registry()->get('Request', 'source_last_modified');
                 if (trim($last_modified) == '') {
-                    $last_modified = Service::Date()->getDate()->toSql();
+                    $last_modified = Services::Date()->getDate()->toSql();
                 }
-                $row->last_modified = Service::Filter()->escape_text($last_modified);
+                $row->last_modified = Services::Filter()->escape_text($last_modified);
 
                 $this->query_results[] = $row;
             }
@@ -90,8 +90,8 @@ Class HeadModel extends Model
                         } else {
                             $row = new \stdClass();
                             $row->type = 'metadata';
-                            $row->name = Service::Filter()->escape_text($name);
-                            $row->content = Service::Filter()->escape_text($content);
+                            $row->name = Services::Filter()->escape_text($name);
+                            $row->content = Services::Filter()->escape_text($content);
                             $this->query_results[] = $row;
                         }
                         //				}
@@ -106,12 +106,12 @@ Class HeadModel extends Model
             $row = new \stdClass();
 
             $row->type = 'links';
-            $row->url = Service::Registry()->get('Request', 'theme_favicon');
+            $row->url = Services::Registry()->get('Request', 'theme_favicon');
             $row->relation = 'shortcut icon';
             $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
             $this->query_results[] = $row;
 
-            $list = Service::Document()->get_links();
+            $list = Services::Document()->get_links();
 
             if (count($list) > 0) {
                 foreach ($list as $item) {
@@ -119,10 +119,10 @@ Class HeadModel extends Model
 
                     $row->type = 'links';
                     $row->url = $item['url'];
-                    $row->relation = Service::Filter()->escape_text(
+                    $row->relation = Services::Filter()->escape_text(
                         $item['relation']
                     );
-                    $row->relation_type = Service::Filter()->escape_text(
+                    $row->relation_type = Services::Filter()->escape_text(
                         $item['relation_type']
                     );
 
@@ -137,7 +137,7 @@ Class HeadModel extends Model
                             $split = explode(',', $pair);
                             $row->attributes .= ' ' . $split[0]
                                 . '="'
-                                . Service::Filter()->escape_text($split[1])
+                                . Services::Filter()->escape_text($split[1])
                                 . '"';
                         }
                     }
@@ -149,7 +149,7 @@ Class HeadModel extends Model
         /** type: css */
         if ($defer == 1) {
         } else {
-            $list = Service::Document()->get_css();
+            $list = Services::Document()->get_css();
 
             if (count($list) > 0) {
                 foreach ($list as $item) {
@@ -167,7 +167,7 @@ Class HeadModel extends Model
             }
 
             /** type: css_declarations */
-            $list = Service::Document()->get_css_declarations();
+            $list = Services::Document()->get_css_declarations();
 
             foreach ($list as $item) {
                 $row = new \stdClass();
@@ -181,7 +181,7 @@ Class HeadModel extends Model
         }
 
         /** type: js */
-        $list = Service::Document()->get_js($defer);
+        $list = Services::Document()->get_js($defer);
 
         foreach ($list as $item) {
             $row = new \stdClass();
@@ -197,7 +197,7 @@ Class HeadModel extends Model
         }
 
         /** type: js_declarations */
-        $list = Service::Document()->get_js_declarations($defer);
+        $list = Services::Document()->get_js_declarations($defer);
 
         foreach ($list as $item) {
             $row = new \stdClass();

@@ -4,11 +4,11 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 use HTMLPurifier\HTMLPurifier;
 use HTMLPurifier\HTMLPurifier_Config;
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -93,7 +93,7 @@ Class FilterService
 		$config = HTMLPurifier\HTMLPurifier_Config::createDefault();
 		var_dump($config);
 
-		if ((int)Service::Registry()->get('Configuration', 'html5', 1) == 1) {
+		if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
 			$config->set('HTML.Doctype', 'HTML 4.01 Transitional');
 			//not supported $config->set('HTML.Doctype', 'HTML5');
 		} else {
@@ -102,7 +102,7 @@ Class FilterService
 		$config->set('URI.Host', BASE_URL);
 
 		/** Custom Filters */
-		$files = Service::Filesystem()->folderFiles(HTMPURIFIER_FILTERS, '\.php$', false, false);
+		$files = Services::Filesystem()->folderFiles(HTMPURIFIER_FILTERS, '\.php$', false, false);
 		foreach ($files as $file) {
 			$class = 'HTMLPurifier\\filters\\';
 			$class .= substr($file, 0, strpos($file, '.'));
@@ -110,7 +110,7 @@ Class FilterService
 		}
 
 		/** Configured Options */
-		$options = Service::Configuration()->loadXML('htmlpurifier');
+		$options = Services::Configuration()->loadFile('htmlpurifier');
 		$options = array();
 		if (count($options) > 0) {
 			foreach ($options->option as $o) {
@@ -619,7 +619,7 @@ Class FilterService
 	 */
 	public function escape_url($url)
 	{
-		if (Service::Registry()->get('Configuration', 'unicode_slugs') == 1) {
+		if (Services::Registry()->get('Configuration', 'unicode_slugs') == 1) {
 //            return FilterOutput::stringURLUnicodeSlug($url);
 		} else {
 //            return FilterOutput::stringURLSafe($url);

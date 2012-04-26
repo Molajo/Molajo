@@ -4,9 +4,9 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 use Molajo\MVC\Model\TableModel;
 
@@ -88,14 +88,14 @@ Class AccessService
 	protected function _initialise()
 	{
 
-		$tasks = Service::Configuration()->loadXML('Tasks');
+		$tasks = Services::Configuration()->loadFile('Tasks');
 		if (count($tasks) == 0) {
 			return;
 		}
 
-		$this->task_to_action = Service::Registry()->initialise();
+		$this->task_to_action = Services::Registry()->initialise();
 
-		$this->action_to_controller = Service::Registry()->initialise();
+		$this->action_to_controller = Services::Registry()->initialise();
 
 		foreach ($tasks->task as $t) {
 			$this->task_to_action
@@ -111,7 +111,7 @@ Class AccessService
 		}
 
 		/** action text to database key */
-		$this->action_to_action_id = Service::Registry()->initialise();
+		$this->action_to_action_id = Services::Registry()->initialise();
 
 		/** retrieve database keys for actions */
 		$m = new TableModel('Actions');
@@ -146,11 +146,11 @@ Class AccessService
 		if ($application_id === false) {
 			//todo: finish the response action/test
 
-			Service::Response()
+			Services::Response()
 				->setHeader('Status', '403 Not Authorised', 'true');
 
-			Service::Message()->set(
-				Service::Registry()
+			Services::Message()->set(
+				Services::Registry()
 					->get('Configuration', 'error_403_message', 'Not Authorised.'),
 							MESSAGE_TYPE_ERROR,
 							403
@@ -166,7 +166,7 @@ Class AccessService
 	 * Using the Task, retrieve the Controller
 	 *
 	 * Example usage:
-	 * Service::Access()->getTaskController($this->get('mvc_task')
+	 * Services::Access()->getTaskController($this->get('mvc_task')
 	 *
 	 * @param $task
 	 *
@@ -185,7 +185,7 @@ Class AccessService
 	 * authoriseTaskList
 	 *
 	 * Example usage:
-	 * $permissions = Service::Access()->authoriseTaskList($tasksArray, $item->catalog_id);
+	 * $permissions = Services::Access()->authoriseTaskList($tasksArray, $item->catalog_id);
 	 *
 	 * @param  array   $tasklist
 	 * @param  string  $catalog_id
@@ -206,7 +206,7 @@ Class AccessService
 
 		foreach ($tasklist as $task) {
 			$taskPermissions[$task] =
-				Service::Access()
+				Services::Access()
 					->authoriseTask($task, $catalog_id);
 		}
 		return $taskPermissions;
@@ -219,7 +219,7 @@ Class AccessService
 	 * on a specific catalog
 	 *
 	 * Example usage:
-	 * Service::Access()->authoriseTask($task, $catalog_id);
+	 * Services::Access()->authoriseTask($task, $catalog_id);
 	 *
 	 * @param  string  $task
 	 * @param  string  $catalog_id
@@ -230,7 +230,7 @@ Class AccessService
 	public function authoriseTask($task, $catalog_id)
 	{
 		if ($task == 'login') {
-			return Service::Access()->authoriseLogin('login', $catalog_id);
+			return Services::Access()->authoriseLogin('login', $catalog_id);
 		}
 
 		/** Retrieve ACL Action for this Task */
@@ -238,9 +238,9 @@ Class AccessService
 		$action_id = (int)$this->action_to_action_id->get($action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-			if (Service::Registry()->get('Configuration', 'debug', 0) == 1) {
-				Service::Debug()
-					->set('AccessService::authoriseTask Task: ' . $task
+			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
+				Services::Debug()
+					->set('AccessServices::authoriseTask Task: ' . $task
 					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
 		}
@@ -254,7 +254,7 @@ Class AccessService
 		$m->query->where($m->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
 		$m->query->where($m->db->qn('group_id')
-				. ' IN (' . implode(',', Service::Registry()->get('User', 'Groups')) . ')'
+				. ' IN (' . implode(',', Services::Registry()->get('User', 'Groups')) . ')'
 				);
 
 		$count = $m->loadResult();
@@ -263,8 +263,8 @@ Class AccessService
 			return true;
 
 		} else {
-			if (Service::Registry()->get('Configuration', 'debug', 0) == 1) {
-				Service::Debug()->set('AccessService::authoriseTask No query results for Task: ' . $task
+			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
+				Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task
 					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
 			return false;
@@ -277,7 +277,7 @@ Class AccessService
 	 * Verifies permission for a user to logon to a specific application
 	 *
 	 * Example usage:
-	 * Service::Access()->authoriseLogin('login', $catalog_id);
+	 * Services::Access()->authoriseLogin('login', $catalog_id);
 	 *
 	 * @param $key
 	 * @param $action
@@ -311,7 +311,7 @@ Class AccessService
 	 *  Append criteria needed to implement view access for Query
 	 *
 	 * Example usage:
-	 *  Service::Access()->setQueryViewAccess(
+	 *  Services::Access()->setQueryViewAccess(
 	 *     $this->query,
 	 *     $this->db,
 	 *     array('join_to_prefix' => $this->primary_prefix,
@@ -331,7 +331,7 @@ Class AccessService
 	public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
 	{
 		echo '<pre>';
-		var_dump(Service::Registry()->get('User', 'ViewGroups'));
+		var_dump(Services::Registry()->get('User', 'ViewGroups'));
 		die;
 		if ($parameters['select'] === true) {
 			$query->select(
@@ -379,7 +379,7 @@ Class AccessService
 				'.' .
 				$db->qn('view_group_id') .
 				' IN (' . implode(',',
-				Service::Registry()->get('User', 'ViewGroups') .
+				Services::Registry()->get('User', 'ViewGroups') .
 					')')
 		);
 
@@ -400,16 +400,16 @@ Class AccessService
 	 *  it returns true
 	 *
 	 * Example usage:
-	 * $userHTMLFilter = Service::Access()->setHTMLFilter();
+	 * $userHTMLFilter = Services::Access()->setHTMLFilter();
 	 *
 	 * @return bool
 	 * @since  1.0
 	 */
 	public function setHTMLFilter()
 	{
-		$groups = Service::Registry()->get('Configuration', 'disable_filter_for_groups');
+		$groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
 		$groupArray = explode(',', $groups);
-		$userGroups = Service::Registry()->get('User', 'groups');
+		$userGroups = Services::Registry()->get('User', 'groups');
 
 		foreach ($groupArray as $single) {
 

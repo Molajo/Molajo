@@ -6,7 +6,7 @@
  */
 namespace Molajo\Extension;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -48,8 +48,8 @@ Class Helper
      * Magic methods __call acts as a proxy to Extension Helpers
      *
      * Usage
-     * Service::Extension()->catalog
-     * Service::Extension()->component ... etc.
+     * Services::Extension()->catalog
+     * Services::Extension()->component ... etc.
      *
      * @static
      * @param $name
@@ -96,7 +96,7 @@ Class Helper
 
         if (class_exists($class)) {
         } else {
-            Service::Debug()->set('Invalid Extension Helper Class: ' . $class);
+            Services::Debug()->set('Invalid Extension Helper Class: ' . $class);
             return false;
         }
 
@@ -104,7 +104,7 @@ Class Helper
             return call_user_func_array(array($class, $method), $arg);
         }
 
-        Service::Debug()->set('Invalid Helper Class Method: ' . $class . ' ' . $method);
+        Services::Debug()->set('Invalid Helper Class Method: ' . $class . ' ' . $method);
         return false;
     }
 }

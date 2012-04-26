@@ -9,7 +9,7 @@ namespace Molajo\Extension\Helper;
 
 use Molajo\MVC\Model\TableModel;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -63,7 +63,7 @@ abstract class MenuitemHelper
         $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$menu_item_id);
 
         /** Catalog Join and View Access Check */
-        Service::Access()->setQueryViewAccess(
+        Services::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',
@@ -97,7 +97,7 @@ abstract class MenuitemHelper
                 ' OR b.stop_publishing_datetime >= ' . $m->db->q($m->now) . ')'
         );
 
-        Service::Access()->setQueryViewAccess(
+        Services::Access()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'b',

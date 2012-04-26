@@ -127,7 +127,7 @@ class Includer
         $this->type = $type;
         $this->items = $items;
 
-        $this->parameters = Service::Registry()->initialise();
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->set('suppress_no_results', 0);
 
 //setViewRegistries
@@ -139,7 +139,7 @@ class Includer
 			$this->getPageView();
 			$this->getTemplateView();
 			$this->getWrapView();
-			$temp = Service::Registry()->initialise();
+			$temp = Services::Registry()->initialise();
 
 			$temp->loadArray($this->parameters);
 			$this->parameters = $temp;
@@ -284,7 +284,7 @@ class Includer
      */
     protected function _initialiseRequest()
     {
-        $this->task_request = Service::Registry()->initialise();
+        $this->task_request = Services::Registry()->initialise();
 
         /** extension */
         $this->set('extension_instance_id', 0);
@@ -458,7 +458,7 @@ class Includer
         $this->set('extension_view_group_id', $row->view_group_id);
         $this->set('extension_type', $row->catalog_type_title);
 
-        $this->parameters = Service::Registry()->initialise();
+        $this->parameters = Services::Registry()->initialise();
         $this->parameters->loadString($row->parameters);
 
         $this->set('source_catalog_type_id',
@@ -727,19 +727,19 @@ class Includer
      */
     protected function _loadViewMedia()
     {
-        $priority = Service::Registry()->get('Configuration', 'media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('Configuration', 'media_priority_other_extension', 400);
 
         $file_path = $this->get('template_view_path');
         $url_path = $this->get('template_view_path_url');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         $file_path = $this->get('wrap_view_path');
         $url_path = $this->get('wrap_view_path_url');
-        $css = Service::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Service::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Service::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
     }
 
     /**
@@ -760,13 +760,13 @@ class Includer
         $task = (string)$this->get('task', 'display');
         $this->set('task', $task);
 
-        if (Service::Registry()->get('Configuration', 'debug', 0) == 1) {
-            Service::Debug()->set(' ');
-            Service::Debug()->set('Includer::invokeMVC');
-            Service::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');
-            Service::Debug()->set('Extension: ' . $this->get('extension_instance_name') . ' ID: ' . $this->get('id') . '');
-            Service::Debug()->set('Template: ' . $this->get('template_view_path') . '');
-            Service::Debug()->set('Wrap: ' . $this->get('wrap_view_path') . '');
+        if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
+            Services::Debug()->set(' ');
+            Services::Debug()->set('Includer::invokeMVC');
+            Services::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');
+            Services::Debug()->set('Extension: ' . $this->get('extension_instance_name') . ' ID: ' . $this->get('id') . '');
+            Services::Debug()->set('Template: ' . $this->get('template_view_path') . '');
+            Services::Debug()->set('Wrap: ' . $this->get('wrap_view_path') . '');
         }
 
         /** instantiate controller  */
@@ -780,7 +780,7 @@ class Includer
         if ($this->parameters->get('html_display_filter', true) == false) {
             return $results;
         } else {
-            return Service::Filter()->filter_html($results);
+            return Services::Filter()->filter_html($results);
         }
     }
 

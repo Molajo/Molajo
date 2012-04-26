@@ -9,7 +9,7 @@ namespace Molajo\Extension\Includer;
 defined('MOLAJO') or die;
 
 use Molajo\Application\Includer;
-use Molajo\Service;
+use Molajo\Service\Services;
 
 /**
  * Head
@@ -54,12 +54,12 @@ Class HeadIncluder extends Includer
 
         if ((int)$this->get('template_view_id', 0) == 0) {
             $this->set('template_view_id',
-                Service::Registry()->get('Configuration', 'head_template_view_id', 'DocumentHead'));
+                Services::Registry()->get('Configuration', 'head_template_view_id', 'DocumentHead'));
         }
 
         if ((int)$this->get('wrap_view_id', 0) == 0) {
             $this->set('wrap_view_id',
-                Service::Registry()->get('Configuration', 'head_wrap_view_id', 'none'));
+                Services::Registry()->get('Configuration', 'head_wrap_view_id', 'none'));
         }
 
         if ($this->type == 'defer') {

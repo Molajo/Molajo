@@ -4,11 +4,11 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
@@ -98,11 +98,11 @@ Class SessionService
 	 */
 	public function setSessionStorageData()
 	{
-		$save_path = Service::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache');
+		$save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache');
 		$options = array();
-		$options['cookie_lifetime'] = Service::Registry()->get('Configuration', 'lifetime', 15);
-		$options['cookie_domain'] = $cookie_domain = Service::Registry()->get('Configuration', 'cookie_domain', '');
-		$options['cookie_path'] = $cookie_path = Service::Registry()->get('Configuration', 'cookie_path', '');
+		$options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
+		$options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration', 'cookie_domain', '');
+		$options['cookie_path'] = $cookie_path = Services::Registry()->get('Configuration', 'cookie_path', '');
 
 		$sessionStorage = new NativeFileSessionStorage ($save_path, $options);
 		return $sessionStorage;

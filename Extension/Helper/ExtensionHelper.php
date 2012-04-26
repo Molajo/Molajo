@@ -8,7 +8,7 @@ namespace Molajo\Extension\Helper;
 
 use Molajo\MVC\Model\DisplayModel;
 use Molajo\MVC\Model\TableModel;
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -91,7 +91,7 @@ abstract class ExtensionHelper
         );
 
         /** Catalog Join and View Access Check */
-        Service::Access()
+        Services::Access()
             ->setQueryViewAccess(
             $m->query,
             $m->db,
@@ -210,7 +210,7 @@ abstract class ExtensionHelper
      * Page Request object that will be populated by this class
      * with overall processing requirements for the page
      *
-     * Access via Service::Registry()->get('Request', 'property')
+     * Access via Services::Registry()->get('Request', 'property')
      *
      * @param   Registry $parameters
      *
@@ -276,13 +276,13 @@ abstract class ExtensionHelper
     {
         $path .= '/language';
 
-        if (Service::Filesystem()->folderExists($path)) {
+        if (Services::Filesystem()->folderExists($path)) {
         } else {
             return false;
         }
 
-        Service::Language()
-            ->load($path, Service::Language()->get('tag'), false, false);
+        Services::Language()
+            ->load($path, Services::Language()->get('tag'), false, false);
         return true;
     }
 }

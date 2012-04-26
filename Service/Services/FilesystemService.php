@@ -4,9 +4,9 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -18,35 +18,35 @@ defined('MOLAJO') or die;
  * Usage:
  *
  * File
- * Service::Filesystem()->fileExists
- * Service::Filesystem()->fileName
- * Service::Filesystem()->fileRead
- * Service::Filesystem()->fileWrite
- * Service::Filesystem()->fileDelete
- * Service::Filesystem()->fileCopy
- * Service::Filesystem()->fileMove
- * Service::Filesystem()->fileExtension
- * Service::Filesystem()->fileNameNoExtension
- * Service::Filesystem()->fileUpload
+ * Services::Filesystem()->fileExists
+ * Services::Filesystem()->fileName
+ * Services::Filesystem()->fileRead
+ * Services::Filesystem()->fileWrite
+ * Services::Filesystem()->fileDelete
+ * Services::Filesystem()->fileCopy
+ * Services::Filesystem()->fileMove
+ * Services::Filesystem()->fileExtension
+ * Services::Filesystem()->fileNameNoExtension
+ * Services::Filesystem()->fileUpload
  *
  * Folder
- * Service::Filesystem()->folderExists
- * Service::Filesystem()->folderName
- * Service::Filesystem()->folderCreate
- * Service::Filesystem()->folderDelete
- * Service::Filesystem()->folderCopy
- * Service::Filesystem()->folderMove
- * Service::Filesystem()->folderFiles
- * Service::Filesystem()->folderFolders
- * Service::Filesystem()->folderlistFolderTree
+ * Services::Filesystem()->folderExists
+ * Services::Filesystem()->folderName
+ * Services::Filesystem()->folderCreate
+ * Services::Filesystem()->folderDelete
+ * Services::Filesystem()->folderCopy
+ * Services::Filesystem()->folderMove
+ * Services::Filesystem()->folderFiles
+ * Services::Filesystem()->folderFolders
+ * Services::Filesystem()->folderlistFolderTree
  *
  * Path
- * Service::Filesystem()->pathSetPermissions
- * Service::Filesystem()->pathGetPermissions
- * Service::Filesystem()->pathCheck
- * Service::Filesystem()->pathClean
- * Service::Filesystem()->pathIsOwner
- * Service::Filesystem()->pathFind
+ * Services::Filesystem()->pathSetPermissions
+ * Services::Filesystem()->pathGetPermissions
+ * Services::Filesystem()->pathCheck
+ * Services::Filesystem()->pathClean
+ * Services::Filesystem()->pathIsOwner
+ * Services::Filesystem()->pathFind
  *
  * @package   Molajo
  * @subpackage  Services
@@ -105,7 +105,7 @@ class FilesystemService
 	 */
 	public static function __callStatic($name, $arguments)
 	{
-		return Service::Filesystem()->processCall($name, $arguments);
+		return Services::Filesystem()->processCall($name, $arguments);
 	}
 
 	/**
@@ -132,7 +132,7 @@ class FilesystemService
 			$method = substr($name, 4, strlen($name) - 4);
 
 		} else {
-			Service::Debug()->set('Invalid Filesystem Class: ' . $name);
+			Services::Debug()->set('Invalid Filesystem Class: ' . $name);
 			return false;
 		}
 
@@ -141,7 +141,7 @@ class FilesystemService
 			return call_user_func_array(array($class, $method), $arguments);
 		}
 
-		Service::Debug()->set('Invalid Filesystem Method: ' . $name);
+		Services::Debug()->set('Invalid Filesystem Method: ' . $name);
 
 		return false;
 	}

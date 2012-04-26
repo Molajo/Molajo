@@ -43,7 +43,7 @@ Class ModelGridTableModule extends DisplayModel
      */
     public function getData()
     {
-        $this->items = Service::Registry()->get('Request', 'query_resultset');
+        $this->items = Services::Registry()->get('Request', 'query_resultset');
         return $this->items;
     }
 }

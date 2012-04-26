@@ -8,7 +8,7 @@ namespace Molajo\MVC\Model;
 
 use Molajo\Extension\Helper;
 use Molajo\Application\Molajo;
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -122,7 +122,7 @@ class DisplayModel extends ItemModel
         if (isset($parameterArray['disable_view_access_check'])
             && $parameterArray['disable_view_access_check'] == 0
         ) {
-            Service::Access()->setQueryViewAccess(
+            Services::Access()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => $this->primary_prefix,

@@ -5,9 +5,9 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 /**
@@ -160,7 +160,7 @@ Class LanguageService
 	protected function load_core_files()
 	{
 		/** load metadata */
-		$metadata = Service::Configuration()->getXML('manifest');
+		$metadata = Services::Configuration()->getXML('manifest');
 
 		if (isset($metadata['name'])) {
 			$this->name = $metadata['name'];
@@ -206,7 +206,7 @@ Class LanguageService
 	{
 		$loaded = $this->_loadLanguage($path, $this->language . '.ini');
 		if ($loaded === false) {
-			Service::Debug()->set('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
+			Services::Debug()->set('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
 		} else {
 			return true;
 		}
@@ -218,7 +218,7 @@ Class LanguageService
 
 		$loaded = $this->_loadLanguage($path, $default . '.ini');
 		if ($loaded === false) {
-			Service::Debug()->set('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
+			Services::Debug()->set('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
 			return false;
 		}
 		return $loaded;
@@ -274,7 +274,7 @@ Class LanguageService
 			return $this->loaded_strings[$key];
 
 		} else {
-			Service::Debug()->set('MolajoLanguage: Missing language key: ' . $key);
+			Services::Debug()->set('MolajoLanguage: Missing language key: ' . $key);
 			return $key;
 		}
 	}
@@ -415,7 +415,7 @@ Class LanguageService
 		}
 
 		/** 2. user  */
-		$language = Service::Registry()->get('User', 'language');
+		$language = Services::Registry()->get('User', 'language');
 		if ($language === false) {
 		} elseif (in_array($language, $installed)) {
 			return $language;
@@ -502,7 +502,7 @@ Class LanguageService
 
 		$languages = array();
 
-		$files = Service::Filesystem()->folderFiles($path . '/language', '\.ini', false, false);
+		$files = Services::Filesystem()->folderFiles($path . '/language', '\.ini', false, false);
 		if (count($files) == 0) {
 			return false;
 		}
@@ -531,7 +531,7 @@ Class LanguageService
 	 */
 	public function getLanguagesCore()
 	{
-		$subfolders = Service::Filesystem()->folderFolders(SITE_LANGUAGES);
+		$subfolders = Services::Filesystem()->folderFolders(SITE_LANGUAGES);
 
 		$languages = array();
 
@@ -558,7 +558,7 @@ Class LanguageService
 	 */
 	public function get_metadata($file)
 	{
-		$xml = Service::Configuration()->loadXML($file);
+		$xml = Services::Configuration()->loadFile($file);
 		if ($xml) {
 		} else {
 			return true;

@@ -4,11 +4,11 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -80,9 +80,9 @@ Class RedirectService
 		}
 
 		/** Configuration Service is available */
-		if (Service::Registry()->get('Configuration', 'sef', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
 
-			if (Service::Registry()->get('Configuration', 'sef_rewrite', 0) == 0) {
+			if (Services::Registry()->get('Configuration', 'sef_rewrite', 0) == 0) {
 				$url = BASE_URL
 					. APPLICATION_URL_PATH
 					. 'index.php/' . $url;
@@ -92,12 +92,12 @@ Class RedirectService
 					. $url;
 			}
 
-			if ((int)Service::Registry()->get('Configuration', 'sef_suffix', 0) == 1) {
+			if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 0) == 1) {
 				$url .= '.html';
 			}
 		}
 
-		Service::Debug()->set('RedirectService::set URL: ' . $this->url . ' Status Code: ' . $this->code);
+		Services::Debug()->set('RedirectServices::set URL: ' . $this->url . ' Status Code: ' . $this->code);
 
 		return;
 	}
@@ -110,7 +110,7 @@ Class RedirectService
 	 */
 	public function redirect()
 	{
-		Service::Debug()->set('RedirectService::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
+		Services::Debug()->set('RedirectServices::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
 
 		return new RedirectResponse($this->url, $this->code);
 	}

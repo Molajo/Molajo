@@ -5,9 +5,9 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -130,19 +130,19 @@ Class LogService
 	 *
 	 * 3. Database
 	 *
-	 * $options['dbo'] - Service::Database();
+	 * $options['dbo'] - Services::Database();
 	 * $options['db_table'] - #__log
 	 *
 	 * +++ Molajo custom loggers
 	 *
 	 * 4. Email
 	 * $this->options['sender'] = array(
-	 *     		Service::Registry()->get('Configuration', 'mail_from'),
-	 *  		Service::Registry()->get('Configuration', 'mail_from_name')
+	 *     		Services::Registry()->get('Configuration', 'mail_from'),
+	 *  		Services::Registry()->get('Configuration', 'mail_from_name')
 	 * 		};
-	 * $this->options['recipient'] = Service::Registry()->get('Configuration', 'mail_from_email_address');
-	 * $this->options['subject'] = Service::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
-	 * $this->options['mailer'] = Service::Mail();
+	 * $this->options['recipient'] = Services::Registry()->get('Configuration', 'mail_from_email_address');
+	 * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
+	 * $this->options['mailer'] = Services::Mail();
 	 *
 	 * 5. ChromePHP
 	 * No addition $option[] values. However, this option requires using Google Chrome and installing this
@@ -195,7 +195,7 @@ Class LogService
 		$type = (string)strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $type));
 
 		/** Date */
-		$date = Service::Date()->getDate($date);
+		$date = Services::Date()->getDate($date);
 
 		/** Log it */
 		try {

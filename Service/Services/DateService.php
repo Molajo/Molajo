@@ -4,9 +4,9 @@
  * @copyright Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -71,7 +71,7 @@ Class DateService
 		if ($time == '') {
 			$time = 'now';
 		}
-		$locale = Service::Language()->get('tag', 'en-GB');
+		$locale = Services::Language()->get('tag', 'en-GB');
 
 		$class = str_replace('-', '_', $locale) . 'Date';
 		if (class_exists($class)) {
@@ -237,11 +237,11 @@ Class DateService
 
 		if ($numeric_value == 1) {
 			return ', ' . $numeric_value . ' ' .
-				strtolower(Service::Language()->translate($singular_literal));
+				strtolower(Services::Language()->translate($singular_literal));
 		}
 
 		return ', ' . $numeric_value . ' ' .
-			strtolower(Service::Language()->translate($plural_literal));
+			strtolower(Services::Language()->translate($plural_literal));
 	}
 
 	/**
@@ -260,45 +260,45 @@ Class DateService
 		switch ($day_number) {
 			case 1:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_MON');
+					Services::Language()->translate('DATE_MON');
 				} else {
-					Service::Language()->translate('DATE_MONDAY');
+					Services::Language()->translate('DATE_MONDAY');
 				}
 			case 2:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_TUE');
+					Services::Language()->translate('DATE_TUE');
 				} else {
-					Service::Language()->translate('DATE_TUESDAY');
+					Services::Language()->translate('DATE_TUESDAY');
 				}
 			case 3:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_WED');
+					Services::Language()->translate('DATE_WED');
 				} else {
-					Service::Language()->translate('DATE_WEDNESDAY');
+					Services::Language()->translate('DATE_WEDNESDAY');
 				}
 			case 4:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_THU');
+					Services::Language()->translate('DATE_THU');
 				} else {
-					Service::Language()->translate('DATE_THURSDAY');
+					Services::Language()->translate('DATE_THURSDAY');
 				}
 			case 5:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_FRI');
+					Services::Language()->translate('DATE_FRI');
 				} else {
-					Service::Language()->translate('DATE_FRIDAY');
+					Services::Language()->translate('DATE_FRIDAY');
 				}
 			case 6:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_SAT');
+					Services::Language()->translate('DATE_SAT');
 				} else {
-					Service::Language()->translate('DATE_SATURDAY');
+					Services::Language()->translate('DATE_SATURDAY');
 				}
 			default:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_SUN');
+					Services::Language()->translate('DATE_SUN');
 				} else {
-					Service::Language()->translate('DATE_SUNDAY');
+					Services::Language()->translate('DATE_SUNDAY');
 				}
 		}
 	}
@@ -319,75 +319,75 @@ Class DateService
 		switch ($month_number) {
 			case 1:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_JAN');
+					Services::Language()->translate('DATE_JAN');
 				} else {
-					Service::Language()->translate('DATE_JANUARY');
+					Services::Language()->translate('DATE_JANUARY');
 				}
 			case 2:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_FEB');
+					Services::Language()->translate('DATE_FEB');
 				} else {
-					Service::Language()->translate('DATE_FEBRUARY');
+					Services::Language()->translate('DATE_FEBRUARY');
 				}
 			case 3:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_MAR');
+					Services::Language()->translate('DATE_MAR');
 				} else {
-					Service::Language()->translate('DATE_MARCH');
+					Services::Language()->translate('DATE_MARCH');
 				}
 			case 4:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_APR');
+					Services::Language()->translate('DATE_APR');
 				} else {
-					Service::Language()->translate('DATE_APRIL');
+					Services::Language()->translate('DATE_APRIL');
 				}
 			case 5:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_MAY');
+					Services::Language()->translate('DATE_MAY');
 				} else {
-					Service::Language()->translate('DATE_MAY');
+					Services::Language()->translate('DATE_MAY');
 				}
 			case 6:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_JUN');
+					Services::Language()->translate('DATE_JUN');
 				} else {
-					Service::Language()->translate('DATE_JUNE');
+					Services::Language()->translate('DATE_JUNE');
 				}
 			case 7:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_JUL');
+					Services::Language()->translate('DATE_JUL');
 				} else {
-					Service::Language()->translate('DATE_JULY');
+					Services::Language()->translate('DATE_JULY');
 				}
 			case 8:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_AUG');
+					Services::Language()->translate('DATE_AUG');
 				} else {
-					Service::Language()->translate('DATE_AUGUST');
+					Services::Language()->translate('DATE_AUGUST');
 				}
 			case 9:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_SEP');
+					Services::Language()->translate('DATE_SEP');
 				} else {
-					Service::Language()->translate('DATE_SEPTEMBER');
+					Services::Language()->translate('DATE_SEPTEMBER');
 				}
 			case 10:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_OCT');
+					Services::Language()->translate('DATE_OCT');
 				} else {
-					Service::Language()->translate('DATE_OCTOBER');
+					Services::Language()->translate('DATE_OCTOBER');
 				}
 			case 11:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_NOV');
+					Services::Language()->translate('DATE_NOV');
 				} else {
-					Service::Language()->translate('DATE_NOVEMBER');
+					Services::Language()->translate('DATE_NOVEMBER');
 				}
 			default:
 				if ($abbreviation === true) {
-					Service::Language()->translate('DATE_DECEMBER');
+					Services::Language()->translate('DATE_DECEMBER');
 				} else {
-					Service::Language()->translate('DATE_DECEMBER');
+					Services::Language()->translate('DATE_DECEMBER');
 				}
 		}
 	}
@@ -399,7 +399,7 @@ Class DateService
 	 * $d = getdate();
 	 * $month = $d['mon'];
 	 * $year = $d['year'];
-	 * $calendar = Service::Date()->buildCalendar ($month, $year);
+	 * $calendar = Services::Date()->buildCalendar ($month, $year);
 	 *
 	 * @param    string $month
 	 * @param    string $year
@@ -472,8 +472,8 @@ Class DateService
 		//todo: amy fix user
 
 		$server_or_user_UTC = 'SERVER_UTC';
-		$config = Service::Registry()->get('Configuration');
-		$user = Service::User();
+		$config = Services::Registry()->get('Configuration');
+		$user = Services::User();
 
 		// If a known filter is given use it.
 		switch (strtoupper((string)$server_or_user_UTC)) {

@@ -101,7 +101,7 @@ class ItemModel extends Model
 		if (key_exists('custom_fields', $this->query_results)
 			&& is_array($this->query_results['custom_fields'])
 		) {
-			$registry = Service::Registry()->initialise();
+			$registry = Services::Registry()->initialise();
 			$registry->loadString($this->query_results['custom_fields']);
 			$this->query_results['custom_fields'] = (string)$registry;
 		}
@@ -109,7 +109,7 @@ class ItemModel extends Model
 		if (key_exists('parameters', $this->query_results)
 			&& is_array($this->query_results['parameters'])
 		) {
-			$registry = Service::Registry()->initialise();
+			$registry = Services::Registry()->initialise();
 			$registry->loadString($this->query_results['parameters']);
 			$this->query_results['parameters'] = (string)$registry;
 		}
@@ -117,7 +117,7 @@ class ItemModel extends Model
 		if (key_exists('metadata', $this->query_results)
 			&& is_array($this->query_results['metadata'])
 		) {
-			$registry = Service::Registry()->initialise();
+			$registry = Services::Registry()->initialise();
 			$registry->loadString($this->query_results['metadata']);
 			$this->query_results['metadata'] = (string)$registry;
 		}

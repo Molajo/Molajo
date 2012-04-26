@@ -4,9 +4,9 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Service;
+namespace Molajo\Service\Services;
 
-use Molajo\Service;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -51,17 +51,17 @@ Class ErrorService
 	 */
 	public function set($code, $message = 'Internal server error')
 	{
-		Service::Registry()->set('Request', 'error_status', true);
-		Service::Registry()->set('Request', 'mvc_controller', 'display');
-		Service::Registry()->set('Request', 'mvc_task', 'display');
-		Service::Registry()->set('Request', 'mvc_model', 'messages');
+		Services::Registry()->set('Request', 'error_status', true);
+		Services::Registry()->set('Request', 'mvc_controller', 'display');
+		Services::Registry()->set('Request', 'mvc_task', 'display');
+		Services::Registry()->set('Request', 'mvc_model', 'messages');
 
 		/** default error theme and page */
-		Service::Registry()->set('Request', 'theme_id',
-			Service::Registry()->get('Configuration', 'error_theme_id', 0)
+		Services::Registry()->set('Request', 'theme_id',
+			Services::Registry()->get('Configuration', 'error_theme_id', 0)
 		);
-		Service::Registry()->set('Request', 'page_view_id',
-			Service::Registry()->get('Configuration', 'error_page_view_id', 0)
+		Services::Registry()->set('Request', 'page_view_id',
+			Services::Registry()->get('Configuration', 'error_page_view_id', 0)
 		);
 
 		/** set header status, message and override default theme/page, if needed */
@@ -76,10 +76,10 @@ Class ErrorService
 
 		} else {
 
-			Service::Response()
+			Services::Response()
 				->setHeader('Status', '500 Internal server error', true);
 
-			Service::Message()
+			Services::Message()
 				->set($message, MESSAGE_TYPE_ERROR, 500);
 		}
 	}
@@ -93,24 +93,24 @@ Class ErrorService
 	 */
 	protected function error503()
 	{
-		Service::Response()
+		Services::Response()
 			->setStatusCode(503);
 
-		Service::Message()
+		Services::Message()
 			->set(
-				Service::Registry()->get('Configuration', 'offline_message',
+				Services::Registry()->get('Configuration', 'offline_message',
 				'This site is not available.<br /> Please check back again soon.'
 			),
 			MESSAGE_TYPE_WARNING,
 			503
 		);
 
-		Service::Registry()->set('Request', 'theme_id',
-			Service::Registry()->get('Configuration', 'offline_theme_id', 0)
+		Services::Registry()->set('Request', 'theme_id',
+			Services::Registry()->get('Configuration', 'offline_theme_id', 0)
 		);
 
-		Service::Registry()->set('Request', 'page_view_id',
-			Service::Registry()->get('Configuration', 'offline_page_view_id', 0)
+		Services::Registry()->set('Request', 'page_view_id',
+			Services::Registry()->get('Configuration', 'offline_page_view_id', 0)
 		);
 	}
 
@@ -123,12 +123,12 @@ Class ErrorService
 	 */
 	protected function error403()
 	{
-		Service::Response()
+		Services::Response()
 			->setStatusCode(403);
 
-		Service::Message()
+		Services::Message()
 			->set(
-				Service::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
+				Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
 				MESSAGE_TYPE_ERROR,
 				403
 			);
@@ -143,12 +143,12 @@ Class ErrorService
 	 */
 	protected function error404()
 	{
-		Service::Response()
+		Services::Response()
 			->setStatusCode(404);
 
-		Service::Message()
+		Services::Message()
 			->set(
-				Service::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
+				Services::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
 				MESSAGE_TYPE_ERROR,
 				404
 			);
