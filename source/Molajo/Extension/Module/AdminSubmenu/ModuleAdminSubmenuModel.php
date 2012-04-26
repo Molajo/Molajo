@@ -7,7 +7,7 @@
 namespace Molajo\Extension\Module;
 
 use Molajo\MVC\Model\DisplayModel;
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 

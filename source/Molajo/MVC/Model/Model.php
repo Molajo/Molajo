@@ -8,7 +8,7 @@ namespace Molajo\MVC\Model;
 
 use Joomla\database\JDatabaseDriver;
 
-use Molajo\Services; //Date, DB, Language, Message, Registry
+use Molajo\Service; //Date, DB, Language, Message, Registry
 
 defined('MOLAJO') or die;
 
@@ -183,29 +183,18 @@ class Model
 	 * @return  object
 	 * @since   1.0
 	 */
-	public function __construct($table = null, $id = null, $path = null)
+	public function __construct($table = null, $id = null)
 	{
 		/** Retrieve XML for Table */
 		if (trim($table) === null) {
 			$table = 'Content';
 		}
 
-		if ($path === null) {
-			$path = CONFIGURATION_FOLDER . '/Table';
-		}
-
-		$file = $path . '/' . ucfirst(strtolower($table)) . '.xml';
-
-		if (is_file($file)) {
-		} else {
-			throw new \InvalidArgumentException('$table:  ' . $table . ' $id: ' . $id . ' $path: ' . $path);
-		}
-
-		$this->table_xml = simplexml_load_file($file);
+		$this->table_xml = Service::Configuration()->loadXML(substr($this->model->table_name, 3, 99));
 
 		$this->model_name = (string)$this->table_xml['name'];
 		if ($this->model_name === '') {
-			throw new \RuntimeException('No model name in XML: ' . $file);
+			throw new \RuntimeException('No model name in XML: ' . $this->model->table_name);
 		}
 		$this->table_name = (string)$this->table_xml['table'];
 

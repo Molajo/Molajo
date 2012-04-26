@@ -184,10 +184,7 @@ Class InstallService
 			return false;
 		}
 
-		$xml = simplexml_load_file($path . '/manifest.xml');
-		if ($xml === false) {
-			return false;
-		}
+		$xml = Service::Configuration()->loadXML('Manifest');
 
 		$data = array();
 

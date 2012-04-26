@@ -6,7 +6,7 @@
  */
 namespace Molajo\Application;
 
-use Molajo\Services;
+use Molajo\Service;
 
 use Molajo\Extension\Helper;
 
@@ -256,13 +256,7 @@ Class Route
 		$use = array();
 
 		/** XML with system defined nonroutable pairs */
-		$xml = CONFIGURATION_FOLDER . '/nonroutable.xml';
-		if (is_file($xml)) {
-		} else {
-			//todo: throw exception
-		}
-
-		$list = simplexml_load_file($xml);
+		$list = Services::Configuration()->loadXML('nonroutable');
 
 		foreach ($list->parameter as $item) {
 

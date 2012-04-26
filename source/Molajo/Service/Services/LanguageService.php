@@ -7,7 +7,7 @@
 
 namespace Molajo\Service;
 
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 /**
@@ -160,8 +160,7 @@ Class LanguageService
 	protected function load_core_files()
 	{
 		/** load metadata */
-		$xmlFile = SITE_LANGUAGES . '/' . $this->language . '/' . 'manifest.xml';
-		$metadata = $this->get_metadata($xmlFile);
+		$metadata = Service::Configuration()->getXML('manifest');
 
 		if (isset($metadata['name'])) {
 			$this->name = $metadata['name'];
@@ -559,7 +558,7 @@ Class LanguageService
 	 */
 	public function get_metadata($file)
 	{
-		$xml = simplexml_load_file($file);
+		$xml = Service::Configuration()->loadXML($file);
 		if ($xml) {
 		} else {
 			return true;

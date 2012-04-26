@@ -131,22 +131,7 @@ Class Parse
          *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
-
-		$formatXML = '';
-
-		if (Service::Filesystem()->fileExists($sequenceXML)) {
-            $formatXML = $sequenceXML;
-        } else {
-            $formatXML = CONFIGURATION_FOLDER. '/includes-page.xml';
-        }
-
-        if (Service::Filesystem()->fileExists($formatXML)) {
-        } else {
-            //error
-            return false;
-        }
-
-        $sequence = simplexml_load_file($formatXML);
+		$sequence = Service::Configuration()->loadXML('includes-page');
 
 		foreach ($sequence->include as $next) {
             $this->sequence[] = (string)$next;
@@ -155,7 +140,7 @@ Class Parse
         /** Theme Parameters */
         Service::Registry()->create('theme');
 
-		$themeParameters = Service::Registry()->get('Request', 'theme_parameters');
+		$themeParameters = Service::Registry()->get('Theme', 'Parameters');
 
 		Service::Registry()->loadArray('theme',
             array(
@@ -181,27 +166,17 @@ Class Parse
         // Service::Dispatcher()->notify('onBeforeRender');
 
         $this->final = false;
+
 		$body = $this->renderLoop();
 
 		/**
          *  Final Includers: Now, the theme, head, messages, and defer includes run
          *      and any cleanup of unfound <include values can take place
          */
-        $formatXML = '';
-
-		if (Service::Filesystem()->fileExists($finalXML)) {
-            $formatXML = $finalXML;
-        } else {
-            $formatXML = CONFIGURATION_FOLDER . '/includes-final.xml';
-        }
-        if (Service::Filesystem()->fileExists($formatXML)) {
-        } else {
-            //error
-            return false;
-        }
+		$sequence = Service::Configuration()->loadXML('includes-final');
 
         $this->sequence = array();
-        $sequence = simplexml_load_file($formatXML);
+
         foreach ($sequence->include as $next) {
             if ($next == 'message') {
                 $messages = Service::Message()->get();

@@ -8,7 +8,7 @@ namespace Molajo\Service;
 
 use HTMLPurifier\HTMLPurifier;
 use HTMLPurifier\HTMLPurifier_Config;
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 
@@ -110,7 +110,7 @@ Class FilterService
 		}
 
 		/** Configured Options */
-		$options = simplexml_load_file(CONFIGURATION_FOLDER . '/htmlpurifier.xml');
+		$options = Service::Configuration()->loadXML('htmlpurifier');
 		$options = array();
 		if (count($options) > 0) {
 			foreach ($options->option as $o) {

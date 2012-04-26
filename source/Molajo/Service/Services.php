@@ -94,12 +94,7 @@ Class Services
         $this->service_connection = new JRegistry();
 
         /** start services in this sequence */
-        $xml = CONFIGURATION_FOLDER . '/services.xml';
-        if (is_file($xml)) {
-        } else {
-            return false;
-        }
-        $services = simplexml_load_file($xml);
+		$services = Service::Configuration()->loadXML('Services');
 
         foreach ($services->service as $item) {
             $try = true;

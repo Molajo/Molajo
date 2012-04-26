@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service;
 
-use Molajo\Services;
+use Molajo\Service;
 
 use Molajo\Application\Molajo;
 
@@ -76,7 +76,7 @@ Class ConfigurationService
 
 		$data = $this->getApplication();
 
-		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Applications.xml');
+		$xml = Service::Configuration()->loadXML('Applications');
 
 		Service::Registry()->loadField('ApplicationCustomfields', 'custom_fields',
 			$data->custom_fields, $xml->custom_fields);
@@ -168,5 +168,32 @@ Class ConfigurationService
 		}
 
 		return $row;
+	}
+
+	/**
+	 * loadXML
+	 *
+	 * add php spl priority for loading
+	 *
+	 * @return  object
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	protected function loadXML($file)
+	{
+		$path_and_file = CONFIGURATION_FOLDER . '/' . $file . '.xml';
+
+		if (file_exists($path_and_file)) {
+		} else {
+			throw new \RuntimeException('File not found: ' . $path_and_file);
+		}
+
+		try {
+			return simplexml_load_file($path_and_file);
+
+		} catch (\Exception $e) {
+
+			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
+		}
 	}
 }

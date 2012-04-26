@@ -10,7 +10,7 @@ namespace Joomla;
 
 use Molajo\Application\Molajo;
 
-use Molajo\Services;
+use Molajo\Service;
 
 use Simplepie\SimplePie;
 
