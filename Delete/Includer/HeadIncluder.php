@@ -9,7 +9,7 @@ namespace Molajo\Extension\Includer;
 defined('MOLAJO') or die;
 
 use Molajo\Application\Includer;
-use Molajo\Services;
+use Molajo\Service;
 
 /**
  * Head

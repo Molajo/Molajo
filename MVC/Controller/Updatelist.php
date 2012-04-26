@@ -6,7 +6,7 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 

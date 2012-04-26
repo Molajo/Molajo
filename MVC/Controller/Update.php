@@ -6,7 +6,7 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 
@@ -157,12 +157,7 @@ class UpdateController extends Controller
     {
         $valid = true;
 
-        $v = simplexml_load_file(
-            MVC
-                . '/Model/Table/'
-                . substr($this->model->table_name, 3, 99)
-                . '.xml'
-        );
+		$v = Service::Configuration()->loadXML(substr($this->model->table_name, 3, 99));
         if (count($v) == 0) {
             return true;
         }

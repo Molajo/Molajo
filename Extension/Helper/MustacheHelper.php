@@ -7,7 +7,7 @@
 namespace Molajo\Application\Helper;
 
 use Mustache;
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 

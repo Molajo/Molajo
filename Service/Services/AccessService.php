@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service;
 
-use Molajo\Services;
+use Molajo\Service;
 
 use Molajo\MVC\Model\TableModel;
 
@@ -87,7 +87,8 @@ Class AccessService
 	 */
 	protected function _initialise()
 	{
-		$tasks = simplexml_load_file(CONFIGURATION_FOLDER . '/tasks.xml');
+
+		$tasks = Service::Configuration()->loadXML('Tasks');
 		if (count($tasks) == 0) {
 			return;
 		}

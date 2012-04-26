@@ -525,7 +525,7 @@ Class Application
 		}
 
 		/** Define PHP constants for application variables */
-		$defines = simplexml_load_file(CONFIGURATION_FOLDER . '/defines.xml');
+		$defines = Service::Configuration()->loadXML('defines');
 
 		foreach ($defines->define as $item) {
 			if (defined((string)$item['name'])) {
@@ -664,7 +664,8 @@ Class Application
 
 		if (defined('SITE_BASE_URL')) {
 		} else {
-			$sites = simplexml_load_file(CONFIGURATION_FOLDER . '/sites.xml');
+
+			$sites = Service::Configuration()->loadXML('sites');
 
 			foreach ($sites->site as $single) {
 				if ($single->base == $siteBase) {
@@ -718,7 +719,8 @@ Class Application
 		if (defined('APPLICATION')) {
 			/* must also define PAGE_REQUEST */
 		} else {
-			$apps = simplexml_load_file(CONFIGURATION_FOLDER . '/applications.xml');
+
+			$apps = Service::Configuration()->loadXML('applications');
 
 			foreach ($apps->application as $app) {
 
@@ -899,7 +901,7 @@ Class Application
 		}
 
 		/** Registry for Custom Fields and Metadata */
-		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Sites.xml');
+		$xml = Service::Configuration()->loadXML('Sites');
 
 		Service::Registry()->loadField('SiteCustomfields', 'custom_fields',
 			$results['custom_fields'], $xml->custom_fields);

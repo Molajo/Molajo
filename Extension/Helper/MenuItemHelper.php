@@ -9,7 +9,7 @@ namespace Molajo\Extension\Helper;
 
 use Molajo\MVC\Model\TableModel;
 
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 

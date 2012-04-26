@@ -8,7 +8,7 @@ namespace Molajo\MVC\Model;
 
 use Molajo\Extension\Helper;
 use Molajo\Application\Molajo;
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 

@@ -8,7 +8,7 @@
 namespace Molajo\Application\Helper;
 
 use Molajo\Extension\Helper\CatalogHelper;
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 
@@ -468,7 +468,8 @@ class ModelHelper
      */
     public function getList($field)
     {
-        $lists = simplexml_load_file(CONFIGURATION_FOLDER . '/lists.xml');
+
+		$lists = Service::Configuration()->loadXML('lists');
         if (count($lists) == 0) {
             return false;
         }

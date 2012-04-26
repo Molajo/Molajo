@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 use Molajo\Application;
 use Molajo\Application\Includer;
 use Molajo\Application\Request;
-use Molajo\Services;
+use Molajo\Service;
 use Molajo\Extension\Helper\ComponentHelper;
 
 /**

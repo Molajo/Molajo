@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service;
 
-use Molajo\Services;
+use Molajo\Service;
 use Joomla\date\JDate;
 
 defined('MOLAJO') or die;

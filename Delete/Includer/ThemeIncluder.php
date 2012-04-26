@@ -8,7 +8,7 @@ namespace Molajo\Extension\Includer;
 
 defined('MOLAJO') or die;
 
-use Molajo\Services;
+use Molajo\Service;
 use Molajo\Application\Request;
 use Molajo\Extension\Helper\ExtensionHelper;
 use Molajo\Extension\Helper\ThemeHelper;

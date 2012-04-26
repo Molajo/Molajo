@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service;
 
-use Molajo\Services;
+use Molajo\Service;
 
 defined('MOLAJO') or die;
 
