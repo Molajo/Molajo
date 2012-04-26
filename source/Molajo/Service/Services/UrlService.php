@@ -193,7 +193,7 @@ Class UrlService
 	/**
 	 * addTrailingSlash
 	 * @param object $option_Text
-	 * $url = ConfigurationServiceURL::encode_link_text ($option_InputText);
+	 * $url = ConfigurationURL::encode_link_text ($option_InputText);
 	 */
 	function addTrailingSlash($option_InputText)
 	{
@@ -203,7 +203,7 @@ Class UrlService
 	/**
 	 * removeTrailingSlash
 	 * @param object $option_Text
-	 * $url = ConfigurationServiceURL::removeTrailingSlash ($option_InputText);
+	 * $url = ConfigurationURL::removeTrailingSlash ($option_InputText);
 	 */
 	function removeTrailingSlash($option_InputText)
 	{
