@@ -61,7 +61,7 @@ class ThemeHelper
      */
     public static function get($theme)
     {
-        return Molajo::Helper()
+        return Application::Helper()
             ->get('Extension',
             CATALOG_TYPE_EXTENSION_THEME,
             $theme

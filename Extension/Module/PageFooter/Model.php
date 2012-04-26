@@ -5,7 +5,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application\MVC\Model;
+namespace Molajo\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
@@ -47,26 +47,26 @@ Class ModulePagefooterModel extends DisplayModel
     {
         $this->items = array();
 
-        $date = Services::Date()
+        $date = Service::Date()
             ->getDate()
             ->format('Y-m-d-H-i-s');
 
         $row = new \stdClass();
 
-        $row->current_year = Services::Date()
+        $row->current_year = Service::Date()
             ->getDate()
             ->format('Y');
 
-        $row->site_name = Services::Registry()->get('Configuration', 'site_name', 'Molajo');
+        $row->site_name = Service::Registry()->get('Configuration', 'site_name', 'Molajo');
 
         $row->link = 'http://molajo.org/';
 
         $row->linked_text = 'Molajo' . '&reg;';
 
-        $row->remaining_text = ' ' . Services::Language()
+        $row->remaining_text = ' ' . Service::Language()
             ->_('IS_FREE_SOFTWARE');
 
-        $row->version = Services::Language()
+        $row->version = Service::Language()
             ->_(MOLAJOVERSION);
 
         /** save recordset */

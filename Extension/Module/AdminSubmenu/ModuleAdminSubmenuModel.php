@@ -6,8 +6,8 @@
  */
 namespace Molajo\Extension\Module;
 
-use Molajo\Application\MVC\Model\DisplayModel;
-use Molajo\Application\Services;
+use Molajo\MVC\Model\DisplayModel;
+use Molajo\Services;
 
 defined('MOLAJO') or die;
 
@@ -45,7 +45,7 @@ Class ModuleAdminSubmenuModel extends DisplayModel
     public function getData()
     {
         $links =
-            Services::Parameter()
+            Service::Parameter()
                 ->get('submenu_items', 'Request');
 
         $linksArray = explode(',', $links);

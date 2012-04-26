@@ -7,16 +7,16 @@
  */
 defined('MOLAJO') or die; ?>
 <fieldset class="batch">
-    <legend><?php echo Services::Language()->translate('GRID_BATCH_OPTIONS');?></legend>
+    <legend><?php echo Service::Language()->translate('GRID_BATCH_OPTIONS');?></legend>
     <?php echo "change acl";?>
 
     <?php echo "change categories"; ?>
 
     <button type="submit">
-        <?php echo Services::Language()->translate('GRID_SUBMIT'); ?>
+        <?php echo Service::Language()->translate('GRID_SUBMIT'); ?>
     </button>
     <button type="button">
-        <?php echo Services::Language()->translate('GRID_CLEAR'); ?>
+        <?php echo Service::Language()->translate('GRID_CLEAR'); ?>
     </button>
 </fieldset>
 </form>

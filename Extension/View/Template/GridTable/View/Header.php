@@ -11,7 +11,7 @@ defined('MOLAJO') or die; ?>
     <tr>
         <?php
         $count = 1;
-        $columns = Molajo::Request()->parameters->get('columns');
+        $columns = Application::Request()->parameters->get('columns');
         $columnArray = explode(',', $columns);
         foreach ($columnArray as $column) {
             $extraClass = '';
@@ -26,7 +26,7 @@ defined('MOLAJO') or die; ?>
                 $extraClass = ' class="' . trim($extraClass) . '"';
             }
             ?>
-            <th<?php echo $extraClass; ?>><?php echo Services::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
+            <th<?php echo $extraClass; ?>><?php echo Service::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
             <?php
             $count++;
         } ?>
