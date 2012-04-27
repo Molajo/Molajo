@@ -111,7 +111,6 @@ Class RouteService
 		} else {
 			Services::Registry()->set('Request', 'status_found', true) ;
 			Services::Debug()->set('Application::Route()->getCatalog() Successful');
-
 		}
 
 		if (Services::Registry()->get('Catalog', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
@@ -122,7 +121,9 @@ Class RouteService
 				Services::Registry()->set('Request', 'status_found', false) ;
 				Services::Debug()->set('Application::Route()->getMenuitem() Failed');
 				return false;
+
 			} else {
+
 				Services::Registry()->set('Request', 'status_found', true) ;
 				Services::Debug()->set('Application::Route()->getMenuitem() Successful');
 			}
@@ -239,9 +240,6 @@ Class RouteService
 		if ($path == '') {
 			Services::Registry()->set('Request', 'non_routable_parameters', array());
 			Services::Registry()->set('Request', 'action', 'display');
-
-			echo Services::Registry()->set('Request', 'action', 'display');
-			die;
 			return true;
 		}
 
@@ -299,7 +297,6 @@ Class RouteService
 		/** Update Path and store Non-routable parameters for Extension Use */
 		Services::Registry()->set('Request', 'request_url_query', $path);
 		Services::Registry()->set('Request', 'non_routable_parameters', $use);
-
 		Services::Registry()->set('Request', 'action', $action);
 
 		/** add Edit and Add later
@@ -364,13 +361,11 @@ Class RouteService
 	protected function getCatalog()
 	{
 		/** Retrieve the query results */
-		$row = Application::Helper()
-			->get('Catalog',
-				(int)Services::Registry()->get('Request', 'catalog_id'),
-				Services::Registry()->get('Request', 'request_url_query'),
-				Services::Registry()->get('Request', 'mvc_option'),
-				Services::Registry()->get('Request', 'mvc_id')
-			);
+		$row = Application::Helper()->get(
+			'Catalog',
+			(int)Services::Registry()->get('Request', 'catalog_id'),
+			Services::Registry()->get('Request', 'request_url_query')
+		);
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0 || (int)$row->routable == 0) {
@@ -394,7 +389,6 @@ Class RouteService
 		Services::Registry()->set('Catalog', 'primary_category_id', (int)$row->primary_category_id);
 		Services::Registry()->set('Catalog', 'sef_request', $row->sef_request);
 		Services::Registry()->set('Catalog', 'request', $row->request);
-
 //todo: remove from table and application
 //		Services::Registry()->set('Catalog', 'request_option', $row->request_option);
 //		Services::Registry()->set('Catalog', 'request_model', $row->request_model);
@@ -421,6 +415,7 @@ Class RouteService
 	 */
 	protected function getMenuitem()
 	{
+
 		/** Retrieve the query results */
 		$row = Application::Helper()
 			->get('Menuitem',

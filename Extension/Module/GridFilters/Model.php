@@ -45,19 +45,14 @@ Class ModuleGridFiltersModel extends Model
         /**
          *  Retrieve Filters from Parameters for Component
          */
-        $filters =
-            Application::Request()
-                ->parameters
-                ->get('filters');
+        $filters = Services::Registry()->get('ExtensionParameters', 'filters');
 
         $filterArray = explode(',', $filters);
 
         /**
          *  Model Helper: MolajoExtensionModelHelper extends ModelHelper
          */
-        $extensionName = ExtensionHelper::formatNameForClass(
-            $this->get('extension_instance_name')
-        );
+        $extensionName = Application::Helper()->formatNameForClass($this->get('extension_instance_name'));
         $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
         if (class_exists($helperClass)) {
         } else {
