@@ -113,7 +113,7 @@ Class Services
             /** class name */
             $entry = (string)$item . 'Service';
             $serviceClass = 'Molajo\\Service\\Services\\' . $entry;
-echo $serviceClass.'<br />';
+
             /** method name */
             $serviceMethod = 'getInstance';
 
