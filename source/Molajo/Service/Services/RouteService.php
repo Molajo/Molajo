@@ -410,6 +410,10 @@ Class RouteService
 			->get('Menuitem',
 				(int)Services::Registry()->get('Catalog', 'source_id')
 			);
+		echo '<pre>';
+		var_dump($row);
+		echo '</pre>';
+		die;
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0 || (int)$row->routable == 0) {
@@ -422,10 +426,7 @@ Class RouteService
 			$this->redirect_to_id = (int)$row->redirect_to_id;
 			return Services::Registry()->set('Request', 'status_found', false);
 		}
-echo '<pre>';
-	  var_dump($row);
-echo '</pre>';
-		die;
+
 		/** Catalog Registry */
 		Services::Registry()->set('Menuitem', 'id', (int)$row->id);
 		Services::Registry()->set('Menuitem', 'redirect_to_id', (int)$row->redirect_to_id);
