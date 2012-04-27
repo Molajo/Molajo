@@ -80,32 +80,9 @@ Class RegistryService
 	}
 
 	/**
-	 * Global
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function createGlobalRegistry()
-	{
-		/** initialise known namespaces for application */
-		$xml = CONFIGURATION_FOLDER . '/Application/registry.xml';
-		if (is_file($xml)) {
-		} else {
-			return false;
-		}
-
-		$list = simplexml_load_file($xml);
-
-		foreach ($list->registry as $item) {
-			$reg = $this->createRegistry((string)$item);
-		}
-	}
-
-	/**
 	 * Create a Registry array for specified Namespace
 	 *
-	 * Usage:
-	 * Services::Registry()->createRegistry('namespace');
+	 * This is protected as the class automatically creates namespaces that are referenced, but do not exist
 	 *
 	 * @param $namespace
 	 *
@@ -118,7 +95,6 @@ Class RegistryService
 		}
 
 		/** Keys array */
-//		$i = count($this->registryKeys);
 		$this->registryKeys[] = $namespace;
 
 		/** Namespace array */
@@ -128,10 +104,129 @@ Class RegistryService
 	}
 
 	/**
-	 * Delete a Registry for specified Namespace
+	 * Returns a Parameter property for a specific item and namespace registry
+	 *   Alias for JFactory::getConfig, returning full registry set for local use
 	 *
 	 * Usage:
-	 * Services::Registry()->deleteRegistry('namespace');
+	 * Services::Registry()->get('Name Space', 'key value');
+	 *
+	 * @param  string  $namespace
+	 * @param  string  $key
+	 * @param  mixed   $default
+	 *
+	 * @return  mixed    registry value
+	 * @since   1.0
+	 */
+	public function get($namespace, $key = null, $default = null)
+	{
+		/** Get without a key returns the entire namespace (Like JFactory::getConfig)  */
+		if ($key == null) {
+			return $this->getRegistry($namespace);
+		}
+
+		/** No sense in fighting it. */
+		$key = strtolower($key);
+
+		/** Does registry exist? If not, create it. */
+		if (in_array($namespace, $this->registryKeys)) {
+		} else {
+			$this->createRegistry($namespace);
+		}
+
+		/** If it doesn't exist, we have problems. */
+		if (isset($this->registry[$namespace])) {
+		} else {
+			//todo: throw error
+			echo $namespace . ' Blow up in RegistryService';
+			die;
+		}
+
+		/** Retrieve the registry for the namespace */
+		$array = $this->registry[$namespace];
+		if (is_array($array)) {
+		} else {
+			$array = array();
+		}
+
+		/** Look for the key value requested */
+		$found = false;
+		while (list($existingKey, $existingValue) = each($array)) {
+			if (strtolower($existingKey) == strtolower($key)) {
+				$found = true;
+				break;
+			}
+		}
+
+		/** Create the entry, if not found, and set it to default */
+		if ($found == true) {
+
+		} else {
+			$array[$key] = $default;
+			$this->registry[$namespace] = $array;
+		}
+
+		/** That's what you wanted, right? */
+		return $array[$key];
+	}
+
+	/**
+	 * Sets a Parameter property for a specific item and parameter set
+	 *
+	 * Usage:
+	 * Services::Registry()->set('Name Space', 'key_name', $value);
+	 *
+	 * @param  string  $namespace
+	 * @param  string  $key
+	 * @param  mixed   $default
+	 *
+	 * @return  Registry
+	 * @since   1.0
+	 */
+	public function set($namespace, $key, $value = '')
+	{
+		/** keep it all on the downlow */
+		$key = strtolower($key);
+
+		/** Get the Registry (or create it) */
+		$array = $this->getRegistry($namespace);
+
+		/** Set the value for the key */
+		$array[$key] = $value;
+
+		/** Save the registry */
+		$this->registry[$namespace] = $array;
+
+		return $this;
+	}
+
+	/**
+	 * Copy one namespace registry to another
+	 *
+	 * Usage:
+	 * Services::Registry()->copy('namespace-x', 'to-namespace-y');
+	 *
+	 * @param  $copyThis
+	 * @param  $intoThis
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function copy($copyThis, $intoThis)
+	{
+		/** Get (or create) the Registry that will be copied */
+		$copy = $this->getRegistry($copyThis);
+
+		/** Get (or create) the Registry that will be copied to */
+		$into = $this->getRegistry($intoThis);
+
+		/** Save the new registry */
+		$this->registry[$intoThis] = $copy;
+
+		return $this;
+	}
+
+	/**
+	 * Delete a Registry for specified Namespace
 	 *
 	 * @param $namespace
 	 *
@@ -150,146 +245,10 @@ Class RegistryService
 	}
 
 	/**
-	 * Returns the entire registry for the specified namespace
-	 *
-	 * Usage:
-	 * Services::Registry()->getRegistry('namespace');
-	 *
-	 * @param $namespace
-	 *
-	 * @return array
-	 */
-	public function getRegistry($namespace)
-	{
-		if (in_array($namespace, $this->registryKeys)) {
-			return $this->registry[$namespace];
-		} else {
-			return $this->createRegistry($namespace);
-		}
-	}
-
-	/**
-	 * Returns a Parameter property for a specific item and namespace registry
-	 *   Alias for JFactory::getConfig, returning full registry set for local use
-	 *
-	 * Usage:
-	 * Services::Registry()->get('Request', 'parameter_name');
-	 *
-	 * @param  string  $namespace
-	 * @param  string  $key
-	 * @param  mixed   $default
-	 *
-	 * @return  mixed    registry value
-	 * @since   1.0
-	 */
-	public function get($namespace, $key = null, $default = null)
-	{
-		if ($key == null) {
-			return $this->getRegistry($namespace);
-		}
-
-		$key = strtolower($key);
-
-		/** Does registry exist? If not, create it. */
-		if (in_array($namespace, $this->registryKeys)) {
-		} else {
-			$this->createRegistry($namespace);
-		}
-
-		/** should exist */
-		if (isset($this->registry[$namespace])) {
-		} else {
-			//throw error
-			echo $namespace . ' Blow up in RegistryService';
-			die;
-		}
-
-		/** Retrieve the namespace */
-		$array = $this->registry[$namespace];
-		if (is_array($array)) {
-		} else {
-			$array = array();
-		}
-
-		/** Is there a match? */
-		$found = false;
-		while (list($existingKey, $existingValue) = each($array)) {
-			if (strtolower($existingKey) == strtolower($key)) {
-				$found = true;
-				break;
-			}
-		}
-
-		if ($found == true) {
-
-		} else {
-			$array[$key] = $default;
-			$this->registry[$namespace] = $array;
-		}
-
-		return $array[$key];
-	}
-
-	/**
-	 * Sets a Parameter property for a specific item and parameter set
-	 *
-	 * Usage:
-	 * Services::Registry()->set('Request', 'parameter_name', $value);
-	 *
-	 * @param  string  $namespace
-	 * @param  string  $key
-	 * @param  mixed   $default
-	 *
-	 * @return  Registry
-	 * @since   1.0
-	 */
-	public function set($namespace, $key, $value = '')
-	{
-		$key = strtolower($key);
-
-		/** Get the Registry (or create it) */
-		$array = $this->getRegistry($namespace);
-
-		/** Set the value for the key */
-		$array[$key] = $value;
-
-		/** Save the registry */
-		$this->registry[$namespace] = $array;
-
-		return $this;
-	}
-
-	/**
-	 * Copy one global registry to another
-	 *
-	 * Usage:
-	 * Services::Registry()->copy('x', 'y');
-	 *
-	 * @param  $copyThis
-	 * @param  $intoThis
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	public function copy($copyThis, $intoThis)
-	{
-		/** Get the Registry that will be copied */
-		$copy = $this->getRegistry($copyThis);
-
-		/** Get the Registry that will be copied into */
-		$into = $this->getRegistry($intoThis);
-
-		/** Save the new registry */
-		$this->registry[$intoThis] = $copy;
-
-		return $this;
-	}
-
-	/**
 	 * Returns an array containing key and name pairs for a namespace registry
 	 *
 	 * Usage:
-	 * Services::Registry()->getArray('request');
+	 * Services::Registry()->getArray('Name Space');
 	 *
 	 * @param   string  $namespace
 	 * @param   boolean @keyOnly set to true to retrieve key names
@@ -302,6 +261,7 @@ Class RegistryService
 		/** Get the Registry */
 		$array = $this->getRegistry($namespace);
 
+		/** full registry array requested */
 		if ($keyOnly == false) {
 			return $array;
 		}
@@ -339,7 +299,35 @@ Class RegistryService
 	}
 
 	/**
-	 * Loads JSON data from a field given the field xml definition
+	 * Retrieves a list of ALL namespaced registries and optionally keys/values
+	 *
+	 * Usage:
+	 * Services::Registry()->listRegistry(1);
+	 *
+	 * @param   boolean $all true - returns the entire list and each registry
+	 *                         false - returns a list of registry names, only
+	 *
+	 * @return  mixed|boolean or array
+	 * @since   1.0
+	 */
+	public function listRegistry($include_entries = false)
+	{
+		if ($include_entries == false) {
+			return $this->registryKeys;
+		}
+
+		$nsArray = array();
+
+		while (list($nsName, $nsValue) = each($this->registryKeys)) {
+			$nsArray['namespace'] = $nsValue;
+			$nsArray['registry'] = $this->registry[$nsValue];
+		}
+
+		return $nsArray;
+	}
+
+	/**
+	 * Loads JSON data from a field given the field xml definition - filters input
 	 *     (can be used for fields like registry, custom fields, metadata, etc.)
 	 *
 	 * Usage:
@@ -395,74 +383,13 @@ Class RegistryService
 					$set = $default;
 				}
 				/** Filter Input and Save the Registry */
-		//$set = $this->filterInput($name, $set, $dataType);
+//todo: come back when HTML Purifier namespacing addressed -- $set = $this->filterInput($name, $set, $dataType);
 				$nsArray[$name] = $set;
 				$this->registry[$namespace] = $nsArray;
 			}
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Retrieves a list of namespaced registries and optionally keys/values
-	 *
-	 * Usage:
-	 * Services::Registry()->listRegistry(1);
-	 *
-	 * @param   boolean $all true - returns the entire list and each registry
-	 *                         false - returns a list of registry names, only
-	 *
-	 * @return  mixed|boolean or array
-	 * @since   1.0
-	 *
-	 *
-	 */
-	public function listRegistry($include_entries = false)
-	{
-		if ($include_entries == false) {
-			return $this->registryKeys;
-		}
-
-		$nsArray = array();
-
-		while (list($nsName, $nsValue) = each($this->registryKeys)) {
-			$nsArray['namespace'] = $nsValue;
-			$nsArray['registry'] = $this->registry[$nsValue];
-		}
-
-		return $nsArray;
-	}
-
-	/**
-	 * loadFile
-	 *
-	 * add php spl priority for loading
-	 *
-	 * @return  object
-	 * @since   1.0
-	 * @throws  \RuntimeException
-	 */
-	public static function loadFile($file, $type = 'Application')
-	{
-		if ($type == 'Application' || $type == 'Table') {
-			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
-		} else {
-			$path_and_file = $type . '/' . $file . '.xml';
-		}
-
-		if (file_exists($path_and_file)) {
-		} else {
-			throw new \RuntimeException('File not found: ' . $path_and_file);
-		}
-
-		try {
-			return simplexml_load_file($path_and_file);
-
-		} catch (\Exception $e) {
-
-			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
-		}
 	}
 
 	/**
@@ -496,5 +423,77 @@ Class RegistryService
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Create Global Registry  - activated in Services during Service startup to initialize the global space
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	protected function createGlobalRegistry()
+	{
+//todo: build in spl file priorities and pass in file
+
+		$list = $this->loadFile('registry');
+
+		foreach ($list->registry as $item) {
+			$reg = $this->createRegistry((string)$item);
+		}
+	}
+
+	/**
+	 * loadFile is the isolated point in the application where all XML configuration files are read
+	 *   That includes XML for tables, services, and the application, along with service startup
+	 *
+	 * Usage:
+	 * Services::Registry()->loadFile('Content', 'Table');
+	 *
+	 * todo: add php spl priority for loading and a little more thinking on API options (ini? json?)
+	 *
+	 * @return  object
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function loadFile($file, $type = 'Application')
+	{
+		if ($type == 'Application' || $type == 'Table') {
+			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
+		} else {
+			$path_and_file = $type . '/' . $file . '.xml';
+		}
+
+		if (file_exists($path_and_file)) {
+		} else {
+			throw new \RuntimeException('File not found: ' . $path_and_file);
+		}
+
+		try {
+			return simplexml_load_file($path_and_file);
+
+		} catch (\Exception $e) {
+
+			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
+		}
+	}
+
+	/**
+	 * Returns the entire registry for the specified namespace
+	 *
+	 * This is protected as the class will retrieve the registry with a get on namespace, only
+	 *
+	 * Services::Registry()->get('Name Space');
+	 *
+	 * @param $namespace
+	 *
+	 * @return array
+	 */
+	protected function getRegistry($namespace)
+	{
+		if (in_array($namespace, $this->registryKeys)) {
+			return $this->registry[$namespace];
+		} else {
+			return $this->createRegistry($namespace);
+		}
 	}
 }
