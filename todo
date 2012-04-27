@@ -105,4 +105,4 @@ If it's before dependencies have loaded, document.
 
 
  TODO:
- Tables configuration - figure out how to extend them
+ Tables configuration - figure out how to extend table xml

@@ -83,7 +83,7 @@ Class RegistryService
 	 * Create a Registry array for specified Namespace
 	 *
 	 * This is useful if you want to create your registry during the class startup processed
-	 * and provide a class propoerty to the connection.
+	 * and provide a class property to the connection.
 	 *
 	 * However, it is NOT required in most situations as the get or set creates the registry
 	 * during first use

@@ -59,7 +59,7 @@ Class AuthorisationService
 	 */
 	public function __construct()
 	{
-		$this->_initialise();
+		$this->initialise();
 	}
 
 	/**
@@ -69,7 +69,7 @@ Class AuthorisationService
 	 * @return null
 	 * @since  1.0
 	 */
-	protected function _initialise()
+	protected function initialise()
 	{
 		$this->registry = new RegistryService();
 
@@ -78,30 +78,24 @@ Class AuthorisationService
 			return;
 		}
 
-		$this->registry->createRegistry('task_to_action');
-		$this->registry->createRegistry('action_to_controller');
-
 		foreach ($tasks->task as $t) {
 			$this->registry->set('task_to_action', (string)$t['name'], (string)$t['action']);
 			$this->registry->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
 		}
-
-		/** action text to database key */
-		$this->registry->createRegistry('action_to_action_id');
 
 		/** retrieve database keys for actions */
 		$m = new TableModel('Actions');
 		$actionsList = $m->loadObjectList();
 
 		foreach ($actionsList as $actionDefinition) {
-			$this->registry->set('task_to_action', $actionDefinition->title, (int)$actionDefinition->id);
+			$this->registry->set('action_to_action_id', $actionDefinition->title, (int)$actionDefinition->id);
 		}
 
 		return;
 	}
 
 	/**
-	 * authorise
+	 * authoriseSiteApplication
 	 *
 	 * Check if the site is authorized for this application
 	 *
@@ -121,13 +115,11 @@ Class AuthorisationService
 		if ($application_id === false) {
 			//todo: finish the response action/test
 
-			Services::Response()
-				->setHeader('Status', '403 Not Authorised', 'true');
+			Services::Response()->setHeader('Status', '403 Not Authorised', 'true');
 
 			Services::Message()->set(
-				Services::Registry()
-					->get('Configuration', 'error_403_message', 'Not Authorised.'),
-							MESSAGE_TYPE_ERROR,
+				Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
+				MESSAGE_TYPE_ERROR,
 							403
 						);
 		}
@@ -141,7 +133,7 @@ Class AuthorisationService
 	 * Using the Task, retrieve the Controller
 	 *
 	 * Example usage:
-	 * Services::Authorisation()->getTaskController($this->get('action')
+	 * Services::Authorisation()->getTaskController($this->get('action'))
 	 *
 	 * @param $task
 	 *
@@ -180,9 +172,7 @@ Class AuthorisationService
 		$taskPermissions = array();
 
 		foreach ($tasklist as $task) {
-			$taskPermissions[$task] =
-				Services::Authorisation()
-					->authoriseTask($task, $catalog_id);
+			$taskPermissions[$task] = Services::Authorisation()->authoriseTask($task, $catalog_id);
 		}
 		return $taskPermissions;
 	}
@@ -201,39 +191,38 @@ Class AuthorisationService
 			Services::Registry()->get('User', 'ViewGroups'))
 		) {
 			Services::Registry()->set('Request', 'status_authorised', true);
+
 		} else {
 			return Services::Registry()->set('Request', 'status_authorised', false);
 		}
 
 		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Request', 'action') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') === true
+		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
+			&& Services::Registry()->get('Request', 'status_authorised') == true
 		) {
 			return true;
-		}
 
-		if (Services::Registry()->get('Request', 'action') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') === false
-		) {
+		} else {
+			Services::Registry()->set('Request', 'status_authorised', false);
 			Services::Error()->set(403);
 			return false;
 		}
 
-		/** verify other tasks */
-		Services::Registry()->set('Request', 'status_authorised',
-			Services::Authorisation()->authoriseTask(
-				Services::Registry()->get('Request', 'action'),
-				Services::Registry()->get('Request', 'catalog_id')
-			)
+		/** verify other actions */
+		$authorised = Services::Authorisation()->authoriseTask(
+			Services::Registry()->get('Request', 'action'),
+			Services::Registry()->get('Catalog', 'id')
 		);
 
+		Services::Registry()->set('Request', 'status_authorised', $authorised);
+
 		if (Services::Registry()->get('Request', 'status_authorised') === true) {
+			return true;
+
 		} else {
 			Services::Error()->set(403);
 			return false;
 		}
-
-		return true;
 	}
 
 	/**
@@ -253,6 +242,7 @@ Class AuthorisationService
 	 */
 	public function authoriseTask($task, $catalog_id)
 	{
+
 		if ($task == 'login') {
 			return Services::Authorisation()->authoriseLogin('login', $catalog_id);
 		}
@@ -262,12 +252,14 @@ Class AuthorisationService
 		$action_id = $this->registry->get('action_to_action_id', $action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
-				Services::Debug()
-					->set('AuthorisationServices::authoriseTask Task: ' . $task
-					. ' Action: ' . $action . ' Action ID: ' . $action_id);
-			}
+				Services::Debug()->set(
+					'AuthorisationServices::authoriseTask '
+					. ' Task: ' . $task
+					. ' Action: ' . $action
+					. ' Action ID: ' . $action_id
+				);
 		}
+
 		//todo: amy fill database with real sample action permissions
 
 		/** check for permission */
@@ -287,10 +279,12 @@ Class AuthorisationService
 			return true;
 
 		} else {
-			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
-				Services::Debug()->set('AuthorisationServices::authoriseTask No query results for Task: ' . $task
-					. ' Action: ' . $action . ' Action ID: ' . $action_id);
-			}
+			Services::Debug()->set(
+				'AuthorisationServices::authoriseTask No Query Results  '
+					. ' Task: ' . $task
+					. ' Action: ' . $action
+					. ' Action ID: ' . $action_id
+			);
 			return false;
 		}
 	}
@@ -437,6 +431,7 @@ Class AuthorisationService
 				break;
 			}
 		}
+
 		return true;
 	}
 }

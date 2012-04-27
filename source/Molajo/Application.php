@@ -111,11 +111,9 @@ Class Application
 		}
 
 		/** Authorise */
-//		if (Services::Registry()->get('Request', 'request_status_authorised') === true) {
-			$continue = $this->authorise();
-//		}
+		$continue = $this->authorise();
 
-		if (Services::Registry()->get('Request', 'request_status_authorised') === true) {
+		if ($continue === false) {
 			Services::Debug()->set('Application Authorise failed');
 			return;
 		} else {
@@ -229,11 +227,14 @@ Class Application
 	 */
 	protected function route()
 	{
-		Services::Route()->process();
+		$results = Services::Route()->process();
 
-		if (Services::Redirect()->url === null
-			&& (int)Services::Redirect()->code == 0
-		) {
+		if ($results == false) {
+			return false;
+
+		} else if (Services::Redirect()->url === null && (int)Services::Redirect()->code == 0) {
+			return true;
+
 		} else {
 			return false;
 		}
@@ -260,8 +261,9 @@ Class Application
 	 */
 	protected function execute()
 	{
-		$action = Services::Registry()->get('Request', 'mvc_controller', 'display');
-
+		$action = Services::Registry()->get('Request', 'action', 'display');
+		echo $action;
+		die;
 		/** Display Action */
 		if ($action == 'display') {
 			$continue = $this->display();
@@ -392,6 +394,9 @@ Class Application
 
 	/**
 	 * Populate BASE_URL using scheme, host, and base URL
+	 *
+	 * Note: The Application::Request object is used instead of the Services::Request due to where
+	 * processing is at this point
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -585,6 +590,7 @@ Class Application
 			define('SITES_TEMP_URL', BASE_URL . 'site/temp');
 		}
 
+		/** Note: The Application::Request object is used due to where processing is at this point */
 		$scheme = Application::Request()->get('request')->getScheme() . '://';
 		$siteBase = substr(BASE_URL, strlen($scheme), strlen(BASE_URL) - strlen($scheme));
 
@@ -614,6 +620,8 @@ Class Application
 
 	/**
 	 * Identify current application and page request
+	 *
+	 * Note: The Application::Request object is used due to where processing is at this point
 	 *
 	 * @return  boolean
 	 * @since   1.0
