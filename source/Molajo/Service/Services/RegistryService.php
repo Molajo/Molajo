@@ -82,7 +82,14 @@ Class RegistryService
 	/**
 	 * Create a Registry array for specified Namespace
 	 *
-	 * This is protected as the class automatically creates namespaces that are referenced, but do not exist
+	 * This is useful if you want to create your registry during the class startup processed
+	 * and provide a class propoerty to the connection.
+	 *
+	 * However, it is NOT required in most situations as the get or set creates the registry
+	 * during first use
+	 *
+	 * Usage:
+	 * Services::Registry()->createRegistry('Name Space', 'key value');
 	 *
 	 * @param $namespace
 	 *
