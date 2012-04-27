@@ -92,3 +92,13 @@ if a faster caching environment was found or a better session management approac
 change can be as transparent as possible to the application.
 
 Installer
+
+
+
+
+
+STANDARDS
+
+1. Use registry to locate XML configuration files - don't directly load in the app
+Only use $xml = Services::Registry()->loadFile('Users', 'Table');
+If it's before dependencies have loaded, document.

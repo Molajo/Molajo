@@ -120,7 +120,7 @@ registration
 			Services::Registry()->set('User', 'registered', 1);
 		}
 
-		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Users.xml');
+		$xml = Services::Registry()->loadFile('Users', 'Table');
 
 		Services::Registry()->loadField(
 			'UserCustomfields',
@@ -144,22 +144,16 @@ registration
 		/** User Applications */
 		$temp = array();
 		$applications = $results['Model\\UserApplications'];
-
-		while (list($name, $value) = each($applications)) {
-			if ($name == 'application_id') {
-				$temp[] = $value;
-			}
+		foreach ($applications as $app) {
+			$temp[] = $app->application_id;
 		}
-
 		Services::Registry()->set('User', 'Applications', $temp);
 
 		/** User Groups */
 		$temp = array();
 		$groups = $results['Model\\UserGroups'];
-		while (list($name, $value) = each($groups)) {
-			if ($name == 'group_id') {
-				$temp[] = $value;
-			}
+		foreach ($groups as $group) {
+			$temp[] = $group->group_id;
 		}
 
 		if (in_array(SYSTEM_GROUP_PUBLIC, $temp)) {
@@ -184,23 +178,17 @@ registration
 			Services::Registry()->set('User', 'administrator', 0);
 		}
 
+
 		/** User View Groups */
 		$temp = array();
-		$view_groups = $results['Model\\UserViewGroups'];
-		while (list($name, $value) = each($view_groups)) {
-			if ($name == 'view_group_id') {
-				$temp[] = $value;
-			}
+		$viewGroups = $results['Model\\UserViewGroups'];
+		foreach ($viewGroups as $vg) {
+			$temp[] = $vg->view_group_id;
 		}
 
 		if (count($temp) == 0) {
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
 		Services::Registry()->set('User', 'ViewGroups', $temp);
-
-		/**      */
-		$list = Services::Registry()->listRegistry(1);
-
-		return $this;
 	}
 }
