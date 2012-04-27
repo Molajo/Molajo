@@ -233,9 +233,12 @@ Class RouteService
 	 */
 	protected function getNonRoutableParameters()
 	{
+		$action = '';
+
 		$path = Services::Registry()->get('Request', 'request_url_query');
 		if ($path == '') {
-			Services::Registry()->get('Request', 'non_routable_parameters', array());
+			Services::Registry()->set('Request', 'non_routable_parameters', array());
+			Services::Registry()->set('Request', 'action', 'display');
 			return true;
 		}
 
@@ -258,6 +261,11 @@ Class RouteService
 
 			if ($value === null) {
 			} else {
+
+				/** Action */
+				if ($key == 'action') {
+					$action =  $value;
+				}
 
 				/** remove non-routable parameter - as it is - from the routeable path */
 				$remove = $key . '=' . $value;
@@ -289,6 +297,8 @@ Class RouteService
 		Services::Registry()->set('Request', 'request_url_query', $path);
 		Services::Registry()->set('Request', 'non_routable_parameters', $use);
 
+		Services::Registry()->set('Request', 'action', $action);
+
 		/** add Edit and Add later
 
 		2. add /add and /edit
@@ -296,7 +306,7 @@ Class RouteService
 		 *
 		if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
 		} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
-		Services::Registry()->set('Request', 'mvc_task', 'add');
+		Services::Registry()->set('Request', 'action', 'add');
 		 */
 
 		/**

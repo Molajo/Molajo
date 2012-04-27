@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <list>
+    <parameter name="action" filter="char"/>
     <parameter name="author" filter="char"/>
     <parameter name="category" filter="char"/>
     <parameter name="count" filter="int"/>

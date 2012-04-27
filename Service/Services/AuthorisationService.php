@@ -141,7 +141,7 @@ Class AuthorisationService
 	 * Using the Task, retrieve the Controller
 	 *
 	 * Example usage:
-	 * Services::Authorisation()->getTaskController($this->get('mvc_task')
+	 * Services::Authorisation()->getTaskController($this->get('action')
 	 *
 	 * @param $task
 	 *

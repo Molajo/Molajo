@@ -259,12 +259,13 @@ Class Application
 		}
 
 		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+		if (Services::Registry()->get('Request', 'action') == 'display'
 			&& Services::Registry()->get('Request', 'status_authorised') === true
 		) {
 			return true;
 		}
-		if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+
+		if (Services::Registry()->get('Request', 'action') == 'display'
 			&& Services::Registry()->get('Request', 'status_authorised') === false
 		) {
 			Services::Error()->set(403);
@@ -274,7 +275,7 @@ Class Application
 		/** verify other tasks */
 		Services::Registry()->set('Request', 'status_authorised',
 			Services::Authorisation()->authoriseTask(
-				Services::Registry()->get('Request', 'mvc_task'),
+				Services::Registry()->get('Request', 'action'),
 				Services::Registry()->get('Request', 'catalog_id')
 			)
 		);
@@ -375,7 +376,7 @@ Class Application
 			ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
 		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
 		Services::Registry()->set('Request', 'controller', $cc);
-		$task = Services::Registry()->get('Request', 'mvc_task');
+		$task = Services::Registry()->get('Request', 'action');
 		Services::Registry()->set('Request', 'task', $task);
 		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);

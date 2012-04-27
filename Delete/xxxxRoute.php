@@ -159,7 +159,7 @@ Class Route
                 ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
             $cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
             Services::Registry()->set('Request', 'controller', $cc);
-            $task = Services::Registry()->get('Request', 'mvc_task');
+            $task = Services::Registry()->get('Request', 'action');
             Services::Registry()->set('Request', 'task', $task);
             Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
             $controller = new $cc($this->page_request, $this->parameters);
@@ -268,29 +268,29 @@ Class Route
         if (count($pairs) > 0
             && isset($pairs['task'])
         ) {
-            Services::Registry()->set('Request', 'mvc_task', $pairs['task']);
+            Services::Registry()->set('Request', 'action', $pairs['task']);
         } else {
-            Services::Registry()->set('Request', 'mvc_task', 'display');
+            Services::Registry()->set('Request', 'action', 'display');
         }
 
-        if (Services::Registry()->get('Request', 'mvc_task', '') == ''
-            || Services::Registry()->get('Request', 'mvc_task', 'display') == 'display'
+        if (Services::Registry()->get('Request', 'action', '') == ''
+            || Services::Registry()->get('Request', 'action', 'display') == 'display'
         ) {
             $pageRequest = Services::Registry()->get('Request', 'request_url_query');
 
             if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
                 $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/edit'));
                 Services::Registry()->set('Request', 'request_url_query', $pageRequest);
-                Services::Registry()->set('Request', 'mvc_task', 'edit');
+                Services::Registry()->set('Request', 'action', 'edit');
 
             } else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
                 $pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/add'));
                 Services::Registry()->set('Request', 'request_url_query', $pageRequest);
-                Services::Registry()->set('Request', 'mvc_task', 'add');
+                Services::Registry()->set('Request', 'action', 'add');
 
             } else {
                 Services::Debug()->set('Application::Request()->getRequest() complete Display Task');
-                Services::Registry()->set('Request', 'mvc_task', 'display');
+                Services::Registry()->set('Request', 'action', 'display');
             }
             return true;
         }
@@ -384,7 +384,7 @@ Class Route
 
         Services::Registry()->set('Request', 'mvc_controller',
             Services::Authorisation()
-                ->getTaskController(Services::Registry()->get('Request', 'mvc_task'))
+                ->getTaskController(Services::Registry()->get('Request', 'action'))
         );
 
         /** Action Tasks need no additional information */
@@ -429,12 +429,12 @@ Class Route
     protected function authoriseTask()
     {
         /** display view verified in getCatalog */
-        if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+        if (Services::Registry()->get('Request', 'action') == 'display'
             && Services::Registry()->get('Request', 'status_authorised') === true
         ) {
             return true;
         }
-        if (Services::Registry()->get('Request', 'mvc_task') == 'display'
+        if (Services::Registry()->get('Request', 'action') == 'display'
             && Services::Registry()->get('Request', 'status_authorised') === false
         ) {
             $this->error(403);
@@ -444,7 +444,7 @@ Class Route
         /** verify other tasks */
         Services::Registry()->set('Request', 'status_authorised',
             Services::Authorisation()->authoriseTask(
-                Services::Registry()->get('Request', 'mvc_task'),
+                Services::Registry()->get('Request', 'action'),
                 Services::Registry()->get('Request', 'request_catalog_id')
             )
         );
@@ -522,8 +522,8 @@ Class Route
                 $parameters->get('controller', '')
             );
         }
-        if (Services::Registry()->get('Request', 'mvc_task', '') == '') {
-            Services::Registry()->set('Request', 'mvc_task',
+        if (Services::Registry()->get('Request', 'action', '') == '') {
+            Services::Registry()->set('Request', 'action',
                 $parameters->get('task', '')
             );
         }
@@ -619,8 +619,8 @@ Class Route
             Services::Registry()->set('Request', 'mvc_controller',
                 $parameters->get('controller', ''));
         }
-        if (Services::Registry()->get('Request', 'mvc_task', '') == '') {
-            Services::Registry()->set('Request', 'mvc_task',
+        if (Services::Registry()->get('Request', 'action', '') == '') {
+            Services::Registry()->set('Request', 'action',
                 $parameters->get('task', ''));
         }
         if (Services::Registry()->get('Request', 'extension_instance_name', '') == '') {
@@ -766,8 +766,8 @@ Class Route
                 $parameters->get('controller', '')
             );
         }
-        if (Services::Registry()->get('Request', 'mvc_task', '') == '') {
-            Services::Registry()->set('Request', 'mvc_task',
+        if (Services::Registry()->get('Request', 'action', '') == '') {
+            Services::Registry()->set('Request', 'action',
                 $parameters->get('task', 'display')
             );
         }
@@ -909,7 +909,7 @@ Class Route
             Services::Registry()->set('Request', 'template_view_id',
                 ViewHelper::getViewDefaultsOther(
                     'template',
-                    Services::Registry()->get('Request', 'mvc_task', ''),
+                    Services::Registry()->get('Request', 'action', ''),
                     (int)Services::Registry()->get('Request', 'mvc_id', 0),
                     $parameters)
             );
@@ -919,7 +919,7 @@ Class Route
             Services::Registry()->set('Request', 'wrap_view_id',
                 ViewHelper::getViewDefaultsOther(
                     'wrap',
-                    Services::Registry()->get('Request', 'mvc_task', ''),
+                    Services::Registry()->get('Request', 'action', ''),
                     (int)Services::Registry()->get('Request', 'mvc_id', 0),
                     $parameters)
             );
@@ -1002,14 +1002,14 @@ Class Route
             Services::Registry()->set('Request', 'template_view_id',
                 Application::Helper()
                     ->getViewDefaultsApplication('View', 'template',
-                    Services::Registry()->get('Request', 'mvc_task', ''),
+                    Services::Registry()->get('Request', 'action', ''),
                     (int)Services::Registry()->get('Request', 'mvc_id', 0))
             );
         }
 
         if ((int)Services::Registry()->get('Request', 'wrap_view_id', 0) == 0) {
             Services::Registry()->set('Request', 'wrap_view_id',
-                Application::Helper()->getViewDefaultsApplication('View', 'wrap', Services::Registry()->get('Request', 'mvc_task', ''), (int)Services::Registry()->get('Request', 'mvc_id', 0))
+                Application::Helper()->getViewDefaultsApplication('View', 'wrap', Services::Registry()->get('Request', 'action', ''), (int)Services::Registry()->get('Request', 'mvc_id', 0))
             );
         }
 
@@ -1223,7 +1223,7 @@ Class Route
     {
         Services::Registry()->set('Request', 'error_status', true);
         Services::Registry()->set('Request', 'mvc_controller', 'display');
-        Services::Registry()->set('Request', 'mvc_task', 'display');
+        Services::Registry()->set('Request', 'action', 'display');
         Services::Registry()->set('Request', 'mvc_model', 'messages');
 
         /** default error theme and page */
@@ -1464,7 +1464,7 @@ Class Route
 		/** mvc parameters */
 		Services::Registry()->set('Request', 'mvc_controller', '');
 		Services::Registry()->set('Request', 'mvc_option', '');
-		Services::Registry()->set('Request', 'mvc_task', '');
+		Services::Registry()->set('Request', 'action', '');
 		Services::Registry()->set('Request', 'mvc_model', '');
 		Services::Registry()->set('Request', 'mvc_id', 0);
 		Services::Registry()->set('Request', 'mvc_category_id', 0);
