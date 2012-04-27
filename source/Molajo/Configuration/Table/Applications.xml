@@ -87,7 +87,7 @@
         <parameter name="media_priority_primary_category" filter="integer" null="1" default="700" values=""/>
         <parameter name="media_priority_menu_item" filter="integer" null="1" default="800" values=""/>
         <parameter name="media_priority_source_data" filter="integer" null="1" default="900" values=""/>
-        <parameter name="debug" filter="boolean" null="1" default="0" />
+        <parameter name="debug" filter="boolean" null="1" default="0" values="" />
         <parameter name="debug_log" filter="text" null="0" default="echo" values="echo,formattedtext,database,email,messages"/>
     </parameters>
     <metadata>

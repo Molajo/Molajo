@@ -26,7 +26,6 @@ if (file_exists(BASE_FOLDER . '/OverrideAutoload.php')) {
 
 /** Execute the application */
 $app = new $class ();
-
 $app->process(
 		$override_request_url, $override_catalog_id,
 		$override_sequenceXML, $override_finalXML

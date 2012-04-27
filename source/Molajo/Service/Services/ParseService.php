@@ -6,6 +6,8 @@
  */
 namespace Molajo\Service\Services;
 
+use Molajo\Service\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -89,7 +91,7 @@ Class ParseService
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new Parse();
+            self::$instance = new ParseService();
         }
         return self::$instance;
     }
@@ -131,7 +133,7 @@ Class ParseService
          *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
-		$sequence = Services::Configuration()->loadFile('includes-page');
+		$sequence = Services::Registry()->loadFile('includes-page');
 
 		foreach ($sequence->include as $next) {
             $this->sequence[] = (string)$next;
@@ -173,7 +175,7 @@ Class ParseService
          *  Final Includers: Now, the theme, head, messages, and defer includes run
          *      and any cleanup of unfound <include values can take place
          */
-		$sequence = Services::Configuration()->loadFile('includes-final');
+		$sequence = Services::Registry()->loadFile('includes-final');
 
         $this->sequence = array();
 

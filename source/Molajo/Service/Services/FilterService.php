@@ -110,7 +110,7 @@ Class FilterService
 		}
 
 		/** Configured Options */
-		$options = Services::Configuration()->loadFile('htmlpurifier');
+		$options = Services::Registry()->loadFile('htmlpurifier');
 		$options = array();
 		if (count($options) > 0) {
 			foreach ($options->option as $o) {

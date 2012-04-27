@@ -36,10 +36,10 @@ Extensions schedule events to participate
 Services::Event()->schedule('OnBeforeSave')
 
 Triggers register for scheduled events.
- Services::Event()->schedule('OnBeforeSave')
+Services::Event()->schedule('OnBeforeSave')
 
 The Application and Controller classes notify the Event Manager at Event Time
-Services::Event()->notify('OnBeforeSave') -
+Services::Event()->notify('OnBeforeSave')
 
 The Event Service triggers those registered
 Services::Event()->trigger('OnBeforeSave')
@@ -49,7 +49,7 @@ Typically, triggers interact with Services which interfaces to the Utility layer
 - Services::Filter()->text
 - Services::Model()->getItems
 
-* * * * Services Layer (Middlware) * * * *
+* * * * Services Layer (Middleware) * * * *
 
 Services::Name()->action('Parameters'):
 

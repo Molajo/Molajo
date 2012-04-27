@@ -30,28 +30,12 @@ Class AccessService
 	protected static $instance;
 
 	/**
-	 * ACL Action literal to database pk
+	 * Registry specific to the AccessService class
 	 *
 	 * @var    Registry
 	 * @since  1.0
 	 */
-	protected $action_to_action_id;
-
-	/**
-	 * Task to ACL Action list
-	 *
-	 * @var    Registry
-	 * @since  1.0
-	 */
-	protected $task_to_action;
-
-	/**
-	 * ACL Action to Molajo Controller list
-	 *
-	 * @var    Registry
-	 * @since  1.0
-	 */
-	protected $action_to_controller;
+	protected $registry;
 
 	/**
 	 * getInstance
@@ -87,39 +71,30 @@ Class AccessService
 	 */
 	protected function _initialise()
 	{
+		$this->registry = new RegistryService();
 
-		$tasks = Services::Configuration()->loadFile('Tasks');
+		$tasks = $this->registry->loadFile('tasks');
 		if (count($tasks) == 0) {
 			return;
 		}
 
-		$this->task_to_action = Services::Registry()->initialise();
-
-		$this->action_to_controller = Services::Registry()->initialise();
+		$this->registry->createRegistry('task_to_action');
+		$this->registry->createRegistry('action_to_controller');
 
 		foreach ($tasks->task as $t) {
-			$this->task_to_action
-				->set(
-				(string)$t['name'],
-				(string)$t['action']
-			);
-			$this->action_to_controller
-				->set(
-				(string)$t['action'],
-				(string)$t['controller']
-			);
+			$this->registry->set('task_to_action', (string)$t['name'], (string)$t['action']);
+			$this->registry->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
 		}
 
 		/** action text to database key */
-		$this->action_to_action_id = Services::Registry()->initialise();
+		$this->registry->createRegistry('action_to_action_id');
 
 		/** retrieve database keys for actions */
 		$m = new TableModel('Actions');
 		$actionsList = $m->loadObjectList();
 
 		foreach ($actionsList as $actionDefinition) {
-			$this->action_to_action_id
-				->set($actionDefinition->title, (int)$actionDefinition->id);
+			$this->registry->set('task_to_action', $actionDefinition->title, (int)$actionDefinition->id);
 		}
 
 		return;
@@ -175,8 +150,8 @@ Class AccessService
 	 */
 	public function getTaskController($task)
 	{
-		$action = $this->task_to_action->get($task);
-		$controller = $this->action_to_controller->get($action);
+		$action = $this->request->get('task_to_action', $task);
+		$controller = $this->request->get('action_to_controller', $action);
 
 		return $controller;
 	}
@@ -234,8 +209,8 @@ Class AccessService
 		}
 
 		/** Retrieve ACL Action for this Task */
-		$action = $this->task_to_action->get($task);
-		$action_id = (int)$this->action_to_action_id->get($action);
+		$action = $this->registry->get('task_to_action', $task);
+		$action_id = $this->registry->get('action_to_action_id', $action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
 			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
@@ -330,9 +305,7 @@ Class AccessService
 	 */
 	public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
 	{
-		echo '<pre>';
-		var_dump(Services::Registry()->get('User', 'ViewGroups'));
-		die;
+
 		if ($parameters['select'] === true) {
 			$query->select(
 				$db->qn($parameters['catalog_prefix']) .

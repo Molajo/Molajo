@@ -6,8 +6,9 @@
  */
 namespace Molajo\Service\Services;
 
-use Molajo\Service\Services;
 use Molajo\Application;
+
+use Molajo\Service\Services;
 
 use Molajo\MVC\Model\TableModel;
 
@@ -20,7 +21,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class Configuration
+Class ConfigurationService
 {
 	/**
 	 * Static instance
@@ -40,7 +41,7 @@ Class Configuration
 	public static function getInstance($configuration_file = null)
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new Configuration($configuration_file);
+			self::$instance = new ConfigurationService($configuration_file);
 		}
 		return self::$instance;
 	}
@@ -56,35 +57,38 @@ Class Configuration
 	 */
 	public function __construct($configuration_file = null)
 	{
-		/** Define PHP constants for application variables */
-		$defines = $this->loadFile('defines');
-
-		foreach ($defines->define as $item) {
-			if (defined((string)$item['name'])) {
-			} else {
-				$value = (string)$item['value'];
-				define((string)$item['name'], $value);
-			}
-		}
-
+		/** Load Site Configuration */
 		$siteData = $this->getSite($configuration_file);
+
 		foreach ($siteData as $key => $value) {
-			Services::Registry()->set('Configuration', '' . $key, $value);
+			Services::Registry()->set('Configuration', $key, $value);
 		}
 
 		$data = $this->getApplication();
 
-		$xml = Services::Configuration()->loadFile('Applications');
+		$xml = Services::Registry()->loadFile('Applications', 'Table');
 
-		Services::Registry()->loadField('ApplicationCustomfields', 'custom_fields',
-			$data->custom_fields, $xml->custom_fields);
-		Services::Registry()->loadField('ApplicationMetadata', 'meta',
-			$data->metadata, $xml->metadata);
-		Services::Registry()->loadField('ApplicationParameters', 'parameters',
-			$data->parameters, $xml->parameter);
+		Services::Registry()->loadField(
+			'ApplicationCustomfields',
+			'custom_field',
+			$data->custom_fields,
+			$xml->custom_fields
+		);
+		Services::Registry()->loadField(
+			'ApplicationMetadata',
+			'meta',
+			$data->metadata,
+			$xml->metadata
+		);
+		Services::Registry()->loadField(
+			'ApplicationParameters',
+			'parameter',
+			$data->parameters,
+			$xml->parameters
+		);
 
 		/** Site Paths, Custom Fields, and Authorisation */
-		Application::setSitePaths();
+		$this->setSitePaths();
 
 		return $this;
 	}
@@ -148,8 +152,10 @@ Class Configuration
 
 			try {
 				$m = new TableModel('Applications');
+
 				$m->query->where($m->db->qn('name') .
 					' = ' . $m->db->quote(APPLICATION));
+
 				$row = $m->loadObject();
 
 				$id = $row->id;
@@ -169,29 +175,64 @@ Class Configuration
 	}
 
 	/**
-	 * loadFile
+	 * Establish media, cache, log, etc., locations for site for application use
 	 *
-	 * add php spl priority for loading
+	 * Called out of the Configurations Class construct - paths needed in startup process for other services
 	 *
-	 * @return  object
-	 * @since   1.0
-	 * @throws  \RuntimeException
+	 * @return mixed
+	 * @since  1.0
 	 */
-	public static function loadFile($file)
+	public function setSitePaths()
 	{
-		$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
-
-		if (file_exists($path_and_file)) {
+		if (defined('SITE_NAME')) {
 		} else {
-			throw new \RuntimeException('File not found: ' . $path_and_file);
+			define('SITE_NAME',
+				Services::Registry()->get('Configuration', 'site_name', SITE_ID)
+			);
 		}
 
-		try {
-			return simplexml_load_file($path_and_file);
-
-		} catch (\Exception $e) {
-
-			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
+		if (defined('SITE_CACHE_FOLDER')) {
+		} else {
+			define('SITE_CACHE_FOLDER',
+				Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache')
+			);
 		}
+
+		if (defined('SITE_LOGS_FOLDER')) {
+		} else {
+			define('SITE_LOGS_FOLDER', SITE_FOLDER_PATH . '/'
+				. Services::Registry()->get('Configuration', 'logs_path', SITE_FOLDER_PATH . '/logs')
+			);
+		}
+
+		/** following must be within the web document folder */
+		if (defined('SITE_MEDIA_FOLDER')) {
+		} else {
+			define('SITE_MEDIA_FOLDER', SITE_FOLDER_PATH . '/'
+				. Services::Registry()->get('Configuration', 'media_path', SITE_FOLDER_PATH . '/media')
+			);
+		}
+		if (defined('SITE_MEDIA_URL')) {
+		} else {
+			define('SITE_MEDIA_URL', BASE_URL
+				. Services::Registry()->get('Configuration', 'media_url', BASE_URL . 'sites/' . SITE_ID . '/media')
+			);
+		}
+
+		/** following must be within the web document folder */
+		if (defined('SITE_TEMP_FOLDER')) {
+		} else {
+			define('SITE_TEMP_FOLDER', SITE_FOLDER_PATH . '/'
+				. Services::Registry()->get('Configuration', 'temp_path',  SITE_FOLDER_PATH . '/temp')
+			);
+		}
+		if (defined('SITE_TEMP_URL')) {
+		} else {
+			define('SITE_TEMP_URL', BASE_URL
+				. Services::Registry()->get('Configuration', 'temp_url', BASE_URL . 'sites/' . SITE_ID . '/temp')
+			);
+		}
+
+		return true;
 	}
 }

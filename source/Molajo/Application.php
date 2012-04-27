@@ -7,9 +7,15 @@
 namespace Molajo;
 
 use Molajo\MVC\Model\TableModel;
+
+use Molajo\Extension\Helper;
+
 use Molajo\Service\Services;
+
 use Molajo\Service\Services\RequestService;
-use Molajo\Service\Services\Configuration;
+
+use Molajo\Service\Services\RegistryService;
+
 use Joomla\JFactory;
 
 defined('MOLAJO') or die;
@@ -62,9 +68,8 @@ Class Application
 	 *
 	 * @param string $override_request_url
 	 * @param string $override_catalog_id
-	 * @param string
-	 *
-	 * @param string $override_finalXML
+	 * @param string $override_sequence_xml
+	 * @param string $override_final_xml
 	 *
 	 *  1. Initialise
 	 *  2. Route
@@ -183,8 +188,7 @@ Class Application
 		}
 
 		/** Connect Application Services */
-		$services = new Service\Services();
-		$continue = $services->StartServices();
+		$continue = Application::Services()->StartServices();
 		if ($continue == false) {
 			return false;
 		}
@@ -346,7 +350,7 @@ Class Application
 	 */
 	protected function display($override_sequenceXML = null, $override_finalXML = null)
 	{
-		$this->rendered_output = Molajo::Parse()->process();
+		$this->rendered_output = Services::Parse()->process();
 		return $this;
 	}
 
@@ -558,6 +562,17 @@ Class Application
 			define('LANGUAGE_QUOTE_REPLACEMENT', '"');
 		}
 
+		/** Define PHP constants for application variables */
+		//$defines = Services::Registry()->loadFile('defines');
+		$defines = RegistryService::loadFile('defines');
+		foreach ($defines->define as $item) {
+			if (defined((string)$item['name'])) {
+			} else {
+				$value = (string)$item['value'];
+				define((string)$item['name'], $value);
+			}
+		}
+
 		/**
 		 *  EXTENSION OPTIONS
 		 *
@@ -592,7 +607,7 @@ Class Application
 
 		if (defined('SITE_LANGUAGES')) {
 		} else {
-			define('SITE_LANGUAGES', EXTENSIONS . '/Language');
+			define('SITE_LANGUAGES', SITES_MEDIA_FOLDER . '/Language');
 		}
 
 		if (defined('SITES_MEDIA_URL')) {
@@ -614,7 +629,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = Configuration::loadFile('sites');
+			$sites = RegistryService::loadFile('sites');
 
 			foreach ($sites->site as $single) {
 				if ($single->base == $siteBase) {
@@ -669,7 +684,7 @@ Class Application
 			/* must also define PAGE_REQUEST */
 		} else {
 
-			$apps = Configuration::loadFile('applications');
+			$apps = RegistryService::loadFile('applications');
 
 			foreach ($apps->application as $app) {
 
@@ -766,71 +781,6 @@ Class Application
 	}
 
 	/**
-	 * Establish media, cache, log, etc., locations for site for application use
-	 *
-	 * Called out of the Configurations Class construct - paths needed in startup process for other services
-	 *
-	 * @return mixed
-	 * @since  1.0
-	 */
-	public function setSitePaths()
-	{
-		if (defined('SITE_NAME')) {
-		} else {
-			define('SITE_NAME', Services::Registry()->get('Configuration', 'site_name',
-				SITE_ID));
-		}
-
-		if (defined('SITE_CACHE_FOLDER')) {
-		} else {
-			define('SITE_CACHE_FOLDER', Services::Registry()->get('Configuration', 'cache_path',
-				SITE_FOLDER_PATH . '/cache'));
-		}
-
-		if (defined('SITE_LOGS_FOLDER')) {
-		} else {
-			define('SITE_LOGS_FOLDER',
-				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'logs_path',
-					SITE_FOLDER_PATH . '/logs')
-			);
-		}
-
-		/** following must be within the web document folder */
-		if (defined('SITE_MEDIA_FOLDER')) {
-		} else {
-			define('SITE_MEDIA_FOLDER',
-				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'media_path',
-					SITE_FOLDER_PATH . '/media')
-			);
-		}
-		if (defined('SITE_MEDIA_URL')) {
-		} else {
-			define('SITE_MEDIA_URL',
-				BASE_URL . Services::Registry()->get('Configuration', 'media_url',
-					BASE_URL . 'sites/' . SITE_ID . '/media')
-			);
-		}
-
-		/** following must be within the web document folder */
-		if (defined('SITE_TEMP_FOLDER')) {
-		} else {
-			define('SITE_TEMP_FOLDER',
-				SITE_FOLDER_PATH . '/' . Services::Registry()->get('Configuration', 'temp_path',
-					SITE_FOLDER_PATH . '/temp')
-			);
-		}
-		if (defined('SITE_TEMP_URL')) {
-		} else {
-			define('SITE_TEMP_URL',
-				BASE_URL . Services::Registry()->get('Configuration', 'temp_url',
-					BASE_URL . 'sites/' . SITE_ID . '/temp')
-			);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Retrieve Site data and save in registry
 	 *
 	 * @return mixed
@@ -850,7 +800,7 @@ Class Application
 		}
 
 		/** Registry for Custom Fields and Metadata */
-		$xml = Services::Configuration()->loadFile('Sites');
+		$xml = Services::Registry()->loadFile('Sites');
 
 		Services::Registry()->loadField('SiteCustomfields', 'custom_fields',
 			$results['custom_fields'], $xml->custom_fields);

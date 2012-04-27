@@ -157,7 +157,7 @@ class UpdateController extends Controller
     {
         $valid = true;
 
-		$v = Services::Configuration()
+		$v = Services::Registry()
 			->loadFile(substr($this->model->table_name, 3, 99));
         if (count($v) == 0) {
             return true;

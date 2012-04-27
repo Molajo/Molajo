@@ -7,8 +7,6 @@
 
 namespace Molajo\Service\Services;
 
-use Joomla\registry\JRegistry;
-
 defined('MOLAJO') or die;
 
 /**
@@ -29,20 +27,20 @@ Class RegistryService
 	protected static $instance;
 
 	/**
-	 * Array containing all globally defined $registry objects
-	 *
-	 * @var    Object Registry
-	 * @since  1.0
-	 */
-	protected $registry;
-
-	/**
 	 * Array containing the key to each $registry object
 	 *
-	 * @var    Object Registry
+	 * @var    Object Array
 	 * @since  1.0
 	 */
 	protected $registryKeys = array();
+
+	/**
+	 * Array containing all globally defined $registry objects
+	 *
+	 * @var    Object Array
+	 * @since  1.0
+	 */
+	protected $registry = array();
 
 	/**
 	 * getInstance
@@ -54,25 +52,41 @@ Class RegistryService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new RegistryService();
+			self::$instance = new RegistryService(true);
 		}
+
 		return self::$instance;
 	}
 
 	/**
-	 * Class constructor.
+	 * Initialise known namespaces for application
 	 *
 	 * @return  object
 	 * @since   1.0
 	 */
-	public function __construct()
+	public function __construct($global = false)
 	{
 		/** store all registries in this object  */
 		$this->registry = array();
 		$this->registryKeys = array();
 
+		if ($global == true) {
+			$this->createGlobalRegistry();
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Global
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	public function createGlobalRegistry()
+	{
 		/** initialise known namespaces for application */
-		$xml = CONFIGURATION_FOLDER . '/registry.xml';
+		$xml = CONFIGURATION_FOLDER . '/Application/registry.xml';
 		if (is_file($xml)) {
 		} else {
 			return false;
@@ -81,73 +95,75 @@ Class RegistryService
 		$list = simplexml_load_file($xml);
 
 		foreach ($list->registry as $item) {
-			$this->create( (string)$item );
+			$reg = $this->createRegistry((string)$item);
+		}
+	}
+
+	/**
+	 * Create a Registry array for specified Namespace
+	 *
+	 * Usage:
+	 * Services::Registry()->createRegistry('namespace');
+	 *
+	 * @param $namespace
+	 *
+	 * @return array
+	 */
+	public function createRegistry($namespace)
+	{
+		if (in_array($namespace, $this->registryKeys)) {
+			return $this->registry[$namespace];
+		}
+
+		/** Keys array */
+//		$i = count($this->registryKeys);
+		$this->registryKeys[] = $namespace;
+
+		/** Namespace array */
+		$this->registry[$namespace] = array();
+
+		return $this->registry[$namespace];
+	}
+
+	/**
+	 * Delete a Registry for specified Namespace
+	 *
+	 * Usage:
+	 * Services::Registry()->deleteRegistry('namespace');
+	 *
+	 * @param $namespace
+	 *
+	 * @return array
+	 */
+	public function deleteRegistry($namespace)
+	{
+		if (isset($this->registryKeys[$namespace])) {
+			unset($this->registryKeys[$namespace]);
+		}
+		if (isset($this->registry[$namespace])) {
+			unset($this->registry[$namespace]);
 		}
 
 		return $this;
 	}
 
 	/**
-	 * Create new Registry object to be used locally
+	 * Returns the entire registry for the specified namespace
 	 *
 	 * Usage:
-	 * $local = Services::Registry()->initialise();
-	 *
-	 * @return JRegistry
-	 * @since  1.0
-	 */
-	public function initialise()
-	{
-		return new JRegistry();
-	}
-
-	/**
-	 * getRegistry
+	 * Services::Registry()->getRegistry('namespace');
 	 *
 	 * @param $namespace
 	 *
-	 * @return \Joomla\registry\JRegistry|mixed
+	 * @return array
 	 */
 	public function getRegistry($namespace)
 	{
 		if (in_array($namespace, $this->registryKeys)) {
 			return $this->registry[$namespace];
-		}  else {
-			return $this->create($namespace);
+		} else {
+			return $this->createRegistry($namespace);
 		}
-	}
-
-
-	/**
-	 * create registry for namespace
-	 *
-	 * @param $namespace
-	 * @return RegistryService
-	 */
-	public function create($namespace)
-	{
-		$new = new JRegistry();
-		$this->registryKeys[] = $namespace;
-		$this->registry[$namespace] = $new;
-
-		return $this->registry[$namespace];
-	}
-
-	/**
-	 * Retrieves a list of named spaced registries and optionally keys/values
-	 *
-	 * Usage:
-	 * Services::Registry()->listRegistry(1);
-	 *
-	 * @param   boolean $all true - returns the entire list and each registry
-	 *                         false - returns a list of registry names, only
-	 *
-	 * @return  mixed|boolean or array
-	 * @since   1.0
-	 */
-	public function listRegistry()
-	{
-		return $this->registryKeys;
 	}
 
 	/**
@@ -161,13 +177,41 @@ Class RegistryService
 	 * @param  string  $key
 	 * @param  mixed   $default
 	 *
-	 * @return  mixed
+	 * @return  mixed    registry value
 	 * @since   1.0
 	 */
 	public function get($namespace, $key, $default = null)
 	{
-		$temp = $this->getRegistry($namespace);
-		return $temp->get($key, $default);
+		/** Does registry exist? If not, create it. */
+		if (in_array($namespace, $this->registryKeys)) {
+		} else {
+			$this->createRegistry($namespace);
+		}
+
+		/** should exist */
+		if (isset($this->registry[$namespace])) {
+		} else {
+			//throw error
+			echo $namespace . ' Blow up in RegistryService';
+			die;
+		}
+
+		/** Retrieve the namespace */
+		$array = $this->registry[$namespace];
+		if (is_array($array)) {
+		} else {
+			$array = array();
+		}
+
+		/** Retrieve the value or default */
+		if (in_array($key, $array, true)) {
+
+		} else {
+			$array[$key] = $default;
+			$this->registry[$namespace] = $array;
+		}
+
+		return $array[$key];
 	}
 
 	/**
@@ -180,13 +224,21 @@ Class RegistryService
 	 * @param  string  $key
 	 * @param  mixed   $default
 	 *
-	 * @return  mixed
+	 * @return  Registry
 	 * @since   1.0
 	 */
 	public function set($namespace, $key, $value = '')
 	{
-		$temp = $this->getRegistry($namespace);
-		return $temp->set($key, $value);
+		/** Get the Registry (or create it) */
+		$array = $this->getRegistry($namespace);
+
+		/** Set the value for the key */
+		$array[$key] = $value;
+
+		/** Save the registry */
+		$this->registry[$namespace] = $array;
+
+		return $this;
 	}
 
 	/**
@@ -203,21 +255,14 @@ Class RegistryService
 	 */
 	public function copy($copyThis, $intoThis)
 	{
+		/** Get the Registry that will be copied */
+		$copy = $this->getRegistry($copyThis);
+
+		/** Get the Registry that will be copied into */
 		$into = $this->getRegistry($intoThis);
-		if ($into instanceof JRegistry) {
-		} else {
-			$into = $this->create($intoThis);
-		}
 
-		$copy = $this->registry->get($copyThis);
-
-		$a = array();
-
-		while (list($k, $v) = each($copy)) {
-			while (list($key, $value) = each($v)) {
-				$into->set($key, $value);
-			}
-		}
+		/** Save the new registry */
+		$this->registry[$intoThis] = $copy;
 
 		return $this;
 	}
@@ -236,25 +281,20 @@ Class RegistryService
 	 */
 	public function getArray($namespace, $keyOnly = false)
 	{
-		$a = array();
+		/** Get the Registry */
+		$array = $this->getRegistry($namespace);
 
-		$temp = $this->create($namespace);
-
-		if ($temp instanceof JRegistry) {
-		} else {
-			return $a;
+		if ($keyOnly == false) {
+			return $array;
 		}
 
-		while (list($key, $value) = each($temp)) {
-
-			if ($keyOnly === false) {
-				$a[$key] = $value;
-			} else {
-				$a[] = $key;
-			}
+		/* Key only */
+		$keyArray = array();
+		while (list($key, $value) = each($array)) {
+			$keyArray[] = $key;
 		}
 
-		return $a;
+		return $keyArray;
 	}
 
 	/**
@@ -271,43 +311,13 @@ Class RegistryService
 	 */
 	public function loadArray($namespace, $array = array())
 	{
-		$load = $this->create($namespace);
+		/** Get the Registry that will be copied */
+		$this->getRegistry($namespace);
 
-		if ($load instanceof JRegistry) {
-		} else {
-			$load = new JRegistry();
-		}
+		/** Save the new registry */
+		$this->registry[$namespace] = $array;
 
-		foreach ($array as $key => $value) {
-			if ($value === null) {
-			} else {
-				$load->set($key, $value);
-			}
-		}
-		return;
-	}
-
-	/**
-	 * Returns all key names for the specified parameter set
-	 *
-	 * Usage:
-	 * Services::Registry()->getKeys('Request');
-	 *
-	 * @param   string  $name
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	public function getKeys($namespace)
-	{
-		$load = $this->create($namespace);
-
-		if ($load instanceof JRegistry) {
-		} else {
-			$load = new JRegistry();
-		}
-
-		return $load->getArray($namespace, true);
+		return $this;
 	}
 
 	/**
@@ -327,15 +337,24 @@ Class RegistryService
 	 */
 	public function loadField($namespace, $field_name, $data, $xml)
 	{
-		$load = $this->create($namespace);
+		/** Get the Registry that will be copied */
+		$this->getRegistry($namespace);
 
-		if ($load instanceof JRegistry) {
-		} else {
-			$load = $this->create($namespace);
+		$nsArray = array();
+
+		/** Decode JSON into object */
+		$jsonObject = json_decode($data);
+
+		/** Place field names into named pair array */
+		$lookup = array();
+
+		if (count($jsonObject) > 0) {
+			foreach ($jsonObject as $key => $value) {
+				$lookup[$key] = $value;
+			}
 		}
 
-		$load->loadString($data, 'JSON');
-
+		/** Load data for defined Fields, only */
 		if (isset($xml->$field_name)) {
 
 			foreach ($xml->$field_name as $cf) {
@@ -349,13 +368,85 @@ Class RegistryService
 				//todo: filter given XML field definitions
 
 				if ($default == '') {
-					$val = $load->get($name, null);
+					$default = null;
+				}
+
+				/** Use value, if exists, or defined default */
+				if (isset($lookup[$name])) {
+					$nsArray[$name] = $lookup[$name];
 				} else {
-					$val = $load->get($name, $default);
+					$nsArray[$name] = $default;
 				}
 			}
 		}
 
+		/** Save the Registry */
+		$this->registry[$namespace] = $nsArray;
+		/**
+		echo '<br /><br /><br /><br />'.$namespace.'<br />';
+		var_dump($this->registry[$namespace]);
+		 */
 		return $this;
+	}
+
+	/**
+	 * Retrieves a list of namespaced registries and optionally keys/values
+	 *
+	 * Usage:
+	 * Services::Registry()->listRegistry(1);
+	 *
+	 * @param   boolean $all true - returns the entire list and each registry
+	 *                         false - returns a list of registry names, only
+	 *
+	 * @return  mixed|boolean or array
+	 * @since   1.0
+	 *
+	 *
+	 */
+	public function listRegistry($include_entries = false)
+	{
+		if ($include_entries == false) {
+			return $this->registryKeys;
+		}
+
+		$nsArray = array();
+
+		while (list($nsName, $nsValue) = each($this->registryKeys)) {
+			$nsArray['namespace'] = $nsValue;
+			$nsArray['registry'] = $this->registry[$nsValue];
+		}
+
+		return $nsArray;
+	}
+
+	/**
+	 * loadFile
+	 *
+	 * add php spl priority for loading
+	 *
+	 * @return  object
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function loadFile($file, $type = 'Application')
+	{
+		if ($type == 'Application' || $type == 'Table') {
+			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
+		} else {
+			$path_and_file = $type . '/' . $file . '.xml';
+		}
+
+		if (file_exists($path_and_file)) {
+		} else {
+			throw new \RuntimeException('File not found: ' . $path_and_file);
+		}
+
+		try {
+			return simplexml_load_file($path_and_file);
+
+		} catch (\Exception $e) {
+
+			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
+		}
 	}
 }

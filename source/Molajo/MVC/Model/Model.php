@@ -8,7 +8,8 @@ namespace Molajo\MVC\Model;
 
 use Joomla\database\JDatabaseDriver;
 
-use Molajo\Service\Services; //Date, DB, Language, Message, Registry
+use Molajo\Service\Services;
+use Molajo\Service\Services\RegistryService;
 
 defined('MOLAJO') or die;
 
@@ -186,16 +187,19 @@ class Model
 	public function __construct($table = null, $id = null)
 	{
 		/** Retrieve XML for Table */
-		if (trim($table) === null) {
+		if (trim($table) == null) {
 			$table = 'Content';
 		}
 
-		$this->table_xml = Services::Configuration()->loadFile(substr($this->model->table_name, 3, 99));
+		$this->table = $table;
+
+		$this->table_xml = Services::Registry()->loadFile($this->table, 'Table');
 
 		$this->model_name = (string)$this->table_xml['name'];
 		if ($this->model_name === '') {
-			throw new \RuntimeException('No model name in XML: ' . $this->model->table_name);
+			throw new \RuntimeException('No model name in XML: ' . $this->table_name);
 		}
+
 		$this->table_name = (string)$this->table_xml['table'];
 
 		/** todo: default table name from model, adding underscores in front of uppercase letters, lowercasing all */
@@ -208,8 +212,10 @@ class Model
 			$this->primary_key = 'id';
 		}
 
-		$this->task_request = Services::Registry()->initialise();
-		$this->state = Services::Registry()->initialise();
+		$registry = new RegistryService();
+		$this->task_request = $registry->createRegistry('task_request');
+		$this->state = $registry->createRegistry('state');
+
 		$this->query_results = array();
 		$this->pagination = array();
 
@@ -224,7 +230,6 @@ class Model
 		}
 
 		$this->db = Services::Database()->get('db');
-
 		$this->query = Services::Database()->getQuery();
 		$this->query->clear();
 

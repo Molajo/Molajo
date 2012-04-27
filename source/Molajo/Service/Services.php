@@ -6,8 +6,6 @@
  */
 namespace Molajo\Service;
 
-use Joomla\registry\JRegistry;
-
 use Molajo\Application;
 
 defined('MOLAJO') or die;
@@ -60,7 +58,7 @@ Class Services
 	 */
 	public function __construct()
 	{
-		$this->service_connection = new JRegistry();
+		$this->service_connection = array();
 	}
 
     /**
@@ -75,7 +73,11 @@ Class Services
      */
     public function get($key, $default = null)
     {
-        return $this->service_connection->get($key, $default);
+		if (isset($this->service_connection[$key])) {
+        	return $this->service_connection[$key];
+		} else {
+			//error
+		}
     }
 
     /**
@@ -102,7 +104,7 @@ Class Services
         $this->message = array();
 
         /** start services in this sequence */
-		$services = Services\Configuration::loadFile('Services');
+		$services = simplexml_load_file(CONFIGURATION_FOLDER . '/Application/services.xml');
 
         foreach ($services->service as $item) {
             $try = true;
@@ -111,7 +113,7 @@ Class Services
             /** class name */
             $entry = (string)$item . 'Service';
             $serviceClass = 'Molajo\\Service\\Services\\' . $entry;
-
+echo $serviceClass.'<br />';
             /** method name */
             $serviceMethod = 'getInstance';
 
@@ -138,7 +140,6 @@ Class Services
             }
 
             /** store connection or error message */
-			echo $entry . '<br />';
             $this->set($entry, $connection, $try);
         }
 
@@ -169,7 +170,7 @@ Class Services
             $this->message[$i] = 'Service: ' . $key . ' FAILED' . $value;
 
         } else {
-            $this->service_connection->set($key, $value);
+            $this->service_connection[$key] = $value;
             $this->message[$i] = 'Service: ' . $key . ' started successfully. ';
         }
     }

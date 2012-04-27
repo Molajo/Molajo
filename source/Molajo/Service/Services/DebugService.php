@@ -68,10 +68,11 @@ Class DebugService
 	public function __construct()
 	{
 		/** Set debugging on or off */
-		$this->on = (int)Services::Registry()->get('Configuration', 'debug', 0);
+		$this->on = Services::Registry()->get('Configuration', 'debug', 0);
+
 		if ($this->on == 0)
 		{
-			return true;
+			return false;
 		}
 
 		/** Valid Logger Options */
