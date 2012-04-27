@@ -111,7 +111,7 @@ class ComponentIncluder extends Includer
         $this->set('controller',
             Services::Registry()->get('Request', 'mvc_controller'));
         $this->set('task',
-            Services::Registry()->get('Request', 'mvc_task'));
+            Services::Registry()->get('Request', 'action'));
         $this->set('model',
             Services::Registry()->get('Request', 'mvc_model'));
         $this->set('table',
