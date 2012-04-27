@@ -229,7 +229,7 @@ Class AccessService
 		$m->query->where($m->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
 		$m->query->where($m->db->qn('group_id')
-				. ' IN (' . implode(',', Services::Registry()->get('User', 'Groups')) . ')'
+				. ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
 				);
 
 		$count = $m->loadResult();
@@ -305,7 +305,6 @@ Class AccessService
 	 */
 	public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
 	{
-
 		if ($parameters['select'] === true) {
 			$query->select(
 				$db->qn($parameters['catalog_prefix']) .
@@ -347,13 +346,11 @@ Class AccessService
 				$db->qn('catalog_type_id')
 		);
 
+		$vg = implode(', ', Services::Registry()->get('User', 'ViewGroups'));
 		$query->where(
 			$db->qn($parameters['catalog_prefix']) .
 				'.' .
-				$db->qn('view_group_id') .
-				' IN (' . implode(',',
-				Services::Registry()->get('User', 'ViewGroups') .
-					')')
+				$db->qn('view_group_id') . ' IN (' . $vg . ')'
 		);
 
 		$query->where(

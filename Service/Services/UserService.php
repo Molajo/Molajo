@@ -190,5 +190,6 @@ registration
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
 		Services::Registry()->set('User', 'ViewGroups', $temp);
+
 	}
 }
