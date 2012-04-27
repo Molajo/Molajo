@@ -381,6 +381,8 @@ Class RouteService
 
 		/** Catalog Registry */
 		Services::Registry()->set('Catalog', 'id', (int)$row->id);
+		Services::Registry()->set('Request', 'catalog_id', (int)$row->id);
+
 		Services::Registry()->set('Catalog', 'redirect_to_id', (int)$row->redirect_to_id);
 		Services::Registry()->set('Catalog', 'catalog_type_id', (int)$row->catalog_type_id);
 		Services::Registry()->set('Catalog', 'source_id', (int)$row->source_id);
@@ -432,9 +434,6 @@ Class RouteService
 		Services::Registry()->set('Menuitem', 'title', $row->title);
 		Services::Registry()->set('Menuitem', 'alias', $row->alias);
 		Services::Registry()->set('Menuitem', 'path', $row->path);
-		Services::Registry()->set('Menuitem', 'custom_fields', $row->custom_fields);
-		Services::Registry()->set('Menuitem', 'parameters', $row->parameters);
-		Services::Registry()->set('Menuitem', 'metadata', $row->metadata);
 		Services::Registry()->set('Menuitem', 'source_table', '#__content');
 		Services::Registry()->set('Menuitem', 'view_group_id', (int)$row->view_group_id);
 		Services::Registry()->set('Menuitem', 'translation_of_id', (int)$row->translation_of_id);
