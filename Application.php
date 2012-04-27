@@ -111,11 +111,11 @@ Class Application
 		}
 
 		/** Authorise */
-		if (Services::Registry()->get('Request', 'status_found') === true) {
+//		if (Services::Registry()->get('Request', 'request_status_authorised') === true) {
 			$continue = $this->authorise();
-		}
+//		}
 
-		if ($continue == false) {
+		if (Services::Registry()->get('Request', 'request_status_authorised') === true) {
 			Services::Debug()->set('Application Authorise failed');
 			return;
 		} else {
@@ -249,44 +249,7 @@ Class Application
 	 */
 	protected function authorise()
 	{
-		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
-			Services::Registry()->get('User', 'ViewGroups'))
-		) {
-			Services::Registry()->set('Request', 'status_authorised', true);
-		} else {
-			return Services::Registry()->set('Request', 'status_authorised', false);
-		}
-
-		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Request', 'action') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') === true
-		) {
-			return true;
-		}
-
-		if (Services::Registry()->get('Request', 'action') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') === false
-		) {
-			Services::Error()->set(403);
-			return false;
-		}
-
-		/** verify other tasks */
-		Services::Registry()->set('Request', 'status_authorised',
-			Services::Authorisation()->authoriseTask(
-				Services::Registry()->get('Request', 'action'),
-				Services::Registry()->get('Request', 'catalog_id')
-			)
-		);
-
-		if (Services::Registry()->get('Request', 'status_authorised') === true) {
-		} else {
-			Services::Error()->set(403);
-			return false;
-		}
-
-		return true;
+		return Services::Authorisation()->authoriseAction();
 	}
 
 	/**
@@ -347,8 +310,10 @@ Class Application
 	 *
 	 * @return  Application
 	 */
-	protected function display($override_sequenceXML = null, $override_finalXML = null)
+	protected function display()
 	{
+		echo  'Action'.$action;
+		die;
 		$this->rendered_output = Services::Parse()->process();
 		return $this;
 	}

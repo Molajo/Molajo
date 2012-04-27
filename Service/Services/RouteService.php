@@ -233,12 +233,15 @@ Class RouteService
 	 */
 	protected function getNonRoutableParameters()
 	{
-		$action = '';
+		$action = 'display';
 
 		$path = Services::Registry()->get('Request', 'request_url_query');
 		if ($path == '') {
 			Services::Registry()->set('Request', 'non_routable_parameters', array());
 			Services::Registry()->set('Request', 'action', 'display');
+
+			echo Services::Registry()->set('Request', 'action', 'display');
+			die;
 			return true;
 		}
 
