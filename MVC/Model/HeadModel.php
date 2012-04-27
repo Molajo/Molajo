@@ -25,11 +25,11 @@ Class HeadModel extends Model
      * @param  $id
      * @since  1.0
      */
-    public function __construct($table = null, $id = null, $path = null)
+    public function __construct($table = null, $id = null)
     {
         $this->name = get_class($this);
 
-        return parent::__construct($table, $id, $path);
+        return parent::__construct($table, $id);
     }
 
     /**

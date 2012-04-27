@@ -41,12 +41,12 @@ Class MailService
 	protected static $instance;
 
 	/**
-	 * Configuration
+	 * Registry
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $configuration;
+	protected $registry;
 
 	/**
 	 * Mail Instance
@@ -89,7 +89,8 @@ Class MailService
 	 */
 	public function __construct()
 	{
-		$this->configuration = Services::Registry()->initialise();
+		$this->registry = new RegistryService();
+		$this->registry->createRegistry('Mail');
 		return $this;
 	}
 
@@ -132,12 +133,12 @@ Class MailService
 	 * @param   string  $key
 	 * @param   mixed   $default
 	 *
-	 * @return  mixed   The value of the configuration.
+	 * @return  mixed
 	 * @since   1.0
 	 */
 	public function get($key, $default = null)
 	{
-		return $this->configuration->get($key, $default);
+		return $this->registry->get('Mail', $key, $default);
 	}
 
 	/**
@@ -148,13 +149,13 @@ Class MailService
 	 * @param   string  $key
 	 * @param   mixed   $value
 	 *
-	 * @return  mixed   Previous value of the property
+	 * @return  mixed
 	 *
 	 * @since   1.0
 	 */
 	public function set($key, $value = null)
 	{
-		$this->configuration->set($key, $value);
+		$this->registry->set('Mail', $key, $value);
 		return $this;
 	}
 

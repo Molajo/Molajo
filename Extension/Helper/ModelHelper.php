@@ -469,7 +469,7 @@ class ModelHelper
     public function getList($field)
     {
 
-		$lists = Services::Configuration()->loadFile('lists');
+		$lists = Services::Registry()->loadFile('lists');
 
         if (count($lists) == 0) {
             return false;

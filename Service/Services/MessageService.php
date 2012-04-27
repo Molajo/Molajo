@@ -7,6 +7,8 @@
 
 namespace Molajo\Service\Services;
 
+use Molajo\Service\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -57,6 +59,7 @@ Class MessageService
 	 */
 	public function __construct()
 	{
+
 	}
 
 	/**

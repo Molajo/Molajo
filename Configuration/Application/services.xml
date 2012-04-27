@@ -10,6 +10,7 @@
     <service>Log</service>
     <service>Debug</service>
     <service>Request</service>
+    <service>Parse</service>
     <service>Route</service>
     <service>Cookie</service>
     <service>Session</service>

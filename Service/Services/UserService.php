@@ -98,7 +98,7 @@ registration
 				|| substr($name, 0, 5) == 'Model'
 			) {
 			} else {
-				Services::Registry()->set('User', '' . $name, $value);
+				Services::Registry()->set('User', $name, $value);
 				if ($name == 'first_name') {
 					$first_name = $value;
 				} elseif ($name == 'last_name') {
@@ -122,9 +122,24 @@ registration
 
 		$xml = simplexml_load_file(CONFIGURATION_FOLDER . '/Table/Users.xml');
 
-		Services::Registry()->loadField('UserCustomfields', 'custom_fields', $results['custom_fields'], $xml->custom_fields);
-		Services::Registry()->loadField('UserMetadata', 'meta', $results['metadata'], $xml->metadata);
-		Services::Registry()->loadField('UserParameters', 'parameters', $results['parameters'], $xml->parameter);
+		Services::Registry()->loadField(
+			'UserCustomfields',
+			'custom_field',
+			$results['custom_fields'],
+			$xml->custom_fields
+		);
+		Services::Registry()->loadField(
+			'UserMetadata',
+			'meta',
+			$results['metadata'],
+			$xml->metadata
+		);
+		Services::Registry()->loadField(
+			'UserParameters',
+			'parameter',
+			$results['parameters'],
+			$xml->parameters
+		);
 
 		/** User Applications */
 		$temp = array();

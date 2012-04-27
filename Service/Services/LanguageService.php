@@ -160,7 +160,8 @@ Class LanguageService
 	protected function load_core_files()
 	{
 		/** load metadata */
-		$metadata = Services::Configuration()->getXML('manifest');
+		$metadata = Services::Registry()
+			->loadFile('manifest', SITE_LANGUAGES . '/' . $this->language);
 
 		if (isset($metadata['name'])) {
 			$this->name = $metadata['name'];
@@ -236,7 +237,6 @@ Class LanguageService
 	 */
 	public function get($key, $default = null)
 	{
-
 		if (isset($this->$key)) {
 			return $this->$key;
 		} else {
@@ -532,7 +532,6 @@ Class LanguageService
 	public function getLanguagesCore()
 	{
 		$subfolders = Services::Filesystem()->folderFolders(SITE_LANGUAGES);
-
 		$languages = array();
 
 		foreach ($subfolders as $path) {
@@ -558,7 +557,7 @@ Class LanguageService
 	 */
 	public function get_metadata($file)
 	{
-		$xml = Services::Configuration()->loadFile($file);
+		$xml = Services::Registry()->loadFile($file);
 		if ($xml) {
 		} else {
 			return true;
