@@ -312,8 +312,6 @@ Class Application
 	 */
 	protected function display()
 	{
-		echo  'Action'.$action;
-		die;
 		$this->rendered_output = Services::Parse()->process();
 		return $this;
 	}
