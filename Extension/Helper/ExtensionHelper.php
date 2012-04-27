@@ -91,7 +91,7 @@ abstract class ExtensionHelper
         );
 
         /** Catalog Join and View Access Check */
-        Services::Access()
+        Services::Authorisation()
             ->setQueryViewAccess(
             $m->query,
             $m->db,

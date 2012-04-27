@@ -208,7 +208,7 @@ class ModelHelper
         $tasksArray = explode(',', $tasks);
 
         /** User Permissions */
-        $permissions = Services::Access()
+        $permissions = Services::Authorisation()
             ->authoriseTaskList($tasksArray, $item->catalog_id);
 
         /** Append onto row */
@@ -571,7 +571,7 @@ class ModelHelper
         }
 
         if ((int)$viewaccess == 1) {
-            Services::Access()->setQueryViewAccess(
+            Services::Authorisation()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => 'a',

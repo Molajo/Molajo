@@ -105,22 +105,25 @@ Class RouteService
 		$continue = $this->getCatalog();
 
 		if ($continue == false) {
+			Services::Registry()->set('Request', 'status_found', false) ;
 			Services::Debug()->set('Application::Route()->getCatalog() Failed');
 			return false;
 		} else {
+			Services::Registry()->set('Request', 'status_found', true) ;
 			Services::Debug()->set('Application::Route()->getCatalog() Successful');
 
 		}
 
-		if (Services::Registry()->get('Catalog', 'catalog_type_id')
-			== CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+		if (Services::Registry()->get('Catalog', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
 
 			$continue = $this->getMenuitem();
 
 			if ($continue == false) {
+				Services::Registry()->set('Request', 'status_found', false) ;
 				Services::Debug()->set('Application::Route()->getMenuitem() Failed');
 				return false;
 			} else {
+				Services::Registry()->set('Request', 'status_found', true) ;
 				Services::Debug()->set('Application::Route()->getMenuitem() Successful');
 			}
 		}
@@ -410,65 +413,55 @@ Class RouteService
 			->get('Menuitem',
 				(int)Services::Registry()->get('Catalog', 'source_id')
 			);
-		echo '<pre>';
-		var_dump($row);
-		echo '</pre>';
-		die;
 
 		/** 404: routeRequest handles redirecting to error page */
-		if (count($row) == 0 || (int)$row->routable == 0) {
+		if (count($row) == 0) {
 			return Services::Registry()->set('Request', 'status_found', false);
 		}
 
-		/** Redirect: routeRequest handles rerouting the request */
-		if ((int)$row->redirect_to_id == 0) {
-		} else {
-			$this->redirect_to_id = (int)$row->redirect_to_id;
-			return Services::Registry()->set('Request', 'status_found', false);
-		}
-
-		/** Catalog Registry */
 		Services::Registry()->set('Menuitem', 'id', (int)$row->id);
-		Services::Registry()->set('Menuitem', 'redirect_to_id', (int)$row->redirect_to_id);
 		Services::Registry()->set('Menuitem', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Menuitem', 'source_id', (int)$row->source_id);
+		Services::Registry()->set('Menuitem', 'title', $row->title);
+		Services::Registry()->set('Menuitem', 'alias', $row->alias);
+		Services::Registry()->set('Menuitem', 'path', $row->path);
+		Services::Registry()->set('Menuitem', 'custom_fields', $row->custom_fields);
+		Services::Registry()->set('Menuitem', 'parameters', $row->parameters);
+		Services::Registry()->set('Menuitem', 'metadata', $row->metadata);
+		Services::Registry()->set('Menuitem', 'source_table', '#__content');
 		Services::Registry()->set('Menuitem', 'view_group_id', (int)$row->view_group_id);
-		Services::Registry()->set('Menuitem', 'primary_category_id', (int)$row->primary_category_id);
-		Services::Registry()->set('Menuitem', 'sef_request', $row->sef_request);
-		Services::Registry()->set('Menuitem', 'request', $row->request);
-//		Services::Registry()->set('Menuitem', 'request_option', $row->request_option);
-//		Services::Registry()->set('Menuitem', 'request_model', $row->request_model);
-		Services::Registry()->set('Menuitem', 'source_table', $row->source_table);
+		Services::Registry()->set('Menuitem', 'translation_of_id', (int)$row->translation_of_id);
+		Services::Registry()->set('Menuitem', 'language', (string)$row->language);
+		Services::Registry()->set('Menuitem', 'catalog_id', (int)$row->catalog_id);
+		Services::Registry()->set('Menuitem', 'view_group_id', (int)$row->view_group_id);
+		Services::Registry()->set('Menuitem', 'menu_id', (int)$row->menu_id);
+		Services::Registry()->set('Menuitem', 'menu_catalog_type_id', (int)$row->menu_catalog_type_id);
+		Services::Registry()->set('Menuitem', 'menu_title', (string) $row->menu_title);
+		Services::Registry()->set('Menuitem', 'menu_parameters', $row->menu_parameters);
+		Services::Registry()->set('Menuitem', 'menu_metadata', (string) $row->menu_metadata);
+		Services::Registry()->set('Menuitem', 'menu_catalog_id', (int)$row->menu_catalog_id);
+		Services::Registry()->set('Menuitem', 'menu_view_group_id', (int)$row->menu_view_group_id);
 
-		/** home */
-		if ((int)Services::Registry()->get('Menuitem', 'catalog_id', 0)
-			== Services::Registry()->get('Configuration', 'home_catalog_id', null)
-		) {
-			Services::Registry()->set('Request', 'request_url_home', true);
-		} else {
-			Services::Registry()->set('Request', 'request_url_home', false);
-		}
+		$xml = Services::Registry()->loadFile('Content', 'Table');
+
+		Services::Registry()->loadField(
+			'MenuitemCustomfields',
+			'custom_field',
+			$row->custom_fields,
+			$xml->custom_fields
+		);
+		Services::Registry()->loadField(
+			'MenuitemMetadata',
+			'meta',
+			$row->metadata,
+			$xml->metadata
+		);
+		Services::Registry()->loadField(
+			'MenuitemParameters',
+			'parameter',
+			$row->parameters,
+			$xml->parameters
+		);
 
 		return true;
-
-		/**
-
-		todo: come back and:
-		1. deal with menu items
-
-
-
-		if (Services::Registry()->get('Request', 'request_catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
-
-		Services::Registry()->set('Request', 'menu_item_id', $row->source_id);
-		$this->createValues('Menuitem', $row);
-		if (Services::Registry()->get('Request', 'status_found') === false) {
-		return Services::Registry()->get('Request', 'status_found');
-		}
-		} else {
-		Services::Registry()->set('Request', 'source_id', $row->source_id);
-
-		}
-		 */
 	}
 }

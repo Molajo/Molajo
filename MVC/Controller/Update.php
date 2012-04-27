@@ -164,7 +164,7 @@ class UpdateController extends Controller
         }
 
         /** filters and defaults */
-        $userHTMLFilter = Services::Access()->setHTMLFilter();
+        $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
 
         $valid = true;
         if (isset($v->filters->filter)) {

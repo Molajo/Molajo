@@ -50,7 +50,7 @@ abstract class ContentHelper
         );
 
         /** Catalog Join and View Access Check */
-        Services::Access()->setQueryViewAccess(
+        Services::Authorisation()->setQueryViewAccess(
             $m->query,
             $m->db,
             array('join_to_prefix' => 'a',

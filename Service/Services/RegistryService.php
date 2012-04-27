@@ -182,8 +182,12 @@ Class RegistryService
 	 * @return  mixed    registry value
 	 * @since   1.0
 	 */
-	public function get($namespace, $key, $default = null)
+	public function get($namespace, $key = null, $default = null)
 	{
+		if ($key == null) {
+			return $this->getRegistry($namespace);
+		}
+
 		$key = strtolower($key);
 
 		/** Does registry exist? If not, create it. */

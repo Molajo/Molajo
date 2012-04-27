@@ -79,7 +79,6 @@ Class RequestService
 		$this->connection = new $class();
 		$this->request = $this->connection->createFromGlobals();
 
-
 		/** Request */
 		$class2 = 'Symfony\\Component\\HttpFoundation\\ParameterBag';
 		$this->connection2 = new $class2();

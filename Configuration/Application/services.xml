@@ -20,7 +20,7 @@
     <service>Language</service>
     <service>Date</service>
     <service>Document</service>
-    <service>Access</service>
+    <service>Authorisation</service>
     <service>Asset</service>
     <service>Image</service>
     <service>Filter</service>

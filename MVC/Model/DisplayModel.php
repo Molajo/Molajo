@@ -122,7 +122,7 @@ class DisplayModel extends ItemModel
         if (isset($parameterArray['disable_view_access_check'])
             && $parameterArray['disable_view_access_check'] == 0
         ) {
-            Services::Access()->setQueryViewAccess(
+            Services::Authorisation()->setQueryViewAccess(
                 $this->query,
                 $this->db,
                 array('join_to_prefix' => $this->primary_prefix,

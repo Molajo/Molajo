@@ -249,8 +249,6 @@ Class Application
 	 */
 	protected function authorise()
 	{
-		// stuff to sor thru -
-
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
 			Services::Registry()->get('User', 'ViewGroups'))
@@ -275,7 +273,7 @@ Class Application
 
 		/** verify other tasks */
 		Services::Registry()->set('Request', 'status_authorised',
-			Services::Access()->authoriseTask(
+			Services::Authorisation()->authoriseTask(
 				Services::Registry()->get('Request', 'mvc_task'),
 				Services::Registry()->get('Request', 'catalog_id')
 			)
@@ -822,7 +820,7 @@ Class Application
 	 */
 	protected function getSiteApplicationAuthorisation()
 	{
-		$authorise = Services::Access()->authoriseSiteApplication();
+		$authorise = Services::Authorisation()->authoriseSiteApplication();
 		if ($authorise === false) {
 			$message = '304: ' . BASE_URL;
 			echo $message;
