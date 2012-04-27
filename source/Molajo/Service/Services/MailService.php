@@ -250,7 +250,7 @@ Class MailService
 
 		/** authorization event */
 		//todo: what is the catalog id of a service?
-		//$results = Services::Access()->authoriseTask('email', $catalog_id);
+		//$results = Services::Authorisation()->authoriseTask('email', $catalog_id);
 
 		return $permission;
 	}

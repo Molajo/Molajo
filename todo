@@ -102,3 +102,7 @@ STANDARDS
 1. Use registry to locate XML configuration files - don't directly load in the app
 Only use $xml = Services::Registry()->loadFile('Users', 'Table');
 If it's before dependencies have loaded, document.
+
+
+ TODO:
+ Tables configuration - figure out how to extend them

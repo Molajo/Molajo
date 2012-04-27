@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class AccessService
+Class AuthorisationService
 {
 	/**
 	 * Static instance
@@ -30,7 +30,7 @@ Class AccessService
 	protected static $instance;
 
 	/**
-	 * Registry specific to the AccessService class
+	 * Registry specific to the AuthorisationService class
 	 *
 	 * @var    Registry
 	 * @since  1.0
@@ -47,7 +47,7 @@ Class AccessService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new AccessService();
+			self::$instance = new AuthorisationService();
 		}
 		return self::$instance;
 	}
@@ -141,7 +141,7 @@ Class AccessService
 	 * Using the Task, retrieve the Controller
 	 *
 	 * Example usage:
-	 * Services::Access()->getTaskController($this->get('mvc_task')
+	 * Services::Authorisation()->getTaskController($this->get('mvc_task')
 	 *
 	 * @param $task
 	 *
@@ -160,7 +160,7 @@ Class AccessService
 	 * authoriseTaskList
 	 *
 	 * Example usage:
-	 * $permissions = Services::Access()->authoriseTaskList($tasksArray, $item->catalog_id);
+	 * $permissions = Services::Authorisation()->authoriseTaskList($tasksArray, $item->catalog_id);
 	 *
 	 * @param  array   $tasklist
 	 * @param  string  $catalog_id
@@ -181,7 +181,7 @@ Class AccessService
 
 		foreach ($tasklist as $task) {
 			$taskPermissions[$task] =
-				Services::Access()
+				Services::Authorisation()
 					->authoriseTask($task, $catalog_id);
 		}
 		return $taskPermissions;
@@ -194,7 +194,7 @@ Class AccessService
 	 * on a specific catalog
 	 *
 	 * Example usage:
-	 * Services::Access()->authoriseTask($task, $catalog_id);
+	 * Services::Authorisation()->authoriseTask($task, $catalog_id);
 	 *
 	 * @param  string  $task
 	 * @param  string  $catalog_id
@@ -205,7 +205,7 @@ Class AccessService
 	public function authoriseTask($task, $catalog_id)
 	{
 		if ($task == 'login') {
-			return Services::Access()->authoriseLogin('login', $catalog_id);
+			return Services::Authorisation()->authoriseLogin('login', $catalog_id);
 		}
 
 		/** Retrieve ACL Action for this Task */
@@ -215,7 +215,7 @@ Class AccessService
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
 			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 				Services::Debug()
-					->set('AccessServices::authoriseTask Task: ' . $task
+					->set('AuthorisationServices::authoriseTask Task: ' . $task
 					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
 		}
@@ -239,7 +239,7 @@ Class AccessService
 
 		} else {
 			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
-				Services::Debug()->set('AccessServices::authoriseTask No query results for Task: ' . $task
+				Services::Debug()->set('AuthorisationServices::authoriseTask No query results for Task: ' . $task
 					. ' Action: ' . $action . ' Action ID: ' . $action_id);
 			}
 			return false;
@@ -252,7 +252,7 @@ Class AccessService
 	 * Verifies permission for a user to logon to a specific application
 	 *
 	 * Example usage:
-	 * Services::Access()->authoriseLogin('login', $catalog_id);
+	 * Services::Authorisation()->authoriseLogin('login', $catalog_id);
 	 *
 	 * @param $key
 	 * @param $action
@@ -286,7 +286,7 @@ Class AccessService
 	 *  Append criteria needed to implement view access for Query
 	 *
 	 * Example usage:
-	 *  Services::Access()->setQueryViewAccess(
+	 *  Services::Authorisation()->setQueryViewAccess(
 	 *     $this->query,
 	 *     $this->db,
 	 *     array('join_to_prefix' => $this->primary_prefix,
@@ -370,7 +370,7 @@ Class AccessService
 	 *  it returns true
 	 *
 	 * Example usage:
-	 * $userHTMLFilter = Services::Access()->setHTMLFilter();
+	 * $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
 	 *
 	 * @return bool
 	 * @since  1.0

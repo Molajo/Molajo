@@ -383,7 +383,7 @@ Class Route
         Services::Registry()->set('Request', 'mvc_id', (int)$row->source_id);
 
         Services::Registry()->set('Request', 'mvc_controller',
-            Services::Access()
+            Services::Authorisation()
                 ->getTaskController(Services::Registry()->get('Request', 'mvc_task'))
         );
 
@@ -443,7 +443,7 @@ Class Route
 
         /** verify other tasks */
         Services::Registry()->set('Request', 'status_authorised',
-            Services::Access()->authoriseTask(
+            Services::Authorisation()->authoriseTask(
                 Services::Registry()->get('Request', 'mvc_task'),
                 Services::Registry()->get('Request', 'request_catalog_id')
             )
