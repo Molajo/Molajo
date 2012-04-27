@@ -191,14 +191,10 @@ Class Application
 			return false;
 		}
 
+		$this->base_url = Services::Registry()->get('Site', 'base_url');
+
 		/** SSL Check */
 		$continue = $this->sslCheck();
-		if ($continue == false) {
-			return false;
-		}
-
-		/** Retrieve Site data and save in registry */
-		$continue = $this->setSiteData();
 		if ($continue == false) {
 			return false;
 		}
@@ -262,15 +258,16 @@ Class Application
 	protected function execute()
 	{
 		$action = Services::Registry()->get('Request', 'action', 'display');
-		echo $action;
-		die;
+
 		/** Display Action */
 		if ($action == 'display') {
+
 			$continue = $this->display();
 
 			if ($continue == false) {
 				Services::Debug()->set('Application execute Display failed');
 				return false;
+
 			} else {
 				Services::Debug()->set('Application execute Display succeeded');
 				return true;
@@ -283,6 +280,7 @@ Class Application
 		if ($continue == false) {
 			Services::Debug()->set('Application execute ' . $action . ' failed');
 			return false;
+
 		} else {
 			Services::Debug()->set('Application execute ' . $action . ' succeeded');
 			return true;
@@ -746,40 +744,6 @@ Class Application
 				return false;
 			}
 		}
-
-		return true;
-	}
-
-	/**
-	 * Retrieve Site data and save in registry
-	 *
-	 * @return mixed
-	 * @since  1.0
-	 * @throws \RuntimeException
-	 */
-	protected function setSiteData()
-	{
-		$m = new TableModel ('Sites', SITE_ID);
-
-		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
-
-		$results = $m->loadAssoc();
-
-		if ($results === false) {
-			throw new \RuntimeException ('Application setSiteData() query problem');
-		}
-
-		/** Registry for Custom Fields and Metadata */
-		$xml = Services::Registry()->loadFile('Sites');
-
-		Services::Registry()->loadField('SiteCustomfields', 'custom_fields',
-			$results['custom_fields'], $xml->custom_fields);
-		Services::Registry()->loadField('SiteMetadata', 'meta',
-			$results['metadata'], $xml->metadata);
-		Services::Registry()->loadField('SiteParameters', 'parameters',
-			$results['parameters'], $xml->parameter);
-
-		$this->base_url = $results['base_url'];
 
 		return true;
 	}

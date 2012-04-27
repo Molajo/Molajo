@@ -56,7 +56,7 @@
         <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1" />
     </fks>
     <custom_fields>
-        <custom_field name="custom_fields" filter="char" null="1" default="" values=""/>
+        <custom_field name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
     </custom_fields>
     <parameters>
         <parameter name="section" filter="char" null="1" default=" "/>

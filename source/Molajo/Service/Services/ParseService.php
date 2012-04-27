@@ -125,6 +125,10 @@ Class ParseService
      */
     public function process()
     {
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Site'));
+		echo '</pre>';
+			die;
 		/** Retrieve overrides */
 		$sequenceXML = Services::Registry()->get('Override', 'sequence_xml', '');
 		$finalXML = Services::Registry()->get('Override', 'final_xml', '');
@@ -153,15 +157,11 @@ Class ParseService
 			)
         );
 
-		$helperFile = Services::Registry()->get('Request', 'theme_path')
-			. '/helpers/theme.php';
+		$helperFile = Services::Registry()->get('Request', 'theme_path') . '/helpers/theme.php';
 
         if (file_exists($helperFile)) {
             require_once $helperFile;
-
-            $helperClass = 'Molajo' .
-				ucfirst(Services::Registry()->get('Request', 'theme_name'))
-				. 'ThemeHelper';
+            $helperClass = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'theme_name')) . 'ThemeHelper';
         }
 
         /** Before Event */
