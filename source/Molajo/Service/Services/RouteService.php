@@ -59,10 +59,7 @@ Class RouteService
 	 */
 	public function process()
 	{
-
-		/**
-		 *     Dependency Injection
-		 */
+		/** Dependency Injection */
 		if ((int)Services::Registry()->get('Override', 'catalog_id', 0) == 0) {
 			Services::Registry()->set('Request', 'catalog_id', 0);
 		} else {
@@ -75,9 +72,7 @@ Class RouteService
 			$path = Services::Registry()->get('Override', 'request_url', '');
 		}
 
-		/**
-		 *     Check for duplicate content URL for Home (and redirect, if found)
-		 */
+		/** @var $continue Check for duplicate content URL for Home (and redirect, if found) */
 		$continue = $this->checkHome($path);
 
 		if ($continue == false) {
@@ -87,9 +82,7 @@ Class RouteService
 			Services::Debug()->set('Application::Route()->checkHome() No Redirect needed');
 		}
 
-		/**
-		 *     See if Application is in Offline Mode
-		 */
+		/** See if Application is in Offline Mode */
 		if (Services::Registry()->get('Configuration', 'offline', 0) == 1) {
 			Services::Error()->set(503);
 			Services::Debug()->set('Application::Route() Direct to Offline Mode');
@@ -98,9 +91,7 @@ Class RouteService
 			Services::Debug()->set('Application::Route() Not in Offline Mode');
 		}
 
-		/**
-		 *     Remove Nonroutable Parameters from path and save for later use
-		 */
+		/** Remove Nonroutable Parameters from path and save for later use */
 		$continue = $this->getNonRoutableParameters();
 
 		if ($continue == false) {
@@ -110,9 +101,7 @@ Class RouteService
 			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Successful');
 		}
 
-		/**
-		 *     Get Data: Catalog and Menu Item (Content)
-		 */
+		/**  Get Data: Catalog and Menu Item (Content) */
 		$continue = $this->getCatalog();
 
 		if ($continue == false) {
@@ -136,30 +125,25 @@ Class RouteService
 			}
 		}
 
-		/**
-		 *     404
-		 */
+		/** 404	 */
 		if (Services::Registry()->get('Request', 'status_found') === false) {
 			Services::Error()->set(404);
 			Services::Debug()->set('Application::Route() 404');
 			return false;
 		}
 
-		/**
-		 *     URL Change Redirect from Catalog
-		 */
+		/** URL Change Redirect from Catalog */
 		if ((int) Services::Registry()->get('Catalog', 'redirect_to_id', 0) == 0) {
 		} else {
 			Services::Response()->redirect(
-				Application::Helper()->getURL('Catalog', Services::Registry()->get('Catalog', 'redirect_to_id', 0)), 301
+				Application::Helper()->getURL('Catalog',
+					Services::Registry()->get('Catalog', 'redirect_to_id', 0)), 301
 			);
 			Services::Debug()->set('Application::Route() Redirect');
 			return false;
 		}
 
-		/**
-		 *     Redirect to Logon
-		 */
+		/** Redirect to Logon */
 		if (Services::Registry()->get('Configuration', 'logon_requirement', 0) > 0
 			&& Services::Registry()->get('User', 'guest', true) === true
 			&& Services::Registry()->get('Request', 'catalog_id')
@@ -172,9 +156,7 @@ Class RouteService
 			return false;
 		}
 
-		/**
-		 *     Return to Application Object
-		 */
+		/**   Return to Application Object */
 		return $this;
 	}
 
@@ -235,7 +217,7 @@ Class RouteService
 	}
 
 	/**
-	 * Retrieve the non routable parameter values and remove from path
+	 * Retrieve non routable parameter values and remove from path
 	 *
 	 * Note: $path has already been stripped of Host, Folder, and Application
 	 *
@@ -391,16 +373,19 @@ Class RouteService
 		Services::Registry()->set('Catalog', 'redirect_to_id', (int)$row->redirect_to_id);
 		Services::Registry()->set('Catalog', 'catalog_type_id', (int)$row->catalog_type_id);
 		Services::Registry()->set('Catalog', 'source_id', (int)$row->source_id);
+		Services::Registry()->set('Catalog', 'routable', (int)$row->routable);
 		Services::Registry()->set('Catalog', 'view_group_id', (int)$row->view_group_id);
 		Services::Registry()->set('Catalog', 'primary_category_id', (int)$row->primary_category_id);
 		Services::Registry()->set('Catalog', 'sef_request', $row->sef_request);
 		Services::Registry()->set('Catalog', 'request', $row->request);
+
+//todo: remove from table and application
 //		Services::Registry()->set('Catalog', 'request_option', $row->request_option);
 //		Services::Registry()->set('Catalog', 'request_model', $row->request_model);
 		Services::Registry()->set('Catalog', 'source_table', $row->source_table);
 
 		/** home */
-		if ((int)Services::Registry()->get('Catalog', 'catalog_id', 0)
+		if ((int)Services::Registry()->get('Catalog', 'id', 0)
 			== Services::Registry()->get('Configuration', 'home_catalog_id', null)
 		) {
 			Services::Registry()->set('Request', 'request_url_home', true);
