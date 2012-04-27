@@ -125,10 +125,6 @@ Class ParseService
      */
     public function process()
     {
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Site'));
-		echo '</pre>';
-			die;
 		/** Retrieve overrides */
 		$sequenceXML = Services::Registry()->get('Override', 'sequence_xml', '');
 		$finalXML = Services::Registry()->get('Override', 'final_xml', '');
