@@ -467,6 +467,10 @@ Class FilterService
 								$null = 0,
 								$default = null)
 	{
+
+		//todo: get html filters back on
+		return true;
+
 		if ($default == null) {
 		} else if ($field_value == null) {
 			$field_value = $default;

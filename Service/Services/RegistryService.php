@@ -7,6 +7,8 @@
 
 namespace Molajo\Service\Services;
 
+use Molajo\Service\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -182,6 +184,8 @@ Class RegistryService
 	 */
 	public function get($namespace, $key, $default = null)
 	{
+		$key = strtolower($key);
+
 		/** Does registry exist? If not, create it. */
 		if (in_array($namespace, $this->registryKeys)) {
 		} else {
@@ -203,8 +207,16 @@ Class RegistryService
 			$array = array();
 		}
 
-		/** Retrieve the value or default */
-		if (in_array($key, $array, true)) {
+		/** Is there a match? */
+		$found = false;
+		while (list($existingKey, $existingValue) = each($array)) {
+			if (strtolower($existingKey) == strtolower($key)) {
+				$found = true;
+				break;
+			}
+		}
+
+		if ($found == true) {
 
 		} else {
 			$array[$key] = $default;
@@ -229,6 +241,8 @@ Class RegistryService
 	 */
 	public function set($namespace, $key, $value = '')
 	{
+		$key = strtolower($key);
+
 		/** Get the Registry (or create it) */
 		$array = $this->getRegistry($namespace);
 
@@ -360,12 +374,11 @@ Class RegistryService
 			foreach ($xml->$field_name as $cf) {
 
 				$name = (string)$cf['name'];
+				$name = strtolower($name);
 				$dataType = (string)$cf['filter'];
 				$null = (string)$cf['null'];
 				$default = (string)$cf['default'];
 				$values = (string)$cf['values'];
-
-				//todo: filter given XML field definitions
 
 				if ($default == '') {
 					$default = null;
@@ -373,19 +386,17 @@ Class RegistryService
 
 				/** Use value, if exists, or defined default */
 				if (isset($lookup[$name])) {
-					$nsArray[$name] = $lookup[$name];
+					$set = $lookup[$name];
 				} else {
-					$nsArray[$name] = $default;
+					$set = $default;
 				}
+				/** Filter Input and Save the Registry */
+		//$set = $this->filterInput($name, $set, $dataType);
+				$nsArray[$name] = $set;
+				$this->registry[$namespace] = $nsArray;
 			}
 		}
 
-		/** Save the Registry */
-		$this->registry[$namespace] = $nsArray;
-		/**
-		echo '<br /><br /><br /><br />'.$namespace.'<br />';
-		var_dump($this->registry[$namespace]);
-		 */
 		return $this;
 	}
 
@@ -448,5 +459,38 @@ Class RegistryService
 
 			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
+	}
+
+	/**
+	 * filterInput
+	 *
+	 * @param   string  $name         Name of input field
+	 * @param   string  $field_value  Value of input field
+	 * @param   string  $dataType     Datatype of input field
+	 * @param   int     $null         0 or 1 - is null allowed
+	 * @param   string  $default      Default value, optional
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	protected function filterInput(
+		$name, $value, $dataType, $null = null, $default = null)
+	{
+
+		try {
+			$value = Services::Filter()
+				->filter(
+				$value,
+				$dataType,
+				$null,
+				$default
+			);
+
+		} catch (\Exception $e) {
+			//todo: errors
+			echo $e->getMessage() . ' ' . $name;
+		}
+
+		return $value;
 	}
 }
