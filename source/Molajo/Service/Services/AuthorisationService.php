@@ -183,7 +183,8 @@ Class AuthorisationService
 
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
-			Services::Registry()->get('User', 'ViewGroups')) ) {
+			Services::Registry()->get('User', 'ViewGroups'))
+		) {
 
 			Services::Registry()->set('Request', 'status_authorised', true);
 
@@ -193,7 +194,8 @@ Class AuthorisationService
 
 		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') == true) {
+			&& Services::Registry()->get('Request', 'status_authorised') == true
+		) {
 
 			return true;
 		}
@@ -240,12 +242,12 @@ Class AuthorisationService
 		$action_id = Services::Registry()->get('action_to_action_id', $action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-				Services::Debug()->set(
-					'AuthorisationServices::authoriseTask '
+			Services::Debug()->set(
+				'AuthorisationServices::authoriseTask '
 					. ' Task: ' . $task
 					. ' Action: ' . $action
 					. ' Action ID: ' . $action_id
-				);
+			);
 		}
 
 		//todo: amy fill database with real sample action permissions
@@ -259,7 +261,7 @@ Class AuthorisationService
 		$m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int)$action_id);
 		$m->model->query->where($m->model->db->qn('group_id')
 				. ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
-				);
+		);
 
 		$count = $m->model->execute('loadResult');
 
@@ -326,8 +328,8 @@ Class AuthorisationService
 	 *     )
 	 * );
 	 *
-	 * @param  array  	 $query
-	 * $param  array  	 $db
+	 * @param  array       $query
+	 * $param  array       $db
 	 * @param  Registry  $parameters
 	 *
 	 * @return     boolean
