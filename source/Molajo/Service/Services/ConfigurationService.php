@@ -117,7 +117,7 @@ Class ConfigurationService
 		Services::Registry()->set('Site', 'description', $items['description']);
 		Services::Registry()->set('Site', 'path', $items['path']);
 
-		/** Registry for Custom Fields and Metadata */
+		/** Registry Definitions for Site */
 		$xml = Services::Registry()->loadFile('Sites', 'Table');
 
 		Services::Registry()->loadField(
@@ -224,11 +224,13 @@ Class ConfigurationService
 		} else {
 
 			try {
-				$m = new TableModel('Applications');
+				$m = Services::Model()->connect('Applications');
 
-				$m->query->where($m->db->qn('name') . ' = ' . $m->db->quote(APPLICATION));
+				$m->model->query->where(
+					$m->model->db->qn('name') . ' = ' . $m->model->db->quote(APPLICATION)
+				);
 
-				$row = $m->loadObject();
+				$row = $m->model->loadObject();
 
 				$id = $row->id;
 

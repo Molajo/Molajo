@@ -142,6 +142,7 @@ Class ModelService
 
 		$this->model->set('db', Services::$dbDriver()->get('db'));
 		$this->model->set('query', Services::$dbDriver()->getQuery());
+		Services::$dbDriver()->getQuery()->clear();
 		$this->model->set('nullDate', Services::$dbDriver()->get('db')->getNullDate());
 		$this->model->set('now', Services::$dbDriver()->get('db')->getDateFormat());
 		$this->model->set('query_results', array());
