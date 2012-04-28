@@ -40,8 +40,8 @@ class Model
 	/**
 	 * Name of the database table for the model
 	 *
-	 * @var        string
-	 * @since      1.0
+	 * @var    string
+	 * @since  1.0
 	 */
 	public $table;
 
@@ -120,16 +120,16 @@ class Model
 	/**
 	 * Results from queries
 	 *
-	 * @var        object
-	 * @since      1.0
+	 * @var    object
+	 * @since  1.0
 	 */
 	protected $query_results;
 
 	/**
 	 * Pagination object from display query
 	 *
-	 * @var        array
-	 * @since      1.0
+	 * @var    object
+	 * @since  1.0
 	 */
 	protected $pagination;
 
@@ -169,7 +169,7 @@ class Model
 	 */
 	public function get($key, $default = null)
 	{
-		return $this->$key = $default;
+		return $this->$key;
 	}
 
 	/**
@@ -729,6 +729,7 @@ class Model
 	 */
 	protected function setQueryDefaults()
 	{
+
 		if ($this->query->select === null) {
 
 			$this->fields = $this->getFieldDatatypes();

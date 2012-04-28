@@ -129,7 +129,7 @@ Class DebugService
 
 		/** Database */
 		if ($options['logger'] == 'database') {
-			$options['dbo'] = Services::Database()->get('db');
+			$options['dbo'] = Services::JDatabase()->get('db');
 			$options['db_table'] = Services::Registry()->get('Configuration', 'debug_database_table', '#__log');
 			$loggerSelected = true;
 		}

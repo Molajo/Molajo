@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="ExtensionSites" table="#__extension_sites" primary_key="id">
+<model name="ExtensionSites" table="#__extension_sites" primary_key="id" db="JDatabase">
     <filters>
         <filter name="id" filter="int" null="0" default=""/>
         <filter name="name" filter="char" null="0" default="" unique="1" />
