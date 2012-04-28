@@ -40,6 +40,8 @@
         <custom_field name="gender" filter="char" null="1" default="" values="M,F"/>
         <custom_field name="about_me" filter="text" null="1" default=""/>
         <custom_field name="twitter" filter="url" null="1" default=""/>
+        <custom_field name="editor" filter="int" null="0" default="1"/>
+        <custom_field name="language" filter="char" null="0" default="en-GB" values="en-GB"/>
         <custom_field name="date_of_birth" filter="date" null="1" default=""/>
     </custom_fields>
     <parameters>
