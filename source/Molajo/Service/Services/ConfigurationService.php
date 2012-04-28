@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Configuration
  *
- * @package   	Molajo
+ * @package       Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -188,7 +188,7 @@ Class ConfigurationService
 		if (defined('SITE_TEMP_FOLDER')) {
 		} else {
 			define('SITE_TEMP_FOLDER', SITE_FOLDER_PATH . '/'
-				. Services::Registry()->get('Configuration', 'temp_path',  SITE_FOLDER_PATH . '/temp'));
+				. Services::Registry()->get('Configuration', 'temp_path', SITE_FOLDER_PATH . '/temp'));
 		}
 		if (defined('SITE_TEMP_URL')) {
 		} else {

@@ -6,6 +6,8 @@
  */
 namespace Molajo\MVC\Model;
 
+use Molajo\Service\Services;
+
 defined('MOLAJO') or die;
 
 /**
@@ -142,7 +144,7 @@ class ItemModel extends Model
 
 				$name = (string)$child['name'];
 
-				$a = new TableModel($name);
+				$a = Services::Model()->connect($name);
 
 				$join = (string)$child['join'];
 				$joinArray = explode(';', $join);
@@ -154,16 +156,16 @@ class ItemModel extends Model
 					$targetField = $whereArray[1];
 					$sourceField = $whereArray[0];
 
-					$a->query->where($a->db->qn($targetField)
+					$a->model->query->where($a->model->db->qn($targetField)
 						. ' = '
 						. (int)$this->query_results[$sourceField]);
 				}
 
-				$this->query_results['Model\\' . $name] = $a->loadObjectList();
+				$this->query_results['Model\\' . $name] = $a->execute('loadObjectList');
 			}
 		}
 
-		/** return array of primary query and additional data elements */
+		/** return array containing primary query and additional data elements */
 		return $this;
 	}
 

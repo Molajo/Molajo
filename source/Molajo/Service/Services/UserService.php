@@ -8,8 +8,6 @@ namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
 
-use Molajo\MVC\Model\ItemModel;
-
 defined('MOLAJO') or die;
 
 /**
@@ -71,21 +69,15 @@ Class UserService
 	 */
 	protected function load()
 	{
+		$m = Services::Model()->connect('Users');
 
-/**
- get the editor and language
- and session?
- 		$user	 =& JFactory::getUser();
-		$editor	 = $user->getParam('editor', $this->getCfg('editor'));
-		$editor = JTriggerHelper::isEnabled('editors', $editor) ? $editor : $this->getCfg('editor');
-		$config->setValue('config.editor', $editor);
-getUserState , setUserState  , getUserStateFromRequest
-login and logout
-registration
+		$m->model->set('id', $this->id);
 
-*/
-		$m = new ItemModel ('Users', $this->id);
-		$results = $m->load();
+		$results = $m->execute('load');
+
+		if ($results === false) {
+			throw new \RuntimeException ('Application setSiteData() query problem');
+		}
 
 		$first_name = '';
 		$last_name = '';
@@ -97,10 +89,14 @@ registration
 				|| $name == 'metadata'
 				|| substr($name, 0, 5) == 'Model'
 			) {
+
 			} else {
+
 				Services::Registry()->set('User', $name, $value);
+
 				if ($name == 'first_name') {
 					$first_name = $value;
+
 				} elseif ($name == 'last_name') {
 					$last_name = $value;
 				}
@@ -188,18 +184,13 @@ registration
 		if (count($temp) == 0) {
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
+
 		Services::Registry()->set('User', 'ViewGroups', $temp);
 
 		/** User Activity */
-/**
-		$temp = array();
 		$activity = $results['Model\\UserActivity'];
-		if (count($activity > 0)) {
-			foreach ($activity as $act) {
-				$temp[] = $app->application_id;
-			}
-		}
-		Services::Registry()->set('User', 'Activity', $temp);
- */
+		Services::Registry()->set('User', 'UserActivity', $activity);
+
+		return $this;
 	}
 }
