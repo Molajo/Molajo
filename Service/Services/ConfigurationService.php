@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Configuration
  *
- * @package       Molajo
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -45,8 +45,6 @@ Class ConfigurationService
 
 	/**
 	 * Retrieve Site and Application data, set constants and paths
-	 *
-	 * Note: setSitePaths executed after Configuration startup to make paths available to other services
 	 *
 	 * @return  object
 	 * @since   1.0
@@ -85,12 +83,14 @@ Class ConfigurationService
 
 		if (file_exists($configuration_file)) {
 			require_once $configuration_file;
+
 		} else {
 			throw new \Exception('Fatal error - Site Configuration File does not exist', 100);
 		}
 
 		if (class_exists($configuration_class)) {
 			$siteData = new $configuration_class();
+
 		} else {
 			throw new \Exception('Fatal error - Configuration Class does not exist', 100);
 		}
@@ -200,7 +200,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * getApplication
+	 * Get the application data and store it in the registry, combine with site data for configuration
 	 *
 	 * @return  boolean
 	 * @since   1.0
