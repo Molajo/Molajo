@@ -88,16 +88,16 @@ Class AuthorisationService
 	}
 
 	/**
-	 * authoriseSiteApplication
-	 *
 	 * Check if the site is authorized for this application
+	 *
+	 * Usage:
+	 * $results = Services::Authorisation()->authoriseSiteApplication();
 	 *
 	 * @param  mixed $application_id if valid, or false
 	 * @return boolean
 	 */
 	public function authoriseSiteApplication()
 	{
-
 		$m = Services::Model()->connect('SiteApplications');
 
 		$m->model->query->select($m->model->db->qn('application_id'));
@@ -121,12 +121,10 @@ Class AuthorisationService
 	}
 
 	/**
-	 * getTaskController
-	 *
-	 * Using the Task, retrieve the Controller
+	 * Using the Request Task, retrieve the Controller
 	 *
 	 * Example usage:
-	 * Services::Authorisation()->getTaskController($this->get('action'))
+	 * $controller = Services::Authorisation()->getTaskController($action);
 	 *
 	 * @param $task
 	 *
@@ -142,7 +140,8 @@ Class AuthorisationService
 	}
 
 	/**
-	 * authoriseTaskList
+	 * For the list of tasks (actions), determine if the user is authorised for the specific catalog id;
+	 * Useful for button bars, links, and other User Interface Presentation Logic
 	 *
 	 * Example usage:
 	 * $permissions = Services::Authorisation()->authoriseTaskList($tasksArray, $item->catalog_id);
@@ -171,7 +170,10 @@ Class AuthorisationService
 	}
 
 	/**
-	 * Verify user authorization
+	 * Verify user authorization for the Request Action and Catalog ID
+	 *
+	 * Example usage:
+	 * $permissions = Services::Authorisation()->authoriseAction();
 	 *
 	 * @return   boolean
 	 * @since    1.0
@@ -214,10 +216,8 @@ Class AuthorisationService
 	}
 
 	/**
-	 * authoriseTask
-	 *
-	 * Verifies permission for a user to perform a specific task
-	 * on a specific catalog
+	 * Verifies permission for a user to perform a specific task on a specific catalog number
+	 * Could be used to determine if an "Edit Article" link is warranted.
 	 *
 	 * Example usage:
 	 * Services::Authorisation()->authoriseTask($task, $catalog_id);
@@ -312,9 +312,8 @@ Class AuthorisationService
 	}
 
 	/**
-	 *  setQueryViewAccess
 	 *
-	 *  Append criteria needed to implement view access for Query
+	 * Used by queries to append criteria needed to implement view access
 	 *
 	 * Example usage:
 	 *  Services::Authorisation()->setQueryViewAccess(
