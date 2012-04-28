@@ -6,10 +6,11 @@
  */
 namespace Molajo\Service\Services;
 
-defined('MOLAJO') or die;
-
 use Molajo\Service\Services;
+
 use Symfony\Component\HttpFoundation\Cookie;
+
+defined('MOLAJO') or die;
 
 /**
  * Redirect

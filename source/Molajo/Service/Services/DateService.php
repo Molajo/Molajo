@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
 /**
  * Date
  *
- * @package   Molajo
- * @subpackage  Service
- * @since           1.0
+ * @package       Molajo
+ * @subpackage    Service
+ * @since         1.0
  */
 Class DateService
 {
@@ -43,8 +43,6 @@ Class DateService
 	}
 
 	/**
-	 * __construct
-	 *
 	 * Class constructor.
 	 *
 	 * @return boolean
@@ -60,11 +58,11 @@ Class DateService
 	 *
 	 * Return the Date object
 	 *
-	 * @param   mixed  $time     The initial time for the JDate object
-	 * @param   mixed  $tzOffset The timezone offset.
+	 * @param  mixed $time     The initial time for the JDate object
+	 * @param  mixed $tzOffset The timezone offset.
 	 *
 	 * @return JDate object
-	 * @since   1.0
+	 * @since  1.0
 	 */
 	public function getDate($time = 'now', $tzOffset = null)
 	{
