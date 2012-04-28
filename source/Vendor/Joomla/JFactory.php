@@ -151,7 +151,7 @@ abstract class JFactory
 	 */
 	public static function getDbo()
 	{
-		return Services::Database();
+		return Services::JDatabase();
 	}
 
 	/**

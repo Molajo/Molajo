@@ -8,8 +8,6 @@ namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
 
-use Molajo\MVC\Model\TableModel;
-
 defined('MOLAJO') or die;
 
 /**
@@ -41,6 +39,7 @@ Class ConfigurationService
 		if (empty(self::$instance)) {
 			self::$instance = new ConfigurationService($configuration_file);
 		}
+
 		return self::$instance;
 	}
 
@@ -68,7 +67,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * retrieve site configuration object from ini file
+	 * Retrieve site configuration object from ini file
 	 *
 	 * @param string $configuration_file optional
 	 *
@@ -103,27 +102,20 @@ Class ConfigurationService
 
 		/** Retrieve Sites Data from DB */
 		$m = Services::Model()->connect('Sites');
-		$items = $model->query('Sites');
-		foreach ($items as $item) {
-			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
-		}
 
+		$m->model->set('id', (int)SITE_ID);
 
-		$m = new TableModel ('Sites');
+		$items = $m->execute('load');
 
-		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
-
-		$results = $m->loadAssoc();
-
-		if ($results === false) {
+		if ($items === false) {
 			throw new \RuntimeException ('Application setSiteData() query problem');
 		}
 
-		Services::Registry()->set('Site', 'id', (int)$results['id']);
-		Services::Registry()->set('Site', 'catalog_type_id', (int)$results['catalog_type_id']);
-		Services::Registry()->set('Site', 'name', $results['name']);
-		Services::Registry()->set('Site', 'description', $results['description']);
-		Services::Registry()->set('Site', 'path', $results['path']);
+		Services::Registry()->set('Site', 'id', (int)$items['id']);
+		Services::Registry()->set('Site', 'catalog_type_id', (int)$items['catalog_type_id']);
+		Services::Registry()->set('Site', 'name', $items['name']);
+		Services::Registry()->set('Site', 'description', $items['description']);
+		Services::Registry()->set('Site', 'path', $items['path']);
 
 		/** Registry for Custom Fields and Metadata */
 		$xml = Services::Registry()->loadFile('Sites', 'Table');
@@ -131,23 +123,23 @@ Class ConfigurationService
 		Services::Registry()->loadField(
 			'SiteCustomfields',
 			'custom_field',
-			$results['custom_fields'],
+			$items['custom_fields'],
 			$xml->custom_fields
 		);
 		Services::Registry()->loadField(
 			'SiteMetadata',
 			'meta',
-			$results['metadata'],
+			$items['metadata'],
 			$xml->metadata
 		);
 		Services::Registry()->loadField(
 			'SiteParameters',
 			'parameter',
-			$results['parameters'],
+			$items['parameters'],
 			$xml->parameters
 		);
 
-		Services::Registry()->set('Site', 'base_url', $results['base_url']);
+		Services::Registry()->set('Site', 'base_url', $items['base_url']);
 
 		return true;
 	}
@@ -234,8 +226,7 @@ Class ConfigurationService
 			try {
 				$m = new TableModel('Applications');
 
-				$m->query->where($m->db->qn('name') .
-					' = ' . $m->db->quote(APPLICATION));
+				$m->query->where($m->db->qn('name') . ' = ' . $m->db->quote(APPLICATION));
 
 				$row = $m->loadObject();
 

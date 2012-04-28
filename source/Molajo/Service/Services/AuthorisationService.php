@@ -61,8 +61,7 @@ Class AuthorisationService
 	}
 
 	/**
-	 * Load lists of ACL-related data needed by this method
-	 * and other classes within the application
+	 * Load lists of ACL-related data needed by this method and other classes within the application
 	 *
 	 * @return null
 	 * @since  1.0
@@ -114,8 +113,8 @@ Class AuthorisationService
 			Services::Message()->set(
 				Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
 				MESSAGE_TYPE_ERROR,
-							403
-						);
+				403
+			);
 		}
 
 		return $application_id;

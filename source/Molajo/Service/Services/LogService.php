@@ -130,7 +130,7 @@ Class LogService
 	 *
 	 * 3. Database
 	 *
-	 * $options['dbo'] - Services::Database();
+	 * $options['dbo'] - Services::JDatabase();
 	 * $options['db_table'] - #__log
 	 *
 	 * +++ Molajo custom loggers

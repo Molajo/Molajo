@@ -7,6 +7,7 @@
 namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
+
 use Joomla\date\JDate;
 
 defined('MOLAJO') or die;
@@ -20,7 +21,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class DatabaseService
+Class JDatabaseService
 {
 	/**
 	 * Static instance
@@ -60,20 +61,24 @@ Class DatabaseService
 	 * @static
 	 * @param   null  $configuration_file
 	 * @return  string
-	 * @throws  \Exception
+	 *
+	 * @since   1.0
 	 */
 	public static function getInstance($configuration_file = null)
 	{
-		return self::$instance ? self::$instance : new DatabaseService($configuration_file);
+		if (empty(self::$instance)) {
+			self::$instance = new JDatabaseService($configuration_file);
+		}
+
+		return self::$instance;
 	}
 
 	/**
 	 * Class constructor.
 	 *
-	 * @param   string  $name     Name of the database driver you'd like to instantiate
-	 * @param   array   $options  Parameters to be passed to the database driver
+	 * @param   string  $configuration_file
 	 *
-	 * @since   11.3
+	 * @since   1.0
 	 */
 	public function __construct($configuration_file = null)
 	{
@@ -110,6 +115,7 @@ Class DatabaseService
 
 		try {
 			$this->db = new $class($this->options);
+
 		} catch (\Exception $e) {
 			throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
 		}
@@ -139,7 +145,7 @@ Class DatabaseService
 	/**
 	 * Get the current query object for the current database connection
 	 *
-	 * @return  Joomla\database\JDatabaseQuery  Database query object
+	 * @return  Joomla\database\JDatabaseQuery
 	 *
 	 * @since   1.0
 	 * @throws  \RuntimeException

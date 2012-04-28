@@ -20,7 +20,6 @@ class ItemModel extends Model
     /**
      * Constructor.
      *
-     * @param  $id
      * @since  1.0
      */
     public function __construct()
@@ -40,9 +39,9 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
-		$this->setLoadQuery()
-			->runLoadQuery()
-			->getLoadAdditionalData();
+		$this->setLoadQuery();
+		$this->runLoadQuery();
+		$this->getLoadAdditionalData();
 
 		return $this->query_results;
 	}

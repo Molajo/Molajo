@@ -17,15 +17,16 @@ defined('MOLAJO') or die;
  */
 Class TableModel extends DisplayModel
 {
+
 	/**
 	 * Constructor.
 	 *
-	 * @param  $id
 	 * @since  1.0
 	 */
 	public function __construct()
 	{
 		$this->name = get_class($this);
+
 		return parent::__construct();
 	}
 }

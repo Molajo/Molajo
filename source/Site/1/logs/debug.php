@@ -2,7 +2,7 @@
 2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: RegistryService started successfully.
 2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: FilesystemService started successfully.
 2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: MessageService started successfully.
-2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: DatabaseService started successfully.
+2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: JDatabaseService started successfully.
 2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: Configuration started successfully.
 2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: LogService started successfully.
 2012-04-21T18:31:02+00:00	DEBUG	debugservice	Service: DebugService started successfully.
@@ -30,7 +30,7 @@
 2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: RegistryService started successfully.
 2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: FilesystemService started successfully.
 2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: MessageService started successfully.
-2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: DatabaseService started successfully.
+2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: JDatabaseService started successfully.
 2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: Configuration started successfully.
 2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: LogService started successfully.
 2012-04-21T19:11:05+00:00	DEBUG	debugservice	Service: DebugService started successfully.
@@ -58,7 +58,7 @@
 2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: RegistryService started successfully.
 2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: FilesystemService started successfully.
 2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: MessageService started successfully.
-2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: DatabaseService started successfully.
+2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: JDatabaseService started successfully.
 2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: Configuration started successfully.
 2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: LogService started successfully.
 2012-04-21T19:29:46+00:00	DEBUG	debugservice	Service: DebugService started successfully.
@@ -86,7 +86,7 @@
 2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: RegistryService started successfully.
 2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: FilesystemService started successfully.
 2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: MessageService started successfully.
-2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: DatabaseService started successfully.
+2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: JDatabaseService started successfully.
 2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: Configuration started successfully.
 2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: LogService started successfully.
 2012-04-21T19:35:21+00:00	DEBUG	debugservice	Service: DebugService started successfully.
@@ -114,7 +114,7 @@
 2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: RegistryService started successfully.
 2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: FilesystemService started successfully.
 2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: MessageService started successfully.
-2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: DatabaseService started successfully.
+2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: JDatabaseService started successfully.
 2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: Configuration started successfully.
 2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: LogService started successfully.
 2012-04-21T19:42:37+00:00	DEBUG	debugservice	Service: DebugService started successfully.
@@ -142,7 +142,7 @@
 2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: RegistryService started successfully.
 2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: FilesystemService started successfully.
 2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: MessageService started successfully.
-2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: DatabaseService started successfully.
+2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: JDatabaseService started successfully.
 2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: Configuration started successfully.
 2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: LogService started successfully.
 2012-04-21T19:43:31+00:00	DEBUG	debugservice	Service: DebugService started successfully.
