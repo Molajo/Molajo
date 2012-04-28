@@ -140,8 +140,8 @@ Class ParseService
         }
 
         /** Theme Parameters */
-        Services::Registry()->create('theme');
-
+        var_dump(Services::Registry()->get('theme'));
+		die;
 		$themeParameters = Services::Registry()->get('Theme', 'Parameters');
 
 		Services::Registry()->loadArray('theme',

@@ -11,25 +11,23 @@ defined('MOLAJO') or die;
 /**
  * Head
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
 Class HeadModel extends Model
 {
     /**
-     * __construct
-     *
      * Constructor.
      *
      * @param  $id
      * @since  1.0
      */
-    public function __construct($table = null, $id = null)
+    public function __construct()
     {
         $this->name = get_class($this);
 
-        return parent::__construct($table, $id);
+        return parent::__construct();
     }
 
     /**
@@ -51,6 +49,7 @@ Class HeadModel extends Model
             $metadata = Services::Document()->get_metadata();
 
             if (count($metadata) > 0) {
+
                 $row = new \stdClass();
                 $row->type = 'base';
 

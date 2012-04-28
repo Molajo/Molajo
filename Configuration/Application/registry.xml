@@ -3,25 +3,12 @@
     <registry>Site</registry>
     <registry>SiteCustomfields</registry>
     <registry>SiteMetadata</registry>
+    <registry>SiteParameters</registry>
 
     <registry>Application</registry>
     <registry>ApplicationCustomfields</registry>
     <registry>ApplicationMetadata</registry>
-
-    <registry>Request</registry>
-    <registry>RequestCatalog</registry>
-    <registry>RequestExtension</registry>
-    <registry>RequestExtensionCustomfields</registry>
-    <registry>RequestExtensionMetadata</registry>
-    <registry>RequestExtensionParameters</registry>
-    <registry>RequestSource</registry>
-    <registry>RequestSourceCustomfields</registry>
-    <registry>RequestSourceMetadata</registry>
-    <registry>RequestSourceParameters</registry>
-    <registry>RequestMVC</registry>
-    <registry>RequestParameters</registry>
-    <registry>RequestTemplate</registry>
-    <registry>RequestWrap</registry>
+    <registry>ApplicationParameters</registry>
 
     <registry>Configuration</registry>
 
@@ -30,27 +17,30 @@
     <registry>UserMetadata</registry>
     <registry>UserParameters</registry>
 
-    <registry>Theme</registry>
-    <registry>ThemeCustomfields</registry>
-    <registry>ThemeMetadata</registry>
-    <registry>ThemeParameters</registry>
-
-    <registry>Page</registry>
+    <registry>Request</registry>
 
     <registry>Catalog</registry>
+
+    <registry>Menuitem</registry>
 
     <registry>Extension</registry>
     <registry>ExtensionCustomfields</registry>
     <registry>ExtensionMetadata</registry>
     <registry>ExtensionParameters</registry>
 
-    <registry>Source</registry>
-    <registry>SourceCustomfields</registry>
-    <registry>SourceMetadata</registry>
-    <registry>SourceParameters</registry>
+    <registry>Content</registry>
+    <registry>ContentCustomfields</registry>
+    <registry>ContentMetadata</registry>
+    <registry>ContentParameters</registry>
 
     <registry>MVC</registry>
     <registry>MVCParameters</registry>
+
+    <registry>Theme</registry>
+    <registry>ThemeCustomfields</registry>
+    <registry>ThemeMetadata</registry>
+    <registry>ThemeParameters</registry>
+    <registry>Page</registry>
     <registry>Template</registry>
     <registry>Wrap</registry>
 </list>

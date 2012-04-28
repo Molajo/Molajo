@@ -6,10 +6,7 @@
  */
 namespace Molajo\MVC\Model;
 
-use Joomla\database\JDatabaseDriver;
-
 use Molajo\Service\Services;
-use Molajo\Service\Services\RegistryService;
 
 defined('MOLAJO') or die;
 
@@ -25,7 +22,7 @@ defined('MOLAJO') or die;
 class Model
 {
 	/**
-	 * Name-spaced Model Name
+	 * Name of Entry Point Class
 	 *
 	 * @var    string
 	 * @since  1.0
@@ -33,12 +30,52 @@ class Model
 	protected $name = '';
 
 	/**
-	 * Model Name
+	 * Model Name retrieved from Table definition file
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
 	protected $model_name = '';
+
+	/**
+	 * Name of the database table for the model
+	 *
+	 * @var        string
+	 * @since      1.0
+	 */
+	public $table;
+
+	/**
+	 * Single row for $table
+	 *
+	 * @var    \stdClass
+	 * @since  1.0
+	 */
+	public $row;
+
+	/**
+	 * List of all data elements in table
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	public $table_fields;
+
+	/**
+	 * Name of the primary key for the model table
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $primary_key = '';
+
+	/**
+	 * Value for the primary key of the model table
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $id = 0;
 
 	/**
 	 * Database connection
@@ -81,20 +118,12 @@ class Model
 	public $now;
 
 	/**
-	 * Results from various model queries
+	 * Results from queries
 	 *
 	 * @var        object
 	 * @since      1.0
 	 */
 	protected $query_results;
-
-	/**
-	 * Used by setter/getter to store model state
-	 *
-	 * @var        object
-	 * @since      1.0
-	 */
-	protected $state;
 
 	/**
 	 * Pagination object from display query
@@ -103,64 +132,6 @@ class Model
 	 * @since      1.0
 	 */
 	protected $pagination;
-
-	/**
-	 * Name of the database table for the model
-	 *
-	 * @var        string
-	 * @since      1.0
-	 */
-	public $table_name;
-
-	/**
-	 * $table_xml
-	 *
-	 * Name of the table definitions for the model
-	 *
-	 * @var        string
-	 * @since      1.0
-	 */
-	public $table_xml;
-
-	/**
-	 * $row
-	 *
-	 * Single row for $table_name
-	 *
-	 * @var    \stdClass
-	 * @since  1.0
-	 */
-	public $row;
-
-	/**
-	 * $table_fields
-	 *
-	 * List of all data elements in table
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	public $table_fields;
-
-	/**
-	 * $primary_key
-	 *
-	 * Name of the primary key for the model table
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $primary_key = '';
-
-	/**
-	 * $id
-	 *
-	 * Value for the primary key of the model table
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $id = 0;
 
 	/**
 	 * Default code if lookup value does not exist
@@ -179,73 +150,40 @@ class Model
 	const DEFAULT_MESSAGE = 'Undefined Message';
 
 	/**
-	 * __construct
-	 *
 	 * @return  object
 	 * @since   1.0
 	 */
-	public function __construct($table = null, $id = null)
+	public function __construct()
 	{
-		/** Retrieve XML for Table */
-		if (trim($table) == null) {
-			$table = 'Content';
-		}
+		$this->name = get_class($this);
+	}
 
-		$this->table = $table;
+	/**
+	 * Get the current value (or default) of the specified Model property
+	 *
+	 * @param   string  $key      Property
+	 * @param   mixed   $default  Value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function get($key, $default = null)
+	{
+		return $this->$key = $default;
+	}
 
-		$this->table_xml = Services::Registry()->loadFile($this->table, 'Table');
-
-		$this->model_name = (string)$this->table_xml['name'];
-		if ($this->model_name === '') {
-			throw new \RuntimeException('No model name in XML: ' . $this->table_name);
-		}
-
-		$this->table_name = (string)$this->table_xml['table'];
-
-		/** todo: default table name from model, adding underscores in front of uppercase letters, lowercasing all */
-		if ($this->table_name === '') {
-			$this->table_name = '#__content';
-		}
-
-		$this->primary_key = (string)$this->table_xml['primary_key'];
-		if ($this->primary_key === '') {
-			$this->primary_key = 'id';
-		}
-
-		$registry = new RegistryService();
-		$this->task_request = $registry->createRegistry('task_request');
-		$this->state = $registry->createRegistry('state');
-
-		$this->query_results = array();
-		$this->pagination = array();
-
-		if ((int)$this->id == 0) {
-			$this->id = $id;
-		}
-		if (trim($this->name) == '') {
-			$this->name = get_class($this);
-		}
-		if (trim($this->primary_key) == '') {
-			$this->primary_key = 'id';
-		}
-
-		$this->db = Services::Database()->get('db');
-		$this->query = Services::Database()->getQuery();
-		$this->query->clear();
-
-		$this->nullDate = $this->db->getNullDate();
-		$this->now = date("Y-m-d") . ' 00:00:00';
-		$this->primary_prefix = 'a';
-
-		$this->model_name = substr($this->name, strlen('Molajo\\MVC\\Model\\'), strlen($this->name) - strlen('Molajo\\MVC\\Model\\') - strlen('Model'));
-
-		/**
-		if ((int) Application::Service()->get('DebugService', 0) == 0) {
-		} else {
-		Services::Debug()->set('Model Construct '.$this->name. ' '.$this->model_name);
-		}
-		 */
-		return $this;
+	/**
+	 * Set the value of a Model property
+	 *
+	 * @param   string  $key    Property
+	 * @param   mixed   $value  Value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function set($key, $value = null)
+	{
+		return $this->$key = $value;
 	}
 
 	/**
@@ -254,8 +192,7 @@ class Model
 	 * @param   string  $code  Numeric value associated with message
 	 *
 	 * @return  mixed  Array or String
-	 *
-	 * @since   12.1
+	 * @since   1.0
 	 */
 	public function getMessage($code = 0)
 	{
@@ -285,8 +222,7 @@ class Model
 	 * @param   string  $code  Numeric value associated with message
 	 *
 	 * @return  mixed  Array or String
-	 *
-	 * @since   12.1
+	 * @since   1.0
 	 */
 	public function getMessageCode($message = null)
 	{
@@ -302,53 +238,6 @@ class Model
 	}
 
 	/**
-	 * get
-	 *
-	 * Returns property of the Model object
-	 * or the default value if the property is not set.
-	 *
-	 * @param   string  $key      The name of the property.
-	 * @param   mixed   $default  The default value (optional) if none is set.
-	 *
-	 * @return  mixed   The value of the configuration.
-	 *
-	 * @since   1.0
-	 */
-	public function get($key, $default = null)
-	{
-		return $this->state->get($key, $default);
-	}
-
-	/**
-	 * set
-	 *
-	 * Modifies a property of the Model object,
-	 * creating it if it does not already exist.
-	 *
-	 * @param   string  $key    The name of the property.
-	 * @param   mixed   $value  The value of the property to set (optional).
-	 *
-	 * @return  mixed   Value of the property
-	 *
-	 * @since   1.0
-	 */
-	public function set($key, $value = null)
-	{
-		return $this->state->set($key, $value);
-	}
-
-	/**
-	 * getState
-	 *
-	 * @return    array
-	 * @since    1.0
-	 */
-	public function getState()
-	{
-		return $this->state;
-	}
-
-	/**
 	 * getFieldNames
 	 *
 	 * Retrieves column names, only, for the database table
@@ -359,12 +248,15 @@ class Model
 	public function getFieldNames()
 	{
 		$fields = array();
+
 		$fieldDefinitions = $this->getFieldDefinitions();
+
 		if (count($fieldDefinitions) > 0) {
 			foreach ($fieldDefinitions as $fieldDefinition) {
 				$fields[] = $fieldDefinition->Field;
 			}
 		}
+
 		return $fields;
 	}
 
@@ -436,10 +328,10 @@ class Model
 	public function getFieldDefinitions()
 	{
 
-		if ($this->table_name == '') {
+		if ($this->table == '') {
 			return array();
 		}
-		return $this->db->getTableColumns($this->table_name, false);
+		return $this->db->getTableColumns($this->table, false);
 
 	}
 
@@ -506,8 +398,6 @@ class Model
 	 */
 
 	/**
-	 * load
-	 *
 	 * Method to load a specific item from a specific model.
 	 * Creates and runs the database query, allow for additional data,
 	 * and returns the integrated data for the item requested
@@ -581,10 +471,13 @@ class Model
 	public function getData()
 	{
 		$this->setQuery();
+
 		$this->query_results = $this->runQuery();
+
 		if (empty($this->query_results)) {
 			return false;
 		}
+
 		$this->query_results = $this->getAdditionalData();
 
 		return $this->query_results;
@@ -640,14 +533,16 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table_name)
+				$this->db->qn($this->table)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
 		}
 
 		$this->db->setQuery($this->query->__toString());
+
 		$this->query_results = $this->db->loadResult();
+
 		if (empty($this->query_results)) {
 			return false;
 		}
@@ -677,13 +572,14 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table_name)
+				$this->db->qn($this->table)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
 		}
 
 		$this->db->setQuery($this->query->__toString());
+
 		$this->query_results = $this->db->loadResultArray();
 
 		$this->processQueryResults('loadResultArray');
@@ -704,7 +600,9 @@ class Model
 	public function loadRow()
 	{
 		$this->setQueryDefaults();
+
 		$this->query_results = $this->db->loadRow();
+
 		$this->processQueryResults('loadRow');
 
 		return $this->query_results;
@@ -723,7 +621,9 @@ class Model
 	public function loadAssoc()
 	{
 		$this->setQueryDefaults();
+
 		$this->query_results = $this->db->loadAssoc();
+
 		$this->processQueryResults('loadAssoc');
 
 		return $this->query_results;
@@ -763,7 +663,9 @@ class Model
 	public function loadRowList()
 	{
 		$this->setQueryDefaults();
-		$this->query_results = $this->db->loadRow();
+
+		$this->query_results = $this->db->loadRowList();
+
 		$this->processQueryResults('loadRowList');
 
 		return $this->query_results;
@@ -782,7 +684,9 @@ class Model
 	public function loadAssocList()
 	{
 		$this->setQueryDefaults();
+
 		$this->query_results = $this->db->loadAssocList();
+
 		$this->processQueryResults('loadAssocList');
 
 		return $this->query_results;
@@ -806,7 +710,9 @@ class Model
 	public function loadObjectList()
 	{
 		$this->setQueryDefaults();
+
 		$this->query_results = $this->db->loadObjectList();
+
 		$this->processQueryResults('loadObjectList');
 
 		return $this->query_results;
@@ -824,7 +730,9 @@ class Model
 	protected function setQueryDefaults()
 	{
 		if ($this->query->select === null) {
+
 			$this->fields = $this->getFieldDatatypes();
+
 			while (list($name, $value) = each($this->fields)) {
 				$this->query->select(
 					$this->db->qn($this->primary_prefix)
@@ -835,7 +743,7 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table_name)
+				$this->db->qn($this->table)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -867,17 +775,7 @@ class Model
 
 		} else {
 
-			Services::Message()
-				->set(
-				$message = Services::Language()
-					->_('ERROR_DATABASE_QUERY') . ' ' .
-					$this->db->getErrorNum() . ' ' .
-					$this->db->getErrorMsg(),
-				$type = MESSAGE_TYPE_ERROR,
-				$code = 500,
-				$debug_location = $this->name . ':' . $location,
-				$debug_object = $this->db
-			);
+			Services::Log()->set('Broken');
 		}
 
 		if (count($this->query_results) == 0) {
@@ -905,7 +803,7 @@ class Model
 	/**
 	 * getPagination
 	 *
-	 * @return    array
+	 * @return   array
 	 * @since    1.0
 	 */
 	public function getPagination()

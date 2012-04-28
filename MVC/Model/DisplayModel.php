@@ -7,7 +7,7 @@
 namespace Molajo\MVC\Model;
 
 use Molajo\Extension\Helper;
-use Molajo\Application\Molajo;
+
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -17,23 +17,21 @@ defined('MOLAJO') or die;
  *
  * Abstracted class used as the parent class for common display views
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
 class DisplayModel extends ItemModel
 {
     /**
-     * __construct
-     *
      * Constructor.
      *
-     * @param  $id
-     * @since  1.0
+     * @param   $id
+     * @since   1.0
      */
-    public function __construct($table = null, $id = null)
+    public function __construct()
     {
-        return parent::__construct($table, $id);
+        return parent::__construct();
     }
 
     /**
@@ -47,7 +45,7 @@ class DisplayModel extends ItemModel
     protected function setQuery()
     {
         /**
-         *  Model Helper: MolajoExtensionModelHelper extends ModelHelper
+         *  Model Helper: ExtensionModelHelper extends ModelHelper
          */
         $extensionName = ExtensionHelper::formatNameForClass(
             $this->get('extension_instance_name')
@@ -114,7 +112,7 @@ class DisplayModel extends ItemModel
          *  From
          */
         $this->query->from(
-            $this->db->qn($this->table_name)
+            $this->db->qn($this->table)
                 . ' as '
                 . $this->db->qn($this->primary_prefix)
         );

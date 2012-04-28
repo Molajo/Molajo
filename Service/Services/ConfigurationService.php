@@ -45,8 +45,6 @@ Class ConfigurationService
 	}
 
 	/**
-	 * __construct
-	 *
 	 * Retrieve Site and Application data, set constants and paths
 	 *
 	 * Note: setSitePaths executed after Configuration startup to make paths available to other services
@@ -70,8 +68,6 @@ Class ConfigurationService
 	}
 
 	/**
-	 * getSite
-	 *
 	 * retrieve site configuration object from ini file
 	 *
 	 * @param string $configuration_file optional
@@ -105,8 +101,15 @@ Class ConfigurationService
 			Services::Registry()->set('SiteParameters', $key, $value);
 		}
 
-		/** Database */
-		$m = new TableModel ('Sites', SITE_ID);
+		/** Retrieve Sites Data from DB */
+		$m = Services::Model()->connect('Sites');
+		$items = $model->query('Sites');
+		foreach ($items as $item) {
+			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
+		}
+
+
+		$m = new TableModel ('Sites');
 
 		$m->query->where($m->db->qn('id') . ' = ' . (int)SITE_ID);
 

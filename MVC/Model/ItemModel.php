@@ -11,23 +11,21 @@ defined('MOLAJO') or die;
 /**
  * Item
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
 class ItemModel extends Model
 {
     /**
-     * __construct
-     *
      * Constructor.
      *
      * @param  $id
      * @since  1.0
      */
-    public function __construct($table = null, $id = null)
+    public function __construct()
     {
-        return parent::__construct($table, $id);
+        return parent::__construct();
     }
 
 	/**
@@ -62,7 +60,7 @@ class ItemModel extends Model
 		$this->query = $this->db->getQuery(true);
 
 		$this->query->select(' * ');
-		$this->query->from($this->db->qn($this->table_name));
+		$this->query->from($this->db->qn($this->table));
 		$this->query->where($this->primary_key
 			. ' = '
 			. $this->db->q($this->id));
@@ -97,6 +95,7 @@ class ItemModel extends Model
 		}
 
 		//todo: abstract out names of fields instead of hardcoding custom_fields, parameters, and metadata
+		//todo: bring in the filtering and fieldnames from the xml
 
 		if (key_exists('custom_fields', $this->query_results)
 			&& is_array($this->query_results['custom_fields'])
@@ -136,11 +135,11 @@ class ItemModel extends Model
 	 */
 	protected function getLoadAdditionalData()
 	{
-		$children = $this->table_xml->children;
+		$this->children = $this->table_xml->children;
 
-		if (count($children->child) > 0) {
+		if (count($this->children->child) > 0) {
 
-			foreach ($children->child as $child) {
+			foreach ($this->children->child as $child) {
 
 				$name = (string)$child['name'];
 
@@ -188,10 +187,10 @@ class ItemModel extends Model
          */
         if ((int)$this->id == 0) {
             $stored = $this->db->insertObject(
-                $this->table_name, $this->row, $this->primary_key);
+                $this->table, $this->row, $this->primary_key);
         } else {
             $stored = $this->db->updateObject(
-                $this->table_name, $this->row, $this->primary_key);
+                $this->table, $this->row, $this->primary_key);
         }
 
         if ($stored) {

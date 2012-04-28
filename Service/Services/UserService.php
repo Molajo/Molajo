@@ -178,7 +178,6 @@ registration
 			Services::Registry()->set('User', 'administrator', 0);
 		}
 
-
 		/** User View Groups */
 		$temp = array();
 		$viewGroups = $results['Model\\UserViewGroups'];
@@ -191,5 +190,16 @@ registration
 		}
 		Services::Registry()->set('User', 'ViewGroups', $temp);
 
+		/** User Activity */
+/**
+		$temp = array();
+		$activity = $results['Model\\UserActivity'];
+		if (count($activity > 0)) {
+			foreach ($activity as $act) {
+				$temp[] = $app->application_id;
+			}
+		}
+		Services::Registry()->set('User', 'Activity', $temp);
+ */
 	}
 }
