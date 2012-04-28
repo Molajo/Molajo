@@ -70,13 +70,11 @@ Class DebugService
 		/** Set debugging on or off */
 		$this->on = Services::Registry()->get('Configuration', 'Debug', 0);
 
-		if ($this->on == 0)
-		{
+		if ($this->on == 0) {
 			return false;
 		}
 
 		/** Valid Logger Options */
-
 		$loggerOptions = array();
 		$loggerOptions[] = 'echo';
 		$loggerOptions[] = 'formattedtext';
@@ -94,13 +92,16 @@ Class DebugService
 
 		$options['logger'] = 'firephp';
 
-		if (!in_array($options['logger'], $loggerOptions)) {
+		if (in_array($options['logger'], $loggerOptions)) {
+		} else {
 			$options['logger'] = 'echo';
 		}
 
 		/** Email */
 		if ($options['logger'] == 'email') {
+
 			$options['mailer'] = Services::Mail();
+
 			$options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
 			$options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
 			$options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
@@ -110,34 +111,49 @@ Class DebugService
 		/** Formatted Text */
 		if ($options['logger'] == 'formattedtext') {
 			$options['logger'] = 'formattedtext';
-			$options['text_file']  = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
-			$temp  = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
+
+			$options['text_file'] = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
+
+			$temp = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
+
 			if ($temp == 'SITE_LOGS_FOLDER') {
 				$options['text_file_path'] = SITE_LOGS_FOLDER;
+
 			} else {
 				$options['text_file_path'] = $temp;
 			}
-			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/'. $options['text_file'])) {
+
+			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $options['text_file'])) {
+
 				$options['text_file_no_php']
-					= (int) Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
+					= (int)Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
 				$loggerSelected = true;
+
 			} else {
 				$options = array();
 				$options['logger'] = 'echo';
 			}
 		}
 
-		/** Database */
+		/** Database: This interface to Joomla's logger is not designed to use Molajo's
+			ModelService approach to interacting with the DB
+		 */
 		if ($options['logger'] == 'database') {
+
 			$options['dbo'] = Services::JDatabase()->get('db');
-			$options['db_table'] = Services::Registry()->get('Configuration', 'debug_database_table', '#__log');
+			$options['db_table']
+				= Services::Registry()
+				->get('Configuration', 'debug_database_table', '#__log');
+
 			$loggerSelected = true;
 		}
 
 		/** Messages */
 		if ($options['logger'] == 'messages') {
 			$options['messages_namespace']
-				= Services::Registry()->get('Configuration', 'debug_messages_namespace', 'debug');
+				= Services::Registry()
+				->get('Configuration', 'debug_messages_namespace', 'debug');
+
 			$loggerSelected = true;
 		}
 
@@ -148,7 +164,9 @@ Class DebugService
 		/** Echo */
 		if ($options['logger'] == 'echo') {
 			$options['logger'] = 'echo';
-			$options['line_separator'] = Services::Registry()->get('Configuration', 'debug_line_separator', '<br />');
+			$options['line_separator']
+				= Services::Registry()
+				->get('Configuration', 'debug_line_separator', '<br />');
 		}
 
 		/** Establish log for activated debug option */
@@ -172,8 +190,15 @@ Class DebugService
 		}
 
 		try {
-			Services::Log()->addEntry($message, LOG_TYPE_DEBUG, self::log_type, Services::Date()->getDate('now'));
+			Services::Log()
+				->addEntry(
+				$message,
+				LOG_TYPE_DEBUG,
+				self::log_type,
+				Services::Date()->getDate('now')
+			);
 		}
+
 		catch (\Exception $e) {
 			throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
 		}
