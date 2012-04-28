@@ -53,7 +53,6 @@ Class ModelService
 		'loadObjectList'
 		);
 
-
 	/**
 	 * Valid DB Options
 	 *
@@ -64,7 +63,6 @@ Class ModelService
 		'JDatabase',
 		'Text'
 	);
-
 
 	/**
 	 * Default DB
@@ -150,7 +148,6 @@ Class ModelService
 		Services::$dbDriver()->getQuery()->clear();
 
 		return $this;
-
 	}
 
 	/**

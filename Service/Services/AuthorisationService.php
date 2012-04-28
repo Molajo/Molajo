@@ -79,7 +79,7 @@ Class AuthorisationService
 		}
 
 		/** retrieve action key pairs*/
-		$items = Services::Model()->get('Actions', 'objectList');
+		$items = Services::Model()->connect('Actions')->execute('loadObjectList');
 		foreach ($items as $item) {
 			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
 		}
@@ -97,13 +97,14 @@ Class AuthorisationService
 	 */
 	public function authoriseSiteApplication()
 	{
-		$m = new TableModel('SiteApplications');
 
-		$m->query->select($m->db->qn('application_id'));
-		$m->query->where($m->db->qn('site_id') . ' = ' . (int)SITE_ID);
-		$m->query->where($m->db->qn('application_id') . ' = ' . (int)APPLICATION_ID);
+		$m = Services::Model()->connect('SiteApplications');
 
-		$application_id = $m->loadResult();
+		$m->model->query->select($m->model->db->qn('application_id'));
+		$m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int)SITE_ID);
+		$m->model->query->where($m->model->db->qn('application_id') . ' = ' . (int)APPLICATION_ID);
+
+		$application_id = $m->execute('loadResult');
 
 		if ($application_id === false) {
 			//todo: finish the response action/test
@@ -116,7 +117,6 @@ Class AuthorisationService
 				403
 			);
 		}
-
 		return $application_id;
 	}
 
@@ -181,8 +181,8 @@ Class AuthorisationService
 
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
-			Services::Registry()->get('User', 'ViewGroups'))
-		) {
+			Services::Registry()->get('User', 'ViewGroups')) ) {
+
 			Services::Registry()->set('Request', 'status_authorised', true);
 
 		} else {
@@ -191,18 +191,13 @@ Class AuthorisationService
 
 		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') == true
-		) {
-			return true;
+			&& Services::Registry()->get('Request', 'status_authorised') == true) {
 
-		} else {
-			Services::Registry()->set('Request', 'status_authorised', false);
-			Services::Error()->set(403);
-			return false;
+			return true;
 		}
 
 		/** verify other actions */
-		$authorised = Services::Authorisation()->authoriseTask(
+		$authorised = $this->authoriseTask(
 			Services::Registry()->get('Request', 'action'),
 			Services::Registry()->get('Catalog', 'id')
 		);
@@ -258,15 +253,15 @@ Class AuthorisationService
 		/** check for permission */
 		$action_id = 3;
 
-		$m = new TableModel('GroupPermissions');
+		$m = Services::Model()->connect('GroupPermissions');
 
-		$m->query->where($m->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
-		$m->query->where($m->db->qn('action_id') . ' = ' . (int)$action_id);
-		$m->query->where($m->db->qn('group_id')
+		$m->model->query->where($m->model->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
+		$m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int)$action_id);
+		$m->model->query->where($m->model->db->qn('group_id')
 				. ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
 				);
 
-		$count = $m->loadResult();
+		$count = $m->model->execute('loadResult');
 
 		if ($count > 0) {
 			return true;
@@ -302,12 +297,12 @@ Class AuthorisationService
 			return false;
 		}
 
-		$m = new TableModel('UserApplications');
+		$m = Services::Model()->connect('UserApplications');
 
-		$m->query->where('application_id = ' . (int)APPLICATION_ID);
-		$m->query->where('user_id = ' . (int)$user_id);
+		$m->model->query->where('application_id = ' . (int)APPLICATION_ID);
+		$m->model->query->where('user_id = ' . (int)$user_id);
 
-		$count = $m->loadResult();
+		$count = $m->model->execute('loadResult');
 
 		if ($count > 0) {
 			return true;
@@ -332,8 +327,8 @@ Class AuthorisationService
 	 *     )
 	 * );
 	 *
-	 * @param  array  $query
-	 * $param  array  $db
+	 * @param  array  	 $query
+	 * $param  array  	 $db
 	 * @param  Registry  $parameters
 	 *
 	 * @return     boolean
