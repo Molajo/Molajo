@@ -8,10 +8,12 @@ namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
 
+use Molajo\MVC\Model\TableModel;
+
 defined('MOLAJO') or die;
 
 /**
- * Authorisation
+ * Access
  *
  * @package     Molajo
  * @subpackage  Services
@@ -69,20 +71,24 @@ Class AuthorisationService
 	 */
 	protected function initialise()
 	{
-		$tasks = Services::Registry()->loadFile('tasks');
+		$this->registry = new RegistryService();
+
+		$tasks = $this->registry->loadFile('tasks');
 		if (count($tasks) == 0) {
 			return;
 		}
 
 		foreach ($tasks->task as $t) {
-			Services::Registry()->set('task_to_action', (string)$t['name'], (string)$t['action']);
-			Services::Registry()->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
+			$this->registry->set('task_to_action', (string)$t['name'], (string)$t['action']);
+			$this->registry->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
 		}
 
-		/** retrieve action key pairs*/
-		$items = Services::Model()->get('Actions', 'objectList');
-		foreach ($items as $item) {
-			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
+		/** retrieve database keys for actions */
+		$m = new TableModel('Actions');
+		$actionsList = $m->loadObjectList();
+
+		foreach ($actionsList as $actionDefinition) {
+			$this->registry->set('action_to_action_id', $actionDefinition->title, (int)$actionDefinition->id);
 		}
 
 		return;
@@ -238,12 +244,12 @@ Class AuthorisationService
 	{
 
 		if ($task == 'login') {
-			return $this->authoriseLogin('login', $catalog_id);
+			return Services::Authorisation()->authoriseLogin('login', $catalog_id);
 		}
 
 		/** Retrieve ACL Action for this Task */
-		$action = Services::Registry()->get('task_to_action', $task);
-		$action_id = Services::Registry()->get('action_to_action_id', $action);
+		$action = $this->registry->get('task_to_action', $task);
+		$action_id = $this->registry->get('action_to_action_id', $action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
 				Services::Debug()->set(

@@ -1,16 +1,14 @@
+
+Request
+Catalog
+Menu Item (Content)
+
+
+
+
 REMOVE
 Includers (collapse into helpers)
 
-
-Distro = Change to Extension and Data Layers
-
-* * * * Extension Layer  * * * *
-
-Selection of Components, Modules, Themes, Views (Page, Template, and Wrap) and Helpers
-
-* * * * Configuration Layer * * * *
-
-Configuration, XML files, Media, Site
 
 * * * * Application Layer  * * * *
 From this point down, you should not see any use of extension type nouns (for example, module)

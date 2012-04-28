@@ -25,11 +25,11 @@ class LoginModel extends DisplayModel
      * @param  $id
      * @since  1.0
      */
-    public function __construct($table = null, $id = null)
+    public function __construct()
     {
         $this->name = get_class($this);
 
-        return parent::__construct($table, $id);
+        return parent::__construct();
     }
 
     /**

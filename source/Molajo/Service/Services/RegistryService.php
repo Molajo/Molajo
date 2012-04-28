@@ -89,7 +89,7 @@ Class RegistryService
 	 * during first use
 	 *
 	 * Usage:
-	 * Services::Registry()->createRegistry('Name Space', 'key value');
+	 * Services::Registry()->createRegistry('Name Space');
 	 *
 	 * @param $namespace
 	 *
