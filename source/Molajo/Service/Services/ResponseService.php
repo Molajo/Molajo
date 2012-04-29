@@ -6,10 +6,11 @@
  */
 namespace Molajo\Service\Services;
 
-defined('MOLAJO') or die;
-
 use Molajo\Service\Services;
+
 use Symfony\Component\HttpFoundation\Response;
+
+defined('MOLAJO') or die;
 
 /**
  * Response
@@ -33,8 +34,8 @@ Class ResponseService extends Response
 	/**
 	 * $response
 	 *
-	 * @var        object
-	 * @since      1.0
+	 * @var    object
+	 * @since  1.0
 	 */
 	protected $response;
 
@@ -42,14 +43,15 @@ Class ResponseService extends Response
 	 * getInstance
 	 *
 	 * @static
-	 * @return object
-	 * @since  1.0
+	 * @return  object
+	 * @since   1.0
 	 */
 	public static function getInstance($content = '', $status = 200, $headers = array())
 	{
 		if (empty(self::$instance)) {
 			self::$instance = new ResponseService($content, $status, $headers);
 		}
+
 		return self::$instance;
 	}
 
@@ -63,6 +65,7 @@ Class ResponseService extends Response
 	public function __construct($content, $status, $headers)
 	{
 		$this->response = new Response();
+
 		parent::__construct($content, $status, $headers);
 	}
 }

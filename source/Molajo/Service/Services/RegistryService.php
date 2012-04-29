@@ -191,7 +191,7 @@ Class RegistryService
 	 */
 	public function set($namespace, $key, $value = '')
 	{
-		/** keep it all on the downlow */
+		/** keep it all on the down-low */
 		$key = strtolower($key);
 
 		/** Get the Registry (or create it) */
@@ -479,7 +479,6 @@ Class RegistryService
 			return simplexml_load_file($path_and_file);
 
 		} catch (\Exception $e) {
-
 			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 	}
@@ -499,6 +498,7 @@ Class RegistryService
 	{
 		if (in_array($namespace, $this->registryKeys)) {
 			return $this->registry[$namespace];
+
 		} else {
 			return $this->createRegistry($namespace);
 		}

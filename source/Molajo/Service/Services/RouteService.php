@@ -62,12 +62,15 @@ Class RouteService
 		/** Dependency Injection */
 		if ((int)Services::Registry()->get('Override', 'catalog_id', 0) == 0) {
 			Services::Registry()->set('Request', 'catalog_id', 0);
+
 		} else {
 			Services::Registry()->set('Request', 'catalog_id',
 				(int)Services::Registry()->get('Override', 'catalog_id', 0));
 		}
+
 		if (Services::Registry()->get('Override', 'request_url', '') == '') {
 			$path = PAGE_REQUEST;
+
 		} else {
 			$path = Services::Registry()->get('Override', 'request_url', '');
 		}
@@ -78,6 +81,7 @@ Class RouteService
 		if ($continue == false) {
 			Services::Debug()->set('Application::Route()->checkHome() Redirect to Real Home');
 			return false;
+
 		} else {
 			Services::Debug()->set('Application::Route()->checkHome() No Redirect needed');
 		}
@@ -87,6 +91,7 @@ Class RouteService
 			Services::Error()->set(503);
 			Services::Debug()->set('Application::Route() Direct to Offline Mode');
 			return true;
+
 		} else {
 			Services::Debug()->set('Application::Route() Not in Offline Mode');
 		}
@@ -97,6 +102,7 @@ Class RouteService
 		if ($continue == false) {
 			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Failed');
 			return false;
+
 		} else {
 			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Successful');
 		}
@@ -108,6 +114,7 @@ Class RouteService
 			Services::Registry()->set('Request', 'status_found', false) ;
 			Services::Debug()->set('Application::Route()->getCatalog() Failed');
 			return false;
+
 		} else {
 			Services::Registry()->set('Request', 'status_found', true) ;
 			Services::Debug()->set('Application::Route()->getCatalog() Successful');

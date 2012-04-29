@@ -205,9 +205,10 @@ Class LanguageService
 	 */
 	public function load($path)
 	{
-		$loaded = $this->_loadLanguage($path, $this->language . '.ini');
+		$loaded = $this->loadLanguage($path, $this->language . '.ini');
 		if ($loaded === false) {
-			Services::Debug()->set('LanguageServices: cannot load file: ' . $path . '/' . $this->language . '.ini');
+			Services::Debug()->set('LanguageServices: cannot load file: '
+				. $path . '/' . $this->language . '.ini');
 		} else {
 			return true;
 		}
@@ -217,9 +218,10 @@ Class LanguageService
 			return false;
 		}
 
-		$loaded = $this->_loadLanguage($path, $default . '.ini');
+		$loaded = $this->loadLanguage($path, $default . '.ini');
 		if ($loaded === false) {
-			Services::Debug()->set('LanguageServices 2: cannot load default language file: ' . $path . '/' . $default . '.ini');
+			Services::Debug()->set('LanguageServices 2: cannot load default language file: '
+				. $path . '/' . $default . '.ini');
 			return false;
 		}
 		return $loaded;
@@ -280,7 +282,7 @@ Class LanguageService
 	}
 
 	/**
-	 * _loadLanguage
+	 * loadLanguage
 	 *
 	 * Parses standard and override language files and merges strings
 	 *
@@ -289,7 +291,7 @@ Class LanguageService
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	protected function _loadLanguage($path, $file)
+	protected function loadLanguage($path, $file)
 	{
 		$filename = $path . '/' . $file;
 
@@ -299,7 +301,7 @@ Class LanguageService
 		}
 
 		if (file_exists($filename)) {
-			$strings = $this->_parse($filename);
+			$strings = $this->parse($filename);
 			$this->loaded_files[$filename] = true;
 		} else {
 			$strings = array();
@@ -310,7 +312,7 @@ Class LanguageService
 		$filename = $path . '/' . $this->language . '.override.ini';
 
 		if (file_exists($filename)) {
-			$override_strings = $this->_parse($filename);
+			$override_strings = $this->parse($filename);
 			$this->loaded_files[$filename] = true;
 		} else {
 			$override_strings = array();
@@ -354,7 +356,7 @@ Class LanguageService
 	}
 
 	/**
-	 * _parse
+	 * parse
 	 *
 	 * Parses a language file.
 	 *
@@ -363,7 +365,7 @@ Class LanguageService
 	 * @return  array  The array of parsed strings.
 	 * @since   1.0
 	 */
-	protected function _parse($filename)
+	protected function parse($filename)
 	{
 		/** capture php errors during parsing */
 		$track_errors = ini_get('track_errors');
