@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Content" table="#__content" primary_key="id" db="JDatabase">
+<model
+        name="Content"
+        table="#__content"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="extension_instance_id" filter="int" null="0" default="0"/>
@@ -36,47 +40,55 @@
         <filter name="translation_of_id" filter="int" null="0" default="0"/>
         <filter name="ordering" filter="int" null="0" default="0"/>
     </filters>
-    <triggers>
-        <trigger name="Alias"  />
-        <trigger name="CatalogTypeId"  />
-        <trigger name="ContentText"  />
-        <trigger name="DateFields"  />
-        <trigger name="UserFields"  />
-        <trigger name="Status"  />
-        <trigger name="Customfields"  />
-        <trigger name="Metadata"  />
-        <trigger name="Parameters"  />
-    </triggers>
-    <fks>
-        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1" />
-        <fk name="checked_out_by" source_id="id" source_model="Users" required="1" />
-        <fk name="created_by" source_id="id" source_model="Users" required="1" />
-        <fk name="modified_by" source_id="id" source_model="Users" required="1" />
-        <fk name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1" />
-        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1" />
-    </fks>
-    <custom_fields>
-        <custom_field name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
-    </custom_fields>
-    <parameters>
-        <parameter name="section" filter="char" null="1" default=" "/>
-        <parameter name="display_suppress_no_results" filter="boolean" null="0" default="0"/>
-        <parameter name="disable_view_access_check" filter="boolean" null="0" default="0"/>
-        <parameter name="template_view_id" filter="integer" null="1" default=""/>
-        <parameter name="wrap_view_id" filter="integer" null="1" default=""/>
-        <parameter name="controller" filter="char" null="1" default=" "/>
-        <parameter name="model" filter="char" null="1" default=" "/>
-        <parameter name="cache" filter="integer" null="1" default=""/>
-        <parameter name="cache_time" filter="integer" null="1" default=""/>
-    </parameters>
-    <metadata>
-        <meta name="metadata_title" filter="char" null="0" default=""/>
-        <meta name="metadata_description" filter="text" null="0" default=""/>
-        <meta name="metadata_keywords" filter="char" null="1" default=""/>
-        <meta name="metadata_robots" filter="char" null="0" default="follow,index"
-              values="follow,nofollow,index,noindex"/>
-        <meta name="metadata_author" filter="char" null="1" default=""/>
-        <meta name="metadata_content_rights" filter="char" null="1" default=""/>
-    </metadata>
+    <fields>
+        <field name="custom_fields" registry="ContentCustomFields">
+            <custom_fields>
+                <custom_field name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
+            </custom_fields>
+        </field>
+        <field name="parameters" registry="ContentCustomFields">
+            <parameters>
+                <parameter name="section" filter="char" null="1" default=" "/>
+                <parameter name="display_suppress_no_results" filter="boolean" null="0" default="0"/>
+                <parameter name="disable_view_access_check" filter="boolean" null="0" default="0"/>
+                <parameter name="template_view_id" filter="integer" null="1" default=""/>
+                <parameter name="wrap_view_id" filter="integer" null="1" default=""/>
+                <parameter name="controller" filter="char" null="1" default=" "/>
+                <parameter name="model" filter="char" null="1" default=" "/>
+                <parameter name="cache" filter="integer" null="1" default=""/>
+                <parameter name="cache_time" filter="integer" null="1" default=""/>
+            </parameters>
+        </field>
+        <field name="metadata" registry="ContentCustomFields">
+            <metadata>
+                <meta name="metadata_title" filter="char" null="0" default=""/>
+                <meta name="metadata_description" filter="text" null="0" default=""/>
+                <meta name="metadata_keywords" filter="char" null="1" default=""/>
+                <meta name="metadata_robots" filter="char" null="0" default="follow,index"
+                      values="follow,nofollow,index,noindex"/>
+                <meta name="metadata_author" filter="char" null="1" default=""/>
+                <meta name="metadata_content_rights" filter="char" null="1" default=""/>
+            </metadata>
+        </field>
+        <fks>
+            <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            <fk name="checked_out_by" source_id="id" source_model="Users" required="1"/>
+            <fk name="created_by" source_id="id" source_model="Users" required="1"/>
+            <fk name="modified_by" source_id="id" source_model="Users" required="1"/>
+            <fk name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1"/>
+            <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        </fks>
+        <triggers>
+            <trigger name="Alias"/>
+            <trigger name="CatalogTypeId"/>
+            <trigger name="ContentText"/>
+            <trigger name="DateFields"/>
+            <trigger name="UserFields"/>
+            <trigger name="Status"/>
+            <trigger name="Customfields"/>
+            <trigger name="Metadata"/>
+            <trigger name="Parameters"/>
+        </triggers>
+    </fields>
 </model>
 

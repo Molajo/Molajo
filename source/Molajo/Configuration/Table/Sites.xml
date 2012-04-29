@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Sites" table="#__sites" primary_key="id" db="JDatabase">
+<model
+        name="Sites"
+        table="#__sites"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
@@ -11,29 +15,37 @@
         <filter name="parameters" filter="" null="1" default=""/>
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
-    <triggers>
-        <trigger name="Customfields"  />
-        <trigger name="Metadata"  />
-        <trigger name="Parameters"  />
-        <trigger name="Sites"  />
-    </triggers>
+    <fields>
+        <field name="parameters" registry="SiteParameters">
+            <parameters>
+                <parameter name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
+            </parameters>
+        </field>
+        <field name="custom_fields" registry="SiteCustomFields">
+            <custom_fields>
+                <custom_field name="custom_field1" filter="char" null="0" default=""/>
+            </custom_fields>
+        </field>
+        <field name="custom_fields" registry="SiteMetadata">
+            <metadata>
+                <meta name="metadata_title" filter="char" null="0" default=""/>
+                <meta name="metadata_description" filter="text" null="0" default=""/>
+                <meta name="metadata_keywords" filter="char" null="1" default=""/>
+                <meta name="metadata_robots" filter="char" null="0" default="follow,index"
+                      values="follow,nofollow,index,noindex"/>
+                <meta name="metadata_author" filter="char" null="1" default=""/>
+                <meta name="metadata_content_rights" filter="char" null="1" default=""/>
+            </metadata>
+        </field>
+    </fields>
     <fks>
-        <fk name="catalog_type_id" source_id="id" source_model="MolajoCatalogTypes" required="1" />
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
     </fks>
-    <parameters>
-        <parameter name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
-    </parameters>
-    <custom_fields>
-        <custom_field name="custom_field1" filter="char" null="0" default="Molajo Site"/>
-    </custom_fields>
-    <metadata>
-        <meta name="metadata_title" filter="char" null="0" default=""/>
-        <meta name="metadata_description" filter="text" null="0" default=""/>
-        <meta name="metadata_keywords" filter="char" null="1" default=""/>
-        <meta name="metadata_robots" filter="char" null="0" default="follow,index"
-              values="follow,nofollow,index,noindex"/>
-        <meta name="metadata_author" filter="char" null="1" default=""/>
-        <meta name="metadata_content_rights" filter="char" null="1" default=""/>
-    </metadata>
+    <triggers>
+        <trigger name="Customfields"/>
+        <trigger name="Metadata"/>
+        <trigger name="Parameters"/>
+        <trigger name="Sites"/>
+    </triggers>
 </model>
 

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="UserApplications" table="#__user_applications" primary_key="id" db="JDatabase">
+<model
+        name="UserApplications"
+        table="#__user_applications"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="user_id" filter="int" null="0" default=""/>
         <filter name="application_id" filter="int" null="0" default=""/>

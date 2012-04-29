@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="ViewGroups" table="#__user_groups" primary_key="id" db="JDatabase">
+<model
+        name="ViewGroups"
+        table="#__user_groups"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="" null="1" default="" identity="1" />
         <filter name="view_group_name_list" filter="char" null="0" default=""/>

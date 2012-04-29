@@ -27,7 +27,7 @@ class LoginModel extends DisplayModel
      */
     public function __construct()
     {
-        $this->name = get_class($this);
+        $this->class_name = get_class($this);
 
         return parent::__construct();
     }

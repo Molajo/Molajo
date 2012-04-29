@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="ExtensionSites" table="#__extension_sites" primary_key="id" db="JDatabase">
+<model
+        name="ExtensionSites"
+        table="#__extension_sites"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="int" null="0" default=""/>
-        <filter name="name" filter="char" null="0" default="" unique="1" />
+        <filter name="name" filter="char" null="0" default="" unique="1"/>
         <filter name="enabled" filter="boolean" null="0" default="0"/>
         <filter name="location" filter="char" null="1" default=""/>
         <filter name="custom_fields" filter="" null="1" default=""/>
@@ -10,9 +14,9 @@
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
     <triggers>
-        <trigger name="Customfields"  />
-        <trigger name="Metadata"  />
-        <trigger name="Parameters"  />
+        <trigger name="Customfields"/>
+        <trigger name="Metadata"/>
+        <trigger name="Parameters"/>
     </triggers>
 </model>
 

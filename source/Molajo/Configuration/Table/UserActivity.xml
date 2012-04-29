@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="UserActivity" table="#__user_activity" primary_key="id" db="JDatabase">
+<model
+        name="UserActivity"
+        table="#__user_activity"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="" null="0" default="" identity="1"/>
-        <filter name="user_id" filter="int" null="0" default="" />
-        <filter name="action_id" filter="int" null="0" default="" />
-        <filter name="catalog_id" filter="int" null="0" default="" />
+        <filter name="user_id" filter="int" null="0" default=""/>
+        <filter name="action_id" filter="int" null="0" default=""/>
+        <filter name="catalog_id" filter="int" null="0" default=""/>
         <filter name="activity_datetime" filter="datetime" null="0" default=""/>
     </filters>
+    <display>
+        <join name="Users" primary="user_id" source_id="id" select="username"/>
+        <join name="Action" primary="id" source_id="id" select="title"/>
+        <join name="Catalog" primary="catalog_id" source_id="id" select=""/>
+        <join name="CatalogTypes" primary="Catalog.id" source_id="id" select="title,source_table"/>
+    </display>
     <triggers>
-        <trigger name="Action" />
+        <trigger name="Action"/>
     </triggers>
     <fks>
-        <fk name="user_id" source_id="id" source_model="Users" required="1" />
-        <fk name="action_id" source_id="id" source_model="Actions" required="1" />
-        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1" />
+        <fk name="user_id" source_id="id" source_model="Users" required="1"/>
+        <fk name="action_id" source_id="id" source_model="Actions" required="1"/>
+        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
     </fks>
 </model>
 

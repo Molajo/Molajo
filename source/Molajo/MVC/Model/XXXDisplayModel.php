@@ -112,7 +112,7 @@ class DisplayModel extends ItemModel
          *  From
          */
         $this->query->from(
-            $this->db->qn($this->table)
+            $this->db->qn($this->table_name)
                 . ' as '
                 . $this->db->qn($this->primary_prefix)
         );

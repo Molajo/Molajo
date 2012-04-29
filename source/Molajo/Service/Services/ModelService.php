@@ -35,7 +35,6 @@ Class ModelService
 	 */
 	public $model;
 
-
 	/**
 	 * Module Name
 	 *
@@ -77,24 +76,6 @@ Class ModelService
 	public $dbDriver;
 
 	/**
-	 * Valid Query Object values
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $query_objects = array(
-		'load',
-		'loadResult',
-		'loadResultArray',
-		'loadRow',
-		'loadAssoc',
-		'loadObject',
-		'loadRowList',
-		'loadAssocList',
-		'loadObjectList'
-		);
-
-	/**
 	 * Valid DB Options
 	 *
 	 * @var    object
@@ -110,7 +91,26 @@ Class ModelService
 	 *
 	 * @var string
 	 */
-	static $default_db = 'JDatabase';
+	static $default_dbDriver = 'JDatabase';
+
+
+	/**
+	 * Valid Query Object values
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $query_objects = array(
+		'load',
+		'loadResult',
+		'loadResultArray',
+		'loadRow',
+		'loadAssoc',
+		'loadObject',
+		'loadRowList',
+		'loadAssocList',
+		'loadObjectList'
+	);
 
 	/**
 	 * getInstance
@@ -179,20 +179,18 @@ Class ModelService
 			throw new \RuntimeException('Model entry failed for ' . $table . 'Error: ' . $e->getMessage());
 		}
 
-		/** 3. Model Properties */
+		/** 3. Set Model Properties */
 		$this->model->set('model_name', $this->model_name);
 		$this->model->set('table', $this->table_name);
 		$this->model->set('table_xml', $this->table_xml);
 		$this->model->set('primary_key', $this->primary_key);
 		$this->model->set('primary_prefix', 'a');
 
-		/** 4. DB Properties */
+		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
 		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
 		$this->model->set('now', Services::$dbo()->get('db')->getDateFormat());
-		$this->model->set('query_results', array());
-		$this->model->set('pagination', array());
 
 		Services::$dbo()->getQuery()->clear();
 

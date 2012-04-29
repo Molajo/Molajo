@@ -78,7 +78,7 @@ Class AuthorisationService
 			Services::Registry()->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
 		}
 
-		/** retrieve action key pairs*/
+		/** retrieve action key pairs */
 		$items = Services::Model()->connect('Actions')->execute('loadObjectList');
 		foreach ($items as $item) {
 			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
@@ -183,8 +183,7 @@ Class AuthorisationService
 
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
-			Services::Registry()->get('User', 'ViewGroups'))
-		) {
+			Services::Registry()->get('User', 'ViewGroups')) ) {
 
 			Services::Registry()->set('Request', 'status_authorised', true);
 
@@ -194,8 +193,7 @@ Class AuthorisationService
 
 		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') == true
-		) {
+			&& Services::Registry()->get('Request', 'status_authorised') == true) {
 
 			return true;
 		}
@@ -410,7 +408,9 @@ Class AuthorisationService
 	public function setHTMLFilter()
 	{
 		$groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
+
 		$groupArray = explode(',', $groups);
+
 		$userGroups = Services::Registry()->get('User', 'groups');
 
 		foreach ($groupArray as $single) {

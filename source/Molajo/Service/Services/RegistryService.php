@@ -11,6 +11,8 @@ use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
+//todo: consider namespace reuse - intentional and otherwise
+
 /**
  * Registry
  *
@@ -29,7 +31,7 @@ Class RegistryService
 	protected static $instance;
 
 	/**
-	 * Array containing the key to each $registry object
+	 * Array containing registry keys
 	 *
 	 * @var    Object Array
 	 * @since  1.0

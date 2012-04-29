@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="CatalogTypes" table="#__catalog_types" primary_key="id" db="JDatabase">
+<model
+        name="CatalogTypes"
+        table="#__catalog_types"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="title" filter="char" null="0" default=" " unique="1"/>
@@ -9,7 +13,7 @@
         <filter name="subfolder" filter="char" null="0" default=" "/>
     </filters>
     <triggers>
-        <trigger name="CatalogSource"  />
+        <trigger name="CatalogSource"/>
     </triggers>
 </model>
 

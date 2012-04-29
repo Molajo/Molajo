@@ -13,6 +13,10 @@ defined('MOLAJO') or die;
 /**
  * Item
  *
+ * Handles basic CRUD operations for a specific type of data
+ *
+ * Data can be extended through use of fields and children, see XML
+ *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
@@ -61,7 +65,7 @@ class ItemModel extends Model
 		$this->query = $this->db->getQuery(true);
 
 		$this->query->select(' * ');
-		$this->query->from($this->db->qn($this->table));
+		$this->query->from($this->db->qn($this->table_name));
 		$this->query->where($this->primary_key
 			. ' = '
 			. $this->db->q($this->id));
@@ -81,13 +85,15 @@ class ItemModel extends Model
 	 */
 	protected function runLoadQuery()
 	{
+		/** Run the query */
 		$this->query_results = $this->db->loadAssoc();
 
+		/** Record Not found */
 		if (empty($this->query_results)) {
 
 			$this->query_results = array();
 
-			/** User Table Columns */
+			/** Table Columns */
 			$columns = $this->getFieldNames();
 
 			for ($i = 0; $i < count($columns); $i++) {
@@ -95,31 +101,18 @@ class ItemModel extends Model
 			}
 		}
 
-		//todo: abstract out names of fields instead of hardcoding custom_fields, parameters, and metadata
-		//todo: bring in the filtering and fieldnames from the xml
+		/** Process special fields for data source */
+		$fields = $this->table_xml->fields;
 
-		if (key_exists('custom_fields', $this->query_results)
-			&& is_array($this->query_results['custom_fields'])
-		) {
-			$registry = Services::Registry()->initialise();
-			$registry->loadString($this->query_results['custom_fields']);
-			$this->query_results['custom_fields'] = (string)$registry;
-		}
+		if (count($fields->field) > 0) {
+			foreach ($fields->field as $field) {
+				$name = (string)$field['name'];
+				$registry = (string)$field['registry'];
 
-		if (key_exists('parameters', $this->query_results)
-			&& is_array($this->query_results['parameters'])
-		) {
-			$registry = Services::Registry()->initialise();
-			$registry->loadString($this->query_results['parameters']);
-			$this->query_results['parameters'] = (string)$registry;
-		}
-
-		if (key_exists('metadata', $this->query_results)
-			&& is_array($this->query_results['metadata'])
-		) {
-			$registry = Services::Registry()->initialise();
-			$registry->loadString($this->query_results['metadata']);
-			$this->query_results['metadata'] = (string)$registry;
+				Services::Registry()->loadField(
+					$registry, $name, $this->query_results[$name], $field->$name
+				);
+			}
 		}
 
 		return $this;
@@ -136,11 +129,11 @@ class ItemModel extends Model
 	 */
 	protected function getLoadAdditionalData()
 	{
-		$this->children = $this->table_xml->children;
+		$children = $this->table_xml->children;
 
-		if (count($this->children->child) > 0) {
+		if (count($children->child) > 0) {
 
-			foreach ($this->children->child as $child) {
+			foreach ($children->child as $child) {
 
 				$name = (string)$child['name'];
 
@@ -188,10 +181,10 @@ class ItemModel extends Model
          */
         if ((int)$this->id == 0) {
             $stored = $this->db->insertObject(
-                $this->table, $this->row, $this->primary_key);
+                $this->table_name, $this->row, $this->primary_key);
         } else {
             $stored = $this->db->updateObject(
-                $this->table, $this->row, $this->primary_key);
+                $this->table_name, $this->row, $this->primary_key);
         }
 
         if ($stored) {
@@ -199,7 +192,7 @@ class ItemModel extends Model
         } else {
 
 //			throw new \Exception(
-//				DB_ERROR_STORE_FAILED . ' ' . $this->name
+//				DB_ERROR_STORE_FAILED . ' ' . $this->class_name
 //				. ' '. $this->db->getErrorMsg()
 //			);
         }

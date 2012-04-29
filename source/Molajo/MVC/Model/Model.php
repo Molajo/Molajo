@@ -22,12 +22,12 @@ defined('MOLAJO') or die;
 class Model
 {
 	/**
-	 * Name of Entry Point Class
+	 * Class name of model
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $name = '';
+	protected $class_name = '';
 
 	/**
 	 * Model Name retrieved from Table definition file
@@ -43,23 +43,15 @@ class Model
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $table;
+	public $table_name;
 
 	/**
-	 * Single row for $table
+	 * Table XML
 	 *
-	 * @var    \stdClass
+	 * @var    object
 	 * @since  1.0
 	 */
-	public $row;
-
-	/**
-	 * List of all data elements in table
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	public $table_fields;
+	public $table_xml;
 
 	/**
 	 * Name of the primary key for the model table
@@ -84,6 +76,22 @@ class Model
 	 * @since  1.0
 	 */
 	public $db;
+
+	/**
+	 * Single row for $table
+	 *
+	 * @var    \stdClass
+	 * @since  1.0
+	 */
+	public $row;
+
+	/**
+	 * List of all data elements in table
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	public $table_fields;
 
 	/**
 	 * Primary Prefix
@@ -155,7 +163,9 @@ class Model
 	 */
 	public function __construct()
 	{
-		$this->name = get_class($this);
+		$this->class_name = get_class($this);
+		$this->query_results = array();
+		$this->pagination = array();
 	}
 
 	/**
@@ -328,10 +338,10 @@ class Model
 	public function getFieldDefinitions()
 	{
 
-		if ($this->table == '') {
+		if ($this->table_name == '') {
 			return array();
 		}
-		return $this->db->getTableColumns($this->table, false);
+		return $this->db->getTableColumns($this->table_name, false);
 
 	}
 
@@ -345,7 +355,7 @@ class Model
 	 */
 	public function getCustomfieldFieldNames()
 	{
-		if ($this->name == '') {
+		if ($this->class_name == '') {
 			return array();
 		}
 	}
@@ -360,7 +370,7 @@ class Model
 	 */
 	public function getMetadataFieldNames()
 	{
-		if ($this->name == '') {
+		if ($this->class_name == '') {
 			return array();
 		}
 	}
@@ -375,7 +385,7 @@ class Model
 	 */
 	public function getParameterFieldNames()
 	{
-		if ($this->name == '') {
+		if ($this->class_name == '') {
 			return array();
 		}
 	}
@@ -493,7 +503,7 @@ class Model
 	 */
 	protected function setQuery()
 	{
-
+		return;
 	}
 
 	/**
@@ -533,7 +543,7 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table)
+				$this->db->qn($this->table_name)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -572,7 +582,7 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table)
+				$this->db->qn($this->table_name)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -744,7 +754,7 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table)
+				$this->db->qn($this->table_name)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
