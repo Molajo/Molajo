@@ -30,7 +30,7 @@ Class Services
     /**
      * Service Connections
      *
-     * @var object
+     * @var   object
      * @since 1.0
      */
     protected $service_connection;
@@ -165,8 +165,7 @@ Class Services
     {
         $i = count($this->message);
 
-        if ($value == null || $try == false
-        ) {
+        if ($value == null || $try == false) {
             $this->message[$i] = 'Service: ' . $key . ' FAILED' . $value;
 
         } else {

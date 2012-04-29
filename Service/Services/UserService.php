@@ -84,11 +84,7 @@ Class UserService
 
 		while (list($name, $value) = each($results)) {
 
-			if ($name == 'parameters'
-				|| $name == 'custom_fields'
-				|| $name == 'metadata'
-				|| substr($name, 0, 5) == 'Model'
-			) {
+			if (substr($name, 0, 5) == 'Model') {
 
 			} else {
 
@@ -115,27 +111,6 @@ Class UserService
 			Services::Registry()->set('User', 'guest', 0);
 			Services::Registry()->set('User', 'registered', 1);
 		}
-
-		$xml = Services::Registry()->loadFile('Users', 'Table');
-
-		Services::Registry()->loadField(
-			'UserCustomfields',
-			'custom_field',
-			$results['custom_fields'],
-			$xml->custom_fields
-		);
-		Services::Registry()->loadField(
-			'UserMetadata',
-			'meta',
-			$results['metadata'],
-			$xml->metadata
-		);
-		Services::Registry()->loadField(
-			'UserParameters',
-			'parameter',
-			$results['parameters'],
-			$xml->parameters
-		);
 
 		/** User Applications */
 		$temp = array();

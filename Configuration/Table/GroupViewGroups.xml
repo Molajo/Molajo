@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="GroupViewGroups" table="#__group_view_groups" primary_key="id" db="JDatabase">
+<model
+        name="GroupViewGroups"
+        table="#__group_view_groups"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="group_id" filter="int" null="0" default=""/>
         <filter name="view_group_id" filter="int" null="0" default=""/>
     </filters>
     <fks>
-        <fk name="group_id" source_id="id" source_model="Content" required="1" />
-        <fk name="view_group_id" source_id="id" source_model="Content" required="1" />
+        <fk name="group_id" source_id="id" source_model="Content" required="1"/>
+        <fk name="view_group_id" source_id="id" source_model="Content" required="1"/>
     </fks>
 </model>
 

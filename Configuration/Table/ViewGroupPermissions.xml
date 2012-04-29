@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="ViewGroupPermissions" table="#__user_group_permissions" primary_key="id" db="JDatabase">
+<model
+        name="ViewGroupPermissions"
+        table="#__user_group_permissions"
+        primary_key="id"
+        db="JDatabase">
     <filters>
         <filter name="id" filter="int" null="0" default=""/>
         <filter name="view_group_id" filter="int" null="0" default=""/>
