@@ -299,7 +299,11 @@ Class MailService
 		}
 		if ($attachment === false || $attachment == '') {
 		} else {
-			$this->mailInstance->AddAttachment($attachment, $name = 'Attachment', $encoding = 'base64', $type = 'application/octet-stream');
+			$this->mailInstance->AddAttachment(
+				$attachment,
+				$name = 'Attachment',
+				$encoding = 'base64',
+				$type = 'application/octet-stream');
 		}
 
 		return true;

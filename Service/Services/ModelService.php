@@ -35,6 +35,47 @@ Class ModelService
 	 */
 	public $model;
 
+
+	/**
+	 * Module Name
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $model_name;
+
+	/**
+	 * Table Name
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $table_name;
+
+	/**
+	 * Table XML
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $table_xml;
+
+	/**
+	 * Primary Key
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	public $primary_key;
+
+	/**
+	 * DB Driver
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	public $dbDriver;
+
 	/**
 	 * Valid Query Object values
 	 *
@@ -87,7 +128,12 @@ Class ModelService
 	}
 
 	/**
-	 * Retrieve Table Definitions, create a model instance, and set model properties
+	 * Prepares data needed for the model
+	 *
+	 * Single-table queries - retrieve Table Definitions, create a model instance, and sets model properties
+	 *     examples include User, Site Application, and Authorisation queries
+	 *
+	 * More complex queries
 	 *
 	 * @param  string  $table
 	 *
@@ -96,30 +142,32 @@ Class ModelService
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect ($table = 'Content')
+	public function connect ($table = null)
 	{
-		/** 1. Get definition file for table */
-		$table_xml = Services::Registry()->loadFile($table, 'Table');
 
-		$model_name = (string)$table_xml['name'];
-		if ($model_name == '') {
+		/** 1. Get definition file for table */
+		$this->table_xml = Services::Registry()->loadFile($table, 'Table');
+
+		$this->model_name = (string)$this->table_xml['name'];
+		if ($this->model_name == '') {
 			throw new \RuntimeException('No model name for table: ' . $table);
 		}
 
-		$table_name = (string)$table_xml['table'];
-		if ($table_name == '') {
-			$table_name = '#__content';
+		$this->table_name = (string)$this->table_xml['table'];
+		if ($this->table_name == '') {
+			$this->table_name = '#__content';
 		}
 
-		$primary_key = (string)$table_xml['primary_key'];
-		if ($primary_key === '') {
-			$primary_key = 'id';
+		$this->primary_key = (string)$this->table_xml['primary_key'];
+		if ($this->primary_key === '') {
+			$this->primary_key = 'id';
 		}
 
-		$dbDriver = (string)$table_xml['db'];
-		if ($dbDriver === '') {
-			$dbDriver = $this->default_dbDriver;
+		$this->dbDriver = (string)$this->table_xml['db'];
+		if ($this->dbDriver === '') {
+			$this->dbDriver = $this->default_dbDriver;
 		}
+		$dbo = $this->dbDriver;
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\MVC\\Model\\TableModel';
@@ -132,20 +180,21 @@ Class ModelService
 		}
 
 		/** 3. Model Properties */
-		$this->model->set('model_name', $model_name);
-		$this->model->set('table', $table_name);
-		$this->model->set('table_xml', $table_xml);
-		$this->model->set('primary_key', $primary_key);
+		$this->model->set('model_name', $this->model_name);
+		$this->model->set('table', $this->table_name);
+		$this->model->set('table_xml', $this->table_xml);
+		$this->model->set('primary_key', $this->primary_key);
 		$this->model->set('primary_prefix', 'a');
 
-		$this->model->set('db', Services::$dbDriver()->get('db'));
-		$this->model->set('query', Services::$dbDriver()->getQuery());
-		$this->model->set('nullDate', Services::$dbDriver()->get('db')->getNullDate());
-		$this->model->set('now', Services::$dbDriver()->get('db')->getDateFormat());
+		/** 4. DB Properties */
+		$this->model->set('db', Services::$dbo()->get('db'));
+		$this->model->set('query', Services::$dbo()->getQuery());
+		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
+		$this->model->set('now', Services::$dbo()->get('db')->getDateFormat());
 		$this->model->set('query_results', array());
 		$this->model->set('pagination', array());
 
-		Services::$dbDriver()->getQuery()->clear();
+		Services::$dbo()->getQuery()->clear();
 
 		return $this;
 	}

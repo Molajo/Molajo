@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 Class RedirectService
 {
 	/**
-	 * Response instance
+	 * Instance
 	 *
 	 * @var    object
 	 * @since  1.0
@@ -34,16 +34,16 @@ Class RedirectService
 	/**
 	 * $url
 	 *
-	 * @var        string
-	 * @since      1.0
+	 * @var    string
+	 * @since  1.0
 	 */
 	public $url = null;
 
 	/**
 	 * $code
 	 *
-	 * @var        integer
-	 * @since      1.0
+	 * @var    integer
+	 * @since  1.0
 	 */
 	public $code = 0;
 
@@ -52,6 +52,7 @@ Class RedirectService
 	 *
 	 * @static
 	 * @return object
+	 *
 	 * @since  1.0
 	 */
 	public static function getInstance($content = '', $status = 200, $headers = array())
@@ -63,12 +64,15 @@ Class RedirectService
 	}
 
 	/**
-	 * set
+	 * Set the Redirect URL and Code
 	 *
-	 * @param null $url
-	 * @param $code
+	 * @param  null $url
+	 *
+	 * @param  $code
+	 *
 	 * @return mixed
-	 * @since 1.0
+	 *
+	 * @since  1.0
 	 */
 	public function set($url = null, $code = 302)
 	{
@@ -84,13 +88,9 @@ Class RedirectService
 		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
 
 			if (Services::Registry()->get('Configuration', 'sef_rewrite', 0) == 0) {
-				$url = BASE_URL
-					. APPLICATION_URL_PATH
-					. 'index.php/' . $url;
+				$url = BASE_URL . APPLICATION_URL_PATH . 'index.php/' . $url;
 			} else {
-				$url = BASE_URL
-					. APPLICATION_URL_PATH
-					. $url;
+				$url = BASE_URL . APPLICATION_URL_PATH . $url;
 			}
 
 			if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 0) == 1) {

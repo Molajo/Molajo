@@ -6,9 +6,6 @@
         <filter name="source_id" filter="int" null="0" default="" values=""/>
         <filter name="routable" filter="boolean" null="0" default="0"/>
         <filter name="sef_request" filter="char" null="0" default=" "/>
-        <filter name="request" filter="char" null="0" default=" "/>
-        <filter name="request_option" filter="char" null="1" default=" "/>
-        <filter name="request_model" filter="char" null="1" default=" "/>
         <filter name="redirect_to_id" filter="int" null="1" default=""/>
         <filter name="view_group_id" filter="int" null="1" default=""/>
         <filter name="primary_category_id" filter="int" null="1" default=""/>
