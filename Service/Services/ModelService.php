@@ -91,8 +91,7 @@ Class ModelService
 	 *
 	 * @var string
 	 */
-	static $default_dbDriver = 'JDatabase';
-
+	protected $default_dbDriver = 'JDatabase';
 
 	/**
 	 * Valid Query Object values
@@ -142,10 +141,60 @@ Class ModelService
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect ($table = null)
+	public function connect($table = null)
 	{
 
-		/** 1. Get definition file for table */
+		/** Specific table model interaction - or - complex data query  */
+		if ($table === null)  {
+		}  else {
+			$this->setModelTable($table);
+			$this->dbDriver = $this->default_dbDriver;
+		}
+		$dbo = $this->dbDriver;
+
+		/* 2. Instantiate Model Class */
+		$modelClass = 'Molajo\\MVC\\Model\\EntryModel';
+
+		try {
+			$this->model = new $modelClass ();
+		}
+		catch (\Exception $e) {
+			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
+		}
+
+		/** 3. Set Model Properties */
+		$this->model->set('model_name', $this->model_name);
+		$this->model->set('table_name', $this->table_name);
+		$this->model->set('table_xml', $this->table_xml);
+		$this->model->set('primary_key', $this->primary_key);
+		$this->model->set('primary_prefix', 'a');
+
+		/** 4. Set DB Properties */
+		$this->model->set('db', Services::$dbo()->get('db'));
+		$this->model->set('query', Services::$dbo()->getQuery());
+		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
+
+		$dateClass = 'Joomla\\date\\JDate';
+		$dateFromJDate = new $dateClass('now');
+		$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
+		$this->model->set('now', $now);
+
+		Services::$dbo()->getQuery()->clear();
+
+		return $this;
+	}
+
+	/**
+	 * Set model properties needed for specific table model interaction
+	 *
+	 * @param   $table
+	 *
+	 * @return  mixed
+	 * @throws  \RuntimeException
+	 */
+	protected function setModelTable($table)
+	{
+
 		$this->table_xml = Services::Registry()->loadFile($table, 'Table');
 
 		$this->model_name = (string)$this->table_xml['name'];
@@ -169,36 +218,12 @@ Class ModelService
 		}
 		$dbo = $this->dbDriver;
 
-		/* 2. Instantiate Model Class */
-		$modelClass = 'Molajo\\MVC\\Model\\TableModel';
-
-		try {
-			$this->model = new $modelClass ();
-		}
-		catch (\Exception $e) {
-			throw new \RuntimeException('Model entry failed for ' . $table . 'Error: ' . $e->getMessage());
-		}
-
-		/** 3. Set Model Properties */
-		$this->model->set('model_name', $this->model_name);
-		$this->model->set('table', $this->table_name);
-		$this->model->set('table_xml', $this->table_xml);
-		$this->model->set('primary_key', $this->primary_key);
-		$this->model->set('primary_prefix', 'a');
-
-		/** 4. Set DB Properties */
-		$this->model->set('db', Services::$dbo()->get('db'));
-		$this->model->set('query', Services::$dbo()->getQuery());
-		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
-		$this->model->set('now', Services::$dbo()->get('db')->getDateFormat());
-
-		Services::$dbo()->getQuery()->clear();
-
-		return $this;
+		return;
 	}
 
 	/**
-	 * Method to execute a query and return results
+	 * Method to execute a model method which interacts with the data source
+	 * and returns results
 	 *
 	 * @param  string  $query_object
 	 *
@@ -207,7 +232,7 @@ Class ModelService
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function execute ($query_object = 'loadObjectList')
+	public function execute($query_object = 'loadObjectList')
 	{
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
@@ -220,13 +245,8 @@ Class ModelService
 
 		catch (\Exception $e) {
 
-			throw new \RuntimeException('Model query failed for '
-				. $this->model->get('table') . 'Error: ' . $e->getMessage());
+			throw new \RuntimeException('Model query failed for ' .$query_object . ' Error: ' . $e->getMessage());
 		}
-
-		echo '<pre>';
-//		var_dump($results);
-		echo '</pre>';
 
 		return $results;
 	}

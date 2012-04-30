@@ -22,14 +22,6 @@ defined('MOLAJO') or die;
 class Model
 {
 	/**
-	 * Class name of model
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $class_name = '';
-
-	/**
 	 * Model Name retrieved from Table definition file
 	 *
 	 * @var    string
@@ -54,6 +46,22 @@ class Model
 	public $table_xml;
 
 	/**
+	 * Load fields in registry flag
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $return_fields = true;
+
+	/**
+	 * Return child data flag
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $return_children = true;
+
+	/**
 	 * Name of the primary key for the model table
 	 *
 	 * @var    string
@@ -68,6 +76,22 @@ class Model
 	 * @since  1.0
 	 */
 	public $id = 0;
+
+	/**
+	 * Value for the name of the item to be returned
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $id_name = '';
+
+	/**
+	 * Goes with id_name to be used to find specific item
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $name_field = '';
 
 	/**
 	 * Database connection
@@ -163,7 +187,6 @@ class Model
 	 */
 	public function __construct()
 	{
-		$this->class_name = get_class($this);
 		$this->query_results = array();
 		$this->pagination = array();
 	}
@@ -337,12 +360,10 @@ class Model
 	 */
 	public function getFieldDefinitions()
 	{
-
 		if ($this->table_name == '') {
 			return array();
 		}
 		return $this->db->getTableColumns($this->table_name, false);
-
 	}
 
 	/**
@@ -355,9 +376,6 @@ class Model
 	 */
 	public function getCustomfieldFieldNames()
 	{
-		if ($this->class_name == '') {
-			return array();
-		}
 	}
 
 	/**
@@ -370,9 +388,6 @@ class Model
 	 */
 	public function getMetadataFieldNames()
 	{
-		if ($this->class_name == '') {
-			return array();
-		}
 	}
 
 	/**
@@ -385,9 +400,6 @@ class Model
 	 */
 	public function getParameterFieldNames()
 	{
-		if ($this->class_name == '') {
-			return array();
-		}
 	}
 
 	/**
@@ -739,7 +751,6 @@ class Model
 	 */
 	protected function setQueryDefaults()
 	{
-
 		if ($this->query->select === null) {
 
 			$this->fields = $this->getFieldDatatypes();

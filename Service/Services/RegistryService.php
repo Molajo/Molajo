@@ -12,6 +12,8 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 //todo: consider namespace reuse - intentional and otherwise
+// Lock from change
+//
 
 /**
  * Registry

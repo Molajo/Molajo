@@ -72,6 +72,8 @@ Class UserService
 		$m = Services::Model()->connect('Users');
 
 		$m->model->set('id', $this->id);
+		$m->model->set('return_fields', true);
+		$m->model->set('return_children', true);
 
 		$results = $m->execute('load');
 

@@ -6,7 +6,7 @@
  */
 namespace Molajo;
 
-use Molajo\MVC\Model\TableModel;
+use Molajo\MVC\Model\EntryModel;
 
 use Molajo\Extension\Helper;
 
@@ -109,7 +109,9 @@ Class Application
 		} else {
 			Services::Debug()->set('Application Route succeeded');
 		}
-
+echo '<pre>';
+var_dump(Services::Registry()->get('MenuitemParameters'));
+		die;
 		/** Authorise */
 		$continue = $this->authorise();
 
@@ -649,7 +651,7 @@ Class Application
 		$pageRequest = '';
 
 		if (defined('APPLICATION')) {
-			/* must also define PAGE_REQUEST */
+			/* to override - must also define PAGE_REQUEST */
 		} else {
 
 			$apps = RegistryService::loadFile('applications');

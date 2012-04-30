@@ -27,8 +27,6 @@ Class MessagesModel extends Model
      */
     public function __construct()
     {
-        $this->class_name = get_class($this);
-
         return parent::__construct();
     }
 

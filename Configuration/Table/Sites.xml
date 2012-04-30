@@ -17,25 +17,19 @@
     </filters>
     <fields>
         <field name="parameters" registry="SiteParameters">
-            <parameters>
-                <parameter name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
-            </parameters>
+            <parameters name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
         </field>
         <field name="custom_fields" registry="SiteCustomFields">
-            <custom_fields>
-                <custom_field name="custom_field1" filter="char" null="0" default=""/>
-            </custom_fields>
+            <custom_fields name="custom_field1" filter="char" null="0" default=""/>
         </field>
-        <field name="custom_fields" registry="SiteMetadata">
-            <metadata>
-                <meta name="metadata_title" filter="char" null="0" default=""/>
-                <meta name="metadata_description" filter="text" null="0" default=""/>
-                <meta name="metadata_keywords" filter="char" null="1" default=""/>
-                <meta name="metadata_robots" filter="char" null="0" default="follow,index"
+        <field name="metadata" registry="SiteMetadata">
+            <metadata name="metadata_title" filter="char" null="0" default=""/>
+            <metadata name="metadata_description" filter="text" null="0" default=""/>
+            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
+            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
                       values="follow,nofollow,index,noindex"/>
-                <meta name="metadata_author" filter="char" null="1" default=""/>
-                <meta name="metadata_content_rights" filter="char" null="1" default=""/>
-            </metadata>
+            <metadata name="metadata_author" filter="char" null="1" default=""/>
+            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
     </fields>
     <fks>

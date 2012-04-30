@@ -358,7 +358,7 @@ class UpdateController extends Controller
      */
     private function storeRelated()
     {
-        $catalog = new TableModel('Catalog');
+        $catalog = new EntryModel('Catalog');
 
         $catalog->catalog_type_id = $this->model->table_name->catalog_type_id;
 
