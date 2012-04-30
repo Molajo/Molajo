@@ -455,23 +455,21 @@ Class RouteService
 			'MenuitemCustomfields',
 			'custom_field',
 			$row->custom_fields,
-			$xml->custom_fields
+			$xml->fields
 		);
 		Services::Registry()->loadField(
 			'MenuitemMetadata',
 			'meta',
 			$row->metadata,
-			$xml->metadata
+			$xml->fields
 		);
 		Services::Registry()->loadField(
 			'MenuitemParameters',
 			'parameter',
 			$row->parameters,
-			$xml->parameters
+			$xml->fields
 		);
-echo '<pre>';
-var_dump($row);
-die;
+
 		return true;
 	}
 }

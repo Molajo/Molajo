@@ -109,9 +109,7 @@ Class Application
 		} else {
 			Services::Debug()->set('Application Route succeeded');
 		}
-echo '<pre>';
-var_dump(Services::Registry()->get('MenuitemParameters'));
-		die;
+
 		/** Authorise */
 		$continue = $this->authorise();
 
@@ -314,7 +312,7 @@ var_dump(Services::Registry()->get('MenuitemParameters'));
 	 */
 	protected function display()
 	{
-		$this->rendered_output = Services::Parse()->process();
+		$this->rendered_output = Services::Parse()->parse();
 		return $this;
 	}
 
