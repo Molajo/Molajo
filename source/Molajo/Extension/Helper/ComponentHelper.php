@@ -1,8 +1,8 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 

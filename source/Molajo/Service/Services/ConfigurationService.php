@@ -69,9 +69,9 @@ Class ConfigurationService
 	 *
 	 * @param string $configuration_file optional
 	 *
-	 * @return object
-	 * @throws \Exception
-	 * @since  1.0
+	 * @return  object
+	 * @throws  \Exception
+	 * @since   1.0
 	 */
 	public function getSite($configuration_file = null)
 	{
@@ -104,9 +104,10 @@ Class ConfigurationService
 		$m = Services::Model()->connect('Sites');
 
 		$m->model->set('id', (int)SITE_ID);
+		$m->model->set('return_fields', true);
+		$m->model->set('return_children', false);
 
 		$items = $m->execute('load');
-
 		if ($items === false) {
 			throw new \RuntimeException ('Application setSiteData() query problem');
 		}
@@ -116,29 +117,6 @@ Class ConfigurationService
 		Services::Registry()->set('Site', 'name', $items['name']);
 		Services::Registry()->set('Site', 'description', $items['description']);
 		Services::Registry()->set('Site', 'path', $items['path']);
-
-		/** Registry Definitions for Site */
-		$xml = Services::Registry()->loadFile('Sites', 'Table');
-
-		Services::Registry()->loadField(
-			'SiteCustomfields',
-			'custom_field',
-			$items['custom_fields'],
-			$xml->custom_fields
-		);
-		Services::Registry()->loadField(
-			'SiteMetadata',
-			'meta',
-			$items['metadata'],
-			$xml->metadata
-		);
-		Services::Registry()->loadField(
-			'SiteParameters',
-			'parameter',
-			$items['parameters'],
-			$xml->parameters
-		);
-
 		Services::Registry()->set('Site', 'base_url', $items['base_url']);
 
 		return true;
@@ -154,6 +132,7 @@ Class ConfigurationService
 	 */
 	public function setSitePaths()
 	{
+
 		if (defined('SITE_NAME')) {
 		} else {
 			define('SITE_NAME',
@@ -207,32 +186,39 @@ Class ConfigurationService
 	 */
 	protected function getApplication()
 	{
-		$row = new \stdClass();
 
 		if (APPLICATION == 'installation') {
 
-			$id = 0;
-			$row->id = 0;
-			$row->name = APPLICATION;
-			$row->path = APPLICATION;
-			$row->catalog_type_id = CATALOG_TYPE_BASE_APPLICATION;
-			$row->description = '';
-			$row->custom_fields = '';
-			$row->parameters = '';
-			$row->metadata = '';
+			Services::Registry()->set('Application', 'id', 0);
+			Services::Registry()->set('Application', 'catalog_type_id', CATALOG_TYPE_BASE_APPLICATION);
+			Services::Registry()->set('Application', 'name', APPLICATION);
+			Services::Registry()->set('Application', 'description', APPLICATION);
+			Services::Registry()->set('Application', 'path', APPLICATION);
 
 		} else {
 
 			try {
+
 				$m = Services::Model()->connect('Applications');
 
-				$m->model->query->where(
-					$m->model->db->qn('name') . ' = ' . $m->model->db->quote(APPLICATION)
-				);
+				$m->model->set('id_name', APPLICATION);
+				$m->model->set('name_field', 'name');
+				$m->model->set('return_fields', true);
+				$m->model->set('return_children', false);
 
-				$row = $m->model->loadObject();
+				$items = $m->execute('load');
 
-				$id = $row->id;
+				if ($items === false) {
+					throw new \RuntimeException ('Application setSiteData() query problem');
+				}
+
+				Services::Registry()->set('Application', 'id', (int)$items['id']);
+				Services::Registry()->set('Application', 'catalog_type_id', (int)$items['catalog_type_id']);
+				Services::Registry()->set('Application', 'name', $items['name']);
+				Services::Registry()->set('Application', 'description', $items['description']);
+				Services::Registry()->set('Application', 'path', $items['path']);
+
+				Services::Registry()->copy('ApplicationParameters', 'Configuration');
 
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -242,34 +228,9 @@ Class ConfigurationService
 
 		if (defined('APPLICATION_ID')) {
 		} else {
-			define('APPLICATION_ID', $id);
+			define('APPLICATION_ID', Services::Registry()->get('Application', 'id'));
 		}
 
-		Services::Registry()->set('Application', 'id', (int)$row->id);
-		Services::Registry()->set('Application', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Application', 'name', $row->name);
-		Services::Registry()->set('Application', 'description', $row->description);
-		Services::Registry()->set('Application', 'path', $row->path);
-
-		$xml = Services::Registry()->loadFile('Applications', 'Table');
-
-		Services::Registry()->loadField(
-			'ApplicationCustomfields',
-			'custom_field',
-			$row->custom_fields,
-			$xml->custom_fields
-		);
-		Services::Registry()->loadField(
-			'ApplicationMetadata',
-			'meta',
-			$row->metadata,
-			$xml->metadata
-		);
-		Services::Registry()->loadField(
-			'ApplicationParameters',
-			'parameter',
-			$row->parameters,
-			$xml->parameters
-		);
+		return $this;
 	}
 }

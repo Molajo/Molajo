@@ -32,7 +32,6 @@ abstract class CatalogHelper
 	 */
 	public static function get($catalog_id = 0, $sef_request = null, $source_id = 0)
 	{
-
 		$parameter_url = 'index.php?id=' . (int)$catalog_id;
 
 		$m = Services::Model()->connect('Catalog');
@@ -57,7 +56,12 @@ abstract class CatalogHelper
 			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
 		} else if ((int)$source_id > 0) {
-			$m->model->query->where($m->model->db->qn('redirect_to_id') . ' = 0 ');
+			$m->model->query->where($m->model->db->qn('source_id') . ' = ' . (int)$source_id);
+			$m->model->query->where($m->model->db->qn('redirect_id') . ' = 0 ');
+
+		} else if (trim($sef_request) == '') {
+			$m->model->query->where($m->model->db->qn('a.id')
+				. ' = ' . (int)Services::Registry()->get('Configuration', 'home_catalog_id', 0));
 
 		} else {
 			$m->model->query->where(
@@ -72,13 +76,18 @@ abstract class CatalogHelper
 			return array();
 		}
 
+		$row->request = 'index.php?id=' . (int)$row->id;
+
 		if ((int)$source_id > 0) {
 
 		} else if ((int)$catalog_id == 0) {
 
+		} else {
+
 			if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
 
-				if ($row->id == $catalog_id) {
+				if ($row->id == $catalog_id
+				) {
 				} else {
 					$row->redirect_to_id = (int)$row->id;
 				}
@@ -101,8 +110,6 @@ abstract class CatalogHelper
 			}
 		}
 
-		//todo: remove after testing
-		$row->redirect_to_id = 0;
 		return $row;
 	}
 

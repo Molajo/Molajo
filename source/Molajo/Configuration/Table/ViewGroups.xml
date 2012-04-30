@@ -5,13 +5,13 @@
         primary_key="id"
         db="JDatabase">
     <filters>
-        <filter name="id" filter="" null="1" default="" identity="1" />
+        <filter name="id" filter="" null="1" default="" identity="1"/>
         <filter name="view_group_name_list" filter="char" null="0" default=""/>
         <filter name="view_group_list" filter="int" null="0" default=""/>
     </filters>
     <fks>
-        <fk name="user_id" source_id="id" source_model="Users" required="1" />
-        <fk name="view_group_id" source_id="id" source_model="GroupViewGroup" required="1" />
+        <fk name="user_id" source_id="id" source_model="Users" required="1"/>
+        <fk name="view_group_id" source_id="id" source_model="GroupViewGroup" required="1"/>
     </fks>
 </model>
 

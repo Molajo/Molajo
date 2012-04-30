@@ -16,88 +16,82 @@
     </filters>
     <fields>
         <field name="custom_fields" registry="ApplicationCustomFields">
-            <custom_fields>
-                <custom_field name="custom_field1" filter="char" null="1" default="" values=""/>
-            </custom_fields>
+            <custom_fields name="custom_field1" filter="char" null="1" default="" values=""/>
         </field>
         <field name="parameters" registry="ApplicationParameters">
-            <parameters>
-                <parameter name="application_name" filter="char" null="1" default="" values=""/>
-                <parameter name="html_display_filter" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="caching" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="cache_time" filter="integer" null="1" default="15" values=""/>
-                <parameter name="cache_handler" filter="char" null="1" default="" values=""/>
-                <parameter name="sef" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="sef_rewrite" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="sef_suffix" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="unicode_slugs" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="force_ssl" filter="binary" null="1" default="0" values="0,1"/>
-                <parameter name="language" filter="char" null="1" default="en-GB" values=""/>
-                <parameter name="direction" filter="char" null="1" default="rtl" values="ltr,rtl"/>
-                <parameter name="offset" filter="char" null="1" default="UTC" values=""/>
-                <parameter name="offset_user" filter="char" null="1" default="UTC" values=""/>
-                <parameter name="multilingual" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="list_limit" filter="integer" null="1" default="15" values=""/>
-                <parameter name="html5" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="image_xsmall" filter="integer" null="1" default="" values=""/>
-                <parameter name="image_small" filter="char" null="1" default="" values=""/>
-                <parameter name="image_medium" filter="char" null="1" default="" values=""/>
-                <parameter name="image_large" filter="char" null="1" default="" values=""/>
-                <parameter name="image_xlarge" filter="char" null="1" default="" values=""/>
-                <parameter name="image_folder" filter="char" null="1" default="" values=""/>
-                <parameter name="thumb_folder" filter="char" null="1" default="" values=""/>
-                <parameter name="editor" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="view_access" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="home_catalog_id" filter="integer" null="0" default="" values=""/>
-                <parameter name="logon_requirement" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="default_theme_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_page_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="head_template_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="head_wrap_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="message_template_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="message_wrap_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="offline" filter="binary" null="1" default="1" values="0,1"/>
-                <parameter name="offline_message" filter="char" null="1" default="" values=""/>
-                <parameter name="offline_theme_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="offline_page_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="error_404_message" filter="char" null="1" default="" values=""/>
-                <parameter name="error_403_message" filter="char" null="1" default="" values=""/>
-                <parameter name="error_theme_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="error_page_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="feed_theme_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="feed_page_view_id" filter="integer" null="1" default="" values=""/>
-                <parameter name="feed_limit" filter="integer" null="1" default="5" values=""/>
-                <parameter name="feed_email" filter="email" null="1" default="" values=""/>
-                <parameter name="media_priority_site" filter="integer" null="1" default="100" values=""/>
-                <parameter name="media_priority_application" filter="integer" null="1" default="200" values=""/>
-                <parameter name="media_priority_user" filter="integer" null="1" default="300" values=""/>
-                <parameter name="media_priority_other_extension" filter="integer" null="1" default="400" values=""/>
-                <parameter name="media_priority_request_extension" filter="integer" null="1" default="500" values=""/>
-                <parameter name="media_priority_theme" filter="integer" null="1" default="600" values=""/>
-                <parameter name="media_priority_primary_category" filter="integer" null="1" default="700" values=""/>
-                <parameter name="media_priority_menu_item" filter="integer" null="1" default="800" values=""/>
-                <parameter name="media_priority_source_data" filter="integer" null="1" default="900" values=""/>
-                <parameter name="debug" filter="boolean" null="1" default="0" values=""/>
-                <parameter name="debug_log" filter="text" null="0" default="echo"
-                           values="echo,formattedtext,database,email,messages"/>
-            </parameters>
+            <parameters name="application_name" filter="char" null="1" default="" values=""/>
+            <parameters name="html_display_filter" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <parameters name="cache_handler" filter="char" null="1" default="" values=""/>
+            <parameters name="sef" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="sef_rewrite" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="sef_suffix" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="unicode_slugs" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="force_ssl" filter="binary" null="1" default="0" values="0,1"/>
+            <parameters name="language" filter="char" null="1" default="en-GB" values=""/>
+            <parameters name="direction" filter="char" null="1" default="rtl" values="ltr,rtl"/>
+            <parameters name="offset" filter="char" null="1" default="UTC" values=""/>
+            <parameters name="offset_user" filter="char" null="1" default="UTC" values=""/>
+            <parameters name="multilingual" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="list_limit" filter="integer" null="1" default="15" values=""/>
+            <parameters name="html5" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="image_xsmall" filter="integer" null="1" default="" values=""/>
+            <parameters name="image_small" filter="char" null="1" default="" values=""/>
+            <parameters name="image_medium" filter="char" null="1" default="" values=""/>
+            <parameters name="image_large" filter="char" null="1" default="" values=""/>
+            <parameters name="image_xlarge" filter="char" null="1" default="" values=""/>
+            <parameters name="image_folder" filter="char" null="1" default="" values=""/>
+            <parameters name="thumb_folder" filter="char" null="1" default="" values=""/>
+            <parameters name="editor" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="view_access" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="home_catalog_id" filter="integer" null="0" default="" values=""/>
+            <parameters name="logon_requirement" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="default_theme_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_page_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="head_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="head_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="message_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="message_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="offline" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="offline_message" filter="char" null="1" default="" values=""/>
+            <parameters name="offline_theme_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="offline_page_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="error_404_message" filter="char" null="1" default="" values=""/>
+            <parameters name="error_403_message" filter="char" null="1" default="" values=""/>
+            <parameters name="error_theme_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="error_page_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="feed_theme_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="feed_page_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="feed_limit" filter="integer" null="1" default="5" values=""/>
+            <parameters name="feed_email" filter="email" null="1" default="" values=""/>
+            <parameters name="media_priority_site" filter="integer" null="1" default="100" values=""/>
+            <parameters name="media_priority_application" filter="integer" null="1" default="200" values=""/>
+            <parameters name="media_priority_user" filter="integer" null="1" default="300" values=""/>
+            <parameters name="media_priority_other_extension" filter="integer" null="1" default="400" values=""/>
+            <parameters name="media_priority_request_extension" filter="integer" null="1" default="500" values=""/>
+            <parameters name="media_priority_theme" filter="integer" null="1" default="600" values=""/>
+            <parameters name="media_priority_primary_category" filter="integer" null="1" default="700" values=""/>
+            <parameters name="media_priority_menu_item" filter="integer" null="1" default="800" values=""/>
+            <parameters name="media_priority_source_data" filter="integer" null="1" default="900" values=""/>
+            <parameters name="debug" filter="boolean" null="1" default="0" values=""/>
+            <parameters name="debug_log" filter="text" null="0" default="echo"
+                        values="echo,formattedtext,database,email,messages"/>
         </field>
         <field name="metadata" registry="ApplicationMetadata">
-            <metadata>
-                <meta name="metadata_title" filter="char" null="0" default="Molajo Application"/>
-                <meta name="metadata_description" filter="text" null="0" default=""/>
-                <meta name="metadata_keywords" filter="char" null="1" default=""/>
-                <meta name="metadata_robots" filter="char" null="0" default="follow,index"
+            <metadata name="metadata_title" filter="char" null="0" default="Molajo Application"/>
+            <metadata name="metadata_description" filter="text" null="0" default=""/>
+            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
+            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
                       values="follow,nofollow,index,noindex"/>
-                <meta name="metadata_author" filter="char" null="1" default=""/>
-                <meta name="metadata_content_rights" filter="char" null="1" default=""/>
-            </metadata>
+            <metadata name="metadata_author" filter="char" null="1" default=""/>
+            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
     </fields>
     <fks>

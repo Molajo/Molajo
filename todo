@@ -70,7 +70,7 @@ Filter - get HTML Purifier in
 ModelService
 Only interface to Models should go thru this the ModelService
 -- It should look for overrides, etc.
--- It should replace TableModel
+-- It should replace EntryModel
 -- Instead of having a Head and Message and Request Model, abstract out the data access
 element and create a "DBO" of sorts to those types of data.
 -- Same for media (files - including CSS, JS, Images, and so forth)

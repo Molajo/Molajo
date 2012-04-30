@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  *
  * Handles basic CRUD operations for a specific type of data
  *
- * Data can be extended through use of fields and children, see XML
+ * Data can be extended within the model through use of fields and children
  *
  * @package     Molajo
  * @subpackage  Model
@@ -23,15 +23,15 @@ defined('MOLAJO') or die;
  */
 class ItemModel extends Model
 {
-    /**
-     * Constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-        return parent::__construct();
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+		return parent::__construct();
+	}
 
 	/**
 	 * load
@@ -46,8 +46,18 @@ class ItemModel extends Model
 	public function load()
 	{
 		$this->setLoadQuery();
+
 		$this->runLoadQuery();
-		$this->getLoadAdditionalData();
+
+		/** Process special fields for data source */
+		if ($this->return_fields == true) {
+			$this->returnFields();
+		}
+
+		/** Process special fields for data source */
+		if ($this->return_children == true) {
+			$this->getLoadAdditionalData();
+		}
 
 		return $this->query_results;
 	}
@@ -66,10 +76,18 @@ class ItemModel extends Model
 
 		$this->query->select(' * ');
 		$this->query->from($this->db->qn($this->table_name));
-		$this->query->where($this->primary_key
-			. ' = '
-			. $this->db->q($this->id));
 
+		if ((int)$this->id > 0) {
+			$this->query->where(
+				$this->db->qn($this->primary_key)
+					. ' = '
+					. $this->db->q($this->id));
+		} else {
+			$this->query->where(
+				$this->db->qn($this->name_field)
+					. ' = '
+					. $this->db->q($this->id_name));
+		}
 		$this->db->setQuery($this->query->__toString());
 
 		return $this;
@@ -101,21 +119,34 @@ class ItemModel extends Model
 			}
 		}
 
-		/** Process special fields for data source */
+		return $this;
+	}
+
+	/**
+	 * Process fields for data source
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	protected function returnFields()
+	{
 		$fields = $this->table_xml->fields;
 
 		if (count($fields->field) > 0) {
+
 			foreach ($fields->field as $field) {
-				$name = (string)$field['name'];
+
+				$field_name = (string)$field['name'];
 				$registry = (string)$field['registry'];
 
 				Services::Registry()->loadField(
-					$registry, $name, $this->query_results[$name], $field->$name
+					$registry,
+					$field_name,
+					$this->query_results[$field_name],
+					$field
 				);
 			}
 		}
-
-		return $this;
 	}
 
 	/**
@@ -162,46 +193,45 @@ class ItemModel extends Model
 		return $this;
 	}
 
-    /**
-     * store
-     *
-     * Method to store a row (insert: no PK; update: PK) in the database.
-     *
-     * @param   boolean True to update fields even if they are null.
-     *
-     * @return  boolean  True on success.
-     * @since   1.0
-     */
-    public function store()
-    {
-        /**
-        echo '<pre>';
-        var_dump($this->row);
-        echo '</pre>';
-         */
-        if ((int)$this->id == 0) {
-            $stored = $this->db->insertObject(
-                $this->table_name, $this->row, $this->primary_key);
-        } else {
-            $stored = $this->db->updateObject(
-                $this->table_name, $this->row, $this->primary_key);
-        }
+	/**
+	 * store
+	 *
+	 * Method to store a row (insert: no PK; update: PK) in the database.
+	 *
+	 * @param   boolean True to update fields even if they are null.
+	 *
+	 * @return  boolean  True on success.
+	 * @since   1.0
+	 */
+	public function store()
+	{
+		/**
+		echo '<pre>';
+		var_dump($this->row);
+		echo '</pre>';
+		 */
+		if ((int)$this->id == 0) {
+			$stored = $this->db->insertObject(
+				$this->table_name, $this->row, $this->primary_key);
+		} else {
+			$stored = $this->db->updateObject(
+				$this->table_name, $this->row, $this->primary_key);
+		}
 
-        if ($stored) {
+		if ($stored) {
 
-        } else {
+		} else {
 
 //			throw new \Exception(
-//				DB_ERROR_STORE_FAILED . ' ' . $this->class_name
 //				. ' '. $this->db->getErrorMsg()
 //			);
-        }
-        /**
-        if ($this->_locked) {
-        $this->_unlock();
-        }
-         */
+		}
+		/**
+		if ($this->_locked) {
+		$this->_unlock();
+		}
+		 */
 
-        return true;
-    }
+		return true;
+	}
 }
