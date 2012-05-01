@@ -3,7 +3,7 @@
         name="GroupViewGroups"
         table="#__group_view_groups"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="group_id" filter="int" null="0" default=""/>
         <filter name="view_group_id" filter="int" null="0" default=""/>

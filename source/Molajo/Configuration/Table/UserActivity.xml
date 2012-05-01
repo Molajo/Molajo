@@ -3,7 +3,7 @@
         name="UserActivity"
         table="#__user_activity"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="id" filter="" null="0" default="" identity="1"/>
         <filter name="user_id" filter="int" null="0" default=""/>

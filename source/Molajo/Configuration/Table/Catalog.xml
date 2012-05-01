@@ -3,7 +3,7 @@
         name="Catalog"
         table="#__catalog"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>

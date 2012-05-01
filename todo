@@ -1,18 +1,36 @@
 
-1. New DBO's for:
+1. New data_sources for:
 
-a. Messgaes
-b. CSS/JS
-c. Registry
-d. Files
+Develop standard API to the DB
 
-2. Get rid of Module models.
+a. Messages
+b. Head data (CSS/JS)
+c. Registry (Parameters - like head and footer and the grid)
+d. File system
+
+2. Get rid of Module models - fold those into the same model thing.
 
 3. Finish Display Controller
 
 a. Parser
 b. Includers
 c. Controller(Display) - Views
+
+Now => where are we? Component, Module, Data Source (Table), Menu Item (Component)
+
+URL = Single item of a Data Source (not always, for example parameters or registry data)
+
+Data Sources:
+Tables - single item - URL, yes
+Media - single item like a file or an image (optional) - URL, usually
+
+Component = URL bearing data source
+
+Template View and SQL for each:
+
+Item
+List   menu item required
+Group  menu item required
 
 * * * * Questions  * * * *
 

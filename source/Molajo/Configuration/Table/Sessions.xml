@@ -3,7 +3,7 @@
         name="Sessions"
         table="#__group_view_groups"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="session_id" filter="char" null="0" default=""/>
         <filter name="application_id" filter="int" null="0" default=""/>

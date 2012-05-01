@@ -3,7 +3,7 @@
         name="Content"
         table="#__content"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="extension_instance_id" filter="int" null="0" default="0"/>

@@ -3,7 +3,7 @@
         name="Menuitem"
         table="#__content"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <fields>
         <field name="custom_fields" registry="MenuitemCustomfields">
             <custom_fields name="custom_field1" filter="char" null="1" default="" values=""/>

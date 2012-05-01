@@ -3,7 +3,7 @@
         name="GroupPermissions"
         table="#__group_permissions"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="0" default=""/>
         <filter name="group_id" filter="int" null="0" default=""/>
