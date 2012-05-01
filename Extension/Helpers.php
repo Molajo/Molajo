@@ -99,7 +99,7 @@ Class Helpers
 	 */
 	public static function __callStatic($name, $arguments)
 	{
-		return Application::Helpers()->get($name . 'Helpers');
+		return Application::Helpers()->get($name . 'Helper');
 	}
 
 
@@ -123,8 +123,6 @@ Class Helpers
 			}
 			$entry = substr($filename, 0, strlen($filename) - 4);
 			$helperClass = 'Molajo\\Extension\\Helper\\' . $entry;
-
-			echo $helperClass.'<br />';
 
 			/** method name */
 			$helperMethod = 'getInstance';
@@ -156,7 +154,6 @@ Class Helpers
 		}
 
 		foreach ($this->message as $message) {
-			echo $message . '<br />';
 			Services::Debug()->set($message);
 		}
 

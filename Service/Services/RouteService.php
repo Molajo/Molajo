@@ -26,8 +26,8 @@ Class RouteService
 	/**
 	 * $instance
 	 *
-	 * @var        object
-	 * @since      1.0
+	 * @var     object
+	 * @since   1.0
 	 */
 	protected static $instance = null;
 
@@ -146,8 +146,7 @@ Class RouteService
 		if ((int)Services::Registry()->get('Catalog', 'redirect_to_id', 0) == 0) {
 		} else {
 			Services::Response()->redirect(
-				Application::Helper()->getURL('Catalog',
-					Services::Registry()->get('Catalog', 'redirect_to_id', 0)), 301
+				Helper::Catalog()->getURL(Services::Registry()->get('Catalog', 'redirect_to_id', 0)), 301
 			);
 			Services::Debug()->set('Application::Route() Redirect');
 			return false;
@@ -366,9 +365,10 @@ Class RouteService
 	protected function getCatalog()
 	{
 		/** Retrieve the query results */
-		$row = Application::Helper()->get('Catalog',
-			(int)Services::Registry()->get('Request', 'catalog_id'),
-			Services::Registry()->get('Request', 'request_url_query')
+		$row = Helpers::Catalog()->get(
+			Services::Registry()->get('Request', 'catalog_id'),
+			Services::Registry()->get('Request', 'request_url_query'),
+			Services::Registry()->get('Request', 'source_id')
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -418,10 +418,7 @@ Class RouteService
 	protected function getMenuitem()
 	{
 		/** Retrieve the query results */
-		$row = Application::Helper()
-			->get('Menuitem',
-			(int)Services::Registry()->get('Catalog', 'source_id')
-		);
+		$row = Helpers::Menuitem()->get(Services::Registry()->get('Catalog', 'source_id'));
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
