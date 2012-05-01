@@ -1,19 +1,22 @@
 
+1. New DBO's for:
 
-REMOVE
-Includers (collapse into helpers)
+a. Messgaes
+b. CSS/JS
+c. Registry
+d. Files
 
-* * * * Extension Layer  * * * *
+2. Get rid of Module models.
+
+3. Finish Display Controller
+
+a. Parser
+b. Includers
+c. Controller(Display) - Views
+
+* * * * Questions  * * * *
 
 Components and Modules - same thing? Name? Widget?
-Theme
-View
-Helpers
-Triggers
-
-
---> ModelHelper: break the methods into Triggers for View Action
-
 
 * * * * Event Layer * * * *
 
@@ -38,23 +41,8 @@ Typically, triggers interact with Services which interfaces to the Utility layer
 - Services::Filter()->text
 - Services::Model()->getItems
 
-* * * * Application Layer  * * * *
-From this point down, you should not see any use of extension type nouns (for example, module)
-
-Logic Flow:
-index.php (Autoexec/namespaces)
-Initialisation
-Route
-Authorisation
-Execute: Action =>MC
--or-
-Execute: Display =>MVC
-Response
-Cleanup
 
 * * * * Services Layer (Middleware) * * * *
-
-Services::Name()->action('Parameters'):
 
 AssetService
 Specific focus on JS and CSS; interface with minimizers, etc.
@@ -77,26 +65,3 @@ element and create a "DBO" of sorts to those types of data.
 -- Models remaining: Model (base), Item (crud), and Display (list)
 -- All customization, editing, and so forth, defined with Table XML and Triggers
 
-* * * * Utility Layer  * * * *
-
-Commodity software, including such elements as mail, session management, cookies, request, response,
-caching, logging, filesystem interaction including image maniutlation, classes that deal with
-webservices, such as twitter, DB interaction.
-
-The only layer that should ever interact with the Utility layer is the Services Layer. That way,
-if a faster caching environment was found or a better session management approach, the
-change can be as transparent as possible to the application.
-
-
-
-
-
-STANDARDS
-
-1. Use registry to locate XML configuration files - don't directly load in the app
-Only use $xml = Services::Registry()->loadFile('Users', 'Table');
-If it's before dependencies have loaded, document.
-
-
- TODO:
- Tables configuration - figure out how to extend table xml
