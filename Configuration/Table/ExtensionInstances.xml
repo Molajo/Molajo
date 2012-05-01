@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="ExtensionInstances"
+        table="#__extension_instances"
+        primary_key="id"
+        data_source="JDatabase">
+    <filters>
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="extension_instance_id" filter="int" null="0" default="0"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="0"/>
+        <filter name="title" filter="char" null="0" default=" "/>
+        <filter name="subtitle" filter="char" null="1" default=" "/>
+        <filter name="alias" filter="char" null="1" default=" "/>
+        <filter name="content_text" filter="text" null="1" default=""/>
+        <filter name="protected" filter="boolean" null="0" default="0"/>
+        <filter name="featured" filter="boolean" null="0" default="0"/>
+        <filter name="stickied" filter="boolean" null="0" default="0"/>
+        <filter name="status" filter="integer" null="0" default="0"/>
+        <filter name="start_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="stop_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="version" filter="int" null="0" default="1"/>
+        <filter name="version_of_id" filter="int" null="0" default="0"/>
+        <filter name="status_prior_to_version" filter="int" null="0" default="0"/>
+        <filter name="created_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="created_by" filter="int" null="0" default="0"/>
+        <filter name="modified_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="modified_by" filter="int" null="0" default="0"/>
+        <filter name="checked_out_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
+        <filter name="checked_out_by" filter="int" null="0" default="0"/>
+        <filter name="custom_fields" filter="" null="1" default=""/>
+        <filter name="parameters" filter="" null="1" default=""/>
+        <filter name="metadata" filter="" null="1" default=""/>
+        <filter name="language" filter="char" null="1" default=""/>
+        <filter name="translation_of_id" filter="int" null="0" default="0"/>
+        <filter name="ordering" filter="int" null="0" default="0"/>
+    </filters>
+    <fields>
+        <field name="custom_fields" registry="ExtensionInstancesCustomFields">
+            <custom_fields name="custom_field1" filter="char" null="1" default="" values=""/>
+        </field>
+        <field name="parameters" registry="ExtensionInstancesParameters">
+            <parameters name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <parameters name="cache_handler" filter="char" null="1" default="" values=""/>
+            <parameters name="list_limit" filter="integer" null="1" default="15" values=""/>
+            <parameters name="default_theme_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_page_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+        </field>
+        <field name="metadata" registry="ExtensionInstancesMetadata">
+            <metadata name="metadata_title" filter="char" null="0" default=""/>
+            <metadata name="metadata_description" filter="text" null="0" default=""/>
+            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
+            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
+                      values="follow,nofollow,index,noindex"/>
+            <metadata name="metadata_author" filter="char" null="1" default=""/>
+            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+        </field>
+    </fields>
+    <fks>
+        <fk name="extension_id" source_id="id" source_model="Extensions" required="1"/>
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        <fk name="checked_out_by" source_id="id" source_model="Users" required="1"/>
+        <fk name="created_by" source_id="id" source_model="Users" required="1"/>
+        <fk name="modified_by" source_id="id" source_model="Users" required="1"/>
+        <fk name="version_id" source_id="id" source_model="ExtensionInstances" required="1"/>
+    </fks>
+    <children>
+        <child name="SiteExtensionInstances" join="id:extension_instance_id"/>
+        <child name="ApplicationExtensionInstances" join="id:extension_instance_id"/>
+    </children>
+    <triggers>
+        <trigger name="CatalogTypeId"/>
+        <trigger name="ContentText"/>
+        <trigger name="DateFields"/>
+        <trigger name="UserFields"/>
+        <trigger name="Status"/>
+        <trigger name="Customfields"/>
+        <trigger name="Metadata"/>
+        <trigger name="Parameters"/>
+    </triggers>
+</model>
+

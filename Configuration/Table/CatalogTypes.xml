@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="CatalogTypes"
+        table="#__catalog_types"
+        primary_key="id"
+        data_source="JDatabase">
+    <filters>
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="title" filter="char" null="0" default=" " unique="1"/>
+        <filter name="protected" filter="boolean" null="0" default="0"/>
+        <filter name="source_table" filter="char" null="0" default=" "/>
+        <filter name="component_option" filter="char" null="0" default=" "/>
+        <filter name="subfolder" filter="char" null="0" default=" "/>
+    </filters>
+    <triggers>
+        <trigger name="CatalogSource"/>
+    </triggers>
+</model>
+

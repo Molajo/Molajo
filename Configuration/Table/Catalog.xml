@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Catalog"
+        table="#__catalog"
+        primary_key="id"
+        data_source="JDatabase">
+    <filters>
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="source_id" filter="int" null="0" default="" values=""/>
+        <filter name="routable" filter="boolean" null="0" default="0"/>
+        <filter name="sef_request" filter="char" null="0" default=" "/>
+        <filter name="redirect_to_id" filter="int" null="1" default=""/>
+        <filter name="view_group_id" filter="int" null="1" default=""/>
+        <filter name="primary_category_id" filter="int" null="1" default=""/>
+    </filters>
+    <fks>
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        <fk name="source_id" source_id="id" source_model="Content" required="1"/>
+        <fk name="redirect_to_id" source_id="id" source_model="Catalog" required="1"/>
+        <fk name="view_group_id" source_id="id" source_model="GroupViewGroups" required="1"/>
+        <fk name="primary_category_id" source_id="id" source_model="CatalogCategories" required="1"/>
+    </fks>
+    <children>
+        <child name="CatalogActivity" join="id:catalog_id"/>
+        <child name="CatalogCategories" join="id:catalog_id"/>
+    </children>
+</model>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Sites"
+        table="#__sites"
+        primary_key="id"
+        data_source="JDatabase">
+    <filters>
+        <filter name="id" filter="int" null="1" default="0"/>
+        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
+        <filter name="name" filter="char" null="0" default="" unique="1"/>
+        <filter name="path" filter="char" null="0" default=""/>
+        <filter name="base_url" filter="url" null="0" default=""/>
+        <filter name="description" filter="text" null="1" default=""/>
+        <filter name="custom_fields" filter="" null="1" default=""/>
+        <filter name="parameters" filter="" null="1" default=""/>
+        <filter name="metadata" filter="" null="1" default=""/>
+    </filters>
+    <fields>
+        <field name="parameters" registry="SiteParameters">
+            <parameters name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
+        </field>
+        <field name="custom_fields" registry="SiteCustomFields">
+            <custom_fields name="custom_field1" filter="char" null="0" default=""/>
+        </field>
+        <field name="metadata" registry="SiteMetadata">
+            <metadata name="metadata_title" filter="char" null="0" default=""/>
+            <metadata name="metadata_description" filter="text" null="0" default=""/>
+            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
+            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
+                      values="follow,nofollow,index,noindex"/>
+            <metadata name="metadata_author" filter="char" null="1" default=""/>
+            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+        </field>
+    </fields>
+    <fks>
+        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+    </fks>
+    <triggers>
+        <trigger name="Customfields"/>
+        <trigger name="Metadata"/>
+        <trigger name="Parameters"/>
+        <trigger name="Sites"/>
+    </triggers>
+</model>
+

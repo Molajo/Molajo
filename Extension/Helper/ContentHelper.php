@@ -2,25 +2,57 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Application\MVC\Model\DisplayModel;
-use Molajo\Application\Services;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Content
+ * ContentHelper
  *
- * @package   Molajo
- * @subpackage  Helpers
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-abstract class ContentHelper
+Class ContentHelper
 {
-    /**
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ContentHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
+	/**
      * get
      *
      * Get the content data for the id specified
@@ -28,30 +60,31 @@ abstract class ContentHelper
      * @return  mixed    An object containing an array of data
      * @since   1.0
      */
-    static public function get($id, $content_table)
+    public function get($id, $content_table)
     {
-        $m = new DisplayModel();
+        $m = Services::Model()->connect('Catalog');
 
-        $m->query->select('a.*');
-        $m->query->from($m->db->qn($content_table) . ' as a ');
-        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$id);
-        $m->query->where('a.' . $m->db->qn('status') .
+		$m->model->query->select($m->model->db->qn('a.id'));
+        $m->model->query->select('a.*');
+        $m->model->query->from($m->db->qn($content_table) . ' as a ');
+        $m->model->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$id);
+        $m->model->query->where('a.' . $m->db->qn('status') .
             ' > ' . STATUS_UNPUBLISHED);
 
-        $m->query->where('(a.start_publishing_datetime = ' .
+        $m->model->query->where('(a.start_publishing_datetime = ' .
                 $m->db->q($m->nullDate) .
                 ' OR a.start_publishing_datetime <= ' .
                 $m->db->q($m->now) . ')'
         );
-        $m->query->where('(a.stop_publishing_datetime = ' .
+        $m->model->query->where('(a.stop_publishing_datetime = ' .
                 $m->db->q($m->nullDate) .
                 ' OR a.stop_publishing_datetime >= ' .
                 $m->db->q($m->now) . ')'
         );
 
         /** Catalog Join and View Access Check */
-        Services::Access()->setQueryViewAccess(
-            $m->query,
+        Services::Authorisation()->setQueryViewAccess(
+            $m->model->query,
             $m->db,
             array('join_to_prefix' => 'a',
                 'join_to_primary_key' => 'id',
@@ -60,8 +93,9 @@ abstract class ContentHelper
             )
         );
 
-        //$m->db->setQuery($m->query->__toString());
-        $rows = $m->runQuery();
+        //$m->db->setQuery($m->model->query->__toString());
+
+		$rows = $m->execute('loadObject');
 
         if (count($rows) == 0) {
             return array();

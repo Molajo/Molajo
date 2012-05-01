@@ -51,7 +51,7 @@ Class ThemeFoundationHelper extends MustacheHelper
         /** Favicons */
         Services::Document()->add_link(
             $url = EXTENSIONS_THEMES_URL
-                . '/' . Services::Registry()->get('request\\theme_name')
+                . '/' . Services::Registry()->get('Request', 'theme_name')
                 . '/' . 'images/apple-touch-icon.png',
             $relation = 'apple-touch-icon-precomposed',
             $relation_type = 'rel',
@@ -59,7 +59,7 @@ Class ThemeFoundationHelper extends MustacheHelper
         );
         Services::Document()->add_link(
             $url = EXTENSIONS_THEMES_URL
-                . '/' . Services::Registry()->get('request\\theme_name')
+                . '/' . Services::Registry()->get('Request', 'theme_name')
                 . '/' . 'images/apple-touch-icon-72x72.png',
             $relation = 'apple-touch-icon-precomposed',
             $relation_type = 'rel',
@@ -67,7 +67,7 @@ Class ThemeFoundationHelper extends MustacheHelper
         );
         Services::Document()->add_link(
             $url = EXTENSIONS_THEMES_URL
-                . '/' . Services::Registry()->get('request\\theme_name')
+                . '/' . Services::Registry()->get('Request', 'theme_name')
                 . '/' . 'images/apple-touch-icon-114x114.png',
             $relation = 'apple-touch-icon-precomposed',
             $relation_type = 'rel',
@@ -83,7 +83,7 @@ Class ThemeFoundationHelper extends MustacheHelper
         ('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
 
         $url = EXTENSIONS_THEMES_URL
-            . '/' . Services::Registry()->get('request\\theme_name')
+            . '/' . Services::Registry()->get('Request', 'theme_name')
             . '/' . 'js/fallback/jquery-1.7.1.min.js';
 
         $fallback = "

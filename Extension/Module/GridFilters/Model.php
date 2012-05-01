@@ -5,7 +5,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application\MVC\Model;
+namespace Molajo\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
@@ -45,19 +45,14 @@ Class ModuleGridFiltersModel extends Model
         /**
          *  Retrieve Filters from Parameters for Component
          */
-        $filters =
-            Molajo::Request()
-                ->parameters
-                ->get('filters');
+        $filters = Services::Registry()->get('ExtensionParameters', 'filters');
 
         $filterArray = explode(',', $filters);
 
         /**
          *  Model Helper: MolajoExtensionModelHelper extends ModelHelper
          */
-        $extensionName = ExtensionHelper::formatNameForClass(
-            $this->get('extension_instance_name')
-        );
+        $extensionName = Application::Helper()->formatNameForClass($this->get('extension_instance_name'));
         $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
         if (class_exists($helperClass)) {
         } else {

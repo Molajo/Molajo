@@ -5,7 +5,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application\MVC\Model;
+namespace Molajo\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
@@ -48,7 +48,7 @@ Class ModulePageheaderModel extends DisplayModel
         $this->items = array();
 
         $row = new \stdClass();
-        $row->title = Services::Registry()->get('Configuration\\site_title', 'Molajo');
+        $row->title = Services::Registry()->get('Configuration', 'site_title', 'Molajo');
         $this->items[] = $row;
 
         return $this->items;
