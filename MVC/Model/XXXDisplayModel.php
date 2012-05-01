@@ -6,7 +6,7 @@
  */
 namespace Molajo\MVC\Model;
 
-use Molajo\Extension\Helper;
+use Molajo\Extension\Helpers;
 
 use Molajo\Service\Services;
 

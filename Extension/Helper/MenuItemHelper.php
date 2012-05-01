@@ -11,15 +11,48 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Menuitem
+ * MenuitemHelper
  *
- * @package   Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-abstract class MenuitemHelper
+Class MenuitemHelper
 {
-    /**
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new MenuitemHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
+	/**
      * get
      *
      * Retrieves Menu item data and verifies access for the extension instances
@@ -31,7 +64,7 @@ abstract class MenuitemHelper
      * @return  bool|mixed
      * @since   1.0
      */
-    public static function get($menu_item_id)
+    public function get($menu_item_id)
     {
 		$m = Services::Model()->connect('Content');
 

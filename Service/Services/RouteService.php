@@ -10,7 +10,7 @@ use Molajo\Application;
 
 use Molajo\Service\Services;
 
-use Molajo\Extension\Helper;
+use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
 
