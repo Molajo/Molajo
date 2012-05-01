@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Users" table="#__users" primary_key="id" db="JDatabase">
+<model name="Users" table="#__users" primary_key="id" data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>

@@ -213,7 +213,7 @@ Class ModelService
 			$this->primary_key = 'id';
 		}
 
-		$this->dbDriver = (string)$this->table_xml['db'];
+		$this->dbDriver = (string)$this->table_xml['data_source'];
 		if ($this->dbDriver === '') {
 			$this->dbDriver = $this->default_dbDriver;
 		}

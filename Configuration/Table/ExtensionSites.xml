@@ -3,7 +3,7 @@
         name="ExtensionSites"
         table="#__extension_sites"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="0" default=""/>
         <filter name="name" filter="char" null="0" default="" unique="1"/>

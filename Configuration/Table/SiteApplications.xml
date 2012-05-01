@@ -3,7 +3,7 @@
         name="SiteApplications"
         table="#__site_applications"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="site_id" filter="int" null="0" default=""/>
         <filter name="application_id" filter="int" null="0" default=""/>

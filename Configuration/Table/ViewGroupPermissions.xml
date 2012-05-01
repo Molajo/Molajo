@@ -3,7 +3,7 @@
         name="ViewGroupPermissions"
         table="#__user_group_permissions"
         primary_key="id"
-        db="JDatabase">
+        data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="0" default=""/>
         <filter name="view_group_id" filter="int" null="0" default=""/>
