@@ -11,14 +11,47 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Extension
+ * ExtensionHelper
  *
- * @package   Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-abstract class ExtensionHelper
+Class ExtensionHelper
 {
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ExtensionHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
 	/**
 	 * get
 	 *
@@ -31,7 +64,7 @@ abstract class ExtensionHelper
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public static function get($catalog_type_id = 0, $extension = null)
+	public function get($catalog_type_id = 0, $extension = null)
 	{
 		$m = Services::Model()->connect('Content');
 
@@ -138,15 +171,13 @@ abstract class ExtensionHelper
 	 *
 	 * Retrieves Extension ID, given title
 	 *
-	 * @static
-	 *
 	 * @param  $catalog_type_id
 	 * @param  $title
 	 *
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public static function getInstanceID($catalog_type_id, $title)
+	public function getInstanceID($catalog_type_id, $title)
 	{
 		$m = new EntryModel('ExtensionInstances');
 
@@ -162,13 +193,12 @@ abstract class ExtensionHelper
 	 *
 	 * Retrieves Extension Name, given the extension_instance_id
 	 *
-	 * @static
 	 * @param   $extension_instance_id
 	 *
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public static function getInstanceTitle($extension_instance_id)
+	public function getInstanceTitle($extension_instance_id)
 	{
 		$m = new EntryModel('ExtensionInstances');
 
@@ -189,7 +219,7 @@ abstract class ExtensionHelper
 	 * @return string
 	 * @since  1.0
 	 */
-	public static function formatNameForClass($extension_name)
+	public function formatNameForClass($extension_name)
 	{
 		return ucfirst(str_replace(array('-', '_'), '', $extension_name));
 	}
@@ -207,7 +237,7 @@ abstract class ExtensionHelper
 	 * @return  null
 	 * @since  1.0
 	 */
-	public static function mergeParameters($merge_in_parameters, $merged_parameters)
+	public function mergeParameters($merge_in_parameters, $merged_parameters)
 	{
 		$mergeIn = $merge_in_parameters->toArray();
 
@@ -240,7 +270,7 @@ abstract class ExtensionHelper
 	 * @return mixed
 	 * @since 1.0
 	 */
-	static public function getPath($catalog_type_id, $name)
+	public function getPath($catalog_type_id, $name)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
 			return ComponentHelper::getPath($name);
@@ -262,7 +292,7 @@ abstract class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public static function loadLanguage($path)
+	public function loadLanguage($path)
 	{
 		$path .= '/language';
 

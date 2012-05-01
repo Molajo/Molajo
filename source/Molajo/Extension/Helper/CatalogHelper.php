@@ -11,16 +11,50 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Catalog
+ * CatalogHelper
  *
  * @package       Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @subpackage    Service
+ * @since         1.0
  */
-abstract class CatalogHelper
+Class CatalogHelper
 {
+
 	/**
-	 * getCatalog - Retrieve Catalog and Catalog Type for specific id or query request
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new CatalogHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
+	/**
+	 * Retrieve Catalog and Catalog Type for specific id or query request
 	 *
 	 * View Access is verified in Application::Request to identify 403 errors
 	 *
@@ -30,7 +64,7 @@ abstract class CatalogHelper
 	 * @results  object
 	 * @since    1.0
 	 */
-	public static function get($catalog_id = 0, $sef_request = null, $source_id = 0)
+	public function get($catalog_id = 0, $sef_request = null, $source_id = 0)
 	{
 		$parameter_url = 'index.php?id=' . (int)$catalog_id;
 
@@ -122,7 +156,7 @@ abstract class CatalogHelper
 	 * @return bool|mixed
 	 * @since  1.0
 	 */
-	public static function getID($catalog_type_id, $source_id)
+	public function getID($catalog_type_id, $source_id)
 	{
 		$m = Services::Model()->connect('Catalog');
 
@@ -143,7 +177,7 @@ abstract class CatalogHelper
 	 * @return string
 	 * @since  1.0
 	 */
-	public static function getURL($catalog_id)
+	public function getURL($catalog_id)
 	{
 		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
 			return '';
@@ -173,7 +207,7 @@ abstract class CatalogHelper
 	 * @param  string URL
 	 * @since  1.0
 	 */
-	public static function getRedirectURL($catalog_id)
+	public function getRedirectURL($catalog_id)
 	{
 		if ((int)$catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
 			return '';

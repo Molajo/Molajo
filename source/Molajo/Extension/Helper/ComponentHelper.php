@@ -11,42 +11,75 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Component
+ * ComponentHelper
  *
- * @package     Molajo
- * @subpackage  Component
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-abstract class ComponentHelper
+Class ComponentHelper
 {
-    /**
-     * get
-     *
-     * @return  array
-     * @since   1.0
-     */
-    static public function get($name)
-    {
-        $row = ExtensionHelper::get(
-            CATALOG_TYPE_EXTENSION_COMPONENT,
-            $name
-        );
-        if (count($row) == 0) {
-            return array();
-        }
-        return $row;
-    }
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * getPath
-     *
-     * Return path for selected Component
-     *
-     * @return bool|string
-     * @since 1.0
-     */
-    static public function getPath($name)
-    {
-        return EXTENSIONS_COMPONENTS . '/' . $name;
-    }
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ComponentHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
+	/**
+	 * get
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public function get($name)
+	{
+		$row = ExtensionHelper::get(
+			CATALOG_TYPE_EXTENSION_COMPONENT,
+			$name
+		);
+		if (count($row) == 0) {
+			return array();
+		}
+		return $row;
+	}
+
+	/**
+	 * getPath
+	 *
+	 * Return path for selected Component
+	 *
+	 * @return bool|string
+	 * @since 1.0
+	 */
+	public function getPath($name)
+	{
+		return EXTENSIONS_COMPONENTS . '/' . $name;
+	}
 }

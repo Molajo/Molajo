@@ -11,15 +11,48 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Content
+ * ContentHelper
  *
- * @package   Molajo
- * @subpackage  Helpers
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-abstract class ContentHelper
+Class ContentHelper
 {
-    /**
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ContentHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
+	/**
      * get
      *
      * Get the content data for the id specified
@@ -27,7 +60,7 @@ abstract class ContentHelper
      * @return  mixed    An object containing an array of data
      * @since   1.0
      */
-    static public function get($id, $content_table)
+    public function get($id, $content_table)
     {
         $m = Services::Model()->connect('Catalog');
 

@@ -8,7 +8,7 @@ namespace Molajo;
 
 use Molajo\MVC\Model\EntryModel;
 
-use Molajo\Extension\Helper;
+use Molajo\Extension\Helpers;
 
 use Molajo\Service\Services;
 
@@ -38,12 +38,12 @@ Class Application
 	protected static $services = null;
 
 	/**
-	 * Application::Helper
+	 * Application::Helpers
 	 *
 	 * @var    object Helper
 	 * @since  1.0
 	 */
-	protected static $helper = null;
+	protected static $helpers = null;
 
 	/**
 	 * Application::Request
@@ -205,6 +205,12 @@ Class Application
 			return false;
 		}
 
+		/** Connect Helpers */
+		$continue = Application::Helpers()->StartHelpers();
+		if ($continue == false) {
+			return false;
+		}
+
 		/** Session */
 		//Services::Session()->create(
 		//        Services::Session()->getHash(get_class($this))
@@ -253,7 +259,8 @@ Class Application
 	 */
 	protected function authorise()
 	{
-		return Services::Authorisation()->authoriseAction();
+		return Services::Authorisation()
+			->authoriseAction();
 	}
 
 	/**
@@ -797,26 +804,26 @@ Class Application
 	}
 
 	/**
-	 * Application::Helper
+	 * Application::Helpers
 	 *
 	 * @static
-	 * @return  Helper
+	 * @return  Helpers
 	 * @throws  \RuntimeException
 	 * @since   1.0
 	 */
-	public static function Helper()
+	public static function Helpers()
 	{
-		if (self::$helper) {
+		if (self::$helpers) {
 		} else {
 			try {
-				self::$helper = Helper::getInstance();
+				self::$helpers = Helpers::getInstance();
 			}
 			catch (\Exception $e) {
-				echo 'Instantiate Helper Exception : ', $e->getMessage(), "\n";
+				echo 'Instantiate Helpers Exception : ', $e->getMessage(), "\n";
 				die;
 			}
 		}
-		return self::$helper;
+		return self::$helpers;
 	}
 
 	/**

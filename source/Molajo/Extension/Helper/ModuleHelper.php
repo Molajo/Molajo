@@ -2,23 +2,56 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Application\Helper;
+namespace Molajo\Extension\Helper;
 
-use Molajo\Extension\Helper\ExtensionHelper;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Module
+ * ModuleHelper
  *
- * @package   Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-abstract class ModuleHelper
+Class ModuleHelper
 {
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ModuleHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
+
     /**
      * get
      *
@@ -27,7 +60,7 @@ abstract class ModuleHelper
      * @return  array
      * @since   1.0
      */
-    static public function get($name)
+    public function get($name)
     {
         $rows = ExtensionHelper::get(
             CATALOG_TYPE_EXTENSION_MODULE,
@@ -51,7 +84,7 @@ abstract class ModuleHelper
      * @return bool|string
      * @since 1.0
      */
-    static public function getPath($name)
+    public function getPath($name)
     {
         return EXTENSIONS_MODULES . '/' . $name;
     }
