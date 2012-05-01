@@ -6,11 +6,11 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-$action = 'index.php?option=' . Molajo::Request()->parameters->get('display_extension_option');
+$action = 'index.php?option=' . Application::Request()->parameters->get('display_extension_option');
 ?>
 <form action="<?php echo $action; ?>" method="post" name="managerForm">
     <fieldset id="filter-bar">
-        <?php if (Molajo::Request()->parameters->get('search', 1) == 1) { ?>
+        <?php if (Application::Request()->parameters->get('search', 1) == 1) { ?>
         <div class="filter-search fltlft">
             <label class="filter-search-lbl" for="filter_search">
                 <?php echo Services::Language()->translate('FORM_SEARCH'); ?>

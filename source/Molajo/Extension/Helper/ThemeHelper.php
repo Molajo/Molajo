@@ -2,66 +2,87 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Extension\Helper;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Theme
+ * ThemeHelper
  *
- * @package   Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-class ThemeHelper
+Class ThemeHelper
 {
-    /**
-     * $data
-     *
-     * Allows collection of any set of data for a single $item
-     *
-     * @var    array
-     * @since  1.0
-     */
-    public $data = array();
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * $rows
-     *
-     * Retains pointer to current row contained within the $data array
-     *
-     * @var    int
-     * @since  1.0
-     */
-    protected $rows = 0;
+	/**
+	 * $data
+	 *
+	 * Allows collection of any set of data for a single $item
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	public $data = array();
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-    }
+	/**
+	 * $rows
+	 *
+	 * Retains pointer to current row contained within the $data array
+	 *
+	 * @var    int
+	 * @since  1.0
+	 */
+	protected $rows = 0;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ThemeHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
 
     /**
      * get
      *
      * Get requested theme data
      *
-     * @static
      * @return  array
      * @since   1.0
      */
-    public static function get($theme)
+    public function get($theme)
     {
-        return Molajo::Helper()
+        return Application::Helper()
             ->get('Extension',
             CATALOG_TYPE_EXTENSION_THEME,
             $theme
@@ -73,11 +94,10 @@ class ThemeHelper
      *
      * Return path for selected Theme
      *
-     * @static
      * @param $theme_name
      * @return bool|string
      */
-    public static function getPath($theme_name)
+    public function getPath($theme_name)
     {
         if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
             return EXTENSIONS_THEMES . '/' . $theme_name;
@@ -90,11 +110,10 @@ class ThemeHelper
      *
      * Return path for selected Theme
      *
-     * @static
      * @return bool|string
      * @since 1.0
      */
-    public static function getPathURL($theme_name)
+    public function getPathURL($theme_name)
     {
         if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
             return EXTENSIONS_THEMES_URL . '/' . $theme_name;
@@ -111,11 +130,10 @@ class ThemeHelper
      *  - Themes/images/ folder (priority 1)
      *  - Root of the website (priority 2)
      *
-     * @static
      * @return  mixed
      * @since   1.0
      */
-    public static function getFavicon($theme_name)
+    public function getFavicon($theme_name)
     {
         $path = EXTENSIONS_THEMES . '/' . $theme_name . '/images/';
         if (file_exists($path . 'favicon.ico')) {

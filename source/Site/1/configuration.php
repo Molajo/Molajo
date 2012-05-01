@@ -4,7 +4,7 @@ Class SiteConfiguration
     /* Site Settings */
     public $site_name = 'Molajo';
 
-    /* JDatabaseFactory Settings */
+    /* JDatabaseDriver Settings */
     public $jdatabase_dbtype = 'mysqli';
     public $jdatabase_host = 'localhost';
     public $jdatabase_user = 'root';
@@ -57,7 +57,7 @@ Class SiteConfiguration
     public $smtphost = 'localhost';
 
 	/* Debug Logging */
-	public $debug_logger = 'email';
+	public $debug_logger = 'echo';
 	/* Text */
 	public $debug_text_file = 'debug.php';
 	public $debug_text_file_path = 'SITE_LOGS_FOLDER';

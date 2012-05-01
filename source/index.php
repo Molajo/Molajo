@@ -18,13 +18,15 @@ $override_sequenceXML = null;
 $override_finalXML = null;
 
 /** Autoload, Namespaces and Overrides */
-require_once BASE_FOLDER . '/Autoload.php';
+if (file_exists(BASE_FOLDER . '/OverrideAutoload.php')) {
+	require_once BASE_FOLDER . '/OverrideAutoload.php';
+} else {
+	require_once BASE_FOLDER . '/Autoload.php';
+}
 
-/** Fire off Application */
-$app = Molajo\Application\Molajo::Application()
-	->process(
-		$override_request_url,
-		$override_catalog_id,
-		$override_sequenceXML,
-		$override_finalXML
+/** Execute the application */
+$app = new $class ();
+$app->process(
+		$override_request_url, $override_catalog_id,
+		$override_sequenceXML, $override_finalXML
 	);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="ViewGroupPermissions"
+        table="#__user_group_permissions"
+        primary_key="id"
+        data_source="JDatabase">
+    <filters>
+        <filter name="id" filter="int" null="0" default=""/>
+        <filter name="view_group_id" filter="int" null="0" default=""/>
+        <filter name="catalog_id" filter="int" null="0" default=""/>
+        <filter name="action_id" filter="int" null="0" default=""/>
+    </filters>
+    <fks>
+        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+        <fk name="view_group_id" source_id="id" source_model="Content" required="1"/>
+    </fks>
+</model>

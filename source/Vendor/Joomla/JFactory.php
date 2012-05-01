@@ -10,7 +10,7 @@ namespace Joomla;
 
 use Molajo\Application\Molajo;
 
-use Molajo\Application\Services;
+use Molajo\Service\Services;
 
 use Simplepie\SimplePie;
 
@@ -151,7 +151,7 @@ abstract class JFactory
 	 */
 	public static function getDbo()
 	{
-		return Services::Database();
+		return Services::JDatabase();
 	}
 
 	/**

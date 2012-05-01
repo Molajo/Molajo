@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Menuitem"
+        table="#__content"
+        primary_key="id"
+        data_source="JDatabase">
+    <fields>
+        <field name="custom_fields" registry="MenuitemCustomfields">
+            <custom_fields name="custom_field1" filter="char" null="1" default="" values=""/>
+        </field>
+        <field name="parameters" registry="MenuitemParameters">
+            <parameters name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <parameters name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <parameters name="cache_handler" filter="char" null="1" default="" values=""/>
+            <parameters name="list_limit" filter="integer" null="1" default="15" values=""/>
+            <parameters name="theme_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="page_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="template_view_id" filter="integer" null="1" default="" values=""/>
+            <parameters name="wrap_view_id" filter="integer" null="1" default="" values=""/>
+        </field>
+        <field name="metadata" registry="MenuitemMetadata">
+            <metadata name="metadata_title" filter="char" null="0" default=""/>
+            <metadata name="metadata_description" filter="text" null="0" default=""/>
+            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
+            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
+                      values="follow,nofollow,index,noindex"/>
+            <metadata name="metadata_author" filter="char" null="1" default=""/>
+            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+        </field>
+    </fields>
+</model>

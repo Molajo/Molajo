@@ -16,7 +16,7 @@ if ($result == 0) {
 <tr<?php echo $rowClass ?>>
     <?php
     $columnCount = 1;
-    $columns = Molajo::Request()->parameters->get('columns');
+    $columns = Application::Request()->parameters->get('columns');
     $columnArray = explode(',', $columns);
     foreach ($columnArray as $column) {
         $extraClass = '';

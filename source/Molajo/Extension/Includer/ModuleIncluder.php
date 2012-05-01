@@ -8,7 +8,7 @@ namespace Molajo\Extension\Helper;
 
 defined('MOLAJO') or die;
 
-use Molajo\Application\Services;
+use Molajo\Service\Services;
 use Molajo\Extension\Helper\ModuleHelper;
 
 /**
@@ -37,7 +37,7 @@ abstract class ModuleHelper
         $results = parent::_getExtension();
 
         if ($results === false) {
-            if (Services::Registry()->get('Configuration\\debug', 0) == 1) {
+            if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
                 Services::Debug()->set('ModuleIncluder::_getExtension');
                 Services::Debug()->set('Module not found: ' . $this->get('extension_instance_name'));
             }
@@ -97,7 +97,7 @@ abstract class ModuleHelper
         parent::_loadMedia(
             EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
             SITE_MEDIA_URL . '/' . $this->get('extension_instance_name'),
-            Services::Registry()->get('Configuration\\media_priority_module', 400)
+            Services::Registry()->get('Configuration', 'media_priority_module', 400)
         );
     }
 }

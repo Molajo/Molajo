@@ -5,7 +5,7 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application\MVC\Model;
+namespace Molajo\MVC\Model;
 namespace Molajo\Extension\Module;
 
 defined('MOLAJO') or die;
@@ -45,7 +45,7 @@ Class ModuleBlockquoteModel extends DisplayModel
      */
     public function getData()
     {
-        $rows = Services::Registry()->get('Request\\query_results');
+        $rows = Services::Registry()->get('Request', 'query_results');
         if (count($rows) == 0) {
             return array();
         }

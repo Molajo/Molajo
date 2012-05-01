@@ -2,54 +2,77 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Application\Helper;
+namespace Molajo\Extension\Helper;
 
-use Mustache;
-use Molajo\Application\Services;
+use Molajo\Service\Services;
+
+use Mustache\Mustache;
 
 defined('MOLAJO') or die;
 
 /**
- * Theme
+ * MustacheHelper
  *
- * @package   Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Helper
+ * @since         1.0
  */
-class MustacheHelper extends Mustache
+Class MustacheHelper extends Mustache
 {
-    /**
-     * $data
-     *
-     * Allows collection of any set of data for a single $item
-     *
-     * @var    array
-     * @since  1.0
-     */
-    public $data = array();
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * $rows
-     *
-     * Retains pointer to current row contained within the $data array
-     *
-     * @var    int
-     * @since  1.0
-     */
-    protected $rows = 0;
+	/**
+	 * $data
+	 *
+	 * Allows collection of any set of data for a single $item
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	public $data = array();
 
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-    }
+	/**
+	 * $rows
+	 *
+	 * Retains pointer to current row contained within the $data array
+	 *
+	 * @var    int
+	 * @since  1.0
+	 */
+	protected $rows = 0;
+
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new MustacheHelper();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+
+	}
 
     /**
      * items
@@ -97,7 +120,7 @@ class MustacheHelper extends Mustache
      */
     public function analytics()
     {
-        $code = Services::Registry()->get('Configuration\\google_analytics_code', 'UA-1682054-15');
+        $code = Services::Registry()->get('Configuration', 'google_analytics_code', 'UA-1682054-15');
         if (trim($code) == '') {
             return;
         }
@@ -164,13 +187,13 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
      */
     public function profile()
     {
-        $rc = new Molajo\Extension\Includer\ModuleIncluder ('profile', '');
+//        $rc = new Molajo\Extension\Includer\ModuleIncluder ('profile', '');
         $attributes = array();
         $attributes['name'] = 'dashboard';
         $attributes['template'] = 'dashboard';
         $attributes['wrap'] = 'section';
         $attributes['id'] = $this->data[$this->rows - 1]->id;
 
-        return $rc->process($attributes);
+//        return $rc->process($attributes);
     }
 }

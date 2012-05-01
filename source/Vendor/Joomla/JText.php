@@ -8,7 +8,7 @@
 
 namespace Joomla;
 
-use Molajo\Application\Services;
+use Molajo\Service\Services;
 
 defined('JPATH_PLATFORM') or die;
 

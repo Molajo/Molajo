@@ -1,0 +1,85 @@
+
+1. New data_sources for:
+
+Develop standard API to the DB
+
+a. Messages
+b. Head data (CSS/JS)
+c. Registry (Parameters - like head and footer and the grid)
+d. File system
+
+2. Get rid of Module models - fold those into the same model thing.
+
+3. Finish Display Controller
+
+a. Parser
+b. Includers
+c. Controller(Display) - Views
+
+Now => where are we? Component, Module, Data Source (Table), Menu Item (Component)
+
+URL = Single item of a Data Source (not always, for example parameters or registry data)
+
+Data Sources:
+Tables - single item - URL, yes
+Media - single item like a file or an image (optional) - URL, usually
+
+Component = URL bearing data source
+
+Template View and SQL for each:
+
+Item
+List   menu item required
+Group  menu item required
+
+* * * * Questions  * * * *
+
+Components and Modules - same thing? Name? Widget?
+
+* * * * Event Layer * * * *
+
+Events are registered with the Events Service.
+
+Only the Application and Controller processes can fire events
+
+Extensions schedule events to participate
+Services::Event()->schedule('OnBeforeSave')
+
+Triggers register for scheduled events.
+Services::Event()->schedule('OnBeforeSave')
+
+The Application and Controller classes notify the Event Manager at Event Time
+Services::Event()->notify('OnBeforeSave')
+
+The Event Service triggers those registered
+Services::Event()->trigger('OnBeforeSave')
+
+Typically, triggers interact with Services which interfaces to the Utility layer:
+- Services::Mail()->Send
+- Services::Filter()->text
+- Services::Model()->getItems
+
+
+* * * * Services Layer (Middleware) * * * *
+
+AssetService
+Specific focus on JS and CSS; interface with minimizers, etc.
+Remove all specifically coded paths from code - instead use the Asset Manager API
+No Services::Filesystem anywhere but the AssetService (Also, see Model)
+Same for views
+Bring in the php spl priority
+
+AuthenticationService - Events for Login, etc
+
+Filter - get HTML Purifier in
+
+ModelService
+Only interface to Models should go thru this the ModelService
+-- It should look for overrides, etc.
+-- It should replace EntryModel
+-- Instead of having a Head and Message and Request Model, abstract out the data access
+element and create a "DBO" of sorts to those types of data.
+-- Same for media (files - including CSS, JS, Images, and so forth)
+-- Models remaining: Model (base), Item (crud), and Display (list)
+-- All customization, editing, and so forth, defined with Table XML and Triggers
+

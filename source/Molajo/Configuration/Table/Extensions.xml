@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Extensions"
+        table="#__extensions"
+        primary_key="id"
+        data_source="JDatabase">
+    <filters>
+        <filter name="id" filter="int" null="0" default=""/>
+        <filter name="extension_site_id" filter="int" null="0" default=""/>
+        <filter name="catalog_type_id" filter="int" null="0" default=""/>
+        <filter name="name" filter="char" null="0" default=""/>
+    </filters>
+    <fks>
+        <fk name="extension_site_id" source_id="id" source_model="Site" required="1"/>
+        <fk name="catalog_type_id" source_id="id" source_model="Site" required="1"/>
+    </fks>
+    <children>
+        <child name="ExtensionInstances" join="id:extension_id"/>
+    </children>
+</model>
+

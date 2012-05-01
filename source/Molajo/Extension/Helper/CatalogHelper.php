@@ -6,198 +6,223 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Application\MVC\Model\TableModel;
-
-use Molajo\Application\Services;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Catalog
+ * CatalogHelper
  *
- * @package   	Molajo
- * @subpackage  Helper
- * @since       1.0
+ * @package       Molajo
+ * @subpackage    Service
+ * @since         1.0
  */
-abstract class CatalogHelper
+Class CatalogHelper
 {
-    /**
-     * getCatalog
-     *
-     * Retrieve Catalog and Catalog Type for specific id or query request
-     *
-     * View Access is verified in Molajo::Request to identify 403 errors
-     *
-     * @param    int  $catalog_id
-     * @param    null $query_request
-     *
-     * @results  object
-     * @since    1.0
-     */
-    public static function get($catalog_id = 0, $query_request = null,
-                               $request_option = '', $source_id = 0)
-    {
-        $m = new TableModel('Catalog');
 
-        $m->query->select('a.' . $m->db->qn('id'));
-        $m->query->select('a.' . $m->db->qn('catalog_type_id'));
-        $m->query->select('a.' . $m->db->qn('source_id'));
-        $m->query->select('a.' . $m->db->qn('routable'));
-        $m->query->select('a.' . $m->db->qn('sef_request'));
-        $m->query->select('a.' . $m->db->qn('request'));
-        $m->query->select('a.' . $m->db->qn('request_option'));
-        $m->query->select('a.' . $m->db->qn('request_model'));
-        $m->query->select('a.' . $m->db->qn('redirect_to_id'));
-        $m->query->select('a.' . $m->db->qn('view_group_id'));
-        $m->query->select('a.' . $m->db->qn('primary_category_id'));
-        $m->query->select('b.' . $m->db->qn('source_table'));
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-        $m->query->from($m->db->qn('#__catalog') . ' as a');
-        $m->query->from($m->db->qn('#__catalog_types') . ' as b');
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new CatalogHelper();
+		}
+		return self::$instance;
+	}
 
-        $m->query->where('a.' . $m->db->qn('catalog_type_id') .
-            ' = b.' . $m->db->qn('id'));
+	/**
+	 * Class constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
 
-        if ((int)$catalog_id > 0) {
+	}
 
-            $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
+	/**
+	 * Retrieve Catalog and Catalog Type for specific id or query request
+	 *
+	 * View Access is verified in Application::Request to identify 403 errors
+	 *
+	 * @param    int  $catalog_id
+	 * @param    null $sef_requst
+	 *
+	 * @results  object
+	 * @since    1.0
+	 */
+	public function get($catalog_id = 0, $sef_request = null, $source_id = 0)
+	{
+		$parameter_url = 'index.php?id=' . (int)$catalog_id;
 
-        } else if ((int)$source_id > 0) {
+		$m = Services::Model()->connect('Catalog');
 
-            $m->query->where('a.' . $m->db->qn('request_option') .
-                ' = ' . $m->db->q($request_option));
-            $m->query->where('a.' . $m->db->qn('redirect_to_id') . ' = 0 ');
+		$m->model->query->select($m->model->db->qn('a.id'));
+		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
+		$m->model->query->select($m->model->db->qn('a.source_id'));
+		$m->model->query->select($m->model->db->qn('a.routable'));
+		$m->model->query->select($m->model->db->qn('a.sef_request'));
+		$m->model->query->select($m->model->db->qn('a.redirect_to_id'));
+		$m->model->query->select($m->model->db->qn('a.view_group_id'));
+		$m->model->query->select($m->model->db->qn('a.primary_category_id'));
+		$m->model->query->select($m->model->db->qn('b.source_table'));
 
-            $m->query->where('a.' . $m->db->qn('source_id') . ' = ' . (int)$source_id);
+		$m->model->query->from($m->model->db->qn('#__catalog') . ' as a');
+		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b');
 
-        } else {
+		$m->model->query->where($m->model->db->qn('a.catalog_type_id')
+			. ' = ' . $m->model->db->qn('b.id'));
 
-            $m->query->where('(a.' . $m->db->qn('sef_request') . ' = ' . $m->db->q($query_request) .
-                    ' OR a.' . $m->db->qn('request') . ' = ' . $m->db->q($query_request) . ')'
-            );
-        }
+		if ((int)$catalog_id > 0) {
+			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
-        $row = $m->loadObject();
+		} else if ((int)$source_id > 0) {
+			$m->model->query->where($m->model->db->qn('source_id') . ' = ' . (int)$source_id);
+			$m->model->query->where($m->model->db->qn('redirect_id') . ' = 0 ');
 
-        if (count($row) == 0) {
-            return array();
-        }
+		} else if (trim($sef_request) == '') {
+			$m->model->query->where($m->model->db->qn('a.id')
+				. ' = ' . (int)Services::Registry()->get('Configuration', 'home_catalog_id', 0));
 
-        if ((int)$source_id > 0) {
+		} else {
+			$m->model->query->where(
+				'(' . $m->model->db->qn('a.sef_request') . ' = ' . $m->model->db->q($sef_request) .
+					' OR' . $m->model->db->qn('a.id') . ' = ' . $m->model->db->q($catalog_id) . ')'
+			);
+		}
 
-        } else if ((int)$catalog_id == 0) {
+		$row = $m->execute('loadObject');
 
-            if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
-                if ($row->sef_request == $query_request) {
+		if (count($row) == 0) {
+			return array();
+		}
 
-                } else {
-                    $row->redirect_to_id = (int)$row->id;
-                }
+		$row->request = 'index.php?id=' . (int)$row->id;
 
-            } else {
-                if ($row->request == $query_request) {
+		if ((int)$source_id > 0) {
 
-                } else {
-                    $row->redirect_to_id = (int)$row->id;
-                }
-            }
+		} else if ((int)$catalog_id == 0) {
 
-            if ($row->id == Services::Registry()->get('Configuration\\home_catalog_id', 0)) {
-                if ($query_request == '') {
-                } else {
-                    $row->redirect_to_id =
-                        Services::Registry()->get('Configuration\\home_catalog_id', 0);
-                }
-            }
-        }
+		} else {
 
-		//todo: remove after testing
-		$row->redirect_to_id = 0;
-        return $row;
-    }
+			if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
 
-    /**
-     * getID
-     *
-     * Retrieves Catalog ID
-     *
-     * @param  null $catalog_type_id
-     * @param  null $source_id
-     *
-     * @return bool|mixed
-     * @since  1.0
-     */
-    public static function getID($catalog_type_id, $source_id)
-    {
-        $m = new TableModel('Catalog');
+				if ($row->id == $catalog_id
+				) {
+				} else {
+					$row->redirect_to_id = (int)$row->id;
+				}
 
-        $m->query->select('a.' . $m->db->qn('id') . ' as catalog_id');
-        $m->query->where('a.' . $m->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
-        $m->query->where('a.' . $m->db->qn('source_id') . ' = ' . (int)$source_id);
-        $m->query->where('a.' . $m->db->qn('view_group_id')
-				. ' IN (' . implode(',', Services::Registry()->get('User\\ViewGroups')) . ')');
+			} else {
+				if ($row->id == $catalog_id) {
 
-        return $m->loadResult();
-    }
+				} else {
+					$row->redirect_to_id = (int)$row->id;
+				}
+			}
 
-    /**
-     * getURL
-     *
-     * Retrieves URL based on Catalog ID
-     *
-     * @param  null $catalog_id
-     *
-     * @return string
-     * @since  1.0
-     */
-    public static function getURL($catalog_id)
-    {
-        /** home */
-        if ($catalog_id == Services::Registry()->get('Configuration\\home_catalog_id', 0)) {
-            return '';
-        }
+			if ($row->id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+				if ($catalog_id == 0) {
 
-        $m = new TableModel('Catalog');
+				} else {
+					$row->redirect_to_id =
+						Services::Registry()->get('Configuration', 'home_catalog_id', 0);
+				}
+			}
+		}
 
-        if (Services::Registry()->get('Configuration\\sef', 1) == 1) {
-            $m->query->select('a.' . $m->db->qn('sef_request'));
-        } else {
-            $m->query->select('a.' . $m->db->qn('request'));
-        }
+		return $row;
+	}
 
-        $m->query->where('a.' . $m->db->qn('id') . ' = ' . (int)$catalog_id);
-        $m->query->where('a.' . $m->db->qn('view_group_id') .  ' IN (' .
-                implode(',', Services::Registry()->get('User\\ViewGroups')) . ')'
-        );
+	/**
+	 * getID - Retrieves Catalog ID
+	 *
+	 * @param  null $catalog_type_id
+	 * @param  null $source_id
+	 *
+	 * @return bool|mixed
+	 * @since  1.0
+	 */
+	public function getID($catalog_type_id, $source_id)
+	{
+		$m = Services::Model()->connect('Catalog');
 
-        return $m->loadResult();
-    }
+		$m->model->query->select($m->model->db->qn('id') . ' as catalog_id');
+		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
+		$m->model->query->where($m->model->db->qn('source_id') . ' = ' . (int)$source_id);
+		$m->model->query->where($m->model->db->qn('view_group_id')
+			. ' IN (' . implode(',', Services::Registry()->get('User', 'ViewGroups')) . ')');
 
-    /**
-     * getRedirectURL
-     *
-     * Function to retrieve catalog information for the Request or Catalog ID
-     *
-     * @return  string url
-     * @since   1.0
-     */
-    public static function getRedirectURL($catalog_id)
-    {
-        if ((int)$catalog_id == Services::Registry()->get('Configuration\\home_catalog_id', 0)
-        ) {
-            return '';
-        }
+		return $m->execute('loadResult');
+	}
 
-        $m = new TableModel('Catalog');
+	/**
+	 * getURL Retrieves URL based on Catalog ID
+	 *
+	 * @param  integer $catalog_id
+	 *
+	 * @return string
+	 * @since  1.0
+	 */
+	public function getURL($catalog_id)
+	{
+		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+			return '';
+		}
 
-        if (Services::Registry()->get('Configuration\\sef', 1) == 0) {
-            $m->query->select($m->db->qn('sef_request'));
-        } else {
-            $m->query->select($m->db->qn('request'));
-        }
+		$m = Services::Model()->connect('Catalog');
 
-        $m->query->where($m->db->qn('id') . ' = ' . (int)$catalog_id);
+		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+			$m->model->query->select($m->model->db->qn('sef_request'));
+		} else {
+			$m->model->query->select($m->model->db->qn('id'));
+		}
 
-        return $m->loadResult();
-    }
+		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
+		$m->model->query->where($m->model->db->qn('view_group_id') . ' IN (' .
+				implode(',', Services::Registry()->get('User', 'ViewGroups')) . ')'
+		);
+
+		return $m->execute('loadResult');
+	}
+
+	/**
+	 * getRedirectURL Function to retrieve catalog information for the Request or Catalog ID
+	 *
+	 * @param  integer $catalog_id
+	 *
+	 * @param  string URL
+	 * @since  1.0
+	 */
+	public function getRedirectURL($catalog_id)
+	{
+		if ((int)$catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+			return '';
+		}
+
+		$m = Services::Model()->connect('Catalog');
+
+		if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
+			$m->model->query->select($m->model->db->qn('sef_request'));
+		} else {
+			$m->model->query->select($m->model->db->qn('id'));
+		}
+
+		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
+
+		return $m->execute('loadResult');
+	}
 }
