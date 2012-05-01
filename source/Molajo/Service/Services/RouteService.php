@@ -32,8 +32,6 @@ Class RouteService
 	protected static $instance = null;
 
 	/**
-	 * Returns the global site object, creating if not existing
-	 *
 	 * @return  Object
 	 *
 	 * @since   1.0
@@ -44,6 +42,7 @@ Class RouteService
 		} else {
 			self::$instance = new RouteService();
 		}
+
 		return self::$instance;
 	}
 
@@ -51,7 +50,7 @@ Class RouteService
 	 * Using the PAGE_REQUEST constant:
 	 *
 	 *  - retrieve the catalog record
-	 *  - set registry values needed to render output
+	 *  - set registry values needed to fulfill the page request
 	 *
 	 * @return mixed
 	 *
@@ -182,7 +181,6 @@ Class RouteService
 	 */
 	protected function checkHome($path = '')
 	{
-
 		if (strlen($path) == 0) {
 			return true;
 

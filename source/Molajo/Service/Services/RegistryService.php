@@ -12,7 +12,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 //todo: consider namespace reuse - intentional and otherwise
-// Lock from change
+//todo: Lock from change
 //
 
 /**
@@ -31,6 +31,16 @@ Class RegistryService
 	 * @since  1.0
 	 */
 	protected static $instance;
+
+	/**
+	 * The debug service is activated after the registry and therefore cannot be used
+	 * to log system activity immediately. Once Services::Debug()->on = true this indicator
+	 * is set to true, existing registries are logged, and individual creates are logged
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $debug_available;
 
 	/**
 	 * Array containing registry keys
@@ -111,6 +121,24 @@ Class RegistryService
 		/** Namespace array */
 		$this->registry[$namespace] = array();
 
+		/** Log it */
+		if (in_array('DebugService', $this->registryKeys)) {
+
+			if (Services::Registry()->get('DebugService', 'on') === true) {
+
+				if ($this->debug_available === false) {
+					$this->debug_available = true;
+					/* Catch up logging Registries created before Debug Service started */
+					foreach ($this->registryKeys as $ns) {
+						Services::Debug()->set('Create Registry ' . $ns);
+					}
+				} else {
+					Services::Debug()->set('Create Registry ' . $namespace);
+				}
+			}
+		}
+
+		/** Return new registry */
 		return $this->registry[$namespace];
 	}
 
@@ -212,6 +240,8 @@ Class RegistryService
 
 	/**
 	 * Copy one namespace registry to another
+	 * Note: this is a merge if there are existing registry values
+	 * If that is not desired, delete the registry prior to the copy
 	 *
 	 * Usage:
 	 * Services::Registry()->copy('namespace-x', 'to-namespace-y');
@@ -224,14 +254,19 @@ Class RegistryService
 	 */
 	public function copy($copyThis, $intoThis)
 	{
+
 		/** Get (or create) the Registry that will be copied */
 		$copy = $this->getRegistry($copyThis);
 
 		/** Get (or create) the Registry that will be copied to */
 		$into = $this->getRegistry($intoThis);
 
-		/** Save the new registry */
-		$this->registry[$intoThis] = $copy;
+		/** Merge */
+		if (count($copy > 0)) {
+			foreach ($copy as $key => $value) {
+				$this->set($intoThis, $key, $value);
+			}
+		}
 
 		return $this;
 	}

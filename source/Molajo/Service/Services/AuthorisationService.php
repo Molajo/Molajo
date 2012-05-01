@@ -30,7 +30,7 @@ Class AuthorisationService
 	/**
 	 * Registry specific to the AuthorisationService class
 	 *
-	 * @var    Registry
+	 * @var    RegistryService
 	 * @since  1.0
 	 */
 	protected $registry;
@@ -61,7 +61,7 @@ Class AuthorisationService
 	}
 
 	/**
-	 * Load lists of ACL-related data needed by this method and other classes within the application
+	 * Load ACL-related data for use with Authorisation
 	 *
 	 * @return null
 	 * @since  1.0
@@ -88,7 +88,7 @@ Class AuthorisationService
 	}
 
 	/**
-	 * Check if the site is authorized for this application
+	 * Check if the site is authorised for this application
 	 *
 	 * Usage:
 	 * $results = Services::Authorisation()->authoriseSiteApplication();
@@ -117,6 +117,7 @@ Class AuthorisationService
 				403
 			);
 		}
+
 		return $application_id;
 	}
 
@@ -164,8 +165,9 @@ Class AuthorisationService
 		$taskPermissions = array();
 
 		foreach ($tasklist as $task) {
-			$taskPermissions[$task] = Services::Authorisation()->authoriseTask($task, $catalog_id);
+			$taskPermissions[$task] = $this->authoriseTask($task, $catalog_id);
 		}
+
 		return $taskPermissions;
 	}
 
@@ -183,7 +185,8 @@ Class AuthorisationService
 
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
-			Services::Registry()->get('User', 'ViewGroups')) ) {
+			Services::Registry()->get('User', 'ViewGroups'))
+		) {
 
 			Services::Registry()->set('Request', 'status_authorised', true);
 
@@ -193,7 +196,8 @@ Class AuthorisationService
 
 		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
-			&& Services::Registry()->get('Request', 'status_authorised') == true) {
+			&& Services::Registry()->get('Request', 'status_authorised') == true
+		) {
 
 			return true;
 		}

@@ -9,7 +9,6 @@
     <service>Model</service>
     <service>Configuration</service>
     <service>Log</service>
-    <service>Debug</service>
     <service>Request</service>
     <service>Parse</service>
     <service>Route</service>
@@ -20,6 +19,7 @@
     <service>User</service>
     <service>Language</service>
     <service>Date</service>
+    <service>Debug</service>
     <service>Document</service>
     <service>Authorisation</service>
     <service>Asset</service>
