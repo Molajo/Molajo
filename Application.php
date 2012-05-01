@@ -85,7 +85,7 @@ Class Application
 	public function process($override_request_url = null, $override_catalog_id = null,
 							$override_sequence_xml = null, $override_final_xml = null)
 	{
-		/** Initialise */
+		/** Initialise Sets the Configuration Registry  */
 		$continue = $this->initialise();
 
 		Services::Registry()->set('Override', 'request_url', $override_request_url);
@@ -100,7 +100,7 @@ Class Application
 			Services::Debug()->set('Application Initialise succeeded');
 		}
 
-		/** Route */
+		/** Route: Sets the Request, Catalog, and Menuitem Registry */
 		$continue = $this->route();
 
 		if ($continue == false) {
@@ -110,7 +110,7 @@ Class Application
 			Services::Debug()->set('Application Route succeeded');
 		}
 
-		/** Authorise */
+		/** Authorise: Services::Registry()->get('Request', 'status_authorised') */
 		$continue = $this->authorise();
 
 		if ($continue === false) {
@@ -216,9 +216,18 @@ Class Application
 	}
 
 	/**
-	 * route application
+	 * Evaluates HTTP Request to determine routing requirements, including:
+	 *
+	 * - Normal page request: populates Registry for Request, Catalog, and Menuitem (if appropriate)
+	 *     Saves array of non_routable_parameters (if identified in request) to Request registry
+	 * - Issues redirect request for "home" duplicate content
+	 * - For 'Application Offline Mode', sets a 503 error and registry values for View
+	 * - For 'Page not found', sets 404 error and registry values for Error Template/View
+	 * - For defined redirect with Catalog, issues 301 Redirect to new URL
+	 * - For 'Logon requirement' situations, issues 303 redirect to configured login page
 	 *
 	 * @return boolean
+	 *
 	 * @since  1.0
 	 */
 	protected function route()
@@ -234,8 +243,6 @@ Class Application
 		} else {
 			return false;
 		}
-
-		return true;
 	}
 
 	/**

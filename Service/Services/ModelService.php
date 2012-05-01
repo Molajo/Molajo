@@ -28,7 +28,7 @@ Class ModelService
 	protected static $instance;
 
 	/**
-	 * Model
+	 * Used with Model get and set
 	 *
 	 * @var    object
 	 * @since  1.0
@@ -41,7 +41,7 @@ Class ModelService
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $model_name;
+	protected $model_name;
 
 	/**
 	 * Table Name
@@ -49,7 +49,7 @@ Class ModelService
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $table_name;
+	protected $table_name;
 
 	/**
 	 * Table XML
@@ -57,7 +57,7 @@ Class ModelService
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $table_xml;
+	protected $table_xml;
 
 	/**
 	 * Primary Key
@@ -65,7 +65,7 @@ Class ModelService
 	 * @var    integer
 	 * @since  1.0
 	 */
-	public $primary_key;
+	protected $primary_key;
 
 	/**
 	 * DB Driver
@@ -73,7 +73,7 @@ Class ModelService
 	 * @var    integer
 	 * @since  1.0
 	 */
-	public $dbDriver;
+	protected $dbDriver;
 
 	/**
 	 * Valid DB Options
@@ -129,8 +129,9 @@ Class ModelService
 	/**
 	 * Prepares data needed for the model
 	 *
-	 * Single-table queries - retrieve Table Definitions, create a model instance, and sets model properties
-	 *     examples include User, Site Application, and Authorisation queries
+	 * Single-table queries - retrieve Table Definitions, create a model instance,
+	 * and sets model properties examples include User, Site Application, and
+	 * Authorisation queries
 	 *
 	 * More complex queries
 	 *
@@ -156,7 +157,7 @@ Class ModelService
 		$modelClass = 'Molajo\\MVC\\Model\\EntryModel';
 
 		try {
-			$this->model = new $modelClass ();
+			$this->model = new $modelClass();
 		}
 		catch (\Exception $e) {
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
@@ -189,7 +190,7 @@ Class ModelService
 	 *
 	 * @param   $table
 	 *
-	 * @return  mixed
+	 * @return  void
 	 * @throws  \RuntimeException
 	 */
 	protected function setModelTable($table)
@@ -216,7 +217,6 @@ Class ModelService
 		if ($this->dbDriver === '') {
 			$this->dbDriver = $this->default_dbDriver;
 		}
-		$dbo = $this->dbDriver;
 
 		return;
 	}

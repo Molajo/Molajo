@@ -34,7 +34,7 @@ Class DebugService
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $on;
+	protected $on;
 
 	/**
 	 * Log Type
@@ -71,7 +71,10 @@ Class DebugService
 		$this->on = Services::Registry()->get('Configuration', 'Debug', 0);
 
 		if ($this->on == 0) {
+			Services::Registry()->set('DebugService', 'on', false);
 			return false;
+		} else {
+			Services::Registry()->set('DebugService', 'on', true);
 		}
 
 		/** Valid Logger Options */
@@ -89,8 +92,6 @@ Class DebugService
 
 		/** Logger Type */
 		$options['logger'] = Services::Registry()->get('Configuration', 'debug_logger', 'echo');
-
-		$options['logger'] = 'firephp';
 
 		if (in_array($options['logger'], $loggerOptions)) {
 		} else {

@@ -114,7 +114,7 @@ Class ImageService
 	 *
 	 * Build an SQL query to select an image.
 	 *
-	 * @return    JDatabaseQuery
+	 * @return
 	 * @since    1.0
 	 */
 	public function getImage($id, $size = 0, $type = 'crop')
