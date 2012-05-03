@@ -105,11 +105,11 @@ Class RouteService
 		} else {
 			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Successful');
 		}
-
+echo 'asdfasdf';
 		/**  Get Route Information: Catalog  */
 		$continue = Helpers::Catalog()->getRoute();
 
-		/** 404     */
+		/** 404 */
 		if (Services::Registry()->get('Route', 'status_found') === false) {
 			Services::Error()->set(404);
 			Services::Debug()->set('Application::Route() 404');

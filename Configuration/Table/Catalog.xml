@@ -14,6 +14,13 @@
         <filter name="view_group_id" filter="int" null="1" default=""/>
         <filter name="primary_category_id" filter="int" null="1" default=""/>
     </filters>
+    <joins>
+        <join table="#__catalog_types" alias="b" select="title,source_table" jointo="id" joinwith="catalog_type_id"/>
+    </joins>
+    <children>
+        <child name="CatalogActivity" join="id:catalog_id"/>
+        <child name="CatalogCategories" join="id:catalog_id"/>
+    </children>
     <foreignkeys>
         <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
         <foreignkey name="source_id" source_id="id" source_model="Content" required="1"/>
@@ -21,9 +28,5 @@
         <foreignkey name="view_group_id" source_id="id" source_model="GroupViewGroups" required="1"/>
         <foreignkey name="primary_category_id" source_id="id" source_model="CatalogCategories" required="1"/>
     </foreignkeys>
-    <children>
-        <child name="CatalogActivity" join="id:catalog_id"/>
-        <child name="CatalogCategories" join="id:catalog_id"/>
-    </children>
 </model>
 
