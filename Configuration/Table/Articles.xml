@@ -4,101 +4,49 @@
         table="#__content"
         primary_key="id"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="extension_instance_id" filter="int" null="0" default="0"/>
-        <filter name="catalog_type_id" filter="int" null="0" default="0"/>
-        <filter name="title" filter="char" null="0" default=" "/>
-        <filter name="subtitle" filter="char" null="1" default=" "/>
-        <filter name="path" filter="char" null="1" default=" "/>
-        <filter name="alias" filter="char" null="1" default=" "/>
-        <filter name="content_text" filter="text" null="1" default=""/>
-        <filter name="protected" filter="boolean" null="0" default="0"/>
-        <filter name="featured" filter="boolean" null="0" default="0"/>
-        <filter name="stickied" filter="boolean" null="0" default="0"/>
-        <filter name="status" filter="integer" null="0" default="0"/>
-        <filter name="start_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="stop_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="version" filter="int" null="0" default="1"/>
-        <filter name="version_of_id" filter="int" null="0" default="0"/>
-        <filter name="status_prior_to_version" filter="int" null="0" default="0"/>
-        <filter name="created_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="created_by" filter="int" null="0" default="0"/>
-        <filter name="modified_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="modified_by" filter="int" null="0" default="0"/>
-        <filter name="checked_out_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="checked_out_by" filter="int" null="0" default="0"/>
-        <filter name="root" filter="int" null="0" default="0"/>
-        <filter name="parent_id" filter="int" null="0" default="0"/>
-        <filter name="lft" filter="int" null="0" default="0"/>
-        <filter name="rgt" filter="int" null="0" default="0"/>
-        <filter name="home" filter="int" null="0" default="0"/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-        <filter name="parameters" filter="" null="1" default=""/>
-        <filter name="metadata" filter="" null="1" default=""/>
-        <filter name="language" filter="char" null="1" default=""/>
-        <filter name="translation_of_id" filter="int" null="0" default="0"/>
-        <filter name="ordering" filter="int" null="0" default="0"/>
-    </filters>
+    <filters include="ContentFilters"/>
     <fields>
-        <field name="custom_fields" registry="ArticlesCustomFields">
-            <custom_fields name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
+        <field name="custom_fields" registry="ArticleCustomfields">
+            <element name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
         </field>
-        <field name="parameters" registry="ArticlesCustomFields">
-            <parameters name="section" filter="char" null="1" default=" "/>
-            <parameters name="display_suppress_no_results" filter="boolean" null="0" default="0"/>
-            <parameters name="disable_view_access_check" filter="boolean" null="0" default="0"/>
-            <parameters name="template_view_id" filter="integer" null="1" default=""/>
-            <parameters name="wrap_view_id" filter="integer" null="1" default=""/>
-            <parameters name="controller" filter="char" null="1" default=" "/>
-            <parameters name="model" filter="char" null="1" default=" "/>
-            <parameters name="cache" filter="integer" null="1" default=""/>
-            <parameters name="cache_time" filter="integer" null="1" default=""/>
+        <field name="parameters" registry="ArticleParameters">
+            <element name="section" filter="char" null="1" default=" "/>
+            <element name="display_suppress_no_results" filter="boolean" null="0" default="0"/>
+            <element name="disable_view_access_check" filter="boolean" null="0" default="0"/>
+            <element name="template_view_id" filter="integer" null="1" default=""/>
+            <element name="wrap_view_id" filter="integer" null="1" default=""/>
+            <element name="controller" filter="char" null="1" default=" "/>
+            <element name="model" filter="char" null="1" default=" "/>
+            <element name="cache" filter="integer" null="1" default=""/>
+            <element name="cache_time" filter="integer" null="1" default=""/>
         </field>
-        <field name="metadata" registry="ArticlesCustomFields">
-            <metadata name="metadata_title" filter="char" null="0" default=""/>
-            <metadata name="metadata_description" filter="text" null="0" default=""/>
-            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
-            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
-                      values="follow,nofollow,index,noindex"/>
-            <metadata name="metadata_author" filter="char" null="1" default=""/>
-            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+        <field name="metadata" registry="ArticleMetadata">
+            <element name="metadata_title" filter="char" null="0" default=""/>
+            <element name="metadata_description" filter="text" null="0" default=""/>
+            <element name="metadata_keywords" filter="char" null="1" default=""/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index"
+                     values="follow,nofollow,index,noindex"/>
+            <element name="metadata_author" filter="char" null="1" default=""/>
+            <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
-        <field name="extparameters" registry="ExtensionParameters">
-            <extparameters name="display_title" filter="char" null="0" default=""/>
-            <extparameters name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
-            <extparameters name="catalog_type_id" filter="integer" null="1" default="10000" values="10000" hidden="true"/>
-            <extparameters name="default_theme_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_page_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <extparameters name="caching" filter="binary" null="1" default="1" values="0,1"/>
-            <extparameters name="cache_time" filter="integer" null="1" default="15" values=""/>
-            <extparameters name="cache_handler" filter="char" null="1" default="" values=""/>
+        <field name="extension_parameters" registry="ExtensionParameters">
+            <element name="display_title" filter="char" null="0" default=""/>
+            <element name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000"
+                     hidden="true"/>
+            <element name="default_theme_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_page_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <element name="cache_handler" filter="char" null="1" default="" values=""/>
         </field>
-        <fks>
-            <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-            <fk name="checked_out_by" source_id="id" source_model="Users" required="1"/>
-            <fk name="created_by" source_id="id" source_model="Users" required="1"/>
-            <fk name="modified_by" source_id="id" source_model="Users" required="1"/>
-            <fk name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1"/>
-            <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-        </fks>
-        <triggers>
-            <trigger name="Alias"/>
-            <trigger name="CatalogTypeId"/>
-            <trigger name="ContentText"/>
-            <trigger name="DateFields"/>
-            <trigger name="UserFields"/>
-            <trigger name="Status"/>
-            <trigger name="Customfields"/>
-            <trigger name="Metadata"/>
-            <trigger name="Parameters"/>
-        </triggers>
+        <foreignkeys include="ContentForeignkeys"/>
+        <triggers include="ContentTriggers"/>
     </fields>
 </model>
-

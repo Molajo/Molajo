@@ -20,9 +20,9 @@
         <trigger name="Parameters"/>
         <trigger name="Language"/>
     </triggers>
-    <fks>
-        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-        <fk name="user_id" source_id="id" source_model="Users" required="1"/>
-    </fks>
+    <foreignkeys>
+        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+        <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+    </foreignkeys>
 </model>
 

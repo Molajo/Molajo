@@ -17,24 +17,24 @@
     </filters>
     <fields>
         <field name="parameters" registry="SiteParameters">
-            <parameters name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
+            <element name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
         </field>
-        <field name="custom_fields" registry="SiteCustomFields">
-            <custom_fields name="custom_field1" filter="char" null="0" default=""/>
+        <field name="custom_fields" registry="SiteCustomfields">
+            <element name="custom_field1" filter="char" null="0" default=""/>
         </field>
         <field name="metadata" registry="SiteMetadata">
-            <metadata name="metadata_title" filter="char" null="0" default=""/>
-            <metadata name="metadata_description" filter="text" null="0" default=""/>
-            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
-            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
-                      values="follow,nofollow,index,noindex"/>
-            <metadata name="metadata_author" filter="char" null="1" default=""/>
-            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+            <element name="metadata_title" filter="char" null="0" default=""/>
+            <element name="metadata_description" filter="text" null="0" default=""/>
+            <element name="metadata_keywords" filter="char" null="1" default=""/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index"
+                     values="follow,nofollow,index,noindex"/>
+            <element name="metadata_author" filter="char" null="1" default=""/>
+            <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
     </fields>
-    <fks>
-        <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-    </fks>
+    <foreignkeys>
+        <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+    </foreignkeys>
     <triggers>
         <trigger name="Customfields"/>
         <trigger name="Metadata"/>

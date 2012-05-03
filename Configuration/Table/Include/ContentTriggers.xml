@@ -1,0 +1,12 @@
+<triggers>
+    <trigger name="Alias"/>
+    <trigger name="CatalogTypeId"/>
+    <trigger name="ContentText"/>
+    <trigger name="DateFields"/>
+    <trigger name="UserFields"/>
+    <trigger name="Status"/>
+    <trigger name="Customfields"/>
+    <trigger name="Metadata"/>
+    <trigger name="Parameters"/>
+    <trigger name="ViewAccess"/>
+</triggers>

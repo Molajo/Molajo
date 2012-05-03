@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Users" table="#__users" primary_key="id" data_source="JDatabase">
+<model name="Users"
+       table="#__users"
+       primary_key="id"
+       data_source="JDatabase">
     <filters>
         <filter name="id" filter="int" null="1" default="0"/>
         <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
@@ -19,39 +22,38 @@
         <filter name="metadata" filter="" null="1" default=""/>
     </filters>
     <fields>
-        <field name="custom_fields" registry="UserCustomFields">
-            <custom_fields name="gender" filter="char" null="1" default="" values="M,F"/>
-            <custom_fields name="about_me" filter="text" null="1" default=""/>
-            <custom_fields name="twitter" filter="url" null="1" default=""/>
-            <custom_fields name="editor" filter="int" null="0" default="1"/>
-            <custom_fields name="language" filter="char" null="0" default="en-GB" values="en-GB"/>
-            <custom_fields name="date_of_birth" filter="date" null="1" default=""/>
+        <field name="custom_fields" registry="UserCustomfields">
+            <element name="gender" filter="char" null="1" default="" values="M,F"/>
+            <element name="about_me" filter="text" null="1" default=""/>
+            <element name="twitter" filter="url" null="1" default=""/>
+            <element name="editor" filter="int" null="0" default="1"/>
+            <element name="language" filter="char" null="0" default="en-GB" values="en-GB"/>
+            <element name="date_of_birth" filter="date" null="1" default=""/>
         </field>
         <field name="parameters" registry="UserParameters">
-            <parameters name="display_gravatar" filter="boolean" null="0" default="0"/>
-            <parameters name="display_birthdate" filter="boolean" null="0" default="0"/>
-            <parameters name="display_email" filter="boolean" null="0" default="0"/>
-            <parameters name="page_view_id" filter="integer" null="1" default=""/>
-            <parameters name="theme_id" filter="integer" null="1" default=""/>
+            <element name="display_gravatar" filter="boolean" null="0" default="0"/>
+            <element name="display_birthdate" filter="boolean" null="0" default="0"/>
+            <element name="display_email" filter="boolean" null="0" default="0"/>
+            <element name="page_view_id" filter="integer" null="1" default=""/>
+            <element name="theme_id" filter="integer" null="1" default=""/>
         </field>
         <field name="metadata" registry="UserMetadata">
-            <metadata name="metadata_title" filter="char" null="0" default=""/>
-            <metadata name="metadata_description" filter="text" null="0" default=""/>
-            <metadata name="metadata_keywords" filter="char" null="1" default=""/>
-            <metadata name="metadata_robots" filter="char" null="0" default="follow,index"
-                      values="follow,nofollow,index,noindex"/>
-            <metadata name="metadata_author" filter="char" null="1" default=""/>
-            <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+            <element name="metadata_title" filter="char" null="0" default=""/>
+            <element name="metadata_description" filter="text" null="0" default=""/>
+            <element name="metadata_keywords" filter="char" null="1" default=""/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index"
+                     values="follow,nofollow,index,noindex"/>
+            <element name="metadata_author" filter="char" null="1" default=""/>
+            <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
     </fields>
-    <fks>
-        <fk name="catalog_type_id"
-            source_id="id"
-            source_model="CatalogTypes"
-            required="1"
-            message="USER_FK_CATALOG_TYPE"
+    <foreignkeys>
+        <foreignkey name="catalog_type_id"
+                    source_id="id"
+                    source_model="CatalogTypes"
+                    required="1"
                 />
-    </fks>
+    </foreignkeys>
     <children>
         <child name="UserApplications" join="id:user_id"/>
         <child name="UserGroups" join="id:user_id"/>
