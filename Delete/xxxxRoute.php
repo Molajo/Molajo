@@ -222,7 +222,7 @@ Class Route
         ) {
             Services::Registry()->set('Request', 'request_catalog_id',
                 Services::Registry()->get('Configuration', 'home_catalog_id', 0));
-            Services::Registry()->set('Request', 'request_url_home', true);
+            Services::Registry()->set('Request', 'home', true);
         }
 
         Services::Debug()->set('Application::Request()->checkHome complete');
@@ -369,9 +369,9 @@ Class Route
         if ((int)Services::Registry()->get('Request', 'request_catalog_id', 0)
             == Services::Registry()->get('Configuration', 'home_catalog_id', null)
         ) {
-            Services::Registry()->set('Request', 'request_url_home', true);
+            Services::Registry()->set('Request', 'home', true);
         } else {
-            Services::Registry()->set('Request', 'request_url_home', false);
+            Services::Registry()->set('Request', 'home', false);
         }
 
         Services::Registry()->set('Request', 'source_table', $row->source_table);
@@ -1348,7 +1348,7 @@ Class Route
 		Services::Registry()->set('Request', 'request_url_query', '');
 		Services::Registry()->set('Request', 'request_url', '');
 		Services::Registry()->set('Request', 'request_url_sef', '');
-		Services::Registry()->set('Request', 'request_url_home', false);
+		Services::Registry()->set('Request', 'home', false);
 
 		/** menu item data */
 		Services::Registry()->set('Request', 'menu_item_id', 0);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Content"
+        name="Articles"
         table="#__content"
         primary_key="id"
         data_source="JDatabase">
@@ -41,10 +41,10 @@
         <filter name="ordering" filter="int" null="0" default="0"/>
     </filters>
     <fields>
-        <field name="custom_fields" registry="ContentCustomFields">
+        <field name="custom_fields" registry="ArticlesCustomFields">
             <custom_fields name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
         </field>
-        <field name="parameters" registry="ContentParameters">
+        <field name="parameters" registry="ArticlesCustomFields">
             <parameters name="section" filter="char" null="1" default=" "/>
             <parameters name="display_suppress_no_results" filter="boolean" null="0" default="0"/>
             <parameters name="disable_view_access_check" filter="boolean" null="0" default="0"/>
@@ -55,7 +55,7 @@
             <parameters name="cache" filter="integer" null="1" default=""/>
             <parameters name="cache_time" filter="integer" null="1" default=""/>
         </field>
-        <field name="metadata" registry="ContentMetadata">
+        <field name="metadata" registry="ArticlesCustomFields">
             <metadata name="metadata_title" filter="char" null="0" default=""/>
             <metadata name="metadata_description" filter="text" null="0" default=""/>
             <metadata name="metadata_keywords" filter="char" null="1" default=""/>
@@ -63,6 +63,22 @@
                       values="follow,nofollow,index,noindex"/>
             <metadata name="metadata_author" filter="char" null="1" default=""/>
             <metadata name="metadata_content_rights" filter="char" null="1" default=""/>
+        </field>
+        <field name="extparameters" registry="ExtensionParameters">
+            <extparameters name="display_title" filter="char" null="0" default=""/>
+            <extparameters name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
+            <extparameters name="catalog_type_id" filter="integer" null="1" default="10000" values="10000" hidden="true"/>
+            <extparameters name="default_theme_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_page_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <extparameters name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <extparameters name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <extparameters name="cache_handler" filter="char" null="1" default="" values=""/>
         </field>
         <fks>
             <fk name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

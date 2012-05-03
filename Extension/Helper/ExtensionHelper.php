@@ -53,6 +53,47 @@ Class ExtensionHelper
 	}
 
 	/**
+	 * Retrieve Route information for a specific Extension
+	 *
+	 * @return    boolean
+	 * @since    1.0
+	 */
+	public function getRoute($extension_id)
+	{
+		/** Retrieve the query results */
+		$row = $this->get(0, $extension_id);
+
+		/** 404: routeRequest handles redirecting to error page */
+		if (count($row) == 0) {
+			return Services::Registry()->set('Route', 'status_found', false);
+		}
+
+		Services::Registry()->set('Extension', 'id', (int)$row->extension_instance_id);
+		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->extension_instance_id);
+		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set('Extension', 'title', $row->title);
+		Services::Registry()->set('Extension', 'row', $row);
+
+		$xml = Services::Registry()->loadFile(ucfirst(strtolower($row->title)), 'Table');
+
+		Services::Registry()->loadField(
+			'ExtensionMetadata',
+			'metadata',
+			$row->metadata,
+			$xml->fields->field[2]
+		);
+
+		Services::Registry()->loadField(
+			'ExtensionParameters',
+			'extparameters',
+			$row->parameters,
+			$xml->fields->field[3]
+		);
+
+		return;
+	}
+
+	/**
 	 * get
 	 *
 	 * Retrieves Extension data from the extension and extension instances
@@ -66,7 +107,7 @@ Class ExtensionHelper
 	 */
 	public function get($catalog_type_id = 0, $extension = null)
 	{
-		$m = Services::Model()->connect('Content');
+		$m = Services::Model()->connect('ExtensionInstances');
 
 		/**
 		 *  a. Extensions Instances Table
@@ -88,32 +129,32 @@ Class ExtensionHelper
 		$m->model->query->select($m->model->db->qn('a.ordering'));
 		$m->model->query->select($m->model->db->qn('a.language'));
 
-		$m->query->from($m->model->db->qn('#__extension_instances') . ' as a');
+		$m->model->query->from($m->model->db->qn('#__extension_instances') . ' as a');
 
-		$m->query->where($m->model->db->qn('a.extension_id') . ' > 0 ');
+		$m->model->query->where($m->model->db->qn('a.extension_id') . ' > 0 ');
 
 		/** extension specified by id, title or request for list */
 		if ((int)$extension > 0) {
-			$m->query->where('(a.' . $m->model->db->qn('a.id') . ' = ' . (int)$extension . ')');
+			$m->model->query->where('(' . $m->model->db->qn('a.id') . ' = ' . (int)$extension . ')');
 
 		} else if ($extension == null) {
 
 		} else {
-			$m->query->where('(a.' . $m->model->db->qn('a.title') . ' = ' . $m->model->db->q($extension) . ')');
-
+			$m->model->query->where('(' . $m->model->db->qn('a.title') . ' = ' . $m->model->db->q($extension) . ')');
 		}
+
 		if ((int)$catalog_type_id > 0) {
-			$m->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
+			$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
 		}
 
 		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 
 		$m->model->query->where('(a.start_publishing_datetime = ' .
-				$m->model->db->q($m->model->db->nullDate) .
+				$m->model->db->q($m->model->nullDate) .
 				' OR a.start_publishing_datetime <= ' . $m->model->db->q($m->model->now) . ')'
 		);
 		$m->model->query->where('(a.stop_publishing_datetime = ' .
-				$m->model->db->q($m->model->db->nullDate) .
+				$m->model->db->q($m->model->nullDate) .
 				' OR a.stop_publishing_datetime >= ' . $m->model->db->q($m->model->now) . ')'
 		);
 
@@ -130,7 +171,7 @@ Class ExtensionHelper
 		);
 
 		/** b_catalog_types. Catalog Types Table  */
-		$m->model->query->select($m->model->db->qn('a.b_catalog_types.title') . ' as catalog_type_title');
+		$m->model->query->select($m->model->db->qn('b_catalog_types.title') . ' as catalog_type_title');
 		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b_catalog_types');
 		$m->model->query->where('b_catalog.catalog_type_id = b_catalog_types.id');
 		$m->model->query->where('b_catalog_types.' .
@@ -157,6 +198,8 @@ Class ExtensionHelper
 		/**
 		 *  Run Query
 		 */
+//		echo $m->model->query->__toString();
+
 		$row = $m->execute('loadObject');
 
 		if (count($row) == 0) {
@@ -179,7 +222,7 @@ Class ExtensionHelper
 	 */
 	public function getInstanceID($catalog_type_id, $title)
 	{
-		$m = new EntryModel('ExtensionInstances');
+		$m = Services::Model()->connect('ExtensionInstances');
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('title') . ' = ' . $m->model->db->q($title));
@@ -200,7 +243,7 @@ Class ExtensionHelper
 	 */
 	public function getInstanceTitle($extension_instance_id)
 	{
-		$m = new EntryModel('ExtensionInstances');
+		$m = Services::Model()->connect('ExtensionInstances');
 
 		$m->model->query->select($m->model->db->qn('title'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$extension_instance_id);
