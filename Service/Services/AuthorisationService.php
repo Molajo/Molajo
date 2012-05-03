@@ -184,7 +184,7 @@ Class AuthorisationService
 	{
 
 		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Services::Registry()->get('Catalog', 'view_group_id'),
+		if (in_array(Services::Registry()->get('Route', 'view_group_id'),
 			Services::Registry()->get('User', 'ViewGroups'))
 		) {
 
@@ -205,7 +205,7 @@ Class AuthorisationService
 		/** verify other actions */
 		$authorised = $this->authoriseTask(
 			Services::Registry()->get('Request', 'action'),
-			Services::Registry()->get('Catalog', 'id')
+			Services::Registry()->get('Route', 'id')
 		);
 
 		Services::Registry()->set('Request', 'status_authorised', $authorised);

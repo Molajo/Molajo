@@ -188,18 +188,10 @@ Class RegistryService
 		}
 
 		/** Look for the key value requested */
-		$found = false;
-		while (list($existingKey, $existingValue) = each($array)) {
-			if (strtolower($existingKey) == strtolower($key)) {
-				$found = true;
-				break;
-			}
-		}
-
-		/** Create the entry, if not found, and set it to default */
-		if ($found == true) {
+		if (isset($array[$key])) {
 
 		} else {
+		/** Create the entry, if not found, and set it to default */
 			$array[$key] = $default;
 			$this->registry[$namespace] = $array;
 		}
@@ -254,7 +246,6 @@ Class RegistryService
 	 */
 	public function copy($copyThis, $intoThis)
 	{
-
 		/** Get (or create) the Registry that will be copied */
 		$copy = $this->getRegistry($copyThis);
 
