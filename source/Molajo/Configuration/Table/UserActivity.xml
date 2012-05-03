@@ -20,10 +20,9 @@
     <triggers>
         <trigger name="Action"/>
     </triggers>
-    <fks>
-        <fk name="user_id" source_id="id" source_model="Users" required="1"/>
-        <fk name="action_id" source_id="id" source_model="Actions" required="1"/>
-        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-    </fks>
+    <foreignkeys>
+        <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+        <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
+        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+    </foreignkeys>
 </model>
-

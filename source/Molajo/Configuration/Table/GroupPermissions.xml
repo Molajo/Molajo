@@ -10,10 +10,10 @@
         <filter name="catalog_id" filter="int" null="0" default=""/>
         <filter name="action_id" filter="int" null="0" default=""/>
     </filters>
-    <fks>
-        <fk name="group_id" source_id="id" source_model="Content" required="1"/>
-        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-        <fk name="action_id" source_id="id" source_model="Actions" required="1"/>
-    </fks>
+    <foreignkeys>
+        <foreignkey name="group_id" source_id="id" source_model="Content" required="1"/>
+        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+        <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
+    </foreignkeys>
 </model>
 

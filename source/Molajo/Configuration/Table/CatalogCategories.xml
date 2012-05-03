@@ -8,9 +8,9 @@
         <filter name="catalog_id" filter="int" null="0" default=""/>
         <filter name="category_id" filter="int" null="0" default=""/>
     </filters>
-    <fks>
-        <fk name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-        <fk name="category_id" source_id="id" source_model="Content" required="1"/>
-    </fks>
+    <foreignkeys>
+        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+        <foreignkey name="category_id" source_id="id" source_model="Content" required="1"/>
+    </foreignkeys>
 </model>
 

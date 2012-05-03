@@ -8,9 +8,9 @@
         <filter name="user_id" filter="int" null="0" default=""/>
         <filter name="application_id" filter="int" null="0" default=""/>
     </filters>
-    <fks>
-        <fk name="user_id" source_id="id" source_model="Users" required="1"/>
-        <fk name="application_id" source_id="id" source_model="Applications" required="1"/>
-    </fks>
+    <foreignkeys>
+        <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+        <foreignkey name="application_id" source_id="id" source_model="Applications" required="1"/>
+    </foreignkeys>
 </model>
 
