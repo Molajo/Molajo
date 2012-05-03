@@ -104,10 +104,11 @@ Class ConfigurationService
 		$m = Services::Model()->connect('Sites');
 
 		$m->model->set('id', (int)SITE_ID);
-		$m->model->set('return_fields', true);
-		$m->model->set('return_children', false);
+		$m->model->set('get_item_children', false);
+        $m->model->set('use_special_joins', false);
 
 		$items = $m->execute('load');
+
 		if ($items === false) {
 			throw new \RuntimeException ('Application setSiteData() query problem');
 		}
@@ -132,7 +133,6 @@ Class ConfigurationService
 	 */
 	public function setSitePaths()
 	{
-
 		if (defined('SITE_NAME')) {
 		} else {
 			define('SITE_NAME',
@@ -203,8 +203,8 @@ Class ConfigurationService
 
 				$m->model->set('id_name', APPLICATION);
 				$m->model->set('name_field', 'name');
-				$m->model->set('return_fields', true);
-				$m->model->set('return_children', false);
+				$m->model->set('get_item_children', false);
+                $m->model->set('use_special_joins', false);
 
 				$items = $m->execute('load');
 

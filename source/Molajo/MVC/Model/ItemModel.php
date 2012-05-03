@@ -23,215 +23,368 @@ defined('MOLAJO') or die;
  */
 class ItemModel extends Model
 {
-	/**
-	 * Constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		return parent::__construct();
-	}
+    /**
+     * Constructor.
+     *
+     * @since  1.0
+     */
+    public function __construct()
+    {
+        return parent::__construct();
+    }
 
-	/**
-	 * load
-	 *
-	 * Method to load a specific item from a specific model.
-	 * Creates and runs the database query, allows for additional data,
-	 * and returns integrated data as the item requested
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function load()
-	{
-		$this->setLoadQuery();
+    /**
+     * load
+     *
+     * Method to load a specific item from a specific model.
+     * Creates and runs the database query, allows for additional data,
+     * and returns integrated data as the item requested
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function load()
+    {
 
-		$this->runLoadQuery();
+        $this->query = $this->db->getQuery(true);
 
-		/** Process special fields for data source */
-		if ($this->return_fields == true) {
-			$this->returnFields();
-		}
+        /** Base query */
+        $this->setLoadQuery();
 
-		/** Process special fields for data source */
-		if ($this->return_children == true) {
-			$this->getLoadAdditionalData();
-		}
+        /** Joins */
+        if ($this->use_special_joins == true) {
+            $this->addSpecialJoins();
+        }
 
-		return $this->query_results;
-	}
+        /** Execute Query */
+        $this->runLoadQuery();
 
-	/**
-	 * setLoadQuery
-	 *
-	 * Retrieve all elements of the specific table for a specific item
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	protected function setLoadQuery()
-	{
-		$this->query = $this->db->getQuery(true);
+        /** Load Special Fields in Registry */
+        if ($this->get_special_fields == true) {
+            $this->addSpecialFields();
+        }
 
-		$this->query->select(' * ');
-		$this->query->from($this->db->qn($this->table_name));
+        /** Retrieve Child Objects  */
+        if ($this->get_item_children == true) {
+            $this->addItemChildren();
+        }
 
-		if ((int)$this->id > 0) {
-			$this->query->where(
-				$this->db->qn($this->primary_key)
-					. ' = '
-					. $this->db->q($this->id));
-		} else {
-			$this->query->where(
-				$this->db->qn($this->name_field)
-					. ' = '
-					. $this->db->q($this->id_name));
-		}
-		$this->db->setQuery($this->query->__toString());
+        /** Return Query Results */
+        return $this->query_results;
+    }
 
-		return $this;
-	}
+    /**
+     * setLoadQuery
+     *
+     * Retrieve all elements of the specific table for a specific item
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function setLoadQuery()
+    {
+        $columns = $this->getFieldNames();
+echo $this->table_name.'<br />';
+        for ($i = 0; $i < count($columns); $i++) {
+            $this->query->select($this->db->qn('a.'.$columns[$i]));
+        }
 
-	/**
-	 * runLoadQuery
-	 *
-	 * Execute query and returns an associative array of data elements
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	protected function runLoadQuery()
-	{
-		/** Run the query */
-		$this->query_results = $this->db->loadAssoc();
+        $this->query->from($this->db->qn($this->table_name).' as a');
 
-		/** Record Not found */
-		if (empty($this->query_results)) {
+        if ((int)$this->id > 0) {
+            $this->query->where(
+                $this->db->qn($this->primary_key)
+                    . ' = '
+                    . $this->db->q($this->id));
+        } else {
+            $this->query->where(
+                $this->db->qn($this->name_field)
+                    . ' = '
+                    . $this->db->q($this->id_name));
+        }
 
-			$this->query_results = array();
+        return $this;
+    }
 
-			/** Table Columns */
-			$columns = $this->getFieldNames();
+    /**
+     * addSpecialJoins
+     *
+     * Use joins defined in table xml to extend model
+     *
+     * @return  array
+     * @since   1.0
+     */
+    protected function addSpecialJoins()
+    {
+        $joins = $this->table_xml->joins;
 
-			for ($i = 0; $i < count($columns); $i++) {
-				$this->query_results[$columns[$i]] = '';
-			}
-		}
+        if (count($joins->join) > 0) {
 
-		return $this;
-	}
+            foreach ($joins->join as $join) {
 
-	/**
-	 * Process fields for data source
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	protected function returnFields()
-	{
-		$fields = $this->table_xml->fields;
+                $join_table = (string)$join['table'];
+                $alias = (string)$join['alias'];
+                $select = (string)$join['select'];
+                $joinTo = (string)$join['jointo'];
+                $joinWith = (string)$join['joinwith'];
 
-		if (count($fields->field) > 0) {
+                /* Join to table */
+                if (trim($alias) == '') {
+                    $alias = $join_table;
+                }
+                $this->query->from($this->db->qn($alias . '.' . $join_table));
 
-			foreach ($fields->field as $field) {
+                /* Select fields */
+                $selectArray = explode(',', $select);
+                if (count($selectArray) > 0) {
+                    foreach ($selectArray as $selectItem) {
+                        $this->query->select($this->db->qn($alias . '.' . $selectItem));
+                    }
+                }
 
-				$field_name = (string)$field['name'];
-				$registry = (string)$field['registry'];
+                /* joinTo and joinWith Fields */
+                $joinToArray = explode(',', $joinTo);
+                $joinWithArray = explode(',', $joinWith);
 
-				Services::Registry()->loadField(
-					$registry,
-					$field_name,
-					$this->query_results[$field_name],
-					$field
-				);
-			}
-		}
-	}
+                if (count($joinToArray) > 0) {
+                    $i = 0;
+                    foreach ($joinToArray as $joinToItem) {
+                        $with = $joinWith[$i];
+                        $hasAlias = explode('.', $with);
+                        if (count($hasAlias) == 1) {
+                            $withJoin = 'a.' . $with;
+                        } else {
+                            $withJoin = $with;
+                        }
+                        $this->query->where($this->db->qn($alias . '.' . $joinToItem) . ' = ' . $this->db->qn($with));
+                        $i++;
+                    }
+                }
+            }
+        }
+        return $this;
+    }
 
-	/**
-	 * getAdditionalData
-	 *
-	 * Method to append additional data elements needed to the standard
-	 * array of elements provided by the data source
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	protected function getLoadAdditionalData()
-	{
-		$children = $this->table_xml->children;
 
-		if (count($children->child) > 0) {
+    /**
+     * runLoadQuery
+     *
+     * Execute query and returns an associative array of data elements
+     *
+     * @return  array
+     * @since   1.0
+     */
+    protected function runLoadQuery()
+    {
+        /** Run the query */
+        $this->db->setQuery($this->query->__toString());
 
-			foreach ($children->child as $child) {
+        $this->query_results = $this->db->loadAssoc();
 
-				$name = (string)$child['name'];
+        /** Record Not found */
+        if (empty($this->query_results)) {
 
-				$a = Services::Model()->connect($name);
+            $this->query_results = array();
 
-				$join = (string)$child['join'];
-				$joinArray = explode(';', $join);
+            /** Table Columns */
+            $columns = $this->getFieldNames();
 
-				foreach ($joinArray as $where) {
+            for ($i = 0; $i < count($columns); $i++) {
+                $this->query_results[$columns[$i]] = '';
+            }
+        }
 
-					$whereArray = explode(':', (string)$where);
+        return $this;
+    }
 
-					$targetField = $whereArray[1];
-					$sourceField = $whereArray[0];
+    /**
+     * addSpecialFields
+     *
+     * Method used in load sequence to optionally expand special fields
+     * for Item, either into the Registry or so that the fields can be used
+     * normally
+     * 
+     * @return  array
+     * @since   1.0
+     */
+    protected function addSpecialFields()
+    {
+        $fields = $this->table_xml->fields;
 
-					$a->model->query->where($a->model->db->qn($targetField)
-						. ' = '
-						. (int)$this->query_results[$sourceField]);
-				}
+        if (count($fields->field) > 0) {
 
-				$this->query_results['Model\\' . $name] = $a->execute('loadObjectList');
-			}
-		}
+            /** Process each field namespace  */
+            foreach ($fields->field as $ns) {
 
-		/** return array containing primary query and additional data elements */
-		return $this;
-	}
+                $field_name = (string)$ns['name'];
+                $namespace = (string)$ns['registry'];
+                $data = $this->query_results[$field_name];
 
-	/**
-	 * store
-	 *
-	 * Method to store a row (insert: no PK; update: PK) in the database.
-	 *
-	 * @param   boolean True to update fields even if they are null.
-	 *
-	 * @return  boolean  True on success.
-	 * @since   1.0
-	 */
-	public function store()
-	{
-		/**
-		echo '<pre>';
-		var_dump($this->row);
-		echo '</pre>';
-		 */
-		if ((int)$this->id == 0) {
-			$stored = $this->db->insertObject(
-				$this->table_name, $this->row, $this->primary_key);
-		} else {
-			$stored = $this->db->updateObject(
-				$this->table_name, $this->row, $this->primary_key);
-		}
+                $elementArray = array();
 
-		if ($stored) {
+                /** Decode JSON into object */
+                $jsonData = json_decode($data);
 
-		} else {
+                /** Place field names into named pair array */
+                $lookup = array();
+
+                if (count($jsonData) > 0) {
+                    foreach ($jsonData as $key => $value) {
+                        $lookup[$key] = $value;
+                    }
+                }
+
+                if (count($ns->element) > 0) {
+
+                    foreach ($ns->element as $element) {
+
+                        $name = (string)$element['name'];
+                        $name = strtolower($name);
+                        $dataType = (string)$element['filter'];
+                        $null = (string)$element['null'];
+                        $default = (string)$element['default'];
+                        $values = (string)$element['values'];
+
+                        if ($default == '') {
+                            $default = null;
+                        }
+
+                        /** Use value, if exists, or defined default */
+                        if (isset($lookup[$name])) {
+                            $set = $lookup[$name];
+                        } else {
+                            $set = $default;
+                        }
+
+                        /** Filter Input and Save the Registry */
+                        //$set = $this->filterInput($name, $set, $dataType, $null, $default);
+                        //echo 'name '.$name.' '.$set.'<br />';
+                        /** Place into Registry */
+                        Services::Registry()->set($namespace, $name, $set);
+
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * filterInput
+     *
+     * @param   string  $name         Name of input field
+     * @param   string  $field_value  Value of input field
+     * @param   string  $dataType     Datatype of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function filterInput(
+        $name, $value, $dataType, $null = null, $default = null)
+    {
+
+        try {
+            $value = Services::Filter()
+                ->filter(
+                $value,
+                $dataType,
+                $null,
+                $default
+            );
+
+        } catch (\Exception $e) {
+            //todo: errors
+            echo $e->getMessage() . ' ' . $name;
+        }
+
+        return $value;
+    }
+
+
+    /**
+     * addItemChildren
+     *
+     * Method to append additional data elements needed to the standard
+     * array of elements provided by the data source
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function addItemChildren()
+    {
+        $children = $this->table_xml->children;
+
+        if (count($children->child) > 0) {
+
+            foreach ($children->child as $child) {
+
+                $name = (string)$child['name'];
+
+                $a = Services::Model()->connect($name);
+
+                $join = (string)$child['join'];
+                $joinArray = explode(';', $join);
+
+                foreach ($joinArray as $where) {
+
+                    $whereArray = explode(':', (string)$where);
+
+                    $targetField = $whereArray[1];
+                    $sourceField = $whereArray[0];
+
+                    $a->model->query->where($a->model->db->qn($targetField)
+                        . ' = '
+                        . (int)$this->query_results[$sourceField]);
+                }
+
+                $this->query_results['Model\\' . $name] = $a->execute('loadObjectList');
+            }
+        }
+
+        /** return array containing primary query and additional data elements */
+        return $this;
+    }
+
+    /**
+     * store
+     *
+     * Method to store a row (insert: no PK; update: PK) in the database.
+     *
+     * @param   boolean True to update fields even if they are null.
+     *
+     * @return  boolean  True on success.
+     * @since   1.0
+     */
+    public function store()
+    {
+        /**
+        echo '<pre>';
+        var_dump($this->row);
+        echo '</pre>';
+         */
+        if ((int)$this->id == 0) {
+            $stored = $this->db->insertObject(
+                $this->table_name, $this->row, $this->primary_key);
+        } else {
+            $stored = $this->db->updateObject(
+                $this->table_name, $this->row, $this->primary_key);
+        }
+
+        if ($stored) {
+
+        } else {
 
 //			throw new \Exception(
 //				. ' '. $this->db->getErrorMsg()
 //			);
-		}
-		/**
-		if ($this->_locked) {
-		$this->_unlock();
-		}
-		 */
+        }
+        /**
+        if ($this->_locked) {
+        $this->_unlock();
+        }
+         */
 
-		return true;
-	}
+        return true;
+    }
 }

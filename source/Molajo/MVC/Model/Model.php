@@ -45,21 +45,29 @@ class Model
 	 */
 	public $table_xml;
 
-	/**
-	 * Load fields in registry flag
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $return_fields = true;
+    /**
+     * Load: special joins flag
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $use_special_joins = false;
 
 	/**
-	 * Return child data flag
+	 * Load: special fields in registry flag
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $return_children = true;
+	public $get_special_fields = true;
+
+	/**
+	 * Load: return child data flag
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $get_item_children = true;
 
 	/**
 	 * Name of the primary key for the model table
@@ -448,6 +456,20 @@ class Model
 		$this->query = $this->db->getQuery(true);
 	}
 
+    /**
+     * addSpecialJoins
+     *
+     * Method used in load sequence to optionally append additional
+     * joins to the primary table and add fields from those tables
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function addSpecialJoins()
+    {
+        return $this->query_results = array();
+    }
+
 	/**
 	 * runLoadQuery
 	 *
@@ -463,18 +485,33 @@ class Model
 	}
 
 	/**
-	 * getLoadAdditionalData
+	 * addSpecialFields
 	 *
-	 * Method used in load sequence to optionally append additional
-	 * data elements to a specific item
+	 * Method used in load sequence to optionally expand special fields
+	 * for Item, either into the Registry or so that the fields can be used
+     * normally
 	 *
 	 * @return array
 	 * @since  1.0
 	 */
-	protected function getLoadAdditionalData()
+	protected function addSpecialFields()
 	{
 		return $this->query_results = array();
 	}
+
+    /**
+     * getLoadAdditionalData
+     *
+     * Method used in load sequence to optionally append additional
+     * data elements to a specific item
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function addItemChildren()
+    {
+        return $this->query_results = array();
+    }
 
 	/**
 	 * getData

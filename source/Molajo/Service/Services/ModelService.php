@@ -144,7 +144,6 @@ Class ModelService
 	 */
 	public function connect($table = null)
 	{
-
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === null)  {
 		}  else {
@@ -169,6 +168,9 @@ Class ModelService
 		$this->model->set('table_xml', $this->table_xml);
 		$this->model->set('primary_key', $this->primary_key);
 		$this->model->set('primary_prefix', 'a');
+        $this->model->set('get_special_fields', true);
+        $this->model->set('get_item_children', true);
+        $this->model->set('use_special_joins', true);
 
 		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));
@@ -195,7 +197,6 @@ Class ModelService
 	 */
 	protected function setModelTable($table)
 	{
-
 		$this->table_xml = Services::Registry()->loadFile($table, 'Table');
 
 		$this->model_name = (string)$this->table_xml['name'];
@@ -244,8 +245,7 @@ Class ModelService
 		}
 
 		catch (\Exception $e) {
-
-			throw new \RuntimeException('Model query failed for ' .$query_object . ' Error: ' . $e->getMessage());
+			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
 		}
 
 		return $results;

@@ -3,8 +3,8 @@
     <site>
         <id>1</id>
         <name>Primary</name>
-        <base>localhost/molajo/source/</base>
-        <folderpath>/Users/AmyStephen/Sites/molajo/source/Site/1</folderpath>
+        <base>localhost/Molajo/source/</base>
+        <folderpath>/Users/AmyStephen/Sites/Molajo/source/Site/1</folderpath>
         <appendtobaseurl>/Site/1</appendtobaseurl>
     </site>
 </sites>
