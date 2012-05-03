@@ -19,7 +19,7 @@
 
     <registry>Request</registry>
 
-    <registry>Catalog</registry>
+    <registry>Route</registry>
 
     <registry>Menuitem</registry>
 
@@ -27,6 +27,11 @@
     <registry>ExtensionCustomfields</registry>
     <registry>ExtensionMetadata</registry>
     <registry>ExtensionParameters</registry>
+
+    <registry>Category</registry>
+    <registry>CategoryCustomfields</registry>
+    <registry>CategoryMetadata</registry>
+    <registry>CategoryParameters</registry>
 
     <registry>Content</registry>
     <registry>ContentCustomfields</registry>

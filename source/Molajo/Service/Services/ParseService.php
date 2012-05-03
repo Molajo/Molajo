@@ -44,7 +44,6 @@ Class ParseService
      * $final
      *
      * Indicator of final processing for includes
-     * (which means clean up of unfound includes can take place)
      *
      * @var boolean
      * @since 1.0

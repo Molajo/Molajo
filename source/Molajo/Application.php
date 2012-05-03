@@ -6,8 +6,6 @@
  */
 namespace Molajo;
 
-use Molajo\MVC\Model\EntryModel;
-
 use Molajo\Extension\Helpers;
 
 use Molajo\Service\Services;
@@ -326,7 +324,7 @@ Class Application
 	 */
 	protected function display()
 	{
-		$this->rendered_output = Services::Parse()->parse();
+		$this->rendered_output = Services::Parse()->process();
 		return $this;
 	}
 
