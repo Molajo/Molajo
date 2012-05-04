@@ -105,7 +105,7 @@ Class RouteService
 		} else {
 			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Successful');
 		}
-echo 'asdfasdf';
+
 		/**  Get Route Information: Catalog  */
 		$continue = Helpers::Catalog()->getRoute();
 
@@ -359,6 +359,11 @@ echo 'asdfasdf';
 	 */
 	protected function getRouteParameters()
 	{
+		echo '<br /><br /><pre>';
+		echo 'Route<br />';
+		var_dump(Services::Registry()->get('Route'));
+		echo '</pre>';
+
 		/**  Menu Item  */
 		if (Services::Registry()->get('Route', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
 			$response = Helpers::Menuitem()->getRoute();

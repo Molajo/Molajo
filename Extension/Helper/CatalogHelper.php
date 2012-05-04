@@ -62,41 +62,39 @@ Class CatalogHelper
 	 */
 	public function getRoute()
 	{
-        echo 'here';
-die;
+
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'id'),
 			Services::Registry()->get('Route', 'request_url_query'),
 			Services::Registry()->get('Route', 'source_id')
 		);
-var_dump($row);
-        die;
+
 		/** 404: routeRequest handles redirecting to error page */
-		if (count($row) == 0 || (int)$row->routable == 0) {
+		if (count($row) == 0 || (int)$row['id'] == 0) {
 			Services::Registry()->set('Route', 'status_found', false);
 			return false;
 		}
 
 		/** Redirect: routeRequest handles rerouting the request */
-		if ((int)$row->redirect_to_id == 0) {
+		if ((int)$row['redirect_to_id'] == 0) {
 		} else {
-			Services::Registry()->set('Route', 'redirect_to_id', (int)$row->redirect_to_id);
+			Services::Registry()->set('Route', 'redirect_to_id', (int)$row['redirect_to_id']);
 			return false;
 		}
 
 		/** Catalog Registry */
-		Services::Registry()->set('Route', 'id', (int)$row->id);
-		Services::Registry()->set('Route', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Route', 'catalog_type', $row->catalog_type);
-		Services::Registry()->set('Route', 'source_table', $row->source_table);
-		Services::Registry()->set('Route', 'source_id', (int)$row->source_id);
-		Services::Registry()->set('Route', 'primary_category_id', (int)$row->primary_category_id);
-		Services::Registry()->set('Route', 'sef_request', $row->sef_request);
-		Services::Registry()->set('Route', 'request', $row->request);
-		Services::Registry()->set('Route', 'redirect_to_id', (int)$row->redirect_to_id);
-		Services::Registry()->set('Route', 'routable', (int)$row->routable);
-		Services::Registry()->set('Route', 'view_group_id', (int)$row->view_group_id);
+		Services::Registry()->set('Route', 'id', (int)$row['id']);
+		Services::Registry()->set('Route', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Route', 'catalog_type', $row['title']);
+		Services::Registry()->set('Route', 'source_table', $row['source_table']);
+		Services::Registry()->set('Route', 'source_id', (int)$row['source_id']);
+		Services::Registry()->set('Route', 'primary_category_id', (int)$row['primary_category_id']);
+		Services::Registry()->set('Route', 'sef_request', $row['sef_request']);
+		Services::Registry()->set('Route', 'request',  $row['request']);
+		Services::Registry()->set('Route', 'redirect_to_id', (int) $row['redirect_to_id']);
+		Services::Registry()->set('Route', 'routable', (int)$row['routable']);
+		Services::Registry()->set('Route', 'view_group_id', (int)$row['view_group_id']);
 
 		/** home */
 		if ((int)Services::Registry()->get('Route', 'id')
@@ -123,63 +121,37 @@ var_dump($row);
 	 */
 	public function get($catalog_id = 0, $sef_request = '', $source_id = 0, $catalog_type_id = 0)
 	{
-        echo 'here';
+		if ((int)$catalog_id > 0) {
+			$catalog_id = (int)$catalog_id;
 
-        if ((int) $catalog_id == 0) {
-            $catalog_id = (int)$catalog_id;
-
-        } else if ((int)$source_id > 0 && (int)$catalog_type_id > 0) {
-            $catalog_id = $this->getID((int)$catalog_type_id, (int)$source_id);
+		} else if ((int)$source_id > 0 && (int)$catalog_type_id > 0) {
+			$catalog_id = $this->getID((int)$catalog_type_id, (int)$source_id);
 
 		} else {
-            $catalog_id = $this->getIDUsingSEFURL($sef_request);
-
+			$catalog_id = $this->getIDUsingSEFURL($sef_request);
 		}
 
-        $m = Services::Model()->connect('Catalog');
-echo $catalog_id;
-        die;
-        $m->model->set('id', (int)$catalog_id);
-        $m->model->set('get_item_children', false);
-        $m->model->set('get_special_fields', false);
+		$m = Services::Model()->connect('Catalog');
 
-        $row = $m->execute('load');
+		$m->model->set('id', (int)$catalog_id);
+		$m->model->set('get_item_children', false);
+		$m->model->set('get_special_fields', false);
+		$m->model->set('add_acl_check', false);
+
+		$row = $m->execute('load');
 
 		if (count($row) == 0) {
 			return array();
 		}
 
-		$row->request = 'index.php?id=' . (int)$row->id;
+		$row['request'] = 'index.php?id=' . (int)$row['id'];
 
-		if ((int)$source_id > 0) {
-
-		} else if ((int)$catalog_id == 0) {
-
-		} else {
-
-			if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
-
-				if ($row->id == $catalog_id
-				) {
-				} else {
-					$row->redirect_to_id = (int)$row->id;
-				}
+		if ($row['id'] == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+			if ($catalog_id == 0) {
 
 			} else {
-				if ($row->id == $catalog_id) {
-
-				} else {
-					$row->redirect_to_id = (int)$row->id;
-				}
-			}
-
-			if ($row->id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
-				if ($catalog_id == 0) {
-
-				} else {
-					$row->redirect_to_id =
-						Services::Registry()->get('Configuration', 'home_catalog_id', 0);
-				}
+				$row->redirect_to_id =
+					Services::Registry()->get('Configuration', 'home_catalog_id', 0);
 			}
 		}
 
@@ -187,27 +159,26 @@ echo $catalog_id;
 	}
 
 
-    /**
-     * getIDUsingSEFURL - Retrieves Catalog ID
-     *
-     * @param  null $catalog_type_id
-     * @param  null $source_id
-     *
-     * @return bool|mixed
-     * @since  1.0
-     */
-    public function getIDUsingSEFURL($sef_request)
-    {
-        $m = Services::Model()->connect('Catalog');
+	/**
+	 * getIDUsingSEFURL - Retrieves Catalog ID
+	 *
+	 * @param  null $catalog_type_id
+	 * @param  null $source_id
+	 *
+	 * @return bool|mixed
+	 * @since  1.0
+	 */
+	public function getIDUsingSEFURL($sef_request)
+	{
+		$m = Services::Model()->connect('Catalog');
 
-        $m->model->query->select($m->model->db->qn('id'));
-        $m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q('sef_request'));
+		$m->model->query->select($m->model->db->qn('id'));
+		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($sef_request));
 
-        return $m->execute('loadResult');
-    }
+		return $m->execute('loadResult');
+	}
 
-
-    /**
+	/**
 	 * getID - Retrieves Catalog ID
 	 *
 	 * @param  null $catalog_type_id

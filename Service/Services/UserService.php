@@ -72,6 +72,8 @@ Class UserService
 		$m = Services::Model()->connect('Users');
 
 		$m->model->set('id', $this->id);
+		$m->model->set('use_special_joins', false);
+		$m->model->set('add_acl_check', false);
 
 		$results = $m->execute('load');
 

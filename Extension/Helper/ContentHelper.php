@@ -15,17 +15,17 @@ defined('MOLAJO') or die;
 /**
  * ContentHelper
  *
- * @package       Molajo
- * @subpackage    Helper
- * @since         1.0
+ * @package      Molajo
+ * @subpackage   Helper
+ * @since        1.0
  */
 Class ContentHelper
 {
 	/**
 	 * Static instance
 	 *
-	 * @var    object
-	 * @since  1.0
+	 * @var     object
+	 * @since   1.0
 	 */
 	protected static $instance;
 
@@ -33,8 +33,8 @@ Class ContentHelper
 	 * getInstance
 	 *
 	 * @static
-	 * @return bool|object
-	 * @since  1.0
+	 * @return  bool|object
+	 * @since   1.0
 	 */
 	public static function getInstance()
 	{
@@ -74,31 +74,12 @@ Class ContentHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Content', 'id', (int)$row->id);
-		Services::Registry()->set('Content', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Content', 'extension_instance_id', (int)$row->extension_instance_id);
-		Services::Registry()->set('Content', 'title', $row->title);
-		Services::Registry()->set('Content', 'translation_of_id', (int)$row->translation_of_id);
-		Services::Registry()->set('Content', 'language', (string)$row->language);
-
-		$xml = Services::Registry()->loadFile(
-			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type'))),
-			'Table'
-		);
-
-		Services::Registry()->loadField(
-			'ContentMetadata',
-			'metadata',
-			$row->metadata,
-			$xml->fields->field[2]
-		);
-
-		Services::Registry()->loadField(
-			'ContentParameters',
-			'parameters',
-			$row->parameters,
-			$xml->fields->field[1]
-		);
+		Services::Registry()->set('Content', 'id', (int)$row['id']);
+		Services::Registry()->set('Content', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Content', 'extension_instance_id', (int)$row['extension_instance_id']);
+		Services::Registry()->set('Content', 'title', $row['title']);
+		Services::Registry()->set('Content', 'translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Content', 'language', (string)$row['language']);
 
 		return true;
 	}
@@ -117,34 +98,21 @@ Class ContentHelper
 			Services::Registry()->get('Route', 'primary_category_id'),
 			'#__content'
 		);
-
+echo '<pre>Category';
+var_dump($row);
+die;
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Category', 'id', (int)$row->id);
-		Services::Registry()->set('Category', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Category', 'title', $row->title);
-		Services::Registry()->set('Category', 'translation_of_id', (int)$row->translation_of_id);
-		Services::Registry()->set('Category', 'language', (string)$row->language);
-		Services::Registry()->set('Category', 'row', $row);
+		Services::Registry()->set('Category', 'id', (int)$row['id']);
+		Services::Registry()->set('Category', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Category', 'title', $row['title']);
+		Services::Registry()->set('Category', 'translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Category', 'language', (string)$row['language']);
 
 		$xml = Services::Registry()->loadFile('Category', 'Table');
-
-		Services::Registry()->loadField(
-			'CategoryMetadata',
-			'metadata',
-			$row->metadata,
-			$xml->fields->field[2]
-		);
-
-		Services::Registry()->loadField(
-			'CategoryParameters',
-			'parameters',
-			$row->parameters,
-			$xml->fields->field[1]
-		);
 
 		return true;
 	}
@@ -157,7 +125,16 @@ Class ContentHelper
      */
     public function get($id, $content_table)
     {
-        $m = Services::Model()->connect('Catalog');
+		$m = Services::Model()->connect(
+			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
+		);
+
+		$m->model->set('id', (int)$id);
+
+		$m->model->set('get_special_fields', true);
+		$m->model->set('get_item_children', false);
+		$m->model->set('use_special_joins', false);
+		$m->model->set('add_acl_check', true);
 
 		$m->model->query->select($m->model->db->qn('a.id'));
 		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
@@ -185,21 +162,10 @@ Class ContentHelper
                 $m->model->db->q($m->model->now) . ')'
         );
 
-        /** Catalog Join and View Access Check */
-        Services::Authorisation()->setQueryViewAccess(
-            $m->model->query,
-            $m->model->db,
-            array('join_to_prefix' => 'a',
-                'join_to_primary_key' => 'id',
-                'catalog_prefix' => 'b_catalog',
-                'select' => true
-            )
-        );
-
 		/**
 		 *  Run Query
 		 */
-		$row = $m->execute('loadObject');
+		$row = $m->execute('load');
 
 		if (count($row) == 0) {
 			return array();

@@ -29,4 +29,3 @@
         <foreignkey name="primary_category_id" source_id="id" source_model="CatalogCategories" required="1"/>
     </foreignkeys>
 </model>
-
