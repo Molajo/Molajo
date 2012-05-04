@@ -70,6 +70,14 @@ class Model
 	public $get_item_children = true;
 
 	/**
+	 * Load: add ACL check
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $add_acl_check = true;
+
+	/**
 	 * Name of the primary key for the model table
 	 *
 	 * @var    string

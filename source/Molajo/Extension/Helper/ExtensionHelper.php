@@ -68,11 +68,12 @@ Class ExtensionHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Extension', 'id', (int)$row->extension_instance_id);
-		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->extension_instance_id);
-		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Extension', 'title', $row->title);
-		Services::Registry()->set('Extension', 'row', $row);
+		Services::Registry()->set('Extension', 'id', (int)$row['extension_instance_id']);
+		Services::Registry()->set('Route', 'extension_instances_id', (int)$row['extension_instance_id']);
+		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Extension', 'title', $row['title']);
+		Services::Registry()->set('Extension', 'parameters', $row['parameters']);
+		Services::Registry()->set('Extension', 'metadata', $row['metadata']);
 
 		$xml = Services::Registry()->loadFile(ucfirst(strtolower($row->title)), 'Table');
 
@@ -116,36 +117,14 @@ Class ExtensionHelper
 
 		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
 		$m->model->query->select($m->model->db->qn('a.title'));
-		$m->model->query->select($m->model->db->qn('a.subtitle'));
-		$m->model->query->select($m->model->db->qn('a.alias'));
-		$m->model->query->select($m->model->db->qn('a.content_text'));
-		$m->model->query->select($m->model->db->qn('a.protected'));
-		$m->model->query->select($m->model->db->qn('a.featured'));
-		$m->model->query->select($m->model->db->qn('a.stickied'));
-		$m->model->query->select($m->model->db->qn('a.status'));
-		$m->model->query->select($m->model->db->qn('a.custom_fields'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
 		$m->model->query->select($m->model->db->qn('a.metadata'));
-		$m->model->query->select($m->model->db->qn('a.ordering'));
 		$m->model->query->select($m->model->db->qn('a.language'));
 
 		$m->model->query->from($m->model->db->qn('#__extension_instances') . ' as a');
 
 		$m->model->query->where($m->model->db->qn('a.extension_id') . ' > 0 ');
 
-		/** extension specified by id, title or request for list */
-		if ((int)$extension > 0) {
-			$m->model->query->where('(' . $m->model->db->qn('a.id') . ' = ' . (int)$extension . ')');
-
-		} else if ($extension == null) {
-
-		} else {
-			$m->model->query->where('(' . $m->model->db->qn('a.title') . ' = ' . $m->model->db->q($extension) . ')');
-		}
-
-		if ((int)$catalog_type_id > 0) {
-			$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
-		}
 
 		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 
@@ -265,44 +244,6 @@ Class ExtensionHelper
 	public function formatNameForClass($extension_name)
 	{
 		return ucfirst(str_replace(array('-', '_'), '', $extension_name));
-	}
-
-	/**
-	 * mergeParameters
-	 *
-	 * Page Request object that will be populated by this class
-	 * with overall processing requirements for the page
-	 *
-	 * Access via Services::Registry()->get('Request', 'property')
-	 *
-	 * @param   Registry $parameters
-	 *
-	 * @return  null
-	 * @since  1.0
-	 */
-	public function mergeParameters($merge_in_parameters, $merged_parameters)
-	{
-		$mergeIn = $merge_in_parameters->toArray();
-
-		while (list($name, $value) = each($mergeIn)) {
-			if (isset($merged_parameters[$name])) {
-			} else if (substr($name, 0, strlen('extension')) == 'extension') {
-			} else if (substr($name, 0, strlen('extension')) == 'source') {
-			} else if (substr($name, 0, strlen('theme')) == 'theme') {
-			} else if (substr($name, 0, strlen('page')) == 'page') {
-			} else if (substr($name, 0, strlen('template')) == 'template') {
-			} else if (substr($name, 0, strlen('wrap')) == 'wrap') {
-			} else if (substr($name, 0, strlen('default')) == 'default') {
-			} else if ($name == 'controller'
-				|| $name == 'task'
-				|| $name == 'model'
-			) {
-			} else {
-				$merged_parameters[$name] = $value;
-			}
-		}
-
-		return $merged_parameters;
 	}
 
 	/**

@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Entry
  *
- * As the name might suggest, the Entry Model is the entry point for all MVC requests.
+ * As the name might suggest, the Entry Model is the entry point for all Model requests.
  * The class merely allows all processing to enter a common gateway and then flow
  * through the class structure to the intended method.
  *

@@ -106,6 +106,7 @@ Class ConfigurationService
 		$m->model->set('id', (int)SITE_ID);
 		$m->model->set('get_item_children', false);
         $m->model->set('use_special_joins', false);
+		$m->model->set('add_acl_check', false);
 
 		$items = $m->execute('load');
 
@@ -205,6 +206,7 @@ Class ConfigurationService
 				$m->model->set('name_field', 'name');
 				$m->model->set('get_item_children', false);
                 $m->model->set('use_special_joins', false);
+				$m->model->set('add_acl_check', false);
 
 				$items = $m->execute('load');
 

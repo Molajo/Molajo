@@ -171,6 +171,7 @@ Class ModelService
         $this->model->set('get_special_fields', true);
         $this->model->set('get_item_children', true);
         $this->model->set('use_special_joins', true);
+		$this->model->set('add_acl_check', true);
 
 		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));
