@@ -4,8 +4,6 @@
         table="{Extension}"
         key="id"
         value="title"
-        ordering="title"
-        selected="{Selected}"
         catalog_type_id="{Extension}"
         registry="ListExtensionFeatured"
         />

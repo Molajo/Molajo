@@ -4,8 +4,6 @@
         table="Group"
         key="id"
         value="title"
-        ordering="title"
-        selected="{Selected}"
         userid="{Userid}"
         view_access="1"
         registry="ListGroups"

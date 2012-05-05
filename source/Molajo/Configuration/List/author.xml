@@ -4,9 +4,7 @@
         table="Users"
         key="id"
         value="username"
-        ordering="username"
         catalog_type_id="{Extension}"
-        selected="{Selected}"
         view_access="0"
         registry="ListAuthor"
         />

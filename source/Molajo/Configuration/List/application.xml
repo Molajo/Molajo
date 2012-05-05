@@ -4,8 +4,6 @@
         table="Applications"
         key="id"
         value="name"
-        ordering="name"
-        selected="{Selected}"
         view_access="0"
         registry="ListApplications"
         />

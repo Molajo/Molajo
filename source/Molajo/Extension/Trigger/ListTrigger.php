@@ -41,22 +41,21 @@ class ListTrigger extends ContentTrigger
 	}
 
 	/**
-     * After-read processing
+	 * After-read processing
 	 *
 	 * Retrieves Author Information for Item
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterRead($data, $model)
-    {
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterRead($data, $model)
+	{
 		$lists = Services::Registry()->get('ExtensionParameters', 'Lists');
 
-		if ($lists === null
-			|| count($lists) == 0) {
+		if ($lists === null || count($lists) == 0) {
 			return;
 		}
 
@@ -64,39 +63,72 @@ class ListTrigger extends ContentTrigger
 
 			$list = Services::Configuration()->loadFile($item);
 
-			$name = (string) $list->name;
-			$table = (string) $list->table;
-			$key = (string) $list->key;
-			$value = (string) $list->value;
-			$ordering = (string) $list->ordering;
-			$selected = (string) $list->selected;
-			$catalog_type_id = (string) $list->catalog_type_id;
-			$extension_catalog_type_id = (string) $list->extension_catalog_type_id;
-			$view_access = (string) $list->view_access;
-			$registry = (string) $list->registry;
-			$userid = (string) $list->userid;
-			$trigger = (string) $list->trigger;
+			$name = (string)$list->name;
+			$table = (string)$list->table;
+			$key = (string)$list->key;
+			$value = (string)$list->value;
+			$published = (string)$list->published;
+			$catalog_type_id = (string)$list->catalog_type_id;
+			$view_access = (string)$list->view_access;
+			$registry = (string)$list->registry;
+			$created_by = (string)$list->created_by;
+
+			$trigger = (string)$list->trigger;
 
 			if (trim($trigger) == '') {
+
 				$m = Services::Model()->connect($table);
 
 				$m->model->set('id', $data->created_by);
 
-				$m->model->set('get_special_fields', 2);
+				$m->model->set('get_special_fields', false);
 				$m->model->set('use_special_joins', false);
 				$m->model->set('add_acl_check', false);
 				$m->model->set('get_item_children', false);
 
-				$results = $m->execute('load');
+				$m->model->query->select($m->model->db->qn('a.' . $key));
+				$m->model->query->select($m->model->db->qn('a.' . $value));
+				$m->model->query->order($m->model->db->qn('a.' . $value));
+
+				if ((int) $catalog_type_id > 0) {
+					$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' > ' . $catalog_type_id);
+				}
+
+				if ((int) $published == 1) {
+					$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
+
+					$m->model->query->where('(a.start_publishing_datetime = ' .
+							$m->model->db->q($m->model->nullDate) .
+							' OR a.start_publishing_datetime <= ' . $m->model->db->q($m->model->now) . ')'
+					);
+					$m->model->query->where('(a.stop_publishing_datetime = ' .
+							$m->model->db->q($m->model->nullDate) .
+							' OR a.stop_publishing_datetime >= ' . $m->model->db->q($m->model->now) . ')'
+					);
+				}
+
+				if ((int) $view_access == 1) {
+					Services::Authorisation()
+						->setQueryViewAccess(
+						$m->model->query,
+						$m->model->db,
+						array('join_to_prefix' => 'a',
+							'join_to_primary_key' => 'id',
+							'catalog_prefix' => 'b_catalog',
+							'select' => true
+						)
+					);
+				}
+				$results = $m->execute('loadRowList');
 
 			} else {
 				$results = Services::Trigger()->get($trigger);
 			}
 
-
+			Services::Registry()->set('Lists', $registry, $results);
 
 		}
 
 		return;
-    }
+	}
 }
