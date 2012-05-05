@@ -19,13 +19,13 @@ defined('MOLAJO') or die;
  */
 Class Triggers
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
 	/**
 	 * Trigger Connections
@@ -36,12 +36,21 @@ Class Triggers
 	protected $trigger_connection;
 
 	/**
-	 * Messages
+	 * Events
 	 *
 	 * @var   object
 	 * @since 1.0
 	 */
-	protected $message;
+	protected $events;
+
+
+	/**
+	 * Events
+	 *
+	 * @var   object
+	 * @since 1.0
+	 */
+	protected $class_events;
 
 	/**
 	 * getInstance
@@ -67,6 +76,8 @@ Class Triggers
 	public function __construct()
 	{
 		$this->trigger_connection = array();
+		$this->events = array();
+		$this->class_events = array();
 	}
 
 	/**
@@ -123,53 +134,104 @@ Class Triggers
 
 		foreach ($triggers as $filename) {
 
-			$try = true;
-			$connection = '';
-
 			/** class name */
 			if ($filename == 'Trigger'
-				&& $filename == 'ContentTrigger'
-				&& substr($filename, 0, 4) == 'hold'
+				|| $filename == 'ContentTrigger'
+				|| substr(strtolower($filename), 0, 4) == 'hold'
 			) {
-				break;
+
+			} else {
+				$this->process_events($filename);
 			}
-			$entry = substr($filename, 0, strlen($filename) - 4);
-			$triggerClass = 'Molajo\\Extension\\Trigger\\' . $entry;
+		}
 
-			/** method name */
-			$method = 'getInstance';
+		Services::Registry()->set('Events', 'List', $this->events);
 
-			/** trap errors for missing class or method */
-			if (class_exists($triggerClass)) {
-				if (method_exists($triggerClass, $method)) {
-				} else {
-					$try = false;
-					$connection = $triggerClass . '::' . $method . ' Class does not exist';
-				}
+		foreach ($this->class_events as $event => $list) {
+			Services::Registry()->set('Events', $event, $list);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Store all events associated with the Trigger
+	 *
+	 * @param  $filename
+	 *
+	 * @return Triggers
+	 * @since  1.0
+	 */
+	protected function process_events($filename)
+	{
+		$try = true;
+		$connection = '';
+
+		$entry = substr($filename, 0, strlen($filename) - 4);
+		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $entry;
+
+		/** method name */
+		$method = 'getInstance';
+
+		/** trap errors for missing class or method */
+		if (class_exists($triggerClass)) {
+			if (method_exists($triggerClass, $method)) {
 			} else {
 				$try = false;
-				$connection = $triggerClass . ' Class does not exist';
+				$connection = $triggerClass . '::' . $method . ' Class does not exist';
 			}
+		} else {
+			$try = false;
+			$connection = $triggerClass . ' Class does not exist';
+		}
 
-			/** make helper connection */
-			if ($try === true) {
-				try {
-					$connection = $triggerClass::$method();
+		/** make helper connection */
+		if ($try === true) {
+			try {
+				$connection = $triggerClass::$method();
 
-				} catch (\Exception $e) {
-					$connection = 'Fatal Error: ' . $e->getMessage();
+			} catch (\Exception $e) {
+				$connection = 'Fatal Error: ' . $e->getMessage();
+			}
+		}
+
+		$events = get_class_methods($triggerClass);
+
+		foreach ($events as $item) {
+
+			if (substr($item, 0, 2) == 'on') {
+
+				if (in_array($item, $this->events)) {
+				} else {
+					$this->events[] = $item;
 				}
+
+				if (isset($this->class_events[$item])) {
+					$classList = $this->class_events[$item];
+				} else {
+					$classList = array();
+				}
+
+				if (is_array($classList)) {
+				} else {
+					if (trim($classList) == '') {
+						$classList = array();
+					} else {
+						$temp = $classList;
+						$classList = array();
+						$classList[] = $temp;
+					}
+				}
+
+				$classList[] = $entry;
+
+				$this->class_events[$item] = $classList;
 			}
-
-			/** store connection or error message */
-			$this->set($entry, $connection, $try);
 		}
+		/** store connection or error message */
+		$this->set($entry, $connection, $try);
 
-		foreach ($this->message as $message) {
-			Services::Debug()->set($message);
-		}
-
-		return true;
+		return $this;
 	}
 
 	/**
@@ -183,16 +245,18 @@ Class Triggers
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	private function set($key, $value = null, $try = true)
+	protected function set($key, $value = null, $try = true)
 	{
-		$i = count($this->message);
+		if ($key == 'Trigger' || $key == 'ContentTrigger') {
 
-		if ($value == null || $try == false) {
-			$this->message[$i] = 'Trigger: ' . $key . ' FAILED' . $value;
+		} else if ($value == null || $try == false) {
+			Services::Debug()->set('Trigger: ' . $key . ' FAILED' . $value);
 
 		} else {
 			$this->trigger_connection[$key] = $value;
-			$this->message[$i] = 'Trigger: ' . $key . ' started successfully. ';
+			Services::Debug()->set('Trigger: ' . $key . ' started successfully. ');
 		}
+
+		return $this;
 	}
 }

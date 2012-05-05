@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class UserTrigger extends ContentTrigger
+class DateFieldsTrigger extends ContentTrigger
 {
 	/**
 	 * Static instance
@@ -35,7 +35,7 @@ class UserTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new UserTrigger();
+			self::$instance = new DateFieldsTrigger();
 		}
 		return self::$instance;
 	}
