@@ -47,6 +47,6 @@
         <element name="cache_handler" filter="char" null="1" default="" values=""/>
     </field>
         <foreignkeys include="ContentForeignkeys"/>
-        <triggers include="ContentTriggers"/>
+        <triggers include="ContentTrigger"/>
     </fields>
 </model>

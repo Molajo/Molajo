@@ -88,7 +88,7 @@ Class MenuitemHelper
 		Services::Registry()->set('Menuitem', 'menu_catalog_id', (int)$row->menu_catalog_id);
 		Services::Registry()->set('Menuitem', 'menu_view_group_id', (int)$row->menu_view_group_id);
 
-		$xml = Services::Registry()->loadFile('Menuitem', 'Table');
+		$xml = Services::Configuration()->loadFile('Menuitem', 'Table');
 
 		Services::Registry()->loadField(
 			'MenuitemCustomfields',

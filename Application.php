@@ -8,10 +8,12 @@ namespace Molajo;
 
 use Molajo\Extension\Helpers;
 
+use Molajo\Extension\Triggers;
+
 use Molajo\Service\Services;
 
 use Molajo\Service\Services\RequestService;
-
+use Molajo\Service\Services\ConfigurationService;
 use Molajo\Service\Services\RegistryService;
 
 use Joomla\JFactory;
@@ -42,6 +44,15 @@ Class Application
 	 * @since  1.0
 	 */
 	protected static $helpers = null;
+
+	/**
+	 * Application::Triggers
+	 *
+	 * @var    object Helper
+	 * @since  1.0
+	 */
+	protected static $triggers = null;
+
 
 	/**
 	 * Application::Request
@@ -204,7 +215,13 @@ Class Application
 		}
 
 		/** Connect Helpers */
-		$continue = Application::Helpers()->StartHelpers();
+		$continue = Application::Helpers()->connect();
+		if ($continue == false) {
+			return false;
+		}
+
+		/** Connect Triggers */
+		$continue = Application::Triggers()->connect();
 		if ($continue == false) {
 			return false;
 		}
@@ -475,9 +492,9 @@ Class Application
 			define('MVC_URL', BASE_URL . 'Molajo/MVC');
 		}
 
-		if (defined('EXTENSIONS_HELPER')) {
+		if (defined('EXTENSIONS_HELPERS')) {
 		} else {
-			define('EXTENSIONS_HELPER', EXTENSIONS . '/Helper');
+			define('EXTENSIONS_HELPERS', EXTENSIONS . '/Helper');
 		}
 		if (defined('EXTENSIONS_COMPONENTS')) {
 		} else {
@@ -494,6 +511,10 @@ Class Application
 		if (defined('EXTENSIONS_THEMES')) {
 		} else {
 			define('EXTENSIONS_THEMES', EXTENSIONS . '/Theme');
+		}
+		if (defined('EXTENSIONS_TRIGGERS')) {
+		} else {
+			define('EXTENSIONS_TRIGGERS', EXTENSIONS . '/Trigger');
 		}
 		if (defined('EXTENSIONS_VIEWS')) {
 		} else {
@@ -540,8 +561,7 @@ Class Application
 		}
 
 		/** Define PHP constants for application variables */
-		//$defines = Services::Registry()->loadFile('defines');
-		$defines = RegistryService::loadFile('defines');
+		$defines = ConfigurationService::loadFile('defines');
 		foreach ($defines->define as $item) {
 			if (defined((string)$item['name'])) {
 			} else {
@@ -607,7 +627,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = RegistryService::loadFile('sites');
+			$sites = ConfigurationService::loadFile('sites');
 
 			foreach ($sites->site as $single) {
 				if ($single->base == $siteBase) {
@@ -664,7 +684,7 @@ Class Application
 			/* to override - must also define PAGE_REQUEST */
 		} else {
 
-			$apps = RegistryService::loadFile('applications');
+			$apps = ConfigurationService::loadFile('applications');
 
 			foreach ($apps->application as $app) {
 
@@ -822,6 +842,29 @@ Class Application
 			}
 		}
 		return self::$helpers;
+	}
+
+	/**
+	 * Application::Triggers
+	 *
+	 * @static
+	 * @return  Triggers
+	 * @throws  \RuntimeException
+	 * @since   1.0
+	 */
+	public static function Triggers()
+	{
+		if (self::$triggers) {
+		} else {
+			try {
+				self::$triggers = Triggers::getInstance();
+			}
+			catch (\Exception $e) {
+				echo 'Instantiate Triggers Exception : ', $e->getMessage(), "\n";
+				die;
+			}
+		}
+		return self::$triggers;
 	}
 
 	/**

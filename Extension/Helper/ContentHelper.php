@@ -112,7 +112,7 @@ die;
 		Services::Registry()->set('Category', 'translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Category', 'language', (string)$row['language']);
 
-		$xml = Services::Registry()->loadFile('Category', 'Table');
+		$xml = Services::Configuration()->loadFile('Category', 'Table');
 
 		return true;
 	}

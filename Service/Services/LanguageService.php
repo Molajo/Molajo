@@ -160,7 +160,7 @@ Class LanguageService
 	protected function load_core_files()
 	{
 		/** load metadata */
-		$metadata = Services::Registry()
+		$metadata = Services::Configuration()
 			->loadFile('manifest', SITE_LANGUAGES . '/' . $this->language);
 
 		if (isset($metadata['name'])) {
@@ -559,7 +559,7 @@ Class LanguageService
 	 */
 	public function get_metadata($file)
 	{
-		$xml = Services::Registry()->loadFile($file);
+		$xml = Services::Configuration()->loadFile($file);
 		if ($xml) {
 		} else {
 			return true;

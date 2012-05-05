@@ -194,10 +194,29 @@ Class CatalogHelper
 		$m->model->query->select($m->model->db->qn('id') . ' as catalog_id');
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
 		$m->model->query->where($m->model->db->qn('source_id') . ' = ' . (int)$source_id);
-		$m->model->query->where($m->model->db->qn('view_group_id')
-			. ' IN (' . implode(',', Services::Registry()->get('User', 'ViewGroups')) . ')');
 
 		return $m->execute('loadResult');
+	}
+
+	/**
+	 * getRedirectURL Function retrieves the Redirect URL for the specified catalog id
+	 *
+	 * @param  integer $catalog_id
+	 *
+	 * @param  string URL
+	 * @since  1.0
+	 */
+	public function getRedirectURL($catalog_id)
+	{
+		$m = Services::Model()->connect('Catalog');
+		$m->model->query->select($m->model->db->qn('redirect_to_id'));
+		$result = $m->execute('loadResult');
+
+		if ((int) $result == 0) {
+			return false;
+		}
+
+		return $this->getURL($result);
 	}
 
 	/**
@@ -214,46 +233,15 @@ Class CatalogHelper
 			return '';
 		}
 
-		$m = Services::Model()->connect('Catalog');
-
 		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+			$m = Services::Model()->connect('Catalog');
 			$m->model->query->select($m->model->db->qn('sef_request'));
+			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
+			$url = $m->execute('loadResult');
 		} else {
-			$m->model->query->select($m->model->db->qn('id'));
+			$url = 'index.php?id=' . (int) $catalog_id;
 		}
 
-		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
-		$m->model->query->where($m->model->db->qn('view_group_id') . ' IN (' .
-				implode(',', Services::Registry()->get('User', 'ViewGroups')) . ')'
-		);
-
-		return $m->execute('loadResult');
-	}
-
-	/**
-	 * getRedirectURL Function to retrieve catalog information for the Request or Catalog ID
-	 *
-	 * @param  integer $catalog_id
-	 *
-	 * @param  string URL
-	 * @since  1.0
-	 */
-	public function getRedirectURL($catalog_id)
-	{
-		if ((int)$catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
-			return '';
-		}
-
-		$m = Services::Model()->connect('Catalog');
-
-		if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
-			$m->model->query->select($m->model->db->qn('sef_request'));
-		} else {
-			$m->model->query->select($m->model->db->qn('id'));
-		}
-
-		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
-
-		return $m->execute('loadResult');
+		return $url;
 	}
 }

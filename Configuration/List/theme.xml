@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list
+        name="theme"
+        table="ExtensionInstances"
+        key="id"
+        value="title"
+        ordering="title"
+        selected="{Selected}"
+        view_access="0"
+        catalog_type_id="1500"
+        registry="ListThemes"
+        />

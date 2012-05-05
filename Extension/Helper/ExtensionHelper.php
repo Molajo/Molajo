@@ -68,14 +68,14 @@ Class ExtensionHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Extension', 'id', (int)$row['extension_instance_id']);
-		Services::Registry()->set('Route', 'extension_instances_id', (int)$row['extension_instance_id']);
-		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Extension', 'title', $row['title']);
-		Services::Registry()->set('Extension', 'parameters', $row['parameters']);
-		Services::Registry()->set('Extension', 'metadata', $row['metadata']);
+		Services::Registry()->set('Extension', 'id', (int)$row->extension_instance_id);
+		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->extension_instance_id);
+		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set('Extension', 'title', $row->title);
+		Services::Registry()->set('Extension', 'parameters', $row->parameters);
+		Services::Registry()->set('Extension', 'metadata', $row->metadata);
 
-		$xml = Services::Registry()->loadFile(ucfirst(strtolower($row->title)), 'Table');
+		$xml = Services::Configuration()->loadFile(ucfirst(strtolower($row->title)), 'Table');
 
 		Services::Registry()->loadField(
 			'ExtensionMetadata',

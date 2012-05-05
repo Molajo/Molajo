@@ -8,6 +8,8 @@ namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
 
+use Molajo\Service\Services\ConfigurationService;
+
 defined('MOLAJO') or die;
 
 /**
@@ -198,7 +200,7 @@ Class ModelService
 	 */
 	protected function setModelTable($table)
 	{
-		$this->table_xml = Services::Registry()->loadFile($table, 'Table');
+		$this->table_xml = ConfigurationService::loadFile($table, 'Table');
 
 		$this->model_name = (string)$this->table_xml['name'];
 		if ($this->model_name == '') {

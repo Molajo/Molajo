@@ -109,9 +109,9 @@ Class Helpers
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function startHelpers()
+	public function connect()
 	{
-		$helpers = Services::Filesystem()->folderFiles(EXTENSIONS_HELPER);
+		$helpers = Services::Filesystem()->folderFiles(EXTENSIONS_HELPERS);
 
 		foreach ($helpers as $filename) {
 			$try = true;
@@ -176,11 +176,11 @@ Class Helpers
 		$i = count($this->message);
 
 		if ($value == null || $try == false) {
-			$this->message[$i] = 'Service: ' . $key . ' FAILED' . $value;
+			$this->message[$i] = 'Trigger: ' . $key . ' FAILED' . $value;
 
 		} else {
 			$this->helper_connection[$key] = $value;
-			$this->message[$i] = 'Service: ' . $key . ' started successfully. ';
+			$this->message[$i] = 'Trigger: ' . $key . ' started successfully. ';
 		}
 	}
 }

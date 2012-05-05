@@ -91,24 +91,34 @@ Class UrlService
 	/**
 	 * Get either a Gravatar URL or complete image tag for a specified email address.
 	 *
-	 * @param string $option_Email The email address
-	 * @param string $s Size in pixels, defaults to 80px [ 1 - 512 ]
-	 * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param boolean $img True to return a complete IMG tag False for just the URL
-	 * @param array $atts Optional, additional key/value attributes to include in the IMG tag
-	 * @return String containing either just a URL or a complete image tag
+	 * @param  string   $email
+	 * @param  string   $size        Size in pixels, defaults to 80px [ 1 - 512 ]
+	 * @param  string   $type        Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	 * @param  string   $rating      Maximum rating (inclusive) [ g | pg | r | x ]
+	 * @param  boolean  $image       True to return a complete IMG tag False for just the URL
+	 * @param  array    $attributes  Optional, additional key/value attributes to include in the IMG tag
+	 *
+	 * @return Linked image or URL
+	 *
 	 * @source http://gravatar.com/site/implement/images/php/
 	 */
-	public function getGravatar($option_Email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array())
+	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g', $image = false, $attributes = array())
 	{
+
+		if ((int)$size == 0) {
+			$size = Services::Registry()->get('Configuration', 'gravatar_size', 80);
+			$type = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
+			$rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
+			$image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
+		}
+
 		$url = 'http://www.gravatar.com/avatar/';
-		$url .= md5(strtolower(trim($option_Email)));
-		$url .= "?s=$s&d=$d&r=$r";
-		if ($img) {
+		$url .= md5(strtolower(trim($email)));
+		$url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
+		if ($image) {
 			$url = '<img src="' . $url . '"';
-			if (count($atts) > 0) {
-				foreach ($atts as $key => $val) {
+			if (count($attributes) > 0) {
+				foreach ($attributes as $key => $val) {
 					$url .= ' ' . $key . '="' . $val . '"';
 				}
 			}

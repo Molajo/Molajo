@@ -12,8 +12,5 @@
         <filter name="component_option" filter="char" null="0" default=" "/>
         <filter name="subfolder" filter="char" null="0" default=" "/>
     </filters>
-    <triggers>
-        <trigger name="CatalogSource"/>
-    </triggers>
 </model>
 

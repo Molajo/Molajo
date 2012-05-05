@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list
+        name="category"
+        table="Category"
+        key="id"
+        value="title"
+        ordering="title"
+        catalog_type_id="3000"
+        extension_catalog_type_id="{Extension}"
+        selected="{Selected}"
+        view_access="1"
+        registry="ListExtensionCategories"
+        />
