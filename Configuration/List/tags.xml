@@ -4,10 +4,7 @@
         table="Tag"
         key="id"
         value="title"
-        ordering="title"
-        catalog_type_id="3500"
-        extension_catalog_type_id="{Extension}"
-        selected="{Selected}"
+        catalog_type_id="{Extension}"
         view_access="1"
         registry="ListExtensionTags"
         />
