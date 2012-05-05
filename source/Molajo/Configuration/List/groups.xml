@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list
+        name="groups"
+        table="Group"
+        key="id"
+        value="title"
+        ordering="title"
+        selected="{Selected}"
+        userid="{Userid}"
+        view_access="1"
+        registry="ListGroups"
+        />

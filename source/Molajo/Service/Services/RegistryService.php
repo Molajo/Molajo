@@ -8,6 +8,7 @@
 namespace Molajo\Service\Services;
 
 use Molajo\Service\Services;
+use Molajo\Service\Services\ConfigurationService;
 
 defined('MOLAJO') or die;
 
@@ -373,44 +374,10 @@ Class RegistryService
 	{
 //todo: build in spl file priorities and pass in file
 
-		$list = $this->loadFile('registry');
+		$list = ConfigurationService::loadFile('registry');
 
 		foreach ($list->registry as $item) {
 			$reg = $this->createRegistry((string)$item);
-		}
-	}
-
-	/**
-	 * loadFile is the isolated point in the application where all XML configuration files are read
-	 *   That includes XML for tables, services, and the application, along with service startup
-	 *
-	 * Usage:
-	 * Services::Registry()->loadFile('Content', 'Table');
-	 *
-	 * todo: add php spl priority for loading and a little more thinking on API options (ini? json?)
-	 *
-	 * @return  object
-	 * @since   1.0
-	 * @throws  \RuntimeException
-	 */
-	public static function loadFile($file, $type = 'Application')
-	{
-		if ($type == 'Application' || $type == 'Table') {
-			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
-		} else {
-			$path_and_file = $type . '/' . $file . '.xml';
-		}
-
-		if (file_exists($path_and_file)) {
-		} else {
-			throw new \RuntimeException('File not found: ' . $path_and_file);
-		}
-
-		try {
-			return simplexml_load_file($path_and_file);
-
-		} catch (\Exception $e) {
-			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 	}
 

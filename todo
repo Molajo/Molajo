@@ -16,25 +16,6 @@ a. Parser
 b. Includers
 c. Controller(Display) - Views
 
-Now => where are we? Component, Module, Data Source (Table), Menu Item (Component)
-
-URL = Single item of a Data Source (not always, for example parameters or registry data)
-
-Data Sources:
-Tables - single item - URL, yes
-Media - single item like a file or an image (optional) - URL, usually
-
-Component = URL bearing data source
-
-Template View and SQL for each:
-
-Item
-List   menu item required
-Group  menu item required
-
-* * * * Questions  * * * *
-
-Components and Modules - same thing? Name? Widget?
 
 * * * * Event Layer * * * *
 

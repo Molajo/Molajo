@@ -62,7 +62,8 @@ class ItemModel extends Model
 		$this->runLoadQuery();
 
 		/** Load Special Fields in Registry */
-		if ($this->get_special_fields == true) {
+		if ($this->get_special_fields == false) {
+		} else {
 			$this->addSpecialFields();
 		}
 
@@ -295,10 +296,13 @@ class ItemModel extends Model
 
 						/** Filter Input and Save the Registry */
 						//$set = $this->filterInput($name, $set, $dataType, $null, $default);
-						//echo 'name '.$name.' '.$set.'<br />';
-						/** Place into Registry */
-						Services::Registry()->set($namespace, $name, $set);
 
+						if ($this->get_special_fields == 2) {
+							$this->query_results[$name] = $set;
+						} else {
+							/** Place into Registry */
+							Services::Registry()->set($namespace, $name, $set);
+						}
 					}
 				}
 			}

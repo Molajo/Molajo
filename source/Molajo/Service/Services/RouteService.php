@@ -241,7 +241,7 @@ Class RouteService
 		$use = array();
 
 		/** XML with system defined nonroutable pairs */
-		$list = Services::Registry()->loadFile('nonroutable');
+		$list = Services::Configuration()->loadFile('nonroutable');
 
 		foreach ($list->parameter as $item) {
 

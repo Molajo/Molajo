@@ -9,7 +9,13 @@ namespace Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Dispatcher
+ * Event Manager
+ *
+ * Application and Controller => Schedule Events
+ *
+ * Triggers => Register for Events
+ *
+ * Event Manager => Coordinates the two
  *
  * Events
  *
@@ -37,7 +43,7 @@ defined('MOLAJO') or die;
  * @subpackage  Service
  * @since       1.0
  */
-Class DispatcherService
+Class EventService
 {
 	/**
 	 * Static instance
@@ -48,12 +54,12 @@ Class DispatcherService
 	protected static $instance;
 
 	/**
-	 * Dispatcher
+	 * Event
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $_dispatcher;
+	protected $registeredEvents;
 
 	/**
 	 * getInstance
@@ -65,7 +71,7 @@ Class DispatcherService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new DispatcherService();
+			self::$instance = new EventService();
 		}
 		return self::$instance;
 	}
@@ -83,55 +89,33 @@ Class DispatcherService
 	}
 
 	/**
-	 * loadDispatcher
+	 * Register triggers with events
 	 *
-	 * @return  void
 	 * @since   1.0
 	 */
-	public function loadDispatcher()
+	public function register()
 	{
-		// Startup should load the dispatcher
-	}
 
-	/**
-	 * registerEvent
-	 *
-	 * Registers a handler to a particular event group.
-	 *
-	 * @param   string    $event    The event name.
-	 * @param   callback  $handler  The handler, a function or an instance of a event object.
-	 *
-	 * @return  Application  Instance of $this to allow chaining.
-	 *
-	 * @since   1.0
-	 */
-	public function registerEvent($event, $handler)
-	{
-		//not used
-		//        if ($this->_dispatcher instanceof JDispatcher) {
-		//            $this->_dispatcher->register($event, $handler);
-		//        }
 
 		return $this;
 	}
 
 	/**
-	 * notify
+	 * Event occurs and registered triggers are fired
 	 *
-	 * Notifies services listening for a specific event
+	 * @param  string  $event  			Name of the Event
+	 * @param  array   $options   		Array of options to be passed on to triggers
+	 * @param  string  $process_flag	0: process all events
+	 * 									1: process all until one fails
+	 * 									2: process each event until one succeeds
 	 *
-	 * @param   string  $event  Event
-	 * @param   array   $args   An array of arguments (optional).
-	 *
-	 * @return  array   An array of results from each function call, or null if no _dispatcher is defined.
+	 * @return  array  $results			Array of results from trigger methods
 	 *
 	 * @since   1.0
 	 */
-	public function notify($event, array $args = null)
+	public function fire($event, $options, $process = 0)
 	{
-		//        if ($this->_dispatcher instanceof JDispatcher) {
-		//            return $this->_dispatcher->trigger($event, $args);
-		//        }
+
 
 		return null;
 	}

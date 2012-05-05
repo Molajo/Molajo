@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list
+        name="application"
+        table="Applications"
+        key="id"
+        value="name"
+        ordering="name"
+        selected="{Selected}"
+        view_access="0"
+        registry="ListApplications"
+        />

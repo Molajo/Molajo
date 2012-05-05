@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list
+        name="featured"
+        table="{Extension}"
+        key="id"
+        value="title"
+        ordering="title"
+        selected="{Selected}"
+        catalog_type_id="{Extension}"
+        registry="ListExtensionFeatured"
+        />
