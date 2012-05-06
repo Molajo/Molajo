@@ -21,13 +21,13 @@ defined('MOLAJO') or die;
  */
 Class Helpers
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
 	/**
 	 * Service Connections

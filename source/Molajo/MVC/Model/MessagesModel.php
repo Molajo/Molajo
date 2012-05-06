@@ -17,46 +17,46 @@ defined('MOLAJO') or die;
  */
 Class MessagesModel extends Model
 {
-    /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param  $id
-     * @since  1.0
-     */
-    public function __construct()
-    {
-        return parent::__construct();
-    }
+	/**
+	 * __construct
+	 *
+	 * Constructor.
+	 *
+	 * @param  $id
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+		return parent::__construct();
+	}
 
-    /**
-     * getData
-     *
-     * @return    array
-     *
-     * @since    1.0
-     */
-    public function getData()
-    {
-        $this->query_results = array();
+	/**
+	 * getData
+	 *
+	 * @return    array
+	 *
+	 * @since    1.0
+	 */
+	public function getData()
+	{
+		$this->query_results = array();
 
-        $messages = Services::Message()->get();
-        if (count($messages) == 0) {
-            return array();
-        }
+		$messages = Services::Message()->get();
+		if (count($messages) == 0) {
+			return array();
+		}
 
-        foreach ($messages as $message) {
-            $row = new \stdClass();
-            $row->content_text = $message['message'];
-            $row->title = $message['type'];
-            $row->code = $message['code'];
-            $row->debug_location = $message['debug_location'];
-            $row->debug_object = $message['debug_object'];
+		foreach ($messages as $message) {
+			$row = new \stdClass();
+			$row->content_text = $message['message'];
+			$row->title = $message['type'];
+			$row->code = $message['code'];
+			$row->debug_location = $message['debug_location'];
+			$row->debug_object = $message['debug_object'];
 
-            $this->query_results[] = $row;
-        }
+			$this->query_results[] = $row;
+		}
 
-        return $this->query_results;
-    }
+		return $this->query_results;
+	}
 }

@@ -115,7 +115,7 @@ Class ViewHelper
 	 *
 	 * @return bool|string
 	 */
-	public function findPath ($view, $view_type, $extension_name, $extension_type, $theme_name)
+	public function findPath($view, $view_type, $extension_name, $extension_type, $theme_name)
 	{
 		/** initialise */
 		$this->view_path = false;

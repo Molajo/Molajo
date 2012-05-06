@@ -19,13 +19,13 @@ defined('MOLAJO') or die;
  */
 class EditController extends DisplayController
 {
-    /** data */
-    public $state;
-    public $item;
+	/** data */
+	public $state;
+	public $item;
 
-    /** editor variables  **/
+	/** editor variables  **/
 //    public $section;
-    public $form;
+	public $form;
 
 //    public $toolbar;
 //    public $slider_id;
@@ -33,79 +33,79 @@ class EditController extends DisplayController
 //    public $userToolbarButtonPermissions;
 //    public $isNew;
 
-    /** common */
+	/** common */
 //    public $parameters;
 //    public $viewHelper;
 //    public $print;
 //    public $user;
 //    public $pageclass_suffix;
 
-    /**
-     * display
-     *
-     * retrieves data from the model and displays the form
-     *
-     * @param null $tpl
-     * @return bool
-     */
-    public function display($tpl = null)
-    {
-        $this->form = $this->get('Form');
-        $this->item = $this->get('Item');
-        $this->state = $this->get('State');
+	/**
+	 * display
+	 *
+	 * retrieves data from the model and displays the form
+	 *
+	 * @param null $tpl
+	 * @return bool
+	 */
+	public function display($tpl = null)
+	{
+		$this->form = $this->get('Form');
+		$this->item = $this->get('Item');
+		$this->state = $this->get('State');
 
-        if (count($errors = $this->get('Errors'))) {
-            MolajoError::raiseError(500, implode("\n", $errors));
-            return false;
-        }
+		if (count($errors = $this->get('Errors'))) {
+			MolajoError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
 
-        /** parameters */
-        if (Application::getName() == 'site') {
-            $this->parameters = Ser::Application()->getParameters();
-            //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
-        } else {
-            $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
-        }
+		/** parameters */
+		if (Application::getName() == 'site') {
+			$this->parameters = Ser::Application()->getParameters();
+			//$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
+		} else {
+			$this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
+		}
 
-        $this->user = Services::User();
+		$this->user = Services::User();
 
-        /** id */
-        if ($this->item->id == null) {
-            $this->isNew = true;
-            $this->slider_id = 0;
-            $this->item->id = 0;
-            $this->item->category_id = 0;
-            $this->item->state = 0;
-        } else {
-            $this->isNew = false;
-            $this->slider_id = $this->item->id;
-        }
+		/** id */
+		if ($this->item->id == null) {
+			$this->isNew = true;
+			$this->slider_id = 0;
+			$this->item->id = 0;
+			$this->item->category_id = 0;
+			$this->item->state = 0;
+		} else {
+			$this->isNew = false;
+			$this->slider_id = $this->item->id;
+		}
 
-        /** ACL: form field authorisations **/
-        $aclClass = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
-        $acl = new $aclClass();
-        $acl->getFormAuthorisations(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
+		/** ACL: form field authorisations **/
+		$aclClass = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
+		$acl = new $aclClass();
+		$acl->getFormAuthorisations(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
 
-        /** ACL: component level authorisations **/
-        $this->permissions = $acl->getUserPermissionTaskset(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
+		/** ACL: component level authorisations **/
+		$this->permissions = $acl->getUserPermissionTaskset(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
 
-        /** page heading, toolbar buttons and submenu **/
-        if (($this->getView() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
-            //        } else if (Application::getName() == 'site') {
-        } else {
-            MolajoToolbarHelper::addButtonsEditView($this->item->state, $this->permissions, $this->item->id, $this->item);
-        }
+		/** page heading, toolbar buttons and submenu **/
+		if (($this->getView() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
+			//        } else if (Application::getName() == 'site') {
+		} else {
+			MolajoToolbarHelper::addButtonsEditView($this->item->state, $this->permissions, $this->item->id, $this->item);
+		}
 
-        //Escape strings for HTML output
-        $this->state->get('page_view_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
+		//Escape strings for HTML output
+		$this->state->get('page_view_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
 
-        if (Application::getName() == 'site') {
-            $documentHelper = new MolajoDocumentHelper ();
-            $documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
-        }
+		if (Application::getName() == 'site') {
+			$documentHelper = new MolajoDocumentHelper ();
+			$documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
+		}
 
-        /** view **/
-        parent::display($tpl);
-        return true;
-    }
+		/** view **/
+		parent::display($tpl);
+		return true;
+	}
 }

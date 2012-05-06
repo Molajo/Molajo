@@ -98,9 +98,9 @@ Class ContentHelper
 			Services::Registry()->get('Route', 'primary_category_id'),
 			'#__content'
 		);
-echo '<pre>Category';
-var_dump($row);
-die;
+		echo '<pre>Category';
+		var_dump($row);
+		die;
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
 			return Services::Registry()->set('Route', 'status_found', false);
@@ -118,13 +118,13 @@ die;
 	}
 
 	/**
-     * Get data for content
-     *
-     * @return  mixed    An object containing an array of data
-     * @since   1.0
-     */
-    public function get($id, $content_table)
-    {
+	 * Get data for content
+	 *
+	 * @return  mixed    An object containing an array of data
+	 * @since   1.0
+	 */
+	public function get($id, $content_table)
+	{
 		$m = Services::Model()->connect(
 			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
 		);
@@ -145,23 +145,23 @@ die;
 		$m->model->query->select($m->model->db->qn('a.metadata'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
 
-        $m->model->query->from($m->model->db->qn($content_table) . ' as a ');
+		$m->model->query->from($m->model->db->qn($content_table) . ' as a ');
 
-        $m->model->query->where('a.' . $m->model->db->qn('id') . ' = ' . (int)$id);
+		$m->model->query->where('a.' . $m->model->db->qn('id') . ' = ' . (int)$id);
 
-        $m->model->query->where('a.' . $m->model->db->qn('status') .
-            ' > ' . STATUS_UNPUBLISHED);
+		$m->model->query->where('a.' . $m->model->db->qn('status') .
+			' > ' . STATUS_UNPUBLISHED);
 
-        $m->model->query->where('(a.start_publishing_datetime = ' .
-                $m->model->db->q($m->model->nullDate) .
-                ' OR a.start_publishing_datetime <= ' .
-                $m->model->db->q($m->model->now) . ')'
-        );
-        $m->model->query->where('(a.stop_publishing_datetime = ' .
-                $m->model->db->q($m->model->nullDate) .
-                ' OR a.stop_publishing_datetime >= ' .
-                $m->model->db->q($m->model->now) . ')'
-        );
+		$m->model->query->where('(a.start_publishing_datetime = ' .
+				$m->model->db->q($m->model->nullDate) .
+				' OR a.start_publishing_datetime <= ' .
+				$m->model->db->q($m->model->now) . ')'
+		);
+		$m->model->query->where('(a.stop_publishing_datetime = ' .
+				$m->model->db->q($m->model->nullDate) .
+				' OR a.stop_publishing_datetime >= ' .
+				$m->model->db->q($m->model->now) . ')'
+		);
 
 		/**
 		 *  Run Query
@@ -173,5 +173,5 @@ die;
 		}
 
 		return $row;
-    }
+	}
 }

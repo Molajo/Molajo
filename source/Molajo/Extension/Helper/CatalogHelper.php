@@ -91,8 +91,8 @@ Class CatalogHelper
 		Services::Registry()->set('Route', 'source_id', (int)$row['source_id']);
 		Services::Registry()->set('Route', 'primary_category_id', (int)$row['primary_category_id']);
 		Services::Registry()->set('Route', 'sef_request', $row['sef_request']);
-		Services::Registry()->set('Route', 'request',  $row['request']);
-		Services::Registry()->set('Route', 'redirect_to_id', (int) $row['redirect_to_id']);
+		Services::Registry()->set('Route', 'request', $row['request']);
+		Services::Registry()->set('Route', 'redirect_to_id', (int)$row['redirect_to_id']);
 		Services::Registry()->set('Route', 'routable', (int)$row['routable']);
 		Services::Registry()->set('Route', 'view_group_id', (int)$row['view_group_id']);
 
@@ -212,7 +212,7 @@ Class CatalogHelper
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
 		$result = $m->execute('loadResult');
 
-		if ((int) $result == 0) {
+		if ((int)$result == 0) {
 			return false;
 		}
 
@@ -239,7 +239,7 @@ Class CatalogHelper
 			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 			$url = $m->execute('loadResult');
 		} else {
-			$url = 'index.php?id=' . (int) $catalog_id;
+			$url = 'index.php?id=' . (int)$catalog_id;
 		}
 
 		return $url;

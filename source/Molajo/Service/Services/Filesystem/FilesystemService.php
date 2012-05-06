@@ -48,7 +48,7 @@ defined('MOLAJO') or die;
  * Services::Filesystem()->pathIsOwner
  * Services::Filesystem()->pathFind
  *
- * @package   	Molajo
+ * @package       Molajo
  * @subpackage  Services
  * @since       1.0
  */

@@ -385,8 +385,8 @@ Class RouteService
 		}
 		echo '<br /><br /><pre>';
 		echo 'Content<br />';
-		echo 'table '.Services::Registry()->get('Route', 'source_table').'<br />';
-		echo 'id '.Services::Registry()->get('Route', 'source_id').'<br />';
+		echo 'table ' . Services::Registry()->get('Route', 'source_table') . '<br />';
+		echo 'id ' . Services::Registry()->get('Route', 'source_id') . '<br />';
 		var_dump(Services::Registry()->get('Content'));
 		echo 'Content Parameters<br />';
 		var_dump(Services::Registry()->get('ContentParameters'));
@@ -403,7 +403,7 @@ Class RouteService
 		}
 		echo '<br /><br /><pre>';
 		echo 'Extension Parameters<br />';
-		echo 'id '.Services::Registry()->get('Route', 'extension_instances_id').'<br />';
+		echo 'id ' . Services::Registry()->get('Route', 'extension_instances_id') . '<br />';
 		var_dump(Services::Registry()->get('ExtensionParameters'));
 		echo 'Metadata<br />';
 		var_dump(Services::Registry()->get('ExtensionMetadata'));
@@ -412,7 +412,7 @@ Class RouteService
 		/**  Primary Category  */
 		if ((int)Services::Registry()->get('Route', 'primary_category_id') == 0) {
 		} else {
-			echo 'id '.Services::Registry()->get('Route', 'primary_category_id').'<br />';
+			echo 'id ' . Services::Registry()->get('Route', 'primary_category_id') . '<br />';
 			Helpers::Content()->getRouteCategory();
 			echo '<br /><br /><pre>';
 			echo 'Categories Parameters<br />';

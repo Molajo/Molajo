@@ -85,11 +85,11 @@ jQuery.fn.daterangepicker = function (s) {
             function () {
                 jQuery(this).removeClass("ui-state-hover")
             }).click(function () {
-            i.find(".ui-state-active").removeClass("ui-state-active");
-            jQuery(this).addClass("ui-state-active");
-            p(jQuery(this), i, m, e);
-            return false
-        });
+                i.find(".ui-state-active").removeClass("ui-state-active");
+                jQuery(this).addClass("ui-state-active");
+                p(jQuery(this), i, m, e);
+                return false
+            });
         return y
     })();
 
@@ -260,10 +260,10 @@ jQuery.fn.daterangepicker = function (s) {
                 });
                 return false
             }).hover(function () {
-            jQuery(this).addClass("ui-state-hover")
-        }, function () {
-            jQuery(this).removeClass("ui-state-hover")
-        });
+                jQuery(this).addClass("ui-state-hover")
+            }, function () {
+                jQuery(this).removeClass("ui-state-hover")
+            });
         var o = c.parent()
     }
     jQuery(document).click(function () {

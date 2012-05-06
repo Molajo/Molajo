@@ -136,7 +136,7 @@ Class DebugService
 		}
 
 		/** Database: This interface to Joomla's logger is not designed to use Molajo's
-			ModelService approach to interacting with the DB
+		ModelService approach to interacting with the DB
 		 */
 		if ($options['logger'] == 'database') {
 

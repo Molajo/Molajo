@@ -7,8 +7,8 @@
  */
 defined('MOLAJO') or die; ?>
 <include:module name=admin-toolbar/>
-<include:module name=admin-submenu/>
-<include:module name=GridFilters/>
-<include:module name=GridTable/>
-<include:module name=GridPagination/>
-<include:module name=GridBatch/>
+	<include:module name=admin-submenu/>
+		<include:module name=GridFilters/>
+			<include:module name=GridTable/>
+				<include:module name=GridPagination/>
+					<include:module name=GridBatch/>

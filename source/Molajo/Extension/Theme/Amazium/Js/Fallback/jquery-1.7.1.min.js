@@ -609,8 +609,8 @@
             function () {
                 e = "resolved"
             }, c.disable, d.lock).fail(function () {
-            e = "rejected"
-        }, b.disable, d.lock), a && a.call(i, i);
+                e = "rejected"
+            }, b.disable, d.lock), a && a.call(i, i);
         return i
     }, when:function (a) {
         function m(a) {

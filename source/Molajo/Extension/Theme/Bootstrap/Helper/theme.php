@@ -18,16 +18,16 @@ use Molajo\Extension\Helper\MustacheHelper;
  */
 Class BootstrapHelper extends MustacheHelper
 {
-    /**
-     * hello
-     *
-     * Accesses User Object and returns a text message
-     *
-     * @results  object
-     * @since    1.0
-     */
-    public function hello()
-    {
-        return 'Hello ' . Services::User()->get('name') . '!';
-    }
+	/**
+	 * hello
+	 *
+	 * Accesses User Object and returns a text message
+	 *
+	 * @results  object
+	 * @since    1.0
+	 */
+	public function hello()
+	{
+		return 'Hello ' . Services::User()->get('name') . '!';
+	}
 }

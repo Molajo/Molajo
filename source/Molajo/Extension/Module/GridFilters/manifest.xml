@@ -16,7 +16,7 @@
                 <filter name="author"/>
                 <filter name="category"/>
                 <filter name="group"/>
-                <filter name="Language"  />
+                <filter name="Language"/>
                 <filter name="status"/>
                 <filter name="tag"/>
             </filters>

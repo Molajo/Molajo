@@ -146,8 +146,8 @@ Class ModelService
 	public function connect($table = null)
 	{
 		/** Specific table model interaction - or - complex data query  */
-		if ($table === null)  {
-		}  else {
+		if ($table === null) {
+		} else {
 			$this->setModelTable($table);
 			$this->dbDriver = $this->default_dbDriver;
 		}
@@ -169,9 +169,9 @@ Class ModelService
 		$this->model->set('table_xml', $this->table_xml);
 		$this->model->set('primary_key', $this->primary_key);
 		$this->model->set('primary_prefix', 'a');
-        $this->model->set('get_special_fields', 1);
-        $this->model->set('get_item_children', true);
-        $this->model->set('use_special_joins', true);
+		$this->model->set('get_special_fields', 1);
+		$this->model->set('get_item_children', true);
+		$this->model->set('use_special_joins', true);
 		$this->model->set('add_acl_check', true);
 
 		/** 4. Set DB Properties */

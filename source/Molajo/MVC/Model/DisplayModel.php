@@ -19,14 +19,14 @@ defined('MOLAJO') or die;
  */
 class DisplayModel extends ItemModel
 {
-    /**
-     * Constructor.
-     *
-     * @param   $id
-     * @since   1.0
-     */
-    public function __construct()
-    {
-        return parent::__construct();
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param   $id
+	 * @since   1.0
+	 */
+	public function __construct()
+	{
+		return parent::__construct();
+	}
 }
