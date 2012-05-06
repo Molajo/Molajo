@@ -111,8 +111,9 @@ Class Services
             $connection = '';
 
             /** class name */
-            $entry = (string)$item . 'Service';
-            $serviceClass = 'Molajo\\Service\\Services\\' . $entry;
+			$entry = (string)$item . 'Service';
+            $folder = (string)$item;
+            $serviceClass = 'Molajo\\Service\\Services\\' . $folder . '\\' . $entry;
 
             /** method name */
             $serviceMethod = 'getInstance';
