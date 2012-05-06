@@ -191,7 +191,7 @@ Class RegistryService
 		if (isset($array[$key])) {
 
 		} else {
-		/** Create the entry, if not found, and set it to default */
+			/** Create the entry, if not found, and set it to default */
 			$array[$key] = $default;
 			$this->registry[$namespace] = $array;
 		}

@@ -10,4 +10,4 @@ $class = 'button ' . strtolower($this->row->name);
 $class = ' class="' . $class . '"';
 ?>
 <li role="button"><a
-    href="<?php echo $this->row->link; ?>"<?php echo $class; ?>><span><?php echo $this->row->name; ?></span></a></li>
+	href="<?php echo $this->row->link; ?>"<?php echo $class; ?>><span><?php echo $this->row->name; ?></span></a></li>

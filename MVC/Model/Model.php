@@ -45,13 +45,13 @@ class Model
 	 */
 	public $table_xml;
 
-    /**
-     * Load: special joins flag
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $use_special_joins = false;
+	/**
+	 * Load: special joins flag
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $use_special_joins = false;
 
 	/**
 	 * Load: special fields in registry flag
@@ -464,19 +464,19 @@ class Model
 		$this->query = $this->db->getQuery(true);
 	}
 
-    /**
-     * addSpecialJoins
-     *
-     * Method used in load sequence to optionally append additional
-     * joins to the primary table and add fields from those tables
-     *
-     * @return array
-     * @since  1.0
-     */
-    protected function addSpecialJoins()
-    {
-        return $this->query_results = array();
-    }
+	/**
+	 * addSpecialJoins
+	 *
+	 * Method used in load sequence to optionally append additional
+	 * joins to the primary table and add fields from those tables
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected function addSpecialJoins()
+	{
+		return $this->query_results = array();
+	}
 
 	/**
 	 * runLoadQuery
@@ -497,7 +497,7 @@ class Model
 	 *
 	 * Method used in load sequence to optionally expand special fields
 	 * for Item, either into the Registry or so that the fields can be used
-     * normally
+	 * normally
 	 *
 	 * @return array
 	 * @since  1.0
@@ -507,19 +507,19 @@ class Model
 		return $this->query_results = array();
 	}
 
-    /**
-     * getLoadAdditionalData
-     *
-     * Method used in load sequence to optionally append additional
-     * data elements to a specific item
-     *
-     * @return array
-     * @since  1.0
-     */
-    protected function addItemChildren()
-    {
-        return $this->query_results = array();
-    }
+	/**
+	 * getLoadAdditionalData
+	 *
+	 * Method used in load sequence to optionally append additional
+	 * data elements to a specific item
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected function addItemChildren()
+	{
+		return $this->query_results = array();
+	}
 
 	/**
 	 * getData

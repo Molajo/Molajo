@@ -286,7 +286,7 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<filters include="'. $include . '"/>';
+			$replace_this = '<filters include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
 		}
 
@@ -299,11 +299,11 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<foreignkeys include="'. $include . '"/>';
+			$replace_this = '<foreignkeys include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
 		}
 
-    	/** <triggers include="ContentTrigger"/> */
+		/** <triggers include="ContentTrigger"/> */
 		$include = '';
 		$triggers = $xml->triggers;
 		$include = (string)$triggers['include'];
@@ -312,7 +312,7 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<triggers include="'. $include . '"/>';
+			$replace_this = '<triggers include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
 		}
 

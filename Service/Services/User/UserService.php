@@ -169,27 +169,27 @@ Class UserService
 		/** User Activity */
 		$activity = $results['Model\\UserActivity'];
 		Services::Registry()->set('User', 'UserActivity', $activity);
-/**
-        echo '<pre>';
-        echo 'User<br />';
-        var_dump(Services::Registry()->get('User'));
-        echo '</pre>';
+		/**
+		echo '<pre>';
+		echo 'User<br />';
+		var_dump(Services::Registry()->get('User'));
+		echo '</pre>';
 
-        echo '<pre>';
-        echo 'User Customfields<br />';
-        var_dump(Services::Registry()->get('UserCustomfields'));
-        echo '</pre>';
+		echo '<pre>';
+		echo 'User Customfields<br />';
+		var_dump(Services::Registry()->get('UserCustomfields'));
+		echo '</pre>';
 
-        echo '<pre>';
-        echo 'User Parameters<br />';
-        var_dump(Services::Registry()->get('UserParameters'));
-        echo '</pre>';
+		echo '<pre>';
+		echo 'User Parameters<br />';
+		var_dump(Services::Registry()->get('UserParameters'));
+		echo '</pre>';
 
-        echo '<pre>';
-        echo 'User Metadata<br />';
-        var_dump(Services::Registry()->get('UserMetadata'));
-        echo '</pre>';
-**/
+		echo '<pre>';
+		echo 'User Metadata<br />';
+		var_dump(Services::Registry()->get('UserMetadata'));
+		echo '</pre>';
+		 **/
 		return $this;
 	}
 }

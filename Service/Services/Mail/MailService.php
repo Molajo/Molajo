@@ -397,11 +397,11 @@ Class MailService
 		try {
 			$value = Services::Filter()
 				->filter(
-					$value,
-					$dataType,
-					$null,
-					$default
-				);
+				$value,
+				$dataType,
+				$null,
+				$default
+			);
 
 		} catch (\Exception $e) {
 

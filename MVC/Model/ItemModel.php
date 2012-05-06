@@ -243,11 +243,11 @@ class ItemModel extends Model
 	protected function addSpecialFields()
 	{
 		$fields = $this->table_xml->fields;
-/**
-echo '<pre>';
-var_dump($fields);
-echo '</pre>';
-*/
+		/**
+		echo '<pre>';
+		var_dump($fields);
+		echo '</pre>';
+		 */
 		if (count($fields->field) > 0) {
 
 			/** Process each field namespace  */

@@ -115,7 +115,7 @@ Class ExtensionHelper
 
 		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 
-		$m->model->query->where('('.$m->model->db->qn('a.start_publishing_datetime').' = ' .
+		$m->model->query->where('(' . $m->model->db->qn('a.start_publishing_datetime') . ' = ' .
 				$m->model->db->q($m->model->nullDate) .
 				' OR ' . $m->model->db->qn('a.start_publishing_datetime') . ' <= ' . $m->model->db->q($m->model->now) . ')'
 		);

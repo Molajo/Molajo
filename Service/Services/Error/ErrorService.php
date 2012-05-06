@@ -98,7 +98,7 @@ Class ErrorService
 
 		Services::Message()
 			->set(
-				Services::Registry()->get('Configuration', 'offline_message',
+			Services::Registry()->get('Configuration', 'offline_message',
 				'This site is not available.<br /> Please check back again soon.'
 			),
 			MESSAGE_TYPE_WARNING,
@@ -128,10 +128,10 @@ Class ErrorService
 
 		Services::Message()
 			->set(
-				Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
-				MESSAGE_TYPE_ERROR,
-				403
-			);
+			Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
+			MESSAGE_TYPE_ERROR,
+			403
+		);
 	}
 
 	/**
@@ -148,10 +148,10 @@ Class ErrorService
 
 		Services::Message()
 			->set(
-				Services::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
-				MESSAGE_TYPE_ERROR,
-				404
-			);
+			Services::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
+			MESSAGE_TYPE_ERROR,
+			404
+		);
 
 		return;
 	}

@@ -52,40 +52,40 @@ Class ModuleHelper
 
 	}
 
-    /**
-     * get
-     *
-     * Retrieve module data
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function get($name)
-    {
-        $rows = ExtensionHelper::get(
-            CATALOG_TYPE_EXTENSION_MODULE,
-            $name
-        );
-        if (count($rows) == 0) {
-            return array();
-        }
+	/**
+	 * get
+	 *
+	 * Retrieve module data
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public function get($name)
+	{
+		$rows = ExtensionHelper::get(
+			CATALOG_TYPE_EXTENSION_MODULE,
+			$name
+		);
+		if (count($rows) == 0) {
+			return array();
+		}
 
-        foreach ($rows as $row) {
-        }
+		foreach ($rows as $row) {
+		}
 
-        return $row;
-    }
+		return $row;
+	}
 
-    /**
-     * getPath
-     *
-     * Return path for selected Module
-     *
-     * @return bool|string
-     * @since 1.0
-     */
-    public function getPath($name)
-    {
-        return EXTENSIONS_MODULES . '/' . $name;
-    }
+	/**
+	 * getPath
+	 *
+	 * Return path for selected Module
+	 *
+	 * @return bool|string
+	 * @since 1.0
+	 */
+	public function getPath($name)
+	{
+		return EXTENSIONS_MODULES . '/' . $name;
+	}
 }

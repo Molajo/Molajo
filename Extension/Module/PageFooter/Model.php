@@ -19,59 +19,59 @@ defined('MOLAJO') or die;
  */
 Class ModulePagefooterModel extends DisplayModel
 {
-    /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param  $config
-     * @since  1.0
-     */
-    public function __construct($table = null, $id = null, $path = null)
-    {
-        $this->name = get_class($this);
-        $this->table = '';
-        $this->primary_key = '';
+	/**
+	 * __construct
+	 *
+	 * Constructor.
+	 *
+	 * @param  $config
+	 * @since  1.0
+	 */
+	public function __construct($table = null, $id = null, $path = null)
+	{
+		$this->name = get_class($this);
+		$this->table = '';
+		$this->primary_key = '';
 
-        return parent::__construct($table, $id, $path);
-    }
+		return parent::__construct($table, $id, $path);
+	}
 
-    /**
-     * getData
-     *
-     * @return    array    An empty array
-     *
-     * @since    1.0
-     */
-    public function getData()
-    {
-        $this->items = array();
+	/**
+	 * getData
+	 *
+	 * @return    array    An empty array
+	 *
+	 * @since    1.0
+	 */
+	public function getData()
+	{
+		$this->items = array();
 
-        $date = Services::Date()
-            ->getDate()
-            ->format('Y-m-d-H-i-s');
+		$date = Services::Date()
+			->getDate()
+			->format('Y-m-d-H-i-s');
 
-        $row = new \stdClass();
+		$row = new \stdClass();
 
-        $row->current_year = Services::Date()
-            ->getDate()
-            ->format('Y');
+		$row->current_year = Services::Date()
+			->getDate()
+			->format('Y');
 
-        $row->site_name = Services::Registry()->get('Configuration', 'site_name', 'Molajo');
+		$row->site_name = Services::Registry()->get('Configuration', 'site_name', 'Molajo');
 
-        $row->link = 'http://molajo.org/';
+		$row->link = 'http://molajo.org/';
 
-        $row->linked_text = 'Molajo' . '&reg;';
+		$row->linked_text = 'Molajo' . '&reg;';
 
-        $row->remaining_text = ' ' . Services::Language()
-            ->_('IS_FREE_SOFTWARE');
+		$row->remaining_text = ' ' . Services::Language()
+			->_('IS_FREE_SOFTWARE');
 
-        $row->version = Services::Language()
-            ->_(MOLAJOVERSION);
+		$row->version = Services::Language()
+			->_(MOLAJOVERSION);
 
-        /** save recordset */
-        $this->items[] = $row;
+		/** save recordset */
+		$this->items[] = $row;
 
-        return $this->items;
-    }
+		return $this->items;
+	}
 }

@@ -14,7 +14,8 @@
     <joins>
         <join table="#__users" alias="b" select="username,first_name,last_name" jointo="id" joinwith="user_id"/>
         <join table="#__actions" alias="c" select="title" jointo="id" joinwith="action_id"/>
-        <join table="#__catalog" alias="d" select="catalog_type_id,source_id,sef_request,view_group_id" jointo="id" joinwith="catalog_id"/>
+        <join table="#__catalog" alias="d" select="catalog_type_id,source_id,sef_request,view_group_id" jointo="id"
+              joinwith="catalog_id"/>
         <join table="#__catalog_types" alias="e" select="title,source_table" jointo="id" joinwith="d.catalog_type_id"/>
     </joins>
     <triggers>

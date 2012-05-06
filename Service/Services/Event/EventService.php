@@ -57,7 +57,7 @@ Class EventService
 	public function schedule($event, $parameters = array())
 	{
 		/** Retrieve Event Registrations */
-		$registrations =  Services::Registry()->get('Events', $event);
+		$registrations = Services::Registry()->get('Events', $event);
 
 		if (is_array($registrations)) {
 		} else {
@@ -72,7 +72,7 @@ Class EventService
 
 		foreach ($registrations as $registration) {
 
-			Services::Debug()->set('Event: '. $event . ' fired registration by Trigger '. $registration);
+			Services::Debug()->set('Event: ' . $event . ' fired registration by Trigger ' . $registration);
 		}
 
 		return $this;
@@ -91,7 +91,7 @@ Class EventService
 	public function register($event, $trigger)
 	{
 		/** Retrieve Event Registrations */
-		$registrations =  Services::Registry()->get('Events', $event);
+		$registrations = Services::Registry()->get('Events', $event);
 
 		if (is_array($registrations)) {
 		} else {
@@ -108,7 +108,7 @@ Class EventService
 
 		Services::Registry()->set('Events', $event, $registrations);
 
-		Services::Debug()->set('Trigger:'. $trigger. ' registered for Event: '. $event);
+		Services::Debug()->set('Trigger:' . $trigger . ' registered for Event: ' . $event);
 
 		return $this;
 	}

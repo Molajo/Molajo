@@ -7,4 +7,4 @@
  */
 defined('MOLAJO') or die; ?>
 <p><a href="<?php echo $this->row->link; ?>"><?php echo $this->row->linked_text; ?>
-    v. <?php echo $this->row->version; ?></a><?php echo $this->row->remaining_text; ?></p>
+	v. <?php echo $this->row->version; ?></a><?php echo $this->row->remaining_text; ?></p>
