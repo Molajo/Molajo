@@ -119,29 +119,29 @@ Class Triggers
 	 */
 	public function connect()
 	{
-		$triggers = Services::Filesystem()->folderFiles(EXTENSIONS_TRIGGERS);
+		$triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
 
-		$triggerClass = 'Molajo\\Extension\\Trigger\\Trigger';
+		$triggerClass = 'Molajo\\Extension\\Trigger\\Trigger\\Trigger';
 		$method = 'getInstance';
 		$connection = $triggerClass::$method();
 		$this->set('Trigger', $connection, true);
 
-		$triggerClass = 'Molajo\\Extension\\Trigger\\ContentTrigger';
+		$triggerClass = 'Molajo\\Extension\\Trigger\\Content\\ContentTrigger';
 		$method = 'getInstance';
 		$connection = $triggerClass::$method();
 
 		$this->set('ContentTrigger', $connection, true);
 
-		foreach ($triggers as $filename) {
+		foreach ($triggers as $folder) {
 
 			/** class name */
-			if ($filename == 'Trigger'
-				|| $filename == 'ContentTrigger'
-				|| substr(strtolower($filename), 0, 4) == 'hold'
+			if ($folder == 'Trigger'
+				|| $folder == 'Content'
+				|| substr(strtolower($folder), 0, 4) == 'hold'
 			) {
 
 			} else {
-				$this->process_events($filename);
+				$this->process_events($folder);
 			}
 		}
 
@@ -157,18 +157,18 @@ Class Triggers
 	/**
 	 * Store all events associated with the Trigger
 	 *
-	 * @param  $filename
+	 * @param  $folder
 	 *
 	 * @return Triggers
 	 * @since  1.0
 	 */
-	protected function process_events($filename)
+	protected function process_events($folder)
 	{
 		$try = true;
 		$connection = '';
 
-		$entry = substr($filename, 0, strlen($filename) - 4);
-		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $entry;
+		$entry = $folder . 'Trigger';
+		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $folder . '\\' . $entry;
 
 		/** method name */
 		$method = 'getInstance';
