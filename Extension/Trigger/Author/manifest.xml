@@ -9,7 +9,4 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>AUTHOR_TRIGGER_DESCRIPTION</description>
-    <files>
-        <folder>Language</folder>
-    </files>
 </extension>
