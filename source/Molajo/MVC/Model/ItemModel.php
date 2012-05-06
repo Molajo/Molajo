@@ -255,7 +255,7 @@ echo '</pre>';
 
 				$field_name = (string)$ns['name'];
 				$namespace = (string)$ns['registry'];
-echo $namespace.' '.$field_name.'<br />';
+
 				if (isset($this->query_results[$field_name])) {
 
 					/** Extract custom fields from JSON */
@@ -295,16 +295,12 @@ echo $namespace.' '.$field_name.'<br />';
 								$set = $default;
 							}
 
-	echo $namespace.' '.$name.' '. $set.' <br />';
-
 							/** Filter Input and Save the Registry */
 							//$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
 							if ($this->get_special_fields == 2) {
-								echo 'it is 2 <br />';
 								$this->query_results[$name] = $set;
 							} else {
-								echo 'it is NOT 2 <br />';
 								Services::Registry()->set($namespace, $name, $set);
 							}
 						}

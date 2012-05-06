@@ -39,5 +39,3 @@ Bring in the php spl priority
 AuthenticationService - Events for Login, etc
 
 Filter - get HTML Purifier in
-
-
