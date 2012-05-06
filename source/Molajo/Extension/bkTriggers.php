@@ -36,6 +36,23 @@ Class Triggers
 	protected $trigger_connection;
 
 	/**
+	 * Events
+	 *
+	 * @var   object
+	 * @since 1.0
+	 */
+	protected $events;
+
+
+	/**
+	 * Events
+	 *
+	 * @var   object
+	 * @since 1.0
+	 */
+	protected $class_events;
+
+	/**
 	 * getInstance
 	 *
 	 * @static
@@ -59,6 +76,8 @@ Class Triggers
 	public function __construct()
 	{
 		$this->trigger_connection = array();
+		$this->events = array();
+		$this->class_events = array();
 	}
 
 	/**
@@ -126,11 +145,17 @@ Class Triggers
 			}
 		}
 
+		Services::Registry()->set('Events', 'List', $this->events);
+
+		foreach ($this->class_events as $event => $list) {
+			Services::Registry()->set('Events', $event, $list);
+		}
+
 		return $this;
 	}
 
 	/**
-	 * Connect to the trigger and register it for events
+	 * Store all events associated with the Trigger
 	 *
 	 * @param  $folder
 	 *
@@ -142,8 +167,8 @@ Class Triggers
 		$try = true;
 		$connection = '';
 
-		$trigger = $folder . 'Trigger';
-		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $folder . '\\' . $trigger;
+		$entry = $folder . 'Trigger';
+		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $folder . '\\' . $entry;
 
 		/** method name */
 		$method = 'getInstance';
@@ -170,20 +195,43 @@ Class Triggers
 			}
 		}
 
-		/** Retrieve all Event Methods in the Trigger */
 		$events = get_class_methods($triggerClass);
 
-		/** Registry the trigger for each event */
 		if (count($events) > 0) {
-			foreach ($events as $event) {
-				if (substr($event, 0, 2) == 'on') {
-					Services::Event()->register($event, $trigger);
+			foreach ($events as $item) {
+				if (substr($item, 0, 2) == 'on') {
+
+					if (in_array($item, $this->events)) {
+					} else {
+						$this->events[] = $item;
+					}
+
+					if (isset($this->class_events[$item])) {
+						$classList = $this->class_events[$item];
+					} else {
+						$classList = array();
+					}
+
+					if (is_array($classList)) {
+					} else {
+						if (trim($classList) == '') {
+							$classList = array();
+						} else {
+							$temp = $classList;
+							$classList = array();
+							$classList[] = $temp;
+						}
+					}
+
+					$classList[] = $entry;
+
+					$this->class_events[$item] = $classList;
 				}
 			}
 		}
 
 		/** store connection or error message */
-		$this->set($trigger, $connection, $try);
+		$this->set($entry, $connection, $try);
 
 		return $this;
 	}

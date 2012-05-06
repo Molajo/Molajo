@@ -1,3 +1,4 @@
+* * * * Model / DB interaction * * * *
 
 1. New data_sources for:
 
@@ -16,30 +17,15 @@ a. Parser
 b. Includers
 c. Controller(Display) - Views
 
-
-* * * * Event Layer * * * *
-
-Events are registered with the Events Service.
-
-Only the Application and Controller processes can fire events
-
-Extensions schedule events to participate
-Services::Event()->schedule('OnBeforeSave')
-
-Triggers register for scheduled events.
-Services::Event()->schedule('OnBeforeSave')
-
-The Application and Controller classes notify the Event Manager at Event Time
-Services::Event()->notify('OnBeforeSave')
-
-The Event Service triggers those registered
-Services::Event()->trigger('OnBeforeSave')
-
-Typically, triggers interact with Services which interfaces to the Utility layer:
-- Services::Mail()->Send
-- Services::Filter()->text
-- Services::Model()->getItems
-
+ModelService
+Only interface to Models should go thru this the ModelService
+-- It should look for overrides, etc.
+-- It should replace EntryModel
+-- Instead of having a Head and Message and Request Model, abstract out the data access
+element and create a "DBO" of sorts to those types of data.
+-- Same for media (files - including CSS, JS, Images, and so forth)
+-- Models remaining: Model (base), Item (crud), and Display (list)
+-- All customization, editing, and so forth, defined with Table XML and Triggers
 
 * * * * Services Layer (Middleware) * * * *
 
@@ -54,13 +40,4 @@ AuthenticationService - Events for Login, etc
 
 Filter - get HTML Purifier in
 
-ModelService
-Only interface to Models should go thru this the ModelService
--- It should look for overrides, etc.
--- It should replace EntryModel
--- Instead of having a Head and Message and Request Model, abstract out the data access
-element and create a "DBO" of sorts to those types of data.
--- Same for media (files - including CSS, JS, Images, and so forth)
--- Models remaining: Model (base), Item (crud), and Display (list)
--- All customization, editing, and so forth, defined with Table XML and Triggers
 

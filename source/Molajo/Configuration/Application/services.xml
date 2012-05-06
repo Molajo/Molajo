@@ -28,4 +28,5 @@
     <service>Url</service>
     <service>Text</service>
     <service>Mail</service>
+    <service>Event</service>
 </services>
