@@ -393,7 +393,7 @@ Class RouteService
 		echo 'Metadata<br />';
 		var_dump(Services::Registry()->get('ContentMetadata'));
 		echo '</pre>';
-		die;
+
 		/**  Extension */
 		$response = Helpers::Extension()->getRoute(
 			Services::Registry()->get('Content', 'extension_instance_id')

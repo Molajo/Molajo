@@ -102,23 +102,6 @@ Class ViewHelper
 	}
 
 	/**
-	 * Constructor
-	 *
-	 * @param  $view - name or id of the view
-	 * @param  $view_type - type of view (Page, Template, Wrap)
-	 * @param  $extension_name - name of component, module, theme, or listener
-	 * @param  $extension_type - type of extension
-	 * @param  $theme_name - name of theme
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * _findPath
 	 *
 	 * Looks for path of view in this order:
@@ -256,7 +239,6 @@ Class ViewHelper
 		if ($type == 'template') {
 			if ($task == 'add' || $task == 'edit') {
 				$view = (int)Services::Registry()->get('Configuration', 'default_edit_template_view_id', 0);
-				;
 
 			} else if ((int)$id == 0) {
 				$view = (int)Services::Registry()->get('Configuration', 'default_items_template_view_id', 0);

@@ -6,17 +6,11 @@
  */
 namespace Molajo;
 
-use Molajo\Extension\Helpers;
-
-use Molajo\Extension\Triggers;
-
-use Molajo\Service\Services;
-
 use Molajo\Service\Services\RequestService;
 use Molajo\Service\Services\ConfigurationService;
-use Molajo\Service\Services\RegistryService;
-
-use Joomla\JFactory;
+use Molajo\Extension\Helpers;
+use Molajo\Extension\Triggers;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -470,28 +464,15 @@ Class Application
 			include_once BASE_FOLDER . '/defines.php';
 		}
 
-		if (defined('EXTENSIONS')) {
-		} else {
-			define('EXTENSIONS', BASE_FOLDER . '/Molajo/Extension');
-		}
-		if (defined('SITES')) {
-		} else {
-			define('SITES', BASE_FOLDER . '/site');
-		}
 		if (defined('CONFIGURATION_FOLDER')) {
 		} else {
 			define('CONFIGURATION_FOLDER', BASE_FOLDER . '/Molajo/Configuration');
 		}
 
-		if (defined('MVC')) {
+		if (defined('EXTENSIONS')) {
 		} else {
-			define('MVC', APPLICATIONS . '/MVC');
+			define('EXTENSIONS', BASE_FOLDER . '/Molajo/Extension');
 		}
-		if (defined('MVC_URL')) {
-		} else {
-			define('MVC_URL', BASE_URL . 'Molajo/MVC');
-		}
-
 		if (defined('EXTENSIONS_HELPERS')) {
 		} else {
 			define('EXTENSIONS_HELPERS', EXTENSIONS . '/Helper');
@@ -537,19 +518,33 @@ Class Application
 		} else {
 			define('EXTENSIONS_THEMES_URL', BASE_URL . 'Molajo/Extension/Theme');
 		}
+		if (defined('EXTENSIONS_TRIGGERS_URL')) {
+		} else {
+			define('EXTENSIONS_TRIGGERS_URL', BASE_URL . 'Molajo/Extension/Trigger');
+		}
 		if (defined('EXTENSIONS_VIEWS_URL')) {
 		} else {
 			define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Molajo/Extension/View');
 		}
 
+		if (defined('MVC')) {
+		} else {
+			define('MVC', APPLICATIONS . '/MVC');
+		}
+		if (defined('MVC_URL')) {
+		} else {
+			define('MVC_URL', BASE_URL . 'Molajo/MVC');
+		}
 
 		if (defined('SERVICES')) {
 		} else {
 			define('SERVICES', APPLICATIONS . '/Service');
 		}
-		if (defined('TRIGGERS')) {
+
+
+		if (defined('SITES')) {
 		} else {
-			define('TRIGGERS', BASE_URL . 'Service/Trigger');
+			define('SITES', BASE_FOLDER . '/site');
 		}
 
 		/**

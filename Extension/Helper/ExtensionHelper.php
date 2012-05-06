@@ -31,8 +31,8 @@ Class ExtensionHelper
 	 * getInstance
 	 *
 	 * @static
-	 * @return bool|object
-	 * @since  1.0
+	 * @return  bool|object
+	 * @since   1.0
 	 */
 	public static function getInstance()
 	{
@@ -43,53 +43,29 @@ Class ExtensionHelper
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * Retrieve Route information for a specific Extension
 	 *
-	 * @return    boolean
-	 * @since    1.0
+	 * @return  boolean
+	 * @since   1.0
 	 */
 	public function getRoute($extension_id)
 	{
 		/** Retrieve the query results */
-		$row = $this->get(0, $extension_id);
+		$row = $this->get($extension_id);
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Extension', 'id', (int)$row->extension_instance_id);
-		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->extension_instance_id);
+		Services::Registry()->set('Extension', 'id', (int)$row->id);
+		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->id);
 		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
 		Services::Registry()->set('Extension', 'title', $row->title);
 		Services::Registry()->set('Extension', 'parameters', $row->parameters);
 		Services::Registry()->set('Extension', 'metadata', $row->metadata);
 
 		$xml = Services::Configuration()->loadFile(ucfirst(strtolower($row->title)), 'Table');
-
-		Services::Registry()->loadField(
-			'ExtensionMetadata',
-			'metadata',
-			$row->metadata,
-			$xml->fields->field[2]
-		);
-
-		Services::Registry()->loadField(
-			'ExtensionParameters',
-			'extparameters',
-			$row->parameters,
-			$xml->fields->field[3]
-		);
 
 		return;
 	}
@@ -106,15 +82,21 @@ Class ExtensionHelper
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public function get($catalog_type_id = 0, $extension = null)
+	public function get($extension_id = 0, $catalog_type_id = 0)
 	{
 		$m = Services::Model()->connect('ExtensionInstances');
+
+		$m->model->set('id', (int)$extension_id);
+
+		$m->model->set('get_special_fields', 0);
+		$m->model->set('get_item_children', false);
+		$m->model->set('use_special_joins', false);
+		$m->model->set('add_acl_check', true);
 
 		/**
 		 *  a. Extensions Instances Table
 		 */
-		$m->model->query->select($m->model->db->qn('a.id') . ' as extension_instance_id');
-
+		$m->model->query->select($m->model->db->qn('a.id'));
 		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
 		$m->model->query->select($m->model->db->qn('a.title'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
@@ -125,16 +107,21 @@ Class ExtensionHelper
 
 		$m->model->query->where($m->model->db->qn('a.extension_id') . ' > 0 ');
 
+		$m->model->query->where(
+			'((' . $m->model->db->qn('a.id') . '= ' . (int)$extension_id . ')'
+				. ' OR (' . $m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id
+				. ' AND 0 = ' . (int)$extension_id . '))'
+		);
 
 		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 
-		$m->model->query->where('(a.start_publishing_datetime = ' .
+		$m->model->query->where('('.$m->model->db->qn('a.start_publishing_datetime').' = ' .
 				$m->model->db->q($m->model->nullDate) .
-				' OR a.start_publishing_datetime <= ' . $m->model->db->q($m->model->now) . ')'
+				' OR ' . $m->model->db->qn('a.start_publishing_datetime') . ' <= ' . $m->model->db->q($m->model->now) . ')'
 		);
-		$m->model->query->where('(a.stop_publishing_datetime = ' .
+		$m->model->query->where('(' . $m->model->db->qn('a.stop_publishing_datetime') . ' = ' .
 				$m->model->db->q($m->model->nullDate) .
-				' OR a.stop_publishing_datetime >= ' . $m->model->db->q($m->model->now) . ')'
+				' OR ' . $m->model->db->qn('a.stop_publishing_datetime') . ' >= ' . $m->model->db->q($m->model->now) . ')'
 		);
 
 		/** Catalog Join and View Access Check */
@@ -152,11 +139,7 @@ Class ExtensionHelper
 		/** b_catalog_types. Catalog Types Table  */
 		$m->model->query->select($m->model->db->qn('b_catalog_types.title') . ' as catalog_type_title');
 		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b_catalog_types');
-		$m->model->query->where('b_catalog.catalog_type_id = b_catalog_types.id');
-		$m->model->query->where('b_catalog_types.' .
-				$m->model->db->qn('component_option') .
-				' = ' . $m->model->db->q('extensions')
-		);
+		$m->model->query->where($m->model->db->qn('b_catalog.catalog_type_id') . ' = ' . $m->model->db->qn('b_catalog_types.id'));
 
 		/**
 		 *  c. Application Table
@@ -177,7 +160,7 @@ Class ExtensionHelper
 		/**
 		 *  Run Query
 		 */
-//		echo $m->model->query->__toString();
+		//echo $m->model->query->__toString();
 
 		$row = $m->execute('loadObject');
 
@@ -257,13 +240,13 @@ Class ExtensionHelper
 	public function getPath($catalog_type_id, $name)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			return ComponentHelper::getPath($name);
+			return Helper::Component()->getPath($name);
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			return ModuleHelper::getPath($name);
+			return Helper::Module()->getPath($name);
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			return ThemeHelper::getPath($name);
+			return Helper::Theme()->getPath($name);
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			return TriggerHelper::getPath($name);
+			return Helper::Trigger()->getPath($name);
 		}
 		return false;
 	}
@@ -285,8 +268,8 @@ Class ExtensionHelper
 			return false;
 		}
 
-		Services::Language()
-			->load($path, Services::Language()->get('tag'), false, false);
+		Services::Language()->load($path, Services::Language()->get('tag'), false, false);
+
 		return true;
 	}
 }

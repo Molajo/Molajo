@@ -176,7 +176,7 @@ class ModelHelper
             substr(
                 strip_tags($item->content_text),
                 0,
-                $parameters->get('view_text_snippet_length', 200)
+                $parameters->get('snippet_length', 200)
             );
 
         return $item;
