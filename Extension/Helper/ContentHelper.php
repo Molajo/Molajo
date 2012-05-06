@@ -131,7 +131,7 @@ die;
 
 		$m->model->set('id', (int)$id);
 
-		$m->model->set('get_special_fields', true);
+		$m->model->set('get_special_fields', 1);
 		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', true);
@@ -148,6 +148,7 @@ die;
         $m->model->query->from($m->model->db->qn($content_table) . ' as a ');
 
         $m->model->query->where('a.' . $m->model->db->qn('id') . ' = ' . (int)$id);
+
         $m->model->query->where('a.' . $m->model->db->qn('status') .
             ' > ' . STATUS_UNPUBLISHED);
 

@@ -62,7 +62,7 @@ class ItemModel extends Model
 		$this->runLoadQuery();
 
 		/** Load Special Fields in Registry */
-		if ($this->get_special_fields == false) {
+		if ($this->get_special_fields == 0) {
 		} else {
 			$this->addSpecialFields();
 		}
@@ -243,7 +243,11 @@ class ItemModel extends Model
 	protected function addSpecialFields()
 	{
 		$fields = $this->table_xml->fields;
-
+/**
+echo '<pre>';
+var_dump($fields);
+echo '</pre>';
+*/
 		if (count($fields->field) > 0) {
 
 			/** Process each field namespace  */
@@ -251,57 +255,58 @@ class ItemModel extends Model
 
 				$field_name = (string)$ns['name'];
 				$namespace = (string)$ns['registry'];
-
+echo $namespace.' '.$field_name.'<br />';
 				if (isset($this->query_results[$field_name])) {
-				} else {
-					break;
-				}
 
-				/** Extract custom fields from JSON */
-				$jsonData = $this->query_results[$field_name];
-				$data = json_decode($jsonData);
+					/** Extract custom fields from JSON */
+					$jsonData = $this->query_results[$field_name];
+					$data = json_decode($jsonData);
 
-				$elementArray = array();
+					$elementArray = array();
 
-				/** Place field names into named pair array */
-				$lookup = array();
+					/** Place field names into named pair array */
+					$lookup = array();
 
-				if (count($data) > 0) {
-					foreach ($data as $key => $value) {
-						$lookup[$key] = $value;
+					if (count($data) > 0) {
+						foreach ($data as $key => $value) {
+							$lookup[$key] = $value;
+						}
 					}
-				}
 
-				if (count($ns->element) > 0) {
+					if (count($ns->element) > 0) {
 
-					foreach ($ns->element as $element) {
+						foreach ($ns->element as $element) {
 
-						$name = (string)$element['name'];
-						$name = strtolower($name);
-						$dataType = (string)$element['filter'];
-						$null = (string)$element['null'];
-						$default = (string)$element['default'];
-						$values = (string)$element['values'];
+							$name = (string)$element['name'];
+							$name = strtolower($name);
+							$dataType = (string)$element['filter'];
+							$null = (string)$element['null'];
+							$default = (string)$element['default'];
+							$values = (string)$element['values'];
 
-						if ($default == '') {
-							$default = null;
-						}
+							if ($default == '') {
+								$default = null;
+							}
 
-						/** Use value, if exists, or defined default */
-						if (isset($lookup[$name])) {
-							$set = $lookup[$name];
-						} else {
-							$set = $default;
-						}
+							/** Use value, if exists, or defined default */
+							if (isset($lookup[$name])) {
+								$set = $lookup[$name];
+							} else {
+								$set = $default;
+							}
 
-						/** Filter Input and Save the Registry */
-						//$set = $this->filterInput($name, $set, $dataType, $null, $default);
+	echo $namespace.' '.$name.' '. $set.' <br />';
 
-						if ($this->get_special_fields == 2) {
-							$this->query_results[$name] = $set;
-						} else {
-							/** Place into Registry */
-							Services::Registry()->set($namespace, $name, $set);
+							/** Filter Input and Save the Registry */
+							//$set = $this->filterInput($name, $set, $dataType, $null, $default);
+
+							if ($this->get_special_fields == 2) {
+								echo 'it is 2 <br />';
+								$this->query_results[$name] = $set;
+							} else {
+								echo 'it is NOT 2 <br />';
+								Services::Registry()->set($namespace, $name, $set);
+							}
 						}
 					}
 				}

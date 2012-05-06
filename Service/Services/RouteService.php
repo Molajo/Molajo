@@ -95,7 +95,7 @@ Class RouteService
 			Services::Debug()->set('Application::Route() Not in Offline Mode');
 		}
 
-		/** Remove Nonroutable Parameters from path and save for later use */
+		/** Remove Parameters from path and save for later use */
 		$continue = $this->getNonRoutableParameters();
 
 		if ($continue == false) {
@@ -384,13 +384,16 @@ Class RouteService
 			Services::Error()->set(500, 'Content Item not found');
 		}
 		echo '<br /><br /><pre>';
-		echo 'Content Parameters<br />';
+		echo 'Content<br />';
+		echo 'table '.Services::Registry()->get('Route', 'source_table').'<br />';
 		echo 'id '.Services::Registry()->get('Route', 'source_id').'<br />';
+		var_dump(Services::Registry()->get('Content'));
+		echo 'Content Parameters<br />';
 		var_dump(Services::Registry()->get('ContentParameters'));
 		echo 'Metadata<br />';
 		var_dump(Services::Registry()->get('ContentMetadata'));
 		echo '</pre>';
-
+		die;
 		/**  Extension */
 		$response = Helpers::Extension()->getRoute(
 			Services::Registry()->get('Content', 'extension_instance_id')

@@ -73,7 +73,7 @@ Class UserService
 
 		$m->model->set('id', $this->id);
 
-		$m->model->set('get_special_fields', true);
+		$m->model->set('get_special_fields', 1);
 		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', false);
 
