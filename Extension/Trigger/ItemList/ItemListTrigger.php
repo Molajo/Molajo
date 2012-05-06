@@ -92,11 +92,11 @@ class ItemListTrigger extends ContentTrigger
 				$m->model->query->select($m->model->db->qn('a.' . $value));
 				$m->model->query->order($m->model->db->qn('a.' . $value));
 
-				if ((int) $catalog_type_id > 0) {
+				if ((int)$catalog_type_id > 0) {
 					$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' > ' . $catalog_type_id);
 				}
 
-				if ((int) $published == 1) {
+				if ((int)$published == 1) {
 					$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 
 					$m->model->query->where('(a.start_publishing_datetime = ' .
@@ -109,7 +109,7 @@ class ItemListTrigger extends ContentTrigger
 					);
 				}
 
-				if ((int) $view_access == 1) {
+				if ((int)$view_access == 1) {
 					Services::Authorisation()
 						->setQueryViewAccess(
 						$m->model->query,

@@ -42,49 +42,49 @@ class CatalogTypeIdTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-create processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeCreate($data, $model)
-    {
+	/**
+	 * Pre-create processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeCreate($data, $model)
+	{
 		// catalog_type_id foreign key
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeUpdate($data, $model)
-    {
-        return $data;
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate($data, $model)
+	{
+		return $data;
 		// save it
-    }
+	}
 
-    /**
-     * Post-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterUpdate($data, $model)
-    {
+	/**
+	 * Post-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterUpdate($data, $model)
+	{
 		// cannot change value
 		// foreign key must exist
-        return $data;
-    }
+		return $data;
+	}
 }

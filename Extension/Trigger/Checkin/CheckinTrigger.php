@@ -42,19 +42,19 @@ class CheckinTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeUpdate($data, $model)
-    {
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate($data, $model)
+	{
 		// make certain the correct person is in checkout
 		// if so, checkin by zeroing otu that value and the date
-        return $data;
-    }
+		return $data;
+	}
 }

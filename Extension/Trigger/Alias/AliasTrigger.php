@@ -42,32 +42,32 @@ class AliasTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-create processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeCreate($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Pre-create processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeCreate($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeUpdate($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate($data, $model)
+	{
+		return $data;
+	}
 
 }

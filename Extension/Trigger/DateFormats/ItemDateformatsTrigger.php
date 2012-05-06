@@ -43,20 +43,21 @@ class ItemDateFormatsTrigger extends ContentTrigger
 	}
 
 	/**
-     * After-read processing
+	 * After-read processing
 	 *
 	 * Adds formatted dates to $data
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterRead($data, $model)
-    {
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterRead($data, $model)
+	{
 		if (isset($data->created_by)
-			&& (int) $data->created_by > 0) {
+			&& (int)$data->created_by > 0
+		) {
 		} else {
 			return;
 		}
@@ -90,7 +91,7 @@ class ItemDateFormatsTrigger extends ContentTrigger
 		}
 
 		return;
-    }
+	}
 
 	/**
 	 * itemDateRoutine

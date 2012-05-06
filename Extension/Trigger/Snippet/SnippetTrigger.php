@@ -42,19 +42,19 @@ class SnippetTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * After-read processing
+	/**
+	 * After-read processing
 	 *
 	 * Parses the Content Text into a snippet, stripped of HTML tags
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterRead($data, $model)
-    {
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterRead($data, $model)
+	{
 		if (isset($data->content_text)) {
 		} else {
 			$data->snippet = '';
@@ -69,5 +69,5 @@ class SnippetTrigger extends ContentTrigger
 			);
 
 		return $data;
-    }
+	}
 }

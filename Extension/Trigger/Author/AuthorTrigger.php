@@ -43,20 +43,21 @@ class AuthorTrigger extends ContentTrigger
 	}
 
 	/**
-     * After-read processing
+	 * After-read processing
 	 *
 	 * Retrieves Author Information for Item
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterRead($data, $model)
-    {
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterRead($data, $model)
+	{
 		if (isset($data->created_by)
-			&& (int) $data->created_by > 0) {
+			&& (int)$data->created_by > 0
+		) {
 		} else {
 			return;
 		}
@@ -86,14 +87,15 @@ class AuthorTrigger extends ContentTrigger
 			if ($name == 'last_name') {
 				$last_name = $value;
 			}
-			$field = 'author_'.$name;
+			$field = 'author_' . $name;
 			$data->$field = $value;
 		}
 
 		$data->author_full_name = $first_name . ' ' . $last_name;
 
 		if (isset($data->author_email)
-			&& $data->author_email !== '') {
+			&& $data->author_email !== ''
+		) {
 
 			$size = Services::Registry()->get('ExtensionParameters', 'gravatar_size', 80);
 			$type = Services::Registry()->get('ExtensionParameters', 'gravatar_type', 'mm');
@@ -110,5 +112,5 @@ class AuthorTrigger extends ContentTrigger
 		}
 
 		return $data;
-    }
+	}
 }

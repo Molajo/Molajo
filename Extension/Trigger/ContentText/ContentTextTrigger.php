@@ -42,19 +42,19 @@ class ContentTextTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-read processing
+	/**
+	 * Pre-read processing
 	 *
 	 * splits the content_text field into intro and full text on readmore
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeRead($data, $model)
-    {
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeRead($data, $model)
+	{
 		if (isset($data->content_text)) {
 		} else {
 			$data->introtext = '';
@@ -77,5 +77,5 @@ class ContentTextTrigger extends ContentTrigger
 		$data->fulltext = $fulltext;
 
 		return $data;
-    }
+	}
 }
