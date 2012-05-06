@@ -42,27 +42,27 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * After-read processing
+	/**
+	 * After-read processing
 	 *
 	 * Use with Grid to determine permissions for buttons and items
 	 * Validate task-level user permissions on each row - relies upon catalog_id
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterRead($data, $model)
-    {
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterRead($data, $model)
+	{
 		if (isset($data->catalog_id)) {
 		} else {
 			return $data;
 		}
 
 		/** Component Buttons */
-		$tasks = Services::Registry()-get('ExtensionParameters', 'toolbar_buttons');
+		$tasks = Services::Registry() - get('ExtensionParameters', 'toolbar_buttons');
 
 		$tasksArray = explode(',', $tasks);
 
@@ -79,5 +79,5 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 		}
 
 		return;
-    }
+	}
 }

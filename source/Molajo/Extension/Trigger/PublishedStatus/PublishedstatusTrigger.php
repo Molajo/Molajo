@@ -42,53 +42,53 @@ class PublishedstatusTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-create processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeCreate($data, $model)
-    {
+	/**
+	 * Pre-create processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeCreate($data, $model)
+	{
 		// if published or greater status
 		// make certain published start date is today or later
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Post-create processing
-     *
-     * @param $data, $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterCreate($data, $model)
-    {
+	/**
+	 * Post-create processing
+	 *
+	 * @param $data, $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterCreate($data, $model)
+	{
 		// if it is published, notify
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Pre-read processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeRead($data, $model)
-    {
+	/**
+	 * Pre-read processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeRead($data, $model)
+	{
 		$model->query->where(
 			$model->db->qn($model->primary_prefix)
 				. '.'
 				. $model->db->qn('status')
 				. ' > '
-				. (int) STATUS_UNPUBLISHED
+				. (int)STATUS_UNPUBLISHED
 		);
 
 		$model->query->where('('
@@ -122,42 +122,42 @@ class PublishedstatusTrigger extends ContentTrigger
 		);
 
 		return $this;
-    }
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeUpdate($data, $model)
-    {
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate($data, $model)
+	{
 		// hold status
 		// if it is published (or greater) make certain published dates are ok
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Post-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterUpdate($data, $model)
-    {
+	/**
+	 * Post-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterUpdate($data, $model)
+	{
 		// if it wasn't published and now is
 
 		// is email notification enabled? are people subscribed?
 		// tweets
 		// pings
-        return $data;
-    }
+		return $data;
+	}
 
 	public function notify($data, $model)
 	{

@@ -41,52 +41,52 @@ class CheckoutTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-read processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeRead($data, $model)
-    {
+	/**
+	 * Pre-read processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeRead($data, $model)
+	{
 		// dirty read?
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeUpdate($data, $model)
-    {
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate($data, $model)
+	{
 		// verify user has rights to update
 		// and that no one else has it updated
 		// if so, check checkout date and user
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Pre-delete processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeDelete($data, $model)
-    {
+	/**
+	 * Pre-delete processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeDelete($data, $model)
+	{
 		// verify user has rights to delete
 		// and that no one else has it checked out
 		// if so, allow, else cancel
-        return $data;
-    }
+		return $data;
+	}
 }

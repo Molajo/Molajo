@@ -42,114 +42,114 @@ class EmailTrigger extends ContentTrigger
 		return self::$instance;
 	}
 
-    /**
-     * Pre-create processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeCreate($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Pre-create processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeCreate($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Post-create processing
-     *
-     * @param $data, $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterCreate($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Post-create processing
+	 *
+	 * @param $data, $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterCreate($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Pre-read processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeRead($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Pre-read processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeRead($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Post-read processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterRead($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Post-read processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterRead($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeUpdate($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Post-update processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterUpdate($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Post-update processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterUpdate($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Pre-delete processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onBeforeDelete($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Pre-delete processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onBeforeDelete($data, $model)
+	{
+		return $data;
+	}
 
-    /**
-     * Post-read processing
-     *
-     * @param   $data
-     * @param   $model
-     *
-     * @return  $data
-     * @since   1.0
-     */
-    public function onAfterDelete($data, $model)
-    {
-        return $data;
-    }
+	/**
+	 * Post-read processing
+	 *
+	 * @param   $data
+	 * @param   $model
+	 *
+	 * @return  $data
+	 * @since   1.0
+	 */
+	public function onAfterDelete($data, $model)
+	{
+		return $data;
+	}
 }
