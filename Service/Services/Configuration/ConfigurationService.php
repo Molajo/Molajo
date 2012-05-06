@@ -105,7 +105,7 @@ Class ConfigurationService
 
 		$m->model->set('id', (int)SITE_ID);
 		$m->model->set('get_item_children', false);
-        $m->model->set('use_special_joins', false);
+		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', false);
 
 		$items = $m->execute('load');
@@ -205,7 +205,7 @@ Class ConfigurationService
 				$m->model->set('id_name', APPLICATION);
 				$m->model->set('name_field', 'name');
 				$m->model->set('get_item_children', false);
-                $m->model->set('use_special_joins', false);
+				$m->model->set('use_special_joins', false);
 				$m->model->set('add_acl_check', false);
 
 				$items = $m->execute('load');
@@ -263,11 +263,91 @@ Class ConfigurationService
 		}
 
 		try {
-			return simplexml_load_file($path_and_file);
+			$xml = simplexml_load_file($path_and_file);
 
 		} catch (\Exception $e) {
 			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
+
+		if ($type == 'Table') {
+		} else {
+			return $xml;
+		}
+
+		/** Process Include Code */
+		$xml_string = '';
+
+		/** <filters include="value">  */
+		$include = '';
+		$filters = $xml->filters;
+		$include = (string)$filters['include'];
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<filters include="'. $include . '"/>';
+			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
+		}
+
+		/** <foreignkeys include="ContentForeignkeys"/> */
+		$include = '';
+		$foreignkeys = $xml->foreignkeys;
+		$include = (string)$foreignkeys['include'];
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<foreignkeys include="'. $include . '"/>';
+			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
+		}
+
+    	/** <triggers include="ContentTrigger"/> */
+		$include = '';
+		$triggers = $xml->triggers;
+		$include = (string)$triggers['include'];
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<triggers include="'. $include . '"/>';
+			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
+		}
+
+		if ($xml_string == '') {
+			return $xml;
+		} else {
+			return simplexml_load_string($xml_string);
+		}
 	}
 
+	/**
+	 * includeFile retrieves the specified include file and substitutes it in for the include statement
+	 *
+	 * Usage:
+	 * Services::Configuration()->includeFile($includename);
+	 *
+	 * @return  object
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function processIncludeFile($include, $replace_this, $xml_string)
+	{
+		$path_and_file = CONFIGURATION_FOLDER . '/table/include/' . $include . '.xml';
+
+		if (file_exists($path_and_file)) {
+		} else {
+			throw new \RuntimeException('Include file not found: ' . $path_and_file);
+		}
+
+		try {
+			$with_this = file_get_contents($path_and_file);
+			return str_replace($replace_this, $with_this, $xml_string);
+
+		} catch (\Exception $e) {
+			throw new \RuntimeException ('Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage());
+		}
+	}
 }

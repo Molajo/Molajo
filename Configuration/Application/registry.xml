@@ -22,6 +22,9 @@
     <registry>Route</registry>
 
     <registry>Menuitem</registry>
+    <registry>MenuitemCustomfields</registry>
+    <registry>MenuitemMetadata</registry>
+    <registry>MenuitemParameters</registry>
 
     <registry>Extension</registry>
     <registry>ExtensionCustomfields</registry>
@@ -42,8 +45,6 @@
     <registry>MVCParameters</registry>
 
     <registry>Theme</registry>
-    <registry>ThemeCustomfields</registry>
-    <registry>ThemeMetadata</registry>
     <registry>ThemeParameters</registry>
     <registry>Page</registry>
     <registry>Template</registry>

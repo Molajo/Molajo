@@ -33,23 +33,23 @@
             <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
         <field name="extension_parameters" registry="ExtensionParameters">
-        <element name="display_title" filter="char" null="0" default=""/>
-        <element name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
-        <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000"
-                 hidden="true"/>
-        <element name="default_theme_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_page_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-        <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-        <element name="cache_handler" filter="char" null="1" default="" values=""/>
-    </field>
-        <foreignkeys include="ContentForeignkeys"/>
-        <triggers include="ContentTrigger"/>
+            <element name="display_title" filter="char" null="0" default=""/>
+            <element name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000"
+                     hidden="true"/>
+            <element name="default_theme_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_page_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <element name="cache_handler" filter="char" null="1" default="" values=""/>
+        </field>
     </fields>
+    <foreignkeys include="ContentForeignkeys"/>
+    <triggers include="ContentTriggers"/>
 </model>
