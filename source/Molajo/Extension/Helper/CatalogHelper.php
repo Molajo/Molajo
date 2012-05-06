@@ -135,7 +135,7 @@ Class CatalogHelper
 
 		$m->model->set('id', (int)$catalog_id);
 		$m->model->set('get_item_children', false);
-		$m->model->set('get_special_fields', false);
+		$m->model->set('get_special_fields', 0);
 		$m->model->set('add_acl_check', false);
 
 		$row = $m->execute('load');

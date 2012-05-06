@@ -59,7 +59,7 @@ class Model
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $get_special_fields = true;
+	public $get_special_fields = 1;
 
 	/**
 	 * Load: return child data flag

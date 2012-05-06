@@ -170,7 +170,7 @@ Class ModelService
 		$this->model->set('table_xml', $this->table_xml);
 		$this->model->set('primary_key', $this->primary_key);
 		$this->model->set('primary_prefix', 'a');
-        $this->model->set('get_special_fields', true);
+        $this->model->set('get_special_fields', 1);
         $this->model->set('get_item_children', true);
         $this->model->set('use_special_joins', true);
 		$this->model->set('add_acl_check', true);
