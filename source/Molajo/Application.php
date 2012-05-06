@@ -6,8 +6,8 @@
  */
 namespace Molajo;
 
-use Molajo\Service\Services\RequestService;
-use Molajo\Service\Services\ConfigurationService;
+use Molajo\Service\Services\Request\RequestService;
+use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Extension\Helpers;
 use Molajo\Extension\Triggers;
 use Molajo\Service\Services;
