@@ -197,37 +197,39 @@ Class Triggers
 
 		$events = get_class_methods($triggerClass);
 
-		foreach ($events as $item) {
+		if (count($events) > 0) {
+			foreach ($events as $item) {
+				if (substr($item, 0, 2) == 'on') {
 
-			if (substr($item, 0, 2) == 'on') {
-
-				if (in_array($item, $this->events)) {
-				} else {
-					$this->events[] = $item;
-				}
-
-				if (isset($this->class_events[$item])) {
-					$classList = $this->class_events[$item];
-				} else {
-					$classList = array();
-				}
-
-				if (is_array($classList)) {
-				} else {
-					if (trim($classList) == '') {
-						$classList = array();
+					if (in_array($item, $this->events)) {
 					} else {
-						$temp = $classList;
-						$classList = array();
-						$classList[] = $temp;
+						$this->events[] = $item;
 					}
+
+					if (isset($this->class_events[$item])) {
+						$classList = $this->class_events[$item];
+					} else {
+						$classList = array();
+					}
+
+					if (is_array($classList)) {
+					} else {
+						if (trim($classList) == '') {
+							$classList = array();
+						} else {
+							$temp = $classList;
+							$classList = array();
+							$classList[] = $temp;
+						}
+					}
+
+					$classList[] = $entry;
+
+					$this->class_events[$item] = $classList;
 				}
-
-				$classList[] = $entry;
-
-				$this->class_events[$item] = $classList;
 			}
 		}
+
 		/** store connection or error message */
 		$this->set($entry, $connection, $try);
 
