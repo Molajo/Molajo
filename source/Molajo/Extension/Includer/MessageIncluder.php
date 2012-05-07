@@ -49,18 +49,18 @@ Class MessageIncluder extends Includer
 	 */
 	protected function getApplicationDefaults()
 	{
-		$this->set('model', 'MessagesModel');
-		$this->set('task', 'display');
+		Services::Registry()->set('Parameters', 'model', 'MessagesModel');
+		Services::Registry()->set('Parameters', 'task', 'display');
 
 		$this->parameters = Services::Registry()->initialise();
 		Services::Registry()->set('Parameters', 'suppress_no_results', 1);
 
-		if ((int)$this->get('template_view_id', 0) == 0) {
-			$this->set('template_view_id',
+		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+			Services::Registry()->set('Parameters', 'template_view_id',
 				Services::Registry()->get('Configuration', 'message_template_view_id'));
 		}
-		if ((int)$this->get('wrap_view_id', 0) == 0) {
-			$this->set('wrap_view_id',
+		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+			Services::Registry()->set('Parameters', 'wrap_view_id',
 				Services::Registry()->get('Configuration', 'message_wrap_view_id'));
 		}
 

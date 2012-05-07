@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\MVC\Controller;
 
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Display
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Controller
  * @since       1.0
  */
@@ -21,8 +21,34 @@ class DisplayController extends Controller
 {
 
 	/**
-	 * display
+	 * Add task is used to render view output for a form used to create new content
 	 *
+	 * @return  string  Rendered output
+	 * @since   1.0
+	 */
+	public function add()
+	{
+		return $this->display();
+	}
+
+	/**
+	 * Edit task is used to render view output for a form used to display existing content
+	 *
+	 * @return  string  Rendered output
+	 * @since   1.0
+	 */
+	public function edit()
+	{
+		$results = parent::checkoutItem();
+
+		if ($results === false) {
+			//
+		}
+
+		return $this->display();
+	}
+
+	/**
 	 * Display task is used to render view output
 	 *
 	 * @return  string  Rendered output
@@ -30,15 +56,6 @@ class DisplayController extends Controller
 	 */
 	public function display()
 	{
-		/** check out */
-		if ($this->get('task') == 'edit') {
-			$results = parent::checkoutItem();
-
-			if ($results === false) {
-				//
-			}
-		}
-
 		/** Set Criteria and Run Query */
 
 		$this->resultset = $this->model->getData();
@@ -50,7 +67,7 @@ class DisplayController extends Controller
 		 *      save query results in the Request object for reuse by other
 		 *      extensions. MolajoRequestModel retrieves data.
 		 */
-		if ($this->get('extension_primary') === true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
 			Application::Request()->set('query_resultset', $this->resultset);
 			Application::Request()->set('query_pagination', $this->pagination);
 			Application::Request()->set('query_state', $this->model_state);
@@ -58,23 +75,23 @@ class DisplayController extends Controller
 
 		/** no results */
 		if (count($this->resultset) == 0
-			&& $this->parameters->get('suppress_no_results') == 1
+			&& Services::Registry()->get('Parameters', 'suppress_no_results') == 1
 		) {
 			return '';
 		}
 
 		/** render template view */
-		$this->view_path = $this->get('template_view_path');
-		$this->view_path_url = $this->get('template_view_path_url');
-		$renderedOutput = $this->renderView($this->get('template_view_name'));
+		$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
+		$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');
+		$renderedOutput = $this->renderView(Services::Registry()->get('Parameters', 'template_view_name'));
 
 		/** mustache */
-		if ($this->parameters->get('mustache', 1) == 1) {
+		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
 			$renderedOutput = $this->processRenderedOutput($renderedOutput);
 		}
 
 		/** render wrap view around template view results */
-		return $this->wrapView($this->get('wrap_view_name'), $renderedOutput);
+		return $this->wrapView(Services::Registry()->get('Parameters', 'wrap_view_name'), $renderedOutput);
 	}
 
 	/**
@@ -91,18 +108,18 @@ class DisplayController extends Controller
 		$this->resultset = array();
 
 		$temp = new \stdClass();
-		$temp->wrap_view_css_id = $this->get('wrap_view_css_id');
-		$temp->wrap_view_css_class = $this->get('wrap_view_css_class');
+		$temp->wrap_view_css_id = Services::Registry()->get('Parameters', 'wrap_view_css_id');
+		$temp->wrap_view_css_class = Services::Registry()->get('Parameters', 'wrap_view_css_class');
 		$temp->content = $renderedOutput;
 
 		$this->resultset[] = $temp;
 
 		/** paths */
-		$this->view_path = $this->get('wrap_view_path');
-		$this->view_path_url = $this->get('wrap_view_path_url');
+		$this->view_path = Services::Registry()->get('Parameters', 'wrap_view_path');
+		$this->view_path_url = Services::Registry()->get('Parameters', 'wrap_view_path_url');
 
 		/** render wrap */
-		return $this->renderView($this->get('wrap_view_name'), 'Wrap');
+		return $this->renderView(Services::Registry()->get('Parameters', 'wrap_view_name'), 'Wrap');
 	}
 
 	/**
@@ -257,5 +274,5 @@ class DisplayController extends Controller
 
 //$this->configuration;
 //Parameters (Includes Global Options, Menu Item, Item);
-//$this->parameters->get('view_show_page_view_heading', 1);
-//$this->parameters->get('view_page_view_class_suffix', '');
+//Services::Registry()->get('Parameters', 'view_show_page_view_heading', 1);
+//Services::Registry()->get('Parameters', 'view_page_view_class_suffix', '');

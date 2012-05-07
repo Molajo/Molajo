@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class LoginController
+class LoginController extends Controller
 {
 	/**
 	 * login
@@ -110,9 +110,9 @@ class LoginController
 	{
 //        MolajoTriggerHelper::getTrigger('user');
 //        if ($type == 'authenticate') {
-//            Services::Dispatcher()->trigger('onUserLoginFailure', array($response, $options));
+//            Services::Event()->schedule('onUserLoginFailure', array($response, $options));
 //        } else {
-//            Services::Dispatcher()->trigger('onUserAuthorisationFailure', array($response, $options));
+//            Services::Event()->schedule('onUserAuthorisationFailure', array($response, $options));
 //        }
 
 		//redirect false;
