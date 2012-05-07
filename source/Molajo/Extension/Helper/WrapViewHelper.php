@@ -40,6 +40,7 @@ Class WrapViewHelper
 		if (empty(self::$instance)) {
 			self::$instance = new WrapViewHelper();
 		}
+
 		return self::$instance;
 	}
 
@@ -59,10 +60,10 @@ Class WrapViewHelper
 
 		$row = Helpers::Extension()->get($wrap_view_id);
 
-		/** 500: Theme not found */
+		/** 500: Wrap not found */
 		if (count($row) == 0) {
-			/** Try System Wrap */
-			$wrap_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
+			/** Try Default 'None' Wrap */
+			$wrap_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None');
 			$row = Helpers::Extension()->get($wrap_view_id);
 			if (count($row) == 0) {
 				Services::Error()->set(500, 'Theme not found');
@@ -153,25 +154,25 @@ Class WrapViewHelper
 	 */
 	public function getPath($wrap_view_name)
 	{
-		$plus = '/View/Wrap/' . $wrap_view_name;
+		$plus = '/View/Wrap/' . ucfirst(strtolower($wrap_view_name));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/index.php')) {
+		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/Manifest.xml')) {
 			return Services::Registry()->get('Theme', 'path') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/index.php')) {
+		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/Manifest.xml')) {
 			return Services::Registry()->get('Extension', 'path') . $plus;
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . $wrap_view_name . '/index.php')) {
+		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . $wrap_view_name . '/Manifest.xml')) {
 			return EXTENSIONS_VIEWS . '/Wrap/' . $wrap_view_name;
 		}
 
 		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/index.php')) {
+		if (file_exists(MVC . $plus . '/Manifest.xml')) {
 			return MVC . $plus;
 		}
 
@@ -188,25 +189,25 @@ Class WrapViewHelper
 	 */
 	public function getPathURL($wrap_view_name)
 	{
-		$plus = '/View/Wrap/' . $wrap_view_name;
+		$plus = '/View/Wrap/' . ucfirst(strtolower($wrap_view_name));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/index.php')) {
+		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/Manifest.xml')) {
 			return Services::Registry()->get('Theme', 'path_url') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/index.php')) {
+		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/Manifest.xml')) {
 			return Services::Registry()->get('Extension', 'path_url') . $plus;
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . $wrap_view_name . '/index.php')) {
+		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . $wrap_view_name . '/Manifest.xml')) {
 			return EXTENSIONS_VIEWS_URL . '/Wrap/' . $wrap_view_name;
 		}
 
 		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/index.php')) {
+		if (file_exists(MVC . $plus . '/Manifest.xml')) {
 			return MVC_URL . $plus;
 		}
 

@@ -6,7 +6,10 @@
  */
 namespace Molajo\MVC\Controller;
 
+use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
+
+use Mustache\Mustache;
 
 defined('MOLAJO') or die;
 
@@ -57,20 +60,19 @@ class DisplayController extends Controller
 	public function display()
 	{
 		/** Set Criteria and Run Query */
-
 		$this->resultset = $this->model->getData();
 		$this->pagination = $this->model->getPagination();
-		$this->model_state = $this->model->getState();
-
+//$this->model_state = $this->model->getState();
+;
 		/**
 		 *  For primary content (the extension determined in Application::Request),
 		 *      save query results in the Request object for reuse by other
 		 *      extensions. MolajoRequestModel retrieves data.
 		 */
 		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
-			Application::Request()->set('query_resultset', $this->resultset);
-			Application::Request()->set('query_pagination', $this->pagination);
-			Application::Request()->set('query_state', $this->model_state);
+			Services::Registry()->set('Primary', 'query_resultset', $this->resultset);
+			Services::Registry()->set('Primary', 'query_pagination', $this->pagination);
+//Services::Registry()->set('Primary', 'query_state', $this->model_state);
 		}
 
 		/** no results */
@@ -81,17 +83,18 @@ class DisplayController extends Controller
 		}
 
 		/** render template view */
-		$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
-		$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');
-		$renderedOutput = $this->renderView(Services::Registry()->get('Parameters', 'template_view_name'));
+		$this->view_path = Services::Registry()->get('TemplateView', 'path');
+		$this->view_path_url = Services::Registry()->get('TemplateView', 'path_url');
+
+		$renderedOutput = $this->renderView(Services::Registry()->get('TemplateView', 'template_view_name'));
 
 		/** mustache */
-		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
-			$renderedOutput = $this->processRenderedOutput($renderedOutput);
+		if (Services::Registry()->get('Parameters', 'mustache', 0) == 1) {
+//$renderedOutput = $this->processRenderedOutput($renderedOutput);
 		}
 
 		/** render wrap view around template view results */
-		return $this->wrapView(Services::Registry()->get('Parameters', 'wrap_view_name'), $renderedOutput);
+		return $this->wrapView(Services::Registry()->get('WrapView', 'wrap_view_name'), $renderedOutput);
 	}
 
 	/**
@@ -108,18 +111,18 @@ class DisplayController extends Controller
 		$this->resultset = array();
 
 		$temp = new \stdClass();
-		$temp->wrap_view_css_id = Services::Registry()->get('Parameters', 'wrap_view_css_id');
-		$temp->wrap_view_css_class = Services::Registry()->get('Parameters', 'wrap_view_css_class');
+		$temp->wrap_view_css_id = Services::Registry()->get('WrapView', 'wrap_view_css_id');
+		$temp->wrap_view_css_class = Services::Registry()->get('WrapView', 'wrap_view_css_class');
 		$temp->content = $renderedOutput;
 
 		$this->resultset[] = $temp;
 
 		/** paths */
-		$this->view_path = Services::Registry()->get('Parameters', 'wrap_view_path');
-		$this->view_path_url = Services::Registry()->get('Parameters', 'wrap_view_path_url');
+		$this->view_path = Services::Registry()->get('WrapView', 'path');
+		$this->view_path_url = Services::Registry()->get('WrapView', 'path_url');
 
 		/** render wrap */
-		return $this->renderView(Services::Registry()->get('Parameters', 'wrap_view_name'), 'Wrap');
+		return $this->renderView(Services::Registry()->get('WrapView', 'wrap_view_name'), 'Wrap');
 	}
 
 	/**
