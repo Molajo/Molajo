@@ -92,58 +92,58 @@ Class ThemeHelper
 	}
 
 	/**
-	 * 	setDefaultTheme
+	 *     setDefaultTheme
 	 *
 	 *  Determine the default theme value, given system default sequence
 	 *
-	 *  @return  string
-	 *  @since   1.0
+	 * @return  string
+	 * @since   1.0
 	 */
 	public function setDefaultTheme()
 	{
 		$theme_id = Services::Registry()->get('ContentParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
 		$theme_id = Services::Registry()->get('MenuItemParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
 		$theme_id = Services::Registry()->get('CategoryParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
 		$theme_id = Services::Registry()->get('ExtensionParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
 		$theme_id = Services::Registry()->get('UserParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
 		$theme_id = Services::Registry()->get('ApplicationParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
 		$theme_id = Services::Registry()->get('SiteParameters', 'theme_id', 0);
-		if ((int) $theme_id == 0) {
+		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
-		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');     //99
+		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System'); //99
 	}
 
 

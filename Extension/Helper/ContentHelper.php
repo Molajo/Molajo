@@ -155,7 +155,7 @@ Class ContentHelper
 				$m->model->db->q($m->model->now) . ')'
 		);
 
-		$m->model->query->select($m->model->db->qn('b.title').' as catalog_type_title');
+		$m->model->query->select($m->model->db->qn('b.title') . ' as catalog_type_title');
 		$m->model->query->select($m->model->db->qn('b.source_table'));
 		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b ');
 		$m->model->query->where($m->model->db->qn('b.id') . ' = ' . $m->model->db->qn('a.catalog_type_id'));

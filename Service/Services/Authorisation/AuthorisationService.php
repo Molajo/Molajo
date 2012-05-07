@@ -30,7 +30,7 @@ Class AuthorisationService
 	/**
 	 * Registry specific to the AuthorisationService class
 	 *
-	 * @var    RegistryService
+	 * @var    Registry
 	 * @since  1.0
 	 */
 	protected $registry;
@@ -182,12 +182,10 @@ Class AuthorisationService
 	 */
 	public function authoriseAction()
 	{
-
 		/** 403: authoriseTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Route', 'view_group_id'),
 			Services::Registry()->get('User', 'ViewGroups'))
 		) {
-
 			Services::Registry()->set('Request', 'status_authorised', true);
 
 		} else {
@@ -198,7 +196,6 @@ Class AuthorisationService
 		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
 			&& Services::Registry()->get('Request', 'status_authorised') == true
 		) {
-
 			return true;
 		}
 

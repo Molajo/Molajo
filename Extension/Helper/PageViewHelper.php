@@ -91,8 +91,8 @@ Class PageViewHelper
 	/**
 	 *  Determine the default theme value, given system default sequence
 	 *
-	 *  @return  string
-	 *  @since   1.0
+	 * @return  string
+	 * @since   1.0
 	 */
 	public function DefaultPageView()
 	{

@@ -363,6 +363,7 @@ Class ConfigurationService
 			throw new \RuntimeException ('Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 	}
+
 	/**
 	 * addSpecialFields
 	 *
