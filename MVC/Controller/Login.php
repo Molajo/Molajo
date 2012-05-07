@@ -182,7 +182,7 @@ class LoginController
 //        MolajoTriggerHelper::importTrigger('user');
 
 		// OK, the credentials are built. Lets fire the onLogout event.
-//        $results = Services::Dispatcher()->notify('onUserLogout', array($parameters, $options));
+//        $results = Services::Event()->schedule('onUserLogout', array($parameters, $options));
 
 		// Check if any of the triggers failed. If none did, success.
 
@@ -197,7 +197,7 @@ class LoginController
 //        }
 
 		// Trigger onUserLoginFailure Event.
-//        Services::Dispatcher()->notify('onUserLogoutFailure', array($parameters));
+//        Services::Event()->schedule('onUserLogoutFailure', array($parameters));
 
 		return false;
 	}

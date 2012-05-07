@@ -139,7 +139,7 @@ Class ParseService
 		}
 
 		/** Before Event */
-		// Services::Dispatcher()->notify('onBeforeRender');
+		Services::Event()->schedule('onBeforeRender');
 
 		$this->final = false;
 
@@ -147,7 +147,7 @@ Class ParseService
 
 		/**
 		 *  Final Includers: Now, the theme, head, messages, and defer includes run
-		 *      and any cleanup of unfound <include values can take place
+		 *      This process also removes <include values not found
 		 */
 		$sequence = Services::Configuration()->loadFile('includes-final');
 
@@ -166,8 +166,10 @@ Class ParseService
 		}
 
 		/** theme: load template media and language files */
-		if (class_exists('IncluderTheme')) {
-			$rc = new IncluderTheme ('theme');
+		$class = 'Molajo\\Extension\\Includer\\ThemeIncluder';
+
+		if (class_exists($class)) {
+			$rc = new $class ('theme');
 			$results = $rc->process();
 
 		} else {
@@ -179,7 +181,7 @@ Class ParseService
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
-		//        Services::Dispatcher()->notify('onAfterRender');
+		$body = Services::Event()->schedule('onAfterRender', $body);
 
 		return $body;
 	}
