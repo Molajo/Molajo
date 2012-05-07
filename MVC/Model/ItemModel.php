@@ -258,7 +258,7 @@ class ItemModel extends Model
 
 				$name = (string)$child['name'];
 
-				$a = Services::Model()->connect($name);
+				$m = Services::Model()->connect($name);
 
 				$join = (string)$child['join'];
 				$joinArray = explode(';', $join);
@@ -270,12 +270,12 @@ class ItemModel extends Model
 					$targetField = $whereArray[1];
 					$sourceField = $whereArray[0];
 
-					$a->model->query->where($a->model->db->qn($targetField)
+					$m->model->query->where($m->model->db->qn($targetField)
 						. ' = '
 						. (int)$this->query_results[$sourceField]);
 				}
 
-				$this->query_results['Model\\' . $name] = $a->execute('loadObjectList');
+				$this->query_results['Model\\' . $name] = $m->getData('loadObjectList');
 			}
 		}
 

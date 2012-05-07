@@ -216,7 +216,7 @@ Class MenuitemHelper
 		/**
 		 *  Run Query
 		 */
-		$row = $m->execute('loadObject');
+		$row = $m->getData('loadObject');
 
 		if (count($row) == 0) {
 			return array();

@@ -108,7 +108,7 @@ Class ConfigurationService
 		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', false);
 
-		$items = $m->execute('load');
+		$items = $m->getData('load');
 
 		if ($items === false) {
 			throw new \RuntimeException ('Application setSiteData() query problem');
@@ -208,7 +208,7 @@ Class ConfigurationService
 				$m->model->set('use_special_joins', false);
 				$m->model->set('add_acl_check', false);
 
-				$items = $m->execute('load');
+				$items = $m->getData('load');
 
 				if ($items === false) {
 					throw new \RuntimeException ('Application setSiteData() query problem');
@@ -308,19 +308,6 @@ Class ConfigurationService
 				$xml_string = file_get_contents($path_and_file);
 			}
 			$replace_this = '<foreignkeys include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
-		}
-
-		/** <triggers include="XYZ"/> */
-		$include = '';
-		$triggers = $xml->triggers;
-		$include = (string)$triggers['include'];
-		if ($include == '') {
-		} else {
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
-			}
-			$replace_this = '<triggers include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
 		}
 

@@ -170,7 +170,7 @@ Class ExtensionHelper
 		 */
 		//echo $m->model->query->__toString();
 
-		$row = $m->execute('loadObject');
+		$row = $m->getData('loadObject');
 
 		if (count($row) == 0) {
 			return array();
@@ -198,7 +198,7 @@ Class ExtensionHelper
 		$m->model->query->where($m->model->db->qn('title') . ' = ' . $m->model->db->q($title));
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
 
-		return $m->execute('loadResult');
+		return $m->getData('loadResult');
 	}
 
 	/**
@@ -218,23 +218,7 @@ Class ExtensionHelper
 		$m->model->query->select($m->model->db->qn('title'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$extension_instance_id);
 
-		return $m->execute('loadResult');
-	}
-
-	/**
-	 * formatNameForClass
-	 *
-	 * Extension names can include dashes (or underscores). This method
-	 * prepares the name for use as a component of a classname.
-	 *
-	 * @param $extension_name
-	 *
-	 * @return string
-	 * @since  1.0
-	 */
-	public function formatNameForClass($extension_name)
-	{
-		return ucfirst(str_replace(array('-', '_'), '', $extension_name));
+		return $m->getData('loadResult');
 	}
 
 	/**

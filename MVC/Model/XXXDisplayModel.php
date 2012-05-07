@@ -7,13 +7,14 @@
 namespace Molajo\MVC\Model;
 
 use Molajo\Extension\Helpers;
-
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
  * Display
+ *
+ * Handles basic CRUD operations for a specific type of data
  *
  * Abstracted class used as the parent class for common display views
  *
@@ -44,19 +45,6 @@ class DisplayModel extends ItemModel
 	 */
 	protected function setQuery()
 	{
-		/**
-		 *  Model Helper: ExtensionModelHelper extends ModelHelper
-		 */
-		$extensionName = Helper::formatNameForClass(
-			$this->get('extension_instance_name')
-		);
-
-		$helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . '\\Helper\\ModelHelper';
-		if (class_exists($helperClass)) {
-		} else {
-			$helperClass = 'Molajo\\Extension\\Helper\\' . 'ModelHelper';
-		}
-		$h = new $helperClass();
 
 		/** collect unique parameter defined query methods and run at end */
 		$methods = array();
@@ -302,15 +290,15 @@ class DisplayModel extends ItemModel
 					}
 				}
 			}
-			// $this->dispatcher->trigger('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
+			// Services::Event()->schedule('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
-			// $this->dispatcher->trigger('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
+			// Services::Event()->schedule('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
 			/** process content triggers */
-			//                $this->dispatcher->trigger('contentPrepare', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
+			//                Services::Event()->schedule('contentPrepare', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
 			//$item->event = new \stdClass();
 
-			//                $results = $this->dispatcher->trigger(
+			//                $results = Services::Event()->schedule(
 			//                    'contentBeforeDisplay',
 			//                    array($this->context,
 			//                        &$item,
@@ -320,7 +308,7 @@ class DisplayModel extends ItemModel
 			//                );
 			//$item->event->beforeDisplayContent = trim(implode("\n", $results));
 
-			//                $results = $this->dispatcher->trigger('contentAfterDisplay', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
+			//                $results = Services::Event()->schedule('contentAfterDisplay', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
 			//$item->event->afterDisplayContent = trim(implode("\n", $results));
 
 			/** remove items so marked **/

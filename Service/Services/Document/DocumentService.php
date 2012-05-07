@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Document
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
@@ -186,7 +186,7 @@ Class DocumentService
 	 *
 	 * @param   string  $name
 	 * @param   string  $content
-	 * @param   string  $context  True: http-equiv; False: standard; Otherise, provided
+	 * @param   string  $context  True: http-equiv; False: standard; Otherwise, provided
 	 *
 	 * @return  void
 	 * @since   1.0

@@ -79,7 +79,7 @@ Class AuthorisationService
 		}
 
 		/** retrieve action key pairs */
-		$items = Services::Model()->connect('Actions')->execute('loadObjectList');
+		$items = Services::Model()->connect('Actions')->getData('loadObjectList');
 		foreach ($items as $item) {
 			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
 		}
@@ -104,7 +104,7 @@ Class AuthorisationService
 		$m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int)SITE_ID);
 		$m->model->query->where($m->model->db->qn('application_id') . ' = ' . (int)APPLICATION_ID);
 
-		$application_id = $m->execute('loadResult');
+		$application_id = $m->getData('loadResult');
 
 		if ($application_id === false) {
 			//todo: finish the response action/test
@@ -262,7 +262,7 @@ Class AuthorisationService
 				. ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
 		);
 
-		$count = $m->model->execute('loadResult');
+		$count = $m->model->getData('loadResult');
 
 		if ($count > 0) {
 			return true;
@@ -303,7 +303,7 @@ Class AuthorisationService
 		$m->model->query->where('application_id = ' . (int)APPLICATION_ID);
 		$m->model->query->where('user_id = ' . (int)$user_id);
 
-		$count = $m->model->execute('loadResult');
+		$count = $m->model->getData('loadResult');
 
 		if ($count > 0) {
 			return true;

@@ -135,7 +135,7 @@ Class CatalogHelper
 		$m->model->set('get_special_fields', 0);
 		$m->model->set('add_acl_check', false);
 
-		$row = $m->execute('load');
+		$row = $m->getData('load');
 
 		if (count($row) == 0) {
 			return array();
@@ -165,7 +165,7 @@ Class CatalogHelper
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($sef_request));
 
-		return $m->execute('loadResult');
+		return $m->getData('loadResult');
 	}
 
 	/**
@@ -185,7 +185,7 @@ Class CatalogHelper
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
 		$m->model->query->where($m->model->db->qn('source_id') . ' = ' . (int)$source_id);
 
-		return $m->execute('loadResult');
+		return $m->getData('loadResult');
 	}
 
 	/**
@@ -202,7 +202,7 @@ Class CatalogHelper
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int) $catalog_id);
 
-		$result = $m->execute('loadResult');
+		$result = $m->getData('loadResult');
 
 		if ((int)$result == 0) {
 			return false;
@@ -232,7 +232,7 @@ Class CatalogHelper
 			$m->model->query->select($m->model->db->qn('sef_request'));
 			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
-			$url = $m->execute('loadResult');
+			$url = $m->getData('loadResult');
 
 		} else {
 			$url = 'index.php?id=' . (int)$catalog_id;

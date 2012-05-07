@@ -169,7 +169,7 @@ Class ContentHelper
 		/**
 		 *  Run Query
 		 */
-		$row = $m->execute('load');
+		$row = $m->getData('load');
 
 		if (count($row) == 0) {
 			return array();

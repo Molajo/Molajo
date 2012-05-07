@@ -24,7 +24,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class UpdateController extends Controller
+class ItemController extends Controller
 {
 	/**
 	 * cancelItem
@@ -97,7 +97,7 @@ class UpdateController extends Controller
 	/**
 	 * saveItemBatch
 	 *
-	 * Called from UpdatelistController::processItem to obtain a current row and prepare data for a new item
+	 * Called from ListController::processItem to obtain a current row and prepare data for a new item
 	 *
 	 * uses saveItem to process save after preparing the data
 	 *

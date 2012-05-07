@@ -22,11 +22,11 @@ defined('MOLAJO') or die;
  * - Feature: feature and unfeature
  * - State: archive, publish, unpublish, spam, trash (Note: version is automatic with save and delete)
  *
- * @package   Molajo
+ * @package   	Molajo
  * @subpackage  Controller
  * @since       1.0
  */
-class UpdatelistController extends UpdateController
+class ListController extends ItemController
 {
 	/**
 	 * Tasks: reorder, orderup, orderdown, saveorder
