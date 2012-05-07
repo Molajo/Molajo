@@ -22,11 +22,10 @@ defined('MOLAJO') or die;
 class ComponentIncluder extends Includer
 {
 	/**
-	 * setRenderCriteria
+	 * setRenderCriteria - Used for Primary Component to set Parameter Values for the identified Route
 	 *
-	 * Initialize the request object for MVC values
-	 *
-	 * @return mixed
+	 * @return null
+	 * @since  1.0
 	 */
 	protected function setRenderCriteria()
 	{
@@ -36,38 +35,31 @@ class ComponentIncluder extends Includer
 			return;
 		}
 
-		$this->parameters = Application::Request()->parameters;
-
-		$this->task_request = Services::Registry()->initialise();
-
 		/** extension */
 		Services::Registry()->set('Parameters', 'extension_instance_id',
-			(int)Services::Registry()->get('Request', 'extension_instance_id'));
-		Services::Registry()->set('Parameters', 'extension_instance_name',
-			Services::Registry()->get('Request', 'extension_instance_name'));
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-			(int)Services::Registry()->get('Request', 'extension_catalog_type_id'));
+			(int)Services::Registry()->get('Extension', 'id'));
+		Services::Registry()->set('Parameters', 'extension_instance_title',
+			Services::Registry()->get('Extension', 'title'));
+
 		Services::Registry()->set('Parameters', 'extension_catalog_id',
-			(int)Services::Registry()->get('Request', 'extension_catalog_id'));
+			(int)Services::Registry()->get('Extension', 'catalog_id'));
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+			(int)Services::Registry()->get('Extension', 'catalog_type_id'));
+		Services::Registry()->set('Parameters', 'extension_catalog_type_title',
+			(int)Services::Registry()->get('Extension', 'catalog_type_title'));
+
 		Services::Registry()->set('Parameters', 'extension_view_group_id',
-			(int)Services::Registry()->get('Request', 'extension_view_group_id'));
-		Services::Registry()->set('Parameters', 'extension_custom_fields',
-			Services::Registry()->get('Request', 'extension_custom_fields'));
-		Services::Registry()->set('Parameters', 'extension_metadata',
-			Services::Registry()->get('Request', 'extension_metadata'));
-		Services::Registry()->set('Parameters', 'extension_parameters',
-			Services::Registry()->get('Request', 'extension_parameters'));
+			(int)Services::Registry()->get('Extension', 'view_group_id'));
+
 		Services::Registry()->set('Parameters', 'extension_path',
-			Services::Registry()->get('Request', 'extension_path'));
-		Services::Registry()->set('Parameters', 'extension_type',
-			Services::Registry()->get('Request', 'extension_type'));
-		Services::Registry()->set('Parameters', 'source_catalog_type_id',
-			Services::Registry()->get('Request', 'source_catalog_type_id'));
+			(int)Services::Registry()->get('Extension', 'path'));
+		Services::Registry()->set('Parameters', 'extension_path_url',
+			(int)Services::Registry()->get('Extension', 'path_url'));
 
 		Services::Registry()->set('Parameters', 'extension_primary', true);
 
-		Services::Registry()->set('Parameters', 'extension_event_type',
-			Services::Registry()->get('Request', 'extension_event_type'));
+		parent::setRenderCriteria();
+
 
 		/** view */
 		Services::Registry()->set('Parameters', 'template_view_id',
@@ -154,7 +146,6 @@ class ComponentIncluder extends Includer
 
 		return true;
 	}
-
 
 	/**
 	 * loadMedia
