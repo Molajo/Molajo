@@ -57,35 +57,6 @@ Class ModuleIncluder extends Includer
 	}
 
 	/**
-	 * import
-	 *
-	 * Extension classes, if existing
-	 *
-	 * @since 1.0
-	 */
-	protected function importClasses()
-	{
-		$load = new LoadHelper();
-		$name = ucfirst(Services::Registry()->get('Parameters', 'extension_instance_name'));
-		$name = str_replace(array('-', '_'), '', $name);
-		$name = 'Molajo' . $name;
-
-		/** Controller */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . '/controller.php')) {
-			$load->requireClassFile(
-				Services::Registry()->get('Parameters', 'extension_path') . '/controller.php',
-				$name . 'ModuleController');
-		}
-
-		/** Model */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . '/model.php')) {
-			$load->requireClassFile(
-				Services::Registry()->get('Parameters', 'extension_path') . '/model.php',
-				$name . 'ModuleModel');
-		}
-	}
-
-	/**
 	 * loadMedia
 	 *
 	 * Loads Media Files for Site, Application, User, and Theme

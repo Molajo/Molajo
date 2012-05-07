@@ -1,11 +1,12 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension;
 
+use Molajo\MVC\Controller\EntryController;
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
 
@@ -107,7 +108,6 @@ class Includer
 		$this->items = $items;
 
 		Services::Registry()->set('Parameters', 'suppress_no_results', 0);
-
 	}
 
 	/**
@@ -141,9 +141,6 @@ class Includer
 				return Services::Registry()->set('Parameters', 'status_found', false);
 			}
 		}
-
-		/** extension MVC classes are loaded */
-		$this->importClasses();
 
 		/** theme include, only - loads metadata for the page */
 		$this->loadMetadata();

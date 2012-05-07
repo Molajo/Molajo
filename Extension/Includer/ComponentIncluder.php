@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension\Includer;
 
@@ -155,83 +155,6 @@ class ComponentIncluder extends Includer
 		return true;
 	}
 
-	/**
-	 * import
-	 *
-	 * imports component folders and files
-	 *
-	 * @return  true
-	 * @since   1.0
-	 */
-	protected function importClasses()
-	{
-		$load = new LoadHelper();
-
-		$name = ucfirst(Services::Registry()->get('Parameters', 'extension_instance_name'));
-		$name = str_replace(array('-', '_'), '', $name);
-		$name = 'Molajo' . $name;
-
-		/** Controllers */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . '/controller.php')) {
-			$load->requireClassFile(
-				Services::Registry()->get('Parameters', 'extension_path') . '/controller.php',
-				$name . 'Controller'
-			);
-		}
-		$files = Services::Filesystem()->folderFiles(Services::Registry()->get('Parameters', 'extension_path') . '/controllers', '\.php$', false, false);
-		if ($files) {
-			foreach ($files as $file) {
-				$load->requireClassFile(
-					Services::Registry()->get('Parameters', 'extension_path') . '/controllers/' . $file,
-					$name . 'Controller' . ucfirst(substr($file, 0, strpos($file, '.')))
-				);
-			}
-		}
-
-		/** Helpers */
-		$files = Services::Filesystem()->folderFiles(Services::Registry()->get('Parameters', 'extension_path') . '/helpers', '\.php$', false, false);
-		if ($files) {
-			foreach ($files as $file) {
-				$load->requireClassFile(Services::Registry()->get('Parameters', 'extension_path') . '/helpers/' . $file,
-					$name . ucfirst(substr($file, 0, strpos($file, '.')))
-				);
-			}
-		}
-
-		/** Models */
-		$files = Services::Filesystem()->folderFiles(Services::Registry()->get('Parameters', 'extension_path') . '/models', '\.php$', false, false);
-		if ($files) {
-			foreach ($files as $file) {
-				$load->requireClassFile(Services::Registry()->get('Parameters', 'extension_path') . '/models/' . $file,
-					$name . 'Model' . ucfirst(substr($file, 0, strpos($file, '.')))
-				);
-			}
-		}
-
-		/** Tables */
-		$files = Services::Filesystem()->folderFiles(Services::Registry()->get('Parameters', 'extension_path') . '/tables', '\.php$', false, false);
-		if ($files) {
-			foreach ($files as $file) {
-				$load->requireClassFile(Services::Registry()->get('Parameters', 'extension_path') . '/tables/' . $file,
-					$name . 'Table' . ucfirst(substr($file, 0, strpos($file, '.')))
-				);
-			}
-		}
-
-		/** Views */
-		$folders = Services::Filesystem()->folderFolders(Services::Registry()->get('Parameters', 'extension_path') . '/views', false, false);
-		if ($folders) {
-			foreach ($folders as $folder) {
-				$files = Services::Filesystem()->folderFiles(Services::Registry()->get('Parameters', 'extension_path') . '/View/' . $folder, false, false);
-				if ($files) {
-					foreach ($files as $file) {
-						$load->requireClassFile(Services::Registry()->get('Parameters', 'extension_path') . '/View/' . $folder . '/' . $file,
-							$name . 'View' . ucfirst($folder));
-					}
-				}
-			}
-		}
-	}
 
 	/**
 	 * loadMedia
