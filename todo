@@ -1,41 +1,33 @@
 * * * * Model / DB interaction * * * *
 
-1. New data_sources for:
-
-Develop standard API to the DB
+DBO for:
 
 a. Messages
 b. Head data (CSS/JS)
 c. Registry (Parameters - like head and footer and the grid)
-d. File system
 
-2. Get rid of Module models - fold those into the same model thing.
+2. Migrate Module models Model Service and above DBO's
 
-3. Finish Display Controller
+=> Only Molajo Models will be EntryModel, DisplayModel, ItemModel, and Model
 
-a. Parser
-b. Includers
-c. Controller(Display) - Views
+3. Parser - update for new formats
 
-ModelService
-Only interface to Models should go thru this the ModelService
--- It should look for overrides, etc.
--- It should replace EntryModel
--- Instead of having a Head and Message and Request Model, abstract out the data access
-element and create a "DBO" of sorts to those types of data.
--- Same for media (files - including CSS, JS, Images, and so forth)
--- Models remaining: Model (base), Item (crud), and Display (list)
--- All customization, editing, and so forth, defined with Table XML and Triggers
+4. Includers - update for new formats (create new tag, formfields)
+
+5. Controller(Display) - update for new formats
 
 * * * * Services Layer (Middleware) * * * *
 
-AssetService
-Specific focus on JS and CSS; interface with minimizers, etc.
-Remove all specifically coded paths from code - instead use the Asset Manager API
-No Services::Filesystem anywhere but the AssetService (Also, see Model)
-Same for views
-Bring in the php spl priority
+AssetService - JS and CSS; interface with minimizers, etc.
 
 AuthenticationService - Events for Login, etc
 
-Filter - get HTML Purifier in
+FilterService - get HTML Purifier back in with namespaces
+
+* * * * NOTES * * * *
+
+Manifest.xml => Parameters
+
+Remove all specifically coded paths from code - instead of FileSystem use the Asset, Configuration API, etc
+
+Bring in the php spl priority
