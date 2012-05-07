@@ -44,16 +44,6 @@ Class CatalogHelper
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * Retrieve Catalog and Catalog Type data for a specific catalog id
 	 * or query request
 	 *

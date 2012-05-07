@@ -7,6 +7,7 @@
 namespace Molajo\MVC\Model;
 
 use Molajo\Service\Services;
+use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('MOLAJO') or die;
 
@@ -64,7 +65,15 @@ class ItemModel extends Model
 		/** Load Special Fields in Registry */
 		if ($this->get_special_fields == 0) {
 		} else {
-			$this->addSpecialFields();
+			$fields = $this->table_xml->fields;
+
+			if (count($fields->field) > 0) {
+				$this->query_results = ConfigurationService::addSpecialFields(
+					$fields,
+					$this->query_results,
+					$this->get_special_fields
+				);
+			}
 		}
 
 		/** Retrieve Child Objects  */
@@ -228,119 +237,6 @@ class ItemModel extends Model
 		}
 
 		return $this;
-	}
-
-	/**
-	 * addSpecialFields
-	 *
-	 * Method used in load sequence to optionally expand special fields
-	 * for Item, either into the Registry or so that the fields can be used
-	 * normally
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	protected function addSpecialFields()
-	{
-		$fields = $this->table_xml->fields;
-		/**
-		echo '<pre>';
-		var_dump($fields);
-		echo '</pre>';
-		 */
-		if (count($fields->field) > 0) {
-
-			/** Process each field namespace  */
-			foreach ($fields->field as $ns) {
-
-				$field_name = (string)$ns['name'];
-				$namespace = (string)$ns['registry'];
-
-				if (isset($this->query_results[$field_name])) {
-
-					/** Extract custom fields from JSON */
-					$jsonData = $this->query_results[$field_name];
-					$data = json_decode($jsonData);
-
-					$elementArray = array();
-
-					/** Place field names into named pair array */
-					$lookup = array();
-
-					if (count($data) > 0) {
-						foreach ($data as $key => $value) {
-							$lookup[$key] = $value;
-						}
-					}
-
-					if (count($ns->element) > 0) {
-
-						foreach ($ns->element as $element) {
-
-							$name = (string)$element['name'];
-							$name = strtolower($name);
-							$dataType = (string)$element['filter'];
-							$null = (string)$element['null'];
-							$default = (string)$element['default'];
-							$values = (string)$element['values'];
-
-							if ($default == '') {
-								$default = null;
-							}
-
-							/** Use value, if exists, or defined default */
-							if (isset($lookup[$name])) {
-								$set = $lookup[$name];
-							} else {
-								$set = $default;
-							}
-
-							/** Filter Input and Save the Registry */
-							//$set = $this->filterInput($name, $set, $dataType, $null, $default);
-
-							if ($this->get_special_fields == 2) {
-								$this->query_results[$name] = $set;
-							} else {
-								Services::Registry()->set($namespace, $name, $set);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * filterInput
-	 *
-	 * @param   string  $name         Name of input field
-	 * @param   string  $field_value  Value of input field
-	 * @param   string  $dataType     Datatype of input field
-	 * @param   int     $null         0 or 1 - is null allowed
-	 * @param   string  $default      Default value, optional
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	protected function filterInput(
-		$name, $value, $dataType, $null = null, $default = null)
-	{
-
-		try {
-			$value = Services::Filter()
-				->filter(
-				$value,
-				$dataType,
-				$null,
-				$default
-			);
-
-		} catch (\Exception $e) {
-			//todo: errors
-			echo $e->getMessage() . ' ' . $name;
-		}
-
-		return $value;
 	}
 
 	/**

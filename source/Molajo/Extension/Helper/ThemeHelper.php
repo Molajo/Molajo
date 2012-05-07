@@ -8,6 +8,8 @@ namespace Molajo\Extension\Helper;
 
 use Molajo\Service\Services;
 
+use Molajo\Extension\Helpers;
+
 defined('MOLAJO') or die;
 
 /**
@@ -28,26 +30,6 @@ Class ThemeHelper
 	protected static $instance;
 
 	/**
-	 * $data
-	 *
-	 * Allows collection of any set of data for a single $item
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	public $data = array();
-
-	/**
-	 * $rows
-	 *
-	 * Retains pointer to current row contained within the $data array
-	 *
-	 * @var    int
-	 * @since  1.0
-	 */
-	protected $rows = 0;
-
-	/**
 	 * getInstance
 	 *
 	 * @static
@@ -63,16 +45,6 @@ Class ThemeHelper
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * get
 	 *
 	 * Get requested theme data
@@ -80,14 +52,100 @@ Class ThemeHelper
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function get($theme)
+	public function get($theme_id = 0)
 	{
-		return Application::Helper()
-			->get('Extension',
-			CATALOG_TYPE_EXTENSION_THEME,
-			$theme
-		);
+		if ($theme_id == 0) {
+			$theme_id = $this->setDefaultTheme();
+		}
+
+		$row = Helpers::Extension()->get($theme_id);
+
+		/** 500: Theme not found */
+		if (count($row) == 0) {
+			/** Try System Template */
+			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
+			$row = Helpers::Extension()->get($theme_id);
+			if (count($row) == 0) {
+				Services::Error()->set(500, 'Theme not found');
+				return false;
+			}
+		}
+
+		Services::Registry()->set('Theme', 'id', (int)$row->id);
+		Services::Registry()->set('Theme', 'title', $row->title);
+		Services::Registry()->set('Theme', 'translation_of_id', $row->translation_of_id);
+		Services::Registry()->set('Theme', 'language', $row->language);
+		Services::Registry()->set('Theme', 'view_group_id', $row->view_group_id);
+		Services::Registry()->set('Theme', 'catalog_id', $row->catalog_id);
+		Services::Registry()->set('Theme', 'catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set('Theme', 'catalog_type_title', $row->catalog_type_title);
+
+		Services::Registry()->set('Theme', 'path', $this->getPath($row->title));
+		Services::Registry()->set('Theme', 'path_url', $this->getPathURL($row->title));
+		Services::Registry()->set('Theme', 'favicon', $this->getFavicon($row->title));
+
+		/** Load special fields for specific extension */
+		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('Theme', 'path'));
+		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
+
+		return;
 	}
+
+	/**
+	 * 	setDefaultTheme
+	 *
+	 *  Determine the default theme value, given system default sequence
+	 *
+	 *  @return  string
+	 *  @since   1.0
+	 */
+	public function setDefaultTheme()
+	{
+		$theme_id = Services::Registry()->get('ContentParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		$theme_id = Services::Registry()->get('MenuItemParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		$theme_id = Services::Registry()->get('CategoryParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		$theme_id = Services::Registry()->get('ExtensionParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		$theme_id = Services::Registry()->get('UserParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		$theme_id = Services::Registry()->get('ApplicationParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		$theme_id = Services::Registry()->get('SiteParameters', 'theme_id', 0);
+		if ((int) $theme_id == 0) {
+		} else {
+			return $theme_id;
+		}
+
+		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');     //99
+	}
+
 
 	/**
 	 * getPath
@@ -102,6 +160,7 @@ Class ThemeHelper
 		if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
 			return EXTENSIONS_THEMES . '/' . $theme_name;
 		}
+
 		return false;
 	}
 
@@ -118,6 +177,7 @@ Class ThemeHelper
 		if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
 			return EXTENSIONS_THEMES_URL . '/' . $theme_name;
 		}
+
 		return false;
 	}
 

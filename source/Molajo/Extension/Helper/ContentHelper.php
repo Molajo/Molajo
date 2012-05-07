@@ -7,7 +7,6 @@
 namespace Molajo\Extension\Helper;
 
 use Molajo\Service\Services;
-
 use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
@@ -45,16 +44,6 @@ Class ContentHelper
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * Retrieve Route information for a specific Menu Item
 	 * identified in the Catalog as the request
 	 *
@@ -75,11 +64,13 @@ Class ContentHelper
 		}
 
 		Services::Registry()->set('Content', 'id', (int)$row['id']);
-		Services::Registry()->set('Content', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Content', 'extension_instance_id', (int)$row['extension_instance_id']);
 		Services::Registry()->set('Content', 'title', $row['title']);
 		Services::Registry()->set('Content', 'translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Content', 'language', (string)$row['language']);
+		Services::Registry()->set('Content', 'catalog_id', (string)$row['catalog_id']);
+		Services::Registry()->set('Content', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Content', 'catalog_type_title', (string)$row['catalog_type_title']);
 
 		return true;
 	}
@@ -98,21 +89,24 @@ Class ContentHelper
 			Services::Registry()->get('Route', 'primary_category_id'),
 			'#__content'
 		);
-		echo '<pre>Category';
-		var_dump($row);
-		die;
+
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
 		Services::Registry()->set('Category', 'id', (int)$row['id']);
-		Services::Registry()->set('Category', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Category', 'title', $row['title']);
 		Services::Registry()->set('Category', 'translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Category', 'language', (string)$row['language']);
+		Services::Registry()->set('Category', 'view_group_id', (string)$row['view_group_id']);
+		Services::Registry()->set('Category', 'catalog_id', (string)$row['catalog_id']);
+		Services::Registry()->set('Category', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Category', 'catalog_type_title', (string)$row['catalog_type_title']);
 
-		$xml = Services::Configuration()->loadFile('Category', 'Table');
+		/** Load special fields for specific extension */
+		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
+		$row = Services::Configuration()->addSpecialFields($xml->category, $row, 1);
 
 		return true;
 	}
@@ -147,11 +141,9 @@ Class ContentHelper
 
 		$m->model->query->from($m->model->db->qn($content_table) . ' as a ');
 
-		$m->model->query->where('a.' . $m->model->db->qn('id') . ' = ' . (int)$id);
+		$m->model->query->where($m->model->db->qn('a.id') . ' = ' . (int)$id);
 
-		$m->model->query->where('a.' . $m->model->db->qn('status') .
-			' > ' . STATUS_UNPUBLISHED);
-
+		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 		$m->model->query->where('(a.start_publishing_datetime = ' .
 				$m->model->db->q($m->model->nullDate) .
 				' OR a.start_publishing_datetime <= ' .
@@ -162,6 +154,11 @@ Class ContentHelper
 				' OR a.stop_publishing_datetime >= ' .
 				$m->model->db->q($m->model->now) . ')'
 		);
+
+		$m->model->query->select($m->model->db->qn('b.title').' as catalog_type_title');
+		$m->model->query->select($m->model->db->qn('b.source_table'));
+		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b ');
+		$m->model->query->where($m->model->db->qn('b.id') . ' = ' . $m->model->db->qn('a.catalog_type_id'));
 
 		/**
 		 *  Run Query

@@ -102,7 +102,7 @@ Class ViewHelper
 	}
 
 	/**
-	 * _findPath
+	 * findPath
 	 *
 	 * Looks for path of view in this order:
 	 *
@@ -219,10 +219,11 @@ Class ViewHelper
 	{
 		Services::Language()
 			->load(
-			EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view,
-			Services::Language()->get('tag'),
-			false,
-			false);
+				EXTENSIONS_VIEWS . '/' . $this->view_type . '/' . $this->view,
+				Services::Language()->get('tag'),
+				false,
+				false
+			);
 	}
 
 	/**
