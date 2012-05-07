@@ -18,7 +18,14 @@ Models => EntryModel, DisplayModel, ItemModel, and Model
 
 6. Triggers - get all data access triggers working
 
+
+
+
+
 * * * * Services Layer (Middleware) * * * *
+
+
+
 
 * * * * DOUBLE-CHECK * * * *
 
@@ -27,3 +34,7 @@ Manifest.xml => Parameters
 Remove all specifically coded paths from code - instead of FileSystem use the Asset, Configuration API, etc
 
 Bring in the php spl priority
+
+Registry - prevent updates
+
+Events - until 1st succeeds; until 1st fails; all
