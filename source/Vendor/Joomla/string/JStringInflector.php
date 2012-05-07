@@ -52,7 +52,7 @@ class JStringInflector
 		),
 		'plural' => array(
 			'/([m|l])ouse$/i' => '\1ice',
-			'/(matr|vert|ind)(ix|ex)$/i'  => '\1ices',
+			'/(matr|vert|ind)(ix|ex)$/i' => '\1ices',
 			'/(x|ch|ss|sh)$/i' => '\1es',
 			'/([^aeiouy]|qu)y$/i' => '\1ies',
 			'/([^aeiouy]|qu)ies$/i' => '\1y',
@@ -130,20 +130,17 @@ class JStringInflector
 	 */
 	private function _addRule($data, $ruleType)
 	{
-		if (is_string($data))
-		{
+		if (is_string($data)) {
 			$data = array($data);
 		}
-		elseif (!is_array($data))
-		{
+		elseif (!is_array($data)) {
 			// Do not translate.
 			throw new InvalidArgumentException('Invalid inflector rule data.');
 		}
 
-		foreach ($data as $rule)
-		{
+		foreach ($data as $rule) {
 			// Ensure a string is pushed.
-			array_push($this->_rules[$ruleType], (string) $rule);
+			array_push($this->_rules[$ruleType], (string)$rule);
 		}
 	}
 
@@ -161,8 +158,7 @@ class JStringInflector
 		$singular = JString::strtolower($singular);
 
 		// Check if the word is in cache.
-		if (isset($this->_cache[$singular]))
-		{
+		if (isset($this->_cache[$singular])) {
 			return $this->_cache[$singular];
 		}
 
@@ -201,13 +197,11 @@ class JStringInflector
 	private function _matchRegexRule($word, $ruleType)
 	{
 		// Cycle through the regex rules.
-		foreach ($this->_rules[$ruleType] as $regex => $replacement)
-		{
+		foreach ($this->_rules[$ruleType] as $regex => $replacement) {
 			$matches = 0;
 			$matchedWord = preg_replace($regex, $replacement, $word, -1, $matches);
 
-			if ($matches > 0)
-			{
+			if ($matches > 0) {
 				return $matchedWord;
 			}
 		}
@@ -229,12 +223,10 @@ class JStringInflector
 	{
 		$singular = JString::strtolower($singular);
 
-		if ($plural === null)
-		{
+		if ($plural === null) {
 			$plural = $singular;
 		}
-		else
-		{
+		else {
 			$plural = JString::strtolower($plural);
 		}
 
@@ -267,7 +259,7 @@ class JStringInflector
 	 *
 	 * @since   12.1
 	 */
-	public function addWord($singular, $plural =null)
+	public function addWord($singular, $plural = null)
 	{
 		$this->_setCache($singular, $plural);
 
@@ -318,12 +310,10 @@ class JStringInflector
 	 */
 	public static function getInstance($new = false)
 	{
-		if ($new)
-		{
+		if ($new) {
 			return new static;
 		}
-		elseif (!is_object(self::$_instance))
-		{
+		elseif (!is_object(self::$_instance)) {
 			self::$_instance = new static;
 		}
 
@@ -341,7 +331,7 @@ class JStringInflector
 	 */
 	public function isCountable($word)
 	{
-		return (boolean) in_array($word, $this->_rules['countable']);
+		return (boolean)in_array($word, $this->_rules['countable']);
 	}
 
 	/**
@@ -358,8 +348,7 @@ class JStringInflector
 		// Try the cache for an known inflection.
 		$inflection = $this->_getCachedSingular($word);
 
-		if ($inflection !== false)
-		{
+		if ($inflection !== false) {
 			return true;
 		}
 
@@ -381,8 +370,7 @@ class JStringInflector
 		// Try the cache for an known inflection.
 		$inflection = $this->_getCachedPlural($word);
 
-		if ($inflection !== false)
-		{
+		if ($inflection !== false) {
 			return true;
 		}
 
@@ -403,21 +391,18 @@ class JStringInflector
 	{
 		// Try to get the cached plural form from the singular.
 		$cache = $this->_getCachedPlural($word);
-		if ($cache !== false)
-		{
+		if ($cache !== false) {
 			return $cache;
 		}
 
 		// Check if the word is a known singular.
-		if ($this->_getCachedSingular($word))
-		{
+		if ($this->_getCachedSingular($word)) {
 			return false;
 		}
 
 		// Compute the inflection.
 		$inflected = $this->_matchRegexRule($word, 'plural');
-		if ($inflected !== false)
-		{
+		if ($inflected !== false) {
 			$this->_setCache($word, $inflected);
 			return $inflected;
 		}
@@ -438,21 +423,18 @@ class JStringInflector
 	{
 		// Try to get the cached singular form from the plural.
 		$cache = $this->_getCachedSingular($word);
-		if ($cache !== false)
-		{
+		if ($cache !== false) {
 			return $cache;
 		}
 
 		// Check if the word is a known plural.
-		if ($this->_getCachedPlural($word))
-		{
+		if ($this->_getCachedPlural($word)) {
 			return false;
 		}
 
 		// Compute the inflection.
 		$inflected = $this->_matchRegexRule($word, 'singular');
-		if ($inflected !== false)
-		{
+		if ($inflected !== false) {
 			$this->_setCache($inflected, $word);
 			return $inflected;
 		}

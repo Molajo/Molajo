@@ -38,8 +38,7 @@ class JCryptCipherSimple implements JCryptCipher
 	public function decrypt($data, JCryptKey $key)
 	{
 		// Validate key.
-		if ($key->type != 'simple')
-		{
+		if ($key->type != 'simple') {
 			throw new \InvalidArgumentException('Invalid key of type: ' . $key->type . '.  Expected simple.');
 		}
 
@@ -52,14 +51,12 @@ class JCryptCipherSimple implements JCryptCipher
 		$charCount = count($chars);
 
 		// Repeat the key as many times as necessary to ensure that the key is at least as long as the input.
-		for ($i = 0; $i < $charCount; $i = strlen($tmp))
-		{
+		for ($i = 0; $i < $charCount; $i = strlen($tmp)) {
 			$tmp = $tmp . $tmp;
 		}
 
 		// Get the XOR values between the ASCII values of the input and key characters for all input offsets.
-		for ($i = 0; $i < $charCount; $i++)
-		{
+		for ($i = 0; $i < $charCount; $i++) {
 			$decrypted .= chr($chars[$i] ^ ord($tmp[$i]));
 		}
 
@@ -80,8 +77,7 @@ class JCryptCipherSimple implements JCryptCipher
 	public function encrypt($data, JCryptKey $key)
 	{
 		// Validate key.
-		if ($key->type != 'simple')
-		{
+		if ($key->type != 'simple') {
 			throw new \InvalidArgumentException('Invalid key of type: ' . $key->type . '.  Expected simple.');
 		}
 
@@ -94,14 +90,12 @@ class JCryptCipherSimple implements JCryptCipher
 		$charCount = count($chars);
 
 		// Repeat the key as many times as necessary to ensure that the key is at least as long as the input.
-		for ($i = 0; $i < $charCount; $i = strlen($tmp))
-		{
+		for ($i = 0; $i < $charCount; $i = strlen($tmp)) {
 			$tmp = $tmp . $tmp;
 		}
 
 		// Get the XOR values between the ASCII values of the input and key characters for all input offsets.
-		for ($i = 0; $i < $charCount; $i++)
-		{
+		for ($i = 0; $i < $charCount; $i++) {
 			$encrypted .= $this->_intToHex(ord($tmp[$i]) ^ ord($chars[$i]));
 		}
 
@@ -124,7 +118,7 @@ class JCryptCipherSimple implements JCryptCipher
 
 		// Just a random key of a given length.
 		$key->private = $this->_getRandomKey();
-		$key->public  = $key->private;
+		$key->public = $key->private;
 
 		return $key;
 	}
@@ -146,8 +140,7 @@ class JCryptCipherSimple implements JCryptCipher
 		$saltLength = strlen($salt);
 
 		// Build the random key.
-		for ($i = 0; $i < $length; $i++)
-		{
+		for ($i = 0; $i < $length; $i++) {
 			$key .= $salt[mt_rand(0, $saltLength - 1)];
 		}
 
@@ -167,9 +160,9 @@ class JCryptCipherSimple implements JCryptCipher
 	private function _hexToInt($s, $i)
 	{
 		// Initialise variables.
-		$j = (int) $i * 2;
+		$j = (int)$i * 2;
 		$k = 0;
-		$s1 = (string) $s;
+		$s1 = (string)$s;
 
 		// Get the character at position $j.
 		$c = substr($s1, $j, 1);
@@ -177,8 +170,7 @@ class JCryptCipherSimple implements JCryptCipher
 		// Get the character at position $j + 1.
 		$c1 = substr($s1, $j + 1, 1);
 
-		switch ($c)
-		{
+		switch ($c) {
 			case 'A':
 				$k += 160;
 				break;
@@ -201,12 +193,11 @@ class JCryptCipherSimple implements JCryptCipher
 				$k += 0;
 				break;
 			default:
-				(int) $k = $k + (16 * (int) $c);
+				(int)$k = $k + (16 * (int)$c);
 				break;
 		}
 
-		switch ($c1)
-		{
+		switch ($c1) {
 			case 'A':
 				$k += 10;
 				break;
@@ -229,7 +220,7 @@ class JCryptCipherSimple implements JCryptCipher
 				$k += 0;
 				break;
 			default:
-				$k += (int) $c1;
+				$k += (int)$c1;
 				break;
 		}
 
@@ -250,11 +241,10 @@ class JCryptCipherSimple implements JCryptCipher
 		// Initialise variables.
 		$array = array();
 
-		$j = (int) strlen($hex) / 2;
+		$j = (int)strlen($hex) / 2;
 
-		for ($i = 0; $i < $j; $i++)
-		{
-			$array[$i] = (int) $this->_hexToInt($hex, $i);
+		for ($i = 0; $i < $j; $i++) {
+			$array[$i] = (int)$this->_hexToInt($hex, $i);
 		}
 
 		return $array;
@@ -272,16 +262,14 @@ class JCryptCipherSimple implements JCryptCipher
 	private function _intToHex($i)
 	{
 		// Sanitize the input.
-		$i = (int) $i;
+		$i = (int)$i;
 
 		// Get the first character of the hexadecimal string if there is one.
-		$j = (int) ($i / 16);
-		if ($j === 0)
-		{
+		$j = (int)($i / 16);
+		if ($j === 0) {
 			$s = ' ';
 		}
-		else
-		{
+		else {
 			$s = strtoupper(dechex($j));
 		}
 

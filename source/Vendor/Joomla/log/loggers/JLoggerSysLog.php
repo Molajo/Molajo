@@ -59,44 +59,37 @@ class JLoggerSyslog extends JLogger
 		parent::__construct($options);
 
 		// Ensure that we have an identity string for the Syslog entries.
-		if (empty($this->options['sys_ident']))
-		{
+		if (empty($this->options['sys_ident'])) {
 			$this->options['sys_ident'] = 'Joomla Platform';
 		}
 
 		// If the option to add the process id to Syslog entries is set use it, otherwise default to true.
-		if (isset($this->options['sys_add_pid']))
-		{
-			$this->options['sys_add_pid'] = (bool) $this->options['sys_add_pid'];
+		if (isset($this->options['sys_add_pid'])) {
+			$this->options['sys_add_pid'] = (bool)$this->options['sys_add_pid'];
 		}
-		else
-		{
+		else {
 			$this->options['sys_add_pid'] = true;
 		}
 
 		// If the option to also send Syslog entries to STDERR is set use it, otherwise default to false.
-		if (isset($this->options['sys_use_stderr']))
-		{
-			$this->options['sys_use_stderr'] = (bool) $this->options['sys_use_stderr'];
+		if (isset($this->options['sys_use_stderr'])) {
+			$this->options['sys_use_stderr'] = (bool)$this->options['sys_use_stderr'];
 		}
-		else
-		{
+		else {
 			$this->options['sys_use_stderr'] = false;
 		}
 
 		// Build the Syslog options from our log object options.
 		$sysOptions = 0;
-		if ($this->options['sys_add_pid'])
-		{
+		if ($this->options['sys_add_pid']) {
 			$sysOptions = $sysOptions | LOG_PID;
 		}
-		if ($this->options['sys_use_stderr'])
-		{
+		if ($this->options['sys_use_stderr']) {
 			$sysOptions = $sysOptions | LOG_PERROR;
 		}
 
 		// Open the Syslog connection.
-		openlog((string) $this->options['sys_ident'], $sysOptions, LOG_USER);
+		openlog((string)$this->options['sys_ident'], $sysOptions, LOG_USER);
 	}
 
 	/**

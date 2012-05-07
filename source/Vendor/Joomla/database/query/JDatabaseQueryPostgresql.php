@@ -61,7 +61,7 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	/**
 	 * Magic function to convert the query to a string, only for postgresql specific query
 	 *
-	 * @return  string	The completed query.
+	 * @return  string    The completed query.
 	 *
 	 * @since   11.3
 	 */
@@ -69,80 +69,65 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	{
 		$query = '';
 
-		switch ($this->type)
-		{
+		switch ($this->type) {
 			case 'select':
-				$query .= (string) $this->select;
-				$query .= (string) $this->from;
-				if ($this->join)
-				{
+				$query .= (string)$this->select;
+				$query .= (string)$this->from;
+				if ($this->join) {
 					// Special case for joins
-					foreach ($this->join as $join)
-					{
-						$query .= (string) $join;
+					foreach ($this->join as $join) {
+						$query .= (string)$join;
 					}
 				}
 
-				if ($this->where)
-				{
-					$query .= (string) $this->where;
+				if ($this->where) {
+					$query .= (string)$this->where;
 				}
 
-				if ($this->group)
-				{
-					$query .= (string) $this->group;
+				if ($this->group) {
+					$query .= (string)$this->group;
 				}
 
-				if ($this->having)
-				{
-					$query .= (string) $this->having;
+				if ($this->having) {
+					$query .= (string)$this->having;
 				}
 
-				if ($this->order)
-				{
-					$query .= (string) $this->order;
+				if ($this->order) {
+					$query .= (string)$this->order;
 				}
 
-				if ($this->limit)
-				{
-					$query .= (string) $this->limit;
+				if ($this->limit) {
+					$query .= (string)$this->limit;
 				}
 
-				if ($this->offset)
-				{
-					$query .= (string) $this->offset;
+				if ($this->offset) {
+					$query .= (string)$this->offset;
 				}
 
-				if ($this->forUpdate)
-				{
-					$query .= (string) $this->forUpdate;
+				if ($this->forUpdate) {
+					$query .= (string)$this->forUpdate;
 				}
-				else
-				{
-					if ($this->forShare)
-					{
-						$query .= (string) $this->forShare;
+				else {
+					if ($this->forShare) {
+						$query .= (string)$this->forShare;
 					}
 				}
 
-				if ($this->noWait)
-				{
-					$query .= (string) $this->noWait;
+				if ($this->noWait) {
+					$query .= (string)$this->noWait;
 				}
 
 				break;
 
 			case 'update':
-				$query .= (string) $this->update;
-				$query .= (string) $this->set;
+				$query .= (string)$this->update;
+				$query .= (string)$this->set;
 
-				if ($this->join)
-				{
+				if ($this->join) {
 					$onWord = ' ON ';
 
 					// Workaround for special case of JOIN with UPDATE
-					foreach ($this->join as $join)
-					{
+					foreach ($this->join as $join) {
 						$joinElem = $join->getElements();
 
 						$joinArray = explode($onWord, $joinElem[0]);
@@ -151,37 +136,32 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 						$this->where($joinArray[1]);
 					}
 
-					$query .= (string) $this->from;
+					$query .= (string)$this->from;
 				}
 
-				if ($this->where)
-				{
-					$query .= (string) $this->where;
+				if ($this->where) {
+					$query .= (string)$this->where;
 				}
 
 				break;
 
 			case 'insert':
-				$query .= (string) $this->insert;
+				$query .= (string)$this->insert;
 
-				if ($this->values)
-				{
-					if ($this->columns)
-					{
-						$query .= (string) $this->columns;
+				if ($this->values) {
+					if ($this->columns) {
+						$query .= (string)$this->columns;
 					}
 
 					$elements = $this->values->getElements();
-					if (!($elements[0] instanceof $this))
-					{
+					if (!($elements[0] instanceof $this)) {
 						$query .= ' VALUES ';
 					}
 
-					$query .= (string) $this->values;
+					$query .= (string)$this->values;
 
-					if ($this->returning)
-					{
-						$query .= (string) $this->returning;
+					if ($this->returning) {
+						$query .= (string)$this->returning;
 					}
 				}
 
@@ -207,8 +187,7 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 */
 	public function clear($clause = null)
 	{
-		switch ($clause)
-		{
+		switch ($clause) {
 			case 'limit':
 				$this->limit = null;
 				break;
@@ -298,12 +277,10 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 */
 	public function concatenate($values, $separator = null)
 	{
-		if ($separator)
-		{
+		if ($separator) {
 			return implode(' || ' . $this->quote($separator) . ' || ', $values);
 		}
-		else
-		{
+		else {
 			return implode(' || ', $values);
 		}
 	}
@@ -330,17 +307,15 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 *
 	 * @since   11.3
 	 */
-	public function forUpdate ($table_name, $glue = ',')
+	public function forUpdate($table_name, $glue = ',')
 	{
 		$this->type = 'forUpdate';
 
-		if ( is_null($this->forUpdate) )
-		{
+		if (is_null($this->forUpdate)) {
 			$glue = strtoupper($glue);
 			$this->forUpdate = new JDatabaseQueryElement('FOR UPDATE', 'OF ' . $table_name, "$glue ");
 		}
-		else
-		{
+		else {
 			$this->forUpdate->append($table_name);
 		}
 
@@ -357,17 +332,15 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 *
 	 * @since   11.3
 	 */
-	public function forShare ($table_name, $glue = ',')
+	public function forShare($table_name, $glue = ',')
 	{
 		$this->type = 'forShare';
 
-		if ( is_null($this->forShare) )
-		{
+		if (is_null($this->forShare)) {
 			$glue = strtoupper($glue);
 			$this->forShare = new JDatabaseQueryElement('FOR SHARE', 'OF ' . $table_name, "$glue ");
 		}
-		else
-		{
+		else {
 			$this->forShare->append($table_name);
 		}
 
@@ -483,12 +456,11 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 *
 	 * @since   11.3
 	 */
-	public function noWait ()
+	public function noWait()
 	{
 		$this->type = 'noWait';
 
-		if ( is_null($this->noWait) )
-		{
+		if (is_null($this->noWait)) {
 			$this->noWait = new JDatabaseQueryElement('NOWAIT', null);
 		}
 
@@ -504,11 +476,10 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 *
 	 * @since   11.3
 	 */
-	public function limit( $limit = 0 )
+	public function limit($limit = 0)
 	{
-		if (is_null($this->limit))
-		{
-			$this->limit = new JDatabaseQueryElement('LIMIT', (int) $limit);
+		if (is_null($this->limit)) {
+			$this->limit = new JDatabaseQueryElement('LIMIT', (int)$limit);
 		}
 
 		return $this;
@@ -523,11 +494,10 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 *
 	 * @since   11.3
 	 */
-	public function offset( $offset = 0 )
+	public function offset($offset = 0)
 	{
-		if (is_null($this->offset))
-		{
-			$this->offset = new JDatabaseQueryElement('OFFSET', (int) $offset);
+		if (is_null($this->offset)) {
+			$this->offset = new JDatabaseQueryElement('OFFSET', (int)$offset);
 		}
 
 		return $this;
@@ -542,10 +512,9 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 *
 	 * @since   11.3
 	 */
-	public function returning( $pkCol )
+	public function returning($pkCol)
 	{
-		if (is_null($this->returning))
-		{
+		if (is_null($this->returning)) {
 			$this->returning = new JDatabaseQueryElement('RETURNING', $pkCol);
 		}
 
@@ -568,8 +537,8 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 */
 	public function setLimit($limit = 0, $offset = 0)
 	{
-		$this->limit  = (int) $limit;
-		$this->offset = (int) $offset;
+		$this->limit = (int)$limit;
+		$this->offset = (int)$offset;
 
 		return $this;
 	}
@@ -589,13 +558,11 @@ class JDatabaseQueryPostgresql extends JDatabaseQuery implements JDatabaseQueryL
 	 */
 	public function processLimit($query, $limit, $offset = 0)
 	{
-		if ($limit > 0)
-		{
+		if ($limit > 0) {
 			$query .= ' LIMIT ' . $limit;
 		}
 
-		if ($offset > 0)
-		{
+		if ($offset > 0) {
 			$query .= ' OFFSET ' . $offset;
 		}
 

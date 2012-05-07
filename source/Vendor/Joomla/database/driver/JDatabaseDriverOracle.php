@@ -61,7 +61,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	public function __construct($options)
 	{
 		$options['driver'] = 'oci';
-		$options['charset']    = (isset($options['charset'])) ? $options['charset']   : 'AL32UTF8';
+		$options['charset'] = (isset($options['charset'])) ? $options['charset'] : 'AL32UTF8';
 		$options['dateformat'] = (isset($options['dateformat'])) ? $options['dateformat'] : 'RRRR-MM-DD HH24:MI:SS';
 
 		$this->charset = $options['charset'];
@@ -81,8 +81,7 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	 */
 	public function connect()
 	{
-		if ($this->connection)
-		{
+		if ($this->connection) {
 			return;
 		}
 
@@ -143,16 +142,16 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	}
 
 	/**
-     * Returns the current date format
-     * This method should be useful in the case that
-     * somebody actually wants to use a different
-     * date format and needs to check what the current
-     * one is to see if it needs to be changed.
-     *
-     * @return string The current date format
-     *
-     * @since 12.1
-     */
+	 * Returns the current date format
+	 * This method should be useful in the case that
+	 * somebody actually wants to use a different
+	 * date format and needs to check what the current
+	 * one is to see if it needs to be changed.
+	 *
+	 * @return string The current date format
+	 *
+	 * @since 12.1
+	 */
 	public function getDateFormat()
 	{
 		return $this->dateformat;
@@ -186,11 +185,10 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 
 		// Sanitize input to an array and iterate over the list.
 		settype($tables, 'array');
-		foreach ($tables as $table)
-		{
+		foreach ($tables as $table) {
 			$query->bind(':tableName', $table);
 			$this->setQuery($query);
-			$statement = (string) $this->loadResult();
+			$statement = (string)$this->loadResult();
 			$result[$table] = $statement;
 		}
 
@@ -229,17 +227,13 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 		$this->setQuery($query);
 		$fields = $this->loadObjectList();
 
-		if ($typeOnly)
-		{
-			foreach ($fields as $field)
-			{
+		if ($typeOnly) {
+			foreach ($fields as $field) {
 				$columns[$table][$field->COLUMN_NAME] = $field->DATA_TYPE;
 			}
 		}
-		else
-		{
-			foreach ($fields as $field)
-			{
+		else {
+			foreach ($fields as $field) {
 				$columns[$table][$field->COLUMN_NAME] = $field;
 			}
 		}
@@ -304,18 +298,15 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 
 		$tables = array();
 
-		if ($includeDatabaseName)
-		{
+		if ($includeDatabaseName) {
 			$query->select('owner, table_name');
 		}
-		else
-		{
+		else {
 			$query->select('table_name');
 		}
 
 		$query->from('all_tables');
-		if ($databaseName)
-		{
+		if ($databaseName) {
 			$query->where('owner = :database');
 			$query->bind(':database', $databaseName);
 		}
@@ -324,12 +315,10 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 
 		$this->setQuery($query);
 
-		if ($includeDatabaseName)
-		{
+		if ($includeDatabaseName) {
 			$tables = $this->loadAssocList();
 		}
-		else
-		{
+		else {
 			$tables = $this->loadResultArray();
 		}
 
@@ -369,27 +358,26 @@ class JDatabaseDriverOracle extends JDatabaseDriverPdo
 	}
 
 	/**
-     * Sets the Oracle Date Format for the session
-     * Default date format for Oracle is = DD-MON-RR
-     * The default date format for this driver is:
-     * 'RRRR-MM-DD HH24:MI:SS' since it is the format
-     * that matches the MySQL one used within most Joomla
-     * tables.
-     *
-     * @param   string  $dateformat  Oracle Date Format String
-     *
-     * @return boolean
-     *
-     * @since  12.1
-     */
+	 * Sets the Oracle Date Format for the session
+	 * Default date format for Oracle is = DD-MON-RR
+	 * The default date format for this driver is:
+	 * 'RRRR-MM-DD HH24:MI:SS' since it is the format
+	 * that matches the MySQL one used within most Joomla
+	 * tables.
+	 *
+	 * @param   string  $dateformat  Oracle Date Format String
+	 *
+	 * @return boolean
+	 *
+	 * @since  12.1
+	 */
 	public function setDateFormat($dateformat = 'DD-MON-RR')
 	{
 		$this->connect();
 
 		$this->setQuery("alter session set nls_date_format = '$dateformat'");
 
-		if (!$this->execute())
-		{
+		if (!$this->execute()) {
 			return false;
 		}
 

@@ -185,14 +185,12 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		// Get an iterator and loop trough the driver classes.
 		$iterator = new \DirectoryIterator(__DIR__ . '/driver');
 
-		foreach ($iterator as $file)
-		{
+		foreach ($iterator as $file) {
 			$fileName = $file->getFilename();
 
 			// Only load for php files.
 			// Note: DirectoryIterator::getExtension only available PHP >= 5.3.6
-			if (!$file->isFile() || substr($fileName, strrpos($fileName, '.') + 1) != 'php')
-			{
+			if (!$file->isFile() || substr($fileName, strrpos($fileName, '.') + 1) != 'php') {
 				continue;
 			}
 
@@ -201,15 +199,13 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 			$class = 'Joomla\\database\\driver\\' . $class;
 
 			// If the class doesn't exist we have nothing left to do but look at the next type.  We did our best.
-			if (!class_exists($class))
-			{
+			if (!class_exists($class)) {
 				continue;
 			}
 
 			// Sweet!  Our class exists, so now we just need to know if it passes its test method.
 			// @deprecated 12.3 Stop checking with test()
-			if ($class::isSupported() || $class::test())
-			{
+			if ($class::isSupported() || $class::test()) {
 				// Connector names should not have file extensions.
 				$connectors[] = str_ireplace('.php', '', $fileName);
 			}
@@ -245,26 +241,22 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$signature = md5(serialize($options));
 
 		// If we already have a database connector instance for these options then just use that.
-		if (empty(self::$instances[$signature]))
-		{
+		if (empty(self::$instances[$signature])) {
 
 			// Derive the class name from the driver.
 			$class = 'Joomla\\database\\driver\\';
 			$class .= 'JDatabaseDriver' . ucfirst(strtolower($options['driver']));
 
 			// If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
-			if (!class_exists($class))
-			{
+			if (!class_exists($class)) {
 				throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $options['driver']));
 			}
 
 			// Create our new JDatabaseDriver connector based on the options given.
-			try
-			{
+			try {
 				$instance = new $class($options);
 			}
-			catch (\RuntimeException $e)
-			{
+			catch (\RuntimeException $e) {
 				throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
 			}
 
@@ -292,38 +284,30 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$end = strlen($sql);
 		$queries = array();
 
-		for ($i = 0; $i < $end; $i++)
-		{
+		for ($i = 0; $i < $end; $i++) {
 			$current = substr($sql, $i, 1);
-			if (($current == '"' || $current == '\''))
-			{
+			if (($current == '"' || $current == '\'')) {
 				$n = 2;
 
-				while (substr($sql, $i - $n + 1, 1) == '\\' && $n < $i)
-				{
+				while (substr($sql, $i - $n + 1, 1) == '\\' && $n < $i) {
 					$n++;
 				}
 
-				if ($n % 2 == 0)
-				{
-					if ($open)
-					{
-						if ($current == $char)
-						{
+				if ($n % 2 == 0) {
+					if ($open) {
+						if ($current == $char) {
 							$open = false;
 							$char = '';
 						}
 					}
-					else
-					{
+					else {
 						$open = true;
 						$char = $current;
 					}
 				}
 			}
 
-			if (($current == ';' && !$open) || $i == $end - 1)
-			{
+			if (($current == ';' && !$open) || $i == $end - 1) {
 				$queries[] = substr($sql, $start, ($i - $start + 1));
 				$start = $i + 1;
 			}
@@ -344,13 +328,11 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	 */
 	public function __call($method, $args)
 	{
-		if (empty($args))
-		{
+		if (empty($args)) {
 			return;
 		}
 
-		switch ($method)
-		{
+		switch ($method) {
 			case 'q':
 				return $this->quote($args[0], isset($args[1]) ? $args[1] : true);
 				break;
@@ -611,8 +593,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$class .= 'JDatabaseExporter' . ucfirst($this->name);
 
 		// Make sure we have an exporter class for this driver.
-		if (!class_exists($class))
-		{
+		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
 			throw new \RuntimeException('Database Exporter not found.');
 		}
@@ -638,8 +619,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$class .= 'JDatabaseImporter' . ucfirst($this->name);
 
 		// Make sure we have an importer class for this driver.
-		if (!class_exists($class))
-		{
+		if (!class_exists($class)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
 			throw new \RuntimeException('Database Importer not found');
 		}
@@ -662,23 +642,20 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	 */
 	public function getQuery($new = false)
 	{
-		if ($new)
-		{
+		if ($new) {
 			// Derive the class name from the driver.
 			$class = 'Joomla\\database\\query\\';
 			$class .= 'JDatabaseQuery' . ucfirst($this->name);
 
 			// Make sure we have a query class for this driver.
-			if (!class_exists($class))
-			{
+			if (!class_exists($class)) {
 				// If it doesn't exist we are at an impasse so throw an exception.
 				throw new \RuntimeException('Database Query Class not found.');
 			}
 
 			return new $class($this);
 		}
-		else
-		{
+		else {
 			return $this->sql;
 		}
 	}
@@ -701,8 +678,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$iteratorClass .= 'JDatabaseIterator' . ucfirst($this->name);
 
 		// Make sure we have an iterator class for this driver.
-		if (!class_exists($iteratorClass))
-		{
+		if (!class_exists($iteratorClass)) {
 			// If it doesn't exist we are at an impasse so throw an exception.
 			throw new \RuntimeException(sprintf('class *%s* is not defined', $iteratorClass));
 		}
@@ -810,17 +786,14 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$statement = 'INSERT INTO ' . $this->quoteName($table) . ' (%s) VALUES (%s)';
 
 		// Iterate over the object variables to build the query fields and values.
-		foreach (get_object_vars($object) as $k => $v)
-		{
+		foreach (get_object_vars($object) as $k => $v) {
 			// Only process non-null scalars.
-			if (is_array($v) or is_object($v) or $v === null)
-			{
+			if (is_array($v) or is_object($v) or $v === null) {
 				continue;
 			}
 
 			// Ignore any internal fields.
-			if ($k[0] == '_')
-			{
+			if ($k[0] == '_') {
 				continue;
 			}
 
@@ -831,15 +804,13 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 
 		// Set the query and execute the insert.
 		$this->setQuery(sprintf($statement, implode(',', $fields), implode(',', $values)));
-		if (!$this->execute())
-		{
+		if (!$this->execute()) {
 			return false;
 		}
 
 		// Update the primary key if it exists.
 		$id = $this->insertId();
-		if ($key && $id)
-		{
+		if ($key && $id) {
 			$object->$key = $id;
 		}
 
@@ -875,14 +846,12 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$ret = null;
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get the first row from the result set as an associative array.
-		if ($array = $this->fetchAssoc($cursor))
-		{
+		if ($array = $this->fetchAssoc($cursor)) {
 			$ret = $array;
 		}
 
@@ -917,21 +886,17 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$array = array();
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get all of the rows from the result set.
-		while ($row = $this->fetchAssoc($cursor))
-		{
+		while ($row = $this->fetchAssoc($cursor)) {
 			$value = ($column) ? (isset($row[$column]) ? $row[$column] : $row) : $row;
-			if ($key)
-			{
+			if ($key) {
 				$array[$row[$key]] = $value;
 			}
-			else
-			{
+			else {
 				$array[] = $value;
 			}
 		}
@@ -961,14 +926,12 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$array = array();
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get all of the rows from the result set as arrays.
-		while ($row = $this->fetchArray($cursor))
-		{
+		while ($row = $this->fetchArray($cursor)) {
 			$array[] = $row[$offset];
 		}
 
@@ -996,17 +959,14 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		static $cursor = null;
 
 		// Execute the query and get the result set cursor.
-		if ( is_null($cursor) )
-		{
-			if (!($cursor = $this->execute()))
-			{
+		if (is_null($cursor)) {
+			if (!($cursor = $this->execute())) {
 				return $this->errorNum ? null : false;
 			}
 		}
 
 		// Get the next row from the result set as an object of type $class.
-		if ($row = $this->fetchObject($cursor, $class))
-		{
+		if ($row = $this->fetchObject($cursor, $class)) {
 			return $row;
 		}
 
@@ -1033,17 +993,14 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		static $cursor = null;
 
 		// Execute the query and get the result set cursor.
-		if ( is_null($cursor) )
-		{
-			if (!($cursor = $this->execute()))
-			{
+		if (is_null($cursor)) {
+			if (!($cursor = $this->execute())) {
 				return $this->errorNum ? null : false;
 			}
 		}
 
 		// Get the next row from the result set as an object of type $class.
-		if ($row = $this->fetchArray($cursor))
-		{
+		if ($row = $this->fetchArray($cursor)) {
 			return $row;
 		}
 
@@ -1072,14 +1029,12 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$ret = null;
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get the first row from the result set as an object of type $class.
-		if ($object = $this->fetchObject($cursor, $class))
-		{
+		if ($object = $this->fetchObject($cursor, $class)) {
 			$ret = $object;
 		}
 
@@ -1112,20 +1067,16 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$array = array();
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get all of the rows from the result set as objects of type $class.
-		while ($row = $this->fetchObject($cursor, $class))
-		{
-			if ($key)
-			{
+		while ($row = $this->fetchObject($cursor, $class)) {
+			if ($key) {
 				$array[$row->$key] = $row;
 			}
-			else
-			{
+			else {
 				$array[] = $row;
 			}
 		}
@@ -1152,14 +1103,12 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$ret = null;
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get the first row from the result set as an array.
-		if ($row = $this->fetchArray($cursor))
-		{
+		if ($row = $this->fetchArray($cursor)) {
 			$ret = $row[0];
 		}
 
@@ -1186,14 +1135,12 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$ret = null;
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get the first row from the result set as an array.
-		if ($row = $this->fetchArray($cursor))
-		{
+		if ($row = $this->fetchArray($cursor)) {
 			$ret = $row;
 		}
 
@@ -1225,20 +1172,16 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$array = array();
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get all of the rows from the result set as arrays.
-		while ($row = $this->fetchArray($cursor))
-		{
-			if ($key !== null)
-			{
+		while ($row = $this->fetchArray($cursor)) {
+			if ($key !== null) {
 				$array[$row[$key]] = $row;
 			}
-			else
-			{
+			else {
 				$array[] = $row;
 			}
 		}
@@ -1291,35 +1234,28 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	 */
 	public function quoteName($name, $as = null)
 	{
-		if (is_string($name))
-		{
+		if (is_string($name)) {
 			$quotedName = $this->quoteNameStr(explode('.', $name));
 
 			$quotedAs = '';
-			if (!is_null($as))
-			{
+			if (!is_null($as)) {
 				settype($as, 'array');
 				$quotedAs .= ' AS ' . $this->quoteNameStr($as);
 			}
 
 			return $quotedName . $quotedAs;
 		}
-		else
-		{
+		else {
 			$fin = array();
 
-			if (is_null($as))
-			{
-				foreach ($name as $str)
-				{
+			if (is_null($as)) {
+				foreach ($name as $str) {
 					$fin[] = $this->quoteName($str);
 				}
 			}
-			elseif (is_array($name) && (count($name) == count($as)))
-			{
+			elseif (is_array($name) && (count($name) == count($as))) {
 				$count = count($name);
-				for ($i = 0; $i < $count; $i++)
-				{
+				for ($i = 0; $i < $count; $i++) {
 					$fin[] = $this->quoteName($name[$i], $as[$i]);
 				}
 			}
@@ -1342,19 +1278,15 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$parts = array();
 		$q = $this->nameQuote;
 
-		foreach ($strArr as $part)
-		{
-			if (is_null($part))
-			{
+		foreach ($strArr as $part) {
+			if (is_null($part)) {
 				continue;
 			}
 
-			if (strlen($q) == 1)
-			{
+			if (strlen($q) == 1) {
 				$parts[] = $q . $part . $q;
 			}
-			else
-			{
+			else {
 				$parts[] = $q{0} . $part . $q{1};
 			}
 		}
@@ -1384,28 +1316,23 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$sql = trim($sql);
 		$n = strlen($sql);
 
-		while ($startPos < $n)
-		{
+		while ($startPos < $n) {
 			$ip = strpos($sql, $prefix, $startPos);
-			if ($ip === false)
-			{
+			if ($ip === false) {
 				break;
 			}
 
 			$j = strpos($sql, "'", $startPos);
 			$k = strpos($sql, '"', $startPos);
-			if (($k !== false) && (($k < $j) || ($j === false)))
-			{
+			if (($k !== false) && (($k < $j) || ($j === false))) {
 				$quoteChar = '"';
 				$j = $k;
 			}
-			else
-			{
+			else {
 				$quoteChar = "'";
 			}
 
-			if ($j === false)
-			{
+			if ($j === false) {
 				$j = $n;
 			}
 
@@ -1414,43 +1341,36 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 
 			$j = $startPos + 1;
 
-			if ($j >= $n)
-			{
+			if ($j >= $n) {
 				break;
 			}
 
 			// Quote comes first, find end of quote
-			while (true)
-			{
+			while (true) {
 				$k = strpos($sql, $quoteChar, $j);
 				$escaped = false;
-				if ($k === false)
-				{
+				if ($k === false) {
 					break;
 				}
 				$l = $k - 1;
-				while ($l >= 0 && $sql{$l} == '\\')
-				{
+				while ($l >= 0 && $sql{$l} == '\\') {
 					$l--;
 					$escaped = !$escaped;
 				}
-				if ($escaped)
-				{
+				if ($escaped) {
 					$j = $k + 1;
 					continue;
 				}
 				break;
 			}
-			if ($k === false)
-			{
+			if ($k === false) {
 				// Error in the query - no end quote; ignore it
 				break;
 			}
 			$literal .= substr($sql, $startPos, $k - $startPos + 1);
 			$startPos = $k + 1;
 		}
-		if ($startPos < $n)
-		{
+		if ($startPos < $n) {
 			$literal .= substr($sql, $startPos, $n - $startPos);
 		}
 
@@ -1496,7 +1416,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	public function setDebug($level)
 	{
 		$previous = $this->debug;
-		$this->debug = (bool) $level;
+		$this->debug = (bool)$level;
 
 		return $previous;
 	}
@@ -1515,8 +1435,8 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 	public function setQuery($query, $offset = 0, $limit = 0)
 	{
 		$this->sql = $query;
-		$this->limit = (int) $limit;
-		$this->offset = (int) $offset;
+		$this->limit = (int)$limit;
+		$this->offset = (int)$offset;
 
 		return $this;
 	}
@@ -1599,38 +1519,31 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		$statement = 'UPDATE ' . $this->quoteName($table) . ' SET %s WHERE %s';
 
 		// Iterate over the object variables to build the query fields/value pairs.
-		foreach (get_object_vars($object) as $k => $v)
-		{
+		foreach (get_object_vars($object) as $k => $v) {
 			// Only process scalars that are not internal fields.
-			if (is_array($v) or is_object($v) or $k[0] == '_')
-			{
+			if (is_array($v) or is_object($v) or $k[0] == '_') {
 				continue;
 			}
 
 			// Set the primary key to the WHERE clause instead of a field to update.
-			if ($k == $key)
-			{
+			if ($k == $key) {
 				$where = $this->quoteName($k) . '=' . $this->quote($v);
 				continue;
 			}
 
 			// Prepare and sanitize the fields and values for the database query.
-			if ($v === null)
-			{
+			if ($v === null) {
 				// If the value is null and we want to update nulls then set it.
-				if ($nulls)
-				{
+				if ($nulls) {
 					$val = 'NULL';
 				}
 				// If the value is null and we do not want to update nulls then ignore this field.
-				else
-				{
+				else {
 					continue;
 				}
 			}
 			// The field is not null so we prep it for update.
-			else
-			{
+			else {
 				$val = $this->quote($v);
 			}
 
@@ -1639,8 +1552,7 @@ abstract class JDatabaseDriver implements JDatabaseInterface
 		}
 
 		// We don't have any fields to update.
-		if (empty($fields))
-		{
+		if (empty($fields)) {
 			return true;
 		}
 

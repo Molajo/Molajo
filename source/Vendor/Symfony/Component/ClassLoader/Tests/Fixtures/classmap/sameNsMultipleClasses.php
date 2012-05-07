@@ -11,5 +11,10 @@
 
 namespace Foo\Bar;
 
-class A {}
-class B {}
+class A
+{
+}
+
+class B
+{
+}

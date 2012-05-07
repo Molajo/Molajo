@@ -4,11 +4,11 @@ function T$(id) {
     return document.getElementById(id)
 }
 
-TINY.ajax = function() {
+TINY.ajax = function () {
     return{
-        call:function(u, d, f, p) {
+        call:function (u, d, f, p) {
             var x = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            x.onreadystatechange = function() {
+            x.onreadystatechange = function () {
                 if (x.readyState == 4 && x.status == 200) {
                     if (d) {
                         var t = T$(d);

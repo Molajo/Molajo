@@ -64,17 +64,14 @@ class JDatabaseQueryOracle extends JDatabaseQueryPdo implements JDatabaseQueryPr
 	public function bind($key = null, $value = null, $dataType = PDO::PARAM_STR, $length = 0, $driverOptions = array())
 	{
 		// Case 1: Empty Key (reset $bounded array)
-		if (empty($key))
-		{
+		if (empty($key)) {
 			$this->bounded = array();
 			return $this;
 		}
 
 		// Case 2: Key Provided, null value (unset key from $bounded array)
-		if (is_null($value))
-		{
-			if (isset($this->bounded[$key]))
-			{
+		if (is_null($value)) {
+			if (isset($this->bounded[$key])) {
 				unset($this->bounded[$key]);
 			}
 
@@ -107,14 +104,11 @@ class JDatabaseQueryOracle extends JDatabaseQueryPdo implements JDatabaseQueryPr
 	 */
 	public function &getBounded($key = null)
 	{
-		if (empty($key))
-		{
+		if (empty($key)) {
 			return $this->bounded;
 		}
-		else
-		{
-			if (isset($this->bounded[$key]))
-			{
+		else {
+			if (isset($this->bounded[$key])) {
 				return $this->bounded[$key];
 			}
 		}
@@ -131,8 +125,7 @@ class JDatabaseQueryOracle extends JDatabaseQueryPdo implements JDatabaseQueryPr
 	 */
 	public function clear($clause = null)
 	{
-		switch ($clause)
-		{
+		switch ($clause) {
 			case null:
 				$this->bounded = array();
 				break;
@@ -188,8 +181,8 @@ class JDatabaseQueryOracle extends JDatabaseQueryPdo implements JDatabaseQueryPr
 	 */
 	public function setLimit($limit = 0, $offset = 0)
 	{
-		$this->limit = (int) $limit;
-		$this->offset = (int) $offset;
+		$this->limit = (int)$limit;
+		$this->offset = (int)$offset;
 
 		return $this;
 	}

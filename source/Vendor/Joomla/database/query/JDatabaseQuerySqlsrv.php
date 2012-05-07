@@ -47,7 +47,7 @@ class JDatabaseQuerySqlsrv extends JDatabaseQuery
 	/**
 	 * Magic function to convert the query to a string.
 	 *
-	 * @return  string	The completed query.
+	 * @return  string    The completed query.
 	 *
 	 * @since   11.1
 	 */
@@ -55,38 +55,32 @@ class JDatabaseQuerySqlsrv extends JDatabaseQuery
 	{
 		$query = '';
 
-		switch ($this->type)
-		{
+		switch ($this->type) {
 			case 'insert':
-				$query .= (string) $this->insert;
+				$query .= (string)$this->insert;
 
 				// Set method
-				if ($this->set)
-				{
-					$query .= (string) $this->set;
+				if ($this->set) {
+					$query .= (string)$this->set;
 				}
 				// Columns-Values method
-				elseif ($this->values)
-				{
-					if ($this->columns)
-					{
-						$query .= (string) $this->columns;
+				elseif ($this->values) {
+					if ($this->columns) {
+						$query .= (string)$this->columns;
 					}
 
 					$elements = $this->insert->getElements();
 					$tableName = array_shift($elements);
 
 					$query .= 'VALUES ';
-					$query .= (string) $this->values;
+					$query .= (string)$this->values;
 
-					if ($this->autoIncrementField)
-					{
+					if ($this->autoIncrementField) {
 						$query = 'SET IDENTITY_INSERT ' . $tableName . ' ON;' . $query . 'SET IDENTITY_INSERT ' . $tableName . ' OFF;';
 					}
 
-					if ($this->where)
-					{
-						$query .= (string) $this->where;
+					if ($this->where) {
+						$query .= (string)$this->where;
 					}
 				}
 
@@ -144,12 +138,10 @@ class JDatabaseQuerySqlsrv extends JDatabaseQuery
 	 */
 	public function concatenate($values, $separator = null)
 	{
-		if ($separator)
-		{
+		if ($separator) {
 			return '(' . implode('+' . $this->quote($separator) . '+', $values) . ')';
 		}
-		else
-		{
+		else {
 			return '(' . implode('+', $values) . ')';
 		}
 	}

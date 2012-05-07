@@ -49,8 +49,7 @@ class JDatabaseQueryMysql extends JDatabaseQuery implements JDatabaseQueryLimita
 	 */
 	public function processLimit($query, $limit, $offset = 0)
 	{
-		if ($limit > 0 || $offset > 0)
-		{
+		if ($limit > 0 || $offset > 0) {
 			$query .= ' LIMIT ' . $offset . ', ' . $limit;
 		}
 
@@ -69,19 +68,16 @@ class JDatabaseQueryMysql extends JDatabaseQuery implements JDatabaseQueryLimita
 	 */
 	public function concatenate($values, $separator = null)
 	{
-		if ($separator)
-		{
+		if ($separator) {
 			$concat_string = 'CONCAT_WS(' . $this->quote($separator);
 
-			foreach ($values as $value)
-			{
+			foreach ($values as $value) {
 				$concat_string .= ', ' . $value;
 			}
 
 			return $concat_string . ')';
 		}
-		else
-		{
+		else {
 			return 'CONCAT(' . implode(',', $values) . ')';
 		}
 	}
@@ -102,8 +98,8 @@ class JDatabaseQueryMysql extends JDatabaseQuery implements JDatabaseQueryLimita
 	 */
 	public function setLimit($limit = 0, $offset = 0)
 	{
-		$this->limit  = (int) $limit;
-		$this->offset = (int) $offset;
+		$this->limit = (int)$limit;
+		$this->offset = (int)$offset;
 
 		return $this;
 	}

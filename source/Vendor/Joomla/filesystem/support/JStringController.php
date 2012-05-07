@@ -61,12 +61,10 @@ class JStringController
 	public function getRef($reference)
 	{
 		$ref = &self::_getArray();
-		if (isset($ref[$reference]))
-		{
+		if (isset($ref[$reference])) {
 			return $ref[$reference];
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}

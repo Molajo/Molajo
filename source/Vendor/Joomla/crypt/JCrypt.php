@@ -125,11 +125,10 @@ class JCrypt
 		 * have a buggy PHP version use it.
 		 */
 		if (function_exists('openssl_random_pseudo_bytes')
-			&& (version_compare(PHP_VERSION, '5.3.4') >= 0 || IS_WIN))
-		{
+			&& (version_compare(PHP_VERSION, '5.3.4') >= 0 || IS_WIN)
+		) {
 			$sslStr = openssl_random_pseudo_bytes($length, $strong);
-			if ($strong)
-			{
+			if ($strong) {
 				return $sslStr;
 			}
 		}
@@ -149,18 +148,15 @@ class JCrypt
 		$handle = null;
 
 		// This is PHP 5.3.3 and up
-		if (function_exists('stream_set_read_buffer') && @is_readable('/dev/urandom'))
-		{
+		if (function_exists('stream_set_read_buffer') && @is_readable('/dev/urandom')) {
 			$handle = @fopen('/dev/urandom', 'rb');
-			if ($handle)
-			{
+			if ($handle) {
 				$urandom = true;
 			}
 		}
 
-		while ($length > strlen($randomStr))
-		{
-			$bytes = ($total > $shaHashLength)? $shaHashLength : $total;
+		while ($length > strlen($randomStr)) {
+			$bytes = ($total > $shaHashLength) ? $shaHashLength : $total;
 			$total -= $bytes;
 			/*
 			 * Collect any entropy available from the PHP system and filesystem.
@@ -170,13 +166,11 @@ class JCrypt
 			$entropy .= implode('', @fstat(fopen(__FILE__, 'r')));
 			$entropy .= memory_get_usage();
 			$sslStr = '';
-			if ($urandom)
-			{
+			if ($urandom) {
 				stream_set_read_buffer($handle, 0);
 				$entropy .= @fread($handle, $bytes);
 			}
-			else
-			{
+			else {
 				/*
 				 * There is no external source of entropy so we repeat calls
 				 * to mt_rand until we are assured there's real randomness in
@@ -186,18 +180,15 @@ class JCrypt
 				 */
 				$samples = 3;
 				$duration = 0;
-				for ($pass = 0; $pass < $samples; ++$pass)
-				{
+				for ($pass = 0; $pass < $samples; ++$pass) {
 					$microStart = microtime(true) * 1000000;
 					$hash = sha1(mt_rand(), true);
-					for ($count = 0; $count < 50; ++$count)
-					{
+					for ($count = 0; $count < 50; ++$count) {
 						$hash = sha1($hash, true);
 					}
 					$microEnd = microtime(true) * 1000000;
 					$entropy .= $microStart . $microEnd;
-					if ($microStart > $microEnd)
-					{
+					if ($microStart > $microEnd) {
 						$microEnd += 1000000;
 					}
 					$duration += $microEnd - $microStart;
@@ -208,19 +199,17 @@ class JCrypt
 				 * Based on the average time, determine the total rounds so that
 				 * the total running time is bounded to a reasonable number.
 				 */
-				$rounds = (int) (($maxTimeMicro / $duration) * 50);
+				$rounds = (int)(($maxTimeMicro / $duration) * 50);
 
 				/*
 				 * Take additional measurements. On average we can expect
 				 * at least $bitsPerRound bits of entropy from each measurement.
 				 */
-				$iter = $bytes * (int) ceil(8 / $bitsPerRound);
-				for ($pass = 0; $pass < $iter; ++$pass)
-				{
+				$iter = $bytes * (int)ceil(8 / $bitsPerRound);
+				for ($pass = 0; $pass < $iter; ++$pass) {
 					$microStart = microtime(true);
 					$hash = sha1(mt_rand(), true);
-					for ($count = 0; $count < $rounds; ++$count)
-					{
+					for ($count = 0; $count < $rounds; ++$count) {
 						$hash = sha1($hash, true);
 					}
 					$entropy .= $microStart . microtime(true);
@@ -230,8 +219,7 @@ class JCrypt
 			$randomStr .= sha1($entropy, true);
 		}
 
-		if ($urandom)
-		{
+		if ($urandom) {
 			@fclose($handle);
 		}
 

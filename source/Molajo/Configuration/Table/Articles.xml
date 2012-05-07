@@ -66,7 +66,8 @@
 
             <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
             <element name="default_edit_template_view_css_id" filter="char" null="1" default="" values=""/>
-            <element name="default_edit_template_view_css_class" filter="char" null="1" default="edit article" values=""/>
+            <element name="default_edit_template_view_css_class" filter="char" null="1" default="edit article"
+                     values=""/>
 
             <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
             <element name="default_edit_wrap_view_css_id" filter="char" null="1" default="" values=""/>
@@ -80,7 +81,8 @@
             <element name="metadata_title" filter="char" null="0" default=""/>
             <element name="metadata_description" filter="text" null="0" default=""/>
             <element name="metadata_keywords" filter="char" null="1" default=""/>
-            <element name="metadata_robots" filter="char" null="0" default="follow,index" values="follow,nofollow,index,noindex"/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index"
+                     values="follow,nofollow,index,noindex"/>
             <element name="metadata_author" filter="char" null="1" default=""/>
             <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
@@ -109,7 +111,8 @@
             <element name="metadata_title" filter="char" null="0" default=""/>
             <element name="metadata_description" filter="text" null="0" default=""/>
             <element name="metadata_keywords" filter="char" null="1" default=""/>
-            <element name="metadata_robots" filter="char" null="0" default="follow,index" values="follow,nofollow,index,noindex"/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index"
+                     values="follow,nofollow,index,noindex"/>
             <element name="metadata_author" filter="char" null="1" default=""/>
             <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>

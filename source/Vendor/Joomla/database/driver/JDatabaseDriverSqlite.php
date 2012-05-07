@@ -108,8 +108,7 @@ class JDatabaseDriverSqlite extends JDatabaseDriverPdo
 	 */
 	public function escape($text, $extra = false)
 	{
-		if (is_int($text) || is_float($text))
-		{
+		if (is_int($text) || is_float($text)) {
 			return $text;
 		}
 
@@ -179,20 +178,16 @@ class JDatabaseDriverSqlite extends JDatabaseDriverPdo
 		$this->setQuery($query);
 		$fields = $this->loadObjectList();
 
-		if ($typeOnly)
-		{
-			foreach ($fields as $field)
-			{
+		if ($typeOnly) {
+			foreach ($fields as $field) {
 				$columns[$field->NAME] = $field->TYPE;
 			}
 		}
-		else
-		{
-			foreach ($fields as $field)
-			{
+		else {
+			foreach ($fields as $field) {
 				// Do some dirty translation to MySQL output.
 				// TODO: Come up with and implement a standard across databases.
-				$columns[$field->NAME] = (object) array(
+				$columns[$field->NAME] = (object)array(
 					'Field' => $field->NAME,
 					'Type' => $field->TYPE,
 					'Null' => ($field->NOTNULL == '1' ? 'NO' : 'YES'),
@@ -236,10 +231,8 @@ class JDatabaseDriverSqlite extends JDatabaseDriverPdo
 		$this->setQuery($query);
 		$rows = $this->loadObjectList();
 
-		foreach ($rows as $column)
-		{
-			if ($column->PK == 1)
-			{
+		foreach ($rows as $column) {
+			if ($column->PK == 1) {
 				$keys[$column->NAME] = $column;
 			}
 		}

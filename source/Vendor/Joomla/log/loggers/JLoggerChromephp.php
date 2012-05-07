@@ -48,16 +48,13 @@ class JLoggerChromephp extends JLogger
 			. $entry->message
 			. (empty($entry->category) ? '' : ' [' . $entry->category . ']');
 
-		if ($entry->priority == JLog::WARNING)
-		{
+		if ($entry->priority == JLog::WARNING) {
 			$method = 'warn';
 		}
-		elseif ($entry->priority == JLog::ERROR)
-		{
+		elseif ($entry->priority == JLog::ERROR) {
 			$method = 'error';
 		}
-		else
-		{
+		else {
 			$method = 'log';
 		}
 

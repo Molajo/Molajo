@@ -103,8 +103,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 		$buffer = '';
 
 		// Get the format.
-		switch ($this->asFormat)
-		{
+		switch ($this->asFormat) {
 			case 'xml':
 			default:
 				$buffer = $this->buildXml();
@@ -164,8 +163,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	{
 		$buffer = array();
 
-		foreach ($this->from as $table)
-		{
+		foreach ($this->from as $table) {
 			// Replace the magic prefix if found.
 			$table = $this->getGenericTableName($table);
 
@@ -175,15 +173,13 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 
 			$buffer[] = '  <table_structure name="' . $table . '">';
 
-			foreach ($fields as $field)
-			{
+			foreach ($fields as $field) {
 				$buffer[] = '   <field Field="' . $field->Field . '"' . ' Type="' . $field->Type . '"' . ' Null="' . $field->Null . '"' . ' Key="' .
 					$field->Key . '"' . (isset($field->Default) ? ' Default="' . $field->Default . '"' : '') . ' Extra="' . $field->Extra . '"' .
 					' />';
 			}
 
-			foreach ($keys as $key)
-			{
+			foreach ($keys as $key) {
 				$buffer[] = '   <key Table="' . $table . '"' . ' Non_unique="' . $key->Non_unique . '"' . ' Key_name="' . $key->Key_name . '"' .
 					' Seq_in_index="' . $key->Seq_in_index . '"' . ' Column_name="' . $key->Column_name . '"' . ' Collation="' . $key->Collation . '"' .
 					' Null="' . $key->Null . '"' . ' Index_type="' . $key->Index_type . '"' . ' Comment="' . htmlspecialchars($key->Comment) . '"' .
@@ -208,14 +204,12 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabaseDriverMysql))
-		{
+		if (!($this->db instanceof JDatabaseDriverMysql)) {
 			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
-		if (empty($this->from))
-		{
+		if (empty($this->from)) {
 			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
@@ -254,16 +248,13 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 */
 	public function from($from)
 	{
-		if (is_string($from))
-		{
+		if (is_string($from)) {
 			$this->from = array($from);
 		}
-		elseif (is_array($from))
-		{
+		elseif (is_array($from)) {
 			$this->from = $from;
 		}
-		else
-		{
+		else {
 			throw new \Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
 		}
 
@@ -297,7 +288,7 @@ class JDatabaseExporterMysql extends JDatabaseExporter
 	 */
 	public function withStructure($setting = true)
 	{
-		$this->options->withStructure = (boolean) $setting;
+		$this->options->withStructure = (boolean)$setting;
 
 		return $this;
 	}

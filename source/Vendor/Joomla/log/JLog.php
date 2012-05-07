@@ -152,15 +152,13 @@ class JLog
 	public static function add($entry, $priority = self::INFO, $category = '', $date = null)
 	{
 		// Automatically instantiate the singleton object if not already done.
-		if (empty(self::$instance))
-		{
+		if (empty(self::$instance)) {
 			self::setInstance(new JLog);
 		}
 
 		// If the entry object isn't a JLogEntry object let's make one.
-		if (!($entry instanceof JLogEntry))
-		{
-			$entry = new JLogEntry((string) $entry, $priority, $category, $date);
+		if (!($entry instanceof JLogEntry)) {
+			$entry = new JLogEntry((string)$entry, $priority, $category, $date);
 		}
 
 		self::$instance->addLogEntry($entry);
@@ -180,14 +178,12 @@ class JLog
 	public static function addLogger(array $options, $priorities = self::ALL, $categories = array())
 	{
 		// Automatically instantiate the singleton object if not already done.
-		if (empty(self::$instance))
-		{
+		if (empty(self::$instance)) {
 			self::setInstance(new JLog);
 		}
 
 		// The default logger is the formatted text log file.
-		if (empty($options['logger']))
-		{
+		if (empty($options['logger'])) {
 			$options['logger'] = 'formattedtext';
 		}
 		$options['logger'] = strtolower($options['logger']);
@@ -196,14 +192,13 @@ class JLog
 		$signature = md5(serialize($options));
 
 		// Register the configuration if it doesn't exist.
-		if (empty(self::$instance->configurations[$signature]))
-		{
+		if (empty(self::$instance->configurations[$signature])) {
 			self::$instance->configurations[$signature] = $options;
 		}
 
-		self::$instance->lookup[$signature] = (object) array(
+		self::$instance->lookup[$signature] = (object)array(
 			'priorities' => $priorities,
-			'categories' => array_map('strtolower', (array) $categories));
+			'categories' => array_map('strtolower', (array)$categories));
 	}
 
 	/**
@@ -218,8 +213,7 @@ class JLog
 	 */
 	public static function setInstance($instance)
 	{
-		if (($instance instanceof JLog) || $instance === null)
-		{
+		if (($instance instanceof JLog) || $instance === null) {
 			self::$instance = & $instance;
 		}
 	}
@@ -239,19 +233,15 @@ class JLog
 		// Find all the appropriate loggers based on priority and category for the entry.
 		$loggers = $this->findLoggers($entry->priority, $entry->category);
 
-		foreach ((array) $loggers as $signature)
-		{
+		foreach ((array)$loggers as $signature) {
 			// Attempt to instantiate the logger object if it doesn't already exist.
-			if (empty($this->loggers[$signature]))
-			{
+			if (empty($this->loggers[$signature])) {
 				$class = 'Joomla\\log\\loggers\\';
 				$class .= 'JLogger' . ucfirst($this->configurations[$signature]['logger']);
-				if (class_exists($class))
-				{
+				if (class_exists($class)) {
 					$this->loggers[$signature] = new $class($this->configurations[$signature]);
 				}
-				else
-				{
+				else {
 					throw new \RuntimeException('Unable to create a JLogger instance: ' . $class);
 				}
 			}
@@ -277,18 +267,15 @@ class JLog
 		$loggers = array();
 
 		// Sanitize inputs.
-		$priority = (int) $priority;
+		$priority = (int)$priority;
 		$category = strtolower($category);
 
 		// Let's go iterate over the loggers and get all the ones we need.
-		foreach ((array) $this->lookup as $signature => $rules)
-		{
+		foreach ((array)$this->lookup as $signature => $rules) {
 			// Check to make sure the priority matches the logger.
-			if ($priority & $rules->priorities)
-			{
+			if ($priority & $rules->priorities) {
 				// If either there are no set categories (meaning all) or the specific category is set, add this logger.
-				if (empty($category) || empty($rules->categories) || in_array($category, $rules->categories))
-				{
+				if (empty($category) || empty($rules->categories) || in_array($category, $rules->categories)) {
 					$loggers[] = $signature;
 				}
 			}

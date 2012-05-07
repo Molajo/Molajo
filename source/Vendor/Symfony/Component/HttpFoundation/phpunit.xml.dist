@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="Tests/bootstrap.php"
->
+        >
     <testsuites>
         <testsuite name="Symfony HttpFoundation Component Test Suite">
             <directory>./Tests/</directory>

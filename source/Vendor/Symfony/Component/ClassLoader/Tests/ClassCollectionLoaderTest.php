@@ -15,9 +15,9 @@ use Symfony\Component\ClassLoader\ClassCollectionLoader;
 
 class ClassCollectionLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testFixNamespaceDeclarations()
-    {
-        $source = <<<EOF
+	public function testFixNamespaceDeclarations()
+	{
+		$source = <<<EOF
 <?php
 
 namespace Foo;
@@ -36,14 +36,14 @@ namespace
 }
 EOF;
 
-        $expected = <<<EOF
+		$expected = <<<EOF
 <?php
 
 namespace Foo
 {
 class Foo {}
 }
-namespace   Bar 
+namespace   Bar
 {
 class Foo {}
 }
@@ -61,14 +61,14 @@ namespace
 }
 EOF;
 
-        $this->assertEquals($expected, ClassCollectionLoader::fixNamespaceDeclarations($source));
-    }
+		$this->assertEquals($expected, ClassCollectionLoader::fixNamespaceDeclarations($source));
+	}
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testUnableToLoadClassException()
-    {
-        ClassCollectionLoader::load(array('SomeNotExistingClass'), '', 'foo', false);
-    }
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testUnableToLoadClassException()
+	{
+		ClassCollectionLoader::load(array('SomeNotExistingClass'), '', 'foo', false);
+	}
 }

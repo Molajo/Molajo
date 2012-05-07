@@ -79,8 +79,7 @@ abstract class JDatabaseIterator implements \Countable, \Iterator
 	 */
 	public function __construct($cursor, $column = null, $class = 'stdClass')
 	{
-		if (!class_exists($class))
-		{
+		if (!class_exists($class)) {
 			throw new \InvalidArgumentException(sprintf('new %s(*%s*, cursor)', get_class($this), gettype($class)));
 		}
 
@@ -98,8 +97,7 @@ abstract class JDatabaseIterator implements \Countable, \Iterator
 	 */
 	public function __destruct()
 	{
-		if ($this->cursor)
-		{
+		if ($this->cursor) {
 			$this->freeResult($this->cursor);
 		}
 	}
@@ -147,11 +145,9 @@ abstract class JDatabaseIterator implements \Countable, \Iterator
 		$this->_current = $this->fetchObject();
 
 		// If an object has been found
-		if ($this->_current)
-		{
+		if ($this->_current) {
 			// Set the key as being the indexed column (if it exists)
-			if (isset($this->_current->{$this->_column}))
-			{
+			if (isset($this->_current->{$this->_column})) {
 				$this->_key = $this->_current->{$this->_column};
 			}
 
@@ -184,7 +180,7 @@ abstract class JDatabaseIterator implements \Countable, \Iterator
 	 */
 	public function valid()
 	{
-		return (boolean) $this->_current;
+		return (boolean)$this->_current;
 	}
 
 	/**

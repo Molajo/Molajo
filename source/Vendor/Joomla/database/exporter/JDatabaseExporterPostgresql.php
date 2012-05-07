@@ -103,8 +103,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 		$buffer = '';
 
 		// Get the format.
-		switch ($this->asFormat)
-		{
+		switch ($this->asFormat) {
 			case 'xml':
 			default:
 				$buffer = $this->buildXml();
@@ -164,8 +163,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	{
 		$buffer = array();
 
-		foreach ($this->from as $table)
-		{
+		foreach ($this->from as $table) {
 			// Replace the magic prefix if found.
 			$table = $this->getGenericTableName($table);
 
@@ -176,10 +174,8 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 
 			$buffer[] = '  <table_structure name="' . $table . '">';
 
-			foreach ($sequences as $sequence)
-			{
-				if (version_compare($this->db->getVersion(), '9.1.0') < 0)
-				{
+			foreach ($sequences as $sequence) {
+				if (version_compare($this->db->getVersion(), '9.1.0') < 0) {
 					$sequence->start_value = null;
 				}
 
@@ -191,15 +187,13 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 					' />';
 			}
 
-			foreach ($fields as $field)
-			{
+			foreach ($fields as $field) {
 				$buffer[] = '   <field Field="' . $field->column_name . '"' . ' Type="' . $field->type . '"' . ' Null="' . $field->null . '"' .
-							(isset($field->default) ? ' Default="' . $field->default . '"' : '') . ' Comments="' . $field->comments . '"' .
+					(isset($field->default) ? ' Default="' . $field->default . '"' : '') . ' Comments="' . $field->comments . '"' .
 					' />';
 			}
 
-			foreach ($keys as $key)
-			{
+			foreach ($keys as $key) {
 				$buffer[] = '   <key Index="' . $key->idxName . '"' . ' is_primary="' . $key->isPrimary . '"' . ' is_unique="' . $key->isUnique . '"' .
 					' Query="' . $key->Query . '" />';
 			}
@@ -222,14 +216,12 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabaseDriverPostgresql))
-		{
+		if (!($this->db instanceof JDatabaseDriverPostgresql)) {
 			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
-		if (empty($this->from))
-		{
+		if (empty($this->from)) {
 			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
@@ -268,16 +260,13 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 */
 	public function from($from)
 	{
-		if (is_string($from))
-		{
+		if (is_string($from)) {
 			$this->from = array($from);
 		}
-		elseif (is_array($from))
-		{
+		elseif (is_array($from)) {
 			$this->from = $from;
 		}
-		else
-		{
+		else {
 			throw new \Exception('JPLATFORM_ERROR_INPUT_REQUIRES_STRING_OR_ARRAY');
 		}
 
@@ -311,7 +300,7 @@ class JDatabaseExporterPostgresql extends JDatabaseExporter
 	 */
 	public function withStructure($setting = true)
 	{
-		$this->options->withStructure = (boolean) $setting;
+		$this->options->withStructure = (boolean)$setting;
 
 		return $this;
 	}

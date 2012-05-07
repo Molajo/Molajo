@@ -63,39 +63,31 @@ class JLoggerEmail extends JLogger
 		parent::__construct($options);
 
 		// If both the database object and driver options are empty we want to use the system database connection.
-		if (empty($this->options['from']))
-		{
+		if (empty($this->options['from'])) {
 			$this->from = JFactory::getConfig()->get('mailfrom');
 		}
-		else
-		{
+		else {
 			$this->from = $this->options['from'];
 		}
 
-		if (empty($this->options['to']))
-		{
+		if (empty($this->options['to'])) {
 			$this->to = JFactory::getConfig()->get('mailfrom');
 		}
-		else
-		{
+		else {
 			$this->to = $this->options['to'];
 		}
 
-		if (empty($this->options['subject']))
-		{
+		if (empty($this->options['subject'])) {
 			$this->subject = JFactory::getConfig()->get('sitename');
 		}
-		else
-		{
+		else {
 			$this->subject = $this->options['subject'];
 		}
 
-		if (empty($this->options['mailer']))
-		{
+		if (empty($this->options['mailer'])) {
 			$this->mailer = JFactory::getMailer();
 		}
-		else
-		{
+		else {
 			$this->mailer = $this->options['mailer'];
 		}
 	}
@@ -116,16 +108,15 @@ class JLoggerEmail extends JLogger
 		$this->mailer->setRecipient($this->to);
 		$this->mailer->setSubject($this->subject);
 		$this->mailer->setBody(
-				$this->priorities[$entry->priority]
+			$this->priorities[$entry->priority]
 				. ': '
 				. $entry->message
 				. (empty($entry->category) ? '' : ' [' . $entry->category . ']')
-			);
+		);
 
 		$results = $this->mailer->Send();
 
-		if ($results == false)
-		{
+		if ($results == false) {
 			throw new \RuntimeException('Email log entry not sent');
 		}
 	}

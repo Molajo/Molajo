@@ -17,8 +17,7 @@ define('JPATH_ISWIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
 // Define a boolean constant as true if a Mac based host
 define('JPATH_ISMAC', (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC'));
 
-if (!defined('JPATH_ROOT'))
-{
+if (!defined('JPATH_ROOT')) {
 	// Define a string constant for the root directory of the file system in native format
 	define('JPATH_ROOT', JPath::clean(JPATH_SITE));
 }
@@ -44,10 +43,8 @@ class JPath
 	public static function canChmod($path)
 	{
 		$perms = fileperms($path);
-		if ($perms !== false)
-		{
-			if (@chmod($path, $perms ^ 0001))
-			{
+		if ($perms !== false) {
+			if (@chmod($path, $perms ^ 0001)) {
 				@chmod($path, $perms);
 				return true;
 			}
@@ -72,28 +69,20 @@ class JPath
 		// Initialise return value
 		$ret = true;
 
-		if (is_dir($path))
-		{
+		if (is_dir($path)) {
 			$dh = opendir($path);
 
-			while ($file = readdir($dh))
-			{
-				if ($file != '.' && $file != '..')
-				{
+			while ($file = readdir($dh)) {
+				if ($file != '.' && $file != '..') {
 					$fullpath = $path . '/' . $file;
-					if (is_dir($fullpath))
-					{
-						if (!self::setPermissions($fullpath, $filemode, $foldermode))
-						{
+					if (is_dir($fullpath)) {
+						if (!self::setPermissions($fullpath, $filemode, $foldermode)) {
 							$ret = false;
 						}
 					}
-					else
-					{
-						if (isset($filemode))
-						{
-							if (!@ chmod($fullpath, octdec($filemode)))
-							{
+					else {
+						if (isset($filemode)) {
+							if (!@ chmod($fullpath, octdec($filemode))) {
 								$ret = false;
 							}
 						}
@@ -101,18 +90,14 @@ class JPath
 				}
 			}
 			closedir($dh);
-			if (isset($foldermode))
-			{
-				if (!@ chmod($path, octdec($foldermode)))
-				{
+			if (isset($foldermode)) {
+				if (!@ chmod($path, octdec($foldermode))) {
 					$ret = false;
 				}
 			}
 		}
-		else
-		{
-			if (isset($filemode))
-			{
+		else {
+			if (isset($filemode)) {
 				$ret = @ chmod($path, octdec($filemode));
 			}
 		}
@@ -134,14 +119,12 @@ class JPath
 		$path = self::clean($path);
 		$mode = @ decoct(@ fileperms($path) & 0777);
 
-		if (strlen($mode) < 3)
-		{
+		if (strlen($mode) < 3) {
 			return '---------';
 		}
 
 		$parsed_mode = '';
-		for ($i = 0; $i < 3; $i++)
-		{
+		for ($i = 0; $i < 3; $i++) {
 			// Read
 			$parsed_mode .= ($mode{$i} & 04) ? "r" : "-";
 
@@ -168,15 +151,13 @@ class JPath
 	 */
 	public static function check($path, $ds = DIRECTORY_SEPARATOR)
 	{
-		if (strpos($path, '..') !== false)
-		{
+		if (strpos($path, '..') !== false) {
 			// Don't translate
 			throw new \Exception('JPath::check Use of relative paths not permitted', 20);
 		}
 
 		$path = self::clean($path);
-		if ((JPATH_ROOT != '') && strpos($path, self::clean(JPATH_ROOT)) !== 0)
-		{
+		if ((JPATH_ROOT != '') && strpos($path, self::clean(JPATH_ROOT)) !== 0) {
 			// Don't translate
 			throw new \Exception('JPath::check Snooping out of bounds @ ' . $path, 20);
 		}
@@ -198,12 +179,10 @@ class JPath
 	{
 		$path = trim($path);
 
-		if (empty($path))
-		{
+		if (empty($path)) {
 			$path = JPATH_ROOT;
 		}
-		else
-		{
+		else {
 			// Remove double slashes and backslashes and convert all slashes and backslashes to DIRECTORY_SEPARATOR
 			$path = preg_replace('#[/\\\\]+#', $ds, $path);
 		}
@@ -232,8 +211,7 @@ class JPath
 		$dir = (!$dir && is_writable($ssp)) ? $ssp : false;
 		$dir = (!$dir && is_writable($jtp)) ? $jtp : false;
 
-		if ($dir)
-		{
+		if ($dir) {
 			$test = $dir . '/' . $tmp;
 
 			// Create the test file
@@ -265,20 +243,17 @@ class JPath
 	public static function find($paths, $file)
 	{
 		// Force to array
-		if (!is_array($paths) && !($paths instanceof \Iterator))
-		{
+		if (!is_array($paths) && !($paths instanceof \Iterator)) {
 			settype($paths, 'array');
 		}
 
 		// Start looping through the path set
-		foreach ($paths as $path)
-		{
+		foreach ($paths as $path) {
 			// Get the path to the file
 			$fullname = $path . '/' . $file;
 
 			// Is the path based on a stream?
-			if (strpos($path, '://') === false)
-			{
+			if (strpos($path, '://') === false) {
 				// Not a stream, so do a realpath() to avoid directory
 				// traversal attempts on the local file system.
 
@@ -293,8 +268,7 @@ class JPath
 			 * non-registered directories are not accessible via directory
 			 * traversal attempts.
 			 */
-			if (file_exists($fullname) && substr($fullname, 0, strlen($path)) == $path)
-			{
+			if (file_exists($fullname) && substr($fullname, 0, strlen($path)) == $path) {
 				return $fullname;
 			}
 		}

@@ -75,7 +75,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		$options['user'] = (isset($options['user'])) ? $options['user'] : 'root';
 		$options['password'] = (isset($options['password'])) ? $options['password'] : '';
 		$options['database'] = (isset($options['database'])) ? $options['database'] : '';
-		$options['select'] = (isset($options['select'])) ? (bool) $options['select'] : true;
+		$options['select'] = (isset($options['select'])) ? (bool)$options['select'] : true;
 
 		// Finalize initialisation.
 		parent::__construct($options);
@@ -91,20 +91,17 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 */
 	public function connect()
 	{
-		if ($this->connection)
-		{
+		if ($this->connection) {
 			return;
 		}
 
 		// Make sure the MySQL extension for PHP is installed and enabled.
-		if (!function_exists('mysql_connect'))
-		{
+		if (!function_exists('mysql_connect')) {
 			throw new \RuntimeException('Could not connect to MySQL.');
 		}
 
 		// Attempt to connect to the server.
-		if (!($this->connection = @ mysql_connect($this->options['host'], $this->options['user'], $this->options['password'], true)))
-		{
+		if (!($this->connection = @ mysql_connect($this->options['host'], $this->options['user'], $this->options['password'], true))) {
 			throw new \RuntimeException('Could not connect to MySQL.');
 		}
 
@@ -112,8 +109,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		mysql_query("SET @@SESSION.sql_mode = '';", $this->connection);
 
 		// If auto-select is enabled select the given database.
-		if ($this->options['select'] && !empty($this->options['database']))
-		{
+		if ($this->options['select'] && !empty($this->options['database'])) {
 			$this->select($this->options['database']);
 		}
 
@@ -128,8 +124,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 */
 	public function __destruct()
 	{
-		if (is_resource($this->connection))
-		{
+		if (is_resource($this->connection)) {
 			mysql_close($this->connection);
 		}
 	}
@@ -150,8 +145,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 		$result = mysql_real_escape_string($text, $this->getConnection());
 
-		if ($extra)
-		{
+		if ($extra) {
 			$result = addcslashes($result, '%_');
 		}
 
@@ -179,8 +173,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	 */
 	public function connected()
 	{
-		if (is_resource($this->connection))
-		{
+		if (is_resource($this->connection)) {
 			return mysql_ping($this->connection);
 		}
 
@@ -277,8 +270,7 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 
 		// Sanitize input to an array and iterate over the list.
 		settype($tables, 'array');
-		foreach ($tables as $table)
-		{
+		foreach ($tables as $table) {
 			// Set the query to get the table CREATE statement.
 			$this->setQuery('SHOW CREATE table ' . $this->quoteName($this->escape($table)));
 			$row = $this->loadRow();
@@ -312,18 +304,14 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		$fields = $this->loadObjectList();
 
 		// If we only want the type as the value add just that to the list.
-		if ($typeOnly)
-		{
-			foreach ($fields as $field)
-			{
+		if ($typeOnly) {
+			foreach ($fields as $field) {
 				$result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 			}
 		}
 		// If we want the whole field data object add that to the list.
-		else
-		{
-			foreach ($fields as $field)
-			{
+		else {
+			foreach ($fields as $field) {
 				$result[$field->Field] = $field;
 			}
 		}
@@ -428,22 +416,19 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	{
 		$this->connect();
 
-		if (!is_resource($this->connection))
-		{
+		if (!is_resource($this->connection)) {
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
 			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
-		$sql = $this->replacePrefix((string) $this->sql);
-		if ($this->limit > 0 || $this->offset > 0)
-		{
+		$sql = $this->replacePrefix((string)$this->sql);
+		if ($this->limit > 0 || $this->offset > 0) {
 			$sql .= ' LIMIT ' . $this->offset . ', ' . $this->limit;
 		}
 
 		// If debugging is enabled then let's log the query.
-		if ($this->debug)
-		{
+		if ($this->debug) {
 			// Increment the query counter and add the query to the object queue.
 			$this->count++;
 			$this->log[] = $sql;
@@ -459,23 +444,19 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 		$this->cursor = @mysql_query($sql, $this->connection);
 
 		// If an error occurred handle it.
-		if (!$this->cursor)
-		{
+		if (!$this->cursor) {
 			// Check if the server was disconnected.
-			if (!$this->connected())
-			{
-				try
-				{
+			if (!$this->connected()) {
+				try {
 					// Attempt to reconnect.
 					$this->connection = null;
 					$this->connect();
 				}
-				// If connect fails, ignore that exception and throw the normal exception.
-				catch (\RuntimeException $e)
-				{
+					// If connect fails, ignore that exception and throw the normal exception.
+				catch (\RuntimeException $e) {
 					// Get the error number and message.
-					$this->errorNum = (int) mysql_errno($this->connection);
-					$this->errorMsg = (string) mysql_error($this->connection) . ' SQL=' . $sql;
+					$this->errorNum = (int)mysql_errno($this->connection);
+					$this->errorMsg = (string)mysql_error($this->connection) . ' SQL=' . $sql;
 
 					// Throw the normal query exception.
 					JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
@@ -486,11 +467,10 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 				return $this->execute();
 			}
 			// The server was not disconnected.
-			else
-			{
+			else {
 				// Get the error number and message.
-				$this->errorNum = (int) mysql_errno($this->connection);
-				$this->errorMsg = (string) mysql_error($this->connection) . ' SQL=' . $sql;
+				$this->errorNum = (int)mysql_errno($this->connection);
+				$this->errorMsg = (string)mysql_error($this->connection) . ' SQL=' . $sql;
 
 				// Throw the normal query exception.
 				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
@@ -535,13 +515,11 @@ class JDatabaseDriverMysql extends JDatabaseDriver
 	{
 		$this->connect();
 
-		if (!$database)
-		{
+		if (!$database) {
 			return false;
 		}
 
-		if (!mysql_select_db($database, $this->connection))
-		{
+		if (!mysql_select_db($database, $this->connection)) {
 			throw new \RuntimeException('Could not connect to database');
 		}
 

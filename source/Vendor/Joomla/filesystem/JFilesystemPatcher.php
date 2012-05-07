@@ -101,8 +101,7 @@ class JFilesystemPatcher
 	 */
 	public static function getInstance()
 	{
-		if (!isset(static::$instance))
-		{
+		if (!isset(static::$instance)) {
 			static::$instance = new static;
 		}
 		return static::$instance;
@@ -131,30 +130,25 @@ class JFilesystemPatcher
 	 */
 	public function apply()
 	{
-		foreach ($this->patches as $patch)
-		{
+		foreach ($this->patches as $patch) {
 			// Separate the input into lines
 			$lines = self::splitLines($patch['udiff']);
 
 			// Loop for each header
-			while (self::findHeader($lines, $src, $dst))
-			{
+			while (self::findHeader($lines, $src, $dst)) {
 				$done = false;
 
-				if ($patch['strip'] === null)
-				{
+				if ($patch['strip'] === null) {
 					$src = $patch['root'] . preg_replace('#^([^/]*/)*#', '', $src);
 					$dst = $patch['root'] . preg_replace('#^([^/]*/)*#', '', $dst);
 				}
-				else
-				{
-					$src = $patch['root'] . preg_replace('#^([^/]*/){' . (int) $patch['strip'] . '}#', '', $src);
-					$dst = $patch['root'] . preg_replace('#^([^/]*/){' . (int) $patch['strip'] . '}#', '', $dst);
+				else {
+					$src = $patch['root'] . preg_replace('#^([^/]*/){' . (int)$patch['strip'] . '}#', '', $src);
+					$dst = $patch['root'] . preg_replace('#^([^/]*/){' . (int)$patch['strip'] . '}#', '', $dst);
 				}
 
 				// Loop for each hunk of differences
-				while (self::findHunk($lines, $src_line, $src_size, $dst_line, $dst_size))
-				{
+				while (self::findHunk($lines, $src_line, $src_size, $dst_line, $dst_size)) {
 					$done = true;
 
 					// Apply the hunk of differences
@@ -162,8 +156,7 @@ class JFilesystemPatcher
 				}
 
 				// If no modifications were found, throw an exception
-				if (!$done)
-				{
+				if (!$done) {
 					throw new \RuntimeException('Invalid Diff');
 				}
 			}
@@ -173,12 +166,9 @@ class JFilesystemPatcher
 		$done = 0;
 
 		// Patch each destination file
-		foreach ($this->destinations as $file => $content)
-		{
-			if (JFile::write($file, implode("\n", $content)))
-			{
-				if (isset($this->sources[$file]))
-				{
+		foreach ($this->destinations as $file => $content) {
+			if (JFile::write($file, implode("\n", $content))) {
+				if (isset($this->sources[$file])) {
 					$this->sources[$file] = $content;
 				}
 				$done++;
@@ -186,12 +176,9 @@ class JFilesystemPatcher
 		}
 
 		// Remove each removed file
-		foreach ($this->removals as $file)
-		{
-			if (JFile::delete($file))
-			{
-				if (isset($this->sources[$file]))
-				{
+		foreach ($this->removals as $file) {
+			if (JFile::delete($file)) {
+				if (isset($this->sources[$file])) {
 					unset($this->sources[$file]);
 				}
 				$done++;
@@ -216,7 +203,7 @@ class JFilesystemPatcher
 	 * @param   string  $root      The files root path
 	 * @param   string  $strip     The number of '/' to strip
 	 *
-	 * @return	JFilesystemPatch $this for chaining
+	 * @return    JFilesystemPatch $this for chaining
 	 *
 	 * @since   12.1
 	 */
@@ -232,7 +219,7 @@ class JFilesystemPatcher
 	 * @param   string  $root   The files root path
 	 * @param   string  $strip  The number of '/' to strip
 	 *
-	 * @return	JFilesystemPatch $this for chaining
+	 * @return    JFilesystemPatch $this for chaining
 	 *
 	 * @since   12.1
 	 */
@@ -279,30 +266,25 @@ class JFilesystemPatcher
 		$line = current($lines);
 
 		// Search for the header
-		while ($line !== false && !preg_match(self::SRC_FILE, $line, $m))
-		{
+		while ($line !== false && !preg_match(self::SRC_FILE, $line, $m)) {
 			$line = next($lines);
 		}
-		if ($line === false)
-		{
+		if ($line === false) {
 			// No header found, return false
 			return false;
 		}
-		else
-		{
+		else {
 			// Set the source file
 			$src = $m[1];
 
 			// Advance to the next line
 			$line = next($lines);
-			if ($line === false)
-			{
+			if ($line === false) {
 				throw new \RuntimeException('Unexpected EOF');
 			}
 
 			// Search the destination file
-			if (!preg_match(self::DST_FILE, $line, $m))
-			{
+			if (!preg_match(self::DST_FILE, $line, $m)) {
 				throw new \RuntimeException('Invalid Diff file');
 			}
 
@@ -310,8 +292,7 @@ class JFilesystemPatcher
 			$dst = $m[1];
 
 			// Advance to the next line
-			if (next($lines) === false)
-			{
+			if (next($lines) === false) {
 				throw new \RuntimeException('Unexpected EOF');
 			}
 			return true;
@@ -336,37 +317,30 @@ class JFilesystemPatcher
 	protected static function findHunk(&$lines, &$src_line, &$src_size, &$dst_line, &$dst_size)
 	{
 		$line = current($lines);
-		if (preg_match(self::HUNK, $line, $m))
-		{
-			$src_line = (int) $m[1];
-			if ($m[3] === '')
-			{
+		if (preg_match(self::HUNK, $line, $m)) {
+			$src_line = (int)$m[1];
+			if ($m[3] === '') {
 				$src_size = 1;
 			}
-			else
-			{
-				$src_size = (int) $m[3];
+			else {
+				$src_size = (int)$m[3];
 			}
 
-			$dst_line = (int) $m[4];
-			if ($m[6] === '')
-			{
+			$dst_line = (int)$m[4];
+			if ($m[6] === '') {
 				$dst_size = 1;
 			}
-			else
-			{
-				$dst_size = (int) $m[6];
+			else {
+				$dst_size = (int)$m[6];
 			}
 
-			if (next($lines) === false)
-			{
+			if (next($lines) === false) {
 				throw new \RuntimeException('Unexpected EOF');
 			}
 
 			return true;
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}
@@ -399,76 +373,60 @@ class JFilesystemPatcher
 		$destin = array();
 		$src_left = $src_size;
 		$dst_left = $dst_size;
-		do
-		{
-			if (!isset($line[0]))
-			{
+		do {
+			if (!isset($line[0])) {
 				$source[] = '';
 				$destin[] = '';
 				$src_left--;
 				$dst_left--;
 			}
-			elseif ($line[0] == '-')
-			{
-				if ($src_left == 0)
-				{
+			elseif ($line[0] == '-') {
+				if ($src_left == 0) {
 					throw new \RuntimeException(JText::sprintf('JLIB_FILESYSTEM_PATCHER_REMOVE_LINE', key($lines)));
 				}
 				$source[] = substr($line, 1);
 				$src_left--;
 			}
-			elseif ($line[0] == '+')
-			{
-				if ($dst_left == 0)
-				{
+			elseif ($line[0] == '+') {
+				if ($dst_left == 0) {
 					throw new \RuntimeException(JText::sprintf('JLIB_FILESYSTEM_PATCHER_ADD_LINE', key($lines)));
 				}
 				$destin[] = substr($line, 1);
 				$dst_left--;
 			}
-			elseif ($line != '\\ No newline at end of file')
-			{
+			elseif ($line != '\\ No newline at end of file') {
 				$line = substr($line, 1);
 				$source[] = $line;
 				$destin[] = $line;
 				$src_left--;
 				$dst_left--;
 			}
-			if ($src_left == 0 && $dst_left == 0)
-			{
+			if ($src_left == 0 && $dst_left == 0) {
 
 				// Now apply the patch, finally!
-				if ($src_size > 0)
-				{
+				if ($src_size > 0) {
 					$src_lines = & $this->getSource($src);
-					if (!isset($src_lines))
-					{
+					if (!isset($src_lines)) {
 						throw new \RuntimeException(JText::sprintf('JLIB_FILESYSTEM_PATCHER_UNEXISING_SOURCE', $src));
 					}
 				}
-				if ($dst_size > 0)
-				{
-					if ($src_size > 0)
-					{
+				if ($dst_size > 0) {
+					if ($src_size > 0) {
 						$dst_lines = & $this->getDestination($dst, $src);
 						$src_bottom = $src_line + count($source);
 						$dst_bottom = $dst_line + count($destin);
-						for ($l = $src_line;$l < $src_bottom;$l++)
-						{
-							if ($src_lines[$l] != $source[$l - $src_line])
-							{
+						for ($l = $src_line; $l < $src_bottom; $l++) {
+							if ($src_lines[$l] != $source[$l - $src_line]) {
 								throw new \RuntimeException(JText::sprintf('JLIB_FILESYSTEM_PATCHER_FAILED_VERIFY', $src, $l));
 							}
 						}
 						array_splice($dst_lines, $dst_line, count($source), $destin);
 					}
-					else
-					{
+					else {
 						$this->destinations[$dst] = $destin;
 					}
 				}
-				else
-				{
+				else {
 					$this->removals[] = $src;
 				}
 				next($lines);
@@ -491,14 +449,11 @@ class JFilesystemPatcher
 	 */
 	protected function &getSource($src)
 	{
-		if (!isset($this->sources[$src]))
-		{
-			if (is_readable($src))
-			{
+		if (!isset($this->sources[$src])) {
+			if (is_readable($src)) {
 				$this->sources[$src] = self::splitLines(file_get_contents($src));
 			}
-			else
-			{
+			else {
 				$this->sources[$src] = null;
 			}
 		}
@@ -517,8 +472,7 @@ class JFilesystemPatcher
 	 */
 	protected function &getDestination($dst, $src)
 	{
-		if (!isset($this->destinations[$dst]))
-		{
+		if (!isset($this->destinations[$dst])) {
 			$this->destinations[$dst] = $this->getSource($src);
 		}
 		return $this->destinations[$dst];

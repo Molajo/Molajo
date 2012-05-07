@@ -321,8 +321,11 @@ Class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function loadLanguage($path)
+	public function loadLanguage($path = null)
 	{
+		if ($path == null) {
+			$path = Services::Registry()->get('Extension', 'path');
+		}
 		$path .= '/language';
 
 		if (Services::Filesystem()->folderExists($path)) {

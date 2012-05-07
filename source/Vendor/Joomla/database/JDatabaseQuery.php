@@ -71,12 +71,10 @@ class JDatabaseQueryElement
 	 */
 	public function __toString()
 	{
-		if (substr($this->name, -2) == '()')
-		{
+		if (substr($this->name, -2) == '()') {
 			return PHP_EOL . substr($this->name, 0, -2) . '(' . implode($this->glue, $this->elements) . ')';
 		}
-		else
-		{
+		else {
 			return PHP_EOL . $this->name . ' ' . implode($this->glue, $this->elements);
 		}
 	}
@@ -92,12 +90,10 @@ class JDatabaseQueryElement
 	 */
 	public function append($elements)
 	{
-		if (is_array($elements))
-		{
+		if (is_array($elements)) {
 			$this->elements = array_merge($this->elements, $elements);
 		}
-		else
-		{
+		else {
 			$this->elements = array_merge($this->elements, array($elements));
 		}
 	}
@@ -124,10 +120,8 @@ class JDatabaseQueryElement
 	 */
 	public function __clone()
 	{
-		foreach ($this as $k => $v)
-		{
-			if (is_object($v) || is_array($v))
-			{
+		foreach ($this as $k => $v) {
+			if (is_object($v) || is_array($v)) {
 				$this->{$k} = unserialize(serialize($v));
 			}
 		}
@@ -285,13 +279,11 @@ abstract class JDatabaseQuery
 	 */
 	public function __call($method, $args)
 	{
-		if (empty($args))
-		{
+		if (empty($args)) {
 			return;
 		}
 
-		switch ($method)
-		{
+		switch ($method) {
 			case 'q':
 				return $this->quote($args[0], isset($args[1]) ? $args[1] : true);
 				break;
@@ -321,7 +313,7 @@ abstract class JDatabaseQuery
 	/**
 	 * Magic function to convert the query to a string.
 	 *
-	 * @return  string	The completed query.
+	 * @return  string    The completed query.
 	 *
 	 * @since   11.1
 	 */
@@ -329,134 +321,115 @@ abstract class JDatabaseQuery
 	{
 		$query = '';
 
-		if ($this->sql)
-		{
+		if ($this->sql) {
 			return $this->sql;
 		}
 
-		switch ($this->type)
-		{
+		switch ($this->type) {
 			case 'element':
-				$query .= (string) $this->element;
+				$query .= (string)$this->element;
 				break;
 
 			case 'select':
-				$query .= (string) $this->select;
-				$query .= (string) $this->from;
-				if ($this->join)
-				{
+				$query .= (string)$this->select;
+				$query .= (string)$this->from;
+				if ($this->join) {
 					// Special case for joins
-					foreach ($this->join as $join)
-					{
-						$query .= (string) $join;
+					foreach ($this->join as $join) {
+						$query .= (string)$join;
 					}
 				}
 
-				if ($this->where)
-				{
-					$query .= (string) $this->where;
+				if ($this->where) {
+					$query .= (string)$this->where;
 				}
 
-				if ($this->group)
-				{
-					$query .= (string) $this->group;
+				if ($this->group) {
+					$query .= (string)$this->group;
 				}
 
-				if ($this->having)
-				{
-					$query .= (string) $this->having;
+				if ($this->having) {
+					$query .= (string)$this->having;
 				}
 
-				if ($this->order)
-				{
-					$query .= (string) $this->order;
+				if ($this->order) {
+					$query .= (string)$this->order;
 				}
 
 				break;
 
 			case 'union':
-				$query .= (string) $this->union;
+				$query .= (string)$this->union;
 				break;
 
 			case 'delete':
-				$query .= (string) $this->delete;
-				$query .= (string) $this->from;
+				$query .= (string)$this->delete;
+				$query .= (string)$this->from;
 
-				if ($this->join)
-				{
+				if ($this->join) {
 					// Special case for joins
-					foreach ($this->join as $join)
-					{
-						$query .= (string) $join;
+					foreach ($this->join as $join) {
+						$query .= (string)$join;
 					}
 				}
 
-				if ($this->where)
-				{
-					$query .= (string) $this->where;
+				if ($this->where) {
+					$query .= (string)$this->where;
 				}
 
 				break;
 
 			case 'update':
-				$query .= (string) $this->update;
+				$query .= (string)$this->update;
 
-				if ($this->join)
-				{
+				if ($this->join) {
 					// Special case for joins
-					foreach ($this->join as $join)
-					{
-						$query .= (string) $join;
+					foreach ($this->join as $join) {
+						$query .= (string)$join;
 					}
 				}
 
-				$query .= (string) $this->set;
+				$query .= (string)$this->set;
 
-				if ($this->where)
-				{
-					$query .= (string) $this->where;
+				if ($this->where) {
+					$query .= (string)$this->where;
 				}
 
 				break;
 
 			case 'insert':
-				$query .= (string) $this->insert;
+				$query .= (string)$this->insert;
 
 				// Set method
-				if ($this->set)
-				{
-					$query .= (string) $this->set;
+				if ($this->set) {
+					$query .= (string)$this->set;
 				}
 				// Columns-Values method
-				elseif ($this->values)
-				{
-					if ($this->columns)
-					{
-						$query .= (string) $this->columns;
+				elseif ($this->values) {
+					if ($this->columns) {
+						$query .= (string)$this->columns;
 					}
 
 					$elements = $this->values->getElements();
-					if (!($elements[0] instanceof $this))
-					{
+					if (!($elements[0] instanceof $this)) {
 						$query .= ' VALUES ';
 					}
 
-					$query .= (string) $this->values;
+					$query .= (string)$this->values;
 				}
 
 				break;
 
 			case 'call':
-				$query .= (string) $this->call;
+				$query .= (string)$this->call;
 				break;
 
 			case 'exec':
-				$query .= (string) $this->exec;
+				$query .= (string)$this->exec;
 				break;
 		}
 
-		if ($this instanceof JDatabaseQueryLimitable)
-		{
+		if ($this instanceof JDatabaseQueryLimitable) {
 			$query = $this->processLimit($query, $this->limit, $this->offset);
 		}
 
@@ -497,12 +470,10 @@ abstract class JDatabaseQuery
 	{
 		$this->type = 'call';
 
-		if (is_null($this->call))
-		{
+		if (is_null($this->call)) {
 			$this->call = new JDatabaseQueryElement('CALL', $columns);
 		}
-		else
-		{
+		else {
 			$this->call->append($columns);
 		}
 
@@ -562,8 +533,7 @@ abstract class JDatabaseQuery
 	{
 		$this->sql = null;
 
-		switch ($clause)
-		{
+		switch ($clause) {
 			case 'select':
 				$this->select = null;
 				$this->type = null;
@@ -678,12 +648,10 @@ abstract class JDatabaseQuery
 	 */
 	public function columns($columns)
 	{
-		if (is_null($this->columns))
-		{
+		if (is_null($this->columns)) {
 			$this->columns = new JDatabaseQueryElement('()', $columns);
 		}
-		else
-		{
+		else {
 			$this->columns->append($columns);
 		}
 
@@ -705,12 +673,10 @@ abstract class JDatabaseQuery
 	 */
 	public function concatenate($values, $separator = null)
 	{
-		if ($separator)
-		{
+		if ($separator) {
 			return 'CONCATENATE(' . implode(' || ' . $this->quote($separator) . ' || ', $values) . ')';
 		}
-		else
-		{
+		else {
 			return 'CONCATENATE(' . implode(' || ', $values) . ')';
 		}
 	}
@@ -742,8 +708,7 @@ abstract class JDatabaseQuery
 	 */
 	public function dateFormat()
 	{
-		if (!($this->db instanceof JDatabaseDriver))
-		{
+		if (!($this->db instanceof JDatabaseDriver)) {
 			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
@@ -784,8 +749,7 @@ abstract class JDatabaseQuery
 		$this->type = 'delete';
 		$this->delete = new JDatabaseQueryElement('DELETE', null);
 
-		if (!empty($table))
-		{
+		if (!empty($table)) {
 			$this->from($table);
 		}
 
@@ -810,8 +774,7 @@ abstract class JDatabaseQuery
 	 */
 	public function escape($text, $extra = false)
 	{
-		if (!($this->db instanceof JDatabaseDriver))
-		{
+		if (!($this->db instanceof JDatabaseDriver)) {
 			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
@@ -838,12 +801,10 @@ abstract class JDatabaseQuery
 	{
 		$this->type = 'exec';
 
-		if (is_null($this->exec))
-		{
+		if (is_null($this->exec)) {
 			$this->exec = new JDatabaseQueryElement('EXEC', $columns);
 		}
-		else
-		{
+		else {
 			$this->exec->append($columns);
 		}
 
@@ -859,8 +820,8 @@ abstract class JDatabaseQuery
 	 * $query->select('*')->from('#__a');
 	 *
 	 * @param   mixed   $tables         A string or array of table names.
-	 * 									It could be a JDatabaseQuery object (or a child of it) to use
-	 * 									a subquery in FROM clause.
+	 *                                     It could be a JDatabaseQuery object (or a child of it) to use
+	 *                                     a subquery in FROM clause.
 	 * @param   string  $subQueryAlias  Alias used when $tables is a JDatabaseQuery.
 	 *
 	 * @return  JDatabaseQuery  Returns this object to allow chaining.
@@ -869,22 +830,18 @@ abstract class JDatabaseQuery
 	 */
 	public function from($tables, $subQueryAlias = null)
 	{
-		if (is_null($this->from))
-		{
-			if ($tables instanceof $this)
-			{
-				if (is_null($subQueryAlias))
-				{
+		if (is_null($this->from)) {
+			if ($tables instanceof $this) {
+				if (is_null($subQueryAlias)) {
 					throw new \RuntimeException('JLIB_DATABASE_ERROR_NULL_SUBQUERY_ALIAS');
 				}
 
-				$tables = '( ' . (string) $tables . ' ) AS ' . $this->quoteName($subQueryAlias);
+				$tables = '( ' . (string)$tables . ' ) AS ' . $this->quoteName($subQueryAlias);
 			}
 
 			$this->from = new JDatabaseQueryElement('FROM', $tables);
 		}
-		else
-		{
+		else {
 			$this->from->append($tables);
 		}
 
@@ -1007,12 +964,10 @@ abstract class JDatabaseQuery
 	 */
 	public function group($columns)
 	{
-		if (is_null($this->group))
-		{
+		if (is_null($this->group)) {
 			$this->group = new JDatabaseQueryElement('GROUP BY', $columns);
 		}
-		else
-		{
+		else {
 			$this->group->append($columns);
 		}
 
@@ -1034,13 +989,11 @@ abstract class JDatabaseQuery
 	 */
 	public function having($conditions, $glue = 'AND')
 	{
-		if (is_null($this->having))
-		{
+		if (is_null($this->having)) {
 			$glue = strtoupper($glue);
 			$this->having = new JDatabaseQueryElement('HAVING', $conditions, " $glue ");
 		}
-		else
-		{
+		else {
 			$this->having->append($conditions);
 		}
 
@@ -1083,7 +1036,7 @@ abstract class JDatabaseQuery
 	 *
 	 * @since   11.1
 	 */
-	public function insert($table, $incrementField=false)
+	public function insert($table, $incrementField = false)
 	{
 		$this->type = 'insert';
 		$this->insert = new JDatabaseQueryElement('INSERT INTO', $table);
@@ -1107,8 +1060,7 @@ abstract class JDatabaseQuery
 	 */
 	public function join($type, $conditions)
 	{
-		if (is_null($this->join))
-		{
+		if (is_null($this->join)) {
 			$this->join = array();
 		}
 		$this->join[] = new JDatabaseQueryElement(strtoupper($type) . ' JOIN', $conditions);
@@ -1171,15 +1123,13 @@ abstract class JDatabaseQuery
 	 */
 	public function nullDate($quoted = true)
 	{
-		if (!($this->db instanceof JDatabaseDriver))
-		{
+		if (!($this->db instanceof JDatabaseDriver)) {
 			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		$result = $this->db->getNullDate($quoted);
 
-		if ($quoted)
-		{
+		if ($quoted) {
 			return $this->db->quote($result);
 		}
 
@@ -1201,12 +1151,10 @@ abstract class JDatabaseQuery
 	 */
 	public function order($columns)
 	{
-		if (is_null($this->order))
-		{
+		if (is_null($this->order)) {
 			$this->order = new JDatabaseQueryElement('ORDER BY', $columns);
 		}
-		else
-		{
+		else {
 			$this->order->append($columns);
 		}
 
@@ -1254,8 +1202,7 @@ abstract class JDatabaseQuery
 	 */
 	public function quote($text, $escape = true)
 	{
-		if (!($this->db instanceof JDatabaseDriver))
-		{
+		if (!($this->db instanceof JDatabaseDriver)) {
 			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
@@ -1287,8 +1234,7 @@ abstract class JDatabaseQuery
 	 */
 	public function quoteName($name, $as = null)
 	{
-		if (!($this->db instanceof JDatabaseDriver))
-		{
+		if (!($this->db instanceof JDatabaseDriver)) {
 			throw new \RuntimeException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
@@ -1334,12 +1280,10 @@ abstract class JDatabaseQuery
 	{
 		$this->type = 'select';
 
-		if (is_null($this->select))
-		{
+		if (is_null($this->select)) {
 			$this->select = new JDatabaseQueryElement('SELECT', $columns);
 		}
-		else
-		{
+		else {
 			$this->select->append($columns);
 		}
 
@@ -1363,13 +1307,11 @@ abstract class JDatabaseQuery
 	 */
 	public function set($conditions, $glue = ',')
 	{
-		if (is_null($this->set))
-		{
+		if (is_null($this->set)) {
 			$glue = strtoupper($glue);
 			$this->set = new JDatabaseQueryElement('SET', $conditions, "\n\t$glue ");
 		}
-		else
-		{
+		else {
 			$this->set->append($conditions);
 		}
 
@@ -1434,12 +1376,10 @@ abstract class JDatabaseQuery
 	 */
 	public function values($values)
 	{
-		if (is_null($this->values))
-		{
+		if (is_null($this->values)) {
 			$this->values = new JDatabaseQueryElement('()', $values, '),(');
 		}
-		else
-		{
+		else {
 			$this->values->append($values);
 		}
 
@@ -1463,13 +1403,11 @@ abstract class JDatabaseQuery
 	 */
 	public function where($conditions, $glue = 'AND')
 	{
-		if (is_null($this->where))
-		{
+		if (is_null($this->where)) {
 			$glue = strtoupper($glue);
 			$this->where = new JDatabaseQueryElement('WHERE', $conditions, " $glue ");
 		}
-		else
-		{
+		else {
 			$this->where->append($conditions);
 		}
 
@@ -1486,10 +1424,8 @@ abstract class JDatabaseQuery
 	 */
 	public function __clone()
 	{
-		foreach ($this as $k => $v)
-		{
-			if (is_object($v) || is_array($v))
-			{
+		foreach ($this as $k => $v) {
+			if (is_object($v) || is_array($v)) {
 				$this->{$k} = unserialize(serialize($v));
 			}
 		}
@@ -1517,31 +1453,26 @@ abstract class JDatabaseQuery
 
 		// Clear any ORDER BY clause in UNION query
 		// See http://dev.mysql.com/doc/refman/5.0/en/union.html
-		if (!is_null($this->order))
-		{
+		if (!is_null($this->order)) {
 			$this->clear('order');
 		}
 
 		// Set up the DISTINCT flag, the name with parentheses, and the glue.
-		if ($distinct)
-		{
+		if ($distinct) {
 			$name = 'UNION DISTINCT ()';
 			$glue = ')' . PHP_EOL . 'UNION DISTINCT (';
 		}
-		else
-		{
+		else {
 			$glue = ')' . PHP_EOL . 'UNION (';
 			$name = 'UNION ()';
 
 		}
 		// Get the JDatabaseQueryElement if it does not exist
-		if (is_null($this->union))
-		{
-				$this->union = new JDatabaseQueryElement($name, $query, "$glue");
+		if (is_null($this->union)) {
+			$this->union = new JDatabaseQueryElement($name, $query, "$glue");
 		}
 		// Otherwise append the second UNION.
-		else
-		{
+		else {
 			$glue = '';
 			$this->union->append($query);
 		}

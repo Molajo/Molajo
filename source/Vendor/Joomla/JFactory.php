@@ -182,8 +182,7 @@ abstract class JFactory
 
 		$cache = self::getCache('feed_parser', 'callback');
 
-		if ($cache_time > 0)
-		{
+		if ($cache_time > 0) {
 			$cache->setLifeTime($cache_time);
 		}
 
@@ -195,12 +194,10 @@ abstract class JFactory
 
 		$contents = $cache->get(array($simplepie, 'init'), null, false, false);
 
-		if ($contents)
-		{
+		if ($contents) {
 			return $simplepie;
 		}
-		else
-		{
+		else {
 			JLog::add(JText::_('JLIB_UTIL_ERROR_LOADING_FEED_DATA'), JLog::WARNING, 'jerror');
 		}
 
@@ -275,32 +272,27 @@ abstract class JFactory
 		$language = self::getLanguage();
 		$locale = $language->getTag();
 
-		if (!isset($classname) || $locale != $mainLocale)
-		{
+		if (!isset($classname) || $locale != $mainLocale) {
 			// Store the locale for future reference
 			$mainLocale = $locale;
 
-			if ($mainLocale !== false)
-			{
+			if ($mainLocale !== false) {
 				$classname = str_replace('-', '_', $mainLocale) . 'Date';
 
-				if (!class_exists($classname))
-				{
+				if (!class_exists($classname)) {
 					// The class does not exist, default to JDate
 					$classname = 'JDate';
 				}
 			}
-			else
-			{
+			else {
 				// No tag, so default to JDate
 				$classname = 'JDate';
 			}
 		}
 
-		$key = $time . '-' . ($tzOffset instanceof DateTimeZone ? $tzOffset->getName() : (string) $tzOffset);
+		$key = $time . '-' . ($tzOffset instanceof DateTimeZone ? $tzOffset->getName() : (string)$tzOffset);
 
-		if (!isset(self::$dates[$classname][$key]))
-		{
+		if (!isset(self::$dates[$classname][$key])) {
 			self::$dates[$classname][$key] = new $classname($time, $tzOffset);
 		}
 
@@ -332,32 +324,27 @@ abstract class JFactory
 		$context['http']['user_agent'] = $version->getUserAgent($ua, $uamask);
 		$context['ftp']['overwrite'] = true;
 
-		if ($use_prefix)
-		{
+		if ($use_prefix) {
 			$FTPOptions = JClientHelper::getCredentials('ftp');
 			$SCPOptions = JClientHelper::getCredentials('scp');
 
-			if ($FTPOptions['enabled'] == 1 && $use_network)
-			{
+			if ($FTPOptions['enabled'] == 1 && $use_network) {
 				$prefix = 'ftp://' . $FTPOptions['user'] . ':' . $FTPOptions['pass'] . '@' . $FTPOptions['host'];
 				$prefix .= $FTPOptions['port'] ? ':' . $FTPOptions['port'] : '';
 				$prefix .= $FTPOptions['root'];
 			}
-			elseif ($SCPOptions['enabled'] == 1 && $use_network)
-			{
+			elseif ($SCPOptions['enabled'] == 1 && $use_network) {
 				$prefix = 'ssh2.sftp://' . $SCPOptions['user'] . ':' . $SCPOptions['pass'] . '@' . $SCPOptions['host'];
 				$prefix .= $SCPOptions['port'] ? ':' . $SCPOptions['port'] : '';
 				$prefix .= $SCPOptions['root'];
 			}
-			else
-			{
+			else {
 				$prefix = JPATH_ROOT . '/';
 			}
 
 			$retval = new JStream($prefix, JPATH_ROOT, $context);
 		}
-		else
-		{
+		else {
 			$retval = new JStream('', '', $context);
 		}
 

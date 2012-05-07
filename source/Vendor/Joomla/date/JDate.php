@@ -91,21 +91,17 @@ class JDate extends \DateTime
 	public function __construct($date = 'now', $tz = null)
 	{
 		// Create the base GMT and server time zone objects.
-		if (empty(self::$gmt) || empty(self::$stz))
-		{
+		if (empty(self::$gmt) || empty(self::$stz)) {
 			self::$gmt = new \DateTimeZone('GMT');
 			self::$stz = new \DateTimeZone(@date_default_timezone_get());
 		}
 
 		// If the time zone object is not set, attempt to build it.
-		if (!($tz instanceof \DateTimeZone))
-		{
-			if ($tz === null)
-			{
+		if (!($tz instanceof \DateTimeZone)) {
+			if ($tz === null) {
 				$tz = self::$gmt;
 			}
-			elseif (is_string($tz))
-			{
+			elseif (is_string($tz)) {
 				$tz = new \DateTimeZone($tz);
 			}
 		}
@@ -137,8 +133,7 @@ class JDate extends \DateTime
 	{
 		$value = null;
 
-		switch ($name)
-		{
+		switch ($name) {
 			case 'daysinmonth':
 				$value = $this->format('t', true);
 				break;
@@ -152,7 +147,7 @@ class JDate extends \DateTime
 				break;
 
 			case 'isleapyear':
-				$value = (boolean) $this->format('L', true);
+				$value = (boolean)$this->format('L', true);
 				break;
 
 			case 'day':
@@ -208,7 +203,7 @@ class JDate extends \DateTime
 	 */
 	public function __toString()
 	{
-		return (string) parent::format(self::$format);
+		return (string)parent::format(self::$format);
 	}
 
 	/**
@@ -238,8 +233,7 @@ class JDate extends \DateTime
 	 */
 	public function dayToString($day, $abbr = false)
 	{
-		switch ($day)
-		{
+		switch ($day) {
 			case 0:
 				return $abbr ? JText::_('SUN') : JText::_('SUNDAY');
 			case 1:
@@ -286,8 +280,7 @@ class JDate extends \DateTime
 	 */
 	public function format($format, $local = false, $translate = true)
 	{
-		if ($translate)
-		{
+		if ($translate) {
 			// Do string replacements for date format options that can be translated.
 			$format = preg_replace('/(^|[^\\\])D/', "\\1" . self::DAY_ABBR, $format);
 			$format = preg_replace('/(^|[^\\\])l/', "\\1" . self::DAY_NAME, $format);
@@ -296,40 +289,33 @@ class JDate extends \DateTime
 		}
 
 		// If the returned time should not be local use GMT.
-		if ($local == false)
-		{
+		if ($local == false) {
 			parent::setTimezone(self::$gmt);
 		}
 
 		// Format the date.
 		$return = parent::format($format);
 
-		if ($translate)
-		{
+		if ($translate) {
 			// Manually modify the month and day strings in the formatted time.
-			if (strpos($return, self::DAY_ABBR) !== false)
-			{
+			if (strpos($return, self::DAY_ABBR) !== false) {
 				$return = str_replace(self::DAY_ABBR, $this->dayToString(parent::format('w'), true), $return);
 			}
 
-			if (strpos($return, self::DAY_NAME) !== false)
-			{
+			if (strpos($return, self::DAY_NAME) !== false) {
 				$return = str_replace(self::DAY_NAME, $this->dayToString(parent::format('w')), $return);
 			}
 
-			if (strpos($return, self::MONTH_ABBR) !== false)
-			{
+			if (strpos($return, self::MONTH_ABBR) !== false) {
 				$return = str_replace(self::MONTH_ABBR, $this->monthToString(parent::format('n'), true), $return);
 			}
 
-			if (strpos($return, self::MONTH_NAME) !== false)
-			{
+			if (strpos($return, self::MONTH_NAME) !== false) {
 				$return = str_replace(self::MONTH_NAME, $this->monthToString(parent::format('n')), $return);
 			}
 		}
 
-		if ($local == false)
-		{
+		if ($local == false) {
 			parent::setTimezone($this->tz);
 		}
 
@@ -347,7 +333,7 @@ class JDate extends \DateTime
 	 */
 	public function getOffsetFromGMT($hours = false)
 	{
-		return (float) $hours ? ($this->tz->getOffset($this) / 3600) : $this->tz->getOffset($this);
+		return (float)$hours ? ($this->tz->getOffset($this) / 3600) : $this->tz->getOffset($this);
 	}
 
 	/**
@@ -362,8 +348,7 @@ class JDate extends \DateTime
 	 */
 	public function monthToString($month, $abbr = false)
 	{
-		switch ($month)
-		{
+		switch ($month) {
 			case 1:
 				return $abbr ? JText::_('JANUARY_SHORT') : JText::_('JANUARY');
 			case 2:
@@ -435,8 +420,7 @@ class JDate extends \DateTime
 	 */
 	public function toSql($local = false, JDatabaseDriver $dbo = null)
 	{
-		if ($dbo === null)
-		{
+		if ($dbo === null) {
 			$dbo = JFactory::getDbo();
 		}
 		return $this->format($dbo->getDateFormat(), $local, false);
@@ -467,6 +451,6 @@ class JDate extends \DateTime
 	 */
 	public function toUnix()
 	{
-		return (int) parent::format('U');
+		return (int)parent::format('U');
 	}
 }

@@ -395,7 +395,7 @@ Class RegistryService
 					$set = $default;
 				}
 				/** Filter Input and Save the Registry */
-		//$set = $this->filterInput($name, $set, $dataType);
+				//$set = $this->filterInput($name, $set, $dataType);
 				$nsArray[$name] = $set;
 				$this->registry[$namespace] = $nsArray;
 			}

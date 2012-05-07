@@ -52,8 +52,7 @@ abstract class JCryptCipherMcrypt implements JCryptCipher
 	 */
 	public function __construct()
 	{
-		if (!is_callable('mcrypt_encrypt'))
-		{
+		if (!is_callable('mcrypt_encrypt')) {
 			throw new \RuntimeException('The mcrypt extension is not available.');
 		}
 	}
@@ -71,8 +70,7 @@ abstract class JCryptCipherMcrypt implements JCryptCipher
 	public function decrypt($data, JCryptKey $key)
 	{
 		// Validate key.
-		if ($key->type != $this->keyType)
-		{
+		if ($key->type != $this->keyType) {
 			throw new \InvalidArgumentException('Invalid key of type: ' . $key->type . '.  Expected ' . $this->keyType . '.');
 		}
 
@@ -95,8 +93,7 @@ abstract class JCryptCipherMcrypt implements JCryptCipher
 	public function encrypt($data, JCryptKey $key)
 	{
 		// Validate key.
-		if ($key->type != $this->keyType)
-		{
+		if ($key->type != $this->keyType) {
 			throw new \InvalidArgumentException('Invalid key of type: ' . $key->type . '.  Expected ' . $this->keyType . '.');
 		}
 
@@ -160,14 +157,12 @@ abstract class JCryptCipherMcrypt implements JCryptCipher
 		$dk = '';
 
 		// Create the key.
-		for ($block = 1; $block <= $kb; $block++)
-		{
+		for ($block = 1; $block <= $kb; $block++) {
 			// Initial hash for this block.
 			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
 
 			// Perform block iterations.
-			for ($i = 1; $i < $c; $i++)
-			{
+			for ($i = 1; $i < $c; $i++) {
 				$ib ^= ($b = hash_hmac($a, $b, $p, true));
 			}
 

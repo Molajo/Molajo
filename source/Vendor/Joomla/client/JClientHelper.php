@@ -46,14 +46,12 @@ class JClientHelper
 
 		$client = strtolower($client);
 
-		if (!isset($credentials[$client]) || $force)
-		{
+		if (!isset($credentials[$client]) || $force) {
 			// Initialise variables.
 			$config = JFactory::getConfig();
-var_dump($config);
+			var_dump($config);
 			// Fetch the client layer configuration options for the specific client
-			switch ($client)
-			{
+			switch ($client) {
 				case 'ftp':
 					$options = array(
 						'enabled' => $config->get('ftp_enable'),
@@ -70,16 +68,14 @@ var_dump($config);
 			}
 
 			// If user and pass are not set in global config lets see if they are in the session
-			if ($options['enabled'] == true && ($options['user'] == '' || $options['pass'] == ''))
-			{
+			if ($options['enabled'] == true && ($options['user'] == '' || $options['pass'] == '')) {
 				$session = JFactory::getSession();
 				$options['user'] = $session->get($client . '.user', null, 'JClientHelper');
 				$options['pass'] = $session->get($client . '.pass', null, 'JClientHelper');
 			}
 
 			// If user or pass are missing, disable this client
-			if ($options['user'] == '' || $options['pass'] == '')
-			{
+			if ($options['user'] == '' || $options['pass'] == '') {
 				$options['enabled'] = false;
 			}
 
@@ -107,21 +103,17 @@ var_dump($config);
 		$client = strtolower($client);
 
 		// Test if the given credentials are valid
-		switch ($client)
-		{
+		switch ($client) {
 			case 'ftp':
 				$config = JFactory::getConfig();
 				$options = array('enabled' => $config->get('ftp_enable'), 'host' => $config->get('ftp_host'), 'port' => $config->get('ftp_port'));
 
-				if ($options['enabled'])
-				{
+				if ($options['enabled']) {
 					$ftp = JClientFtp::getInstance($options['host'], $options['port']);
 
 					// Test the connection and try to log in
-					if ($ftp->isConnected())
-					{
-						if ($ftp->login($user, $pass))
-						{
+					if ($ftp->isConnected()) {
+						if ($ftp->login($user, $pass)) {
 							$return = true;
 						}
 						$ftp->quit();
@@ -133,8 +125,7 @@ var_dump($config);
 				break;
 		}
 
-		if ($return)
-		{
+		if ($return) {
 			// Save valid credentials to the session
 			$session = JFactory::getSession();
 			$session->set($client . '.user', $user, 'JClientHelper');
@@ -162,8 +153,7 @@ var_dump($config);
 		$client = strtolower($client);
 
 		// Get (unmodified) credentials for this client
-		switch ($client)
-		{
+		switch ($client) {
 			case 'ftp':
 				$config = JFactory::getConfig();
 				$options = array('enabled' => $config->get('ftp_enable'), 'user' => $config->get('ftp_user'), 'pass' => $config->get('ftp_pass'));
@@ -174,24 +164,20 @@ var_dump($config);
 				break;
 		}
 
-		if ($options['enabled'] == false)
-		{
+		if ($options['enabled'] == false) {
 			// The client is disabled in global config, so let's pretend we are OK
 			$return = true;
 		}
-		elseif ($options['user'] != '' && $options['pass'] != '')
-		{
+		elseif ($options['user'] != '' && $options['pass'] != '') {
 			// Login credentials are available in global config
 			$return = true;
 		}
-		else
-		{
+		else {
 			// Check if login credentials are available in the session
 			$session = JFactory::getSession();
 			$user = $session->get($client . '.user', null, 'JClientHelper');
 			$pass = $session->get($client . '.pass', null, 'JClientHelper');
-			if ($user != '' && $pass != '')
-			{
+			if ($user != '' && $pass != '') {
 				$return = true;
 			}
 		}
@@ -218,27 +204,21 @@ var_dump($config);
 		// Determine whether FTP credentials have been passed along with the current request
 		$user = JRequest::getString('username', null, 'POST', JREQUEST_ALLOWRAW);
 		$pass = JRequest::getString('password', null, 'POST', JREQUEST_ALLOWRAW);
-		if ($user != '' && $pass != '')
-		{
+		if ($user != '' && $pass != '') {
 			// Add credentials to the session
-			if (self::setCredentials($client, $user, $pass))
-			{
+			if (self::setCredentials($client, $user, $pass)) {
 				$return = false;
 			}
-			else
-			{
-				if (class_exists('JError'))
-				{
+			else {
+				if (class_exists('JError')) {
 					$return = JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_CLIENT_ERROR_HELPER_SETCREDENTIALSFROMREQUEST_FAILED'));
 				}
-				else
-				{
+				else {
 					throw new InvalidArgumentException('Invalid user credentials');
 				}
 			}
 		}
-		else
-		{
+		else {
 			// Just determine if the FTP input fields need to be shown
 			$return = !self::hasCredentials('ftp');
 		}

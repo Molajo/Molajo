@@ -23,27 +23,27 @@ use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
  */
 class NativeFileSessionHandlerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstruct()
-    {
-        $storage = new NativeSessionStorage(array('name' => 'TESTING'), new NativeFileSessionHandler(sys_get_temp_dir()));
+	public function testConstruct()
+	{
+		$storage = new NativeSessionStorage(array('name' => 'TESTING'), new NativeFileSessionHandler(sys_get_temp_dir()));
 
-        if (version_compare(phpversion(), '5.4.0', '<')) {
-            $this->assertEquals('files', $storage->getSaveHandler()->getSaveHandlerName());
-            $this->assertEquals('files', ini_get('session.save_handler'));
-        } else {
-            $this->assertEquals('files', $storage->getSaveHandler()->getSaveHandlerName());
-            $this->assertEquals('user', ini_get('session.save_handler'));
-        }
+		if (version_compare(phpversion(), '5.4.0', '<')) {
+			$this->assertEquals('files', $storage->getSaveHandler()->getSaveHandlerName());
+			$this->assertEquals('files', ini_get('session.save_handler'));
+		} else {
+			$this->assertEquals('files', $storage->getSaveHandler()->getSaveHandlerName());
+			$this->assertEquals('user', ini_get('session.save_handler'));
+		}
 
-        $this->assertEquals(sys_get_temp_dir(), ini_get('session.save_path'));
-        $this->assertEquals('TESTING', ini_get('session.name'));
-    }
+		$this->assertEquals(sys_get_temp_dir(), ini_get('session.save_path'));
+		$this->assertEquals('TESTING', ini_get('session.name'));
+	}
 
-    public function testConstructDefault()
-    {
-        $path = ini_get('session.save_path');
-        $storage = new NativeSessionStorage(array('name' => 'TESTING'), new NativeFileSessionHandler());
+	public function testConstructDefault()
+	{
+		$path = ini_get('session.save_path');
+		$storage = new NativeSessionStorage(array('name' => 'TESTING'), new NativeFileSessionHandler());
 
-        $this->assertEquals($path, ini_get('session.save_path'));
-    }
+		$this->assertEquals($path, ini_get('session.save_path'));
+	}
 }

@@ -110,14 +110,12 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	public function check()
 	{
 		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabaseDriverPostgresql))
-		{
+		if (!($this->db instanceof JDatabaseDriverPostgresql)) {
 			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
 		}
 
 		// Check if the tables have been specified.
-		if (empty($this->from))
-		{
+		if (empty($this->from)) {
 			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
 		}
 
@@ -168,7 +166,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 */
 	protected function getAddIndexSQL(\SimpleXMLElement $field)
 	{
-		return (string) $field['Query'];
+		return (string)$field['Query'];
 	}
 
 	/**
@@ -198,16 +196,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		$oldSeq = $this->getSeqLookup($oldSequence);
 		$newSequenceLook = $this->getSeqLookup($newSequence);
 
-		foreach ($newSequenceLook as $kSeqName => $vSeq)
-		{
-			if (isset($oldSeq[$kSeqName]))
-			{
+		foreach ($newSequenceLook as $kSeqName => $vSeq) {
+			if (isset($oldSeq[$kSeqName])) {
 				// The field exists, check it's the same.
 				$column = $oldSeq[$kSeqName][0];
 
 				/* For older database version that doesn't support these fields use default values */
-				if (version_compare($this->db->getVersion(), '9.1.0') < 0)
-				{
+				if (version_compare($this->db->getVersion(), '9.1.0') < 0) {
 					$column->Min_Value = '1';
 					$column->Max_Value = '9223372036854775807';
 					$column->Increment = '1';
@@ -216,67 +211,59 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 				}
 
 				// Test whether there is a change.
-				$change = ((string) $vSeq[0]['Type'] != $column->Type) || ((string) $vSeq[0]['Start_Value'] != $column->Start_Value)
-					|| ((string) $vSeq[0]['Min_Value'] != $column->Min_Value) || ((string) $vSeq[0]['Max_Value'] != $column->Max_Value)
-					|| ((string) $vSeq[0]['Increment'] != $column->Increment) || ((string) $vSeq[0]['Cycle_option'] != $column->Cycle_option)
-					|| ((string) $vSeq[0]['Table'] != $column->Table) || ((string) $vSeq[0]['Column'] != $column->Column)
-					|| ((string) $vSeq[0]['Schema'] != $column->Schema) || ((string) $vSeq[0]['Name'] != $column->Name);
+				$change = ((string)$vSeq[0]['Type'] != $column->Type) || ((string)$vSeq[0]['Start_Value'] != $column->Start_Value)
+					|| ((string)$vSeq[0]['Min_Value'] != $column->Min_Value) || ((string)$vSeq[0]['Max_Value'] != $column->Max_Value)
+					|| ((string)$vSeq[0]['Increment'] != $column->Increment) || ((string)$vSeq[0]['Cycle_option'] != $column->Cycle_option)
+					|| ((string)$vSeq[0]['Table'] != $column->Table) || ((string)$vSeq[0]['Column'] != $column->Column)
+					|| ((string)$vSeq[0]['Schema'] != $column->Schema) || ((string)$vSeq[0]['Name'] != $column->Name);
 
-				if ($change)
-				{
+				if ($change) {
 					$alters[] = $this->getChangeSequenceSQL($kSeqName, $vSeq);
 				}
 
 				// Unset this field so that what we have left are fields that need to be removed.
 				unset($oldSeq[$kSeqName]);
 			}
-			else
-			{
+			else {
 				// The sequence is new
 				$alters[] = $this->getAddSequenceSQL($newSequenceLook[$kSeqName][0]);
 			}
 		}
 
 		// Any sequences left are orphans
-		foreach ($oldSeq as $name => $column)
-		{
+		foreach ($oldSeq as $name => $column) {
 			// Delete the sequence.
 			$alters[] = $this->getDropSequenceSQL($name);
 		}
 
 		/* Field section */
 		// Loop through each field in the new structure.
-		foreach ($newFields as $field)
-		{
-			$fName = (string) $field['Field'];
+		foreach ($newFields as $field) {
+			$fName = (string)$field['Field'];
 
-			if (isset($oldFields[$fName]))
-			{
+			if (isset($oldFields[$fName])) {
 				// The field exists, check it's the same.
 				$column = $oldFields[$fName];
 
 				// Test whether there is a change.
-				$change = ((string) $field['Type'] != $column->Type) || ((string) $field['Null'] != $column->Null)
-					|| ((string) $field['Default'] != $column->Default);
+				$change = ((string)$field['Type'] != $column->Type) || ((string)$field['Null'] != $column->Null)
+					|| ((string)$field['Default'] != $column->Default);
 
-				if ($change)
-				{
+				if ($change) {
 					$alters[] = $this->getChangeColumnSQL($table, $field);
 				}
 
 				// Unset this field so that what we have left are fields that need to be removed.
 				unset($oldFields[$fName]);
 			}
-			else
-			{
+			else {
 				// The field is new.
 				$alters[] = $this->getAddColumnSQL($table, $field);
 			}
 		}
 
 		// Any columns left are orphans
-		foreach ($oldFields as $name => $column)
-		{
+		foreach ($oldFields as $name => $column) {
 			// Delete the column.
 			$alters[] = $this->getDropColumnSQL($table, $name);
 		}
@@ -287,61 +274,50 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		$newLookup = $this->getIdxLookup($newKeys);
 
 		// Loop through each key in the new structure.
-		foreach ($newLookup as $name => $keys)
-		{
+		foreach ($newLookup as $name => $keys) {
 			// Check if there are keys on this field in the existing table.
-			if (isset($oldLookup[$name]))
-			{
+			if (isset($oldLookup[$name])) {
 				$same = true;
 				$newCount = count($newLookup[$name]);
 				$oldCount = count($oldLookup[$name]);
 
 				// There is a key on this field in the old and new tables. Are they the same?
-				if ($newCount == $oldCount)
-				{
-					for ($i = 0; $i < $newCount; $i++)
-					{
+				if ($newCount == $oldCount) {
+					for ($i = 0; $i < $newCount; $i++) {
 						// Check only query field -> different query means different index
-						$same = ((string) $newLookup[$name][$i]['Query'] == $oldLookup[$name][$i]->Query);
+						$same = ((string)$newLookup[$name][$i]['Query'] == $oldLookup[$name][$i]->Query);
 
-						if (!$same)
-						{
+						if (!$same) {
 							// Break out of the loop. No need to check further.
 							break;
 						}
 					}
 				}
-				else
-				{
+				else {
 					// Count is different, just drop and add.
 					$same = false;
 				}
 
-				if (!$same)
-				{
+				if (!$same) {
 					$alters[] = $this->getDropIndexSQL($name);
-					$alters[]  = (string) $newLookup[$name][0]['Query'];
+					$alters[] = (string)$newLookup[$name][0]['Query'];
 				}
 
 				// Unset this field so that what we have left are fields that need to be removed.
 				unset($oldLookup[$name]);
 			}
-			else
-			{
+			else {
 				// This is a new key.
-				$alters[] = (string) $newLookup[$name][0]['Query'];
+				$alters[] = (string)$newLookup[$name][0]['Query'];
 			}
 		}
 
 		// Any keys left are orphans.
-		foreach ($oldLookup as $name => $keys)
-		{
-			if ($oldLookup[$name][0]->is_primary == 'TRUE')
-			{
+		foreach ($oldLookup as $name => $keys) {
+			if ($oldLookup[$name][0]->is_primary == 'TRUE') {
 				$alters[] = $this->getDropPrimaryKeySQL($table, $oldLookup[$name][0]->Index);
 			}
-			else
-			{
+			else {
 				$alters[] = $this->getDropIndexSQL($name);
 			}
 		}
@@ -376,8 +352,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	protected function getAddSequenceSQL($field)
 	{
 		/* For older database version that doesn't support these fields use default values */
-		if (version_compare($this->db->getVersion(), '9.1.0') < 0)
-		{
+		if (version_compare($this->db->getVersion(), '9.1.0') < 0) {
 			$field['Min_Value'] = '1';
 			$field['Max_Value'] = '9223372036854775807';
 			$field['Increment'] = '1';
@@ -385,13 +360,13 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 			$field['Start_Value'] = '1';
 		}
 
-		$sql = 'CREATE SEQUENCE ' . (string) $field['Name'] .
-				' INCREMENT BY ' . (string) $field['Increment'] . ' MINVALUE ' . $field['Min_Value'] .
-				' MAXVALUE ' . (string) $field['Max_Value'] . ' START ' . (string) $field['Start_Value'] .
-				(((string) $field['Cycle_option'] == 'NO' ) ? ' NO' : '' ) . ' CYCLE' .
-				' OWNED BY ' . $this->db->quoteName(
-									(string) $field['Schema'] . '.' . (string) $field['Table'] . '.' . (string) $field['Column']
-								);
+		$sql = 'CREATE SEQUENCE ' . (string)$field['Name'] .
+			' INCREMENT BY ' . (string)$field['Increment'] . ' MINVALUE ' . $field['Min_Value'] .
+			' MAXVALUE ' . (string)$field['Max_Value'] . ' START ' . (string)$field['Start_Value'] .
+			(((string)$field['Cycle_option'] == 'NO') ? ' NO' : '') . ' CYCLE' .
+			' OWNED BY ' . $this->db->quoteName(
+			(string)$field['Schema'] . '.' . (string)$field['Table'] . '.' . (string)$field['Column']
+		);
 		return $sql;
 	}
 
@@ -407,8 +382,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	protected function getChangeSequenceSQL($field)
 	{
 		/* For older database version that doesn't support these fields use default values */
-		if (version_compare($this->db->getVersion(), '9.1.0') < 0)
-		{
+		if (version_compare($this->db->getVersion(), '9.1.0') < 0) {
 			$field['Min_Value'] = '1';
 			$field['Max_Value'] = '9223372036854775807';
 			$field['Increment'] = '1';
@@ -416,12 +390,12 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 			$field['Start_Value'] = '1';
 		}
 
-		$sql = 'ALTER SEQUENCE ' . (string) $field['Name'] .
-				' INCREMENT BY ' . (string) $field['Increment'] . ' MINVALUE ' . (string) $field['Min_Value'] .
-				' MAXVALUE ' . (string) $field['Max_Value'] . ' START ' . (string) $field['Start_Value'] .
-				' OWNED BY ' . $this->db->quoteName(
-									(string) $field['Schema'] . '.' . (string) $field['Table'] . '.' . (string) $field['Column']
-								);
+		$sql = 'ALTER SEQUENCE ' . (string)$field['Name'] .
+			' INCREMENT BY ' . (string)$field['Increment'] . ' MINVALUE ' . (string)$field['Min_Value'] .
+			' MAXVALUE ' . (string)$field['Max_Value'] . ' START ' . (string)$field['Start_Value'] .
+			' OWNED BY ' . $this->db->quoteName(
+			(string)$field['Schema'] . '.' . (string)$field['Table'] . '.' . (string)$field['Column']
+		);
 		return $sql;
 	}
 
@@ -437,7 +411,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 */
 	protected function getChangeColumnSQL($table, \SimpleXMLElement $field)
 	{
-		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ALTER COLUMN ' . $this->db->quoteName((string) $field['Field']) . ' '
+		$sql = 'ALTER TABLE ' . $this->db->quoteName($table) . ' ALTER COLUMN ' . $this->db->quoteName((string)$field['Field']) . ' '
 			. $this->getAlterColumnSQL($table, $field);
 
 		return $sql;
@@ -459,40 +433,34 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		// TODO Incorporate into parent class and use $this.
 		$blobs = array('text', 'smalltext', 'mediumtext', 'largetext');
 
-		$fName = (string) $field['Field'];
-		$fType = (string) $field['Type'];
-		$fNull = (string) $field['Null'];
-		$fDefault = (isset($field['Default']) && $field['Default'] != 'NULL' ) ?
-						preg_match('/^[0-9]$/', $field['Default']) ? $field['Default'] : $this->db->quote((string) $field['Default'])
-					: null;
+		$fName = (string)$field['Field'];
+		$fType = (string)$field['Type'];
+		$fNull = (string)$field['Null'];
+		$fDefault = (isset($field['Default']) && $field['Default'] != 'NULL') ?
+			preg_match('/^[0-9]$/', $field['Default']) ? $field['Default'] : $this->db->quote((string)$field['Default'])
+			: null;
 
 		$sql = ' TYPE ' . $fType;
 
-		if ($fNull == 'NO')
-		{
-			if (in_array($fType, $blobs) || $fDefault === null)
-			{
+		if ($fNull == 'NO') {
+			if (in_array($fType, $blobs) || $fDefault === null) {
 				$sql .= ",\nALTER COLUMN " . $this->db->quoteName($fName) . ' SET NOT NULL' .
-						",\nALTER COLUMN " . $this->db->quoteName($fName) . ' DROP DEFAULT';
+					",\nALTER COLUMN " . $this->db->quoteName($fName) . ' DROP DEFAULT';
 			}
-			else
-			{
+			else {
 				$sql .= ",\nALTER COLUMN " . $this->db->quoteName($fName) . ' SET NOT NULL' .
-						",\nALTER COLUMN " . $this->db->quoteName($fName) . ' SET DEFAULT ' . $fDefault;
+					",\nALTER COLUMN " . $this->db->quoteName($fName) . ' SET DEFAULT ' . $fDefault;
 			}
 		}
-		else
-		{
-			if ($fDefault !== null)
-			{
+		else {
+			if ($fDefault !== null) {
 				$sql .= ",\nALTER COLUMN " . $this->db->quoteName($fName) . ' DROP NOT NULL' .
-						",\nALTER COLUMN " . $this->db->quoteName($fName) . ' SET DEFAULT ' . $fDefault;
+					",\nALTER COLUMN " . $this->db->quoteName($fName) . ' SET DEFAULT ' . $fDefault;
 			}
 		}
 
 		/* sequence was created in other function, here is associated a default value but not yet owner */
-		if (strpos($fDefault, 'nextval') !== false)
-		{
+		if (strpos($fDefault, 'nextval') !== false) {
 			$sql .= ";\nALTER SEQUENCE " . $this->db->quoteName($table . '_' . $fName . '_seq') . ' OWNED BY ' . $this->db->quoteName($table . '.' . $fName);
 		}
 
@@ -514,37 +482,30 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		// TODO Incorporate into parent class and use $this.
 		$blobs = array('text', 'smalltext', 'mediumtext', 'largetext');
 
-		$fName = (string) $field['Field'];
-		$fType = (string) $field['Type'];
-		$fNull = (string) $field['Null'];
-		$fDefault = (isset($field['Default']) && $field['Default'] != 'NULL' ) ?
-						preg_match('/^[0-9]$/', $field['Default']) ? $field['Default'] : $this->db->quote((string) $field['Default'])
-					: null;
+		$fName = (string)$field['Field'];
+		$fType = (string)$field['Type'];
+		$fNull = (string)$field['Null'];
+		$fDefault = (isset($field['Default']) && $field['Default'] != 'NULL') ?
+			preg_match('/^[0-9]$/', $field['Default']) ? $field['Default'] : $this->db->quote((string)$field['Default'])
+			: null;
 
 		/* nextval() as default value means that type field is serial */
-		if (strpos($fDefault, 'nextval') !== false)
-		{
+		if (strpos($fDefault, 'nextval') !== false) {
 			$sql = $this->db->quoteName($fName) . ' SERIAL';
 		}
-		else
-		{
+		else {
 			$sql = $this->db->quoteName($fName) . ' ' . $fType;
 
-			if ($fNull == 'NO')
-			{
-				if (in_array($fType, $blobs) || $fDefault === null)
-				{
+			if ($fNull == 'NO') {
+				if (in_array($fType, $blobs) || $fDefault === null) {
 					$sql .= ' NOT NULL';
 				}
-				else
-				{
+				else {
 					$sql .= ' NOT NULL DEFAULT ' . $fDefault;
 				}
 			}
-			else
-			{
-				if ($fDefault !== null)
-				{
+			else {
+				if ($fDefault !== null) {
 					$sql .= ' DEFAULT ' . $fDefault;
 				}
 			}
@@ -617,18 +578,14 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	{
 		// First pass, create a lookup of the keys.
 		$lookup = array();
-		foreach ($keys as $key)
-		{
-			if ($key instanceof \SimpleXMLElement)
-			{
-				$kName = (string) $key['Index'];
+		foreach ($keys as $key) {
+			if ($key instanceof \SimpleXMLElement) {
+				$kName = (string)$key['Index'];
 			}
-			else
-			{
+			else {
 				$kName = $key->Index;
 			}
-			if (empty($lookup[$kName]))
-			{
+			if (empty($lookup[$kName])) {
 				$lookup[$kName] = array();
 			}
 			$lookup[$kName][] = $key;
@@ -651,18 +608,14 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	{
 		// First pass, create a lookup of the keys.
 		$lookup = array();
-		foreach ($sequences as $seq)
-		{
-			if ($seq instanceof \SimpleXMLElement)
-			{
-				$sName = (string) $seq['Name'];
+		foreach ($sequences as $seq) {
+			if ($seq instanceof \SimpleXMLElement) {
+				$sName = (string)$seq['Name'];
 			}
-			else
-			{
+			else {
 				$sName = $seq->Name;
 			}
-			if (empty($lookup[$sName]))
-			{
+			if (empty($lookup[$sName])) {
 				$lookup[$sName] = array();
 			}
 			$lookup[$sName][] = $seq;
@@ -676,7 +629,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 *
 	 * @param   string  $table  The name of the table.
 	 *
-	 * @return  string	The real name of the table.
+	 * @return  string    The real name of the table.
 	 *
 	 * @since   12.1
 	 */
@@ -707,59 +660,48 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 		$prefix = $this->db->getPrefix();
 		$tables = $this->db->getTableList();
 
-		if ($this->from instanceof \SimpleXMLElement)
-		{
+		if ($this->from instanceof \SimpleXMLElement) {
 			$xml = $this->from;
 		}
-		else
-		{
+		else {
 			$xml = new \SimpleXMLElement($this->from);
 		}
 
 		// Get all the table definitions.
 		$xmlTables = $xml->xpath('database/table_structure');
 
-		foreach ($xmlTables as $table)
-		{
+		foreach ($xmlTables as $table) {
 			// Convert the magic prefix into the real table name.
-			$tableName = (string) $table['name'];
+			$tableName = (string)$table['name'];
 			$tableName = preg_replace('|^#__|', $prefix, $tableName);
 
-			if (in_array($tableName, $tables))
-			{
+			if (in_array($tableName, $tables)) {
 				// The table already exists. Now check if there is any difference.
-				if ($queries = $this->getAlterTableSQL($xml->database->table_structure))
-				{
+				if ($queries = $this->getAlterTableSQL($xml->database->table_structure)) {
 					// Run the queries to upgrade the data structure.
-					foreach ($queries as $query)
-					{
-						$this->db->setQuery((string) $query);
-						if (!$this->db->query())
-						{
+					foreach ($queries as $query) {
+						$this->db->setQuery((string)$query);
+						if (!$this->db->query()) {
 							$this->addLog('Fail: ' . $this->db->getQuery());
 							throw new \Exception($this->db->getErrorMsg());
 						}
-						else
-						{
+						else {
 							$this->addLog('Pass: ' . $this->db->getQuery());
 						}
 					}
 
 				}
 			}
-			else
-			{
+			else {
 				// This is a new table.
 				$sql = $this->xmlToCreate($table);
 
-				$this->db->setQuery((string) $sql);
-				if (!$this->db->query())
-				{
+				$this->db->setQuery((string)$sql);
+				if (!$this->db->query()) {
 					$this->addLog('Fail: ' . $this->db->getQuery());
 					throw new \Exception($this->db->getErrorMsg());
 				}
-				else
-				{
+				else {
 					$this->addLog('Pass: ' . $this->db->getQuery());
 				}
 			}
@@ -793,7 +735,7 @@ class JDatabaseImporterPostgresql extends JDatabaseImporter
 	 */
 	public function withStructure($setting = true)
 	{
-		$this->options->withStructure = (boolean) $setting;
+		$this->options->withStructure = (boolean)$setting;
 
 		return $this;
 	}

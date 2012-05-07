@@ -24,107 +24,107 @@ namespace Symfony\Component\HttpFoundation\Session\Storage;
  */
 class MockFileSessionStorage extends MockArraySessionStorage
 {
-    /**
-     * @var string
-     */
-    private $savePath;
+	/**
+	 * @var string
+	 */
+	private $savePath;
 
-    private $sessionData;
+	private $sessionData;
 
-    /**
-     * Constructor.
-     *
-     * @param string $savePath Path of directory to save session files.
-     * @param string $name     Session name.
-     */
-    public function __construct($savePath = null, $name = 'MOCKSESSID')
-    {
-        if (null === $savePath) {
-            $savePath = sys_get_temp_dir();
-        }
+	/**
+	 * Constructor.
+	 *
+	 * @param string $savePath Path of directory to save session files.
+	 * @param string $name     Session name.
+	 */
+	public function __construct($savePath = null, $name = 'MOCKSESSID')
+	{
+		if (null === $savePath) {
+			$savePath = sys_get_temp_dir();
+		}
 
-        if (!is_dir($savePath)) {
-            mkdir($savePath, 0777, true);
-        }
+		if (!is_dir($savePath)) {
+			mkdir($savePath, 0777, true);
+		}
 
-        $this->savePath = $savePath;
+		$this->savePath = $savePath;
 
-        parent::__construct($name);
-    }
+		parent::__construct($name);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function start()
-    {
-        if ($this->started) {
-            return true;
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function start()
+	{
+		if ($this->started) {
+			return true;
+		}
 
-        if (!$this->id) {
-            $this->id = $this->generateId();
-        }
+		if (!$this->id) {
+			$this->id = $this->generateId();
+		}
 
-        $this->read();
+		$this->read();
 
-        $this->started = true;
+		$this->started = true;
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function regenerate($destroy = false, $lifetime = null)
-    {
-        if (!$this->started) {
-            $this->start();
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function regenerate($destroy = false, $lifetime = null)
+	{
+		if (!$this->started) {
+			$this->start();
+		}
 
-        if ($destroy) {
-            $this->destroy();
-        }
+		if ($destroy) {
+			$this->destroy();
+		}
 
-        return parent::regenerate($destroy, $lifetime);
-    }
+		return parent::regenerate($destroy, $lifetime);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save()
-    {
-        file_put_contents($this->getFilePath(), serialize($this->data));
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function save()
+	{
+		file_put_contents($this->getFilePath(), serialize($this->data));
+	}
 
-    /**
-     * Deletes a session from persistent storage.
-     * Deliberately leaves session data in memory intact.
-     */
-    private function destroy()
-    {
-        if (is_file($this->getFilePath())) {
-            unlink($this->getFilePath());
-        }
-    }
+	/**
+	 * Deletes a session from persistent storage.
+	 * Deliberately leaves session data in memory intact.
+	 */
+	private function destroy()
+	{
+		if (is_file($this->getFilePath())) {
+			unlink($this->getFilePath());
+		}
+	}
 
-    /**
-     * Calculate path to file.
-     *
-     * @return string File path
-     */
-    private function getFilePath()
-    {
-        return $this->savePath.'/'.$this->id.'.mocksess';
-    }
+	/**
+	 * Calculate path to file.
+	 *
+	 * @return string File path
+	 */
+	private function getFilePath()
+	{
+		return $this->savePath . '/' . $this->id . '.mocksess';
+	}
 
-    /**
-     * Reads session from storage and loads session.
-     */
-    private function read()
-    {
-        $filePath = $this->getFilePath();
-        $this->data = is_readable($filePath) && is_file($filePath) ? unserialize(file_get_contents($filePath)) : array();
+	/**
+	 * Reads session from storage and loads session.
+	 */
+	private function read()
+	{
+		$filePath = $this->getFilePath();
+		$this->data = is_readable($filePath) && is_file($filePath) ? unserialize(file_get_contents($filePath)) : array();
 
-        $this->loadSession();
-    }
+		$this->loadSession();
+	}
 }

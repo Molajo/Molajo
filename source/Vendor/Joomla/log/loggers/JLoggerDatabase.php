@@ -85,8 +85,7 @@ class JLoggerDatabase extends JLogger
 		parent::__construct($options);
 
 		// If both the database object and driver options are empty we want to use the system database connection.
-		if (empty($this->options['dbo']) && empty($this->options['db_driver']))
-		{
+		if (empty($this->options['dbo']) && empty($this->options['db_driver'])) {
 			$this->dbo = JFactory::getDBO();
 			$this->driver = null;
 			$this->host = null;
@@ -95,8 +94,7 @@ class JLoggerDatabase extends JLogger
 			$this->database = null;
 			$this->prefix = null;
 		}
-		else if (empty($this->options['dbo']))
-		{
+		else if (empty($this->options['dbo'])) {
 			$this->dbo = null;
 			$this->driver = (empty($this->options['db_driver'])) ? 'mysql' : $this->options['db_driver'];
 			$this->host = (empty($this->options['db_host'])) ? '127.0.0.1' : $this->options['db_host'];
@@ -105,8 +103,7 @@ class JLoggerDatabase extends JLogger
 			$this->database = (empty($this->options['db_database'])) ? 'logging' : $this->options['db_database'];
 			$this->prefix = (empty($this->options['db_prefix'])) ? 'jos_' : $this->options['db_prefix'];
 		}
-		else
-		{
+		else {
 			$this->dbo = $this->options['dbo'];
 		}
 
@@ -126,8 +123,7 @@ class JLoggerDatabase extends JLogger
 	public function addEntry(JLogEntry $entry)
 	{
 		// Connect to the database if not connected.
-		if (empty($this->dbo))
-		{
+		if (empty($this->dbo)) {
 			$this->connect();
 		}
 

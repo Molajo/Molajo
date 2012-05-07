@@ -268,8 +268,7 @@ Class Application
 	 */
 	protected function authorise()
 	{
-		return Services::Authorisation()
-			->authoriseAction();
+		return Services::Authorisation()->authoriseAction();
 	}
 
 	/**
@@ -587,7 +586,6 @@ Class Application
 	 */
 	protected function setSite()
 	{
-
 		if (defined('SITES')) {
 		} else {
 			define('SITES', BASE_FOLDER . '/Site');

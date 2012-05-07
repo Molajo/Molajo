@@ -41,8 +41,7 @@ class JLoggerEcho extends JLogger
 	{
 		parent::__construct($options);
 
-		if (!empty($this->options['line_separator']))
-		{
+		if (!empty($this->options['line_separator'])) {
 			$this->line_separator = $this->options['line_separator'];
 		}
 	}

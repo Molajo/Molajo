@@ -41,77 +41,77 @@ namespace Symfony\Component\ClassLoader;
  */
 class ApcClassLoader
 {
-    private $prefix;
-    private $classFinder;
+	private $prefix;
+	private $classFinder;
 
-    /**
-     * Constructor.
-     *
-     * @param string $prefix A prefix to create a namespace in APC
-     * @param object $classFinder
-     *
-     * @api
-     */
-    public function __construct($prefix, $classFinder)
-    {
-        if (!extension_loaded('apc')) {
-            throw new \RuntimeException('Unable to use ApcUniversalClassLoader as APC is not enabled.');
-        }
+	/**
+	 * Constructor.
+	 *
+	 * @param string $prefix A prefix to create a namespace in APC
+	 * @param object $classFinder
+	 *
+	 * @api
+	 */
+	public function __construct($prefix, $classFinder)
+	{
+		if (!extension_loaded('apc')) {
+			throw new \RuntimeException('Unable to use ApcUniversalClassLoader as APC is not enabled.');
+		}
 
-        if (!method_exists($classFinder, 'findFile')) {
-            throw new \InvalidArgumentException('The class finder must implement a "findFile" method.');
-        }
+		if (!method_exists($classFinder, 'findFile')) {
+			throw new \InvalidArgumentException('The class finder must implement a "findFile" method.');
+		}
 
-        $this->prefix = $prefix;
-        $this->classFinder = $classFinder;
-    }
+		$this->prefix = $prefix;
+		$this->classFinder = $classFinder;
+	}
 
-    /**
-     * Registers this instance as an autoloader.
-     *
-     * @param Boolean $prepend Whether to prepend the autoloader or not
-     */
-    public function register($prepend = false)
-    {
-        spl_autoload_register(array($this, 'loadClass'), true, $prepend);
-    }
+	/**
+	 * Registers this instance as an autoloader.
+	 *
+	 * @param Boolean $prepend Whether to prepend the autoloader or not
+	 */
+	public function register($prepend = false)
+	{
+		spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+	}
 
-    /**
-     * Unregisters this instance as an autoloader.
-     */
-    public function unregister()
-    {
-        spl_autoload_unregister(array($this, 'loadClass'));
-    }
+	/**
+	 * Unregisters this instance as an autoloader.
+	 */
+	public function unregister()
+	{
+		spl_autoload_unregister(array($this, 'loadClass'));
+	}
 
-    /**
-     * Loads the given class or interface.
-     *
-     * @param string $class The name of the class
-     * @return Boolean|null True, if loaded
-     */
-    public function loadClass($class)
-    {
-        if ($file = $this->findFile($class)) {
-            require $file;
+	/**
+	 * Loads the given class or interface.
+	 *
+	 * @param string $class The name of the class
+	 * @return Boolean|null True, if loaded
+	 */
+	public function loadClass($class)
+	{
+		if ($file = $this->findFile($class)) {
+			require $file;
 
-            return true;
-        }
-    }
+			return true;
+		}
+	}
 
-    /**
-     * Finds a file by class name while caching lookups to APC.
-     *
-     * @param string $class A class name to resolve to file
-     *
-     * @return string|null
-     */
-    public function findFile($class)
-    {
-        if (false === $file = apc_fetch($this->prefix.$class)) {
-            apc_store($this->prefix.$class, $file = $this->classFinder->findFile($class));
-        }
+	/**
+	 * Finds a file by class name while caching lookups to APC.
+	 *
+	 * @param string $class A class name to resolve to file
+	 *
+	 * @return string|null
+	 */
+	public function findFile($class)
+	{
+		if (false === $file = apc_fetch($this->prefix . $class)) {
+			apc_store($this->prefix . $class, $file = $this->classFinder->findFile($class));
+		}
 
-        return $file;
-    }
+		return $file;
+	}
 }

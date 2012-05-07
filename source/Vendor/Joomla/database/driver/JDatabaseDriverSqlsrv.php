@@ -87,7 +87,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$options['user'] = (isset($options['user'])) ? $options['user'] : '';
 		$options['password'] = (isset($options['password'])) ? $options['password'] : '';
 		$options['database'] = (isset($options['database'])) ? $options['database'] : '';
-		$options['select'] = (isset($options['select'])) ? (bool) $options['select'] : true;
+		$options['select'] = (isset($options['select'])) ? (bool)$options['select'] : true;
 
 		// Finalize initialisation
 		parent::__construct($options);
@@ -103,8 +103,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 */
 	public function connect()
 	{
-		if ($this->connection)
-		{
+		if ($this->connection) {
 			return;
 		}
 
@@ -117,14 +116,12 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 			'ReturnDatesAsStrings' => true);
 
 		// Make sure the SQLSRV extension for PHP is installed and enabled.
-		if (!function_exists('sqlsrv_connect'))
-		{
+		if (!function_exists('sqlsrv_connect')) {
 			throw new \RuntimeException('PHP extension sqlsrv_connect is not available.');
 		}
 
 		// Attempt to connect to the server.
-		if (!($this->connection = @ sqlsrv_connect($this->options['host'], $config)))
-		{
+		if (!($this->connection = @ sqlsrv_connect($this->options['host'], $config))) {
 			throw new \RuntimeException('Database sqlsrv_connect failed');
 		}
 
@@ -132,8 +129,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		sqlsrv_configure('WarningsReturnAsErrors', 0);
 
 		// If auto-select is enabled select the given database.
-		if ($this->options['select'] && !empty($this->options['database']))
-		{
+		if ($this->options['select'] && !empty($this->options['database'])) {
 			$this->select($this->options['database']);
 		}
 	}
@@ -145,8 +141,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	 */
 	public function __destruct()
 	{
-		if (is_resource($this->connection))
-		{
+		if (is_resource($this->connection)) {
 			sqlsrv_close($this->connection);
 		}
 	}
@@ -188,8 +183,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	{
 		$this->connect();
 
-		foreach ($constraints as $constraint)
-		{
+		foreach ($constraints as $constraint) {
 			$this->setQuery('sp_rename ' . $constraint . ',' . str_replace($prefix, $backup, $constraint));
 			$this->execute();
 		}
@@ -215,8 +209,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$result = str_replace('\"', '"', $result);
 		$result = str_replace('\/', '/', $result);
 
-		if ($extra)
-		{
+		if ($extra) {
 			// We need the below str_replace since the search in sql server doesn't recognize _ character.
 			$result = str_replace('_', '[_]', $result);
 		}
@@ -253,14 +246,12 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 
 		$query = $this->getQuery(true);
 
-		if ($ifExists)
-		{
+		if ($ifExists) {
 			$this->setQuery(
 				'IF EXISTS(SELECT TABLE_NAME FROM' . ' INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ' . $query->quote($tableName) . ') DROP TABLE ' . $tableName
 			);
 		}
-		else
-		{
+		else {
 			$this->setQuery('DROP TABLE ' . $tableName);
 		}
 
@@ -328,28 +319,24 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		// Initialise variables.
 		$result = array();
 
-		$table_temp = $this->replacePrefix((string) $table);
+		$table_temp = $this->replacePrefix((string)$table);
 
 		// Set the query to get the table fields statement.
 		$this->setQuery(
 			'SELECT column_name as Field, data_type as Type, is_nullable as \'Null\', column_default as \'Default\'' .
-			' FROM information_schema.columns' . ' WHERE table_name = ' . $this->quote($table_temp)
+				' FROM information_schema.columns' . ' WHERE table_name = ' . $this->quote($table_temp)
 		);
 		$fields = $this->loadObjectList();
 
 		// If we only want the type as the value add just that to the list.
-		if ($typeOnly)
-		{
-			foreach ($fields as $field)
-			{
+		if ($typeOnly) {
+			foreach ($fields as $field) {
 				$result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 			}
 		}
 		// If we want the whole field data object add that to the list.
-		else
-		{
-			foreach ($fields as $field)
-			{
+		else {
+			foreach ($fields as $field) {
 				$result[$field->Field] = $field;
 			}
 		}
@@ -445,23 +432,18 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$fields = array();
 		$values = array();
 		$statement = 'INSERT INTO ' . $this->quoteName($table) . ' (%s) VALUES (%s)';
-		foreach (get_object_vars($object) as $k => $v)
-		{
-			if (is_array($v) or is_object($v))
-			{
+		foreach (get_object_vars($object) as $k => $v) {
+			if (is_array($v) or is_object($v)) {
 				continue;
 			}
-			if (!$this->checkFieldExists($table, $k))
-			{
+			if (!$this->checkFieldExists($table, $k)) {
 				continue;
 			}
-			if ($k[0] == '_')
-			{
+			if ($k[0] == '_') {
 				// Internal field
 				continue;
 			}
-			if ($k == $key && $key == 0)
-			{
+			if ($k == $key && $key == 0) {
 				continue;
 			}
 			$fields[] = $this->quoteName($k);
@@ -469,13 +451,11 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		}
 		// Set the query and execute the insert.
 		$this->setQuery(sprintf($statement, implode(',', $fields), implode(',', $values)));
-		if (!$this->execute())
-		{
+		if (!$this->execute()) {
 			return false;
 		}
 		$id = $this->insertId();
-		if ($key && $id)
-		{
+		if ($key && $id) {
 			$object->$key = $id;
 		}
 		return true;
@@ -494,7 +474,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 
 		// TODO: SELECT IDENTITY
 		$this->setQuery('SELECT @@IDENTITY');
-		return (int) $this->loadResult();
+		return (int)$this->loadResult();
 	}
 
 	/**
@@ -511,14 +491,12 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$ret = null;
 
 		// Execute the query and get the result set cursor.
-		if (!($cursor = $this->execute()))
-		{
+		if (!($cursor = $this->execute())) {
 			return null;
 		}
 
 		// Get the first row from the result set as an array.
-		if ($row = sqlsrv_fetch_array($cursor, SQLSRV_FETCH_NUMERIC))
-		{
+		if ($row = sqlsrv_fetch_array($cursor, SQLSRV_FETCH_NUMERIC)) {
 			$ret = $row[0];
 		}
 		// Free up system resources and return.
@@ -543,22 +521,19 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	{
 		$this->connect();
 
-		if (!is_resource($this->connection))
-		{
+		if (!is_resource($this->connection)) {
 			JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
 			throw new \RuntimeException($this->errorMsg, $this->errorNum);
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
-		$sql = $this->replacePrefix((string) $this->sql);
-		if ($this->limit > 0 || $this->offset > 0)
-		{
+		$sql = $this->replacePrefix((string)$this->sql);
+		if ($this->limit > 0 || $this->offset > 0) {
 			$sql = $this->limit($sql, $this->limit, $this->offset);
 		}
 
 		// If debugging is enabled then let's log the query.
-		if ($this->debug)
-		{
+		if ($this->debug) {
 
 			// Increment the query counter and add the query to the object queue.
 			$this->count++;
@@ -572,12 +547,10 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$this->errorMsg = '';
 
 		// SQLSrv_num_rows requires a static or keyset cursor.
-		if (strncmp(ltrim(strtoupper($sql)), 'SELECT', strlen('SELECT')) == 0)
-		{
+		if (strncmp(ltrim(strtoupper($sql)), 'SELECT', strlen('SELECT')) == 0) {
 			$array = array('Scrollable' => SQLSRV_CURSOR_KEYSET);
 		}
-		else
-		{
+		else {
 			$array = array();
 		}
 
@@ -585,20 +558,16 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$this->cursor = @sqlsrv_query($this->connection, $sql, array(), $array);
 
 		// If an error occurred handle it.
-		if (!$this->cursor)
-		{
+		if (!$this->cursor) {
 			// Check if the server was disconnected.
-			if (!$this->connected())
-			{
-				try
-				{
+			if (!$this->connected()) {
+				try {
 					// Attempt to reconnect.
 					$this->connection = null;
 					$this->connect();
 				}
-				// If connect fails, ignore that exception and throw the normal exception.
-				catch (\RuntimeException $e)
-				{
+					// If connect fails, ignore that exception and throw the normal exception.
+				catch (\RuntimeException $e) {
 					// Get the error number and message.
 					$errors = sqlsrv_errors();
 					$this->errorNum = $errors[0]['SQLSTATE'];
@@ -613,8 +582,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 				return $this->execute();
 			}
 			// The server was not disconnected.
-			else
-			{
+			else {
 				// Get the error number and message.
 				$errors = sqlsrv_errors();
 				$this->errorNum = $errors[0]['SQLSTATE'];
@@ -653,28 +621,23 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 		$sql = trim($sql);
 		$n = strlen($sql);
 
-		while ($startPos < $n)
-		{
+		while ($startPos < $n) {
 			$ip = strpos($sql, $prefix, $startPos);
-			if ($ip === false)
-			{
+			if ($ip === false) {
 				break;
 			}
 
 			$j = strpos($sql, "N'", $startPos);
 			$k = strpos($sql, '"', $startPos);
-			if (($k !== false) && (($k < $j) || ($j === false)))
-			{
+			if (($k !== false) && (($k < $j) || ($j === false))) {
 				$quoteChar = '"';
 				$j = $k;
 			}
-			else
-			{
+			else {
 				$quoteChar = "'";
 			}
 
-			if ($j === false)
-			{
+			if ($j === false) {
 				$j = $n;
 			}
 
@@ -683,43 +646,36 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 
 			$j = $startPos + 1;
 
-			if ($j >= $n)
-			{
+			if ($j >= $n) {
 				break;
 			}
 
 			// Quote comes first, find end of quote
-			while (true)
-			{
+			while (true) {
 				$k = strpos($sql, $quoteChar, $j);
 				$escaped = false;
-				if ($k === false)
-				{
+				if ($k === false) {
 					break;
 				}
 				$l = $k - 1;
-				while ($l >= 0 && $sql{$l} == '\\')
-				{
+				while ($l >= 0 && $sql{$l} == '\\') {
 					$l--;
 					$escaped = !$escaped;
 				}
-				if ($escaped)
-				{
+				if ($escaped) {
 					$j = $k + 1;
 					continue;
 				}
 				break;
 			}
-			if ($k === false)
-			{
+			if ($k === false) {
 				// Error in the query - no end quote; ignore it
 				break;
 			}
 			$literal .= substr($sql, $startPos, $k - $startPos + 1);
 			$startPos = $k + 1;
 		}
-		if ($startPos < $n)
-		{
+		if ($startPos < $n) {
 			$literal .= substr($sql, $startPos, $n - $startPos);
 		}
 
@@ -740,13 +696,11 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	{
 		$this->connect();
 
-		if (!$database)
-		{
+		if (!$database) {
 			return false;
 		}
 
-		if (!sqlsrv_query($this->connection, 'USE ' . $database, null, array('scrollable' => SQLSRV_CURSOR_STATIC)))
-		{
+		if (!sqlsrv_query($this->connection, 'USE ' . $database, null, array('scrollable' => SQLSRV_CURSOR_STATIC))) {
 			throw new \RuntimeException('Could not connect to database');
 		}
 
@@ -884,17 +838,15 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	{
 		$this->connect();
 
-		$table = $this->replacePrefix((string) $table);
+		$table = $this->replacePrefix((string)$table);
 		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS" . " WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$field'" .
 			" ORDER BY ORDINAL_POSITION";
 		$this->setQuery($sql);
 
-		if ($this->loadResult())
-		{
+		if ($this->loadResult()) {
 			return true;
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}
@@ -913,8 +865,7 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	protected function limit($sql, $limit, $offset)
 	{
 		$orderBy = stristr($sql, 'ORDER BY');
-		if (is_null($orderBy) || empty($orderBy))
-		{
+		if (is_null($orderBy) || empty($orderBy)) {
 			$orderBy = 'ORDER BY (select 0)';
 		}
 		$sql = str_ireplace($orderBy, '', $sql);
@@ -944,12 +895,10 @@ class JDatabaseDriverSqlsrv extends JDatabaseDriver
 	{
 		$constraints = array();
 
-		if (!is_null($prefix) && !is_null($backup))
-		{
+		if (!is_null($prefix) && !is_null($backup)) {
 			$constraints = $this->getTableConstraints($oldTable);
 		}
-		if (!empty($constraints))
-		{
+		if (!empty($constraints)) {
 			$this->renameConstraints($constraints, $prefix, $backup);
 		}
 

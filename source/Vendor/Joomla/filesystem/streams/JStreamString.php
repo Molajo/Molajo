@@ -114,16 +114,14 @@ class JStreamString
 	{
 		$this->currentString = &JStringController::getRef(str_replace('string://', '', $path));
 
-		if ($this->currentString)
-		{
+		if ($this->currentString) {
 			$this->len = strlen($this->currentString);
 			$this->pos = 0;
 			$this->stat = $this->url_stat($path, 0);
 
 			return true;
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}
@@ -232,8 +230,7 @@ class JStreamString
 	 */
 	public function stream_eof()
 	{
-		if ($this->pos > $this->len)
-		{
+		if ($this->pos > $this->len) {
 			return true;
 		}
 
@@ -253,25 +250,21 @@ class JStreamString
 	public function stream_seek($offset, $whence)
 	{
 		// $whence: SEEK_SET, SEEK_CUR, SEEK_END
-		if ($offset > $this->len)
-		{
+		if ($offset > $this->len) {
 			// We can't seek beyond our len.
 			return false;
 		}
 
-		switch ($whence)
-		{
+		switch ($whence) {
 			case SEEK_SET:
 				$this->pos = $offset;
 				break;
 
 			case SEEK_CUR:
-				if (($this->pos + $offset) < $this->len)
-				{
+				if (($this->pos + $offset) < $this->len) {
 					$this->pos += $offset;
 				}
-				else
-				{
+				else {
 					return false;
 				}
 				break;

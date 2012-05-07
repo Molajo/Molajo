@@ -52,11 +52,11 @@ class JCryptKey
 	public function __construct($type, $private = null, $public = null)
 	{
 		// Set the key type.
-		$this->type = (string) $type;
+		$this->type = (string)$type;
 
 		// Set the optional public/private key strings.
-		$this->private = isset($private) ? (string) $private : null;
-		$this->public  = isset($public) ? (string) $public : null;
+		$this->private = isset($private) ? (string)$private : null;
+		$this->public = isset($public) ? (string)$public : null;
 	}
 
 	/**
@@ -70,12 +70,10 @@ class JCryptKey
 	 */
 	public function __get($name)
 	{
-		if ($name == 'type')
-		{
+		if ($name == 'type') {
 			return $this->type;
 		}
-		else
-		{
+		else {
 			trigger_error('Cannot access property ' . __CLASS__ . '::' . $name, E_USER_WARNING);
 		}
 	}

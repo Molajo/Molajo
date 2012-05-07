@@ -32,12 +32,10 @@ class JDatabaseIteratorPdo extends JDatabaseIterator
 	 */
 	public function count()
 	{
-		if (!empty($this->cursor) && $this->cursor instanceof PDOStatement)
-		{
+		if (!empty($this->cursor) && $this->cursor instanceof PDOStatement) {
 			return $this->cursor->rowCount();
 		}
-		else
-		{
+		else {
 			return 0;
 		}
 	}
@@ -51,12 +49,10 @@ class JDatabaseIteratorPdo extends JDatabaseIterator
 	 */
 	protected function fetchObject()
 	{
-		if (!empty($this->cursor) && $this->cursor instanceof PDOStatement)
-		{
+		if (!empty($this->cursor) && $this->cursor instanceof PDOStatement) {
 			return $this->cursor->fetchObject($this->class);
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}
@@ -70,8 +66,7 @@ class JDatabaseIteratorPdo extends JDatabaseIterator
 	 */
 	protected function freeResult()
 	{
-		if (!empty($this->cursor) && $this->cursor instanceof PDOStatement)
-		{
+		if (!empty($this->cursor) && $this->cursor instanceof PDOStatement) {
 			$this->cursor->closeCursor();
 		}
 	}

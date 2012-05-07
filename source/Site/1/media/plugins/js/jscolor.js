@@ -13,18 +13,18 @@
 var jscolor = {
 
 
-    dir : '', // location of jscolor directory (leave empty to autodetect)
-    bindClass : 'color', // class name
-    binding : true, // automatic binding via <input class="...">
-    preloading : true, // use image preloading?
+    dir:'', // location of jscolor directory (leave empty to autodetect)
+    bindClass:'color', // class name
+    binding:true, // automatic binding via <input class="...">
+    preloading:true, // use image preloading?
 
 
-    install : function() {
+    install:function () {
         jscolor.addEvent(window, 'load', jscolor.init);
     },
 
 
-    init : function() {
+    init:function () {
         if (jscolor.binding) {
             jscolor.bind();
         }
@@ -34,7 +34,7 @@ var jscolor = {
     },
 
 
-    getDir : function() {
+    getDir:function () {
         if (!jscolor.dir) {
             var detected = jscolor.detectDir();
             jscolor.dir = detected !== false ? detected : 'jscolor/';
@@ -43,7 +43,7 @@ var jscolor = {
     },
 
 
-    detectDir : function() {
+    detectDir:function () {
         var base = location.href;
 
         var e = document.getElementsByTagName('base');
@@ -68,7 +68,7 @@ var jscolor = {
     },
 
 
-    bind : function() {
+    bind:function () {
         var matchClass = new RegExp('(^|\\s)(' + jscolor.bindClass + ')\\s*(\\{[^}]*\\})?', 'i');
         var e = document.getElementsByTagName('input');
         for (var i = 0; i < e.length; i += 1) {
@@ -78,7 +78,7 @@ var jscolor = {
                 if (m[3]) {
                     try {
                         eval('prop=' + m[3]);
-                    } catch(eInvalidProp) {
+                    } catch (eInvalidProp) {
                     }
                 }
                 e[i].color = new jscolor.color(e[i], prop);
@@ -87,7 +87,7 @@ var jscolor = {
     },
 
 
-    preload : function() {
+    preload:function () {
         for (var fn in jscolor.imgRequire) {
             if (jscolor.imgRequire.hasOwnProperty(fn)) {
                 jscolor.loadImage(fn);
@@ -96,24 +96,24 @@ var jscolor = {
     },
 
 
-    images : {
-        pad : [ 181, 101 ],
-        sld : [ 16, 101 ],
-        cross : [ 15, 15 ],
-        arrow : [ 7, 11 ]
+    images:{
+        pad:[ 181, 101 ],
+        sld:[ 16, 101 ],
+        cross:[ 15, 15 ],
+        arrow:[ 7, 11 ]
     },
 
 
-    imgRequire : {},
-    imgLoaded : {},
+    imgRequire:{},
+    imgLoaded:{},
 
 
-    requireImage : function(filename) {
+    requireImage:function (filename) {
         jscolor.imgRequire[filename] = true;
     },
 
 
-    loadImage : function(filename) {
+    loadImage:function (filename) {
         if (!jscolor.imgLoaded[filename]) {
             jscolor.imgLoaded[filename] = new Image();
             jscolor.imgLoaded[filename].src = jscolor.getDir() + filename;
@@ -121,12 +121,12 @@ var jscolor = {
     },
 
 
-    fetchElement : function(mixed) {
+    fetchElement:function (mixed) {
         return typeof mixed === 'string' ? document.getElementById(mixed) : mixed;
     },
 
 
-    addEvent : function(el, evnt, func) {
+    addEvent:function (el, evnt, func) {
         if (el.addEventListener) {
             el.addEventListener(evnt, func, false);
         } else if (el.attachEvent) {
@@ -135,7 +135,7 @@ var jscolor = {
     },
 
 
-    fireEvent : function(el, evnt) {
+    fireEvent:function (el, evnt) {
         if (!el) {
             return;
         }
@@ -152,7 +152,7 @@ var jscolor = {
     },
 
 
-    getElementPos : function(e) {
+    getElementPos:function (e) {
         var e1 = e, e2 = e;
         var x = 0, y = 0;
         if (e1.offsetParent) {
@@ -169,12 +169,12 @@ var jscolor = {
     },
 
 
-    getElementSize : function(e) {
+    getElementSize:function (e) {
         return [e.offsetWidth, e.offsetHeight];
     },
 
 
-    getMousePos : function(e) {
+    getMousePos:function (e) {
         if (!e) {
             e = window.event;
         }
@@ -189,7 +189,7 @@ var jscolor = {
     },
 
 
-    getViewPos : function() {
+    getViewPos:function () {
         if (typeof window.pageYOffset === 'number') {
             return [window.pageXOffset, window.pageYOffset];
         } else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
@@ -202,7 +202,7 @@ var jscolor = {
     },
 
 
-    getViewSize : function() {
+    getViewSize:function () {
         if (typeof window.innerWidth === 'number') {
             return [window.innerWidth, window.innerHeight];
         } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
@@ -215,7 +215,7 @@ var jscolor = {
     },
 
 
-    URI : function(uri) { // See RFC3986
+    URI:function (uri) { // See RFC3986
 
         this.scheme = null;
         this.authority = null;
@@ -223,7 +223,7 @@ var jscolor = {
         this.query = null;
         this.fragment = null;
 
-        this.parse = function(uri) {
+        this.parse = function (uri) {
             var m = uri.match(/^(([A-Za-z][0-9A-Za-z+.-]*)(:))?((\/\/)([^\/?#]*))?([^?#]*)((\?)([^#]*))?((#)(.*))?/);
             this.scheme = m[3] ? m[2] : null;
             this.authority = m[5] ? m[6] : null;
@@ -233,7 +233,7 @@ var jscolor = {
             return this;
         };
 
-        this.toString = function() {
+        this.toString = function () {
             var result = '';
             if (this.scheme !== null) {
                 result = result + this.scheme + ':';
@@ -253,7 +253,7 @@ var jscolor = {
             return result;
         };
 
-        this.toAbsolute = function(base) {
+        this.toAbsolute = function (base) {
             var base = new jscolor.URI(base);
             var r = this;
             var t = new jscolor.URI;
@@ -339,7 +339,7 @@ var jscolor = {
      * var myColor = new jscolor.color(myInputElement)
      */
 
-    color : function(target, prop) {
+    color:function (target, prop) {
 
 
         this.required = true; // refuse empty values?
@@ -370,14 +370,14 @@ var jscolor = {
         }
 
 
-        this.hidePicker = function() {
+        this.hidePicker = function () {
             if (isPickerOwner()) {
                 removePicker();
             }
         };
 
 
-        this.showPicker = function() {
+        this.showPicker = function () {
             if (!isPickerOwner()) {
                 var tp = jscolor.getElementPos(target); // target pos
                 var ts = jscolor.getElementSize(target); // target size
@@ -424,7 +424,7 @@ var jscolor = {
         };
 
 
-        this.importColor = function() {
+        this.importColor = function () {
             if (!valueElement) {
                 this.exportColor();
             } else {
@@ -449,7 +449,7 @@ var jscolor = {
         };
 
 
-        this.exportColor = function(flags) {
+        this.exportColor = function (flags) {
             if (!(flags & leaveValue) && valueElement) {
                 var value = this.toString();
                 if (this.caps) {
@@ -478,7 +478,7 @@ var jscolor = {
         };
 
 
-        this.fromHSV = function(h, s, v, flags) { // null = don't change
+        this.fromHSV = function (h, s, v, flags) { // null = don't change
             h < 0 && (h = 0) || h > 6 && (h = 6);
             s < 0 && (s = 0) || s > 1 && (s = 1);
             v < 0 && (v = 0) || v > 1 && (v = 1);
@@ -491,7 +491,7 @@ var jscolor = {
         };
 
 
-        this.fromRGB = function(r, g, b, flags) { // null = don't change
+        this.fromRGB = function (r, g, b, flags) { // null = don't change
             r < 0 && (r = 0) || r > 1 && (r = 1);
             g < 0 && (g = 0) || g > 1 && (g = 1);
             b < 0 && (b = 0) || b > 1 && (b = 1);
@@ -511,7 +511,7 @@ var jscolor = {
         };
 
 
-        this.fromString = function(hex, flags) {
+        this.fromString = function (hex, flags) {
             var m = hex.match(/^\W*([0-9A-F]{3}([0-9A-F]{3})?)\W*$/i);
             if (!m) {
                 return false;
@@ -536,7 +536,7 @@ var jscolor = {
         };
 
 
-        this.toString = function() {
+        this.toString = function () {
             return (
                 (0x100 | Math.round(255 * this.rgb[0])).toString(16).substr(1) +
                     (0x100 | Math.round(255 * this.rgb[1])).toString(16).substr(1) +
@@ -568,17 +568,17 @@ var jscolor = {
             switch (i) {
                 case 6:
                 case 0:
-                    return [v,n,m];
+                    return [v, n, m];
                 case 1:
-                    return [n,v,m];
+                    return [n, v, m];
                 case 2:
-                    return [m,v,n];
+                    return [m, v, n];
                 case 3:
-                    return [m,n,v];
+                    return [m, n, v];
                 case 4:
-                    return [n,m,v];
+                    return [n, m, v];
                 case 5:
-                    return [v,m,n];
+                    return [v, m, n];
             }
         }
 
@@ -592,16 +592,16 @@ var jscolor = {
         function drawPicker(x, y) {
             if (!jscolor.picker) {
                 jscolor.picker = {
-                    box : document.createElement('div'),
-                    boxB : document.createElement('div'),
-                    pad : document.createElement('div'),
-                    padB : document.createElement('div'),
-                    padM : document.createElement('div'),
-                    sld : document.createElement('div'),
-                    sldB : document.createElement('div'),
-                    sldM : document.createElement('div')
+                    box:document.createElement('div'),
+                    boxB:document.createElement('div'),
+                    pad:document.createElement('div'),
+                    padB:document.createElement('div'),
+                    padM:document.createElement('div'),
+                    sld:document.createElement('div'),
+                    sldB:document.createElement('div'),
+                    sldM:document.createElement('div')
                 };
-                for (var i = 0,segSize = 4; i < jscolor.images.sld[1]; i += segSize) {
+                for (var i = 0, segSize = 4; i < jscolor.images.sld[1]; i += segSize) {
                     var seg = document.createElement('div');
                     seg.style.height = segSize + 'px';
                     seg.style.fontSize = '1px';
@@ -629,35 +629,35 @@ var jscolor = {
 
             // controls interaction
             p.box.onmouseup =
-                p.box.onmouseout = function() {
+                p.box.onmouseout = function () {
                     target.focus();
                 };
-            p.box.onmousedown = function() {
+            p.box.onmousedown = function () {
                 abortBlur = true;
             };
-            p.box.onmousemove = function(e) {
+            p.box.onmousemove = function (e) {
                 holdPad && setPad(e);
                 holdSld && setSld(e);
             };
             p.padM.onmouseup =
-                p.padM.onmouseout = function() {
+                p.padM.onmouseout = function () {
                     if (holdPad) {
                         holdPad = false;
                         jscolor.fireEvent(valueElement, 'change');
                     }
                 };
-            p.padM.onmousedown = function(e) {
+            p.padM.onmousedown = function (e) {
                 holdPad = true;
                 setPad(e);
             };
             p.sldM.onmouseup =
-                p.sldM.onmouseout = function() {
+                p.sldM.onmouseout = function () {
                     if (holdSld) {
                         holdSld = false;
                         jscolor.fireEvent(valueElement, 'change');
                     }
                 };
-            p.sldM.onmousedown = function(e) {
+            p.sldM.onmousedown = function (e) {
                 holdSld = true;
                 setSld(e);
             };
@@ -715,7 +715,7 @@ var jscolor = {
             p.sldM.style.height = p.box.style.height;
             try {
                 p.sldM.style.cursor = 'pointer';
-            } catch(eOldIE) {
+            } catch (eOldIE) {
                 p.sldM.style.cursor = 'hand';
             }
 
@@ -777,22 +777,22 @@ var jscolor = {
                     switch (i) {
                         case 6:
                         case 0:
-                            rgb = [0,1,2];
+                            rgb = [0, 1, 2];
                             break;
                         case 1:
-                            rgb = [1,0,2];
+                            rgb = [1, 0, 2];
                             break;
                         case 2:
-                            rgb = [2,0,1];
+                            rgb = [2, 0, 1];
                             break;
                         case 3:
-                            rgb = [2,1,0];
+                            rgb = [2, 1, 0];
                             break;
                         case 4:
-                            rgb = [1,2,0];
+                            rgb = [1, 2, 0];
                             break;
                         case 5:
-                            rgb = [0,2,1];
+                            rgb = [0, 2, 1];
                             break;
                     }
                     for (var i = 0; i < seg.length; i += 1) {
@@ -895,14 +895,14 @@ var jscolor = {
             leaveSld = 1 << 3;
 
         // target
-        jscolor.addEvent(target, 'focus', function() {
+        jscolor.addEvent(target, 'focus', function () {
             if (THIS.pickerOnfocus) {
                 THIS.showPicker();
             }
         });
-        jscolor.addEvent(target, 'blur', function() {
+        jscolor.addEvent(target, 'blur', function () {
             if (!abortBlur) {
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                     abortBlur || blurTarget();
                     abortBlur = false;
                 }, 0);
@@ -913,7 +913,7 @@ var jscolor = {
 
         // valueElement
         if (valueElement) {
-            var updateField = function() {
+            var updateField = function () {
                 THIS.fromString(valueElement.value, leaveValue);
             };
             jscolor.addEvent(valueElement, 'keyup', updateField);
@@ -925,8 +925,8 @@ var jscolor = {
         // styleElement
         if (styleElement) {
             styleElement.jscStyle = {
-                backgroundColor : styleElement.style.backgroundColor,
-                color : styleElement.style.color
+                backgroundColor:styleElement.style.backgroundColor,
+                color:styleElement.style.color
             };
         }
 

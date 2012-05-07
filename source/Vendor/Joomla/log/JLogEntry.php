@@ -84,19 +84,18 @@ class JLogEntry
 	 */
 	public function __construct($message, $priority = JLog::INFO, $category = '', $date = null)
 	{
-		$this->message = (string) $message;
+		$this->message = (string)$message;
 
 		// Sanitize the priority.
-		if (!in_array($priority, $this->priorities))  //amy removed true
+		if (!in_array($priority, $this->priorities)) //amy removed true
 		{
 			$priority = JLog::INFO;
 		}
 		$this->priority = $priority;
 
 		// Sanitize category if it exists.
-		if (!empty($category))
-		{
-			$this->category = (string) strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $category));
+		if (!empty($category)) {
+			$this->category = (string)strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $category));
 		}
 
 		// Get the date as a JDate object.
