@@ -359,23 +359,12 @@ Class RouteService
 	 */
 	protected function getRouteParameters()
 	{
-		echo '<br /><br /><pre>';
-		echo 'Route<br />';
-		var_dump(Services::Registry()->get('Route'));
-		echo '</pre>';
-
 		/**  Menu Item  */
 		if (Services::Registry()->get('Route', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
 			$response = Helpers::Menuitem()->getRoute();
 			if ($response === false) {
 				Services::Error()->set(500, 'Menu Item not found');
 			}
-			echo '<br /><br /><pre>';
-			echo 'Menu Item Parameters<br />';
-			var_dump(Services::Registry()->get('MenuitemParameters'));
-			echo 'Metadata<br />';
-			var_dump(Services::Registry()->get('MenuitemMetadata'));
-			echo '</pre>';
 		}
 
 		/**  Content */
@@ -383,47 +372,78 @@ Class RouteService
 		if ($response === false) {
 			Services::Error()->set(500, 'Content Item not found');
 		}
-		echo '<br /><br /><pre>';
-		echo 'Content<br />';
+
+		/**  Extension */
+		$response = Helpers::Extension()->getRoute(Services::Registry()->get('Content', 'extension_instance_id'));
+		if ($response === false) {
+			Services::Error()->set(500, 'Extension not found');
+		}
+
+		/**  Primary Category  */
+		if ((int)Services::Registry()->get('Route', 'primary_category_id') == 0) {
+		} else {
+			Helpers::Content()->getRouteCategory();
+		}
+
+		/** Theme  */
+		Helpers::Theme()->get();
+
+		/** Page  */
+		Helpers::View()->get('Page');
+
+		return;
+
+		echo '<br /><br />Route<br /><pre>';
+		var_dump(Services::Registry()->get('Route'));
+		echo '</pre>';
+
+		echo '<br /><br />Menu Item<br /><pre>';
+		var_dump(Services::Registry()->get('Menuitem'));
+		echo '<br />Menu Item Parameters<br />';
+		var_dump(Services::Registry()->get('MenuitemParameters'));
+		echo '<br />Metadata<br />';
+		var_dump(Services::Registry()->get('MenuitemMetadata'));
+		echo '</pre>';
+
+		echo '<br /><br />Content<br /><pre>';
 		echo 'table ' . Services::Registry()->get('Route', 'source_table') . '<br />';
-		echo 'id ' . Services::Registry()->get('Route', 'source_id') . '<br />';
+		echo 'id ' . Services::Registry()->get('Route', 'source_id') . '<br /><pre>';
 		var_dump(Services::Registry()->get('Content'));
-		echo 'Content Parameters<br />';
+		echo 'Parameters<br />';
 		var_dump(Services::Registry()->get('ContentParameters'));
 		echo 'Metadata<br />';
 		var_dump(Services::Registry()->get('ContentMetadata'));
 		echo '</pre>';
 
-		/**  Extension */
-		$response = Helpers::Extension()->getRoute(
-			Services::Registry()->get('Content', 'extension_instance_id')
-		);
-		if ($response === false) {
-			Services::Error()->set(500, 'Extension not found');
-		}
-		echo '<br /><br /><pre>';
-		echo 'Extension Parameters<br />';
-		echo 'id ' . Services::Registry()->get('Route', 'extension_instances_id') . '<br />';
+		echo '<br /><br />Extension<br /><pre>';
+		echo 'id ' . Services::Registry()->get('Route', 'extension_instances_id') . '<br /><pre>';
+		var_dump(Services::Registry()->get('Extension'));
+		echo 'Parameters<br />';
 		var_dump(Services::Registry()->get('ExtensionParameters'));
+		echo 'Custom Fields<br />';
+		var_dump(Services::Registry()->get('ExtensionCustomfields'));
 		echo 'Metadata<br />';
 		var_dump(Services::Registry()->get('ExtensionMetadata'));
 		echo '</pre>';
 
-		/**  Primary Category  */
-		if ((int)Services::Registry()->get('Route', 'primary_category_id') == 0) {
-		} else {
-			echo 'id ' . Services::Registry()->get('Route', 'primary_category_id') . '<br />';
-			Helpers::Content()->getRouteCategory();
-			echo '<br /><br /><pre>';
-			echo 'Categories Parameters<br />';
-			var_dump(Services::Registry()->get('CategoryParameters'));
-			echo 'Metadata<br />';
-			var_dump(Services::Registry()->get('CategoryMetadata'));
-			echo '</pre>';
-		}
+		echo '<br /><br />Primary Category<br /><pre>';
+		echo 'id ' . Services::Registry()->get('Route', 'primary_category_id') . '<br /><pre>';
+		var_dump(Services::Registry()->get('Category'));
+		echo 'Parameters<br /><pre>';
+		var_dump(Services::Registry()->get('CategoryParameters'));
+		echo 'Metadata<br />';
+		var_dump(Services::Registry()->get('CategoryMetadata'));
+		echo '</pre>';
 
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Route'));
-		die;
+
+		echo '<br /><br />Theme<br /><pre>';
+		var_dump(Services::Registry()->get('Theme'));
+		echo '<br /><br />Parameters<br /><pre>';
+		var_dump(Services::Registry()->get('ThemeParameters'));
+		echo '<br /><br />Custom Fields<br /><pre>';
+		var_dump(Services::Registry()->get('ThemeCustomfields'));
+		echo '<br /><br />Metadata<br /><pre>';
+		var_dump(Services::Registry()->get('ThemeMetadata'));
+		echo '</pre>';
 	}
 }

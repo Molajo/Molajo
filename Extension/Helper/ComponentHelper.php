@@ -43,16 +43,6 @@ Class ComponentHelper
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * get
 	 *
 	 * @return  array

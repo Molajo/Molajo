@@ -60,12 +60,17 @@ Class ExtensionHelper
 
 		Services::Registry()->set('Extension', 'id', (int)$row->id);
 		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->id);
-		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
 		Services::Registry()->set('Extension', 'title', $row->title);
-		Services::Registry()->set('Extension', 'parameters', $row->parameters);
-		Services::Registry()->set('Extension', 'metadata', $row->metadata);
+		Services::Registry()->set('Extension', 'translation_of_id', $row->translation_of_id);
+		Services::Registry()->set('Extension', 'language', $row->language);
+		Services::Registry()->set('Extension', 'view_group_id', $row->view_group_id);
+		Services::Registry()->set('Extension', 'catalog_id', $row->catalog_id);
+		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set('Extension', 'catalog_type_title', $row->catalog_type_title);
 
-		$xml = Services::Configuration()->loadFile(ucfirst(strtolower($row->title)), 'Table');
+		/** Load special fields for specific extension */
+		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
+		$row = Services::Configuration()->addSpecialFields($xml->extension, $row, 1);
 
 		return;
 	}
@@ -88,10 +93,10 @@ Class ExtensionHelper
 
 		$m->model->set('id', (int)$extension_id);
 
-		$m->model->set('get_special_fields', 0);
+		$m->model->set('get_special_fields', 1);
 		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
-		$m->model->set('add_acl_check', true);
+		$m->model->set('add_acl_check', false);
 
 		/**
 		 *  a. Extensions Instances Table
@@ -101,6 +106,8 @@ Class ExtensionHelper
 		$m->model->query->select($m->model->db->qn('a.title'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
 		$m->model->query->select($m->model->db->qn('a.metadata'));
+		$m->model->query->select($m->model->db->qn('a.custom_fields'));
+		$m->model->query->select($m->model->db->qn('a.translation_of_id'));
 		$m->model->query->select($m->model->db->qn('a.language'));
 
 		$m->model->query->from($m->model->db->qn('#__extension_instances') . ' as a');
@@ -114,7 +121,6 @@ Class ExtensionHelper
 		);
 
 		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
-
 		$m->model->query->where('(' . $m->model->db->qn('a.start_publishing_datetime') . ' = ' .
 				$m->model->db->q($m->model->nullDate) .
 				' OR ' . $m->model->db->qn('a.start_publishing_datetime') . ' <= ' . $m->model->db->q($m->model->now) . ')'

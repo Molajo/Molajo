@@ -24,9 +24,9 @@
     <service>Authorisation</service>
     <service>Asset</service>
     <service>Image</service>
-    <service>Filter</service>
     <service>Url</service>
     <service>Text</service>
     <service>Mail</service>
     <service>Event</service>
+    <service>Filter</service>
 </services>

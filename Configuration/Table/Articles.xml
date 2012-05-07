@@ -32,11 +32,67 @@
             <element name="metadata_author" filter="char" null="1" default=""/>
             <element name="metadata_content_rights" filter="char" null="1" default=""/>
         </field>
-        <field name="extension_parameters" registry="ExtensionParameters">
+    </fields>
+    <foreignkeys include="ContentForeignkeys"/>
+    <triggers include="ContentTriggers"/>
+    <category>
+        <field name="custom_fields" registry="CategoryCustomfields">
+            <element name="custom_fields" filter="char" null="0" default="This is a category custom field." values=""/>
+        </field>
+        <field name="parameters" registry="CategoryParameters">
+            <element name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
+
+            <element name="theme_id" filter="integer" null="1" default="" values=""/>
+
+            <element name="page_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="page_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="page_view_css_class" filter="char" null="1" default="" values=""/>
+
+            <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_items_template_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="default_items_template_view_css_class" filter="char" null="1" default="" values=""/>
+
+            <element name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_items_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="default_items_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+
+            <element name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_item_template_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="default_item_template_view_css_class" filter="char" null="1" default="" values=""/>
+
+            <element name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_item_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="default_item_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+
+            <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_edit_template_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="default_edit_template_view_css_class" filter="char" null="1" default="edit article" values=""/>
+
+            <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="default_edit_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+            <element name="default_edit_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+
+            <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="cache_time" filter="integer" null="1" default="15" values=""/>
+            <element name="cache_handler" filter="char" null="1" default="" values=""/>
+        </field>
+        <field name="metadata" registry="CategoryMetadata">
+            <element name="metadata_title" filter="char" null="0" default=""/>
+            <element name="metadata_description" filter="text" null="0" default=""/>
+            <element name="metadata_keywords" filter="char" null="1" default=""/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index" values="follow,nofollow,index,noindex"/>
+            <element name="metadata_author" filter="char" null="1" default=""/>
+            <element name="metadata_content_rights" filter="char" null="1" default=""/>
+        </field>
+    </category>
+    <extension>
+        <field name="custom_fields" registry="ExtensionCustomfields">
+            <element name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
+        </field>
+        <field name="parameters" registry="ExtensionParameters">
             <element name="display_title" filter="char" null="0" default=""/>
             <element name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000"
-                     hidden="true"/>
+            <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000" hidden="true"/>
             <element name="default_theme_id" filter="integer" null="1" default="" values=""/>
             <element name="default_page_view_id" filter="integer" null="1" default="" values=""/>
             <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
@@ -49,7 +105,13 @@
             <element name="cache_time" filter="integer" null="1" default="15" values=""/>
             <element name="cache_handler" filter="char" null="1" default="" values=""/>
         </field>
-    </fields>
-    <foreignkeys include="ContentForeignkeys"/>
-    <triggers include="ContentTriggers"/>
+        <field name="metadata" registry="ExtensionMetadata">
+            <element name="metadata_title" filter="char" null="0" default=""/>
+            <element name="metadata_description" filter="text" null="0" default=""/>
+            <element name="metadata_keywords" filter="char" null="1" default=""/>
+            <element name="metadata_robots" filter="char" null="0" default="follow,index" values="follow,nofollow,index,noindex"/>
+            <element name="metadata_author" filter="char" null="1" default=""/>
+            <element name="metadata_content_rights" filter="char" null="1" default=""/>
+        </field>
+    </extension>
 </model>

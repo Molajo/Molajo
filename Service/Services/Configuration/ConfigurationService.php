@@ -274,10 +274,10 @@ Class ConfigurationService
 			return $xml;
 		}
 
-		/** Process Include Code */
+		/** Table only: Process Include Code */
 		$xml_string = '';
 
-		/** <filters include="value">  */
+		/** <filters include="XYZ">  */
 		$include = '';
 		$filters = $xml->filters;
 		$include = (string)$filters['include'];
@@ -287,10 +287,10 @@ Class ConfigurationService
 				$xml_string = file_get_contents($path_and_file);
 			}
 			$replace_this = '<filters include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
+			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
 		}
 
-		/** <foreignkeys include="ContentForeignkeys"/> */
+		/** <foreignkeys include="XYZ"/> */
 		$include = '';
 		$foreignkeys = $xml->foreignkeys;
 		$include = (string)$foreignkeys['include'];
@@ -300,10 +300,10 @@ Class ConfigurationService
 				$xml_string = file_get_contents($path_and_file);
 			}
 			$replace_this = '<foreignkeys include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
+			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
 		}
 
-		/** <triggers include="ContentTrigger"/> */
+		/** <triggers include="XYZ"/> */
 		$include = '';
 		$triggers = $xml->triggers;
 		$include = (string)$triggers['include'];
@@ -313,7 +313,20 @@ Class ConfigurationService
 				$xml_string = file_get_contents($path_and_file);
 			}
 			$replace_this = '<triggers include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $replace_this, $xml_string);
+			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+		}
+
+		/** <triggers include="XYZ"/> */
+		$include = '';
+		$triggers = $xml->triggers;
+		$include = (string)$triggers['include'];
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<triggers include="' . $include . '"/>';
+			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
 		}
 
 		if ($xml_string == '') {
@@ -333,9 +346,9 @@ Class ConfigurationService
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public static function processIncludeFile($include, $replace_this, $xml_string)
+	public static function processIncludeFile($include, $type, $replace_this, $xml_string)
 	{
-		$path_and_file = CONFIGURATION_FOLDER . '/table/include/' . $include . '.xml';
+		$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
 
 		if (file_exists($path_and_file)) {
 		} else {
@@ -349,5 +362,135 @@ Class ConfigurationService
 		} catch (\Exception $e) {
 			throw new \RuntimeException ('Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage());
 		}
+	}
+	/**
+	 * addSpecialFields
+	 *
+	 * Method used in load sequence to optionally expand special fields
+	 * for Item, either into the Registry or so that the fields can be used
+	 * normally
+	 *
+	 * $param $fields xml string beginning with the fields section (literals fields, extension or category)
+	 * $data  associative array containing custom fields
+	 * $retrieval_method - 1: populate registry or 2: return as columns in $data associative array
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public static function addSpecialFields($fields, $queryResults, $retrieval_method)
+	{
+		/**
+		echo '<pre>';
+		var_dump($fields);
+		echo '</pre>';
+		 */
+		if (count($fields->field) > 0) {
+		} else {
+			return $queryResults;
+		}
+
+		/** Process each field namespace  */
+		foreach ($fields->field as $ns) {
+
+			$field_name = (string)$ns['name'];
+
+			$namespace = (string)$ns['registry'];
+
+			if ((is_array($queryResults) && isset($queryResults[$field_name]))
+				|| (is_object($queryResults) && isset($queryResults->$field_name))
+			) {
+
+				if (is_array($queryResults)) {
+					$jsonData = $queryResults[$field_name];
+				} else {
+					$jsonData = $queryResults->$field_name;
+				}
+
+				$custom_field = json_decode($jsonData);
+
+				$elementArray = array();
+
+				/** Place field names into named pair array */
+				$lookup = array();
+
+				if (count($custom_field) > 0) {
+					foreach ($custom_field as $key => $value) {
+						$lookup[$key] = $value;
+					}
+				}
+
+				if (count($ns->element) > 0) {
+
+					foreach ($ns->element as $element) {
+
+						$name = (string)$element['name'];
+						$name = strtolower($name);
+						$dataType = (string)$element['filter'];
+						$null = (string)$element['null'];
+						$default = (string)$element['default'];
+						$values = (string)$element['values'];
+
+						if ($default == '') {
+							$default = null;
+						}
+
+						/** Use value, if exists, or defined default */
+						if (isset($lookup[$name])) {
+							$setValue = $lookup[$name];
+						} else {
+							$setValue = $default;
+						}
+
+						/** Filter Input and Save the Registry */
+						//$set = $this->filterInput($name, $set, $dataType, $null, $default);
+
+						if ($retrieval_method == 2) {
+							if (is_array($queryResults)) {
+								$queryResults[$name] = $setValue;
+							} else {
+								$queryResults->$name = $setValue;
+							}
+						} else {
+							Services::Registry()->set($namespace, $name, $setValue);
+						}
+					}
+				}
+			}
+		}
+
+		return $queryResults;
+	}
+
+	/**
+	 * filterInput
+	 *
+	 * @param   string  $name         Name of input field
+	 * @param   string  $field_value  Value of input field
+	 * @param   string  $dataType     Datatype of input field
+	 * @param   int     $null         0 or 1 - is null allowed
+	 * @param   string  $default      Default value, optional
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	protected function filterInput(
+		$name, $value, $dataType, $null = null, $default = null)
+	{
+
+		try {
+			$value = Services::Filter()
+				->filter(
+				$value,
+				$dataType,
+				$null,
+				$default
+			);
+
+		} catch (\Exception $e) {
+			//todo: errors
+			echo $e->getMessage() . ' ' . $name;
+		}
+
+		return $value;
 	}
 }
