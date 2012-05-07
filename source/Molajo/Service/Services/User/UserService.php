@@ -77,7 +77,7 @@ Class UserService
 		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', false);
 
-		$results = $m->execute('load');
+		$results = $m->getData('load');
 
 		if ($results === false) {
 			throw new \RuntimeException ('Application setSiteData() query problem');

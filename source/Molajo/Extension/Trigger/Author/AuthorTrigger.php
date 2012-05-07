@@ -71,7 +71,7 @@ class AuthorTrigger extends ContentTrigger
 		$m->model->set('add_acl_check', false);
 		$m->model->set('get_item_children', false);
 
-		$results = $m->execute('load');
+		$results = $m->getData('load');
 
 		if ($results == false) {
 			return;

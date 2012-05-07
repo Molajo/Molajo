@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class UpdateController extends Controller
+class ItemController extends Controller
 {
 
 	/**
@@ -131,7 +131,7 @@ class UpdateController extends Controller
 			} catch (Exception $e) {
 				$valid = false;
 
-				Services::Debug()->set('UpdateController::load Failed');
+				Services::Debug()->set('ItemController::load Failed');
 				Services::Debug()->set('Model: ' . $this->model->name . ' ID: ' . $this->id);
 
 				Services::Message()
@@ -201,14 +201,14 @@ class UpdateController extends Controller
 							$type = MESSAGE_TYPE_ERROR
 						);
 
-						Services::Debug()->set('UpdateController::filter_and_validate Filter Failed' . ' ' . $message);
+						Services::Debug()->set('ItemController::filter_and_validate Filter Failed' . ' ' . $message);
 
 					}
 				}
 			}
 		}
 
-		Services::Debug()->set('UpdateController::filter_and_validate Filter::Success: ' . $valid);
+		Services::Debug()->set('ItemController::filter_and_validate Filter::Success: ' . $valid);
 
 		/** Helper Functions */
 		if (isset($v->helpers->helper)) {
@@ -226,13 +226,13 @@ class UpdateController extends Controller
 						$type = MESSAGE_TYPE_ERROR
 					);
 
-					Services::Debug()->set('UpdateController::filter_and_validate Helper Failed' . ' ' . $message);
+					Services::Debug()->set('ItemController::filter_and_validate Helper Failed' . ' ' . $message);
 
 				}
 			}
 		}
 
-		Services::Debug()->set('UpdateController::filter_and_validate Helper::Success: ' . $valid);
+		Services::Debug()->set('ItemController::filter_and_validate Helper::Success: ' . $valid);
 
 		/** Foreign Keys */
 		if (isset($v->fks->fk)) {
@@ -255,12 +255,12 @@ class UpdateController extends Controller
 						$type = MESSAGE_TYPE_ERROR
 					);
 
-					Services::Debug()->set('UpdateController::filter_and_validate FKs Failed' . ' ' . $message);
+					Services::Debug()->set('ItemController::filter_and_validate FKs Failed' . ' ' . $message);
 				}
 			}
 		}
 
-		Services::Debug()->set('UpdateController::Validate FK::Success: ' . $valid);
+		Services::Debug()->set('ItemController::Validate FK::Success: ' . $valid);
 
 		return $valid;
 	}
@@ -316,7 +316,7 @@ class UpdateController extends Controller
 										  $required, $message)
 	{
 
-		Services::Debug()->set('UpdateController::validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
+		Services::Debug()->set('ItemController::validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
 
 		if ($this->model->row->$name == 0
 			&& $required == 0

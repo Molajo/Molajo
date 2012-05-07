@@ -383,55 +383,6 @@ class Model
 	}
 
 	/**
-	 * getCustomfieldFieldNames
-	 *
-	 * Retrieves custom_field column names for specific model
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public function getCustomfieldFieldNames()
-	{
-	}
-
-	/**
-	 * getMetadataFieldNames
-	 *
-	 * Retrieves metadata column names for specific model
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public function getMetadataFieldNames()
-	{
-	}
-
-	/**
-	 * getParameterFieldNames
-	 *
-	 * Retrieves parameter column names for specific model
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public function getParameterFieldNames()
-	{
-	}
-
-	/**
-	 * getProperties
-	 *
-	 * Returns an associative array of object properties.
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function getProperties()
-	{
-		return get_object_vars($this);
-	}
-
-	/**
 	 *  Read Methods
 	 */
 
@@ -508,10 +459,10 @@ class Model
 	}
 
 	/**
-	 * getLoadAdditionalData
+	 * addItemChildren
 	 *
 	 * Method used in load sequence to optionally append additional
-	 * data elements to a specific item
+	 * query result objects to to a specific item
 	 *
 	 * @return array
 	 * @since  1.0

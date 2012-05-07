@@ -121,7 +121,7 @@ class ItemListTrigger extends ContentTrigger
 						)
 					);
 				}
-				$results = $m->execute('loadRowList');
+				$results = $m->getData('loadRowList');
 
 			} else {
 				$results = Services::Trigger()->get($trigger);

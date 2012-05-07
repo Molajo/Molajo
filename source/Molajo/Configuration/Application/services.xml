@@ -10,7 +10,6 @@
     <service>Configuration</service>
     <service>Log</service>
     <service>Request</service>
-    <service>Parse</service>
     <service>Route</service>
     <service>Cookie</service>
     <service>Session</service>
@@ -29,4 +28,9 @@
     <service>Mail</service>
     <service>Event</service>
     <service>Filter</service>
+    <service>Parse</service>
+    <service>Password</service>
+    <service>Authentication</service>
+    <service>Cache</service>
+    <service>Install</service>
 </services>

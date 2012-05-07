@@ -138,7 +138,7 @@ Class ModelService
 	 *
 	 * @param  string  $table
 	 *
-	 * @return void
+	 * @return object
 	 *
 	 * @since   1.0
 	 * @throws \RuntimeException
@@ -194,7 +194,7 @@ Class ModelService
 	 *
 	 * @param   $table
 	 *
-	 * @return  void
+	 * @return  object
 	 * @throws  \RuntimeException
 	 */
 	protected function setModelTable($table)
@@ -221,7 +221,7 @@ Class ModelService
 			$this->dbDriver = $this->default_dbDriver;
 		}
 
-		return;
+		return $this;
 	}
 
 	/**
@@ -235,7 +235,7 @@ Class ModelService
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function execute($query_object = 'loadObjectList')
+	public function getData($query_object = 'loadObjectList')
 	{
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
@@ -243,13 +243,11 @@ Class ModelService
 		}
 
 		try {
-			$results = $this->model->$query_object();
+			return $this->model->$query_object();
 		}
 
 		catch (\Exception $e) {
 			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
 		}
-
-		return $results;
 	}
 }

@@ -8,23 +8,19 @@ c. Registry (Parameters - like head and footer and the grid)
 
 2. Migrate Module models Model Service and above DBO's
 
-=> Only Molajo Models will be EntryModel, DisplayModel, ItemModel, and Model
+3. Includers - update for new formats (create new tag, formfields)
 
-3. Parser - update for new formats
+4. Controller - update for new formats - first Display, later Updates
+Controllers => EntryController, DisplayController, ListController, ItemController, and Controller
 
-4. Includers - update for new formats (create new tag, formfields)
+5. Model - update for new formats - first Display, later updates
+Models => EntryModel, DisplayModel, ItemModel, and Model
 
-5. Controller(Display) - update for new formats
+6. Triggers - get all data access triggers working
 
 * * * * Services Layer (Middleware) * * * *
 
-AssetService - JS and CSS; interface with minimizers, etc.
-
-AuthenticationService - Events for Login, etc
-
-FilterService - get HTML Purifier back in with namespaces
-
-* * * * NOTES * * * *
+* * * * DOUBLE-CHECK * * * *
 
 Manifest.xml => Parameters
 
