@@ -7,15 +7,13 @@
 namespace Molajo\Service\Services\Route;
 
 use Molajo\Application;
-
 use Molajo\Service\Services;
-
 use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
 
 /**
- * Route
+ * Route Service
  *
  * @package    Molajo
  * @subpackage Route
@@ -389,9 +387,10 @@ Class RouteService
 		Helpers::Theme()->get();
 
 		/** Page  */
-		Helpers::View()->get('Page');
+		Helpers::PageView()->get();
 
 		return;
+
 
 		echo '<br /><br />Route<br /><pre>';
 		var_dump(Services::Registry()->get('Route'));
@@ -444,6 +443,16 @@ Class RouteService
 		var_dump(Services::Registry()->get('ThemeCustomfields'));
 		echo '<br /><br />Metadata<br /><pre>';
 		var_dump(Services::Registry()->get('ThemeMetadata'));
+		echo '</pre>';
+
+		echo '<br /><br />PageView<br /><pre>';
+		var_dump(Services::Registry()->get('PageView'));
+		echo '<br /><br />Parameters<br /><pre>';
+		var_dump(Services::Registry()->get('PageViewParameters'));
+		echo '<br /><br />Custom Fields<br /><pre>';
+		var_dump(Services::Registry()->get('PageViewCustomfields'));
+		echo '<br /><br />Metadata<br /><pre>';
+		var_dump(Services::Registry()->get('PageViewMetadata'));
 		echo '</pre>';
 	}
 }
