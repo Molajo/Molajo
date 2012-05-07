@@ -240,9 +240,8 @@ Class AuthenticationService
 	 */
 	public static function authorise($response, $options = Array())
 	{
-//        MolajoTriggerHelper::getTrigger('authentication');
-//        $dispatcher = Services::Dispatcher();
-//        $authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
+
+		$authorisations = Services::Event()->schedule('onUserAuthorisation', Array($response, $options));
 
 		$response->status = MolajoAuthentication::STATUS_SUCCESS;
 		foreach ($authorisations as $authorisation) {

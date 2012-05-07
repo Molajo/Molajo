@@ -52,7 +52,7 @@ class UpdateController extends Controller
 //        JRequest::checkToken() or die;
 
 		/** Check In Item **/
-		if ($this->get('id') == 0) {
+		if (Services::Registry()->get('Parameters', 'id') == 0) {
 		} else {
 			$results = parent::checkinItem();
 		}
@@ -75,7 +75,7 @@ class UpdateController extends Controller
 	 */
 	public function restore()
 	{
-		if ($this->parameters->get('version_management', 1) == 1) {
+		if (Services::Registry()->get('Parameters', 'version_management', 1) == 1) {
 		} else {
 			$this->redirectClass->setRedirectMessage(Services::Language()->translate('RESTORE_DISABLED_IN_CONFIGURATION'));
 			$this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
@@ -83,10 +83,10 @@ class UpdateController extends Controller
 		}
 
 		/** Model: Get Data for Restore ID **/
-		$data = $this->model->restore($this->get('id'));
+		$data = $this->model->restore(Services::Registry()->get('Parameters', 'id'));
 
 		/** Version_History: reset ids to point to current row **/
-		JRequest::setVar('from_id', $this->get('id'));
+		JRequest::setVar('from_id', Services::Registry()->get('Parameters', 'id'));
 		JRequest::setVar('id', $data->id);
 		$this->set('id', $data->id);
 		$this->model->reset();
@@ -111,16 +111,16 @@ class UpdateController extends Controller
 
 		/** Model: Get Data for Copy ID **/
 		if ($task == 'copy') {
-			$data = $this->model->copy($this->get('id'), $this->batch_category_id);
+			$data = $this->model->copy(Services::Registry()->get('Parameters', 'id'), $this->batch_category_id);
 
 			/** reset ids to point to current row **/
-			JRequest::setVar('from_id', $this->get('id'));
+			JRequest::setVar('from_id', Services::Registry()->get('Parameters', 'id'));
 			JRequest::setVar('id', 0);
 
 			$this->set('id', 0);
 			$this->model->reset();
 		} else {
-			$data = $this->model->move($this->get('id'), $this->batch_category_id);
+			$data = $this->model->move(Services::Registry()->get('Parameters', 'id'), $this->batch_category_id);
 		}
 
 		return $this->saveItem($data, 'save');
@@ -242,8 +242,8 @@ class UpdateController extends Controller
 		$context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task . '.' . JRequest::getInt('datakey');
 
 		/** Edit: verify checkout **/
-		if ((int)$this->get('id')) {
-			$results = $this->verifyCheckout($this->get('id'));
+		if ((int)Services::Registry()->get('Parameters', 'id')) {
+			$results = $this->verifyCheckout(Services::Registry()->get('Parameters', 'id'));
 			if ($results === false) {
 				return $this->redirectClass->setSuccessIndicator(false);
 			}
@@ -332,8 +332,8 @@ class UpdateController extends Controller
 			return $this->redirectClass->setSuccessIndicator(false);
 		}
 
-		$this->get('id', (int)$results);
-		$validData->id = $this->get('id');
+		Services::Registry()->get('Parameters', 'id', (int)$results);
+		$validData->id = Services::Registry()->get('Parameters', 'id');
 
 		/** Event: onContentSaveForm **/
 		/** Molajo_Note: New Event onContentSaveForm follows primary content save to keep data insync **/
@@ -349,7 +349,7 @@ class UpdateController extends Controller
 		if ($this->existing_status == $validData->status || $this->isNew) {
 		} else {
 			/** Event: onContentChangeState **/
-			$this->dispatcher->trigger('onContentChangeState', array($context, $this->get('id'), $validData->status));
+			$this->dispatcher->trigger('onContentChangeState', array($context, Services::Registry()->get('Parameters', 'id'), $validData->status));
 		}
 
 		/** Version_History: maintain count **/
@@ -378,7 +378,7 @@ class UpdateController extends Controller
 			$this->redirectClass->setRedirectMessage(Services::Language()->translate('SAVE_SUCCESSFUL'));
 		}
 
-		JRequest::setVar('id', $this->get('id'));
+		JRequest::setVar('id', Services::Registry()->get('Parameters', 'id'));
 		$this->redirectClass->setRedirectMessageType('message');
 		return $this->redirectClass->setSuccessIndicator(true);
 	}
@@ -424,7 +424,7 @@ class UpdateController extends Controller
 		}
 
 		/** Model: delete **/
-		$results = $this->model->delete($this->get('id'));
+		$results = $this->model->delete(Services::Registry()->get('Parameters', 'id'));
 		if ($results === false) {
 			return $this->redirectClass->setSuccessIndicator(false);
 		}

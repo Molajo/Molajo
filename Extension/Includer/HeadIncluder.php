@@ -50,16 +50,16 @@ Class HeadIncluder extends Includer
 	 */
 	protected function getApplicationDefaults()
 	{
-		$this->set('model', 'HeadModel');
-		$this->set('task', 'display');
+		Services::Registry()->set('Parameters', 'model', 'HeadModel');
+		Services::Registry()->set('Parameters', 'task', 'display');
 
-		if ((int)$this->get('template_view_id', 0) == 0) {
-			$this->set('template_view_id',
+		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+			Services::Registry()->set('Parameters', 'template_view_id',
 				Services::Registry()->get('Configuration', 'head_template_view_id', 'DocumentHead'));
 		}
 
-		if ((int)$this->get('wrap_view_id', 0) == 0) {
-			$this->set('wrap_view_id',
+		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+			Services::Registry()->set('Parameters', 'wrap_view_id',
 				Services::Registry()->get('Configuration', 'head_wrap_view_id', 'none'));
 		}
 

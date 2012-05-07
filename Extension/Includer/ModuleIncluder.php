@@ -31,7 +31,7 @@ Class ModuleIncluder extends Includer
 	 */
 	protected function getExtension()
 	{
-		$this->set(
+		Services::Registry()->set('Parameters',
 			'extension_catalog_type_id',
 			CATALOG_TYPE_EXTENSION_MODULE
 		);
@@ -40,18 +40,18 @@ Class ModuleIncluder extends Includer
 		if ($results === false) {
 			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 				Services::Debug()->set('ModuleIncluder::getExtension');
-				Services::Debug()->set('Module not found: ' . $this->get('extension_instance_name'));
+				Services::Debug()->set('Module not found: ' . Services::Registry()->get('Parameters', 'extension_instance_name'));
 			}
 			return false;
 		}
 
-		$this->set(
+		Services::Registry()->set('Parameters',
 			'extension_path',
 			ModuleHelper::getPath(
-				strtolower($this->get('extension_instance_name')))
+				strtolower(Services::Registry()->get('Parameters', 'extension_instance_name')))
 		);
 
-		$this->set('extension_type', 'module');
+		Services::Registry()->set('Parameters', 'extension_type', 'module');
 
 		return true;
 	}
@@ -66,21 +66,21 @@ Class ModuleIncluder extends Includer
 	protected function importClasses()
 	{
 		$load = new LoadHelper();
-		$name = ucfirst($this->get('extension_instance_name'));
+		$name = ucfirst(Services::Registry()->get('Parameters', 'extension_instance_name'));
 		$name = str_replace(array('-', '_'), '', $name);
 		$name = 'Molajo' . $name;
 
 		/** Controller */
-		if (file_exists($this->get('extension_path') . '/controller.php')) {
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . '/controller.php')) {
 			$load->requireClassFile(
-				$this->get('extension_path') . '/controller.php',
+				Services::Registry()->get('Parameters', 'extension_path') . '/controller.php',
 				$name . 'ModuleController');
 		}
 
 		/** Model */
-		if (file_exists($this->get('extension_path') . '/model.php')) {
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . '/model.php')) {
 			$load->requireClassFile(
-				$this->get('extension_path') . '/model.php',
+				Services::Registry()->get('Parameters', 'extension_path') . '/model.php',
 				$name . 'ModuleModel');
 		}
 	}
@@ -96,8 +96,8 @@ Class ModuleIncluder extends Includer
 	protected function loadMedia()
 	{
 		parent::loadMedia(
-			EXTENSIONS_MODULES_URL . '/' . $this->get('extension_instance_name'),
-			SITE_MEDIA_URL . '/' . $this->get('extension_instance_name'),
+			EXTENSIONS_MODULES_URL . '/' . Services::Registry()->get('Parameters', 'extension_instance_name'),
+			SITE_MEDIA_URL . '/' . Services::Registry()->get('Parameters', 'extension_instance_name'),
 			Services::Registry()->get('Configuration', 'media_priority_module', 400)
 		);
 	}
