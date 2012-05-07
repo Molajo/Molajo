@@ -251,8 +251,16 @@ Class ConfigurationService
 	 */
 	public static function loadFile($file, $type = 'Application')
 	{
-		if ($type == 'Application' || $type == 'Table') {
+		if ($type == 'Application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
+
+		} else if ($type == 'Table') {
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
+			}
+
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
 		}

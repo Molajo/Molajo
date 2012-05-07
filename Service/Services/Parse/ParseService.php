@@ -138,27 +138,6 @@ Class ParseService
 			$this->sequence[] = (string)$next;
 		}
 
-		/** Theme Parameters */
-		var_dump(Services::Registry()->get('theme'));
-		die;
-		$themeParameters = Services::Registry()->get('Theme', 'Parameters');
-
-		Services::Registry()->loadArray('theme',
-			array(
-				'theme' => Services::Registry()->get('Request', 'theme_name'),
-				'theme_path' => Services::Registry()->get('Request', 'theme_path') . '/' . 'index.php',
-				'page' => Services::Registry()->get('Request', 'page_view_include'),
-				'parameters' => Services::Registry()->get('Request', 'theme_parameters')
-			)
-		);
-
-		$helperFile = Services::Registry()->get('Request', 'theme_path') . '/helpers/theme.php';
-
-		if (file_exists($helperFile)) {
-			require_once $helperFile;
-			$helperClass = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'theme_name')) . 'ThemeHelper';
-		}
-
 		/** Before Event */
 		// Services::Dispatcher()->notify('onBeforeRender');
 
@@ -206,20 +185,19 @@ Class ParseService
 	}
 
 	/**
-	 *  renderLoop
+	 * renderLoop
 	 *
-	 * Parse the Theme and Page View, and then rendered output, for
-	 *  <include:type statements
+	 * Parse the Theme and Page View, and then rendered output, for <include:type statements
 	 *
-	 * @return string  $body     Rendered output for the Response Head and Body
-	 * @since  1.0
+	 * @return  string  $body  Rendered output for the Response Head and Body
+	 * @since   1.0
 	 */
 	protected function renderLoop($body = null)
 	{
 		/** initial run: start with theme and page */
 		if ($body == null) {
 			ob_start();
-			require $this->parameters->get('theme_path');
+			require Services::Registry()->get('Theme', 'path_include');
 			$this->rendered_output = ob_get_contents();
 			ob_end_clean();
 
@@ -266,10 +244,7 @@ Class ParseService
 		$this->include_request = array();
 		$i = 0;
 
-		preg_match_all('#<include:(.*)\/>#iU',
-			$this->rendered_output,
-			$matches
-		);
+		preg_match_all('#<include:(.*)\/>#iU', $this->rendered_output, $matches);
 
 		if (count($matches) == 0) {
 			return;
@@ -288,7 +263,6 @@ Class ParseService
 					$includerType = $part;
 					$this->include_request[$i]['name'] = $includerType;
 					$this->include_request[$i]['replace'] = $includeStatement;
-
 
 				} else {
 
@@ -353,7 +327,9 @@ Class ParseService
 					$replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
 					/** 6. call the includer class */
-					$class = 'Includer' . ucfirst($includerType);
+					$class = 'Molajo\\Extension\\Includer\\';
+					$class .= ucfirst($includerType) . 'Includer';
+
 					if (class_exists($class)) {
 						$rc = new $class ($includerType, $includeName);
 					} else {

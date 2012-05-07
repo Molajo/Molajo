@@ -2,21 +2,20 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension\Includer;
 
-defined('MOLAJO') or die;
-
+use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
-use Molajo\Application\Request;
-use Molajo\Extension\Helper\ExtensionHelper;
-use Molajo\Extension\Helper\ThemeHelper;
+use Molajo\Extension\Includer;
+
+defined('MOLAJO') or die;
 
 /**
  * Theme
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Includer
  * @since       1.0
  */
@@ -40,7 +39,7 @@ Class ThemeIncluder extends Includer
 		$this->type = $type;
 
 		$this->parameters = Services::Registry()->initialise();
-		$this->parameters->set('suppress_no_results', 0);
+		Services::Registry()->set('Parameters', 'suppress_no_results', 0);
 	}
 
 	/**
@@ -55,22 +54,22 @@ Class ThemeIncluder extends Includer
 	 */
 	public function process($attributes = array())
 	{
-		$this->_loadMetadata();
-		$this->_loadLanguage();
-		$this->_loadMedia();
+		$this->loadMetadata();
+		$this->loadLanguage();
+		$this->loadMedia();
 
 		return;
 	}
 
 	/**
-	 * _loadMetadata
+	 * loadMetadata
 	 *
 	 * Loads Metadata values into Services::Document Metadata array
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _loadMetadata()
+	protected function loadMetadata()
 	{
 		if (Services::Registry()->get('Request', 'status_error') == true) {
 
@@ -104,14 +103,14 @@ Class ThemeIncluder extends Includer
 	}
 
 	/**
-	 * _loadLanguage
+	 * loadLanguage
 	 *
 	 * Loads Language Files for extension
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _loadLanguage()
+	protected function loadLanguage()
 	{
 		/** theme */
 		ExtensionHelper::loadLanguage(
@@ -125,25 +124,25 @@ Class ThemeIncluder extends Includer
 	}
 
 	/**
-	 * _loadMedia
+	 * loadMedia
 	 *
 	 * Loads Media Files for Site, Application, User, and Theme
 	 *
 	 * @return  boolean  True, if the file has successfully loaded.
 	 * @since   1.0
 	 */
-	protected function _loadMedia()
+	protected function loadMedia()
 	{
 		/**  Site */
-		$this->_loadMediaPlus('',
+		$this->loadMediaPlus('',
 			Services::Registry()->get('Configuration', 'media_priority_site', 100));
 
 		/** Application */
-		$this->_loadMediaPlus('/application' . APPLICATION,
+		$this->loadMediaPlus('/application' . APPLICATION,
 			Services::Registry()->get('Configuration', 'media_priority_application', 200));
 
 		/** User */
-		$this->_loadMediaPlus('/user' .
+		$this->loadMediaPlus('/user' .
 				Services::User()
 					->get('id'),
 			Services::Registry()->get('Configuration', 'media_priority_user', 300));
@@ -165,7 +164,7 @@ Class ThemeIncluder extends Includer
 		}
 
 		/** Theme */
-		$this->_loadMediaPlus('',
+		$this->loadMediaPlus('',
 			Services::Registry()->get('Configuration', 'media_priority_site', 100));
 
 		$priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
@@ -189,14 +188,14 @@ Class ThemeIncluder extends Includer
 	}
 
 	/**
-	 * _loadMediaPlus
+	 * loadMediaPlus
 	 *
 	 * Loads Media Files for Site, Application, User, and Theme
 	 *
 	 * @return  boolean  True, if the file has successfully loaded.
 	 * @since   1.0
 	 */
-	protected function _loadMediaPlus($plus = '', $priority = 500)
+	protected function loadMediaPlus($plus = '', $priority = 500)
 	{
 		/** Site Specific: Application */
 		$file_path = SITE_MEDIA_FOLDER . '/' . $plus;

@@ -12,7 +12,7 @@ use Molajo\Extension\Helpers;
 defined('MOLAJO') or die;
 
 /**
- * ContentHelper
+ * Content Helper
  *
  * @package      Molajo
  * @subpackage   Helper
@@ -44,7 +44,7 @@ Class ContentHelper
 	}
 
 	/**
-	 * Retrieve Route information for a specific Menu Item
+	 * Retrieve Route information for a specific Content Item
 	 * identified in the Catalog as the request
 	 *
 	 * @return    boolean
@@ -65,6 +65,7 @@ Class ContentHelper
 
 		Services::Registry()->set('Content', 'id', (int)$row['id']);
 		Services::Registry()->set('Content', 'extension_instance_id', (int)$row['extension_instance_id']);
+		Services::Registry()->set('Content', 'extension_catalog_type_id', (int)$row['extension_catalog_type_id']);
 		Services::Registry()->set('Content', 'title', $row['title']);
 		Services::Registry()->set('Content', 'translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Content', 'language', (string)$row['language']);
@@ -129,6 +130,7 @@ Class ContentHelper
 		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', true);
+		$m->model->set('category_type_id', Services::Registry()->get('Route', 'catalog_type'));
 
 		$m->model->query->select($m->model->db->qn('a.id'));
 		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
@@ -159,6 +161,10 @@ Class ContentHelper
 		$m->model->query->select($m->model->db->qn('b.source_table'));
 		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b ');
 		$m->model->query->where($m->model->db->qn('b.id') . ' = ' . $m->model->db->qn('a.catalog_type_id'));
+
+		$m->model->query->select($m->model->db->qn('c.catalog_type_id') . ' as extension_catalog_type_id');
+		$m->model->query->from($m->model->db->qn('#__extension_instances') . ' as c ');
+		$m->model->query->where($m->model->db->qn('c.id') . ' = ' . $m->model->db->qn('a.extension_instance_id'));
 
 		/**
 		 *  Run Query

@@ -2,19 +2,20 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension\Includer;
 
-defined('MOLAJO') or die;
-
-use Molajo\Application\Includer;
+use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
+use Molajo\Extension\Includer;
+
+defined('MOLAJO') or die;
 
 /**
  * Message
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Includer
  * @since       1.0
  */
@@ -39,20 +40,20 @@ Class MessageIncluder extends Includer
 	}
 
 	/**
-	 *  _getApplicationDefaults
+	 *  getApplicationDefaults
 	 *
 	 *  Retrieve default values, if not provided by extension
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _getApplicationDefaults()
+	protected function getApplicationDefaults()
 	{
 		$this->set('model', 'MessagesModel');
 		$this->set('task', 'display');
 
 		$this->parameters = Services::Registry()->initialise();
-		$this->parameters->set('suppress_no_results', 1);
+		Services::Registry()->set('Parameters', 'suppress_no_results', 1);
 
 		if ((int)$this->get('template_view_id', 0) == 0) {
 			$this->set('template_view_id',

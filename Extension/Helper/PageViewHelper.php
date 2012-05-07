@@ -79,6 +79,7 @@ Class PageViewHelper
 		Services::Registry()->set('PageView', 'catalog_type_id', (int)$row->catalog_type_id);
 		Services::Registry()->set('PageView', 'catalog_type_title', $row->catalog_type_title);
 		Services::Registry()->set('PageView', 'path', $this->getPath($row->title));
+		Services::Registry()->set('PageView', 'path_include', $this->getPath($row->title) . '/index.php');
 		Services::Registry()->set('PageView', 'path_url', $this->getPathURL($row->title));
 
 		/** Load special fields for specific extension */

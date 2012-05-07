@@ -2,39 +2,37 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension\Includer;
 
-defined('MOLAJO') or die;
-
-use Molajo\Application;
-use Molajo\Application\Includer;
-use Molajo\Application\Request;
+use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
-use Molajo\Extension\Helper\ComponentHelper;
+use Molajo\Extension\Includer;
+
+defined('MOLAJO') or die;
 
 /**
  * Component
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Includer
  * @since       1.0
  */
 class ComponentIncluder extends Includer
 {
 	/**
-	 * _setRenderCriteria
+	 * setRenderCriteria
 	 *
 	 * Initialize the request object for MVC values
 	 *
 	 * @return mixed
 	 */
-	protected function _setRenderCriteria()
+	protected function setRenderCriteria()
 	{
 		if ($this->type == 'request') {
 		} else {
-			parent::_setRenderCriteria();
+			parent::setRenderCriteria();
 			return;
 		}
 
@@ -127,21 +125,21 @@ class ComponentIncluder extends Includer
 	}
 
 	/**
-	 * _getExtension
+	 * getExtension
 	 *
 	 * Retrieve extension information using either the ID or the name
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _getExtension()
+	protected function getExtension()
 	{
 		$this->set(
 			'extension_catalog_type_id',
 			CATALOG_TYPE_EXTENSION_COMPONENT
 		);
 
-		$results = parent::_getExtension();
+		$results = parent::getExtension();
 		if ($results === false) {
 			return false;
 		}
@@ -165,7 +163,7 @@ class ComponentIncluder extends Includer
 	 * @return  true
 	 * @since   1.0
 	 */
-	protected function _importClasses()
+	protected function importClasses()
 	{
 		$load = new LoadHelper();
 
@@ -236,43 +234,43 @@ class ComponentIncluder extends Includer
 	}
 
 	/**
-	 * _loadMedia
+	 * loadMedia
 	 *
 	 * Loads Media Files for Site, Application, User, and Theme
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _loadMedia()
+	protected function loadMedia()
 	{
 		/**  Primary Category */
-		$this->_loadMediaPlus('/category' . $this->get('category_id'),
+		$this->loadMediaPlus('/category' . $this->get('category_id'),
 			Services::Registry()->get('Configuration', 'media_priority_primary_category', 700));
 
 		/** Menu Item */
-		$this->_loadMediaPlus('/menuitem' . $this->get('menu_item_id'),
+		$this->loadMediaPlus('/menuitem' . $this->get('menu_item_id'),
 			Services::Registry()->get('Configuration', 'media_priority_menu_item', 800));
 
 		/** Source */
-		$this->_loadMediaPlus('/source' . $this->get('id'),
+		$this->loadMediaPlus('/source' . $this->get('id'),
 			Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
 
 		/** Component */
-		$this->_loadMediaPlus('/component' . $this->get('extension_instance_name'),
+		$this->loadMediaPlus('/component' . $this->get('extension_instance_name'),
 			Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
 
 		return true;
 	}
 
 	/**
-	 * _loadMediaPlus
+	 * loadMediaPlus
 	 *
 	 * Loads Media Files for Site, Application, User, and Theme
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _loadMediaPlus($plus = '', $priority = 500)
+	protected function loadMediaPlus($plus = '', $priority = 500)
 	{
 		/** Theme */
 		$file_path = EXTENSIONS_THEMES . '/' . $this->get('theme_name');

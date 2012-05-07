@@ -2,19 +2,20 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Extension\Includer;
 
-defined('MOLAJO') or die;
-
-use Molajo\Application\Includer;
+use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
+use Molajo\Extension\Includer;
+
+defined('MOLAJO') or die;
 
 /**
  * Head
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Includer
  * @since       1.0
  */
@@ -36,18 +37,18 @@ Class HeadIncluder extends Includer
 	{
 		$this->extension_required = false;
 		parent::__construct($name, $type, $items);
-		$this->parameters->set('html_display_filter', false);
+		Services::Registry()->set('Parameters', 'html_display_filter', false);
 	}
 
 	/**
-	 *  _getApplicationDefaults
+	 *  getApplicationDefaults
 	 *
 	 *  Retrieve default values, if not provided by extension
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _getApplicationDefaults()
+	protected function getApplicationDefaults()
 	{
 		$this->set('model', 'HeadModel');
 		$this->set('task', 'display');
@@ -63,9 +64,9 @@ Class HeadIncluder extends Includer
 		}
 
 		if ($this->type == 'defer') {
-			$this->parameters->set('defer', 1);
+			Services::Registry()->set('Parameters', 'defer', 1);
 		} else {
-			$this->parameters->set('defer', 0);
+			Services::Registry()->set('Parameters', 'defer', 0);
 		}
 
 		return true;
