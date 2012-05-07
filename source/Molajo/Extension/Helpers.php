@@ -102,7 +102,6 @@ Class Helpers
 		return Application::Helpers()->get($name . 'Helper');
 	}
 
-
 	/**
 	 * loads all helpers in the helpers folder
 	 *

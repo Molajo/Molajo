@@ -6,7 +6,6 @@
     <service>Filesystem</service>
     <service>Message</service>
     <service>JDatabase</service>
-    <service>Model</service>
     <service>Configuration</service>
     <service>Log</service>
     <service>Request</service>

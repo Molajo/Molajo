@@ -6,6 +6,7 @@
  */
 namespace Molajo\Service\Services\Configuration;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -101,7 +102,7 @@ Class ConfigurationService
 		}
 
 		/** Retrieve Sites Data from DB */
-		$m = Services::Model()->connect('Sites');
+		$m = Application::Controller()->connect('Sites');
 
 		$m->model->set('id', (int)SITE_ID);
 		$m->model->set('get_item_children', false);
@@ -200,7 +201,7 @@ Class ConfigurationService
 
 			try {
 
-				$m = Services::Model()->connect('Applications');
+				$m = Application::Controller()->connect('Applications');
 
 				$m->model->set('id_name', APPLICATION);
 				$m->model->set('name_field', 'name');

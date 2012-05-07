@@ -20,12 +20,96 @@ defined('MOLAJO') or die;
 class Controller
 {
 	/**
-	 * $model
+	 * Static instance
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $model;
+	protected static $instance;
+
+	/**
+	 * Used with Model get and set
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $model;
+
+	/**
+	 * Module Name
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $model_name;
+
+	/**
+	 * Table Name
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $table_name;
+
+	/**
+	 * Table XML
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $table_xml;
+
+	/**
+	 * Primary Key
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	protected $primary_key;
+
+	/**
+	 * DB Driver
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	protected $dbDriver;
+
+	/**
+	 * Valid DB Options
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $db_options = array(
+		'JDatabase',
+		'Text'
+	);
+
+	/**
+	 * Default DB
+	 *
+	 * @var string
+	 */
+	protected $default_dbDriver = 'JDatabase';
+
+	/**
+	 * Valid Query Object values
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $query_objects = array(
+		'load',
+		'loadResult',
+		'loadResultArray',
+		'loadRow',
+		'loadAssoc',
+		'loadObject',
+		'loadRowList',
+		'loadAssocList',
+		'loadObjectList'
+	);
 
 	/**
 	 * $resultset
@@ -55,16 +139,7 @@ class Controller
 	 */
 	public function __construct()
 	{
-		/** model */
-		$mc = (string)Services::Registry()->get('Parameters', 'model');
 
-		$this->model = new $mc();
-		$this->model->task_request = $this->task_request;
-		$this->model->parameters = $this->parameters;
-		$this->model->id = $this->task_request->get('id');
-
-		/** success **/
-		return true;
 	}
 
 	/**

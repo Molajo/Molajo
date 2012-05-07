@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 use Molajo\Extension\Helpers;
 
@@ -120,7 +121,7 @@ Class ContentHelper
 	 */
 	public function get($id, $content_table)
 	{
-		$m = Services::Model()->connect(
+		$m = Application::Controller()->connect(
 			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
 		);
 

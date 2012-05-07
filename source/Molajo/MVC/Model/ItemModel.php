@@ -6,6 +6,7 @@
  */
 namespace Molajo\MVC\Model;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
@@ -258,7 +259,7 @@ class ItemModel extends Model
 
 				$name = (string)$child['name'];
 
-				$m = Services::Model()->connect($name);
+				$m = Application::Controller()->connect($name);
 
 				$join = (string)$child['join'];
 				$joinArray = explode(';', $join);

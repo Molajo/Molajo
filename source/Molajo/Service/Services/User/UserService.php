@@ -6,6 +6,7 @@
  */
 namespace Molajo\Service\Services\User;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -69,7 +70,7 @@ Class UserService
 	 */
 	protected function load()
 	{
-		$m = Services::Model()->connect('Users');
+		$m = Application::Controller()->connect('Users');
 
 		$m->model->set('id', $this->id);
 

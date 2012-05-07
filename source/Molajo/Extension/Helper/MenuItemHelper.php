@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -126,7 +127,7 @@ Class MenuitemHelper
 	 */
 	public function get($menu_item_id)
 	{
-		$m = Services::Model()->connect('Content');
+		$m = Application::Controller()->connect('Content');
 
 		/**
 		 *  a. Content Table

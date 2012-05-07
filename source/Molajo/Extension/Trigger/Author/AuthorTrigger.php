@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Trigger\Author;
 
+use Molajo\Application;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
 defined('MOLAJO') or die;
@@ -62,7 +63,7 @@ class AuthorTrigger extends ContentTrigger
 			return;
 		}
 
-		$m = Services::Model()->connect('Users');
+		$m = Application::Controller()->connect('Users');
 
 		$m->model->set('id', $data->created_by);
 

@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -91,7 +92,7 @@ Class ExtensionHelper
 	 */
 	public function get($extension_id = 0, $catalog_type_id = 0)
 	{
-		$m = Services::Model()->connect('ExtensionInstances');
+		$m = Application::Controller()->connect('ExtensionInstances');
 
 		$m->model->set('id', (int)$extension_id);
 
@@ -192,7 +193,7 @@ Class ExtensionHelper
 	 */
 	public function getInstanceID($catalog_type_id, $title)
 	{
-		$m = Services::Model()->connect('ExtensionInstances');
+		$m = Application::Controller()->connect('ExtensionInstances');
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('title') . ' = ' . $m->model->db->q($title));
@@ -213,7 +214,7 @@ Class ExtensionHelper
 	 */
 	public function getInstanceTitle($extension_instance_id)
 	{
-		$m = Services::Model()->connect('ExtensionInstances');
+		$m = Application::Controller()->connect('ExtensionInstances');
 
 		$m->model->query->select($m->model->db->qn('title'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$extension_instance_id);
