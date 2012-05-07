@@ -75,7 +75,7 @@ Class EventService
 			Services::Debug()->set('Event: ' . $event . ' fired registration by Trigger ' . $registration);
 		}
 
-		return $this;
+		return $parameters;
 	}
 
 	/**

@@ -37,9 +37,6 @@ Class ThemeIncluder extends Includer
 	{
 		$this->name = $name;
 		$this->type = $type;
-
-		$this->parameters = Services::Registry()->initialise();
-		Services::Registry()->set('Parameters', 'suppress_no_results', 0);
 	}
 
 	/**
@@ -54,6 +51,8 @@ Class ThemeIncluder extends Includer
 	 */
 	public function process($attributes = array())
 	{
+		return;
+
 		$this->loadMetadata();
 		$this->loadLanguage();
 		$this->loadMedia();
