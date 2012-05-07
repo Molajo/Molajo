@@ -6,6 +6,7 @@
  */
 namespace Molajo\Service\Services\Authorisation;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -79,7 +80,7 @@ Class AuthorisationService
 		}
 
 		/** retrieve action key pairs */
-		$items = Services::Model()->connect('Actions')->getData('loadObjectList');
+		$items = Application::Controller()->connect('Actions')->getData('loadObjectList');
 		foreach ($items as $item) {
 			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
 		}
@@ -98,7 +99,7 @@ Class AuthorisationService
 	 */
 	public function authoriseSiteApplication()
 	{
-		$m = Services::Model()->connect('SiteApplications');
+		$m = Application::Controller()->connect('SiteApplications');
 
 		$m->model->query->select($m->model->db->qn('application_id'));
 		$m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int)SITE_ID);
@@ -254,7 +255,7 @@ Class AuthorisationService
 		/** check for permission */
 		$action_id = 3;
 
-		$m = Services::Model()->connect('GroupPermissions');
+		$m = Application::Controller()->connect('GroupPermissions');
 
 		$m->model->query->where($m->model->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int)$action_id);
@@ -298,7 +299,7 @@ Class AuthorisationService
 			return false;
 		}
 
-		$m = Services::Model()->connect('UserApplications');
+		$m = Application::Controller()->connect('UserApplications');
 
 		$m->model->query->where('application_id = ' . (int)APPLICATION_ID);
 		$m->model->query->where('user_id = ' . (int)$user_id);

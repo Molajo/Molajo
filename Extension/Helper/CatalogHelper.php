@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -128,7 +129,7 @@ Class CatalogHelper
 			}
 		}
 
-		$m = Services::Model()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog');
 
 		$m->model->set('id', (int)$catalog_id);
 		$m->model->set('get_item_children', false);
@@ -160,7 +161,7 @@ Class CatalogHelper
 	 */
 	public function getIDUsingSEFURL($sef_request)
 	{
-		$m = Services::Model()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog');
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($sef_request));
@@ -179,7 +180,7 @@ Class CatalogHelper
 	 */
 	public function getID($catalog_type_id, $source_id)
 	{
-		$m = Services::Model()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog');
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
@@ -198,7 +199,7 @@ Class CatalogHelper
 	 */
 	public function getRedirectURL($catalog_id)
 	{
-		$m = Services::Model()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog');
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int) $catalog_id);
 
@@ -227,7 +228,7 @@ Class CatalogHelper
 
 		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
 
-			$m = Services::Model()->connect('Catalog');
+			$m = Application::Controller()->connect('Catalog');
 
 			$m->model->query->select($m->model->db->qn('sef_request'));
 			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);

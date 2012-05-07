@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Trigger\ItemList;
 
+use Molajo\Application;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
 defined('MOLAJO') or die;
@@ -79,7 +80,7 @@ class ItemListTrigger extends ContentTrigger
 
 			if (trim($trigger) == '') {
 
-				$m = Services::Model()->connect($table);
+				$m = Application::Controller()->connect($table);
 
 				$m->model->set('id', $data->created_by);
 

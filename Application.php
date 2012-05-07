@@ -11,6 +11,7 @@ use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Extension\Helpers;
 use Molajo\Extension\Triggers;
 use Molajo\Service\Services;
+use Molajo\MVC\Controller\EntryController;
 
 defined('MOLAJO') or die;
 
@@ -47,7 +48,6 @@ Class Application
 	 */
 	protected static $triggers = null;
 
-
 	/**
 	 * Application::Request
 	 *
@@ -55,6 +55,14 @@ Class Application
 	 * @since  1.0
 	 */
 	protected static $request = null;
+
+	/**
+	 * Application::Controller
+	 *
+	 * @var    object Controller
+	 * @since  1.0
+	 */
+	protected static $controller = null;
 
 	/**
 	 * $rendered_output
@@ -156,6 +164,12 @@ Class Application
 	{
 		if (version_compare(PHP_VERSION, '5.3', '<')) {
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
+		}
+
+		/** Connect Triggers */
+		$continue = Application::Controller();
+		if ($continue == false) {
+			return false;
 		}
 
 		/** HTTP class */
@@ -881,5 +895,28 @@ Class Application
 		}
 
 		return self::$request;
+	}
+
+	/**
+	 * Application::Controller
+	 *
+	 * @static
+	 * @return  Controller
+	 * @since   1.0
+	 */
+	public static function Controller()
+	{
+		if (self::$controller) {
+		} else {
+			try {
+				self::$controller = EntryController::getInstance();
+			}
+			catch (\Exception $e) {
+				echo 'Instantiate EntryController Exception : ', $e->getMessage(), "\n";
+				die;
+			}
+		}
+
+		return self::$controller;
 	}
 }
