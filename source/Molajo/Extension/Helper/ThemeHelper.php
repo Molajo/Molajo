@@ -81,6 +81,7 @@ Class ThemeHelper
 		Services::Registry()->set('Theme', 'catalog_type_title', $row->catalog_type_title);
 
 		Services::Registry()->set('Theme', 'path', $this->getPath($row->title));
+		Services::Registry()->set('Theme', 'path_include', $this->getPath($row->title) . '/index.php');
 		Services::Registry()->set('Theme', 'path_url', $this->getPathURL($row->title));
 		Services::Registry()->set('Theme', 'favicon', $this->getFavicon($row->title));
 

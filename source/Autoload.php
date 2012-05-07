@@ -42,6 +42,7 @@ $s->registerNamespace('Molajo\\Extension', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Component', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Formfield', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Helper', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Includer', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Module', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Theme', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Trigger', BASE_FOLDER);

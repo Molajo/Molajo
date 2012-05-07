@@ -4,17 +4,18 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Application;
+namespace Molajo\Extension;
 
-use Molajo\Extension\Helper\ExtensionHelper;
+use Molajo\Extension\Helpers;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
  * Includer
  *
- * @package   Molajo
- * @subpackage  Application
+ * @package     Molajo
+ * @subpackage  Extension
  * @since       1.0
  */
 class Includer
@@ -127,22 +128,8 @@ class Includer
 		$this->type = $type;
 		$this->items = $items;
 
-		$this->parameters = Services::Registry()->initialise();
-		$this->parameters->set('suppress_no_results', 0);
+		Services::Registry()->set('Parameters', 'suppress_no_results', 0);
 
-//setViewRegistries
-//	This code should be in an extension specific helper
-		$this->setViewRegistries();
-		$this->getUser();
-		$this->getApplicationDefaults();
-		$this->getTheme();
-		$this->getPageView();
-		$this->getTemplateView();
-		$this->getWrapView();
-		$temp = Services::Registry()->initialise();
-
-		$temp->loadArray($this->parameters);
-		$this->parameters = $temp;
 	}
 
 	/**
@@ -164,6 +151,8 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
+		return $this->name .' '.$this->type .' '.$this->items;
+
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 
@@ -176,28 +165,28 @@ class Includer
 		}
 
 		/** extension MVC classes are loaded */
-		$this->_importClasses();
+		$this->importClasses();
 
 		/** theme include, only - loads metadata for the page */
-		$this->_loadMetadata();
+		$this->loadMetadata();
 
 		/** language must be there before the extension runs */
-		$this->_loadLanguage();
+		$this->loadLanguage();
 
 		/** instantiate MVC and render output */
 		$this->rendered_output = $this->invokeMVC();
 
 		/** only load media if there was rendered output */
 		if ($this->rendered_output == ''
-			&& $this->parameters->get('suppress_no_results') == 0
+			&& Services::Registry()->get('Parameters', 'suppress_no_results') == 0
 		) {
 		} else {
-			$this->_loadMedia();
-			$this->_loadViewMedia();
+			$this->loadMedia();
+			$this->loadViewMedia();
 		}
 
 		/** used by events to update $items, if necessary */
-		$this->_postMVCProcessing();
+		$this->postMVCProcessing();
 
 		return $this->rendered_output;
 	}
@@ -245,15 +234,15 @@ class Includer
 	protected function setRenderCriteria()
 	{
 		/** creates mvc object and initialises settings */
-		$this->_initialiseRequest();
+		$this->initialiseRequest();
 
 		/** establish values needed for MVC */
-		$this->_getAttributes();
+		$this->getAttributes();
 
 		/** retrieves extension and populates related mvc object values */
 		if ($this->extension_required === false) {
 		} else {
-			$this->_getExtension();
+			$this->getExtension();
 			if ($this->get('extension_instance_id', 0) == 0) {
 				return $this->set('status_found', false);
 			}
@@ -262,11 +251,11 @@ class Includer
 		/** retrieves MVC defaults for extension */
 		if ($this->get('extension_parameters', '') == '') {
 		} else {
-			$this->_getExtensionDefaults();
+			$this->getExtensionDefaults();
 		}
 
 		/** retrieves MVC defaults for application object */
-		$this->_getApplicationDefaults();
+		$this->getApplicationDefaults();
 
 		/** gets paths for template and wrap views */
 		$this->setPaths();
@@ -275,14 +264,14 @@ class Includer
 	}
 
 	/**
-	 * _initialiseRequest
+	 * initialiseRequest
 	 *
 	 * Initialize the request object for MVC values
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _initialiseRequest()
+	protected function initialiseRequest()
 	{
 		$this->task_request = Services::Registry()->initialise();
 
@@ -340,14 +329,14 @@ class Includer
 	}
 
 	/**
-	 * _getAttributes
+	 * getAttributes
 	 *
 	 *  Retrieve request information needed to execute extension
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _getAttributes()
+	protected function getAttributes()
 	{
 		foreach ($this->attributes as $name => $value) {
 
@@ -417,14 +406,14 @@ class Includer
 	}
 
 	/**
-	 * _getExtension
+	 * getExtension
 	 *
 	 * Retrieve extension information using either the ID or the name
 	 *
 	 * @return bool
 	 * @since 1.0
 	 */
-	protected function _getExtension()
+	protected function getExtension()
 	{
 		if ($this->get('extension_instance_id', 0) == 0) {
 			$rows = ExtensionHelper::get(
@@ -462,49 +451,49 @@ class Includer
 		$this->parameters->loadString($row->parameters);
 
 		$this->set('source_catalog_type_id',
-			$this->parameters->get('source_catalog_type_id'));
+			Services::Registry()->get('Parameters', 'source_catalog_type_id'));
 
 		if ((int)$this->get('template_view_id', 0) == 0) {
 			$this->set('template_view_id',
-				$this->parameters->get('template_view_id')
+				Services::Registry()->get('Parameters', 'template_view_id')
 			);
 		}
 
 		/** wrap */
 		if ((int)$this->get('wrap_view_id', 0) == 0) {
 			$this->set('wrap_view_id',
-				$this->parameters->get('wrap_view_id')
+				Services::Registry()->get('Parameters', 'wrap_view_id')
 			);
 		}
 
 		/** mvc */
 		if ($this->get('controller', '') == '') {
 			$this->set('controller',
-				$this->parameters->get('controller', ''));
+				Services::Registry()->get('Parameters', 'controller', ''));
 		}
 		if ($this->get('task', '') == '') {
 			$this->set('task',
-				$this->parameters->get('task', 'display'));
+				Services::Registry()->get('Parameters', 'task', 'display'));
 		}
 		if ($this->get('model', '') == '') {
 			$this->set('model',
-				$this->parameters->get('model', ''));
+				Services::Registry()->get('Parameters', 'model', ''));
 		}
 		if ((int)$this->get('id', 0) == 0) {
 			$this->set('id',
-				$this->parameters->get('id', 0));
+				Services::Registry()->get('Parameters', 'id', 0));
 		}
 		if ((int)$this->get('category_id', 0) == 0) {
 			$this->set('category_id',
-				$this->parameters->get('category_id', 0));
+				Services::Registry()->get('Parameters', 'category_id', 0));
 		}
 		if ((int)$this->get('suppress_no_results', 0) == 0) {
 			$this->set('suppress_no_results',
-				$this->parameters->get('suppress_no_results', 0));
+				Services::Registry()->get('Parameters', 'suppress_no_results', 0));
 		}
 
 		$this->set('extension_event_type',
-			$this->parameters->get('event_type', array('content'))
+			Services::Registry()->get('Parameters', 'event_type', array('content'))
 		);
 
 		$this->set('extension_path',
@@ -518,14 +507,14 @@ class Includer
 	}
 
 	/**
-	 *  _getExtensionDefaults
+	 *  getExtensionDefaults
 	 *
 	 *  Retrieve default values, if needed, for the extension
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _getExtensionDefaults()
+	protected function getExtensionDefaults()
 	{
 		if ((int)$this->get('template_view_id', 0) == 0) {
 
@@ -557,14 +546,14 @@ class Includer
 	}
 
 	/**
-	 *  _getApplicationDefaults
+	 *  getApplicationDefaults
 	 *
 	 *  Retrieve default values, if not provided by extension
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function _getApplicationDefaults()
+	protected function getApplicationDefaults()
 	{
 		if ((int)$this->get('template_view_id', 0) == 0) {
 
@@ -667,65 +656,63 @@ class Includer
 	}
 
 	/**
-	 * _importClasses
+	 * importClasses
 	 *
 	 * lazy load import for extension classes and files
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _importClasses()
+	protected function importClasses()
 	{
 	}
 
 	/**
-	 * _loadMetadata
+	 * loadMetadata
 	 *
 	 * Theme Includer use, only, loads the page metadata
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _loadMetadata()
+	protected function loadMetadata()
 	{
 	}
 
 	/**
-	 * _loadLanguage
+	 * loadLanguage
 	 *
 	 * Loads Language Files for extension
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _loadLanguage()
+	protected function loadLanguage()
 	{
-		return ExtensionHelper::loadLanguage(
-			$this->get('extension_path')
-		);
+		return Helpers::Extension()->loadLanguage(Services::Registry()->get('Extension', 'path'));
 	}
 
 	/**
-	 * _loadMedia
+	 * loadMedia
 	 *
 	 * Loads Media CSS and JS files for extension and related content
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _loadMedia()
+	protected function loadMedia()
 	{
 	}
 
 	/**
-	 * _loadViewMedia
+	 * loadViewMedia
 	 *
 	 * Loads Media CSS and JS files for Template and Wrap Views
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function _loadViewMedia()
+	protected function loadViewMedia()
 	{
 		$priority = Services::Registry()->get('Configuration', 'media_priority_other_extension', 400);
 
@@ -776,8 +763,8 @@ class Includer
 		$results = $controller->$task();
 
 		/** html display filters */
-		$this->parameters->set('html_display_filter', false);
-		if ($this->parameters->get('html_display_filter', true) == false) {
+		Services::Registry()->set('Parameters', 'html_display_filter', false);
+		if (Services::Registry()->get('Parameters', 'html_display_filter', true) == false) {
 			return $results;
 		} else {
 			return Services::Filter()->filter_html($results);
@@ -897,10 +884,10 @@ class Includer
 	}
 
 	/**
-	 * _postMVCProcessing
+	 * postMVCProcessing
 	 * @return bool
 	 */
-	protected function _postMVCProcessing()
+	protected function postMVCProcessing()
 	{
 
 	}

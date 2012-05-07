@@ -11,15 +11,14 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * CatalogHelper
+ * Catalog Helper
  *
- * @package       Molajo
- * @subpackage    Service
- * @since         1.0
+ * @package     Molajo
+ * @subpackage  Service
+ * @since       1.0
  */
 Class CatalogHelper
 {
-
 	/**
 	 * Static instance
 	 *
@@ -32,20 +31,20 @@ Class CatalogHelper
 	 * getInstance
 	 *
 	 * @static
-	 * @return bool|object
-	 * @since  1.0
+	 * @return  bool|object
+	 * @since   1.0
 	 */
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
 			self::$instance = new CatalogHelper();
 		}
+
 		return self::$instance;
 	}
 
 	/**
-	 * Retrieve Catalog and Catalog Type data for a specific catalog id
-	 * or query request
+	 * Retrieve Catalog and Catalog Type data for a specific catalog id or query request
 	 *
 	 * @return    boolean
 	 * @since    1.0
@@ -66,6 +65,12 @@ Class CatalogHelper
 			return false;
 		}
 
+		/** 404: item not routable, redirecting to error page */
+		if ((int)$row['routable'] == 0) {
+			Services::Registry()->set('Route', 'status_found', false);
+			return false;
+		}
+
 		/** Redirect: routeRequest handles rerouting the request */
 		if ((int)$row['redirect_to_id'] == 0) {
 		} else {
@@ -73,17 +78,14 @@ Class CatalogHelper
 			return false;
 		}
 
-		/** Catalog Registry */
+		/** Route Registry */
 		Services::Registry()->set('Route', 'id', (int)$row['id']);
 		Services::Registry()->set('Route', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Route', 'catalog_type', $row['title']);
 		Services::Registry()->set('Route', 'source_table', $row['source_table']);
 		Services::Registry()->set('Route', 'source_id', (int)$row['source_id']);
-		Services::Registry()->set('Route', 'primary_category_id', (int)$row['primary_category_id']);
 		Services::Registry()->set('Route', 'sef_request', $row['sef_request']);
 		Services::Registry()->set('Route', 'request', $row['request']);
-		Services::Registry()->set('Route', 'redirect_to_id', (int)$row['redirect_to_id']);
-		Services::Registry()->set('Route', 'routable', (int)$row['routable']);
 		Services::Registry()->set('Route', 'view_group_id', (int)$row['view_group_id']);
 
 		/** home */
@@ -112,13 +114,18 @@ Class CatalogHelper
 	public function get($catalog_id = 0, $sef_request = '', $source_id = 0, $catalog_type_id = 0)
 	{
 		if ((int)$catalog_id > 0) {
-			$catalog_id = (int)$catalog_id;
 
 		} else if ((int)$source_id > 0 && (int)$catalog_type_id > 0) {
 			$catalog_id = $this->getID((int)$catalog_type_id, (int)$source_id);
+			if ($catalog_id == false) {
+				return array();
+			}
 
 		} else {
 			$catalog_id = $this->getIDUsingSEFURL($sef_request);
+			if ($catalog_id == false) {
+				return array();
+			}
 		}
 
 		$m = Services::Model()->connect('Catalog');
@@ -135,19 +142,12 @@ Class CatalogHelper
 		}
 
 		$row['request'] = 'index.php?id=' . (int)$row['id'];
-
-		if ($row['id'] == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
-			if ($catalog_id == 0) {
-
-			} else {
-				$row->redirect_to_id =
-					Services::Registry()->get('Configuration', 'home_catalog_id', 0);
-			}
+		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+			$row['sef_request'] = '';
 		}
 
 		return $row;
 	}
-
 
 	/**
 	 * getIDUsingSEFURL - Retrieves Catalog ID
@@ -181,7 +181,7 @@ Class CatalogHelper
 	{
 		$m = Services::Model()->connect('Catalog');
 
-		$m->model->query->select($m->model->db->qn('id') . ' as catalog_id');
+		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
 		$m->model->query->where($m->model->db->qn('source_id') . ' = ' . (int)$source_id);
 
@@ -189,7 +189,7 @@ Class CatalogHelper
 	}
 
 	/**
-	 * getRedirectURL Function retrieves the Redirect URL for the specified catalog id
+	 * Retrieves Redirect URL for Catalog id
 	 *
 	 * @param  integer $catalog_id
 	 *
@@ -200,6 +200,8 @@ Class CatalogHelper
 	{
 		$m = Services::Model()->connect('Catalog');
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
+		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int) $catalog_id);
+
 		$result = $m->execute('loadResult');
 
 		if ((int)$result == 0) {
@@ -224,10 +226,14 @@ Class CatalogHelper
 		}
 
 		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+
 			$m = Services::Model()->connect('Catalog');
+
 			$m->model->query->select($m->model->db->qn('sef_request'));
 			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
+
 			$url = $m->execute('loadResult');
+
 		} else {
 			$url = 'index.php?id=' . (int)$catalog_id;
 		}
