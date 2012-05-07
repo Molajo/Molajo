@@ -107,7 +107,7 @@ class Includer
 		$this->type = $type;
 		$this->items = $items;
 
-		Services::Registry()->set('Parameters', 'suppress_no_results', 0);
+		Services::Registry()->createRegistry('Parameters');
 	}
 
 	/**

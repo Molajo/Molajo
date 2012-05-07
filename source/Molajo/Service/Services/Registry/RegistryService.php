@@ -266,10 +266,10 @@ Class RegistryService
 	 */
 	public function deleteRegistry($namespace)
 	{
-		if (isset($this->registryKeys[$namespace])) {
+		if (in_array($namespace, $this->registryKeys)) {
 			unset($this->registryKeys[$namespace]);
 		}
-		if (isset($this->registry[$namespace])) {
+		if (in_array($namespace, $this->registry)) {
 			unset($this->registry[$namespace]);
 		}
 

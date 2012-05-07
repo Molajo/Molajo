@@ -92,6 +92,7 @@ Class ParseService
 		if (empty(self::$instance)) {
 			self::$instance = new ParseService();
 		}
+
 		return self::$instance;
 	}
 
@@ -342,6 +343,7 @@ Class ParseService
 
 					/** 7. render output and store results as "replace with" */
 					$with[] = $rc->process($attributes);
+					Services::Registry()->deleteRegistry('Parameters');
 				}
 			}
 		}
