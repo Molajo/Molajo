@@ -129,13 +129,15 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
-		return $this->name .' '.$this->type .' '.$this->items;
+		echo $this->name .' '.$this->type .' '.$this->items.'<br />';
+		return;
 
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 
 		/** initialises and populates the MVC request */
 		$this->setRenderCriteria();
+
 		if ($this->extension_required === true) {
 			if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
 				return Services::Registry()->set('Parameters', 'status_found', false);
