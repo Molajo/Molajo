@@ -67,6 +67,8 @@ Class ExtensionHelper
 		Services::Registry()->set('Extension', 'catalog_id', $row->catalog_id);
 		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
 		Services::Registry()->set('Extension', 'catalog_type_title', $row->catalog_type_title);
+		Services::Registry()->set('Extension', 'path', $this->getPath((int)$row->catalog_type_id, $row->title));
+		Services::Registry()->set('Extension', 'path_url', $this->getPathURL((int)$row->catalog_type_id, $row->title));
 
 		/** Load special fields for specific extension */
 		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
@@ -246,14 +248,68 @@ Class ExtensionHelper
 	public function getPath($catalog_type_id, $name)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			return Helper::Component()->getPath($name);
+			return EXTENSIONS_COMPONENTS . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
+			return EXTENSIONS_FORMFIELDS . '/' . $name;
+
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			return Helper::Module()->getPath($name);
+			return EXTENSIONS_MODULES . '/' . $name;
+
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			return Helper::Theme()->getPath($name);
+			return EXTENSIONS_THEMES . '/' . $name;
+
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			return Helper::Trigger()->getPath($name);
+			return EXTENSIONS_TRIGGERS . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			return Helpers::Page()->getPath($name);
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+			return Helpers::Template()->getPath($name);
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+			return Helpers::Wrap()->getPath($name);
 		}
+
+		return false;
+	}
+
+	/**
+	 * getPathURL
+	 *
+	 * Return URL path for Extension
+	 *
+	 * @return mixed
+	 * @since 1.0
+	 */
+	public function getPathURL($catalog_type_id, $name)
+	{
+		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
+			return EXTENSIONS_COMPONENTS_URL . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
+			return EXTENSIONS_FORMFIELDS_URL . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
+			return EXTENSIONS_MODULES_URL . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
+			return EXTENSIONS_THEMES_URL . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
+			return EXTENSIONS_TRIGGERS_URL . '/' . $name;
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			return Helpers::Page()->getPathURL($name);
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+			return Helpers::Template()->getPathURL($name);
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+			return Helpers::Wrap()->getPathURL($name);
+		}
+
 		return false;
 	}
 
