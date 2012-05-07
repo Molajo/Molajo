@@ -7,7 +7,6 @@
 namespace Molajo\Service\Services\Registry;
 
 use Molajo\Service\Services;
-use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('MOLAJO') or die;
 
@@ -68,7 +67,7 @@ Class RegistryService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new RegistryService(true);
+			self::$instance = new RegistryService();
 		}
 
 		return self::$instance;
@@ -80,15 +79,11 @@ Class RegistryService
 	 * @return  object
 	 * @since   1.0
 	 */
-	public function __construct($global = false)
+	public function __construct()
 	{
 		/** store all registries in this object  */
 		$this->registry = array();
 		$this->registryKeys = array();
-
-		if ($global == true) {
-			$this->createGlobalRegistry();
-		}
 
 		return $this;
 	}
@@ -361,23 +356,6 @@ Class RegistryService
 		}
 
 		return $nsArray;
-	}
-
-	/**
-	 * Create Global Registry  - activated in Services during Service startup to initialize the global space
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	protected function createGlobalRegistry()
-	{
-//todo: build in spl file priorities and pass in file
-
-		$list = ConfigurationService::loadFile('registry');
-
-		foreach ($list->registry as $item) {
-			$reg = $this->createRegistry((string)$item);
-		}
 	}
 
 	/**
