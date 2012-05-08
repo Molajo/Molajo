@@ -39,35 +39,39 @@ Class HeadModel extends Model
 	{
 		$this->query_results = array();
 
-		$defer = (int)$this->parameters->get('defer');
+		$defer = (int)$this->parameters->get('defer', 0);
 
 		/** get metadata (part used in base) */
 		if ($defer == 1) {
 		} else {
-			$metadata = Services::Document()->get_metadata();
+			$metadata = Services::Registry()->get('Metadata');
 
 			if (count($metadata) > 0) {
 
 				$row = new \stdClass();
 				$row->type = 'base';
 
+				/** Title */
 				$title = $metadata['standard']['title'];
 				if (trim($title) == '') {
 					$title = Services::Registry()->get('Configuration', 'metadata_title', 'Molajo');
 				}
 				$row->title = Services::Filter()->escape_text($title);
 
+				/** Mimetype */
 				$mimetype = Services::Document()->get_mime_encoding();
 				if (trim($mimetype) == '') {
 					$mimetype = 'text/html';
 				}
 				$row->mimetype = Services::Filter()->escape_text($mimetype);
 
-				$row->base = Services::Registry()->get('Request', 'url_base');
+				/** Base URL for Site */
+				$row->base = Services::Registry()->get('Site', 'base_url');
 
-				$last_modified = Services::Registry()->get('Request', 'source_last_modified');
+				/** Last Modified Date */
+				$last_modified = Services::Registry()->get('Metadata', 'modified_datetime');
 				if (trim($last_modified) == '') {
-					$last_modified = Services::Date()->getDate()->toSql();
+					$last_modified = Services::Date()->getDate();
 				}
 				$row->last_modified = Services::Filter()->escape_text($last_modified);
 
@@ -103,7 +107,7 @@ Class HeadModel extends Model
 			$row = new \stdClass();
 
 			$row->type = 'links';
-			$row->url = Services::Registry()->get('Request', 'theme_favicon');
+			$row->url = Services::Registry()->get('Theme', 'favicon');
 			$row->relation = 'shortcut icon';
 			$row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
 			$this->query_results[] = $row;

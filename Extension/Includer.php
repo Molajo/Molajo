@@ -148,9 +148,6 @@ class Includer
 			}
 		}
 
-		/** theme include, only - loads metadata for the page */
-		$this->loadMetadata();
-
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
 
@@ -310,19 +307,6 @@ class Includer
 			(bool)Services::Registry()->get('Request', 'mvc_suppress_no_results'));
 
 		return;
-	}
-
-
-	/**
-	 * loadMetadata
-	 *
-	 * Theme Includer use, only, loads the page metadata
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function loadMetadata()
-	{
 	}
 
 	/**

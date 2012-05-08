@@ -56,6 +56,7 @@ Class RouteService
 	 */
 	public function process()
 	{
+
 		/** Overrides */
 		if ((int)Services::Registry()->get('Override', 'catalog_id', 0) == 0) {
 			Services::Registry()->set('Route', 'id', 0);
@@ -109,6 +110,7 @@ Class RouteService
 
 		/** 404 */
 		if (Services::Registry()->get('Route', 'status_found') === false) {
+			echo 404;
 			Services::Error()->set(404);
 			Services::Debug()->set('Application::Route() 404');
 			return false;
@@ -389,6 +391,9 @@ Class RouteService
 		/** Page  */
 		Helpers::PageView()->get();
 
+		/** Metadata */
+		$this->loadMetadata();
+
 		return;
 
 
@@ -454,5 +459,82 @@ Class RouteService
 		echo '<br /><br />Metadata<br /><pre>';
 		var_dump(Services::Registry()->get('PageViewMetadata'));
 		echo '</pre>';
+
+
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Metadata'));
+
+	}
+
+
+	/**
+	 * loadMetadata
+	 *
+	 * Loads Metadata values into Services::Document Metadata array
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function loadMetadata()
+	{
+		// todo: add event for metadata
+
+		Services::Registry()->set('Metadata', 'title', '');
+		Services::Registry()->set('Metadata', 'description', '');
+		Services::Registry()->set('Metadata', 'keywords', '');
+		Services::Registry()->set('Metadata', 'robots', '');
+		Services::Registry()->set('Metadata', 'author', '');
+		Services::Registry()->set('Metadata', 'content_rights', '');
+
+		if (Services::Registry()->get('Request', 'status_error') == true) {
+			Services::Registry()->set('Metadata', 'title',
+				Services::Language()->translate('ERROR_FOUND'));
+			return;
+		}
+
+		/** Last Modified */
+		$date = Services::Date()->getDate();
+
+		if (Services::Registry()->get('Menuitem', 'modified_datetime') == NULL) {
+		} else {
+			$date = Services::Registry()->get('Menuitem', 'modified_datetime');
+		}
+		if (Services::Registry()->get('Content', 'modified_datetime') == NULL) {
+		} else {
+			$date = Services::Registry()->get('Content', 'modified_datetime');
+		}
+		Services::Registry()->set('Metadata', 'modified_datetime', $date);
+
+		/** Metadata */
+		$this->setMetadata('SiteMetadata');
+		$this->setMetadata('ApplicationMetadata');
+		$this->setMetadata('ExtensionMetadata');
+		$this->setMetadata('CategoryMetadata');
+		$this->setMetadata('MenuItemMetadata');
+		$this->setMetadata('ContentMetadata');
+
+	}
+
+	/**
+	 * setMetadata for specific Namespace
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function setMetadata($namespace)
+	{
+		$metadata = Services::Registry()->get($namespace);
+
+		if (count($metadata) > 0) {
+			foreach ($metadata as $key => $value) {
+				if (substr($key, 0, 9) == 'metadata_')  {
+					$key = substr($key, 9, strlen($key) - 9);
+				}
+				if ($value == '' || $value === null) {
+				} else {
+					Services::Registry()->set('Metadata', $key, $value);
+				}
+			}
+		}
 	}
 }

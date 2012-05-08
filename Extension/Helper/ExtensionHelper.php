@@ -359,8 +359,10 @@ Class ExtensionHelper
 		}
 		$path .= '/language';
 
+
 		if (Services::Filesystem()->folderExists($path)) {
 		} else {
+			echo 'does not exist'.$path.'<br />';
 			return false;
 		}
 

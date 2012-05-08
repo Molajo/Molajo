@@ -36,14 +36,6 @@ Class DocumentService
 	protected $links;
 
 	/**
-	 * Metadata
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $metadata = array();
-
-	/**
 	 * CSS
 	 *
 	 * @var    array
@@ -84,14 +76,6 @@ Class DocumentService
 	protected $mime_encoding;
 
 	/**
-	 * Last Modified Date
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $last_modified;
-
-	/**
 	 * getInstance
 	 *
 	 * @static
@@ -120,37 +104,11 @@ Class DocumentService
 	}
 
 	/**
-	 * set_last_modified
-	 *
-	 * Last modified date
-	 *
-	 * @return null
-	 * @since  1.0
-	 */
-	public function set_last_modified($value)
-	{
-		$this->last_modified = $value;
-	}
-
-	/**
-	 * get_last_modified
-	 *
-	 * Last modified date
-	 *
-	 * @return null
-	 * @since  1.0
-	 */
-	public function get_last_modified()
-	{
-		return $this->last_modified;
-	}
-
-	/**
 	 * set_mime_encoding
 	 *
 	 * Sets the document MIME encoding that is sent to the browser.
 	 *
-	\  	 * @param   string   $type
+	 * @param   string   $type
 	 *
 	 * @return void
 	 * @since   1.0
@@ -165,7 +123,7 @@ Class DocumentService
 	 *
 	 * Sets the document MIME encoding that is sent to the browser.
 	 *
-	\  	 * @param   string   $type
+	 * @param   string   $type
 	 *
 	 * @return string
 	 * @since   1.0
@@ -173,53 +131,6 @@ Class DocumentService
 	public function get_mime_encoding()
 	{
 		return $this->mime_encoding;
-	}
-
-	/**
-	 * set_metadata
-	 *
-	 * Defines an entry of metadata to be displayed within the document head
-	 *
-	 * Example usage:
-	 * Services::Document()->set_metadata
-	 *    ('viewport', 'width=device-width, initial-scale=1, maximum-scale=1')
-	 *
-	 * @param   string  $name
-	 * @param   string  $content
-	 * @param   string  $context  True: http-equiv; False: standard; Otherwise, provided
-	 *
-	 * @return  void
-	 * @since   1.0
-	 */
-	public function set_metadata($name, $content, $context = false)
-	{
-		$name = strtolower($name);
-
-		if (is_bool($context) && ($context === true)) {
-			$this->metadata['http-equiv'][$name] = $content;
-
-		} else if (is_string($context)) {
-			$result = $this->metadata[$context][$name];
-
-		} else {
-			$this->metadata['standard'][$name] = $content;
-		}
-	}
-
-	/**
-	 * get_metadata
-	 *
-	 * Retrieves an array of metadata defined for the document
-	 *
-	 * Example usage:
-	 * $metadata = Services::Document()->get_metadata();
-	 *
-	 * @return  string
-	 * @since   1.0
-	 */
-	public function get_metadata()
-	{
-		return $this->metadata;
 	}
 
 	/**
