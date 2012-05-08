@@ -228,7 +228,7 @@ There are two options for using query results:
 
 #### To process the recordset within your view file, include the Custom.php view file. ####
 
-When Molajo finds a Custom.php file, it pushes the $this->resultset object into the file.
+When Molajo finds a Custom.php file, it pushes the $this->query_results object into the file.
 
 The view must handle it's own loop processing for the recordset.
 
@@ -309,7 +309,7 @@ Extension, Theme
 
 All rows
 
-    <?php echo '<pre>'; var_dump($this->resultset); echo '</pre>';  ?>
+    <?php echo '<pre>'; var_dump($this->query_results); echo '</pre>';  ?>
 
 Single Row
 

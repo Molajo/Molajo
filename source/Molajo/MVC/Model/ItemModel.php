@@ -47,6 +47,7 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
+
 		/** Base query */
 		$this->setLoadQuery();
 
@@ -104,20 +105,14 @@ class ItemModel extends Model
 		}
 
 		if ($this->query->from == null) {
-			$this->query->from($this->db->qn($this->table_name) . ' as a');
+			$this->query->from($this->db->qn($this->table_name) . ' as '.$this->db->qn('a'));
 		}
 
 		if ($this->query->where == null) {
 			if ((int)$this->id > 0) {
-				$this->query->where(
-					$this->db->qn('a.' . $this->primary_key)
-						. ' = '
-						. $this->db->q($this->id));
+				$this->query->where($this->db->qn('a.' . $this->primary_key) . ' = ' . $this->db->q($this->id));
 			} else {
-				$this->query->where(
-					$this->db->qn('a.' . $this->name_field)
-						. ' = '
-						. $this->db->q($this->id_name));
+				$this->query->where($this->db->qn('a.' . $this->name_field) . ' = ' . $this->db->q($this->id_name));
 			}
 		}
 
@@ -136,14 +131,14 @@ class ItemModel extends Model
 	{
 		Services::Authorisation()
 			->setQueryViewAccess(
-			$this->query,
-			$this->db,
-			array('join_to_prefix' => 'a',
-				'join_to_primary_key' => $this->primary_key,
-				'catalog_prefix' => 'b_catalog',
-				'select' => true
-			)
-		);
+				$this->query,
+				$this->db,
+				array('join_to_prefix' => 'a',
+					'join_to_primary_key' => $this->primary_key,
+					'catalog_prefix' => 'b_catalog',
+					'select' => true
+				)
+			);
 
 		return $this;
 	}
@@ -175,7 +170,7 @@ class ItemModel extends Model
 					$alias = $join_table;
 				}
 
-				$this->query->from($this->db->qn($join_table) . ' as ' . $alias);
+				$this->query->from($this->db->qn($join_table) . ' as ' . $this->db->qn($alias));
 
 				/* Select fields */
 				$selectArray = explode(',', $select);

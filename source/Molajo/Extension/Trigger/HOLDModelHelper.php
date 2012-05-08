@@ -193,9 +193,7 @@ class ModelHelper
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function itemURL(
-		$item = array(),
-		$parameters = array())
+	public function itemURL($item = array(), $parameters = array())
 	{
 		if (isset($item->catalog_id)) {
 		} else {
@@ -203,7 +201,7 @@ class ModelHelper
 			return $item;
 		}
 
-		$item->url = CatalogHelper::getURL($item->catalog_id);
+		$item->url = Helpers::Catalog()->getURL($item->catalog_id);
 
 		return $item;
 	}
@@ -499,44 +497,44 @@ class ModelHelper
 	 */
 	public function getStatusList()
 	{
-		$resultset = array();
+		$query_results = array();
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_ARCHIVED;
 		$obj->value = Services::Language()->translate('STATUS_ARCHIVED');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_PUBLISHED;
 		$obj->value = Services::Language()->translate('STATUS_PUBLISHED');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_UNPUBLISHED;
 		$obj->value = Services::Language()->translate('STATUS_UNPUBLISHED');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_TRASHED;
 		$obj->value = Services::Language()->translate('STATUS_TRASHED');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_SPAMMED;
 		$obj->value = Services::Language()->translate('STATUS_SPAMMED');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_DRAFT;
 		$obj->value = Services::Language()->translate('STATUS_DRAFT');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
 		$obj = new \stdClass();
 		$obj->key = STATUS_VERSION;
 		$obj->value = Services::Language()->translate('STATUS_VERSION');
-		$resultset[] = $obj;
+		$query_results[] = $obj;
 
-		return $resultset;
+		return $query_results;
 	}
 
 	/**

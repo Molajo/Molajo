@@ -167,8 +167,8 @@ Class TemplateViewHelper
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . $template_view_name . '/Manifest.xml')) {
-			return EXTENSIONS_VIEWS . '/Template/' . $template_view_name;
+		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($template_view_name)) . '/Manifest.xml')) {
+			return EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($template_view_name));
 		}
 
 		/** 4. MVC */
@@ -202,8 +202,8 @@ Class TemplateViewHelper
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . $template_view_name . '/Manifest.xml')) {
-			return EXTENSIONS_VIEWS_URL . '/Template/' . $template_view_name;
+		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($template_view_name)) . '/Manifest.xml')) {
+			return EXTENSIONS_VIEWS_URL . '/Template/' . ucfirst(strtolower($template_view_name));
 		}
 
 		/** 4. MVC */

@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Update
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Controller
  * @since       1.0
  */
@@ -37,6 +37,7 @@ class ItemController extends Controller
 		$this->model->row->id = 0;
 		 */
 		$this->model->row->title = 'Puff it up.';
+
 		/** filter input, validate values and foreign keys */
 		if ($valid === true) {
 			$valid = $this->filter_and_validate($this->model->row);
@@ -49,30 +50,27 @@ class ItemController extends Controller
 
 		/** redirect */
 		if ($valid === true) {
-			if ($this->model->row->id == 0
-				|| $this->model->row->status == 0
-			) {
-				Services::Response()
-					->redirect(
-					$this->task_request->get('redirect_on_success'),
-					301);
+
+			if ($this->model->row->id == 0 || $this->model->row->status == 0) {
+				Services::Response()->redirect($this->task_request->get('redirect_on_success'), 301);
+
 			} else {
-				Services::Response()
-					->redirect(
-					CatalogHelper::getURL(
-						$this->task_request->get('request_catalog_id')),
-					301
-				);
+
+				Services::Response()->redirect(
+					Helpers::Catalog()->getURL($this->task_request->get('request_catalog_id')),	301);
 			}
+
 		} else {
+
 			$link = $this->task_request->get('redirect_on_failure');
+
 			if ((int)$this->id == 0) {
 				$link .= '&task=add';
 			} else {
 				$link .= '&task=edit';
 			}
-			Services::Response()
-				->redirect($link, 301);
+
+			Services::Response()->redirect($link, 301);
 		}
 
 		/**
@@ -101,12 +99,12 @@ class ItemController extends Controller
 		$valid = true;
 
 		/** new or update? */
-		$this->model->query->where($this->model->db->qn('id')
-			. ' = ' . (int)$this->id);
+		$this->model->query->where($this->model->db->qn('id') . ' = ' . (int)$this->id);
 
 		$results = $this->model->load();
 
 		if (empty($results)) {
+
 			$this->model->row = new \stdClass;
 			$this->model->row->id = 0;
 			$this->model->row->title = 'One long summer';
@@ -157,17 +155,19 @@ class ItemController extends Controller
 	{
 		$valid = true;
 
-		$v = Services::Registry()
-			->loadFile(substr($this->model->table_name, 3, 99));
+		$v = Services::Registry()->loadFile(substr($this->model->table_name, 3, 99));
 		if (count($v) == 0) {
 			return true;
 		}
 
 		/** filters and defaults */
+
 		$userHTMLFilter = Services::Authorisation()->setHTMLFilter();
 
 		$valid = true;
+
 		if (isset($v->filters->filter)) {
+
 			foreach ($v->filters->filter as $f) {
 
 				$name = (string)$f['name'];
@@ -183,18 +183,16 @@ class ItemController extends Controller
 
 				if ($dataType == null) {
 					// no filter defined
-				} else if ($dataType == 'html'
-					&& $userHTMLFilter === false
-				) {
+				} else if ($dataType == 'html' && $userHTMLFilter === false) {
 					// user does not require HTML filtering
 
 				} else {
 
 					try {
-						$value = Services::Filter()->filter(
-							$value, $dataType, $null, $default);
+						$value = Services::Filter()->filter($value, $dataType, $null, $default);
 
 					} catch (Exception $e) {
+
 						$valid = false;
 						Services::Message()->set(
 							$message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
@@ -202,7 +200,6 @@ class ItemController extends Controller
 						);
 
 						Services::Debug()->set('ItemController::filter_and_validate Filter Failed' . ' ' . $message);
-
 					}
 				}
 			}
@@ -212,6 +209,7 @@ class ItemController extends Controller
 
 		/** Helper Functions */
 		if (isset($v->helpers->helper)) {
+
 			foreach ($v->helpers->helper as $h) {
 
 				$name = (string)$h['name'];
@@ -220,6 +218,7 @@ class ItemController extends Controller
 					$this->validateHelperFunction($name);
 
 				} catch (Exception $e) {
+
 					$valid = false;
 					Services::Message()->set(
 						$message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
@@ -227,7 +226,6 @@ class ItemController extends Controller
 					);
 
 					Services::Debug()->set('ItemController::filter_and_validate Helper Failed' . ' ' . $message);
-
 				}
 			}
 		}
@@ -236,6 +234,7 @@ class ItemController extends Controller
 
 		/** Foreign Keys */
 		if (isset($v->fks->fk)) {
+
 			foreach ($v->fks->fk as $f) {
 
 				$name = (string)$f['name'];
@@ -245,10 +244,10 @@ class ItemController extends Controller
 				$message = (string)$f['message'];
 
 				try {
-					$this->validateForeignKey($name, $source_id,
-						$source_model, $required, $message);
+					$this->validateForeignKey($name, $source_id, $source_model, $required, $message);
 
 				} catch (Exception $e) {
+
 					$valid = false;
 					Services::Message()->set(
 						$message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
@@ -312,25 +311,25 @@ class ItemController extends Controller
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	protected function validateForeignKey($name, $source_id, $source_model,
-										  $required, $message)
+	protected function validateForeignKey($name, $source_id, $source_model, $required, $message)
 	{
 
-		Services::Debug()->set('ItemController::validateForeignKey Field: ' . $name . ' Value: ' . $this->model->row->$name . ' Source: ' . $source_id . ' Model: ' . $source_model . ' Required: ' . $required);
+		Services::Debug()->set(
+			'ItemController::validateForeignKey Field: ' . $name
+			. ' Value: ' . $this->model->row->$name
+			. ' Source: ' . $source_id
+			. ' Model: ' . $source_model
+			. ' Required: ' . $required
+		);
 
-		if ($this->model->row->$name == 0
-			&& $required == 0
-		) {
+		if ($this->model->row->$name == 0 && $required == 0) {
 			return true;
 		}
 
 		if (isset($this->model->row->$name)) {
 
 			$m = new $source_model ();
-
-			$m->query->where($m->db->qn('id')
-				. ' = ' . $m->db->q($this->model->row->$name));
-
+			$m->query->where($m->db->qn('id') . ' = ' . $m->db->q($this->model->row->$name));
 			$value = $m->loadResult();
 
 			if (empty($value)) {
@@ -365,6 +364,7 @@ class ItemController extends Controller
 		$this->catalog_id = $catalog->save();
 
 		$catalog->load();
+
 		if ($catalog->getError()) {
 			$this->setError($catalog->getError());
 			return false;

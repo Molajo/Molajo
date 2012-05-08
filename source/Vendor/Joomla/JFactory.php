@@ -110,7 +110,7 @@ abstract class JFactory
 	 */
 	public static function getUser($id = null)
 	{
-		return Services::User();
+		return Services::Registry()->get('User');
 	}
 
 	/**

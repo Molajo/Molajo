@@ -55,6 +55,7 @@ Class ThemeIncluder extends Includer
 	 */
 	public function process($attributes = array())
 	{
+
 		$this->loadMetadata();
 
 		$this->loadLanguage();
@@ -180,7 +181,7 @@ Class ThemeIncluder extends Includer
 			Services::Registry()->get('Configuration', 'media_priority_application', 200));
 
 		/** User */
-		$this->loadMediaPlus('/user' . Services::User()->get('id'),
+		$this->loadMediaPlus('/user' . Services::Registry()->get('User', 'id'),
 			Services::Registry()->get('Configuration', 'media_priority_user', 300));
 
 		/** Load custom Theme Helper Media, if exists */
@@ -188,9 +189,9 @@ Class ThemeIncluder extends Includer
 			. ucfirst(Services::Registry()->get('Theme', 'title'))
 			. 'Helper';
 
-		if (class_exits($helperClass)) {
+		if (\class_exists($helperClass)) {
 			$load = new $helperClass();
-			if (method_exists($load, 'loadMedia')) {
+			if (\method_exists($load, 'loadMedia')) {
 				$load->loadMedia();
 			}
 		}
