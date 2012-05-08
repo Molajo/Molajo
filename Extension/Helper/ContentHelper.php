@@ -73,6 +73,7 @@ Class ContentHelper
 		Services::Registry()->set('Content', 'catalog_id', (string)$row['catalog_id']);
 		Services::Registry()->set('Content', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Content', 'catalog_type_title', (string)$row['catalog_type_title']);
+		Services::Registry()->set('Content', 'modified_datetime', (string)$row['modified_datetime']);
 
 		return true;
 	}
@@ -105,6 +106,7 @@ Class ContentHelper
 		Services::Registry()->set('Category', 'catalog_id', (string)$row['catalog_id']);
 		Services::Registry()->set('Category', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Category', 'catalog_type_title', (string)$row['catalog_type_title']);
+		Services::Registry()->set('Category', 'modified_datetime', (string)$row['modified_datetime']);
 
 		/** Load special fields for specific extension */
 		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
@@ -141,6 +143,7 @@ Class ContentHelper
 		$m->model->query->select($m->model->db->qn('a.language'));
 		$m->model->query->select($m->model->db->qn('a.metadata'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
+		$m->model->query->select($m->model->db->qn('a.modified_datetime'));
 
 		$m->model->query->from($m->model->db->qn($content_table) . ' as a ');
 

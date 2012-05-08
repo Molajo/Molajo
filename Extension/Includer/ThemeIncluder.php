@@ -21,6 +21,7 @@ defined('MOLAJO') or die;
  */
 Class ThemeIncluder extends Includer
 {
+
 	/**
 	 * __construct
 	 *
@@ -28,15 +29,18 @@ Class ThemeIncluder extends Includer
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing renderers, only)
+	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
 	public function __construct($name = null, $type = null, $items = null)
 	{
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
 		$this->name = $name;
 		$this->type = $type;
+
+		return $this;
 	}
 
 	/**
@@ -51,10 +55,10 @@ Class ThemeIncluder extends Includer
 	 */
 	public function process($attributes = array())
 	{
-		return;
-
 		$this->loadMetadata();
+
 		$this->loadLanguage();
+
 		$this->loadMedia();
 
 		return;
@@ -70,34 +74,73 @@ Class ThemeIncluder extends Includer
 	 */
 	protected function loadMetadata()
 	{
-		if (Services::Registry()->get('Request', 'status_error') == true) {
+		// todo: trigger for metadata
 
+		Services::Document()->set_metadata('title', '');
+		Services::Document()->set_metadata('description', '');
+		Services::Document()->set_metadata('keywords', '');
+		Services::Document()->set_metadata('robots', '');
+		Services::Document()->set_metadata('author', '');
+		Services::Document()->set_metadata('content_rights', '');
+
+		if (Services::Registry()->get('Request', 'status_error') == true) {
 			Services::Document()->set_metadata('title',
 				Services::Language()->translate('ERROR_FOUND'));
+			return;
+		}
 
-			Services::Document()->set_metadata('description', '');
-			Services::Document()->set_metadata('keywords', '');
-			Services::Document()->set_metadata('robots', '');
-			Services::Document()->set_metadata('author', '');
-			Services::Document()->set_metadata('content_rights', '');
-
-		} else {
-
-			Services::Document()->set_metadata('title',
-				Services::Registry()->get('Request', 'metadata_title'));
-			Services::Document()->set_metadata('description',
-				Services::Registry()->get('Request', 'metadata_description'));
-			Services::Document()->set_metadata('keywords',
-				Services::Registry()->get('Request', 'metadata_keywords'));
-			Services::Document()->set_metadata('robots',
-				Services::Registry()->get('Request', 'metadata_robots'));
-			Services::Document()->set_metadata('author',
-				Services::Registry()->get('Request', 'metadata_author'));
-			Services::Document()->set_metadata('content_rights',
-				Services::Registry()->get('Request', 'metadata_content_rights'));
-
+		/** Last Modified */
+		if (Services::Registry()->get('Content', 'source_last_modified', '') == '') {
 			Services::Document()->set_last_modified(
-				Services::Registry()->get('Request', 'source_last_modified'));
+				Services::Registry()->get('Menuitem', 'source_last_modified'));
+		} else {
+			Services::Document()->set_last_modified(
+				Services::Registry()->get('Content', 'source_last_modified'));
+		}
+
+		/** Metadata */
+		if (Services::Registry()->get('ContentMetadata', 'metadata_title', '') == '') {
+		} else {
+			return $this->setMetadata('ContentMetadata');
+		}
+
+		if (Services::Registry()->get('MenuItemMetadata', 'metadata_title', '') == '') {
+		} else {
+			return $this->setMetadata('MenuItemMetadata');
+		}
+
+		if (Services::Registry()->get('CategoryMetadata', 'metadata_title', '') == '') {
+		} else {
+			return $this->setMetadata('CategoryMetadata');
+		}
+
+		if (Services::Registry()->get('ExtensionMetadata', 'metadata_title', '') == '') {
+		} else {
+			return $this->setMetadata('ExtensionMetadata');
+		}
+
+		if (Services::Registry()->get('ApplicationMetadata', 'metadata_title', '') == '') {
+		} else {
+			return $this->setMetadata('ApplicationMetadata');
+		}
+
+		return $this->setMetadata('SiteMetadata');
+	}
+
+	/**
+	 * setMetadata for specific Namespace
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function setMetadata($namespace)
+	{
+		$metadata = Services::Registry()->get($namespace);
+
+		if (count($metadata) > 0) {
+			foreach ($metadata as $key => $value) {
+				Services::Document()->set_metadata(substr($key, 10, strlen($key) - 10), $value);
+			}
 		}
 	}
 
@@ -111,15 +154,11 @@ Class ThemeIncluder extends Includer
 	 */
 	protected function loadLanguage()
 	{
-		/** theme */
-		ExtensionHelper::loadLanguage(
-			EXTENSIONS_THEMES . '/'
-				. Services::Registry()->get('Request', 'theme_name')
-		);
-		/** Page view */
-		ExtensionHelper::loadLanguage(
-			Services::Registry()->get('Request', 'page_view_path')
-		);
+		/** Theme */
+		Helpers::Extension()->loadLanguage(Services::Registry()->get('Theme', 'path'));
+
+		/** Page View */
+		Helpers::Extension()->loadLanguage(Services::Registry()->get('PageView', 'path'));
 	}
 
 	/**
@@ -141,47 +180,41 @@ Class ThemeIncluder extends Includer
 			Services::Registry()->get('Configuration', 'media_priority_application', 200));
 
 		/** User */
-		$this->loadMediaPlus('/user' .
-				Services::User()
-					->get('id'),
+		$this->loadMediaPlus('/user' . Services::User()->get('id'),
 			Services::Registry()->get('Configuration', 'media_priority_user', 300));
 
-		/** Theme Helper Load Media */
-		$helperClass = 'Molajo' .
-			ucfirst(Services::Registry()->get('Request', 'theme_name'))
-			. 'ThemeHelper';
+		/** Load custom Theme Helper Media, if exists */
+		$helperClass = 'Molajo\\Extension\\Theme\\' . 'Theme'
+			. ucfirst(Services::Registry()->get('Theme', 'title'))
+			. 'Helper';
 
-		if (class_exists($helperClass)) {
-			$h = new $helperClass();
-		} else {
-			$helperClass = 'MolajoThemeHelper';
-		}
-		$h = new $helperClass();
-
-		if (method_exists($helperClass, 'loadMedia')) {
-			$h->loadMedia();
+		if (class_exits($helperClass)) {
+			$load = new $helperClass();
+			if (method_exists($load, 'loadMedia')) {
+				$load->loadMedia();
+			}
 		}
 
 		/** Theme */
-		$this->loadMediaPlus('',
-			Services::Registry()->get('Configuration', 'media_priority_site', 100));
-
 		$priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
-		$file_path = EXTENSIONS_THEMES . '/' .
-			Services::Registry()->get('Request', 'theme_name');
-		$url_path = EXTENSIONS_THEMES_URL . '/' .
-			Services::Registry()->get('Request', 'theme_name');
+		$file_path = Services::Registry()->get('Theme', 'path');
+		$url_path = Services::Registry()->get('Theme', 'path_url');
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
 		/** Page */
 		$priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
-		$file_path = Services::Registry()->get('Request', 'page_view_path');
-		$url_path = Services::Registry()->get('Request', 'page_view_path_url');
+		$file_path = Services::Registry()->get('PageView', 'path');
+		$url_path = Services::Registry()->get('PageView', 'path_url');
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+
+		/** Catalog ID specific */
+		$this->loadMediaPlus('', Services::Registry()->get('Configuration', 'media_priority_site', 100));
 
 		return;
 	}
@@ -199,6 +232,7 @@ Class ThemeIncluder extends Includer
 		/** Site Specific: Application */
 		$file_path = SITE_MEDIA_FOLDER . '/' . $plus;
 		$url_path = SITE_MEDIA_URL . '/' . $plus;
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
@@ -206,6 +240,7 @@ Class ThemeIncluder extends Includer
 		/** Site Specific: Site-wide */
 		$file_path = SITE_MEDIA_FOLDER . $plus;
 		$url_path = SITE_MEDIA_URL . $plus;
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
@@ -213,6 +248,7 @@ Class ThemeIncluder extends Includer
 		/** All Sites: Application */
 		$file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
 		$url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
@@ -220,6 +256,7 @@ Class ThemeIncluder extends Includer
 		/** All Sites: Site Wide */
 		$file_path = SITES_MEDIA_FOLDER . $plus;
 		$url_path = SITES_MEDIA_URL . $plus;
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);

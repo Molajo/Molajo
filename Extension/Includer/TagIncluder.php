@@ -22,6 +22,17 @@ defined('MOLAJO') or die;
 Class TagIncluder extends Includer
 {
 	/**
+	 * process
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function process($attributes = array())
+	{
+		return '';
+	}
+
+	/**
 	 * Renders multiple modules script and returns the results as a string
 	 *
 	 * @param   string  $position  The position of the modules to render

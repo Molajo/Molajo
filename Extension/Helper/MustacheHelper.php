@@ -65,16 +65,6 @@ Class MustacheHelper extends Mustache
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * items
 	 *
 	 * Returns a single row of information to mustache
@@ -104,8 +94,7 @@ Class MustacheHelper extends Mustache
 	{
 		$this->analytics();
 
-		return Services::URL()
-			->getGravatar(
+		return Services::URL()->getGravatar(
 			$email = 'AmyStephen@gmail.com',
 			$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
 		);

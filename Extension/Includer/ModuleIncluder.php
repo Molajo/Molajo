@@ -22,6 +22,35 @@ defined('MOLAJO') or die;
 Class ModuleIncluder extends Includer
 {
 	/**
+	 * __construct
+	 *
+	 * Class constructor.
+	 *
+	 * @param  string $name
+	 * @param  string $type
+	 * @param  array  $items (used for event processing includes, only)
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	public function __construct($name = null, $type = null, $items = null)
+	{
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_MODULE);
+		return parent::__construct($name, $type, $items);
+	}
+
+	/**
+	 * process
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function process($attributes = array())
+	{
+		return '';
+	}
+
+	/**
 	 * getExtension
 	 *
 	 * Retrieve extension information using either the ID or the name
@@ -31,10 +60,6 @@ Class ModuleIncluder extends Includer
 	 */
 	protected function getExtension()
 	{
-		Services::Registry()->set('Parameters',
-			'extension_catalog_type_id',
-			CATALOG_TYPE_EXTENSION_MODULE
-		);
 		$results = parent::getExtension();
 
 		if ($results === false) {

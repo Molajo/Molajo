@@ -7,7 +7,6 @@
 namespace Molajo\Extension\Helper;
 
 use Molajo\Service\Services;
-
 use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
@@ -41,6 +40,7 @@ Class ThemeHelper
 		if (empty(self::$instance)) {
 			self::$instance = new ThemeHelper();
 		}
+
 		return self::$instance;
 	}
 
@@ -93,7 +93,7 @@ Class ThemeHelper
 	}
 
 	/**
-	 *     setDefaultTheme
+	 *  setDefaultTheme
 	 *
 	 *  Determine the default theme value, given system default sequence
 	 *
@@ -147,7 +147,6 @@ Class ThemeHelper
 		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System'); //99
 	}
 
-
 	/**
 	 * getPath
 	 *
@@ -200,6 +199,7 @@ Class ThemeHelper
 		if (file_exists($path . 'favicon.ico')) {
 			return EXTENSIONS_THEMES_URL . '/' . $theme_name . '/images/favicon.ico';
 		}
+
 		$path = BASE_FOLDER;
 		if (file_exists($path . 'favicon.ico')) {
 			return BASE_URL . $theme_name . '/images/favicon.ico';

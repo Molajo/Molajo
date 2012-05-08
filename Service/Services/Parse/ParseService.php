@@ -329,7 +329,12 @@ Class ParseService
 					/** 5. store the "replace this" value */
 					$replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-					/** 6. call the includer class */
+					/** 6. initialize registry */
+					Services::Registry()->createRegistry('Parameters');
+					Services::Registry()->createRegistry('TemplateView');
+					Services::Registry()->createRegistry('WrapView');
+
+					/** 7. call the includer class */
 					$class = 'Molajo\\Extension\\Includer\\';
 					$class .= ucfirst($includerType) . 'Includer';
 
@@ -341,17 +346,20 @@ Class ParseService
 						// ERROR
 					}
 
-					/** 7. render output and store results as "replace with" */
+					/** 8. render output and store results as "replace with" */
 					$with[] = $rc->process($attributes);
+
 					Services::Registry()->deleteRegistry('Parameters');
+					Services::Registry()->deleteRegistry('TemplateView');
+					Services::Registry()->deleteRegistry('WrapView');
 				}
 			}
 		}
 
-		/** 8. replace it */
+		/** 9. replace it */
 		$this->rendered_output = str_replace($replace, $with, $this->rendered_output);
 
-		/** 9. make certain all <include:xxx /> literals are removed on final */
+		/** 10. make certain all <include:xxx /> literals are removed on final */
 		if ($this->final === true) {
 			$replace = array();
 			$with = array();

@@ -176,7 +176,7 @@ Class TemplateViewHelper
 			return MVC . $plus;
 		}
 
-		return false ;
+		return false;
 	}
 
 	/**
