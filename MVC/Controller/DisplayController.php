@@ -8,7 +8,6 @@ namespace Molajo\MVC\Controller;
 
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
-
 use Mustache\Mustache;
 
 defined('MOLAJO') or die;
@@ -22,6 +21,17 @@ defined('MOLAJO') or die;
  */
 class DisplayController extends Controller
 {
+
+	/**
+	 * Constructor.
+	 *
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+		return parent::__construct();
+	}
+
 
 	/**
 	 * Add task is used to render view output for a form used to create new content
@@ -59,9 +69,8 @@ class DisplayController extends Controller
 	 */
 	public function display()
 	{
-		echo 'hello';
 		/** Set Criteria and Run Query */
-		$this->resultset = $this->model->getData();
+		$this->query_results = $this->model->getData();
 		$this->pagination = $this->model->getPagination();
 //$this->model_state = $this->model->getState();
 ;
@@ -71,13 +80,13 @@ class DisplayController extends Controller
 		 *      extensions. MolajoRequestModel retrieves data.
 		 */
 		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
-			Services::Registry()->set('Primary', 'query_resultset', $this->resultset);
+			Services::Registry()->set('Primary', 'query_resultset', $this->query_results);
 			Services::Registry()->set('Primary', 'query_pagination', $this->pagination);
 //Services::Registry()->set('Primary', 'query_state', $this->model_state);
 		}
 
 		/** no results */
-		if (count($this->resultset) == 0
+		if (count($this->query_results) == 0
 			&& Services::Registry()->get('Parameters', 'suppress_no_results') == 1
 		) {
 			return '';
@@ -90,8 +99,8 @@ class DisplayController extends Controller
 		$renderedOutput = $this->renderView(Services::Registry()->get('TemplateView', 'title'));
 
 		/** Mustache */
-		if (Services::Registry()->get('Parameters', 'mustache', 0) == 1) {
-//$renderedOutput = $this->processRenderedOutput($renderedOutput);
+		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
+$renderedOutput = $this->processRenderedOutput($renderedOutput);
 		}
 
 		/** render wrap view around template view results */
@@ -109,14 +118,14 @@ class DisplayController extends Controller
 	 */
 	public function wrapView($view, $renderedOutput)
 	{
-		$this->resultset = array();
+		$this->query_results = array();
 
 		$temp = new \stdClass();
 		$temp->wrap_view_css_id = Services::Registry()->get('WrapView', 'wrap_view_css_id');
 		$temp->wrap_view_css_class = Services::Registry()->get('WrapView', 'wrap_view_css_class');
 		$temp->content = $renderedOutput;
 
-		$this->resultset[] = $temp;
+		$this->query_results[] = $temp;
 
 		/** paths */
 		$this->view_path = Services::Registry()->get('WrapView', 'path');
@@ -131,7 +140,7 @@ class DisplayController extends Controller
 	 *
 	 * Depending on the files within view/view-type/view-name/View/*.*:
 	 *
-	 * 1. Include a single Custom.php file to process all query results in $this->resultset
+	 * 1. Include a single Custom.php file to process all query results in $this->query_results
 	 *
 	 * 2. Include Header.php, Body.php, and/or Footer.php views for Molajo to
 	 *  perform the looping, sending $row into the views
@@ -154,8 +163,8 @@ class DisplayController extends Controller
 		} else {
 
 			/** 2. controller manages loop and event processing */
-			$totalRows = count($this->resultset);
-			foreach ($this->resultset as $this->row) {
+			$totalRows = count($this->query_results);
+			foreach ($this->query_results as $this->row) {
 
 				/** header: before any rows are processed */
 				if ($rowCount == 1) {
@@ -233,27 +242,38 @@ class DisplayController extends Controller
 		$m = new Mustache;
 
 		/** Theme Helper */
-		$helperClass = 'Extension\\Helper\\MustacheHelper\\MustacheHelper';
+		$helperClass = 'Molajo\\Extension\\Helper\\MustacheHelper';
 		$h = new $helperClass();
 
-		/** create input dataset */
-		$totalRows = count($this->resultset);
-		$row = 0;
+		/** Push in Parameters */
+		$h->parameters = $this->parameters;
+
+		/** Push in model results */
+		$totalRows = count($this->query_results);
+		if (($this->query_results) == false) {
+		     $totalRows = 0;
+		}
+
+		$counter = 0;
+		$new_query_results = array();
 		if ($totalRows > 0) {
-			foreach ($this->resultset as $this->row) {
+			foreach ($this->query_results as $this->row) {
+
 				$item = new \stdClass ();
 				$pairs = get_object_vars($this->row);
 				foreach ($pairs as $key => $value) {
 					$item->$key = $value;
 				}
-				$h->data[$row] = $item;
-				$row++;
+
+				$new_query_results->data[$counter] = $item;
+
+				$counter++;
 			}
 		}
 
-		/** Pass rendered output and data to Helper */
+		/** Pass in Rendered Output and Helper Class Istance */
 		ob_start();
-		echo $h->render($template, $h);
+		echo $h->render($template, $new_query_results);
 		$output = ob_get_contents();
 		ob_end_clean();
 

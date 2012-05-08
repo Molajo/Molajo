@@ -14,5 +14,10 @@
 <include:defer/>
  */
 defined('MOLAJO') or die; ?>
+<include:head/>
+<include:module name=PageHeader template=PageHeader wrap=Head/>
+<include:message/>
 <include:request/>
+<include:module name=PageFooter template=PageFooter wrap=Footer/>
+<include:defer/>
 

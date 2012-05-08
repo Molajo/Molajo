@@ -89,10 +89,10 @@ Class EntryController extends DisplayController
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($table = null)
+	public function connect($table = '')
 	{
 		/** Specific table model interaction - or - complex data query  */
-		if ($table === null) {
+		if ($table === '') {
 		} else {
 			$this->setModelTable($table);
 			$this->dbDriver = $this->default_dbDriver;
@@ -190,9 +190,8 @@ Class EntryController extends DisplayController
 
 		try {
 			return $this->model->$query_object();
-		}
 
-		catch (\Exception $e) {
+		} catch (\Exception $e) {
 			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
 		}
 	}

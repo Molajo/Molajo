@@ -107,7 +107,7 @@ Class Services
 		$services = simplexml_load_file(CONFIGURATION_FOLDER . '/Application/services.xml');
 
 		foreach ($services->service as $item) {
-			$try = true;
+			$connectionSucceeded = true;
 			$connection = '';
 
 			/** class name */
@@ -120,28 +120,38 @@ Class Services
 
 			/** trap errors for missing class or method */
 			if (class_exists($serviceClass)) {
+
 				if (method_exists($serviceClass, $serviceMethod)) {
+
 				} else {
-					$try = false;
-					$connection = $serviceClass . '::' . $serviceMethod . ' Class does not exist';
+					$connectionSucceeded = false;
+					$connection = $serviceClass . '::' . $serviceMethod . ' Class Method does not exist';
+					echo $connection;
 				}
 			} else {
-				$try = false;
+				$connectionSucceeded = false;
 				$connection = $serviceClass . ' Class does not exist';
+				echo $connection;
 			}
 
 			/** make service connection */
-			if ($try === true) {
+			if ($connectionSucceeded == true) {
 				try {
+//echo $serviceClass.' '.$serviceMethod.'<br />';
 					$connection = $serviceClass::$serviceMethod();
 
 				} catch (\Exception $e) {
+					$connectionSucceeded = false;
 					$connection = 'Fatal Error: ' . $e->getMessage();
 				}
 			}
 
 			/** store connection or error message */
-			$this->set($entry, $connection, $try);
+			if ($connectionSucceeded == false) {
+				echo 'service failed for '. $entry.'<br />';
+			}
+			$this->set($entry, $connection, $connectionSucceeded);
+
 		}
 
 		foreach ($this->message as $message) {
@@ -162,11 +172,11 @@ Class Services
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	private function set($key, $value = null, $try = true)
+	private function set($key, $value = null, $connectionSucceeded = true)
 	{
 		$i = count($this->message);
 
-		if ($value == null || $try == false) {
+		if ($value == null || $connectionSucceeded == false) {
 			$this->message[$i] = 'Service: ' . $key . ' FAILED' . $value;
 
 		} else {

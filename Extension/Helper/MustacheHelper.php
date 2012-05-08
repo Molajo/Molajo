@@ -7,7 +7,6 @@
 namespace Molajo\Extension\Helper;
 
 use Molajo\Service\Services;
-
 use Mustache\Mustache;
 
 defined('MOLAJO') or die;
@@ -28,6 +27,14 @@ Class MustacheHelper extends Mustache
 	 * @since  1.0
 	 */
 	protected static $instance;
+
+	/**
+	 * Parameters passed in by Controller when class instantiated
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $parameters;
 
 	/**
 	 * $data
@@ -94,10 +101,10 @@ Class MustacheHelper extends Mustache
 	{
 		$this->analytics();
 
-		return Services::URL()->getGravatar(
-			$email = 'AmyStephen@gmail.com',
-			$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
-		);
+		//return Services::Url()->getGravatar(
+		//	$email = 'AmyStephen@gmail.com',
+		//	$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
+		//);
 	}
 
 	/**
@@ -148,8 +155,10 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function intro()
 	{
-		$result = Services::Text()->smilies($this->data[$this->rows - 1]->introtext);
-		return $this->data[$this->rows - 1]->introtext;
+		if ($this->data == null) { return; }
+
+		$result = Services::Text()->smilies($this->data[$this->rows]->introtext);
+		return $this->data[$this->rows]->introtext;
 	}
 
 	/**
@@ -176,13 +185,17 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function profile()
 	{
-//        $rc = new Molajo\Extension\Includer\ModuleIncluder ('profile', '');
+		if ($this->data == null) { return; }
+
+		$class = 'Molajo\\Extension\\Includer\\ModuleIncluder';
+        $rc = new $class ('profile', '');
+
 		$attributes = array();
 		$attributes['name'] = 'dashboard';
 		$attributes['template'] = 'dashboard';
 		$attributes['wrap'] = 'section';
-		$attributes['id'] = $this->data[$this->rows - 1]->id;
+		$attributes['id'] = $this->data[$this->rows]->id;
 
-//        return $rc->process($attributes);
+        return $rc->process($attributes);
 	}
 }

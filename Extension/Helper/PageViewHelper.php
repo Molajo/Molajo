@@ -154,7 +154,7 @@ Class PageViewHelper
 	 */
 	public function getPath($page_view_name)
 	{
-		$plus = '/View/Page/' . $page_view_name;
+		$plus = '/View/Page/' . ucfirst(strtolower($page_view_name));
 
 		/** 1. Theme */
 		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/index.php')) {
@@ -167,8 +167,8 @@ Class PageViewHelper
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Page/' . $page_view_name . '/index.php')) {
-			return EXTENSIONS_VIEWS . '/Page/' . $page_view_name;
+		if (file_exists(EXTENSIONS_VIEWS . '/Page/' . ucfirst(strtolower($page_view_name)) . '/index.php')) {
+			return EXTENSIONS_VIEWS . '/Page/' . ucfirst(strtolower($page_view_name));
 		}
 
 		/** 4. MVC */
@@ -189,7 +189,7 @@ Class PageViewHelper
 	 */
 	public function getPathURL($page_view_name)
 	{
-		$plus = '/View/Page/' . $page_view_name;
+		$plus = '/View/Page/' . ucfirst(strtolower($page_view_name));
 
 		/** 1. Theme */
 		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/index.php')) {
@@ -202,8 +202,8 @@ Class PageViewHelper
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Page/' . $page_view_name . '/index.php')) {
-			return EXTENSIONS_VIEWS_URL . '/Page/' . $page_view_name;
+		if (file_exists(EXTENSIONS_VIEWS . '/Page/' . ucfirst(strtolower($page_view_name)) . '/index.php')) {
+			return EXTENSIONS_VIEWS_URL . '/Page/' . ucfirst(strtolower($page_view_name));
 		}
 
 		/** 4. MVC */

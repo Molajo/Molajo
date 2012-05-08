@@ -113,7 +113,7 @@ Class ExtensionHelper
 
 		/** Load special fields for specific extension */
 		$xml = Services::Configuration()->loadFile(
-			Services::Registry()->get('Parameters', 'extension_path') . '/' . 'Manifest.xml'
+			'Manifest', Services::Registry()->get('Parameters', 'extension_path')
 		);
 
 		if ($xml == false) {
@@ -279,19 +279,19 @@ Class ExtensionHelper
 	public function getPath($catalog_type_id, $name)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			return EXTENSIONS_COMPONENTS . '/' . $name;
+			return EXTENSIONS_COMPONENTS . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
-			return EXTENSIONS_FORMFIELDS . '/' . $name;
+			return EXTENSIONS_FORMFIELDS . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			return EXTENSIONS_MODULES . '/' . $name;
+			return EXTENSIONS_MODULES . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			return EXTENSIONS_THEMES . '/' . $name;
+			return EXTENSIONS_THEMES . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			return EXTENSIONS_TRIGGERS . '/' . $name;
+			return EXTENSIONS_TRIGGERS . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
 			return Helpers::Page()->getPath($name);
@@ -317,19 +317,19 @@ Class ExtensionHelper
 	public function getPathURL($catalog_type_id, $name)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			return EXTENSIONS_COMPONENTS_URL . '/' . $name;
+			return EXTENSIONS_COMPONENTS_URL . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
-			return EXTENSIONS_FORMFIELDS_URL . '/' . $name;
+			return EXTENSIONS_FORMFIELDS_URL . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			return EXTENSIONS_MODULES_URL . '/' . $name;
+			return EXTENSIONS_MODULES_URL . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			return EXTENSIONS_THEMES_URL . '/' . $name;
+			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			return EXTENSIONS_TRIGGERS_URL . '/' . $name;
+			return EXTENSIONS_TRIGGERS_URL . '/' . ucfirst(strtolower($name));
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
 			return Helpers::Page()->getPathURL($name);

@@ -57,7 +57,7 @@ class ListController extends ItemController
 	}
 
 	/**
-	 * copy, move or delete -> processFeatureChange -> processIems
+	 * copy, move or delete -> processFeatureChange -> processItems
 	 *
 	 * call processItems which loops through the ids and calls saveItemBatch or deleteItemBatch
 	 *

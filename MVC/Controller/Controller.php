@@ -28,6 +28,14 @@ class Controller
 	protected static $instance;
 
 	/**
+	 * Stores various extension-specific key/value pairs
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $parameters = array();
+
+	/**
 	 * Used with Model get and set
 	 *
 	 * @var    object
@@ -112,12 +120,20 @@ class Controller
 	);
 
 	/**
-	 * $resultset
+	 * $query_results
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $resultset;
+	protected $query_results;
+
+	/**
+	 * $row
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $row;
 
 	/**
 	 * $pagination
@@ -139,7 +155,7 @@ class Controller
 	 */
 	public function __construct()
 	{
-
+		  $this->parameters = array();
 	}
 
 	/**
@@ -210,9 +226,7 @@ class Controller
 			return true;
 		}
 // or super admin
-		if ($this->model->checked_out
-			== Services::Registry()->get('User', 'id')
-		) {
+		if ($this->model->checked_out == Services::Registry()->get('User', 'id')) {
 
 		} else {
 			// redirect error

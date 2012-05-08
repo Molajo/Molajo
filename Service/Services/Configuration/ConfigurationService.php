@@ -256,6 +256,7 @@ Class ConfigurationService
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
 
 		} else if ($type == 'Table') {
+
 			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
 				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
 			} else {
@@ -268,6 +269,8 @@ Class ConfigurationService
 
 		if (file_exists($path_and_file)) {
 		} else {
+			echo 'File not found: ' . $path_and_file;
+			die;
 			throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
 

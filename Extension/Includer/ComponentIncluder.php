@@ -70,15 +70,15 @@ class ComponentIncluder extends Includer
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)Services::Registry()->get('Extension', 'catalog_type_id'));
 		Services::Registry()->set('Parameters', 'extension_catalog_type_title',
-			(int)Services::Registry()->get('Extension', 'catalog_type_title'));
+			Services::Registry()->get('Extension', 'catalog_type_title'));
 
 		Services::Registry()->set('Parameters', 'extension_view_group_id',
 			(int)Services::Registry()->get('Extension', 'view_group_id'));
 
 		Services::Registry()->set('Parameters', 'extension_path',
-			(int)Services::Registry()->get('Extension', 'path'));
+			Services::Registry()->get('Extension', 'path'));
 		Services::Registry()->set('Parameters', 'extension_path_url',
-			(int)Services::Registry()->get('Extension', 'path_url'));
+			Services::Registry()->get('Extension', 'path_url'));
 
 		Services::Registry()->set('Parameters', 'extension_primary', true);
 

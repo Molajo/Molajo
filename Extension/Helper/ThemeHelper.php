@@ -157,8 +157,8 @@ Class ThemeHelper
 	 */
 	public function getPath($theme_name)
 	{
-		if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
-			return EXTENSIONS_THEMES . '/' . $theme_name;
+		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name)) . '/' . 'index.php')) {
+			return EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name)) ;
 		}
 
 		return false;
@@ -174,8 +174,8 @@ Class ThemeHelper
 	 */
 	public function getPathURL($theme_name)
 	{
-		if (file_exists(EXTENSIONS_THEMES . '/' . $theme_name . '/' . 'index.php')) {
-			return EXTENSIONS_THEMES_URL . '/' . $theme_name;
+		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name))  . '/' . 'index.php')) {
+			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($theme_name)) ;
 		}
 
 		return false;
@@ -195,14 +195,14 @@ Class ThemeHelper
 	 */
 	public function getFavicon($theme_name)
 	{
-		$path = EXTENSIONS_THEMES . '/' . $theme_name . '/images/';
+		$path = EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name))  . '/images/';
 		if (file_exists($path . 'favicon.ico')) {
-			return EXTENSIONS_THEMES_URL . '/' . $theme_name . '/images/favicon.ico';
+			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($theme_name))  . '/images/favicon.ico';
 		}
 
 		$path = BASE_FOLDER;
 		if (file_exists($path . 'favicon.ico')) {
-			return BASE_URL . $theme_name . '/images/favicon.ico';
+			return BASE_URL . '/favicon.ico';
 		}
 
 		return false;

@@ -131,18 +131,20 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
-		echo $this->name . ' ' . $this->type . ' ' . $this->items . '<br />';
-
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 		$this->getAttributes();
+
+		/** retrieve the extension that will be used to generate the MVC request */
+		$this->getExtension();
 
 		/** initialises and populates the MVC request */
 		$this->setRenderCriteria();
 
 		if ($this->extension_required === true) {
 			if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
-				return Services::Registry()->set('Parameters', 'status_found', false);
+				Services::Registry()->set('Parameters', 'status_found', false);
+				return false;
 			}
 		}
 
@@ -384,11 +386,40 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
-		$m = Application::Controller()->connect(Services::Registry()->get('Parameters', 'table'));
+		/** Controller */
+		$m = Application::Controller()->connect('');
+
+		/** Set Parameters */
+		$m->parameters['include_name'] = $this->name;
+		$m->parameters['include_type'] = $this->type;
+
+		$parameters = Services::Registry()->get('Parameters');
+		foreach ($parameters as $key => $value) {
+			$m->parameters[$key] = $value;
+		}
+
+		$template = Services::Registry()->get('TemplateView');
+		foreach ($template as $key => $value) {
+			$m->parameters['template_view_' . $key] = $value;
+		}
+
+		$wrap = Services::Registry()->get('WrapView');
+		foreach ($wrap as $key => $value) {
+			$m->parameters['wrap_view_' . $key] = $value;
+		}
+
+		$page = Services::Registry()->get('PageView');
+		foreach ($page as $key => $value) {
+			$m->parameters['page_view_' . $key] = $value;
+		}
+
+		$theme = Services::Registry()->get('Theme');
+		foreach ($theme as $key => $value) {
+			$m->parameters['theme_' . $key] = $value;
+		}
 
 		$m->model->set('id', Services::Registry()->get('Parameters', 'id'));
-
-		$m->model->set('get_special_fields', 1);
+		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
 		$m->model->set('add_acl_check', false);
 
@@ -411,8 +442,6 @@ class Includer
 		return Services::Filter()->filter_html($results);
 		}
 		 */
-		echo $results;
-		die;
 		return $results;
 	}
 
