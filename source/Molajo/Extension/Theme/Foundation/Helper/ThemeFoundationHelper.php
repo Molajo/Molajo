@@ -7,6 +7,7 @@
 namespace Molajo\Extension\Theme\Foundation\Helper;
 
 use Molajo\Extension\Helper\MustacheHelper;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 /**
@@ -45,8 +46,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 	public function loadMedia()
 	{
 		/** Mobile Specific Meta */
-		Services::Document()->set_metadata
-		('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+		Services::Registry()->set('Metadata', 'viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
 
 		/** Favicons */
 		Services::Document()->add_link(

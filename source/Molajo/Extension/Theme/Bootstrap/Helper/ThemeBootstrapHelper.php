@@ -4,20 +4,29 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Theme\Amazium\Helper;
+namespace Molajo\Extension\Theme\Bootstrap\Helper;
 
 use Molajo\Extension\Helper\MustacheHelper;
+use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
 /**
  * Helper
  *
- * @package     Molajo
+ * @package   Molajo
  * @subpackage  Helper
  * @since       1.0
  */
-Class AmaziumThemeHelper extends MustacheHelper
+Class ThemeBootstrapHelper extends MustacheHelper
 {
+
+	/**
+	 * Parameters
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $parameters;
+
 	/**
 	 * hello
 	 *
@@ -28,7 +37,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 	 */
 	public function hello()
 	{
-		return 'Hello ' . Services::Registry()->get('User', 'name') . '!!!';
+		return 'Hello ' . Services::Registry()->get('User', 'name') . '!';
 	}
 
 	/**
@@ -45,8 +54,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 	public function loadMedia()
 	{
 		/** Mobile Specific Meta */
-		Services::Document()->set_metadata
-		('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+		Services::Registry()->set('Metadata', 'viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
 
 		/** Favicons */
 		Services::Document()->add_link(
@@ -91,6 +99,7 @@ Class AmaziumThemeHelper extends MustacheHelper
          {
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
+
 		Services::Document()->add_js_declaration
 		($fallback, 'text/javascript', 1000);
 	}

@@ -55,94 +55,11 @@ Class ThemeIncluder extends Includer
 	 */
 	public function process($attributes = array())
 	{
-
-		$this->loadMetadata();
-
 		$this->loadLanguage();
 
 		$this->loadMedia();
 
 		return;
-	}
-
-	/**
-	 * loadMetadata
-	 *
-	 * Loads Metadata values into Services::Document Metadata array
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function loadMetadata()
-	{
-		// todo: trigger for metadata
-
-		Services::Document()->set_metadata('title', '');
-		Services::Document()->set_metadata('description', '');
-		Services::Document()->set_metadata('keywords', '');
-		Services::Document()->set_metadata('robots', '');
-		Services::Document()->set_metadata('author', '');
-		Services::Document()->set_metadata('content_rights', '');
-
-		if (Services::Registry()->get('Request', 'status_error') == true) {
-			Services::Document()->set_metadata('title',
-				Services::Language()->translate('ERROR_FOUND'));
-			return;
-		}
-
-		/** Last Modified */
-		if (Services::Registry()->get('Content', 'source_last_modified', '') == '') {
-			Services::Document()->set_last_modified(
-				Services::Registry()->get('Menuitem', 'source_last_modified'));
-		} else {
-			Services::Document()->set_last_modified(
-				Services::Registry()->get('Content', 'source_last_modified'));
-		}
-
-		/** Metadata */
-		if (Services::Registry()->get('ContentMetadata', 'metadata_title', '') == '') {
-		} else {
-			return $this->setMetadata('ContentMetadata');
-		}
-
-		if (Services::Registry()->get('MenuItemMetadata', 'metadata_title', '') == '') {
-		} else {
-			return $this->setMetadata('MenuItemMetadata');
-		}
-
-		if (Services::Registry()->get('CategoryMetadata', 'metadata_title', '') == '') {
-		} else {
-			return $this->setMetadata('CategoryMetadata');
-		}
-
-		if (Services::Registry()->get('ExtensionMetadata', 'metadata_title', '') == '') {
-		} else {
-			return $this->setMetadata('ExtensionMetadata');
-		}
-
-		if (Services::Registry()->get('ApplicationMetadata', 'metadata_title', '') == '') {
-		} else {
-			return $this->setMetadata('ApplicationMetadata');
-		}
-
-		return $this->setMetadata('SiteMetadata');
-	}
-
-	/**
-	 * setMetadata for specific Namespace
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function setMetadata($namespace)
-	{
-		$metadata = Services::Registry()->get($namespace);
-
-		if (count($metadata) > 0) {
-			foreach ($metadata as $key => $value) {
-				Services::Document()->set_metadata(substr($key, 10, strlen($key) - 10), $value);
-			}
-		}
 	}
 
 	/**
@@ -185,9 +102,9 @@ Class ThemeIncluder extends Includer
 			Services::Registry()->get('Configuration', 'media_priority_user', 300));
 
 		/** Load custom Theme Helper Media, if exists */
-		$helperClass = 'Molajo\\Extension\\Theme\\' . 'Theme'
-			. ucfirst(Services::Registry()->get('Theme', 'title'))
-			. 'Helper';
+		$helperClass = 'Molajo\\Extension\\Theme\\'
+			. ucfirst(Services::Registry()->get('Theme', 'title')) . '\\Helper\\'
+			. 'Theme' . ucfirst(Services::Registry()->get('Theme', 'title')) . 'Helper';
 
 		if (\class_exists($helperClass)) {
 			$load = new $helperClass();

@@ -241,9 +241,17 @@ $renderedOutput = $this->processRenderedOutput($renderedOutput);
 		/** Instantiate Mustache before Theme Helper */
 		$m = new Mustache;
 
-		/** Theme Helper */
-		$helperClass = 'Molajo\\Extension\\Helper\\MustacheHelper';
-		$h = new $helperClass();
+		/** Theme Specific Mustache Helper or Molajo Mustache Helper */
+		$helperClass = 'Molajo\\Extension\\Theme\\'
+			. ucfirst(Services::Registry()->get('Theme', 'title')) . '\\Helper\\'
+			. 'Theme' . ucfirst(Services::Registry()->get('Theme', 'title')) . 'Helper';
+
+		if (\class_exists($helperClass)) {
+			$h = new $helperClass();
+		} else {
+			$helperClass = 'Molajo\\Extension\\Helper\\MustacheHelper';
+			$h = new $helperClass();
+		}
 
 		/** Push in Parameters */
 		$h->parameters = $this->parameters;
@@ -271,10 +279,11 @@ $renderedOutput = $this->processRenderedOutput($renderedOutput);
 			}
 		}
 
-		/** Pass in Rendered Output and Helper Class Istance */
+		/** Pass in Rendered Output and Helper Class Instance */
 		ob_start();
 		echo $h->render($template, $new_query_results);
 		$output = ob_get_contents();
+
 		ob_end_clean();
 
 		/** Return processed output */

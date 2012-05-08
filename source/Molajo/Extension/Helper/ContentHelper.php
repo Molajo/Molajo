@@ -53,6 +53,7 @@ Class ContentHelper
 	 */
 	public function getRoute()
 	{
+
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'source_id'),

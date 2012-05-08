@@ -123,7 +123,9 @@ Class CatalogHelper
 			}
 
 		} else {
+
 			$catalog_id = $this->getIDUsingSEFURL($sef_request);
+
 			if ($catalog_id == false) {
 				return array();
 			}
