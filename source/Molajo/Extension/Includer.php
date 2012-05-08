@@ -94,6 +94,16 @@ class Includer
 	protected $items;
 
 	/**
+	 * $normal
+	 *
+	 * Used to pre-retrieve parameter information for request and prevent requery
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $normal = false;
+
+	/**
 	 * __construct
 	 *
 	 * Class constructor.
@@ -131,6 +141,8 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
+		$normal = true;
+
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 		$this->getAttributes();
@@ -226,6 +238,10 @@ class Includer
 	 */
 	protected function getExtension()
 	{
+		if ($normal = true && $this->type == 'request') {
+			return;
+		}
+
 		/** Retrieve Extension Instances ID */
 		if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'extension_instance_id',
@@ -256,8 +272,12 @@ class Includer
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function setRenderCriteria()
+	public function setRenderCriteria()
 	{
+		if ($normal = true && $this->type == 'request') {
+			return;
+		}
+
 		/** Retrieve Template View Primary Key */
 		if (Services::Registry()->get('TemplateView', 'title', '') == '') {
 		} else {
@@ -370,44 +390,139 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
-		/** Controller */
-		$m = Application::Controller()->connect('');
 
-		/** Set Parameters */
+		/** Initialize */
+		Services::Registry()->set('Parameters', 'id', 0);
+		Services::Registry()->set('Parameters', 'menuitem', 0);
+		Services::Registry()->set('Parameters', 'model_method', '');
+
+		$get_item_children = false;
+		$use_special_joins = false;
+		$add_acl_check = false;
+		$get_special_fields = false;
+
+		$table = '';
+
+		/** Type of Query: Single Item, Menu Item, Content List */
+		if ((int) Services::Registry()->get('Menuitem', 'id') > 0) {
+
+			$moduleMethod = 'getData';
+
+			Services::Registry()->set('Parameters', 'menuitem',
+				(int) Services::Registry()->get('Menuitem', 'id'));
+
+			//MenuItem parameters win;
+
+		} else if ((int) Services::Registry()->get('Content', 'id') == 0
+			&& ($this->type == 'Request' || $this->type == 'Component')) {
+
+			$moduleMethod = 'load';
+
+			Services::Registry()->set('Parameters', 'id',
+				(int) Services::Registry()->get('Content', 'id'));
+
+			$table = Services::Registry()->get('Extension', 'extension_instance_title');
+			$table = ucfirst(strtolower($table));
+
+			/** @var $get_item_children set at global/extension/item level */
+
+			$get_item_children = false;
+			$use_special_joins = false;
+			$add_acl_check = true;
+			$get_special_fields = 2;
+
+		}  else {
+
+			/** Full list, only Extension level parameters */
+			$moduleMethod = 'getData';
+		}
+
+		Services::Registry()->set('Parameters', 'moduleMethod', $moduleMethod);
+
+
+		/** Controller */
+		$m = Application::Controller()->connect($table);
+
+		$m->model->set('id', Services::Registry()->get('Parameters', 'id'));
+
+		$m->model->set('get_item_children', $get_item_children);
+		$m->model->set('use_special_joins', $use_special_joins);
+		$m->model->set('add_acl_check', $add_acl_check);
+		$m->model->set('get_special_fields', $get_special_fields);
+
+		/** Save Parameters so that the information can be used by frontend devs in Views */
+
+		/** Include Type */
 		$m->parameters['include_name'] = $this->name;
 		$m->parameters['include_type'] = $this->type;
+
+		/** @var $configuration  */
+		$m->configuration = Services::Registry()->get('Configuration');
 
 		$parameters = Services::Registry()->get('Parameters');
 		foreach ($parameters as $key => $value) {
 			$m->parameters[$key] = $value;
 		}
 
-		$template = Services::Registry()->get('TemplateView');
-		foreach ($template as $key => $value) {
+		$x = Services::Registry()->get('Route');
+		foreach ($x as $key => $value) {
+			$m->parameters['route_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Content');
+		foreach ($x as $key => $value) {
+			$m->parameters['content_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Category');
+		foreach ($x as $key => $value) {
+			$m->parameters['category_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Menuitem');
+		foreach ($x as $key => $value) {
+			$m->parameters['menuitem_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('TemplateView');
+		foreach ($x as $key => $value) {
 			$m->parameters['template_view_' . $key] = $value;
 		}
 
-		$wrap = Services::Registry()->get('WrapView');
-		foreach ($wrap as $key => $value) {
+		$x = Services::Registry()->get('WrapView');
+		foreach ($x as $key => $value) {
 			$m->parameters['wrap_view_' . $key] = $value;
 		}
 
-		$page = Services::Registry()->get('PageView');
-		foreach ($page as $key => $value) {
+		$x = Services::Registry()->get('PageView');
+		foreach ($x as $key => $value) {
 			$m->parameters['page_view_' . $key] = $value;
 		}
 
-		$theme = Services::Registry()->get('Theme');
-		foreach ($theme as $key => $value) {
+		$x = Services::Registry()->get('Theme');
+		foreach ($x as $key => $value) {
 			$m->parameters['theme_' . $key] = $value;
 		}
 
-		$m->model->set('id', Services::Registry()->get('Parameters', 'id'));
-		$m->model->set('get_item_children', false);
-		$m->model->set('use_special_joins', false);
-		$m->model->set('add_acl_check', false);
+	    /** User Object */
+		$m->user = Services::Registry()->get('User');
 
-		$results = $m->display();
+		$x = Services::Registry()->get('UserCustomfields');
+		if (count($x) > 0 && $x !== null) {
+			foreach ($x as $key => $value) {
+				$m->user[$key] = $value;
+			}
+		}
+
+		$x = Services::Registry()->get('UserParameters');
+		if (count($x) > 0 && $x !== null) {
+			foreach ($x as $key => $value) {
+				$m->user[$key] = $value;
+			}
+		}
+
+		/** Invoke the Method */
+		$results = $m->getData($moduleMethod, true);
 
 		if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 			Services::Debug()->set(' ');

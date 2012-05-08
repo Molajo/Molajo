@@ -35,6 +35,15 @@ class Controller
 	 */
 	public $parameters = array();
 
+
+	/**
+	 * User object, custom fields and parameters
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $user = array();
+
 	/**
 	 * Used with Model get and set
 	 *
