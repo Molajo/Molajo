@@ -36,6 +36,35 @@ class DisplayModel extends ItemModel
 	}
 
 	/**
+	 * getData
+	 *
+	 * Used for most view access queries for any model.
+	 *
+	 * Use load for retrieving a specific item with intent to update.
+	 *
+	 * Method to establish query criteria, formulate a database query,
+	 * run the database query, allow for the addition of more data, and
+	 * return the integrated data
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	public function getData()
+	{
+		$this->setQuery();
+
+		$this->query_results = $this->runQuery();
+
+		if (empty($this->query_results)) {
+			return false;
+		}
+
+		$this->query_results = $this->getAdditionalData();
+
+		return $this->query_results;
+	}
+
+	/**
 	 * setQuery
 	 *
 	 * Method to create a query object

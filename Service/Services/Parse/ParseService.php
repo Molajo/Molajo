@@ -82,6 +82,36 @@ Class ParseService
 	protected $includes = array();
 
 	/**
+	 * $parameters
+	 *
+	 * Application parameters for sharing with the Routed Extension, Metadata, Theme and Page View
+	 *
+	 * @var string
+	 * @since 1.0
+	 */
+	protected $parameters = array();
+
+	/**
+	 * $user
+	 *
+	 * User object for sharing with the Theme and Page View
+	 *
+	 * @var string
+	 * @since 1.0
+	 */
+	protected $user = array();
+
+	/**
+	 * $configuration
+	 *
+	 * Configuration object for sharing with the Theme and Page View
+	 *
+	 * @var string
+	 * @since 1.0
+	 */
+	protected $configuration = array();
+
+	/**
 	 * getInstance
 	 *
 	 * @return bool|object
@@ -143,6 +173,8 @@ Class ParseService
 		Services::Event()->schedule('onBeforeRender');
 
 		$this->final = false;
+
+		$this->preProcessingThemeParameters();
 
 		$body = $this->renderLoop();
 
@@ -298,6 +330,7 @@ Class ParseService
 	{
 		$replace = array();
 		$with = array();
+		$first = true;
 
 		/** 1. process extension includers in order defined by sequence.xml */
 		foreach ($this->sequence as $sequence) {
@@ -330,11 +363,15 @@ Class ParseService
 					$replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
 					/** 6. initialize registry */
-					Services::Registry()->createRegistry('Parameters');
-					Services::Registry()->createRegistry('TemplateView');
-					Services::Registry()->createRegistry('WrapView');
+					if ($first) {
+					} else {
+						Services::Registry()->createRegistry('Parameters');
+						Services::Registry()->createRegistry('TemplateView');
+						Services::Registry()->createRegistry('WrapView');
+					}
 
 					/** 7. call the includer class */
+					$first = false;
 					$class = 'Molajo\\Extension\\Includer\\';
 					$class .= ucfirst($includerType) . 'Includer';
 
@@ -372,5 +409,103 @@ Class ParseService
 		}
 
 		return $this->rendered_output;
+	}
+
+	/**
+	 * preProcessingThemeParameters
+	 *
+	 * Invoked prior to the start of parsing in order to provide the Template and Page index.php files
+	 * with access to the Component Parameters and it's Template and Wrap View vlaues
+	 *
+	 * @return  void
+	 * @since   1.0
+	 */
+	protected function preProcessingThemeParameters()
+	{
+
+		Services::Registry()->createRegistry('Parameters');
+		Services::Registry()->createRegistry('TemplateView');
+		Services::Registry()->createRegistry('WrapView');
+
+		$x = Services::Registry()->get('Request');
+		foreach ($x as $key => $value) {
+			$this->parameters['request_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Route');
+		foreach ($x as $key => $value) {
+			$this->parameters['route_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Content');
+		foreach ($x as $key => $value) {
+			$this->parameters['content_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Category');
+		foreach ($x as $key => $value) {
+			$this->parameters['category_'.$key] = $value;
+		}
+
+		$x = Services::Registry()->get('Menuitem');
+		foreach ($x as $key => $value) {
+			$this->parameters['menuitem_'.$key] = $value;
+		}
+
+		/** Populates Extension Parameters */
+		$class = 'Molajo\\Extension\\Includer\\ComponentIncluder';
+		$rc = new $class ('Request', 'Component');
+		$rc->getExtension();
+		$rc->setRenderCriteria();
+
+		$parameters = Services::Registry()->get('Parameters');
+		foreach ($parameters as $key => $value) {
+			$this->parameters[$key] = $value;
+		}
+
+		$x = Services::Registry()->get('TemplateView');
+		foreach ($x as $key => $value) {
+			$this->parameters['template_view_' . $key] = $value;
+		}
+
+		$x = Services::Registry()->get('WrapView');
+		foreach ($x as $key => $value) {
+			$this->parameters['wrap_view_' . $key] = $value;
+		}
+
+		$x = Services::Registry()->get('PageView');
+		foreach ($x as $key => $value) {
+			$this->parameters['page_view_' . $key] = $value;
+		}
+
+		$x = Services::Registry()->get('Theme');
+		foreach ($x as $key => $value) {
+			$this->parameters['theme_' . $key] = $value;
+		}
+
+		$x = Services::Registry()->get('Metadata');
+		foreach ($x as $key => $value) {
+			$this->parameters['metadata_' . $key] = $value;
+		}
+
+		/** User Object */
+		$this->user = Services::Registry()->get('User');
+
+		$x = Services::Registry()->get('UserCustomfields');
+		if (count($x) > 0 && $x !== null) {
+			foreach ($x as $key => $value) {
+				$this->user[$key] = $value;
+			}
+		}
+
+		$x = Services::Registry()->get('UserParameters');
+		if (count($x) > 0 && $x !== null) {
+			foreach ($x as $key => $value) {
+				$this->user[$key] = $value;
+			}
+		}
+
+		/** Configuration */
+		$this->configuration = Services::Registry()->get('Configuration');
 	}
 }

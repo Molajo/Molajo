@@ -45,11 +45,9 @@ class ComponentIncluder extends Includer
 	 * @return null
 	 * @since  1.0
 	 */
-	protected function getExtension()
+	public function getExtension()
 	{
-		if ($this->type == 'request') {
-		} else {
-			parent::getExtension();
+		if ($normal = true && $this->type == 'request') {
 			return;
 		}
 

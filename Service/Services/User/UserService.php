@@ -89,7 +89,11 @@ Class UserService
 
 		while (list($name, $value) = each($results)) {
 
-			if (substr($name, 0, 5) == 'Model') {
+			if (substr($name, 0, 5) == 'Model'
+				|| $name == 'parameters'
+				|| $name == 'custom_fields'
+				|| $name == 'metadata'
+			) {
 
 			} else {
 

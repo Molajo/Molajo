@@ -91,6 +91,7 @@ Class EntryController extends DisplayController
 	 */
 	public function connect($table = '')
 	{
+
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {
 		} else {
@@ -181,15 +182,23 @@ Class EntryController extends DisplayController
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function getData($query_object = 'loadObjectList')
+	public function getData($query_object = 'loadObjectList', $view_requested = false)
 	{
+
+		//** Need to know if there is a view, or not */
+
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
 			$query_object = 'loadObjectList';
 		}
 
 		try {
-			return $this->model->$query_object();
+			if ($view_requested == true) {
+				return $this->display();
+
+			} else {
+				return $this->model->$query_object();
+			}
 
 		} catch (\Exception $e) {
 			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
