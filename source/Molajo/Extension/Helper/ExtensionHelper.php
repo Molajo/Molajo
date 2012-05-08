@@ -78,6 +78,52 @@ Class ExtensionHelper
 		return;
 	}
 
+
+	/**
+	 * Retrieve Route information for a specific Extension
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function getIncludeExtension($extension_id)
+	{
+		/** Retrieve the query results */
+		$row = $this->get($extension_id);
+
+		/** 404: routeRequest handles redirecting to error page */
+		if (count($row) == 0) {
+			return Services::Registry()->set('Parameter', 'status_found', false);
+		}
+
+		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$row->id);
+		Services::Registry()->set('Parameters', 'extension_instance_title', $row->title);
+		Services::Registry()->set('Parameters', 'extension_translation_of_id', $row->translation_of_id);
+		Services::Registry()->set('Parameters', 'extension_language', $row->language);
+
+		Services::Registry()->set('Parameters', 'extension_catalog_id', $row->catalog_id);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$row->catalog_type_id);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $row->catalog_type_title);
+
+		Services::Registry()->set('Parameters', 'extension_view_group_id', $row->view_group_id);
+
+		Services::Registry()->set('Parameters', 'extension_path', $this->getPath((int)$row->catalog_type_id, $row->title));
+		Services::Registry()->set('Parameters', 'extension_path_url', $this->getPathURL((int)$row->catalog_type_id, $row->title));
+
+		Services::Registry()->set('Parameters', 'extension_primary', false);
+
+		/** Load special fields for specific extension */
+		$xml = Services::Configuration()->loadFile(
+			Services::Registry()->get('Parameters', 'extension_path') . '/' . 'Manifest.xml'
+		);
+
+		if ($xml == false) {
+			return;
+		}
+		$row = Services::Configuration()->addSpecialFields($xml->extension, $row, 1);
+
+		return;
+	}
+
 	/**
 	 * get
 	 *
@@ -301,7 +347,7 @@ Class ExtensionHelper
 	/**
 	 * loadLanguage
 	 *
-	 * Loads Language Files for extension
+	 * Loads Language Files for Extension
 	 *
 	 * @return  boolean
 	 * @since   1.0

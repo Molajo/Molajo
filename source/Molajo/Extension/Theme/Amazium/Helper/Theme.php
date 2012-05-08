@@ -1,20 +1,18 @@
 <?php
 /**
- * @package   Molajo
- * @subpackage  Theme
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Theme;
-
-defined('MOLAJO') or die;
+namespace Molajo\Extension\Theme\Amazium\Helper;
 
 use Molajo\Extension\Helper\MustacheHelper;
 
+defined('MOLAJO') or die;
 /**
  * Helper
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -30,7 +28,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 	 */
 	public function hello()
 	{
-		return 'Hello ' . Services::User()->get('name') . '!!!';
+		return 'Hello ' . Services::Registry()->get('User', 'name') . '!!!';
 	}
 
 	/**
@@ -53,7 +51,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 		/** Favicons */
 		Services::Document()->add_link(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Request', 'theme_name')
+				. '/' . Services::Registry()->get('Theme', 'title')
 				. '/' . 'images/apple-touch-icon.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
@@ -61,7 +59,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 		);
 		Services::Document()->add_link(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Request', 'theme_name')
+				. '/' . Services::Registry()->get('Theme', 'title')
 				. '/' . 'images/apple-touch-icon-72x72.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
@@ -69,7 +67,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 		);
 		Services::Document()->add_link(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Request', 'theme_name')
+				. '/' . Services::Registry()->get('Theme', 'title')
 				. '/' . 'images/apple-touch-icon-114x114.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
@@ -85,7 +83,7 @@ Class AmaziumThemeHelper extends MustacheHelper
 		('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
 
 		$url = EXTENSIONS_THEMES_URL
-			. '/' . Services::Registry()->get('Request', 'theme_name')
+			. '/' . Services::Registry()->get('Theme', 'title')
 			. '/' . 'js/fallback/jquery-1.7.1.min.js';
 
 		$fallback = "

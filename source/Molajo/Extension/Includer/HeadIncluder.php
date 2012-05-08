@@ -21,6 +21,7 @@ defined('MOLAJO') or die;
  */
 Class HeadIncluder extends Includer
 {
+
 	/**
 	 * __construct
 	 *
@@ -28,16 +29,18 @@ Class HeadIncluder extends Includer
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing renderers, only)
+	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
 	public function __construct($name = null, $type = null, $items = null)
 	{
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
 		$this->extension_required = false;
 		parent::__construct($name, $type, $items);
 		Services::Registry()->set('Parameters', 'html_display_filter', false);
+		return $this;
 	}
 
 	/**

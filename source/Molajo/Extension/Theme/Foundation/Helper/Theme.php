@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   Molajo
- * @subpackage  Theme
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Theme\Helper;
-defined('MOLAJO') or die;
+namespace Molajo\Extension\Theme\Foundation\Helper;
+
 use Molajo\Extension\Helper\MustacheHelper;
 
+defined('MOLAJO') or die;
 /**
  * Helper
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Helper
  * @since       1.0
  */
@@ -28,7 +28,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 	 */
 	public function hello()
 	{
-		return 'Hello ' . Services::User()->get('name') . '!!!';
+		return 'Hello ' . Services::Registry()->get('User', 'name') . '!!!';
 	}
 
 	/**
@@ -51,7 +51,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 		/** Favicons */
 		Services::Document()->add_link(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Request', 'theme_name')
+				. '/' . Services::Registry()->get('Theme', 'title')
 				. '/' . 'images/apple-touch-icon.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
@@ -59,7 +59,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 		);
 		Services::Document()->add_link(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Request', 'theme_name')
+				. '/' . Services::Registry()->get('Theme', 'title')
 				. '/' . 'images/apple-touch-icon-72x72.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
@@ -67,7 +67,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 		);
 		Services::Document()->add_link(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Request', 'theme_name')
+				. '/' . Services::Registry()->get('Theme', 'title')
 				. '/' . 'images/apple-touch-icon-114x114.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
@@ -83,7 +83,7 @@ Class ThemeFoundationHelper extends MustacheHelper
 		('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
 
 		$url = EXTENSIONS_THEMES_URL
-			. '/' . Services::Registry()->get('Request', 'theme_name')
+			. '/' . Services::Registry()->get('Theme', 'title')
 			. '/' . 'js/fallback/jquery-1.7.1.min.js';
 
 		$fallback = "
@@ -91,6 +91,7 @@ Class ThemeFoundationHelper extends MustacheHelper
          {
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
+
 		Services::Document()->add_js_declaration
 		($fallback, 'text/javascript', 1000);
 	}

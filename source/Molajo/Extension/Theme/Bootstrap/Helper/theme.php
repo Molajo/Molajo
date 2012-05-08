@@ -28,6 +28,6 @@ Class BootstrapHelper extends MustacheHelper
 	 */
 	public function hello()
 	{
-		return 'Hello ' . Services::User()->get('name') . '!';
+		return 'Hello ' . Services::Registry()->get('User', 'name') . '!';
 	}
 }

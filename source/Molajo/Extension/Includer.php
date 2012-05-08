@@ -31,6 +31,7 @@ class Includer
 
 	/**
 	 * $type
+	 * Examples: head, module, message, tag, request, module, defer
 	 *
 	 * @var    string
 	 * @since  1.0
@@ -49,7 +50,10 @@ class Includer
 	 * $attributes
 	 *
 	 * Extracted in Parser Class from Theme/Rendered output
+	 *
 	 * <include:extension statement attr1=x attr2=y attrN="and-so-on" />
+	 * template, template_css_id, template_css_class
+	 * wrap, wrap_css_id, wrap_css_class
 	 *
 	 * @var    array
 	 * @since  1.0
@@ -107,7 +111,7 @@ class Includer
 		$this->type = $type;
 		$this->items = $items;
 
-		Services::Registry()->createRegistry('Parameters');
+		return;
 	}
 
 	/**
@@ -127,10 +131,11 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
-		echo $this->name .' '.$this->type .' '.$this->items.'<br />';
+		echo $this->name . ' ' . $this->type . ' ' . $this->items . '<br />';
 
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
+		$this->getAttributes();
 
 		/** initialises and populates the MVC request */
 		$this->setRenderCriteria();
@@ -165,103 +170,51 @@ class Includer
 		return $this->rendered_output;
 	}
 
-	/**
-	 * setRenderCriteria
-	 *
-	 * Initialize the request object for MVC values
-	 *
-	 * @return  bool
-	 * @since   1.0
-	 */
-	protected function setRenderCriteria()
-	{
-		/** establish values needed for MVC */
-		$this->getAttributes();
-
-		/** Template  */
-		Helpers::TemplateView()->get();
-
-		/** Page  */
-		Helpers::WrapView()->get();
-
-		return Services::Registry()->set('Parameters', 'status_found', true);
-	}
 
 	/**
 	 * getAttributes
 	 *
-	 *  Retrieve request information needed to execute extension
+	 * Use the view and/or wrap criteria ife specified on the <include statement
 	 *
-	 * @return  bool
+	 * @return  null
 	 * @since   1.0
 	 */
 	protected function getAttributes()
 	{
-		foreach ($this->attributes as $name => $value) {
+		if (count($this->attributes) > 0) {
 
-			if ($name == 'name' || $name == 'title') {
-				Services::Registry()->set('Parameters', 'extension_instance_name', $value);
+			foreach ($this->attributes as $name => $value) {
 
-			} else if ($name == 'tag') {
-				$this->tag = $value;
-
-
-			} else if ($name == 'template') {
-				Services::Registry()->set('Parameters', 'template_view_name', $value);
-
-			} else if ($name == 'template_view_css_id'
-				|| $name == 'template_view_id'
-			) {
-				Services::Registry()->set('Parameters', 'template_view_css_id', $value);
-
-			} else if ($name == 'template_view_css_class'
-				|| $name == 'view_class'
-			) {
-				Services::Registry()->set('Parameters', 'template_view_css_class', $value);
+				if ($name == 'name' || $name == 'title') {
+					Services::Registry()->set('Parameters', 'extension_instance_name', $value);
 
 
-			} else if ($name == 'wrap') {
-				Services::Registry()->set('Parameters', 'wrap_view_name', $value);
+				} else if ($name == 'tag') {
+					$this->tag = $value;
 
-			} else if ($name == 'wrap_view_css_id'
-				|| $name == 'wrap_view_id'
-			) {
-				Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 
-			} else if ($name == 'wrap_view_css_class'
-				|| $name == 'wrap_view_class'
-			) {
-				Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
+				} else if ($name == 'template') {
+					Services::Registry()->set('TemplateView', 'title', $value);
+
+				} else if ($name == 'template_css_id') {
+					Services::Registry()->set('TemplateView', 'css_id', $value);
+
+				} else if ($name == 'template_css_class') {
+					Services::Registry()->set('TemplateView', 'css_class', $value);
+
+
+				} else if ($name == 'wrap') {
+					Services::Registry()->set('WrapView', 'title', $value);
+
+				} else if ($name == 'wrap_css_id') {
+					Services::Registry()->set('WrapView', 'css_id', $value);
+
+				} else if ($name == 'wrap_css_class') {
+					Services::Registry()->set('WrapView', 'css_class', $value);
+				}
+
 			}
 		}
-
-		/** Retrieve Template View Primary Key */
-		if (Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
-			if (Services::Registry()->get('Parameters', 'template_view_name', '') == '') {
-			} else {
-				Services::Registry()->set('Parameters', 'template_view_id',
-					ExtensionHelper::getInstanceID(
-						CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
-						Services::Registry()->get('Parameters', 'template_view_name')
-					)
-				);
-			}
-		}
-
-		/** Retrieve Wrap View Primary Key */
-		if (Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
-			if (Services::Registry()->get('Parameters', 'wrap_view_name', '') == '') {
-			} else {
-				Services::Registry()->set('Parameters', 'wrap_view_id',
-					ExtensionHelper::getInstanceID(
-						CATALOG_TYPE_EXTENSION_WRAP_VIEW,
-						Services::Registry()->get('Parameters', 'wrap_view_name')
-					)
-				);
-			}
-		}
-
-		return true;
 	}
 
 	/**
@@ -274,96 +227,89 @@ class Includer
 	 */
 	protected function getExtension()
 	{
+		/** Retrieve Extension Instances ID */
 		if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
-			$rows = ExtensionHelper::get(
-				(int)Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-				Services::Registry()->get('Parameters', 'extension_instance_name')
-			);
-
-		} else {
-			$rows = ExtensionHelper::get(
-				(int)Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-				(int)Services::Registry()->get('Parameters', 'extension_instance_id')
+			Services::Registry()->set('Parameters', 'extension_instance_id',
+				Helpers::Extension()->getInstanceID(
+					Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+					Services::Registry()->get('Parameters', 'extension_instance_name')
+				)
 			);
 		}
 
-		/** Extension not found */
-		if ((Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0)
-			&& (count($rows) == 0)
-		) {
-			return Services::Registry()->set('Parameters', 'status_found', false);
-		}
-
-		/** Process Results */
-		$row = array();
-		foreach ($rows as $row) {
-		}
-
-		Services::Registry()->set('Parameters', 'extension_instance_id', $row->extension_instance_id);
-		Services::Registry()->set('Parameters', 'extension_instance_name', $row->title);
-		Services::Registry()->set('Parameters', 'extension_catalog_id', $row->catalog_id);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', $row->catalog_type_id);
-		Services::Registry()->set('Parameters', 'extension_view_group_id', $row->view_group_id);
-		Services::Registry()->set('Parameters', 'extension_type', $row->catalog_type_title);
-
-		$this->parameters = Services::Registry()->initialise();
-		$this->parameters->loadString($row->parameters);
-
-		Services::Registry()->set('Parameters', 'source_catalog_type_id',
-			Services::Registry()->get('Parameters', 'source_catalog_type_id'));
-
-		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'template_view_id')
-			);
-		}
-
-		/** wrap */
-		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'wrap_view_id')
-			);
-		}
-
-		/** mvc */
-		if (Services::Registry()->get('Parameters', 'controller', '') == '') {
-			Services::Registry()->set('Parameters', 'controller',
-				Services::Registry()->get('Parameters', 'controller', ''));
-		}
-		if (Services::Registry()->get('Parameters', 'task', '') == '') {
-			Services::Registry()->set('Parameters', 'task',
-				Services::Registry()->get('Parameters', 'task', 'display'));
-		}
-		if (Services::Registry()->get('Parameters', 'model', '') == '') {
-			Services::Registry()->set('Parameters', 'model',
-				Services::Registry()->get('Parameters', 'model', ''));
-		}
-		if ((int)Services::Registry()->get('Parameters', 'id', 0) == 0) {
-			Services::Registry()->set('Parameters', 'id',
-				Services::Registry()->get('Parameters', 'id', 0));
-		}
-		if ((int)Services::Registry()->get('Parameters', 'category_id', 0) == 0) {
-			Services::Registry()->set('Parameters', 'category_id',
-				Services::Registry()->get('Parameters', 'category_id', 0));
-		}
-		if ((int)Services::Registry()->get('Parameters', 'suppress_no_results', 0) == 0) {
-			Services::Registry()->set('Parameters', 'suppress_no_results',
-				Services::Registry()->get('Parameters', 'suppress_no_results', 0));
-		}
-
-		Services::Registry()->set('Parameters', 'extension_event_type',
-			Services::Registry()->get('Parameters', 'event_type', array('content'))
+		/**  Retrieve Extension Data and set Extension Parameter values */
+		$response = Helpers::Extension()->getIncludeExtension(
+			Services::Registry()->get('Parameters', 'extension_instance_id')
 		);
+		if ($response == false) {
+			return Services::Registry()->set('Parameter', 'status_found', false);
+		}
 
-		Services::Registry()->set('Parameters', 'extension_path',
-			ExtensionHelper::getPath(
-				Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-				Services::Registry()->get('Parameters', 'extension_instance_name')
-			)
-		);
-
-		return Services::Registry()->set('Parameters', 'status_found', true);
+		return;
 	}
+
+	/**
+	 * setRenderCriteria
+	 *
+	 * Use the view and/or wrap criteria ife specified on the <include statement
+	 * Retrieve View and wrap criteria and path information
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function setRenderCriteria()
+	{
+		/** Retrieve Template View Primary Key */
+		if (Services::Registry()->get('TemplateView', 'title', '') == '') {
+		} else {
+			Services::Registry()->set('TemplateView', 'id',
+				Helpers::Extension()->getInstanceID(
+					CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
+					Services::Registry()->get('TemplateView', 'title')
+				)
+			);
+		}
+
+		/** Retrieve Wrap View Primary Key */
+		if (Services::Registry()->get('WrapView', 'title', '') == '') {
+		} else {
+			Services::Registry()->set('WrapView', 'id',
+				Helpers::Extension()->getInstanceID(
+					CATALOG_TYPE_EXTENSION_WRAP_VIEW,
+					Services::Registry()->get('WrapView', 'title')
+				)
+			);
+		}
+
+		/** Template  */
+		Helpers::TemplateView()->get(Services::Registry()->get('TemplateView', 'id', 0));
+
+		/** Wrap  */
+		Helpers::WrapView()->get(Services::Registry()->get('WrapView', 'id', 0));
+
+		return;
+
+		//????
+
+		/** mvc parameters */
+		Services::Registry()->set('Parameters', 'controller',
+			Services::Registry()->get('Request', 'mvc_controller'));
+		Services::Registry()->set('Parameters', 'task',
+			Services::Registry()->get('Request', 'action'));
+		Services::Registry()->set('Parameters', 'model',
+			Services::Registry()->get('Request', 'mvc_model'));
+		Services::Registry()->set('Parameters', 'table',
+			Services::Registry()->get('Request', 'source_table'));
+		Services::Registry()->set('Parameters', 'id',
+			(int)Services::Registry()->get('Request', 'mvc_id'));
+		Services::Registry()->set('Parameters', 'category_id',
+			(int)Services::Registry()->get('Request', 'mvc_category_id'));
+		Services::Registry()->set('Parameters', 'suppress_no_results',
+			(bool)Services::Registry()->get('Request', 'mvc_suppress_no_results'));
+
+		return;
+	}
+
 
 	/**
 	 * loadMetadata
@@ -416,12 +362,14 @@ class Includer
 
 		$file_path = Services::Registry()->get('Parameters', 'template_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'template_view_path_url');
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
 		$file_path = Services::Registry()->get('Parameters', 'wrap_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'wrap_view_path_url');
+
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
@@ -458,11 +406,14 @@ class Includer
 		/** html display filters
 		Services::Registry()->set('Parameters', 'html_display_filter', false);
 		if (Services::Registry()->get('Parameters', 'html_display_filter', true) == false) {
-			return $results;
+		return $results;
 		} else {
-			return Services::Filter()->filter_html($results);
+		return Services::Filter()->filter_html($results);
 		}
 		 */
+		echo $results;
+		die;
+		return $results;
 	}
 
 	/**

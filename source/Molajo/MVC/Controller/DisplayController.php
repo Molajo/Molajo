@@ -59,6 +59,7 @@ class DisplayController extends Controller
 	 */
 	public function display()
 	{
+		echo 'hello';
 		/** Set Criteria and Run Query */
 		$this->resultset = $this->model->getData();
 		$this->pagination = $this->model->getPagination();
@@ -86,15 +87,15 @@ class DisplayController extends Controller
 		$this->view_path = Services::Registry()->get('TemplateView', 'path');
 		$this->view_path_url = Services::Registry()->get('TemplateView', 'path_url');
 
-		$renderedOutput = $this->renderView(Services::Registry()->get('TemplateView', 'template_view_name'));
+		$renderedOutput = $this->renderView(Services::Registry()->get('TemplateView', 'title'));
 
-		/** mustache */
+		/** Mustache */
 		if (Services::Registry()->get('Parameters', 'mustache', 0) == 1) {
 //$renderedOutput = $this->processRenderedOutput($renderedOutput);
 		}
 
 		/** render wrap view around template view results */
-		return $this->wrapView(Services::Registry()->get('WrapView', 'wrap_view_name'), $renderedOutput);
+		return $this->wrapView(Services::Registry()->get('WrapView', 'title'), $renderedOutput);
 	}
 
 	/**
@@ -122,7 +123,7 @@ class DisplayController extends Controller
 		$this->view_path_url = Services::Registry()->get('WrapView', 'path_url');
 
 		/** render wrap */
-		return $this->renderView(Services::Registry()->get('WrapView', 'wrap_view_name'), 'Wrap');
+		return $this->renderView(Services::Registry()->get('WrapView', 'title'), 'Wrap');
 	}
 
 	/**

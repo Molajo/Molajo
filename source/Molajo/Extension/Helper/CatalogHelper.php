@@ -201,7 +201,7 @@ Class CatalogHelper
 	{
 		$m = Application::Controller()->connect('Catalog');
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
-		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int) $catalog_id);
+		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
 		$result = $m->getData('loadResult');
 

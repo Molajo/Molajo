@@ -22,16 +22,34 @@ defined('MOLAJO') or die;
 class ComponentIncluder extends Includer
 {
 	/**
+	 * __construct
+	 *
+	 * Class constructor.
+	 *
+	 * @param  string $name
+	 * @param  string $type
+	 * @param  array  $items (used for event processing includes, only)
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	public function __construct($name = null, $type = null, $items = null)
+	{
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_COMPONENT);
+		return parent::__construct($name, $type, $items);
+	}
+
+	/**
 	 * setRenderCriteria - Used for Primary Component to set Parameter Values for the identified Route
 	 *
 	 * @return null
 	 * @since  1.0
 	 */
-	protected function setRenderCriteria()
+	protected function getExtension()
 	{
 		if ($this->type == 'request') {
 		} else {
-			parent::setRenderCriteria();
+			parent::getExtension();
 			return;
 		}
 
@@ -40,6 +58,12 @@ class ComponentIncluder extends Includer
 			(int)Services::Registry()->get('Extension', 'id'));
 		Services::Registry()->set('Parameters', 'extension_instance_title',
 			Services::Registry()->get('Extension', 'title'));
+
+
+		Services::Registry()->set('Parameters', 'extension_translation_of_id',
+			Services::Registry()->get('Extension', 'translation_of_id'));
+		Services::Registry()->set('Parameters', 'extension_language',
+			Services::Registry()->get('Extension', 'language'));
 
 		Services::Registry()->set('Parameters', 'extension_catalog_id',
 			(int)Services::Registry()->get('Extension', 'catalog_id'));
@@ -58,93 +82,7 @@ class ComponentIncluder extends Includer
 
 		Services::Registry()->set('Parameters', 'extension_primary', true);
 
-		parent::setRenderCriteria();
-
-
-		/** view */
-		Services::Registry()->set('Parameters', 'template_view_id',
-			(int)Services::Registry()->get('Request', 'template_view_id'));
-		Services::Registry()->set('Parameters', 'template_view_name',
-			Services::Registry()->get('Request', 'template_view_name'));
-		Services::Registry()->set('Parameters', 'template_view_css_id',
-			Services::Registry()->get('Request', 'template_view_css_id'));
-		Services::Registry()->set('Parameters', 'template_view_css_class',
-			Services::Registry()->get('Request', 'template_view_css_class'));
-		Services::Registry()->set('Parameters', 'template_view_catalog_type_id',
-			Services::Registry()->get('Request', 'template_view_catalog_type_id'));
-		Services::Registry()->set('Parameters', 'template_view_catalog_id',
-			(int)Services::Registry()->get('Request', 'template_view_catalog_id'));
-		Services::Registry()->set('Parameters', 'template_view_path',
-			Services::Registry()->get('Request', 'template_view_path'));
-		Services::Registry()->set('Parameters', 'template_view_path_url',
-			Services::Registry()->get('Request', 'template_view_path_url'));
-
-		/** wrap */
-		Services::Registry()->set('Parameters', 'wrap_view_id',
-			(int)Services::Registry()->get('Request', 'wrap_view_id'));
-		Services::Registry()->set('Parameters', 'wrap_view_name',
-			Services::Registry()->get('Request', 'wrap_view_name'));
-		Services::Registry()->set('Parameters', 'wrap_view_css_id',
-			Services::Registry()->get('Request', 'wrap_view_css_id'));
-		Services::Registry()->set('Parameters', 'wrap_view_css_class',
-			Services::Registry()->get('Request', 'wrap_view_css_class'));
-		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_id',
-			Services::Registry()->get('Request', 'wrap_view_catalog_type_id'));
-		Services::Registry()->set('Parameters', 'wrap_view_catalog_id',
-			(int)Services::Registry()->get('Request', 'wrap_view_catalog_id'));
-		Services::Registry()->set('Parameters', 'wrap_view_path',
-			Services::Registry()->get('Request', 'wrap_view_path'));
-		Services::Registry()->set('Parameters', 'wrap_view_path_url',
-			Services::Registry()->get('Request', 'wrap_view_path_url'));
-
-		/** mvc parameters */
-		Services::Registry()->set('Parameters', 'controller',
-			Services::Registry()->get('Request', 'mvc_controller'));
-		Services::Registry()->set('Parameters', 'task',
-			Services::Registry()->get('Request', 'action'));
-		Services::Registry()->set('Parameters', 'model',
-			Services::Registry()->get('Request', 'mvc_model'));
-		Services::Registry()->set('Parameters', 'table',
-			Services::Registry()->get('Request', 'source_table'));
-		Services::Registry()->set('Parameters', 'id',
-			(int)Services::Registry()->get('Request', 'mvc_id'));
-		Services::Registry()->set('Parameters', 'category_id',
-			(int)Services::Registry()->get('Request', 'mvc_category_id'));
-		Services::Registry()->set('Parameters', 'suppress_no_results',
-			(bool)Services::Registry()->get('Request', 'mvc_suppress_no_results'));
-
 		return;
-	}
-
-	/**
-	 * getExtension
-	 *
-	 * Retrieve extension information using either the ID or the name
-	 *
-	 * @return  bool
-	 * @since   1.0
-	 */
-	protected function getExtension()
-	{
-		Services::Registry()->set('Parameters',
-			'extension_catalog_type_id',
-			CATALOG_TYPE_EXTENSION_COMPONENT
-		);
-
-		$results = parent::getExtension();
-		if ($results === false) {
-			return false;
-		}
-
-		Services::Registry()->set('Parameters',
-			'extension_path',
-			ComponentHelper::getPath(
-				strtolower(Services::Registry()->get('Parameters', 'extension_instance_name')))
-		);
-
-		Services::Registry()->set('Parameters', 'extension_type', 'component');
-
-		return true;
 	}
 
 	/**
