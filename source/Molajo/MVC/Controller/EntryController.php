@@ -120,7 +120,6 @@ Class EntryController extends DisplayController
 		$this->model->set('get_item_children', true);
 		$this->model->set('use_special_joins', true);
 		$this->model->set('add_acl_check', true);
-		$this->model->set('load_as_object', false);
 
 		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));
@@ -183,7 +182,7 @@ Class EntryController extends DisplayController
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function getData($query_object = 'loadObjectList', $view_requested = false, $load_as_object = false)
+	public function getData($query_object = 'loadObjectList', $view_requested = false)
 	{
 		//** Need to know if there is a view, or not */
 		if (in_array($query_object, $this->query_objects)) {

@@ -101,7 +101,7 @@ class DisplayController extends Controller
 		$renderedOutput = $this->renderView(Services::Registry()->get('TemplateView', 'title'));
 
 		/** Mustache */
-		if (Services::Registry()->get('Parameters', 'mustache', 1) == 199999) {
+		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
 			$renderedOutput = $this->processRenderedOutput($renderedOutput);
 		}
 
@@ -250,6 +250,7 @@ class DisplayController extends Controller
 
 		if (\class_exists($helperClass)) {
 			$h = new $helperClass();
+
 		} else {
 			$helperClass = 'Molajo\\Extension\\Helper\\MustacheHelper';
 			$h = new $helperClass();
@@ -265,19 +266,26 @@ class DisplayController extends Controller
 		     $totalRows = 0;
 		}
 
-		$new_query_results = array();
-		if ($totalRows > 0) {
-			foreach ($this->query_results as $this->row) {
 
-				$item = new \stdClass ();
-				$pairs = get_object_vars($this->row);
-				foreach ($pairs as $key => $value) {
-					$item->$key = $value;
+		if (is_object($this->row)) {
+
+			if ($totalRows > 0) {
+				foreach ($this->query_results as $this->row) {
+
+					$item = new \stdClass ();
+					$pairs = get_object_vars($this->row);
+					foreach ($pairs as $key => $value) {
+						$item->$key = $value;
+					}
+
+					$new_query_results[] = $item;
+
 				}
-
-				$new_query_results[] = $item;
-
 			}
+
+			/** Load -- Associative Array */
+		} else {
+			$new_query_results = $this->row;
 		}
 
 		/** Pass in Rendered Output and Helper Class Instance */

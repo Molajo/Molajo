@@ -400,7 +400,6 @@ class Includer
 		$use_special_joins = false;
 		$add_acl_check = false;
 		$get_special_fields = false;
-		$load_as_object = false;
 
 		$table = '';
 
@@ -415,11 +414,7 @@ class Includer
 		} else if (((int) Services::Registry()->get('Content', 'id') > 0)
 					&& ($this->type == 'request' || $this->type == 'component')) {
 
-			if (Services::Registry()->get('Route', 'action') == 'display') {
-				$load_as_object = true;
-			} else {
-				$load_as_object = false;
-			}
+//			if (Services::Registry()->get('Route', 'action') == 'display') {
 			$moduleMethod = 'load';
 
 			Services::Registry()->set('Parameters', 'id',
@@ -454,7 +449,6 @@ class Includer
 		$m->model->set('use_special_joins', $use_special_joins);
 		$m->model->set('add_acl_check', $add_acl_check);
 		$m->model->set('get_special_fields', $get_special_fields);
-		$m->model->set('load_as_object', $load_as_object);
 
 		/** Save Parameters so that the information can be used by frontend devs in Views */
 
