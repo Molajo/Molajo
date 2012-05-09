@@ -63,7 +63,7 @@ Class TemplateViewHelper
 		/** 500: Template not found */
 		if (count($row) == 0) {
 			/** Try Default Template */
-			$template_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE, 'Default');
+			$template_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
 			$row = Helpers::Extension()->get($template_view_id);
 			if (count($row) == 0) {
 				Services::Error()->set(500, 'Template not found');
@@ -83,8 +83,8 @@ Class TemplateViewHelper
 		Services::Registry()->set('TemplateView', 'path_url', $this->getPathURL($row->title));
 
 		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('TemplateView', 'path'));
-		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
+//		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('TemplateView', 'path'));
+//		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
 
 		return;
 	}

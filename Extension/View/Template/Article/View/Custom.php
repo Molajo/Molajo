@@ -18,6 +18,6 @@ defined('MOLAJO') or die; ?>
 	<footer>
 		{{start_publishing_datetime}}
 	</footer>
-	{{/ items }}
+{{/ items }}
 	{{{dashboard}}}
 	{{{placeholder}}}

@@ -10,8 +10,7 @@
     <version>1.0</version>
     <description>VIEW_TEMPLATE_PAGE_HEADER_DESCRIPTION</description>
     <config>
-        <field name="parameters" registry="TemplateParameters">
-            <element name="example" filter="integer" null="1" default="" values=""/>
+        <field name="parameters" registry="TemplateViewParameters">
         </field>
     </config>
 </extension>

@@ -69,12 +69,19 @@ class DisplayController extends Controller
 	 */
 	public function display()
 	{
-		/** Primary Query */
-		$x = $this->parameters['query_object'];
-		$this->query_results = $this->model->$x();
 
-		/** Pagination (if needed) */
-		$this->pagination = $this->model->getPagination();
+		/** Primary Query */
+		if ($this->parameters['query_object'] == 'none') {
+			$this->query_results = array();
+			$this->pagination = array();
+
+		} else {
+			$x = $this->parameters['query_object'];
+			$this->query_results = $this->model->$x();
+
+			/** Pagination (if needed) */
+			$this->pagination = $this->model->getPagination();
+		}
 
 		/**
 		 *  For primary content (the extension determined in Application::Request),
@@ -91,7 +98,7 @@ class DisplayController extends Controller
 		if (count($this->query_results) == 0
 			&& Services::Registry()->get('Parameters', 'suppress_no_results') == 1
 		) {
-			return '';
+			//return '';
 		}
 
 		/** render template view */
@@ -258,7 +265,7 @@ class DisplayController extends Controller
 
 		/** Push in Parameters */
 		$h->parameters = $this->parameters;
-
+		$h->items = $this->query_results;
 		/** Push in model results */
 		$totalRows = count($this->query_results);
 
@@ -267,7 +274,7 @@ class DisplayController extends Controller
 		}
 
 
-		if (is_object($this->row)) {
+		if (is_object($this->query_results)) {
 
 			if ($totalRows > 0) {
 				foreach ($this->query_results as $this->row) {
@@ -285,12 +292,12 @@ class DisplayController extends Controller
 
 			/** Load -- Associative Array */
 		} else {
-			$new_query_results = $this->row;
+			$new_query_results = $this->query_results;
 		}
 
 		/** Pass in Rendered Output and Helper Class Instance */
 		ob_start();
-		echo $h->render($template, $new_query_results);
+		echo $h->render($template);
 		$output = ob_get_contents();
 		ob_end_clean();
 

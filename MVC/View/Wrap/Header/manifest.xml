@@ -9,4 +9,8 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>WRAP_VIEW_HEADER_DESCRIPTION</description>
+    <config>
+        <field name="parameters" registry="TemplateWrapParameters">
+        </field>
+    </config>
 </extension>
