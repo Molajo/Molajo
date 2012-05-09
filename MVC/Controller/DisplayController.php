@@ -69,11 +69,13 @@ class DisplayController extends Controller
 	 */
 	public function display()
 	{
-		/** Set Criteria and Run Query */
-		$this->query_results = $this->model->getData();
+		/** Primary Query */
+		$x = $this->parameters['query_object'];
+		$this->query_results = $this->model->$x();
+
+		/** Pagination (if needed) */
 		$this->pagination = $this->model->getPagination();
-//$this->model_state = $this->model->getState();
-;
+
 		/**
 		 *  For primary content (the extension determined in Application::Request),
 		 *      save query results in the Request object for reuse by other
@@ -99,8 +101,8 @@ class DisplayController extends Controller
 		$renderedOutput = $this->renderView(Services::Registry()->get('TemplateView', 'title'));
 
 		/** Mustache */
-		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
-$renderedOutput = $this->processRenderedOutput($renderedOutput);
+		if (Services::Registry()->get('Parameters', 'mustache', 1) == 199999) {
+			$renderedOutput = $this->processRenderedOutput($renderedOutput);
 		}
 
 		/** render wrap view around template view results */
@@ -258,11 +260,11 @@ $renderedOutput = $this->processRenderedOutput($renderedOutput);
 
 		/** Push in model results */
 		$totalRows = count($this->query_results);
+
 		if (($this->query_results) == false) {
 		     $totalRows = 0;
 		}
 
-		$counter = 0;
 		$new_query_results = array();
 		if ($totalRows > 0) {
 			foreach ($this->query_results as $this->row) {
@@ -273,9 +275,8 @@ $renderedOutput = $this->processRenderedOutput($renderedOutput);
 					$item->$key = $value;
 				}
 
-				$new_query_results->data[$counter] = $item;
+				$new_query_results[] = $item;
 
-				$counter++;
 			}
 		}
 
@@ -283,7 +284,6 @@ $renderedOutput = $this->processRenderedOutput($renderedOutput);
 		ob_start();
 		echo $h->render($template, $new_query_results);
 		$output = ob_get_contents();
-
 		ob_end_clean();
 
 		/** Return processed output */

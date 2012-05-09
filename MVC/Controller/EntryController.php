@@ -110,7 +110,7 @@ Class EntryController extends DisplayController
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
 
-		/** 3. Set Model Properties */
+		/** 3. Set Default Model Properties */
 		$this->model->set('model_name', $this->model_name);
 		$this->model->set('table_name', $this->table_name);
 		$this->model->set('table_xml', $this->table_xml);
@@ -120,6 +120,7 @@ Class EntryController extends DisplayController
 		$this->model->set('get_item_children', true);
 		$this->model->set('use_special_joins', true);
 		$this->model->set('add_acl_check', true);
+		$this->model->set('load_as_object', false);
 
 		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));
@@ -182,18 +183,18 @@ Class EntryController extends DisplayController
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function getData($query_object = 'loadObjectList', $view_requested = false)
+	public function getData($query_object = 'loadObjectList', $view_requested = false, $load_as_object = false)
 	{
-
 		//** Need to know if there is a view, or not */
-
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
 			$query_object = 'loadObjectList';
 		}
 
 		try {
+
 			if ($view_requested == true) {
+				$this->parameters['query_object'] = $query_object;
 				return $this->display();
 
 			} else {

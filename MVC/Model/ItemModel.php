@@ -217,7 +217,11 @@ class ItemModel extends Model
 		/** Run the query */
 		$this->db->setQuery($this->query->__toString());
 
-		$this->query_results = $this->db->loadAssoc();
+		if ($this->load_as_object == true) {
+			$this->query_results = $this->db->loadObjectList();
+		} else {
+			$this->query_results = $this->db->loadAssoc();
+		}
 
 		/** Record Not found */
 		if (empty($this->query_results)) {
