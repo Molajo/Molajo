@@ -204,23 +204,23 @@ class Includer
 					$this->tag = $value;
 
 
-				} else if ($name == 'templateXXXXX') {
+				} else if ($name == 'template') {
 					Services::Registry()->set('TemplateView', 'title', $value);
 
-				} else if ($name == 'template_css_idXXXXX') {
+				} else if ($name == 'template_css_id') {
 					Services::Registry()->set('TemplateView', 'css_id', $value);
 
-				} else if ($name == 'template_css_classXXXXX') {
+				} else if ($name == 'template_css_class') {
 					Services::Registry()->set('TemplateView', 'css_class', $value);
 
 
-				} else if ($name == 'wrapXXXXX') {
+				} else if ($name == 'wrap') {
 					Services::Registry()->set('WrapView', 'title', $value);
 
-				} else if ($name == 'wrap_css_idXXXXX') {
+				} else if ($name == 'wrap_css_id') {
 					Services::Registry()->set('WrapView', 'css_id', $value);
 
-				} else if ($name == 'wrap_css_classXXXXX') {
+				} else if ($name == 'wrap_css_class') {
 					Services::Registry()->set('WrapView', 'css_class', $value);
 				}
 
