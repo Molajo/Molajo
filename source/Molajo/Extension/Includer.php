@@ -204,23 +204,23 @@ class Includer
 					$this->tag = $value;
 
 
-				} else if ($name == 'template') {
+				} else if ($name == 'templateXXXXX') {
 					Services::Registry()->set('TemplateView', 'title', $value);
 
-				} else if ($name == 'template_css_id') {
+				} else if ($name == 'template_css_idXXXXX') {
 					Services::Registry()->set('TemplateView', 'css_id', $value);
 
-				} else if ($name == 'template_css_class') {
+				} else if ($name == 'template_css_classXXXXX') {
 					Services::Registry()->set('TemplateView', 'css_class', $value);
 
 
-				} else if ($name == 'wrap') {
+				} else if ($name == 'wrapXXXXX') {
 					Services::Registry()->set('WrapView', 'title', $value);
 
-				} else if ($name == 'wrap_css_id') {
+				} else if ($name == 'wrap_css_idXXXXX') {
 					Services::Registry()->set('WrapView', 'css_id', $value);
 
-				} else if ($name == 'wrap_css_class') {
+				} else if ($name == 'wrap_css_classXXXXX') {
 					Services::Registry()->set('WrapView', 'css_class', $value);
 				}
 
@@ -238,9 +238,6 @@ class Includer
 	 */
 	protected function getExtension()
 	{
-		if ($normal = true && $this->type == 'request') {
-			return;
-		}
 
 		/** Retrieve Extension Instances ID */
 		if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
@@ -274,8 +271,18 @@ class Includer
 	 */
 	public function setRenderCriteria()
 	{
-		if ($normal = true && $this->type == 'request') {
-			return;
+		if (Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+		} else {
+			Services::Registry()->deleteRegistry('TemplateView');
+			Services::Registry()->set('TemplateView', 'id', Services::Registry()->get('Parameters', 'template_view_id'));
+			Services::Registry()->set('TemplateView', 'title', '');
+		}
+
+		if (Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+		} else {
+			Services::Registry()->deleteRegistry('WrapView');
+			Services::Registry()->set('WrapView', 'id', Services::Registry()->get('Parameters', 'wrap_view_id'));
+			Services::Registry()->set('WrapView', 'title', '');
 		}
 
 		/** Retrieve Template View Primary Key */
@@ -301,10 +308,10 @@ class Includer
 		}
 
 		/** Template  */
-		Helpers::TemplateView()->get(Services::Registry()->get('TemplateView', 'id', 0));
+		Helpers::TemplateView()->get(Services::Registry()->get('TemplateView', 'id'));
 
 		/** Wrap  */
-		Helpers::WrapView()->get(Services::Registry()->get('WrapView', 'id', 0));
+		Helpers::WrapView()->get(Services::Registry()->get('WrapView', 'id'));
 
 		return;
 
@@ -390,7 +397,6 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
-
 		/** Initialize */
 		Services::Registry()->set('Parameters', 'id', 0);
 		Services::Registry()->set('Parameters', 'menuitem', 0);
@@ -404,7 +410,10 @@ class Includer
 		$table = '';
 
 		/** Type of Query: Single Item, Menu Item, Content List */
-		if ((int) Services::Registry()->get('Menuitem', 'id') > 0) {
+		if (Services::Registry()->get('Parameters', 'query_object') == 'none') {
+			$moduleMethod = 'none';
+
+		} else if ((int) Services::Registry()->get('Menuitem', 'id') > 0) {
 
 			$moduleMethod = 'getData';
 

@@ -40,17 +40,6 @@ Class ModuleIncluder extends Includer
 	}
 
 	/**
-	 * process
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	public function process($attributes = array())
-	{
-		return '';
-	}
-
-	/**
 	 * getExtension
 	 *
 	 * Retrieve extension information using either the ID or the name
@@ -60,25 +49,22 @@ Class ModuleIncluder extends Includer
 	 */
 	protected function getExtension()
 	{
-		$results = parent::getExtension();
+		Services::Registry()->deleteRegistry('ExtensionParameters');
 
-		if ($results === false) {
-			if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
-				Services::Debug()->set('ModuleIncluder::getExtension');
-				Services::Debug()->set('Module not found: ' . Services::Registry()->get('Parameters', 'extension_instance_name'));
-			}
-			return false;
-		}
-
-		Services::Registry()->set('Parameters',
-			'extension_path',
-			ModuleHelper::getPath(
-				strtolower(Services::Registry()->get('Parameters', 'extension_instance_name')))
+		/** Retrieve Extension Instances ID */
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Helpers::Extension()->getInstanceID(
+				Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+				Services::Registry()->get('Parameters', 'extension_instance_name')
+			)
 		);
 
-		Services::Registry()->set('Parameters', 'extension_type', 'module');
+		/**  Retrieve Extension Data and set Extension Parameter values */
+		$response = Helpers::Extension()->getIncludeExtension(
+			Services::Registry()->get('Parameters', 'extension_instance_id')
+		);
 
-		return true;
+		return $response;
 	}
 
 	/**

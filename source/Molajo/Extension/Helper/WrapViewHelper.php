@@ -70,6 +70,7 @@ Class WrapViewHelper
 				return false;
 			}
 		}
+		Services::Registry()->deleteRegistry('WrapView');
 
 		Services::Registry()->set('WrapView', 'id', (int)$row->id);
 		Services::Registry()->set('WrapView', 'title', $row->title);
@@ -83,8 +84,8 @@ Class WrapViewHelper
 		Services::Registry()->set('WrapView', 'path_url', $this->getPathURL($row->title));
 
 		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('WrapView', 'path'));
-		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
+//		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('WrapView', 'path'));
+//		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
 
 		return;
 	}

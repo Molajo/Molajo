@@ -124,7 +124,8 @@ class Controller
 		'loadObject',
 		'loadRowList',
 		'loadAssocList',
-		'loadObjectList'
+		'loadObjectList',
+		'none'
 	);
 
 	/**

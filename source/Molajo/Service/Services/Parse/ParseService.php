@@ -366,8 +366,6 @@ Class ParseService
 					if ($first) {
 					} else {
 						Services::Registry()->createRegistry('Parameters');
-						Services::Registry()->createRegistry('TemplateView');
-						Services::Registry()->createRegistry('WrapView');
 					}
 
 					/** 7. call the includer class */
@@ -385,10 +383,6 @@ Class ParseService
 
 					/** 8. render output and store results as "replace with" */
 					$with[] = $rc->process($attributes);
-
-					Services::Registry()->deleteRegistry('Parameters');
-					Services::Registry()->deleteRegistry('TemplateView');
-					Services::Registry()->deleteRegistry('WrapView');
 				}
 			}
 		}

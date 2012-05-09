@@ -9,8 +9,8 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <create_date>January 2012</create_date>
-    <files>
-        <folder>views</folder>
-        <folder>language</folder>
-    </files>
+    <config>
+        <field name="parameters" registry="TemplateWrapParameters">
+        </field>
+    </config>
 </extension>

@@ -41,6 +41,11 @@ class VersionService
 		if (empty(self::$instance)) {
 			self::$instance = new VersionService();
 		}
+
+		if (defined('MOLAJOVERSION')) {
+		} else {
+			define('MOLAJOVERSION', self::VERSION);
+		}
 		return self::$instance;
 	}
 

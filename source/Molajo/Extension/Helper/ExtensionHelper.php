@@ -92,7 +92,8 @@ Class ExtensionHelper
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
-			return Services::Registry()->set('Parameter', 'status_found', false);
+			Services::Registry()->set('Parameter', 'status_found', false);
+			return false;
 		}
 
 		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$row->id);
@@ -111,15 +112,19 @@ Class ExtensionHelper
 
 		Services::Registry()->set('Parameters', 'extension_primary', false);
 
-		/** Load special fields for specific extension */
 		$xml = Services::Configuration()->loadFile(
 			'Manifest', Services::Registry()->get('Parameters', 'extension_path')
 		);
-
 		if ($xml == false) {
 			return;
 		}
-		$row = Services::Configuration()->addSpecialFields($xml->extension, $row, 1);
+
+		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
+
+		$parameters = Services::Registry()->get('ExtensionParameters');
+		foreach ($parameters as $key => $value) {
+			Services::Registry()->set('Parameters', $key, $value);
+		}
 
 		return;
 	}

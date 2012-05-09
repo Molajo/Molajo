@@ -101,10 +101,10 @@ Class MustacheHelper extends Mustache
 	{
 		$this->analytics();
 
-		//return Services::Url()->getGravatar(
-		//	$email = 'AmyStephen@gmail.com',
-		//	$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
-		//);
+		return Services::Url()->getGravatar(
+			$email = 'AmyStephen@gmail.com',
+			$s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
+		);
 	}
 
 	/**
@@ -155,10 +155,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function intro()
 	{
-		if ($this->data == null) { return; }
-
-		$result = Services::Text()->smilies($this->data[$this->rows]->introtext);
-		return $this->data[$this->rows]->introtext;
+		return Services::Text()->smilies($this->items['content_text']);
 	}
 
 	/**
@@ -185,8 +182,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function profile()
 	{
-		if ($this->data == null) { return; }
-
 		$class = 'Molajo\\Extension\\Includer\\ModuleIncluder';
         $rc = new $class ('profile', '');
 
@@ -194,7 +189,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 		$attributes['name'] = 'dashboard';
 		$attributes['template'] = 'dashboard';
 		$attributes['wrap'] = 'section';
-		$attributes['id'] = $this->data[$this->rows]->id;
+		$attributes['id'] = $this->items['id'];
 
         return $rc->process($attributes);
 	}
