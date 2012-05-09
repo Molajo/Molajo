@@ -35,7 +35,6 @@ class Controller
 	 */
 	public $parameters = array();
 
-
 	/**
 	 * User object, custom fields and parameters
 	 *
@@ -164,7 +163,7 @@ class Controller
 	 */
 	public function __construct()
 	{
-		  $this->parameters = array();
+		$this->parameters = array();
 	}
 
 	/**
