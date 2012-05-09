@@ -77,15 +77,6 @@ class Model
 	 */
 	public $add_acl_check = true;
 
-
-	/**
-	 * Load: As row (true) or Associative Array (false-default)
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $load_as_object = false;
-
 	/**
 	 * Name of the primary key for the model table
 	 *
