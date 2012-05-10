@@ -75,7 +75,7 @@ class Model
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $add_acl_check = true;
+	public $check_view_level_access = true;
 
 	/**
 	 * Name of the primary key for the model table

@@ -2,7 +2,7 @@
 <extension type="theme" version="1.0">
     <name>THEME_BOOTSTRAP_NAME</name>
     <author>Amy Stephen</author>
-    <create_date>January 2012</create_date>
+    <create_date>June 2012</create_date>
     <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author_email>collaborate@molajo.org</author_email>
@@ -14,17 +14,16 @@
             <element name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
         </field>
         <field name="parameters" registry="ThemeParameters">
-            <element name="display_title" filter="char" null="0" default=""/>
-            <element name="display_suppress_no_results" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000" hidden="true"/>
+            <element name="display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000" hidden="1"/>
             <element name="default_theme_id" filter="integer" null="1" default="" values=""/>
             <element name="default_page_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="list_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="list_wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="wrap_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="form_template_view_id" filter="integer" null="1" default="" values=""/>
+            <element name="form_wrap_view_id" filter="integer" null="1" default="" values=""/>
             <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
             <element name="cache_time" filter="integer" null="1" default="15" values=""/>
             <element name="cache_handler" filter="char" null="1" default="" values=""/>

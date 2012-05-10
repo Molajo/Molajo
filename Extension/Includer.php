@@ -52,8 +52,8 @@ class Includer
 	 * Extracted in Parser Class from Theme/Rendered output
 	 *
 	 * <include:extension statement attr1=x attr2=y attrN="and-so-on" />
-	 * template, template_css_id, template_css_class
-	 * wrap, wrap_css_id, wrap_css_class
+	 * template, template_view_css_id, template_view_css_class
+	 * wrap, wrap_view_css_id, wrap_view_css_class
 	 *
 	 * @var    array
 	 * @since  1.0
@@ -207,20 +207,20 @@ class Includer
 				} else if ($name == 'template') {
 					Services::Registry()->set('TemplateView', 'title', $value);
 
-				} else if ($name == 'template_css_id') {
+				} else if ($name == 'template_view_css_id') {
 					Services::Registry()->set('TemplateView', 'css_id', $value);
 
-				} else if ($name == 'template_css_class') {
+				} else if ($name == 'template_view_css_class') {
 					Services::Registry()->set('TemplateView', 'css_class', $value);
 
 
 				} else if ($name == 'wrap') {
 					Services::Registry()->set('WrapView', 'title', $value);
 
-				} else if ($name == 'wrap_css_id') {
+				} else if ($name == 'wrap_view_css_id') {
 					Services::Registry()->set('WrapView', 'css_id', $value);
 
-				} else if ($name == 'wrap_css_class') {
+				} else if ($name == 'wrap_view_css_class') {
 					Services::Registry()->set('WrapView', 'css_class', $value);
 				}
 
@@ -404,7 +404,7 @@ class Includer
 
 		$get_item_children = false;
 		$use_special_joins = false;
-		$add_acl_check = false;
+		$check_view_level_access = false;
 		$get_special_fields = false;
 
 		$table = '';
@@ -438,7 +438,7 @@ class Includer
 
 			$get_item_children = false;
 			$use_special_joins = false;
-			$add_acl_check = true;
+			$check_view_level_access = true;
 			$get_special_fields = 2;
 
 		}  else {
@@ -456,7 +456,7 @@ class Includer
 
 		$m->model->set('get_item_children', $get_item_children);
 		$m->model->set('use_special_joins', $use_special_joins);
-		$m->model->set('add_acl_check', $add_acl_check);
+		$m->model->set('check_view_level_access', $check_view_level_access);
 		$m->model->set('get_special_fields', $get_special_fields);
 
 		/** Save Parameters so that the information can be used by frontend devs in Views */

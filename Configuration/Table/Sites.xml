@@ -17,10 +17,15 @@
     </filters>
     <fields>
         <field name="parameters" registry="SiteParameters">
-            <element name="porch_light" filter="boolean" null="1" default="0" values="0,1"/>
-        </field>
-        <field name="custom_fields" registry="SiteCustomfields">
-            <element name="custom_field1" filter="char" null="0" default=""/>
+            <element name="enable_draft_save" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="enable_version_history" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="maximum_version_count" filter="integer" null="0" default="5" minimum="0" maximum="20"/>
+            <element name="enable_hit_counts" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="enable_comments" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="enable_ratings" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="enable_notifications" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="enable_tweets" filter="binary" null="0" default="1" values="0,1"/>
+            <element name="enable_ping" filter="binary" null="0" default="1" values="0,1"/>
         </field>
         <field name="metadata" registry="SiteMetadata">
             <element name="metadata_title" filter="char" null="0" default=""/>
@@ -36,7 +41,6 @@
         <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
     </foreignkeys>
     <triggers>
-        <trigger name="Customfields"/>
         <trigger name="Metadata"/>
         <trigger name="Parameters"/>
         <trigger name="Sites"/>

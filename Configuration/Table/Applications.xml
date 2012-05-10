@@ -3,111 +3,182 @@
         name="Applications"
         table="#__applications"
         primary_key="id"
+        primary_prefix="a"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="1" default="0" identity="1"/>
-        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
-        <filter name="name" filter="char" null="0" default="" unique="1"/>
-        <filter name="path" filter="char" null="0" default=""/>
-        <filter name="description" filter="text" null="1" default=""/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-        <filter name="parameters" filter="" null="1" default=""/>
-        <filter name="metadata" filter="" null="1" default=""/>
-    </filters>
-    <fields>
-        <field name="custom_fields" registry="ApplicationCustomfields">
-            <element name="custom_field1" filter="char" null="1" default="" values=""/>
-        </field>
-        <field name="parameters" registry="ApplicationParameters">
-            <element name="application_name" filter="char" null="1" default="" values=""/>
-            <element name="html_display_filter" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-            <element name="cache_handler" filter="char" null="1" default="" values=""/>
-            <element name="sef" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="sef_rewrite" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="sef_suffix" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="unicode_slugs" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="force_ssl" filter="binary" null="1" default="0" values="0,1"/>
-            <element name="language" filter="char" null="1" default="en-GB" values=""/>
-            <element name="direction" filter="char" null="1" default="rtl" values="ltr,rtl"/>
-            <element name="offset" filter="char" null="1" default="UTC" values=""/>
-            <element name="offset_user" filter="char" null="1" default="UTC" values=""/>
-            <element name="multilingual" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="list_limit" filter="integer" null="1" default="15" values=""/>
-            <element name="html5" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="image_xsmall" filter="integer" null="1" default="" values=""/>
-            <element name="image_small" filter="char" null="1" default="" values=""/>
-            <element name="image_medium" filter="char" null="1" default="" values=""/>
-            <element name="image_large" filter="char" null="1" default="" values=""/>
-            <element name="image_xlarge" filter="char" null="1" default="" values=""/>
-            <element name="image_folder" filter="char" null="1" default="" values=""/>
-            <element name="thumb_folder" filter="char" null="1" default="" values=""/>
-            <element name="editor" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="view_access" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="home_catalog_id" filter="integer" null="0" default="" values=""/>
-            <element name="logon_requirement" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="theme_id" filter="integer" null="1" default="" values=""/>
-            <element name="page_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_items_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_items_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_item_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_item_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_edit_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="default_edit_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="head_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="head_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="message_template_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="message_wrap_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="offline" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="offline_message" filter="char" null="1" default="" values=""/>
-            <element name="offline_theme_id" filter="integer" null="1" default="" values=""/>
-            <element name="offline_page_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="error_404_message" filter="char" null="1" default="" values=""/>
-            <element name="error_403_message" filter="char" null="1" default="" values=""/>
-            <element name="error_theme_id" filter="integer" null="1" default="" values=""/>
-            <element name="error_page_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="feed_theme_id" filter="integer" null="1" default="" values=""/>
-            <element name="feed_page_view_id" filter="integer" null="1" default="" values=""/>
-            <element name="feed_limit" filter="integer" null="1" default="5" values=""/>
-            <element name="feed_email" filter="email" null="1" default="" values=""/>
-            <element name="media_priority_site" filter="integer" null="1" default="100" values=""/>
-            <element name="media_priority_application" filter="integer" null="1" default="200" values=""/>
-            <element name="media_priority_user" filter="integer" null="1" default="300" values=""/>
-            <element name="media_priority_other_extension" filter="integer" null="1" default="400" values=""/>
-            <element name="media_priority_request_extension" filter="integer" null="1" default="500" values=""/>
-            <element name="media_priority_theme" filter="integer" null="1" default="600" values=""/>
-            <element name="media_priority_primary_category" filter="integer" null="1" default="700" values=""/>
-            <element name="media_priority_menu_item" filter="integer" null="1" default="800" values=""/>
-            <element name="media_priority_source_data" filter="integer" null="1" default="900" values=""/>
-            <element name="debug" filter="boolean" null="1" default="0" values=""/>
-            <element name="debug_log" filter="text" null="0" default="echo"
-                     values="echo,formattedtext,database,email,messages"/>
-        </field>
-        <field name="metadata" registry="ApplicationMetadata">
-            <element name="metadata_title" filter="char" null="0" default="Molajo Application"/>
-            <element name="metadata_description" filter="text" null="0" default=""/>
-            <element name="metadata_keywords" filter="char" null="1" default=""/>
-            <element name="metadata_robots" filter="char" null="0" default="follow,index"
-                     values="follow,nofollow,index,noindex"/>
-            <element name="metadata_author" filter="char" null="1" default=""/>
-            <element name="metadata_content_rights" filter="char" null="1" default=""/>
-        </field>
-    </fields>
-    <foreignkeys>
-        <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-        <foreignkey name="home_catalog_id" source_id="id" source_model="Catalog" required="1"/>
-    </foreignkeys>
-    <children>
-        <child name="ApplicationExtensionInstances" join="id:application_id"/>
-    </children>
-    <triggers>
-        <trigger name="Application"/>
-        <trigger name="ContentText"/>
-        <trigger name="Customfields"/>
-        <trigger name="Metadata"/>
-        <trigger name="Parameters"/>
-        <trigger name="Language"/>
-    </triggers>
-</model>
 
+    <content>
+        <filters>
+            <filter name="id" filter="int" null="1" default="0" identity="1"/>
+            <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
+            <filter name="name" filter="char" null="0" default="" unique="1"/>
+            <filter name="path" filter="char" null="0" default=""/>
+            <filter name="description" filter="text" null="1" default=""/>
+            <filter name="custom_fields" filter="" null="1" default=""/>
+            <filter name="parameters" filter="" null="1" default=""/>
+            <filter name="metadata" filter="" null="1" default=""/>
+        </filters>
+
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            <foreignkey name="home_catalog_id" source_id="id" source_model="Catalog" required="1"/>
+        </foreignkeys>
+
+        <children>
+            <child name="ApplicationExtensionInstances" join="id:application_id"/>
+        </children>
+
+        <triggers>
+            <trigger name="Application"/>
+            <trigger name="ContentText"/>
+            <trigger name="Customfields"/>
+            <trigger name="Metadata"/>
+            <trigger name="Parameters"/>
+            <trigger name="Language"/>
+        </triggers>
+
+        <fields>
+            <field name="custom_fields" registry="ApplicationCustomfields">
+                <element name="custom_field1" filter="char" null="1" default="" values=""/>
+            </field>
+
+            <field name="parameters" registry="ApplicationParameters">
+                <element name="application_name" filter="char" null="1" default="" values=""/>
+
+                <element name="sef" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="sef_rewrite" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="sef_suffix" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="unicode_slugs" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="force_ssl" filter="binary" null="1" default="0" values="0,1"/>
+
+                <element name="default_language" filter="char" null="1" default="en-GB" values=""/>
+                <element name="direction" filter="char" null="1" default="ltr" values="ltr,rtl"/>
+                <element name="multilingual" filter="binary" null="1" default="0" values="0,1"/>
+
+                <element name="offset" filter="char" null="1" default="UTC" values=""/>
+                <element name="offset_user" filter="char" null="1" default="UTC" values=""/>
+
+                <element name="html5" filter="binary" null="1" default="1" values="0,1"/>
+
+                <element name="html_display_filter" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="cache_time" filter="integer" null="1" default="15" values=""/>
+                <element name="cache_handler" filter="char" null="1" default="" values=""/>
+
+                <element name="image_xsmall" filter="integer" null="1" default="" values=""/>
+                <element name="image_small" filter="char" null="1" default="" values=""/>
+                <element name="image_medium" filter="char" null="1" default="" values=""/>
+                <element name="image_large" filter="char" null="1" default="" values=""/>
+                <element name="image_xlarge" filter="char" null="1" default="" values=""/>
+                <element name="image_folder" filter="char" null="1" default="" values=""/>
+                <element name="thumb_folder" filter="char" null="1" default="" values=""/>
+
+                <element name="editor" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="view_access" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="home_catalog_id" filter="integer" null="0" default="" values=""/>
+                <element name="logon_requirement" filter="binary" null="1" default="1" values="0,1"/>
+
+                <element name="debug" filter="boolean" null="1" default="0" values=""/>
+                <element name="debug_log" filter="text" null="0" default="echo"
+                         values="echo,formattedtext,database,email,messages"/>
+
+                <element name="theme_id" filter="integer" null="1" default="" values=""/>
+
+                <element name="page_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="page_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="page_view_css_class" filter="char" null="1" default="" values=""/>
+
+                <element name="head_template_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="head_wrap_view_id" filter="integer" null="1" default="" values=""/>
+
+                <element name="message_template_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="message_wrap_view_id" filter="integer" null="1" default="" values=""/>
+
+                <element name="offline_theme_id" filter="integer" null="1" default="" values=""/>
+                <element name="offline_page_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="offline" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="offline_message" filter="char" null="1" default="" values=""/>
+
+                <element name="error_theme_id" filter="integer" null="1" default="" values=""/>
+                <element name="error_page_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="error_404_message" filter="char" null="1" default="" values=""/>
+                <element name="error_403_message" filter="char" null="1" default="" values=""/>
+
+                <element name="item_template_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="item_template_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="item_template_view_css_class" filter="char" null="1" default="" values=""/>
+                <element name="item_wrap_view_id" filter="integer" null="1" default="0" values=""/>
+                <element name="item_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="item_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+                <element name="item_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="item_get_children" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="item_check_view_level_access" filter="integer" null="0" default="1" values="0,1,2"/>
+
+                <element name="form_template_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="form_template_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="form_template_view_css_class" filter="char" null="1" default="" values=""/>
+                <element name="form_wrap_view_id" filter="integer" null="1" default="0" values=""/>
+                <element name="form_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="form_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+
+                <element name="list_page_view_id" filter="integer" null="1" default=""/>
+                <element name="list_page_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="list_page_view_css_class" filter="char" null="1" default="" values=""/>
+                <element name="list_template_view_id" filter="integer" null="1" default=""/>
+                <element name="list_template_view_css_id" filter="char" null="1" default="" values=""/>
+                <element name="list_template_view_css_class" filter="char" null="1" default="" values=""/>
+
+                <element name="list_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="list_get_child_row_counts" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="list_check_view_level_access" filter="integer" null="0" default="1" values="0,1,2"/>
+
+                <element name="list_display_archived_content" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="list_display_featured_content" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="list_display_stickied_content" filter="integer" null="0" default="1" values="0,1,2"/>
+                <element name="list_display_published_date_begin" filter="date" null="0" default=""/>
+                <element name="list_display_published_date_end" filter="date" null="0" default=""/>
+                <element name="list_display_category_list"/>
+                <element name="list_display_tag_list"/>
+                <element name="list_display_author_list"/>
+                <element name="list_begin" filter="integer" default="1"/>
+                <element name="list_length" filter="integer" default="5" minimum="0" maximum="20"/>
+                <element name="list_order_by_field1" filter="field_list" null="1" default="featured"/>
+                <element name="list_order_by_direction1" filter="char" null="1" default="DESC" values="ASC,DESC"/>
+                <element name="list_order_by_field2" filter="field_list" null="1" default="start_publishing_datetime"/>
+                <element name="list_order_by_direction2" filter="char" null="1" default="DESC" values="ASC,DESC"/>
+                <element name="list_order_by_field3" filter="field_list" null="1" default=""/>
+                <element name="list_order_by_direction3" filter="char" null="1" default="DESC" values="ASC,DESC"/>
+
+                <element name="feed_theme_id" filter="integer" null="1" default="" values=""/>
+                <element name="feed_page_view_id" filter="integer" null="1" default="" values=""/>
+                <element name="feed_limit" filter="integer" null="1" default="5" minimum="0" maximum="20"/>
+                <element name="feed_email" filter="email" null="1" default="" values=""/>
+
+                <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
+                <element name="cache_time" filter="integer" null="1" default="15" values=""/>
+                <element name="cache_handler" filter="char" null="1" default="" values=""/>
+
+                <element name="asset_priority_site" filter="integer" null="1" default="100" values=""/>
+                <element name="asset_priority_application" filter="integer" null="1" default="200" values=""/>
+                <element name="asset_priority_user" filter="integer" null="1" default="300" values=""/>
+                <element name="asset_priority_extension" filter="integer" null="1" default="400" values=""/>
+                <element name="asset_priority_request" filter="integer" null="1" default="500" values=""/>
+                <element name="asset_priority_category" filter="integer" null="1" default="600" values=""/>
+                <element name="asset_priority_menu_item" filter="integer" null="1" default="700" values=""/>
+                <element name="asset_priority_source" filter="integer" null="1" default="800" values=""/>
+                <element name="asset_priority_theme" filter="integer" null="1" default="900" values=""/>
+
+            </field>
+
+            <field name="metadata" registry="ApplicationMetadata">
+                <element name="metadata_title" filter="char" null="0" default="Molajo Application"/>
+                <element name="metadata_description" filter="text" null="0" default=""/>
+                <element name="metadata_keywords" filter="char" null="1" default=""/>
+                <element name="metadata_robots" filter="char" null="0" default="follow,index"
+                         values="follow,nofollow,index,noindex"/>
+                <element name="metadata_author" filter="char" null="1" default=""/>
+                <element name="metadata_content_rights" filter="char" null="1" default=""/>
+            </field>
+
+        </fields>
+    </content>
+</model>

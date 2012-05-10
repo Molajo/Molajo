@@ -1,0 +1,4 @@
+<field name="custom_fields">
+    <element name="intro_image" file="" filter="image" shape="" size=""/>
+    <element name="body_image" file="" filter="image" shape="" size=""/>
+</field>
