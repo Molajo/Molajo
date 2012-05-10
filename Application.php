@@ -637,7 +637,7 @@ Class Application
 			$sites = ConfigurationService::loadFile('sites');
 
 			foreach ($sites->site as $single) {
-				if ($single->base == $siteBase) {
+				if (strtolower($single->base) == strtolower($siteBase)) {
 					define('SITE_BASE_URL', $single->base);
 					define('SITE_FOLDER_PATH', $single->folderpath);
 					define('SITE_APPEND_TO_BASE_URL', $single->appendtobaseurl);
