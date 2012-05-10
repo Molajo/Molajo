@@ -8,7 +8,7 @@
                 name="extension_options"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="EXTENSION_OPTIONS_LABEL"
                 description="EXTENSION_OPTIONS_DESC"
                 />
@@ -17,7 +17,7 @@
                 name="tag_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="TAG_LABEL"
                 description="TAG_DESC"
                 />
@@ -46,7 +46,7 @@
                 name="comment_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="COMMENT_LABEL"
                 description="COMMENT_DESC"
                 />
@@ -75,7 +75,7 @@
                 name="version_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="VERSION_LABEL"
                 description="VERSION_DESC"
                 />
@@ -117,7 +117,7 @@
                 name="uninstall_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="UNINSTALL_LABEL"
                 description="UNINSTALL_DESC"
                 />
@@ -175,7 +175,7 @@
                 name="item_label_desc"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="ITEM_LABEL"
                 description="ITEM_DESC"
                 />
@@ -184,7 +184,7 @@
                label="ITEM_DETAIL_PARAMETER1_LABEL"
                description="ITEM_DETAIL_PARAMETER1_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -197,7 +197,7 @@
                label="ITEM_DETAIL_PARAMETER2_LABEL"
                description="ITEM_DETAIL_PARAMETER2_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -210,7 +210,7 @@
                label="ITEM_DETAIL_PARAMETER3_LABEL"
                description="ITEM_DETAIL_PARAMETER3_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -223,7 +223,7 @@
                label="ITEM_DETAIL_PARAMETER4_LABEL"
                description="ITEM_DETAIL_PARAMETER4_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -236,7 +236,7 @@
                label="ITEM_DETAIL_PARAMETER5_LABEL"
                description="ITEM_DETAIL_PARAMETER5_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -255,7 +255,7 @@
                 name="config_views"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="VIEW_LABEL"
                 description="VIEW_DESC"
                 />
@@ -264,7 +264,7 @@
                 name="config_comment_editor"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="ITEM_EDITOR_LABEL"
                 description="ITEM_EDITOR_DESC"
                 />
@@ -273,7 +273,7 @@
                label="ITEM_EDITOR_PARAMETER1_LABEL"
                description="ITEM_EDITOR_PARAMETER1_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -286,7 +286,7 @@
                label="ITEM_EDITOR_PARAMETER2_LABEL"
                description="ITEM_EDITOR_PARAMETER2_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -299,7 +299,7 @@
                label="ITEM_EDITOR_PARAMETER3_LABEL"
                description="ITEM_EDITOR_PARAMETER3_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -312,7 +312,7 @@
                label="ITEM_EDITOR_PARAMETER4_LABEL"
                description="ITEM_EDITOR_PARAMETER4_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -325,7 +325,7 @@
                label="ITEM_EDITOR_PARAMETER5_LABEL"
                description="ITEM_EDITOR_PARAMETER5_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -338,7 +338,7 @@
                 name="config_comment_default"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="ITEM_DEFAULT_VIEW_LABEL"
                 description="ITEM_DEFAULT_VIEW_DESC"
                 />
@@ -347,7 +347,7 @@
                label="ITEM_DEFAULT_VIEW_PARAMETER1_LABEL"
                description="ITEM_DEFAULT_VIEW_PARAMETER1_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -360,7 +360,7 @@
                label="ITEM_DEFAULT_VIEW_PARAMETER2_LABEL"
                description="ITEM_DEFAULT_VIEW_PARAMETER2_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -373,7 +373,7 @@
                label="ITEM_DEFAULT_VIEW_PARAMETER3_LABEL"
                description="ITEM_DEFAULT_VIEW_PARAMETER3_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -386,7 +386,7 @@
                label="ITEM_DEFAULT_VIEW_PARAMETER4_LABEL"
                description="ITEM_DEFAULT_VIEW_PARAMETER4_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -399,7 +399,7 @@
                label="ITEM_DEFAULT_VIEW_PARAMETER5_LABEL"
                description="ITEM_DEFAULT_VIEW_PARAMETER5_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -412,7 +412,7 @@
                 name="config_comments_blog"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="ITEM_BLOG_LABEL"
                 description="ITEM_BLOG_DESC"
                 />
@@ -421,7 +421,7 @@
                label="ITEM_BLOG_PARAMETER1_LABEL"
                description="ITEM_BLOG_PARAMETER1_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -434,7 +434,7 @@
                label="ITEM_BLOG_PARAMETER2_LABEL"
                description="ITEM_BLOG_PARAMETER2_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -447,7 +447,7 @@
                label="ITEM_BLOG_PARAMETER3_LABEL"
                description="ITEM_BLOG_PARAMETER3_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -460,7 +460,7 @@
                label="ITEM_BLOG_PARAMETER4_LABEL"
                description="ITEM_BLOG_PARAMETER4_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -473,7 +473,7 @@
                label="ITEM_BLOG_PARAMETER5_LABEL"
                description="ITEM_BLOG_PARAMETER5_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -486,7 +486,7 @@
                 name="config_comments_default"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="MULTIPLE_LIST_LABEL"
                 description="MULTIPLE_LIST_DESC"
                 />
@@ -495,7 +495,7 @@
                label="ITEM_LIST_PARAMETER1_LABEL"
                description="ITEM_LIST_PARAMETER1_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -508,7 +508,7 @@
                label="ITEM_LIST_PARAMETER2_LABEL"
                description="ITEM_LIST_PARAMETER2_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -521,7 +521,7 @@
                label="ITEM_LIST_PARAMETER3_LABEL"
                description="ITEM_LIST_PARAMETER3_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -534,7 +534,7 @@
                label="ITEM_LIST_PARAMETER4_LABEL"
                description="ITEM_LIST_PARAMETER4_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -547,7 +547,7 @@
                label="ITEM_LIST_PARAMETER5_LABEL"
                description="ITEM_LIST_PARAMETER5_DESC"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 500 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -565,7 +565,7 @@
                 name="config_manager_list"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="MANAGER_LIST_LABEL"
                 description="MANAGER_LIST_DESC"
                 />
@@ -574,7 +574,7 @@
                 name="config_manager_button_title_option"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="TITLE_DISPLAY_OPTIONS_LABEL"
                 description="TITLE_DISPLAY_OPTIONS_DESC"
                 />
@@ -593,14 +593,14 @@
                 name="config_manager_button_bar_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="TOOLBAR_BUTTON_OPTIONS_LABEL"
                 description="TOOLBAR_BUTTON_OPTIONS_DESC"
                 />
 
         <field name="config_manager_button_bar_option1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -613,7 +613,7 @@
 
         <field name="config_manager_button_bar_option2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -626,7 +626,7 @@
 
         <field name="config_manager_button_bar_option3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -639,7 +639,7 @@
 
         <field name="config_manager_button_bar_option4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -652,7 +652,7 @@
 
         <field name="config_manager_button_bar_option5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -665,7 +665,7 @@
 
         <field name="config_manager_button_bar_option6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -678,7 +678,7 @@
 
         <field name="config_manager_button_bar_option7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -691,7 +691,7 @@
 
         <field name="config_manager_button_bar_option8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -704,7 +704,7 @@
 
         <field name="config_manager_button_bar_option9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -717,7 +717,7 @@
 
         <field name="config_manager_button_bar_option10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -730,7 +730,7 @@
 
         <field name="config_manager_button_bar_option11"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -743,7 +743,7 @@
 
         <field name="config_manager_button_bar_option12"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -756,7 +756,7 @@
 
         <field name="config_manager_button_bar_option13"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -769,7 +769,7 @@
 
         <field name="config_manager_button_bar_option14"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -782,7 +782,7 @@
 
         <field name="config_manager_button_bar_option15"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -795,7 +795,7 @@
 
         <field name="config_manager_button_bar_option16"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -808,7 +808,7 @@
 
         <field name="config_manager_button_bar_option17"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -821,7 +821,7 @@
 
         <field name="config_manager_button_bar_option18"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -834,7 +834,7 @@
 
         <field name="config_manager_button_bar_option19"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -847,7 +847,7 @@
 
         <field name="config_manager_button_bar_option20"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 200 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -862,7 +862,7 @@
                 name="config_manager_submenus"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_SUBMENUS_LABEL"
                 description="MANAGER_SUBMENUS_DESC"
                 />
@@ -879,7 +879,7 @@
 
         <field name="config_manager_submenu1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 220 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -892,7 +892,7 @@
 
         <field name="config_manager_submenu2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 220 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -905,7 +905,7 @@
 
         <field name="config_manager_submenu3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 220 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -918,7 +918,7 @@
 
         <field name="config_manager_submenu4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 220 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -931,7 +931,7 @@
 
         <field name="config_manager_submenu5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 220 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -946,7 +946,7 @@
                 name="config_manager_list_filters"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_FILTERS_LABEL"
                 description="MANAGER_FILTERS_DESC"
                 />
@@ -963,7 +963,7 @@
 
         <field name="config_manager_list_filters1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -976,7 +976,7 @@
 
         <field name="config_manager_list_filters2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -989,7 +989,7 @@
 
         <field name="config_manager_list_filters3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1002,7 +1002,7 @@
 
         <field name="config_manager_list_filters4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1015,7 +1015,7 @@
 
         <field name="config_manager_list_filters5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1028,7 +1028,7 @@
 
         <field name="config_manager_list_filters6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1041,7 +1041,7 @@
 
         <field name="config_manager_list_filters7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1054,7 +1054,7 @@
 
         <field name="config_manager_list_filters8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1067,7 +1067,7 @@
 
         <field name="config_manager_list_filters9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1080,7 +1080,7 @@
 
         <field name="config_manager_list_filters10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1095,14 +1095,14 @@
                 name="config_manager_list_filters_query_filters"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_TWO_FIELD_QUERY_FILTERS_LABEL"
                 description="MANAGER_TWO_FIELD_QUERY_FILTERS_DESC"
                 />
 
         <field name="config_manager_list_filters_query_filters1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1115,7 +1115,7 @@
 
         <field name="config_manager_list_filters_query_filters2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1128,7 +1128,7 @@
 
         <field name="config_manager_list_filters_query_filters3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1141,7 +1141,7 @@
 
         <field name="config_manager_list_filters_query_filters4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1154,7 +1154,7 @@
 
         <field name="config_manager_list_filters_query_filters5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1169,7 +1169,7 @@
                 name="config_manager_grid_columns"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_GRID_COLUMNS_LABEL"
                 description="MANAGER_GRID_COLUMNS_DESC"
                 />
@@ -1186,7 +1186,7 @@
 
         <field name="config_manager_grid_column1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1199,7 +1199,7 @@
 
         <field name="config_manager_grid_column2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1212,7 +1212,7 @@
 
         <field name="config_manager_grid_column3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1225,7 +1225,7 @@
 
         <field name="config_manager_grid_column4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1238,7 +1238,7 @@
 
         <field name="config_manager_grid_column5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1251,7 +1251,7 @@
 
         <field name="config_manager_grid_column6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1264,7 +1264,7 @@
 
         <field name="config_manager_grid_column7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1277,7 +1277,7 @@
 
         <field name="config_manager_grid_column8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1290,7 +1290,7 @@
 
         <field name="config_manager_grid_column9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1303,7 +1303,7 @@
 
         <field name="config_manager_grid_column10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1316,7 +1316,7 @@
 
         <field name="config_manager_grid_column11"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1329,7 +1329,7 @@
 
         <field name="config_manager_grid_column12"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1342,7 +1342,7 @@
 
         <field name="config_manager_grid_column13"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1355,7 +1355,7 @@
 
         <field name="config_manager_grid_column14"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1368,7 +1368,7 @@
 
         <field name="config_manager_grid_column15"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1388,7 +1388,7 @@
                 name="config_manager_editor"
                 type="spacer"
                 class="spacer"
-                hr="false"
+                hr="0"
                 label="MANAGER_EDITOR_LABEL"
                 description="MANAGER_EDITOR_DESC"
                 />
@@ -1397,14 +1397,14 @@
                 name="config_manager_editor_button_bar_new_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_BUTTON_BAR_NEW_OPTIONS_LABEL"
                 description="MANAGER_EDITOR_BUTTON_BAR_NEW_OPTIONS_DESC"
                 />
 
         <field name="config_manager_editor_button_bar_new_option1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1417,7 +1417,7 @@
 
         <field name="config_manager_editor_button_bar_new_option2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1430,7 +1430,7 @@
 
         <field name="config_manager_editor_button_bar_new_option3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1443,7 +1443,7 @@
 
         <field name="config_manager_editor_button_bar_new_option4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1456,7 +1456,7 @@
 
         <field name="config_manager_editor_button_bar_new_option5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1469,7 +1469,7 @@
 
         <field name="config_manager_editor_button_bar_new_option6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1482,7 +1482,7 @@
 
         <field name="config_manager_editor_button_bar_new_option7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1495,7 +1495,7 @@
 
         <field name="config_manager_editor_button_bar_new_option8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1508,7 +1508,7 @@
 
         <field name="config_manager_editor_button_bar_new_option9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1521,7 +1521,7 @@
 
         <field name="config_manager_editor_button_bar_new_option10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1536,14 +1536,14 @@
                 name="config_manager_editor_button_bar_edit_options"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_BUTTON_BAR_EDIT_OPTIONS_LABEL"
                 description="MANAGER_EDITOR_BUTTON_BAR_EDIT_OPTIONS_DESC"
                 />
 
         <field name="config_manager_editor_button_bar_edit_option1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1556,7 +1556,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1569,7 +1569,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1582,7 +1582,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1595,7 +1595,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1608,7 +1608,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1621,7 +1621,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1634,7 +1634,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1647,7 +1647,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1660,7 +1660,7 @@
 
         <field name="config_manager_editor_button_bar_edit_option10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1675,14 +1675,14 @@
                 name="config_manager_editor_buttons"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_BUTTONS_LABEL"
                 description="MANAGER_EDITOR_BUTTONS_DESC"
                 />
 
         <field name="config_manager_editor_buttons1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1695,7 +1695,7 @@
 
         <field name="config_manager_editor_buttons2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1708,7 +1708,7 @@
 
         <field name="config_manager_editor_buttons3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1721,7 +1721,7 @@
 
         <field name="config_manager_editor_buttons4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1734,7 +1734,7 @@
 
         <field name="config_manager_editor_buttons5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1747,7 +1747,7 @@
 
         <field name="config_manager_editor_buttons6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1760,7 +1760,7 @@
 
         <field name="config_manager_editor_buttons7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1773,7 +1773,7 @@
 
         <field name="config_manager_editor_buttons8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1786,7 +1786,7 @@
 
         <field name="config_manager_editor_buttons9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1799,7 +1799,7 @@
 
         <field name="config_manager_editor_buttons10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1814,14 +1814,14 @@
                 name="config_manager_edit_left_top_columns"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_LEFT_TOP_COLUMNS_LABEL"
                 description="MANAGER_EDITOR_LEFT_TOP_COLUMNS_DESC"
                 />
 
         <field name="config_manager_editor_left_top_column1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1834,7 +1834,7 @@
 
         <field name="config_manager_editor_left_top_column2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1847,7 +1847,7 @@
 
         <field name="config_manager_editor_left_top_column3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1860,7 +1860,7 @@
 
         <field name="config_manager_editor_left_top_column4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1873,7 +1873,7 @@
 
         <field name="config_manager_editor_left_top_column5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1886,7 +1886,7 @@
 
         <field name="config_manager_editor_left_top_column6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1899,7 +1899,7 @@
 
         <field name="config_manager_editor_left_top_column7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1912,7 +1912,7 @@
 
         <field name="config_manager_editor_left_top_column8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1925,7 +1925,7 @@
 
         <field name="config_manager_editor_left_top_column9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1938,7 +1938,7 @@
 
         <field name="config_manager_editor_left_top_column10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1953,14 +1953,14 @@
                 name="config_manager_edit_primary_columns"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_PRIMARY_COLUMNS_LABEL"
                 description="MANAGER_EDITOR_PRIMARY_COLUMNS_DESC"
                 />
 
         <field name="config_manager_editor_primary_column1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1975,14 +1975,14 @@
                 name="config_manager_edit_left_bottom_columns"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_LEFT_BOTTOM_COLUMNS_LABEL"
                 description="MANAGER_EDITOR_LEFT_BOTTOM_COLUMNS_DESC"
                 />
 
         <field name="config_manager_editor_left_bottom_column1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -1995,7 +1995,7 @@
 
         <field name="config_manager_editor_left_bottom_column2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2008,7 +2008,7 @@
 
         <field name="config_manager_editor_left_bottom_column3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2021,7 +2021,7 @@
 
         <field name="config_manager_editor_left_bottom_column4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2034,7 +2034,7 @@
 
         <field name="config_manager_editor_left_bottom_column5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2049,14 +2049,14 @@
                 name="config_manager_edit_right_publishing_columns"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_RIGHT_PUBLISHING_COLUMNS_LABEL"
                 description="MANAGER_EDITOR_RIGHT_PUBLISHING_COLUMNS_DESC"
                 />
 
         <field name="config_manager_editor_right_publishing_column1"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2069,7 +2069,7 @@
 
         <field name="config_manager_editor_right_publishing_column2"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2082,7 +2082,7 @@
 
         <field name="config_manager_editor_right_publishing_column3"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2095,7 +2095,7 @@
 
         <field name="config_manager_editor_right_publishing_column4"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2108,7 +2108,7 @@
 
         <field name="config_manager_editor_right_publishing_column5"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2121,7 +2121,7 @@
 
         <field name="config_manager_editor_right_publishing_column6"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2134,7 +2134,7 @@
 
         <field name="config_manager_editor_right_publishing_column7"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2147,7 +2147,7 @@
 
         <field name="config_manager_editor_right_publishing_column8"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2160,7 +2160,7 @@
 
         <field name="config_manager_editor_right_publishing_column9"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2173,7 +2173,7 @@
 
         <field name="config_manager_editor_right_publishing_column10"
                type="sql"
-               translate="true"
+               translate="1"
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
@@ -2188,7 +2188,7 @@
                 name="config_manager_edit_right_attribs_columns"
                 type="spacer"
                 class="spacer"
-                hr="true"
+                hr="1"
                 label="MANAGER_EDITOR_RIGHT_ATTRIBS_COLUMNS_LABEL"
                 description="MANAGER_EDITOR_RIGHT_ATTRIBS_COLUMNS_DESC"
                 />

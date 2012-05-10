@@ -1,36 +1,38 @@
-<filters>
-    <filter name="id" filter="int" null="1" default="0"/>
-    <filter name="extension_instance_id" filter="int" null="0" default="0"/>
-    <filter name="catalog_type_id" filter="int" null="0" default="0"/>
-    <filter name="title" filter="char" null="0" default=" "/>
-    <filter name="subtitle" filter="char" null="1" default=" "/>
-    <filter name="path" filter="char" null="1" default=" "/>
-    <filter name="alias" filter="char" null="1" default=" "/>
-    <filter name="content_text" filter="text" null="1" default=""/>
-    <filter name="protected" filter="boolean" null="0" default="0"/>
-    <filter name="featured" filter="boolean" null="0" default="0"/>
-    <filter name="stickied" filter="boolean" null="0" default="0"/>
-    <filter name="status" filter="integer" null="0" default="0"/>
-    <filter name="start_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-    <filter name="stop_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-    <filter name="version" filter="int" null="0" default="1"/>
-    <filter name="version_of_id" filter="int" null="0" default="0"/>
-    <filter name="status_prior_to_version" filter="int" null="0" default="0"/>
-    <filter name="created_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-    <filter name="created_by" filter="int" null="0" default="0"/>
-    <filter name="modified_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-    <filter name="modified_by" filter="int" null="0" default="0"/>
-    <filter name="checked_out_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-    <filter name="checked_out_by" filter="int" null="0" default="0"/>
-    <filter name="root" filter="int" null="0" default="0"/>
-    <filter name="parent_id" filter="int" null="0" default="0"/>
-    <filter name="lft" filter="int" null="0" default="0"/>
-    <filter name="rgt" filter="int" null="0" default="0"/>
-    <filter name="home" filter="int" null="0" default="0"/>
-    <filter name="custom_fields" filter="" null="1" default=""/>
-    <filter name="parameters" filter="" null="1" default=""/>
-    <filter name="metadata" filter="" null="1" default=""/>
-    <filter name="language" filter="char" null="1" default=""/>
-    <filter name="translation_of_id" filter="int" null="0" default="0"/>
-    <filter name="ordering" filter="int" null="0" default="0"/>
-</filters>
+<fields>
+    <field name="id" field="int" null="1" default="" identity="1"/>
+    <field name="extension_instance_id" field="int" null="0" default="0"/>
+    <field name="catalog_type_id" field="int" null="0" default="0"/>
+    <field name="title" field="char" null="0" default=" "/>
+    <field name="subtitle" field="char" null="1" default=" "/>
+    <field name="path" field="char" null="1" default=" "/>
+    <field name="alias" field="char" null="1" default=" "/>
+    <field name="content_text" field="text" null="1" default=""/>
+    <field name="protected" field="boolean" null="0" default="0"/>
+    <field name="featured" field="boolean" null="0" default="0"/>
+    <field name="stickied" field="boolean" null="0" default="0"/>
+    <field name="status" field="integer" null="0" default="0"/>
+    <field name="start_publishing_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+    <field name="stop_publishing_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+    <field name="version" field="int" null="0" default="1"/>
+    <field name="version_of_id" field="int" null="0" default="0"/>
+    <field name="status_prior_to_version" field="int" null="0" default="0"/>
+    <field name="created_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+    <field name="created_by" field="int" null="0" default="0"/>
+    <field name="modified_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+    <field name="modified_by" field="int" null="0" default="0"/>
+    <field name="checked_out_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+    <field name="checked_out_by" field="int" null="0" default="0"/>
+    <field name="root" field="int" null="0" default="0"/>
+    <field name="parent_id" field="int" null="0" default="0"/>
+    <field name="lft" field="int" null="0" default="0"/>
+    <field name="rgt" field="int" null="0" default="0"/>
+    <field name="lvl" field="int" null="0" default="0"/>
+    <field name="home" field="int" null="0" default="0"/>
+    <field name="position" field="char" length="45" null="0" default="0"/>
+    <field name="custom_fields" customfield="1" />
+    <field name="parameters" customfield="1" />
+    <field name="metadata" customfield="1" />
+    <field name="language" field="char" null="1" default=""/>
+    <field name="translation_of_id" field="int" null="0" default="0"/>
+    <field name="ordering" field="int" null="0" default="0"/>
+</fields>

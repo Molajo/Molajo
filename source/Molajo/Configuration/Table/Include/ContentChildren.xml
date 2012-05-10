@@ -1,0 +1,5 @@
+<children>
+    <child name="Comments" join="id:parent_id"/>
+    <child name="Ratings" join="id:parent_id"/>
+    <child name="Notifications" join="id:parent_id"/>
+</children>

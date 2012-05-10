@@ -52,7 +52,7 @@ class ItemModel extends Model
 		$this->setLoadQuery();
 
 		/** Add ACL Checking */
-		if ($this->add_acl_check == true) {
+		if ($this->check_view_level_access == true) {
 			$this->addACLCheck();
 		}
 

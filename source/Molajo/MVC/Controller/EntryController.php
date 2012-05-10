@@ -119,7 +119,7 @@ Class EntryController extends DisplayController
 		$this->model->set('get_special_fields', 1);
 		$this->model->set('get_item_children', true);
 		$this->model->set('use_special_joins', true);
-		$this->model->set('add_acl_check', true);
+		$this->model->set('check_view_level_access', true);
 
 		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));

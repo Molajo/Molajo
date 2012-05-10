@@ -6,5 +6,5 @@
         value="title"
         catalog_type_id="{Extension}"
         view_access="1"
-        registry="ListExtensionCategories"
+        registry="ListCategories{Catalog}"
         />

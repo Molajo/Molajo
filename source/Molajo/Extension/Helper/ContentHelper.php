@@ -133,7 +133,7 @@ Class ContentHelper
 		$m->model->set('get_special_fields', 1);
 		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
-		$m->model->set('add_acl_check', true);
+		$m->model->set('check_view_level_access', true);
 		$m->model->set('category_type_id', Services::Registry()->get('Route', 'catalog_type'));
 
 		$m->model->query->select($m->model->db->qn('a.id'));
