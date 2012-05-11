@@ -1,4 +1,3 @@
-<field name="custom_fields">
-    <element name="intro_image" file="" filter="image" shape="" size=""/>
-    <element name="body_image" file="" filter="image" shape="" size=""/>
-</field>
+<element name="intro_image" file="" filter="image" shape="" size=""/>
+<element name="body_image" file="" filter="image" shape="" size=""/>
+<element name="author_notes" field="char" null="0" default=" "/>

@@ -13,8 +13,12 @@
         <model
                 name="Articles"
                 catalog_type_id="10000"
-                include="Content">
+                table="#__content"
+                primary_key="id"
+                primary_prefix="a"
+                data_source="JDatabase">
         </model>
+        <body include="Content"/>
     </config>
 </extension>
 

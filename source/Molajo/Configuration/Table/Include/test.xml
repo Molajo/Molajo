@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.0">
+    <name>COMPONENT_ARTICLES_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>June 2012</create_date>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>COMPONENT_ARTICLES_DESCRIPTION</description>
+    <config>
+        <model
+                name="Articles"
+                catalog_type_id="10000"
+                table="#__content"
+                primary_key="id"
+                primary_prefix="a"
+                data_source="JDatabase">
+        </model>
+        <table>
+            <item>
+                <fields>
+                    <field name="id" field="int" null="1" default="" identity="1"/>
+                    <field name="extension_instance_id" field="int" null="0" default="0"/>
+                    <field name="catalog_type_id" field="int" null="0" default="0"/>
+                    <field name="title" field="char" null="0" default=" "/>
+                    <field name="subtitle" field="char" null="1" default=" "/>
+                    <field name="path" field="char" null="1" default=" "/>
+                    <field name="alias" field="char" null="1" default=" "/>
+                    <field name="content_text" field="text" null="1" default=""/>
+                    <field name="protected" field="boolean" null="0" default="0"/>
+                    <field name="featured" field="boolean" null="0" default="0"/>
+                    <field name="stickied" field="boolean" null="0" default="0"/>
+                    <field name="status" field="integer" null="0" default="0"/>
+                    <field name="start_publishing_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+                    <field name="stop_publishing_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+                    <field name="version" field="int" null="0" default="1"/>
+                    <field name="version_of_id" field="int" null="0" default="0"/>
+                    <field name="status_prior_to_version" field="int" null="0" default="0"/>
+                    <field name="created_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+                    <field name="created_by" field="int" null="0" default="0"/>
+                    <field name="modified_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+                    <field name="modified_by" field="int" null="0" default="0"/>
+                    <field name="checked_out_datetime" field="date" null="0" default="0000-00-00 00:00:00"/>
+                    <field name="checked_out_by" field="int" null="0" default="0"/>
+                    <field name="root" field="int" null="0" default="0"/>
+                    <field name="parent_id" field="int" null="0" default="0"/>
+                    <field name="lft" field="int" null="0" default="0"/>
+                    <field name="rgt" field="int" null="0" default="0"/>
+                    <field name="lvl" field="int" null="0" default="0"/>
+                    <field name="home" field="int" null="0" default="0"/>
+                    <field name="position" field="char" length="45" null="0" default="0"/>
+                    <field name="custom_fields" customfield="1"/>
+                    <field name="parameters" customfield="1"/>
+                    <field name="metadata" customfield="1"/>
+                    <field name="language" field="char" null="1" default=""/>
+                    <field name="translation_of_id" field="int" null="0" default="0"/>
+                    <field name="ordering" field="int" null="0" default="0"/>
+                </fields>
+
+                <foreignkeys>
+                    <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+                    <foreignkey name="checked_out_by" source_id="id" source_model="Users" required="1"/>
+                    <foreignkey name="created_by" source_id="id" source_model="Users" required="1"/>
+                    <foreignkey name="modified_by" source_id="id" source_model="Users" required="1"/>
+                    <foreignkey name="extension_instance_id" source_id="id" source_model="ExtensionInstances"
+                                required="1"/>
+                    <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+                </foreignkeys>
+                <children>
+                    <child name="Comments" join="id:parent_id"/>
+                    <child name="Ratings" join="id:parent_id"/>
+                    <child name="Notifications" join="id:parent_id"/>
+                </children>
+
+                <triggers>
+                    <trigger name="Alias"/>
+                    <trigger name="CatalogTypeId"/>
+                    <trigger name="ContentText"/>
+                    <trigger name="DateFields"/>
+                    <trigger name="UserFields"/>
+                    <trigger name="Status"/>
+                    <trigger name="Customfields"/>
+                    <trigger name="Metadata"/>
+                    <trigger name="Parameters"/>
+                    <trigger name="ViewAccess"/>
+                </triggers>
+                <customfields>
+                    <customfield name="custom_fields" registry="ItemCustomfields">
+                        <field name="custom_fields">
+                            <element include="ContentCustomfields"/>
+                            <element name="only_in_custom" file="" filter="image" shape="" size=""/>
+                        </field>
+                    </customfield>
+                    <customfield name="metadata" registry="ItemMetadata">
+                        <field name="custom_fields">
+                            <element include="SystemMetadata"/>
+                        </field>
+                    </customfield>
+                    <customfield name="parameters" registry="ItemParameters">
+                        <field name="parameters">
+                            <element include="SystemItemParameters"/>
+                        </field>
+                    </customfield>
+                </customfields>
+            </item>
+            <component>
+                <customfields>
+                    <field name="parameters" registry="ComponentParameters">
+                        <element include="SystemComponentParameters"/>
+                    </field>
+                </customfields>
+            </component>
+        </table>
+
+    </config>
+</extension>

@@ -15,8 +15,8 @@
     <triggers include="ContentTriggers"/>
     <content>
         <fields>
-            <field name="custom_fields" registry="ContentCustomfields">
-                <element include="ContentCustomfields"/>
+            <field name="custom_fields" registry="ItemCustomfields">
+                <element include="ItemCustomfields"/>
             </field>
             <field name="metadata" registry="ContentMetadata">
                 <element include="ContentMetadata"/>
@@ -29,7 +29,7 @@
     <component>
         <fields>
             <field name="custom_fields" registry="ComponentCustomfields">
-                <element include="ContentCustomfields"/>
+                <element include="ItemCustomfields"/>
             </field>
             <field name="metadata" registry="ComponentMetadata">
                 <element include="ContentMetadata"/>

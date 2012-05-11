@@ -1,8 +1,6 @@
-<field name="metadata">
-    <element name="metadata_title" filter="char" null="1" default=""/>
-    <element name="metadata_description" filter="text" null="1" default=""/>
-    <element name="metadata_keywords" filter="char" null="1" default=""/>
-    <element name="metadata_robots" filter="char" null="1" default="follow,index"/>
-    <element name="metadata_author" filter="char" null="1" default=""/>
-    <element name="metadata_content_rights" filter="char" null="1" default=""/>
-</field>
+<element name="metadata_title" filter="char" null="1" default=""/>
+<element name="metadata_description" filter="text" null="1" default=""/>
+<element name="metadata_keywords" filter="char" null="1" default=""/>
+<element name="metadata_robots" filter="char" null="1" default="follow,index"/>
+<element name="metadata_author" filter="char" null="1" default=""/>
+<element name="metadata_content_rights" filter="char" null="1" default=""/>
