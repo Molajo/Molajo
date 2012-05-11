@@ -1,46 +1,38 @@
-<customfield name="parameters">
+<element name="enable_draft_save" filter="binary" null="0" default="1" values="0,1"/>
+<element name="enable_version_history" filter="binary" null="0" default="1" values="0,1"/>
+<element name="maximum_version_count" filter="integer" null="0" default="5" minimum="0" maximum="20"/>
+<element name="enable_hit_counts" filter="binary" null="0" default="1" values="0,1"/>
+<element name="enable_comments" filter="binary" null="0" default="1" values="0,1"/>
+<element name="enable_ratings" filter="binary" null="0" default="1" values="0,1"/>
+<element name="enable_notifications" filter="binary" null="0" default="1" values="0,1"/>
+<element name="enable_tweets" filter="binary" null="0" default="1" values="0,1"/>
+<element name="enable_ping" filter="binary" null="0" default="1" values="0,1"/>
 
-    <site>
-        <element name="enable_draft_save" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="enable_version_history" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="maximum_version_count" filter="integer" null="0" default="5" minimum="0" maximum="20"/>
-        <element name="enable_hit_counts" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="enable_comments" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="enable_ratings" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="enable_notifications" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="enable_tweets" filter="binary" null="0" default="1" values="0,1"/>
-        <element name="enable_ping" filter="binary" null="0" default="1" values="0,1"/>
-    </site>
+<element name="display_view_on_no_results" filter="binary" null="0" default="0" values="0,1"/>
 
-    <application>
-        <element name="display_view_on_no_results" filter="binary" null="0" default="0" values="0,1"/>
+<element name="theme_id" filter="integer" null="1" default="" values=""/>
 
-        <element name="theme_id" filter="integer" null="1" default="" values=""/>
+<element name="page_view_id" filter="integer" null="1" default="" values=""/>
+<element name="page_view_css_id" filter="char" null="1" default="" values=""/>
+<element name="page_view_css_class" filter="char" null="1" default="" values=""/>
 
-        <element name="page_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="page_view_css_id" filter="char" null="1" default="" values=""/>
-        <element name="page_view_css_class" filter="char" null="1" default="" values=""/>
+<element name="item_template_view_id" filter="integer" null="1" default="" values=""/>
+<element name="item_template_view_css_id" filter="char" null="1" default="" values=""/>
+<element name="item_template_view_css_class" filter="char" null="1" default="" values=""/>
+<element name="item_wrap_view_id" filter="integer" null="1" default="0" values=""/>
+<element name="item_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+<element name="item_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+<element name="item_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
+<element name="item_get_children" filter="integer" null="0" default="1" values="0,1,2"/>
+<element name="item_check_view_level_access" filter="integer" null="0" default="1" values="0,1,2"/>
 
-        <element name="item_template_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="item_template_view_css_id" filter="char" null="1" default="" values=""/>
-        <element name="item_template_view_css_class" filter="char" null="1" default="" values=""/>
-        <element name="item_wrap_view_id" filter="integer" null="1" default="0" values=""/>
-        <element name="item_wrap_view_css_id" filter="char" null="1" default="" values=""/>
-        <element name="item_wrap_view_css_class" filter="char" null="1" default="" values=""/>
-        <element name="item_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
-        <element name="item_get_children" filter="integer" null="0" default="1" values="0,1,2"/>
-        <element name="item_check_view_level_access" filter="integer" null="0" default="1" values="0,1,2"/>
+<element name="form_template_view_id" filter="integer" null="1" default="" values=""/>
+<element name="form_template_view_css_id" filter="char" null="1" default="" values=""/>
+<element name="form_template_view_css_class" filter="char" null="1" default="" values=""/>
+<element name="form_wrap_view_id" filter="integer" null="1" default="0" values=""/>
+<element name="form_wrap_view_css_id" filter="char" null="1" default="" values=""/>
+<element name="form_wrap_view_css_class" filter="char" null="1" default="" values=""/>
 
-        <element name="form_template_view_id" filter="integer" null="1" default="" values=""/>
-        <element name="form_template_view_css_id" filter="char" null="1" default="" values=""/>
-        <element name="form_template_view_css_class" filter="char" null="1" default="" values=""/>
-        <element name="form_wrap_view_id" filter="integer" null="1" default="0" values=""/>
-        <element name="form_wrap_view_css_id" filter="char" null="1" default="" values=""/>
-        <element name="form_wrap_view_css_class" filter="char" null="1" default="" values=""/>
-
-        <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-        <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-        <element name="cache_handler" filter="char" null="1" default="" values=""/>
-    </application>
-
-</customfield>
+<element name="caching" filter="binary" null="1" default="1" values="0,1"/>
+<element name="cache_time" filter="integer" null="1" default="15" values=""/>
+<element name="cache_handler" filter="char" null="1" default="" values=""/>

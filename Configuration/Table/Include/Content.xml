@@ -13,7 +13,6 @@
                 <element include="SystemMetadata"/>
             </customfield>
             <customfield name="parameters" registry="ItemParameters">
-
                 <element include="SystemItemParameters"/>
             </customfield>
         </customfields>
