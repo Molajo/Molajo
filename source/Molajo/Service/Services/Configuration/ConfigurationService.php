@@ -358,7 +358,6 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			echo 'asdfasfdas';
 			$replace_this = '<triggers include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
 			$xml = simplexml_load_string($xml_string);
@@ -424,6 +423,12 @@ Class ConfigurationService
 				$xml = simplexml_load_string($xml_string);
 			}
 			$i++;
+		}
+
+		if ($file == 'Articles') {
+			echo '<pre>';
+			echo $xml_string;
+			echo '</pre>';
 		}
 
 		return $xml;
