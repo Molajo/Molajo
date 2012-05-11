@@ -425,12 +425,6 @@ Class ConfigurationService
 			$i++;
 		}
 
-		if ($file == 'Articles') {
-			echo '<pre>';
-			echo $xml_string;
-			echo '</pre>';
-		}
-
 		return $xml;
 	}
 
