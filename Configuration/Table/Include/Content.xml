@@ -1,0 +1,28 @@
+<table>
+    <item>
+        <filters include="ContentFilters"/>
+        <foreignkeys include="ContentForeignkeys"/>
+        <children include="ContentChildren"/>
+        <triggers include="ContentTriggers"/>
+        <customfields>
+            <customfield name="custom_fields" registry="ItemCustomfields">
+                <element include="ContentCustomfields"/>
+                <element name="only_in_custom" file="" filter="image" shape="" size=""/>
+            </customfield>
+            <customfield name="metadata" registry="ItemMetadata">
+                <element include="SystemMetadata"/>
+            </customfield>
+            <customfield name="parameters" registry="ItemParameters">
+
+                <element include="SystemItemParameters"/>
+            </customfield>
+        </customfields>
+    </item>
+    <component>
+        <customfields>
+            <customfield name="parameters" registry="ComponentParameters">
+                <element include="SystemComponentParameters"/>
+            </customfield>
+        </customfields>
+    </component>
+</table>

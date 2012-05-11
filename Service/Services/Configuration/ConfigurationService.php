@@ -238,8 +238,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * loadFile is the isolated point in the application where all XML configuration files are read
-	 *   That includes XML for tables, services, and the application, along with service startup
+	 * loadFile is the point in the application where all XML configuration files are read
 	 *
 	 * Usage:
 	 * Services::Configuration()->loadFile('Content', 'Table');
@@ -257,8 +256,8 @@ Class ConfigurationService
 
 		} else if ($type == 'Table') {
 
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml';
 			} else {
 				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
 			}
@@ -289,10 +288,27 @@ Class ConfigurationService
 		/** Table only: Process Include Code */
 		$xml_string = '';
 
+		/** <body include="XYZ">  */
+		$include = '';
+		$include = (string)$xml->config->body['include'];
+		if (isset($xml->config->body['include'])) {
+			$include = (string)$xml->config->body['include'];
+		}
+		if ($include == '') {
+		} else {
+			$replace_this = '<body include="' . $include . '"/>';
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$xml = simplexml_load_string($xml_string);
+		}
+
 		/** <filters include="XYZ">  */
 		$include = '';
-		$filters = $xml->filters;
-		$include = (string)$filters['include'];
+		if (isset($xml->config->table->item->filters['include'])) {
+			$include = (string)$xml->config->table->item->filters['include'];
+		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
@@ -304,8 +320,9 @@ Class ConfigurationService
 
 		/** <foreignkeys include="XYZ"/> */
 		$include = '';
-		$foreignkeys = $xml->foreignkeys;
-		$include = (string)$foreignkeys['include'];
+		if (isset($xml->config->table->item->foreignkeys['include'])) {
+			$include = (string)$xml->config->table->item->foreignkeys['include'];
+		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
@@ -313,26 +330,103 @@ Class ConfigurationService
 			}
 			$replace_this = '<foreignkeys include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$xml = simplexml_load_string($xml_string);
 		}
 
-		/** <triggers include="XYZ"/> */
+		/** <children include="XYZ"/> */
 		$include = '';
-		$triggers = $xml->triggers;
-		$include = (string)$triggers['include'];
+		if (isset($xml->config->table->item->children['include'])) {
+			$include = (string)$xml->config->table->item->children['include'];
+		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<triggers include="' . $include . '"/>';
+			$replace_this = '<children include="' . $include . '"/>';
 			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$xml = simplexml_load_string($xml_string);
 		}
 
-		if ($xml_string == '') {
-			return $xml;
-		} else {
-			return simplexml_load_string($xml_string);
+		/** <triggers include="XYZ"/> */
+		$include = '';
+		if (isset($xml->config->table->item->triggers['include'])) {
+			$include = (string)$xml->config->table->item->triggers['include'];
 		}
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			echo 'asdfasfdas';
+			$replace_this = '<triggers include="' . $include . '"/>';
+			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		/** Item Customfields <element include="XYZ"/> */
+		$temp = '';
+		if (isset($xml->config->table->item->customfields)) {
+			$temp = $xml->config->table->item->customfields;
+		}
+
+		$include = 'x';
+		$i = 0;
+		while ($include != '') {
+
+			$include = '';
+			if (isset($temp->customfield[$i]->element['include'])) {
+				$include = (string)$temp->customfield[$i]->element['include'];
+			}
+
+			if ($include == '') {
+				$done = true;
+				break;
+			} else {
+
+				if ($xml_string == '') {
+					$xml_string = file_get_contents($path_and_file);
+				}
+
+				$replace_this = '<element include="' . $include . '"/>';
+				$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+				$xml = simplexml_load_string($xml_string);
+			}
+			$i++;
+		}
+
+		/** Component Customfields <element include="XYZ"/> */
+		$temp = '';
+		if (isset($xml->config->table->component->customfields)) {
+			$temp = $xml->config->table->component->customfields;
+		}
+
+		$include = 'x';
+		$i = 0;
+		while ($include != '') {
+
+			$include = '';
+			if (isset($temp->customfield[$i]->element['include'])) {
+				$include = (string)$temp->customfield[$i]->element['include'];
+			}
+
+			if ($include == '') {
+				$done = true;
+				break;
+			} else {
+
+				if ($xml_string == '') {
+					$xml_string = file_get_contents($path_and_file);
+				}
+
+				$replace_this = '<element include="' . $include . '"/>';
+				$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+				$xml = simplexml_load_string($xml_string);
+			}
+			$i++;
+		}
+
+		return $xml;
 	}
 
 	/**
