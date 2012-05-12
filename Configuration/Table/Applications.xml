@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Applications"
+        catalog_type_id="50"
         table="#__applications"
         primary_key="id"
+        id_name="name"
         primary_prefix="a"
-        get_special_fields="1"
+        get_custom_fields="1"
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
         data_source="JDatabase">
-
     <table>
         <item>
             <fields>
                 <field name="id" type="int" null="1" default="0" identity="1"/>
-                <field name="catalog_type_id" type="int" null="0" default="500" values="500"/>
+                <field name="catalog_type_id" type="int" null="0" default="50" values="50"/>
                 <field name="name" type="char" null="0" default="" unique="1"/>
                 <field name="path" type="char" null="0" default=""/>
                 <field name="description" type="text" null="1" default=""/>
@@ -25,26 +26,24 @@
 
             <foreignkeys>
                 <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-                <foreignkey name="home_catalog_id" source_id="id" source_model="Catalog" required="1"/>
             </foreignkeys>
 
             <children>
+                <child name="SiteApplications" join="id:application_id"/>
+                <child name="ApplicationExtensionInstances" join="id:application_id"/>
+                <child name="UserApplications" join="id:application_id"/>
+                <child name="Sessions" join="id:application_id"/>
                 <child name="ApplicationExtensionInstances" join="id:application_id"/>
             </children>
 
             <triggers>
                 <trigger name="Application"/>
-                <trigger name="ContentText"/>
                 <trigger name="Customfields"/>
                 <trigger name="Metadata"/>
                 <trigger name="Parameters"/>
-                <trigger name="Language"/>
             </triggers>
 
             <customfields>
-                <customfield name="custom_fields" registry="ItemCustomfields">
-                    <field name="custom_field1" type="char" null="1" default="" values=""/>
-                </customfield>
 
                 <customfield name="parameters" registry="ItemParameters">
                     <field name="application_name" type="char" null="1" default="" values=""/>
@@ -55,7 +54,7 @@
                     <field name="unicode_slugs" type="binary" null="1" default="1" values="0,1"/>
                     <field name="force_ssl" type="binary" null="1" default="0" values="0,1"/>
 
-                    <field name="default_language" type="char" null="1" default="en-GB" values=""/>
+                    <field name="language" type="char" null="1" default="en-GB" values=""/>
                     <field name="direction" type="char" null="1" default="ltr" values="ltr,rtl"/>
                     <field name="multilingual" type="binary" null="1" default="0" values="0,1"/>
 
@@ -65,9 +64,6 @@
                     <field name="html5" type="binary" null="1" default="1" values="0,1"/>
 
                     <field name="html_display_filter" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="caching" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="cache_time" type="integer" null="1" default="15" values=""/>
-                    <field name="cache_handler" type="char" null="1" default="" values=""/>
 
                     <field name="image_xsmall" type="integer" null="1" default="" values=""/>
                     <field name="image_small" type="char" null="1" default="" values=""/>
@@ -78,7 +74,6 @@
                     <field name="thumb_folder" type="char" null="1" default="" values=""/>
 
                     <field name="editor" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="view_access" type="binary" null="1" default="1" values="0,1"/>
                     <field name="home_catalog_id" type="integer" null="0" default="" values=""/>
                     <field name="logon_requirement" type="binary" null="1" default="1" values="0,1"/>
 
@@ -112,23 +107,16 @@
                     <field name="error_404_message" type="char" null="1" default="" values=""/>
                     <field name="error_403_message" type="char" null="1" default="" values=""/>
 
-                    <field include="SystemComponentParameters"/>
+                    <include name="SystemComponentParameters"/>
 
                 </customfield>
 
                 <customfield name="metadata" registry="ItemMetadata">
-                    <field include="SystemMetadata"/>
+                    <include name="SystemMetadata"/>
                 </customfield>
 
             </customfields>
 
         </item>
-        <component>
-            <customfields>
-                <customfield name="parameters" registry="ComponentParameters">
-                    <field include="SystemComponentParameters"/>
-                </customfield>
-            </customfields>
-        </component>
     </table>
 </model>

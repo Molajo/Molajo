@@ -4,7 +4,7 @@
         table="#__content"
         primary_key="id"
         primary_prefix="a"
-        get_special_fields="0"
+        get_custom_fields="0"
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
@@ -16,26 +16,26 @@
     <content>
         <fields>
             <field name="custom_fields" registry="ItemCustomfields">
-                <field include="ItemCustomfields"/>
+                <include name="ItemCustomfields"/>
             </field>
             <field name="metadata" registry="ContentMetadata">
-                <field include="ContentMetadata"/>
+                <include name="ContentMetadata"/>
             </field>
             <field name="parameters" registry="ContentParameters">
-                <field include="ContentParameters"/>
+                <include name="ContentParameters"/>
             </field>
         </fields>
     </content>
     <component>
         <fields>
             <field name="custom_fields" registry="ComponentCustomfields">
-                <field include="ItemCustomfields"/>
+                <include name="ItemCustomfields"/>
             </field>
             <field name="metadata" registry="ComponentMetadata">
-                <field include="ContentMetadata"/>
+                <include name="ContentMetadata"/>
             </field>
             <field name="parameters" registry="ComponentParameters">
-                <field include="ContentParameters"/>
+                <include name="ContentParameters"/>
             </field>
         </fields>
     </component>

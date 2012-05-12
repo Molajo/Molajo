@@ -130,7 +130,7 @@ Class ContentHelper
 
 		$m->model->set('id', (int)$id);
 
-		$m->model->set('get_special_fields', 1);
+		$m->model->set('get_custom_fields', 1);
 		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
 		$m->model->set('check_view_level_access', true);

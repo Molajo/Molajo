@@ -91,14 +91,17 @@ Class EntryController extends DisplayController
 	 */
 	public function connect($table = '')
 	{
-
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {
-		} else {
-			$this->setModelTable($table);
 			$this->dataSource = $this->default_dataSource;
+		} else {
+			$this->table_registry_name = ConfigurationService::loadFile($table, 'Table');
+			/*
+			echo '<pre>';
+			var_dump(Services::Registry()->get($this->table_registry_name));
+			echo '</pre>';
+			*/
 		}
-		$dbo = $this->dataSource;
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\MVC\\Model\\EntryModel';
@@ -110,23 +113,19 @@ Class EntryController extends DisplayController
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
 
-		/** 3. Set Default Model Properties */
-		$this->model->set('model_name', $this->model_name);
-		$this->model->set('table_name', $this->table_name);
-		$this->model->set('primary_key', $this->primary_key);
+		/** Set Model Properties */
 		$this->model->set('table_registry_name', $this->table_registry_name);
-		$this->model->set('primary_prefix',
-			Services::Registry()->get($this->table_registry_name, 'PrimaryPrefix'));
-		$this->model->set('get_special_fields',
-			Services::Registry()->get($this->table_registry_name, 'GetSpecialFields'));
-		$this->model->set('get_item_children',
-			Services::Registry()->get($this->table_registry_name, 'GetItemChildren'));
-		$this->model->set('use_special_joins',
-			Services::Registry()->get($this->table_registry_name, 'UseSpecialJoins'));
-		$this->model->set('check_view_level_access',
-			Services::Registry()->get($this->table_registry_name, 'CheckViewLevelAccess'));
+		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
+		$this->model->set('table_name', Services::Registry()->get($this->table_registry_name, 'table_name'));
+		$this->model->set('primary_key', Services::Registry()->get($this->table_registry_name, 'primary_key'));
+		$this->model->set('id', Services::Registry()->get($this->table_registry_name, 'id'));
+		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
+		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
+		$this->model->set('id_name', Services::Registry()->get($this->table_registry_name, 'id_name'));
 
 		/** 4. Set DB Properties */
+		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
+
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
 		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
@@ -137,41 +136,6 @@ Class EntryController extends DisplayController
 		$this->model->set('now', $now);
 
 		Services::$dbo()->getQuery()->clear();
-
-		return $this;
-	}
-
-	/**
-	 * Set model properties needed for specific table model interaction
-	 *
-	 * @param   $table
-	 *
-	 * @return  object
-	 * @throws  \RuntimeException
-	 */
-	protected function setModelTable($table)
-	{
-		$this->table_registry_name = 'table' . ucfirst(strtolower($table));
-
-		$this->model_name = Services::Registry()->get($this->table_registry_name, 'Name');
-		if ($this->model_name == '') {
-			throw new \RuntimeException('No model name for table: ' . $table);
-		}
-
-		$this->table_name = Services::Registry()->get($this->table_registry_name, 'Table');
-		if ($this->table_name == '') {
-			$this->table_name = '#__content';
-		}
-
-		$this->primary_key = Services::Registry()->get($this->table_registry_name, 'PrimaryKey');
-		if ($this->primary_key === '') {
-			$this->primary_key = 'id';
-		}
-
-		$this->dataSource = Services::Registry()->get($this->table_registry_name, 'DataSource');
-		if ($this->dataSource === '') {
-			$this->dataSource = $this->default_dataSource;
-		}
 
 		return $this;
 	}

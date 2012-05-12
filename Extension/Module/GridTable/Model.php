@@ -29,7 +29,7 @@ Class ModelGridTableModule extends DisplayModel
 	{
 		$this->name = get_class($this);
 		$this->table = '';
-		$this->primary_key = '';
+		Services::Registry()->get($this->table_registry_name, 'primary_key') = '';
 
 		return parent::__construct($table, $id, $path);
 	}

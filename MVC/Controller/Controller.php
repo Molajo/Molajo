@@ -44,52 +44,12 @@ class Controller
 	public $user = array();
 
 	/**
-	 * Used with Model get and set
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $model;
-
-	/**
-	 * Module Name
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $model_name;
-
-	/**
-	 * Table Name
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $table_name;
-
-	/**
 	 * Registry containing Table Configuration from XML
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
 	protected $table_registry_name;
-
-	/**
-	 * Primary Key
-	 *
-	 * @var    integer
-	 * @since  1.0
-	 */
-	protected $primary_key;
-
-	/**
-	 * DB Driver
-	 *
-	 * @var    integer
-	 * @since  1.0
-	 */
-	protected $dataSource;
 
 	/**
 	 * Valid DB Options

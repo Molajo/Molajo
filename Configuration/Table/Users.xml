@@ -5,6 +5,10 @@
         table="#__users"
         primary_key="id"
         primary_prefix="a"
+        get_custom_fields="1"
+        get_item_children="1"
+        use_special_joins="1"
+        check_view_level_access="0"
         data_source="JDatabase">
     <table>
         <item>
@@ -55,7 +59,7 @@
                     <field name="date_of_birth" type="date" null="1" default=""/>
                 </customfield>
                 <customfield name="metadata" registry="ItemMetadata">
-                    <field include="SystemMetadata"/>
+                    <include name="SystemMetadata"/>
                 </customfield>
                 <customfield name="parameters" registry="ItemParameters">
                     <field name="display_gravatar" type="boolean" null="0" default="0"/>

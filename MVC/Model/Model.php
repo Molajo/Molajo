@@ -22,7 +22,15 @@ defined('MOLAJO') or die;
 class Model
 {
 	/**
-	 * Model Name retrieved from Table definition file
+	 * Table registry
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $table_registry_name = false;
+
+	/**
+	 * Model Name
 	 *
 	 * @var    string
 	 * @since  1.0
@@ -30,101 +38,44 @@ class Model
 	protected $model_name = '';
 
 	/**
-	 * Name of the database table for the model
+	 * Database table
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $table_name;
-
-	public $table_registry_name;
-	/**
-	 * Load: special joins flag
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $use_special_joins = false;
+	protected $table_name = '';
 
 	/**
-	 * Load: special fields in registry flag
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $get_special_fields = 1;
-
-	/**
-	 * Load: return child data flag
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $get_item_children = true;
-
-	/**
-	 * Load: add ACL check
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $check_view_level_access = true;
-
-	/**
-	 * Name of the primary key for the model table
+	 * Primary key for the database table
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $primary_key = '';
+	protected $primary_key = '';
 
 	/**
-	 * Value for the primary key of the model table
+	 * Value for the primary key
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $id = 0;
+	protected $id = 0;
 
 	/**
-	 * Value for the name of the item to be returned
+	 * Name key (if existing) for the database table
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $id_name = '';
+	protected $name_key = '';
 
 	/**
-	 * Goes with id_name to be used to find specific item
+	 * Value for the name key
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $name_field = '';
-
-	/**
-	 * Database connection
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $db;
-
-	/**
-	 * Single row for $table
-	 *
-	 * @var    \stdClass
-	 * @since  1.0
-	 */
-	public $row;
-
-	/**
-	 * List of all data elements in table
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	public $table_fields;
+	protected $id_name = '';
 
 	/**
 	 * Primary Prefix
@@ -132,7 +83,15 @@ class Model
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $primary_prefix;
+	protected $primary_prefix;
+
+	/**
+	 * Database connection
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $db;
 
 	/**
 	 * Database query object
@@ -140,7 +99,7 @@ class Model
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $query;
+	protected $query;
 
 	/**
 	 * Used in queries to determine date validity
@@ -148,7 +107,7 @@ class Model
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $nullDate;
+	protected $nullDate;
 
 	/**
 	 * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
@@ -156,7 +115,7 @@ class Model
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $now;
+	protected $now;
 
 	/**
 	 * Results from queries
@@ -175,20 +134,20 @@ class Model
 	protected $pagination;
 
 	/**
-	 * Default code if lookup value does not exist
+	 * Single row for $table
 	 *
-	 * @var    integer  constant
+	 * @var    \stdClass
 	 * @since  1.0
 	 */
-	const DEFAULT_CODE = 300000;
+	protected $row;
 
 	/**
-	 * Default message if no message is provided
+	 * List of all data elements in table
 	 *
-	 * @var    string  Constant
-	 * @since  12.1
+	 * @var    array
+	 * @since  1.0
 	 */
-	const DEFAULT_MESSAGE = 'Undefined Message';
+	protected $table_fields;
 
 	/**
 	 * @return  object
@@ -226,36 +185,6 @@ class Model
 	public function set($key, $value = null)
 	{
 		return $this->$key = $value;
-	}
-
-	/**
-	 * Return message given message code
-	 *
-	 * @param   string  $code  Numeric value associated with message
-	 *
-	 * @return  mixed  Array or String
-	 * @since   1.0
-	 */
-	public function getMessage($code = 0)
-	{
-		$message = array(
-			300100 => 'Invalid key of type. Expected simple.',
-			300200 => 'The mcrypt extension is not available.',
-			300300 => 'Invalid JCryptKey used with Mcrypt decryption.',
-			300400 => 'Invalid JCryptKey used with Mcrypt encryption.',
-			300500 => 'Invalid JCryptKey used with Simple decryption.',
-			300600 => 'Invalid JCryptKey used with Simple encryption.',
-		);
-
-		if ($code == 0) {
-			return $message;
-		}
-
-		if (isset($message[$code])) {
-			return $message[$code];
-		}
-
-		return self::DEFAULT_MESSAGE;
 	}
 
 	/**
@@ -369,10 +298,10 @@ class Model
 	 */
 	public function getFieldDefinitions()
 	{
-		if ($this->table_name == '') {
+		if (Services::Registry()->get($this->table_registry_name, 'Table') == '') {
 			return array();
 		}
-		return $this->db->getTableColumns($this->table_name, false);
+		return $this->db->getTableColumns(Services::Registry()->get($this->table_registry_name, 'Table'), false);
 	}
 
 	/**
@@ -409,7 +338,7 @@ class Model
 	}
 
 	/**
-	 * addSpecialJoins
+	 * useSpecialJoins
 	 *
 	 * Method used in load sequence to optionally append additional
 	 * joins to the primary table and add fields from those tables
@@ -417,7 +346,7 @@ class Model
 	 * @return array
 	 * @since  1.0
 	 */
-	protected function addSpecialJoins()
+	protected function useSpecialJoins()
 	{
 		return $this->query_results = array();
 	}
@@ -539,12 +468,12 @@ class Model
 			$this->query->select(
 				$this->db->qn($this->primary_prefix)
 					. '.'
-					. $this->db->qn($this->primary_key));
+					. $this->db->qn(Services::Registry()->get($this->table_registry_name, 'primary_key')));
 		}
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table_name)
+				$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -578,12 +507,12 @@ class Model
 			$this->query->select(
 				$this->db->qn($this->primary_prefix)
 					. '.'
-					. $this->db->qn($this->primary_key));
+					. $this->db->qn(Services::Registry()->get($this->table_registry_name, 'primary_key')));
 		}
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table_name)
+				$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -754,7 +683,7 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn($this->table_name)
+				$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);

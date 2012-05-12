@@ -1,7 +1,7 @@
 <table>
     <item>
         <fields>
-            <field include="ContentFields"/>
+            <include name="ContentFields"/>
         </fields>
         <foreignkeys>
             <foreignkey include="ContentForeignkeys"/>
@@ -14,21 +14,21 @@
         </triggers>
         <customfields>
             <customfield name="custom_fields" registry="ItemCustomfields">
-                <field include="ContentCustomfields"/>
+                <include name="ContentCustomfields"/>
                 <field name="example_of_content_only_field" type="int" null="1" default="1"/>
             </customfield>
             <customfield name="metadata" registry="ItemMetadata">
-                <field include="SystemMetadata"/>
+                <include name="SystemMetadata"/>
             </customfield>
             <customfield name="parameters" registry="ItemParameters">
-                <field include="SystemItemParameters"/>
+                <include name="SystemItemParameters"/>
             </customfield>
         </customfields>
     </item>
     <component>
         <customfields>
             <customfield name="parameters" registry="ComponentParameters">
-                <field include="SystemComponentParameters"/>
+                <include name="SystemComponentParameters"/>
             </customfield>
         </customfields>
     </component>

@@ -98,15 +98,16 @@ Class ConfigurationService
 
 		foreach ($siteData as $key => $value) {
 			Services::Registry()->set('Configuration', $key, $value);
-			Services::Registry()->set('SiteParameters', $key, $value);
 		}
 
 		/** Retrieve Sites Data from DB */
 		$m = Application::Controller()->connect('Sites');
 
 		$m->model->set('id', (int)SITE_ID);
-
+		    echo 'here';
 		$items = $m->getData('load');
+		var_dump($items);
+		die;
 
 		if ($items === false) {
 			throw new \RuntimeException ('Application setSiteData() query problem');
@@ -115,9 +116,9 @@ Class ConfigurationService
 		Services::Registry()->set('Site', 'id', (int)$items['id']);
 		Services::Registry()->set('Site', 'catalog_type_id', (int)$items['catalog_type_id']);
 		Services::Registry()->set('Site', 'name', $items['name']);
-		Services::Registry()->set('Site', 'description', $items['description']);
 		Services::Registry()->set('Site', 'path', $items['path']);
 		Services::Registry()->set('Site', 'base_url', $items['base_url']);
+		Services::Registry()->set('Site', 'description', $items['description']);
 
 		return true;
 	}
@@ -211,10 +212,15 @@ Class ConfigurationService
 				Services::Registry()->set('Application', 'id', (int)$items['id']);
 				Services::Registry()->set('Application', 'catalog_type_id', (int)$items['catalog_type_id']);
 				Services::Registry()->set('Application', 'name', $items['name']);
-				Services::Registry()->set('Application', 'description', $items['description']);
 				Services::Registry()->set('Application', 'path', $items['path']);
+				Services::Registry()->set('Application', 'description', $items['description']);
 
-				Services::Registry()->copy('ApplicationParameters', 'Configuration');
+				/** Combine Application and Site Parameters into Configuration */
+				$parameters = Services::Registry()->copy('ApplicationTable', 'ItemParameters');
+				foreach ($parameters as $key => $value) {
+					Services::Registry()->set('Configuration', $key, $value);
+				}
+				Services::Registry()->set('ApplicationTable', 'ItemParameters', array());
 
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -236,16 +242,26 @@ Class ConfigurationService
 	 * Usage:
 	 * Services::Configuration()->loadFile('Content', 'Table');
 	 *
-	 * @return  object
+	 * @return  mixed object or void
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
 	public static function loadFile($file, $type = 'Application')
 	{
+		echo $file . '<br />';
 		if ($type == 'Application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
 
 		} else if ($type == 'Table') {
+
+			/** If table data is already loaded in Registry, just use it */
+			$registryName = ucfirst(strtolower($file)) . 'Table';
+			$exists = Services::Registry()->exists($registryName);
+			if ($exists === true) {
+				echo 'Already have ' . $registryName . '<br />';
+				return $registryName;
+			}
+
 			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml')) {
 				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml';
 			} else {
@@ -270,14 +286,15 @@ Class ConfigurationService
 		}
 
 		if ($type == 'Table') {
-			$xml = ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
+			return ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
+		} else {
+			return $xml;
 		}
-
-		return $xml;
 	}
 
 	/**
 	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
+	 * Returns the name of the registry
 	 *
 	 * @static
 	 * @param $file
@@ -285,7 +302,7 @@ Class ConfigurationService
 	 * @param $path_and_file
 	 * @param $xml
 	 *
-	 * @return  void
+	 * @return  string
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
@@ -294,64 +311,64 @@ Class ConfigurationService
 		/** Table only: Process Include Code */
 		$xml_string = '';
 
-		$registryName = 'table' . ucfirst(strtolower($file));
+		$registryName = ucfirst(strtolower($file)) . 'Table';
 
-echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br />';
+		echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
 
 		$exists = Services::Registry()->exists($registryName);
 		if ($exists === true) {
-			return;
+			return $registryName;
 		}
 
-		Services::Registry()->set($registryName, 'Name', (string)$xml['name']);
-		Services::Registry()->set($registryName, 'Table', (string)$xml['table']);
+		Services::Registry()->set($registryName, 'model_name', (string)$xml['name']);
+		Services::Registry()->set($registryName, 'table_name', (string)$xml['table']);
 
 		$value = (string)$xml['primary_key'];
 		if ($value == '') {
 			$value = 'id';
 		}
 
-		Services::Registry()->set($registryName, 'PrimaryKey', $value);
+		Services::Registry()->set($registryName, 'primary_key', $value);
 
 		$value = (string)$xml['primary_prefix'];
 		if ($value == '') {
 			$value = 'a';
 		}
-		Services::Registry()->set($registryName, 'PrimaryPrefix', $value);
+		Services::Registry()->set($registryName, 'primary_prefix', $value);
 
-		$value = (int)$xml['get_special_fields'];
+		$value = (int)$xml['get_custom_fields'];
 		if ($value == 0 || $value == 1 || $value == 2) {
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'GetSpecialFields', $value);
+		Services::Registry()->set($registryName, 'get_custom_fields', $value);
 
 		$value = (int)$xml['get_item_children'];
 		if ($value == 0) {
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'GetItemChildren', $value, '0');
+		Services::Registry()->set($registryName, 'get_item_children', $value, '0');
 
 		$value = (int)$xml['use_special_joins'];
 		if ($value == 0) {
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'UseSpecialJoins', $value, '0');
+		Services::Registry()->set($registryName, 'use_special_joins', $value, '0');
 
 		$value = (int)$xml['check_view_level_access'];
 		if ($value == 0) {
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'CheckViewLevelAccess', $value, '1');
+		Services::Registry()->set($registryName, 'check_view_level_access', $value, '1');
 
 		$value = (string)$xml['data_source'];
 		if ($value == '') {
 			$value = 'JDatabase';
 		}
-		Services::Registry()->set($registryName, 'DataSource', $value, 'JDatabase');
+		Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
 
 		/** Body - No registry */
 
@@ -376,8 +393,8 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
 
 		$include = '';
-		if (isset($xml->model->table->item->fields->field['include'])) {
-			$include = (string)$xml->model->table->item->fields->field['include'];
+		if (isset($xml->model->table->item->fields->include['name'])) {
+			$include = (string)$xml->model->table->item->fields->include['name'];
 		}
 		if ($include == '') {
 		} else {
@@ -385,7 +402,9 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<field include="' . $include . '"/>';
+
+			$replace_this = '<include name="' . $include . '"/>';
+
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $type, $replace_this, $xml_string
 			);
@@ -404,6 +423,7 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 				$fieldAttributesArray = array();
 
 				while (list($key, $value) = each($fieldAttributes)) {
+
 					if (in_array($key, $known)) {
 					} else {
 						echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
@@ -498,6 +518,7 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 		if (isset($xml->table->item->triggers->trigger['include'])) {
 			$include = (string)$xml->table->item->triggers->trigger['include'];
 		}
+
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
@@ -521,39 +542,29 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 			Services::Registry()->set($registryName, 'Triggers', $triggersArray);
 		}
 
-
 		/** Item Customfields */
-
-		$temp = '';
-		if (isset($xml->table->item->customfields)) {
-			$temp = $xml->table->item->customfields;
-		}
-
 		$include = 'x';
-		$i = 0;
 		while ($include != '') {
 
-			$include = '';
-			if (isset($temp->customfield[$i]->field['include'])) {
-				$include = (string)$temp->customfield[$i]->field['include'];
-			}
-
-			if ($include == '') {
+			if (isset($xml->table->item->customfields->customfield->include['name'])) {
+				$include = (string)$xml->table->item->customfields->customfield->include['name'];
+			} else {
+				$include = '';
 				$done = true;
 				break;
-			} else {
-
-				if ($xml_string == '') {
-					$xml_string = file_get_contents($path_and_file);
-				}
-
-				$replace_this = '<field include="' . $include . '"/>';
-				$xml_string = ConfigurationService::replaceIncludeStatement(
-					$include, $file, $type, $replace_this, $xml_string
-				);
-				$xml = simplexml_load_string($xml_string);
 			}
-			$i++;
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
+
+			$xml = simplexml_load_string($xml_string);
 		}
 
 		$temp = '';
@@ -562,37 +573,29 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 			ConfigurationService::getCustomFields($temp, $file, $known, $registryName);
 		}
 
-		/** Component Custom Fields */
-		$temp = '';
-		if (isset($xml->table->component->customfields)) {
-			$temp = $xml->table->component->customfields;
-		}
-
+		/** Component Customfields */
 		$include = 'x';
-		$i = 0;
 		while ($include != '') {
 
-			$include = '';
-			if (isset($temp->customfield[$i]->field['include'])) {
-				$include = (string)$temp->customfield[$i]->field['include'];
-			}
-
-			if ($include == '') {
+			if (isset($xml->table->component->customfields->customfield->include['name'])) {
+				$include = (string)$xml->table->component->customfields->customfield->include['name'];
+			} else {
+				$include = '';
 				$done = true;
 				break;
-			} else {
-
-				if ($xml_string == '') {
-					$xml_string = file_get_contents($path_and_file);
-				}
-
-				$replace_this = '<field include="' . $include . '"/>';
-				$xml_string = ConfigurationService::replaceIncludeStatement(
-					$include, $file, $type, $replace_this, $xml_string
-				);
-				$xml = simplexml_load_string($xml_string);
 			}
-			$i++;
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
+
+			$xml = simplexml_load_string($xml_string);
 		}
 
 		$temp = '';
@@ -601,7 +604,7 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 			ConfigurationService::getCustomFields($temp, $file, $known, $registryName);
 		}
 
-		return;
+		return $registryName;
 	}
 
 	/**
@@ -706,136 +709,5 @@ echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br /
 
 			$i++;
 		}
-	}
-
-	/**
-	 * populateCustomFields
-	 *
-	 * Method used in load sequence to optionally expand special fields
-	 * for Item, either into the Registry or so that the fields can be used
-	 * normally
-	 *
-	 * $param $fields xml string beginning with the fields section (literals fields, extension or category)
-	 * $data  associative array containing custom fields
-	 * $retrieval_method - 1: populate registry or 2: return as columns in $data associative array
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public static function populateCustomFields($fields, $queryResults, $retrieval_method)
-	{
-		/**
-		echo '<pre>';
-		var_dump($fields);
-		echo '</pre>';
-		 */
-		if (count($fields->field) > 0) {
-		} else {
-			return $queryResults;
-		}
-
-		/** Process each field namespace  */
-		foreach ($fields->field as $ns) {
-
-			$field_name = (string)$ns['name'];
-
-			$namespace = (string)$ns['registry'];
-
-			if ((is_array($queryResults) && isset($queryResults[$field_name]))
-				|| (is_object($queryResults) && isset($queryResults->$field_name))
-			) {
-
-				if (is_array($queryResults)) {
-					$jsonData = $queryResults[$field_name];
-				} else {
-					$jsonData = $queryResults->$field_name;
-				}
-
-				$custom_field = json_decode($jsonData);
-
-				$fieldArray = array();
-
-				/** Place field names into named pair array */
-				$lookup = array();
-
-				if (count($custom_field) > 0) {
-					foreach ($custom_field as $key => $value) {
-						$lookup[$key] = $value;
-					}
-				}
-
-				if (count($ns->$fieldArray) > 0) {
-
-					foreach ($ns->$fieldArray as $f) {
-
-						$name = (string)$f['name'];
-						$name = strtolower($name);
-						$dataType = (string)$f['filter'];
-						$null = (string)$f['null'];
-						$default = (string)$f['default'];
-						$values = (string)$f['values'];
-
-						if ($default == '') {
-							$default = null;
-						}
-
-						/** Use value, if exists, or defined default */
-						if (isset($lookup[$name])) {
-							$setValue = $lookup[$name];
-						} else {
-							$setValue = $default;
-						}
-
-						/** Filter Input and Save the Registry */
-						//$set = $this->filterInput($name, $set, $dataType, $null, $default);
-
-						if ($retrieval_method == 2) {
-							if (is_array($queryResults)) {
-								$queryResults[$name] = $setValue;
-							} else {
-								$queryResults->$name = $setValue;
-							}
-						} else {
-							Services::Registry()->set($namespace, $name, $setValue);
-						}
-					}
-				}
-			}
-		}
-
-		return $queryResults;
-	}
-
-	/**
-	 * filterInput
-	 *
-	 * @param   string  $name         Name of input field
-	 * @param   string  $field_value  Value of input field
-	 * @param   string  $dataType     Datatype of input field
-	 * @param   int     $null         0 or 1 - is null allowed
-	 * @param   string  $default      Default value, optional
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	protected function filterInput(
-		$name, $value, $dataType, $null = null, $default = null)
-	{
-
-		try {
-			$value = Services::Filter()
-				->filter(
-				$value,
-				$dataType,
-				$null,
-				$default
-			);
-
-		} catch (\Exception $e) {
-			//todo: errors
-			echo $e->getMessage() . ' ' . $name;
-		}
-
-		return $value;
 	}
 }
