@@ -4,15 +4,15 @@
         table="#__extension_sites"
         primary_key="id"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="0" default=""/>
-        <filter name="name" filter="char" null="0" default="" unique="1"/>
-        <filter name="enabled" filter="boolean" null="0" default="0"/>
-        <filter name="location" filter="char" null="1" default=""/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-        <filter name="parameters" filter="" null="1" default=""/>
-        <filter name="metadata" filter="" null="1" default=""/>
-    </filters>
+    <fields>
+        <field name="id" type="int" null="0" default=""/>
+        <field name="name" type="char" null="0" default="" unique="1"/>
+        <field name="enabled" type="boolean" null="0" default="0"/>
+        <field name="location" type="char" null="1" default=""/>
+        <field name="custom_fields" type="" null="1" default=""/>
+        <field name="parameters" type="" null="1" default=""/>
+        <field name="metadata" type="" null="1" default=""/>
+    </fields>
     <triggers>
         <trigger name="Customfields"/>
         <trigger name="Metadata"/>

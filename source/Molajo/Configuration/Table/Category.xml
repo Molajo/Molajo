@@ -16,26 +16,26 @@
     <content>
         <fields>
             <field name="custom_fields" registry="ItemCustomfields">
-                <element include="ItemCustomfields"/>
+                <field include="ItemCustomfields"/>
             </field>
             <field name="metadata" registry="ContentMetadata">
-                <element include="ContentMetadata"/>
+                <field include="ContentMetadata"/>
             </field>
             <field name="parameters" registry="ContentParameters">
-                <element include="ContentParameters"/>
+                <field include="ContentParameters"/>
             </field>
         </fields>
     </content>
     <component>
         <fields>
             <field name="custom_fields" registry="ComponentCustomfields">
-                <element include="ItemCustomfields"/>
+                <field include="ItemCustomfields"/>
             </field>
             <field name="metadata" registry="ComponentMetadata">
-                <element include="ContentMetadata"/>
+                <field include="ContentMetadata"/>
             </field>
             <field name="parameters" registry="ComponentParameters">
-                <element include="ContentParameters"/>
+                <field include="ContentParameters"/>
             </field>
         </fields>
     </component>

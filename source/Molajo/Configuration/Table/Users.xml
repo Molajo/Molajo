@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Users"
-       table="#__users"
-       primary_key="id"
-       data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
-        <filter name="username" filter="char" null="0" default="" unique="1"/>
-        <filter name="first_name" filter="char" null="0" default=""/>
-        <filter name="last_name" filter="char" null="0" default=""/>
-        <filter name="content_text" filter="text" null="1" default=""/>
-        <filter name="email" filter="char" null="0" default=" "/>
-        <filter name="password" filter="char" null="0" default=" "/>
-        <filter name="block" filter="boolean" null="0" default="0"/>
-        <filter name="activation" filter="boolean" null="0" default="0"/>
-        <filter name="send_email" filter="boolean" null="0" default="0"/>
-        <filter name="register_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="last_visit_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-        <filter name="parameters" filter="" null="1" default=""/>
-        <filter name="metadata" filter="" null="1" default=""/>
-    </filters>
-    <fields>
-        <field name="custom_fields" registry="UserCustomfields">
-            <element name="gender" filter="char" null="1" default="" values="M,F"/>
-            <element name="about_me" filter="text" null="1" default=""/>
-            <element name="twitter" filter="url" null="1" default=""/>
-            <element name="editor" filter="int" null="0" default="1"/>
-            <element name="language" filter="char" null="0" default="en-GB" values="en-GB"/>
-            <element name="date_of_birth" filter="date" null="1" default=""/>
-        </field>
-        <field name="parameters" registry="UserParameters">
-            <element name="display_gravatar" filter="boolean" null="0" default="0"/>
-            <element name="display_birthdate" filter="boolean" null="0" default="0"/>
-            <element name="display_email" filter="boolean" null="0" default="0"/>
-            <element name="page_view_id" filter="integer" null="1" default=""/>
-            <element name="theme_id" filter="integer" null="1" default=""/>
-        </field>
-        <field name="metadata" registry="UserMetadata">
-            <element name="metadata_title" filter="char" null="0" default=""/>
-            <element name="metadata_description" filter="text" null="0" default=""/>
-            <element name="metadata_keywords" filter="char" null="1" default=""/>
-            <element name="metadata_robots" filter="char" null="0" default="follow,index"
-                     values="follow,nofollow,index,noindex"/>
-            <element name="metadata_author" filter="char" null="1" default=""/>
-            <element name="metadata_content_rights" filter="char" null="1" default=""/>
-        </field>
-    </fields>
-    <foreignkeys>
-        <foreignkey name="catalog_type_id"
-                    source_id="id"
-                    source_model="CatalogTypes"
-                    required="1"
-                />
-    </foreignkeys>
-    <children>
-        <child name="UserApplications" join="id:user_id"/>
-        <child name="UserGroups" join="id:user_id"/>
-        <child name="UserViewGroups" join="id:user_id"/>
-        <child name="UserActivity" join="id:user_id"/>
-    </children>
-    <triggers>
-        <trigger name="Username"/>
-        <trigger name="Email"/>
-        <trigger name="Password"/>
-        <trigger name="ContentText"/>
-        <trigger name="DateFields"/>
-        <trigger name="Customfields"/>
-        <trigger name="Metadata"/>
-        <trigger name="Parameters"/>
-    </triggers>
-</model>
+<model
+        name="Users"
+        catalog_type_id="500"
+        table="#__users"
+        primary_key="id"
+        primary_prefix="a"
+        data_source="JDatabase">
+    <table>
+        <item>
+            <fields>
+                <field name="id" type="int" null="1" default="0" identity="1"/>
+                <field name="catalog_type_id" type="int" null="0" default="500" values="500"/>
+                <field name="username" type="char" null="0" default="" unique="1"/>
+                <field name="first_name" type="char" null="0" default=""/>
+                <field name="last_name" type="char" null="0" default=""/>
+                <field name="content_text" type="text" null="1" default=""/>
+                <field name="email" type="char" null="0" default=" "/>
+                <field name="password" type="char" null="0" default=" "/>
+                <field name="block" type="boolean" null="0" default="0"/>
+                <field name="activation" type="boolean" null="0" default="0"/>
+                <field name="send_email" type="boolean" null="0" default="0"/>
+                <field name="register_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="last_visit_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="custom_fields" type="" null="1" default=""/>
+                <field name="parameters" type="" null="1" default=""/>
+                <field name="metadata" type="" null="1" default=""/>
+            </fields>
+            <foreignkeys>
+                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            </foreignkeys>
+            <children>
+                <child name="UserApplications" join="id:user_id"/>
+                <child name="UserGroups" join="id:user_id"/>
+                <child name="UserViewGroups" join="id:user_id"/>
+                <child name="UserActivity" join="id:user_id"/>
+            </children>
+            <triggers>
+                <trigger name="Username"/>
+                <trigger name="Email"/>
+                <trigger name="Password"/>
+                <trigger name="ContentText"/>
+                <trigger name="DateFields"/>
+                <trigger name="Customfields"/>
+                <trigger name="Metadata"/>
+                <trigger name="Parameters"/>
+            </triggers>
+            <customfields>
+                <customfield name="parameters" registry="ItemCustomfields">
+                    <field name="gender" type="char" null="1" default="" values="M,F"/>
+                    <field name="about_me" type="text" null="1" default=""/>
+                    <field name="twitter" type="url" null="1" default=""/>
+                    <field name="editor" type="int" null="0" default="1"/>
+                    <field name="language" type="char" null="0" default="en-GB" values="en-GB"/>
+                    <field name="date_of_birth" type="date" null="1" default=""/>
+                </customfield>
+                <customfield name="metadata" registry="ItemMetadata">
+                    <field include="SystemMetadata"/>
+                </customfield>
+                <customfield name="parameters" registry="ItemParameters">
+                    <field name="display_gravatar" type="boolean" null="0" default="0"/>
+                    <field name="display_birthdate" type="boolean" null="0" default="0"/>
+                    <field name="display_email" type="boolean" null="0" default="0"/>
 
+                    <field name="theme_id" type="integer" null="1" default="" values=""/>
+
+                    <field name="page_view_id" type="integer" null="1" default="" values=""/>
+                    <field name="page_view_css_id" type="char" null="1" default="" values=""/>
+                    <field name="page_view_css_class" type="char" null="1" default="" values=""/>
+                </customfield>
+            </customfields>
+        </item>
+    </table>
+</model>

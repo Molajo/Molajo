@@ -9,15 +9,15 @@
         use_special_joins="0"
         check_view_level_access="1"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="catalog_id" filter="int" null="0" default="" values=""/>
-        <filter name="user_id" filter="int" null="0" default="0" values=""/>
-        <filter name="rating" filter="int" null="1" default="" values=""/>
-        <filter name="activity_datetime" filter="datetime" null="0" default=""/>
-        <filter name="ip_address" filter="char" null="0" default=""/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-    </filters>
+    <fields>
+        <field name="id" type="int" null="1" default="0"/>
+        <field name="catalog_id" type="int" null="0" default="" values=""/>
+        <field name="user_id" type="int" null="0" default="0" values=""/>
+        <field name="rating" type="int" null="1" default="" values=""/>
+        <field name="activity_datetime" type="datetime" null="0" default=""/>
+        <field name="ip_address" type="char" null="0" default=""/>
+        <field name="custom_fields" type="" null="1" default=""/>
+    </fields>
     <triggers>
         <trigger name="IPAddress"/>
         <trigger name="Language"/>

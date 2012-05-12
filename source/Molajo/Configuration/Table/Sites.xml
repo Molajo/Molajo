@@ -1,49 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Sites"
+        catalog_type_id="10"
         table="#__sites"
         primary_key="id"
+        primary_prefix="a"
+        get_special_fields="1"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="0"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="catalog_type_id" filter="int" null="0" default="500" values="500"/>
-        <filter name="name" filter="char" null="0" default="" unique="1"/>
-        <filter name="path" filter="char" null="0" default=""/>
-        <filter name="base_url" filter="url" null="0" default=""/>
-        <filter name="description" filter="text" null="1" default=""/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-        <filter name="parameters" filter="" null="1" default=""/>
-        <filter name="metadata" filter="" null="1" default=""/>
-    </filters>
-    <fields>
-        <field name="parameters" registry="SiteParameters">
-            <element name="enable_draft_save" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="enable_version_history" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="maximum_version_count" filter="integer" null="0" default="5" minimum="0" maximum="20"/>
-            <element name="enable_hit_counts" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="enable_comments" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="enable_ratings" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="enable_notifications" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="enable_tweets" filter="binary" null="0" default="1" values="0,1"/>
-            <element name="enable_ping" filter="binary" null="0" default="1" values="0,1"/>
-        </field>
-        <field name="metadata" registry="SiteMetadata">
-            <element name="metadata_title" filter="char" null="0" default=""/>
-            <element name="metadata_description" filter="text" null="0" default=""/>
-            <element name="metadata_keywords" filter="char" null="1" default=""/>
-            <element name="metadata_robots" filter="char" null="0" default="follow,index"
-                     values="follow,nofollow,index,noindex"/>
-            <element name="metadata_author" filter="char" null="1" default=""/>
-            <element name="metadata_content_rights" filter="char" null="1" default=""/>
-        </field>
-    </fields>
-    <foreignkeys>
-        <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-    </foreignkeys>
-    <triggers>
-        <trigger name="Metadata"/>
-        <trigger name="Parameters"/>
-        <trigger name="Sites"/>
-    </triggers>
+    <table>
+        <item>
+            <fields>
+                <field name="id" type="int" null="1" default="0" identity="1"/>
+                <field name="catalog_type_id" type="int" null="0" default="500" values="500"/>
+                <field name="name" type="char" null="0" default="" unique="1"/>
+                <field name="path" type="char" null="0" default=""/>
+                <field name="base_url" type="url" null="0" default=""/>
+                <field name="description" type="text" null="1" default=""/>
+                <field name="custom_fields" type="" null="1" default=""/>
+                <field name="parameters" type="" null="1" default=""/>
+                <field name="metadata" type="" null="1" default=""/>
+            </fields>
+            <foreignkeys>
+                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            </foreignkeys>
+            <triggers>
+                <trigger name="Metadata"/>
+                <trigger name="Parameters"/>
+                <trigger name="Sites"/>
+            </triggers>
+            <customfields>
+                <customfield name="parameters" registry="SiteParameters">
+                    <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0"
+                             maximum="20"/>
+                    <field name="enable_hit_counts" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="enable_comments" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="enable_ratings" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="enable_notifications" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="enable_tweets" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="enable_ping" type="binary" null="0" default="1" values="0,1"/>
+                </customfield>
+                <customfield name="metadata" registry="SiteMetadata">
+                    <field name="metadata_title" type="char" null="0" default=""/>
+                    <field name="metadata_description" type="text" null="0" default=""/>
+                    <field name="metadata_keywords" type="char" null="1" default=""/>
+                    <field name="metadata_robots" type="char" null="0" default="follow,index"
+                             values="follow,nofollow,index,noindex"/>
+                    <field name="metadata_author" type="char" null="1" default=""/>
+                    <field name="metadata_content_rights" type="char" null="1" default=""/>
+                </customfield>
+            </customfields>
+        </item>
+    </table>
 </model>
-

@@ -84,7 +84,7 @@ Class TemplateViewHelper
 
 		/** Load special fields for specific extension */
 //		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('TemplateView', 'path'));
-//		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
+//		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
 
 		return;
 	}

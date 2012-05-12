@@ -9,16 +9,47 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_ARTICLES_DESCRIPTION</description>
-    <config>
-        <model
-                name="Articles"
-                catalog_type_id="10000"
-                table="#__content"
-                primary_key="id"
-                primary_prefix="a"
-                data_source="JDatabase">
-        </model>
-        <body include="Content"/>
-    </config>
+    <model
+            name="Articles"
+            catalog_type_id="10000"
+            table="#__content"
+            primary_key="id"
+            primary_prefix="a"
+            data_source="JDatabase">
+        <table>
+            <item>
+                <fields>
+                    <field include="ContentFields"/>
+                </fields>
+                <foreignkeys>
+                    <foreignkey include="ContentForeignkeys"/>
+                </foreignkeys>
+                <children>
+                    <child include="ContentChildren"/>
+                </children>
+                <triggers>
+                    <trigger include="ContentTriggers"/>
+                </triggers>
+                <customfields>
+                    <customfield name="custom_fields" registry="ItemCustomfields">
+                        <element include="ContentCustomfields"/>
+                        <element name="example_of_content_only_field" filter="int" null="1" default="1"/>
+                    </customfield>
+                    <customfield name="metadata" registry="ItemMetadata">
+                        <element include="SystemMetadata"/>
+                    </customfield>
+                    <customfield name="parameters" registry="ItemParameters">
+                        <element include="SystemItemParameters"/>
+                    </customfield>
+                </customfields>
+            </item>
+            <component>
+                <customfields>
+                    <customfield name="parameters" registry="ComponentParameters">
+                        <element include="SystemComponentParameters"/>
+                    </customfield>
+                </customfields>
+            </component>
+        </table>
+    </model>
 </extension>
-

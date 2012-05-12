@@ -4,10 +4,10 @@
         table="#__user_view_groups"
         primary_key="id"
         data_source="JDatabase">
-    <filters>
-        <filter name="user_id" filter="int" null="0" default=""/>
-        <filter name="view_group_id" filter="int" null="0" default=""/>
-    </filters>
+    <fields>
+        <field name="user_id" type="int" null="0" default=""/>
+        <field name="view_group_id" type="int" null="0" default=""/>
+    </fields>
     <foreignkeys>
         <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
         <foreignkey name="view_group_id" source_id="id" source_model="GroupViewGroup" required="1"/>

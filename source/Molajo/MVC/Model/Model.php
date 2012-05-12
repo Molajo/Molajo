@@ -37,14 +37,7 @@ class Model
 	 */
 	public $table_name;
 
-	/**
-	 * Table XML
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $table_xml;
-
+	public $table_registry_name;
 	/**
 	 * Load: special joins flag
 	 *
@@ -444,7 +437,7 @@ class Model
 	}
 
 	/**
-	 * addSpecialFields
+	 * populateCustomFields
 	 *
 	 * Method used in load sequence to optionally expand special fields
 	 * for Item, either into the Registry or so that the fields can be used
@@ -453,7 +446,7 @@ class Model
 	 * @return array
 	 * @since  1.0
 	 */
-	protected function addSpecialFields()
+	protected function populateCustomFields()
 	{
 		return $this->query_results = array();
 	}
