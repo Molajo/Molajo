@@ -96,9 +96,9 @@ Class EntryController extends DisplayController
 		if ($table === '') {
 		} else {
 			$this->setModelTable($table);
-			$this->dbDriver = $this->default_dbDriver;
+			$this->dataSource = $this->default_dataSource;
 		}
-		$dbo = $this->dbDriver;
+		$dbo = $this->dataSource;
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\MVC\\Model\\EntryModel';
@@ -113,13 +113,18 @@ Class EntryController extends DisplayController
 		/** 3. Set Default Model Properties */
 		$this->model->set('model_name', $this->model_name);
 		$this->model->set('table_name', $this->table_name);
-		$this->model->set('table_xml', $this->table_xml);
 		$this->model->set('primary_key', $this->primary_key);
-		$this->model->set('primary_prefix', 'a');
-		$this->model->set('get_special_fields', 1);
-		$this->model->set('get_item_children', true);
-		$this->model->set('use_special_joins', true);
-		$this->model->set('check_view_level_access', true);
+		$this->model->set('table_registry_name', $this->table_registry_name);
+		$this->model->set('primary_prefix',
+			Services::Registry()->get($this->table_registry_name, 'PrimaryPrefix'));
+		$this->model->set('get_special_fields',
+			Services::Registry()->get($this->table_registry_name, 'GetSpecialFields'));
+		$this->model->set('get_item_children',
+			Services::Registry()->get($this->table_registry_name, 'GetItemChildren'));
+		$this->model->set('use_special_joins',
+			Services::Registry()->get($this->table_registry_name, 'UseSpecialJoins'));
+		$this->model->set('check_view_level_access',
+			Services::Registry()->get($this->table_registry_name, 'CheckViewLevelAccess'));
 
 		/** 4. Set DB Properties */
 		$this->model->set('db', Services::$dbo()->get('db'));
@@ -146,26 +151,26 @@ Class EntryController extends DisplayController
 	 */
 	protected function setModelTable($table)
 	{
-		$this->table_xml = ConfigurationService::loadFile($table, 'Table');
+		$this->table_registry_name = 'table' . ucfirst(strtolower($table));
 
-		$this->model_name = (string)$this->table_xml['name'];
+		$this->model_name = Services::Registry()->get($this->table_registry_name, 'Name');
 		if ($this->model_name == '') {
 			throw new \RuntimeException('No model name for table: ' . $table);
 		}
 
-		$this->table_name = (string)$this->table_xml['table'];
+		$this->table_name = Services::Registry()->get($this->table_registry_name, 'Table');
 		if ($this->table_name == '') {
 			$this->table_name = '#__content';
 		}
 
-		$this->primary_key = (string)$this->table_xml['primary_key'];
+		$this->primary_key = Services::Registry()->get($this->table_registry_name, 'PrimaryKey');
 		if ($this->primary_key === '') {
 			$this->primary_key = 'id';
 		}
 
-		$this->dbDriver = (string)$this->table_xml['data_source'];
-		if ($this->dbDriver === '') {
-			$this->dbDriver = $this->default_dbDriver;
+		$this->dataSource = Services::Registry()->get($this->table_registry_name, 'DataSource');
+		if ($this->dataSource === '') {
+			$this->dataSource = $this->default_dataSource;
 		}
 
 		return $this;

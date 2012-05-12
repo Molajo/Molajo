@@ -73,7 +73,7 @@ Class ExtensionHelper
 
 		/** Load special fields for specific extension */
 		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
-		$row = Services::Configuration()->addSpecialFields($xml->extension, $row, 1);
+		$row = Services::Configuration()->populateCustomFields($xml->extension, $row, 1);
 
 		return;
 	}
@@ -119,7 +119,7 @@ Class ExtensionHelper
 			return;
 		}
 
-		$row = Services::Configuration()->addSpecialFields($xml->config, $row, 1);
+		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
 
 		$parameters = Services::Registry()->get('ExtensionParameters');
 		foreach ($parameters as $key => $value) {

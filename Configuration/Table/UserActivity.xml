@@ -4,13 +4,13 @@
         table="#__user_activity"
         primary_key="id"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="" null="0" default="" identity="1"/>
-        <filter name="user_id" filter="int" null="0" default=""/>
-        <filter name="action_id" filter="int" null="0" default=""/>
-        <filter name="catalog_id" filter="int" null="0" default=""/>
-        <filter name="activity_datetime" filter="datetime" null="0" default=""/>
-    </filters>
+    <fields>
+        <field name="id" type="" null="0" default="" identity="1"/>
+        <field name="user_id" type="int" null="0" default=""/>
+        <field name="action_id" type="int" null="0" default=""/>
+        <field name="catalog_id" type="int" null="0" default=""/>
+        <field name="activity_datetime" type="datetime" null="0" default=""/>
+    </fields>
     <joins>
         <join table="#__users" alias="b" select="username,first_name,last_name" jointo="id" joinwith="user_id"/>
         <join table="#__actions" alias="c" select="title" jointo="id" joinwith="action_id"/>

@@ -68,12 +68,12 @@ class Controller
 	protected $table_name;
 
 	/**
-	 * Table XML
+	 * Registry containing Table Configuration from XML
 	 *
-	 * @var    object
+	 * @var    string
 	 * @since  1.0
 	 */
-	protected $table_xml;
+	protected $table_registry_name;
 
 	/**
 	 * Primary Key
@@ -89,7 +89,7 @@ class Controller
 	 * @var    integer
 	 * @since  1.0
 	 */
-	protected $dbDriver;
+	protected $dataSource;
 
 	/**
 	 * Valid DB Options
@@ -107,7 +107,7 @@ class Controller
 	 *
 	 * @var string
 	 */
-	protected $default_dbDriver = 'JDatabase';
+	protected $default_dataSource = 'JDatabase';
 
 	/**
 	 * Valid Query Object values

@@ -1,26 +1,34 @@
 <table>
     <item>
-        <filters include="ContentFilters"/>
-        <foreignkeys include="ContentForeignkeys"/>
-        <children include="ContentChildren"/>
-        <triggers include="ContentTriggers"/>
+        <fields>
+            <field include="ContentFields"/>
+        </fields>
+        <foreignkeys>
+            <foreignkey include="ContentForeignkeys"/>
+        </foreignkeys>
+        <children>
+            <child include="ContentChildren"/>
+        </children>
+        <triggers>
+            <trigger include="ContentTriggers"/>
+        </triggers>
         <customfields>
             <customfield name="custom_fields" registry="ItemCustomfields">
-                <element include="ContentCustomfields"/>
-                <element name="only_in_custom" file="" filter="image" shape="" size=""/>
+                <field include="ContentCustomfields"/>
+                <field name="example_of_content_only_field" type="int" null="1" default="1"/>
             </customfield>
             <customfield name="metadata" registry="ItemMetadata">
-                <element include="SystemMetadata"/>
+                <field include="SystemMetadata"/>
             </customfield>
             <customfield name="parameters" registry="ItemParameters">
-                <element include="SystemItemParameters"/>
+                <field include="SystemItemParameters"/>
             </customfield>
         </customfields>
     </item>
     <component>
         <customfields>
             <customfield name="parameters" registry="ComponentParameters">
-                <element include="SystemComponentParameters"/>
+                <field include="SystemComponentParameters"/>
             </customfield>
         </customfields>
     </component>

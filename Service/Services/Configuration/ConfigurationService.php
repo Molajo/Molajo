@@ -105,9 +105,6 @@ Class ConfigurationService
 		$m = Application::Controller()->connect('Sites');
 
 		$m->model->set('id', (int)SITE_ID);
-		$m->model->set('get_item_children', false);
-		$m->model->set('use_special_joins', false);
-		$m->model->set('check_view_level_access', false);
 
 		$items = $m->getData('load');
 
@@ -204,10 +201,6 @@ Class ConfigurationService
 				$m = Application::Controller()->connect('Applications');
 
 				$m->model->set('id_name', APPLICATION);
-				$m->model->set('name_field', 'name');
-				$m->model->set('get_item_children', false);
-				$m->model->set('use_special_joins', false);
-				$m->model->set('check_view_level_access', false);
 
 				$items = $m->getData('load');
 
@@ -238,12 +231,10 @@ Class ConfigurationService
 	}
 
 	/**
-	 * loadFile is the point in the application where all XML configuration files are read
+	 * loadFile processes all XML configuration files for the application
 	 *
 	 * Usage:
 	 * Services::Configuration()->loadFile('Content', 'Table');
-	 *
-	 * todo: add php spl priority for loading and a little more thinking on API options (ini? json?)
 	 *
 	 * @return  object
 	 * @since   1.0
@@ -255,7 +246,6 @@ Class ConfigurationService
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
 
 		} else if ($type == 'Table') {
-
 			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml')) {
 				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml';
 			} else {
@@ -269,7 +259,6 @@ Class ConfigurationService
 		if (file_exists($path_and_file)) {
 		} else {
 			echo 'File not found: ' . $path_and_file;
-			die;
 			throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
 
@@ -281,18 +270,94 @@ Class ConfigurationService
 		}
 
 		if ($type == 'Table') {
-		} else {
-			return $xml;
+			$xml = ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
 		}
 
+		return $xml;
+	}
+
+	/**
+	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
+	 *
+	 * @static
+	 * @param $file
+	 * @param string $type
+	 * @param $path_and_file
+	 * @param $xml
+	 *
+	 * @return  void
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function processTableFile($file, $type = 'Table', $path_and_file, $xml)
+	{
 		/** Table only: Process Include Code */
 		$xml_string = '';
 
-		/** <body include="XYZ">  */
+		$registryName = 'table' . ucfirst(strtolower($file));
+
+echo 'Registry: ' . $registryName . ' $path_and_file ' . $path_and_file . '<br />';
+
+		$exists = Services::Registry()->exists($registryName);
+		if ($exists === true) {
+			return;
+		}
+
+		Services::Registry()->set($registryName, 'Name', (string)$xml['name']);
+		Services::Registry()->set($registryName, 'Table', (string)$xml['table']);
+
+		$value = (string)$xml['primary_key'];
+		if ($value == '') {
+			$value = 'id';
+		}
+
+		Services::Registry()->set($registryName, 'PrimaryKey', $value);
+
+		$value = (string)$xml['primary_prefix'];
+		if ($value == '') {
+			$value = 'a';
+		}
+		Services::Registry()->set($registryName, 'PrimaryPrefix', $value);
+
+		$value = (int)$xml['get_special_fields'];
+		if ($value == 0 || $value == 1 || $value == 2) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'GetSpecialFields', $value);
+
+		$value = (int)$xml['get_item_children'];
+		if ($value == 0) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'GetItemChildren', $value, '0');
+
+		$value = (int)$xml['use_special_joins'];
+		if ($value == 0) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'UseSpecialJoins', $value, '0');
+
+		$value = (int)$xml['check_view_level_access'];
+		if ($value == 0) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'CheckViewLevelAccess', $value, '1');
+
+		$value = (string)$xml['data_source'];
+		if ($value == '') {
+			$value = 'JDatabase';
+		}
+		Services::Registry()->set($registryName, 'DataSource', $value, 'JDatabase');
+
+		/** Body - No registry */
+
 		$include = '';
-		$include = (string)$xml->config->body['include'];
-		if (isset($xml->config->body['include'])) {
-			$include = (string)$xml->config->body['include'];
+		if (isset($xml->model->body['include'])) {
+			$include = (string)$xml->model->body['include'];
 		}
 		if ($include == '') {
 		} else {
@@ -300,73 +365,168 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		/** <filters include="XYZ">  */
+		/** Fields  */
+		$known = array('name', 'type', 'null', 'default', 'length', 'customtype',
+			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
+
 		$include = '';
-		if (isset($xml->config->table->item->filters['include'])) {
-			$include = (string)$xml->config->table->item->filters['include'];
+		if (isset($xml->model->table->item->fields->field['include'])) {
+			$include = (string)$xml->model->table->item->fields->field['include'];
+		}
+		if ($include == '') {
+		} else {
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<field include="' . $include . '"/>';
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		if (isset($xml->table->item->fields->field)) {
+
+			$fields = $xml->table->item->fields->field;
+			$fieldArray = array();
+
+			foreach ($fields as $field) {
+
+				$attributes = get_object_vars($field);
+				$fieldAttributes = ($attributes["@attributes"]);
+				$fieldAttributesArray = array();
+
+				while (list($key, $value) = each($fieldAttributes)) {
+					if (in_array($key, $known)) {
+					} else {
+						echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
+					}
+					$fieldAttributesArray[$key] = $value;
+				}
+				$fieldArray[] = $fieldAttributesArray;
+			}
+			Services::Registry()->set($registryName, 'Fields', $fieldArray);
+		}
+
+		/** Foreign Keys */
+
+		$include = '';
+		if (isset($xml->table->item->foreignkeys->foreignkey['include'])) {
+			$include = (string)$xml->table->item->foreignkeys->foreignkey['include'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<filters include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$replace_this = '<foreignkey include="' . $include . '"/>';
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
+			$xml = simplexml_load_string($xml_string);
 		}
 
-		/** <foreignkeys include="XYZ"/> */
+		if (isset($xml->table->item->foreignkeys->foreignkey)) {
+
+			$fks = $xml->table->item->foreignkeys->foreignkey;
+			$fkArray = array();
+			foreach ($fks as $fk) {
+
+				$attributes = get_object_vars($fk);
+				$fkAttributes = ($attributes["@attributes"]);
+				$fkAttributesArray = array();
+
+				$fkAttributesArray['name'] = $fkAttributes['name'];
+				$fkAttributesArray['source_id'] = $fkAttributes['source_id'];
+				$fkAttributesArray['source_model'] = $fkAttributes['source_model'];
+				$fkAttributesArray['required'] = $fkAttributes['required'];
+
+				$fkArray[] = $fkAttributesArray;
+			}
+			Services::Registry()->set($registryName, 'ForeignKeys', $fkArray);
+		}
+
+		/** Children */
+
 		$include = '';
-		if (isset($xml->config->table->item->foreignkeys['include'])) {
-			$include = (string)$xml->config->table->item->foreignkeys['include'];
+		if (isset($xml->table->item->children->child['include'])) {
+			$include = (string)$xml->table->item->children->child['include'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<foreignkeys include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$replace_this = '<child include="' . $include . '"/>';
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		/** <children include="XYZ"/> */
+		if (isset($xml->table->item->children->child)) {
+
+			$cs = $xml->table->item->children->child;
+			$csArray = array();
+			foreach ($cs as $c) {
+
+				$chVars = get_object_vars($c);
+				$chAttributes = ($chVars["@attributes"]);
+				$chkAttributesArray = array();
+
+				$chkAttributesArray['name'] = $chAttributes['name'];
+				$temp = $chAttributes['join'];
+				$keys = explode(':', $temp);
+				$chkAttributesArray['join_to_key'] = $keys[0];
+				$chkAttributesArray['this_table_key'] = $keys[1];
+
+				$csArray[] = $chkAttributesArray;
+			}
+			Services::Registry()->set($registryName, 'Children', $csArray);
+		}
+
+		/** Triggers */
+
 		$include = '';
-		if (isset($xml->config->table->item->children['include'])) {
-			$include = (string)$xml->config->table->item->children['include'];
+		if (isset($xml->table->item->triggers->trigger['include'])) {
+			$include = (string)$xml->table->item->triggers->trigger['include'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<children include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+			$replace_this = '<trigger include="' . $include . '"/>';
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $type, $replace_this, $xml_string
+			);
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		/** <triggers include="XYZ"/> */
-		$include = '';
-		if (isset($xml->config->table->item->triggers['include'])) {
-			$include = (string)$xml->config->table->item->triggers['include'];
-		}
-		if ($include == '') {
-		} else {
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
+		if (isset($xml->table->item->triggers->trigger)) {
+			$triggers = $xml->table->item->triggers->trigger;
+			$triggersArray = array();
+			foreach ($triggers as $trigger) {
+				$t = get_object_vars($trigger);
+				$tAttr = ($t["@attributes"]);
+				$triggersArray[] = $tAttr['name'];
 			}
-			$replace_this = '<triggers include="' . $include . '"/>';
-			$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
-			$xml = simplexml_load_string($xml_string);
+			Services::Registry()->set($registryName, 'Triggers', $triggersArray);
 		}
 
-		/** Item Customfields <element include="XYZ"/> */
+
+		/** Item Customfields */
+
 		$temp = '';
-		if (isset($xml->config->table->item->customfields)) {
-			$temp = $xml->config->table->item->customfields;
+		if (isset($xml->table->item->customfields)) {
+			$temp = $xml->table->item->customfields;
 		}
 
 		$include = 'x';
@@ -374,8 +534,8 @@ Class ConfigurationService
 		while ($include != '') {
 
 			$include = '';
-			if (isset($temp->customfield[$i]->element['include'])) {
-				$include = (string)$temp->customfield[$i]->element['include'];
+			if (isset($temp->customfield[$i]->field['include'])) {
+				$include = (string)$temp->customfield[$i]->field['include'];
 			}
 
 			if ($include == '') {
@@ -387,17 +547,25 @@ Class ConfigurationService
 					$xml_string = file_get_contents($path_and_file);
 				}
 
-				$replace_this = '<element include="' . $include . '"/>';
-				$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+				$replace_this = '<field include="' . $include . '"/>';
+				$xml_string = ConfigurationService::replaceIncludeStatement(
+					$include, $file, $type, $replace_this, $xml_string
+				);
 				$xml = simplexml_load_string($xml_string);
 			}
 			$i++;
 		}
 
-		/** Component Customfields <element include="XYZ"/> */
 		$temp = '';
-		if (isset($xml->config->table->component->customfields)) {
-			$temp = $xml->config->table->component->customfields;
+		if (isset($xml->table->item->customfields)) {
+			$temp = $xml->table->item->customfields;
+			ConfigurationService::getCustomFields($temp, $file, $known, $registryName);
+		}
+
+		/** Component Custom Fields */
+		$temp = '';
+		if (isset($xml->table->component->customfields)) {
+			$temp = $xml->table->component->customfields;
 		}
 
 		$include = 'x';
@@ -405,8 +573,8 @@ Class ConfigurationService
 		while ($include != '') {
 
 			$include = '';
-			if (isset($temp->customfield[$i]->element['include'])) {
-				$include = (string)$temp->customfield[$i]->element['include'];
+			if (isset($temp->customfield[$i]->field['include'])) {
+				$include = (string)$temp->customfield[$i]->field['include'];
 			}
 
 			if ($include == '') {
@@ -418,29 +586,48 @@ Class ConfigurationService
 					$xml_string = file_get_contents($path_and_file);
 				}
 
-				$replace_this = '<element include="' . $include . '"/>';
-				$xml_string = Services::Configuration()->processIncludeFile($include, $type, $replace_this, $xml_string);
+				$replace_this = '<field include="' . $include . '"/>';
+				$xml_string = ConfigurationService::replaceIncludeStatement(
+					$include, $file, $type, $replace_this, $xml_string
+				);
 				$xml = simplexml_load_string($xml_string);
 			}
 			$i++;
 		}
 
-		return $xml;
+		$temp = '';
+		if (isset($xml->table->component->customfields)) {
+			$temp = $xml->table->component->customfields;
+			ConfigurationService::getCustomFields($temp, $file, $known, $registryName);
+		}
+
+		return;
 	}
 
 	/**
-	 * includeFile retrieves the specified include file and substitutes it in for the include statement
+	 * replaceIncludeStatement retrieves the specified include file and substitutes the contents
+	 * for the include statement
 	 *
-	 * Usage:
-	 * Services::Configuration()->includeFile($includename);
-	 *
+	 * @static
 	 * @return  object
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public static function processIncludeFile($include, $type, $replace_this, $xml_string)
+	public static function replaceIncludeStatement($include, $file, $type, $replace_this, $xml_string)
 	{
-		$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
+		if ($type == 'Application') {
+			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
+
+		} else if ($type == 'Table') {
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/include/' . $include . '.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/include/' . $include . '.xml';
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
+			}
+
+		} else {
+			$path_and_file = $type . '/include/' . $include . '.xml';
+		}
 
 		if (file_exists($path_and_file)) {
 		} else {
@@ -452,12 +639,77 @@ Class ConfigurationService
 			return str_replace($replace_this, $with_this, $xml_string);
 
 		} catch (\Exception $e) {
-			throw new \RuntimeException ('Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage());
+			throw new \RuntimeException (
+				'Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage()
+			);
+		}
+	}
+
+
+	/**
+	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
+	 *
+	 * @static
+	 * @param $xml
+	 * @param $file
+	 * @param $known - list of valid field attributes
+	 * @param $registryName
+	 *
+	 * @return  object
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function getCustomFields($xml, $file, $known, $registryName)
+	{
+		$i = 0;
+		$done = false;
+		while ($done == false) {
+
+			$work = $xml->customfield[$i];
+			$customfieldArray = array();
+
+			if (isset($work['name'])) {
+				$customfieldArray['name'] = (string)$work['name'];
+				$customfieldArray['registry'] = ucfirst(strtolower($file)) . (string)$work['registry'];
+			} else {
+				$done = true;
+				break;
+			}
+
+			if (isset($work->field['name'])) {
+				$fields = $work->field;
+			} else {
+				$done = true;
+				break;
+			}
+
+			$fieldArray = array();
+			foreach ($fields as $field) {
+
+				$attributes = get_object_vars($field);
+				$fieldAttributes = ($attributes["@attributes"]);
+				$fieldAttributesArray = array();
+				while (list($key, $value) = each($fieldAttributes)) {
+					if (in_array($key, $known)) {
+					} else {
+						echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
+					}
+					$fieldAttributesArray[$key] = $value;
+				}
+
+				$fieldArray[] = $fieldAttributesArray;
+			}
+
+			$customfieldArray['fields'] = $fieldArray;
+
+			Services::Registry()->set($registryName, $customfieldArray['registry'], $customfieldArray);
+
+			$i++;
 		}
 	}
 
 	/**
-	 * addSpecialFields
+	 * populateCustomFields
 	 *
 	 * Method used in load sequence to optionally expand special fields
 	 * for Item, either into the Registry or so that the fields can be used
@@ -470,7 +722,7 @@ Class ConfigurationService
 	 * @return  array
 	 * @since   1.0
 	 */
-	public static function addSpecialFields($fields, $queryResults, $retrieval_method)
+	public static function populateCustomFields($fields, $queryResults, $retrieval_method)
 	{
 		/**
 		echo '<pre>';
@@ -501,7 +753,7 @@ Class ConfigurationService
 
 				$custom_field = json_decode($jsonData);
 
-				$elementArray = array();
+				$fieldArray = array();
 
 				/** Place field names into named pair array */
 				$lookup = array();
@@ -512,16 +764,16 @@ Class ConfigurationService
 					}
 				}
 
-				if (count($ns->element) > 0) {
+				if (count($ns->$fieldArray) > 0) {
 
-					foreach ($ns->element as $element) {
+					foreach ($ns->$fieldArray as $f) {
 
-						$name = (string)$element['name'];
+						$name = (string)$f['name'];
 						$name = strtolower($name);
-						$dataType = (string)$element['filter'];
-						$null = (string)$element['null'];
-						$default = (string)$element['default'];
-						$values = (string)$element['values'];
+						$dataType = (string)$f['filter'];
+						$null = (string)$f['null'];
+						$default = (string)$f['default'];
+						$values = (string)$f['values'];
 
 						if ($default == '') {
 							$default = null;

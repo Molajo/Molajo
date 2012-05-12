@@ -11,7 +11,7 @@
     <description>MODULE_ADMIN_FILTERS_DESCRIPTION</description>
     <parameters>
         <fieldset name="extension">
-            <filters>
+            <fields>
                 <filter name="search"/>
                 <filter name="author"/>
                 <filter name="category"/>

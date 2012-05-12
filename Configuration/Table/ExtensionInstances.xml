@@ -4,36 +4,36 @@
         table="#__extension_instances"
         primary_key="id"
         data_source="JDatabase">
-    <filters>
-        <filter name="id" filter="int" null="1" default="0"/>
-        <filter name="extension_instance_id" filter="int" null="0" default="0"/>
-        <filter name="catalog_type_id" filter="int" null="0" default="0"/>
-        <filter name="title" filter="char" null="0" default=" "/>
-        <filter name="subtitle" filter="char" null="1" default=" "/>
-        <filter name="alias" filter="char" null="1" default=" "/>
-        <filter name="content_text" filter="text" null="1" default=""/>
-        <filter name="protected" filter="boolean" null="0" default="0"/>
-        <filter name="featured" filter="boolean" null="0" default="0"/>
-        <filter name="stickied" filter="boolean" null="0" default="0"/>
-        <filter name="status" filter="integer" null="0" default="0"/>
-        <filter name="start_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="stop_publishing_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="version" filter="int" null="0" default="1"/>
-        <filter name="version_of_id" filter="int" null="0" default="0"/>
-        <filter name="status_prior_to_version" filter="int" null="0" default="0"/>
-        <filter name="created_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="created_by" filter="int" null="0" default="0"/>
-        <filter name="modified_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="modified_by" filter="int" null="0" default="0"/>
-        <filter name="checked_out_datetime" filter="date" null="0" default="0000-00-00 00:00:00"/>
-        <filter name="checked_out_by" filter="int" null="0" default="0"/>
-        <filter name="custom_fields" filter="" null="1" default=""/>
-        <filter name="parameters" filter="" null="1" default=""/>
-        <filter name="metadata" filter="" null="1" default=""/>
-        <filter name="language" filter="char" null="1" default=""/>
-        <filter name="translation_of_id" filter="int" null="0" default="0"/>
-        <filter name="ordering" filter="int" null="0" default="0"/>
-    </filters>
+    <fields>
+        <field name="id" type="int" null="1" default="0"/>
+        <field name="extension_instance_id" type="int" null="0" default="0"/>
+        <field name="catalog_type_id" type="int" null="0" default="0"/>
+        <field name="title" type="char" null="0" default=" "/>
+        <field name="subtitle" type="char" null="1" default=" "/>
+        <field name="alias" type="char" null="1" default=" "/>
+        <field name="content_text" type="text" null="1" default=""/>
+        <field name="protected" type="boolean" null="0" default="0"/>
+        <field name="featured" type="boolean" null="0" default="0"/>
+        <field name="stickied" type="boolean" null="0" default="0"/>
+        <field name="status" type="integer" null="0" default="0"/>
+        <field name="start_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+        <field name="stop_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+        <field name="version" type="int" null="0" default="1"/>
+        <field name="version_of_id" type="int" null="0" default="0"/>
+        <field name="status_prior_to_version" type="int" null="0" default="0"/>
+        <field name="created_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+        <field name="created_by" type="int" null="0" default="0"/>
+        <field name="modified_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+        <field name="modified_by" type="int" null="0" default="0"/>
+        <field name="checked_out_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+        <field name="checked_out_by" type="int" null="0" default="0"/>
+        <field name="custom_fields" type="" null="1" default=""/>
+        <field name="parameters" type="" null="1" default=""/>
+        <field name="metadata" type="" null="1" default=""/>
+        <field name="language" type="char" null="1" default=""/>
+        <field name="translation_of_id" type="int" null="0" default="0"/>
+        <field name="ordering" type="int" null="0" default="0"/>
+    </fields>
     <foreignkeys>
         <foreignkey name="extension_id" source_id="id" source_model="Extensions" required="1"/>
         <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

@@ -1,6 +1,6 @@
-<element name="metadata_title" filter="char" null="1" default=""/>
-<element name="metadata_description" filter="text" null="1" default=""/>
-<element name="metadata_keywords" filter="char" null="1" default=""/>
-<element name="metadata_robots" filter="char" null="1" default="follow,index"/>
-<element name="metadata_author" filter="char" null="1" default=""/>
-<element name="metadata_content_rights" filter="char" null="1" default=""/>
+<field name="metadata_title" type="char" null="1" default=""/>
+<field name="metadata_description" type="text" null="1" default=""/>
+<field name="metadata_keywords" type="char" null="1" default=""/>
+<field name="metadata_robots" type="char" null="1" default="follow,index"/>
+<field name="metadata_author" type="char" null="1" default=""/>
+<field name="metadata_content_rights" type="char" null="1" default=""/>

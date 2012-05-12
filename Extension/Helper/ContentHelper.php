@@ -111,7 +111,7 @@ Class ContentHelper
 
 		/** Load special fields for specific extension */
 		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
-		$row = Services::Configuration()->addSpecialFields($xml->category, $row, 1);
+		$row = Services::Configuration()->populateCustomFields($xml->category, $row, 1);
 
 		return true;
 	}

@@ -47,7 +47,6 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
-
 		/** Base query */
 		$this->setLoadQuery();
 
@@ -67,10 +66,11 @@ class ItemModel extends Model
 		/** Load Special Fields in Registry */
 		if ($this->get_special_fields == 0) {
 		} else {
-			$fields = $this->table_xml->fields;
+			$fields = Services::Configuration()->get($this->table_registry_name, 'Fields');
 
-			if (count($fields->field) > 0) {
-				$this->query_results = ConfigurationService::addSpecialFields(
+			if (count($fields) > 0) {
+				echo $this->table_name.'<br />';
+				$this->query_results = ConfigurationService::populateCustomFields(
 					$fields,
 					$this->query_results,
 					$this->get_special_fields

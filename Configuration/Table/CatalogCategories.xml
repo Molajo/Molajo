@@ -9,10 +9,10 @@
         use_special_joins="0"
         check_view_level_access="0"
         data_source="JDatabase">
-    <filters>
-        <filter name="catalog_id" filter="int" null="0" default=""/>
-        <filter name="category_id" filter="int" null="0" default=""/>
-    </filters>
+    <fields>
+        <field name="catalog_id" type="int" null="0" default=""/>
+        <field name="category_id" type="int" null="0" default=""/>
+    </fields>
     <foreignkeys>
         <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
         <foreignkey name="category_id" source_id="id" source_model="Content" required="1"/>

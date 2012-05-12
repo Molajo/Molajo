@@ -9,15 +9,13 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_ARTICLES_DESCRIPTION</description>
-    <config>
-        <model
-                name="Articles"
-                catalog_type_id="10000"
-                table="#__content"
-                primary_key="id"
-                primary_prefix="a"
-                data_source="JDatabase">
-        </model>
+    <model
+            name="Articles"
+            catalog_type_id="10000"
+            table="#__content"
+            primary_key="id"
+            primary_prefix="a"
+            data_source="JDatabase">
         <table>
             <item>
                 <fields>
@@ -57,8 +55,8 @@
                     <field name="language" field="char" null="1" default=""/>
                     <field name="translation_of_id" field="int" null="0" default="0"/>
                     <field name="ordering" field="int" null="0" default="0"/>
-                </fields>
 
+                </fields>
                 <foreignkeys>
                     <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
                     <foreignkey name="checked_out_by" source_id="id" source_model="Users" required="1"/>
@@ -67,13 +65,14 @@
                     <foreignkey name="extension_instance_id" source_id="id" source_model="ExtensionInstances"
                                 required="1"/>
                     <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+
                 </foreignkeys>
                 <children>
                     <child name="Comments" join="id:parent_id"/>
                     <child name="Ratings" join="id:parent_id"/>
                     <child name="Notifications" join="id:parent_id"/>
-                </children>
 
+                </children>
                 <triggers>
                     <trigger name="Alias"/>
                     <trigger name="CatalogTypeId"/>
@@ -85,65 +84,68 @@
                     <trigger name="Metadata"/>
                     <trigger name="Parameters"/>
                     <trigger name="ViewAccess"/>
+
                 </triggers>
                 <customfields>
                     <customfield name="custom_fields" registry="ItemCustomfields">
-                        <element name="intro_image" file="" filter="image" shape="" size=""/>
-                        <element name="body_image" file="" filter="image" shape="" size=""/>
-                        <element name="author_notes" field="char" null="0" default=" "/>
+                        <field name="intro_image" file="" type="image" shape="" size=""/>
+                        <field name="body_image" file="" type="image" shape="" size=""/>
+                        <field name="author_notes" field="char" null="0" default=" "/>
 
-                        <element name="only_in_custom" file="" filter="image" shape="" size=""/>
+                        <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                     </customfield>
                     <customfield name="metadata" registry="ItemMetadata">
-                        <element name="metadata_title" filter="char" null="1" default=""/>
-                        <element name="metadata_description" filter="text" null="1" default=""/>
-                        <element name="metadata_keywords" filter="char" null="1" default=""/>
-                        <element name="metadata_robots" filter="char" null="1" default="follow,index"/>
-                        <element name="metadata_author" filter="char" null="1" default=""/>
-                        <element name="metadata_content_rights" filter="char" null="1" default=""/>
+                        <field name="metadata_title" type="char" null="1" default=""/>
+                        <field name="metadata_description" type="text" null="1" default=""/>
+                        <field name="metadata_keywords" type="char" null="1" default=""/>
+                        <field name="metadata_robots" type="char" null="1" default="follow,index"/>
+                        <field name="metadata_author" type="char" null="1" default=""/>
+                        <field name="metadata_content_rights" type="char" null="1" default=""/>
 
                     </customfield>
                     <customfield name="parameters" registry="ItemParameters">
-                        <element name="enable_draft_save" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_version_history" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="maximum_version_count" filter="integer" null="0" default="5" minimum="0"
-                                 maximum="20"/>
-                        <element name="enable_hit_counts" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_comments" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_ratings" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_notifications" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_tweets" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_ping" filter="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0"
+                               maximum="20"/>
+                        <field name="enable_hit_counts" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_comments" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_ratings" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_notifications" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_tweets" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_ping" type="binary" null="0" default="1" values="0,1"/>
 
-                        <element name="display_view_on_no_results" filter="binary" null="0" default="0" values="0,1"/>
+                        <field name="display_view_on_no_results" type="binary" null="0" default="0"
+                               values="0,1"/>
 
-                        <element name="theme_id" filter="integer" null="1" default="" values=""/>
+                        <field name="theme_id" type="integer" null="1" default="" values=""/>
 
-                        <element name="page_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="page_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="page_view_css_class" filter="char" null="1" default="" values=""/>
+                        <field name="page_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="page_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="page_view_css_class" type="char" null="1" default="" values=""/>
 
-                        <element name="item_template_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="item_template_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="item_template_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="item_wrap_view_id" filter="integer" null="1" default="0" values=""/>
-                        <element name="item_wrap_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="item_wrap_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="item_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
-                        <element name="item_get_children" filter="integer" null="0" default="1" values="0,1,2"/>
-                        <element name="item_check_view_level_access" filter="integer" null="0" default="1"
-                                 values="0,1,2"/>
+                        <field name="item_template_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="item_template_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="item_template_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
+                        <field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="item_get_special_fields" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="item_get_children" type="integer" null="0" default="1" values="0,1,2"/>
+                        <field name="item_check_view_level_access" type="integer" null="0" default="1"
+                               values="0,1,2"/>
 
-                        <element name="form_template_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="form_template_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="form_template_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="form_wrap_view_id" filter="integer" null="1" default="0" values=""/>
-                        <element name="form_wrap_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="form_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+                        <field name="form_template_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="form_template_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="form_template_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="form_wrap_view_id" type="integer" null="1" default="0" values=""/>
+                        <field name="form_wrap_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="form_wrap_view_css_class" type="char" null="1" default="" values=""/>
 
-                        <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-                        <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-                        <element name="cache_handler" filter="char" null="1" default="" values=""/>
+                        <field name="caching" type="binary" null="1" default="1" values="0,1"/>
+                        <field name="cache_time" type="integer" null="1" default="15" values=""/>
+                        <field name="cache_handler" type="char" null="1" default="" values=""/>
 
                     </customfield>
                 </customfields>
@@ -151,92 +153,95 @@
             <component>
                 <customfields>
                     <customfield name="parameters" registry="ComponentParameters">
-                        <element name="enable_draft_save" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_version_history" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="maximum_version_count" filter="integer" null="0" default="5" minimum="0"
-                                 maximum="20"/>
-                        <element name="enable_hit_counts" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_comments" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_ratings" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_notifications" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_tweets" filter="binary" null="0" default="1" values="0,1"/>
-                        <element name="enable_ping" filter="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0"
+                               maximum="20"/>
+                        <field name="enable_hit_counts" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_comments" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_ratings" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_notifications" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_tweets" type="binary" null="0" default="1" values="0,1"/>
+                        <field name="enable_ping" type="binary" null="0" default="1" values="0,1"/>
 
-                        <element name="display_view_on_no_results" filter="binary" null="0" default="0" values="0,1"/>
+                        <field name="display_view_on_no_results" type="binary" null="0" default="0"
+                               values="0,1"/>
 
-                        <element name="theme_id" filter="integer" null="1" default="" values=""/>
+                        <field name="theme_id" type="integer" null="1" default="" values=""/>
 
-                        <element name="page_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="page_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="page_view_css_class" filter="char" null="1" default="" values=""/>
+                        <field name="page_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="page_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="page_view_css_class" type="char" null="1" default="" values=""/>
 
-                        <element name="item_template_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="item_template_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="item_template_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="item_wrap_view_id" filter="integer" null="1" default="0" values=""/>
-                        <element name="item_wrap_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="item_wrap_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="item_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
-                        <element name="item_get_children" filter="integer" null="0" default="1" values="0,1,2"/>
-                        <element name="item_check_view_level_access" filter="integer" null="0" default="1"
-                                 values="0,1,2"/>
+                        <field name="item_template_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="item_template_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="item_template_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
+                        <field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="item_get_special_fields" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="item_get_children" type="integer" null="0" default="1" values="0,1,2"/>
+                        <field name="item_check_view_level_access" type="integer" null="0" default="1"
+                               values="0,1,2"/>
 
-                        <element name="form_template_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="form_template_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="form_template_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="form_wrap_view_id" filter="integer" null="1" default="0" values=""/>
-                        <element name="form_wrap_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="form_wrap_view_css_class" filter="char" null="1" default="" values=""/>
+                        <field name="form_template_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="form_template_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="form_template_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="form_wrap_view_id" type="integer" null="1" default="0" values=""/>
+                        <field name="form_wrap_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="form_wrap_view_css_class" type="char" null="1" default="" values=""/>
 
-                        <element name="list_page_view_id" filter="integer" null="1" default=""/>
-                        <element name="list_page_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="list_page_view_css_class" filter="char" null="1" default="" values=""/>
-                        <element name="list_template_view_id" filter="integer" null="1" default=""/>
-                        <element name="list_template_view_css_id" filter="char" null="1" default="" values=""/>
-                        <element name="list_template_view_css_class" filter="char" null="1" default="" values=""/>
+                        <field name="list_page_view_id" type="integer" null="1" default=""/>
+                        <field name="list_page_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="list_page_view_css_class" type="char" null="1" default="" values=""/>
+                        <field name="list_template_view_id" type="integer" null="1" default=""/>
+                        <field name="list_template_view_css_id" type="char" null="1" default="" values=""/>
+                        <field name="list_template_view_css_class" type="char" null="1" default="" values=""/>
 
-                        <element name="list_get_special_fields" filter="integer" null="0" default="1" values="0,1,2"/>
-                        <element name="list_get_child_row_counts" filter="integer" null="0" default="1" values="0,1,2"/>
-                        <element name="list_check_view_level_access" filter="integer" null="0" default="1"
-                                 values="0,1,2"/>
+                        <field name="list_get_special_fields" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="list_get_child_row_counts" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="list_check_view_level_access" type="integer" null="0" default="1"
+                               values="0,1,2"/>
 
-                        <element name="list_display_archived_content" filter="integer" null="0" default="1"
-                                 values="0,1,2"/>
-                        <element name="list_display_featured_content" filter="integer" null="0" default="1"
-                                 values="0,1,2"/>
-                        <element name="list_display_stickied_content" filter="integer" null="0" default="1"
-                                 values="0,1,2"/>
-                        <element name="list_display_published_date_begin" filter="date" null="0" default=""/>
-                        <element name="list_display_published_date_end" filter="date" null="0" default=""/>
-                        <element name="list_display_category_list"/>
-                        <element name="list_display_tag_list"/>
-                        <element name="list_display_author_list"/>
-                        <element name="list_begin" filter="integer" default="1"/>
-                        <element name="list_length" filter="integer" default="5" minimum="0" maximum="20"/>
-                        <element name="list_order_by_field1" filter="field_list" null="1" default="featured"/>
-                        <element name="list_order_by_direction1" filter="char" null="1" default="DESC"
-                                 values="ASC,DESC"/>
-                        <element name="list_order_by_field2" filter="field_list" null="1"
-                                 default="start_publishing_datetime"/>
-                        <element name="list_order_by_direction2" filter="char" null="1" default="DESC"
-                                 values="ASC,DESC"/>
-                        <element name="list_order_by_field3" filter="field_list" null="1" default=""/>
-                        <element name="list_order_by_direction3" filter="char" null="1" default="DESC"
-                                 values="ASC,DESC"/>
+                        <field name="list_display_archived_content" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="list_display_featured_content" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="list_display_stickied_content" type="integer" null="0" default="1"
+                               values="0,1,2"/>
+                        <field name="list_display_published_date_begin" type="date" null="0" default=""/>
+                        <field name="list_display_published_date_end" type="date" null="0" default=""/>
+                        <field name="list_display_category_list"/>
+                        <field name="list_display_tag_list"/>
+                        <field name="list_display_author_list"/>
+                        <field name="list_begin" type="integer" default="1"/>
+                        <field name="list_length" type="integer" default="5" minimum="0" maximum="20"/>
+                        <field name="list_order_by_field1" type="field_list" null="1" default="featured"/>
+                        <field name="list_order_by_direction1" type="char" null="1" default="DESC"
+                               values="ASC,DESC"/>
+                        <field name="list_order_by_field2" type="field_list" null="1"
+                               default="start_publishing_datetime"/>
+                        <field name="list_order_by_direction2" type="char" null="1" default="DESC"
+                               values="ASC,DESC"/>
+                        <field name="list_order_by_field3" type="field_list" null="1" default=""/>
+                        <field name="list_order_by_direction3" type="char" null="1" default="DESC"
+                               values="ASC,DESC"/>
 
-                        <element name="feed_theme_id" filter="integer" null="1" default="" values=""/>
-                        <element name="feed_page_view_id" filter="integer" null="1" default="" values=""/>
-                        <element name="feed_limit" filter="integer" null="1" default="5" minimum="0" maximum="20"/>
-                        <element name="feed_email" filter="email" null="1" default="" values=""/>
+                        <field name="feed_theme_id" type="integer" null="1" default="" values=""/>
+                        <field name="feed_page_view_id" type="integer" null="1" default="" values=""/>
+                        <field name="feed_limit" type="integer" null="1" default="5" minimum="0" maximum="20"/>
+                        <field name="feed_email" type="email" null="1" default="" values=""/>
 
-                        <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-                        <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-                        <element name="cache_handler" filter="char" null="1" default="" values=""/>
+                        <field name="caching" type="binary" null="1" default="1" values="0,1"/>
+                        <field name="cache_time" type="integer" null="1" default="15" values=""/>
+                        <field name="cache_handler" type="char" null="1" default="" values=""/>
 
                     </customfield>
                 </customfields>
             </component>
         </table>
-
-    </config>
+    </model>
 </extension>

@@ -89,6 +89,25 @@ Class RegistryService
 	}
 
 	/**
+	 * Checks to see if the specified namespace exists
+	 *
+	 * Services::Registry()->exists('Name Space');
+	 *
+	 * @param $namespace
+	 *
+	 * @return array
+	 */
+	public function exists($namespace)
+	{
+		if (in_array($namespace, $this->registryKeys)) {
+			return true;
+
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Create a Registry array for specified Namespace
 	 *
 	 * This is useful if you want to create your registry during the class startup processed
