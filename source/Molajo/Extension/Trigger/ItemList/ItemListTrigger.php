@@ -84,7 +84,7 @@ class ItemListTrigger extends ContentTrigger
 
 				$m->model->set('id', $data->created_by);
 
-				$m->model->set('get_special_fields', 0);
+				$m->model->set('get_custom_fields', 0);
 				$m->model->set('use_special_joins', false);
 				$m->model->set('check_view_level_access', false);
 				$m->model->set('get_item_children', false);

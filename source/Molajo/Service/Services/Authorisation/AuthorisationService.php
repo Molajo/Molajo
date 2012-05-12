@@ -322,7 +322,7 @@ Class AuthorisationService
 	 *     $this->query,
 	 *     $this->db,
 	 *     array('join_to_prefix' => $this->primary_prefix,
-	 *         'join_to_primary_key' => $this->primary_key,
+	 *         'join_to_primary_key' => Services::Registry()->get($this->table_registry_name, 'primary_key'),
 	 *         'catalog_prefix' => $this->primary_prefix . '_catalog',
 	 *         'select' => true
 	 *     )

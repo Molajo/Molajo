@@ -31,7 +31,7 @@ Class ModuleBlockquoteModel extends DisplayModel
 	{
 		$this->name = get_class($this);
 		$this->table = '';
-		$this->primary_key = '';
+
 
 		return parent::__construct($table, $id, $path);
 	}

@@ -129,7 +129,7 @@ class DisplayModel extends ItemModel
 		 *  From
 		 */
 		$this->query->from(
-			$this->db->qn($this->table_name)
+			$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
 				. ' as '
 				. $this->db->qn($this->primary_prefix)
 		);
@@ -141,7 +141,7 @@ class DisplayModel extends ItemModel
 				$this->query,
 				$this->db,
 				array('join_to_prefix' => $this->primary_prefix,
-					'join_to_primary_key' => $this->primary_key,
+					'join_to_primary_key' => Services::Registry()->get($this->table_registry_name, 'primary_key'),
 					'catalog_prefix' => $this->primary_prefix . '_catalog',
 					'select' => true
 				)
@@ -193,15 +193,15 @@ class DisplayModel extends ItemModel
 		}
 
 		/** Specific criteria */
-		if (isset($parameterArray[$this->primary_key])
-			&& (int)$parameterArray[$this->primary_key] > 0
+		if (isset($parameterArray[Services::Registry()->get($this->table_registry_name, 'primary_key')])
+			&& (int)$parameterArray[Services::Registry()->get($this->table_registry_name, 'primary_key')] > 0
 		) {
 			$this->query->where(
 				$this->db->qn($this->primary_prefix)
 					. '.'
-					. $this->db->qn($this->primary_key)
+					. $this->db->qn(Services::Registry()->get($this->table_registry_name, 'primary_key'))
 					. ' = '
-					. (int)$parameterArray[$this->primary_key]
+					. (int)$parameterArray[Services::Registry()->get($this->table_registry_name, 'primary_key')]
 			);
 		}
 

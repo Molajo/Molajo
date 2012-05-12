@@ -69,7 +69,6 @@ class DisplayController extends Controller
 	 */
 	public function display()
 	{
-
 		/** Primary Query */
 		if ($this->parameters['query_object'] == 'none') {
 			$this->query_results = array();

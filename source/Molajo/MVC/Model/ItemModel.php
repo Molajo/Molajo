@@ -51,35 +51,26 @@ class ItemModel extends Model
 		$this->setLoadQuery();
 
 		/** Add ACL Checking */
-		if ($this->check_view_level_access == true) {
+		if (Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0) == 1) {
 			$this->addACLCheck();
 		}
 
 		/** Joins */
-		if ($this->use_special_joins == true) {
-			$this->addSpecialJoins();
+		if (Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0) == 1) {
+			$this->useSpecialJoins();
 		}
 
 		/** Execute Query */
 		$this->runLoadQuery();
 
 		/** Load Special Fields in Registry */
-		if ($this->get_special_fields == 0) {
+		if (Services::Registry()->get($this->table_registry_name, 'get_custom_fields', 0) == 0) {
 		} else {
-			$fields = Services::Configuration()->get($this->table_registry_name, 'Fields');
-
-			if (count($fields) > 0) {
-				echo $this->table_name.'<br />';
-				$this->query_results = ConfigurationService::populateCustomFields(
-					$fields,
-					$this->query_results,
-					$this->get_special_fields
-				);
-			}
+			$this->addCustomFields();
 		}
 
 		/** Retrieve Child Objects  */
-		if ($this->get_item_children == true) {
+		if (Services::Registry()->get($this->table_registry_name, 'get_item_children', 0) == 1) {
 			$this->addItemChildren();
 		}
 
@@ -98,21 +89,32 @@ class ItemModel extends Model
 	protected function setLoadQuery()
 	{
 		if ($this->query->select == null) {
-			$columns = $this->getFieldNames();
-			for ($i = 0; $i < count($columns); $i++) {
-				$this->query->select($this->db->qn('a.' . $columns[$i]));
+			$columns = Services::Registry()->get($this->table_registry_name, 'Fields');
+
+			foreach ($columns as $column) {
+				$this->query->select($this->db->qn($this->primary_prefix . '.' . $column['name']));
 			}
 		}
 
 		if ($this->query->from == null) {
-			$this->query->from($this->db->qn($this->table_name) . ' as '.$this->db->qn('a'));
+			$this->query->from(
+				$this->db->qn($this->table_name)
+					. ' as '
+					. $this->db->qn($this->primary_prefix)
+			);
 		}
 
 		if ($this->query->where == null) {
 			if ((int)$this->id > 0) {
-				$this->query->where($this->db->qn('a.' . $this->primary_key) . ' = ' . $this->db->q($this->id));
+				$this->query->where(
+					$this->db->qn($this->primary_prefix . '.' . $this->primary_key)
+						. ' = ' . $this->db->q($this->id)
+				);
 			} else {
-				$this->query->where($this->db->qn('a.' . $this->name_field) . ' = ' . $this->db->q($this->id_name));
+				$this->query->where(
+					$this->db->qn($this->primary_prefix . '.' . $this->name_key)
+						. ' = ' . $this->db->q($this->id_name)
+				);
 			}
 		}
 
@@ -131,39 +133,39 @@ class ItemModel extends Model
 	{
 		Services::Authorisation()
 			->setQueryViewAccess(
-				$this->query,
-				$this->db,
-				array('join_to_prefix' => 'a',
-					'join_to_primary_key' => $this->primary_key,
-					'catalog_prefix' => 'b_catalog',
-					'select' => true
-				)
-			);
+			$this->query,
+			$this->db,
+			array('join_to_prefix' => $this->primary_prefix,
+				'join_to_primary_key' => $this->primary_key,
+				'catalog_prefix' => 'b_catalog',
+				'select' => true
+			)
+		);
 
 		return $this;
 	}
 
 	/**
-	 * addSpecialJoins
+	 * useSpecialJoins
 	 *
 	 * Use joins defined in table xml to extend model
 	 *
 	 * @return  array
 	 * @since   1.0
 	 */
-	protected function addSpecialJoins()
+	protected function useSpecialJoins()
 	{
-		$joins = $this->table_xml->joins;
+		$joins = Services::Registry()->get($this->table_registry_name, 'joins');
 
-		if (count($joins->join) > 0) {
+		if (count($joins) > 0) {
 
-			foreach ($joins->join as $join) {
+			foreach ($joins as $join) {
 
-				$join_table = (string)$join['table'];
-				$alias = (string)$join['alias'];
-				$select = (string)$join['select'];
-				$joinTo = (string)$join['jointo'];
-				$joinWith = (string)$join['joinwith'];
+				$join_table = $join['table'];
+				$alias = $join['alias'];
+				$select = $join['select'];
+				$joinTo = $join['jointo'];
+				$joinWith = $join['joinwith'];
 
 				/* Join to table */
 				if (trim($alias) == '') {
@@ -195,7 +197,9 @@ class ItemModel extends Model
 						} else {
 							$withJoin = $with;
 						}
-						$this->query->where($this->db->qn($alias . '.' . $joinToItem) . ' = ' . $this->db->qn($with));
+						$this->query->where($this->db->qn($alias . '.' . $joinToItem)
+							. ' = '
+							. $this->db->qn($with));
 						$i++;
 					}
 				}
@@ -225,14 +229,146 @@ class ItemModel extends Model
 			$this->query_results = array();
 
 			/** Table Columns */
-			$columns = $this->getFieldNames();
+			$columns = Services::Registry()->get($this->table_registry_name, 'Fields');
 
-			for ($i = 0; $i < count($columns); $i++) {
-				$this->query_results[$columns[$i]] = '';
+			foreach ($columns as $column) {
+				$this->query_results[$column['name']] = '';
 			}
 		}
 
 		return $this;
+	}
+
+	/**
+	 * addCustomFields
+	 *
+	 * Populate the custom fields defined by the Table xml with query results
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	protected function addCustomFields()
+	{
+		$customFields = Services::Configuration()->get($this->table_registry_name, 'Customfields');
+		echo '<pre>';
+		var_dump($customFields);
+		die;
+		if (count($customFields) > 0) {
+		} else {
+			return $this;
+		}
+
+		/**
+		echo '<pre>';
+		var_dump($fields);
+		echo '</pre>';
+		 */
+
+		$retrieval_method = Services::Configuration()->get($this->table_registry_name, 'get_custom_fields');
+
+		/** Process each field namespace  */
+		foreach ($fields as $ns) {
+
+			$field_name = $ns['name'];
+
+			$namespace = $ns['registry'];
+
+			if ((is_array($this->query_results) && isset($this->query_results[$field_name]))
+				|| (is_object($this->query_results) && isset($this->query_results->$field_name))
+			) {
+
+				if (is_array($this->query_results)) {
+					$jsonData = $this->query_results[$field_name];
+				} else {
+					$jsonData = $this->query_results->$field_name;
+				}
+
+				$custom_field = json_decode($jsonData);
+
+				$fieldArray = array();
+
+				/** Place field names into named pair array */
+				$lookup = array();
+
+				if (count($custom_field) > 0) {
+					foreach ($custom_field as $key => $value) {
+						$lookup[$key] = $value;
+					}
+				}
+
+				if (count($ns->$fieldArray) > 0) {
+
+					foreach ($ns->$fieldArray as $f) {
+
+						$name = $f['name'];
+						$name = strtolower($name);
+						$dataType = $f['filter'];
+						$null = $f['null'];
+						$default = $f['default'];
+						$values = $f['values'];
+
+						if ($default == '') {
+							$default = null;
+						}
+
+						/** Use value, if exists, or defined default */
+						if (isset($lookup[$name])) {
+							$setValue = $lookup[$name];
+						} else {
+							$setValue = $default;
+						}
+
+						/** Filter Input and Save the Registry */
+						//$set = $this->filterInput($name, $set, $dataType, $null, $default);
+
+						if ($retrieval_method == 2) {
+							if (is_array($this->query_results)) {
+								$this->query_results[$name] = $setValue;
+							} else {
+								$this->query_results->$name = $setValue;
+							}
+						} else {
+							Services::Registry()->set($namespace, $name, $setValue);
+						}
+					}
+				}
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * filterInput
+	 *
+	 * @param   string  $name         Name of input field
+	 * @param   string  $field_value  Value of input field
+	 * @param   string  $dataType     Datatype of input field
+	 * @param   int     $null         0 or 1 - is null allowed
+	 * @param   string  $default      Default value, optional
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	protected function filterInput(
+		$name, $value, $dataType, $null = null, $default = null)
+	{
+
+		try {
+			$value = Services::Filter()
+				->filter(
+				$value,
+				$dataType,
+				$null,
+				$default
+			);
+
+		} catch (\Exception $e) {
+			//todo: errors
+			echo $e->getMessage() . ' ' . $name;
+		}
+
+		return $value;
 	}
 
 	/**
@@ -246,22 +382,22 @@ class ItemModel extends Model
 	 */
 	protected function addItemChildren()
 	{
-		$children = $this->table_xml->children;
+		$children = Services::Registry()->get($this->table_registry_name, 'Children');
 
-		if (count($children->child) > 0) {
+		if (count($children) > 0) {
 
-			foreach ($children->child as $child) {
+			foreach ($children as $child) {
 
-				$name = (string)$child['name'];
+				$name = $child['name'];
 
 				$m = Application::Controller()->connect($name);
 
-				$join = (string)$child['join'];
+				$join = $child['join'];
 				$joinArray = explode(';', $join);
 
 				foreach ($joinArray as $where) {
 
-					$whereArray = explode(':', (string)$where);
+					$whereArray = explode(':', $where);
 
 					$targetField = $whereArray[1];
 					$sourceField = $whereArray[0];
@@ -270,7 +406,6 @@ class ItemModel extends Model
 						. ' = '
 						. (int)$this->query_results[$sourceField]);
 				}
-
 				$this->query_results['Model\\' . $name] = $m->getData('loadObjectList');
 			}
 		}
@@ -298,10 +433,10 @@ class ItemModel extends Model
 		 */
 		if ((int)$this->id == 0) {
 			$stored = $this->db->insertObject(
-				$this->table_name, $this->row, $this->primary_key);
+				Services::Registry()->get($this->table_registry_name, 'Table'), $this->row, Services::Registry()->get($this->table_registry_name, 'primary_key'));
 		} else {
 			$stored = $this->db->updateObject(
-				$this->table_name, $this->row, $this->primary_key);
+				Services::Registry()->get($this->table_registry_name, 'Table'), $this->row, Services::Registry()->get($this->table_registry_name, 'primary_key'));
 		}
 
 		if ($stored) {
