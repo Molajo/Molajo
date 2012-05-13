@@ -34,10 +34,10 @@
                 <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
             </foreignkeys>
             <children>
+                <child name="UserActivity" join="id:user_id"/>
                 <child name="UserApplications" join="id:user_id"/>
                 <child name="UserGroups" join="id:user_id"/>
                 <child name="UserViewGroups" join="id:user_id"/>
-                <child name="UserActivity" join="id:user_id"/>
             </children>
             <triggers>
                 <trigger name="Username"/>
@@ -50,18 +50,8 @@
                 <trigger name="Parameters"/>
             </triggers>
             <customfields>
-                <customfield name="customfields" registry="Customfields">
-                    <field name="gender" type="char" null="1" default="" values="M,F"/>
-                    <field name="about_me" type="text" null="1" default=""/>
-                    <field name="twitter" type="url" null="1" default=""/>
-                    <field name="editor" type="int" null="0" default="1"/>
-                    <field name="language" type="char" null="0" default="en-GB" values="en-GB"/>
-                    <field name="date_of_birth" type="date" null="1" default=""/>
-                </customfield>
-                <customfield name="metadata" registry="Metadata">
-                    <include name="SystemMetadata"/>
-                </customfield>
-                <customfield name="parameters" registry="Parameters">
+
+                <customfield name="parameters">
                     <field name="display_gravatar" type="boolean" null="0" default="0"/>
                     <field name="display_birthdate" type="boolean" null="0" default="0"/>
                     <field name="display_email" type="boolean" null="0" default="0"/>
@@ -72,7 +62,22 @@
                     <field name="page_view_css_id" type="char" null="1" default="" values=""/>
                     <field name="page_view_css_class" type="char" null="1" default="" values=""/>
                 </customfield>
+
+                <customfield name="customfields">
+                    <field name="gender" type="char" null="1" default="" values="M,F"/>
+                    <field name="about_me" type="text" null="1" default=""/>
+                    <field name="twitter" type="url" null="1" default=""/>
+                    <field name="editor" type="int" null="0" default="1"/>
+                    <field name="language" type="char" null="0" default="en-GB" values="en-GB"/>
+                    <field name="date_of_birth" type="date" null="1" default=""/>
+                </customfield>
+
+                <customfield name="metadata">
+                    <include name="SystemMetadata"/>
+                </customfield>
+
             </customfields>
+
         </item>
     </table>
 </model>

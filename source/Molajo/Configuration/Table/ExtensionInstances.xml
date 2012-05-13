@@ -1,60 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="ExtensionInstances"
+        catalog_type_id="0"
         table="#__extension_instances"
         primary_key="id"
+        primary_prefix="a"
+        get_customfields="1"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="1"
         data_source="JDatabase">
-    <fields>
-        <field name="id" type="int" null="1" default="0"/>
-        <field name="extension_instance_id" type="int" null="0" default="0"/>
-        <field name="catalog_type_id" type="int" null="0" default="0"/>
-        <field name="title" type="char" null="0" default=" "/>
-        <field name="subtitle" type="char" null="1" default=" "/>
-        <field name="alias" type="char" null="1" default=" "/>
-        <field name="content_text" type="text" null="1" default=""/>
-        <field name="protected" type="boolean" null="0" default="0"/>
-        <field name="featured" type="boolean" null="0" default="0"/>
-        <field name="stickied" type="boolean" null="0" default="0"/>
-        <field name="status" type="integer" null="0" default="0"/>
-        <field name="start_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-        <field name="stop_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-        <field name="version" type="int" null="0" default="1"/>
-        <field name="version_of_id" type="int" null="0" default="0"/>
-        <field name="status_prior_to_version" type="int" null="0" default="0"/>
-        <field name="created_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-        <field name="created_by" type="int" null="0" default="0"/>
-        <field name="modified_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-        <field name="modified_by" type="int" null="0" default="0"/>
-        <field name="checked_out_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-        <field name="checked_out_by" type="int" null="0" default="0"/>
-        <field name="customfields" type="" null="1" default=""/>
-        <field name="parameters" type="" null="1" default=""/>
-        <field name="metadata" type="" null="1" default=""/>
-        <field name="language" type="char" null="1" default=""/>
-        <field name="translation_of_id" type="int" null="0" default="0"/>
-        <field name="ordering" type="int" null="0" default="0"/>
-    </fields>
-    <foreignkeys>
-        <foreignkey name="extension_id" source_id="id" source_model="Extensions" required="1"/>
-        <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-        <foreignkey name="checked_out_by" source_id="id" source_model="Users" required="1"/>
-        <foreignkey name="created_by" source_id="id" source_model="Users" required="1"/>
-        <foreignkey name="modified_by" source_id="id" source_model="Users" required="1"/>
-        <foreignkey name="version_id" source_id="id" source_model="ExtensionInstances" required="1"/>
-    </foreignkeys>
-    <children>
-        <child name="SiteExtensionInstances" join="id:extension_instance_id"/>
-        <child name="ApplicationExtensionInstances" join="id:extension_instance_id"/>
-    </children>
-    <triggers>
-        <trigger name="CatalogTypeId"/>
-        <trigger name="ContentText"/>
-        <trigger name="DateFields"/>
-        <trigger name="UserFields"/>
-        <trigger name="Status"/>
-        <trigger name="Customfields"/>
-        <trigger name="Metadata"/>
-        <trigger name="Parameters"/>
-    </triggers>
+    <table>
+        <item>
+            <fields>
+                <field name="id" type="int" null="1" default="0"/>
+                <field name="extension_instance_id" type="int" null="0" default="0"/>
+                <field name="catalog_type_id" type="int" null="0" default="0"/>
+                <field name="title" type="char" null="0" default=" "/>
+                <field name="subtitle" type="char" null="1" default=" "/>
+                <field name="alias" type="char" null="1" default=" "/>
+                <field name="content_text" type="text" null="1" default=""/>
+                <field name="protected" type="boolean" null="0" default="0"/>
+                <field name="featured" type="boolean" null="0" default="0"/>
+                <field name="stickied" type="boolean" null="0" default="0"/>
+                <field name="status" type="integer" null="0" default="0"/>
+                <field name="start_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="stop_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="version" type="int" null="0" default="1"/>
+                <field name="version_of_id" type="int" null="0" default="0"/>
+                <field name="status_prior_to_version" type="int" null="0" default="0"/>
+                <field name="created_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="created_by" type="int" null="0" default="0"/>
+                <field name="modified_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="modified_by" type="int" null="0" default="0"/>
+                <field name="checked_out_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
+                <field name="checked_out_by" type="int" null="0" default="0"/>
+                <field name="customfields" type="customfield" null="1" default=""/>
+                <field name="parameters" type="customfield" null="1" default=""/>
+                <field name="metadata" type="customfield" null="1" default=""/>
+                <field name="language" type="char" null="1" default=""/>
+                <field name="translation_of_id" type="int" null="0" default="0"/>
+                <field name="ordering" type="int" null="0" default="0"/>
+            </fields>
+            <foreignkeys>
+                <foreignkey name="extension_id" source_id="id" source_model="Extensions" required="1"/>
+                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+                <foreignkey name="checked_out_by" source_id="id" source_model="Users" required="1"/>
+                <foreignkey name="created_by" source_id="id" source_model="Users" required="1"/>
+                <foreignkey name="modified_by" source_id="id" source_model="Users" required="1"/>
+                <foreignkey name="version_id" source_id="id" source_model="ExtensionInstances" required="1"/>
+            </foreignkeys>
+            <children>
+                <child name="SiteExtensionInstances" join="id:extension_instance_id"/>
+                <child name="ApplicationExtensionInstances" join="id:extension_instance_id"/>
+            </children>
+            <triggers>
+                <trigger name="CatalogTypeId"/>
+                <trigger name="ContentText"/>
+                <trigger name="DateFields"/>
+                <trigger name="UserFields"/>
+                <trigger name="Status"/>
+                <trigger name="Customfields"/>
+                <trigger name="Metadata"/>
+                <trigger name="Parameters"/>
+            </triggers>
+            <customfields>
+                <customfield name="metadata">
+                    <include name="SystemMetadata"/>
+                </customfield>
+                <customfield name="parameters">
+                    <include name="SystemComponentParameters"/>
+                </customfield>
+            </customfields>
+        </item>
+    </table>
 </model>
 

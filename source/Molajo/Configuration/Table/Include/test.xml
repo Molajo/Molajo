@@ -87,14 +87,14 @@
 
                 </triggers>
                 <customfields>
-                    <customfield name="customfields" registry="Customfields">
+                    <customfield name="customfields">
                         <field name="intro_image" file="" type="image" shape="" size=""/>
                         <field name="body_image" file="" type="image" shape="" size=""/>
                         <field name="author_notes" field="char" null="0" default=" "/>
 
                         <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                     </customfield>
-                    <customfield name="metadata" registry="Metadata">
+                    <customfield name="metadata">
                         <field name="metadata_title" type="char" null="1" default=""/>
                         <field name="metadata_description" type="text" null="1" default=""/>
                         <field name="metadata_keywords" type="char" null="1" default=""/>
@@ -103,7 +103,7 @@
                         <field name="metadata_content_rights" type="char" null="1" default=""/>
 
                     </customfield>
-                    <customfield name="parameters" registry="Parameters">
+                    <customfield name="parameters">
                         <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
                         <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
                         <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0"
@@ -152,7 +152,7 @@
             </item>
             <component>
                 <customfields>
-                    <customfield name="parameters" registry="ComponentParameters">
+                    <customfield name="parameters">
                         <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
                         <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
                         <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0"
