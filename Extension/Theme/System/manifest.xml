@@ -10,8 +10,8 @@
     <version>1.0</version>
     <description>THEME_SYSTEM_DESCRIPTION</description>
     <config>
-        <field name="custom_fields" registry="ThemeCustomfields">
-            <element name="custom_fields" filter="char" null="0" default="This is the default" values=""/>
+        <field name="customfields" registry="ThemeCustomfields">
+            <element name="customfields" filter="char" null="0" default="This is the default" values=""/>
         </field>
         <field name="parameters" registry="ThemeParameters">
             <element name="display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>

@@ -96,11 +96,11 @@ Class EntryController extends DisplayController
 			$this->dataSource = $this->default_dataSource;
 		} else {
 			$this->table_registry_name = ConfigurationService::loadFile($table, 'Table');
-			/*
+
 			echo '<pre>';
-			var_dump(Services::Registry()->get($this->table_registry_name));
+			//var_dump(Services::Registry()->get($this->table_registry_name));
 			echo '</pre>';
-			*/
+
 		}
 
 		/* 2. Instantiate Model Class */

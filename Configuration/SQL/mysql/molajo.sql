@@ -61,7 +61,7 @@ INSERT INTO `molajo_catalog_types` (`id`, `title`, `protected`, `source_table`, 
 # EXTENSION SITES
 #
 INSERT INTO `molajo_extension_sites`
- (`id`, `name`, `enabled`, `location`, `custom_fields`, `parameters`)
+ (`id`, `name`, `enabled`, `location`, `customfields`, `parameters`)
   VALUES
     (1, 'Molajo Core', 1, 'http://update.molajo.org/core.xml', '', ''),
     (2, 'Molajo Directory', 1, 'http://update.molajo.org/directory.xml', '', '');
@@ -107,7 +107,7 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
@@ -136,7 +136,7 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
@@ -219,7 +219,7 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
@@ -245,7 +245,7 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
@@ -273,7 +273,7 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `catalog_type_id`,
         `name`, `subtype`, '', '',
@@ -300,7 +300,7 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`,
     `position`, `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `catalog_type_id`,
         `name`, '', '', '',
@@ -342,7 +342,7 @@ INSERT INTO `molajo_extension_instances`
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
     `checked_out_datetime`, `checked_out_by`,
-    `position`, `custom_fields`, `parameters`,
+    `position`, `customfields`, `parameters`,
     `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `catalog_type_id`,
         `name`, '', '', '',
@@ -360,7 +360,7 @@ INSERT INTO `molajo_extension_instances`
 # SITES
 #
 INSERT INTO `molajo_sites`
-  (`id`, `catalog_type_id`, `name`, `path`, `base_url`, `description`, `parameters`, `custom_fields`)
+  (`id`, `catalog_type_id`, `name`, `path`, `base_url`, `description`, `parameters`, `customfields`)
   VALUES
     (1, 10, 'Molajo', '', '', 'Primary Site', '{}', '{}');
 
@@ -369,7 +369,7 @@ INSERT INTO `molajo_sites`
 # Note: after menus are defined, update applications for home
 #
 INSERT INTO `molajo_applications`
-  (`id`, `catalog_type_id`, `name`, `path`, `description`, `parameters`, `custom_fields`)
+  (`id`, `catalog_type_id`, `name`, `path`, `description`, `parameters`, `customfields`)
   VALUES
     (1, 50, 'site', '', 'Primary application for site visitors', '{}', '{}'),
     (2, 50, 'administrator', 'administrator', 'Administrative site area for site construction', '{}', '{}');
@@ -400,7 +400,7 @@ SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'groups')
 INSERT INTO `molajo_content`
   (`id`, `extension_instance_id`, `title`, `path`, `alias`, `content_text`, `catalog_type_id`,
    `root`, `parent_id`, `lft`, `rgt`, `lvl`, `ordering`,
-   `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`, `language`, `translation_of_id`)
+   `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `language`, `translation_of_id`)
    VALUES
       (1, @id, 'Public', 'groups', 'public', 'All visitors regardless of authentication status', 100, 0, 0, 1, 2, 1, 1, 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '{}', 'en-GB', 0),
       (2, @id, 'Guest', 'groups', 'guest', 'Visitors not authenticated', 100, 0, 0, 3, 4, 1, 2, 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '{}', 'en-GB', 0),
@@ -427,25 +427,25 @@ INSERT INTO `molajo_group_view_groups`
     (4, 5);
 
 ##  Administrator
-INSERT INTO `molajo_users` (`id`, `catalog_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 500, 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', '{}', '{}');
+INSERT INTO `molajo_users` (`id`, `catalog_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `customfields`) VALUES ('42', 500, 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', '{}', '{}');
 INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (42, 1), (42, 2);
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'groups');
 INSERT INTO `molajo_content`
   (`extension_instance_id`, `title`, `path`, `alias`, `content_text`, `catalog_type_id`,
    `parent_id`, `lft`, `rgt`, `lvl`, `ordering`,
-   `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`, `language`, `translation_of_id`)
+   `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `language`, `translation_of_id`)
   SELECT @id, CONCAT(`first_name`, ' ', `last_name`), 'groups', `username`, '', 120, `id`, 0, 0, 0, 1, 0, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '{}', 'en-GB', 0
     FROM `molajo_users` WHERE username = 'admin';
 INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (42, 3), (42, 4);
 
 ##  Sample Registered User
-INSERT INTO `molajo_users` (`id`, `catalog_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('100', 500, 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{}', '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}');
+INSERT INTO `molajo_users` (`id`, `catalog_type_id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `customfields`) VALUES ('100', 500, 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{}', '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}');
 INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (100, 1);
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'groups');
 INSERT INTO `molajo_content`
   (`extension_instance_id`, `title`, `path`, `alias`, `content_text`, `catalog_type_id`,
    `parent_id`, `lft`, `rgt`, `lvl`, `ordering`,
-   `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`, `language`, `translation_of_id`)
+   `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `language`, `translation_of_id`)
   SELECT @id, CONCAT(`first_name`, ' ', `last_name`), 'groups', `username`, '', 120, `id`, 0, 0, 0, 1, 0, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '{}', 'en-GB', 0
     FROM `molajo_users` WHERE username = 'mark';
 INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (100, 3);
@@ -608,7 +608,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 101, 101, 'Root', '', '', 101, 0, 0, 65, 0,
         `id`, 2000,
          '{}', '{}',
@@ -627,7 +627,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 102, 102, 'Content', '', 'content', 101, 101, 1, 12, 1,
         `id`, 2000,
         CONCAT ('{"extension_instance_id":"7","section":"content","id":"","category_id":"","theme_id":"","page_view_id":"","page_view_css_id":"","page_view_css_class":"","template_view_id":"19","template_view_css_id":"","template_view_css_class":"","wrap_view_id":"67","wrap_view_css_id":"","wrap_view_css_class":"","cache":"1","cache_time":"900"}'),
@@ -646,7 +646,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 103, 103, 'Articles', 'content', 'articles', 101, 2, 2, 3, 2,
         `id`, 2000,
         CONCAT ('{"extension_instance_id":"2","id":"","category_id":"","theme_id":"","page_view_id":"","page_view_css_id":"","page_view_css_class":"","template_view_id":"128","template_view_css_id":"","template_view_css_class":"","wrap_view_id":"33","wrap_view_css_id":"","wrap_view_css_class":"","cache":"1","cache_time":"900"}'),
@@ -664,7 +664,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 104, 104, 'Contacts', 'content', 'contacts', 101, 2, 4, 5, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -680,7 +680,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 105, 105, 'Comments', 'content', 'comments', 101, 2, 6, 7, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -696,7 +696,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 107, 107, 'Media', 'content', 'media', 101, 2, 10, 11, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -714,7 +714,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 108, 108, 'Access', '', 'access', 101, 1, 13, 22, 1,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -730,7 +730,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 109, 109, 'Profile', 'access', 'profile', 101, 8, 14, 15, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -746,7 +746,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 110, 110, 'Users', 'access', 'users', 101, 8, 16, 17, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -762,7 +762,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 111, 111, 'Groups', 'access', 'groups', 101, 8, 18, 19, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -778,7 +778,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 112, 112, 'Catalog', 'access', 'catalog', 101, 8, 20, 21, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -795,7 +795,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 113, 113, 'Build', '', 'build', 101, 1, 23, 34, 1,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -811,7 +811,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 114, 114, 'Categories', 'build', 'categories', 101, 13, 24, 25, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -827,7 +827,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 115, 115, 'Menus', 'build', 'menus', 101, 13, 26, 27, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -843,7 +843,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 116, 116, 'Menu Items', 'build', 'menus', 101, 13, 28, 29, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -859,7 +859,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 117, 117, 'Modules', 'build', 'modules', 101, 13, 30, 31, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -875,7 +875,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 118, 118, 'Themes', 'build', 'themes', 101, 13, 32, 33, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -893,7 +893,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 119, 119, 'Configure', '', 'configure', 101, 1, 35, 48, 1,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -909,7 +909,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 120, 120, 'Site', 'configure', 'sites', 101, 19, 36, 37, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -925,7 +925,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 121, 121, 'Applications', 'configure', 'applications', 101, 19, 38, 39, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -941,7 +941,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 122, 122, 'Checkin', 'configure', 'checkin', 101, 19, 40, 41, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -957,7 +957,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 123, 123, 'Clean Cache', 'configure', 'cleancache', 101, 19, 42, 43, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -973,7 +973,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 124, 124, 'Redirects', 'configure', 'redirects', 101, 19, 44, 45, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -989,7 +989,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 125, 125, 'Triggers', 'configure', 'triggers', 101, 19, 46, 47, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -1006,7 +1006,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 126, 126, 'Extend', '', 'extend', 101, 1, 49, 56, 1,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -1022,7 +1022,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 127, 127, 'Install', 'extend', 'install', 101, 26, 50, 51, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -1038,7 +1038,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 128, 128, 'Upgrade', 'extend', 'Upgrade', 101, 26, 52, 53, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -1054,7 +1054,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 129, 129, 'Uninstall', 'extend', 'uninstall', 101, 26, 54, 55, 2,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -1071,7 +1071,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 130, 130, 'Search', '', 'search', 101, 1, 57, 58, 1,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,
@@ -1088,7 +1088,7 @@ INSERT INTO `molajo_content`
     `subtitle`, `content_text`, `protected`, `featured`, `stickied`,
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `language`, `translation_of_id`)
+    `checked_out_datetime`, `checked_out_by`, `customfields`, `language`, `translation_of_id`)
   SELECT 131, 131, 'Home', '', 'home', 101, 1, 59, 60, 1,
         `id`, 2000, CONCAT('{"request":"', `id`, '","page_view_title":"","page_view_id":"","page_view_class_suffix":"","category_id":"","author":"","number_of_items":"10","featured":"0","order_by":"1","pagination":"","view":"","wrap":"div","view_class_suffix":"","link_title":"","link_css":"","link_image":"","link_include_text":"","link_target":"","cache":"1","cache_time":"900","spam_protection":""}'),
         '', '', 1, 0, 0,

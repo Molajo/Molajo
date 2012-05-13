@@ -97,13 +97,13 @@ Class PageViewHelper
 	 */
 	public function DefaultPageView()
 	{
-		$page_view_id = Services::Registry()->get('ContentParameters', 'page_view_id', 0);
+		$page_view_id = Services::Registry()->get('Parameters', 'page_view_id', 0);
 		if ((int)$page_view_id == 0) {
 		} else {
 			return $page_view_id;
 		}
 
-		$page_view_id = Services::Registry()->get('MenuItemParameters', 'page_view_id', 0);
+		$page_view_id = Services::Registry()->get('MenuParameters', 'page_view_id', 0);
 		if ((int)$page_view_id == 0) {
 		} else {
 			return $page_view_id;

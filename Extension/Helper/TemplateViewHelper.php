@@ -97,13 +97,13 @@ Class TemplateViewHelper
 	 */
 	public function DefaultTemplateView()
 	{
-		$template_view_id = Services::Registry()->get('ContentParameters', 'template_view_id', 0);
+		$template_view_id = Services::Registry()->get('Parameters', 'template_view_id', 0);
 		if ((int)$template_view_id == 0) {
 		} else {
 			return $template_view_id;
 		}
 
-		$template_view_id = Services::Registry()->get('MenuItemParameters', 'template_view_id', 0);
+		$template_view_id = Services::Registry()->get('MenuParameters', 'template_view_id', 0);
 		if ((int)$template_view_id == 0) {
 		} else {
 			return $template_view_id;

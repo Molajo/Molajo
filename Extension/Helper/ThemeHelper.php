@@ -102,13 +102,13 @@ Class ThemeHelper
 	 */
 	public function setDefaultTheme()
 	{
-		$theme_id = Services::Registry()->get('ContentParameters', 'theme_id', 0);
+		$theme_id = Services::Registry()->get('Parameters', 'theme_id', 0);
 		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;
 		}
 
-		$theme_id = Services::Registry()->get('MenuItemParameters', 'theme_id', 0);
+		$theme_id = Services::Registry()->get('MenuParameters', 'theme_id', 0);
 		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;

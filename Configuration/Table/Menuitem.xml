@@ -6,7 +6,7 @@
         data_source="JDatabase">
     <filters include="ContentFilters"/>
     <fields>
-        <field name="custom_fields" registry="MenuitemCustomfields">
+        <field name="customfields" registry="MenuitemCustomfields">
             <field name="custom_field1" type="char" null="1" default="" values=""/>
         </field>
         <field name="parameters" registry="MenuitemParameters">

@@ -98,13 +98,13 @@ Class WrapViewHelper
 	 */
 	public function DefaultWrapView()
 	{
-		$wrap_view_id = Services::Registry()->get('ContentParameters', 'wrap_view_id', 0);
+		$wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id', 0);
 		if ((int)$wrap_view_id == 0) {
 		} else {
 			return $wrap_view_id;
 		}
 
-		$wrap_view_id = Services::Registry()->get('MenuItemParameters', 'wrap_view_id', 0);
+		$wrap_view_id = Services::Registry()->get('MenuParameters', 'wrap_view_id', 0);
 		if ((int)$wrap_view_id == 0) {
 		} else {
 			return $wrap_view_id;

@@ -27,7 +27,7 @@
         <field name="modified_by" type="int" null="0" default="0"/>
         <field name="checked_out_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
         <field name="checked_out_by" type="int" null="0" default="0"/>
-        <field name="custom_fields" type="" null="1" default=""/>
+        <field name="customfields" type="" null="1" default=""/>
         <field name="parameters" type="" null="1" default=""/>
         <field name="metadata" type="" null="1" default=""/>
         <field name="language" type="char" null="1" default=""/>

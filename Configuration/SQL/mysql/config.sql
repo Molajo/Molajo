@@ -56,21 +56,21 @@ INSERT INTO `molajo_extension_options`
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
-      (1, 0, 200, 'custom_fields_image1_label', 'FIELD_CUSTOM_FIELDS_IMAGE1_LABEL', 34),
-      (1, 0, 200, 'custom_fields_image1_file', 'FIELD_CUSTOM_FIELDS_IMAGE1_FILE', 35),
-      (1, 0, 200, 'custom_fields_image1_credit', 'FIELD_CUSTOM_FIELDS_IMAGE1_CREDIT', 36),
+      (1, 0, 200, 'customfields_image1_label', 'FIELD_CUSTOM_FIELDS_IMAGE1_LABEL', 34),
+      (1, 0, 200, 'customfields_image1_file', 'FIELD_CUSTOM_FIELDS_IMAGE1_FILE', 35),
+      (1, 0, 200, 'customfields_image1_credit', 'FIELD_CUSTOM_FIELDS_IMAGE1_CREDIT', 36),
 
-      (1, 0, 200, 'custom_fields_link1_label', 'FIELD_CUSTOM_FIELDS_LINK1_LABEL', 37),
-      (1, 0, 200, 'custom_fields_link1_url', 'FIELD_CUSTOM_FIELDS_LINK1_FILE', 38),
+      (1, 0, 200, 'customfields_link1_label', 'FIELD_CUSTOM_FIELDS_LINK1_LABEL', 37),
+      (1, 0, 200, 'customfields_link1_url', 'FIELD_CUSTOM_FIELDS_LINK1_FILE', 38),
 
-      (1, 0, 200, 'custom_fields_video1_label', 'FIELD_CUSTOM_FIELDS_VIDEO1_LABEL', 39),
-      (1, 0, 200, 'custom_fields_video1_url', 'FIELD_CUSTOM_FIELDS_VIDEO1_URL', 40),
+      (1, 0, 200, 'customfields_video1_label', 'FIELD_CUSTOM_FIELDS_VIDEO1_LABEL', 39),
+      (1, 0, 200, 'customfields_video1_url', 'FIELD_CUSTOM_FIELDS_VIDEO1_URL', 40),
 
-      (1, 0, 200, 'custom_fields_audio1_label', 'FIELD_CUSTOM_FIELDS_AUDIO1_LABEL', 41),
-      (1, 0, 200, 'custom_fields_audio1_url', 'FIELD_CUSTOM_FIELDS_AUDIO1_URL', 42),
+      (1, 0, 200, 'customfields_audio1_label', 'FIELD_CUSTOM_FIELDS_AUDIO1_LABEL', 41),
+      (1, 0, 200, 'customfields_audio1_url', 'FIELD_CUSTOM_FIELDS_AUDIO1_URL', 42),
 
-      (1, 0, 200, 'custom_fields_file1_label', 'FIELD_CUSTOM_FIELDS_FILE1_LABEL', 43),
-      (1, 0, 200, 'custom_fields_file1_url', 'FIELD_CUSTOM_FIELDS_FILE1_URL', 44);
+      (1, 0, 200, 'customfields_file1_label', 'FIELD_CUSTOM_FIELDS_FILE1_LABEL', 43),
+      (1, 0, 200, 'customfields_file1_url', 'FIELD_CUSTOM_FIELDS_FILE1_URL', 44);
 
 # 200 Metadata
 INSERT INTO `molajo_extension_options`
@@ -162,7 +162,7 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 0, 220, '', '', 0),
-      (1, 0, 220, 'custom_fields', 'FIELD_JSON_CUSTOM_FIELDS', 1),
+      (1, 0, 220, 'customfields', 'FIELD_JSON_CUSTOM_FIELDS', 1),
       (1, 0, 220, 'metadata', 'FIELD_JSON_METADATA', 2),
       (1, 0, 220, 'parameters', 'FIELD_JSON_PARAMETERS', 3);
 

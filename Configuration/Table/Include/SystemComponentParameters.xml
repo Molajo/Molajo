@@ -22,7 +22,7 @@
 <field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
 <field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
 <field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
-<field name="item_get_custom_fields" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="item_get_customfields" type="integer" null="0" default="1" values="0,1,2"/>
 <field name="item_get_children" type="integer" null="0" default="1" values="0,1,2"/>
 <field name="item_check_view_level_access" type="integer" null="0" default="1" values="0,1,2"/>
 
@@ -40,7 +40,7 @@
 <field name="list_template_view_css_id" type="char" null="1" default="" values=""/>
 <field name="list_template_view_css_class" type="char" null="1" default="" values=""/>
 
-<field name="list_get_custom_fields" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="list_get_customfields" type="integer" null="0" default="1" values="0,1,2"/>
 <field name="list_get_child_row_counts" type="integer" null="0" default="1" values="0,1,2"/>
 <field name="list_check_view_level_access" type="integer" null="0" default="1" values="0,1,2"/>
 

@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="UserActivity"
+        catalog_type_id="0"
         table="#__user_activity"
         primary_key="id"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="1"
+        check_view_level_access="0"
         data_source="JDatabase">
-    <fields>
-        <field name="id" type="" null="0" default="" identity="1"/>
-        <field name="user_id" type="int" null="0" default=""/>
-        <field name="action_id" type="int" null="0" default=""/>
-        <field name="catalog_id" type="int" null="0" default=""/>
-        <field name="activity_datetime" type="datetime" null="0" default=""/>
-    </fields>
-    <joins>
-        <join table="#__users" alias="b" select="username,first_name,last_name" jointo="id" joinwith="user_id"/>
-        <join table="#__actions" alias="c" select="title" jointo="id" joinwith="action_id"/>
-        <join table="#__catalog" alias="d" select="catalog_type_id,source_id,sef_request,view_group_id" jointo="id"
-              joinwith="catalog_id"/>
-        <join table="#__catalog_types" alias="e" select="title,source_table" jointo="id" joinwith="d.catalog_type_id"/>
-    </joins>
-    <triggers>
-        <trigger name="Action"/>
-    </triggers>
-    <foreignkeys>
-        <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
-        <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
-        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-    </foreignkeys>
+    <table>
+        <item>
+            <fields>
+                <field name="id" type="" null="0" default="" identity="1"/>
+                <field name="user_id" type="int" null="0" default=""/>
+                <field name="action_id" type="int" null="0" default=""/>
+                <field name="catalog_id" type="int" null="0" default=""/>
+                <field name="activity_datetime" type="datetime" null="0" default=""/>
+            </fields>
+            <joins>
+                <join table="#__users"
+                      alias="useractivity_to_users"
+                      select="username,first_name,last_name"
+                      jointo="id"
+                      joinwith="user_id"/>
+                <join table="#__actions"
+                      alias="useractivity_to_actions"
+                      select="title"
+                      jointo="id"
+                      joinwith="action_id"/>
+                <join table="#__catalog"
+                      alias="useractivity_to_catalog"
+                      select="catalog_type_id,source_id,sef_request,view_group_id"
+                      jointo="id"
+                      joinwith="catalog_id"/>
+                <join table="#__catalog_types"
+                      alias="useractivity_to_catalog_to_catalog_type"
+                      select="title,source_table"
+                      jointo="id"
+                      joinwith="useractivity_to_catalog.catalog_type_id"/>
+            </joins>
+            <triggers>
+                <trigger name="Action"/>
+            </triggers>
+            <foreignkeys>
+                <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+                <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
+                <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+            </foreignkeys>
+        </item>
+    </table>
 </model>

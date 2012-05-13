@@ -70,68 +70,33 @@ Class UserService
 	 */
 	protected function load()
 	{
+		/** Initialize */
+		Services::Registry()->deleteRegistry('Users');
+
+		/** Retrieve User Data  */
 		$m = Application::Controller()->connect('Users');
 
 		$m->model->set('id', $this->id);
 
-		$m->model->set('get_custom_fields', 1);
-		$m->model->set('use_special_joins', false);
-		$m->model->set('check_view_level_access', false);
-
 		$results = $m->getData('load');
 
 		if ($results === false) {
-			throw new \RuntimeException ('Application setSiteData() query problem');
-		}
-
-		$first_name = '';
-		$last_name = '';
-
-		while (list($name, $value) = each($results)) {
-
-			if (substr($name, 0, 5) == 'Model'
-				|| $name == 'parameters'
-				|| $name == 'custom_fields'
-				|| $name == 'metadata'
-			) {
-
-			} else {
-
-				Services::Registry()->set('User', $name, $value);
-
-				if ($name == 'first_name') {
-					$first_name = $value;
-
-				} elseif ($name == 'last_name') {
-					$last_name = $value;
-				}
-			}
-		}
-
-		Services::Registry()->set('User', 'name', $first_name . ' ' . $last_name);
-		Services::Registry()->set('User', 'administrator', 0);
-
-		if ($this->id == 0) {
-			Services::Registry()->set('User', 'public', 1);
-			Services::Registry()->set('User', 'guest', 1);
-			Services::Registry()->set('User', 'registered', 0);
-		} else {
-			Services::Registry()->set('User', 'public', 1);
-			Services::Registry()->set('User', 'guest', 0);
-			Services::Registry()->set('User', 'registered', 1);
+			throw new \RuntimeException ('User load() query problem');
 		}
 
 		/** User Applications */
 		$temp = array();
-		$applications = $results['Model\\UserApplications'];
+		$applications = $results['UserApplications'];
 		foreach ($applications as $app) {
 			$temp[] = $app->application_id;
 		}
+		unset($results['UserApplications']);
+
 		Services::Registry()->set('User', 'Applications', $temp);
 
 		/** User Groups */
 		$temp = array();
-		$groups = $results['Model\\UserGroups'];
+		$groups = $results['UserGroups'];
 		foreach ($groups as $group) {
 			$temp[] = $group->group_id;
 		}
@@ -149,18 +114,13 @@ Class UserService
 				$temp[] = SYSTEM_GROUP_REGISTERED;
 			}
 		}
+		unset($results['UserGroups']);
 
 		Services::Registry()->set('User', 'Groups', $temp);
 
-		if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $temp)) {
-			Services::Registry()->set('User', 'administrator', 1);
-		} else {
-			Services::Registry()->set('User', 'administrator', 0);
-		}
-
 		/** User View Groups */
 		$temp = array();
-		$viewGroups = $results['Model\\UserViewGroups'];
+		$viewGroups = $results['UserViewGroups'];
 		foreach ($viewGroups as $vg) {
 			$temp[] = $vg->view_group_id;
 		}
@@ -168,13 +128,50 @@ Class UserService
 		if (count($temp) == 0) {
 			$temp = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
+		unset($results['ViewGroups']);
 
 		Services::Registry()->set('User', 'ViewGroups', $temp);
 
 		/** User Activity */
-		$activity = $results['Model\\UserActivity'];
-		Services::Registry()->set('User', 'UserActivity', $activity);
-		/**
+		$activity = $results['UserActivity'];
+		unset($results['UserActivity']);
+
+		Services::Registry()->set('User', 'Activity', $activity);
+
+		/** User Object */
+		$first_name = '';
+		$last_name = '';
+
+		while (list($name, $value) = each($results)) {
+
+			Services::Registry()->set('User', $name, $value);
+
+			if ($name == 'first_name') {
+				$first_name = $value;
+
+			} elseif ($name == 'last_name') {
+				$last_name = $value;
+			}
+		}
+
+		Services::Registry()->set('User', 'name', $first_name . ' ' . $last_name);
+
+		if ($this->id == 0) {
+			Services::Registry()->set('User', 'public', 1);
+			Services::Registry()->set('User', 'guest', 1);
+			Services::Registry()->set('User', 'registered', 0);
+		} else {
+			Services::Registry()->set('User', 'public', 1);
+			Services::Registry()->set('User', 'guest', 0);
+			Services::Registry()->set('User', 'registered', 1);
+		}
+
+		if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $temp)) {
+			Services::Registry()->set('User', 'administrator', 1);
+		} else {
+			Services::Registry()->set('User', 'administrator', 0);
+		}
+
 		echo '<pre>';
 		echo 'User<br />';
 		var_dump(Services::Registry()->get('User'));
@@ -182,19 +179,19 @@ Class UserService
 
 		echo '<pre>';
 		echo 'User Customfields<br />';
-		var_dump(Services::Registry()->get('UserCustomfields'));
+		var_dump(Services::Registry()->get('UsersCustomfields'));
 		echo '</pre>';
 
 		echo '<pre>';
 		echo 'User Parameters<br />';
-		var_dump(Services::Registry()->get('UserParameters'));
+		var_dump(Services::Registry()->get('UsersParameters'));
 		echo '</pre>';
 
 		echo '<pre>';
 		echo 'User Metadata<br />';
-		var_dump(Services::Registry()->get('UserMetadata'));
+		var_dump(Services::Registry()->get('UsersMetadata'));
 		echo '</pre>';
-		 **/
+		  die;
 		return $this;
 	}
 }

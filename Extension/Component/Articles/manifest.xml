@@ -31,15 +31,15 @@
                     <trigger include="ContentTriggers"/>
                 </triggers>
                 <customfields>
-                    <customfield name="custom_fields" registry="ItemCustomfields">
+                    <customfield name="customfields" registry="Customfields">
                         <element include="ContentCustomfields"/>
                         <element name="example_of_content_only_field" filter="int" null="1" default="1"/>
                     </customfield>
-                    <customfield name="metadata" registry="ItemMetadata">
+                    <customfield name="metadata" registry="Metadata">
                         <element include="SystemMetadata"/>
                     </customfield>
-                    <customfield name="parameters" registry="ItemParameters">
-                        <element include="SystemItemParameters"/>
+                    <customfield name="parameters" registry="Parameters">
+                        <element include="SystemParameters"/>
                     </customfield>
                 </customfields>
             </item>

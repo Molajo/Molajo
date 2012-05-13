@@ -2,7 +2,7 @@
 <model
         name="UserApplications"
         table="#__user_applications"
-        primary_key="id"
+        primary_key="user_id,application_id"
         data_source="JDatabase">
     <fields>
         <field name="user_id" type="int" null="0" default=""/>

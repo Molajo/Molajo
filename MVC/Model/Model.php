@@ -46,6 +46,14 @@ class Model
 	protected $table_name = '';
 
 	/**
+	 * Used internally to retrieve and use names of table fields
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $fields = '';
+
+	/**
 	 * Primary key for the database table
 	 *
 	 * @var    string
@@ -298,10 +306,10 @@ class Model
 	 */
 	public function getFieldDefinitions()
 	{
-		if (Services::Registry()->get($this->table_registry_name, 'Table') == '') {
+		if ($this->table_name == '') {
 			return array();
 		}
-		return $this->db->getTableColumns(Services::Registry()->get($this->table_registry_name, 'Table'), false);
+		return $this->db->getTableColumns($this->table_name, false);
 	}
 
 	/**
@@ -340,15 +348,65 @@ class Model
 	/**
 	 * useSpecialJoins
 	 *
-	 * Method used in load sequence to optionally append additional
-	 * joins to the primary table and add fields from those tables
+	 * Use joins defined in table xml to extend model
 	 *
-	 * @return array
-	 * @since  1.0
+	 * @return  array
+	 * @since   1.0
 	 */
 	protected function useSpecialJoins()
 	{
-		return $this->query_results = array();
+		$joins = Services::Registry()->get($this->table_registry_name, 'Joins');
+
+		if (count($joins) > 0) {
+
+			foreach ($joins as $join) {
+
+				$join_table = $join['table'];
+				$alias = $join['alias'];
+				$select = $join['select'];
+				$joinTo = $join['jointo'];
+				$joinWith = $join['joinwith'];
+
+				/* Join to table */
+				if (trim($alias) == '') {
+					$alias = $join_table;
+				}
+
+				$this->query->from($this->db->qn($join_table) . ' as ' . $this->db->qn($alias));
+
+				/* Select fields */
+				$selectArray = explode(',', $select);
+
+				if (count($selectArray) > 0) {
+					foreach ($selectArray as $selectItem) {
+						$this->query->select($this->db->qn($alias . '.' . $selectItem));
+					}
+				}
+
+				/* joinTo and joinWith Fields */
+				$joinToArray = explode(',', $joinTo);
+				$joinWithArray = explode(',', $joinWith);
+
+				if (count($joinToArray) > 0) {
+					$i = 0;
+					foreach ($joinToArray as $joinToItem) {
+						$with = $joinWithArray[$i];
+						$hasAlias = explode('.', $with);
+						if (count($hasAlias) == 1) {
+							$withJoin = $this->primary_prefix. '.' . $with;
+						} else {
+							$withJoin = $with;
+						}
+						$this->query->where($this->db->qn($alias . '.' . $joinToItem)
+							. ' = '
+							. $this->db->qn($with));
+						$i++;
+					}
+				}
+			}
+		}
+
+		return $this;
 	}
 
 	/**
@@ -468,12 +526,12 @@ class Model
 			$this->query->select(
 				$this->db->qn($this->primary_prefix)
 					. '.'
-					. $this->db->qn(Services::Registry()->get($this->table_registry_name, 'primary_key')));
+					. $this->db->qn($this->primary_key));
 		}
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
+				$this->db->qn($this->table_name)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -507,12 +565,12 @@ class Model
 			$this->query->select(
 				$this->db->qn($this->primary_prefix)
 					. '.'
-					. $this->db->qn(Services::Registry()->get($this->table_registry_name, 'primary_key')));
+					. $this->db->qn($this->primary_key));
 		}
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
+				$this->db->qn($this->table_name)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
@@ -649,12 +707,28 @@ class Model
 	 */
 	public function loadObjectList()
 	{
+		/** Establish primary select values and table, if not provided */
 		$this->setQueryDefaults();
 
+		/** Joins */
+		if (Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0) == 1) {
+			$this->useSpecialJoins();
+		}
+
+		/** Set the DB Query */
+		$this->db->setQuery($this->query->__toString());
+
+		//echo '<pre>';
+		//var_dump($this->query->__toString());
+		//echo '</pre>';
+
+		/** Execute the query */
 		$this->query_results = $this->db->loadObjectList();
 
+		/** error handling */
 		$this->processQueryResults('loadObjectList');
 
+		/** return results */
 		return $this->query_results;
 	}
 
@@ -670,7 +744,6 @@ class Model
 	protected function setQueryDefaults()
 	{
 		if ($this->query->select === null) {
-
 			$this->fields = $this->getFieldDatatypes();
 
 			while (list($name, $value) = each($this->fields)) {
@@ -683,18 +756,12 @@ class Model
 
 		if ($this->query->from == null) {
 			$this->query->from(
-				$this->db->qn(Services::Registry()->get($this->table_registry_name, 'Table'))
+				$this->db->qn($this->table_name)
 					. ' as '
 					. $this->db->qn($this->primary_prefix)
 			);
 		}
 
-		$this->db->setQuery($this->query->__toString());
-		/**
-		echo '<pre>';
-		var_dump($this->query->__toString());
-		echo '</pre>';
-		 */
 		return;
 	}
 
@@ -739,6 +806,7 @@ class Model
 	{
 		return array();
 	}
+
 
 	/**
 	 * getPagination
