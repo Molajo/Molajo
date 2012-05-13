@@ -49,7 +49,7 @@
                     <field name="lvl" field="int" null="0" default="0"/>
                     <field name="home" field="int" null="0" default="0"/>
                     <field name="position" field="char" length="45" null="0" default="0"/>
-                    <field name="custom_fields" customfield="1"/>
+                    <field name="customfields" customfield="1"/>
                     <field name="parameters" customfield="1"/>
                     <field name="metadata" customfield="1"/>
                     <field name="language" field="char" null="1" default=""/>
@@ -87,14 +87,14 @@
 
                 </triggers>
                 <customfields>
-                    <customfield name="custom_fields" registry="ItemCustomfields">
+                    <customfield name="customfields" registry="Customfields">
                         <field name="intro_image" file="" type="image" shape="" size=""/>
                         <field name="body_image" file="" type="image" shape="" size=""/>
                         <field name="author_notes" field="char" null="0" default=" "/>
 
                         <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                     </customfield>
-                    <customfield name="metadata" registry="ItemMetadata">
+                    <customfield name="metadata" registry="Metadata">
                         <field name="metadata_title" type="char" null="1" default=""/>
                         <field name="metadata_description" type="text" null="1" default=""/>
                         <field name="metadata_keywords" type="char" null="1" default=""/>
@@ -103,7 +103,7 @@
                         <field name="metadata_content_rights" type="char" null="1" default=""/>
 
                     </customfield>
-                    <customfield name="parameters" registry="ItemParameters">
+                    <customfield name="parameters" registry="Parameters">
                         <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
                         <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
                         <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0"
@@ -130,7 +130,7 @@
                         <field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
                         <field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
                         <field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
-                        <field name="item_get_custom_fields" type="integer" null="0" default="1"
+                        <field name="item_get_customfields" type="integer" null="0" default="1"
                                values="0,1,2"/>
                         <field name="item_get_children" type="integer" null="0" default="1" values="0,1,2"/>
                         <field name="item_check_view_level_access" type="integer" null="0" default="1"
@@ -179,7 +179,7 @@
                         <field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
                         <field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
                         <field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
-                        <field name="item_get_custom_fields" type="integer" null="0" default="1"
+                        <field name="item_get_customfields" type="integer" null="0" default="1"
                                values="0,1,2"/>
                         <field name="item_get_children" type="integer" null="0" default="1" values="0,1,2"/>
                         <field name="item_check_view_level_access" type="integer" null="0" default="1"
@@ -199,7 +199,7 @@
                         <field name="list_template_view_css_id" type="char" null="1" default="" values=""/>
                         <field name="list_template_view_css_class" type="char" null="1" default="" values=""/>
 
-                        <field name="list_get_custom_fields" type="integer" null="0" default="1"
+                        <field name="list_get_customfields" type="integer" null="0" default="1"
                                values="0,1,2"/>
                         <field name="list_get_child_row_counts" type="integer" null="0" default="1"
                                values="0,1,2"/>

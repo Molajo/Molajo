@@ -147,7 +147,7 @@ Class ExtensionHelper
 
 		$m->model->set('id', (int)$extension_id);
 
-		$m->model->set('get_custom_fields', 1);
+		$m->model->set('get_customfields', 1);
 		$m->model->set('get_item_children', false);
 		$m->model->set('use_special_joins', false);
 		$m->model->set('check_view_level_access', false);
@@ -160,7 +160,7 @@ Class ExtensionHelper
 		$m->model->query->select($m->model->db->qn('a.title'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
 		$m->model->query->select($m->model->db->qn('a.metadata'));
-		$m->model->query->select($m->model->db->qn('a.custom_fields'));
+		$m->model->query->select($m->model->db->qn('a.customfields'));
 		$m->model->query->select($m->model->db->qn('a.translation_of_id'));
 		$m->model->query->select($m->model->db->qn('a.language'));
 

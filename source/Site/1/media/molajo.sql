@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 10, 2012 at 09:08 AM
+-- Generation Time: May 13, 2012 at 01:13 PM
 -- Server version: 5.5.9
 -- PHP Version: 5.3.6
 
@@ -51,7 +51,7 @@ CREATE TABLE `molajo_applications` (
   `name` varchar(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `path` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `description` mediumtext,
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   `parameters` mediumtext COMMENT 'Configurable Parameter Values',
   `metadata` mediumtext,
   PRIMARY KEY (`id`),
@@ -437,7 +437,7 @@ CREATE TABLE `molajo_catalog_activity` (
   `rating` tinyint(4) unsigned DEFAULT NULL,
   `activity_datetime` datetime DEFAULT NULL,
   `ip_address` varchar(15) NOT NULL DEFAULT '',
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   PRIMARY KEY (`id`),
   KEY `catalog_activity_catalog_index` (`catalog_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -550,7 +550,7 @@ CREATE TABLE `molajo_content` (
   `rgt` int(11) unsigned NOT NULL DEFAULT '0',
   `lvl` int(11) unsigned NOT NULL DEFAULT '0',
   `home` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   `parameters` mediumtext COMMENT 'Attributes (Custom Fields)',
   `metadata` mediumtext,
   `language` char(7) NOT NULL DEFAULT 'en-GB',
@@ -742,7 +742,7 @@ CREATE TABLE `molajo_extension_instances` (
   `modified_by` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Modified By User ID',
   `checked_out_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Checked out Date and Time',
   `checked_out_by` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Checked out by User Id',
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   `parameters` mediumtext COMMENT 'Attributes (Custom Fields)',
   `metadata` mediumtext,
   `language` char(7) NOT NULL DEFAULT 'en-GB',
@@ -875,7 +875,7 @@ CREATE TABLE `molajo_extension_sites` (
   `name` varchar(255) DEFAULT ' ',
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
   `location` varchar(2048) NOT NULL,
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   `parameters` mediumtext,
   `metadata` mediumtext,
   PRIMARY KEY (`id`)
@@ -1112,7 +1112,7 @@ CREATE TABLE `molajo_sites` (
   `path` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `base_url` varchar(2048) NOT NULL DEFAULT ' ',
   `description` mediumtext,
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   `parameters` mediumtext COMMENT 'Configurable Parameter Values',
   `metadata` mediumtext,
   PRIMARY KEY (`id`)
@@ -1122,7 +1122,7 @@ CREATE TABLE `molajo_sites` (
 -- Dumping data for table `molajo_sites`
 --
 
-INSERT INTO `molajo_sites` VALUES(1, 10, 'Molajo', '', '', 'Primary Site', '{"custom_field1":"I am a custom field for the site object, specifically the #1 site."}', '{"porch_light":"1"}', '{"metadata_title":"Molajo Site 1", "metadata_description":"Welcome to the Molajo Site 1", "metadata_keywords":"molajo", "metadata_robots":"follow, index", "metadata_author":"Author Name", "metadata_content_rights":"CC"}');
+INSERT INTO `molajo_sites` VALUES(1, 10, 'Molajo', '', '', 'Primary Site', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1291,7 +1291,7 @@ CREATE TABLE `molajo_users` (
   `send_email` tinyint(4) NOT NULL DEFAULT '0',
   `register_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_visit_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `custom_fields` mediumtext,
+  `customfields` mediumtext,
   `parameters` mediumtext COMMENT 'Configurable Parameter Values',
   `metadata` mediumtext,
   PRIMARY KEY (`id`),

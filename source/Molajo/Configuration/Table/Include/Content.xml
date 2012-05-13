@@ -13,15 +13,15 @@
             <trigger include="ContentTriggers"/>
         </triggers>
         <customfields>
-            <customfield name="custom_fields" registry="ItemCustomfields">
+            <customfield name="customfields" registry="Customfields">
                 <include name="ContentCustomfields"/>
                 <field name="example_of_content_only_field" type="int" null="1" default="1"/>
             </customfield>
-            <customfield name="metadata" registry="ItemMetadata">
+            <customfield name="metadata" registry="Metadata">
                 <include name="SystemMetadata"/>
             </customfield>
-            <customfield name="parameters" registry="ItemParameters">
-                <include name="SystemItemParameters"/>
+            <customfield name="parameters" registry="Parameters">
+                <include name="SystemParameters"/>
             </customfield>
         </customfields>
     </item>

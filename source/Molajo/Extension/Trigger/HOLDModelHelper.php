@@ -322,7 +322,7 @@ class ModelHelper
 		$item = array(),
 		$parameters = array())
 	{
-		$jsonfields[] = 'custom_fields';
+		$jsonfields[] = 'customfields';
 		$jsonfields[] = 'parameters';
 		$jsonfields[] = 'metadata';
 

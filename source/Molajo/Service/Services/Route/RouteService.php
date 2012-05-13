@@ -414,9 +414,9 @@ Class RouteService
 		echo 'id ' . Services::Registry()->get('Route', 'source_id') . '<br /><pre>';
 		var_dump(Services::Registry()->get('Content'));
 		echo 'Parameters<br />';
-		var_dump(Services::Registry()->get('ContentParameters'));
+		var_dump(Services::Registry()->get('Parameters'));
 		echo 'Metadata<br />';
-		var_dump(Services::Registry()->get('ContentMetadata'));
+		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
 
 		echo '<br /><br />Extension<br /><pre>';
@@ -510,8 +510,8 @@ Class RouteService
 		$this->setMetadata('ApplicationMetadata');
 		$this->setMetadata('ExtensionMetadata');
 		$this->setMetadata('CategoryMetadata');
-		$this->setMetadata('MenuItemMetadata');
-		$this->setMetadata('ContentMetadata');
+		$this->setMetadata('MenuMetadata');
+		$this->setMetadata('Metadata');
 
 	}
 

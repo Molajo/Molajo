@@ -4,9 +4,9 @@
         catalog_type_id="50"
         table="#__applications"
         primary_key="id"
-        id_name="name"
+        name_key="name"
         primary_prefix="a"
-        get_custom_fields="1"
+        get_customfields="1"
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
@@ -19,7 +19,7 @@
                 <field name="name" type="char" null="0" default="" unique="1"/>
                 <field name="path" type="char" null="0" default=""/>
                 <field name="description" type="text" null="1" default=""/>
-                <field name="custom_fields" type="" null="1" default=""/>
+                <field name="customfields" type="" null="1" default=""/>
                 <field name="parameters" type="" null="1" default=""/>
                 <field name="metadata" type="" null="1" default=""/>
             </fields>
@@ -45,7 +45,7 @@
 
             <customfields>
 
-                <customfield name="parameters" registry="ItemParameters">
+                <customfield name="parameters" registry="Parameters">
                     <field name="application_name" type="char" null="1" default="" values=""/>
 
                     <field name="sef" type="binary" null="1" default="1" values="0,1"/>
@@ -111,7 +111,7 @@
 
                 </customfield>
 
-                <customfield name="metadata" registry="ItemMetadata">
+                <customfield name="metadata" registry="Metadata">
                     <include name="SystemMetadata"/>
                 </customfield>
 

@@ -69,7 +69,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_sites` (
   `name` VARCHAR(255) NULL DEFAULT ' ' ,
   `enabled` TINYINT(1) NOT NULL DEFAULT 0 ,
   `location` VARCHAR(2048) NOT NULL ,
-  `custom_fields` MEDIUMTEXT NULL ,
+  `customfields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL ,
   `metadata` MEDIUMTEXT NULL ,
   PRIMARY KEY (`id`) )
@@ -157,7 +157,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   `modified_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Modified By User ID' ,
   `checked_out_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Checked out Date and Time' ,
   `checked_out_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Checked out by User Id' ,
-  `custom_fields` MEDIUMTEXT NULL ,
+  `customfields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
   `metadata` MEDIUMTEXT NULL ,
   `language` CHAR(7) NOT NULL DEFAULT 'en-GB' ,
@@ -184,7 +184,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_sites` (
   `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias' ,
   `base_url` VARCHAR(2048) NOT NULL DEFAULT ' ' ,
   `description` MEDIUMTEXT NULL DEFAULT NULL ,
-  `custom_fields` MEDIUMTEXT NULL DEFAULT NULL ,
+  `customfields` MEDIUMTEXT NULL DEFAULT NULL ,
   `parameters` MEDIUMTEXT NULL DEFAULT NULL COMMENT 'Configurable Parameter Values' ,
   `metadata` MEDIUMTEXT NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
@@ -202,7 +202,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_applications` (
   `name` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title' ,
   `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias' ,
   `description` MEDIUMTEXT NULL DEFAULT NULL ,
-  `custom_fields` MEDIUMTEXT NULL DEFAULT NULL ,
+  `customfields` MEDIUMTEXT NULL DEFAULT NULL ,
   `parameters` MEDIUMTEXT NULL DEFAULT NULL COMMENT 'Configurable Parameter Values' ,
   `metadata` MEDIUMTEXT NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
@@ -245,7 +245,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_content` (
   `rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `lvl` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `home` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
-  `custom_fields` MEDIUMTEXT NULL ,
+  `customfields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
   `metadata` MEDIUMTEXT NULL ,
   `language` CHAR(7) NOT NULL DEFAULT 'en-GB' ,
@@ -279,7 +279,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_users` (
   `send_email` TINYINT(4) NOT NULL DEFAULT 0 ,
   `register_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' ,
   `last_visit_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' ,
-  `custom_fields` MEDIUMTEXT NULL ,
+  `customfields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Configurable Parameter Values' ,
   `metadata` MEDIUMTEXT NULL ,
   PRIMARY KEY (`id`) )
@@ -593,7 +593,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_catalog_activity` (
   `rating` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   `activity_datetime` DATETIME NULL ,
   `ip_address` VARCHAR(15) NOT NULL DEFAULT '' ,
-  `custom_fields` MEDIUMTEXT NULL ,
+  `customfields` MEDIUMTEXT NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_catalog_activity_catalog`
     FOREIGN KEY (`catalog_id` )

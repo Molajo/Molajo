@@ -94,7 +94,7 @@ Class MenuitemHelper
 		Services::Registry()->loadField(
 			'MenuitemCustomfields',
 			'custom_field',
-			$row->custom_fields,
+			$row->customfields,
 			$xml->fields
 		);
 		Services::Registry()->loadField(
@@ -138,7 +138,7 @@ Class MenuitemHelper
 		$m->model->query->select($m->model->db->qn('a.title'));
 		$m->model->query->select($m->model->db->qn('a.alias'));
 		$m->model->query->select($m->model->db->qn('a.path'));
-		$m->model->query->select($m->model->db->qn('a.custom_fields'));
+		$m->model->query->select($m->model->db->qn('a.customfields'));
 		$m->model->query->select($m->model->db->qn('a.parameters'));
 		$m->model->query->select($m->model->db->qn('a.metadata'));
 		$m->model->query->select($m->model->db->qn('a.translation_of_id'));
