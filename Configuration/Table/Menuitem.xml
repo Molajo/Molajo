@@ -6,10 +6,10 @@
         data_source="JDatabase">
     <filters include="ContentFilters"/>
     <fields>
-        <field name="customfields" registry="MenuitemCustomfields">
+        <field name="customfields">
             <field name="custom_field1" type="char" null="1" default="" values=""/>
         </field>
-        <field name="parameters" registry="MenuitemParameters">
+        <field name="parameters">
             <field name="caching" type="binary" null="1" default="1" values="0,1"/>
             <field name="cache_time" type="integer" null="1" default="15" values=""/>
             <field name="cache_handler" type="char" null="1" default="" values=""/>
@@ -19,7 +19,7 @@
             <field name="template_view_id" type="integer" null="1" default="" values=""/>
             <field name="wrap_view_id" type="integer" null="1" default="" values=""/>
         </field>
-        <field name="metadata" registry="MenuitemMetadata">
+        <field name="metadata">
             <field name="metadata_title" type="char" null="0" default=""/>
             <field name="metadata_description" type="text" null="0" default=""/>
             <field name="metadata_keywords" type="char" null="1" default=""/>

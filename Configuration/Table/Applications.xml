@@ -19,9 +19,9 @@
                 <field name="name" type="char" null="0" default="" unique="1"/>
                 <field name="path" type="char" null="0" default=""/>
                 <field name="description" type="text" null="1" default=""/>
-                <field name="customfields" type="" null="1" default=""/>
-                <field name="parameters" type="" null="1" default=""/>
-                <field name="metadata" type="" null="1" default=""/>
+                <field name="customfields" type="customfield" null="1" default=""/>
+                <field name="parameters" type="customfield" null="1" default=""/>
+                <field name="metadata" type="customfield" null="1" default=""/>
             </fields>
 
             <foreignkeys>
@@ -45,7 +45,7 @@
 
             <customfields>
 
-                <customfield name="parameters" registry="Parameters">
+                <customfield name="parameters">
                     <field name="application_name" type="char" null="1" default="" values=""/>
 
                     <field name="sef" type="binary" null="1" default="1" values="0,1"/>
@@ -111,7 +111,7 @@
 
                 </customfield>
 
-                <customfield name="metadata" registry="Metadata">
+                <customfield name="metadata">
                     <include name="SystemMetadata"/>
                 </customfield>
 

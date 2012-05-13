@@ -15,26 +15,26 @@
     <triggers include="ContentTriggers"/>
     <content>
         <fields>
-            <field name="customfields" registry="Customfields">
+            <field name="customfields">
                 <include name="Customfields"/>
             </field>
-            <field name="metadata" registry="Metadata">
+            <field name="metadata">
                 <include name="SystemMetadata"/>
             </field>
-            <field name="parameters" registry="Parameters">
+            <field name="parameters">
                 <include name="SystemParameters"/>
             </field>
         </fields>
     </content>
     <component>
         <fields>
-            <field name="customfields" registry="ComponentCustomfields">
+            <field name="customfields">
                 <include name="Customfields"/>
             </field>
-            <field name="metadata" registry="ComponentMetadata">
+            <field name="metadata">
                 <include name="SystemMetadata"/>
             </field>
-            <field name="parameters" registry="ComponentParameters">
+            <field name="parameters">
                 <include name="SystemParameters"/>
             </field>
         </fields>

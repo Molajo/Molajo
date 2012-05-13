@@ -13,21 +13,21 @@
             <trigger include="ContentTriggers"/>
         </triggers>
         <customfields>
-            <customfield name="customfields" registry="Customfields">
+            <customfield name="customfields">
                 <include name="ContentCustomfields"/>
                 <field name="example_of_content_only_field" type="int" null="1" default="1"/>
             </customfield>
-            <customfield name="metadata" registry="Metadata">
+            <customfield name="metadata">
                 <include name="SystemMetadata"/>
             </customfield>
-            <customfield name="parameters" registry="Parameters">
+            <customfield name="parameters">
                 <include name="SystemParameters"/>
             </customfield>
         </customfields>
     </item>
     <component>
         <customfields>
-            <customfield name="parameters" registry="ComponentParameters">
+            <customfield name="parameters">
                 <include name="SystemComponentParameters"/>
             </customfield>
         </customfields>

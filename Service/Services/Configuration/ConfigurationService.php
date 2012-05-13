@@ -584,27 +584,29 @@ Class ConfigurationService
 		/** Item Customfields */
 		$include = 'x';
 		$i = 0;
-		while ($include != '') {
+		while ($i < 99) {
 
-			if (isset($xml->table->item->customfields->customfield[$i]->include['name'])) {
-				$include = (string)$xml->table->item->customfields->customfield[$i]->include['name'];
+			if (isset($xml->table->item->customfields->customfield[$i])) {
 			} else {
-				$include = '';
-				$done = true;
+				$i = 9999;
 				break;
 			}
 
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
+			if (isset($xml->table->item->customfields->customfield[$i]->include['name'])) {
+				$include = (string)$xml->table->item->customfields->customfield[$i]->include['name'];
+
+				if ($xml_string == '') {
+					$xml_string = file_get_contents($path_and_file);
+				}
+
+				$replace_this = '<include name="' . $include . '"/>';
+
+				$xml_string = ConfigurationService::replaceIncludeStatement(
+					$include, $file, $type, $replace_this, $xml_string
+				);
+
+				$xml = simplexml_load_string($xml_string);
 			}
-
-			$replace_this = '<include name="' . $include . '"/>';
-
-			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
-			);
-
-			$xml = simplexml_load_string($xml_string);
 			$i++;
 		}
 
@@ -620,27 +622,30 @@ Class ConfigurationService
 		/** Component Customfields */
 		$include = 'x';
 		$i = 0;
-		while ($include != '') {
+		while ($i < 99) {
 
-			if (isset($xml->table->component->customfields->customfield[$i]->include['name'])) {
-				$include = (string)$xml->table->component->customfields->customfield[$i]->include['name'];
+			if (isset($xml->table->component->customfields->customfield[$i])) {
 			} else {
-				$include = '';
-				$done = true;
+				$i = 9999;
 				break;
 			}
 
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
+			if (isset($xml->table->component->customfields->customfield[$i]->include['name'])) {
+				$include = (string)$xml->table->component->customfields->customfield[$i]->include['name'];
+
+				if ($xml_string == '') {
+					$xml_string = file_get_contents($path_and_file);
+				}
+
+				$replace_this = '<include name="' . $include . '"/>';
+
+				$xml_string = ConfigurationService::replaceIncludeStatement(
+					$include, $file, $type, $replace_this, $xml_string
+				);
+
+				$xml = simplexml_load_string($xml_string);
 			}
-
-			$replace_this = '<include name="' . $include . '"/>';
-
-			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
-			);
-
-			$xml = simplexml_load_string($xml_string);
+			$i++;
 		}
 
 		if (isset($xml->table->component->customfields)) {

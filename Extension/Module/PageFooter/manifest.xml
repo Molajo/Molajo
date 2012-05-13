@@ -10,7 +10,7 @@
     <version>1.0</version>
     <description>MODULE_PAGE_FOOTER_DESCRIPTION</description>
     <config>
-        <field name="parameters" registry="Parameters">
+        <field name="parameters">
             <element name="display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>
             <element name="template_view_id" filter="integer" null="1" default="42" values=""/>
             <element name="wrap_view_id" filter="integer" null="1" default="62" values=""/>
