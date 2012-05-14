@@ -118,7 +118,7 @@ Class ContentHelper
 	{
 		/** Retrieve the query results */
 		$row = $this->get(
-			Services::Registry()->get('Route', 'primary_category_id'),
+			Services::Registry()->get('Route', 'category_id'),
 			'#__content'
 		);
 
@@ -128,19 +128,43 @@ Class ContentHelper
 		}
 
 		Services::Registry()->set('Category', 'id', (int)$row['id']);
+		Services::Registry()->set('Category', 'extension_instance_id', (int)$row['extension_instance_id']);
+		Services::Registry()->set('Category', 'extension_catalog_type_id', (int)$row['extension_catalog_type_id']);
 		Services::Registry()->set('Category', 'title', $row['title']);
 		Services::Registry()->set('Category', 'translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Category', 'language', (string)$row['language']);
-		Services::Registry()->set('Category', 'view_group_id', (string)$row['view_group_id']);
-		Services::Registry()->set('Category', 'catalog_id', (string)$row['catalog_id']);
+		Services::Registry()->set('Category', 'language', $row['language']);
+		Services::Registry()->set('Category', 'catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Category', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Category', 'catalog_type_title', (string)$row['catalog_type_title']);
-		Services::Registry()->set('Category', 'modified_datetime', (string)$row['modified_datetime']);
+		Services::Registry()->set('Category', 'catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Category', 'modified_datetime', $row['modified_datetime']);
 
-		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile(
-			ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
-		$row = Services::Configuration()->populateCustomFields($xml->category, $row, 1);
+		/** Process each field namespace  */
+		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
+		foreach ($customFieldTypes as $customFieldName) {
+
+			Services::Registry()->deleteRegistry('Category'. ucfirst(strtolower($customFieldName)));
+
+			Services::Registry()->copy(
+				$row['model_name']. ucfirst(strtolower($customFieldName)),
+				'Category'. ucfirst(strtolower($customFieldName))
+			);
+
+			Services::Registry()->deleteRegistry($row['model_name']. ucfirst(strtolower($customFieldName)));
+		}
+/**
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Category'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('CategoryCustomfields'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('CategoryParameters'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('CategoryMetadata'));
+		echo '</pre>';
+*/
 
 		return true;
 	}
@@ -198,6 +222,7 @@ Class ContentHelper
 		 *  Run Query
 		 */
 		$row = $m->getData('load');
+
 		$row['table_registry_name'] = $m->model->table_registry_name;
 		$row['model_name'] = $m->model->model_name;
 

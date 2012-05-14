@@ -214,7 +214,6 @@ class ItemModel extends Model
 				$data = json_decode($jsonData);
 
 				/** test for application-specific values */
-
 				if (count($data) > 0
 					&& (defined('APPLICATION_ID'))) {
 					foreach ($data as $key => $value) {
@@ -273,6 +272,7 @@ class ItemModel extends Model
 						$this->query_results->$name = $setValue;
 					}
 				} else {
+//echo $useRegistryName.' '. $name.' '.$setValue.'<br /> ';
 					Services::Registry()->set($useRegistryName, $name, $setValue);
 				}
 			}
