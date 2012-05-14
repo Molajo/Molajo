@@ -89,16 +89,18 @@ Class EntryController extends DisplayController
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($table = '')
+	public function connect($table = '', $type = null)
 	{
-
+		if ($type == null) {
+			$type = 'Table';
+		}
 		echo 'connect '.$table.'<br />';
 
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {
 			$this->dataSource = $this->default_dataSource;
 		} else {
-			$this->table_registry_name = ConfigurationService::loadFile($table, 'Table');
+			$this->table_registry_name = ConfigurationService::loadFile($table, $type);
 
 			//echo '<pre>';
 			//var_dump(Services::Registry()->get($this->table_registry_name));

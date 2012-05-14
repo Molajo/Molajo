@@ -186,9 +186,13 @@ Class ExtensionHelper
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public function get($extension_id = 0)
+	public function get($extension_id = 0, $model = null)
 	{
-		$m = Application::Controller()->connect('ExtensionInstances');
+		if ($model == null) {
+			$model = 'ExtensionInstances';
+		}
+
+		$m = Application::Controller()->connect($model);
 
 		$m->model->set('id', (int)$extension_id);
 

@@ -83,10 +83,7 @@ Class WrapViewHelper
 		Services::Registry()->set('WrapView', 'path', $this->getPath($row->title));
 		Services::Registry()->set('WrapView', 'path_url', $this->getPathURL($row->title));
 
-		/** Load special fields for specific extension */
-//		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('WrapView', 'path'));
-//		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
-
+		//fix
 		return;
 	}
 

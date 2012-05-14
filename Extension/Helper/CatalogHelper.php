@@ -132,7 +132,7 @@ Class CatalogHelper
 			}
 		}
 
-		$m = Application::Controller()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog', 'Table');
 
 		$m->model->set('id', (int)$catalog_id);
 
@@ -161,7 +161,7 @@ Class CatalogHelper
 	 */
 	public function getIDUsingSEFURL($sef_request)
 	{
-		$m = Application::Controller()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog', 'Table');
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($sef_request));
@@ -180,7 +180,7 @@ Class CatalogHelper
 	 */
 	public function getID($catalog_type_id, $source_id)
 	{
-		$m = Application::Controller()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog', 'Table');
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
@@ -199,7 +199,7 @@ Class CatalogHelper
 	 */
 	public function getRedirectURL($catalog_id)
 	{
-		$m = Application::Controller()->connect('Catalog');
+		$m = Application::Controller()->connect('Catalog', 'Table');
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
@@ -228,7 +228,7 @@ Class CatalogHelper
 
 		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
 
-			$m = Application::Controller()->connect('Catalog');
+			$m = Application::Controller()->connect('Catalog', 'Table');
 
 			$m->model->query->select($m->model->db->qn('sef_request'));
 			$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);

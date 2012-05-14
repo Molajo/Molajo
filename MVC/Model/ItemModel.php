@@ -187,7 +187,9 @@ class ItemModel extends Model
 	protected function addCustomFields()
 	{
 		$customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
-
+		if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
+			return $this;
+		}
 		$retrieval_method = Services::Registry()->get($this->table_registry_name, 'get_customfields');
 
 		/** Process each field namespace  */

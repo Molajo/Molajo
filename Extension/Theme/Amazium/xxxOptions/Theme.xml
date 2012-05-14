@@ -1,6 +1,6 @@
 <model
-        name="Extensioninstances"
-        catalog_type_id="0"
+        name="Theme"
+        catalog_type_id="1500"
         table="#__extension_instances"
         primary_key="id"
         primary_prefix="a"
@@ -28,10 +28,9 @@
                     <include name="SystemMetadata"/>
                 </customfield>
                 <customfield name="parameters">
-                    <include name="SystemComponentParameters"/>
+                    <include name="SystemThemeParameters"/>
                 </customfield>
             </customfields>
         </item>
     </table>
 </model>
-

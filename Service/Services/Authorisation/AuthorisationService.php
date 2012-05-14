@@ -69,7 +69,7 @@ Class AuthorisationService
 	 */
 	protected function initialise()
 	{
-		$tasks = Services::Configuration()->loadFile('tasks');
+		$tasks = Services::Configuration()->loadFile('tasks', 'Application');
 		if (count($tasks) == 0) {
 			return;
 		}

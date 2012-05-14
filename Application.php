@@ -569,7 +569,7 @@ Class Application
 		}
 
 		/** Define PHP constants for application variables */
-		$defines = ConfigurationService::loadFile('defines');
+		$defines = ConfigurationService::loadFile('defines', 'Application');
 		foreach ($defines->define as $item) {
 			if (defined((string)$item['name'])) {
 			} else {
@@ -634,7 +634,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = ConfigurationService::loadFile('sites');
+			$sites = ConfigurationService::loadFile('sites', 'Application');
 
 			foreach ($sites->site as $single) {
 				if (strtolower($single->base) == strtolower($siteBase)) {
@@ -691,7 +691,7 @@ Class Application
 			/* to override - must also define PAGE_REQUEST */
 		} else {
 
-			$apps = ConfigurationService::loadFile('applications');
+			$apps = ConfigurationService::loadFile('applications', 'Application');
 
 			foreach ($apps->application as $app) {
 

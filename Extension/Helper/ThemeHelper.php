@@ -58,36 +58,45 @@ Class ThemeHelper
 			$theme_id = $this->setDefaultTheme();
 		}
 
-		$row = Helpers::Extension()->get($theme_id);
+		Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
+		$title = Helpers::Extension()->getInstanceTitle((int)$theme_id);
+		Services::Registry()->set('Parameters', 'theme_title', $title);
+		Services::Registry()->set('Parameters', 'theme_path', $this->getPath($title));
+		Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($title) . '/index.php');
+		Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($title));
+		Services::Registry()->set('Parameters', 'favicon', $this->getFavicon($title));
+
+		$row = Helpers::Extension()->get($theme_id, 'Theme');
 
 		/** 500: Theme not found */
 		if (count($row) == 0) {
 			/** Try System Template */
 			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
+
+			/** Get new Title and path */
+			$title = Helpers::Extension()->getInstanceTitle((int)$theme_id);
+			Services::Registry()->set('Parameters', 'theme_title', $title);
+			Services::Registry()->set('Parameters', 'theme_path', $this->getPath($title));
+			Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($title) . '/index.php');
+			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($title));
+			Services::Registry()->set('Parameters', 'favicon', $this->getFavicon($title));
+
 			$row = Helpers::Extension()->get($theme_id);
+
 			if (count($row) == 0) {
 				Services::Error()->set(500, 'Theme not found');
 				return false;
 			}
 		}
 
-		Services::Registry()->set('Theme', 'id', (int)$row->id);
-		Services::Registry()->set('Theme', 'title', $row->title);
-		Services::Registry()->set('Theme', 'translation_of_id', $row->translation_of_id);
-		Services::Registry()->set('Theme', 'language', $row->language);
-		Services::Registry()->set('Theme', 'view_group_id', $row->view_group_id);
-		Services::Registry()->set('Theme', 'catalog_id', $row->catalog_id);
-		Services::Registry()->set('Theme', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Theme', 'catalog_type_title', $row->catalog_type_title);
+		Services::Registry()->set('Parameters', 'theme_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'theme_language', $row['language']);
+		Services::Registry()->set('Parameters', 'theme_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'theme_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'theme_catalog_type_title', $row['catalog_type_title']);
 
-		Services::Registry()->set('Theme', 'path', $this->getPath($row->title));
-		Services::Registry()->set('Theme', 'path_include', $this->getPath($row->title) . '/index.php');
-		Services::Registry()->set('Theme', 'path_url', $this->getPathURL($row->title));
-		Services::Registry()->set('Theme', 'favicon', $this->getFavicon($row->title));
-
-		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('Theme', 'path'));
-		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
+		//todo: think about parameters.
 
 		return;
 	}
@@ -103,24 +112,6 @@ Class ThemeHelper
 	public function setDefaultTheme()
 	{
 		$theme_id = Services::Registry()->get('Parameters', 'theme_id', 0);
-		if ((int)$theme_id == 0) {
-		} else {
-			return $theme_id;
-		}
-
-		$theme_id = Services::Registry()->get('MenuParameters', 'theme_id', 0);
-		if ((int)$theme_id == 0) {
-		} else {
-			return $theme_id;
-		}
-
-		$theme_id = Services::Registry()->get('CategoryParameters', 'theme_id', 0);
-		if ((int)$theme_id == 0) {
-		} else {
-			return $theme_id;
-		}
-
-		$theme_id = Services::Registry()->get('ExtensionParameters', 'theme_id', 0);
 		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;

@@ -88,27 +88,7 @@ Class MenuitemHelper
 		Services::Registry()->set('Menuitem', 'menu_metadata', (string)$row->menu_metadata);
 		Services::Registry()->set('Menuitem', 'menu_catalog_id', (int)$row->menu_catalog_id);
 		Services::Registry()->set('Menuitem', 'menu_view_group_id', (int)$row->menu_view_group_id);
-
-		$xml = Services::Configuration()->loadFile('Menuitem', 'Table');
-
-		Services::Registry()->loadField(
-			'MenuitemCustomfields',
-			'custom_field',
-			$row->customfields,
-			$xml->fields
-		);
-		Services::Registry()->loadField(
-			'MenuitemMetadata',
-			'meta',
-			$row->metadata,
-			$xml->fields
-		);
-		Services::Registry()->loadField(
-			'MenuitemParameters',
-			'parameter',
-			$row->parameters,
-			$xml->fields
-		);
+//fix
 
 		return true;
 	}

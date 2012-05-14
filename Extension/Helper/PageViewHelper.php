@@ -53,38 +53,53 @@ Class PageViewHelper
 	 */
 	public function get($page_view_id = 0)
 	{
+
 		if ($page_view_id == 0) {
-			$page_view_id = $this->DefaultPageView();
+			$page_view_id = $this->setDefaultPageView();
 		}
 
-		$row = Helpers::Extension()->get($page_view_id);
+		Services::Registry()->set('Parameters', 'page_view_id', (int)$page_view_id);
+		$title = Helpers::Extension()->getInstanceTitle((int)$page_view_id);
+		Services::Registry()->set('Parameters', 'page_view_title', $title);
+		Services::Registry()->set('Parameters', 'page_view_path', $this->getPath($title));
+		Services::Registry()->set('Parameters', 'page_view_path_include', $this->getPath($title) . '/index.php');
+		Services::Registry()->set('Parameters', 'page_view_path_url', $this->getPathURL($title));
+
+		$row = Helpers::Extension()->get($page_view_id, 'PageView');
 
 		/** 500: Theme not found */
 		if (count($row) == 0) {
 			/** Try System Template */
 			$page_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
+
+			/** Get new Title and path */
+			$title = Helpers::Extension()->getInstanceTitle((int)$page_view_id);
+			Services::Registry()->set('Parameters', 'page_view_title', $title);
+			Services::Registry()->set('Parameters', 'page_view_path', $this->getPath($title));
+			Services::Registry()->set('Parameters', 'page_view_path_include', $this->getPath($title) . '/index.php');
+			Services::Registry()->set('Parameters', 'page_view_path_url', $this->getPathURL($title));
+			Services::Registry()->set('Parameters', 'favicon', $this->getFavicon($title));
+
 			$row = Helpers::Extension()->get($page_view_id);
+
 			if (count($row) == 0) {
 				Services::Error()->set(500, 'Theme not found');
 				return false;
 			}
 		}
 
-		Services::Registry()->set('PageView', 'id', (int)$row->id);
-		Services::Registry()->set('PageView', 'title', $row->title);
-		Services::Registry()->set('PageView', 'translation_of_id', $row->translation_of_id);
-		Services::Registry()->set('PageView', 'language', $row->language);
-		Services::Registry()->set('PageView', 'view_group_id', $row->view_group_id);
-		Services::Registry()->set('PageView', 'catalog_id', $row->catalog_id);
-		Services::Registry()->set('PageView', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('PageView', 'catalog_type_title', $row->catalog_type_title);
-		Services::Registry()->set('PageView', 'path', $this->getPath($row->title));
-		Services::Registry()->set('PageView', 'path_include', $this->getPath($row->title) . '/index.php');
-		Services::Registry()->set('PageView', 'path_url', $this->getPathURL($row->title));
+		Services::Registry()->set('Parameters', 'page_view_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'page_view_language', $row['language']);
+		Services::Registry()->set('Parameters', 'page_view_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'page_view_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'page_view_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'page_view_catalog_type_title', $row['catalog_type_title']);
 
-		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('PageView', 'path'));
-		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
+		$parameters = Services::Registry()->get('Parameters');
+		echo '<pre>';
+		var_dump($parameters);
+		echo '</pre>';
+		//todo: think about parameters.
 
 		return;
 	}
@@ -95,27 +110,9 @@ Class PageViewHelper
 	 * @return  string
 	 * @since   1.0
 	 */
-	public function DefaultPageView()
+	public function setDefaultPageView()
 	{
 		$page_view_id = Services::Registry()->get('Parameters', 'page_view_id', 0);
-		if ((int)$page_view_id == 0) {
-		} else {
-			return $page_view_id;
-		}
-
-		$page_view_id = Services::Registry()->get('MenuParameters', 'page_view_id', 0);
-		if ((int)$page_view_id == 0) {
-		} else {
-			return $page_view_id;
-		}
-
-		$page_view_id = Services::Registry()->get('CategoryParameters', 'page_view_id', 0);
-		if ((int)$page_view_id == 0) {
-		} else {
-			return $page_view_id;
-		}
-
-		$page_view_id = Services::Registry()->get('ExtensionParameters', 'page_view_id', 0);
 		if ((int)$page_view_id == 0) {
 		} else {
 			return $page_view_id;

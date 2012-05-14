@@ -1,0 +1,24 @@
+<table>
+    <item>
+        <fields>
+            <include name="ExtensionFields"/>
+        </fields>
+        <foreignkeys>
+            <include name="ExtensionForeignkeys"/>
+        </foreignkeys>
+        <children>
+            <include name="ExtensionChildren"/>
+        </children>
+        <triggers>
+            <include name="ExtensionTriggers"/>
+        </triggers>
+        <customfields>
+            <customfield name="metadata">
+                <include name="SystemMetadata"/>
+            </customfield>
+            <customfield name="parameters">
+                <include name="SystemThemeParameters"/>
+            </customfield>
+        </customfields>
+    </item>
+</table>
