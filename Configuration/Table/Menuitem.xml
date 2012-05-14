@@ -1,34 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Menuitem"
+        catalog_type_id="0"
         table="#__content"
         primary_key="id"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="0"
         data_source="JDatabase">
-    <filters include="ContentFilters"/>
-    <fields>
-        <field name="customfields">
-            <field name="custom_field1" type="char" null="1" default="" values=""/>
-        </field>
-        <field name="parameters">
-            <field name="caching" type="binary" null="1" default="1" values="0,1"/>
-            <field name="cache_time" type="integer" null="1" default="15" values=""/>
-            <field name="cache_handler" type="char" null="1" default="" values=""/>
-            <field name="list_limit" type="integer" null="1" default="15" values=""/>
-            <field name="theme_id" type="integer" null="1" default="" values=""/>
-            <field name="page_view_id" type="integer" null="1" default="" values=""/>
-            <field name="template_view_id" type="integer" null="1" default="" values=""/>
-            <field name="wrap_view_id" type="integer" null="1" default="" values=""/>
-        </field>
-        <field name="metadata">
-            <field name="metadata_title" type="char" null="0" default=""/>
-            <field name="metadata_description" type="text" null="0" default=""/>
-            <field name="metadata_keywords" type="char" null="1" default=""/>
-            <field name="metadata_robots" type="char" null="0" default="follow,index"
-                     values="follow,nofollow,index,noindex"/>
-            <field name="metadata_author" type="char" null="1" default=""/>
-            <field name="metadata_content_rights" type="char" null="1" default=""/>
-        </field>
-        <foreignkeys include="ContentForeignkeys"/>
-        <triggers include="ContentTriggers"/>
-    </fields>
+    <body include="Content"/>
 </model>

@@ -108,15 +108,15 @@ Class ConfigurationService
 		$items = $m->getData('load');
 
 		if ($items === false) {
-			throw new \RuntimeException ('Application setSiteData() query problem');
+			throw new \RuntimeException ('Site getSite() query problem');
 		}
 
-		Services::Registry()->set('Site', 'id', (int)$items['id']);
-		Services::Registry()->set('Site', 'catalog_type_id', (int)$items['catalog_type_id']);
-		Services::Registry()->set('Site', 'name', $items['name']);
-		Services::Registry()->set('Site', 'path', $items['path']);
-		Services::Registry()->set('Site', 'base_url', $items['base_url']);
-		Services::Registry()->set('Site', 'description', $items['description']);
+		Services::Registry()->set('Configuration', 'site_id', (int)$items['id']);
+		Services::Registry()->set('Configuration', 'site_catalog_type_id', (int)$items['catalog_type_id']);
+		Services::Registry()->set('Configuration', 'site_name', $items['name']);
+		Services::Registry()->set('Configuration', 'site_path', $items['path']);
+		Services::Registry()->set('Configuration', 'site_base_url', $items['base_url']);
+		Services::Registry()->set('Configuration', 'site_description', $items['description']);
 
 		return true;
 	}
@@ -187,11 +187,11 @@ Class ConfigurationService
 
 		if (APPLICATION == 'installation') {
 
-			Services::Registry()->set('Application', 'id', 0);
-			Services::Registry()->set('Application', 'catalog_type_id', CATALOG_TYPE_BASE_APPLICATION);
-			Services::Registry()->set('Application', 'name', APPLICATION);
-			Services::Registry()->set('Application', 'description', APPLICATION);
-			Services::Registry()->set('Application', 'path', APPLICATION);
+			Services::Registry()->set('Configuration', 'application_id', 0);
+			Services::Registry()->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_BASE_APPLICATION);
+			Services::Registry()->set('Configuration', 'application_name', APPLICATION);
+			Services::Registry()->set('Configuration', 'application_description', APPLICATION);
+			Services::Registry()->set('Configuration', 'application_path', APPLICATION);
 
 		} else {
 
@@ -205,11 +205,11 @@ Class ConfigurationService
 					throw new \RuntimeException ('Application setSiteData() query problem');
 				}
 
-				Services::Registry()->set('Application', 'id', (int)$items['id']);
-				Services::Registry()->set('Application', 'catalog_type_id', (int)$items['catalog_type_id']);
-				Services::Registry()->set('Application', 'name', $items['name']);
-				Services::Registry()->set('Application', 'path', $items['path']);
-				Services::Registry()->set('Application', 'description', $items['description']);
+				Services::Registry()->set('Configuration', 'application_id', (int)$items['id']);
+				Services::Registry()->set('Configuration', 'application_catalog_type_id', (int)$items['catalog_type_id']);
+				Services::Registry()->set('Configuration', 'application_name', $items['name']);
+				Services::Registry()->set('Configuration', 'application_path', $items['path']);
+				Services::Registry()->set('Configuration', 'application_description', $items['description']);
 
 				/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->get('ApplicationsParameters');
@@ -218,7 +218,7 @@ Class ConfigurationService
 				}
 
 				/** Remove from primary result set */
-				Services::Registry()->set('ApplicationTable', 'Parameters', array());
+				Services::Registry()->deleteRegistry('ApplicationsParameters');
 
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -228,7 +228,7 @@ Class ConfigurationService
 
 		if (defined('APPLICATION_ID')) {
 		} else {
-			define('APPLICATION_ID', Services::Registry()->get('Application', 'id'));
+			define('APPLICATION_ID', Services::Registry()->get('Configuration', 'application_id'));
 		}
 
 		return $this;
@@ -247,6 +247,8 @@ Class ConfigurationService
 	public static function loadFile($file, $type = 'Application')
 	{
 		//echo $file . '<br />';
+//		$extensionManifest = false;
+
 		if ($type == 'Application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
 
@@ -259,11 +261,12 @@ Class ConfigurationService
 				return $registryName;
 			}
 
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml';
-			} else {
+//			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml')) {
+//				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml';
+//				$extensionManifest = true;
+//			} else {
 				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
-			}
+//			}
 
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
@@ -375,12 +378,12 @@ Class ConfigurationService
 		/** Body - No registry */
 
 		$include = '';
-		if (isset($xml->model->body['include'])) {
-			$include = (string)$xml->model->body['include'];
+		if (isset($xml->model->body->include['name'])) {
+			$include = (string)$xml->model->body->include['name'];
 		}
 		if ($include == '') {
 		} else {
-			$replace_this = '<body include="' . $include . '"/>';
+			$replace_this = '<include name="' . $include . '"/>';
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
@@ -391,7 +394,7 @@ Class ConfigurationService
 		}
 
 		/** Fields  */
-		$known = array('name', 'type', 'null', 'default', 'length', 'customtype',
+		$known = array('name', 'type', 'null', 'default', 'length', 'customtype', 'file', 'char',
 			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
 
 		$include = '';
@@ -440,15 +443,15 @@ Class ConfigurationService
 		/** Joins */
 
 		$include = '';
-		if (isset($xml->table->item->joins->join['include'])) {
-			$include = (string)$xml->table->item->joins->join['include'];
+		if (isset($xml->table->item->joins->include['name'])) {
+			$include = (string)$xml->table->item->joins->include['name'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<joins include="' . $include . '"/>';
+			$replace_this = '<<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $type, $replace_this, $xml_string
 			);
@@ -480,15 +483,15 @@ Class ConfigurationService
 		/** Foreign Keys */
 
 		$include = '';
-		if (isset($xml->table->item->foreignkeys->foreignkey['include'])) {
-			$include = (string)$xml->table->item->foreignkeys->foreignkey['include'];
+		if (isset($xml->table->item->foreignkeys->include['name'])) {
+			$include = (string)$xml->table->item->foreignkeys->include['name'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<foreignkey include="' . $include . '"/>';
+			$replace_this = '<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $type, $replace_this, $xml_string
 			);
@@ -518,15 +521,15 @@ Class ConfigurationService
 		/** Children */
 
 		$include = '';
-		if (isset($xml->table->item->children->child['include'])) {
-			$include = (string)$xml->table->item->children->child['include'];
+		if (isset($xml->table->item->children->include['name'])) {
+			$include = (string)$xml->table->item->children->include['name'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<child include="' . $include . '"/>';
+			$replace_this = '<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $type, $replace_this, $xml_string
 			);
@@ -552,10 +555,9 @@ Class ConfigurationService
 		}
 
 		/** Triggers */
-
 		$include = '';
-		if (isset($xml->table->item->triggers->trigger['include'])) {
-			$include = (string)$xml->table->item->triggers->trigger['include'];
+		if (isset($xml->table->item->triggers->include['name'])) {
+			$include = (string)$xml->table->item->triggers->include['name'];
 		}
 
 		if ($include == '') {
@@ -563,7 +565,7 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<trigger include="' . $include . '"/>';
+			$replace_this = '<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $type, $replace_this, $xml_string
 			);
@@ -657,6 +659,10 @@ Class ConfigurationService
 			);
 		}
 
+//if ($file == 'Articles') {
+//			var_dump($xml);
+//			die;
+//		}
 		return $registryName;
 	}
 
@@ -748,7 +754,7 @@ Class ConfigurationService
 
 					if (in_array($key2, $known)) {
 					} else {
-						echo 'Field attribute not known ' . $key2 . ' for ' . $file . '<br />';
+						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
 					}
 
 					$fieldAttributesArray[$key2] = $value2;
@@ -773,7 +779,7 @@ Class ConfigurationService
 			}
 
 			$temp[] = $name;
-			Services::Registry()->set($registryName, 'CustomFieldGroups', $temp);
+			Services::Registry()->set($registryName, 'CustomFieldGroups', array_unique($temp));
 
 			$i++;
 		}

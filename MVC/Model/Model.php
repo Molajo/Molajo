@@ -24,18 +24,22 @@ class Model
 	/**
 	 * Table registry
 	 *
+	 * Declared public to retrieve following query in order to identify custom field registries
+	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $table_registry_name = false;
+	public $table_registry_name = false;
 
 	/**
 	 * Model Name
 	 *
+	 * Declared public to retrieve following query in order to identify custom field registries
+	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $model_name = '';
+	public $model_name = '';
 
 	/**
 	 * Database table
@@ -96,34 +100,42 @@ class Model
 	/**
 	 * Database connection
 	 *
+	 * Public to access db quoting on query parts
+	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $db;
+	public $db;
 
 	/**
 	 * Database query object
 	 *
+	 * Public to allow setting of partial query values
+	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $query;
+	public $query;
 
 	/**
 	 * Used in queries to determine date validity
 	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $nullDate;
-
-	/**
-	 * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
+	 * Public to access property during query development
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $now;
+	public $nullDate;
+
+	/**
+	 * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
+	 *
+	 * Public to access property during query development
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $now;
 
 	/**
 	 * Results from queries

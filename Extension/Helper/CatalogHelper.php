@@ -134,9 +134,9 @@ Class CatalogHelper
 		$m = Application::Controller()->connect('Catalog');
 
 		$m->model->set('id', (int)$catalog_id);
-		$m->model->set('get_item_children', false);
+		$m->model->set('get_item_children', 0);
 		$m->model->set('get_customfields', 0);
-		$m->model->set('check_view_level_access', false);
+		$m->model->set('check_view_level_access', 0);
 
 		$row = $m->getData('load');
 
@@ -148,6 +148,9 @@ Class CatalogHelper
 		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
 			$row['sef_request'] = '';
 		}
+//echo '<pre>';
+//var_dump($row);
+//echo '</pre>';
 
 		return $row;
 	}

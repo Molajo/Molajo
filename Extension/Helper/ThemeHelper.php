@@ -132,13 +132,7 @@ Class ThemeHelper
 			return $theme_id;
 		}
 
-		$theme_id = Services::Registry()->get('ApplicationParameters', 'theme_id', 0);
-		if ((int)$theme_id == 0) {
-		} else {
-			return $theme_id;
-		}
-
-		$theme_id = Services::Registry()->get('SiteParameters', 'theme_id', 0);
+		$theme_id = Services::Registry()->get('Configuration', 'theme_id', 0);
 		if ((int)$theme_id == 0) {
 		} else {
 			return $theme_id;

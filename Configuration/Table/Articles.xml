@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Category"
+        name="Articles"
+        catalog_type_id="10000"
         table="#__content"
         primary_key="id"
         primary_prefix="a"
-        get_customfields="0"
+        get_customfields="1"
         get_item_children="0"
-        use_special_joins="0"
-        check_view_level_access="0"
+        use_special_joins="1"
+        check_view_level_access="1"
         data_source="JDatabase">
     <table>
         <item>
@@ -15,17 +16,18 @@
                 <include name="ContentFields"/>
             </fields>
             <foreignkeys>
-                <foreignkey include="ContentForeignkeys"/>
+                <include name="ContentForeignkeys"/>
             </foreignkeys>
             <children>
-                <child include="ContentChildren"/>
+                <include name="ContentChildren"/>
             </children>
             <triggers>
-                <trigger include="ContentTriggers"/>
+                <include name="ContentTriggers"/>
             </triggers>
             <customfields>
                 <customfield name="customfields">
                     <include name="ContentCustomfields"/>
+                    <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                 </customfield>
                 <customfield name="metadata">
                     <include name="SystemMetadata"/>

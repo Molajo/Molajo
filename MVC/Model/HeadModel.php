@@ -66,7 +66,7 @@ Class HeadModel extends Model
 				$row->mimetype = Services::Filter()->escape_text($mimetype);
 
 				/** Base URL for Site */
-				$row->base = Services::Registry()->get('Site', 'base_url');
+				$row->base = Services::Registry()->get('Configuration', 'site_base_url');
 
 				/** Last Modified Date */
 				$last_modified = Services::Registry()->get('Metadata', 'modified_datetime');

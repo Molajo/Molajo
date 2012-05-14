@@ -76,12 +76,12 @@ INSERT INTO `molajo_extension_options`
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
-      (1, 0, 200, 'metadata_title', 'FIELD_METADATA_TITLE', 45),
-      (1, 0, 200, 'metadata_author', 'FIELD_METADATA_AUTHOR', 45),
-      (1, 0, 200, 'metadata_content_rights', 'FIELD_METADATA_CONTENT_RIGHTS', 46),
-      (1, 0, 200, 'metadata_description', 'FIELD_METADATA_DESCRIPTION', 47),
-      (1, 0, 200, 'metadata_keywords', 'FIELD_METADATA_KEYWORDS', 48),
-      (1, 0, 200, 'metadata_robots', 'FIELD_METADATA_ROBOTS', 49);
+      (1, 0, 200, 'title', 'FIELD_METADATA_TITLE', 45),
+      (1, 0, 200, 'author', 'FIELD_METADATA_AUTHOR', 45),
+      (1, 0, 200, 'content_rights', 'FIELD_METADATA_CONTENT_RIGHTS', 46),
+      (1, 0, 200, 'description', 'FIELD_METADATA_DESCRIPTION', 47),
+      (1, 0, 200, 'keywords', 'FIELD_METADATA_KEYWORDS', 48),
+      (1, 0, 200, 'robots', 'FIELD_METADATA_ROBOTS', 49);
 
 # 200 Parameters
 INSERT INTO `molajo_extension_options`

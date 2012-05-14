@@ -95,12 +95,12 @@
                         <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                     </customfield>
                     <customfield name="metadata">
-                        <field name="metadata_title" type="char" null="1" default=""/>
-                        <field name="metadata_description" type="text" null="1" default=""/>
-                        <field name="metadata_keywords" type="char" null="1" default=""/>
-                        <field name="metadata_robots" type="char" null="1" default="follow,index"/>
-                        <field name="metadata_author" type="char" null="1" default=""/>
-                        <field name="metadata_content_rights" type="char" null="1" default=""/>
+                        <field name="title" type="char" null="1" default=""/>
+                        <field name="description" type="text" null="1" default=""/>
+                        <field name="keywords" type="char" null="1" default=""/>
+                        <field name="robots" type="char" null="1" default="follow,index"/>
+                        <field name="author" type="char" null="1" default=""/>
+                        <field name="content_rights" type="char" null="1" default=""/>
 
                     </customfield>
                     <customfield name="parameters">

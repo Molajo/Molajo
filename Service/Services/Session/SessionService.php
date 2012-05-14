@@ -87,7 +87,7 @@ Class SessionService
 	{
 		$storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
 		$session = new Session($storage);
-		var_dump($session);
+		//var_dump($session);
 	}
 
 	/**

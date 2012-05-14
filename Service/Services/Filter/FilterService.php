@@ -91,7 +91,7 @@ Class FilterService
 		return;
 
 		$config = HTMLPurifier\HTMLPurifier_Config::createDefault();
-		var_dump($config);
+		//var_dump($config);
 
 		if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
 			$config->set('HTML.Doctype', 'HTML 4.01 Transitional');

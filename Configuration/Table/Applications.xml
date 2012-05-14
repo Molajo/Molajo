@@ -46,7 +46,7 @@
             <customfields>
 
                 <customfield name="parameters">
-                    <field name="application_name" type="char" null="1" default="" values=""/>
+                    <field name="application_name" type="char" null="1" default="Molajo Application" values=""/>
 
                     <field name="sef" type="binary" null="1" default="1" values="0,1"/>
                     <field name="sef_rewrite" type="binary" null="1" default="1" values="0,1"/>

@@ -127,13 +127,7 @@ Class TemplateViewHelper
 			return $template_view_id;
 		}
 
-		$template_view_id = Services::Registry()->get('ApplicationParameters', 'template_view_id', 0);
-		if ((int)$template_view_id == 0) {
-		} else {
-			return $template_view_id;
-		}
-
-		$template_view_id = Services::Registry()->get('SiteParameters', 'template_view_id', 0);
+		$template_view_id = Services::Registry()->get('Configuration', 'template_view_id', 0);
 		if ((int)$template_view_id == 0) {
 		} else {
 			return $template_view_id;

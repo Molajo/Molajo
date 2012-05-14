@@ -56,7 +56,6 @@ Class RouteService
 	 */
 	public function process()
 	{
-
 		/** Overrides */
 		if ((int)Services::Registry()->get('Override', 'catalog_id', 0) == 0) {
 			Services::Registry()->set('Route', 'id', 0);

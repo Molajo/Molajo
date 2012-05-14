@@ -127,13 +127,7 @@ Class PageViewHelper
 			return $page_view_id;
 		}
 
-		$page_view_id = Services::Registry()->get('ApplicationParameters', 'page_view_id', 0);
-		if ((int)$page_view_id == 0) {
-		} else {
-			return $page_view_id;
-		}
-
-		$page_view_id = Services::Registry()->get('SiteParameters', 'page_view_id', 0);
+		$page_view_id = Services::Registry()->get('Configuration', 'page_view_id', 0);
 		if ((int)$page_view_id == 0) {
 		} else {
 			return $page_view_id;
