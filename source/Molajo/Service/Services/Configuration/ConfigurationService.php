@@ -238,7 +238,7 @@ Class ConfigurationService
 	 * loadFile processes all XML configuration files for the application
 	 *
 	 * Usage:
-	 * Services::Configuration()->loadFile('Content', 'Table');
+	 * Services::Configuration()->loadFile('defines', 'Application');
 	 *
 	 * @return  mixed object or void
 	 * @since   1.0
@@ -247,9 +247,45 @@ Class ConfigurationService
 	public static function loadFile($file, $type = 'Application')
 	{
 		if ($type == 'Application') {
-			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
+			$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
 
 		} else if ($type == 'Table') {
+
+			if ($file == 'Theme') {
+				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
+					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
+				} else {
+					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+				}
+
+			} else if ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+			}
+
+		} else if ($type == 'Route') {     // Primary Component Data
+				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
+					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+				} else {
+					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+				}
+
+		} else if ($type == 'Component') {
+				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
+					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
+
+				} else {
+					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+				}
+
+		} else if ($file == 'Module') {
+			if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Options/Extension.xml')) {
+				$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Options/Extension.xml';
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+			}
 
 			/** If table data is already loaded in Registry, just use it */
 			$registryName = ucfirst(strtolower($file)) . 'Table';
@@ -258,29 +294,14 @@ Class ConfigurationService
 				return $registryName;
 			}
 
-			/** Component Extension XML */
-			if ($file == 'Extensioninstances'
-				&& file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
-
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
-
-			/** Component Data XML */
-			} else if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
-
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
-
-			/** Non-component Application Table */
-			} else {
-
-				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
-			}
-
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
 		}
 
+
 		if (file_exists($path_and_file)) {
 		} else {
+			echo $file.' '.$type.' '.$path_and_file.'<br />';
 			echo 'File not found: ' . $path_and_file;
 			throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
@@ -292,10 +313,10 @@ Class ConfigurationService
 			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 
-		if ($type == 'Table') {
-			return ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
-		} else {
+		if ($type == 'Application') {
 			return $xml;
+		} else {
+			return ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
 		}
 	}
 
@@ -318,7 +339,7 @@ Class ConfigurationService
 		/** Table only: Process Include Code */
 		$xml_string = '';
 
-		$registryName = ucfirst(strtolower($file)) . 'Table';
+		$registryName = ucfirst(strtolower($file)) . $type;
 
 //echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
 
@@ -395,7 +416,7 @@ Class ConfigurationService
 				$xml_string = file_get_contents($path_and_file);
 			}
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
+				$include, $file, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -418,7 +439,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
+				$include, $file, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -460,7 +481,7 @@ Class ConfigurationService
 			}
 			$replace_this = '<<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
+				$include, $file, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -475,11 +496,11 @@ Class ConfigurationService
 				$joinAttributes = ($joinVars["@attributes"]);
 				$joinAttributesArray = array();
 
-				$joinAttributesArray['table'] = (string) $joinAttributes['table'];
-				$joinAttributesArray['alias'] = (string) $joinAttributes['alias'];
-				$joinAttributesArray['select'] = (string) $joinAttributes['select'];
-				$joinAttributesArray['jointo'] = (string) $joinAttributes['jointo'];
-				$joinAttributesArray['joinwith'] = (string) $joinAttributes['joinwith'];
+				$joinAttributesArray['table'] = (string)$joinAttributes['table'];
+				$joinAttributesArray['alias'] = (string)$joinAttributes['alias'];
+				$joinAttributesArray['select'] = (string)$joinAttributes['select'];
+				$joinAttributesArray['jointo'] = (string)$joinAttributes['jointo'];
+				$joinAttributesArray['joinwith'] = (string)$joinAttributes['joinwith'];
 
 				$jArray[] = $joinAttributesArray;
 			}
@@ -500,7 +521,7 @@ Class ConfigurationService
 			}
 			$replace_this = '<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
+				$include, $file, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -538,7 +559,7 @@ Class ConfigurationService
 			}
 			$replace_this = '<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
+				$include, $file, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -574,7 +595,7 @@ Class ConfigurationService
 			}
 			$replace_this = '<include name="' . $include . '"/>';
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $file, $type, $replace_this, $xml_string
+				$include, $file, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -611,7 +632,7 @@ Class ConfigurationService
 				$replace_this = '<include name="' . $include . '"/>';
 
 				$xml_string = ConfigurationService::replaceIncludeStatement(
-					$include, $file, $type, $replace_this, $xml_string
+					$include, $file, $replace_this, $xml_string
 				);
 
 				$xml = simplexml_load_string($xml_string);
@@ -649,7 +670,7 @@ Class ConfigurationService
 				$replace_this = '<include name="' . $include . '"/>';
 
 				$xml_string = ConfigurationService::replaceIncludeStatement(
-					$include, $file, $type, $replace_this, $xml_string
+					$include, $file, $replace_this, $xml_string
 				);
 
 				$xml = simplexml_load_string($xml_string);
@@ -682,22 +703,9 @@ Class ConfigurationService
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public static function replaceIncludeStatement($include, $file, $type, $replace_this, $xml_string)
+	public static function replaceIncludeStatement($include, $file, $replace_this, $xml_string)
 	{
-		if ($type == 'Application') {
-			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
-
-		} else if ($type == 'Table') {
-
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/include/' . $include . '.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/include/' . $include . '.xml';
-			} else {
-				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
-			}
-
-		} else {
-			$path_and_file = $type . '/include/' . $include . '.xml';
-		}
+		$path_and_file = CONFIGURATION_FOLDER . '/' . '/include/' . $include . '.xml';
 
 		if (file_exists($path_and_file)) {
 		} else {

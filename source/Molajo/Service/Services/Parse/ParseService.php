@@ -163,7 +163,7 @@ Class ParseService
 		 *  Body Includers: processed recursively until no more <include: are found
 		 *      for the set of includes defined in the includes-page.xml
 		 */
-		$sequence = Services::Configuration()->loadFile('includes-page');
+		$sequence = Services::Configuration()->loadFile('includes-page', 'Application');
 
 		foreach ($sequence->include as $next) {
 			$this->sequence[] = (string)$next;
@@ -182,7 +182,7 @@ Class ParseService
 		 *  Final Includers: Now, the theme, head, messages, and defer includes run
 		 *      This process also removes <include values not found
 		 */
-		$sequence = Services::Configuration()->loadFile('includes-final');
+		$sequence = Services::Configuration()->loadFile('includes-final', 'Application');
 
 		$this->sequence = array();
 

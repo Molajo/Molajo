@@ -454,11 +454,6 @@ class Includer
 
 		$m->model->set('id', Services::Registry()->get('Parameters', 'id'));
 
-		$m->model->set('get_item_children', $get_item_children);
-		$m->model->set('use_special_joins', $use_special_joins);
-		$m->model->set('check_view_level_access', $check_view_level_access);
-		$m->model->set('get_customfields', $get_customfields);
-
 		/** Save Parameters so that the information can be used by frontend devs in Views */
 
 		/** Include Type */

@@ -56,7 +56,8 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'source_id'),
-			Services::Registry()->get('Route', 'source_table')
+			Services::Registry()->get('Route', 'source_table'),
+			'Route'
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -119,7 +120,8 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'category_id'),
-			'#__content'
+			'#__content',
+			'Component'
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -175,10 +177,14 @@ Class ContentHelper
 	 * @return  mixed    An object containing an array of data
 	 * @since   1.0
 	 */
-	public function get($id, $content_table)
+	public function get($id, $content_table, $type = null)
 	{
+		if ($type == null) {
+			$type = 'Component';
+		}
 		$m = Application::Controller()->connect(
-			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
+			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type'))),
+			$type
 		);
 
 		$m->model->set('id', (int)$id);

@@ -82,9 +82,7 @@ Class TemplateViewHelper
 		Services::Registry()->set('TemplateView', 'path', $this->getPath($row->title));
 		Services::Registry()->set('TemplateView', 'path_url', $this->getPathURL($row->title));
 
-		/** Load special fields for specific extension */
-//		$xml = Services::Configuration()->loadFile('Manifest', Services::Registry()->get('TemplateView', 'path'));
-//		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
+		//fix
 
 		return;
 	}

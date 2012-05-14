@@ -240,7 +240,7 @@ Class RouteService
 		$use = array();
 
 		/** XML with system defined nonroutable pairs */
-		$list = Services::Configuration()->loadFile('nonroutable');
+		$list = Services::Configuration()->loadFile('nonroutable', 'Application');
 
 		foreach ($list->parameter as $item) {
 
