@@ -128,13 +128,7 @@ Class WrapViewHelper
 			return $wrap_view_id;
 		}
 
-		$wrap_view_id = Services::Registry()->get('ApplicationParameters', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		$wrap_view_id = Services::Registry()->get('SiteParameters', 'wrap_view_id', 0);
+		$wrap_view_id = Services::Registry()->get('Configuration', 'wrap_view_id', 0);
 		if ((int)$wrap_view_id == 0) {
 		} else {
 			return $wrap_view_id;

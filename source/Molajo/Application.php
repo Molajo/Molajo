@@ -208,7 +208,7 @@ Class Application
 			return false;
 		}
 
-		$this->base_url = Services::Registry()->get('Site', 'base_url');
+		$this->base_url = Services::Registry()->get('Configuration', 'site_base_url');
 
 		/** SSL Check */
 		$continue = $this->sslCheck();

@@ -9,47 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_ARTICLES_DESCRIPTION</description>
-    <model
-            name="Articles"
-            catalog_type_id="10000"
-            table="#__content"
-            primary_key="id"
-            primary_prefix="a"
-            data_source="JDatabase">
-        <table>
-            <item>
-                <fields>
-                    <field include="ContentFields"/>
-                </fields>
-                <foreignkeys>
-                    <foreignkey include="ContentForeignkeys"/>
-                </foreignkeys>
-                <children>
-                    <child include="ContentChildren"/>
-                </children>
-                <triggers>
-                    <trigger include="ContentTriggers"/>
-                </triggers>
-                <customfields>
-                    <customfield name="customfields">
-                        <element include="ContentCustomfields"/>
-                        <element name="example_of_content_only_field" filter="int" null="1" default="1"/>
-                    </customfield>
-                    <customfield name="metadata">
-                        <element include="SystemMetadata"/>
-                    </customfield>
-                    <customfield name="parameters">
-                        <element include="SystemParameters"/>
-                    </customfield>
-                </customfields>
-            </item>
-            <component>
-                <customfields>
-                    <customfield name="parameters" registry="ComponentParameters">
-                        <element include="SystemComponentParameters"/>
-                    </customfield>
-                </customfields>
-            </component>
-        </table>
-    </model>
+    <model name="Articles"/>
 </extension>

@@ -7,24 +7,27 @@
         get_customfields="0"
         get_item_children="0"
         use_special_joins="0"
-        check_view_level_access="1"
+        check_view_level_access="0"
         data_source="JDatabase">
-    <fields>
-        <field name="id" type="int" null="1" default="0"/>
-        <field name="catalog_id" type="int" null="0" default="" values=""/>
-        <field name="user_id" type="int" null="0" default="0" values=""/>
-        <field name="rating" type="int" null="1" default="" values=""/>
-        <field name="activity_datetime" type="datetime" null="0" default=""/>
-        <field name="ip_address" type="char" null="0" default=""/>
-        <field name="customfields" type="" null="1" default=""/>
-    </fields>
-    <triggers>
-        <trigger name="IPAddress"/>
-        <trigger name="Language"/>
-    </triggers>
-    <foreignkeys>
-        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-        <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
-    </foreignkeys>
+    <table>
+        <item>
+            <fields>
+                <field name="id" type="int" null="1" default="0"/>
+                <field name="catalog_id" type="int" null="0" default="" values=""/>
+                <field name="user_id" type="int" null="0" default="0" values=""/>
+                <field name="rating" type="int" null="1" default="" values=""/>
+                <field name="activity_datetime" type="datetime" null="0" default=""/>
+                <field name="ip_address" type="char" null="0" default=""/>
+                <field name="customfields" type="" null="1" default=""/>
+            </fields>
+            <triggers>
+                <trigger name="IPAddress"/>
+                <trigger name="Language"/>
+            </triggers>
+            <foreignkeys>
+                <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+                <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+            </foreignkeys>
+        </item>
+    </table>
 </model>
-

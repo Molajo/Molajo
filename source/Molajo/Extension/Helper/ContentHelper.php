@@ -53,7 +53,6 @@ Class ContentHelper
 	 */
 	public function getRoute()
 	{
-
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'source_id'),
@@ -70,11 +69,40 @@ Class ContentHelper
 		Services::Registry()->set('Content', 'extension_catalog_type_id', (int)$row['extension_catalog_type_id']);
 		Services::Registry()->set('Content', 'title', $row['title']);
 		Services::Registry()->set('Content', 'translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Content', 'language', (string)$row['language']);
-		Services::Registry()->set('Content', 'catalog_id', (string)$row['catalog_id']);
+		Services::Registry()->set('Content', 'language', $row['language']);
+		Services::Registry()->set('Content', 'catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Content', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Content', 'catalog_type_title', (string)$row['catalog_type_title']);
-		Services::Registry()->set('Content', 'modified_datetime', (string)$row['modified_datetime']);
+		Services::Registry()->set('Content', 'catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Content', 'modified_datetime', $row['modified_datetime']);
+
+		/** Process each field namespace  */
+		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
+		foreach ($customFieldTypes as $customFieldName) {
+
+			Services::Registry()->deleteRegistry('Content'. ucfirst(strtolower($customFieldName)));
+
+			Services::Registry()->copy(
+				$row['model_name']. ucfirst(strtolower($customFieldName)),
+				'Content'. ucfirst(strtolower($customFieldName))
+			);
+
+			Services::Registry()->deleteRegistry($row['model_name']. ucfirst(strtolower($customFieldName)));
+		}
+
+		/**
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Content'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('ContentCustomfields'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('ContentParameters'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('ContentMetadata'));
+		echo '</pre>';
+		*/
 
 		return true;
 	}
@@ -110,7 +138,8 @@ Class ContentHelper
 		Services::Registry()->set('Category', 'modified_datetime', (string)$row['modified_datetime']);
 
 		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
+		$xml = Services::Configuration()->loadFile(
+			ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
 		$row = Services::Configuration()->populateCustomFields($xml->category, $row, 1);
 
 		return true;
@@ -129,12 +158,6 @@ Class ContentHelper
 		);
 
 		$m->model->set('id', (int)$id);
-
-		$m->model->set('get_customfields', 1);
-		$m->model->set('get_item_children', false);
-		$m->model->set('use_special_joins', false);
-		$m->model->set('check_view_level_access', true);
-		$m->model->set('category_type_id', Services::Registry()->get('Route', 'catalog_type'));
 
 		$m->model->query->select($m->model->db->qn('a.id'));
 		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
@@ -175,6 +198,8 @@ Class ContentHelper
 		 *  Run Query
 		 */
 		$row = $m->getData('load');
+		$row['table_registry_name'] = $m->model->table_registry_name;
+		$row['model_name'] = $m->model->model_name;
 
 		if (count($row) == 0) {
 			return array();

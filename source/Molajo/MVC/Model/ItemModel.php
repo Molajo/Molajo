@@ -187,11 +187,6 @@ class ItemModel extends Model
 	protected function addCustomFields()
 	{
 		$customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
-		echo 'In addCustomFields '.$this->table_name.'<br />';
-		echo '<pre>';
-		var_dump($customFieldTypes);
-		echo '</pre>';
-
 
 		$retrieval_method = Services::Registry()->get($this->table_registry_name, 'get_customfields');
 
@@ -206,7 +201,6 @@ class ItemModel extends Model
 			$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
 
 			/** See if there are query results for the Custom Field Group */
-
 			if ((is_array($this->query_results) && isset($this->query_results[$customFieldName]))
 				|| (is_object($this->query_results) && isset($this->query_results->$customFieldName))
 			) {
@@ -219,6 +213,19 @@ class ItemModel extends Model
 
 				$data = json_decode($jsonData);
 
+				/** test for application-specific values */
+
+				if (count($data) > 0
+					&& (defined('APPLICATION_ID'))) {
+					foreach ($data as $key => $value) {
+
+						if ($key == APPLICATION_ID) {
+							$data = $value;
+							break;
+						}
+					}
+				}
+
 				/** Place queryresults data for custom field group into named pair array */
 				$lookup = array();
 
@@ -229,55 +236,52 @@ class ItemModel extends Model
 				}
 
 			} else {
+
 				$data = array();
 				$lookup = array();
 			}
 
-			/** Process each of the Custom Field Group Definitions for Query Results */
-			if (count($data) > 0) {
+			/** Process each of the Custom Field Group Definitions for Query Results or defaults */
+			foreach ($fields as $f) {
 
-				foreach ($fields as $f) {
+				$name = $f['name'];
+				$name = strtolower($name);
 
-					$name = $f['name'];
-					$name = strtolower($name);
+				$default = null;
+				if (isset($f['default'])) {
+					$default = $f['default'];
+				}
 
+				if ($default == '') {
 					$default = null;
-					if (isset($f['default'])) {
-						$default = $f['default'];
-					}
-
-					if ($default == '') {
-						$default = null;
-					}
-
-					/** Use value, if exists, or defined default */
-					if (isset($lookup[$name])) {
-						$setValue = $lookup[$name];
-					} else {
-						$setValue = $default;
-					}
-
-					/** Filter Input and Save the Registry */
-					//$set = $this->filterInput($name, $set, $dataType, $null, $default);
-
-					if ($retrieval_method == 2) {
-						if (is_array($this->query_results)) {
-							$this->query_results[$name] = $setValue;
-						} else {
-							$this->query_results->$name = $setValue;
-						}
-					} else {
-						echo $useRegistryName.' '.$name. ' ' . $setValue. '<br />';
-						Services::Registry()->set($useRegistryName, $name, $setValue);
-					}
 				}
 
-				if (is_array($this->query_results) && isset($this->query_results[$customFieldName])) {
-					unset($this->query_results[$customFieldName]);
-
-				} else if (is_object($this->query_results) && isset($this->query_results->$customFieldName)) {
-					unset($this->query_results->$customFieldName);
+				/** Use value, if exists, or defined default */
+				if (isset($lookup[$name])) {
+					$setValue = $lookup[$name];
+				} else {
+					$setValue = $default;
 				}
+
+				/** Filter Input and Save the Registry */
+				//$set = $this->filterInput($name, $set, $dataType, $null, $default);
+
+				if ($retrieval_method == 2) {
+					if (is_array($this->query_results)) {
+						$this->query_results[$name] = $setValue;
+					} else {
+						$this->query_results->$name = $setValue;
+					}
+				} else {
+					Services::Registry()->set($useRegistryName, $name, $setValue);
+				}
+			}
+
+			if (is_array($this->query_results) && isset($this->query_results[$customFieldName])) {
+				unset($this->query_results[$customFieldName]);
+
+			} else if (is_object($this->query_results) && isset($this->query_results->$customFieldName)) {
+				unset($this->query_results->$customFieldName);
 			}
 		}
 
