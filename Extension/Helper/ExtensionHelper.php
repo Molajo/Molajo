@@ -59,25 +59,56 @@ Class ExtensionHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Extension', 'id', (int)$row->id);
-		Services::Registry()->set('Route', 'extension_instances_id', (int)$row->id);
-		Services::Registry()->set('Extension', 'title', $row->title);
-		Services::Registry()->set('Extension', 'translation_of_id', $row->translation_of_id);
-		Services::Registry()->set('Extension', 'language', $row->language);
-		Services::Registry()->set('Extension', 'view_group_id', $row->view_group_id);
-		Services::Registry()->set('Extension', 'catalog_id', $row->catalog_id);
-		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Extension', 'catalog_type_title', $row->catalog_type_title);
-		Services::Registry()->set('Extension', 'path', $this->getPath((int)$row->catalog_type_id, $row->title));
-		Services::Registry()->set('Extension', 'path_url', $this->getPathURL((int)$row->catalog_type_id, $row->title));
+		Services::Registry()->set('Extension', 'id', (int)$row['id']);
+		Services::Registry()->set('Route', 'extension_instances_id', (int)$row['id']);
+		Services::Registry()->set('Extension', 'title', $row['title']);
+		Services::Registry()->set('Extension', 'translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Extension', 'language', $row['language']);
+		Services::Registry()->set('Extension', 'view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Extension', 'catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Extension', 'catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Extension', 'path',
+			$this->getPath((int)$row['catalog_type_id'], $row['title']));
+		Services::Registry()->set('Extension', 'path_url',
+			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
 
-		/** Load special fields for specific extension */
-		$xml = Services::Configuration()->loadFile(ucfirst(strtolower(Services::Registry()->get('Content', 'catalog_type_title'))), 'Table');
-		$row = Services::Configuration()->populateCustomFields($xml->extension, $row, 1);
+		/** Process each field namespace  */
+		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
+		foreach ($customFieldTypes as $customFieldName) {
+
+			Services::Registry()->deleteRegistry('Extension'. ucfirst(strtolower($customFieldName)));
+
+			Services::Registry()->copy(
+				$row['model_name']. ucfirst(strtolower($customFieldName)),
+				'Extension'. ucfirst(strtolower($customFieldName))
+			);
+
+			Services::Registry()->deleteRegistry($row['model_name']. ucfirst(strtolower($customFieldName)));
+		}
+
+		Services::Registry()->deleteRegistry('Parameters');
+		$this->populateParameterRegistry($row);
+	   /**
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Extension'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('ExtensionCustomfields'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('ExtensionParameters'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('ExtensionMetadata'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+	    */
 		return;
 	}
-
 
 	/**
 	 * Retrieve Route information for a specific Extension
@@ -96,34 +127,48 @@ Class ExtensionHelper
 			return false;
 		}
 
-		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$row->id);
-		Services::Registry()->set('Parameters', 'extension_instance_title', $row->title);
-		Services::Registry()->set('Parameters', 'extension_translation_of_id', $row->translation_of_id);
-		Services::Registry()->set('Parameters', 'extension_language', $row->language);
+		$this->populateParameterRegistry($row);
 
-		Services::Registry()->set('Parameters', 'extension_catalog_id', $row->catalog_id);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $row->catalog_type_title);
+		return;
+	}
 
-		Services::Registry()->set('Parameters', 'extension_view_group_id', $row->view_group_id);
 
-		Services::Registry()->set('Parameters', 'extension_path', $this->getPath((int)$row->catalog_type_id, $row->title));
-		Services::Registry()->set('Parameters', 'extension_path_url', $this->getPathURL((int)$row->catalog_type_id, $row->title));
+	/**
+	 * Retrieve Route information for a specific Extension
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function populateParameterRegistry($row)
+	{
+
+		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$row['id']);
+		Services::Registry()->set('Parameters', 'extension_instance_title', $row['title']);
+		Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'extension_language', $row['language']);
+
+		Services::Registry()->set('Parameters', 'extension_catalog_id', (int)$row['catalog_id']);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $row['catalog_type_title']);
+
+		Services::Registry()->set('Parameters', 'extension_view_group_id', (int)$row['view_group_id']);
+
+		Services::Registry()->set('Parameters', 'extension_path',
+			$this->getPath((int)$row['catalog_type_id'], $row['title']));
+		Services::Registry()->set('Parameters', 'extension_path_url',
+			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
 
 		Services::Registry()->set('Parameters', 'extension_primary', false);
 
-		$xml = Services::Configuration()->loadFile(
-			'Manifest', Services::Registry()->get('Parameters', 'extension_path')
-		);
-		if ($xml == false) {
-			return;
-		}
+		/** Process each field namespace  */
+		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
-		$row = Services::Configuration()->populateCustomFields($xml->config, $row, 1);
+		foreach ($customFieldTypes as $customFieldName) {
 
-		$parameters = Services::Registry()->get('ExtensionParameters');
-		foreach ($parameters as $key => $value) {
-			Services::Registry()->set('Parameters', $key, $value);
+			Services::Registry()->copy(
+				$row['model_name']. ucfirst(strtolower($customFieldName)),
+				'Parameters'. ucfirst(strtolower($customFieldName))
+			);
 		}
 
 		return;
@@ -141,16 +186,11 @@ Class ExtensionHelper
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public function get($extension_id = 0, $catalog_type_id = 0)
+	public function get($extension_id = 0)
 	{
 		$m = Application::Controller()->connect('ExtensionInstances');
 
 		$m->model->set('id', (int)$extension_id);
-
-		$m->model->set('get_customfields', 1);
-		$m->model->set('get_item_children', false);
-		$m->model->set('use_special_joins', false);
-		$m->model->set('check_view_level_access', false);
 
 		/**
 		 *  a. Extensions Instances Table
@@ -168,11 +208,7 @@ Class ExtensionHelper
 
 		$m->model->query->where($m->model->db->qn('a.extension_id') . ' > 0 ');
 
-		$m->model->query->where(
-			'((' . $m->model->db->qn('a.id') . '= ' . (int)$extension_id . ')'
-				. ' OR (' . $m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id
-				. ' AND 0 = ' . (int)$extension_id . '))'
-		);
+		$m->model->query->where($m->model->db->qn('a.id') . '= ' . (int)$extension_id);
 
 		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 		$m->model->query->where('(' . $m->model->db->qn('a.start_publishing_datetime') . ' = ' .
@@ -182,18 +218,6 @@ Class ExtensionHelper
 		$m->model->query->where('(' . $m->model->db->qn('a.stop_publishing_datetime') . ' = ' .
 				$m->model->db->q($m->model->nullDate) .
 				' OR ' . $m->model->db->qn('a.stop_publishing_datetime') . ' >= ' . $m->model->db->q($m->model->now) . ')'
-		);
-
-		/** Catalog Join and View Access Check */
-		Services::Authorisation()
-			->setQueryViewAccess(
-			$m->model->query,
-			$m->model->db,
-			array('join_to_prefix' => 'a',
-				'join_to_primary_key' => 'id',
-				'catalog_prefix' => 'b_catalog',
-				'select' => true
-			)
 		);
 
 		/** b_catalog_types. Catalog Types Table  */
@@ -220,9 +244,10 @@ Class ExtensionHelper
 		/**
 		 *  Run Query
 		 */
-		//echo $m->model->query->__toString();
+		$row = $m->getData('load');
 
-		$row = $m->getData('loadObject');
+		$row['table_registry_name'] = $m->model->table_registry_name;
+		$row['model_name'] = $m->model->model_name;
 
 		if (count($row) == 0) {
 			return array();

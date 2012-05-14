@@ -373,13 +373,15 @@ Class RouteService
 		}
 
 		/**  Extension */
-		$response = Helpers::Extension()->getRoute(Services::Registry()->get('Content', 'extension_instance_id'));
+		$response = Helpers::Extension()->getRoute(
+			Services::Registry()->get('Content', 'extension_instance_id')
+		);
 		if ($response === false) {
 			Services::Error()->set(500, 'Extension not found');
 		}
 
 		/**  Primary Category  */
-		if ((int)Services::Registry()->get('Route', 'primary_category_id') == 0) {
+		if ((int)Services::Registry()->get('Route', 'category_id') == 0) {
 		} else {
 			Helpers::Content()->getRouteCategory();
 		}

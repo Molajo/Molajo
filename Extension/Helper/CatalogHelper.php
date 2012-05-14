@@ -88,6 +88,7 @@ Class CatalogHelper
 		Services::Registry()->set('Route', 'sef_request', $row['sef_request']);
 		Services::Registry()->set('Route', 'request', $row['request']);
 		Services::Registry()->set('Route', 'view_group_id', (int)$row['view_group_id']);
+		Services::Registry()->set('Route', 'category_id', (int)$row['primary_category_id']);
 
 		/** home */
 		if ((int)Services::Registry()->get('Route', 'id')
@@ -134,9 +135,6 @@ Class CatalogHelper
 		$m = Application::Controller()->connect('Catalog');
 
 		$m->model->set('id', (int)$catalog_id);
-		$m->model->set('get_item_children', 0);
-		$m->model->set('get_customfields', 0);
-		$m->model->set('check_view_level_access', 0);
 
 		$row = $m->getData('load');
 
@@ -148,9 +146,6 @@ Class CatalogHelper
 		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
 			$row['sef_request'] = '';
 		}
-//echo '<pre>';
-//var_dump($row);
-//echo '</pre>';
 
 		return $row;
 	}

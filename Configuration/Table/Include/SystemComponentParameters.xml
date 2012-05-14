@@ -1,3 +1,9 @@
+<field name="display_title" type="text" null="1" default="" />
+
+<field name="display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
+<field name="content_catalog_type_id" type="integer" null="1" default="10000" values="10000"/>
+<field name="extension_catalog_type_id" type="integer" null="1" default="1050" values="1050"/>
+
 <field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
 <field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
 <field name="maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
@@ -7,8 +13,6 @@
 <field name="enable_notifications" type="binary" null="0" default="1" values="0,1"/>
 <field name="enable_tweets" type="binary" null="0" default="1" values="0,1"/>
 <field name="enable_ping" type="binary" null="0" default="1" values="0,1"/>
-
-<field name="display_view_on_no_results" type="binary" null="0" default="0" values="0,1"/>
 
 <field name="theme_id" type="integer" null="1" default="" values=""/>
 

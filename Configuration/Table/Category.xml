@@ -35,12 +35,5 @@
                 </customfield>
             </customfields>
         </item>
-        <component>
-            <customfields>
-                <customfield name="parameters">
-                    <include name="SystemComponentParameters"/>
-                </customfield>
-            </customfields>
-        </component>
     </table>
 </model>

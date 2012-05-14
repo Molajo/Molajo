@@ -246,9 +246,6 @@ Class ConfigurationService
 	 */
 	public static function loadFile($file, $type = 'Application')
 	{
-		//echo $file . '<br />';
-//		$extensionManifest = false;
-
 		if ($type == 'Application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
 
@@ -261,12 +258,22 @@ Class ConfigurationService
 				return $registryName;
 			}
 
-//			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml')) {
-//				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Manifest.xml';
-//				$extensionManifest = true;
-//			} else {
+			/** Component Extension XML */
+			if ($file == 'Extensioninstances'
+				&& file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
+
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
+
+			/** Component Data XML */
+			} else if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
+
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+
+			/** Non-component Application Table */
+			} else {
+
 				$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
-//			}
+			}
 
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
@@ -681,6 +688,7 @@ Class ConfigurationService
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/include/' . $include . '.xml';
 
 		} else if ($type == 'Table') {
+
 			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/include/' . $include . '.xml')) {
 				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/include/' . $include . '.xml';
 			} else {
