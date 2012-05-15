@@ -94,7 +94,7 @@ Class EntryController extends DisplayController
 		if ($type == null) {
 			$type = 'Table';
 		}
-		echo 'connect '.$table.'<br />';
+		//echo 'connect '.$table.'<br />';
 
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {
