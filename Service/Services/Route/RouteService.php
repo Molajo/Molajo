@@ -397,117 +397,110 @@ Class RouteService
 		/** Page  */
 		Helpers::PageView()->get();
 
-		/** Metadata */
-		$this->loadMetadata();
+		/** Final Template and Wrap selections */
+		$this->finalizeParameters();
 
 		return;
-
-
+/**
 		echo '<br /><br />Route<br /><pre>';
 		var_dump(Services::Registry()->get('Route'));
-		echo '</pre>';
 
 		echo '<br />Parameters<br />';
 		var_dump(Services::Registry()->get('Parameters'));
+
 		echo '<br />Metadata<br />';
 		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
 
-		echo '<br /><br />Theme<br /><pre>';
-		var_dump(Services::Registry()->get('Theme'));
-		echo '<br /><br />Parameters<br /><pre>';
-		var_dump(Services::Registry()->get('ThemeParameters'));
-		echo '<br /><br />Custom Fields<br /><pre>';
-		var_dump(Services::Registry()->get('ThemeCustomfields'));
-		echo '<br /><br />Metadata<br /><pre>';
-		var_dump(Services::Registry()->get('ThemeMetadata'));
-		echo '</pre>';
-
-		echo '<br /><br />PageView<br /><pre>';
-		var_dump(Services::Registry()->get('PageView'));
-		echo '<br /><br />Parameters<br /><pre>';
-		var_dump(Services::Registry()->get('PageViewParameters'));
-		echo '<br /><br />Custom Fields<br /><pre>';
-		var_dump(Services::Registry()->get('PageViewCustomfields'));
-		echo '<br /><br />Metadata<br /><pre>';
-		var_dump(Services::Registry()->get('PageViewMetadata'));
-		echo '</pre>';
-
-
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Metadata'));
-
+		die;
+*/
 	}
 
-
 	/**
-	 * loadMetadata
-	 *
-	 * Loads Metadata values into Services::Document Metadata array
+	 * Finalize the Template and Wrap selections for the request
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function loadMetadata()
+	protected function finalizeParameters()
 	{
-		// todo: add event for metadata
 
-		Services::Registry()->set('Metadata', 'title', '');
-		Services::Registry()->set('Metadata', 'description', '');
-		Services::Registry()->set('Metadata', 'keywords', '');
-		Services::Registry()->set('Metadata', 'robots', '');
-		Services::Registry()->set('Metadata', 'author', '');
-		Services::Registry()->set('Metadata', 'content_rights', '');
+		if (Services::Registry()->get('Route', 'task') == 'add'
+			|| Services::Registry()->get('Route', 'task') == 'edit') {
 
-		if (Services::Registry()->get('Request', 'status_error') == true) {
-			Services::Registry()->set('Metadata', 'title',
-				Services::Language()->translate('ERROR_FOUND'));
-			return;
-		}
+			Services::Registry()->set('Parameters', 'template_view', 'form');
 
-		/** Last Modified */
-		$date = Services::Date()->getDate();
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'form_template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_id',
+				Services::Registry()->get('Parameters', 'form_template_view_css_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_class',
+				Services::Registry()->get('Parameters', 'form_template_view_css_class'));
 
-		if (Services::Registry()->get('Menuitem', 'modified_datetime') == NULL) {
+			Services::Registry()->set('Parameters', 'wrap_view_id',
+				Services::Registry()->get('Parameters', 'form_wrap_view_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_id',
+				Services::Registry()->get('Parameters', 'form_wrap_view_css_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_class',
+				Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
+
+		} else if ((int)Services::Registry()->get('Route', 'source_id') == 0) {
+
+			Services::Registry()->set('Parameters', 'template_view', 'list');
+
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'list_template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_id',
+				Services::Registry()->get('Parameters', 'list_template_view_css_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_class',
+				Services::Registry()->get('Parameters', 'list_template_view_css_class'));
+
+			Services::Registry()->set('Parameters', 'wrap_view_id',
+				Services::Registry()->get('Parameters', 'list_wrap_view_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_id',
+				Services::Registry()->get('Parameters', 'list_wrap_view_css_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_class',
+				Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
+
 		} else {
-			$date = Services::Registry()->get('Menuitem', 'modified_datetime');
+
+			Services::Registry()->set('Parameters', 'template_view', 'item');
+
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'item_template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_id',
+				Services::Registry()->get('Parameters', 'item_template_view_css_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_class',
+				Services::Registry()->get('Parameters', 'item_template_view_css_class'));
+
+			Services::Registry()->set('Parameters', 'wrap_view_id',
+				Services::Registry()->get('Parameters', 'item_wrap_view_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_id',
+				Services::Registry()->get('Parameters', 'item_wrap_view_css_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_class',
+				Services::Registry()->get('Parameters', 'item_wrap_view_css_class'));
 		}
-		if (Services::Registry()->get('Content', 'modified_datetime') == NULL) {
-		} else {
-			$date = Services::Registry()->get('Content', 'modified_datetime');
-		}
-		Services::Registry()->set('Metadata', 'modified_datetime', $date);
 
-		/** Metadata */
-		$this->setMetadata('SiteMetadata');
-		$this->setMetadata('ApplicationMetadata');
-		$this->setMetadata('ExtensionMetadata');
-		$this->setMetadata('CategoryMetadata');
-		$this->setMetadata('MenuMetadata');
-		$this->setMetadata('Metadata');
+		/** Remove parameters not needed */
+		Services::Registry()->delete('Parameters', 'list_template_view_id');
+		Services::Registry()->delete('Parameters', 'list_template_view_css_id');
+		Services::Registry()->delete('Parameters', 'list_template_view_css_class');
+		Services::Registry()->delete('Parameters', 'list_wrap_view_id');
+		Services::Registry()->delete('Parameters', 'list_wrap_view_css_id');
+		Services::Registry()->delete('Parameters', 'list_wrap_view_css_class');
 
-	}
+		Services::Registry()->delete('Parameters', 'item_template_view_id');
+		Services::Registry()->delete('Parameters', 'item_template_view_css_id');
+		Services::Registry()->delete('Parameters', 'item_template_view_css_class');
+		Services::Registry()->delete('Parameters', 'item_wrap_view_id');
+		Services::Registry()->delete('Parameters', 'item_wrap_view_css_id');
+		Services::Registry()->delete('Parameters', 'item_wrap_view_css_class');
 
-	/**
-	 * setMetadata for specific Namespace
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function setMetadata($namespace)
-	{
-		$metadata = Services::Registry()->get($namespace);
-
-		if (count($metadata) > 0) {
-			foreach ($metadata as $key => $value) {
-				if (substr($key, 0, 9) == 'metadata_')  {
-					$key = substr($key, 9, strlen($key) - 9);
-				}
-				if ($value == '' || $value === null) {
-				} else {
-					Services::Registry()->set('Metadata', $key, $value);
-				}
-			}
-		}
+		Services::Registry()->delete('Parameters', 'form_template_view_id');
+		Services::Registry()->delete('Parameters', 'form_template_view_css_id');
+		Services::Registry()->delete('Parameters', 'form_template_view_css_class');
+		Services::Registry()->delete('Parameters', 'form_wrap_view_id');
+		Services::Registry()->delete('Parameters', 'form_wrap_view_css_id');
+		Services::Registry()->delete('Parameters', 'form_wrap_view_css_class');
 	}
 }

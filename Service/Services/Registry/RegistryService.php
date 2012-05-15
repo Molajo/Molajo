@@ -245,6 +245,40 @@ Class RegistryService
 	}
 
 	/**
+	 * Deletes a Parameter property
+	 *
+	 * Usage:
+	 * Services::Registry()->delete('Name Space', 'key_name');
+	 *
+	 * @param  string  $namespace
+	 * @param  string  $key
+	 *
+	 * @return  Registry
+	 * @since   1.0
+	 */
+	public function delete($namespace, $key)
+	{
+		/** Retrieve the registry for the namespace */
+		$array = $this->registry[$namespace];
+		if (is_array($array)) {
+		} else {
+			$array = array();
+		}
+
+		/** Look for the key value requested */
+		if (isset($array[$key])) {
+
+			/** Remove entry */
+			unset($array[$key]);
+		}
+
+		/** Replace namespace */
+		$this->registry[$namespace] = $array;
+
+		return $this;
+	}
+
+	/**
 	 * Copy one namespace registry to another
 	 * Note: this is a merge if there are existing registry values
 	 * If that is not desired, delete the registry prior to the copy

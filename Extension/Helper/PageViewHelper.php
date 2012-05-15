@@ -53,7 +53,6 @@ Class PageViewHelper
 	 */
 	public function get($page_view_id = 0)
 	{
-
 		if ($page_view_id == 0) {
 			$page_view_id = $this->setDefaultPageView();
 		}
@@ -93,12 +92,6 @@ Class PageViewHelper
 		Services::Registry()->set('Parameters', 'page_view_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Parameters', 'page_view_catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Parameters', 'page_view_catalog_type_title', $row['catalog_type_title']);
-
-		$parameters = Services::Registry()->get('Parameters');
-		echo '<pre>';
-		var_dump($parameters);
-		echo '</pre>';
-		//todo: think about parameters.
 
 		return;
 	}

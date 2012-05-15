@@ -131,7 +131,6 @@ Class ExtensionHelper
 		return;
 	}
 
-
 	/**
 	 * Retrieve Route information for a specific Extension
 	 *

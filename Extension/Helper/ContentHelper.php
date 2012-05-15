@@ -155,7 +155,6 @@ Class ContentHelper
 			$customFieldName = ucfirst(strtolower($customFieldName));
 
 			if ('Category' . $customFieldName == 'Category' . 'Parameters') {
-				echo 'yes category parameters';
 				Services::Registry()->merge(
 					'Extension' . $customFieldName,
 					'Parameters'
@@ -163,7 +162,6 @@ Class ContentHelper
 			}
 
 			if ('Category' . $customFieldName == 'Category' . 'Metadata') {
-				echo 'yes category metadata';
 				Services::Registry()->merge(
 					'Extension' . $customFieldName,
 					'Metadata'
