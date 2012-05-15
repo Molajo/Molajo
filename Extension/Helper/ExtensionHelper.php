@@ -59,53 +59,52 @@ Class ExtensionHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Extension', 'id', (int)$row['id']);
-		Services::Registry()->set('Route', 'extension_instances_id', (int)$row['id']);
-		Services::Registry()->set('Extension', 'title', $row['title']);
-		Services::Registry()->set('Extension', 'translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Extension', 'language', $row['language']);
-		Services::Registry()->set('Extension', 'view_group_id', $row['view_group_id']);
-		Services::Registry()->set('Extension', 'catalog_id', $row['catalog_id']);
-		Services::Registry()->set('Extension', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Extension', 'catalog_type_title', $row['catalog_type_title']);
-		Services::Registry()->set('Extension', 'path',
+		Services::Registry()->set('Route', 'extension_title', $row['title']);
+		Services::Registry()->set('Route', 'extension_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Route', 'extension_language', $row['language']);
+		Services::Registry()->set('Route', 'extension_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Route', 'extension_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Route', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Route', 'extension_catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Route', 'extension_path',
 			$this->getPath((int)$row['catalog_type_id'], $row['title']));
-		Services::Registry()->set('Extension', 'path_url',
+		Services::Registry()->set('Route', 'extension_path_url',
 			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
-
 		foreach ($customFieldTypes as $customFieldName) {
 
-			Services::Registry()->deleteRegistry('Extension'. ucfirst(strtolower($customFieldName)));
+			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			Services::Registry()->copy(
-				$row['model_name']. ucfirst(strtolower($customFieldName)),
-				'Extension'. ucfirst(strtolower($customFieldName))
-			);
+			if ('Extension' . $customFieldName == 'Extension' . 'Parameters') {
+				Services::Registry()->merge(
+					'Extension' . $customFieldName,
+					'Parameters'
+				);
+			}
 
-			Services::Registry()->deleteRegistry($row['model_name']. ucfirst(strtolower($customFieldName)));
+			if ('Extension' . $customFieldName == 'Extension' . 'Metadata') {
+				Services::Registry()->merge(
+					'Extension' . $customFieldName,
+					'Metadata'
+				);
+			}
+
+			Services::Registry()->deleteRegistry('Extension' . $customFieldName);
 		}
 
-		Services::Registry()->deleteRegistry('Parameters');
-		$this->populateParameterRegistry($row);
 	   /**
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Extension'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('ExtensionCustomfields'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('ExtensionParameters'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('ExtensionMetadata'));
+		var_dump(Services::Registry()->get('Route'));
 		echo '</pre>';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Parameters'));
 		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Metadata'));
+		echo '</pre>';
+		die;
 	    */
 		return;
 	}
@@ -139,26 +138,26 @@ Class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function populateParameterRegistry($row)
+	public function populateParameterRegistry($row, $primary = false)
 	{
 
-		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$row['id']);
-		Services::Registry()->set('Parameters', 'extension_instance_title', $row['title']);
-		Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Parameters', 'extension_language', $row['language']);
+		Services::Registry()->set('Include', 'extension_id', (int)$row['id']);
+		Services::Registry()->set('Include', 'extension_title', $row['title']);
+		Services::Registry()->set('Include', 'extension_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Include', 'extension_language', $row['language']);
 
-		Services::Registry()->set('Parameters', 'extension_catalog_id', (int)$row['catalog_id']);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Include', 'extension_catalog_id', (int)$row['catalog_id']);
+		Services::Registry()->set('Include', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Include', 'extension_catalog_type_title', $row['catalog_type_title']);
 
-		Services::Registry()->set('Parameters', 'extension_view_group_id', (int)$row['view_group_id']);
+		Services::Registry()->set('Include', 'extension_view_group_id', (int)$row['view_group_id']);
 
-		Services::Registry()->set('Parameters', 'extension_path',
+		Services::Registry()->set('Include', 'extension_path',
 			$this->getPath((int)$row['catalog_type_id'], $row['title']));
-		Services::Registry()->set('Parameters', 'extension_path_url',
+		Services::Registry()->set('Include', 'extension_path_url',
 			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
 
-		Services::Registry()->set('Parameters', 'extension_primary', false);
+		Services::Registry()->set('Include', 'extension_primary', $primary);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');

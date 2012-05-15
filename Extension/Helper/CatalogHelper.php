@@ -80,15 +80,15 @@ Class CatalogHelper
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Route', 'id', (int)$row['id']);
+		Services::Registry()->set('Route', 'catalog_id', (int)$row['id']);
 		Services::Registry()->set('Route', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Route', 'catalog_type', $row['title']);
-		Services::Registry()->set('Route', 'source_table', $row['source_table']);
-		Services::Registry()->set('Route', 'source_id', (int)$row['source_id']);
 		Services::Registry()->set('Route', 'sef_request', $row['sef_request']);
 		Services::Registry()->set('Route', 'request', $row['request']);
 		Services::Registry()->set('Route', 'view_group_id', (int)$row['view_group_id']);
 		Services::Registry()->set('Route', 'category_id', (int)$row['primary_category_id']);
+		Services::Registry()->set('Route', 'source_table', $row['source_table']);
+		Services::Registry()->set('Route', 'source_id', (int)$row['source_id']);
 
 		/** home */
 		if ((int)Services::Registry()->get('Route', 'id')

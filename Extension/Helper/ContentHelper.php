@@ -65,45 +65,55 @@ Class ContentHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Content', 'id', (int)$row['id']);
-		Services::Registry()->set('Content', 'extension_instance_id', (int)$row['extension_instance_id']);
-		Services::Registry()->set('Content', 'extension_catalog_type_id', (int)$row['extension_catalog_type_id']);
-		Services::Registry()->set('Content', 'title', $row['title']);
-		Services::Registry()->set('Content', 'translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Content', 'language', $row['language']);
-		Services::Registry()->set('Content', 'catalog_id', $row['catalog_id']);
-		Services::Registry()->set('Content', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Content', 'catalog_type_title', $row['catalog_type_title']);
-		Services::Registry()->set('Content', 'modified_datetime', $row['modified_datetime']);
+		Services::Registry()->set('Route', 'extension_instance_id', (int)$row['extension_instance_id']);
+		Services::Registry()->set('Route', 'extension_catalog_type_id', (int)$row['extension_catalog_type_id']);
+		Services::Registry()->set('Route', 'content_id', (int)$row['id']);
+		Services::Registry()->set('Route', 'content_title', $row['title']);
+		Services::Registry()->set('Route', 'content_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Route', 'content_language', $row['language']);
+		Services::Registry()->set('Route', 'content_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Route', 'content_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Route', 'content_catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Route', 'content_modified_datetime', $row['modified_datetime']);
+
+		$model = ucfirst(strtolower($row['model_name']));
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 		foreach ($customFieldTypes as $customFieldName) {
 
-			Services::Registry()->deleteRegistry('Content'. ucfirst(strtolower($customFieldName)));
+			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			Services::Registry()->copy(
-				$row['model_name']. ucfirst(strtolower($customFieldName)),
-				'Content'. ucfirst(strtolower($customFieldName))
-			);
+			if ($model . $customFieldName == $model . 'Parameters') {
+				Services::Registry()->merge(
+					$model . $customFieldName,
+					'Parameters'
+				);
+			}
 
-			Services::Registry()->deleteRegistry($row['model_name']. ucfirst(strtolower($customFieldName)));
+			if ($model . $customFieldName == $model . 'Metadata') {
+				Services::Registry()->merge(
+					$model . $customFieldName,
+					'Metadata'
+				);
+			}
+
+			Services::Registry()->deleteRegistry($model . $customFieldName);
 		}
 
 		/**
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Content'));
+		var_dump(Services::Registry()->get('Route'));
 		echo '</pre>';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('ContentCustomfields'));
+		var_dump(Services::Registry()->get('Parameters'));
 		echo '</pre>';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('ContentParameters'));
+		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('ContentMetadata'));
-		echo '</pre>';
+		die;
 		*/
+
 
 		return true;
 	}
@@ -129,46 +139,53 @@ Class ContentHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		Services::Registry()->set('Category', 'id', (int)$row['id']);
-		Services::Registry()->set('Category', 'extension_instance_id', (int)$row['extension_instance_id']);
-		Services::Registry()->set('Category', 'extension_catalog_type_id', (int)$row['extension_catalog_type_id']);
-		Services::Registry()->set('Category', 'title', $row['title']);
-		Services::Registry()->set('Category', 'translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Category', 'language', $row['language']);
-		Services::Registry()->set('Category', 'catalog_id', $row['catalog_id']);
-		Services::Registry()->set('Category', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Category', 'catalog_type_title', $row['catalog_type_title']);
-		Services::Registry()->set('Category', 'modified_datetime', $row['modified_datetime']);
+		Services::Registry()->set('Route', 'category_id', (int)$row['id']);
+		Services::Registry()->set('Route', 'category_title', $row['title']);
+		Services::Registry()->set('Route', 'category_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Route', 'category_language', $row['language']);
+		Services::Registry()->set('Route', 'category_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Route', 'category_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Route', 'category_catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Route', 'category_modified_datetime', $row['modified_datetime']);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 		foreach ($customFieldTypes as $customFieldName) {
 
-			Services::Registry()->deleteRegistry('Category'. ucfirst(strtolower($customFieldName)));
+			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			Services::Registry()->copy(
-				$row['model_name']. ucfirst(strtolower($customFieldName)),
-				'Category'. ucfirst(strtolower($customFieldName))
-			);
+			if ('Category' . $customFieldName == 'Category' . 'Parameters') {
+				echo 'yes category parameters';
+				Services::Registry()->merge(
+					'Extension' . $customFieldName,
+					'Parameters'
+				);
+			}
 
-			Services::Registry()->deleteRegistry($row['model_name']. ucfirst(strtolower($customFieldName)));
+			if ('Category' . $customFieldName == 'Category' . 'Metadata') {
+				echo 'yes category metadata';
+				Services::Registry()->merge(
+					'Extension' . $customFieldName,
+					'Metadata'
+				);
+			}
+
+			Services::Registry()->deleteRegistry('Category' . $customFieldName);
 		}
-/**
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Category'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('CategoryCustomfields'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('CategoryParameters'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('CategoryMetadata'));
-		echo '</pre>';
-*/
 
-		return true;
+	   /**
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Route'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Metadata'));
+		echo '</pre>';
+		die;
+	    */
+		return;
 	}
 
 	/**
