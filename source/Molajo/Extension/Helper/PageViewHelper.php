@@ -78,7 +78,6 @@ Class PageViewHelper
 			Services::Registry()->set('Parameters', 'page_view_path', $this->getPath($title));
 			Services::Registry()->set('Parameters', 'page_view_path_include', $this->getPath($title) . '/index.php');
 			Services::Registry()->set('Parameters', 'page_view_path_url', $this->getPathURL($title));
-			Services::Registry()->set('Parameters', 'favicon', $this->getFavicon($title));
 
 			$row = Helpers::Extension()->get($page_view_id);
 

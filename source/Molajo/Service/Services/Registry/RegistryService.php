@@ -277,6 +277,40 @@ Class RegistryService
 	}
 
 	/**
+	 * Merge on namespace into another -- existing values are NOT overwritten
+	 *
+	 * Usage:
+	 * Services::Registry()->merge('namespace-x', 'to-namespace-y');
+	 *
+	 * @param  $mergeThis
+	 * @param  $intoThis
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function merge($mergeThis, $intoThis)
+	{
+		/** Get (or create) the Registry that will be merged into the other */
+		$merge = $this->getRegistry($mergeThis);
+
+		/** Get (or create) the Registry that will be copied to */
+		$into = $this->getRegistry($intoThis);
+
+		/** Merge */
+		if (count($merge > 0)) {
+			foreach ($merge as $key => $value) {
+				$existingValue = $this->get($intoThis, $key, '');
+
+				if (trim($existingValue) == '') {
+					$this->set($intoThis, $key, $value);
+				}
+			}
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Delete a Registry for specified Namespace
 	 *
 	 * @param $namespace
