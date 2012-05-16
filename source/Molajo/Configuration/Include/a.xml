@@ -1,8 +1,8 @@
 <field name="application_name" type="char" null="1" default="" values=""/>
 
 <field name="sef" type="binary" null="1" default="1" values="0,1"/>
-<field name="sef_rewrite" type="binary" null="1" default="1" values="0,1"/>
-<field name="sef_suffix" type="binary" null="1" default="1" values="0,1"/>
+<field name="url_sef_rewrite" type="binary" null="1" default="1" values="0,1"/>
+<field name="url_sef_suffix" type="binary" null="1" default="1" values="0,1"/>
 <field name="unicode_slugs" type="binary" null="1" default="1" values="0,1"/>
 <field name="force_ssl" type="binary" null="1" default="0" values="0,1"/>
 

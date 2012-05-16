@@ -77,7 +77,7 @@ Class Application
 	 *
 	 * Override normal processing with these parameters
 	 *
-	 * @param string $override_request_url
+	 * @param string $override_url_request
 	 * @param string $override_catalog_id
 	 * @param string $override_sequence_xml
 	 * @param string $override_final_xml
@@ -93,13 +93,13 @@ Class Application
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function process($override_request_url = null, $override_catalog_id = null,
+	public function process($override_url_request = null, $override_catalog_id = null,
 							$override_sequence_xml = null, $override_final_xml = null)
 	{
 		/** Initialise Sets the Configuration Registry  */
 		$continue = $this->initialise();
 
-		Services::Registry()->set('Override', 'request_url', $override_request_url);
+		Services::Registry()->set('Override', 'url_request', $override_url_request);
 		Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
 		Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
@@ -248,7 +248,7 @@ Class Application
 	 * Evaluates HTTP Request to determine routing requirements, including:
 	 *
 	 * - Normal page request: populates Registry for Request, Catalog, and Menuitem (if appropriate)
-	 *     Saves array of non_routable_parameters (if identified in request) to Request registry
+	 *     Saves array of request_non_routable_parameters (if identified in request) to Request registry
 	 * - Issues redirect request for "home" duplicate content
 	 * - For 'Application Offline Mode', sets a 503 error and registry values for View
 	 * - For 'Page not found', sets 404 error and registry values for Error Template/View
@@ -293,7 +293,12 @@ Class Application
 	 */
 	protected function execute()
 	{
-		$action = Services::Registry()->get('Request', 'action', 'display');
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Route'));
+echo '<br /><br />';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+		$action = Services::Registry()->get('Route', 'request_action', 'display');
 
 		/** Display Action */
 		if ($action == 'display') {
@@ -364,10 +369,10 @@ Class Application
 		$temp->loadArray($this->parameters);
 		$this->parameters = $temp;
 
-		if (Services::Registry()->get('Configuration', 'sef', 1) == 0) {
-			$link = $this->page_request->get('request_url_sef');
+		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 0) {
+			$link = $this->page_request->get('url_request_sef');
 		} else {
-			$link = $this->page_request->get('request_url');
+			$link = $this->page_request->get('url_request');
 		}
 		Services::Registry()->set('Request', 'redirect_on_failure', $link);
 
@@ -375,8 +380,8 @@ Class Application
 			ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
 		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
 		Services::Registry()->set('Request', 'controller', $cc);
-		$action = Services::Registry()->get('Request', 'action');
-		Services::Registry()->set('Request', 'action', $action);
+		$action = Services::Registry()->get('Route', 'request_action');
+		Services::Registry()->set('Route', 'request_action', $action);
 		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);
 

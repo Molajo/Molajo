@@ -12,7 +12,7 @@ ini_set('zend.ze1_compatibility_mode', 0);
 define('BASE_FOLDER', __DIR__);
 
 /** Initialize Optional Parameters */
-$override_request_url = null;
+$override_url_request = null;
 $override_catalog_id = null;
 $override_sequenceXML = null;
 $override_finalXML = null;
@@ -27,6 +27,6 @@ if (file_exists(BASE_FOLDER . '/OverrideAutoload.php')) {
 /** Execute the application */
 $app = new $class ();
 $app->process(
-	$override_request_url, $override_catalog_id,
+	$override_url_request, $override_catalog_id,
 	$override_sequenceXML, $override_finalXML
 );

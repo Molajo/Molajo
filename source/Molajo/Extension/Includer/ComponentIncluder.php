@@ -35,7 +35,7 @@ class ComponentIncluder extends Includer
 	 */
 	public function __construct($name = null, $type = null, $items = null)
 	{
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_COMPONENT);
+		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_COMPONENT);
 		return parent::__construct($name, $type, $items);
 	}
 
@@ -52,33 +52,33 @@ class ComponentIncluder extends Includer
 		}
 
 		/** extension */
-		Services::Registry()->set('Parameters', 'extension_instance_id',
+		Services::Registry()->set('Include', 'extension_id',
 			(int)Services::Registry()->get('Extension', 'id'));
-		Services::Registry()->set('Parameters', 'extension_instance_title',
+		Services::Registry()->set('Include', 'extension_instance_title',
 			Services::Registry()->get('Extension', 'title'));
 
 
-		Services::Registry()->set('Parameters', 'extension_translation_of_id',
+		Services::Registry()->set('Include', 'extension_translation_of_id',
 			Services::Registry()->get('Extension', 'translation_of_id'));
-		Services::Registry()->set('Parameters', 'extension_language',
+		Services::Registry()->set('Include', 'extension_language',
 			Services::Registry()->get('Extension', 'language'));
 
-		Services::Registry()->set('Parameters', 'extension_catalog_id',
+		Services::Registry()->set('Include', 'extension_catalog_id',
 			(int)Services::Registry()->get('Extension', 'catalog_id'));
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+		Services::Registry()->set('Include', 'extension_catalog_type_id',
 			(int)Services::Registry()->get('Extension', 'catalog_type_id'));
-		Services::Registry()->set('Parameters', 'extension_catalog_type_title',
+		Services::Registry()->set('Include', 'extension_catalog_type_title',
 			Services::Registry()->get('Extension', 'catalog_type_title'));
 
-		Services::Registry()->set('Parameters', 'extension_view_group_id',
+		Services::Registry()->set('Include', 'extension_view_group_id',
 			(int)Services::Registry()->get('Extension', 'view_group_id'));
 
-		Services::Registry()->set('Parameters', 'extension_path',
+		Services::Registry()->set('Include', 'extension_path',
 			Services::Registry()->get('Extension', 'path'));
-		Services::Registry()->set('Parameters', 'extension_path_url',
+		Services::Registry()->set('Include', 'extension_path_url',
 			Services::Registry()->get('Extension', 'path_url'));
 
-		Services::Registry()->set('Parameters', 'extension_primary', true);
+		Services::Registry()->set('Include', 'extension_primary', true);
 
 		return;
 	}
@@ -94,19 +94,19 @@ class ComponentIncluder extends Includer
 	protected function loadMedia()
 	{
 		/**  Primary Category */
-		$this->loadMediaPlus('/category' . Services::Registry()->get('Parameters', 'category_id'),
+		$this->loadMediaPlus('/category' . Services::Registry()->get('Include', 'category_id'),
 			Services::Registry()->get('Configuration', 'media_priority_primary_category', 700));
 
 		/** Menu Item */
-		$this->loadMediaPlus('/menuitem' . Services::Registry()->get('Parameters', 'menu_item_id'),
+		$this->loadMediaPlus('/menuitem' . Services::Registry()->get('Include', 'menu_item_id'),
 			Services::Registry()->get('Configuration', 'media_priority_menu_item', 800));
 
 		/** Source */
-		$this->loadMediaPlus('/source' . Services::Registry()->get('Parameters', 'id'),
+		$this->loadMediaPlus('/source' . Services::Registry()->get('Include', 'id'),
 			Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
 
 		/** Component */
-		$this->loadMediaPlus('/component' . Services::Registry()->get('Parameters', 'extension_instance_name'),
+		$this->loadMediaPlus('/component' . Services::Registry()->get('Include', 'extension_instance_name'),
 			Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
 
 		return true;
@@ -123,8 +123,8 @@ class ComponentIncluder extends Includer
 	protected function loadMediaPlus($plus = '', $priority = 500)
 	{
 		/** Theme */
-		$file_path = EXTENSIONS_THEMES . '/' . Services::Registry()->get('Parameters', 'theme_name');
-		$url_path = EXTENSIONS_THEMES_URL . '/' . Services::Registry()->get('Parameters', 'theme_name');
+		$file_path = EXTENSIONS_THEMES . '/' . Services::Registry()->get('Include', 'theme_title');
+		$url_path = EXTENSIONS_THEMES_URL . '/' . Services::Registry()->get('Include', 'theme_title');
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);

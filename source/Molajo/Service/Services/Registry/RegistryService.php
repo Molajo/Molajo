@@ -297,9 +297,6 @@ Class RegistryService
 		/** Get (or create) the Registry that will be copied */
 		$copy = $this->getRegistry($copyThis);
 
-		/** Get (or create) the Registry that will be copied to */
-		$into = $this->getRegistry($intoThis);
-
 		/** Merge */
 		if (count($copy > 0)) {
 			foreach ($copy as $key => $value) {
@@ -318,26 +315,49 @@ Class RegistryService
 	 *
 	 * @param  $mergeThis
 	 * @param  $intoThis
+	 * @param  $matching - merge for matching keys and remove from original
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function merge($mergeThis, $intoThis)
+	public function merge($mergeThis, $intoThis, $matching = false)
 	{
 		/** Get (or create) the Registry that will be merged into the other */
-		$merge = $this->getRegistry($mergeThis);
+		$mergeArray = $this->getRegistry($mergeThis);
 
 		/** Get (or create) the Registry that will be copied to */
-		$into = $this->getRegistry($intoThis);
+		$intoArray = $this->getRegistry($intoThis);
 
 		/** Merge */
-		if (count($merge > 0)) {
-			foreach ($merge as $key => $value) {
+		if (count($mergeArray > 0)) {
+		} else {
+			return $this;
+		}
+
+		foreach ($mergeArray as $key => $value) {
+
+			if ($matching == true) {
+
+				if (isset($intoArray[$key])) {
+					$merge = true;
+				} else {
+					$merge = false;
+				}
+
+			}  else {
+				$merge = true;
+			}
+
+			if ($merge == true) {
 				$existingValue = $this->get($intoThis, $key, '');
 
 				if (trim($existingValue) == '') {
 					echo $mergeThis.' '.$intoThis.' '.$key.' '.$value.'<br />';
 					$this->set($intoThis, $key, $value);
+				}
+
+				if ($matching == true) {
+					$this->delete($mergeThis, $key);
 				}
 			}
 		}

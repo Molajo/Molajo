@@ -1131,7 +1131,7 @@ UPDATE `molajo_applications`
 
 # Sites
 INSERT INTO `molajo_catalog`
- (`catalog_type_id`, `source_id`, `routable`, `sef_request`,
+ (`catalog_type_id`, `source_id`, `routable`, `url_sef_request`,
  `request`, `request_option`, `request_model`, `redirect_to_id`,
  `view_group_id`, `primary_category_id`)
   SELECT `catalog_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
@@ -1139,14 +1139,14 @@ INSERT INTO `molajo_catalog`
 
 # Application
 INSERT INTO `molajo_catalog`
- (`catalog_type_id`, `source_id`, `routable`, `sef_request`, `request`, `request_option`, `request_model`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
+ (`catalog_type_id`, `source_id`, `routable`, `url_sef_request`, `request`, `request_option`, `request_model`, `redirect_to_id`, `view_group_id`, `primary_category_id`)
   SELECT `catalog_type_id`, `id`, false, `path`, '', '', '', 0, 1, 0
     FROM  molajo_applications;
 
 # Groups
 INSERT INTO `molajo_catalog`
   (`catalog_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`,
+  `url_sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
 SELECT a.`catalog_type_id`, a.`id`, true,
     CONCAT('group/', a.`id`),
@@ -1161,7 +1161,7 @@ SELECT a.`catalog_type_id`, a.`id`, true,
 # Extension Instances
 INSERT INTO `molajo_catalog`
   (`catalog_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`,
+  `url_sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
 SELECT a.`catalog_type_id`, a.`id`, true,
     CONCAT(b.`component_option`, '/', LOWER(b.`title`), '/', a.`id`),
@@ -1174,7 +1174,7 @@ SELECT a.`catalog_type_id`, a.`id`, true,
 # Menu Items
 INSERT INTO `molajo_catalog`
   (`catalog_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`,
+  `url_sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   VALUES
   (2000, 102, true, 'content', 'index.php?option=dashboard&model=static', 'dashboard', 'static', 0, 1, 3),

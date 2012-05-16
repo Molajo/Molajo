@@ -16,12 +16,12 @@
 <field name="criteria_html_display_filter" type="binary" null="1" default="1" values="0,1"/>
 
 <field name="criteria_image_xsmall" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_small" type="char" null="1" default="" values=""/>
-<field name="criteria_image_medium" type="char" null="1" default="" values=""/>
-<field name="criteria_image_large" type="char" null="1" default="" values=""/>
-<field name="criteria_image_xlarge" type="char" null="1" default="" values=""/>
-<field name="criteria_image_folder" type="char" null="1" default="" values=""/>
-<field name="criteria_thumb_folder" type="char" null="1" default="" values=""/>
+<field name="criteria_image_small" type="integer" null="1" default="" values=""/>
+<field name="criteria_image_medium" type="integer" null="1" default="" values=""/>
+<field name="criteria_image_large" type="integer" null="1" default="" values=""/>
+<field name="criteria_image_xlarge" type="integer" null="1" default="" values=""/>
+<field name="criteria_image_folder" type="folder" null="1" default="" values=""/>
+<field name="criteria_thumb_folder" type="folder" null="1" default="" values=""/>
 
 <field name="criteria_asset_priority_site" type="integer" null="1" default="100" values=""/>
 <field name="criteria_asset_priority_application" type="integer" null="1" default="200" values=""/>
@@ -86,7 +86,3 @@
 <field name="feed_page_view_id" type="integer" null="0" default="" values=""/>
 <field name="feed_limit" type="integer" null="0" default="5" minimum="0" maximum="20"/>
 <field name="feed_email" type="email" null="0" default="" values=""/>
-
-<field name="caching" type="binary" null="0" default="1" values="0,1"/>
-<field name="cache_time" type="integer" null="0" default="15" values=""/>
-<field name="cache_handler" type="char" null="0" default="" values=""/>

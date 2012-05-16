@@ -55,9 +55,8 @@ Class CatalogHelper
 
 		/** Retrieve the query results */
 		$row = $this->get(
-			Services::Registry()->get('Route', 'id'),
-			Services::Registry()->get('Route', 'request_url_query'),
-			Services::Registry()->get('Route', 'source_id')
+			Services::Registry()->get('Route', 'request_catalog_id'),
+			Services::Registry()->get('Route', 'request_url_query')
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -83,20 +82,20 @@ Class CatalogHelper
 		Services::Registry()->set('Route', 'catalog_id', (int)$row['id']);
 		Services::Registry()->set('Route', 'catalog_type_id', (int)$row['catalog_type_id']);
 		Services::Registry()->set('Route', 'catalog_type', $row['title']);
-		Services::Registry()->set('Route', 'sef_request', $row['sef_request']);
-		Services::Registry()->set('Route', 'request', $row['request']);
-		Services::Registry()->set('Route', 'view_group_id', (int)$row['view_group_id']);
-		Services::Registry()->set('Route', 'category_id', (int)$row['primary_category_id']);
-		Services::Registry()->set('Route', 'source_table', $row['source_table']);
-		Services::Registry()->set('Route', 'source_id', (int)$row['source_id']);
+		Services::Registry()->set('Route', 'catalog_url_sef_request', $row['sef_request']);
+		Services::Registry()->set('Route', 'catalog_url_request', $row['catalog_url_request']);
+		Services::Registry()->set('Route', 'catalog_view_group_id', (int)$row['view_group_id']);
+		Services::Registry()->set('Route', 'catalog_category_id', (int)$row['primary_category_id']);
+		Services::Registry()->set('Route', 'catalog_source_table', $row['source_table']);
+		Services::Registry()->set('Route', 'catalog_source_id', (int)$row['source_id']);
 
 		/** home */
-		if ((int)Services::Registry()->get('Route', 'id')
+		if ((int)Services::Registry()->get('Route', 'request_catalog_id')
 			== Services::Registry()->get('Configuration', 'home_catalog_id')
 		) {
-			Services::Registry()->set('Route', 'home', true);
+			Services::Registry()->set('Route', 'catalog_home', true);
 		} else {
-			Services::Registry()->set('Route', 'home', false);
+			Services::Registry()->set('Route', 'catalog_home', false);
 		}
 
 		return true;
@@ -113,7 +112,7 @@ Class CatalogHelper
 	 * @results  object
 	 * @since    1.0
 	 */
-	public function get($catalog_id = 0, $sef_request = '', $source_id = 0, $catalog_type_id = 0)
+	public function get($catalog_id = 0, $url_sef_request = '', $source_id = 0, $catalog_type_id = 0)
 	{
 		if ((int)$catalog_id > 0) {
 
@@ -125,7 +124,7 @@ Class CatalogHelper
 
 		} else {
 
-			$catalog_id = $this->getIDUsingSEFURL($sef_request);
+			$catalog_id = $this->getIDUsingSEFURL($url_sef_request);
 
 			if ($catalog_id == false) {
 				return array();
@@ -142,7 +141,7 @@ Class CatalogHelper
 			return array();
 		}
 
-		$row['request'] = 'index.php?id=' . (int)$row['id'];
+		$row['catalog_url_request'] = 'index.php?id=' . (int)$row['id'];
 		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
 			$row['sef_request'] = '';
 		}
@@ -159,12 +158,12 @@ Class CatalogHelper
 	 * @return bool|mixed
 	 * @since  1.0
 	 */
-	public function getIDUsingSEFURL($sef_request)
+	public function getIDUsingSEFURL($url_sef_request)
 	{
 		$m = Application::Controller()->connect('Catalog', 'Table');
 
 		$m->model->query->select($m->model->db->qn('id'));
-		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($sef_request));
+		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($url_sef_request));
 
 		return $m->getData('loadResult');
 	}
@@ -226,7 +225,7 @@ Class CatalogHelper
 			return '';
 		}
 
-		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
 			$m = Application::Controller()->connect('Catalog', 'Table');
 

@@ -85,7 +85,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_catalog` (
   `catalog_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `source_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Content Primary Key' ,
   `routable` TINYINT(1)  NOT NULL DEFAULT 0 ,
-  `sef_request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL' ,
+  `url_sef_request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL' ,
   `request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.' ,
   `request_option` VARCHAR(45) NOT NULL ,
   `request_model` VARCHAR(45) NOT NULL ,
@@ -102,7 +102,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `sef_request` ON `molajo_catalog` (`sef_request` ASC) ;
+CREATE INDEX `url_sef_request` ON `molajo_catalog` (`url_sef_request` ASC) ;
 
 CREATE INDEX `request` ON `molajo_catalog` (`request` ASC) ;
 

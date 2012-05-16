@@ -70,6 +70,7 @@ Class UserService
 	 */
 	protected function load()
 	{
+
 		/** Initialize */
 		Services::Registry()->deleteRegistry('Users');
 
@@ -168,7 +169,7 @@ Class UserService
 		Services::Registry()->set('User', 'Groups', $groups);
 		Services::Registry()->set('User', 'ViewGroups', $viewGroups);
 		Services::Registry()->set('User', 'Activity', $activity);
-/** test
+/**
 		echo '<pre>';
 		echo 'User<br />';
 		var_dump(Services::Registry()->get('User'));
@@ -188,7 +189,7 @@ Class UserService
 		echo 'User Metadata<br />';
 		var_dump(Services::Registry()->get('UsersMetadata'));
 		echo '</pre>';
- */
+*/
 		return $this;
 	}
 }

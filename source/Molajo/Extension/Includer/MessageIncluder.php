@@ -35,7 +35,7 @@ Class MessageIncluder extends Includer
 	 */
 	public function __construct($name = null, $type = null, $items = null)
 	{
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
+		Services::Registry()->set('Include', 'extension_catalog_type_id', 0);
 		$this->extension_required = false;
 		parent::__construct($name, $type, $items);
 		return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
@@ -55,7 +55,7 @@ Class MessageIncluder extends Includer
 		Services::Registry()->set('Parameters', 'action', 'display');
 
 		$this->parameters = Services::Registry()->initialise();
-		Services::Registry()->set('Parameters', 'suppress_no_results', 1);
+		Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
 
 		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'template_view_id',

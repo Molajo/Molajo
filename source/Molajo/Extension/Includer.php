@@ -154,7 +154,7 @@ class Includer
 		$this->setRenderCriteria();
 
 		if ($this->extension_required === true) {
-			if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
+			if (Services::Registry()->get('Include', 'extension_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'status_found', false);
 				return false;
 			}
@@ -163,12 +163,31 @@ class Includer
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
 
+		/** Final Template and Wrap selections */
+		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		Helpers::Extension()->finalizeParameters(
+			Services::Registry()->get('Include', 'content_id', 0),
+			Services::Registry()->get('Include', 'request_action', 'display')
+		);
+
+		/** Sort */
+		Services::Registry()->sort('Include');
+		Services::Registry()->sort('Parameters');
+
+		echo '<br /><br />Route<br /><pre>';
+		var_dump(Services::Registry()->get('Include'));
+
+		echo '<br />Parameters (RouteParameters)<br />';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+
 		/** instantiate MVC and render output */
 		$this->rendered_output = $this->invokeMVC();
 
 		/** only load media if there was rendered output */
 		if ($this->rendered_output == ''
-			&& Services::Registry()->get('Parameters', 'suppress_no_results') == 0
+			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 0
 		) {
 		} else {
 			$this->loadMedia();
@@ -197,7 +216,7 @@ class Includer
 			foreach ($this->attributes as $name => $value) {
 
 				if ($name == 'name' || $name == 'title') {
-					Services::Registry()->set('Parameters', 'extension_instance_name', $value);
+					Services::Registry()->set('Include', 'extension_title', $value);
 
 
 				} else if ($name == 'tag') {
@@ -205,23 +224,23 @@ class Includer
 
 
 				} else if ($name == 'template') {
-					Services::Registry()->set('TemplateView', 'title', $value);
+					Services::Registry()->set('Parameters', 'template_view_title', $value);
 
-				} else if ($name == 'template_view_css_id') {
-					Services::Registry()->set('TemplateView', 'css_id', $value);
+				} else if ($name == 'template_view_css_id ') {
+					Services::Registry()->set('Parameters', 'template_view_css_id', $value);
 
 				} else if ($name == 'template_view_css_class') {
-					Services::Registry()->set('TemplateView', 'css_class', $value);
+					Services::Registry()->set('Parameters', 'template_view_css_class', $value);
 
 
 				} else if ($name == 'wrap') {
-					Services::Registry()->set('WrapView', 'title', $value);
+					Services::Registry()->set('Parameters', 'wrap_view_title', $value);
 
 				} else if ($name == 'wrap_view_css_id') {
-					Services::Registry()->set('WrapView', 'css_id', $value);
+					Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 
 				} else if ($name == 'wrap_view_css_class') {
-					Services::Registry()->set('WrapView', 'css_class', $value);
+					Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 				}
 
 			}
@@ -240,18 +259,18 @@ class Includer
 	{
 
 		/** Retrieve Extension Instances ID */
-		if (Services::Registry()->get('Parameters', 'extension_instance_id', 0) == 0) {
-			Services::Registry()->set('Parameters', 'extension_instance_id',
+		if (Services::Registry()->get('Include', 'extension_id', 0) == 0) {
+			Services::Registry()->set('Include', 'extension_id',
 				Helpers::Extension()->getInstanceID(
-					Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-					Services::Registry()->get('Parameters', 'extension_instance_name')
+					Services::Registry()->get('Include', 'extension_catalog_type_id'),
+					Services::Registry()->get('Include', 'extension_title')
 				)
 			);
 		}
 
 		/**  Retrieve Extension Data and set Extension Parameter values */
 		$response = Helpers::Extension()->getIncludeExtension(
-			Services::Registry()->get('Parameters', 'extension_instance_id')
+			Services::Registry()->get('Include', 'extension_id')
 		);
 		if ($response == false) {
 			return Services::Registry()->set('Parameter', 'status_found', false);
@@ -271,10 +290,14 @@ class Includer
 	 */
 	public function setRenderCriteria()
 	{
+
+		return;
+
+		// should be taken care of in the helper queriers or finalize
 		if (Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 		} else {
-			Services::Registry()->deleteRegistry('TemplateView');
-			Services::Registry()->set('TemplateView', 'id', Services::Registry()->get('Parameters', 'template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'template_view_id'));
 			Services::Registry()->set('TemplateView', 'title', '');
 		}
 
@@ -321,7 +344,7 @@ class Includer
 		Services::Registry()->set('Parameters', 'controller',
 			Services::Registry()->get('Request', 'mvc_controller'));
 		Services::Registry()->set('Parameters', 'action',
-			Services::Registry()->get('Request', 'action'));
+			Services::Registry()->get('Route', 'request_action'));
 		Services::Registry()->set('Parameters', 'model',
 			Services::Registry()->get('Request', 'mvc_model'));
 		Services::Registry()->set('Parameters', 'table',
@@ -330,7 +353,7 @@ class Includer
 			(int)Services::Registry()->get('Request', 'mvc_id'));
 		Services::Registry()->set('Parameters', 'category_id',
 			(int)Services::Registry()->get('Request', 'mvc_category_id'));
-		Services::Registry()->set('Parameters', 'suppress_no_results',
+		Services::Registry()->set('Parameters', 'display_view_on_no_results',
 			(bool)Services::Registry()->get('Request', 'mvc_suppress_no_results'));
 
 		return;
@@ -346,7 +369,7 @@ class Includer
 	 */
 	protected function loadLanguage()
 	{
-		return Helpers::Extension()->loadLanguage(Services::Registry()->get('Extension', 'path'));
+		return Helpers::Extension()->loadLanguage(Services::Registry()->get('Include', 'extension_path'));
 	}
 
 	/**
@@ -402,11 +425,6 @@ class Includer
 		Services::Registry()->set('Parameters', 'menuitem', 0);
 		Services::Registry()->set('Parameters', 'model_method', '');
 
-		$get_item_children = false;
-		$use_special_joins = false;
-		$check_view_level_access = false;
-		$get_customfields = false;
-
 		$table = '';
 
 		/** Type of Query: Single Item, Menu Item, Content List */
@@ -423,7 +441,7 @@ class Includer
 		} else if (((int) Services::Registry()->get('Content', 'id') > 0)
 					&& ($this->type == 'request' || $this->type == 'component')) {
 
-//			if (Services::Registry()->get('Route', 'action') == 'display') {
+//			if (Services::Registry()->get('Route', 'request_action') == 'display') {
 			$moduleMethod = 'load';
 
 			Services::Registry()->set('Parameters', 'id',
@@ -432,7 +450,7 @@ class Includer
 			$table = Services::Registry()->get('Content', 'catalog_type_title');
 			$table = ucfirst(strtolower($table));
 
-			Services::Registry()->set('Parameters', 'extension_primary', true);
+			Services::Registry()->set('Include', 'extension_primary', true);
 
 			/** @var $get_item_children set at global/extension/item level */
 
@@ -532,7 +550,7 @@ class Includer
 			Services::Debug()->set(' ');
 			Services::Debug()->set('Includer::invokeMVC');
 			//Services::Debug()->set('Controller: ' . $cc . ' Action: ' . $action . ' Model: ' . $model . ' ');
-			Services::Debug()->set('Extension: ' . Services::Registry()->get('Parameters', 'extension_instance_name') . ' ID: ' . Services::Registry()->get('Parameters', 'id') . '');
+			Services::Debug()->set('Extension: ' . Services::Registry()->get('Include', 'extension_title') . ' ID: ' . Services::Registry()->get('Parameters', 'id') . '');
 			Services::Debug()->set('Template: ' . Services::Registry()->get('Parameters', 'template_view_path') . '');
 			Services::Debug()->set('Wrap: ' . Services::Registry()->get('Parameters', 'wrap_view_path') . '');
 		}

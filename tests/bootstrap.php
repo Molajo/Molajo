@@ -16,7 +16,7 @@ define('BASE_FOLDER', $f.'/source');
 require_once BASE_FOLDER . '/Autoload.php';
 
 /** Initialize Optional Parameters */
-$override_request_url = null;
+$override_url_request = null;
 $override_catalog_id = null;
 $override_sequenceXML = null;
 $override_finalXML = null;

@@ -121,7 +121,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 205, 'catalog_catalog_type_id', 'FIELD_catalog_type_id', 64),
       (1, 0, 205, 'catalog_source_id', 'FIELD_CATALOG_SOURCE_ID', 65),
       (1, 0, 205, 'catalog_routable', 'FIELD_CATALOG_ROUTABLE', 66),
-      (1, 0, 205, 'catalog_sef_request', 'FIELD_CATALOG_SEF_REQUEST', 67),
+      (1, 0, 205, 'catalog_url_sef_request', 'FIELD_CATALOG_SEF_REQUEST', 67),
       (1, 0, 205, 'catalog_request', 'FIELD_CATALOG_REQUEST', 68),
       (1, 0, 205, 'catalog_request_option', 'FIELD_CATALOG_OPTION', 69),
       (1, 0, 205, 'catalog_request_model', 'FIELD_CATALOG_MODEL', 70),

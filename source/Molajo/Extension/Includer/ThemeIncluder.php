@@ -36,7 +36,7 @@ Class ThemeIncluder extends Includer
 	 */
 	public function __construct($name = null, $type = null, $items = null)
 	{
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
+		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
 		$this->name = $name;
 		$this->type = $type;
 
