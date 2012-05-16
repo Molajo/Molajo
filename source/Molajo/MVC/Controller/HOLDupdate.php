@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Update Controller
  *
- * Handles the standard single-item save, delete, and cancel tasks
+ * Handles the standard single-item save, delete, and cancel actions
  *
  * Cancel: cancel and close
  * Save: apply, create, save, saveascopy, saveandnew, restore
@@ -104,13 +104,13 @@ class ItemController extends Controller
 	 * @return    Boolean
 	 * @since    1.0
 	 */
-	public function saveItemBatch($task)
+	public function saveItemBatch($action)
 	{
 		/** initialisation */
 		$results = parent::initialise('save');
 
 		/** Model: Get Data for Copy ID **/
-		if ($task == 'copy') {
+		if ($action == 'copy') {
 			$data = $this->model->copy(Services::Registry()->get('Parameters', 'id'), $this->batch_category_id);
 
 			/** reset ids to point to current row **/
@@ -167,12 +167,12 @@ class ItemController extends Controller
 	 *
 	 * Used to obtain form data and send to saveItem for save processing
 	 *
-	 * Method called by apply, create, save, saveascopy and saveandnew tasks
+	 * Method called by apply, create, save, saveascopy and saveandnew actions
 	 *
 	 * @return    Boolean
 	 * @since    1.0
 	 */
-	public function saveItemForm($task)
+	public function saveItemForm($action)
 	{
 		/** security token **/
 		JRequest::checkToken() or die;
@@ -181,14 +181,14 @@ class ItemController extends Controller
 
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
 
-		/** Preparation: save as copy id and task cleanup **/
-		if ($task == 'saveascopy') {
+		/** Preparation: save as copy id and action cleanup **/
+		if ($action == 'saveascopy') {
 			$this->set('id', 0);
 			$data['id'] = 0;
-			$task = 'apply';
+			$action = 'apply';
 			JRequest::setVar('id', 0);
 		}
-		return $this->saveItem($data, $task);
+		return $this->saveItem($data, $action);
 	}
 
 	/**
@@ -203,17 +203,17 @@ class ItemController extends Controller
 	 * @return    Boolean
 	 * @since    1.0
 	 */
-	public function saveItem($data, $task = null)
+	public function saveItem($data, $action = null)
 	{
 		/** security token **/
 		JRequest::checkToken() or die;
 
-		/** task **/
-		if ($task == null) {
-			$task = $this->getTask();
+		/** action **/
+		if ($action == null) {
+			$action = $this->getTask();
 		}
 
-		/** Edit: Must have data from form input, copy or restore task **/
+		/** Edit: Must have data from form input, copy or restore action **/
 		if (empty($data)) {
 			$this->redirectClass->setRedirectMessage(Services::Language()->translate('SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
 			$this->redirectClass->setRedirectMessageType(Services::Language()->translate('warning'));
@@ -239,7 +239,7 @@ class ItemController extends Controller
 
 		/** Preparation: Save form or version data **/
 		Services::User()->setUserState(JRequest::getInt('datakey'), $data);
-		$context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task . '.' . JRequest::getInt('datakey');
+		$context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action . '.' . JRequest::getInt('datakey');
 
 		/** Edit: verify checkout **/
 		if ((int)Services::Registry()->get('Parameters', 'id')) {
@@ -252,7 +252,7 @@ class ItemController extends Controller
 		/** Model: Get Form **/
 		/** Model Trigger_Event: contentPrepareData **/
 		/** Model Trigger_Event: contentPrepareForm **/
-		/** Molajo_Note: Forms are named with the concatenated values of option, EditView, view, task, id, datakey separated by '.' **/
+		/** Molajo_Note: Forms are named with the concatenated values of option, EditView, view, action, id, datakey separated by '.' **/
 		$form = $this->model->getForm($data, false);
 		if ($form === false) {
 			return $this->redirectClass->setSuccessIndicator(false);
@@ -296,7 +296,7 @@ class ItemController extends Controller
 		}
 
 		/** ACL **/
-		$results = $this->checkTaskAuthorisation($checkTask = $task);
+		$results = $this->checkTaskAuthorisation($checkTask = $action);
 		if ($results === false) {
 			return $this->redirectClass->setSuccessIndicator(false);
 		}
@@ -372,7 +372,7 @@ class ItemController extends Controller
 			return true;
 		}
 
-		if ($task == 'restore') {
+		if ($action == 'restore') {
 			$this->redirectClass->setRedirectMessage(Services::Language()->translate('RESTORE_SUCCESSFUL'));
 		} else {
 			$this->redirectClass->setRedirectMessage(Services::Language()->translate('SAVE_SUCCESSFUL'));

@@ -46,7 +46,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 	 * After-read processing
 	 *
 	 * Use with Grid to determine permissions for buttons and items
-	 * Validate task-level user permissions on each row - relies upon catalog_id
+	 * Validate action-level user permissions on each row - relies upon catalog_id
 	 *
 	 * @param   $data
 	 * @param   $model
@@ -62,19 +62,19 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 		}
 
 		/** Component Buttons */
-		$tasks = Services::Registry() - get('ExtensionParameters', 'toolbar_buttons');
+		$actions = Services::Registry() - get('ExtensionParameters', 'toolbar_buttons');
 
-		$tasksArray = explode(',', $tasks);
+		$actionsArray = explode(',', $actions);
 
 		/** User Permissions */
 		$permissions = Services::Authorisation()
-			->authoriseTaskList($tasksArray, $data->catalog_id);
+			->authoriseTaskList($actionsArray, $data->catalog_id);
 
 		/** Append onto row */
-		foreach ($tasksArray as $task) {
-			if ($permissions[$task] === true) {
-				$field = $task . 'Permission';
-				$data->$field = $permissions[$task];
+		foreach ($actionsArray as $action) {
+			if ($permissions[$action] === true) {
+				$field = $action . 'Permission';
+				$data->$field = $permissions[$action];
 			}
 		}
 

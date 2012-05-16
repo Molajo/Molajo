@@ -19,6 +19,12 @@
 ## Can be commented out if causes errors, see notes above.
 Options +FollowSymLinks
 
+
+<files *.xml>
+order deny,allow
+deny from all
+</files>
+
 ## Mod_rewrite in use.
 
 RewriteEngine On

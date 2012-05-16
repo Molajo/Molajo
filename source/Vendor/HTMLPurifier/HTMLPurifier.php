@@ -3472,7 +3472,7 @@ class HTMLPurifier_Encoder
 	 *       character entities that the projected character encoding
 	 *       can allow. We could possibly implement a smart version
 	 *       but that would require it to also know which Unicode
-	 *       codepoints the charset supported (not an easy task).
+	 *       codepoints the charset supported (not an easy action).
 	 * @note Sort of with cleanUTF8() but it assumes that $str is
 	 *       well-formed UTF-8
 	 */
@@ -4086,7 +4086,7 @@ class HTMLPurifier_Exception extends Exception
  * Sometimes, a little ad-hoc fixing of HTML has to be done before
  * it gets sent through HTML Purifier: you can use filters to acheive
  * this effect. For instance, YouTube videos can be preserved using
- * this manner. You could have used a decorator for this task, but
+ * this manner. You could have used a decorator for this action, but
  * PHP's support for them is not terribly robust, so we're going
  * to just loop through the filters.
  *
@@ -15514,7 +15514,7 @@ class HTMLPurifier_Strategy_Core extends HTMLPurifier_Strategy_Composite
  *
  * The second objective is to ensure that explicitly excluded elements of
  * an element do not appear in its children.  Code that accomplishes this
- * task is pervasive through the strategy, though the two are distinct tasks
+ * action is pervasive through the strategy, though the two are distinct actions
  * and could, theoretically, be seperated (although it's not recommended).
  *
  * @note Whether or not unrecognized children are silently dropped or

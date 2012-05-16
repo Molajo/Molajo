@@ -117,7 +117,7 @@ class Controller
 	 *
 	 * Constructor.
 	 *
-	 * @param  array  $task_request
+	 * @param  array  $action_request
 	 * @param  array  $parameters
 	 *
 	 * @since  1.0
@@ -130,7 +130,7 @@ class Controller
 	/**
 	 * display
 	 *
-	 * Display task is used to render view output
+	 * Display action is used to render view output
 	 *
 	 * @return  string  Rendered output
 	 * @since   1.0
@@ -253,7 +253,7 @@ class Controller
 		}
 
 		/** versions deleted with delete **/
-		if (Services::Registry()->get('Parameters', 'task') == 'delete'
+		if (Services::Registry()->get('Parameters', 'action') == 'delete'
 			&& Services::Registry()->get('Parameters', 'retain_versions_after_delete', 1) == 0
 		) {
 			return true;
@@ -293,7 +293,7 @@ class Controller
 		}
 
 		/** versions deleted with delete **/
-		if (Services::Registry()->get('Parameters', 'task') == 'delete'
+		if (Services::Registry()->get('Parameters', 'action') == 'delete'
 			&& Services::Registry()->get('Parameters', 'retain_versions_after_delete', 1) == 0
 		) {
 			$maintainVersions = 0;

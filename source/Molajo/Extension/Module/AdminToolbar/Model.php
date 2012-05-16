@@ -67,9 +67,9 @@ Class ModuleAdminToolbarModel extends DisplayModel
 
 				$row->option = Services::Registry()->get('ExtensionParameters', 'display_extension_option');
 
-				$row->task = $buttonname;
+				$row->action = $buttonname;
 
-				$row->link = 'index.php?id=' . (int)$row->catalog_id . '&task=' . $row->task;
+				$row->link = 'index.php?id=' . (int)$row->catalog_id . '&action=' . $row->action;
 
 				$this->data[] = $row;
 			}

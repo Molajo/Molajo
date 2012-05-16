@@ -47,7 +47,7 @@ Class WrapViewHelper
 	/**
 	 * get
 	 *
-	 * Get requested theme data
+	 * Get Requested Wrap View data
 	 *
 	 * @return  array
 	 * @since   1.0
@@ -55,35 +55,45 @@ Class WrapViewHelper
 	public function get($wrap_view_id = 0)
 	{
 		if ($wrap_view_id == 0) {
-			$wrap_view_id = $this->DefaultWrapView();
+			$wrap_view_id = $this->setDefaultWrapView();
 		}
 
-		$row = Helpers::Extension()->get($wrap_view_id);
+		Services::Registry()->set('Parameters', 'wrap_view_id', (int)$wrap_view_id);
+		$title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
+		Services::Registry()->set('Parameters', 'wrap_view_title', $title);
+		Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($title));
+		Services::Registry()->set('Parameters', 'wrap_view_path_include', $this->getPath($title) . '/Manifest.xml');
+		Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($title));
 
-		/** 500: Wrap not found */
+		$row = Helpers::Extension()->get($wrap_view_id, 'WrapView');
+
+		/** 500: Theme not found */
 		if (count($row) == 0) {
-			/** Try Default 'None' Wrap */
+			/** Try System Template */
 			$wrap_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None');
+
+			/** Get new Title and path */
+			$title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
+			Services::Registry()->set('Parameters', 'wrap_view_title', $title);
+			Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($title));
+			Services::Registry()->set('Parameters', 'wrap_view_path_include', $this->getPath($title) . '/Manifest.xml');
+			Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($title));
+
 			$row = Helpers::Extension()->get($wrap_view_id);
+
 			if (count($row) == 0) {
-				Services::Error()->set(500, 'Theme not found');
+				Services::Error()->set(500, 'Wrap View not found');
 				return false;
 			}
 		}
-		Services::Registry()->deleteRegistry('WrapView');
 
-		Services::Registry()->set('WrapView', 'id', (int)$row->id);
-		Services::Registry()->set('WrapView', 'title', $row->title);
-		Services::Registry()->set('WrapView', 'translation_of_id', $row->translation_of_id);
-		Services::Registry()->set('WrapView', 'language', $row->language);
-		Services::Registry()->set('WrapView', 'view_group_id', $row->view_group_id);
-		Services::Registry()->set('WrapView', 'catalog_id', $row->catalog_id);
-		Services::Registry()->set('WrapView', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('WrapView', 'catalog_type_title', $row->catalog_type_title);
-		Services::Registry()->set('WrapView', 'path', $this->getPath($row->title));
-		Services::Registry()->set('WrapView', 'path_url', $this->getPathURL($row->title));
+		Services::Registry()->set('Parameters', 'wrap_view_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'wrap_view_language', $row['language']);
+		Services::Registry()->set('Parameters', 'wrap_view_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'wrap_view_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_title', $row['catalog_type_title']);
 
-		//fix
 		return;
 	}
 
@@ -93,27 +103,9 @@ Class WrapViewHelper
 	 * @return  string
 	 * @since   1.0
 	 */
-	public function DefaultWrapView()
+	public function setDefaultWrapView()
 	{
 		$wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		$wrap_view_id = Services::Registry()->get('MenuParameters', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		$wrap_view_id = Services::Registry()->get('CategoryParameters', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		$wrap_view_id = Services::Registry()->get('ExtensionParameters', 'wrap_view_id', 0);
 		if ((int)$wrap_view_id == 0) {
 		} else {
 			return $wrap_view_id;

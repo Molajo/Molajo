@@ -34,7 +34,7 @@ class DisplayController extends Controller
 
 
 	/**
-	 * Add task is used to render view output for a form used to create new content
+	 * Add action is used to render view output for a form used to create new content
 	 *
 	 * @return  string  Rendered output
 	 * @since   1.0
@@ -45,7 +45,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * Edit task is used to render view output for a form used to display existing content
+	 * Edit action is used to render view output for a form used to display existing content
 	 *
 	 * @return  string  Rendered output
 	 * @since   1.0
@@ -62,7 +62,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * Display task is used to render view output
+	 * Display action is used to render view output
 	 *
 	 * @return  string  Rendered output
 	 * @since   1.0

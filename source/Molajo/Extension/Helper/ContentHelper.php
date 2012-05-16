@@ -57,7 +57,8 @@ Class ContentHelper
 		$row = $this->get(
 			Services::Registry()->get('Route', 'source_id'),
 			Services::Registry()->get('Route', 'source_table'),
-			'Route'
+			'Route',
+			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -131,7 +132,8 @@ Class ContentHelper
 		$row = $this->get(
 			Services::Registry()->get('Route', 'category_id'),
 			'#__content',
-			'Component'
+			'Table',
+			'Categories'
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -154,21 +156,21 @@ Class ContentHelper
 
 			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			if ('Category' . $customFieldName == 'Category' . 'Parameters') {
+			if ('Categories' . $customFieldName == 'Categories' . 'Parameters') {
 				Services::Registry()->merge(
-					'Extension' . $customFieldName,
+					'Categories' . $customFieldName,
 					'Parameters'
 				);
 			}
 
-			if ('Category' . $customFieldName == 'Category' . 'Metadata') {
+			if ('Categories' . $customFieldName == 'Categories' . 'Metadata') {
 				Services::Registry()->merge(
-					'Extension' . $customFieldName,
+					'Categories' . $customFieldName,
 					'Metadata'
 				);
 			}
 
-			Services::Registry()->deleteRegistry('Category' . $customFieldName);
+			Services::Registry()->deleteRegistry('Categories' . $customFieldName);
 		}
 
 	   /**
@@ -192,13 +194,13 @@ Class ContentHelper
 	 * @return  mixed    An object containing an array of data
 	 * @since   1.0
 	 */
-	public function get($id, $content_table, $type = null)
+	public function get($id, $content_table, $type = null, $datasource = null)
 	{
 		if ($type == null) {
 			$type = 'Component';
 		}
 		$m = Application::Controller()->connect(
-			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type'))),
+			$datasource,
 			$type
 		);
 

@@ -184,7 +184,7 @@ Class InstallService
 			return false;
 		}
 
-		$xml = Services::Configuration()->loadFile('Manifest', 'Application');
+		$xml = Services::Configuration()->getFile('Manifest', 'Application');
 
 		$data = array();
 

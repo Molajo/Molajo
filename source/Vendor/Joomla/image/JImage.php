@@ -93,7 +93,7 @@ class JImage
 		}
 		elseif (!empty($source) && is_string($source)) {
 			// If the source input is not empty, assume it is a path and populate the image handle.
-			$this->loadFile($source);
+			$this->getFile($source);
 		}
 	}
 
@@ -336,7 +336,7 @@ class JImage
 	 * @throws  \InvalidArgumentException
 	 * @throws  \RuntimeException
 	 */
-	public function loadFile($path)
+	public function getFile($path)
 	{
 		// Make sure the file exists.
 		if (!file_exists($path)) {

@@ -64,7 +64,7 @@ Class ThemeHelper
 		Services::Registry()->set('Parameters', 'theme_path', $this->getPath($title));
 		Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($title) . '/index.php');
 		Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($title));
-		Services::Registry()->set('Parameters', 'favicon', $this->getFavicon($title));
+		Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($title));
 
 		$row = Helpers::Extension()->get($theme_id, 'Theme');
 
@@ -79,7 +79,7 @@ Class ThemeHelper
 			Services::Registry()->set('Parameters', 'theme_path', $this->getPath($title));
 			Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($title) . '/index.php');
 			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($title));
-			Services::Registry()->set('Parameters', 'favicon', $this->getFavicon($title));
+			Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($title));
 
 			$row = Helpers::Extension()->get($theme_id);
 

@@ -31,7 +31,7 @@
                     <include name="SystemMetadata"/>
                 </customfield>
                 <customfield name="parameters">
-                    <include name="SystemParameters"/>
+                    <include name="SystemComponentParameters"/>
                 </customfield>
             </customfields>
         </item>

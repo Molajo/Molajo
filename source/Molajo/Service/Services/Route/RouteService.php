@@ -240,7 +240,7 @@ Class RouteService
 		$use = array();
 
 		/** XML with system defined nonroutable pairs */
-		$list = Services::Configuration()->loadFile('nonroutable', 'Application');
+		$list = Services::Configuration()->getFile('nonroutable', 'Application');
 
 		foreach ($list->parameter as $item) {
 
@@ -400,20 +400,27 @@ Class RouteService
 		/** Final Template and Wrap selections */
 		$this->finalizeParameters();
 
-		return;
-/**
+		/** Sort */
+		Services::Registry()->sort('Route');
+		Services::Registry()->sort('Parameters');
+		Services::Registry()->sort('Metadata');
+
 		echo '<br /><br />Route<br /><pre>';
 		var_dump(Services::Registry()->get('Route'));
 
+		echo '<br />Configuration<br />';
+
+		var_dump(Services::Registry()->get('Configuration'));
+
 		echo '<br />Parameters<br />';
+
 		var_dump(Services::Registry()->get('Parameters'));
 
 		echo '<br />Metadata<br />';
 		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
 
-		die;
-*/
+		return;
 	}
 
 	/**
@@ -425,8 +432,8 @@ Class RouteService
 	protected function finalizeParameters()
 	{
 
-		if (Services::Registry()->get('Route', 'task') == 'add'
-			|| Services::Registry()->get('Route', 'task') == 'edit') {
+		if (Services::Registry()->get('Route', 'action') == 'add'
+			|| Services::Registry()->get('Route', 'action') == 'edit') {
 
 			Services::Registry()->set('Parameters', 'template_view', 'form');
 
@@ -467,19 +474,23 @@ Class RouteService
 			Services::Registry()->set('Parameters', 'template_view', 'item');
 
 			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'item_template_view_id'));
+				Services::Registry()->get('Parameters', 'template_view_id'));
 			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'item_template_view_css_id'));
+				Services::Registry()->get('Parameters', 'template_view_css_id'));
 			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'item_template_view_css_class'));
+				Services::Registry()->get('Parameters', 'template_view_css_class'));
 
 			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'item_wrap_view_id'));
+				Services::Registry()->get('Parameters', 'wrap_view_id'));
 			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'item_wrap_view_css_id'));
+				Services::Registry()->get('Parameters', 'wrap_view_css_id'));
 			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'item_wrap_view_css_class'));
+				Services::Registry()->get('Parameters', 'wrap_view_css_class'));
 		}
+
+		Helpers::TemplateView()->get();
+
+		Helpers::WrapView()->get();
 
 		/** Remove parameters not needed */
 		Services::Registry()->delete('Parameters', 'list_template_view_id');
@@ -489,18 +500,15 @@ Class RouteService
 		Services::Registry()->delete('Parameters', 'list_wrap_view_css_id');
 		Services::Registry()->delete('Parameters', 'list_wrap_view_css_class');
 
-		Services::Registry()->delete('Parameters', 'item_template_view_id');
-		Services::Registry()->delete('Parameters', 'item_template_view_css_id');
-		Services::Registry()->delete('Parameters', 'item_template_view_css_class');
-		Services::Registry()->delete('Parameters', 'item_wrap_view_id');
-		Services::Registry()->delete('Parameters', 'item_wrap_view_css_id');
-		Services::Registry()->delete('Parameters', 'item_wrap_view_css_class');
-
 		Services::Registry()->delete('Parameters', 'form_template_view_id');
 		Services::Registry()->delete('Parameters', 'form_template_view_css_id');
 		Services::Registry()->delete('Parameters', 'form_template_view_css_class');
 		Services::Registry()->delete('Parameters', 'form_wrap_view_id');
 		Services::Registry()->delete('Parameters', 'form_wrap_view_css_id');
 		Services::Registry()->delete('Parameters', 'form_wrap_view_css_class');
+
+		/** Not needed */
+		Services::Registry()->delete('Route', 'id');
+		Services::Registry()->delete('Route', 'request_url_query');
 	}
 }

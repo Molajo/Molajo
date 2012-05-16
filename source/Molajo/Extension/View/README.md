@@ -25,7 +25,7 @@ View Types are designed to handle specific types of rendered output, including:
 
 ### What is a Controller? ###
 
-A Controller controls the logic flow, instructing the Model and View to do specific tasks.
+A Controller controls the logic flow, instructing the Model and View to do specific action.
 
 ### What is a Model? ###
 

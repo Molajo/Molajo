@@ -435,7 +435,7 @@ Class RegistryService
 	}
 
 	/**
-	 * loadFile
+	 * getFile
 	 *
 	 * add php spl priority for loading
 	 *
@@ -443,7 +443,7 @@ Class RegistryService
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public static function loadFile($file, $type = 'Application')
+	public static function getFile($file, $type = 'Application')
 	{
 		if ($type == 'Application' || $type == 'Table') {
 			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';

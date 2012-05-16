@@ -52,22 +52,22 @@ class ItemController extends Controller
 		if ($valid === true) {
 
 			if ($this->model->row->id == 0 || $this->model->row->status == 0) {
-				Services::Response()->redirect($this->task_request->get('redirect_on_success'), 301);
+				Services::Response()->redirect($this->action_request->get('redirect_on_success'), 301);
 
 			} else {
 
 				Services::Response()->redirect(
-					Helpers::Catalog()->getURL($this->task_request->get('request_catalog_id')),	301);
+					Helpers::Catalog()->getURL($this->action_request->get('request_catalog_id')),	301);
 			}
 
 		} else {
 
-			$link = $this->task_request->get('redirect_on_failure');
+			$link = $this->action_request->get('redirect_on_failure');
 
 			if ((int)$this->id == 0) {
-				$link .= '&task=add';
+				$link .= '&action=add';
 			} else {
-				$link .= '&task=edit';
+				$link .= '&action=edit';
 			}
 
 			Services::Response()->redirect($link, 301);
@@ -155,7 +155,7 @@ class ItemController extends Controller
 	{
 		$valid = true;
 
-		$v = Services::Registry()->loadFile(substr($this->model->table_name, 3, 99));
+		$v = Services::Registry()->getFile(substr($this->model->table_name, 3, 99));
 		if (count($v) == 0) {
 			return true;
 		}
