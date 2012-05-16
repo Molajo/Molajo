@@ -7,7 +7,7 @@
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
-if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1
+if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1
 	&& (Services::Registry()->get('WrapView', 'title') == 'article'
 		|| Services::Registry()->get('WrapView', 'title') == 'aside'
 		|| Services::Registry()->get('WrapView', 'title') == 'footer'
@@ -42,7 +42,7 @@ endif;
 <<?php echo trim($headerType . $headerId . $headerClass . $headerRole); ?>>
 <?php
 $headingLevel = Services::Registry()->get('Parameters', 'wrap_view_header_level', 3);
-if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1):
+if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1):
 	if (Services::Registry()->get('Parameters', 'wrap_view_show_title', false) === true
 		&& Services::Registry()->get('Parameters', 'wrap_view_show_subtitle', false) === true
 	) : ?>

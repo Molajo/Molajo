@@ -39,7 +39,7 @@ Class HeadIncluder extends Includer
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
 		$this->extension_required = false;
 		parent::__construct($name, $type, $items);
-		Services::Registry()->set('Parameters', 'html_display_filter', false);
+		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
 		return $this;
 	}
 

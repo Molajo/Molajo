@@ -6,8 +6,7 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
-if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1
+if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1
 	&& ($this->action->get('wrap_view_name') == 'article'
 		|| $this->action->get('wrap_view_name') == 'aside'
 		|| $this->action->get('wrap_view_name') == 'footer'
@@ -36,7 +35,7 @@ endif;
 <<?php echo trim($headerType . $headerId . $headerClass); ?>>
 <?php
 $headingLevel = Services::Registry()->get('Parameters', 'wrap_view_header_level', 3);
-if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1):
+if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1):
 	if (Services::Registry()->get('Parameters', 'wrap_view_show_title', false) === true
 		&& Services::Registry()->get('Parameters', 'wrap_view_show_subtitle', false) === true
 	) : ?>
@@ -58,7 +57,7 @@ if (Services::Registry()->get('Parameters', 'wrap_view_show_subtitle', false) ==
 	<?php
 endif;
 
-if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) :
+if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1) :
 	if (Services::Registry()->get('Parameters', 'wrap_view_show_title', false) === true
 		&& Services::Registry()->get('Parameters', 'wrap_view_show_subtitle', false) === true
 	) : ?>

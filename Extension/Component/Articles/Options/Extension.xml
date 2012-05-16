@@ -28,6 +28,8 @@
                     <include name="SystemMetadata"/>
                 </customfield>
                 <customfield name="parameters">
+                    <field name="catalog_type_id" type="int" null="1" default="10000" values="10000"/>
+                    <field name="extension_catalog_type_id" type="integer" null="1" default="1050" values="1050"/>
                     <include name="SystemComponentParameters"/>
                 </customfield>
             </customfields>

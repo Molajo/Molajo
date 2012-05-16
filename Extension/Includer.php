@@ -538,8 +538,8 @@ class Includer
 		}
 
 		/** html display filters
-		Services::Registry()->set('Parameters', 'html_display_filter', false);
-		if (Services::Registry()->get('Parameters', 'html_display_filter', true) == false) {
+		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
+		if (Services::Registry()->get('Parameters', 'criteria_html_display_filter', true) == false) {
 		return $results;
 		} else {
 		return Services::Filter()->filter_html($results);
