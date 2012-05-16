@@ -52,7 +52,7 @@ Class MessageIncluder extends Includer
 	protected function getApplicationDefaults()
 	{
 		Services::Registry()->set('Parameters', 'model', 'MessagesModel');
-		Services::Registry()->set('Parameters', 'task', 'display');
+		Services::Registry()->set('Parameters', 'action', 'display');
 
 		$this->parameters = Services::Registry()->initialise();
 		Services::Registry()->set('Parameters', 'suppress_no_results', 1);

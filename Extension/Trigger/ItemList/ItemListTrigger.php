@@ -64,7 +64,7 @@ class ItemListTrigger extends ContentTrigger
 
 		foreach ($lists as $item) {
 
-			$list = Services::Configuration()->loadFile($item);
+			$list = Services::Configuration()->getFile($item);
 
 			$name = (string)$list->name;
 			$table = (string)$list->table;

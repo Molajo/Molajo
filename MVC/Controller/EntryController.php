@@ -21,12 +21,12 @@ defined('MOLAJO') or die;
  * There are two basic process flows to the Controller within the Molajo Application:
  *
  * 1. The first is directly related to processing the request and using the MVC
- *     architecture to either render output or execute the task action.
+ *     architecture to either render output or execute the action action.
  *
  *   -> For rendering, the Parser and Includer gather data needed and execute
- *         the Controller task to activate the MVC.
+ *         the Controller action to activate the MVC.
  *
- *   -> For task actions, the Controller task is initiated in the Application class.
+ *   -> For action actions, the Controller action is initiated in the Application class.
  *
  *  The Controller then interacts with the Model for data requests.
  *
@@ -100,7 +100,7 @@ Class EntryController extends DisplayController
 		if ($table === '') {
 			$this->dataSource = $this->default_dataSource;
 		} else {
-			$this->table_registry_name = ConfigurationService::loadFile($table, $type);
+			$this->table_registry_name = ConfigurationService::getFile($table, $type);
 
 			//echo '<pre>';
 			//var_dump(Services::Registry()->get($this->table_registry_name));

@@ -72,7 +72,7 @@ class ModelHelper
 	/**
 	 * itemUserPermission
 	 *
-	 * Validate task-level user permissions on each row
+	 * Validate action-level user permissions on each row
 	 *
 	 * Note: Must request content catalog_id in order to use this method
 	 *
@@ -90,22 +90,22 @@ class ModelHelper
 		}
 
 		/** Component Buttons */
-		$tasks =
+		$actions =
 			Application::Request()
 				->parameters
 				->get('toolbar_buttons');
 
-		$tasksArray = explode(',', $tasks);
+		$actionsArray = explode(',', $actions);
 
 		/** User Permissions */
 		$permissions = Services::Authorisation()
-			->authoriseTaskList($tasksArray, $item->catalog_id);
+			->authoriseTaskList($actionsArray, $item->catalog_id);
 
 		/** Append onto row */
-		foreach ($tasksArray as $task) {
-			if ($permissions[$task] === true) {
-				$fieldname = $task . 'Permission';
-				$item->$fieldname = $permissions[$task];
+		foreach ($actionsArray as $action) {
+			if ($permissions[$action] === true) {
+				$fieldname = $action . 'Permission';
+				$item->$fieldname = $permissions[$action];
 			}
 		}
 
@@ -357,7 +357,7 @@ class ModelHelper
 	public function getList($field)
 	{
 
-		$lists = Services::Configuration()->loadFile('lists');
+		$lists = Services::Configuration()->getFile('lists');
 
 		if (count($lists) == 0) {
 			return false;

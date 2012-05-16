@@ -46,7 +46,7 @@ Class PageViewHelper
 	/**
 	 * get
 	 *
-	 * Get requested theme data
+	 * Get Requested Page View
 	 *
 	 * @return  array
 	 * @since   1.0

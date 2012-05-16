@@ -8,15 +8,15 @@
 defined('MOLAJO') or die;
 
 if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1
-	&& ($this->task->get('wrap_view_name') == 'article'
-		|| $this->task->get('wrap_view_name') == 'aside'
-		|| $this->task->get('wrap_view_name') == 'footer'
-		|| $this->task->get('wrap_view_name') == 'header'
-		|| $this->task->get('wrap_view_name') == 'hgroup'
-		|| $this->task->get('wrap_view_name') == 'nav'
-		|| $this->task->get('wrap_view_name') == 'section')
+	&& ($this->action->get('wrap_view_name') == 'article'
+		|| $this->action->get('wrap_view_name') == 'aside'
+		|| $this->action->get('wrap_view_name') == 'footer'
+		|| $this->action->get('wrap_view_name') == 'header'
+		|| $this->action->get('wrap_view_name') == 'hgroup'
+		|| $this->action->get('wrap_view_name') == 'nav'
+		|| $this->action->get('wrap_view_name') == 'section')
 ):
-	$headerType = $this->task->get('wrap_view_name');
+	$headerType = $this->action->get('wrap_view_name');
 else :
 	$headerType = 'div';
 endif;

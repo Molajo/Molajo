@@ -324,7 +324,7 @@ Class Application
 	}
 
 	/**
-	 * Executes a display task
+	 * Executes a display action
 	 *
 	 * Display Task
 	 *
@@ -335,7 +335,7 @@ Class Application
 	 *      associated extension includer in order, collecting
 	 *      rendering data needed by the MVC
 	 *
-	 * 3. MVC: executes controller task, invoking model processing and
+	 * 3. MVC: executes controller action, invoking model processing and
 	 *    rendering of template and wrap views
 	 *
 	 * Steps 1-3 continue until no more <include:type statements are
@@ -375,13 +375,13 @@ Class Application
 			ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
 		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
 		Services::Registry()->set('Request', 'controller', $cc);
-		$task = Services::Registry()->get('Request', 'action');
-		Services::Registry()->set('Request', 'task', $task);
+		$action = Services::Registry()->get('Request', 'action');
+		Services::Registry()->set('Request', 'action', $action);
 		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);
 
-		/** execute task: non-display, edit, or add tasks */
-		$continue = $controller->$task();
+		/** execute action: non-display, edit, or add action */
+		$continue = $controller->$action();
 
 		//redirect
 
@@ -569,7 +569,7 @@ Class Application
 		}
 
 		/** Define PHP constants for application variables */
-		$defines = ConfigurationService::loadFile('defines', 'Application');
+		$defines = ConfigurationService::getFile('defines', 'Application');
 		foreach ($defines->define as $item) {
 			if (defined((string)$item['name'])) {
 			} else {
@@ -634,7 +634,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = ConfigurationService::loadFile('sites', 'Application');
+			$sites = ConfigurationService::getFile('sites', 'Application');
 
 			foreach ($sites->site as $single) {
 				if (strtolower($single->base) == strtolower($siteBase)) {
@@ -691,7 +691,7 @@ Class Application
 			/* to override - must also define PAGE_REQUEST */
 		} else {
 
-			$apps = ConfigurationService::loadFile('applications', 'Application');
+			$apps = ConfigurationService::getFile('applications', 'Application');
 
 			foreach ($apps->application as $app) {
 

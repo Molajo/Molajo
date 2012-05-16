@@ -1,73 +1,73 @@
-<field name="display_title" type="text" null="1" default="" />
+<field name="display_title" type="char" null="1" default="" values=""/>
 
 <field name="display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-<field name="content_catalog_type_id" type="integer" null="1" default="10000" values="10000"/>
+<field name="catalog_type_id" type="int" null="1" default="10000" values="10000"/>
 <field name="extension_catalog_type_id" type="integer" null="1" default="1050" values="1050"/>
 
-<field name="enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
-<field name="enable_version_history" type="binary" null="0" default="1" values="0,1"/>
-<field name="maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
-<field name="enable_hit_counts" type="binary" null="0" default="1" values="0,1"/>
-<field name="enable_comments" type="binary" null="0" default="1" values="0,1"/>
-<field name="enable_ratings" type="binary" null="0" default="1" values="0,1"/>
-<field name="enable_notifications" type="binary" null="0" default="1" values="0,1"/>
-<field name="enable_tweets" type="binary" null="0" default="1" values="0,1"/>
-<field name="enable_ping" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_draft_save" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_version_history" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
+<field name="criteria_enable_hit_counts" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_comments" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_ratings" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_notifications" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_tweets" type="binary" null="0" default="1" values="0,1"/>
+<field name="criteria_enable_ping" type="binary" null="0" default="1" values="0,1"/>
 
-<field name="theme_id" type="integer" null="1" default="" values=""/>
+<field name="theme_id" type="integer" null="0" default="" values=""/>
 
-<field name="page_view_id" type="integer" null="1" default="" values=""/>
-<field name="page_view_css_id" type="char" null="1" default="" values=""/>
-<field name="page_view_css_class" type="char" null="1" default="" values=""/>
+<field name="page_view_id" type="integer" null="0" default="" values=""/>
+<field name="page_view_css_id" type="char" null="0" default="" values=""/>
+<field name="page_view_css_class" type="char" null="0" default="" values=""/>
 
-<field name="item_template_view_id" type="integer" null="1" default="" values=""/>
-<field name="item_template_view_css_id" type="char" null="1" default="" values=""/>
-<field name="item_template_view_css_class" type="char" null="1" default="" values=""/>
-<field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
-<field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
-<field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
+<field name="template_view_id" type="integer" null="0" default="" values=""/>
+<field name="template_view_css_id" type="char" null="0" default="" values=""/>
+<field name="template_view_css_class" type="char" null="0" default="" values=""/>
+<field name="wrap_view_id" type="integer" null="0" default="0" values=""/>
+<field name="wrap_view_css_id" type="char" null="0" default="" values=""/>
+<field name="wrap_view_css_class" type="char" null="0" default="" values=""/>
 
-<field name="form_template_view_id" type="integer" null="1" default="" values=""/>
-<field name="form_template_view_css_id" type="char" null="1" default="" values=""/>
-<field name="form_template_view_css_class" type="char" null="1" default="" values=""/>
-<field name="form_wrap_view_id" type="integer" null="1" default="0" values=""/>
-<field name="form_wrap_view_css_id" type="char" null="1" default="" values=""/>
-<field name="form_wrap_view_css_class" type="char" null="1" default="" values=""/>
+<field name="form_template_view_id" type="integer" null="0" default="" values=""/>
+<field name="form_template_view_css_id" type="char" null="0" default="" values=""/>
+<field name="form_template_view_css_class" type="char" null="0" default="" values=""/>
+<field name="form_wrap_view_id" type="integer" null="0" default="0" values=""/>
+<field name="form_wrap_view_css_id" type="char" null="0" default="" values=""/>
+<field name="form_wrap_view_css_class" type="char" null="0" default="" values=""/>
 
-<field name="list_page_view_id" type="integer" null="1" default=""/>
-<field name="list_page_view_css_id" type="char" null="1" default="" values=""/>
-<field name="list_page_view_css_class" type="char" null="1" default="" values=""/>
-<field name="list_template_view_id" type="integer" null="1" default=""/>
-<field name="list_template_view_css_id" type="char" null="1" default="" values=""/>
-<field name="list_template_view_css_class" type="char" null="1" default="" values=""/>
+<field name="list_template_view_id" type="integer" null="0" default=""/>
+<field name="list_template_view_css_id" type="char" null="0" default="" values=""/>
+<field name="list_template_view_css_class" type="char" null="0" default="" values=""/>
+<field name="list_wrap_view_id" type="integer" null="0" default="0" values=""/>
+<field name="list_wrap_view_css_id" type="char" null="0" default="" values=""/>
+<field name="list_wrap_view_css_class" type="char" null="0" default="" values=""/>
 
-<field name="list_get_customfields" type="integer" null="0" default="1" values="0,1,2"/>
-<field name="list_get_item_children" type="integer" null="0" default="1" values="0,1,2"/>
-<field name="list_use_special_joins" type="integer" null="0" default="1" values="0,1,2"/>
-<field name="list_check_view_level_access" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_get_customfields" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_get_item_children" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_use_special_joins" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_check_view_level_access" type="integer" null="0" default="1" values="0,1,2"/>
 
-<field name="list_display_archived_content" type="integer" null="0" default="1" values="0,1,2"/>
-<field name="list_display_featured_content" type="integer" null="0" default="1" values="0,1,2"/>
-<field name="list_display_stickied_content" type="integer" null="0" default="1" values="0,1,2"/>
-<field name="list_display_published_date_begin" type="date" null="0" default=""/>
-<field name="list_display_published_date_end" type="date" null="0" default=""/>
-<field name="list_display_category_list" type="categorylist" null="1" default=""/>
-<field name="list_display_tag_list" type="taglist" null="1" default=""/>
-<field name="list_display_author_list" type="authorlist" null="1" default=""/>
-<field name="list_begin" type="integer" default="1"/>
-<field name="list_length" type="integer" default="5" minimum="0" maximum="20"/>
-<field name="list_order_by_field1" type="field_list" null="1" default="start_publishing_datetime"/>
-<field name="list_order_by_direction1" type="char" null="1" default="DESC" values="ASC,DESC"/>
-<field name="list_order_by_field2" type="field_list" null="1" default=""/>
-<field name="list_order_by_direction2" type="char" null="1" default="DESC" values="ASC,DESC"/>
-<field name="list_order_by_field3" type="field_list" null="1" default=""/>
-<field name="list_order_by_direction3" type="char" null="1" default="DESC" values="ASC,DESC"/>
+<field name="criteria_list_display_archived_content" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_display_featured_content" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_display_stickied_content" type="integer" null="0" default="1" values="0,1,2"/>
+<field name="criteria_list_display_published_date_begin" type="date" null="0" default=""/>
+<field name="criteria_list_display_published_date_end" type="date" null="0" default=""/>
+<field name="criteria_list_display_category_list" type="categorylist" null="0" default=""/>
+<field name="criteria_list_display_tag_list" type="taglist" null="0" default=""/>
+<field name="criteria_list_display_author_list" type="authorlist" null="0" default=""/>
+<field name="criteria_list_begin" type="integer" default="1"/>
+<field name="criteria_list_length" type="integer" default="5" minimum="0" maximum="20"/>
+<field name="criteria_list_order_by_field1" type="field_list" null="0" default="start_publishing_datetime"/>
+<field name="criteria_list_order_by_direction1" type="char" null="0" default="DESC" values="ASC,DESC"/>
+<field name="criteria_list_order_by_field2" type="field_list" null="0" default=""/>
+<field name="criteria_list_order_by_direction2" type="char" null="0" default="DESC" values="ASC,DESC"/>
+<field name="criteria_list_order_by_field3" type="field_list" null="0" default=""/>
+<field name="criteria_list_order_by_direction3" type="char" null="0" default="DESC" values="ASC,DESC"/>
 
-<field name="feed_theme_id" type="integer" null="1" default="" values=""/>
-<field name="feed_page_view_id" type="integer" null="1" default="" values=""/>
-<field name="feed_limit" type="integer" null="1" default="5" minimum="0" maximum="20"/>
-<field name="feed_email" type="email" null="1" default="" values=""/>
+<field name="feed_theme_id" type="integer" null="0" default="" values=""/>
+<field name="feed_page_view_id" type="integer" null="0" default="" values=""/>
+<field name="feed_limit" type="integer" null="0" default="5" minimum="0" maximum="20"/>
+<field name="feed_email" type="email" null="0" default="" values=""/>
 
-<field name="caching" type="binary" null="1" default="1" values="0,1"/>
-<field name="cache_time" type="integer" null="1" default="15" values=""/>
-<field name="cache_handler" type="char" null="1" default="" values=""/>
+<field name="caching" type="binary" null="0" default="1" values="0,1"/>
+<field name="cache_time" type="integer" null="0" default="15" values=""/>
+<field name="cache_handler" type="char" null="0" default="" values=""/>

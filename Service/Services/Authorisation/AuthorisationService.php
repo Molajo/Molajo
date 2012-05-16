@@ -69,13 +69,13 @@ Class AuthorisationService
 	 */
 	protected function initialise()
 	{
-		$tasks = Services::Configuration()->loadFile('tasks', 'Application');
-		if (count($tasks) == 0) {
+		$actions = Services::Configuration()->getFile('actions', 'Application');
+		if (count($actions) == 0) {
 			return;
 		}
 
-		foreach ($tasks->task as $t) {
-			Services::Registry()->set('task_to_action', (string)$t['name'], (string)$t['action']);
+		foreach ($actions->action as $t) {
+			Services::Registry()->set('action_to_action', (string)$t['name'], (string)$t['action']);
 			Services::Registry()->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
 		}
 
@@ -128,48 +128,48 @@ Class AuthorisationService
 	 * Example usage:
 	 * $controller = Services::Authorisation()->getTaskController($action);
 	 *
-	 * @param $task
+	 * @param $action
 	 *
 	 * @return string
 	 * @since  1.0
 	 */
-	public function getTaskController($task)
+	public function getTaskController($action)
 	{
-		$action = $this->request->get('task_to_action', $task);
+		$action = $this->request->get('action_to_action', $action);
 		$controller = $this->request->get('action_to_controller', $action);
 
 		return $controller;
 	}
 
 	/**
-	 * For the list of tasks (actions), determine if the user is authorised for the specific catalog id;
+	 * For the list of actions (actions), determine if the user is authorised for the specific catalog id;
 	 * Useful for button bars, links, and other User Interface Presentation Logic
 	 *
 	 * Example usage:
-	 * $permissions = Services::Authorisation()->authoriseTaskList($tasksArray, $item->catalog_id);
+	 * $permissions = Services::Authorisation()->authoriseTaskList($actionsArray, $item->catalog_id);
 	 *
-	 * @param  array   $tasklist
+	 * @param  array   $actionlist
 	 * @param  string  $catalog_id
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function authoriseTaskList($tasklist = array(), $catalog_id = 0)
+	public function authoriseTaskList($actionlist = array(), $catalog_id = 0)
 	{
-		if (count($tasklist) == 0) {
+		if (count($actionlist) == 0) {
 			return false;
 		}
 		if ($catalog_id == 0) {
 			return false;
 		}
 
-		$taskPermissions = array();
+		$actionPermissions = array();
 
-		foreach ($tasklist as $task) {
-			$taskPermissions[$task] = $this->authoriseTask($task, $catalog_id);
+		foreach ($actionlist as $action) {
+			$actionPermissions[$action] = $this->authoriseTask($action, $catalog_id);
 		}
 
-		return $taskPermissions;
+		return $actionPermissions;
 	}
 
 	/**
@@ -218,33 +218,33 @@ Class AuthorisationService
 	}
 
 	/**
-	 * Verifies permission for a user to perform a specific task on a specific catalog number
+	 * Verifies permission for a user to perform a specific action on a specific catalog number
 	 * Could be used to determine if an "Edit Article" link is warranted.
 	 *
 	 * Example usage:
-	 * Services::Authorisation()->authoriseTask($task, $catalog_id);
+	 * Services::Authorisation()->authoriseTask($action, $catalog_id);
 	 *
-	 * @param  string  $task
+	 * @param  string  $action
 	 * @param  string  $catalog_id
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function authoriseTask($task, $catalog_id)
+	public function authoriseTask($action, $catalog_id)
 	{
 
-		if ($task == 'login') {
+		if ($action == 'login') {
 			return $this->authoriseLogin('login', $catalog_id);
 		}
 
 		/** Retrieve ACL Action for this Task */
-		$action = Services::Registry()->get('task_to_action', $task);
+		$action = Services::Registry()->get('action_to_action', $action);
 		$action_id = Services::Registry()->get('action_to_action_id', $action);
 
 		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
 			Services::Debug()->set(
 				'AuthorisationServices::authoriseTask '
-					. ' Task: ' . $task
+					. ' Task: ' . $action
 					. ' Action: ' . $action
 					. ' Action ID: ' . $action_id
 			);
@@ -271,7 +271,7 @@ Class AuthorisationService
 		} else {
 			Services::Debug()->set(
 				'AuthorisationServices::authoriseTask No Query Results  '
-					. ' Task: ' . $task
+					. ' Task: ' . $action
 					. ' Action: ' . $action
 					. ' Action ID: ' . $action_id
 			);

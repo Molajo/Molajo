@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<actions>
+    <action name="apply" action="edit" controller="update"/>
+    <action name="archive" action="publish" controller="updatelist"/>
+    <action name="cancel" action="none" controller="update"/>
+    <action name="checkin" action="administer" controller="updatelist"/>
+    <action name="copy" action="view" controller="updatelist"/>
+    <action name="create" action="view" controller="update"/>
+    <action name="delete" action="delete" controller="updatelist"/>
+    <action name="display" action="view" controller="display"/>
+    <action name="edit" action="view" controller="display"/>
+    <action name="feature" action="publish" controller="updatelist"/>
+    <action name="login" action="login" controller="login"/>
+    <action name="logout" action="logout" controller="login"/>
+    <action name="move" action="edit" controller="updatelist"/>
+    <action name="new" action="create" controller="display"/>
+    <action name="orderdown" action="publish" controller="updatelist"/>
+    <action name="orderup" action="publish" controller="updatelist"/>
+    <action name="options" action="administer" controller="options"/>
+    <action name="publish" action="publish" controller="updatelist"/>
+    <action name="reorder" action="publish" controller="updatelist"/>
+    <action name="restore" action="publish" controller="updatelist"/>
+    <action name="save" action="edit" controller="update"/>
+    <action name="saveandnew" action="edit" controller="update"/>
+    <action name="saveascopy" action="edit" controller="update"/>
+    <action name="spam" action="publish" controller="updatelist"/>
+    <action name="sticky" action="publish" controller="updatelist"/>
+    <action name="trash" action="delete" controller="updatelist"/>
+    <action name="unfeature" action="publish" controller="updatelist"/>
+    <action name="unpublish" action="publish" controller="updatelist"/>
+    <action name="unsticky" action="publish" controller="updatelist"/>
+    <action name="restore" action="publish" controller="updatelist"/>
+</actions>

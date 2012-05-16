@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Categories"
+        catalog_type_id="10000"
+        table="#__content"
+        primary_key="id"
+        primary_prefix="a"
+        get_customfields="1"
+        get_item_children="0"
+        use_special_joins="1"
+        check_view_level_access="1"
+        data_source="JDatabase">
+    <table>
+        <item>
+            <fields>
+                <include name="ContentFields"/>
+            </fields>
+            <foreignkeys>
+                <include name="ContentForeignkeys"/>
+            </foreignkeys>
+            <children>
+                <include name="ContentChildren"/>
+            </children>
+            <triggers>
+                <include name="ContentTriggers"/>
+            </triggers>
+            <customfields>
+                <customfield name="customfields">
+                    <include name="ContentCustomfields"/>
+                    <field name="example_of_content_only_field" type="int" null="1" default="1"/>
+                </customfield>
+                <customfield name="metadata">
+                    <include name="SystemMetadata"/>
+                </customfield>
+                <customfield name="parameters">
+                    <include name="SystemComponentParameters"/>
+                </customfield>
+            </customfields>
+        </item>
+    </table>
+</model>

@@ -54,7 +54,7 @@ Class HeadIncluder extends Includer
 	protected function getApplicationDefaults()
 	{
 		Services::Registry()->set('Parameters', 'model', 'HeadModel');
-		Services::Registry()->set('Parameters', 'task', 'display');
+		Services::Registry()->set('Parameters', 'action', 'display');
 
 		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'template_view_id',

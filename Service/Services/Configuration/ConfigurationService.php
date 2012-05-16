@@ -235,16 +235,16 @@ Class ConfigurationService
 	}
 
 	/**
-	 * loadFile processes all XML configuration files for the application
+	 * getFile processes all XML configuration files for the application
 	 *
 	 * Usage:
-	 * Services::Configuration()->loadFile('defines', 'Application');
+	 * Services::Configuration()->getFile('defines', 'Application');
 	 *
 	 * @return  mixed object or void
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public static function loadFile($file, $type = 'Application')
+	public static function getFile($file, $type = 'Application')
 	{
 		if ($type == 'Application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
@@ -262,7 +262,11 @@ Class ConfigurationService
 				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 
 			} else {
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
+					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+				} else {
+					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+				}
 			}
 
 		} else if ($type == 'Route') {     // Primary Component Data

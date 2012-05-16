@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Update List Controller
  *
- * Handles the standard list tasks, typically applied to multiple items
+ * Handles the standard list actions, typically applied to multiple items
  *
  * Tasks processed:
  * - Order: reorder, orderup, orderdown, saveorder
@@ -195,22 +195,22 @@ class ListController extends ItemController
 		JRequest::checkToken() or die;
 
 		/** initialise */
-		$results = $this->initialise($this->data['task']);
+		$results = $this->initialise($this->data['action']);
 		if ($results === false) {
 			return $this->redirectClass->setSuccessIndicator(false);
 		}
 
-		/** task **/
-		$task = $this->getTask();
+		/** action **/
+		$action = $this->getTask();
 
 		/** initialisation */
-		$results = parent::initialise($task);
+		$results = parent::initialise($action);
 		if ($results === false) {
 			return $this->redirectClass->setSuccessIndicator(false);
 		}
 
 		/** context **/
-		$context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $task;
+		$context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action;
 
 		/** ids **/
 		$idArray = JRequest::getVar('cid', array(), '', 'array');
@@ -222,7 +222,7 @@ class ListController extends ItemController
 		}
 
 		/** target category **/
-		if ($task == 'copy' || $task == 'delete') {
+		if ($action == 'copy' || $action == 'delete') {
 			$this->batch_category_id = JRequest::getInt('batch_category_id');
 			if ((int)$this->batch_category_id == 0) {
 				$this->redirectClass->setRedirectMessage(Services::Language()->translate('BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
@@ -265,7 +265,7 @@ class ListController extends ItemController
 			if ($errorFoundForItem === true) {
 			} else {
 				/** Check In Item **/
-				if ($task == 'copy' || $task == 'checkin') {
+				if ($action == 'copy' || $action == 'checkin') {
 				} else {
 					$results = $this->checkoutItem();
 					if ($results === false) {
@@ -274,11 +274,11 @@ class ListController extends ItemController
 				}
 			}
 
-			/** task: do it **/
+			/** action: do it **/
 			if ($errorFoundForItem === true) {
 			} else {
 
-				$results = $this->processItem($task, $column);
+				$results = $this->processItem($action, $column);
 				if ($results === false) {
 					$errorFoundForItem = true;
 				}
@@ -288,7 +288,7 @@ class ListController extends ItemController
 			if ($errorFoundForItem === true) {
 			} else {
 				/** Check In Item **/
-				if ($task == 'copy' || $task == 'checkin') {
+				if ($action == 'copy' || $action == 'checkin') {
 				} else {
 					$results = $this->checkinItem();
 					if ($results === false) {
@@ -308,7 +308,7 @@ class ListController extends ItemController
 //        $results = $this->cleanCache();
 
 		if ($errorFoundForBatch === false) {
-			$this->redirectClass->setRedirectMessage(Services::Language()->plural('N_ITEMS_' . strtoupper($task), count($idArray)));
+			$this->redirectClass->setRedirectMessage(Services::Language()->plural('N_ITEMS_' . strtoupper($action), count($idArray)));
 			$this->redirectClass->setRedirectMessageType(Services::Language()->translate('message'));
 			return $this->redirectClass->setSuccessIndicator(true);
 		} else {
@@ -329,17 +329,17 @@ class ListController extends ItemController
 	 * @return    Boolean
 	 * @since    1.0
 	 */
-	public function processItem($task, $column = null)
+	public function processItem($action, $column = null)
 	{
 		/** full row **/
-		if ($task == 'copy' || $task == 'move' || $task == 'delete') {
-			$results = parent::saveItemBatch($task);
+		if ($action == 'copy' || $action == 'move' || $action == 'delete') {
+			$results = parent::saveItemBatch($action);
 			if ($results === false) {
 				return false;
 			}
 
 			/** checking */
-		} else if ($task == 'checkin') {
+		} else if ($action == 'checkin') {
 			$results = parent::checkinItem();
 			if ($results === false) {
 				return false;
@@ -347,8 +347,8 @@ class ListController extends ItemController
 
 		} else {
 			/** single column value change (state, featured, sticky) **/
-			$previous = $this->model->$task;
-			$newValue = $this->model->$task($this->mvc['id']);
+			$previous = $this->model->$action;
+			$newValue = $this->model->$action($this->mvc['id']);
 			if ($newValue === false) {
 				return false;
 			}

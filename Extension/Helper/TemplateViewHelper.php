@@ -47,7 +47,7 @@ Class TemplateViewHelper
 	/**
 	 * get
 	 *
-	 * Get requested theme data
+	 * Get Requested Template View data
 	 *
 	 * @return  array
 	 * @since   1.0
@@ -55,34 +55,46 @@ Class TemplateViewHelper
 	public function get($template_view_id = 0)
 	{
 		if ($template_view_id == 0) {
-			$template_view_id = $this->DefaultTemplateView();
+			$template_view_id = $this->setDefaultTemplateView();
 		}
 
-		$row = Helpers::Extension()->get($template_view_id);
+		Services::Registry()->set('Parameters', 'template_view_id', (int)$template_view_id);
+		$title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
+		Services::Registry()->set('Parameters', 'template_view_title', $title);
+		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title));
+		Services::Registry()->set('Parameters', 'template_view_path_include',
+			$this->getPath($title) . '/Manifest.xml');
+		Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title));
 
-		/** 500: Template not found */
+		$row = Helpers::Extension()->get($template_view_id, 'TemplateView');
+
+		/** 500: Theme not found */
 		if (count($row) == 0) {
-			/** Try Default Template */
+			/** Try System Template */
 			$template_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
+
+			/** Get new Title and path */
+			$title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
+			Services::Registry()->set('Parameters', 'template_view_title', $title);
+			Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title));
+			Services::Registry()->set('Parameters', 'template_view_path_include',
+				$this->getPath($title) . '/Manifest.xml');
+			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title));
+
 			$row = Helpers::Extension()->get($template_view_id);
+
 			if (count($row) == 0) {
-				Services::Error()->set(500, 'Template not found');
+				Services::Error()->set(500, 'Template View not found');
 				return false;
 			}
 		}
 
-		Services::Registry()->set('TemplateView', 'id', (int)$row->id);
-		Services::Registry()->set('TemplateView', 'title', $row->title);
-		Services::Registry()->set('TemplateView', 'translation_of_id', $row->translation_of_id);
-		Services::Registry()->set('TemplateView', 'language', $row->language);
-		Services::Registry()->set('TemplateView', 'view_group_id', $row->view_group_id);
-		Services::Registry()->set('TemplateView', 'catalog_id', $row->catalog_id);
-		Services::Registry()->set('TemplateView', 'catalog_type_id', (int)$row->catalog_type_id);
-		Services::Registry()->set('TemplateView', 'catalog_type_title', $row->catalog_type_title);
-		Services::Registry()->set('TemplateView', 'path', $this->getPath($row->title));
-		Services::Registry()->set('TemplateView', 'path_url', $this->getPathURL($row->title));
-
-		//fix
+		Services::Registry()->set('Parameters', 'template_view_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'template_view_language', $row['language']);
+		Services::Registry()->set('Parameters', 'template_view_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_type_title', $row['catalog_type_title']);
 
 		return;
 	}
@@ -93,27 +105,9 @@ Class TemplateViewHelper
 	 * @return  string
 	 * @since   1.0
 	 */
-	public function DefaultTemplateView()
+	public function setDefaultTemplateView()
 	{
 		$template_view_id = Services::Registry()->get('Parameters', 'template_view_id', 0);
-		if ((int)$template_view_id == 0) {
-		} else {
-			return $template_view_id;
-		}
-
-		$template_view_id = Services::Registry()->get('MenuParameters', 'template_view_id', 0);
-		if ((int)$template_view_id == 0) {
-		} else {
-			return $template_view_id;
-		}
-
-		$template_view_id = Services::Registry()->get('CategoryParameters', 'template_view_id', 0);
-		if ((int)$template_view_id == 0) {
-		} else {
-			return $template_view_id;
-		}
-
-		$template_view_id = Services::Registry()->get('ExtensionParameters', 'template_view_id', 0);
 		if ((int)$template_view_id == 0) {
 		} else {
 			return $template_view_id;

@@ -77,21 +77,21 @@ Class ExtensionHelper
 
 			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			if ('Extension' . $customFieldName == 'Extension' . 'Parameters') {
+			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Parameters') {
 				Services::Registry()->merge(
-					'Extension' . $customFieldName,
+					'Extensioninstances' . $customFieldName,
 					'Parameters'
 				);
 			}
 
-			if ('Extension' . $customFieldName == 'Extension' . 'Metadata') {
+			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Metadata') {
 				Services::Registry()->merge(
-					'Extension' . $customFieldName,
+					'Extensioninstances' . $customFieldName,
 					'Metadata'
 				);
 			}
 
-			Services::Registry()->deleteRegistry('Extension' . $customFieldName);
+			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
 
 	   /**

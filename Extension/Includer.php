@@ -320,7 +320,7 @@ class Includer
 		/** mvc parameters */
 		Services::Registry()->set('Parameters', 'controller',
 			Services::Registry()->get('Request', 'mvc_controller'));
-		Services::Registry()->set('Parameters', 'task',
+		Services::Registry()->set('Parameters', 'action',
 			Services::Registry()->get('Request', 'action'));
 		Services::Registry()->set('Parameters', 'model',
 			Services::Registry()->get('Request', 'mvc_model'));
@@ -391,7 +391,7 @@ class Includer
 	/**
 	 * invokeMVC
 	 *
-	 * Instantiate the Controller and fire off the task, returns rendered output
+	 * Instantiate the Controller and fire off the action, returns rendered output
 	 *
 	 * @return mixed
 	 */
@@ -531,7 +531,7 @@ class Includer
 		if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 			Services::Debug()->set(' ');
 			Services::Debug()->set('Includer::invokeMVC');
-			//Services::Debug()->set('Controller: ' . $cc . ' Task: ' . $task . ' Model: ' . $model . ' ');
+			//Services::Debug()->set('Controller: ' . $cc . ' Action: ' . $action . ' Model: ' . $model . ' ');
 			Services::Debug()->set('Extension: ' . Services::Registry()->get('Parameters', 'extension_instance_name') . ' ID: ' . Services::Registry()->get('Parameters', 'id') . '');
 			Services::Debug()->set('Template: ' . Services::Registry()->get('Parameters', 'template_view_path') . '');
 			Services::Debug()->set('Wrap: ' . Services::Registry()->get('Parameters', 'wrap_view_path') . '');

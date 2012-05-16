@@ -336,12 +336,36 @@ Class RegistryService
 				$existingValue = $this->get($intoThis, $key, '');
 
 				if (trim($existingValue) == '') {
+					echo $mergeThis.' '.$intoThis.' '.$key.' '.$value.'<br />';
 					$this->set($intoThis, $key, $value);
 				}
 			}
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Sort Namespace array
+	 *
+	 * Usage:
+	 * Services::Registry()->sort('namespace');
+	 *
+	 * @param  namespace
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function sort($namespace)
+	{
+		/** Get (or create) the Registry that will be merged into the other */
+		$sort = $this->getRegistry($namespace);
+
+		ksort($sort);
+
+		$this->registry[$namespace] = $sort;
+
+		return $this->get($namespace);
 	}
 
 	/**
