@@ -19,11 +19,25 @@
 ## Can be commented out if causes errors, see notes above.
 Options +FollowSymLinks
 
-
+## Deny access to xml configuration files
 <files *.xml>
 order deny,allow
 deny from all
 </files>
+
+# Responsive Images
+# Mobile-First images that scale responsively and responsibly
+# https://github.com/filamentgroup/Responsive-Images
+# Copyright 2010, Scott Jehl, Filament Group, Inc
+# Dual licensed under the MIT or GPL Version 2 licenses.
+# //Start Responsive Images
+RewriteEngine On
+# direct image requests to temp
+RewriteCond %{QUERY_STRING} full=(.*)&?
+RewriteRule (.*)rwd-router/.*\.(jpe?g|png|gif|webp) $1%1 [L]
+# ignore trap for non-image requests, rewrite URL without trap segment
+RewriteRule (.*)rwd-router/(.*)$ $1$2
+# //End Responsive Images
 
 ## Mod_rewrite in use.
 

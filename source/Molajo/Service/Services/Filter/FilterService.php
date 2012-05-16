@@ -80,7 +80,7 @@ Class FilterService
 	 *
 	 * 1. defining options in applications/Configuration/htmlpurifier.xml
 	 * 2. creating custom filters in applications/filters
-	 * 3. setting html_display_filter parameter false (default = true)
+	 * 3. setting criteria_html_display_filter parameter false (default = true)
 	 *
 	 * HTML 5 is not supported by HTMLPurifier although they are
 	 *  working on it. http://htmlpurifier.org/doxygen/html/classHTML5.html
@@ -93,7 +93,7 @@ Class FilterService
 		$config = HTMLPurifier\HTMLPurifier_Config::createDefault();
 		//var_dump($config);
 
-		if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
+		if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1) {
 			$config->set('HTML.Doctype', 'HTML 4.01 Transitional');
 			//not supported $config->set('HTML.Doctype', 'HTML5');
 		} else {

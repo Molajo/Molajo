@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="theme" version="1.0">
-    <name>THEME_RESPONSIFY_NAME</name>
+    <name>THEME_RESPONSIVE_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
-    <description>THEME_RESPONSIFY_DESCRIPTION</description>
+    <description>THEME_RESPONSIVE_DESCRIPTION</description>
     <config>
         <field name="customfields" registry="ThemeCustomfields">
             <element name="customfields" filter="char" null="0" default="This is the default" values=""/>

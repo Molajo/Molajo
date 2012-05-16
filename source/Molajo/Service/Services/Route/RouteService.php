@@ -400,10 +400,6 @@ Class RouteService
 		/** Final Template and Wrap selections */
 		$this->finalizeParameters();
 
-		/** Sort */
-		Services::Registry()->sort('Route');
-		Services::Registry()->sort('Parameters');
-		Services::Registry()->sort('Metadata');
 
 		echo '<br /><br />Route<br /><pre>';
 		var_dump(Services::Registry()->get('Route'));
@@ -510,5 +506,11 @@ Class RouteService
 		/** Not needed */
 		Services::Registry()->delete('Route', 'id');
 		Services::Registry()->delete('Route', 'request_url_query');
+
+		/** Sort */
+		Services::Registry()->sort('Configuration');
+		Services::Registry()->sort('Route');
+		Services::Registry()->sort('Parameters');
+		Services::Registry()->sort('Metadata');
 	}
 }
