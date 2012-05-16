@@ -95,7 +95,7 @@ class DisplayController extends Controller
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& Services::Registry()->get('Parameters', 'suppress_no_results') == 1
+			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 1
 		) {
 			//return '';
 		}

@@ -63,7 +63,7 @@ Class MenuitemHelper
 	public function getRoute()
 	{
 		/** Retrieve the query results */
-		$row = $this->get(Services::Registry()->get('Route', 'source_id'));
+		$row = $this->get(Services::Registry()->get('Route', 'catalog_source_id'));
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {

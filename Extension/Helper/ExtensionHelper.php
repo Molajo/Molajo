@@ -8,6 +8,7 @@ namespace Molajo\Extension\Helper;
 
 use Molajo\Application;
 use Molajo\Service\Services;
+use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -94,7 +95,7 @@ Class ExtensionHelper
 			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
 
-	   /**
+/**
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Route'));
 		echo '</pre>';
@@ -105,7 +106,7 @@ Class ExtensionHelper
 		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
 		die;
-	    */
+*/
 		return;
 	}
 
@@ -225,7 +226,7 @@ Class ExtensionHelper
 		/** b_catalog_types. Catalog Types Table  */
 		$m->model->query->select($m->model->db->qn('b_catalog_types.title') . ' as catalog_type_title');
 		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b_catalog_types');
-		$m->model->query->where($m->model->db->qn('b_catalog.catalog_type_id') . ' = ' . $m->model->db->qn('b_catalog_types.id'));
+		$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . $m->model->db->qn('b_catalog_types.id'));
 
 		/**
 		 *  c. Application Table
@@ -401,5 +402,91 @@ Class ExtensionHelper
 		Services::Language()->load($path, Services::Language()->get('tag'), false, false);
 
 		return true;
+	}
+
+	/**
+	 * Finalize the Template and Wrap selections for the request
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	public function finalizeParameters($source_id = 0, $action = 'display')
+	{
+		if ($action == 'add'
+			|| $action == 'edit') {
+
+			Services::Registry()->set('Parameters', 'template_view', 'form');
+
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'form_template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_id',
+				Services::Registry()->get('Parameters', 'form_template_view_css_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_class',
+				Services::Registry()->get('Parameters', 'form_template_view_css_class'));
+
+			Services::Registry()->set('Parameters', 'wrap_view_id',
+				Services::Registry()->get('Parameters', 'form_wrap_view_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_id',
+				Services::Registry()->get('Parameters', 'form_wrap_view_css_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_class',
+				Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
+
+		} else if ((int)$source_id == 0) {
+
+			Services::Registry()->set('Parameters', 'template_view', 'list');
+
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'list_template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_id',
+				Services::Registry()->get('Parameters', 'list_template_view_css_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_class',
+				Services::Registry()->get('Parameters', 'list_template_view_css_class'));
+
+			Services::Registry()->set('Parameters', 'wrap_view_id',
+				Services::Registry()->get('Parameters', 'list_wrap_view_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_id',
+				Services::Registry()->get('Parameters', 'list_wrap_view_css_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_class',
+				Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
+
+		} else {
+
+			Services::Registry()->set('Parameters', 'template_view', 'item');
+
+			Services::Registry()->set('Parameters', 'template_view_id',
+				Services::Registry()->get('Parameters', 'template_view_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_id',
+				Services::Registry()->get('Parameters', 'template_view_css_id'));
+			Services::Registry()->set('Parameters', 'template_view_css_class',
+				Services::Registry()->get('Parameters', 'template_view_css_class'));
+
+			Services::Registry()->set('Parameters', 'wrap_view_id',
+				Services::Registry()->get('Parameters', 'wrap_view_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_id',
+				Services::Registry()->get('Parameters', 'wrap_view_css_id'));
+			Services::Registry()->set('Parameters', 'wrap_view_css_class',
+				Services::Registry()->get('Parameters', 'wrap_view_css_class'));
+		}
+
+		Helpers::TemplateView()->get();
+
+		Helpers::WrapView()->get();
+
+		/** Remove parameters not needed */
+		Services::Registry()->delete('Parameters', 'list_template_view_id');
+		Services::Registry()->delete('Parameters', 'list_template_view_css_id');
+		Services::Registry()->delete('Parameters', 'list_template_view_css_class');
+		Services::Registry()->delete('Parameters', 'list_wrap_view_id');
+		Services::Registry()->delete('Parameters', 'list_wrap_view_css_id');
+		Services::Registry()->delete('Parameters', 'list_wrap_view_css_class');
+
+		Services::Registry()->delete('Parameters', 'form_template_view_id');
+		Services::Registry()->delete('Parameters', 'form_template_view_css_id');
+		Services::Registry()->delete('Parameters', 'form_template_view_css_class');
+		Services::Registry()->delete('Parameters', 'form_wrap_view_id');
+		Services::Registry()->delete('Parameters', 'form_wrap_view_css_id');
+		Services::Registry()->delete('Parameters', 'form_wrap_view_css_class');
+
+		return;
 	}
 }

@@ -194,7 +194,7 @@ Class AuthorisationService
 		}
 
 		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Request', 'action', 'display') == 'display'
+		if (Services::Registry()->get('Route', 'request_action', 'display') == 'display'
 			&& Services::Registry()->get('Request', 'status_authorised') == true
 		) {
 			return true;
@@ -202,8 +202,8 @@ Class AuthorisationService
 
 		/** verify other actions */
 		$authorised = $this->authoriseTask(
-			Services::Registry()->get('Request', 'action'),
-			Services::Registry()->get('Route', 'id')
+			Services::Registry()->get('Route', 'request_action'),
+			Services::Registry()->get('Route', 'request_catalog_id')
 		);
 
 		Services::Registry()->set('Request', 'status_authorised', $authorised);

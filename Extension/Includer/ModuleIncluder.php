@@ -35,7 +35,7 @@ Class ModuleIncluder extends Includer
 	 */
 	public function __construct($name = null, $type = null, $items = null)
 	{
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_MODULE);
+		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_MODULE);
 		return parent::__construct($name, $type, $items);
 	}
 
@@ -52,16 +52,16 @@ Class ModuleIncluder extends Includer
 		Services::Registry()->deleteRegistry('ExtensionParameters');
 
 		/** Retrieve Extension Instances ID */
-		Services::Registry()->set('Parameters', 'extension_instance_id',
+		Services::Registry()->set('Include', 'extension_id',
 			Helpers::Extension()->getInstanceID(
-				Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-				Services::Registry()->get('Parameters', 'extension_instance_name')
+				Services::Registry()->get('Include', 'extension_catalog_type_id'),
+				Services::Registry()->get('Include', 'extension_title')
 			)
 		);
 
 		/**  Retrieve Extension Data and set Extension Parameter values */
 		$response = Helpers::Extension()->getIncludeExtension(
-			Services::Registry()->get('Parameters', 'extension_instance_id')
+			Services::Registry()->get('Include', 'extension_id')
 		);
 
 		return $response;
@@ -78,8 +78,8 @@ Class ModuleIncluder extends Includer
 	protected function loadMedia()
 	{
 		parent::loadMedia(
-			EXTENSIONS_MODULES_URL . '/' . Services::Registry()->get('Parameters', 'extension_instance_name'),
-			SITE_MEDIA_URL . '/' . Services::Registry()->get('Parameters', 'extension_instance_name'),
+			EXTENSIONS_MODULES_URL . '/' . Services::Registry()->get('Include', 'extension_title'),
+			SITE_MEDIA_URL . '/' . Services::Registry()->get('Include', 'extension_title'),
 			Services::Registry()->get('Configuration', 'media_priority_module', 400)
 		);
 	}

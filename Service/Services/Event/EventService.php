@@ -70,11 +70,11 @@ Class EventService
 			}
 		}
 
-		foreach ($registrations as $registration) {
-
-			Services::Debug()->set('Event: ' . $event . ' fired registration by Trigger ' . $registration);
+		if (count($registrations) > 0) {
+			foreach ($registrations as $registration) {
+				Services::Debug()->set('Event: ' . $event . ' fired registration by Trigger ' . $registration);
+			}
 		}
-
 		return $parameters;
 	}
 

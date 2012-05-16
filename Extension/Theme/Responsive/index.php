@@ -8,4 +8,4 @@ use Molajo\Service\Services;
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-include Services::Registry()->get('PageView', 'path_include');
+include Services::Registry()->get('Parameters', 'page_view_path_include');

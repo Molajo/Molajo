@@ -58,18 +58,18 @@ Class RouteService
 	{
 		/** Overrides */
 		if ((int)Services::Registry()->get('Override', 'catalog_id', 0) == 0) {
-			Services::Registry()->set('Route', 'id', 0);
+			Services::Registry()->set('Route', 'request_catalog_id', 0);
 
 		} else {
-			Services::Registry()->set('Route', 'id',
+			Services::Registry()->set('Route', 'request_catalog_id',
 				(int)Services::Registry()->get('Override', 'catalog_id', 0));
 		}
 
-		if (Services::Registry()->get('Override', 'request_url', '') == '') {
+		if (Services::Registry()->get('Override', 'url_request', '') == '') {
 			$path = PAGE_REQUEST;
 
 		} else {
-			$path = Services::Registry()->get('Override', 'request_url', '');
+			$path = Services::Registry()->get('Override', 'url_request', '');
 		}
 
 		/** @var $continue Check for duplicate content URL for Home (and redirect, if found) */
@@ -134,7 +134,7 @@ Class RouteService
 		/** Redirect to Logon */
 		if (Services::Registry()->get('Configuration', 'logon_requirement', 0) > 0
 			&& Services::Registry()->get('User', 'guest', true) === true
-			&& Services::Registry()->get('Route', 'id')
+			&& Services::Registry()->get('Route', 'request_catalog_id')
 				<> Services::Registry()->get('Configuration', 'logon_requirement', 0)
 		) {
 			Services::Response()->redirect(
@@ -168,13 +168,13 @@ Class RouteService
 		} else {
 
 			/** duplicate content: URLs without the .html */
-			if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 1) == 1
+			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1
 				&& substr($path, -11) == '/index.html'
 			) {
 				$path = substr($path, 0, (strlen($path) - 11));
 			}
 
-			if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 1) == 1
+			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1
 				&& substr($path, -5) == '.html'
 			) {
 				$path = substr($path, 0, (strlen($path) - 5));
@@ -196,11 +196,11 @@ Class RouteService
 
 		/** Home */
 		if (Services::Registry()->get('Route', 'request_url_query', '') == ''
-			&& (int)Services::Registry()->get('Route', 'id', 0) == 0
+			&& (int)Services::Registry()->get('Route', 'request_catalog_id', 0) == 0
 		) {
-			Services::Registry()->set('Route', 'id',
+			Services::Registry()->set('Route', 'request_catalog_id',
 				Services::Registry()->get('Configuration', 'home_catalog_id', 0));
-			Services::Registry()->set('Route', 'home', true);
+			Services::Registry()->set('Route', 'catalog_home', true);
 		}
 
 		return true;
@@ -225,16 +225,16 @@ Class RouteService
 		$path = Services::Registry()->get('Route', 'request_url_query');
 
 		if ($path == '') {
-			Services::Registry()->set('Route', 'non_routable_parameters', array());
-			Services::Registry()->set('Route', 'action', 'display');
-			Services::Registry()->set('Route', 'id',
+			Services::Registry()->set('Route', 'request_non_routable_parameters', array());
+			Services::Registry()->set('Route', 'request_action', 'display');
+			Services::Registry()->set('Route', 'request_catalog_id',
 				Services::Registry()->get('Configuration', 'home_catalog_id', 0));
 			return true;
 		}
 
 		/** Retrieve ID */
 		$value = (int)Services::Request()->get('request')->get('id');
-		Services::Registry()->set('Route', 'id', $value);
+		Services::Registry()->set('Route', 'request_catalog_id', $value);
 
 		/** save non-routable parameter pairs in array */
 		$use = array();
@@ -289,8 +289,8 @@ Class RouteService
 
 		/** Update Path and store Non-routable parameters for Extension Use */
 		Services::Registry()->set('Route', 'request_url_query', $path);
-		Services::Registry()->set('Route', 'non_routable_parameters', $use);
-		Services::Registry()->set('Route', 'action', $action);
+		Services::Registry()->set('Route', 'request_non_routable_parameters', $use);
+		Services::Registry()->set('Route', 'request_action', $action);
 
 		/** add Edit and Add later
 
@@ -299,7 +299,7 @@ Class RouteService
 		 *
 		if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
 		} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
-		Services::Registry()->set('Route', 'action', 'add');
+		Services::Registry()->set('Route', 'request_action', 'add');
 		 */
 
 		/**
@@ -378,14 +378,14 @@ Class RouteService
 		}
 
 		/**  Category  */
-		if ((int)Services::Registry()->get('Route', 'category_id') == 0) {
+		if ((int)Services::Registry()->get('Route', 'catalog_category_id') == 0) {
 		} else {
 			Helpers::Content()->getRouteCategory();
 		}
 
 		/**  Extension */
 		$response = Helpers::Extension()->getRoute(
-			Services::Registry()->get('Route', 'extension_instance_id')
+			Services::Registry()->get('Route', 'extension_id')
 		);
 		if ($response === false) {
 			Services::Error()->set(500, 'Extension not found');
@@ -398,9 +398,24 @@ Class RouteService
 		Helpers::PageView()->get();
 
 		/** Final Template and Wrap selections */
-		$this->finalizeParameters();
+		Services::Registry()->merge('Configuration', 'Parameters', true);
 
+		Helpers::Extension()->finalizeParameters(
+			Services::Registry()->get('Route', 'content_id', 0),
+			Services::Registry()->get('Route', 'request_action', 'display')
+		);
 
+		/** Not needed */
+		Services::Registry()->delete('Route', 'request_catalog_id');
+		Services::Registry()->delete('Route', 'request_url_query');
+
+		/** Sort */
+		Services::Registry()->sort('Configuration');
+		Services::Registry()->sort('Route');
+		Services::Registry()->sort('Parameters');
+		Services::Registry()->sort('Metadata');
+
+/**
 		echo '<br /><br />Route<br /><pre>';
 		var_dump(Services::Registry()->get('Route'));
 
@@ -415,102 +430,8 @@ Class RouteService
 		echo '<br />Metadata<br />';
 		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
+*/
 
 		return;
-	}
-
-	/**
-	 * Finalize the Template and Wrap selections for the request
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function finalizeParameters()
-	{
-
-		if (Services::Registry()->get('Route', 'action') == 'add'
-			|| Services::Registry()->get('Route', 'action') == 'edit') {
-
-			Services::Registry()->set('Parameters', 'template_view', 'form');
-
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'form_template_view_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'form_template_view_css_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'form_template_view_css_class'));
-
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'form_wrap_view_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'form_wrap_view_css_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
-
-		} else if ((int)Services::Registry()->get('Route', 'source_id') == 0) {
-
-			Services::Registry()->set('Parameters', 'template_view', 'list');
-
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'list_template_view_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'list_template_view_css_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'list_template_view_css_class'));
-
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'list_wrap_view_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'list_wrap_view_css_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
-
-		} else {
-
-			Services::Registry()->set('Parameters', 'template_view', 'item');
-
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'template_view_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'template_view_css_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'template_view_css_class'));
-
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'wrap_view_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'wrap_view_css_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'wrap_view_css_class'));
-		}
-
-		Helpers::TemplateView()->get();
-
-		Helpers::WrapView()->get();
-
-		/** Remove parameters not needed */
-		Services::Registry()->delete('Parameters', 'list_template_view_id');
-		Services::Registry()->delete('Parameters', 'list_template_view_css_id');
-		Services::Registry()->delete('Parameters', 'list_template_view_css_class');
-		Services::Registry()->delete('Parameters', 'list_wrap_view_id');
-		Services::Registry()->delete('Parameters', 'list_wrap_view_css_id');
-		Services::Registry()->delete('Parameters', 'list_wrap_view_css_class');
-
-		Services::Registry()->delete('Parameters', 'form_template_view_id');
-		Services::Registry()->delete('Parameters', 'form_template_view_css_id');
-		Services::Registry()->delete('Parameters', 'form_template_view_css_class');
-		Services::Registry()->delete('Parameters', 'form_wrap_view_id');
-		Services::Registry()->delete('Parameters', 'form_wrap_view_css_id');
-		Services::Registry()->delete('Parameters', 'form_wrap_view_css_class');
-
-		/** Not needed */
-		Services::Registry()->delete('Route', 'id');
-		Services::Registry()->delete('Route', 'request_url_query');
-
-		/** Sort */
-		Services::Registry()->sort('Configuration');
-		Services::Registry()->sort('Route');
-		Services::Registry()->sort('Parameters');
-		Services::Registry()->sort('Metadata');
 	}
 }

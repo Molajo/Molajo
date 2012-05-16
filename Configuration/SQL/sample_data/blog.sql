@@ -20,7 +20,7 @@ INSERT INTO `molajo_content`
 # Catalog records for Catalog
 INSERT INTO `molajo_catalog`
   (`catalog_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`,
+  `url_sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   SELECT 3000, `id`, true,
     CONCAT('category', '/', `alias`),
@@ -51,7 +51,7 @@ INSERT INTO `molajo_content`
 SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `catalog_type_id` = 3000);
 INSERT INTO `molajo_catalog`
   (`catalog_type_id`, `source_id`, `routable`,
-  `sef_request`, `request`, `request_option`, `request_model`,
+  `url_sef_request`, `request`, `request_option`, `request_model`,
   `redirect_to_id`, `view_group_id`, `primary_category_id`)
   SELECT 10000, `id`, true,
     CONCAT(`path`, '/', `alias`),

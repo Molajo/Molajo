@@ -85,15 +85,15 @@ Class RedirectService
 		}
 
 		/** Configuration Service is available */
-		if (Services::Registry()->get('Configuration', 'sef', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-			if (Services::Registry()->get('Configuration', 'sef_rewrite', 0) == 0) {
+			if (Services::Registry()->get('Configuration', 'url_sef_rewrite', 0) == 0) {
 				$url = BASE_URL . APPLICATION_URL_PATH . 'index.php/' . $url;
 			} else {
 				$url = BASE_URL . APPLICATION_URL_PATH . $url;
 			}
 
-			if ((int)Services::Registry()->get('Configuration', 'sef_suffix', 0) == 1) {
+			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 0) == 1) {
 				$url .= '.html';
 			}
 		}

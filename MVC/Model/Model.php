@@ -729,11 +729,11 @@ class Model
 
 		/** Set the DB Query */
 		$this->db->setQuery($this->query->__toString());
-
-		//echo '<pre>';
-		//var_dump($this->query->__toString());
-		//echo '</pre>';
-
+/**
+		echo '<pre>';
+		var_dump($this->query->__toString());
+		echo '</pre>';
+*/
 		/** Execute the query */
 		$this->query_results = $this->db->loadObjectList();
 
