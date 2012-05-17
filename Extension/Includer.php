@@ -9,6 +9,7 @@ namespace Molajo\Extension;
 use Molajo\Application;
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
+use Molajo\MVC\Controller\DisplayController;
 
 defined('MOLAJO') or die;
 
@@ -120,6 +121,7 @@ class Includer
 		$this->name = $name;
 		$this->type = $type;
 		$this->items = $items;
+		echo $this->name.' '.$this->type.'<br />';
 
 		return;
 	}
@@ -145,6 +147,7 @@ class Includer
 
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
+
 		$this->getAttributes();
 
 		/** retrieve the extension that will be used to generate the MVC request */
@@ -162,25 +165,6 @@ class Includer
 
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
-
-		/** Final Template and Wrap selections */
-		Services::Registry()->merge('Configuration', 'Parameters', true);
-
-		Helpers::Extension()->finalizeParameters(
-			Services::Registry()->get('Include', 'content_id', 0),
-			Services::Registry()->get('Include', 'request_action', 'display')
-		);
-
-		/** Sort */
-		Services::Registry()->sort('Include');
-		Services::Registry()->sort('Parameters');
-
-		echo '<br /><br />Route<br /><pre>';
-		var_dump(Services::Registry()->get('Include'));
-
-		echo '<br />Parameters (RouteParameters)<br />';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
 
 		/** instantiate MVC and render output */
 		$this->rendered_output = $this->invokeMVC();
@@ -250,33 +234,21 @@ class Includer
 	/**
 	 * getExtension
 	 *
-	 * Retrieve extension information using either the ID or the name
+	 * Retrieve extension information after looking up the ID in the extension-specific includer
 	 *
 	 * @return bool
 	 * @since 1.0
 	 */
-	protected function getExtension()
+	protected function getExtension($extension_id = null)
 	{
+		$response = Helpers::Extension()->getIncludeExtension($extension_id);
 
-		/** Retrieve Extension Instances ID */
-		if (Services::Registry()->get('Include', 'extension_id', 0) == 0) {
-			Services::Registry()->set('Include', 'extension_id',
-				Helpers::Extension()->getInstanceID(
-					Services::Registry()->get('Include', 'extension_catalog_type_id'),
-					Services::Registry()->get('Include', 'extension_title')
-				)
-			);
-		}
-
-		/**  Retrieve Extension Data and set Extension Parameter values */
-		$response = Helpers::Extension()->getIncludeExtension(
-			Services::Registry()->get('Include', 'extension_id')
-		);
 		if ($response == false) {
 			return Services::Registry()->set('Parameter', 'status_found', false);
 		}
 
 		return;
+
 	}
 
 	/**
@@ -290,51 +262,19 @@ class Includer
 	 */
 	public function setRenderCriteria()
 	{
+		 //add user?
 
-		return;
+		/** Final Template and Wrap selections */
+		Services::Registry()->merge('Configuration', 'Parameters', true);
 
-		// should be taken care of in the helper queriers or finalize
-		if (Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
-		} else {
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'template_view_id'));
-			Services::Registry()->set('TemplateView', 'title', '');
-		}
+		Helpers::Extension()->finalizeParameters(
+			Services::Registry()->get('Include', 'content_id', 0),
+			Services::Registry()->get('Include', 'request_action', 'display')
+		);
 
-		if (Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
-		} else {
-			Services::Registry()->deleteRegistry('WrapView');
-			Services::Registry()->set('WrapView', 'id', Services::Registry()->get('Parameters', 'wrap_view_id'));
-			Services::Registry()->set('WrapView', 'title', '');
-		}
-
-		/** Retrieve Template View Primary Key */
-		if (Services::Registry()->get('TemplateView', 'title', '') == '') {
-		} else {
-			Services::Registry()->set('TemplateView', 'id',
-				Helpers::Extension()->getInstanceID(
-					CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
-					Services::Registry()->get('TemplateView', 'title')
-				)
-			);
-		}
-
-		/** Retrieve Wrap View Primary Key */
-		if (Services::Registry()->get('WrapView', 'title', '') == '') {
-		} else {
-			Services::Registry()->set('WrapView', 'id',
-				Helpers::Extension()->getInstanceID(
-					CATALOG_TYPE_EXTENSION_WRAP_VIEW,
-					Services::Registry()->get('WrapView', 'title')
-				)
-			);
-		}
-
-		/** Template  */
-		Helpers::TemplateView()->get(Services::Registry()->get('TemplateView', 'id'));
-
-		/** Wrap  */
-		Helpers::WrapView()->get(Services::Registry()->get('WrapView', 'id'));
+		/** Sort */
+		Services::Registry()->sort('Include');
+		Services::Registry()->sort('Parameters');
 
 		return;
 
@@ -394,7 +334,7 @@ class Includer
 	 */
 	protected function loadViewMedia()
 	{
-		$priority = Services::Registry()->get('Configuration', 'media_priority_other_extension', 400);
+		$priority = Services::Registry()->get('Parameters', 'criteria_media_priority_other_extension', 400);
 
 		$file_path = Services::Registry()->get('Parameters', 'template_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'template_view_path_url');
@@ -420,131 +360,8 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
-		/** Initialize */
-		Services::Registry()->set('Parameters', 'id', 0);
-		Services::Registry()->set('Parameters', 'menuitem', 0);
-		Services::Registry()->set('Parameters', 'model_method', '');
-
-		$table = '';
-
-		/** Type of Query: Single Item, Menu Item, Content List */
-		if (Services::Registry()->get('Parameters', 'query_object') == 'none') {
-			$moduleMethod = 'none';
-
-		} else if ((int) Services::Registry()->get('Menuitem', 'id') > 0) {
-
-			$moduleMethod = 'getData';
-
-			Services::Registry()->set('Parameters', 'menuitem',
-				(int) Services::Registry()->get('Menuitem', 'id'));
-
-		} else if (((int) Services::Registry()->get('Content', 'id') > 0)
-					&& ($this->type == 'request' || $this->type == 'component')) {
-
-//			if (Services::Registry()->get('Route', 'request_action') == 'display') {
-			$moduleMethod = 'load';
-
-			Services::Registry()->set('Parameters', 'id',
-				(int) Services::Registry()->get('Content', 'id'));
-
-			$table = Services::Registry()->get('Content', 'catalog_type_title');
-			$table = ucfirst(strtolower($table));
-
-			Services::Registry()->set('Include', 'extension_primary', true);
-
-			/** @var $get_item_children set at global/extension/item level */
-
-			$get_item_children = false;
-			$use_special_joins = false;
-			$check_view_level_access = true;
-			$get_customfields = 2;
-
-		}  else {
-
-			/** Full list, only Extension level parameters */
-			$moduleMethod = 'getData';
-		}
-
-		Services::Registry()->set('Parameters', 'moduleMethod');
-
-		/** Controller */
-		$m = Application::Controller()->connect($table);
-
-		$m->model->set('id', Services::Registry()->get('Parameters', 'id'));
-
-		/** Save Parameters so that the information can be used by frontend devs in Views */
-
-		/** Include Type */
-		$m->parameters['include_name'] = $this->name;
-		$m->parameters['include_type'] = $this->type;
-
-		/** @var $configuration  */
-		$m->configuration = Services::Registry()->get('Configuration');
-
-		$parameters = Services::Registry()->get('Parameters');
-		foreach ($parameters as $key => $value) {
-			$m->parameters[$key] = $value;
-		}
-
-		$x = Services::Registry()->get('Route');
-		foreach ($x as $key => $value) {
-			$m->parameters['route_'.$key] = $value;
-		}
-
-		$x = Services::Registry()->get('Content');
-		foreach ($x as $key => $value) {
-			$m->parameters['content_'.$key] = $value;
-		}
-
-		$x = Services::Registry()->get('Category');
-		foreach ($x as $key => $value) {
-			$m->parameters['category_'.$key] = $value;
-		}
-
-		$x = Services::Registry()->get('Menuitem');
-		foreach ($x as $key => $value) {
-			$m->parameters['menuitem_'.$key] = $value;
-		}
-
-		$x = Services::Registry()->get('TemplateView');
-		foreach ($x as $key => $value) {
-			$m->parameters['template_view_' . $key] = $value;
-		}
-
-		$x = Services::Registry()->get('WrapView');
-		foreach ($x as $key => $value) {
-			$m->parameters['wrap_view_' . $key] = $value;
-		}
-
-		$x = Services::Registry()->get('PageView');
-		foreach ($x as $key => $value) {
-			$m->parameters['page_view_' . $key] = $value;
-		}
-
-		$x = Services::Registry()->get('Theme');
-		foreach ($x as $key => $value) {
-			$m->parameters['theme_' . $key] = $value;
-		}
-
-	    /** User Object */
-		$m->user = Services::Registry()->get('User');
-
-		$x = Services::Registry()->get('UserCustomfields');
-		if (count($x) > 0 && $x !== null) {
-			foreach ($x as $key => $value) {
-				$m->user[$key] = $value;
-			}
-		}
-
-		$x = Services::Registry()->get('UserParameters');
-		if (count($x) > 0 && $x !== null) {
-			foreach ($x as $key => $value) {
-				$m->user[$key] = $value;
-			}
-		}
-
-		/** Invoke the Method */
-		$results = $m->getData($moduleMethod, true);
+		$controller = new DisplayController();
+		$results = $controller->Display();
 
 		if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
 			Services::Debug()->set(' ');

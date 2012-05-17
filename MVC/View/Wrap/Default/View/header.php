@@ -8,15 +8,15 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1
-	&& (Services::Registry()->get('WrapView', 'title') == 'article'
-		|| Services::Registry()->get('WrapView', 'title') == 'aside'
-		|| Services::Registry()->get('WrapView', 'title') == 'footer'
-		|| Services::Registry()->get('WrapView', 'title') == 'header'
-		|| Services::Registry()->get('WrapView', 'title') == 'hgroup'
-		|| Services::Registry()->get('WrapView', 'title') == 'nav'
-		|| Services::Registry()->get('WrapView', 'title') == 'section')
+	&& (Services::Registry()->get('Parameters', 'wrap_view_title') == 'article'
+		|| Services::Registry()->get('Parameters', 'wrap_view_title') == 'aside'
+		|| Services::Registry()->get('Parameters', 'wrap_view_title') == 'footer'
+		|| Services::Registry()->get('Parameters', 'wrap_view_title') == 'header'
+		|| Services::Registry()->get('Parameters', 'wrap_view_title') == 'hgroup'
+		|| Services::Registry()->get('Parameters', 'wrap_view_title') == 'nav'
+		|| Services::Registry()->get('Parameters', 'wrap_view_title') == 'section')
 ):
-	$headerType = Services::Registry()->get('WrapView', 'title');
+	$headerType = Services::Registry()->get('Parameters', 'wrap_view_title');
 else :
 	$headerType = 'div';
 endif;

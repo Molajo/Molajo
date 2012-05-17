@@ -6,7 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Service\Services;
+use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -43,14 +43,16 @@ Class ComponentHelper
 	}
 
 	/**
-	 * get
+	 * Get Component ID with the Name
+	 *
+	 * @param $name
 	 *
 	 * @return  array
 	 * @since   1.0
 	 */
 	public function get($name)
 	{
-		$row = ExtensionHelper::get(
+		$row = Helpers::Extension()->getInstanceID(
 			CATALOG_TYPE_EXTENSION_COMPONENT,
 			$name
 		);

@@ -127,20 +127,6 @@ Class ExtensionHelper
 			return false;
 		}
 
-		$this->populateParameterRegistry($row);
-
-		return;
-	}
-
-	/**
-	 * Retrieve Route information for a specific Extension
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function populateParameterRegistry($row, $primary = false)
-	{
-
 		Services::Registry()->set('Include', 'extension_id', (int)$row['id']);
 		Services::Registry()->set('Include', 'extension_title', $row['title']);
 		Services::Registry()->set('Include', 'extension_translation_of_id', (int)$row['translation_of_id']);
@@ -157,17 +143,30 @@ Class ExtensionHelper
 		Services::Registry()->set('Include', 'extension_path_url',
 			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
 
-		Services::Registry()->set('Include', 'extension_primary', $primary);
+		Services::Registry()->set('Include', 'extension_primary', false);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
 		foreach ($customFieldTypes as $customFieldName) {
 
-			Services::Registry()->copy(
-				$row['model_name']. ucfirst(strtolower($customFieldName)),
-				'Parameters'. ucfirst(strtolower($customFieldName))
-			);
+			$customFieldName = ucfirst(strtolower($customFieldName));
+
+			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Parameters') {
+				Services::Registry()->merge(
+					'Extensioninstances' . $customFieldName,
+					'Parameters'
+				);
+			}
+
+			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Metadata') {
+				Services::Registry()->merge(
+					'Extensioninstances' . $customFieldName,
+					'Metadata'
+				);
+			}
+
+			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
 
 		return;
@@ -412,8 +411,7 @@ Class ExtensionHelper
 	 */
 	public function finalizeParameters($source_id = 0, $action = 'display')
 	{
-		if ($action == 'add'
-			|| $action == 'edit') {
+		if ($action == 'add' || $action == 'edit') {
 
 			Services::Registry()->set('Parameters', 'template_view', 'form');
 
@@ -452,20 +450,6 @@ Class ExtensionHelper
 		} else {
 
 			Services::Registry()->set('Parameters', 'template_view', 'item');
-
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'template_view_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'template_view_css_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'template_view_css_class'));
-
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'wrap_view_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'wrap_view_css_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'wrap_view_css_class'));
 		}
 
 		Helpers::TemplateView()->get();

@@ -52,7 +52,6 @@ Class CatalogHelper
 	 */
 	public function getRoute()
 	{
-
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'request_catalog_id'),
@@ -117,7 +116,9 @@ Class CatalogHelper
 		if ((int)$catalog_id > 0) {
 
 		} else if ((int)$source_id > 0 && (int)$catalog_type_id > 0) {
+
 			$catalog_id = $this->getID((int)$catalog_type_id, (int)$source_id);
+
 			if ($catalog_id == false) {
 				return array();
 			}
@@ -136,12 +137,12 @@ Class CatalogHelper
 		$m->model->set('id', (int)$catalog_id);
 
 		$row = $m->getData('load');
-
 		if (count($row) == 0) {
 			return array();
 		}
 
 		$row['catalog_url_request'] = 'index.php?id=' . (int)$row['id'];
+
 		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
 			$row['sef_request'] = '';
 		}
@@ -150,10 +151,9 @@ Class CatalogHelper
 	}
 
 	/**
-	 * getIDUsingSEFURL - Retrieves Catalog ID
+	 * Retrieves Catalog ID for the Request SEF URL
 	 *
-	 * @param  null $catalog_type_id
-	 * @param  null $source_id
+	 * @param  string $url_sef_request
 	 *
 	 * @return bool|mixed
 	 * @since  1.0
@@ -169,7 +169,7 @@ Class CatalogHelper
 	}
 
 	/**
-	 * getID - Retrieves Catalog ID
+	 * Retrieves Catalog ID for the specified Catalog Type ID and Source ID (From content)
 	 *
 	 * @param  null $catalog_type_id
 	 * @param  null $source_id
@@ -199,7 +199,9 @@ Class CatalogHelper
 	public function getRedirectURL($catalog_id)
 	{
 		$m = Application::Controller()->connect('Catalog', 'Table');
+
 		$m->model->query->select($m->model->db->qn('redirect_to_id'));
+
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
 		$result = $m->getData('loadResult');

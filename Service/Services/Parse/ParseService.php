@@ -176,6 +176,7 @@ Class ParseService
 
 		/** Save parameters for the primary route so that Includer / MVC can use Parameters Registry */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
+		Services::Registry()->copy('Route', 'Include');
 
 		/** Start parsing and processing page include for Theme */
 		$body = $this->renderLoop();
@@ -366,8 +367,11 @@ Class ParseService
 
 					/** 6. initialize registry */
 					if ($first) {
+						Services::Registry()->set('Include', 'extension_primary', true);
 					} else {
 						Services::Registry()->createRegistry('Include');
+						Services::Registry()->createRegistry('Parameters');
+						Services::Registry()->set('Include', 'extension_primary', false);
 					}
 
 					/** 7. call the includer class */
@@ -385,6 +389,8 @@ Class ParseService
 
 					/** 8. render output and store results as "replace with" */
 					$with[] = $rc->process($attributes);
+					Services::Registry()->deleteRegistry('Include');
+					Services::Registry()->deleteRegistry('Parameters');
 				}
 			}
 		}

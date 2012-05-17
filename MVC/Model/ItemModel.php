@@ -88,8 +88,14 @@ class ItemModel extends Model
 	 */
 	protected function setLoadQuery()
 	{
+		echo 'In Load Query '.$this->table_registry_name. '<br />';
+
 		if ($this->query->select == null) {
+
 			$columns = Services::Registry()->get($this->table_registry_name, 'Fields');
+echo '<pre>';
+var_dump($columns);
+echo '</pre>';
 
 			foreach ($columns as $column) {
 				$this->query->select($this->db->qn($this->primary_prefix . '.' . $column['name']));

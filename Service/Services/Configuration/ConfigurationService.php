@@ -252,6 +252,7 @@ Class ConfigurationService
 		} else if ($type == 'Table') {
 
 			if ($file == 'Theme') {
+
 				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
 					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
 				} else {
@@ -259,6 +260,7 @@ Class ConfigurationService
 				}
 
 			} else if ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
+
 				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 
 			} else {
@@ -270,6 +272,7 @@ Class ConfigurationService
 			}
 
 		} else if ($type == 'Route') {     // Primary Component Data
+
 				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
 					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
 				} else {
@@ -277,6 +280,7 @@ Class ConfigurationService
 				}
 
 		} else if ($type == 'Component') {
+
 				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
 					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
 
@@ -285,6 +289,7 @@ Class ConfigurationService
 				}
 
 		} else if ($file == 'Module') {
+
 			if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Options/Extension.xml')) {
 				$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Options/Extension.xml';
 			} else {

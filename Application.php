@@ -121,7 +121,7 @@ Class Application
 			Services::Debug()->set('Application Route succeeded');
 		}
 
-		/** Authorise: Services::Registry()->get('Request', 'status_authorised') */
+		/** Authorise: Services::Registry()->get('Route', 'status_authorised') */
 		$continue = $this->authorise();
 
 		if ($continue === false) {
@@ -293,11 +293,7 @@ Class Application
 	 */
 	protected function execute()
 	{
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Route'));
-echo '<br /><br />';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
+
 		$action = Services::Registry()->get('Route', 'request_action', 'display');
 
 		/** Display Action */

@@ -406,6 +406,37 @@ Class RegistryService
 	}
 
 	/**
+	 * Rename a namespace (deletes existing, creates new)
+	 *
+	 * Usage:
+	 * Services::Registry()->rename($namespace);
+	 *
+	 * @param  $namespace
+	 * @param  $newname
+	 *
+	 * @return  Registry
+	 * @since   1.0
+	 */
+	public function rename($namespace, $newname)
+	{
+		/** Retrieve existing contents, sort it. */
+		$existing = $this->getRegistry($namespace);
+		ksort($existing);
+
+		/** Delete the new and old namespaces */
+		$this->deleteRegistry($namespace);
+		$this->deleteRegistry($newname);
+
+		/** create the new namespace */
+		$this->createRegistry($newname);
+
+		/** Populate the new namespace with saved data */
+		$this->registry[$newname] = $existing;
+
+		return $this;
+	}
+
+	/**
 	 * Returns an array containing key and name pairs for a namespace registry
 	 *
 	 * Usage:
