@@ -121,7 +121,6 @@ class Includer
 		$this->name = $name;
 		$this->type = $type;
 		$this->items = $items;
-		echo $this->name.' '.$this->type.'<br />';
 
 		return;
 	}
@@ -244,14 +243,6 @@ class Includer
 			Services::Registry()->get('Include', 'extension_title'),
 			$this->type
 		);
-
-		echo '<br /><br /><pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
-
-		echo '<br /><br /><pre>';
-		var_dump(Services::Registry()->get('Include'));
-		echo '</pre>';
 
 		if ($results == false) {
 			return Services::Registry()->set('Parameter', 'status_found', false);
@@ -381,12 +372,16 @@ class Includer
 		}
 
 		/** html display filters
-		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
-		if (Services::Registry()->get('Parameters', 'criteria_html_display_filter', true) == false) {
-		return $results;
-		} else {
-		return Services::Filter()->filter_html($results);
-		}
+
+
+		echo '<br /><br /><pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+
+		echo '<br /><br /><pre>';
+		var_dump(Services::Registry()->get('Include'));
+		echo '</pre>';
+
 		 */
 		return $results;
 	}
