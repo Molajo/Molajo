@@ -6,13 +6,11 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  * <include:module name=Mainmenu wrap=Nav />
  * <include:module name=Sidebar template=Sidebar wrap=div/>
+ *<include:defer/>
+ * <include:message/>
+ * <include:head/>
  */
 defined('MOLAJO') or die; ?>
-<include:module name=Pageheader template=Pageheader wrap=Head/>
-<include:message/>
-
-<include:head/>
-
+<include:module name=Pageheader/>
 <include:request/>
-<include:module name=Pagefooter template=Pagefooter wrap=Footer/>
-<include:defer/>
+<include:module name=Pagefooter/>

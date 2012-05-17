@@ -125,7 +125,8 @@ class DisplayController extends Controller
 		$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');
 
 		$renderedOutput = $this->renderView(Services::Registry()->get('Parameters', 'template_view_title'));
-
+echo '<br /><br /><br /><br />';
+echo $renderedOutput;
 		/** Mustache */
 		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
 			$renderedOutput = $this->processRenderedOutput($renderedOutput);

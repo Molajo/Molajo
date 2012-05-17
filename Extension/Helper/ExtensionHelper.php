@@ -152,24 +152,16 @@ Class ExtensionHelper
 
 			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Parameters') {
+			if ($customFieldName == 'Parameters') {
 				Services::Registry()->merge(
-					'Extensioninstances' . $customFieldName,
-					'Parameters'
+					$row['table_registry_name'].'Parameters', 'Parameters'
 				);
 			}
 
-			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Metadata') {
-				Services::Registry()->merge(
-					'Extensioninstances' . $customFieldName,
-					'Metadata'
-				);
-			}
+			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 
-			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
-	   echo '<pre>';
-		var_dump(Services::Registry()->get('Parameters'));
+
 		return;
 	}
 
@@ -192,8 +184,6 @@ Class ExtensionHelper
 		}
 
 		$m = Application::Controller()->connect($model, $type);
-
-		$m->model->set('id', (int)$extension_id);
 
 		/**
 		 *  a. Extensions Instances Table
@@ -388,18 +378,25 @@ Class ExtensionHelper
 	public function loadLanguage($path = null)
 	{
 		if ($path == null) {
-			$path = Services::Registry()->get('Extension', 'path');
+			$path = Services::Registry()->get('Include', 'extension_path');
 		}
-		$path .= '/language';
+		if ($path == null) {
+			$path = Services::Registry()->get('Request', 'extension_path');
+		}
+		$path .= '/Language';
 
 
 		if (Services::Filesystem()->folderExists($path)) {
 		} else {
+			return;
 			echo 'does not exist'.$path.'<br />';
+			echo '<pre>';
+			var_dump(Services::Registry()->get('Include'));
 			return false;
 		}
 
-		Services::Language()->load($path, Services::Language()->get('tag'), false, false);
+//todo fix Services::Language()->load($path, Services::Language()->get('tag'), false, false);
+		Services::Language()->load($path, 'en-GB', false, false);
 
 		return true;
 	}
@@ -412,45 +409,126 @@ Class ExtensionHelper
 	 */
 	public function finalizeParameters($source_id = 0, $action = 'display')
 	{
+
+		$getTemplate = true;
+
+		$template_view_id = (int) Services::Registry()->get('Parameters', 'template_view_id', 0);
+		$template_view_title = Services::Registry()->get('Parameters', 'template_view_title', '');
+
+		if ($template_view_id == 0) {
+		} else {
+			$template_view_title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
+			if ($template_view_title == false) {
+			} else {
+				$getTemplate = false;
+				Services::Registry()->set('Parameters', 'wrap_view_title', $template_view_title);
+			}
+
+		}
+
+		if ($template_view_title == '') {
+		} else {
+			if ($template_view_id == 0) {
+				$template_view_id = Helpers::Extension()->getInstanceID(
+					CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
+					$template_view_title
+				);
+				if ($template_view_id == false) {
+				} else {
+					$getTemplate = false;
+					Services::Registry()->set('Parameters', 'template_view_id', $template_view_id);
+				}
+			}
+		}
+
+
+		$getWrap = true;
+
+		$wrap_view_id = (int) Services::Registry()->get('Parameters', 'wrap_view_id', 0);
+		$wrap_view_title = Services::Registry()->get('Parameters', 'wrap_view_title', '');
+
+		if ($wrap_view_id == 0) {
+		} else {
+			$wrap_view_title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
+			if ($wrap_view_title == false) {
+			} else {
+				$getWrap = false;
+				Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_view_title);
+			}
+
+		}
+
+		if ($wrap_view_title == '') {
+		} else {
+			if ($wrap_view_id == 0) {
+				$wrap_view_id = Helpers::Extension()->getInstanceID(
+					CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
+					$wrap_view_title
+				);
+				if ($wrap_view_id == false) {
+				} else {
+					$getWrap = false;
+					Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_view_id);
+				}
+			}
+		}
+
+
 		if ($action == 'add' || $action == 'edit') {
 
 			Services::Registry()->set('Parameters', 'template_view', 'form');
 
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'form_template_view_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'form_template_view_css_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'form_template_view_css_class'));
+			if ($getTemplate == true) {
+				Services::Registry()->set('Parameters', 'template_view_id',
+					Services::Registry()->get('Parameters', 'form_template_view_id'));
+				Services::Registry()->set('Parameters', 'template_view_css_id',
+					Services::Registry()->get('Parameters', 'form_template_view_css_id'));
+				Services::Registry()->set('Parameters', 'template_view_css_class',
+					Services::Registry()->get('Parameters', 'form_template_view_css_class'));
+			}
 
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'form_wrap_view_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'form_wrap_view_css_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
+			if ($getWrap == true) {
+				Services::Registry()->set('Parameters', 'wrap_view_id',
+					Services::Registry()->get('Parameters', 'form_wrap_view_id'));
+				Services::Registry()->set('Parameters', 'wrap_view_css_id',
+					Services::Registry()->get('Parameters', 'form_wrap_view_css_id'));
+				Services::Registry()->set('Parameters', 'wrap_view_css_class',
+					Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
+			}
 
 		} else if ((int)$source_id == 0) {
 
 			Services::Registry()->set('Parameters', 'template_view', 'list');
 
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'list_template_view_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_id',
-				Services::Registry()->get('Parameters', 'list_template_view_css_id'));
-			Services::Registry()->set('Parameters', 'template_view_css_class',
-				Services::Registry()->get('Parameters', 'list_template_view_css_class'));
+			if ($getTemplate == true) {
+				Services::Registry()->set('Parameters', 'template_view_id',
+					Services::Registry()->get('Parameters', 'list_template_view_id'));
+				Services::Registry()->set('Parameters', 'template_view_css_id',
+					Services::Registry()->get('Parameters', 'list_template_view_css_id'));
+				Services::Registry()->set('Parameters', 'template_view_css_class',
+					Services::Registry()->get('Parameters', 'list_template_view_css_class'));
+			}
 
-			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'list_wrap_view_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_id',
-				Services::Registry()->get('Parameters', 'list_wrap_view_css_id'));
-			Services::Registry()->set('Parameters', 'wrap_view_css_class',
-				Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
+			if ($getWrap == true) {
+				Services::Registry()->set('Parameters', 'wrap_view_id',
+					Services::Registry()->get('Parameters', 'list_wrap_view_id'));
+				Services::Registry()->set('Parameters', 'wrap_view_css_id',
+					Services::Registry()->get('Parameters', 'list_wrap_view_css_id'));
+				Services::Registry()->set('Parameters', 'wrap_view_css_class',
+					Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
+			}
+
 
 		} else {
 
 			Services::Registry()->set('Parameters', 'template_view', 'item');
+			if ($getTemplate == true) {
+
+			}
+
+			if ($getWrap == true) {
+
+			}
 		}
 
 		Helpers::TemplateView()->get();

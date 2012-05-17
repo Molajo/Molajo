@@ -205,9 +205,9 @@ Class LanguageService
 	public function load($path)
 	{
 		$loaded = $this->loadLanguage($path, $this->language . '.ini');
-		if ($loaded === false) {
-			Services::Debug()->set('LanguageServices: cannot load file: '
-				. $path . '/' . $this->language . '.ini');
+		if ($loaded == false) {
+//			Services::Debug()->set('LanguageServices: cannot load file: '
+				echo 'cannot load language file ' . $path . '/' . $this->language . '.ini';
 		} else {
 			return true;
 		}
