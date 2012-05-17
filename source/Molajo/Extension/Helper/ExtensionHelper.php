@@ -116,10 +116,10 @@ Class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getIncludeExtension($extension_id)
+	public function getIncludeExtension($extension_id, $model_name = null, $type = null)
 	{
 		/** Retrieve the query results */
-		$row = $this->get($extension_id);
+		$row = $this->get($extension_id, $model_name, $type);
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
@@ -168,7 +168,8 @@ Class ExtensionHelper
 
 			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
-
+	   echo '<pre>';
+		var_dump(Services::Registry()->get('Parameters'));
 		return;
 	}
 
@@ -184,13 +185,13 @@ Class ExtensionHelper
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public function get($extension_id = 0, $model = null)
+	public function get($extension_id = 0, $model = null, $type = null)
 	{
 		if ($model == null) {
 			$model = 'ExtensionInstances';
 		}
 
-		$m = Application::Controller()->connect($model);
+		$m = Application::Controller()->connect($model, $type);
 
 		$m->model->set('id', (int)$extension_id);
 

@@ -47,24 +47,13 @@ Class ModuleIncluder extends Includer
 	 * @return bool
 	 * @since 1.0
 	 */
-	protected function getExtension()
+	protected function getExtension($extension_id = null)
 	{
-		Services::Registry()->deleteRegistry('ExtensionParameters');
+		$extension_id = Helpers::Module()->get(
+			Services::Registry()->get('Include', 'extension_title')
+			);
 
-		/** Retrieve Extension Instances ID */
-		Services::Registry()->set('Include', 'extension_id',
-			Helpers::Extension()->getInstanceID(
-				Services::Registry()->get('Include', 'extension_catalog_type_id'),
-				Services::Registry()->get('Include', 'extension_title')
-			)
-		);
-
-		/**  Retrieve Extension Data and set Extension Parameter values */
-		$response = Helpers::Extension()->getIncludeExtension(
-			Services::Registry()->get('Include', 'extension_id')
-		);
-
-		return $response;
+		return parent::getExtension($extension_id);
 	}
 
 	/**

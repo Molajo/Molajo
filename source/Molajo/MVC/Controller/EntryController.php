@@ -101,11 +101,6 @@ Class EntryController extends DisplayController
 			$this->dataSource = $this->default_dataSource;
 		} else {
 			$this->table_registry_name = ConfigurationService::getFile($table, $type);
-
-			//echo '<pre>';
-			//var_dump(Services::Registry()->get($this->table_registry_name));
-			//echo '</pre>';
-
 		}
 
 		/* 2. Instantiate Model Class */
@@ -118,7 +113,6 @@ Class EntryController extends DisplayController
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
 
-		/** Set Model Properties */
 		$this->model->set('table_registry_name', $this->table_registry_name);
 		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
 		$this->model->set('table_name', Services::Registry()->get($this->table_registry_name, 'table_name'));
@@ -129,7 +123,11 @@ Class EntryController extends DisplayController
 		$this->model->set('id_name', Services::Registry()->get($this->table_registry_name, 'id_name'));
 
 		/** 4. Set DB Properties */
-		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
+		if (strtolower($type) == 'module') {
+			$dbo = 'JDatabase';
+		} else {
+			$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
+		}
 
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());

@@ -241,9 +241,13 @@ class Includer
 	 */
 	protected function getExtension($extension_id = null)
 	{
-		$response = Helpers::Extension()->getIncludeExtension($extension_id);
+		$results = Helpers::Extension()->getIncludeExtension(
+			$extension_id,
+			Services::Registry()->get('Include', 'extension_title'),
+			$this->type
+		);
 
-		if ($response == false) {
+		if ($results == false) {
 			return Services::Registry()->set('Parameter', 'status_found', false);
 		}
 

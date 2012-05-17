@@ -43,16 +43,6 @@ Class ModuleHelper
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
 	 * get
 	 *
 	 * Retrieve module data
@@ -62,7 +52,7 @@ Class ModuleHelper
 	 */
 	public function get($name)
 	{
-		$row = Helpers::Extension()->get(
+		$row = Helpers::Extension()->getInstanceID(
 			CATALOG_TYPE_EXTENSION_MODULE,
 			$name
 		);
