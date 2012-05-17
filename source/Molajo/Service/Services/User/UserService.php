@@ -72,7 +72,7 @@ Class UserService
 	{
 
 		/** Initialize */
-		Services::Registry()->deleteRegistry('Users');
+		Services::Registry()->deleteRegistry('User');
 
 		/** Retrieve User Data  */
 		$m = Application::Controller()->connect('Users');
@@ -169,6 +169,10 @@ Class UserService
 		Services::Registry()->set('User', 'Groups', $groups);
 		Services::Registry()->set('User', 'ViewGroups', $viewGroups);
 		Services::Registry()->set('User', 'Activity', $activity);
+
+		Services::Registry()->rename('UsersCustomfields', 'UserCustomfields');
+		Services::Registry()->rename('UsersParameters', 'UserParameters');
+		Services::Registry()->rename('UsersMetadata', 'UserMetadata');
 /**
 		echo '<pre>';
 		echo 'User<br />';
@@ -177,17 +181,17 @@ Class UserService
 
 		echo '<pre>';
 		echo 'User Customfields<br />';
-		var_dump(Services::Registry()->get('UsersCustomfields'));
+		var_dump(Services::Registry()->get('UserCustomfields'));
 		echo '</pre>';
 
 		echo '<pre>';
 		echo 'User Parameters<br />';
-		var_dump(Services::Registry()->get('UsersParameters'));
+		var_dump(Services::Registry()->get('UserParameters'));
 		echo '</pre>';
 
 		echo '<pre>';
 		echo 'User Metadata<br />';
-		var_dump(Services::Registry()->get('UsersMetadata'));
+		var_dump(Services::Registry()->get('UserMetadata'));
 		echo '</pre>';
 */
 		return $this;

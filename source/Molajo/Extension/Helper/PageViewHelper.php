@@ -140,13 +140,13 @@ Class PageViewHelper
 		$plus = '/View/Page/' . ucfirst(strtolower($page_view_name));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/index.php')) {
-			return Services::Registry()->get('Theme', 'path') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/index.php')) {
+			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/index.php')) {
-			return Services::Registry()->get('Extension', 'path') . $plus;
+		if (file_exists(Services::Registry()->get('Include', 'extension_path') . $plus . '/index.php')) {
+			return Services::Registry()->get('Include', 'extension_path') . $plus;
 		}
 
 		/** 3. View */
@@ -174,14 +174,15 @@ Class PageViewHelper
 	{
 		$plus = '/View/Page/' . ucfirst(strtolower($page_view_name));
 
+
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/index.php')) {
-			return Services::Registry()->get('Theme', 'path_url') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/index.php')) {
+			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/index.php')) {
-			return Services::Registry()->get('Extension', 'path_url') . $plus;
+		if (file_exists(Services::Registry()->get('Include', 'extension_path') . $plus . '/index.php')) {
+			return Services::Registry()->get('Include', 'extension_path_url') . $plus;
 		}
 
 		/** 3. View */

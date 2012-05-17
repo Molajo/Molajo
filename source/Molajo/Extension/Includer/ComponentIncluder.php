@@ -40,50 +40,60 @@ class ComponentIncluder extends Includer
 	}
 
 	/**
+	 * getAttributes
+	 *
+	 * Use the view and/or wrap criteria ife specified on the <include statement
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function getAttributes()
+	{
+		/** Include and Parameter Registries are already loaded for Primary Component */
+		if (Services::Registry()->get('Include', 'extension_primary') == true) {
+			return;
+		} else {
+			return parent::getAttribute();
+		}
+	}
+
+	/**
 	 * setRenderCriteria - Used for Primary Component to set Parameter Values for the identified Route
 	 *
 	 * @return null
 	 * @since  1.0
 	 */
-	public function getExtension()
+	public function getExtension($extension_id = null)
 	{
-		if ($normal = true && $this->type == 'request') {
+		/** Include and Parameter Registries are already loaded for Primary Component */
+		if (Services::Registry()->get('Include', 'extension_primary') == true) {
 			return;
 		}
 
-		/** extension */
-		Services::Registry()->set('Include', 'extension_id',
-			(int)Services::Registry()->get('Extension', 'id'));
-		Services::Registry()->set('Include', 'extension_instance_title',
-			Services::Registry()->get('Extension', 'title'));
-
-
-		Services::Registry()->set('Include', 'extension_translation_of_id',
-			Services::Registry()->get('Extension', 'translation_of_id'));
-		Services::Registry()->set('Include', 'extension_language',
-			Services::Registry()->get('Extension', 'language'));
-
-		Services::Registry()->set('Include', 'extension_catalog_id',
-			(int)Services::Registry()->get('Extension', 'catalog_id'));
-		Services::Registry()->set('Include', 'extension_catalog_type_id',
-			(int)Services::Registry()->get('Extension', 'catalog_type_id'));
-		Services::Registry()->set('Include', 'extension_catalog_type_title',
-			Services::Registry()->get('Extension', 'catalog_type_title'));
-
-		Services::Registry()->set('Include', 'extension_view_group_id',
-			(int)Services::Registry()->get('Extension', 'view_group_id'));
-
-		Services::Registry()->set('Include', 'extension_path',
-			Services::Registry()->get('Extension', 'path'));
-		Services::Registry()->set('Include', 'extension_path_url',
-			Services::Registry()->get('Extension', 'path_url'));
-
-		Services::Registry()->set('Include', 'extension_primary', true);
-
-		return;
+		/** Retrieve Component ID, then Extension, populate Include and Parameters */
+		$extension_id = Helpers::Component()->get($this->name);
+		return parent::getExtension($extension_id);
 	}
 
 	/**
+	 * setRenderCriteria
+	 *
+	 * Use the view and/or wrap criteria ife specified on the <include statement
+	 * Retrieve View and wrap criteria and path information
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	public function setRenderCriteria()
+	{
+		/** Include and Parameter Registries are already loaded for Primary Component */
+		if (Services::Registry()->get('Include', 'extension_primary') == true) {
+			return;
+		}
+		return parent::setRenderCriteria();
+	}
+
+		/**
 	 * loadMedia
 	 *
 	 * Loads Media Files for Site, Application, User, and Theme
@@ -94,20 +104,21 @@ class ComponentIncluder extends Includer
 	protected function loadMedia()
 	{
 		/**  Primary Category */
-		$this->loadMediaPlus('/category' . Services::Registry()->get('Include', 'category_id'),
-			Services::Registry()->get('Configuration', 'media_priority_primary_category', 700));
+		$this->loadMediaPlus('/category' . Services::Registry()->get('Include', 'catalog_category_id'),
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_category', 700));
 
 		/** Menu Item */
 		$this->loadMediaPlus('/menuitem' . Services::Registry()->get('Include', 'menu_item_id'),
-			Services::Registry()->get('Configuration', 'media_priority_menu_item', 800));
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_menu_item', 800));
 
 		/** Source */
-		$this->loadMediaPlus('/source' . Services::Registry()->get('Include', 'id'),
-			Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
+		$this->loadMediaPlus('/source/'  . Services::Registry()->get('Include', 'extension_title')
+				. Services::Registry()->get('Include', 'content_id'),
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_source', 900));
 
 		/** Component */
-		$this->loadMediaPlus('/component' . Services::Registry()->get('Include', 'extension_instance_name'),
-			Services::Registry()->get('Configuration', 'media_priority_source_data', 900));
+		$this->loadMediaPlus('/component/' . Services::Registry()->get('Include', 'extension_title'),
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_extension', 900));
 
 		return true;
 	}

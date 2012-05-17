@@ -6,7 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Service\Services;
+use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -62,17 +62,13 @@ Class ModuleHelper
 	 */
 	public function get($name)
 	{
-		$rows = ExtensionHelper::get(
+		$row = Helpers::Extension()->get(
 			CATALOG_TYPE_EXTENSION_MODULE,
 			$name
 		);
-		if (count($rows) == 0) {
+		if (count($row) == 0) {
 			return array();
 		}
-
-		foreach ($rows as $row) {
-		}
-
 		return $row;
 	}
 
