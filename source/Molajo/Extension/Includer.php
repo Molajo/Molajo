@@ -184,7 +184,6 @@ class Includer
 		return $this->rendered_output;
 	}
 
-
 	/**
 	 * getAttributes
 	 *
@@ -226,7 +225,6 @@ class Includer
 				} else if ($name == 'wrap_view_css_class') {
 					Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 				}
-
 			}
 		}
 	}
@@ -247,6 +245,14 @@ class Includer
 			$this->type
 		);
 
+		echo '<br /><br /><pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+
+		echo '<br /><br /><pre>';
+		var_dump(Services::Registry()->get('Include'));
+		echo '</pre>';
+
 		if ($results == false) {
 			return Services::Registry()->set('Parameter', 'status_found', false);
 		}
@@ -266,8 +272,6 @@ class Includer
 	 */
 	public function setRenderCriteria()
 	{
-		 //add user?
-
 		/** Final Template and Wrap selections */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 

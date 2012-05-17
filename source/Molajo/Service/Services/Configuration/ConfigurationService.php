@@ -359,27 +359,38 @@ Class ConfigurationService
 			return $registryName;
 		}
 
-		Services::Registry()->set($registryName, 'model_name', $file);
-		Services::Registry()->set($registryName, 'table_name', '#__extension_instances');
-		Services::Registry()->set($registryName, 'primary_key', 'id');
-		Services::Registry()->set($registryName, 'primary_prefix', 'a');
-		Services::Registry()->set($registryName, 'name_key', 'title');
- 		Services::Registry()->set($registryName, 'get_customfields', true);
-		Services::Registry()->set($registryName, 'get_item_children', false);
-		Services::Registry()->set($registryName, 'use_special_joins', false);
-		Services::Registry()->set($registryName, 'check_view_level_access', false);
-		Services::Registry()->set($registryName, 'data_source', 'JDatabase');
+		/** Model */
+		if (isset($xml->config->include['model'])) {
 
-		/** Parameters - Include Code */
-		if (isset($xml->config->include['name'])) {
-
-			$include = (string)$xml->config->include['name'];
+			$include = (string)$xml->config->include['model'];
 
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
 
-			$replace_this = '<include name="' . $include . '"/>';
+			$replace_this = '<include model="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $replace_this, $xml_string
+			);
+
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		/** Set Model Properties */
+		ConfigurationService::setModelRegistry($registryName, $xml->config->model);
+		Services::Registry()->set($registryName, 'model_name', $registryName);
+
+		/** Parameters - Include Code */
+		if (isset($xml->config->parameters->include['parameters'])) {
+
+			$include = (string)$xml->config->parameters->include['parameters'];
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+
+			$replace_this = '<include parameters="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $replace_this, $xml_string
@@ -394,7 +405,7 @@ Class ConfigurationService
 
 		/** Retrieve Field Attributes for each field */
 		$fieldArray = array();
-		foreach ($xml->config->field as $key1 => $value1) {
+		foreach ($xml->config->parameters->field as $key1 => $value1) {
 
 			$attributes = get_object_vars($value1);
 			$fieldAttributes = ($attributes["@attributes"]);
@@ -406,7 +417,6 @@ Class ConfigurationService
 				} else {
 					echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
 				}
-
 				$fieldAttributesArray[$key2] = $value2;
 			}
 
@@ -415,37 +425,13 @@ Class ConfigurationService
 
 		Services::Registry()->set($registryName, 'Parameters', $fieldArray);
 
+		Services::Registry()->set($registryName, 'CustomFieldGroups', array('Parameters'));
+
 		return $registryName;
 	}
 
-	/**
-	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
-	 * Returns the name of the registry
-	 *
-	 * @static
-	 * @param $file
-	 * @param string $type
-	 * @param $path_and_file
-	 * @param $xml
-	 *
-	 * @return  string
-	 * @since   1.0
-	 * @throws  \RuntimeException
-	 */
-	public static function processTableFile($file, $type = 'Table', $path_and_file, $xml)
+	public static function setModelRegistry($registryName, $xml)
 	{
-		/** Table only: Process Include Code */
-		$xml_string = '';
-
-		$registryName = ucfirst(strtolower($file)) . $type;
-
-//echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
-
-		$exists = Services::Registry()->exists($registryName);
-		if ($exists === true) {
-			return $registryName;
-		}
-
 		Services::Registry()->set($registryName, 'model_name', (string)$xml['name']);
 		Services::Registry()->set($registryName, 'table_name', (string)$xml['table']);
 
@@ -500,6 +486,40 @@ Class ConfigurationService
 			$value = 'JDatabase';
 		}
 		Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
+
+		return;
+	}
+
+	/**
+	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
+	 * Returns the name of the registry
+	 *
+	 * @static
+	 * @param $file
+	 * @param string $type
+	 * @param $path_and_file
+	 * @param $xml
+	 *
+	 * @return  string
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function processTableFile($file, $type = 'Table', $path_and_file, $xml)
+	{
+		/** Table only: Process Include Code */
+		$xml_string = '';
+
+		$registryName = ucfirst(strtolower($file)) . $type;
+
+//echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
+
+		$exists = Services::Registry()->exists($registryName);
+		if ($exists === true) {
+			return $registryName;
+		}
+
+		/** Set Model Properties */
+		ConfigurationService::setModelRegistry($registryName, $xml);
 
 		/** Body - No registry */
 

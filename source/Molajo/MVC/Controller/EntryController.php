@@ -123,11 +123,7 @@ Class EntryController extends DisplayController
 		$this->model->set('id_name', Services::Registry()->get($this->table_registry_name, 'id_name'));
 
 		/** 4. Set DB Properties */
-		if (strtolower($type) == 'module') {
-			$dbo = 'JDatabase';
-		} else {
-			$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
-		}
+		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
 
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());

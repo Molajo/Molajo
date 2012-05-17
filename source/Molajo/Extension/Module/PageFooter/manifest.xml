@@ -10,18 +10,13 @@
     <version>1.0</version>
     <description>MODULE_PAGE_FOOTER_DESCRIPTION</description>
     <config>
-        <field name="parameters">
-            <element name="display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="template_view_id" filter="integer" null="1" default="42" values=""/>
-            <element name="wrap_view_id" filter="integer" null="1" default="62" values=""/>
-            <element name="site_name" filter="char" null="0" default="Molajo" values=""/>
-            <element name="link" filter="char" null="1" default="http://Molajo.org" values=""/>
-            <element name="linked_text" filter="char" null="0" default="none" values=""/>
-            <element name="remaining_text" filter="char" null="0" default="Molajo" values=""/>
-            <element name="query_object" filter="char" null="0" default="none" values=""/>
-            <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-            <element name="cache_handler" filter="char" null="1" default="file" values=""/>
-        </field>
+        <include model="ModuleModel"/>
+        <parameters>
+            <field name="site_name" type="char" null="0" default="Molajo" values=""/>
+            <field name="link" type="char" null="1" default="http://Molajo.org" values=""/>
+            <field name="linked_text" type="char" null="0" default="Molajo" values=""/>
+            <field name="remaining_text" type="char" null="0" default=" is Free Software" values=""/>
+            <include parameters="ModuleParameters"/>
+        </parameters>
     </config>
 </extension>

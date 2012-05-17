@@ -1,33 +1,42 @@
 {
     "1":{
-    "display_title":"Molajo Article Component: Site Page Header",
+        "site_name":"Molajo",
+        "link":"http://Molajo.org",
+        "linked_text":"Molajo &reg;",
+        "remaining_text":"is Free Software",
 
-    "display_view_on_no_results":"1",
-
-    "template_view_id":"41",
-    "template_view_css_id":"",
-    "template_view_css_class":"",
-
-    "wrap_view_id":"61",
-    "wrap_view_css_id":"",
-    "wrap_view_css_class":"",
-
-    "caching":"0",
-    "cache_time":"15",
-    "cache_handler":"file"
-
-    },
-    "2":{
-
-        "display_title":"Molajo Article Component: Administrator Page Header",
+        "display_title":"Molajo Article Component: Site Page Footer",
 
         "display_view_on_no_results":"1",
 
-        "template_view_id":"41",
+        "template_view_id":"42",
         "template_view_css_id":"",
         "template_view_css_class":"",
 
-        "wrap_view_id":"61",
+        "wrap_view_id":"62",
+        "wrap_view_css_id":"",
+        "wrap_view_css_class":"",
+
+        "caching":"0",
+        "cache_time":"15",
+        "cache_handler":"file"
+
+    },
+    "2":{
+        "site_name":"Molajo",
+        "link":"http://Molajo.org",
+        "linked_text":"Molajo &reg;",
+        "remaining_text":"is Free Software",
+
+        "display_title":"Molajo Article Component: Administrator Page Footer",
+
+        "display_view_on_no_results":"1",
+
+        "template_view_id":"42",
+        "template_view_css_id":"",
+        "template_view_css_class":"",
+
+        "wrap_view_id":"62",
         "wrap_view_css_id":"",
         "wrap_view_css_class":"",
 
@@ -39,3 +48,8 @@
 }
 
 
+
+"site_name":"Molajo",
+"link":"http://Molajo.org",
+"linked_text":"Molajo &reg;",
+"remaining_text":"is Free Software",
