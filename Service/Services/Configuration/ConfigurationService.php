@@ -247,39 +247,49 @@ Class ConfigurationService
 	public static function getFile($file, $type = 'Application')
 	{
 		if ($type == 'Application') {
+		} else {
+			$registryName = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
+			$exists = Services::Registry()->exists($registryName);
+			if ($exists === true) {
+				return $registryName;
+			}
+		}
+
+		if (strtolower($type) == 'application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
 
-		} else if ($type == 'Table') {
+		} elseif (strtolower($type) == 'table') {
 
-			if ($file == 'Theme') {
+				if ($file == 'Theme') {
 
-				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
-					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
-				} else {
+					if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
+						$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
+					} else {
+						$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+					}
+
+				} elseif ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
+
 					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+
+				} else {
+
+					if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
+						$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+					} else {
+						$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+					}
 				}
 
-			} else if ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
+		} elseif (strtolower($type) == 'route') {     // Primary Component Data
 
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-
-			} else {
 				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
 					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
 				} else {
 					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 				}
-			}
 
-		} else if ($type == 'Route') {     // Primary Component Data
-
-				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
-					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
-				} else {
-					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-				}
-
-		} else if ($type == 'Component') {
+		} elseif (strtolower($type) == 'component') {
 
 				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
 					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
@@ -288,25 +298,17 @@ Class ConfigurationService
 					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 				}
 
-		} else if ($file == 'Module') {
+		} elseif (strtolower($type) == 'module') {
 
-			if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Options/Extension.xml')) {
-				$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Options/Extension.xml';
-			} else {
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-			}
-
-			/** If table data is already loaded in Registry, just use it */
-			$registryName = ucfirst(strtolower($file)) . 'Table';
-			$exists = Services::Registry()->exists($registryName);
-			if ($exists === true) {
-				return $registryName;
-			}
+				if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml')) {
+					$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml';
+				} else {
+					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+				}
 
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
 		}
-
 
 		if (file_exists($path_and_file)) {
 		} else {
@@ -322,11 +324,98 @@ Class ConfigurationService
 			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 
-		if ($type == 'Application') {
+		if (strtolower($type) == 'application') {
 			return $xml;
+
+		} else if (strtolower($type) == 'module') {
+			return ConfigurationService::processModuleTable($file, $type, $path_and_file, $xml);
+
 		} else {
+			//error ?
 			return ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
 		}
+	}
+
+	/**
+	 * processModuleTable extracts XML configuration data for Modules and populates Registry
+	 *
+	 * @static
+	 * @param $file
+	 * @param string $type
+	 * @param $path_and_file
+	 * @param $xml
+	 *
+	 * @return  string Name of registry
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public static function processModuleTable($file, $type = 'Module', $path_and_file, $xml)
+	{
+		$xml_string = '';
+		$registryName = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
+
+		$exists = Services::Registry()->exists($registryName);
+		if ($exists === true) {
+			return $registryName;
+		}
+
+		Services::Registry()->set($registryName, 'model_name', $file);
+		Services::Registry()->set($registryName, 'table_name', '#__extension_instances');
+		Services::Registry()->set($registryName, 'primary_key', 'id');
+		Services::Registry()->set($registryName, 'primary_prefix', 'a');
+		Services::Registry()->set($registryName, 'name_key', 'title');
+ 		Services::Registry()->set($registryName, 'get_customfields', true);
+		Services::Registry()->set($registryName, 'get_item_children', false);
+		Services::Registry()->set($registryName, 'use_special_joins', false);
+		Services::Registry()->set($registryName, 'check_view_level_access', false);
+		Services::Registry()->set($registryName, 'data_source', 'JDatabase');
+
+		/** Parameters - Include Code */
+		if (isset($xml->config->include['name'])) {
+
+			$include = (string)$xml->config->include['name'];
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $replace_this, $xml_string
+			);
+
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		/** Fields  */
+		$known = array('name', 'type', 'null', 'default', 'length', 'customtype', 'file', 'char',
+			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
+
+		/** Retrieve Field Attributes for each field */
+		$fieldArray = array();
+		foreach ($xml->config->field as $key1 => $value1) {
+
+			$attributes = get_object_vars($value1);
+			$fieldAttributes = ($attributes["@attributes"]);
+			$fieldAttributesArray = array();
+
+			while (list($key2, $value2) = each($fieldAttributes)) {
+
+				if (in_array($key2, $known)) {
+				} else {
+					echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
+				}
+
+				$fieldAttributesArray[$key2] = $value2;
+			}
+
+			$fieldArray[] = $fieldAttributesArray;
+		}
+
+		Services::Registry()->set($registryName, 'Parameters', $fieldArray);
+
+		return $registryName;
 	}
 
 	/**
@@ -696,10 +785,6 @@ Class ConfigurationService
 			);
 		}
 
-//if ($file == 'Articles') {
-//			var_dump($xml);
-//			die;
-//		}
 		return $registryName;
 	}
 

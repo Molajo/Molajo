@@ -1,0 +1,15 @@
+<field name="display_title" type="char" null="1" default="" values=""/>
+
+<field name="display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
+
+<field name="template_view_id" type="integer" null="1" default="" values=""/>
+<field name="template_view_css_id" type="char" null="1" default="" values=""/>
+<field name="template_view_css_class" type="char" null="1" default="" values=""/>
+
+<field name="wrap_view_id" type="integer" null="1" default="" values=""/>
+<field name="wrap_view_css_id" type="char" null="1" default="" values=""/>
+<field name="wrap_view_css_class" type="char" null="1" default="" values=""/>
+
+<field name="caching" type="binary" null="1" default="1" values="0,1"/>
+<field name="cache_time" type="integer" null="1" default="15" values=""/>
+<field name="cache_handler" type="char" null="1" default="" values=""/>

@@ -82,14 +82,13 @@ class DisplayController extends Controller
 
 		$type = Services::Registry()->get('Parameters', 'template_view');
 
-		if ($type == 'formXXXXXX' || $type == 'itemXXXXX') {
+		if ($type == 'formXXXXX' || $type == 'itemXXXXX') {
 
 			/** Include and Parameter Registries are already loaded for Primary Component */
-			if (Services::Registry()->get('Include', 'extension_primary') == true) {
-				$type = 'Request';
-			} else {
-				$type = 'Table';
-			}
+//			if (Services::Registry()->get('Include', 'extension_primary') == true) {
+
+				$type = 'Component';
+
 			$m = Application::Controller()->connect(
 				Services::Registry()->get('Include', 'extension_title'), $type
 			);

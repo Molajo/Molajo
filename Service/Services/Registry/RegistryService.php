@@ -352,7 +352,7 @@ Class RegistryService
 				$existingValue = $this->get($intoThis, $key, '');
 
 				if (trim($existingValue) == '') {
-					echo $mergeThis.' '.$intoThis.' '.$key.' '.$value.'<br />';
+//					echo $mergeThis.' '.$intoThis.' '.$key.' '.$value.'<br />';
 					$this->set($intoThis, $key, $value);
 				}
 

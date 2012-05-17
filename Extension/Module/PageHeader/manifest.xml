@@ -10,14 +10,6 @@
     <version>1.0</version>
     <description>MODULE_PAGE_HEADER_DESCRIPTION</description>
     <config>
-        <field name="parameters" registry="ExtensionParameters">
-            <element name="display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="template_view_id" filter="integer" null="1" default="41" values=""/>
-            <element name="wrap_view_id" filter="integer" null="1" default="63" values=""/>
-            <element name="query_object" filter="char" null="0" default="none" values=""/>
-            <element name="caching" filter="binary" null="1" default="1" values="0,1"/>
-            <element name="cache_time" filter="integer" null="1" default="15" values=""/>
-            <element name="cache_handler" filter="char" null="1" default="" values=""/>
-        </field>
+        <include name="ModuleParameters"/>
     </config>
 </extension>
