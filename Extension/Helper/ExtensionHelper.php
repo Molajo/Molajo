@@ -450,6 +450,7 @@ Class ExtensionHelper
 		if ($wrap_view_id == 0) {
 		} else {
 			$wrap_view_title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
+
 			if ($wrap_view_title == false) {
 			} else {
 				$getWrap = false;
@@ -472,7 +473,6 @@ Class ExtensionHelper
 				}
 			}
 		}
-
 
 		if ($action == 'add' || $action == 'edit') {
 

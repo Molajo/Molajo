@@ -141,7 +141,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function placeholder()
 	{
-		return Services::Text()->getPlaceHolderText(55, array('html', 'lorem'));
+		return Services::Text()->getPlaceHolderText(106, array('html', 'lorem'));
 	}
 
 	/**
@@ -155,7 +155,9 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function intro()
 	{
-		return Services::Text()->smilies($this->items['content_text']);
+		if (isset($this->items['content_text'])) {
+			return Services::Text()->smilies($this->items['content_text']);
+		}
 	}
 
 	/**
@@ -182,6 +184,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 	 */
 	public function profile()
 	{
+		return;
 		$class = 'Molajo\\Extension\\Includer\\ModuleIncluder';
         $rc = new $class ('profile', '');
 
