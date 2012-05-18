@@ -191,8 +191,8 @@ Class ParseService
 
 		foreach ($sequence->include as $next) {
 			if ($next == 'message') {
-				$messages = Services::Message()->get();
-				if (count($messages) == 0) {
+				$messages = Services::Message()->get('count');
+				if ((int) $messages == 0) {
 				} else {
 					$this->sequence[] = (string)$next;
 				}

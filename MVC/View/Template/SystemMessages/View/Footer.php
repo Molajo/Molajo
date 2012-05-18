@@ -6,7 +6,3 @@
  */
 defined('MOLAJO') or die; ?>
 </ul>
-</dd>
-</dt>
-</dl>
-</div>

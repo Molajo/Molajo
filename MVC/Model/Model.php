@@ -229,6 +229,18 @@ class Model
 	}
 
 	/**
+	 * retrieves messages (only available for the Message dbo
+	 *
+	 * @return  mixed  Array or String or Null
+	 * @since   1.0
+	 */
+	public function getMessages()
+	{
+		return $this->db->getMessages();
+	}
+
+
+	/**
 	 * getFieldNames
 	 *
 	 * Retrieves column names, only, for the database table

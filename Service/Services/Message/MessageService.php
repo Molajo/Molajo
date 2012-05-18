@@ -51,29 +51,6 @@ Class MessageService
 	}
 
 	/**
-	 * Class constructor.
-	 *
-	 * @return boolean
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
-	 * get application messages
-	 *
-	 * @return  array  Application messages
-	 *
-	 * @since   1.0
-	 */
-	public function get()
-	{
-		return $this->messages;
-	}
-
-	/**
 	 * Set the system message.
 	 *
 	 * @param  string  $message
@@ -106,5 +83,77 @@ Class MessageService
 		$this->messages[$count]['code'] = $code;
 
 		return true;
+	}
+
+	/**
+	 * get application messages
+	 *
+	 * @return  array  Application messages
+	 *
+	 * @since   1.0
+	 */
+	public function get($option = null)
+	{
+		if ($option == 'db') {
+			return $this;
+
+		} else if ($option == 'count') {
+			return count($this->messages);
+
+		} else {
+			return $this->messages;
+		}
+
+	}
+
+	/**
+	 * 	Dummy functions to pass service off as a DBO to interact with model
+	 */
+	public function getNullDate()
+	{
+		return $this;
+	}
+
+	public function getQuery()
+	{
+		return $this;
+	}
+
+	public function toSql()
+	{
+		return $this;
+	}
+
+	public function clear()
+	{
+		return $this;
+	}
+
+	/**
+	 * getData
+	 *
+	 * @return    array
+	 *
+	 * @since    1.0
+	 */
+	public function getMessages()
+	{
+		$query_results = array();
+
+		$messages = $this->get();
+		if (count($messages) == 0) {
+			return array();
+		}
+
+		foreach ($messages as $message) {
+			$row = new \stdClass();
+			$row->content_text = $message['message'];
+			$row->title = $message['type'];
+			$row->code = $message['code'];
+
+			$query_results[] = $row;
+		}
+
+		return $query_results;
 	}
 }
