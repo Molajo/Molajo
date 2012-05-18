@@ -21,7 +21,6 @@ defined('MOLAJO') or die;
  */
 Class ThemeIncluder extends Includer
 {
-
 	/**
 	 * __construct
 	 *
@@ -29,12 +28,11 @@ Class ThemeIncluder extends Includer
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function __construct($name = null, $type = null, $items = null)
+	public function __construct($name = null, $type = null)
 	{
 		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_THEME);
 		$this->name = $name;
@@ -73,10 +71,10 @@ Class ThemeIncluder extends Includer
 	protected function loadLanguage()
 	{
 		/** Theme */
-		Helpers::Extension()->loadLanguage(Services::Registry()->get('Theme', 'path'));
+		Helpers::Extension()->loadLanguage(Services::Registry()->get('Parameters', 'theme_path'));
 
 		/** Page View */
-		Helpers::Extension()->loadLanguage(Services::Registry()->get('PageView', 'path'));
+		Helpers::Extension()->loadLanguage(Services::Registry()->get('Parameters', 'page_view_path'));
 	}
 
 	/**
@@ -91,15 +89,15 @@ Class ThemeIncluder extends Includer
 	{
 		/**  Site */
 		$this->loadMediaPlus('',
-			Services::Registry()->get('Configuration', 'media_priority_site', 100));
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_site', 100));
 
 		/** Application */
 		$this->loadMediaPlus('/application' . APPLICATION,
-			Services::Registry()->get('Configuration', 'media_priority_application', 200));
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_application', 200));
 
 		/** User */
 		$this->loadMediaPlus('/user' . Services::Registry()->get('User', 'id'),
-			Services::Registry()->get('Configuration', 'media_priority_user', 300));
+			Services::Registry()->get('Parameters', 'criteria_asset_priority_user', 300));
 
 		/** Load custom Theme Helper Media, if exists */
 		$helperClass = 'Molajo\\Extension\\Theme\\'
@@ -114,25 +112,25 @@ Class ThemeIncluder extends Includer
 		}
 
 		/** Theme */
-		$priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
-		$file_path = Services::Registry()->get('Theme', 'path');
-		$url_path = Services::Registry()->get('Theme', 'path_url');
+		$priority = Services::Registry()->get('Parameters', 'criteria_asset_priority_theme', 600);
+		$file_path = Services::Registry()->get('Parameters', 'theme_path');
+		$url_path = Services::Registry()->get('Parameters', 'theme_path_url');
 
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
 		/** Page */
-		$priority = Services::Registry()->get('Configuration', 'media_priority_theme', 600);
-		$file_path = Services::Registry()->get('PageView', 'path');
-		$url_path = Services::Registry()->get('PageView', 'path_url');
+		$priority = Services::Registry()->get('Parameters', 'criteria_asset_priority_theme', 600);
+		$file_path = Services::Registry()->get('Parameters', 'page_view_path');
+		$url_path = Services::Registry()->get('Parameters', 'page_view_path_url');
 
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
 		/** Catalog ID specific */
-		$this->loadMediaPlus('', Services::Registry()->get('Configuration', 'media_priority_site', 100));
+		$this->loadMediaPlus('', Services::Registry()->get('Parameters', 'criteria_asset_priority_site', 100));
 
 		return;
 	}

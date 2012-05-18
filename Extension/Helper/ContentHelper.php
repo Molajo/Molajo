@@ -57,7 +57,7 @@ Class ContentHelper
 		$row = $this->get(
 			Services::Registry()->get('Route', 'catalog_source_id'),
 			Services::Registry()->get('Route', 'catalog_source_table'),
-			'Route',  // represents the primary request for the page
+			'Route', // represents the primary request for the page
 			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
 		);
 
@@ -103,7 +103,7 @@ Class ContentHelper
 			Services::Registry()->deleteRegistry($model . $customFieldName);
 		}
 
-/**
+		/**
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Route'));
 		echo '</pre>';
@@ -114,7 +114,7 @@ Class ContentHelper
 		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
 		die;
-*/
+		 */
 		return true;
 	}
 
@@ -171,18 +171,6 @@ Class ContentHelper
 			Services::Registry()->deleteRegistry('Categories' . $customFieldName);
 		}
 
-/**
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Route'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Metadata'));
-		echo '</pre>';
-		 die;
-*/
 		return;
 	}
 

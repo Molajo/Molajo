@@ -45,6 +45,9 @@
 <field name="wrap_view_id" type="integer" null="0" default="0" values=""/>
 <field name="wrap_view_css_id" type="char" null="0" default="" values=""/>
 <field name="wrap_view_css_class" type="char" null="0" default="" values=""/>
+<field name="model_name" type="char" null="0" default="" values=""/>
+<field name="model_type" type="char" null="0" default="" values="Table,Component,Module"/>
+<field name="model_query_object" type="char" null="0" default="" values=""/>
 
 <field name="form_template_view_id" type="integer" null="0" default="" values=""/>
 <field name="form_template_view_css_id" type="char" null="0" default="" values=""/>
@@ -52,6 +55,9 @@
 <field name="form_wrap_view_id" type="integer" null="0" default="0" values=""/>
 <field name="form_wrap_view_css_id" type="char" null="0" default="" values=""/>
 <field name="form_wrap_view_css_class" type="char" null="0" default="" values=""/>
+<field name="form_name" type="char" null="0" default="" values=""/>
+<field name="form_type" type="char" null="0" default="" values="Table,Component,Module"/>
+<field name="form_query_object" type="char" null="0" default="" values=""/>
 
 <field name="list_template_view_id" type="integer" null="0" default=""/>
 <field name="list_template_view_css_id" type="char" null="0" default="" values=""/>
@@ -59,6 +65,9 @@
 <field name="list_wrap_view_id" type="integer" null="0" default="0" values=""/>
 <field name="list_wrap_view_css_id" type="char" null="0" default="" values=""/>
 <field name="list_wrap_view_css_class" type="char" null="0" default="" values=""/>
+<field name="list_name" type="char" null="0" default="" values=""/>
+<field name="list_type" type="char" null="0" default="" values="Table,Component,Module"/>
+<field name="list_query_object" type="char" null="0" default="" values=""/>
 
 <field name="criteria_list_get_customfields" type="integer" null="0" default="1" values="0,1,2"/>
 <field name="criteria_list_get_item_children" type="integer" null="0" default="1" values="0,1,2"/>

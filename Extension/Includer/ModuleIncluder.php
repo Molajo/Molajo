@@ -28,16 +28,15 @@ Class ModuleIncluder extends Includer
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function __construct($name = null, $type = null, $items = null)
+	public function __construct($name = null, $type = null)
 	{
 		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_MODULE);
 
-		return parent::__construct($name, $type, $items);
+		return parent::__construct($name, $type);
 	}
 
 	/**

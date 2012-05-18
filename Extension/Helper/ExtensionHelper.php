@@ -95,6 +95,10 @@ Class ExtensionHelper
 			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
 
+		Services::Registry()->set('Parameters', 'model_name', 'Messages');
+		Services::Registry()->set('Parameters', 'model_type', 'Table');
+		Services::Registry()->set('Parameters', 'query_object', 'getMessages');
+
 /**
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Route'));

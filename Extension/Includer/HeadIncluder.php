@@ -30,16 +30,14 @@ Class HeadIncluder extends Includer
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function __construct($name = null, $type = null, $items = null)
+	public function __construct($name = null, $type = null)
 	{
 		Services::Registry()->set('Include', 'extension_catalog_type_id', 0);
-		$this->extension_required = false;
-		parent::__construct($name, $type, $items);
+		parent::__construct($name, $type);
 		return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
 	}
 
@@ -57,7 +55,7 @@ Class HeadIncluder extends Includer
 	}
 
 	/**
-	 *  getApplicationDefaults
+	 *  setRenderCriteria
 	 *
 	 *  Retrieve default values, if not provided by extension
 	 *
@@ -70,11 +68,11 @@ Class HeadIncluder extends Includer
 
 		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Parameters', 'head_template_view_id'));
+				Services::Registry()->get('Configuration', 'head_template_view_id'));
 		}
 		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Parameters', 'message_wrap_view_id'));
+				Services::Registry()->get('Configuration', 'head_wrap_view_id'));
 		}
 
 		if ($this->type == 'defer') {
@@ -116,10 +114,6 @@ Class HeadIncluder extends Includer
 	protected function invokeMVC()
 	{
 		$controller = new DisplayController();
-
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
 
 		Services::Registry()->set('Parameters', 'model_name', 'Assets');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');

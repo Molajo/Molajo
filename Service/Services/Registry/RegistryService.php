@@ -229,6 +229,10 @@ Class RegistryService
 	 */
 	public function set($namespace, $key, $value = '')
 	{
+		if ($key == '') {
+			return;       //error
+		}
+
 		/** keep it all on the down-low */
 		$key = strtolower($key);
 

@@ -30,17 +30,16 @@ Class MessageIncluder extends Includer
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function __construct($name = null, $type = null, $items = null)
+	public function __construct($name = null, $type = null)
 	{
 		Services::Registry()->set('Include', 'extension_catalog_type_id', 0);
-		$this->extension_required = false;
-		parent::__construct($name, $type, $items);
-		return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
+		parent::__construct($name, $type);
+		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
+		return $this;
 	}
 
 	/**
@@ -53,11 +52,11 @@ Class MessageIncluder extends Includer
 	 */
 	protected function getExtension($extension_id = null)
 	{
-		return;
+		return $this;
 	}
 
 	/**
-	 *  getApplicationDefaults
+	 *  setRenderCriteria
 	 *
 	 *  Retrieve default values, if not provided by extension
 	 *
@@ -90,6 +89,7 @@ Class MessageIncluder extends Includer
 	 */
 	protected function loadLanguage()
 	{
+		return $this;
 	}
 
 	/**
@@ -100,6 +100,7 @@ Class MessageIncluder extends Includer
 	 */
 	protected function loadViewMedia()
 	{
+		return $this;
 	}
 
 	/**

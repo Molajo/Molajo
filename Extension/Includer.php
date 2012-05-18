@@ -62,65 +62,20 @@ class Includer
 	protected $attributes = array();
 
 	/**
-	 * $extension_required
-	 *
-	 * Some includes (ex. head, messages, defer), do not require
-	 * an extension for further processing. In those cases, this
-	 * indicator is set to false.
-	 *
-	 * @var    bool
-	 * @since  1.0
-	 */
-	protected $extension_required = true;
-
-	/**
-	 * $rendered_output
-	 *
-	 * Rendered output resulting from MVC processing
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $rendered_output;
-
-	/**
-	 * $items
-	 *
-	 * Used only for event processing and will be passed into the
-	 * MVC to serve as the Model data source
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $items;
-
-	/**
-	 * $normal
-	 *
-	 * Used to pre-retrieve parameter information for request and prevent requery
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $normal = false;
-
-	/**
 	 * __construct
 	 *
 	 * Class constructor.
 	 *
 	 * @param  string $name
 	 * @param  string $type
-	 * @param  array  $items (used for event processing includes, only)
 	 *
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function __construct($name = null, $type = null, $items = null)
+	public function __construct($name = null, $type = null)
 	{
 		$this->name = $name;
 		$this->type = $type;
-		$this->items = $items;
 
 		return;
 	}
@@ -142,11 +97,8 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
-		$normal = true;
-
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
-
 		$this->getAttributes();
 
 		/** retrieve the extension that will be used to generate the MVC request */
@@ -155,21 +107,14 @@ class Includer
 		/** initialises and populates the MVC request */
 		$this->setRenderCriteria();
 
-		if ($this->extension_required === true) {
-			if (Services::Registry()->get('Include', 'extension_id', 0) == 0) {
-				Services::Registry()->set('Parameters', 'status_found', false);
-				return false;
-			}
-		}
-
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
 
 		/** instantiate MVC and render output */
-		$this->rendered_output = $this->invokeMVC();
+		$rendered_output = $this->invokeMVC();
 
 		/** only load media if there was rendered output */
-		if ($this->rendered_output == ''
+		if ($rendered_output == ''
 			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 0
 		) {
 		} else {
@@ -177,10 +122,10 @@ class Includer
 			$this->loadViewMedia();
 		}
 
-		/** used by events to update $items, if necessary */
-		$this->postMVCProcessing();
+		/** further processing of rendered output - move mustache here? */
+		//$rendered_output = $this->postMVCProcessing($rendered_output);
 
-		return $this->rendered_output;
+		return $rendered_output;
 	}
 
 	/**
@@ -275,26 +220,6 @@ class Includer
 		Services::Registry()->sort('Parameters');
 
 		return;
-
-		//????
-
-		/** mvc parameters */
-		Services::Registry()->set('Parameters', 'controller',
-			Services::Registry()->get('Request', 'mvc_controller'));
-		Services::Registry()->set('Parameters', 'action',
-			Services::Registry()->get('Route', 'request_action'));
-		Services::Registry()->set('Parameters', 'model',
-			Services::Registry()->get('Request', 'mvc_model'));
-		Services::Registry()->set('Parameters', 'table',
-			Services::Registry()->get('Request', 'source_table'));
-		Services::Registry()->set('Parameters', 'id',
-			(int)Services::Registry()->get('Request', 'mvc_id'));
-		Services::Registry()->set('Parameters', 'category_id',
-			(int)Services::Registry()->get('Request', 'mvc_category_id'));
-		Services::Registry()->set('Parameters', 'display_view_on_no_results',
-			(bool)Services::Registry()->get('Request', 'mvc_suppress_no_results'));
-
-		return;
 	}
 
 	/**
@@ -359,8 +284,11 @@ class Includer
 	protected function invokeMVC()
 	{
 		$controller = new DisplayController();
-		//$m = Application::Controller()->connect('Messages', 'Table');
-		//Services::Registry()->set('Parameters', 'query_object', 'getData');
+//		$m = Application::Controller()->connect(
+//			'Messages',
+//			'Table'
+//		);
+//		Services::Registry()->set('Parameters', 'query_object', 'getData');
 		$results = $controller->Display();
 
 		if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
@@ -391,8 +319,8 @@ class Includer
 	 * postMVCProcessing
 	 * @return bool
 	 */
-	protected function postMVCProcessing()
+	protected function postMVCProcessing($rendered_output)
 	{
-
+		return $rendered_output;
 	}
 }
