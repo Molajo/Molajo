@@ -7,19 +7,18 @@
  * <include:module name=pullquote template=pullquote wrap=aside/>
  */
 defined('MOLAJO') or die; ?>
-{{# items }}
-<header>
-	<h2>{{title}}</h2>
+<article>
+	<header>
+		<h2>The Title Goes Here</h2>
+	</header>
 
-	<h3>{{hello}}</h3>
-</header>
+	<aside>
+		This is aside text lorem ipsum dolor sit amet consectetur adipisicing.
+	</aside>
 
-	<img src="{{gravatar}}" alt="{{name}}" class="alignright"/>
-	{{{intro}}}
-	{{{fulltext}}}
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis <a href="#">nostrud exercitation</a> ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod <a href="#">tempor incididunt</a> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
 	<footer>
-		{{start_publishing_datetime}}
+		Posted August 22, 2011
 	</footer>
-{{/ items }}
-	{{{dashboard}}}
-	{{{placeholder}}}
+</article>

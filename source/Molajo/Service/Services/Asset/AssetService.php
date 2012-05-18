@@ -83,7 +83,6 @@ Class AssetService
 		} else {
 			return $this;
 		}
-
 	}
 
 	/**

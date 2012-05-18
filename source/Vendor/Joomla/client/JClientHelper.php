@@ -49,7 +49,7 @@ class JClientHelper
 		if (!isset($credentials[$client]) || $force) {
 			// Initialise variables.
 			$config = JFactory::getConfig();
-			var_dump($config);
+
 			// Fetch the client layer configuration options for the specific client
 			switch ($client) {
 				case 'ftp':

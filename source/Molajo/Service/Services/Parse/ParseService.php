@@ -62,16 +62,6 @@ Class ParseService
 	protected $include_request = array();
 
 	/**
-	 * $rendered_output
-	 *
-	 * Collects output rendered by MVC after Includer Processing
-	 *
-	 * @var string
-	 * @since 1.0
-	 */
-	protected $rendered_output = array();
-
-	/**
 	 * $includes
 	 *
 	 * Parsing process retrieves include statements from the theme and rendered output
@@ -201,6 +191,10 @@ Class ParseService
 			}
 		}
 
+		/** Saved during class entry */
+		Services::Registry()->copy('RouteParameters', 'Parameters');
+		Services::Registry()->copy('Route', 'Include');
+
 		/** theme: load template media and language files */
 		$class = 'Molajo\\Extension\\Includer\\ThemeIncluder';
 
@@ -214,6 +208,7 @@ Class ParseService
 		}
 
 		$this->final = true;
+
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
@@ -234,14 +229,18 @@ Class ParseService
 	{
 		/** initial run: start with theme and page */
 		if ($body == null) {
+			$first = true;
 			ob_start();
 			require Services::Registry()->get('Parameters', 'theme_path_include');
-			$this->rendered_output = ob_get_contents();
+			$body = ob_get_contents();
 			ob_end_clean();
 
 		} else {
 			/* final run (for page head): start with rendered body */
-			$this->rendered_output = $body;
+			$first = false;
+			$final = true;
+			Services::Registry()->deleteRegistry('Include');
+			Services::Registry()->deleteRegistry('Parameters');
 		}
 
 		/** process all input for include: statements  */
@@ -251,12 +250,12 @@ Class ParseService
 
 			$loop++;
 
-			$this->parseIncludeRequests();
+			$this->parseIncludeRequests($body);
 
 			if (count($this->include_request) == 0) {
 				break;
 			} else {
-				$this->rendered_output = $this->callIncluder();
+				$body = $this->callIncluder($first, $body);
 			}
 
 			if ($loop > STOP_LOOP) {
@@ -264,7 +263,7 @@ Class ParseService
 			}
 			continue;
 		}
-		return $this->rendered_output;
+		return $body;
 	}
 
 	/**
@@ -276,13 +275,13 @@ Class ParseService
 	 * @return  array
 	 * @since   1.0
 	 */
-	protected function parseIncludeRequests()
+	protected function parseIncludeRequests($body)
 	{
 		$matches = array();
 		$this->include_request = array();
 		$i = 0;
 
-		preg_match_all('#<include:(.*)\/>#iU', $this->rendered_output, $matches);
+		preg_match_all('#<include:(.*)\/>#iU', $body, $matches);
 
 		if (count($matches) == 0) {
 			return;
@@ -329,11 +328,10 @@ Class ParseService
 	 * @return  string rendered output
 	 * @since   1.0
 	 */
-	protected function callIncluder()
+	protected function callIncluder($first = false, $body)
 	{
 		$replace = array();
 		$with = array();
-		$first = true;
 
 		/** 1. process extension includers in order defined by sequence.xml */
 		foreach ($this->sequence as $sequence) {
@@ -389,6 +387,7 @@ Class ParseService
 
 					/** 8. render output and store results as "replace with" */
 					$with[] = $rc->process($attributes);
+
 					Services::Registry()->deleteRegistry('Include');
 					Services::Registry()->deleteRegistry('Parameters');
 				}
@@ -396,7 +395,7 @@ Class ParseService
 		}
 
 		/** 9. replace it */
-		$this->rendered_output = str_replace($replace, $with, $this->rendered_output);
+		$body = str_replace($replace, $with, $body);
 
 		/** 10. make certain all <include:xxx /> literals are removed on final */
 		if ($this->final === true) {
@@ -407,9 +406,9 @@ Class ParseService
 				$with[] = '';
 			}
 
-			$this->rendered_output = str_replace($replace, $with, $this->rendered_output);
+			$body = str_replace($replace, $with, $body);
 		}
 
-		return $this->rendered_output;
+		return $body;
 	}
 }
