@@ -52,7 +52,7 @@ Class TemplateViewHelper
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function get($template_view_id = 0)
+	public function get($template_view_id = 0, $no_extension = false)
 	{
 		if ($template_view_id == 0) {
 			$template_view_id = $this->setDefaultTemplateView();
@@ -61,9 +61,9 @@ Class TemplateViewHelper
 		Services::Registry()->set('Parameters', 'template_view_id', (int)$template_view_id);
 		$title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
 		Services::Registry()->set('Parameters', 'template_view_title', $title);
-		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title));
+		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title, $no_extension));
 		Services::Registry()->set('Parameters', 'template_view_path_include',
-			$this->getPath($title) . '/Manifest.xml');
+			$this->getPath($title, $no_extension) . '/Manifest.xml');
 		Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title));
 
 		$row = Helpers::Extension()->get($template_view_id, 'TemplateView');
@@ -76,10 +76,10 @@ Class TemplateViewHelper
 			/** Get new Title and path */
 			$title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
 			Services::Registry()->set('Parameters', 'template_view_title', $title);
-			Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title));
+			Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title, $no_extension));
 			Services::Registry()->set('Parameters', 'template_view_path_include',
-				$this->getPath($title) . '/Manifest.xml');
-			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title));
+				$this->getPath($title, $no_extension) . '/Manifest.xml');
+			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title, $no_extension));
 
 			$row = Helpers::Extension()->get($template_view_id);
 
@@ -138,18 +138,21 @@ Class TemplateViewHelper
 	 * @param $template_view_name
 	 * @return bool|string
 	 */
-	public function getPath($template_view_name)
+	public function getPath($template_view_name, $no_extension)
 	{
 		$plus = '/View/Template/' . ucfirst(strtolower($template_view_name));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Theme', 'path') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Extension', 'path') . $plus;
+		if ($no_extension == true) {
+		} else {
+			if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+				return Services::Registry()->get('Parameters', 'extension_path') . $plus;
+			}
 		}
 
 		/** 3. View */
@@ -173,18 +176,22 @@ Class TemplateViewHelper
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($template_view_name)
+	public function getPathURL($template_view_name, $no_extension = false)
 	{
 		$plus = '/View/Template/' . ucfirst(strtolower($template_view_name));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Theme', 'path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Theme', 'path_url') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
 		}
 
+
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Extension', 'path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Extension', 'path_url') . $plus;
+		if ($no_extension == true) {
+		} else {
+			if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+				return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
+			}
 		}
 
 		/** 3. View */

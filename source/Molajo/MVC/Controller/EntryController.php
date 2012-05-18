@@ -94,6 +94,7 @@ Class EntryController extends Controller
 		if ($type == null) {
 			$type = 'Table';
 		}
+//echo $table.' '.$type.' <br />';
 
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {

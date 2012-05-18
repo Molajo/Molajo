@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="view" group="template">
-    <name>VIEW_TEMPLATE_PAGE_HEADER_NAME</name>
+    <name>VIEW_TEMPLATE_MENU_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,7 +8,11 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>VIEW_TEMPLATE_PAGE_HEADER_DESCRIPTION</description>
+    <description>VIEW_TEMPLATE_MENU_DESCRIPTION</description>
     <config>
+        <field name="parameters" registry="TemplateParameters">
+            <element name="menu" filter="integer" null="1" default="" values=""/>
+        </field>
     </config>
 </extension>
+

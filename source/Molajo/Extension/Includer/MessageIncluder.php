@@ -76,9 +76,29 @@ Class MessageIncluder extends Includer
 				Services::Registry()->get('Configuration', 'message_wrap_view_id'));
 		}
 
-		parent::setRenderCriteria();
+		Services::Registry()->set('Parameters', 'model_name', 'Messages');
+		Services::Registry()->set('Parameters', 'model_type', 'Table');
+		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
 
-		return true;
+		/** Final Template and Wrap selections */
+		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		Helpers::Extension()->finalizeParameters(
+			Services::Registry()->get('Include', 'content_id', 0),
+			Services::Registry()->get('Include', 'request_action', 'display'),
+			true
+		);
+
+		/* Yes, this is done before, too. Get over it or fix it. */
+		Services::Registry()->set('Parameters', 'model_name', 'Assets');
+		Services::Registry()->set('Parameters', 'model_type', 'Table');
+		Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
+
+		/** Sort */
+		Services::Registry()->sort('Include');
+		Services::Registry()->sort('Parameters');
+
+		return;
 	}
 
 	/**
@@ -101,19 +121,5 @@ Class MessageIncluder extends Includer
 	protected function loadViewMedia()
 	{
 		return $this;
-	}
-
-	/**
-	 * Instantiate the Controller and fire off the action, returns rendered output
-	 *
-	 * @return mixed
-	 */
-	protected function invokeMVC()
-	{
-		$controller = new DisplayController();
-		Services::Registry()->set('Parameters', 'model_name', 'Messages');
-		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'query_object', 'getMessages');
-		return $controller->Display();
 	}
 }

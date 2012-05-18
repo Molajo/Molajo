@@ -95,10 +95,6 @@ Class ExtensionHelper
 			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
 		}
 
-		Services::Registry()->set('Parameters', 'model_name', 'Messages');
-		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'query_object', 'getMessages');
-
 /**
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Route'));
@@ -158,7 +154,7 @@ Class ExtensionHelper
 
 			if ($customFieldName == 'Parameters') {
 				Services::Registry()->merge(
-					$row['table_registry_name'].'Parameters', 'Parameters'
+					$row['table_registry_name'] . 'Parameters', 'Parameters'
 				);
 			}
 
@@ -186,7 +182,6 @@ Class ExtensionHelper
 		if ($model == null) {
 			$model = 'ExtensionInstances';
 		}
-
 		$m = Application::Controller()->connect($model, $type);
 
 		/**
@@ -393,7 +388,7 @@ Class ExtensionHelper
 		if (Services::Filesystem()->folderExists($path)) {
 		} else {
 			return;
-			echo 'does not exist'.$path.'<br />';
+			echo 'does not exist' . $path . '<br />';
 			echo '<pre>';
 			var_dump(Services::Registry()->get('Include'));
 			return false;
@@ -411,12 +406,12 @@ Class ExtensionHelper
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function finalizeParameters($source_id = 0, $action = 'display')
+	public function finalizeParameters($source_id = 0, $action = 'display', $no_extension = false)
 	{
 
 		$getTemplate = true;
 
-		$template_view_id = (int) Services::Registry()->get('Parameters', 'template_view_id', 0);
+		$template_view_id = (int)Services::Registry()->get('Parameters', 'template_view_id', 0);
 		$template_view_title = Services::Registry()->get('Parameters', 'template_view_title', '');
 
 		if ($template_view_id == 0) {
@@ -445,10 +440,9 @@ Class ExtensionHelper
 			}
 		}
 
-
 		$getWrap = true;
 
-		$wrap_view_id = (int) Services::Registry()->get('Parameters', 'wrap_view_id', 0);
+		$wrap_view_id = (int)Services::Registry()->get('Parameters', 'wrap_view_id', 0);
 		$wrap_view_title = Services::Registry()->get('Parameters', 'wrap_view_title', '');
 
 		if ($wrap_view_id == 0) {
@@ -500,6 +494,11 @@ Class ExtensionHelper
 					Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
 			}
 
+			$model_name = Services::Registry()->get('Parameters', 'form_model_nane', '');
+			$model_type = Services::Registry()->get('Parameters', 'form_model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'form_model_query_object', '');
+
+
 		} else if ((int)$source_id == 0) {
 
 			Services::Registry()->set('Parameters', 'template_view', 'list');
@@ -522,10 +521,15 @@ Class ExtensionHelper
 					Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
 			}
 
+			$model_name = Services::Registry()->get('Parameters', 'list_model_nane', '');
+			$model_type = Services::Registry()->get('Parameters', 'list_model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'list_model_query_object', '');
+
 
 		} else {
 
 			Services::Registry()->set('Parameters', 'template_view', 'item');
+
 			if ($getTemplate == true) {
 
 			}
@@ -533,11 +537,42 @@ Class ExtensionHelper
 			if ($getWrap == true) {
 
 			}
+
+			$model_name = Services::Registry()->get('Parameters', 'model_nane', '');
+			$model_type = Services::Registry()->get('Parameters', 'model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', '');
 		}
 
-		Helpers::TemplateView()->get();
+		if ($model_name == '') {
+			$model_name = Services::Registry()->get('Parameters', 'extension_title');
+		}
+		Services::Registry()->set('Parameters', 'model_nane', $model_name);
 
-		Helpers::WrapView()->get();
+		if ($model_type == '') {
+			$model_type = 'Table';
+		}
+		Services::Registry()->set('Parameters', 'model_type', $model_type);
+
+		if ($action == 'add' || $action == 'edit') {
+			if ($model_query_object == '') {
+				$model_query_object = 'load';
+			}
+
+		} else if ((int)$source_id == 0) {
+			if ($model_query_object == '') {
+				$model_query_object = 'load';
+			}
+
+		} else {
+			if ($model_query_object == '') {
+				$model_query_object = 'getData';
+			}
+		}
+		Services::Registry()->set('Parameters', 'model_query_object', $model_query_object);
+
+		Helpers::TemplateView()->get($no_extension);
+
+		Helpers::WrapView()->get($no_extension);
 
 		/** Remove parameters not needed */
 		Services::Registry()->delete('Parameters', 'list_template_view_id');

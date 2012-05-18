@@ -185,10 +185,8 @@ Class ContentHelper
 		if ($type == null) {
 			$type = 'Component';
 		}
-		$m = Application::Controller()->connect(
-			$datasource,
-			$type
-		);
+
+		$m = Application::Controller()->connect($datasource, $type);
 
 		$m->model->set('id', (int)$id);
 

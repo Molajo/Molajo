@@ -24,17 +24,6 @@ class DisplayController extends EntryController
 {
 
 	/**
-	 * Constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		return parent::__construct();
-	}
-
-
-	/**
 	 * Add action is used to render view output for a form used to create new content
 	 *
 	 * @return  string  Rendered output
@@ -80,23 +69,19 @@ class DisplayController extends EntryController
 		echo '</pre>';
 		 */
 
-		$type = Services::Registry()->get('Parameters', 'template_view');
-		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
-		$model_type = Services::Registry()->get('Parameters', 'model_type', '');
-		$query_object = Services::Registry()->get('Parameters', 'query_object', '');
+		$template_view_type = Services::Registry()->get('Parameters', 'template_view');
 
-		if ($query_object == '') {
+		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
+		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
+		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
+//echo 'Model Name '.$model_name.'  $model_type:  '.$model_type.' Model query_object: '. $model_query_object.'<br />';
+		if ($model_name == '') {
 			$this->query_results = array();
 
 		} else {
 			$this->connect($model_name, $model_type);
-			$this->query_results = $this->getData($query_object);
+			$this->query_results = $this->getData($model_query_object);
 		}
-
-
-
-		//if ($type == 'formXXXXX' || $type == 'itemXXXXX') {
-
 
 		$this->pagination = array();
 
@@ -108,7 +93,6 @@ class DisplayController extends EntryController
 		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
 			Services::Registry()->set('Route', 'query_resultset', $this->query_results);
 			Services::Registry()->set('Route', 'query_pagination', $this->pagination);
-//Services::Registry()->set('Primary', 'query_state', $this->model_state);
 		}
 
 		/** no results */
