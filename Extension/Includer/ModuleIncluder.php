@@ -36,6 +36,7 @@ Class ModuleIncluder extends Includer
 	public function __construct($name = null, $type = null, $items = null)
 	{
 		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_MODULE);
+
 		return parent::__construct($name, $type, $items);
 	}
 
@@ -49,9 +50,7 @@ Class ModuleIncluder extends Includer
 	 */
 	protected function getExtension($extension_id = null)
 	{
-		$extension_id = Helpers::Module()->get(
-			Services::Registry()->get('Include', 'extension_title')
-			);
+		$extension_id = Helpers::Module()->get(Services::Registry()->get('Include', 'extension_title'));
 
 		return parent::getExtension($extension_id);
 	}

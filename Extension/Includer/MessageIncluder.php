@@ -88,7 +88,9 @@ Class MessageIncluder extends Includer
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function loadLanguage() {}
+	protected function loadLanguage()
+	{
+	}
 
 	/**
 	 * Loads Media CSS and JS files for Template and Wrap Views
@@ -96,7 +98,9 @@ Class MessageIncluder extends Includer
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function loadViewMedia() {}
+	protected function loadViewMedia()
+	{
+	}
 
 	/**
 	 * Instantiate the Controller and fire off the action, returns rendered output

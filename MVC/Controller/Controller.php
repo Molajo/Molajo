@@ -85,6 +85,7 @@ class Controller
 		'loadRowList',
 		'loadAssocList',
 		'loadObjectList',
+		'getAssets',
 		'getMessages',
 		'none'
 	);

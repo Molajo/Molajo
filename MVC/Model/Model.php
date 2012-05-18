@@ -239,6 +239,16 @@ class Model
 		return $this->db->getMessages();
 	}
 
+	/**
+	 * retrieves JS and CSS assets, metadata for head
+	 *
+	 * @return  mixed  Array or String or Null
+	 * @since   1.0
+	 */
+	public function getAssets()
+	{
+		return $this->db->getAssets();
+	}
 
 	/**
 	 * getFieldNames

@@ -5,7 +5,7 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-$defer = (int)$this->parameters->get('defer');
+$defer = (int)Services::Registry()->get('Parameters', 'defer');
 if ($defer == 1) {
 	?>
 </body>
@@ -15,11 +15,11 @@ if ($defer == 1) {
 	?>
 </head>
 <?php
-	$bodyClassSuffix = $this->parameters->get('body_class_suffix');
-	if (trim($this->parameters->get('body_class_suffix', '')) == '') {
+	$bodyClassSuffix = Services::Registry()->get('Parameters', 'body_class_suffix');
+	if (trim(Services::Registry()->get('Parameters', 'body_class_suffix', '')) == '') {
 		$bodyElement = '<body>';
 	} else {
-		$bodyElement = '<body ' . ' class="' . htmlspecialchars($this->parameters->get('body_class_suffix')) . '">';
+		$bodyElement = '<body ' . ' class="' . htmlspecialchars(Services::Registry()->get('Parameters', 'body_class_suffix')) . '">';
 	}
 	echo $bodyElement;
 }
