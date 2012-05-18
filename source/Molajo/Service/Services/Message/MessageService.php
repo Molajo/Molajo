@@ -107,7 +107,7 @@ Class MessageService
 	}
 
 	/**
-	 * 	Dummy functions to pass service off as a DBO to interact with model
+	 *     Dummy functions to pass service off as a DBO to interact with model
 	 */
 	public function getNullDate()
 	{

@@ -6,9 +6,11 @@
  */
 namespace Molajo\Extension\Includer;
 
+use Molajo\Application;
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
 use Molajo\Extension\Includer;
+use Molajo\MVC\Controller\DisplayController;
 
 defined('MOLAJO') or die;
 
@@ -21,7 +23,6 @@ defined('MOLAJO') or die;
  */
 Class HeadIncluder extends Includer
 {
-
 	/**
 	 * __construct
 	 *
@@ -39,8 +40,20 @@ Class HeadIncluder extends Includer
 		Services::Registry()->set('Include', 'extension_catalog_type_id', 0);
 		$this->extension_required = false;
 		parent::__construct($name, $type, $items);
-		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
-		return $this;
+		return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
+	}
+
+	/**
+	 * getExtension
+	 *
+	 * Retrieve extension information after looking up the ID in the extension-specific includer
+	 *
+	 * @return bool
+	 * @since 1.0
+	 */
+	protected function getExtension($extension_id = null)
+	{
+		return;
 	}
 
 	/**
@@ -51,19 +64,17 @@ Class HeadIncluder extends Includer
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function getApplicationDefaults()
+	protected function setRenderCriteria()
 	{
-		Services::Registry()->set('Parameters', 'model', 'HeadModel');
-		Services::Registry()->set('Parameters', 'action', 'display');
+		Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
 
 		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Configuration', 'head_template_view_id', 'DocumentHead'));
+				Services::Registry()->get('Parameters', 'head_template_view_id'));
 		}
-
 		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'wrap_view_id',
-				Services::Registry()->get('Configuration', 'head_wrap_view_id', 'none'));
+				Services::Registry()->get('Parameters', 'message_wrap_view_id'));
 		}
 
 		if ($this->type == 'defer') {
@@ -72,6 +83,48 @@ Class HeadIncluder extends Includer
 			Services::Registry()->set('Parameters', 'defer', 0);
 		}
 
+		parent::setRenderCriteria();
+
 		return true;
+	}
+
+	/**
+	 * Loads Language Files for extension
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function loadLanguage()
+	{
+	}
+
+	/**
+	 * Loads Media CSS and JS files for Template and Wrap Views
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function loadViewMedia()
+	{
+	}
+
+	/**
+	 * Instantiate the Controller and fire off the action, returns rendered output
+	 *
+	 * @return mixed
+	 */
+	protected function invokeMVC()
+	{
+		$controller = new DisplayController();
+
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+
+		Services::Registry()->set('Parameters', 'model_name', 'Assets');
+		Services::Registry()->set('Parameters', 'model_type', 'Table');
+		Services::Registry()->set('Parameters', 'query_object', 'getAssets');
+
+		return $controller->Display();
 	}
 }
