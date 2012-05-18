@@ -38,7 +38,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-Class EntryController extends DisplayController
+Class EntryController extends Controller
 {
 	/**
 	 * Static instance
@@ -94,7 +94,6 @@ Class EntryController extends DisplayController
 		if ($type == null) {
 			$type = 'Table';
 		}
-		//echo 'connect '.$table.'<br />';
 
 		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {
@@ -129,10 +128,12 @@ Class EntryController extends DisplayController
 		$this->model->set('query', Services::$dbo()->getQuery());
 		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
 
-		$dateClass = 'Joomla\\date\\JDate';
-		$dateFromJDate = new $dateClass('now');
-		$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
-		$this->model->set('now', $now);
+		if ($dbo == 'JDatabase') {
+			$dateClass = 'Joomla\\date\\JDate';
+			$dateFromJDate = new $dateClass('now');
+			$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
+			$this->model->set('now', $now);
+		}
 
 		Services::$dbo()->getQuery()->clear();
 

@@ -6,9 +6,11 @@
  */
 namespace Molajo\Extension\Includer;
 
+use Molajo\Application;
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
 use Molajo\Extension\Includer;
+use Molajo\MVC\Controller\DisplayController;
 
 defined('MOLAJO') or die;
 
@@ -42,6 +44,19 @@ Class MessageIncluder extends Includer
 	}
 
 	/**
+	 * getExtension
+	 *
+	 * Retrieve extension information after looking up the ID in the extension-specific includer
+	 *
+	 * @return bool
+	 * @since 1.0
+	 */
+	protected function getExtension($extension_id = null)
+	{
+		return;
+	}
+
+	/**
 	 *  getApplicationDefaults
 	 *
 	 *  Retrieve default values, if not provided by extension
@@ -49,12 +64,8 @@ Class MessageIncluder extends Includer
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function getApplicationDefaults()
+	protected function setRenderCriteria()
 	{
-		Services::Registry()->set('Parameters', 'model', 'MessagesModel');
-		Services::Registry()->set('Parameters', 'action', 'display');
-
-		$this->parameters = Services::Registry()->initialise();
 		Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
 
 		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
@@ -66,7 +77,38 @@ Class MessageIncluder extends Includer
 				Services::Registry()->get('Configuration', 'message_wrap_view_id'));
 		}
 
+		parent::setRenderCriteria();
+
 		return true;
 	}
-}
 
+	/**
+	 * Loads Language Files for extension
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function loadLanguage() {}
+
+	/**
+	 * Loads Media CSS and JS files for Template and Wrap Views
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function loadViewMedia() {}
+
+	/**
+	 * Instantiate the Controller and fire off the action, returns rendered output
+	 *
+	 * @return mixed
+	 */
+	protected function invokeMVC()
+	{
+		$controller = new DisplayController();
+		Services::Registry()->set('Parameters', 'model_name', 'Messages');
+		Services::Registry()->set('Parameters', 'model_type', 'Table');
+		Services::Registry()->set('Parameters', 'query_object', 'getMessages');
+		return $controller->Display();
+	}
+}

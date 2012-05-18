@@ -120,6 +120,8 @@ Class Application
 		} else {
 			Services::Debug()->set('Application Route succeeded');
 		}
+		Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
+		Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
 
 		/** Authorise: Services::Registry()->get('Route', 'status_authorised') */
 		$continue = $this->authorise();

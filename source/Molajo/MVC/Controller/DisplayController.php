@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class DisplayController extends Controller
+class DisplayController extends EntryController
 {
 
 	/**
@@ -81,24 +81,22 @@ class DisplayController extends Controller
 		 */
 
 		$type = Services::Registry()->get('Parameters', 'template_view');
+		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
+		$model_type = Services::Registry()->get('Parameters', 'model_type', '');
+		$query_object = Services::Registry()->get('Parameters', 'query_object', '');
 
-		if ($type == 'formXXXXX' || $type == 'itemXXXXX') {
-
-			/** Include and Parameter Registries are already loaded for Primary Component */
-//			if (Services::Registry()->get('Include', 'extension_primary') == true) {
-
-				$type = 'Component';
-
-			$m = Application::Controller()->connect(
-				Services::Registry()->get('Include', 'extension_title'), $type
-			);
-
-			$m->model->set('id', Services::Registry()->get('Include', 'content_id'));
-
-			$this->query_results = $m->getData('load');
-		} else {
+		if ($query_object == '') {
 			$this->query_results = array();
+
+		} else {
+			$this->connect($model_name, $model_type);
+			$this->query_results = $this->getData($query_object);
 		}
+
+
+
+		//if ($type == 'formXXXXX' || $type == 'itemXXXXX') {
+
 
 		$this->pagination = array();
 

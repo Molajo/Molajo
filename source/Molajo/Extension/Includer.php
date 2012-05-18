@@ -249,7 +249,6 @@ class Includer
 		}
 
 		return;
-
 	}
 
 	/**
@@ -261,7 +260,7 @@ class Includer
 	 * @return  bool
 	 * @since   1.0
 	 */
-	public function setRenderCriteria()
+	protected function setRenderCriteria()
 	{
 		/** Final Template and Wrap selections */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
@@ -360,6 +359,8 @@ class Includer
 	protected function invokeMVC()
 	{
 		$controller = new DisplayController();
+		//$m = Application::Controller()->connect('Messages', 'Table');
+		//Services::Registry()->set('Parameters', 'query_object', 'getData');
 		$results = $controller->Display();
 
 		if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
