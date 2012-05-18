@@ -27,19 +27,6 @@ Class ThemeResponsiveHelper extends MustacheHelper
 	public $parameters;
 
 	/**
-	 * hello
-	 *
-	 * Accesses User Object and returns a text message
-	 *
-	 * @results  object
-	 * @since    1.0
-	 */
-	public function hello()
-	{
-		return 'Hello ' . Services::Registry()->get('User', 'name') . '!';
-	}
-
-	/**
 	 * loadMedia
 	 *
 	 * If exists, automatically called in the Theme Rendering process
@@ -56,14 +43,23 @@ Class ThemeResponsiveHelper extends MustacheHelper
 	 * http://24ways.org/2011/displaying-icons-with-fonts-and-data-attributes
 	 *
 	 * http://keyamoon.com/icomoon/#toHome
-	 *
+	 * adapt.js
 	 * http://responsivepx.com/
 	 * http://mattkersley.com/responsive/
+	 * http://www.responsinator.com/
+	 * http://quirktools.com/screenfly/
 	 *
 	 * @since  1.0
 	 */
 	public function loadMedia()
 	{
+		/** Load after doctype and before head */
+//<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+//<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+//<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+//<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+//<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
 		/** Mobile Specific Meta */
 		Services::Registry()->set('Metadata', 'viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
 
@@ -93,13 +89,14 @@ Class ThemeResponsiveHelper extends MustacheHelper
 			$attributes = array('sizes,114x114')
 		);
 
-		/** HTML5 Shim */
-		Services::Document()->add_js
-		('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
-
 		/** jQuery CDN and fallback */
 		Services::Document()->add_js
-		('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', 1000);
+		('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1000);
+
+		/** Modernizer */
+		Services::Document()->add_js
+		('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1000);
+
 
 		$url = EXTENSIONS_THEMES_URL
 			. '/' . Services::Registry()->get('Theme', 'title')

@@ -10,8 +10,8 @@
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:module name=Pageheader/>
+<include:module name=Adminheader/>
 <include:message/>
 <include:request/>
-<include:module name=Pagefooter/>
+<include:module name=Adminfooter/>
 <include:defer/>

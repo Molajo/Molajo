@@ -212,7 +212,8 @@ class Includer
 
 		Helpers::Extension()->finalizeParameters(
 			Services::Registry()->get('Include', 'content_id', 0),
-			Services::Registry()->get('Include', 'request_action', 'display')
+			Services::Registry()->get('Include', 'request_action', 'display'),
+			false
 		);
 
 		/** Sort */
@@ -284,11 +285,6 @@ class Includer
 	protected function invokeMVC()
 	{
 		$controller = new DisplayController();
-//		$m = Application::Controller()->connect(
-//			'Messages',
-//			'Table'
-//		);
-//		Services::Registry()->set('Parameters', 'query_object', 'getData');
 		$results = $controller->Display();
 
 		if (Services::Registry()->get('Configuration', 'debug', 0) == 1) {
@@ -300,7 +296,7 @@ class Includer
 			Services::Debug()->set('Wrap: ' . Services::Registry()->get('Parameters', 'wrap_view_path') . '');
 		}
 
-		/** html display filters
+		/** html display filters     */
 
 
 		echo '<br /><br /><pre>';
@@ -311,7 +307,7 @@ class Includer
 		var_dump(Services::Registry()->get('Include'));
 		echo '</pre>';
 
-		 */
+		/* */
 		return $results;
 	}
 
