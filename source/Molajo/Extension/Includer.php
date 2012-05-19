@@ -99,10 +99,18 @@ class Includer
 	{
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
+
+		echo $this->name.'<br /> Attributes from Parsing<pre>';
+		var_dump($this->attributes);
+
 		$this->getAttributes();
+
+
 
 		/** retrieve the extension that will be used to generate the MVC request */
 		$this->getExtension();
+		echo Services::Registry()->get('Include', 'extension_title');
+		echo Services::Registry()->get('Include', 'extension_id');
 
 		/** initialises and populates the MVC request */
 		$this->setRenderCriteria();
@@ -123,7 +131,7 @@ class Includer
 		}
 
 		/** further processing of rendered output - move mustache here? */
-		//$rendered_output = $this->postMVCProcessing($rendered_output);
+		$rendered_output = $this->postMVCProcessing($rendered_output);
 
 		return $rendered_output;
 	}
@@ -142,6 +150,7 @@ class Includer
 
 			foreach ($this->attributes as $name => $value) {
 
+				/** Wrap Includer uses name for input */
 				if ($name == 'name' || $name == 'title') {
 					Services::Registry()->set('Include', 'extension_title', $value);
 
@@ -149,25 +158,55 @@ class Includer
 				} else if ($name == 'tag') {
 					$this->tag = $value;
 
+				} else if ($name == 'template' || $name == 'template_view_title'
+					|| $name == 'template_view' || $name == 'template_view') {
 
-				} else if ($name == 'template') {
-					Services::Registry()->set('Parameters', 'template_view_title', $value);
+					$template_id = Helpers::Extension()
+						->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
 
-				} else if ($name == 'template_view_css_id ') {
+					if ((int) $template_id == 0) {
+					} else {
+						Services::Registry()->set('Parameters', 'template_view_id', $template_id);
+					}
+
+				} else if ($name == 'template_view_css_id' || $name == 'template_css_id'
+					|| $name == 'template_id') {
+
 					Services::Registry()->set('Parameters', 'template_view_css_id', $value);
 
-				} else if ($name == 'template_view_css_class') {
+				} else if ($name == 'template_view_css_class' || $name == 'template_css_class'
+					|| $name == 'template_class') {
+
 					Services::Registry()->set('Parameters', 'template_view_css_class', $value);
 
 
-				} else if ($name == 'wrap') {
-					Services::Registry()->set('Parameters', 'wrap_view_title', $value);
+				} else if ($name == 'wrap' || $name == 'wrap_view_title'
+					|| $name == 'wrap_view' || $name == 'wrap_view') {
 
-				} else if ($name == 'wrap_view_css_id') {
+					$wrap_id = Helpers::Extension()
+						->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
+
+					if ((int) $wrap_id == 0) {
+					} else {
+						Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
+					}
+
+				} else if ($name == 'wrap_view_css_id' || $name == 'wrap_css_id'
+					|| $name == 'wrap_id') {
+
 					Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 
-				} else if ($name == 'wrap_view_css_class') {
-					Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
+				} else if ($name == 'wrap_view_css_class' || $name == 'wrap_css_class'
+					|| $name == 'wrap_class') {
+
+					Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
+
+				} else if ($name == 'wrap_model_query_object') {
+					Services::Registry()->set('Parameters', 'wrap_model_query_object', $value);
+
+				} else {
+					echo '<br /><br /><br /><br /><br /><br /><br />'.$name.' '.$value.'<br /><br /><br /><br /><br /><br /><br />';
+					Services::Registry()->set('Parameters', $name, $value);
 				}
 			}
 		}
@@ -185,8 +224,8 @@ class Includer
 	{
 		$results = Helpers::Extension()->getIncludeExtension(
 			$extension_id,
-			Services::Registry()->get('Include', 'extension_title'),
-			$this->type
+			Services::Registry()->get('Include', 'extension_catalog_type_id'),
+			Services::Registry()->get('Include', 'extension_title')
 		);
 
 		if ($results == false) {
@@ -212,8 +251,7 @@ class Includer
 
 		Helpers::Extension()->finalizeParameters(
 			Services::Registry()->get('Include', 'content_id', 0),
-			Services::Registry()->get('Include', 'request_action', 'display'),
-			false
+			Services::Registry()->get('Include', 'request_action', 'display')
 		);
 
 		/** Sort */
@@ -284,6 +322,14 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
+		echo '<br /><br /><pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+
+		echo '<br /><br /><pre>';
+		var_dump(Services::Registry()->get('Include'));
+		echo '</pre>';
+
 		$controller = new DisplayController();
 		$results = $controller->Display();
 
@@ -296,7 +342,7 @@ class Includer
 			Services::Debug()->set('Wrap: ' . Services::Registry()->get('Parameters', 'wrap_view_path') . '');
 		}
 
-		/** html display filters     */
+		/** html display filters
 
 
 		echo '<br /><br /><pre>';
@@ -307,7 +353,7 @@ class Includer
 		var_dump(Services::Registry()->get('Include'));
 		echo '</pre>';
 
-		/* */
+		*/
 		return $results;
 	}
 

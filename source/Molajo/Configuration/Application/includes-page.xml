@@ -5,4 +5,5 @@
     <include>module</include>
     <include>tag</include>
     <include>component</include>
+    <include>wrap</include>
 </sequence>

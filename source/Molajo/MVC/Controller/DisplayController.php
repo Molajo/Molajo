@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class DisplayController extends EntryController
+class DisplayController extends ModelController
 {
 
 	/**
@@ -72,15 +72,25 @@ class DisplayController extends EntryController
 		$template_view_type = Services::Registry()->get('Parameters', 'template_view');
 
 		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
-		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
+		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Content');
 		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
-//echo 'Model Name '.$model_name.'  $model_type:  '.$model_type.' Model query_object: '. $model_query_object.'<br />';
-		if ($model_name == '') {
+
+		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		Services::Registry()->get($table_registry_name, 'id', Services::Registry()->get('Include', 'content_id'));
+
+		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type . ' Model query_object: ' . $model_query_object . '<br />';
+
+		if ($model_name == 'Wraps') {
+			$this->query_results = $model_query_object;
+
+		} else if ($model_name == '') {
 			$this->query_results = array();
 
 		} else {
 			$this->connect($model_name, $model_type);
 			$this->query_results = $this->getData($model_query_object);
+			//var_dump($this->query_results);
 		}
 
 		$this->pagination = array();
@@ -97,23 +107,29 @@ class DisplayController extends EntryController
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 1
+			&& Services::Registry()->get('Parameters', 'display_view_on_no_results', 0) == 0
 		) {
 			//return '';
 		}
 
-		/** render template view */
-		$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
-		$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');
+		if ($model_name == 'Wraps') {
+			$renderedOutput = $model_query_object;
+			echo 'Wrap : ' . Services::Registry()->get('Parameters', 'wrap_view_title');
 
-		$renderedOutput = $this->renderView(Services::Registry()->get('Parameters', 'template_view_title'));
+			/** Template View */
+		} else {
+			$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
+			$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');
 
-		/** Mustache */
-		if (Services::Registry()->get('Parameters', 'mustache', 1) == 1) {
-			$renderedOutput = $this->processRenderedOutput($renderedOutput);
+			$renderedOutput = $this->renderView(Services::Registry()->get('Parameters', 'template_view_title'));
+
+			/** Mustache */
+			if (Services::Registry()->get('Parameters', 'mustache', 0) == 1) {
+				$renderedOutput = $this->processRenderedOutput($renderedOutput);
+			}
 		}
 
-		/** render wrap view around template view results */
+		/** Wrap template view results */
 		return $this->wrapView(Services::Registry()->get('Parameters', 'wrap_view_title'), $renderedOutput);
 	}
 
@@ -271,7 +287,7 @@ class DisplayController extends EntryController
 		$totalRows = count($this->query_results);
 
 		if (($this->query_results) == false) {
-		     $totalRows = 0;
+			$totalRows = 0;
 		}
 
 

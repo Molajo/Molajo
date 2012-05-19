@@ -15,13 +15,13 @@ use Molajo\MVC\Controller\DisplayController;
 defined('MOLAJO') or die;
 
 /**
- * Message
+ * Wrap
  *
  * @package     Molajo
  * @subpackage  Includer
  * @since       1.0
  */
-Class MessageIncluder extends Includer
+Class WrapIncluder extends Includer
 {
 	/**
 	 * __construct
@@ -67,35 +67,33 @@ Class MessageIncluder extends Includer
 	{
 		Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
 
-		if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
-			Services::Registry()->set('Parameters', 'template_view_id',
-				Services::Registry()->get('Configuration', 'message_template_view_id'));
-		}
 		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
 			Services::Registry()->set('Parameters', 'wrap_view_id',
 				Services::Registry()->get('Configuration', 'message_wrap_view_id'));
 		}
 
-		Services::Registry()->set('Parameters', 'model_name', 'Messages');
+		Services::Registry()->set('Parameters', 'model_name', 'Wraps');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
 
-		/** Final Template and Wrap selections */
+		$wrap_this = Services::Registry()->get('Parameters', 'wrap_model_query_object');
+		Services::Registry()->set('Parameters', 'model_query_object', $wrap_this);
+		Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
+
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
-		Helpers::Extension()->finalizeParameters(
-			Services::Registry()->get('Include', 'content_id', 0),
-			Services::Registry()->get('Include', 'request_action', 'display')
-		);
+		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id', 0));
 
 		/* Yes, this is done before, too. Get over it or fix it. */
-		Services::Registry()->set('Parameters', 'model_name', 'Assets');
+		Services::Registry()->set('Parameters', 'model_name', 'Wraps');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
-
+		Services::Registry()->set('Parameters', 'model_query_object', $wrap_this);
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
 		/** Sort */
 		Services::Registry()->sort('Include');
 		Services::Registry()->sort('Parameters');
+
 
 		return;
 	}

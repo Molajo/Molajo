@@ -1,6 +1,5 @@
 <model
-        name="Extensioninstances"
-        catalog_type_id="1050"
+        name="ArticlesComponent"
         table="#__extension_instances"
         primary_key="id"
         primary_prefix="a"
@@ -24,6 +23,9 @@
                 <include name="ExtensionTriggers"/>
             </triggers>
             <customfields>
+                <customfield name="customfields">
+                    <field name="example_of_content_only_field" type="int" null="1" default="1"/>
+                </customfield>
                 <customfield name="metadata">
                     <include name="SystemMetadata"/>
                 </customfield>

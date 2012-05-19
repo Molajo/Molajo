@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Content"
-        catalog_type_id="0"
         table="#__content"
         primary_key="id"
         primary_prefix="a"

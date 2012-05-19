@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.0">
-    <name>MODULE_ADMIN_HEADER_NAME</name>
+    <name>MODULE_ADMINHEADER_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
-    <description>MODULE_ADMIN_HEADER_DESCRIPTION</description>
+    <description>MODULE_ADMINHEADER_DESCRIPTION</description>
     <config>
         <include model="ModuleModel"/>
         <parameters>

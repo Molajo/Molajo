@@ -182,7 +182,7 @@ Class ParseService
 		foreach ($sequence->include as $next) {
 			if ($next == 'message') {
 				$messages = Services::Message()->get('count');
-				if ((int) $messages == 0) {
+				if ((int)$messages == 0) {
 				} else {
 					$this->sequence[] = (string)$next;
 				}
@@ -239,8 +239,6 @@ Class ParseService
 			/* final run (for page head): start with rendered body */
 			$first = false;
 			$final = true;
-			Services::Registry()->deleteRegistry('Include');
-			Services::Registry()->deleteRegistry('Parameters');
 		}
 
 		/** process all input for include: statements  */
@@ -250,19 +248,24 @@ Class ParseService
 
 			$loop++;
 
+			$this->include_request = array();
 			$this->parseIncludeRequests($body);
 
 			if (count($this->include_request) == 0) {
 				break;
+
 			} else {
+
 				$body = $this->callIncluder($first, $body);
 			}
-
+echo $body;
+			die;
 			if ($loop > STOP_LOOP) {
 				break;
 			}
 			continue;
 		}
+
 		return $body;
 	}
 
@@ -290,21 +293,63 @@ Class ParseService
 		foreach ($matches[1] as $includeStatement) {
 
 			$parts = array();
+			$found_one = false;
+
+			$entireIncludeStatement = $includeStatement;
+
+			if (strtolower(substr(trim($includeStatement), 0, 4)) == 'wrap') {
+
+				$includeStatement = substr(trim($includeStatement), 4, 99999);
+
+				$temp = substr(trim($includeStatement), strpos(trim($includeStatement), 'name=') + 5, 99999);
+				$name = substr(trim($temp), 0, strpos(trim($temp), ' '));
+
+				$replace = 'name=' . $name;
+				$includeStatement = str_replace($replace, '', $includeStatement);
+
+				$value = substr(trim($includeStatement), strpos(trim($includeStatement), 'value=') + 6, 99999);
+
+				$replace = 'value=' . $value;
+				$includeStatement = str_replace($replace, '', $includeStatement);
+
+				if (substr(trim($value), 0, 1) == '"' && substr(trim($value), strlen(trim($value)) - 1, 1) == '"') {
+					$value = substr(trim($value), 1, strlen(trim($value)) - 2);
+
+				} else if (substr(trim($value), 0, 1) == "'" && substr(trim($value), strlen(trim($value)) - 1, 1) == "'") {
+					$value = substr(trim($value), 1, strlen(trim($value)) - 2);
+				}
+
+				$this->include_request[$i]['name'] = 'wrap';
+				$this->include_request[$i]['replace'] = $entireIncludeStatement;
+
+				$this->include_request[$i]['attributes']['wrap_view'] = $name;
+				$this->include_request[$i]['attributes']['wrap_model_query_object'] = $value;
+
+				/** process any remaining parameters in normal processing below */
+
+			} else {
+				$includerType = '';
+			}
+
 			$parts = explode(' ', $includeStatement);
-			$includerType = '';
+			$countAttributes = 0;
 
-			foreach ($parts as $part) {
+			if (count($parts) > 0) {
+				foreach ($parts as $part) {
 
-				/** 1st part is the Includer Command */
-				if ($includerType == '') {
-					$includerType = $part;
-					$this->include_request[$i]['name'] = $includerType;
-					$this->include_request[$i]['replace'] = $includeStatement;
+					/** 1st part is the Includer Command */
+					if ($includerType == '') {
+						$includerType = $part;
 
-				} else {
+						$this->include_request[$i]['name'] = $includerType;
+						$this->include_request[$i]['replace'] = $entireIncludeStatement;
+
+					}
 
 					/** Includer Attributes */
 					$attributes = str_replace('"', '', $part);
+
+					$attributes = $part;
 
 					if (trim($attributes) == '') {
 					} else {
@@ -312,12 +357,21 @@ Class ParseService
 						/** Associative array of attributes */
 						$pair = array();
 						$pair = explode('=', $attributes);
-						$this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
+						if($pair[0] == $includerType) {
+						} else {
+							$countAttributes++;
+							$this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
+						}
 					}
+				}
+				if ($countAttributes == 0) {
+					$this->include_request[$i]['attributes'] = array();
 				}
 			}
 			$i++;
 		}
+
+		return;
 	}
 
 	/**
@@ -378,7 +432,9 @@ Class ParseService
 					$class .= ucfirst($includerType) . 'Includer';
 
 					if (class_exists($class)) {
+
 						$rc = new $class ($includerType, $includeName);
+
 					} else {
 						echo 'failed includer = ' . $class . '<br />';
 						die;
@@ -398,17 +454,6 @@ Class ParseService
 		$body = str_replace($replace, $with, $body);
 
 		/** 10. make certain all <include:xxx /> literals are removed on final */
-		if ($this->final === true) {
-			$replace = array();
-			$with = array();
-			for ($i = 0; $i < count($this->include_request); $i++) {
-				$replace[] = "<include:" . $this->include_request[$i]['replace'] . "/>";
-				$with[] = '';
-			}
-
-			$body = str_replace($replace, $with, $body);
-		}
-
 		return $body;
 	}
 }

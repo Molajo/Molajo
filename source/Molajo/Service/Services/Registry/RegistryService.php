@@ -99,12 +99,24 @@ Class RegistryService
 	 */
 	public function exists($namespace)
 	{
-		if (in_array($namespace, $this->registryKeys)) {
-			return true;
-
+		$namespaces = $this->registryKeys;
+		if (is_array($namespaces)) {
 		} else {
 			return false;
 		}
+
+		if (in_array($namespace, $namespaces)) {
+		}  else {
+			return false;
+		}
+
+		$thisNamespace = $this->registry[$namespace];
+
+		if (count($thisNamespace) == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -125,7 +137,8 @@ Class RegistryService
 	 */
 	public function createRegistry($namespace)
 	{
-		if (in_array($namespace, $this->registryKeys)) {
+
+		if (isset($this->registryKeys[$namespace])) {
 			return $this->registry[$namespace];
 		}
 
@@ -423,6 +436,7 @@ Class RegistryService
 	 */
 	public function rename($namespace, $newname)
 	{
+
 		/** Retrieve existing contents, sort it. */
 		$existing = $this->getRegistry($namespace);
 		ksort($existing);

@@ -52,10 +52,8 @@ Class ComponentHelper
 	 */
 	public function get($name)
 	{
-		$row = Helpers::Extension()->getInstanceID(
-			CATALOG_TYPE_EXTENSION_COMPONENT,
-			$name
-		);
+		$row = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_COMPONENT, $name);
+
 		if (count($row) == 0) {
 			return array();
 		}

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Sites"
-        catalog_type_id="10"
         table="#__sites"
         primary_key="id"
         primary_prefix="a"
