@@ -38,3 +38,59 @@ Bring in the php spl priority
 Registry - prevent updates
 
 Events - until 1st succeeds; until 1st fails; all
+
+
+* * * * Useful during development * * * *
+
+1. adding extensions
+
+INSERT INTO `molajo`.`molajo_extensions` ( `id` , `extension_site_id` , `catalog_type_id` , `name`) VALUES ( NULL ,  '1',  '1200',  ' Search');
+
+INSERT INTO `molajo`.`molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`) VALUES (NULL, '246', '1200', 'Search', 'templates', '', '', '1', '0', '0', '1', '2011-11-11 11:11:11', '0000-00-00 00:00:00', '1', '0', '0', '2011-11-11 11:11:11', '0', '2011-11-11 11:11:11', '0', '0000-00-00 00:00:00', '0', '{}', '', NULL, 'en-GB', '0', '41');
+
+INSERT INTO `molajo`.`molajo_application_extension_instances` (`extension_instance_id`, `application_id`) VALUES ('246', '1'), ('246', '2');
+
+INSERT INTO `molajo`.`molajo_catalog` ( `id` , `catalog_type_id` , `source_id` , `routable` , `sef_request` , `redirect_to_id` , `view_group_id` , `primary_category_id` , `tinyurl` ) VALUES ( NULL ,  '1200',  '246',  '1',  'extensions/views/246',  '0',  '1',  '0',  '');
+
+
+1. removing extension instances
+delete from `molajo_application_extension_instances` WHERE `extension_instance_id` in (111, 112, 113, 114, 117, 118)
+
+delete from `molajo_application_extension_instances` WHERE `extension_instance_id` in (111, 112, 113, 114, 117, 118)
+
+delete from `molajo_group_permissions` WHERE catalog_id in (select distinct id from `molajo_catalog` WHERE `source_id` in (111, 112, 113, 114, 117, 118) and `catalog_type_id` = 1350)
+
+delete from `molajo_view_group_permissions` WHERE catalog_id in (select distinct id from `molajo_catalog` WHERE `source_id` in (111, 112, 113, 114, 117, 118) and `catalog_type_id` = 1350)
+
+delete from `molajo_catalog` WHERE `source_id` in (111, 112, 113, 114, 117, 118) and `catalog_type_id` = 1350
+
+delete from `molajo_extension_instances` WHERE `extension_instance_id` in (111, 112, 113, 114, 117, 118)
+
+2. rebuilding security
+
+drop and recreate
+
+CREATE TABLE `molajo_view_group_permissions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `view_group_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_groups.id',
+  `catalog_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_catalog.id',
+  `action_id` int(11) unsigned NOT NULL COMMENT 'Foreign Key to molajo_actions.id',
+  PRIMARY KEY (`id`),
+  KEY `fk_view_group_permissions_view_groups_index` (`view_group_id`),
+  KEY `fk_view_group_permissions_actions_index` (`action_id`),
+  KEY `fk_view_group_permissions_catalog_index` (`catalog_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+INSERT INTO `molajo_view_group_permissions` (view_group_id, catalog_id, action_id)
+
+SELECT b.view_group_id, c.id, c.id
+
+FROM `molajo_content` a,
+ `molajo_group_view_groups` b,
+ `molajo_catalog` c,
+ `molajo_actions` d
+WHERE a.`catalog_type_id` in (100, 120)
+  AND a.id = b.group_id
+  AND b.view_group_id = c.view_group_id
+  AND d.title = 'view'
