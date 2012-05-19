@@ -11,7 +11,7 @@ use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Extension\Helpers;
 use Molajo\Extension\Triggers;
 use Molajo\Service\Services;
-use Molajo\MVC\Controller\EntryController;
+use Molajo\MVC\Controller\ModelController;
 
 defined('MOLAJO') or die;
 
@@ -912,10 +912,10 @@ Class Application
 		if (self::$controller) {
 		} else {
 			try {
-				self::$controller = EntryController::getInstance();
+				self::$controller = ModelController::getInstance();
 			}
 			catch (\Exception $e) {
-				echo 'Instantiate EntryController Exception : ', $e->getMessage(), "\n";
+				echo 'Instantiate ModelController Exception : ', $e->getMessage(), "\n";
 				die;
 			}
 		}

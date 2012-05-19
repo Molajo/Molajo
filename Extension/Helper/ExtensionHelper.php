@@ -47,13 +47,23 @@ Class ExtensionHelper
 	/**
 	 * Retrieve Route information for a specific Extension
 	 *
+	 * Creates the following Registries (ex. Articles component) containing datasource information for this component.
+	 *
+	 * ArticlesComponent, ArticlesComponentCustomfields, ArticlesComponentMetadata, ArticlesComponentParameters
+	 *
+	 * Merges into Route and Parameters Registries
+	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function getRoute($extension_id)
 	{
 		/** Retrieve the query results */
-		$row = $this->get($extension_id);
+		$row = $this->get(
+			$extension_id,
+			ucfirst(strtolower(Services::Registry()->get('Route', 'content_catalog_type_title'))),
+			'Component'
+		);
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
@@ -74,28 +84,13 @@ Class ExtensionHelper
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
+
 		foreach ($customFieldTypes as $customFieldName) {
-
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
-			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Parameters') {
-				Services::Registry()->merge(
-					'Extensioninstances' . $customFieldName,
-					'Parameters'
-				);
-			}
-
-			if ('Extensioninstances' . $customFieldName == 'Extensioninstances' . 'Metadata') {
-				Services::Registry()->merge(
-					'Extensioninstances' . $customFieldName,
-					'Metadata'
-				);
-			}
-
-			Services::Registry()->deleteRegistry('Extensioninstances' . $customFieldName);
+			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
 		}
 
-/**
+		/**
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Route'));
 		echo '</pre>';
@@ -116,9 +111,35 @@ Class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getIncludeExtension($extension_id, $model_name = null, $type = null)
+	public function getIncludeExtension($extension_id, $catalog_type_id, $model_name = null)
 	{
 		/** Retrieve the query results */
+		$type = '';
+		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
+			$type = 'Component';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
+			$type = 'Formfields';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
+			$type = 'Module';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
+			$type = 'Theme';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
+			$type = 'Trigger';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			$type = 'Pageview';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+			$type = 'Templateview';
+
+		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+			$type = 'Wrapview';
+		}
+
 		$row = $this->get($extension_id, $model_name, $type);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -387,7 +408,6 @@ Class ExtensionHelper
 
 		if (Services::Filesystem()->folderExists($path)) {
 		} else {
-			return;
 			echo 'does not exist' . $path . '<br />';
 			echo '<pre>';
 			var_dump(Services::Registry()->get('Include'));
@@ -406,9 +426,8 @@ Class ExtensionHelper
 	 * @return  null
 	 * @since   1.0
 	 */
-	public function finalizeParameters($source_id = 0, $action = 'display', $no_extension = false)
+	public function finalizeParameters($source_id = 0, $action = 'display')
 	{
-
 		$getTemplate = true;
 
 		$template_view_id = (int)Services::Registry()->get('Parameters', 'template_view_id', 0);
@@ -437,6 +456,8 @@ Class ExtensionHelper
 					$getTemplate = false;
 					Services::Registry()->set('Parameters', 'template_view_id', $template_view_id);
 				}
+			}  else {
+				$getTemplate = false;
 			}
 		}
 
@@ -461,7 +482,7 @@ Class ExtensionHelper
 		} else {
 			if ($wrap_view_id == 0) {
 				$wrap_view_id = Helpers::Extension()->getInstanceID(
-					CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
+					CATALOG_TYPE_EXTENSION_WRAP_VIEW,
 					$wrap_view_title
 				);
 				if ($wrap_view_id == false) {
@@ -469,6 +490,8 @@ Class ExtensionHelper
 					$getWrap = false;
 					Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_view_id);
 				}
+			}  else {
+				$getWrap = false;
 			}
 		}
 
@@ -494,7 +517,7 @@ Class ExtensionHelper
 					Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
 			}
 
-			$model_name = Services::Registry()->get('Parameters', 'form_model_nane', '');
+			$model_name = Services::Registry()->get('Parameters', 'form_model_name', '');
 			$model_type = Services::Registry()->get('Parameters', 'form_model_type', '');
 			$model_query_object = Services::Registry()->get('Parameters', 'form_model_query_object', '');
 
@@ -521,7 +544,7 @@ Class ExtensionHelper
 					Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
 			}
 
-			$model_name = Services::Registry()->get('Parameters', 'list_model_nane', '');
+			$model_name = Services::Registry()->get('Parameters', 'list_model_name', '');
 			$model_type = Services::Registry()->get('Parameters', 'list_model_type', '');
 			$model_query_object = Services::Registry()->get('Parameters', 'list_model_query_object', '');
 
@@ -538,15 +561,15 @@ Class ExtensionHelper
 
 			}
 
-			$model_name = Services::Registry()->get('Parameters', 'model_nane', '');
+			$model_name = Services::Registry()->get('Parameters', 'model_name', '');
 			$model_type = Services::Registry()->get('Parameters', 'model_type', '');
 			$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', '');
 		}
 
 		if ($model_name == '') {
-			$model_name = Services::Registry()->get('Parameters', 'extension_title');
+			$model_name = Services::Registry()->get('Include', 'extension_title');
 		}
-		Services::Registry()->set('Parameters', 'model_nane', $model_name);
+		Services::Registry()->set('Parameters', 'model_name', $model_name);
 
 		if ($model_type == '') {
 			$model_type = 'Table';
@@ -570,9 +593,9 @@ Class ExtensionHelper
 		}
 		Services::Registry()->set('Parameters', 'model_query_object', $model_query_object);
 
-		Helpers::TemplateView()->get($no_extension);
+		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id', 0));
 
-		Helpers::WrapView()->get($no_extension);
+		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id', 0));
 
 		/** Remove parameters not needed */
 		Services::Registry()->delete('Parameters', 'list_template_view_id');

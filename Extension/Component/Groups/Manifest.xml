@@ -12,7 +12,6 @@
     <config>
         <model
                 name="Groups"
-                catalog_type_id="100,110,120,130"
                 table="#__content"
                 primary_key="id"
                 primary_prefix="a"

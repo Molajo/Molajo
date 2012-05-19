@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="UserViewGroups"
-        catalog_type_id="0"
         table="#__user_view_groups"
         primary_key="id"
         get_customfields="0"

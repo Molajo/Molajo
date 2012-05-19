@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Users"
-        catalog_type_id="500"
         table="#__users"
         primary_key="id"
         primary_prefix="a"

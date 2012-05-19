@@ -57,7 +57,7 @@ class ComponentIncluder extends Includer
 	}
 
 	/**
-	 * setRenderCriteria - Used for Primary Component to set Parameter Values for the identified Route
+	 * getExtension - Used for non-primary Component to set Parameter Values
 	 *
 	 * @return null
 	 * @since  1.0

@@ -52,7 +52,7 @@ Class WrapViewHelper
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function get($wrap_view_id = 0, $no_extension = false)
+	public function get($wrap_view_id = 0)
 	{
 		if ($wrap_view_id == 0) {
 			$wrap_view_id = $this->setDefaultWrapView();
@@ -61,9 +61,9 @@ Class WrapViewHelper
 		Services::Registry()->set('Parameters', 'wrap_view_id', (int)$wrap_view_id);
 		$title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
 		Services::Registry()->set('Parameters', 'wrap_view_title', $title);
-		Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($title, $no_extension));
-		Services::Registry()->set('Parameters', 'wrap_view_path_include', $this->getPath($title, $no_extension) . '/Manifest.xml');
-		Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($title, $no_extension));
+		Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($title));
+		Services::Registry()->set('Parameters', 'wrap_view_path_include', $this->getPath($title) . '/Manifest.xml');
+		Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($title));
 
 		$row = Helpers::Extension()->get($wrap_view_id, 'WrapView');
 
@@ -75,9 +75,9 @@ Class WrapViewHelper
 			/** Get new Title and path */
 			$title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
 			Services::Registry()->set('Parameters', 'wrap_view_title', $title);
-			Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($title, $no_extension));
-			Services::Registry()->set('Parameters', 'wrap_view_path_include', $this->getPath($title, $no_extension) . '/Manifest.xml');
-			Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($title, $no_extension));
+			Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($title));
+			Services::Registry()->set('Parameters', 'wrap_view_path_include', $this->getPath($title) . '/Manifest.xml');
+			Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($title));
 
 			$row = Helpers::Extension()->get($wrap_view_id);
 
@@ -136,7 +136,7 @@ Class WrapViewHelper
 	 * @param $wrap_view_name
 	 * @return bool|string
 	 */
-	public function getPath($wrap_view_name, $no_extension = false)
+	public function getPath($wrap_view_name)
 	{
 		$plus = '/View/Wrap/' . ucfirst(strtolower($wrap_view_name));
 
@@ -146,11 +146,8 @@ Class WrapViewHelper
 		}
 
 		/** 2. Extension */
-		if ($no_extension == true) {
-		} else {
-			if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
-				return Services::Registry()->get('Parameters', 'extension_path') . $plus;
-			}
+		if (file_exists(Services::Registry()->get('Include', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Include', 'extension_path') . $plus;
 		}
 
 		/** 3. View */
@@ -174,7 +171,7 @@ Class WrapViewHelper
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($wrap_view_name, $no_extension = false)
+	public function getPathURL($wrap_view_name)
 	{
 		$plus = '/View/Wrap/' . ucfirst(strtolower($wrap_view_name));
 
@@ -184,11 +181,8 @@ Class WrapViewHelper
 		}
 
 		/** 2. Extension */
-		if ($no_extension == true) {
-		} else {
-			if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
-				return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
-			}
+		if (file_exists(Services::Registry()->get('Include', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Include', 'extension_path_url') . $plus;
 		}
 
 		/** 3. View */

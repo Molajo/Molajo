@@ -260,51 +260,52 @@ Class ConfigurationService
 
 		} elseif (strtolower($type) == 'table') {
 
-				if ($file == 'Theme') {
+			if ($file == 'Theme') {
 
-					if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
-						$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
-					} else {
-						$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-					}
-
-				} elseif ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
-
-					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-
+				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
+					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
 				} else {
-
-					if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
-						$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
-					} else {
-						$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-					}
+					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 				}
 
-		} elseif (strtolower($type) == 'route') {     // Primary Component Data
+			} else if ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
+
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+
+			} else {
 
 				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
 					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+
 				} else {
 					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 				}
+			}
+
+		} else if (strtolower($type) == 'content') { // Primary Component Data
+
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+			}
 
 		} elseif (strtolower($type) == 'component') {
 
-				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
-					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
 
-				} else {
-					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-				}
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+			}
 
 		} elseif (strtolower($type) == 'module') {
 
-				if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml')) {
-					$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml';
-				} else {
-					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-				}
+			if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml')) {
+				$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml';
+			} else {
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+			}
 
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
@@ -312,7 +313,7 @@ Class ConfigurationService
 
 		if (file_exists($path_and_file)) {
 		} else {
-			echo $file.' '.$type.' '.$path_and_file.'<br />';
+			echo $file . ' ' . $type . ' ' . $path_and_file . '<br />';
 			echo 'File not found: ' . $path_and_file;
 			throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
@@ -334,6 +335,74 @@ Class ConfigurationService
 			//error ?
 			return ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
 		}
+	}
+
+	/**
+	 * Retrieves base Model Registry data and stores it to the datasource registry
+	 *
+	 * @static
+	 * @param  $registryName
+	 * @param  $xml
+	 * @return mixed
+	 */
+	public static function setModelRegistry($registryName, $xml)
+	{
+		Services::Registry()->set($registryName, 'model_name', (string)$xml['name']);
+		Services::Registry()->set($registryName, 'table_name', (string)$xml['table']);
+
+		$value = (string)$xml['primary_key'];
+		if ($value == '') {
+			$value = 'id';
+		}
+		Services::Registry()->set($registryName, 'primary_key', $value);
+
+		$value = (string)$xml['name_key'];
+		if ($value == '') {
+			$value = 'title';
+		}
+		Services::Registry()->set($registryName, 'name_key', $value);
+
+		$value = (string)$xml['primary_prefix'];
+		if ($value == '') {
+			$value = 'a';
+		}
+		Services::Registry()->set($registryName, 'primary_prefix', $value);
+
+		$value = (int)$xml['get_customfields'];
+		if ($value == 0 || $value == 1 || $value == 2) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'get_customfields', $value);
+
+		$value = (int)$xml['get_item_children'];
+		if ($value == 0) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'get_item_children', $value, '0');
+
+		$value = (int)$xml['use_special_joins'];
+		if ($value == 0) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'use_special_joins', $value, '0');
+
+		$value = (int)$xml['check_view_level_access'];
+		if ($value == 0) {
+		} else {
+			$value = 1;
+		}
+		Services::Registry()->set($registryName, 'check_view_level_access', $value, '1');
+
+		$value = (string)$xml['data_source'];
+		if ($value == '') {
+			$value = 'JDatabase';
+		}
+		Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
+
+		return;
 	}
 
 	/**
@@ -430,66 +499,6 @@ Class ConfigurationService
 		return $registryName;
 	}
 
-	public static function setModelRegistry($registryName, $xml)
-	{
-		Services::Registry()->set($registryName, 'model_name', (string)$xml['name']);
-		Services::Registry()->set($registryName, 'table_name', (string)$xml['table']);
-
-		$value = (string)$xml['primary_key'];
-		if ($value == '') {
-			$value = 'id';
-		}
-		Services::Registry()->set($registryName, 'primary_key', $value);
-
-		$value = (string)$xml['name_key'];
-		if ($value == '') {
-			$value = 'title';
-		}
-		Services::Registry()->set($registryName, 'name_key', $value);
-
-		$value = (string)$xml['primary_prefix'];
-		if ($value == '') {
-			$value = 'a';
-		}
-		Services::Registry()->set($registryName, 'primary_prefix', $value);
-
-		$value = (int)$xml['get_customfields'];
-		if ($value == 0 || $value == 1 || $value == 2) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'get_customfields', $value);
-
-		$value = (int)$xml['get_item_children'];
-		if ($value == 0) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'get_item_children', $value, '0');
-
-		$value = (int)$xml['use_special_joins'];
-		if ($value == 0) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'use_special_joins', $value, '0');
-
-		$value = (int)$xml['check_view_level_access'];
-		if ($value == 0) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'check_view_level_access', $value, '1');
-
-		$value = (string)$xml['data_source'];
-		if ($value == '') {
-			$value = 'JDatabase';
-		}
-		Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
-
-		return;
-	}
-
 	/**
 	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
 	 * Returns the name of the registry
@@ -544,8 +553,8 @@ Class ConfigurationService
 			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
 
 		$include = '';
-		if (isset($xml->model->table->item->fields->include['name'])) {
-			$include = (string)$xml->model->table->item->fields->include['name'];
+		if (isset($xml->table->item->fields->include['name'])) {
+			$include = (string)$xml->table->item->fields->include['name'];
 		}
 		if ($include == '') {
 		} else {
@@ -583,7 +592,8 @@ Class ConfigurationService
 				}
 				$fieldArray[] = $fieldAttributesArray;
 			}
-			Services::Registry()->set($registryName, 'Fields', $fieldArray);
+
+			Services::Registry()->set($registryName, 'fields', $fieldArray);
 		}
 
 		/** Joins */
@@ -623,7 +633,7 @@ Class ConfigurationService
 				$jArray[] = $joinAttributesArray;
 			}
 
-			Services::Registry()->set($registryName, 'Joins', $jArray);
+			Services::Registry()->set($registryName, 'joins', $jArray);
 		}
 
 		/** Foreign Keys */
@@ -661,7 +671,7 @@ Class ConfigurationService
 
 				$fkArray[] = $fkAttributesArray;
 			}
-			Services::Registry()->set($registryName, 'ForeignKeys', $fkArray);
+			Services::Registry()->set($registryName, 'foreignkeys', $fkArray);
 		}
 
 		/** Children */
@@ -697,7 +707,7 @@ Class ConfigurationService
 
 				$csArray[] = $chkAttributesArray;
 			}
-			Services::Registry()->set($registryName, 'Children', $csArray);
+			Services::Registry()->set($registryName, 'children', $csArray);
 		}
 
 		/** Triggers */
@@ -726,7 +736,7 @@ Class ConfigurationService
 				$tAttr = ($t["@attributes"]);
 				$triggersArray[] = $tAttr['name'];
 			}
-			Services::Registry()->set($registryName, 'Triggers', $triggersArray);
+			Services::Registry()->set($registryName, 'triggers', $triggersArray);
 		}
 
 		/** Item Customfields */
@@ -759,6 +769,7 @@ Class ConfigurationService
 		}
 
 		if (isset($xml->table->item->customfields)) {
+
 			ConfigurationService::getCustomFields(
 				$xml->table->item->customfields,
 				$file,

@@ -125,7 +125,7 @@ Class LanguageService
 			self::$languages[$language] = new LanguageService($language);
 		}
 		return self::$languages[$language];
-	}
+ 	}
 
 	/**
 	 * __construct

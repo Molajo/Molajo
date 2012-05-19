@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="UserApplications"
-        catalog_type_id="0"
         table="#__user_applications"
         primary_key="user_id,application_id"
         get_customfields="1"

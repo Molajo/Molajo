@@ -27,7 +27,6 @@
 <field name="rgt" type="int" null="0" default="0"/>
 <field name="lvl" type="int" null="0" default="0"/>
 <field name="home" type="int" null="0" default="0"/>
-<field name="position" type="char" length="45" null="0" default="0"/>
 <field name="customfields" customtype="1"/>
 <field name="parameters" customtype="1"/>
 <field name="metadata" customtype="1"/>

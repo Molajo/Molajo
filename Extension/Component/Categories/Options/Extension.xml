@@ -1,6 +1,5 @@
 <model
-        name="Extensioninstances"
-        catalog_type_id="1050"
+        name="CategoriesComponent"
         table="#__extension_instances"
         primary_key="id"
         primary_prefix="a"

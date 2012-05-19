@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Applications"
-        catalog_type_id="50"
         table="#__applications"
         primary_key="id"
         name_key="name"

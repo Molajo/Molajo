@@ -90,8 +90,7 @@ Class HeadIncluder extends Includer
 
 		Helpers::Extension()->finalizeParameters(
 			Services::Registry()->get('Include', 'content_id', 0),
-			Services::Registry()->get('Include', 'request_action', 'display'),
-			true
+			Services::Registry()->get('Include', 'request_action', 'display')
 		);
 
 		/* Yes, this is done before, too. Get over it or fix it. */

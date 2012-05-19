@@ -89,7 +89,6 @@ class ItemModel extends Model
 	protected function setLoadQuery()
 	{
 		if ($this->query->select == null) {
-
 			$columns = Services::Registry()->get($this->table_registry_name, 'Fields');
 
 			foreach ($columns as $column) {

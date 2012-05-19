@@ -48,6 +48,10 @@ Class ContentHelper
 	 * Retrieve Route information for a specific Content Item
 	 * identified in the Catalog as the request
 	 *
+	 * Various registries used to store data and definitional results. For example:
+	 * ArticlesContent (and ArticlesContentCustomfields, ArticlesContentMetadata, ArticlesContentParameters
+	 * ArticlesComponent - XML definitions for components
+	 *
 	 * @return    boolean
 	 * @since    1.0
 	 */
@@ -57,7 +61,7 @@ Class ContentHelper
 		$row = $this->get(
 			Services::Registry()->get('Route', 'catalog_source_id'),
 			Services::Registry()->get('Route', 'catalog_source_table'),
-			'Route', // represents the primary request for the page
+			'Content',
 			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
 		);
 
@@ -83,26 +87,11 @@ Class ContentHelper
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
 		foreach ($customFieldTypes as $customFieldName) {
-
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
-			if ($model . $customFieldName == $model . 'Parameters') {
-				Services::Registry()->merge(
-					$model . $customFieldName,
-					'Parameters'
-				);
-			}
-
-			if ($model . $customFieldName == $model . 'Metadata') {
-				Services::Registry()->merge(
-					$model . $customFieldName,
-					'Metadata'
-				);
-			}
-
-			Services::Registry()->deleteRegistry($model . $customFieldName);
+			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
 		}
 
+		return true;
 		/**
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Route'));
@@ -115,12 +104,17 @@ Class ContentHelper
 		echo '</pre>';
 		die;
 		 */
-		return true;
 	}
 
 	/**
 	 * Retrieve Route information for a specific Category
 	 * identified in the as the request
+	 *
+	 * Creates the following Registries (ex. Articles content) containing datasource information for this category.
+	 *
+	 * ContentCategories, ContentCategoriesCustomfields, ContentCategoriesMetadata, ContentCategoriesParameters
+	 *
+	 * Merges into Route and Parameters Registries
 	 *
 	 * @return    boolean
 	 * @since    1.0
@@ -131,7 +125,7 @@ Class ContentHelper
 		$row = $this->get(
 			Services::Registry()->get('Route', 'catalog_category_id'),
 			Services::Registry()->get('Route', 'catalog_source_table'),
-			'Table',
+			'Content',
 			'Categories'
 		);
 
@@ -150,25 +144,10 @@ Class ContentHelper
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
+
 		foreach ($customFieldTypes as $customFieldName) {
-
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
-			if ('Categories' . $customFieldName == 'Categories' . 'Parameters') {
-				Services::Registry()->merge(
-					'Categories' . $customFieldName,
-					'Parameters'
-				);
-			}
-
-			if ('Categories' . $customFieldName == 'Categories' . 'Metadata') {
-				Services::Registry()->merge(
-					'Categories' . $customFieldName,
-					'Metadata'
-				);
-			}
-
-			Services::Registry()->deleteRegistry('Categories' . $customFieldName);
+			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
 		}
 
 		return;
@@ -183,7 +162,7 @@ Class ContentHelper
 	public function get($id, $content_table, $type = null, $datasource = null)
 	{
 		if ($type == null) {
-			$type = 'Component';
+			$type = 'Content';
 		}
 
 		$m = Application::Controller()->connect($datasource, $type);

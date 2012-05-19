@@ -12,13 +12,11 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Entry
+ * Model Controller
  *
- * As the name might suggest, the Entry Controller is the entry point for all Controller requests.
- * The class merely allows all processing to enter a common gateway and then flow
- * through the class structure to the intended method.
+ * The class merely allows all model instantiation as a common gateway
  *
- * There are two basic process flows to the Controller within the Molajo Application:
+ * There are two basic process flows to the Model within the Molajo Application:
  *
  * 1. The first is directly related to processing the request and using the MVC
  *     architecture to either render output or execute the action action.
@@ -31,14 +29,13 @@ defined('MOLAJO') or die;
  *  The Controller then interacts with the Model for data requests.
  *
  * 2. The second logic flow routes support queries originating in Service and Helper
- *  route through the Model Service class which essentially acts as a Controller
- *  to gather information and then invoke the Model, as needed.
+ *  classes and pass through this Controller to invoke the Model, as needed.
  *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
  */
-Class EntryController extends Controller
+Class ModelController extends Controller
 {
 	/**
 	 * Static instance
@@ -58,7 +55,7 @@ Class EntryController extends Controller
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new EntryController();
+			self::$instance = new ModelController();
 		}
 		return self::$instance;
 	}
@@ -74,15 +71,10 @@ Class EntryController extends Controller
 	}
 
 	/**
-	 * Prepares data needed for the model
-	 *
-	 * Single-table queries - retrieve Table Definitions, create a model instance,
-	 * and sets model properties examples include User, Site Application, and
-	 * Authorisation queries
-	 *
-	 * More complex queries
+	 * Prepares data needed for the model using an XML table definition
 	 *
 	 * @param  string  $table
+	 * @param  string  $type
 	 *
 	 * @return object
 	 *
@@ -94,13 +86,19 @@ Class EntryController extends Controller
 		if ($type == null) {
 			$type = 'Table';
 		}
-//echo $table.' '.$type.' <br />';
 
-		/** Specific table model interaction - or - complex data query  */
 		if ($table === '') {
 			$this->dataSource = $this->default_dataSource;
+
 		} else {
-			$this->table_registry_name = ConfigurationService::getFile($table, $type);
+			$table_registry_name = ucfirst(strtolower($table)) . ucfirst(strtolower($type));
+
+			if (Services::Registry()->exists($table_registry_name) == true) {
+				$this->table_registry_name = $table_registry_name;
+
+			} else {
+				$this->table_registry_name = ConfigurationService::getFile($table, $type);
+			}
 		}
 
 		/* 2. Instantiate Model Class */
@@ -112,7 +110,7 @@ Class EntryController extends Controller
 		catch (\Exception $e) {
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
-
+		/** 3. Model Properties         */
 		$this->model->set('table_registry_name', $this->table_registry_name);
 		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
 		$this->model->set('table_name', Services::Registry()->get($this->table_registry_name, 'table_name'));
@@ -122,7 +120,7 @@ Class EntryController extends Controller
 		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
 		$this->model->set('id_name', Services::Registry()->get($this->table_registry_name, 'id_name'));
 
-		/** 4. Set DB Properties */
+		/** 4. Set DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
 
 		$this->model->set('db', Services::$dbo()->get('db'));
@@ -154,14 +152,14 @@ Class EntryController extends Controller
 	 */
 	public function getData($query_object = 'loadObjectList', $view_requested = false)
 	{
-		//** Need to know if there is a view, or not */
+
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
 			$query_object = 'loadObjectList';
 		}
 
 		try {
-
+			/** Sometimes, only the data is requested */
 			if ($view_requested == true) {
 				$this->parameters['query_object'] = $query_object;
 				return $this->display();

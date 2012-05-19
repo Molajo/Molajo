@@ -70,7 +70,6 @@ Class UserService
 	 */
 	protected function load()
 	{
-
 		/** Initialize */
 		Services::Registry()->deleteRegistry('User');
 

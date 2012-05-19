@@ -1,6 +1,5 @@
 <model
         name="WrapView"
-        catalog_type_id="1250"
         table="#__extension_instances"
         primary_key="id"
         primary_prefix="a"

@@ -415,7 +415,7 @@ Class RouteService
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-/**
+	  /**
 		echo '<br /><br />Route<br /><pre>';
 		var_dump(Services::Registry()->get('Route'));
 
@@ -430,8 +430,8 @@ Class RouteService
 		echo '<br />Metadata<br />';
 		var_dump(Services::Registry()->get('Metadata'));
 		echo '</pre>';
+die;
 */
-
 		return;
 	}
 }
