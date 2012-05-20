@@ -3,6 +3,7 @@
         name="Sessions"
         table="#__group_view_groups"
         primary_key="id"
+        check_published="0"
         data_source="JDatabase">
     <fields>
         <field name="session_id" type="char" null="0" default=""/>

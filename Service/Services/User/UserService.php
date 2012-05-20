@@ -75,9 +75,7 @@ Class UserService
 
 		/** Retrieve User Data  */
 		$m = Application::Controller()->connect('Users');
-
 		$m->model->set('id', $this->id);
-
 		$results = $m->getData('load');
 
 		if ($results === false) {

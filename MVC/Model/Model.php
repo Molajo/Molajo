@@ -401,19 +401,31 @@ class Model
 				$joinTo = $join['jointo'];
 				$joinWith = $join['joinwith'];
 
+//echo  'JOIN: ' . $join_table . ' ' . $alias . ' ' . $select . ' ' . $joinTo . ' ' . $joinWith . '<br />';
+
 				/* Join to table */
 				if (trim($alias) == '') {
-					$alias = $join_table;
+					$alias = substr($join_table, 3, strlen($join_table));
 				}
 
 				$this->query->from($this->db->qn($join_table) . ' as ' . $this->db->qn($alias));
 
 				/* Select fields */
-				$selectArray = explode(',', $select);
+				if (trim($select) == '') {
+					$selectArray = array();
+				} else {
+					$selectArray = explode(',', $select);
+				}
 
 				if (count($selectArray) > 0) {
+
 					foreach ($selectArray as $selectItem) {
-						$this->query->select($this->db->qn($alias . '.' . $selectItem));
+
+						$this->query->select(
+							$this->db->qn(trim($alias) . '.' . trim($selectItem))
+								. ' as ' .
+								$this->db->qn(trim($alias) . '_' . trim($selectItem))
+						);
 					}
 				}
 
@@ -422,24 +434,90 @@ class Model
 				$joinWithArray = explode(',', $joinWith);
 
 				if (count($joinToArray) > 0) {
+
 					$i = 0;
 					foreach ($joinToArray as $joinToItem) {
-						$with = $joinWithArray[$i];
-						$hasAlias = explode('.', $with);
-						if (count($hasAlias) == 1) {
-							$withJoin = $this->primary_prefix. '.' . $with;
+
+						/** join THIS to that */
+						$to = $joinToItem;
+
+						if (substr(trim($to), 0, 1) == '{' && substr(trim($to), strlen(trim($to)) - 1, 1) == '}') {
+							$temp = substr(trim($to), 1, strlen(trim($to)) - 2);
+							$split = explode(',', $temp);
+							$value = Services::Registry()->get($split[0], $split[0]);
+							if ($value == (int)$value) {
+								$whereLeft = (int)$value;
+							} else {
+								$whereLeft = $this->db->q($value);
+							}
+
+						} else if ($to == 'APPLICATION_ID') {
+							$whereLeft = APPLICATION_ID;
+
+						} else if ($to == 'SITE_ID') {
+							$whereLeft = SITE_ID;
+
+
+						} else if (is_numeric($to)) {
+							$whereLeft = (int)$to;
+
 						} else {
-							$withJoin = $with;
+
+							$hasAlias = explode('.', $to);
+
+							if (count($hasAlias) > 1) {
+								$toJoin = trim($hasAlias[0]) . '.' . trim($hasAlias[1]);
+							} else {
+								$toJoin = trim($alias) . '.' . trim($to);
+							}
+
+							$whereLeft = $this->db->qn($toJoin);
 						}
-						$this->query->where($this->db->qn($alias . '.' . $joinToItem)
-							. ' = '
-							. $this->db->qn($with));
+
+						/** join this to THAT */
+						$with = $joinWithArray[$i];
+
+						if (substr(trim($with), 0, 1) == '{' && substr(trim($with), strlen(trim($with)) - 1, 1) == '}') {
+							$temp = substr(trim($with), 1, strlen(trim($with)) - 2);
+							$split = explode('.', $temp);
+							$value = Services::Registry()->get($split[0], $split[0]);
+
+							if ($value == (int)$value) {
+								$whereRight = (int)$value;
+							} else {
+								$whereRight = $this->db->q($value);
+							}
+
+						} else if ($with == 'APPLICATION_ID') {
+							$whereRight = APPLICATION_ID;
+
+						} else if ($with == 'SITE_ID') {
+							$whereRight = SITE_ID;
+
+						} else if (is_numeric($with)) {
+							$whereRight = (int)$with;
+
+						} else {
+
+							$hasAlias = explode('.', $with);
+
+							if (count($hasAlias) > 1) {
+								$withJoin = trim($hasAlias[0]) . '.' . trim($hasAlias[1]);
+							} else {
+								$withJoin = trim($this->primary_prefix) . '.' . trim($with);
+							}
+
+							$whereRight = $this->db->qn($withJoin);
+						}
+
+						/** put the where together */
+						$this->query->where($whereLeft . ' = ' . $whereRight);
+
 						$i++;
 					}
 				}
 			}
 		}
-
 		return $this;
 	}
 
@@ -751,11 +829,11 @@ class Model
 
 		/** Set the DB Query */
 		$this->db->setQuery($this->query->__toString());
-/**
+		/**
 		echo '<pre>';
 		var_dump($this->query->__toString());
 		echo '</pre>';
-*/
+		 */
 		/** Execute the query */
 		$this->query_results = $this->db->loadObjectList();
 

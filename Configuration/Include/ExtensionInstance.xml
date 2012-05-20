@@ -4,6 +4,9 @@
             <include name="ExtensionFields"/>
         </fields>
         <foreignkeys>
+            <include name="ExtensionInstancesJoins"/>
+        </foreignkeys>
+        <foreignkeys>
             <include name="ExtensionForeignkeys"/>
         </foreignkeys>
         <children>

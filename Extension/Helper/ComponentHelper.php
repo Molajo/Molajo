@@ -57,6 +57,7 @@ Class ComponentHelper
 		if (count($row) == 0) {
 			return array();
 		}
+
 		return $row;
 	}
 

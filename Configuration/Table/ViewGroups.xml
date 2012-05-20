@@ -3,6 +3,7 @@
         name="ViewGroups"
         table="#__user_groups"
         primary_key="id"
+        check_published="0"
         data_source="JDatabase">
     <fields>
         <field name="id" type="" null="1" default="" identity="1"/>

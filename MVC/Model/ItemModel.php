@@ -47,12 +47,19 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
+		$this->query->clear();
+
 		/** Base query */
 		$this->setLoadQuery();
 
 		/** Add ACL Checking */
 		if (Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0) == 1) {
 			$this->addACLCheck();
+		}
+
+		/** Check Published */
+		if (Services::Registry()->get($this->table_registry_name, 'check_published', 0) == 1) {
+			$this->addPublishedCheck();
 		}
 
 		/** Joins */
@@ -89,6 +96,7 @@ class ItemModel extends Model
 	protected function setLoadQuery()
 	{
 		if ($this->query->select == null) {
+
 			$columns = Services::Registry()->get($this->table_registry_name, 'Fields');
 
 			foreach ($columns as $column) {
@@ -97,11 +105,7 @@ class ItemModel extends Model
 		}
 
 		if ($this->query->from == null) {
-			$this->query->from(
-				$this->db->qn($this->table_name)
-					. ' as '
-					. $this->db->qn($this->primary_prefix)
-			);
+			$this->query->from($this->db->qn($this->table_name) . ' as ' . $this->db->qn($this->primary_prefix));
 		}
 
 		if ($this->query->where == null) {
@@ -137,9 +141,44 @@ class ItemModel extends Model
 			$this->db,
 			array('join_to_prefix' => $this->primary_prefix,
 				'join_to_primary_key' => $this->primary_key,
-				'catalog_prefix' => 'b_catalog',
+				'catalog_prefix' => 'acl_check_catalog',
 				'select' => true
 			)
+		);
+
+		return $this;
+	}
+
+	/**
+	 *
+	 * //todo move this into a trigger since it has specific column names
+	 * // modify it so that ACL extends status codes that are visible
+	 *
+	 * addPublishedCheck
+	 *
+	 * Standard Publish check on primary content
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	protected function addPublishedCheck()
+	{
+		$this->query->where($this->db->qn($this->primary_prefix)
+			. '.' . $this->db->qn('status')
+			. ' > ' . STATUS_UNPUBLISHED);
+
+		$this->query->where('(' . $this->db->qn($this->primary_prefix)
+				. '.' . $this->db->qn('start_publishing_datetime')
+				. ' = ' . $this->db->q($this->nullDate)
+				. ' OR ' . $this->db->qn($this->primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
+				. ' <= ' . $this->db->q($this->now) . ')'
+		);
+
+		$this->query->where('(' . $this->db->qn($this->primary_prefix)
+				. '.' . $this->db->qn('stop_publishing_datetime')
+				. ' = ' . $this->db->q($this->nullDate)
+				. ' OR ' . $this->db->qn($this->primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
+				. ' >= ' . $this->db->q($this->now) . ')'
 		);
 
 		return $this;
@@ -155,6 +194,8 @@ class ItemModel extends Model
 	 */
 	protected function runLoadQuery()
 	{
+//echo $this->query->__toString();
+
 		/** Run the query */
 		$this->db->setQuery($this->query->__toString());
 
@@ -217,7 +258,8 @@ class ItemModel extends Model
 
 				/** test for application-specific values */
 				if (count($data) > 0
-					&& (defined('APPLICATION_ID'))) {
+					&& (defined('APPLICATION_ID'))
+				) {
 					foreach ($data as $key => $value) {
 
 						if ($key == APPLICATION_ID) {
@@ -354,7 +396,7 @@ class ItemModel extends Model
 					$targetField = $whereArray[1];
 					$sourceField = $whereArray[0];
 
-					$m->model->query->where($m->model->db->qn($targetField)
+					$this->query->where($this->db->qn($targetField)
 						. ' = '
 						. (int)$this->query_results[$sourceField]);
 				}

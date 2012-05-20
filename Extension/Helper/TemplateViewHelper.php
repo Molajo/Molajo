@@ -1,8 +1,8 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @package   Molajo
+ * @copyright 2012 Amy Stephen. All rights reserved.
+ * @license   GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 
@@ -12,7 +12,7 @@ use Molajo\Extension\Helpers;
 defined('MOLAJO') or die;
 
 /**
- * Template View Helper
+ * TemplateView Helper
  *
  * @package       Molajo
  * @subpackage    Helper
@@ -47,7 +47,7 @@ Class TemplateViewHelper
 	/**
 	 * get
 	 *
-	 * Get Requested Template View data
+	 * Get requested template_view data
 	 *
 	 * @return  array
 	 * @since   1.0
@@ -55,36 +55,43 @@ Class TemplateViewHelper
 	public function get($template_view_id = 0)
 	{
 		if ($template_view_id == 0) {
-			$template_view_id = $this->setDefaultTemplateView();
+			$template_view_id = $this->setDefault();
 		}
 
 		Services::Registry()->set('Parameters', 'template_view_id', (int)$template_view_id);
-		$title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
-		Services::Registry()->set('Parameters', 'template_view_title', $title);
-		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title));
-		Services::Registry()->set('Parameters', 'template_view_path_include',
-			$this->getPath($title) . '/Manifest.xml');
-		Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title));
 
-		$row = Helpers::Extension()->get($template_view_id, 'TemplateView');
+		$node = Helpers::Extension()->getExtensionNode((int)$template_view_id);
 
-		/** 500: Theme not found */
+		Services::Registry()->set('Parameters', 'template_view_path_node', $node);
+
+		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($node));
+		Services::Registry()->set('Parameters', 'template_view_path_include', $this->getPath($node) . '/index.php');
+		Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($node));
+
+		/** Retrieve the query results */
+		$row = Helpers::Extension()->get($template_view_id, 'TemplateViews', 'Table');
+
+		/** 500: not found */
 		if (count($row) == 0) {
-			/** Try System Template */
+
+			/** System Default */
 			$template_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
 
-			/** Get new Title and path */
-			$title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
-			Services::Registry()->set('Parameters', 'template_view_title', $title);
-			Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($title));
-			Services::Registry()->set('Parameters', 'template_view_path_include',
-				$this->getPath($title) . '/Manifest.xml');
-			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($title));
+			/** System default */
+			Services::Registry()->set('Parameters', 'template_view_id', (int)$template_view_id);
 
-			$row = Helpers::Extension()->get($template_view_id);
+			$node = Helpers::Extension()->getExtensionNode((int)$template_view_id);
+
+			Services::Registry()->set('Parameters', 'template_view_path_node', $node);
+
+			Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($node));
+			Services::Registry()->set('Parameters', 'template_view_path_include', $this->getPath($node) . '/index.php');
+			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($node));
+
+			$row = Helpers::Extension()->get($template_view_id, 'TemplateView');
 
 			if (count($row) == 0) {
-				Services::Error()->set(500, 'Template View not found');
+				Services::Error()->set(500, 'View not found');
 				return false;
 			}
 		}
@@ -94,18 +101,20 @@ Class TemplateViewHelper
 		Services::Registry()->set('Parameters', 'template_view_view_group_id', $row['view_group_id']);
 		Services::Registry()->set('Parameters', 'template_view_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Parameters', 'template_view_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Parameters', 'template_view_catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_type_title', $row['catalog_types_title']);
 
 		return;
 	}
 
 	/**
-	 *  Determine the default theme value, given system default sequence
+	 *  setDefault
+	 *
+	 *  Determine the default template_view value, given system default sequence
 	 *
 	 * @return  string
 	 * @since   1.0
 	 */
-	public function setDefaultTemplateView()
+	public function setDefault()
 	{
 		$template_view_id = Services::Registry()->get('Parameters', 'template_view_id', 0);
 		if ((int)$template_view_id == 0) {
@@ -125,77 +134,38 @@ Class TemplateViewHelper
 			return $template_view_id;
 		}
 
-		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default'); //55
+		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'System'); //99
 	}
 
 	/**
 	 * getPath
 	 *
-	 * Return path for selected Template View
-	 *
-	 * Expects known path for Theme and Extension
+	 * Return path for selected TemplateView
 	 *
 	 * @param $template_view_name
 	 * @return bool|string
 	 */
-	public function getPath($template_view_name)
+	public function getPath($node)
 	{
-		$plus = '/View/Template/' . ucfirst(strtolower($template_view_name));
-
-		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
-		}
-
-		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Include', 'extension_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Include', 'extension_path') . $plus;
-		}
-
-		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($template_view_name)) . '/Manifest.xml')) {
-			return EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($template_view_name));
-		}
-
-		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/Manifest.xml')) {
-			return MVC . $plus;
+		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node));
 		}
 
 		return false;
 	}
 
 	/**
-	 * getURLPath
+	 * getPathURL
 	 *
-	 * Return URL path for selected Template View
+	 * Return path for selected TemplateView
 	 *
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($template_view_name)
+	public function getPathURL($node)
 	{
-		$plus = '/View/Template/' . ucfirst(strtolower($template_view_name));
-
-		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
-		}
-
-
-		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Include', 'extension_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Include', 'extension_path_url') . $plus;
-		}
-
-		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($template_view_name)) . '/Manifest.xml')) {
-			return EXTENSIONS_VIEWS_URL . '/Template/' . ucfirst(strtolower($template_view_name));
-		}
-
-		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/Manifest.xml')) {
-			return MVC_URL . $plus;
+		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return EXTENSIONS_VIEWS_URL . '/Template/' . ucfirst(strtolower($node));
 		}
 
 		return false;

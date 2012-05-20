@@ -161,7 +161,9 @@ Class ModelController extends Controller
 		try {
 			/** Sometimes, only the data is requested */
 			if ($view_requested == true) {
+
 				$this->parameters['query_object'] = $query_object;
+
 				return $this->display();
 
 			} else {
@@ -169,6 +171,7 @@ Class ModelController extends Controller
 			}
 
 		} catch (\Exception $e) {
+
 			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
 		}
 	}

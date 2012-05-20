@@ -380,7 +380,8 @@ Class AuthorisationService
 				$db->qn('catalog_type_id')
 		);
 
-		$vg = implode(', ', Services::Registry()->get('User', 'ViewGroups'));
+		$vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
+
 		$query->where(
 			$db->qn($parameters['catalog_prefix']) .
 				'.' .

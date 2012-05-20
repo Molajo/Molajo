@@ -70,38 +70,42 @@ Class ExtensionHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
+		/** Store Route Data */
+		Services::Registry()->set('Routedata', 'Component', $row);
+
+		/** Route Registry */
 		Services::Registry()->set('Route', 'extension_title', $row['title']);
 		Services::Registry()->set('Route', 'extension_translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Route', 'extension_language', $row['language']);
 		Services::Registry()->set('Route', 'extension_view_group_id', $row['view_group_id']);
 		Services::Registry()->set('Route', 'extension_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Route', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Route', 'extension_catalog_type_title', $row['catalog_type_title']);
+		Services::Registry()->set('Route', 'extension_type_path_node', $row['catalog_types_title']);
+
 		Services::Registry()->set('Route', 'extension_path',
-			$this->getPath((int)$row['catalog_type_id'], $row['title']));
+			$this->getPath((int)$row['catalog_type_id'],
+				Services::Registry()->get('Route', 'extension_name_path_node'))
+		);
+
 		Services::Registry()->set('Route', 'extension_path_url',
-			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
+			$this->getPathURL((int)$row['catalog_type_id'],
+				Services::Registry()->get('Route', 'extension_name_path_node'))
+		);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
+
 			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
+
+			$data = Services::Registry()->get($row['table_registry_name'] . $customFieldName);
+			Services::Registry()->set('Routedata', 'Extension' . $customFieldName, $data);
+
+			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 		}
 
-		/**
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Route'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Metadata'));
-		echo '</pre>';
-		die;
-*/
 		return;
 	}
 
@@ -113,33 +117,10 @@ Class ExtensionHelper
 	 */
 	public function getIncludeExtension($extension_id, $catalog_type_id, $model_name = null)
 	{
+		/** Retrieve catalog type, given the key value */
+		$type = Helpers::Extension()->getType($catalog_type_id);
+
 		/** Retrieve the query results */
-		$type = '';
-		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			$type = 'Component';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
-			$type = 'Formfields';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			$type = 'Module';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			$type = 'Theme';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			$type = 'Trigger';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			$type = 'Pageview';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
-			$type = 'Templateview';
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			$type = 'Wrapview';
-		}
-
 		$row = $this->get($extension_id, $model_name, $type);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -148,39 +129,40 @@ Class ExtensionHelper
 			return false;
 		}
 
-		Services::Registry()->set('Include', 'extension_id', (int)$row['id']);
+		/** Store Extension Data */
+		Services::Registry()->set('Includedata', 'Extension', $row);
+
+		/** Route Registry */
 		Services::Registry()->set('Include', 'extension_title', $row['title']);
 		Services::Registry()->set('Include', 'extension_translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Include', 'extension_language', $row['language']);
-
-		Services::Registry()->set('Include', 'extension_catalog_id', (int)$row['catalog_id']);
+		Services::Registry()->set('Include', 'extension_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Include', 'extension_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Include', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Include', 'extension_catalog_type_title', $row['catalog_type_title']);
-
-		Services::Registry()->set('Include', 'extension_view_group_id', (int)$row['view_group_id']);
+		Services::Registry()->set('Include', 'extension_type_path_node', $row['catalog_types_title']);
 
 		Services::Registry()->set('Include', 'extension_path',
-			$this->getPath((int)$row['catalog_type_id'], $row['title']));
-		Services::Registry()->set('Include', 'extension_path_url',
-			$this->getPathURL((int)$row['catalog_type_id'], $row['title']));
+			$this->getPath((int)$row['catalog_type_id'],
+				Services::Registry()->get('Include', 'extension_name_path_node'))
+		);
 
-		Services::Registry()->set('Include', 'extension_primary', false);
+		Services::Registry()->set('Include', 'extension_path_url',
+			$this->getPathURL((int)$row['catalog_type_id'],
+				Services::Registry()->get('Include', 'extension_name_path_node'))
+		);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
 		foreach ($customFieldTypes as $customFieldName) {
-
 			$customFieldName = ucfirst(strtolower($customFieldName));
 
-			if ($customFieldName == 'Parameters') {
-				Services::Registry()->merge(
-					$row['table_registry_name'] . 'Parameters', 'Parameters'
-				);
-			}
+			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
+
+			$data = Services::Registry()->get($row['table_registry_name'] . $customFieldName);
+			Services::Registry()->set('Includedata', 'Extension' . $customFieldName, $data);
 
 			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
-
 		}
 
 		return;
@@ -198,65 +180,10 @@ Class ExtensionHelper
 	 * @return  bool|mixed
 	 * @since   1.0
 	 */
-	public function get($extension_id = 0, $model = null, $type = null)
+	public function get($extension_id = 0, $model = 'ExtensionInstances', $type = null)
 	{
-		if ($model == null) {
-			$model = 'ExtensionInstances';
-		}
 		$m = Application::Controller()->connect($model, $type);
-
-		/**
-		 *  a. Extensions Instances Table
-		 */
-		$m->model->query->select($m->model->db->qn('a.id'));
-		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
-		$m->model->query->select($m->model->db->qn('a.title'));
-		$m->model->query->select($m->model->db->qn('a.parameters'));
-		$m->model->query->select($m->model->db->qn('a.metadata'));
-		$m->model->query->select($m->model->db->qn('a.customfields'));
-		$m->model->query->select($m->model->db->qn('a.translation_of_id'));
-		$m->model->query->select($m->model->db->qn('a.language'));
-
-		$m->model->query->from($m->model->db->qn('#__extension_instances') . ' as a');
-
-		$m->model->query->where($m->model->db->qn('a.extension_id') . ' > 0 ');
-
-		$m->model->query->where($m->model->db->qn('a.id') . '= ' . (int)$extension_id);
-
-		$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
-		$m->model->query->where('(' . $m->model->db->qn('a.start_publishing_datetime') . ' = ' .
-				$m->model->db->q($m->model->nullDate) .
-				' OR ' . $m->model->db->qn('a.start_publishing_datetime') . ' <= ' . $m->model->db->q($m->model->now) . ')'
-		);
-		$m->model->query->where('(' . $m->model->db->qn('a.stop_publishing_datetime') . ' = ' .
-				$m->model->db->q($m->model->nullDate) .
-				' OR ' . $m->model->db->qn('a.stop_publishing_datetime') . ' >= ' . $m->model->db->q($m->model->now) . ')'
-		);
-
-		/** b_catalog_types. Catalog Types Table  */
-		$m->model->query->select($m->model->db->qn('b_catalog_types.title') . ' as catalog_type_title');
-		$m->model->query->from($m->model->db->qn('#__catalog_types') . ' as b_catalog_types');
-		$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . $m->model->db->qn('b_catalog_types.id'));
-
-		/**
-		 *  c. Application Table
-		 *      Extension Instances must be enabled for the Application
-		 */
-		$m->model->query->from($m->model->db->qn('#__application_extension_instances') . ' as c');
-		$m->model->query->where($m->model->db->qn('c.extension_instance_id') . ' = ' . $m->model->db->qn('a.id'));
-		$m->model->query->where($m->model->db->qn('c.application_id') . ' = ' . APPLICATION_ID);
-
-		/**
-		 *  d. Site Table
-		 *      Extension Instances must be enabled for the Site
-		 */
-		$m->model->query->from($m->model->db->qn('#__site_extension_instances') . ' as d');
-		$m->model->query->where($m->model->db->qn('d.extension_instance_id') . ' = ' . $m->model->db->qn('a.id'));
-		$m->model->query->where($m->model->db->qn('d.site_id') . ' = ' . SITE_ID);
-
-		/**
-		 *  Run Query
-		 */
+		$m->model->set('id', (int)$extension_id);
 		$row = $m->getData('load');
 
 		$row['table_registry_name'] = $m->model->table_registry_name;
@@ -294,7 +221,7 @@ Class ExtensionHelper
 	/**
 	 * getInstanceTitle
 	 *
-	 * Retrieves Extension Name, given the extension_instance_id
+	 * Retrieves Extension Instance Title, given the extension_instance_id
 	 *
 	 * @param   $extension_instance_id
 	 *
@@ -312,41 +239,58 @@ Class ExtensionHelper
 	}
 
 	/**
+	 * getExtensionNode
+	 *
+	 * Retrieves the folder node for the specific extension
+	 *
+	 * @param  $catalog_type_id
+	 * @param  $extension_instance_id
+	 *
+	 * @return  bool|mixed
+	 * @since   1.0
+	 */
+	public function getExtensionNode($extension_instance_id)
+	{
+
+		$m = Application::Controller()->connect();
+
+		$m->model->query->select($m->model->db->qn('a.name'));
+
+		$m->model->query->from($m->model->db->qn('#__extensions').' as '.$m->model->db->qn('a'));
+		$m->model->query->from($m->model->db->qn('#__extension_instances').' as '.$m->model->db->qn('b'));
+
+		$m->model->query->where($m->model->db->qn('a.id') . ' = ' . $m->model->db->qn('b.extension_id'));
+		$m->model->query->where($m->model->db->qn('b.id') . ' = ' . (int)$extension_instance_id);
+
+		return $m->getData('loadResult');
+	}
+
+	/**
 	 * getPath
 	 *
-	 * Return path for Extension
+	 * Return path for Extension - make certain to send in extension name, not
+	 *     extension instance title. Extensions Instances do not have to have
+	 *  the same name as the Extension, itself. The Extension name is what
+	 *  is used in the path statements.
 	 *
 	 * @return mixed
 	 * @since 1.0
 	 */
-	public function getPath($catalog_type_id, $name)
+	public function getPath($catalog_type_id, $node)
 	{
-		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			return EXTENSIONS_COMPONENTS . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
-			return EXTENSIONS_FORMFIELDS . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			return EXTENSIONS_MODULES . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			return EXTENSIONS_THEMES . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			return EXTENSIONS_TRIGGERS . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			return Helpers::Page()->getPath($name);
+		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			return Helpers::Page()->getPath($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
-			return Helpers::Template()->getPath($name);
+			return Helpers::Template()->getPath($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			return Helpers::Wrap()->getPath($name);
-		}
+			return Helpers::Wrap()->getPath($node);
 
-		return false;
+		} else {
+			$type = Helpers::Extension()->getType($catalog_type_id);
+			return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
+		}
 	}
 
 	/**
@@ -357,34 +301,21 @@ Class ExtensionHelper
 	 * @return mixed
 	 * @since 1.0
 	 */
-	public function getPathURL($catalog_type_id, $name)
+	public function getPathURL($catalog_type_id, $node)
 	{
-		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-			return EXTENSIONS_COMPONENTS_URL . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
-			return EXTENSIONS_FORMFIELDS_URL . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-			return EXTENSIONS_MODULES_URL . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
-			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-			return EXTENSIONS_TRIGGERS_URL . '/' . ucfirst(strtolower($name));
-
-		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			return Helpers::Page()->getPathURL($name);
+		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			return Helpers::Page()->getPathURL($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
-			return Helpers::Template()->getPathURL($name);
+			return Helpers::Template()->getPathURL($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			return Helpers::Wrap()->getPathURL($name);
-		}
+			return Helpers::Wrap()->getPathURL($node);
 
-		return false;
+		} else {
+			$type = Helpers::Extension()->getType($catalog_type_id);
+			return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
+		}
 	}
 
 	/**
@@ -405,7 +336,6 @@ Class ExtensionHelper
 		}
 		$path .= '/Language';
 
-
 		if (Services::Filesystem()->folderExists($path)) {
 		} else {
 			echo 'does not exist' . $path . '<br />';
@@ -414,8 +344,7 @@ Class ExtensionHelper
 			return false;
 		}
 
-//todo fix Services::Language()->load($path, Services::Language()->get('tag'), false, false);
-		Services::Language()->load($path, 'en-GB', false, false);
+		Services::Language()->load($path, Services::Language()->get('tag'), false, false);
 
 		return true;
 	}
@@ -456,7 +385,7 @@ Class ExtensionHelper
 					$getTemplate = false;
 					Services::Registry()->set('Parameters', 'template_view_id', $template_view_id);
 				}
-			}  else {
+			} else {
 				$getTemplate = false;
 			}
 		}
@@ -490,7 +419,7 @@ Class ExtensionHelper
 					$getWrap = false;
 					Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_view_id);
 				}
-			}  else {
+			} else {
 				$getWrap = false;
 			}
 		}
@@ -613,5 +542,72 @@ Class ExtensionHelper
 		Services::Registry()->delete('Parameters', 'form_wrap_view_css_class');
 
 		return;
+	}
+
+	/**
+	 * Retrieve the path node for a specified catalog type or
+	 * it retrieves the catalog id value for the requested type
+	 *
+	 * @param $catalog_type_id
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
+	public function getType($catalog_type_id = 0, $catalog_type = '')
+	{
+		if ((int)$catalog_type_id == 0) {
+
+			if ($catalog_type == 'Component') {
+				return CATALOG_TYPE_EXTENSION_COMPONENT;
+
+			} else if ($catalog_type == 'Formfield') {
+				return CATALOG_TYPE_EXTENSION_FORMFIELDS;
+
+			} else if ($catalog_type_id == 'Module') {
+				return CATALOG_TYPE_EXTENSION_MODULE;
+
+			} else if ($catalog_type == 'Theme') {
+				return CATALOG_TYPE_EXTENSION_THEME;
+
+			} else if ($catalog_type == 'Trigger') {
+				return CATALOG_TYPE_EXTENSION_TRIGGER;
+
+			} else if ($catalog_type == 'Pageview') {
+				return CATALOG_TYPE_EXTENSION_PAGE_VIEW;
+
+			} else if ($catalog_type == 'Templateview') {
+				return CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW;
+
+			} else if ($catalog_type == 'Wrapview') {
+				return CATALOG_TYPE_EXTENSION_WRAP_VIEW;
+			}
+
+		} else {
+
+			if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
+				return 'Component';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
+				return 'Formfield';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
+				return 'Module';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
+				return 'Theme';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
+				return 'Trigger';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+				return 'Pageview';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+				return 'Templateview';
+
+			} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+				return 'Wrapview';
+			}
+		}
 	}
 }

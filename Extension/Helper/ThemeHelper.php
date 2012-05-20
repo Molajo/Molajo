@@ -55,33 +55,42 @@ Class ThemeHelper
 	public function get($theme_id = 0)
 	{
 		if ($theme_id == 0) {
-			$theme_id = $this->setDefaultTheme();
+			$theme_id = $this->setDefault();
 		}
 
 		Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
-		$title = Helpers::Extension()->getInstanceTitle((int)$theme_id);
-		Services::Registry()->set('Parameters', 'theme_title', $title);
-		Services::Registry()->set('Parameters', 'theme_path', $this->getPath($title));
-		Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($title) . '/index.php');
-		Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($title));
-		Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($title));
 
-		$row = Helpers::Extension()->get($theme_id, 'Theme');
+		$node = Helpers::Extension()->getExtensionNode((int)$theme_id);
 
-		/** 500: Theme not found */
+		Services::Registry()->set('Parameters', 'theme_path_node', $node);
+
+		Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
+		Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
+		Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
+		Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
+
+		/** Retrieve the query results */
+		$row = Helpers::Extension()->get($theme_id, 'Themes', 'Table');
+
+		/** 500: not found */
 		if (count($row) == 0) {
-			/** Try System Template */
+
+			/** System Default */
 			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
 
-			/** Get new Title and path */
-			$title = Helpers::Extension()->getInstanceTitle((int)$theme_id);
-			Services::Registry()->set('Parameters', 'theme_title', $title);
-			Services::Registry()->set('Parameters', 'theme_path', $this->getPath($title));
-			Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($title) . '/index.php');
-			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($title));
-			Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($title));
+			/** System default */
+			Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
 
-			$row = Helpers::Extension()->get($theme_id);
+			$node = Helpers::Extension()->getExtensionNode((int)$theme_id);
+
+			Services::Registry()->set('Parameters', 'theme_path_node', $node);
+
+			Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
+			Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
+			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
+			Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
+
+			$row = Helpers::Extension()->get($theme_id, 'Theme');
 
 			if (count($row) == 0) {
 				Services::Error()->set(500, 'Theme not found');
@@ -94,22 +103,20 @@ Class ThemeHelper
 		Services::Registry()->set('Parameters', 'theme_view_group_id', $row['view_group_id']);
 		Services::Registry()->set('Parameters', 'theme_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Parameters', 'theme_catalog_type_title', $row['catalog_type_title']);
-
-		//todo: think about parameters.
+		Services::Registry()->set('Parameters', 'theme_catalog_type_title', $row['catalog_types_title']);
 
 		return;
 	}
 
 	/**
-	 *  setDefaultTheme
+	 *  setDefault
 	 *
 	 *  Determine the default theme value, given system default sequence
 	 *
 	 * @return  string
 	 * @since   1.0
 	 */
-	public function setDefaultTheme()
+	public function setDefault()
 	{
 		$theme_id = Services::Registry()->get('Parameters', 'theme_id', 0);
 		if ((int)$theme_id == 0) {
@@ -140,27 +147,27 @@ Class ThemeHelper
 	 * @param $theme_name
 	 * @return bool|string
 	 */
-	public function getPath($theme_name)
+	public function getPath($node)
 	{
-		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name)) . '/' . 'index.php')) {
-			return EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name)) ;
+		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node));
 		}
 
 		return false;
 	}
 
 	/**
-	 * getPath
+	 * getPathURL
 	 *
 	 * Return path for selected Theme
 	 *
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($theme_name)
+	public function getPathURL($node)
 	{
-		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name))  . '/' . 'index.php')) {
-			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($theme_name)) ;
+		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($node));
 		}
 
 		return false;
@@ -178,11 +185,11 @@ Class ThemeHelper
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function getFavicon($theme_name)
+	public function getFavicon($node)
 	{
-		$path = EXTENSIONS_THEMES . '/' . ucfirst(strtolower($theme_name))  . '/images/';
+		$path = EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node)) . '/images/';
 		if (file_exists($path . 'favicon.ico')) {
-			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($theme_name))  . '/images/favicon.ico';
+			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($node)) . '/images/favicon.ico';
 		}
 
 		$path = BASE_FOLDER;

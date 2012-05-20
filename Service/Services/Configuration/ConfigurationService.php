@@ -396,6 +396,12 @@ Class ConfigurationService
 		}
 		Services::Registry()->set($registryName, 'check_view_level_access', $value, '1');
 
+		if ($value == 1) {
+		} else {
+			$value = 0;
+		}
+		Services::Registry()->set($registryName, 'check_published', $value, '1');
+
 		$value = (string)$xml['data_source'];
 		if ($value == '') {
 			$value = 'JDatabase';
@@ -503,6 +509,12 @@ Class ConfigurationService
 	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
 	 * Returns the name of the registry
 	 *
+	 * NOTE: Until this gets fixed, right now, the replacement does not take place for includes
+	 * if there is a space following the name value.
+	 *
+	 * This works: <include name="ThisRocks"/>
+	 * This does not works: <include name="ThisSucks" />
+	 *
 	 * @static
 	 * @param $file
 	 * @param string $type
@@ -604,10 +616,12 @@ Class ConfigurationService
 		}
 		if ($include == '') {
 		} else {
+
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
-			$replace_this = '<<include name="' . $include . '"/>';
+			$replace_this = '<include name="' . $include . '"/>';
+
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $replace_this, $xml_string
 			);
@@ -633,7 +647,7 @@ Class ConfigurationService
 				$jArray[] = $joinAttributesArray;
 			}
 
-			Services::Registry()->set($registryName, 'joins', $jArray);
+			Services::Registry()->set($registryName, 'Joins', $jArray);
 		}
 
 		/** Foreign Keys */
@@ -830,7 +844,7 @@ Class ConfigurationService
 	 */
 	public static function replaceIncludeStatement($include, $file, $replace_this, $xml_string)
 	{
-		$path_and_file = CONFIGURATION_FOLDER . '/' . '/include/' . $include . '.xml';
+		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
 
 		if (file_exists($path_and_file)) {
 		} else {
