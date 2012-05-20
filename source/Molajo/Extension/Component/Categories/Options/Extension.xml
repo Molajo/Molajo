@@ -7,12 +7,16 @@
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="1"
+        check_published="1"
         data_source="JDatabase">
     <table>
         <item>
             <fields>
                 <include name="ExtensionFields"/>
             </fields>
+            <joins>
+                <include name="ExtensionInstancesJoins"/>
+            </joins>
             <foreignkeys>
                 <include name="ExtensionForeignkeys"/>
             </foreignkeys>

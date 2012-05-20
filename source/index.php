@@ -17,6 +17,8 @@ $override_catalog_id = null;
 $override_sequenceXML = null;
 $override_finalXML = null;
 
+$class = 'Molajo\\Application';
+
 /** Autoload, Namespaces and Overrides */
 if (file_exists(BASE_FOLDER . '/OverrideAutoload.php')) {
 	require_once BASE_FOLDER . '/OverrideAutoload.php';

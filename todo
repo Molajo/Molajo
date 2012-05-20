@@ -42,7 +42,22 @@ Events - until 1st succeeds; until 1st fails; all
 
 * * * * Useful during development * * * *
 
-1. adding extensions
+1. Review
+
+/**
+echo '<pre>';
+var_dump(Services::Registry()->get('Route'));
+echo '</pre>';
+echo '<pre>';
+var_dump(Services::Registry()->get('Parameters'));
+echo '</pre>';
+echo '<pre>';
+var_dump(Services::Registry()->get('Metadata'));
+echo '</pre>';
+die;
+ */
+
+2. add an extension
 
 INSERT INTO `molajo`.`molajo_extensions` ( `id` , `extension_site_id` , `catalog_type_id` , `name`) VALUES ( NULL ,  '1',  '1200',  ' Search');
 
@@ -53,7 +68,8 @@ INSERT INTO `molajo`.`molajo_application_extension_instances` (`extension_instan
 INSERT INTO `molajo`.`molajo_catalog` ( `id` , `catalog_type_id` , `source_id` , `routable` , `sef_request` , `redirect_to_id` , `view_group_id` , `primary_category_id` , `tinyurl` ) VALUES ( NULL ,  '1200',  '246',  '1',  'extensions/views/246',  '0',  '1',  '0',  '');
 
 
-1. removing extension instances
+3. remove an extension
+
 delete from `molajo_application_extension_instances` WHERE `extension_instance_id` in (111, 112, 113, 114, 117, 118)
 
 delete from `molajo_application_extension_instances` WHERE `extension_instance_id` in (111, 112, 113, 114, 117, 118)
@@ -66,7 +82,7 @@ delete from `molajo_catalog` WHERE `source_id` in (111, 112, 113, 114, 117, 118)
 
 delete from `molajo_extension_instances` WHERE `extension_instance_id` in (111, 112, 113, 114, 117, 118)
 
-2. rebuilding security
+4. rebuild security
 
 drop and recreate
 

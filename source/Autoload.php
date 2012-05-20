@@ -6,8 +6,6 @@
  */
 defined('MOLAJO') or die;
 
-$class = 'Molajo\\Application';
-
 /** used in this script */
 if (defined('APPLICATIONS')) {
 } else {

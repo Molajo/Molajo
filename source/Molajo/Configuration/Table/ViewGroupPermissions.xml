@@ -3,6 +3,7 @@
         name="ViewGroupPermissions"
         table="#__user_group_permissions"
         primary_key="id"
+        check_published="0"
         data_source="JDatabase">
     <fields>
         <field name="id" type="int" null="0" default=""/>

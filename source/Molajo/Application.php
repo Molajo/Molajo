@@ -264,7 +264,7 @@ Class Application
 	protected function route()
 	{
 		$results = Services::Route()->process();
-
+		            die;
 		if ($results == false) {
 			return false;
 
@@ -518,6 +518,10 @@ Class Application
 			define('EXTENSIONS_VIEWS', EXTENSIONS . '/View');
 		}
 
+		if (defined('EXTENSIONS_URL')) {
+		} else {
+			define('EXTENSIONS_URL', BASE_URL . 'Molajo/Extension');
+		}
 		if (defined('EXTENSIONS_COMPONENTS_URL')) {
 		} else {
 			define('EXTENSIONS_COMPONENTS_URL', BASE_URL . 'Molajo/Extension/Component');
