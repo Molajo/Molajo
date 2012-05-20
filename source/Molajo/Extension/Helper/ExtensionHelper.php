@@ -70,9 +70,6 @@ Class ExtensionHelper
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
 
-		/** Store Route Data */
-		Services::Registry()->set('Routedata', 'Component', $row);
-
 		/** Route Registry */
 		Services::Registry()->set('Route', 'extension_title', $row['title']);
 		Services::Registry()->set('Route', 'extension_translation_of_id', (int)$row['translation_of_id']);
@@ -80,7 +77,7 @@ Class ExtensionHelper
 		Services::Registry()->set('Route', 'extension_view_group_id', $row['view_group_id']);
 		Services::Registry()->set('Route', 'extension_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Route', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Route', 'extension_type_path_node', $row['catalog_types_title']);
+		Services::Registry()->set('Route', 'extension_catalog_type_title', $row['catalog_types_title']);
 
 		Services::Registry()->set('Route', 'extension_path',
 			$this->getPath((int)$row['catalog_type_id'],
@@ -97,12 +94,7 @@ Class ExtensionHelper
 
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
 			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
-
-			$data = Services::Registry()->get($row['table_registry_name'] . $customFieldName);
-			Services::Registry()->set('Routedata', 'Extension' . $customFieldName, $data);
-
 			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 		}
 
@@ -129,9 +121,6 @@ Class ExtensionHelper
 			return false;
 		}
 
-		/** Store Extension Data */
-		Services::Registry()->set('Includedata', 'Extension', $row);
-
 		/** Route Registry */
 		Services::Registry()->set('Include', 'extension_title', $row['title']);
 		Services::Registry()->set('Include', 'extension_translation_of_id', (int)$row['translation_of_id']);
@@ -139,7 +128,7 @@ Class ExtensionHelper
 		Services::Registry()->set('Include', 'extension_view_group_id', $row['view_group_id']);
 		Services::Registry()->set('Include', 'extension_catalog_id', $row['catalog_id']);
 		Services::Registry()->set('Include', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Include', 'extension_type_path_node', $row['catalog_types_title']);
+		Services::Registry()->set('Include', 'extension_catalog_type_title', $row['catalog_types_title']);
 
 		Services::Registry()->set('Include', 'extension_path',
 			$this->getPath((int)$row['catalog_type_id'],
@@ -156,12 +145,7 @@ Class ExtensionHelper
 
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
 			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
-
-			$data = Services::Registry()->get($row['table_registry_name'] . $customFieldName);
-			Services::Registry()->set('Includedata', 'Extension' . $customFieldName, $data);
-
 			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 		}
 
@@ -553,7 +537,7 @@ Class ExtensionHelper
 	 * @return  string
 	 * @since   1.0
 	 */
-	public function getType($catalog_type_id = 0, $catalog_type = '')
+	public function getType($catalog_type_id = 0, $catalog_type = null)
 	{
 		if ((int)$catalog_type_id == 0) {
 

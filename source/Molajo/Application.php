@@ -264,7 +264,7 @@ Class Application
 	protected function route()
 	{
 		$results = Services::Route()->process();
-		            die;
+
 		if ($results == false) {
 			return false;
 
@@ -295,7 +295,6 @@ Class Application
 	 */
 	protected function execute()
 	{
-
 		$action = Services::Registry()->get('Route', 'request_action', 'display');
 
 		/** Display Action */

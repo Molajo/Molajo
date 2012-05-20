@@ -168,6 +168,18 @@ Class ParseService
 		Services::Registry()->copy('Parameters', 'RouteParameters');
 		Services::Registry()->copy('Route', 'Include');
 
+
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Route'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Parameters'));
+		echo '</pre>';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Metadata'));
+		echo '</pre>';
+		die;
+
 		/** Start parsing and processing page include for Theme */
 		$body = $this->renderLoop();
 
@@ -289,7 +301,9 @@ echo $body;
 		if (count($matches) == 0) {
 			return;
 		}
-
+		echo '<pre>';
+		var_dump($matches);
+		die;
 		foreach ($matches[1] as $includeStatement) {
 
 			$parts = array();
