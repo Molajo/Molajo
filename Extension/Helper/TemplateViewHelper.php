@@ -140,32 +140,70 @@ Class TemplateViewHelper
 	/**
 	 * getPath
 	 *
-	 * Return path for selected TemplateView
+	 * Return path for selected View
 	 *
-	 * @param $template_view_name
+	 * Expects known path for Theme and Extension
+	 *
+	 * @param $node
 	 * @return bool|string
 	 */
 	public function getPath($node)
 	{
-		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+		$plus = '/View/Template/' . ucfirst(strtolower($node));
+
+		/** 1. Theme */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
+		}
+
+		/** 2. Extension */
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'extension_path') . $plus;
+		}
+
+		/** 3. View */
+		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
 			return EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node));
+		}
+
+		/** 4. MVC */
+		if (file_exists(MVC . $plus . '/Manifest.xml')) {
+			return MVC . $plus;
 		}
 
 		return false;
 	}
 
 	/**
-	 * getPathURL
+	 * getURLPath
 	 *
-	 * Return path for selected TemplateView
+	 * Return URL path for selected Template View
 	 *
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($node)
+	public function getPathURL($node = false)
 	{
-		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+		$plus = '/View/Template/' . ucfirst(strtolower($node));
+
+		/** 1. Theme */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
+		}
+
+		/** 2. Extension */
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
+		}
+
+		/** 3. View */
+		if (file_exists(EXTENSIONS_VIEWS . '/Template/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
 			return EXTENSIONS_VIEWS_URL . '/Template/' . ucfirst(strtolower($node));
+		}
+
+		/** 4. MVC */
+		if (file_exists(MVC . $plus . '/Manifest.xml')) {
+			return MVC_URL . $plus;
 		}
 
 		return false;
