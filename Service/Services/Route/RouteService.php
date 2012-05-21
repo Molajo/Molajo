@@ -56,20 +56,27 @@ Class RouteService
 	 */
 	public function process()
 	{
+		/** Route Registry */
+		Services::Registry()->createRegistry('Route');
+
+		Services::Registry()->set('Route', 'status_found', '');
+		Services::Registry()->set('Route', 'status_authorised', '');
+		Services::Registry()->set('Route', 'redirect_to_id', 0);
+
 		/** Overrides */
-		if ((int)Services::Registry()->get('Override', 'catalog_id', 0) == 0) {
+		if ((int)Services::Registry()->get('Override', 'catalog_id', false) == true) {
 			Services::Registry()->set('Route', 'request_catalog_id', 0);
 
 		} else {
 			Services::Registry()->set('Route', 'request_catalog_id',
-				(int)Services::Registry()->get('Override', 'catalog_id', 0));
+				(int)Services::Registry()->get('Override', 'catalog_id'));
 		}
 
-		if (Services::Registry()->get('Override', 'url_request', '') == '') {
+		if (Services::Registry()->get('Override', 'url_request', false) == false) {
 			$path = PAGE_REQUEST;
 
 		} else {
-			$path = Services::Registry()->get('Override', 'url_request', '');
+			$path = Services::Registry()->get('Override', 'url_request');
 		}
 
 		/** @var $continue Check for duplicate content URL for Home (and redirect, if found) */
@@ -132,13 +139,13 @@ Class RouteService
 		}
 
 		/** Redirect to Logon */
-		if (Services::Registry()->get('Configuration', 'logon_requirement', 0) > 0
+		if (Services::Registry()->get('Configuration', 'application_logon_requirement', 0) > 0
 			&& Services::Registry()->get('User', 'guest', true) === true
 			&& Services::Registry()->get('Route', 'request_catalog_id')
-				<> Services::Registry()->get('Configuration', 'logon_requirement', 0)
+				<> Services::Registry()->get('Configuration', 'application_logon_requirement', 0)
 		) {
 			Services::Response()->redirect(
-				Services::Registry()->get('Configuration', 'logon_requirement', 0)
+				Services::Registry()->get('Configuration', 'application_logon_requirement', 0)
 				, 303
 			);
 			Services::Debug()->set('Application::Route() Redirect to Logon');
@@ -199,7 +206,7 @@ Class RouteService
 			&& (int)Services::Registry()->get('Route', 'request_catalog_id', 0) == 0
 		) {
 			Services::Registry()->set('Route', 'request_catalog_id',
-				Services::Registry()->get('Configuration', 'home_catalog_id', 0));
+				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
 			Services::Registry()->set('Route', 'catalog_home', true);
 		}
 
@@ -228,7 +235,7 @@ Class RouteService
 			Services::Registry()->set('Route', 'request_non_routable_parameters', array());
 			Services::Registry()->set('Route', 'request_action', 'display');
 			Services::Registry()->set('Route', 'request_catalog_id',
-				Services::Registry()->get('Configuration', 'home_catalog_id', 0));
+				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
 			return true;
 		}
 
@@ -359,9 +366,9 @@ Class RouteService
 	protected function getRouteParameters()
 	{
 		/** Initialize shared Registries */
-		Services::Registry()->deleteRegistry('Parameters');
+		Services::Registry()->createRegistry('Parameters');
 
-		Services::Registry()->deleteRegistry('Metadata');
+		Services::Registry()->createRegistry('Metadata');
 
 		/**  Menu Item  */
 		if (Services::Registry()->get('Route', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
@@ -391,47 +398,26 @@ Class RouteService
 			Services::Error()->set(500, 'Extension not found');
 		}
 
-		/** Theme  */
-		Helpers::Theme()->get();
+		Helpers::Extension()->setDefaultThemePage('Route');
 
-		/** Page  */
-		Helpers::PageView()->get();
+		Helpers::Extension()->setDefaultTemplateWrap('Route');
 
-		/** Final Template and Wrap selections */
-		Services::Registry()->merge('Configuration', 'Parameters', true);
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
 
-		Helpers::Extension()->finalizeParameters(
-			Services::Registry()->get('Route', 'content_id', 0),
-			Services::Registry()->get('Route', 'request_action', 'display')
-		);
+		Services::Registry()->merge('Route', 'Parameters', false);
 
-		/** Not needed */
-		Services::Registry()->delete('Route', 'request_catalog_id');
-		Services::Registry()->delete('Route', 'request_url_query');
-
-		/** Sort */
-		Services::Registry()->sort('Configuration');
-		Services::Registry()->sort('Route');
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-	  /**
-		echo '<br /><br />Route<br /><pre>';
-		var_dump(Services::Registry()->get('Route'));
+		Services::Registry()->deleteRegistry('Route');
 
-		echo '<br />Configuration<br />';
-
-		var_dump(Services::Registry()->get('Configuration'));
-
-		echo '<br />Parameters<br />';
-
-		var_dump(Services::Registry()->get('Parameters'));
-
-		echo '<br />Metadata<br />';
-		var_dump(Services::Registry()->get('Metadata'));
-		echo '</pre>';
-die;
-*/
+		/**
+		Services::Registry()->get('Parameters', '*');
+		Services::Registry()->get('Metadata', '*');
+		die;
+		*/
 		return;
 	}
 }

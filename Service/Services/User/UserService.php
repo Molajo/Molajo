@@ -84,15 +84,15 @@ Class UserService
 
 		/** User Applications */
 		$applications = array();
-		$x = $results['UserApplications'];
+		$x = $results['Userapplications'];
 		foreach ($x as $app) {
 			$applications[] = $app->application_id;
 		}
-		unset($results['UserApplications']);
+		unset($results['Userapplications']);
 
 		/** User Groups */
 		$groups = array();
-		$x = $results['UserGroups'];
+		$x = $results['Usergroups'];
 		foreach ($x as $group) {
 			$groups[] = $group->group_id;
 		}
@@ -110,11 +110,11 @@ Class UserService
 				$groups[] = SYSTEM_GROUP_REGISTERED;
 			}
 		}
-		unset($results['UserGroups']);
+		unset($results['Usergroups']);
 
 		/** User View Groups */
 		$viewGroups = array();
-		$x = $results['UserViewGroups'];
+		$x = $results['Userviewgroups'];
 		foreach ($x as $vg) {
 			$viewGroups[] = $vg->view_group_id;
 		}
@@ -122,11 +122,11 @@ Class UserService
 		if (count($viewGroups) == 0) {
 			$viewGroups = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
-		unset($results['UserViewGroups']);
+		unset($results['Userviewgroups']);
 
 		/** User Activity */
-		$activity = $results['UserActivity'];
-		unset($results['UserActivity']);
+		$activity = $results['Useractivity'];
+		unset($results['Useractivity']);
 
 		/** User Object */
 		$first_name = '';
@@ -170,6 +170,7 @@ Class UserService
 		Services::Registry()->rename('UsersCustomfields', 'UserCustomfields');
 		Services::Registry()->rename('UsersParameters', 'UserParameters');
 		Services::Registry()->rename('UsersMetadata', 'UserMetadata');
+
 /**
 		echo '<pre>';
 		echo 'User<br />';

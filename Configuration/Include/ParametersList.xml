@@ -1,0 +1,30 @@
+<field name="list_theme_id" type="integer" null="1" default="" values=""/>
+<field name="list_page_view_id" type="integer" null="1" default="" values=""/>
+<field name="list_page_view_css_id" type="char" null="1" default="" values=""/>
+<field name="list_page_view_css_class" type="char" null="1" default="" values=""/>
+<field name="list_template_view_id" type="integer" null="1" default=""/>
+<field name="list_template_view_css_id" type="char" null="1" default="" values=""/>
+<field name="list_template_view_css_class" type="char" null="1" default="" values=""/>
+<field name="list_wrap_view_id" type="integer" null="1" default="0" values=""/>
+<field name="list_wrap_view_css_id" type="char" null="1" default="" values=""/>
+<field name="list_wrap_view_css_class" type="char" null="1" default="" values=""/>
+<field name="list_model_name" type="char" null="1" default="" values=""/>
+<field name="list_model_type" type="char" null="1" default="" values="Table,Component,Module"/>
+<field name="list_model_query_object" type="char" null="1" default="" values=""/>
+
+<field name="criteria_list_display_archived_content" type="integer" null="1" default="1" values="0,1,2"/>
+<field name="criteria_list_display_featured_content" type="integer" null="1" default="1" values="0,1,2"/>
+<field name="criteria_list_display_stickied_content" type="integer" null="1" default="1" values="0,1,2"/>
+<field name="criteria_list_display_published_date_begin" type="date" null="1" default=""/>
+<field name="criteria_list_display_published_date_end" type="date" null="1" default=""/>
+<field name="criteria_list_display_category_list" type="categorylist" null="1" default=""/>
+<field name="criteria_list_display_tag_list" type="taglist" null="1" default=""/>
+<field name="criteria_list_display_author_list" type="authorlist" null="1" default=""/>
+<field name="criteria_list_begin" type="integer" default="1"/>
+<field name="criteria_list_length" type="integer" default="5" minimum="0" maximum="20"/>
+<field name="criteria_list_order_by_field1" type="field_list" null="1" default="start_publishing_datetime"/>
+<field name="criteria_list_order_by_direction1" type="char" null="1" default="DESC" values="ASC,DESC"/>
+<field name="criteria_list_order_by_field2" type="field_list" null="1" default=""/>
+<field name="criteria_list_order_by_direction2" type="char" null="1" default="DESC" values="ASC,DESC"/>
+<field name="criteria_list_order_by_field3" type="field_list" null="1" default=""/>
+<field name="criteria_list_order_by_direction3" type="char" null="1" default="DESC" values="ASC,DESC"/>

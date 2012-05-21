@@ -62,7 +62,7 @@ Class ExtensionHelper
 		$row = $this->get(
 			$extension_id,
 			ucfirst(strtolower(Services::Registry()->get('Route', 'content_catalog_type_title'))),
-			'Component'
+			'List'
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -98,13 +98,20 @@ Class ExtensionHelper
 			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 		}
 
+//Services::Registry()->get('ArticlesList', '*');
+
 		return;
 	}
 
 	/**
 	 * Retrieve Route information for a specific Extension
 	 *
-	 * @return  boolean
+	 * @param int $extension_id
+	 * @param int $catalog_type_id
+	 * @param null $model_name ('Articles', 'Comments')
+	 *
+	 * @return bool
+	 *
 	 * @since   1.0
 	 */
 	public function getIncludeExtension($extension_id, $catalog_type_id, $model_name = null)
@@ -113,7 +120,11 @@ Class ExtensionHelper
 		$type = Helpers::Extension()->getType($catalog_type_id);
 
 		/** Retrieve the query results */
-		$row = $this->get($extension_id, $model_name, $type);
+		$row = $this->get(
+			$extension_id,
+			$model_name,
+			$type
+		);
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
@@ -235,13 +246,12 @@ Class ExtensionHelper
 	 */
 	public function getExtensionNode($extension_instance_id)
 	{
-
 		$m = Application::Controller()->connect();
 
 		$m->model->query->select($m->model->db->qn('a.name'));
 
-		$m->model->query->from($m->model->db->qn('#__extensions').' as '.$m->model->db->qn('a'));
-		$m->model->query->from($m->model->db->qn('#__extension_instances').' as '.$m->model->db->qn('b'));
+		$m->model->query->from($m->model->db->qn('#__extensions') . ' as ' . $m->model->db->qn('a'));
+		$m->model->query->from($m->model->db->qn('#__extension_instances') . ' as ' . $m->model->db->qn('b'));
 
 		$m->model->query->where($m->model->db->qn('a.id') . ' = ' . $m->model->db->qn('b.extension_id'));
 		$m->model->query->where($m->model->db->qn('b.id') . ' = ' . (int)$extension_instance_id);
@@ -334,196 +344,159 @@ Class ExtensionHelper
 	}
 
 	/**
-	 * Finalize the Template and Wrap selections for the request
+	 *  setDefaultThemePage
 	 *
-	 * @return  null
+	 *  Determine the default theme value, given system default sequence
+	 *
+	 * @return  string
 	 * @since   1.0
 	 */
-	public function finalizeParameters($source_id = 0, $action = 'display')
+	public function setDefaultThemePage($namespace)
 	{
-		$getTemplate = true;
-
-		$template_view_id = (int)Services::Registry()->get('Parameters', 'template_view_id', 0);
-		$template_view_title = Services::Registry()->get('Parameters', 'template_view_title', '');
-
-		if ($template_view_id == 0) {
-		} else {
-			$template_view_title = Helpers::Extension()->getInstanceTitle((int)$template_view_id);
-			if ($template_view_title == false) {
+		if ((int)Services::Registry()->get($namespace, 'content_id') > 0) {
+			if (strtolower(Services::Registry()->get($namespace, 'request_action')) == 'display') {
+				$type = 'item';
 			} else {
-				$getTemplate = false;
-				Services::Registry()->set('Parameters', 'wrap_view_title', $template_view_title);
+				$type = 'form';
 			}
-
+		} else {
+			$type = 'list';
 		}
 
-		if ($template_view_title == '') {
-		} else {
-			if ($template_view_id == 0) {
-				$template_view_id = Helpers::Extension()->getInstanceID(
-					CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW,
-					$template_view_title
-				);
-				if ($template_view_id == false) {
-				} else {
-					$getTemplate = false;
-					Services::Registry()->set('Parameters', 'template_view_id', $template_view_id);
-				}
-			} else {
-				$getTemplate = false;
-			}
-		}
+		if ($type == 'form') {
+			$theme_id = Services::Registry()->get('Parameters', 'form_theme_id', 0);
 
-		$getWrap = true;
-
-		$wrap_view_id = (int)Services::Registry()->get('Parameters', 'wrap_view_id', 0);
-		$wrap_view_title = Services::Registry()->get('Parameters', 'wrap_view_title', '');
-
-		if ($wrap_view_id == 0) {
-		} else {
-			$wrap_view_title = Helpers::Extension()->getInstanceTitle((int)$wrap_view_id);
-
-			if ($wrap_view_title == false) {
-			} else {
-				$getWrap = false;
-				Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_view_title);
-			}
-
-		}
-
-		if ($wrap_view_title == '') {
-		} else {
-			if ($wrap_view_id == 0) {
-				$wrap_view_id = Helpers::Extension()->getInstanceID(
-					CATALOG_TYPE_EXTENSION_WRAP_VIEW,
-					$wrap_view_title
-				);
-				if ($wrap_view_id == false) {
-				} else {
-					$getWrap = false;
-					Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_view_id);
-				}
-			} else {
-				$getWrap = false;
-			}
-		}
-
-		if ($action == 'add' || $action == 'edit') {
-
-			Services::Registry()->set('Parameters', 'template_view', 'form');
-
-			if ($getTemplate == true) {
-				Services::Registry()->set('Parameters', 'template_view_id',
-					Services::Registry()->get('Parameters', 'form_template_view_id'));
-				Services::Registry()->set('Parameters', 'template_view_css_id',
-					Services::Registry()->get('Parameters', 'form_template_view_css_id'));
-				Services::Registry()->set('Parameters', 'template_view_css_class',
-					Services::Registry()->get('Parameters', 'form_template_view_css_class'));
-			}
-
-			if ($getWrap == true) {
-				Services::Registry()->set('Parameters', 'wrap_view_id',
-					Services::Registry()->get('Parameters', 'form_wrap_view_id'));
-				Services::Registry()->set('Parameters', 'wrap_view_css_id',
-					Services::Registry()->get('Parameters', 'form_wrap_view_css_id'));
-				Services::Registry()->set('Parameters', 'wrap_view_css_class',
-					Services::Registry()->get('Parameters', 'form_wrap_view_css_class'));
-			}
+			$page_view_id = Services::Registry()->get('Parameters', 'form_page_view_id', 0);
+			$page_view_css_id = Services::Registry()->get('Parameters', 'form_page_view_css_id', '');
+			$page_view_css_class = Services::Registry()->get('Parameters', 'form_page_view_css_class', '');
 
 			$model_name = Services::Registry()->get('Parameters', 'form_model_name', '');
 			$model_type = Services::Registry()->get('Parameters', 'form_model_type', '');
 			$model_query_object = Services::Registry()->get('Parameters', 'form_model_query_object', '');
 
+		} else if ($type == 'item') {
 
-		} else if ((int)$source_id == 0) {
+			$theme_id = Services::Registry()->get('Parameters', 'item_theme_id', 0);
 
-			Services::Registry()->set('Parameters', 'template_view', 'list');
+			$page_view_id = Services::Registry()->get('Parameters', 'item_page_view_id', 0);
+			$page_view_css_id = Services::Registry()->get('Parameters', 'item_page_view_css_id', '');
+			$page_view_css_class = Services::Registry()->get('Parameters', 'item_page_view_css_class', '');
 
-			if ($getTemplate == true) {
-				Services::Registry()->set('Parameters', 'template_view_id',
-					Services::Registry()->get('Parameters', 'list_template_view_id'));
-				Services::Registry()->set('Parameters', 'template_view_css_id',
-					Services::Registry()->get('Parameters', 'list_template_view_css_id'));
-				Services::Registry()->set('Parameters', 'template_view_css_class',
-					Services::Registry()->get('Parameters', 'list_template_view_css_class'));
-			}
+			$model_name = Services::Registry()->get('Parameters', 'item_model_name', '');
+			$model_type = Services::Registry()->get('Parameters', 'item_model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'item_model_query_object', '');
 
-			if ($getWrap == true) {
-				Services::Registry()->set('Parameters', 'wrap_view_id',
-					Services::Registry()->get('Parameters', 'list_wrap_view_id'));
-				Services::Registry()->set('Parameters', 'wrap_view_css_id',
-					Services::Registry()->get('Parameters', 'list_wrap_view_css_id'));
-				Services::Registry()->set('Parameters', 'wrap_view_css_class',
-					Services::Registry()->get('Parameters', 'list_wrap_view_css_class'));
-			}
+		} else {
+			$theme_id = Services::Registry()->get('Parameters', 'list_theme_id', 0);
+
+			$page_view_id = Services::Registry()->get('Parameters', 'list_page_view_id', 0);
+			$page_view_css_id = Services::Registry()->get('Parameters', 'list_page_view_css_id', '');
+			$page_view_css_class = Services::Registry()->get('Parameters', 'list_page_view_css_class', '');
 
 			$model_name = Services::Registry()->get('Parameters', 'list_model_name', '');
 			$model_type = Services::Registry()->get('Parameters', 'list_model_type', '');
 			$model_query_object = Services::Registry()->get('Parameters', 'list_model_query_object', '');
+		}
 
+		/** Set Parameters */
+		Services::Registry()->set($namespace, 'theme_id', $theme_id);
+
+		Services::Registry()->set($namespace, 'page_view_id', $page_view_id);
+		Services::Registry()->set($namespace, 'page_view_css_id', $page_view_css_id);
+		Services::Registry()->set($namespace, 'page_view_css_class', $page_view_css_class);
+
+		Services::Registry()->set($namespace, 'model_name', $model_name);
+		Services::Registry()->set($namespace, 'model_type', $model_type);
+		Services::Registry()->set($namespace, 'model_query_object', $model_query_object);
+
+		/** Theme  */
+		Helpers::Theme()->get($theme_id, $namespace);
+
+		/** Page  */
+		Helpers::PageView()->get($page_view_id, $namespace);
+
+		return;
+	}
+
+	/**
+	 *  setDefaultThemePage
+	 *
+	 *  Determine the default theme value, given system default sequence
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
+	public function setDefaultTemplateWrap($namespace)
+	{
+		if ((int)Services::Registry()->get($namespace, 'content_id') > 0) {
+			if (strtolower(Services::Registry()->get($namespace, 'request_action')) == 'display') {
+				$type = 'item';
+			} else {
+				$type = 'form';
+			}
+		} else {
+			$type = 'list';
+		}
+
+		if ($type == 'form') {
+			$template_view_id = Services::Registry()->get('Parameters', 'form_template_view_id', 0);
+			$template_view_css_id = Services::Registry()->get('Parameters', 'form_template_view_css_id', '');
+			$template_view_css_class = Services::Registry()->get('Parameters', 'form_template_view_css_class', '');
+
+			$wrap_view_id = Services::Registry()->get('Parameters', 'form_wrap_view_id', 0);
+			$wrap_view_css_id = Services::Registry()->get('Parameters', 'form_wrap_view_css_id', '');
+			$wrap_view_css_class = Services::Registry()->get('Parameters', 'form_wrap_view_css_class', '');
+
+			$model_name = Services::Registry()->get('Parameters', 'form_model_name', '');
+			$model_type = Services::Registry()->get('Parameters', 'form_model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'form_model_query_object', '');
+
+		} else if ($type == 'item') {
+
+			$template_view_id = Services::Registry()->get('Parameters', 'item_template_view_id', 0);
+			$template_view_css_id = Services::Registry()->get('Parameters', 'item_template_view_css_id', '');
+			$template_view_css_class = Services::Registry()->get('Parameters', 'item_template_view_css_class', '');
+
+			$wrap_view_id = Services::Registry()->get('Parameters', 'item_wrap_view_id', 0);
+			$wrap_view_css_id = Services::Registry()->get('Parameters', 'item_wrap_view_css_id', '');
+			$wrap_view_css_class = Services::Registry()->get('Parameters', 'item_wrap_view_css_class', '');
+
+			$model_name = Services::Registry()->get('Parameters', 'item_model_name', '');
+			$model_type = Services::Registry()->get('Parameters', 'item_model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'item_model_query_object', '');
 
 		} else {
+			$template_view_id = Services::Registry()->get('Parameters', 'list_template_view_id', 0);
+			$template_view_css_id = Services::Registry()->get('Parameters', 'list_template_view_css_id', '');
+			$template_view_css_class = Services::Registry()->get('Parameters', 'list_template_view_css_class', '');
 
-			Services::Registry()->set('Parameters', 'template_view', 'item');
+			$wrap_view_id = Services::Registry()->get('Parameters', 'list_wrap_view_id', 0);
+			$wrap_view_css_id = Services::Registry()->get('Parameters', 'list_wrap_view_css_id', '');
+			$wrap_view_css_class = Services::Registry()->get('Parameters', 'list_wrap_view_css_class', '');
 
-			if ($getTemplate == true) {
-
-			}
-
-			if ($getWrap == true) {
-
-			}
-
-			$model_name = Services::Registry()->get('Parameters', 'model_name', '');
-			$model_type = Services::Registry()->get('Parameters', 'model_type', '');
-			$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', '');
+			$model_name = Services::Registry()->get('Parameters', 'list_model_name', '');
+			$model_type = Services::Registry()->get('Parameters', 'list_model_type', '');
+			$model_query_object = Services::Registry()->get('Parameters', 'list_model_query_object', '');
 		}
 
-		if ($model_name == '') {
-			$model_name = Services::Registry()->get('Include', 'extension_title');
-		}
-		Services::Registry()->set('Parameters', 'model_name', $model_name);
+		/** Set Parameters */
+		Services::Registry()->set($namespace, 'template_view_id', $template_view_id);
+		Services::Registry()->set($namespace, 'template_view_css_id', $template_view_css_id);
+		Services::Registry()->set($namespace, 'template_view_css_class', $template_view_css_class);
 
-		if ($model_type == '') {
-			$model_type = 'Table';
-		}
-		Services::Registry()->set('Parameters', 'model_type', $model_type);
+		Services::Registry()->set($namespace, 'wrap_view_id', $wrap_view_id);
+		Services::Registry()->set($namespace, 'wrap_view_css_id', $wrap_view_css_id);
+		Services::Registry()->set($namespace, 'wrap_view_css_class', $wrap_view_css_class);
 
-		if ($action == 'add' || $action == 'edit') {
-			if ($model_query_object == '') {
-				$model_query_object = 'load';
-			}
+		Services::Registry()->set($namespace, 'model_name', $model_name);
+		Services::Registry()->set($namespace, 'model_type', $model_type);
+		Services::Registry()->set($namespace, 'model_query_object', $model_query_object);
 
-		} else if ((int)$source_id == 0) {
-			if ($model_query_object == '') {
-				$model_query_object = 'load';
-			}
+		/** Template  */
+		Helpers::TemplateView()->get($template_view_id, $namespace);
 
-		} else {
-			if ($model_query_object == '') {
-				$model_query_object = 'getData';
-			}
-		}
-		Services::Registry()->set('Parameters', 'model_query_object', $model_query_object);
-
-		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id', 0));
-
-		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id', 0));
-
-		/** Remove parameters not needed */
-		Services::Registry()->delete('Parameters', 'list_template_view_id');
-		Services::Registry()->delete('Parameters', 'list_template_view_css_id');
-		Services::Registry()->delete('Parameters', 'list_template_view_css_class');
-		Services::Registry()->delete('Parameters', 'list_wrap_view_id');
-		Services::Registry()->delete('Parameters', 'list_wrap_view_css_id');
-		Services::Registry()->delete('Parameters', 'list_wrap_view_css_class');
-
-		Services::Registry()->delete('Parameters', 'form_template_view_id');
-		Services::Registry()->delete('Parameters', 'form_template_view_css_id');
-		Services::Registry()->delete('Parameters', 'form_template_view_css_class');
-		Services::Registry()->delete('Parameters', 'form_wrap_view_id');
-		Services::Registry()->delete('Parameters', 'form_wrap_view_css_id');
-		Services::Registry()->delete('Parameters', 'form_wrap_view_css_class');
+		/** Wrap  */
+		Helpers::WrapView()->get($wrap_view_id, $namespace);
 
 		return;
 	}

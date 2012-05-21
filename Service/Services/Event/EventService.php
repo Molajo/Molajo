@@ -56,8 +56,16 @@ Class EventService
 	 */
 	public function schedule($event, $parameters = array())
 	{
+		return $this;
+
 		/** Retrieve Event Registrations */
-		$registrations = Services::Registry()->get('Events', $event);
+		$exists = Services::Registry()->exists('Events', $event);
+
+		if ($exists === true) {
+			$registrations = Services::Registry()->get('Events', $event);
+		} else {
+			$registrations = array();
+		}
 
 		if (is_array($registrations)) {
 		} else {
@@ -90,8 +98,16 @@ Class EventService
 	 */
 	public function register($event, $trigger)
 	{
+		return $this;
+
 		/** Retrieve Event Registrations */
-		$registrations = Services::Registry()->get('Events', $event);
+		$exists = Services::Registry()->exists('Events', $event);
+
+		if ($exists === true) {
+			$registrations = Services::Registry()->get('Events', $event);
+		} else {
+			$registrations = array();
+		}
 
 		if (is_array($registrations)) {
 		} else {

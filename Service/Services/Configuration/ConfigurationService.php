@@ -101,12 +101,10 @@ Class ConfigurationService
 		}
 
 		/** Retrieve Sites Data from DB */
-		$m = Application::Controller()->connect('Sites');
-
+		$m = Application::Controller()->connect('Sites', 'Table');
 		$m->model->set('id', (int)SITE_ID);
 
 		$items = $m->getData('load');
-
 		if ($items === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
@@ -202,11 +200,12 @@ Class ConfigurationService
 
 				$items = $m->getData('load');
 				if ($items === false) {
-					throw new \RuntimeException ('Application setSiteData() query problem');
+					throw new \RuntimeException ('Application getApplication() query problem');
 				}
 
 				Services::Registry()->set('Configuration', 'application_id', (int)$items['id']);
-				Services::Registry()->set('Configuration', 'application_catalog_type_id', (int)$items['catalog_type_id']);
+				Services::Registry()->set('Configuration', 'application_catalog_type_id',
+					(int)$items['catalog_type_id']);
 				Services::Registry()->set('Configuration', 'application_name', $items['name']);
 				Services::Registry()->set('Configuration', 'application_path', $items['path']);
 				Services::Registry()->set('Configuration', 'application_description', $items['description']);
@@ -217,8 +216,10 @@ Class ConfigurationService
 					Services::Registry()->set('Configuration', $key, $value);
 				}
 
-				/** Remove from primary result set */
-				Services::Registry()->deleteRegistry('ApplicationsParameters');
+				/** Dynamic configuration info: base URLs for Site and Application */
+				Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
+				$path = Services::Registry()->get('Configuration', 'application_path', '');
+				Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
 
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -246,7 +247,10 @@ Class ConfigurationService
 	 */
 	public static function getFile($file, $type = 'Application')
 	{
-		if ($type == 'Application') {
+//echo 'File: ' . $file . ' Type: ' . $type . '<br />';
+
+		if ($type == 'Application' || $type == 'Language') {
+
 		} else {
 			$registryName = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
 			$exists = Services::Registry()->exists($registryName);
@@ -258,9 +262,15 @@ Class ConfigurationService
 		if (strtolower($type) == 'application') {
 			$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
 
-		} elseif (strtolower($type) == 'table') {
+		} else if (strtolower($type) == 'language') {
+			$path_and_file = $file . '/' . 'Manifest.xml';
 
-			if ($file == 'Theme') {
+		} else if (strtolower($type) == 'table') {
+
+			if (file_exists(EXTENSIONS_COMPONENTS . '/options/' . $file . '.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/Options/' . $file . '.xml';
+
+			} else if ($file == 'Theme') {
 
 				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
 					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
@@ -274,26 +284,21 @@ Class ConfigurationService
 
 			} else {
 
-				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
-					$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
-
-				} else {
-					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-				}
+				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 			}
 
-		} else if (strtolower($type) == 'content') { // Primary Component Data
+		} else if (strtolower($type) == 'item') { // Primary Component Data
 
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Table.xml';
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Item.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Item.xml';
 			} else {
 				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 			}
 
-		} elseif (strtolower($type) == 'component') {
+		} elseif (strtolower($type) == 'list') {
 
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Extension.xml';
+			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/List.xml')) {
+				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/List.xml';
 
 			} else {
 				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
@@ -313,7 +318,7 @@ Class ConfigurationService
 
 		if (file_exists($path_and_file)) {
 		} else {
-			echo $file . ' ' . $type . ' ' . $path_and_file . '<br />';
+			echo 'DOES NOT EXIST ' . $file . ' ' . $type . '<br />' . $path_and_file . '<br />';
 			echo 'File not found: ' . $path_and_file;
 			throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
@@ -326,6 +331,9 @@ Class ConfigurationService
 		}
 
 		if (strtolower($type) == 'application') {
+			return $xml;
+
+		} else if (strtolower($type) == 'language') {
 			return $xml;
 
 		} else if (strtolower($type) == 'module') {
@@ -534,10 +542,13 @@ Class ConfigurationService
 
 //echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
 
+		/** If the registry already exists, return it, otherwise create it */
 		$exists = Services::Registry()->exists($registryName);
 		if ($exists === true) {
 			return $registryName;
 		}
+
+		Services::Registry()->createRegistry($registryName);
 
 		/** Set Model Properties */
 		ConfigurationService::setModelRegistry($registryName, $xml);
@@ -753,37 +764,44 @@ Class ConfigurationService
 			Services::Registry()->set($registryName, 'triggers', $triggersArray);
 		}
 
-		/** Item Customfields */
-		$include = 'x';
-		$i = 0;
-		while ($i < 99) {
+		/** Customfields */
+		$fieldTypes = 0;
+		while ($fieldTypes < 99) {
 
-			if (isset($xml->table->item->customfields->customfield[$i])) {
+			/** Process one field type at a time ex. parameters, metadata, customfield */
+			if (isset($xml->table->item->customfields->customfield[$fieldTypes])) {
 			} else {
-				$i = 9999;
+				$fieldTypes = 9999;
 				break;
 			}
 
-			if (isset($xml->table->item->customfields->customfield[$i]->include['name'])) {
-				$include = (string)$xml->table->item->customfields->customfield[$i]->include['name'];
+			$done = false;
+			while ($done == false) {
 
-				if ($xml_string == '') {
-					$xml_string = file_get_contents($path_and_file);
+				/** Process one include code statement at a time per fieldtype */
+				if (isset($xml->table->item->customfields->customfield[$fieldTypes]->include['name'])) {
+					$include = (string)$xml->table->item->customfields->customfield[$fieldTypes]->include['name'];
+
+					if ($xml_string == '') {
+						$xml_string = file_get_contents($path_and_file);
+					}
+
+					$replace_this = '<include name="' . $include . '"/>';
+
+					$xml_string = ConfigurationService::replaceIncludeStatement(
+						$include, $file, $replace_this, $xml_string
+					);
+
+					$xml = simplexml_load_string($xml_string);
+				} else {
+					$done = true;
 				}
-
-				$replace_this = '<include name="' . $include . '"/>';
-
-				$xml_string = ConfigurationService::replaceIncludeStatement(
-					$include, $file, $replace_this, $xml_string
-				);
-
-				$xml = simplexml_load_string($xml_string);
 			}
-			$i++;
+			$fieldTypes++;
 		}
 
+		/** Now that all include code has been retrieved, process custom fields */
 		if (isset($xml->table->item->customfields)) {
-
 			ConfigurationService::getCustomFields(
 				$xml->table->item->customfields,
 				$file,
@@ -792,7 +810,8 @@ Class ConfigurationService
 			);
 		}
 
-		/** Component Customfields */
+		/** I THINK THIS WILL BE REMOVED Component Customfields (OR WE'LL USE THIS FOR QUERIES) */
+
 		$include = 'x';
 		$i = 0;
 		while ($i < 99) {
@@ -917,16 +936,23 @@ Class ConfigurationService
 
 				$fieldArray[] = $fieldAttributesArray;
 			}
-
 			Services::Registry()->set($registryName, $name, $fieldArray);
 
 			/** Track Registry names for all customfields */
-			$temp = Services::Registry()->get($registryName, 'CustomFieldGroups');
+			$exists = Services::Registry()->exists($registryName, 'CustomFieldGroups');
+
+			if ($exists === true) {
+				$temp = Services::Registry()->get($registryName, 'CustomFieldGroups');
+			} else {
+				$temp = array();
+			}
+
 			if (is_array($temp)) {
 			} else {
 				if ($temp == '') {
 					$temp = array();
 				} else {
+
 					$hold = $temp;
 					$temp = array();
 					$temp[] = $hold;
@@ -934,6 +960,7 @@ Class ConfigurationService
 			}
 
 			$temp[] = $name;
+
 			Services::Registry()->set($registryName, 'CustomFieldGroups', array_unique($temp));
 
 			$i++;

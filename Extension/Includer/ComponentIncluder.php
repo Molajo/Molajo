@@ -34,7 +34,7 @@ class ComponentIncluder extends Includer
 	 */
 	public function __construct($name = null, $type = null)
 	{
-		Services::Registry()->set('Include', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_COMPONENT);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_COMPONENT);
 		return parent::__construct($name, $type);
 	}
 
@@ -49,7 +49,7 @@ class ComponentIncluder extends Includer
 	protected function getAttributes()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Component */
-		if (Services::Registry()->get('Include', 'extension_primary') == true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 			return;
 		} else {
 			return parent::getAttribute();
@@ -65,7 +65,7 @@ class ComponentIncluder extends Includer
 	public function getExtension($extension_id = null)
 	{
 		/** Include and Parameter Registries are already loaded for Primary Component */
-		if (Services::Registry()->get('Include', 'extension_primary') == true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 			return;
 		}
 
@@ -86,7 +86,7 @@ class ComponentIncluder extends Includer
 	public function setRenderCriteria()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Component */
-		if (Services::Registry()->get('Include', 'extension_primary') == true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 			return;
 		}
 		return parent::setRenderCriteria();
@@ -103,20 +103,20 @@ class ComponentIncluder extends Includer
 	protected function loadMedia()
 	{
 		/** Primary Category */
-		$this->loadMediaPlus('/category' . Services::Registry()->get('Include', 'catalog_category_id'),
+		$this->loadMediaPlus('/category' . Services::Registry()->get('Parameters', 'catalog_category_id'),
 			Services::Registry()->get('Parameters', 'criteria_asset_priority_category', 700));
 
 		/** Menu Item */
-		$this->loadMediaPlus('/menuitem' . Services::Registry()->get('Include', 'menu_item_id'),
+		$this->loadMediaPlus('/menuitem' . Services::Registry()->get('Parameters', 'menu_item_id'),
 			Services::Registry()->get('Parameters', 'criteria_asset_priority_menu_item', 800));
 
 		/** Source */
-		$this->loadMediaPlus('/source/'  . Services::Registry()->get('Include', 'extension_title')
+		$this->loadMediaPlus('/source/'  . Services::Registry()->get('Parameters', 'extension_title')
 				. Services::Registry()->get('Include', 'content_id'),
 			Services::Registry()->get('Parameters', 'criteria_asset_priority_source', 900));
 
 		/** Component */
-		$this->loadMediaPlus('/component/' . Services::Registry()->get('Include', 'extension_title'),
+		$this->loadMediaPlus('/component/' . Services::Registry()->get('Parameters', 'extension_title'),
 			Services::Registry()->get('Parameters', 'criteria_asset_priority_extension', 900));
 
 		return true;
@@ -133,8 +133,8 @@ class ComponentIncluder extends Includer
 	protected function loadMediaPlus($plus = '', $priority = 500)
 	{
 		/** Theme */
-		$file_path = EXTENSIONS_THEMES . '/' . Services::Registry()->get('Include', 'theme_title');
-		$url_path = EXTENSIONS_THEMES_URL . '/' . Services::Registry()->get('Include', 'theme_title');
+		$file_path = EXTENSIONS_THEMES . '/' . Services::Registry()->get('Parameters', 'theme_title');
+		$url_path = EXTENSIONS_THEMES_URL . '/' . Services::Registry()->get('Parameters', 'theme_title');
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);

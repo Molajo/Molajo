@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="ArticlesContent"
+        name="CategoriesItem"
         table="#__content"
         primary_key="id"
-        name_key="title"
         primary_prefix="a"
         get_customfields="1"
         get_item_children="0"
@@ -17,7 +16,7 @@
                 <include name="ContentFields"/>
             </fields>
             <joins>
-                <include name="ContentJoins"/>
+                <include name="CategoryContentJoins"/>
             </joins>
             <foreignkeys>
                 <include name="ContentForeignkeys"/>
@@ -37,7 +36,7 @@
                     <include name="SystemMetadata"/>
                 </customfield>
                 <customfield name="parameters">
-                    <include name="SystemParameters"/>
+                    <include name="ParametersItem"/>
                 </customfield>
             </customfields>
         </item>

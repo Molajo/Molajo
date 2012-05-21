@@ -146,14 +146,18 @@ Class ParseService
 	public function process()
 	{
 		/** Retrieve overrides */
-		$sequenceXML = Services::Registry()->get('Override', 'sequence_xml', '');
-		$finalXML = Services::Registry()->get('Override', 'final_xml', '');
+		$sequenceXML = Services::Registry()->get('Override', 'sequence_xml', false);
+		$finalXML = Services::Registry()->get('Override', 'final_xml', false);
 
 		/**
 		 *  Body Includers: processed recursively until no more <include: are found
 		 *      for the set of includes defined in the includes-page.xml
 		 */
-		$sequence = Services::Configuration()->getFile('includes-page', 'Application');
+		if ($finalXML === false) {
+			$sequence = Services::Configuration()->getFile('includes-page', 'Application');
+		} else {
+			$sequence = $sequenceXML;
+		}
 
 		foreach ($sequence->include as $next) {
 			$this->sequence[] = (string)$next;
@@ -166,19 +170,6 @@ Class ParseService
 
 		/** Save parameters for the primary route so that Includer / MVC can use Parameters Registry */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
-		Services::Registry()->copy('Route', 'Include');
-
-
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Route'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Metadata'));
-		echo '</pre>';
-		die;
 
 		/** Start parsing and processing page include for Theme */
 		$body = $this->renderLoop();
@@ -187,7 +178,11 @@ Class ParseService
 		 *  Final Includers: Now, the theme, head, messages, and defer includes run
 		 *      This process also removes <include values not found
 		 */
-		$sequence = Services::Configuration()->getFile('includes-final', 'Application');
+		if ($finalXML === false) {
+			$sequence = Services::Configuration()->getFile('includes-final', 'Application');
+		} else {
+			$sequence = $finalXML;
+		}
 
 		$this->sequence = array();
 
@@ -205,8 +200,8 @@ Class ParseService
 
 		/** Saved during class entry */
 		Services::Registry()->copy('RouteParameters', 'Parameters');
-		Services::Registry()->copy('Route', 'Include');
-
+echo 'stop in parser';
+die;
 		/** theme: load template media and language files */
 		$class = 'Molajo\\Extension\\Includer\\ThemeIncluder';
 
@@ -301,9 +296,7 @@ echo $body;
 		if (count($matches) == 0) {
 			return;
 		}
-		echo '<pre>';
-		var_dump($matches);
-		die;
+
 		foreach ($matches[1] as $includeStatement) {
 
 			$parts = array();
@@ -433,11 +426,10 @@ echo $body;
 
 					/** 6. initialize registry */
 					if ($first) {
-						Services::Registry()->set('Include', 'extension_primary', true);
+						Services::Registry()->set('Parameters', 'extension_primary', true);
 					} else {
-						Services::Registry()->createRegistry('Include');
 						Services::Registry()->createRegistry('Parameters');
-						Services::Registry()->set('Include', 'extension_primary', false);
+						Services::Registry()->set('Parameters', 'extension_primary', false);
 					}
 
 					/** 7. call the includer class */
@@ -458,7 +450,6 @@ echo $body;
 					/** 8. render output and store results as "replace with" */
 					$with[] = $rc->process($attributes);
 
-					Services::Registry()->deleteRegistry('Include');
 					Services::Registry()->deleteRegistry('Parameters');
 				}
 			}

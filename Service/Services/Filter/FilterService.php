@@ -623,7 +623,7 @@ Class FilterService
 	 */
 	public function escape_url($url)
 	{
-		if (Services::Registry()->get('Configuration', 'unicode_slugs') == 1) {
+		if (Services::Registry()->get('Configuration', 'url_unicode_slugs') == 1) {
 //            return FilterOutput::stringURLUnicodeSlug($url);
 		} else {
 //            return FilterOutput::stringURLSafe($url);

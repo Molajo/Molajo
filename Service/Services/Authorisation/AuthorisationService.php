@@ -184,33 +184,33 @@ Class AuthorisationService
 	public function authoriseAction()
 	{
 		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Services::Registry()->get('Route', 'catalog_view_group_id'),
+		if (in_array(Services::Registry()->get('Parameters', 'catalog_view_group_id'),
 			Services::Registry()->get('User', 'ViewGroups'))
-			&& in_array(Services::Registry()->get('Route', 'extension_view_group_id'),
+			&& in_array(Services::Registry()->get('Parameters', 'extension_view_group_id'),
 				Services::Registry()->get('User', 'ViewGroups'))) {
 
-			Services::Registry()->set('Route', 'status_authorised', true);
+			Services::Registry()->set('Parameters', 'status_authorised', true);
 
 		} else {
-			return Services::Registry()->set('Route', 'status_authorised', false);
+			return Services::Registry()->set('Parameters', 'status_authorised', false);
 		}
 
 		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Route', 'request_action', 'display') == 'display'
-			&& Services::Registry()->get('Route', 'status_authorised') == true
+		if (Services::Registry()->get('Parameters', 'request_action', 'display') == 'display'
+			&& Services::Registry()->get('Parameters', 'status_authorised') == true
 		) {
 			return true;
 		}
 
 		/** verify other actions */
 		$authorised = $this->authoriseTask(
-			Services::Registry()->get('Route', 'request_action'),
-			Services::Registry()->get('Route', 'request_catalog_id')
+			Services::Registry()->get('Parameters', 'request_action'),
+			Services::Registry()->get('Parameters', 'request_catalog_id')
 		);
 
-		Services::Registry()->set('Route', 'status_authorised', $authorised);
+		Services::Registry()->set('Parameters', 'status_authorised', $authorised);
 
-		if (Services::Registry()->get('Route', 'status_authorised') === true) {
+		if (Services::Registry()->get('Parameters', 'status_authorised') === true) {
 			return true;
 
 		} else {

@@ -93,8 +93,8 @@ Class Application
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function process($override_url_request = null, $override_catalog_id = null,
-							$override_sequence_xml = null, $override_final_xml = null)
+	public function process($override_url_request = false, $override_catalog_id = false,
+							$override_sequence_xml = false, $override_final_xml = false)
 	{
 		/** Initialise Sets the Configuration Registry  */
 		$continue = $this->initialise();
@@ -295,7 +295,7 @@ Class Application
 	 */
 	protected function execute()
 	{
-		$action = Services::Registry()->get('Route', 'request_action', 'display');
+		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 
 		/** Display Action */
 		if ($action == 'display') {
@@ -399,8 +399,7 @@ Class Application
 	protected function response()
 	{
 		if (Services::Redirect()->url === null
-			&& (int)Services::Redirect()->code == 0
-		) {
+			&& (int)Services::Redirect()->code == 0) {
 
 			Services::Debug()
 				->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200');
@@ -772,7 +771,10 @@ Class Application
 	 */
 	protected function sslCheck()
 	{
-		if ((int)Services::Registry()->get('Configuration', 'force_ssl', 0) > 0) {
+
+		Services::Registry()->get('ApplicationsParameters');
+
+		if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
 			if ((Services::Request()->get('connection')->isSecure() === true)) {
 
