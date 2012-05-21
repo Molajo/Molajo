@@ -1,7 +1,7 @@
 <table>
     <item>
         <fields>
-            <include name="ContentFields"/>
+            <include name="FieldsContent"/>
         </fields>
         <foreignkeys>
             <foreignkey include="ContentForeignkeys"/>
@@ -17,19 +17,11 @@
                 <include name="ContentCustomfields"/>
             </customfield>
             <customfield name="metadata">
-                <include name="SystemMetadata"/>
+                <include name="Metadata"/>
             </customfield>
             <customfield name="parameters">
                 <include name="ParametersItem"/>
             </customfield>
         </customfields>
     </item>
-    <list>
-        <customfields>
-            <customfield name="parameters">
-                <include name="ParametersItem"/>
-                <include name="ParametersList"/>
-            </customfield>
-        </customfields>
-    </list>
 </table>

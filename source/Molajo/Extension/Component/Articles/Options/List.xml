@@ -12,26 +12,26 @@
     <table>
         <item>
             <fields>
-                <include name="ExtensionFields"/>
+                <include name="FieldsExtensionInstance"/>
             </fields>
             <joins>
-                <include name="ExtensionInstancesJoins"/>
+                <include name="JoinsExtensionInstance"/>
             </joins>
             <foreignkeys>
-                <include name="ExtensionForeignkeys"/>
+                <include name="ForeignKeysExtensionInstance"/>
             </foreignkeys>
             <children>
-                <include name="ExtensionChildren"/>
+                <include name="ChildrenExtensionInstance"/>
             </children>
             <triggers>
-                <include name="ExtensionTriggers"/>
+                <include name="TriggersExtensionInstance"/>
             </triggers>
             <customfields>
                 <customfield name="customfields">
                     <field name="example_of_article_only_field" type="int" null="1" default="1"/>
                 </customfield>
                 <customfield name="metadata">
-                    <include name="SystemMetadata"/>
+                    <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
                     <include name="ParametersItem"/>

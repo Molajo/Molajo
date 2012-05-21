@@ -238,6 +238,7 @@ die;
 		if ($body == null) {
 			$first = true;
 			ob_start();
+			echo Services::Registry()->get('Parameters', 'theme_path_include');
 			require Services::Registry()->get('Parameters', 'theme_path_include');
 			$body = ob_get_contents();
 			ob_end_clean();
@@ -255,18 +256,28 @@ die;
 
 			$loop++;
 
+			/** Retrieve <include /> Statements in body */
 			$this->include_request = array();
 			$this->parseIncludeRequests($body);
 
+			/** When no other <include /> statements are found, end recursive processing */
 			if (count($this->include_request) == 0) {
 				break;
 
-			} else {
-
-				$body = $this->callIncluder($first, $body);
 			}
+
+			/** Render output for each discovered <include /> statement */
+
+			$body = $this->callIncluder($first, $body);
+
 echo $body;
 			die;
+
+			/**
+			 *	Rendered output will be parsed until no more <include /> statements are discovered.
+			 *	An endless loop could be created if frontend developers include a template that
+			 *	includes the same template. This is a stop-gap measure to prevent that from happening.
+			 */
 			if ($loop > STOP_LOOP) {
 				break;
 			}
@@ -281,6 +292,9 @@ echo $body;
 	 *
 	 * Parse the theme (first) and then rendered output (subsequent calls)
 	 * in search of include statements
+	 *
+	 * Note: Neither attribute pair may contain spaces.
+	 * To include multiple class value overrides, separate each element with a comma
 	 *
 	 * @return  array
 	 * @since   1.0
@@ -301,6 +315,7 @@ echo $body;
 
 			$parts = array();
 			$found_one = false;
+			$includerType = '';
 
 			$entireIncludeStatement = $includeStatement;
 
@@ -314,17 +329,12 @@ echo $body;
 				$replace = 'name=' . $name;
 				$includeStatement = str_replace($replace, '', $includeStatement);
 
-				$value = substr(trim($includeStatement), strpos(trim($includeStatement), 'value=') + 6, 99999);
+				$value = substr(trim($includeStatement),
+					strpos(trim($includeStatement), '{{{') + 3,
+					strpos(trim($includeStatement), '}}}') - 3);
 
-				$replace = 'value=' . $value;
+				$replace = '{{{' . $value . '}}}';
 				$includeStatement = str_replace($replace, '', $includeStatement);
-
-				if (substr(trim($value), 0, 1) == '"' && substr(trim($value), strlen(trim($value)) - 1, 1) == '"') {
-					$value = substr(trim($value), 1, strlen(trim($value)) - 2);
-
-				} else if (substr(trim($value), 0, 1) == "'" && substr(trim($value), strlen(trim($value)) - 1, 1) == "'") {
-					$value = substr(trim($value), 1, strlen(trim($value)) - 2);
-				}
 
 				$this->include_request[$i]['name'] = 'wrap';
 				$this->include_request[$i]['replace'] = $entireIncludeStatement;
@@ -332,13 +342,12 @@ echo $body;
 				$this->include_request[$i]['attributes']['wrap_view'] = $name;
 				$this->include_request[$i]['attributes']['wrap_model_query_object'] = $value;
 
-				/** process any remaining parameters in normal processing below */
-
-			} else {
-				$includerType = '';
+				/** process any remaining parameters pairs in normal processing below */
+				$includerType = '{}{}{}{do not reprocess}{}{}{}';
 			}
 
 			$parts = explode(' ', $includeStatement);
+
 			$countAttributes = 0;
 
 			if (count($parts) > 0) {
@@ -350,13 +359,10 @@ echo $body;
 
 						$this->include_request[$i]['name'] = $includerType;
 						$this->include_request[$i]['replace'] = $entireIncludeStatement;
-
 					}
 
 					/** Includer Attributes */
 					$attributes = str_replace('"', '', $part);
-
-					$attributes = $part;
 
 					if (trim($attributes) == '') {
 					} else {
@@ -367,6 +373,7 @@ echo $body;
 						if($pair[0] == $includerType) {
 						} else {
 							$countAttributes++;
+
 							$this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
 						}
 					}
@@ -379,6 +386,32 @@ echo $body;
 		}
 
 		return;
+	}
+
+	/**
+	 * parseRemoveQuotes   NOT USED
+	 *
+	 * Removes value from enclosed double or single quotes
+	 *
+	 * @param   string
+	 *
+	 * @return  string rendered output
+	 * @since   1.0
+	 */
+	protected function parseRemoveQuotes($value = null)
+	{
+		if (substr(trim($value), 0, 1) == '"'
+			&& substr(trim($value), strlen(trim($value)) - 1, 1) == '"'
+		) {
+			return substr(trim($value), 1, strlen(trim($value)) - 2);
+
+		} else if (substr(trim($value), 0, 1) == "'"
+			&& substr(trim($value), strlen(trim($value)) - 1, 1) == "'"
+		) {
+			return substr(trim($value), 1, strlen(trim($value)) - 2);
+		}
+
+		return $value;
 	}
 
 	/**
@@ -438,7 +471,6 @@ echo $body;
 					$class .= ucfirst($includerType) . 'Includer';
 
 					if (class_exists($class)) {
-
 						$rc = new $class ($includerType, $includeName);
 
 					} else {

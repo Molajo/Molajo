@@ -63,7 +63,7 @@ Class ModuleIncluder extends Includer
 	 * @since   1.0
 	 */
 	protected function loadMedia()
-	{
+	{   /* use parameter */
 		parent::loadMedia(
 			EXTENSIONS_MODULES_URL . '/' . Services::Registry()->get('Include', 'extension_title'),
 			SITE_MEDIA_URL . '/' . Services::Registry()->get('Include', 'extension_title'),

@@ -30,15 +30,18 @@
                 <field name="parameters" type="" null="1" default=""/>
                 <field name="metadata" type="" null="1" default=""/>
             </fields>
+
             <foreignkeys>
                 <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
             </foreignkeys>
+
             <children>
                 <child name="UserActivity" join="id:user_id"/>
                 <child name="UserApplications" join="id:user_id"/>
                 <child name="UserGroups" join="id:user_id"/>
                 <child name="UserViewGroups" join="id:user_id"/>
             </children>
+
             <triggers>
                 <trigger name="Username"/>
                 <trigger name="Email"/>
@@ -49,6 +52,7 @@
                 <trigger name="Metadata"/>
                 <trigger name="Parameters"/>
             </triggers>
+
             <customfields>
 
                 <customfield name="parameters">
@@ -82,7 +86,7 @@
                 </customfield>
 
                 <customfield name="metadata">
-                    <include name="SystemMetadata"/>
+                    <include name="Metadata"/>
                 </customfield>
 
             </customfields>

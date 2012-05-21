@@ -1,0 +1,28 @@
+{
+    "2":{
+        "site_name":"Molajo",
+        "link":"http://Molajo.org",
+        "linked_text":"Molajo&#174",
+        "remaining_text":"is Free Software",
+
+        "display_view_on_no_results":"1",
+
+        "criteria_asset_priority":"1",
+
+        "template_view_id":"41",
+        "template_view_css_id":"",
+        "template_view_css_class":"",
+
+        "wrap_view_id":"61",
+        "wrap_view_css_id":"",
+        "wrap_view_css_class":"",
+
+        "model_name":"dboParameters",
+        "model_type":"Module",
+        "model_query_object":"getParameters",
+
+        "caching":"0",
+        "cache_time":"15",
+        "cache_handler":"file"
+    }
+}

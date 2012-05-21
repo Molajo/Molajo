@@ -10,8 +10,8 @@
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:module name=Adminheader/>
+<include:module name=Adminheader display_view_on_no_results=1/>
 <include:message/>
-<include:request/>
+<include:request template_class=red non_standard_attributes=ignored/>
 <include:module name=Adminfooter/>
 <include:defer/>
