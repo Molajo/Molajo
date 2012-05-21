@@ -290,7 +290,6 @@ class DisplayController extends ModelController
 			$totalRows = 0;
 		}
 
-
 		if (is_object($this->query_results)) {
 
 			if ($totalRows > 0) {

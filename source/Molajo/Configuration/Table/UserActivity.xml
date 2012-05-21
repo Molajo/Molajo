@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="UserActivity"
+        name="UseractivityTable"
         table="#__user_activity"
         primary_key="id"
         primary_prefix="a"
@@ -36,7 +36,7 @@
                       jointo="id"
                       joinwith="catalog_id"/>
                 <join table="#__catalog_types"
-                      alias="useractivity_to_catalog_to_catalog_type"
+                      alias="useractivity_to_catalog_type"
                       select="title,source_table"
                       jointo="id"
                       joinwith="useractivity_to_catalog.catalog_type_id"/>

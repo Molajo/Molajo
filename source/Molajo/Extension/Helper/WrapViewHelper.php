@@ -52,20 +52,20 @@ Class WrapViewHelper
 	 * @return  array
 	 * @since   1.0
 	 */
-	public function get($wrap_view_id = 0)
+	public function get($wrap_view_id = 0, $namespace)
 	{
 		if ($wrap_view_id == 0) {
-			$wrap_view_id = $this->setDefault();
+			// $wrap_view_id = $this->setDefault();
 		}
 
-		Services::Registry()->set('Parameters', 'wrap_view_id', (int)$wrap_view_id);
+		Services::Registry()->set($namespace, 'wrap_view_id', (int)$wrap_view_id);
 
 		$node = Helpers::Extension()->getExtensionNode((int)$wrap_view_id);
 
-		Services::Registry()->set('Parameters', 'wrap_view_path_node', $node);
+		Services::Registry()->set($namespace, 'wrap_view_path_node', $node);
 
-		Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node));
-		Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node));
+		Services::Registry()->set($namespace, 'wrap_view_path', $this->getPath($node, $namespace));
+		Services::Registry()->set($namespace, 'wrap_view_path_url', $this->getPathURL($node, $namespace));
 
 		/** Retrieve the query results */
 		$row = Helpers::Extension()->get($wrap_view_id, 'WrapViews', 'Table');
@@ -77,14 +77,14 @@ Class WrapViewHelper
 			$wrap_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'Default');
 
 			/** System default */
-			Services::Registry()->set('Parameters', 'wrap_view_id', (int)$wrap_view_id);
+			Services::Registry()->set($namespace, 'wrap_view_id', (int)$wrap_view_id);
 
 			$node = Helpers::Extension()->getExtensionNode((int)$wrap_view_id);
 
-			Services::Registry()->set('Parameters', 'wrap_view_path_node', $node);
+			Services::Registry()->set($namespace, 'wrap_view_path_node', $node);
 
-			Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node));
-			Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node));
+			Services::Registry()->set($namespace, 'wrap_view_path', $this->getPath($node, $namespace));
+			Services::Registry()->set($namespace, 'wrap_view_path_url', $this->getPathURL($node, $namespace));
 
 			$row = Helpers::Extension()->get($wrap_view_id, 'WrapView');
 
@@ -94,45 +94,14 @@ Class WrapViewHelper
 			}
 		}
 
-		Services::Registry()->set('Parameters', 'wrap_view_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Parameters', 'wrap_view_language', $row['language']);
-		Services::Registry()->set('Parameters', 'wrap_view_view_group_id', $row['view_group_id']);
-		Services::Registry()->set('Parameters', 'wrap_view_catalog_id', $row['catalog_id']);
-		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set($namespace, 'wrap_view_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set($namespace, 'wrap_view_language', $row['language']);
+		Services::Registry()->set($namespace, 'wrap_view_view_group_id', $row['view_group_id']);
+		Services::Registry()->set($namespace, 'wrap_view_catalog_id', $row['catalog_id']);
+		Services::Registry()->set($namespace, 'wrap_view_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set($namespace, 'wrap_view_catalog_type_title', $row['catalog_types_title']);
 
 		return;
-	}
-
-	/**
-	 *  setDefault
-	 *
-	 *  Determine the default wrap_view value, given system default sequence
-	 *
-	 * @return  string
-	 * @since   1.0
-	 */
-	public function setDefault()
-	{
-		$wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		$wrap_view_id = Services::Registry()->get('UserParameters', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		$wrap_view_id = Services::Registry()->get('Configuration', 'wrap_view_id', 0);
-		if ((int)$wrap_view_id == 0) {
-		} else {
-			return $wrap_view_id;
-		}
-
-		return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'System'); //99
 	}
 
 	/**
@@ -145,18 +114,18 @@ Class WrapViewHelper
 	 * @param $node
 	 * @return bool|string
 	 */
-	public function getPath($node)
+	public function getPath($node, $namespace)
 	{
 		$plus = '/View/Wrap/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
+		if (file_exists(Services::Registry()->get($namespace, 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get($namespace, 'theme_path') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
-				return Services::Registry()->get('Parameters', 'extension_path') . $plus;
+		if (file_exists(Services::Registry()->get($namespace, 'extension_path') . $plus . '/Manifest.xml')) {
+				return Services::Registry()->get($namespace, 'extension_path') . $plus;
 		}
 
 		/** 3. View */
@@ -180,18 +149,18 @@ Class WrapViewHelper
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($node = false)
+	public function getPathURL($node = false, $namespace)
 	{
 		$plus = '/View/Wrap/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
+		if (file_exists(Services::Registry()->get($namespace, 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get($namespace, 'theme_path_url') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
+		if (file_exists(Services::Registry()->get($namespace, 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get($namespace, 'extension_path_url') . $plus;
 		}
 
 		/** 3. View */

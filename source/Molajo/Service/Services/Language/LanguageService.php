@@ -160,7 +160,7 @@ Class LanguageService
 	{
 		/** load metadata */
 		$metadata = Services::Configuration()
-			->getFile('manifest', SITE_LANGUAGES . '/' . $this->language);
+			->getFile(SITE_LANGUAGES . '/' . $this->language, 'Language');
 
 		if (isset($metadata['name'])) {
 			$this->name = $metadata['name'];
@@ -558,7 +558,7 @@ Class LanguageService
 	 */
 	public function get_metadata($file)
 	{
-		$xml = Services::Configuration()->getFile($file);
+		$xml = Services::Configuration()->getFile($file, 'Language');
 		if ($xml) {
 		} else {
 			return true;

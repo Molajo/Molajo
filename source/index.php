@@ -12,10 +12,10 @@ ini_set('zend.ze1_compatibility_mode', 0);
 define('BASE_FOLDER', __DIR__);
 
 /** Initialize Optional Parameters */
-$override_url_request = null;
-$override_catalog_id = null;
-$override_sequenceXML = null;
-$override_finalXML = null;
+$override_url_request = false;
+$override_catalog_id = false;
+$override_sequenceXML = false;
+$override_finalXML = false;
 
 $class = 'Molajo\\Application';
 

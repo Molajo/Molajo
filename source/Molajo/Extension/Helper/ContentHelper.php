@@ -61,7 +61,7 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'catalog_source_id'),
-			'Content',
+			'Item',
 			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
 		);
 
@@ -69,9 +69,6 @@ Class ContentHelper
 		if (count($row) == 0) {
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
-
-		/** Store Route Data */
-		Services::Registry()->set('Routedata', 'Content', $row);
 
 		/** Route Registry */
 		Services::Registry()->set('Route', 'content_id', (int)$row['id']);
@@ -94,14 +91,11 @@ Class ContentHelper
 
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
 			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
-
-			$data = Services::Registry()->get($row['table_registry_name'] . $customFieldName);
-			Services::Registry()->set('Routedata', 'Content'.$customFieldName, $data);
-
 			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 		}
+
+//Services::Registry()->get('ArticlesItem', '*');
 
 		return true;
 	}
@@ -123,7 +117,7 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$row = $this->get(
 			Services::Registry()->get('Route', 'catalog_category_id'),
-			'Content',
+			'Item',
 			'Categories'
 		);
 
@@ -131,9 +125,6 @@ Class ContentHelper
 		if (count($row) == 0) {
 			return Services::Registry()->set('Route', 'status_found', false);
 		}
-
-		/** Store Route Data */
-		Services::Registry()->set('Routedata', 'Category', $row);
 
 		/** Route Registry with Category Data */
 		Services::Registry()->set('Route', 'category_id', (int)$row['id']);
@@ -149,14 +140,11 @@ Class ContentHelper
 
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
-
 			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
-
-			$data = Services::Registry()->get($row['table_registry_name'] . $customFieldName);
-			Services::Registry()->set('Routedata', 'Category'.$customFieldName, $data);
-
 			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 		}
+
+//Services::Registry()->get('CategoriesItem', '*');
 
 		return true;
 	}

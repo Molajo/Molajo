@@ -115,10 +115,8 @@ Class ModelController extends Controller
 		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
 		$this->model->set('table_name', Services::Registry()->get($this->table_registry_name, 'table_name'));
 		$this->model->set('primary_key', Services::Registry()->get($this->table_registry_name, 'primary_key'));
-		$this->model->set('id', Services::Registry()->get($this->table_registry_name, 'id'));
 		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
 		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
-		$this->model->set('id_name', Services::Registry()->get($this->table_registry_name, 'id_name'));
 
 		/** 4. Set DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');

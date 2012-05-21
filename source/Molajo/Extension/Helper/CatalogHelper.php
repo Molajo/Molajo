@@ -93,7 +93,7 @@ Class CatalogHelper
 
 		/** home */
 		if ((int)Services::Registry()->get('Route', 'request_catalog_id')
-			== Services::Registry()->get('Configuration', 'home_catalog_id')
+			== Services::Registry()->get('Configuration', 'application_home_catalog_id')
 		) {
 			Services::Registry()->set('Route', 'catalog_home', true);
 		} else {
@@ -143,7 +143,7 @@ Class CatalogHelper
 
 		$row['catalog_url_request'] = 'index.php?id=' . (int)$row['id'];
 
-		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+		if ($catalog_id == Services::Registry()->get('Configuration', 'application_home_catalog_id', 0)) {
 			$row['sef_request'] = '';
 		}
 
@@ -222,7 +222,7 @@ Class CatalogHelper
 	 */
 	public function getURL($catalog_id)
 	{
-		if ($catalog_id == Services::Registry()->get('Configuration', 'home_catalog_id', 0)) {
+		if ($catalog_id == Services::Registry()->get('Configuration', 'application_home_catalog_id', 0)) {
 			return '';
 		}
 

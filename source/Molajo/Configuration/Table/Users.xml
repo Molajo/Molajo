@@ -6,7 +6,7 @@
         primary_prefix="a"
         get_customfields="1"
         get_item_children="1"
-        use_special_joins="1"
+        use_special_joins="0"
         check_view_level_access="0"
         check_published="1"
         data_source="JDatabase">
@@ -56,11 +56,20 @@
                     <field name="display_birthdate" type="boolean" null="0" default="0"/>
                     <field name="display_email" type="boolean" null="0" default="0"/>
 
-                    <field name="theme_id" type="integer" null="1" default="" values=""/>
+                    <field name="item_theme_id" type="integer" null="1" default="" values=""/>
+                    <field name="item_page_view_id" type="integer" null="1" default="" values=""/>
+                    <field name="item_page_view_css_id" type="char" null="1" default="" values=""/>
+                    <field name="item_page_view_css_class" type="char" null="1" default="" values=""/>
 
-                    <field name="page_view_id" type="integer" null="1" default="" values=""/>
-                    <field name="page_view_css_id" type="char" null="1" default="" values=""/>
-                    <field name="page_view_css_class" type="char" null="1" default="" values=""/>
+                    <field name="form_theme_id" type="integer" null="1" default="" values=""/>
+                    <field name="form_page_view_id" type="integer" null="1" default="" values=""/>
+                    <field name="form_page_view_css_id" type="char" null="1" default="" values=""/>
+                    <field name="form_page_view_css_class" type="char" null="1" default="" values=""/>
+
+                    <field name="list_theme_id" type="integer" null="1" default="" values=""/>
+                    <field name="list_page_view_id" type="integer" null="1" default="" values=""/>
+                    <field name="list_page_view_css_id" type="char" null="1" default="" values=""/>
+                    <field name="list_page_view_css_class" type="char" null="1" default="" values=""/>
                 </customfield>
 
                 <customfield name="customfields">

@@ -20,15 +20,16 @@
                 <include name="SystemMetadata"/>
             </customfield>
             <customfield name="parameters">
-                <include name="SystemParameters"/>
+                <include name="ParametersItem"/>
             </customfield>
         </customfields>
     </item>
-    <component>
+    <list>
         <customfields>
             <customfield name="parameters">
-                <include name="SystemComponentParameters"/>
+                <include name="ParametersItem"/>
+                <include name="ParametersList"/>
             </customfield>
         </customfields>
-    </component>
+    </list>
 </table>

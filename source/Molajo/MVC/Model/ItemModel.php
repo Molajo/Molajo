@@ -383,8 +383,9 @@ class ItemModel extends Model
 			foreach ($children as $child) {
 
 				$name = $child['name'];
+				$name = ucfirst(strtolower($name));
 
-				$m = Application::Controller()->connect($name);
+				$m = Application::Controller()->connect($name, 'Table');
 
 				$join = $child['join'];
 				$joinArray = explode(';', $join);

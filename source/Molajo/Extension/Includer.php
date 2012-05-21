@@ -77,6 +77,8 @@ class Includer
 		$this->name = $name;
 		$this->type = $type;
 
+		Services::Registry()->createRegistry('Include');
+
 		return;
 	}
 
@@ -247,6 +249,11 @@ class Includer
 	protected function setRenderCriteria()
 	{
 		/** Final Template and Wrap selections */
+
+		/** Final Template and Wrap selections */
+		Services::Registry()->merge('Include', 'Parameters', false);
+		Services::Registry()->deleteRegistry('Include');
+
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		Helpers::Extension()->finalizeParameters(
@@ -255,8 +262,8 @@ class Includer
 		);
 
 		/** Sort */
-		Services::Registry()->sort('Include');
 		Services::Registry()->sort('Parameters');
+		Services::Registry()->sort('Metadata');
 
 		return;
 	}
@@ -323,11 +330,7 @@ class Includer
 	protected function invokeMVC()
 	{
 		echo '<br /><br /><pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
-
-		echo '<br /><br /><pre>';
-		var_dump(Services::Registry()->get('Include'));
+		//var_dump(Services::Registry()->get('Parameters'));
 		echo '</pre>';
 
 		$controller = new DisplayController();

@@ -46,28 +46,26 @@
             <customfields>
 
                 <customfield name="parameters">
+
                     <field name="application_name" type="char" null="1" default="Molajo Application" values=""/>
+                    <field name="application_home_catalog_id" type="integer" null="0" default="" values=""/>
+                    <field name="application_logon_requirement" type="binary" null="1" default="1" values="0,1"/>
 
                     <field name="url_sef" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="url_url_sef_rewrite" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="url_url_sef_suffix" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="url_sef_rewrite" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="url_sef_suffix" type="binary" null="1" default="1" values="0,1"/>
                     <field name="url_unicode_slugs" type="binary" null="1" default="1" values="0,1"/>
                     <field name="url_force_ssl" type="binary" null="1" default="0" values="0,1"/>
 
                     <field name="language" type="char" null="1" default="en-GB" values=""/>
                     <field name="language_direction" type="char" null="1" default="ltr" values="ltr,rtl"/>
                     <field name="language_multilingual" type="binary" null="1" default="0" values="0,1"/>
-
                     <field name="language_utc_offset" type="char" null="1" default="UTC" values=""/>
                     <field name="language_utc_offset_user" type="char" null="1" default="UTC" values=""/>
 
                     <field name="debug" type="boolean" null="1" default="0" values=""/>
                     <field name="debug_log" type="text" null="0" default="echo"
                            values="echo,formattedtext,database,email,messages"/>
-
-                    <field name="editor" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="home_catalog_id" type="integer" null="0" default="" values=""/>
-                    <field name="logon_requirement" type="binary" null="1" default="1" values="0,1"/>
 
                     <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
                     <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>
@@ -89,8 +87,8 @@
                     <field name="system_cache_time" type="integer" null="0" default="15" values=""/>
                     <field name="system_cache_handler" type="char" null="0" default="" values=""/>
 
-                    <include name="SystemComponentParameters"/>
-
+                    <include name="ParametersItem"/>
+                    <include name="ParametersList"/>
                 </customfield>
 
                 <customfield name="metadata">
