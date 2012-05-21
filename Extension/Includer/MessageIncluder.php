@@ -76,7 +76,7 @@ Class MessageIncluder extends Includer
 				Services::Registry()->get('Configuration', 'message_wrap_view_id'));
 		}
 
-		Services::Registry()->set('Parameters', 'model_name', 'Messages');
+		Services::Registry()->set('Parameters', 'model_name', 'dboMessages');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
 		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
 

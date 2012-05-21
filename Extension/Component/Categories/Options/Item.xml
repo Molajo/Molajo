@@ -13,27 +13,27 @@
     <table>
         <item>
             <fields>
-                <include name="ContentFields"/>
+                <include name="FieldsContent"/>
             </fields>
             <joins>
-                <include name="CategoryContentJoins"/>
+                <include name="JoinsCategoryItem"/>
             </joins>
             <foreignkeys>
-                <include name="ContentForeignkeys"/>
+                <include name="ForeignkeysContent"/>
             </foreignkeys>
             <children>
-                <include name="ContentChildren"/>
+                <include name="ChildrenContent"/>
             </children>
             <triggers>
-                <include name="ContentTriggers"/>
+                <include name="TriggersContent"/>
             </triggers>
             <customfields>
                 <customfield name="customfields">
-                    <include name="ContentCustomfields"/>
+                    <include name="CustomfieldsContent"/>
                     <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                 </customfield>
                 <customfield name="metadata">
-                    <include name="SystemMetadata"/>
+                    <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
                     <include name="ParametersItem"/>

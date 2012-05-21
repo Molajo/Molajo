@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 
 //todo: consider namespace reuse - intentional and otherwise
 //todo: Lock from change
-//
+//todo: consider API and minimize interface points
 
 /**
  * Registry
@@ -158,6 +158,10 @@ Class RegistryService
 	 */
 	public function createRegistry($namespace)
 	{
+		if ($namespace == 'db') {
+			return false;
+			// reserved word -- throw error
+		}
 
 		if (isset($this->registryKeys[$namespace])) {
 			return $this->registry[$namespace];
@@ -215,6 +219,11 @@ Class RegistryService
 	 */
 	public function get($namespace = null, $key = null, $default = null)
 	{
+		if ($namespace == 'db') {
+			return $this;
+
+		}
+
 		if ($namespace == '*') {
 
 			return $this->listRegistry('*');
@@ -296,14 +305,24 @@ Class RegistryService
 	 * @param  string  $namespace
 	 * @param  string  $key
 	 * @param  mixed   $default
+	 * @param  boolean $match - used as a security precaution to ensure only named parameters
+	 * 							are updated via <include /> statement overrides
 	 *
 	 * @return  Registry
 	 * @since   1.0
 	 */
-	public function set($namespace, $key, $value = null)
+	public function set($namespace, $key, $value = null, $match = false)
 	{
 		if ($key == '') {
 			return; //error
+		}
+
+		/** Match requirement for security to ensure only named parameters are updated */
+		if ($match === true) {
+			$exists = $this->exists($namespace, $key);
+			if ($exists == false) {
+				return false;
+			}
 		}
 
 		/** keep it all on the down-low */
@@ -678,5 +697,59 @@ Class RegistryService
 		echo '</pre>';
 
 		return;
+	}
+
+
+	/**
+	 *     Dummy functions to pass service off as a DBO to interact with model
+	 */
+	public function getNullDate()
+	{
+		return $this;
+	}
+
+	public function getQuery()
+	{
+		return $this;
+	}
+
+	public function toSql()
+	{
+		return $this;
+	}
+
+	public function clear()
+	{
+		return $this;
+	}
+
+	/**
+	 * getParameters - simulates DBO - interacts with the Model getParameters method
+	 *
+	 * @return    array
+	 *
+	 * @since    1.0
+	 */
+	public function getParameters()
+	{
+		$query_results = array();
+
+		/** Retrieve Parameter Registry */
+		$parameters = $this->registry['Parameters'];
+		sort($parameters);
+
+		/** Simulate a recordset */
+		$row = new \stdClass();
+
+		/** Process all parameters as fields */
+		foreach ($parameters as $key => $value) {
+			$row->$key = $value;
+		}
+
+		/** Place all fields into a row */
+		$query_results[] = $row;
+
+		/** Return results to Model */
+		return $query_results;
 	}
 }

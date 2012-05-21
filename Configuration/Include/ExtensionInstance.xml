@@ -1,26 +1,27 @@
 <table>
     <item>
         <fields>
-            <include name="ExtensionFields"/>
+            <include name="FieldsExtensionInstance"/>
         </fields>
+        <joins>
+            <include name="JoinsExtensionInstance"/>
+        </joins>
         <foreignkeys>
-            <include name="ExtensionInstancesJoins"/>
-        </foreignkeys>
-        <foreignkeys>
-            <include name="ExtensionForeignkeys"/>
+            <include name="ForeignKeysExtensionInstance"/>
         </foreignkeys>
         <children>
-            <include name="ExtensionChildren"/>
+            <include name="ChildrenExtensionInstance"/>
         </children>
         <triggers>
-            <include name="ExtensionTriggers"/>
+            <include name="TriggersExtensionInstance"/>
         </triggers>
         <customfields>
             <customfield name="metadata">
-                <include name="SystemMetadata"/>
+                <include name="Metadata"/>
             </customfield>
             <customfield name="parameters">
-                <include name="SystemThemeParameters"/>
+                <include name="ParametersItem"/>
+                <include name="ParametersList"/>
             </customfield>
         </customfields>
     </item>

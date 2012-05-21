@@ -48,7 +48,7 @@ Class ContentHelper
 	/**
 	 * Retrieve Route information for a specific Content Item
 	 *
-	 * Various registries used to store data definitions. For example: ArticlesContent (and ArticlesContentCustomfields,
+	 * Various registries used to store data definitions. For example: ArticlesContent (and ArticlesCustomfieldsContent,
 	 * ArticlesContentMetadata, ArticlesContentParameters), ArticlesComponent (etc.)
 	 *
 	 * These registries are reused, not rebuilt

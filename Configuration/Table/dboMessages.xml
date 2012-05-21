@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Messages"
+        name="dboMessages"
         table="#__dummy"
         primary_key=""
         primary_prefix=""

@@ -102,15 +102,24 @@ class Includer
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 
-		echo $this->name.'<br /> Attributes from Parsing<pre>';
-		var_dump($this->attributes);
-
 		$this->getAttributes();
 
+		/**  Extension */
+		$response = Helpers::Extension()->getRoute(
+			Services::Registry()->get('Route', 'extension_id')
+		);
+		if ($response === false) {
+			Services::Error()->set(500, 'Extension not found');
+		}
 
+		echo 'Extension' . $this->type.' '. $this->name.'<br />';
+		echo 'Attributes from Parsing<pre>';
+		var_dump($this->attributes);
+		echo '</pre>';
 
 		/** retrieve the extension that will be used to generate the MVC request */
 		$this->getExtension();
+
 		echo Services::Registry()->get('Include', 'extension_title');
 		echo Services::Registry()->get('Include', 'extension_id');
 
@@ -150,16 +159,18 @@ class Includer
 	{
 		if (count($this->attributes) > 0) {
 
+			//todo filter input appropriately
 			foreach ($this->attributes as $name => $value) {
 
-				/** Wrap Includer uses name for input */
+				/** Name used by includer for extension */
 				if ($name == 'name' || $name == 'title') {
 					Services::Registry()->set('Include', 'extension_title', $value);
 
-
+				/** Used to extract a list of extensions for inclusion */
 				} else if ($name == 'tag') {
 					$this->tag = $value;
 
+				/** Template */
 				} else if ($name == 'template' || $name == 'template_view_title'
 					|| $name == 'template_view' || $name == 'template_view') {
 
@@ -181,7 +192,7 @@ class Includer
 
 					Services::Registry()->set('Parameters', 'template_view_css_class', $value);
 
-
+				/** Wrap */
 				} else if ($name == 'wrap' || $name == 'wrap_view_title'
 					|| $name == 'wrap_view' || $name == 'wrap_view') {
 
@@ -206,9 +217,13 @@ class Includer
 				} else if ($name == 'wrap_model_query_object') {
 					Services::Registry()->set('Parameters', 'wrap_model_query_object', $value);
 
-				} else {
-					echo '<br /><br /><br /><br /><br /><br /><br />'.$name.' '.$value.'<br /><br /><br /><br /><br /><br /><br />';
+				/** Model */
+				} else if ($name == 'model_name' || $name == 'model_type' || $name == "model_query_object") {
 					Services::Registry()->set('Parameters', $name, $value);
+
+				} else {
+					/** For security reasons, other parameters must override and match defined parameter values */
+					Services::Registry()->set('Parameters', $name, $value, true);
 				}
 			}
 		}
@@ -248,7 +263,22 @@ class Includer
 	 */
 	protected function setRenderCriteria()
 	{
-		/** Final Template and Wrap selections */
+
+		Helpers::Extension()->setThemePageView('Include');
+
+		Helpers::Extension()->setTemplateWrapModel('Include');
+
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
+
+		Services::Registry()->merge('Route', 'Parameters', false);
+
+		Services::Registry()->sort('Parameters');
+		Services::Registry()->sort('Metadata');
+
+		Services::Registry()->deleteRegistry('Route');
+
 
 		/** Final Template and Wrap selections */
 		Services::Registry()->merge('Include', 'Parameters', false);

@@ -398,21 +398,27 @@ Class RouteService
 			Services::Error()->set(500, 'Extension not found');
 		}
 
-		Helpers::Extension()->setDefaultThemePage('Route');
+		/**  Merge in all Route information  */
+		Services::Registry()->merge('Route', 'Parameters', false);
 
-		Helpers::Extension()->setDefaultTemplateWrap('Route');
+		/**  Merge in matching Configuration data  */
+		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		Helpers::Extension()->setThemePageView();
+
+		Helpers::Extension()->setTemplateWrapModel();
 
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'form*');
-
-		Services::Registry()->merge('Route', 'Parameters', false);
 
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
 		Services::Registry()->deleteRegistry('Route');
 
+		Services::Registry()->get('Parameters', '*');
+		die;
 		/**
 		Services::Registry()->get('Parameters', '*');
 		Services::Registry()->get('Metadata', '*');

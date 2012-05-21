@@ -240,6 +240,17 @@ class Model
 	}
 
 	/**
+	 * retrieves parameters (only available for the Parameters dbo
+	 *
+	 * @return  mixed  Array or String or Null
+	 * @since   1.0
+	 */
+	public function getParameters()
+	{
+		return $this->db->getParameters();
+	}
+
+	/**
 	 * retrieves JS and CSS assets, metadata for head
 	 *
 	 * @return  mixed  Array or String or Null

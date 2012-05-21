@@ -12,10 +12,10 @@
     <table>
         <item>
             <fields>
-                <include name="ExtensionFields"/>
+                <include name="FieldsExtensionInstance"/>
             </fields>
             <joins>
-                <include name="ExtensionInstancesJoins"/>
+                <include name="JoinsExtensionInstance"/>
             </joins>
         </item>
     </table>

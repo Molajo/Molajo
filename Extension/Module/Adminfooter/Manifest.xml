@@ -10,13 +10,13 @@
     <version>1.0</version>
     <description>MODULE_ADMINFOOTER_DESCRIPTION</description>
     <config>
-        <include model="ModuleModel"/>
+        <include model="dboParameters"/>
         <parameters>
             <field name="site_name" type="char" null="0" default="Molajo" values=""/>
             <field name="link" type="char" null="1" default="http://Molajo.org" values=""/>
             <field name="linked_text" type="char" null="0" default="Molajo" values=""/>
             <field name="remaining_text" type="char" null="0" default=" is Free Software" values=""/>
-            <include parameters="ModuleParameters"/>
+            <include parameters="ParametersModule"/>
         </parameters>
     </config>
 </extension>

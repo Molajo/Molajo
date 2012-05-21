@@ -79,7 +79,8 @@ class DisplayController extends ModelController
 
 		Services::Registry()->get($table_registry_name, 'id', Services::Registry()->get('Include', 'content_id'));
 
-		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type . ' Model query_object: ' . $model_query_object . '<br />';
+		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type
+			. ' Model query_object: ' . $model_query_object . '<br />';
 
 		if ($model_name == 'Wraps') {
 			$this->query_results = $model_query_object;

@@ -12,20 +12,20 @@
     <table>
         <item>
             <fields>
-                <include name="ExtensionFields"/>
+                <include name="FieldsExtension"/>
             </fields>
             <foreignkeys>
-                <include name="ExtensionForeignkeys"/>
+                <include name="ForeignKeysExtension"/>
             </foreignkeys>
             <children>
-                <include name="ExtensionChildren"/>
+                <include name="ChildrenExtension"/>
             </children>
             <triggers>
-                <include name="ExtensionTriggers"/>
+                <include name="TriggersExtension"/>
             </triggers>
             <customfields>
                 <customfield name="metadata">
-                    <include name="SystemMetadata"/>
+                    <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
                     <include name="SystemThemeParameters"/>

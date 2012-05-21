@@ -92,7 +92,7 @@
                 </customfield>
 
                 <customfield name="metadata">
-                    <include name="SystemMetadata"/>
+                    <include name="Metadata"/>
                 </customfield>
 
             </customfields>

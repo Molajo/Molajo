@@ -1,5 +1,0 @@
-<join table="#__catalog_types"
-      alias="catalog_types"
-      select="title"
-      jointo="id"
-      joinwith="catalog_type_id"/>
