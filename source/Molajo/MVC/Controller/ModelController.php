@@ -86,11 +86,13 @@ Class ModelController extends Controller
 		if ($type == null) {
 			$type = 'Table';
 		}
+//echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 
 		if ($table === '') {
 			$this->dataSource = $this->default_dataSource;
 
 		} else {
+
 			$table_registry_name = ucfirst(strtolower($table)) . ucfirst(strtolower($type));
 
 			if (Services::Registry()->exists($table_registry_name) == true) {
@@ -108,8 +110,10 @@ Class ModelController extends Controller
 			$this->model = new $modelClass();
 		}
 		catch (\Exception $e) {
+
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
+
 		/** 3. Model Properties         */
 		$this->model->set('table_registry_name', $this->table_registry_name);
 		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
@@ -117,6 +121,10 @@ Class ModelController extends Controller
 		$this->model->set('primary_key', Services::Registry()->get($this->table_registry_name, 'primary_key'));
 		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
 		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
+
+		if ($this->table_registry_name == 'DboparametersModule')  {
+			Services::Registry()->set($this->table_registry_name, 'data_source', 'Registry');
+		}
 
 		/** 4. Set DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
@@ -165,6 +173,7 @@ Class ModelController extends Controller
 				return $this->display();
 
 			} else {
+
 				return $this->model->$query_object();
 			}
 

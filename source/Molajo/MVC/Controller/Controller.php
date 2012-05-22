@@ -87,6 +87,7 @@ class Controller
 		'loadObjectList',
 		'getAssets',
 		'getMessages',
+		'getParameters',
 		'none'
 	);
 
@@ -325,7 +326,7 @@ class Controller
 	 */
 	public function cleanCache()
 	{
-//        $cache = Molajo::getCache(Services::Registry()->get('Include', 'extension_title'));
+//        $cache = Molajo::getCache(Services::Registry()->get('Parameters', 'extension_title'));
 //        $cache->clean();
 	}
 }

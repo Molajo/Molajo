@@ -270,7 +270,7 @@ Class ConfigurationService
 			if (file_exists(EXTENSIONS_COMPONENTS . '/options/' . $file . '.xml')) {
 				$path_and_file = EXTENSIONS_COMPONENTS . '/Options/' . $file . '.xml';
 
-			} else if ($file == 'Theme') {
+			} else if ($file == 'Themes') {
 
 				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
 					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
@@ -278,7 +278,7 @@ Class ConfigurationService
 					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 				}
 
-			} else if ($file == 'PageView' || $file == 'TemplateView' || $file == 'WrapView') {
+			} else if ($file == 'PageViews' || $file == 'TemplateViews' || $file == 'WrapViews') {
 
 				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
 
@@ -488,27 +488,32 @@ Class ConfigurationService
 
 		/** Retrieve Field Attributes for each field */
 		$fieldArray = array();
-		foreach ($xml->config->parameters->field as $key1 => $value1) {
 
-			$attributes = get_object_vars($value1);
-			$fieldAttributes = ($attributes["@attributes"]);
-			$fieldAttributesArray = array();
+		if (isset($xml->config->parameters->field)) {
+			foreach ($xml->config->parameters->field as $key1 => $value1) {
 
-			while (list($key2, $value2) = each($fieldAttributes)) {
+				$attributes = get_object_vars($value1);
+				$fieldAttributes = ($attributes["@attributes"]);
+				$fieldAttributesArray = array();
 
-				if (in_array($key2, $known)) {
-				} else {
-					echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
+				while (list($key2, $value2) = each($fieldAttributes)) {
+
+					if (in_array($key2, $known)) {
+					} else {
+						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
+					}
+					$fieldAttributesArray[$key2] = $value2;
 				}
-				$fieldAttributesArray[$key2] = $value2;
-			}
 
-			$fieldArray[] = $fieldAttributesArray;
+				$fieldArray[] = $fieldAttributesArray;
+			}
 		}
 
 		Services::Registry()->set($registryName, 'Parameters', $fieldArray);
 
 		Services::Registry()->set($registryName, 'CustomFieldGroups', array('Parameters'));
+
+		//Services::Registry()->get($registryName, '*');
 
 		return $registryName;
 	}
@@ -863,6 +868,7 @@ Class ConfigurationService
 	 */
 	public static function replaceIncludeStatement($include, $file, $replace_this, $xml_string)
 	{
+//echo 'In replace: ' . $include . ' ' . $file . ' ' . $replace_this . ' ' . $xml_string . ' <br />';
 		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
 
 		if (file_exists($path_and_file)) {

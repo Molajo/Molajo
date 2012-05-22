@@ -49,25 +49,21 @@ Class TemplateViewHelper
 	 *
 	 * Get requested template_view data
 	 *
-	 * @return  array
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function get($template_view_id = 0, $namespace)
+	public function get($template_view_id = 0)
 	{
-		if ($template_view_id == 0) {
-			$template_view_id = $this->setDefault();
-		}
-
-		Services::Registry()->set($namespace, 'template_view_id', (int)$template_view_id);
+		Services::Registry()->set('Parameters', 'template_view_id', (int)$template_view_id);
 
 		$node = Helpers::Extension()->getExtensionNode((int)$template_view_id);
 
-		Services::Registry()->set($namespace, 'template_view_path_node', $node);
+		Services::Registry()->set('Parameters', 'template_view_path_node', $node);
 
-		Services::Registry()->set($namespace, 'template_view_path', $this->getPath($node, $namespace));
-		Services::Registry()->set($namespace, 'template_view_path_include',
-			$this->getPath($node, $namespace) . '/index.php');
-		Services::Registry()->set($namespace, 'template_view_path_url', $this->getPathURL($node, $namespace));
+		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($node));
+		Services::Registry()->set('Parameters', 'template_view_path_include',
+			$this->getPath($node) . '/index.php');
+		Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($node));
 
 		/** Retrieve the query results */
 		$row = Helpers::Extension()->get($template_view_id, 'TemplateViews', 'Table');
@@ -79,16 +75,16 @@ Class TemplateViewHelper
 			$template_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
 
 			/** System default */
-			Services::Registry()->set($namespace, 'template_view_id', (int)$template_view_id);
+			Services::Registry()->set('Parameters', 'template_view_id', (int)$template_view_id);
 
 			$node = Helpers::Extension()->getExtensionNode((int)$template_view_id);
 
-			Services::Registry()->set($namespace, 'template_view_path_node', $node);
+			Services::Registry()->set('Parameters', 'template_view_path_node', $node);
 
-			Services::Registry()->set($namespace, 'template_view_path', $this->getPath($node, $namespace));
-			Services::Registry()->set($namespace, 'template_view_path_include',
-				$this->getPath($node, $namespace) . '/index.php');
-			Services::Registry()->set($namespace, 'template_view_path_url', $this->getPathURL($node, $namespace));
+			Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($node));
+			Services::Registry()->set('Parameters', 'template_view_path_include',
+				$this->getPath($node) . '/index.php');
+			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($node));
 
 			$row = Helpers::Extension()->get($template_view_id, 'TemplateView');
 
@@ -98,14 +94,14 @@ Class TemplateViewHelper
 			}
 		}
 
-		Services::Registry()->set($namespace, 'template_view_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set($namespace, 'template_view_language', $row['language']);
-		Services::Registry()->set($namespace, 'template_view_view_group_id', $row['view_group_id']);
-		Services::Registry()->set($namespace, 'template_view_catalog_id', $row['catalog_id']);
-		Services::Registry()->set($namespace, 'template_view_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set($namespace, 'template_view_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set('Parameters', 'template_view_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'template_view_language', $row['language']);
+		Services::Registry()->set('Parameters', 'template_view_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'template_view_catalog_type_title', $row['catalog_types_title']);
 
-		return;
+		return true;
 	}
 
 	/**
@@ -118,18 +114,18 @@ Class TemplateViewHelper
 	 * @param $node
 	 * @return bool|string
 	 */
-	public function getPath($node, $namespace)
+	public function getPath($node)
 	{
 		$plus = '/View/Template/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get($namespace, 'theme_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get($namespace, 'theme_path') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get($namespace, 'extension_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get($namespace, 'extension_path') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'extension_path') . $plus;
 		}
 
 		/** 3. View */
@@ -153,18 +149,18 @@ Class TemplateViewHelper
 	 * @return bool|string
 	 * @since 1.0
 	 */
-	public function getPathURL($node = false, $namespace)
+	public function getPathURL($node = false)
 	{
 		$plus = '/View/Template/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get($namespace, 'theme_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get($namespace, 'theme_path_url') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get($namespace, 'extension_path') . $plus . '/Manifest.xml')) {
-			return Services::Registry()->get($namespace, 'extension_path_url') . $plus;
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
 		}
 
 		/** 3. View */

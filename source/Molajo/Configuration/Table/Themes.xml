@@ -1,5 +1,6 @@
 <model
         name="ThemesTable"
+        catalog_type_id="1500"
         table="#__extension_instances"
         primary_key="id"
         primary_prefix="a"
@@ -7,7 +8,6 @@
         get_item_children="0"
         use_special_joins="1"
         check_view_level_access="1"
-        check_published="1"
         data_source="JDatabase">
     <table>
         <item>
@@ -17,6 +17,23 @@
             <joins>
                 <include name="JoinsExtensionInstance"/>
             </joins>
+            <foreignkeys>
+                <include name="ForeignkeysExtensionInstance"/>
+            </foreignkeys>
+            <children>
+                <include name="ChildrenExtensionInstance"/>
+            </children>
+            <triggers>
+                <include name="TriggersExtensionInstance"/>
+            </triggers>
+            <customfields>
+                <customfield name="metadata">
+                    <include name="Metadata"/>
+                </customfield>
+                <customfield name="parameters">
+                    <include name="ParametersTheme"/>
+                </customfield>
+            </customfields>
         </item>
     </table>
 </model>

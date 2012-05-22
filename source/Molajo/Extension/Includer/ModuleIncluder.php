@@ -39,19 +39,64 @@ Class ModuleIncluder extends Includer
 		return parent::__construct($name, $type);
 	}
 
+
 	/**
 	 * getExtension
 	 *
-	 * Retrieve extension information using either the ID or the name
+	 * Retrieve extension information after looking up the ID in the extension-specific includer
 	 *
 	 * @return bool
 	 * @since 1.0
 	 */
-	protected function getExtension($extension_id = null)
+	protected function getExtension()
 	{
-		$extension_id = Helpers::Module()->get(Services::Registry()->get('Include', 'extension_title'));
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Helpers::Extension()->getInstanceID(
+				Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+				Services::Registry()->get('Parameters', 'extension_title')
+			)
+		);
 
-		return parent::getExtension($extension_id);
+		$response = Helpers::Extension()->getExtension(
+			Services::Registry()->get('Parameters', 'extension_instance_id'),
+			'Modules',
+			'Table'
+		);
+
+		if ($response === false) {
+			Services::Error()->set(500, 'Extension not found');
+		}
+		return;
+	}
+
+
+	/**
+	 * setRenderCriteria
+	 *
+	 * Use the view and/or wrap criteria ife specified on the <include statement
+	 * Retrieve View and wrap criteria and path information
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function setRenderCriteria()
+	{
+
+		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		/** Template  */
+		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
+
+		/** Wrap  */
+		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
+
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
+
+		Services::Registry()->sort('Parameters');
+
+		return;
 	}
 
 	/**
@@ -63,10 +108,10 @@ Class ModuleIncluder extends Includer
 	 * @since   1.0
 	 */
 	protected function loadMedia()
-	{   /* use parameter */
+	{
 		parent::loadMedia(
-			EXTENSIONS_MODULES_URL . '/' . Services::Registry()->get('Include', 'extension_title'),
-			SITE_MEDIA_URL . '/' . Services::Registry()->get('Include', 'extension_title'),
+			EXTENSIONS_MODULES_URL . '/' . Services::Registry()->get('Parameters', 'template_view_path_url'),
+			SITE_MEDIA_URL . '/' . Services::Registry()->get('Parameters', 'extension_title'),
 			Services::Registry()->get('Configuration', 'media_priority_module', 400)
 		);
 	}

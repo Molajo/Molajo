@@ -54,8 +54,8 @@ Class CatalogHelper
 	{
 		/** Retrieve the query results */
 		$row = $this->get(
-			Services::Registry()->get('Route', 'request_catalog_id'),
-			Services::Registry()->get('Route', 'request_url_query')
+			Services::Registry()->get('Parameters', 'request_catalog_id'),
+			Services::Registry()->get('Parameters', 'request_url_query')
 		);
 
 		/** Store Route Data */
@@ -63,41 +63,41 @@ Class CatalogHelper
 
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0 || (int)$row['id'] == 0) {
-			Services::Registry()->set('Route', 'status_found', false);
+			Services::Registry()->set('Parameters', 'status_found', false);
 			return false;
 		}
 
 		/** 404: item not routable, redirecting to error page */
 		if ((int)$row['routable'] == 0) {
-			Services::Registry()->set('Route', 'status_found', false);
+			Services::Registry()->set('Parameters', 'status_found', false);
 			return false;
 		}
 
 		/** Redirect: routeRequest handles rerouting the request */
 		if ((int)$row['redirect_to_id'] == 0) {
 		} else {
-			Services::Registry()->set('Route', 'redirect_to_id', (int)$row['redirect_to_id']);
+			Services::Registry()->set('Parameters', 'redirect_to_id', (int)$row['redirect_to_id']);
 			return false;
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Route', 'catalog_id', (int)$row['id']);
-		Services::Registry()->set('Route', 'catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Route', 'catalog_type', $row['b_title']);
-		Services::Registry()->set('Route', 'catalog_url_sef_request', $row['sef_request']);
-		Services::Registry()->set('Route', 'catalog_url_request', $row['catalog_url_request']);
-		Services::Registry()->set('Route', 'catalog_view_group_id', (int)$row['view_group_id']);
-		Services::Registry()->set('Route', 'catalog_category_id', (int)$row['primary_category_id']);
-		Services::Registry()->set('Route', 'catalog_source_table', $row['b_source_table']);
-		Services::Registry()->set('Route', 'catalog_source_id', (int)$row['source_id']);
+		Services::Registry()->set('Parameters', 'catalog_id', (int)$row['id']);
+		Services::Registry()->set('Parameters', 'catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'catalog_type', $row['b_title']);
+		Services::Registry()->set('Parameters', 'catalog_url_sef_request', $row['sef_request']);
+		Services::Registry()->set('Parameters', 'catalog_url_request', $row['catalog_url_request']);
+		Services::Registry()->set('Parameters', 'catalog_view_group_id', (int)$row['view_group_id']);
+		Services::Registry()->set('Parameters', 'catalog_category_id', (int)$row['primary_category_id']);
+		Services::Registry()->set('Parameters', 'catalog_source_table', $row['b_source_table']);
+		Services::Registry()->set('Parameters', 'catalog_source_id', (int)$row['source_id']);
 
 		/** home */
-		if ((int)Services::Registry()->get('Route', 'request_catalog_id')
+		if ((int)Services::Registry()->get('Parameters', 'request_catalog_id')
 			== Services::Registry()->get('Configuration', 'application_home_catalog_id')
 		) {
-			Services::Registry()->set('Route', 'catalog_home', true);
+			Services::Registry()->set('Parameters', 'catalog_home', true);
 		} else {
-			Services::Registry()->set('Route', 'catalog_home', false);
+			Services::Registry()->set('Parameters', 'catalog_home', false);
 		}
 
 		return true;

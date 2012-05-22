@@ -200,8 +200,7 @@ Class ParseService
 
 		/** Saved during class entry */
 		Services::Registry()->copy('RouteParameters', 'Parameters');
-echo 'stop in parser';
-die;
+
 		/** theme: load template media and language files */
 		$class = 'Molajo\\Extension\\Includer\\ThemeIncluder';
 

@@ -60,30 +60,30 @@ Class ContentHelper
 	{
 		/** Retrieve the query results */
 		$row = $this->get(
-			Services::Registry()->get('Route', 'catalog_source_id'),
+			Services::Registry()->get('Parameters', 'catalog_source_id'),
 			'Item',
-			ucfirst(strtolower(Services::Registry()->get('Route', 'catalog_type')))
+			ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_type')))
 		);
 
 		/** 404  */
 		if (count($row) == 0) {
-			return Services::Registry()->set('Route', 'status_found', false);
+			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Route', 'content_id', (int)$row['id']);
-		Services::Registry()->set('Route', 'content_title', $row['title']);
-		Services::Registry()->set('Route', 'content_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Route', 'content_language', $row['language']);
-		Services::Registry()->set('Route', 'content_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Route', 'content_catalog_type_title', $row['catalog_types_title']);
-		Services::Registry()->set('Route', 'content_modified_datetime', $row['modified_datetime']);
+		Services::Registry()->set('Parameters', 'content_id', (int)$row['id']);
+		Services::Registry()->set('Parameters', 'content_title', $row['title']);
+		Services::Registry()->set('Parameters', 'content_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'content_language', $row['language']);
+		Services::Registry()->set('Parameters', 'content_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'content_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set('Parameters', 'content_modified_datetime', $row['modified_datetime']);
 
-		Services::Registry()->set('Route', 'extension_instance_id', (int)$row['extension_instances_id']);
-		Services::Registry()->set('Route', 'extension_title', $row['extension_instances_title']);
-		Services::Registry()->set('Route', 'extension_id', (int)$row['extensions_id']);
-		Services::Registry()->set('Route', 'extension_name_path_node', $row['extensions_name']);
-		Services::Registry()->set('Route', 'extension_catalog_type_id',
+		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$row['extension_instances_id']);
+		Services::Registry()->set('Parameters', 'extension_title', $row['extension_instances_title']);
+		Services::Registry()->set('Parameters', 'extension_id', (int)$row['extensions_id']);
+		Services::Registry()->set('Parameters', 'extension_name_path_node', $row['extensions_name']);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)$row['extension_instances_catalog_type_id']);
 
 		/** Process each field namespace  */
@@ -116,24 +116,24 @@ Class ContentHelper
 	{
 		/** Retrieve the query results */
 		$row = $this->get(
-			Services::Registry()->get('Route', 'catalog_category_id'),
+			Services::Registry()->get('Parameters', 'catalog_category_id'),
 			'Item',
 			'Categories'
 		);
 
 		/** 404 */
 		if (count($row) == 0) {
-			return Services::Registry()->set('Route', 'status_found', false);
+			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
 
 		/** Route Registry with Category Data */
-		Services::Registry()->set('Route', 'category_id', (int)$row['id']);
-		Services::Registry()->set('Route', 'category_title', $row['title']);
-		Services::Registry()->set('Route', 'category_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Route', 'category_language', $row['language']);
-		Services::Registry()->set('Route', 'category_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Route', 'category_catalog_type_title', $row['catalog_types_title']);
-		Services::Registry()->set('Route', 'category_modified_datetime', $row['modified_datetime']);
+		Services::Registry()->set('Parameters', 'category_id', (int)$row['id']);
+		Services::Registry()->set('Parameters', 'category_title', $row['title']);
+		Services::Registry()->set('Parameters', 'category_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'category_language', $row['language']);
+		Services::Registry()->set('Parameters', 'category_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'category_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set('Parameters', 'category_modified_datetime', $row['modified_datetime']);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
