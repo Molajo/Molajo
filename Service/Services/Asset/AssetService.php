@@ -149,7 +149,7 @@ Class AssetService
 				$row->base = Services::Registry()->get('Configuration', 'site_base_url');
 
 				/** Last Modified Date */
-				$last_modified = Services::Registry()->get('Route', 'modified_datetime');
+				$last_modified = Services::Registry()->get('Parameters', 'modified_datetime');
 				if (trim($last_modified) == '') {
 					$last_modified = Services::Date()->getDate();
 				}

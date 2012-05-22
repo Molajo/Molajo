@@ -53,7 +53,7 @@ Class ErrorService
 	{
 		Services::Registry()->set('Request', 'error_status', true);
 		Services::Registry()->set('Request', 'mvc_controller', 'display');
-		Services::Registry()->set('Route', 'request_action', 'display');
+		Services::Registry()->set('Parameters', 'request_action', 'display');
 		Services::Registry()->set('Request', 'mvc_model', 'messages');
 
 		/** default error theme and page */

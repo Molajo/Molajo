@@ -57,18 +57,19 @@ Class RouteService
 	public function process()
 	{
 		/** Route Registry */
-		Services::Registry()->createRegistry('Route');
+		Services::Registry()->createRegistry('Parameters');
+		Services::Registry()->createRegistry('Metadata');
 
-		Services::Registry()->set('Route', 'status_found', '');
-		Services::Registry()->set('Route', 'status_authorised', '');
-		Services::Registry()->set('Route', 'redirect_to_id', 0);
+		Services::Registry()->set('Parameters', 'status_found', '');
+		Services::Registry()->set('Parameters', 'status_authorised', '');
+		Services::Registry()->set('Parameters', 'redirect_to_id', 0);
 
 		/** Overrides */
 		if ((int)Services::Registry()->get('Override', 'catalog_id', false) == true) {
-			Services::Registry()->set('Route', 'request_catalog_id', 0);
+			Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
 		} else {
-			Services::Registry()->set('Route', 'request_catalog_id',
+			Services::Registry()->set('Parameters', 'request_catalog_id',
 				(int)Services::Registry()->get('Override', 'catalog_id'));
 		}
 
@@ -79,59 +80,45 @@ Class RouteService
 			$path = Services::Registry()->get('Override', 'url_request');
 		}
 
-		/** @var $continue Check for duplicate content URL for Home (and redirect, if found) */
+		/** Check for duplicate content URL for Home (and redirect, if found) */
 		$continue = $this->checkHome($path);
 
 		if ($continue == false) {
-			Services::Debug()->set('Application::Route()->checkHome() Redirect to Real Home');
-			return false;
-
-		} else {
-			Services::Debug()->set('Application::Route()->checkHome() No Redirect needed');
-		}
+			Services::Debug()->set('Route checkHome() Redirect to Real Home');
+			return false;}
 
 		/** See if Application is in Offline Mode */
 		if (Services::Registry()->get('Configuration', 'offline', 0) == 1) {
 			Services::Error()->set(503);
 			Services::Debug()->set('Application::Route() Direct to Offline Mode');
 			return true;
-
-		} else {
-			Services::Debug()->set('Application::Route() Not in Offline Mode');
 		}
 
 		/** Remove Parameters from path and save for later use */
-		$continue = $this->getNonRoutableParameters();
+		$continue = $this->getNonRouteParameters();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Failed');
+			Services::Debug()->set('Route getNonRouteParameters() Failed');
 			return false;
-
-		} else {
-			Services::Debug()->set('Application::Route()->getNonRoutableParameters() Successful');
 		}
 
 		/**  Get Route Information: Catalog  */
 		$continue = Helpers::Catalog()->getRoute();
 
 		/** 404 */
-		if (Services::Registry()->get('Route', 'status_found') === false) {
+		if (Services::Registry()->get('Parameters', 'status_found') === false) {
 			echo 404;
 			Services::Error()->set(404);
 			Services::Debug()->set('Application::Route() 404');
 			return false;
-
-		} else {
-			Services::Registry()->set('Route', 'status_found', true);
-			Services::Debug()->set('Application::Route()->getCatalog() Successful');
 		}
 
 		/** URL Change Redirect from Catalog */
-		if ((int)Services::Registry()->get('Route', 'redirect_to_id', 0) == 0) {
+		if ((int)Services::Registry()->get('Parameters', 'redirect_to_id', 0) == 0) {
 		} else {
 			Services::Response()->redirect(
 				Helper::Catalog()->getURL(
-					Services::Registry()->get('Route', 'redirect_to_id', 0)
+					Services::Registry()->get('Parameters', 'redirect_to_id', 0)
 				), 301
 			);
 			Services::Debug()->set('Application::Route() Redirect');
@@ -141,7 +128,7 @@ Class RouteService
 		/** Redirect to Logon */
 		if (Services::Registry()->get('Configuration', 'application_logon_requirement', 0) > 0
 			&& Services::Registry()->get('User', 'guest', true) === true
-			&& Services::Registry()->get('Route', 'request_catalog_id')
+			&& Services::Registry()->get('Parameters', 'request_catalog_id')
 				<> Services::Registry()->get('Configuration', 'application_logon_requirement', 0)
 		) {
 			Services::Response()->redirect(
@@ -176,45 +163,43 @@ Class RouteService
 
 			/** duplicate content: URLs without the .html */
 			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1
-				&& substr($path, -11) == '/index.html'
-			) {
+				&& substr($path, -11) == '/index.html') {
 				$path = substr($path, 0, (strlen($path) - 11));
 			}
 
 			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1
-				&& substr($path, -5) == '.html'
-			) {
+				&& substr($path, -5) == '.html') {
 				$path = substr($path, 0, (strlen($path) - 5));
 			}
 		}
 
 		/** populate value used in query  */
-		Services::Registry()->set('Route', 'request_url_query', $path);
+		Services::Registry()->set('Parameters', 'request_url_query', $path);
 
 		/** home: duplicate content - redirect */
-		if (Services::Registry()->get('Route', 'request_url_query', '') == 'index.php'
-			|| Services::Registry()->get('Route', 'request_url_query', '') == 'index.php/'
-			|| Services::Registry()->get('Route', 'request_url_query', '') == 'index.php?'
-			|| Services::Registry()->get('Route', 'request_url_query', '') == '/index.php/'
+		if (Services::Registry()->get('Parameters', 'request_url_query', '') == 'index.php'
+			|| Services::Registry()->get('Parameters', 'request_url_query', '') == 'index.php/'
+			|| Services::Registry()->get('Parameters', 'request_url_query', '') == 'index.php?'
+			|| Services::Registry()->get('Parameters', 'request_url_query', '') == '/index.php/'
 		) {
 			Services::Redirect()->set('', 301);
 			return false;
 		}
 
 		/** Home */
-		if (Services::Registry()->get('Route', 'request_url_query', '') == ''
-			&& (int)Services::Registry()->get('Route', 'request_catalog_id', 0) == 0
-		) {
-			Services::Registry()->set('Route', 'request_catalog_id',
+		if (Services::Registry()->get('Parameters', 'request_url_query', '') == ''
+			&& (int)Services::Registry()->get('Parameters', 'request_catalog_id', 0) == 0) {
+
+			Services::Registry()->set('Parameters', 'request_catalog_id',
 				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
-			Services::Registry()->set('Route', 'catalog_home', true);
+			Services::Registry()->set('Parameters', 'catalog_home', true);
 		}
 
 		return true;
 	}
 
 	/**
-	 * Retrieve non routable parameter values and remove from path
+	 * Retrieve non route parameter values and remove from path
 	 *
 	 * Note: $path has already been stripped of Host, Folder, and Application
 	 *
@@ -225,23 +210,23 @@ Class RouteService
 	 *
 	 * @since 1.0
 	 */
-	protected function getNonRoutableParameters()
+	protected function getNonRouteParameters()
 	{
 		$action = 'display';
 
-		$path = Services::Registry()->get('Route', 'request_url_query');
+		$path = Services::Registry()->get('Parameters', 'request_url_query');
 
 		if ($path == '') {
-			Services::Registry()->set('Route', 'request_non_routable_parameters', array());
-			Services::Registry()->set('Route', 'request_action', 'display');
-			Services::Registry()->set('Route', 'request_catalog_id',
+			Services::Registry()->set('Parameters', 'request_non_route_parameters', array());
+			Services::Registry()->set('Parameters', 'request_action', 'display');
+			Services::Registry()->set('Parameters', 'request_catalog_id',
 				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
 			return true;
 		}
 
 		/** Retrieve ID */
 		$value = (int)Services::Request()->get('request')->get('id');
-		Services::Registry()->set('Route', 'request_catalog_id', $value);
+		Services::Registry()->set('Parameters', 'request_catalog_id', $value);
 
 		/** save non-routable parameter pairs in array */
 		$use = array();
@@ -268,7 +253,7 @@ Class RouteService
 					$action = $value;
 				}
 
-				/** remove non-routable parameter - as it is - from the routeable path */
+				/** remove non-route parameters - as it is - from the route path */
 				$remove = $key . '=' . $value;
 
 				$path = substr($path, 0, strpos($path, $remove))
@@ -295,9 +280,9 @@ Class RouteService
 		}
 
 		/** Update Path and store Non-routable parameters for Extension Use */
-		Services::Registry()->set('Route', 'request_url_query', $path);
-		Services::Registry()->set('Route', 'request_non_routable_parameters', $use);
-		Services::Registry()->set('Route', 'request_action', $action);
+		Services::Registry()->set('Parameters', 'request_url_query', $path);
+		Services::Registry()->set('Parameters', 'request_non_route_parameters', $use);
+		Services::Registry()->set('Parameters', 'request_action', $action);
 
 		/** add Edit and Add later
 
@@ -306,19 +291,19 @@ Class RouteService
 		 *
 		if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
 		} else if (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
-		Services::Registry()->set('Route', 'request_action', 'add');
+		Services::Registry()->set('Parameters', 'request_action', 'add');
 		 */
 
 		/**
 		look up the URL in the catalog first to determine if it's internal
 		if (trim($return) == '') {
-		Services::Registry()->set('Route', 'redirect_on_success', '');
+		Services::Registry()->set('Parameters', 'redirect_on_success', '');
 
 		} else if (JUri::isInternal(base64_decode($return))) {
-		Services::Registry()->set('Route', 'redirect_on_success', base64_decode($return));
+		Services::Registry()->set('Parameters', 'redirect_on_success', base64_decode($return));
 
 		} else {
-		Services::Registry()->set('Route', 'redirect_on_success', '');
+		Services::Registry()->set('Parameters', 'redirect_on_success', '');
 		}
 		 */
 		return true;
@@ -365,14 +350,9 @@ Class RouteService
 	 */
 	protected function getRouteParameters()
 	{
-		/** Initialize shared Registries */
-		Services::Registry()->createRegistry('Parameters');
-
-		Services::Registry()->createRegistry('Metadata');
-
 		/**  Menu Item  */
-		if (Services::Registry()->get('Route', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
-			$response = Helpers::Menuitem()->getRoute();
+		if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+			$response = Helpers::Content()->getMenuitem();
 			if ($response === false) {
 				Services::Error()->set(500, 'Menu Item not found');
 			}
@@ -385,21 +365,20 @@ Class RouteService
 		}
 
 		/**  Category  */
-		if ((int)Services::Registry()->get('Route', 'catalog_category_id') == 0) {
+		if ((int)Services::Registry()->get('Parameters', 'catalog_category_id') == 0) {
 		} else {
 			Helpers::Content()->getRouteCategory();
 		}
 
 		/**  Extension */
-		$response = Helpers::Extension()->getRoute(
-			Services::Registry()->get('Route', 'extension_id')
+		$response = Helpers::Extension()->getExtension(
+			Services::Registry()->get('Parameters', 'extension_instance_id'),
+			ucfirst(strtolower(Services::Registry()->get('Parameters', 'content_catalog_type_title'))),
+			'List'
 		);
 		if ($response === false) {
 			Services::Error()->set(500, 'Extension not found');
 		}
-
-		/**  Merge in all Route information  */
-		Services::Registry()->merge('Route', 'Parameters', false);
 
 		/**  Merge in matching Configuration data  */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
@@ -415,10 +394,6 @@ Class RouteService
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-		Services::Registry()->deleteRegistry('Route');
-
-		Services::Registry()->get('Parameters', '*');
-		die;
 		/**
 		Services::Registry()->get('Parameters', '*');
 		Services::Registry()->get('Metadata', '*');

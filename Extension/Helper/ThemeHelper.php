@@ -49,25 +49,25 @@ Class ThemeHelper
 	 *
 	 * Get requested theme data
 	 *
-	 * @return  array
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function get($theme_id = 0, $namespace)
+	public function get($theme_id = 0)
 	{
 		if ($theme_id == 0) {
 			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
 		}
 
-		Services::Registry()->set($namespace, 'theme_id', (int)$theme_id);
+		Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
 
 		$node = Helpers::Extension()->getExtensionNode((int)$theme_id);
 
-		Services::Registry()->set($namespace, 'theme_path_node', $node);
+		Services::Registry()->set('Parameters', 'theme_path_node', $node);
 
-		Services::Registry()->set($namespace, 'theme_path', $this->getPath($node));
-		Services::Registry()->set($namespace, 'theme_path_include', $this->getPath($node) . '/index.php');
-		Services::Registry()->set($namespace, 'theme_path_url', $this->getPathURL($node));
-		Services::Registry()->set($namespace, 'theme_favicon', $this->getFavicon($node));
+		Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
+		Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
+		Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
+		Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
 
 		/** Retrieve the query results */
 		$row = Helpers::Extension()->get($theme_id, 'Themes', 'Table');
@@ -85,18 +85,18 @@ Class ThemeHelper
 			/** System default */
 		   	$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
 
-			Services::Registry()->set($namespace, 'theme_id', (int)$theme_id);
+			Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
 
 			$node = Helpers::Extension()->getExtensionNode((int)$theme_id);
 
-			Services::Registry()->set($namespace, 'theme_path_node', $node);
+			Services::Registry()->set('Parameters', 'theme_path_node', $node);
 
-			Services::Registry()->set($namespace, 'theme_path', $this->getPath($node));
-			Services::Registry()->set($namespace, 'theme_path_include', $this->getPath($node) . '/index.php');
-			Services::Registry()->set($namespace, 'theme_path_url', $this->getPathURL($node));
-			Services::Registry()->set($namespace, 'theme_favicon', $this->getFavicon($node));
+			Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
+			Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
+			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
+			Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
 
-			$row = Helpers::Extension()->get($theme_id, 'Theme');
+			$row = Helpers::Extension()->get($theme_id, 'Themes', 'Table');
 
 			if (count($row) == 0) {
 				Services::Error()->set(500, 'Theme not found');
@@ -104,14 +104,14 @@ Class ThemeHelper
 			}
 		}
 
-		Services::Registry()->set($namespace, 'theme_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set($namespace, 'theme_language', $row['language']);
-		Services::Registry()->set($namespace, 'theme_view_group_id', $row['view_group_id']);
-		Services::Registry()->set($namespace, 'theme_catalog_id', $row['catalog_id']);
-		Services::Registry()->set($namespace, 'theme_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set($namespace, 'theme_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set('Parameters', 'theme_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'theme_language', $row['language']);
+		Services::Registry()->set('Parameters', 'theme_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'theme_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'theme_catalog_type_title', $row['catalog_types_title']);
 
-		return;
+		return true;
 	}
 
 	/**

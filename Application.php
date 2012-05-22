@@ -123,7 +123,7 @@ Class Application
 //Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
 //Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
 
-		/** Authorise: Services::Registry()->get('Route', 'status_authorised') */
+		/** Authorise: Services::Registry()->get('Parameters', 'status_authorised') */
 		$continue = $this->authorise();
 
 		if ($continue === false) {
@@ -377,8 +377,8 @@ Class Application
 			ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
 		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
 		Services::Registry()->set('Request', 'controller', $cc);
-		$action = Services::Registry()->get('Route', 'request_action');
-		Services::Registry()->set('Route', 'request_action', $action);
+		$action = Services::Registry()->get('Parameters', 'request_action');
+		Services::Registry()->set('Parameters', 'request_action', $action);
 		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);
 

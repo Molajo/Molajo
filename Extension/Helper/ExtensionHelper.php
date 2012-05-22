@@ -56,126 +56,61 @@ Class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getRoute($extension_id)
+	public function getExtension($extension_id, $model = 'ExtensionInstances', $type = 'Table')
 	{
 		/** Retrieve the query results */
-		$row = $this->get(
-			$extension_id,
-			ucfirst(strtolower(Services::Registry()->get('Route', 'content_catalog_type_title'))),
-			'List'
-		);
+		$row = Helpers::Extension()->get($extension_id, $model, $type);
 
-		/** 404: routeRequest handles redirecting to error page */
+		/** 500: not found */
 		if (count($row) == 0) {
-			return Services::Registry()->set('Route', 'status_found', false);
-		}
-
-		/** Route Registry */
-		Services::Registry()->set('Route', 'extension_title', $row['title']);
-		Services::Registry()->set('Route', 'extension_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Route', 'extension_language', $row['language']);
-		Services::Registry()->set('Route', 'extension_view_group_id', $row['view_group_id']);
-		Services::Registry()->set('Route', 'extension_catalog_id', $row['catalog_id']);
-		Services::Registry()->set('Route', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Route', 'extension_catalog_type_title', $row['catalog_types_title']);
-
-		Services::Registry()->set('Route', 'extension_path',
-			$this->getPath((int)$row['catalog_type_id'],
-				Services::Registry()->get('Route', 'extension_name_path_node'))
-		);
-
-		Services::Registry()->set('Route', 'extension_path_url',
-			$this->getPathURL((int)$row['catalog_type_id'],
-				Services::Registry()->get('Route', 'extension_name_path_node'))
-		);
-
-		/** Process each field namespace  */
-		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
-
-		foreach ($customFieldTypes as $customFieldName) {
-			$customFieldName = ucfirst(strtolower($customFieldName));
-			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
-			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
-		}
-
-//Services::Registry()->get('ArticlesList', '*');
-
-		return;
-	}
-
-	/**
-	 * Retrieve Route information for a specific Extension
-	 *
-	 * @param int $extension_id
-	 * @param int $catalog_type_id
-	 * @param null $model_name ('Articles', 'Comments')
-	 *
-	 * @return bool
-	 *
-	 * @since   1.0
-	 */
-	public function getIncludeExtension($extension_id, $catalog_type_id, $model_name = null)
-	{
-		/** Retrieve catalog type, given the key value */
-		$type = Helpers::Extension()->getType($catalog_type_id);
-
-		/** Retrieve the query results */
-		$row = $this->get(
-			$extension_id,
-			$model_name,
-			$type
-		);
-
-		/** 404: routeRequest handles redirecting to error page */
-		if (count($row) == 0) {
-			Services::Registry()->set('Parameter', 'status_found', false);
 			return false;
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Include', 'extension_title', $row['title']);
-		Services::Registry()->set('Include', 'extension_translation_of_id', (int)$row['translation_of_id']);
-		Services::Registry()->set('Include', 'extension_language', $row['language']);
-		Services::Registry()->set('Include', 'extension_view_group_id', $row['view_group_id']);
-		Services::Registry()->set('Include', 'extension_catalog_id', $row['catalog_id']);
-		Services::Registry()->set('Include', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
-		Services::Registry()->set('Include', 'extension_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set('Parameters', 'extension_id', $row['extensions_id']);
+		Services::Registry()->set('Parameters', 'extension_name', $row['extensions_name']);
+		Services::Registry()->set('Parameters', 'extension_name_path_node', $row['extensions_name']);
+		Services::Registry()->set('Parameters', 'extension_title', $row['title']);
+		Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$row['translation_of_id']);
+		Services::Registry()->set('Parameters', 'extension_language', $row['language']);
+		Services::Registry()->set('Parameters', 'extension_view_group_id', $row['view_group_id']);
+		Services::Registry()->set('Parameters', 'extension_catalog_id', $row['catalog_id']);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$row['catalog_type_id']);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $row['catalog_types_title']);
 
-		Services::Registry()->set('Include', 'extension_path',
+		Services::Registry()->set('Parameters', 'extension_path',
 			$this->getPath((int)$row['catalog_type_id'],
-				Services::Registry()->get('Include', 'extension_name_path_node'))
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
 		);
 
-		Services::Registry()->set('Include', 'extension_path_url',
+		Services::Registry()->set('Parameters', 'extension_path_url',
 			$this->getPathURL((int)$row['catalog_type_id'],
-				Services::Registry()->get('Include', 'extension_name_path_node'))
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
 		);
 
 		/** Process each field namespace  */
 		$customFieldTypes = Services::Registry()->get($row['table_registry_name'], 'CustomFieldGroups');
 
-		foreach ($customFieldTypes as $customFieldName) {
-			$customFieldName = ucfirst(strtolower($customFieldName));
-			Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
-			Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
+		if (count($customFieldTypes) > 0) {
+			foreach ($customFieldTypes as $customFieldName) {
+				$customFieldName = ucfirst(strtolower($customFieldName));
+				Services::Registry()->merge($row['table_registry_name'] . $customFieldName, $customFieldName);
+				Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
+			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
-	 * get
+	 * Common query for all Extensions
 	 *
-	 * Retrieves Extension data from the extension and extension instances
-	 * Verifies access for user, application and site
+	 * Merges into Parameter Registy
 	 *
-	 * @param   $catalog_type_id
-	 * @param   $extension
-	 *
-	 * @return  bool|mixed
+	 * @return  array
 	 * @since   1.0
 	 */
-	public function get($extension_id = 0, $model = 'ExtensionInstances', $type = null)
+	public function get($extension_id, $model = 'ExtensionInstances', $type = 'Table')
 	{
 		$m = Application::Controller()->connect($model, $type);
 		$m->model->set('id', (int)$extension_id);
@@ -184,8 +119,9 @@ Class ExtensionHelper
 		$row['table_registry_name'] = $m->model->table_registry_name;
 		$row['model_name'] = $m->model->model_name;
 
+		/** 404: routeRequest handles redirecting to error page */
 		if (count($row) == 0) {
-			return array();
+			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
 
 		return $row;
@@ -273,13 +209,13 @@ Class ExtensionHelper
 	public function getPath($catalog_type_id, $node)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			return Helpers::Page()->getPath($node);
+			return Helpers::PageView()->getPath($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
 			return Helpers::Template()->getPath($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			return Helpers::Wrap()->getPath($node);
+			return Helpers::WrapView()->getPath($node);
 
 		} else {
 			$type = Helpers::Extension()->getType($catalog_type_id);
@@ -298,13 +234,13 @@ Class ExtensionHelper
 	public function getPathURL($catalog_type_id, $node)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			return Helpers::Page()->getPathURL($node);
+			return Helpers::PageView()->getPathURL($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
 			return Helpers::Template()->getPathURL($node);
 
 		} else if ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			return Helpers::Wrap()->getPathURL($node);
+			return Helpers::WrapView()->getPathURL($node);
 
 		} else {
 			$type = Helpers::Extension()->getType($catalog_type_id);
@@ -323,10 +259,7 @@ Class ExtensionHelper
 	public function loadLanguage($path = null)
 	{
 		if ($path == null) {
-			$path = Services::Registry()->get('Include', 'extension_path');
-		}
-		if ($path == null) {
-			$path = Services::Registry()->get('Request', 'extension_path');
+			$path = Services::Registry()->get('Parameters', 'extension_path');
 		}
 		$path .= '/Language';
 
@@ -334,7 +267,7 @@ Class ExtensionHelper
 		} else {
 			echo 'does not exist' . $path . '<br />';
 			echo '<pre>';
-			var_dump(Services::Registry()->get('Include'));
+			var_dump(Services::Registry()->get('Parameters'));
 			return false;
 		}
 
@@ -348,7 +281,7 @@ Class ExtensionHelper
 	 *
 	 *  Determine the default theme value, given system default sequence
 	 *
-	 * @return  string
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function setThemePageView()
@@ -371,7 +304,6 @@ Class ExtensionHelper
 			$page_view_css_class = Services::Registry()->get('Parameters', 'form_page_view_css_class', '');
 
 		} else if ($type == 'item') {
-
 			$theme_id = Services::Registry()->get('Parameters', 'item_theme_id', 0);
 
 			$page_view_id = Services::Registry()->get('Parameters', 'item_page_view_id', 0);
@@ -394,12 +326,12 @@ Class ExtensionHelper
 		Services::Registry()->set('Parameters', 'page_view_css_class', $page_view_css_class);
 
 		/** Theme  */
-		Helpers::Theme()->get($theme_id, 'Parameters');
+		Helpers::Theme()->get($theme_id);
 
 		/** Page  */
-		Helpers::PageView()->get($page_view_id, 'Parameters');
+		Helpers::PageView()->get($page_view_id);
 
-		return;
+		return true;
 	}
 
 	/**
@@ -477,10 +409,10 @@ Class ExtensionHelper
 		Services::Registry()->set('Parameters', 'model_query_object', $model_query_object);
 
 		/** Template  */
-		Helpers::TemplateView()->get($template_view_id, 'Parameters');
+		Helpers::TemplateView()->get($template_view_id);
 
 		/** Wrap  */
-		Helpers::WrapView()->get($wrap_view_id, 'Parameters');
+		Helpers::WrapView()->get($wrap_view_id);
 
 		return;
 	}

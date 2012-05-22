@@ -62,26 +62,35 @@ class DisplayController extends ModelController
 
 		/**
 		echo '<br /><br />Route<br /><pre>';
-		var_dump(Services::Registry()->get('Include'));
+		var_dump(Services::Registry()->get('Parameters'));
 
 		echo '<br />Parameters (RouteParameters)<br />';
 		var_dump(Services::Registry()->get('Parameters'));
 		echo '</pre>';
 		 */
-
-		$template_view_type = Services::Registry()->get('Parameters', 'template_view');
+		/**
+		 ["model_name"]=>
+string(13) "dboParameters"
+["model_query_object"]=>
+string(13) "getParameters"
+["model_type"]=>
+string(6) "Module"
+copy theme and page
+		*/
+		$template_view_type = Services::Registry()->get('Parameters', 'template_view', '');
 
 		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
 		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Content');
 		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
-		Services::Registry()->get($table_registry_name, 'id', Services::Registry()->get('Include', 'content_id'));
-
+		//echo $table_registry_name.'<br />';
+//Services::Registry()->get($table_registry_name, 'id', Services::Registry()->get('Parameters', 'content_id'));
+/**
 		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type
+			. 'Table Registry Name '. $table_registry_name
 			. ' Model query_object: ' . $model_query_object . '<br />';
-
+*/
 		if ($model_name == 'Wraps') {
 			$this->query_results = $model_query_object;
 
@@ -90,6 +99,7 @@ class DisplayController extends ModelController
 
 		} else {
 			$this->connect($model_name, $model_type);
+
 			$this->query_results = $this->getData($model_query_object);
 			//var_dump($this->query_results);
 		}
@@ -102,8 +112,8 @@ class DisplayController extends ModelController
 		 *      extensions. MolajoRequestModel retrieves data.
 		 */
 		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
-			Services::Registry()->set('Route', 'query_resultset', $this->query_results);
-			Services::Registry()->set('Route', 'query_pagination', $this->pagination);
+			Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
+			Services::Registry()->set('Parameters', 'query_pagination', $this->pagination);
 		}
 
 		/** no results */

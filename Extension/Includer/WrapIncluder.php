@@ -87,9 +87,7 @@ Class WrapIncluder extends Includer
 		Services::Registry()->set('Parameters', 'model_name', 'Wraps');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
 		Services::Registry()->set('Parameters', 'model_query_object', $wrap_this);
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
+
 		/** Sort */
 		Services::Registry()->sort('Include');
 		Services::Registry()->sort('Parameters');

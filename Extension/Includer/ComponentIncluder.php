@@ -35,8 +35,7 @@ class ComponentIncluder extends Includer
 	public function __construct($name = null, $type = null)
 	{
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_COMPONENT);
-		Services::Registry()->get('Parameters', '*');
-		die;
+
 		return parent::__construct($name, $type);
 	}
 
@@ -64,16 +63,30 @@ class ComponentIncluder extends Includer
 	 * @return null
 	 * @since  1.0
 	 */
-	public function getExtension($extension_id = null)
+	protected function getExtension()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Component */
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 			return;
 		}
 
-		/** Retrieve Component ID, then Extension, populate Include and Parameters */
-		$extension_id = Helpers::Component()->get($this->name);
-		return parent::getExtension($extension_id);
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Helpers::Extension()->getInstanceID(
+				Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+				Services::Registry()->get('Parameters', 'extension_title')
+			)
+		);
+
+		$response = Helpers::Extension()->getExtension(
+			Services::Registry()->get('Parameters', 'extension_instance_id'),
+			'ExtensionInstances',
+			'Table'
+		);
+		if ($response === false) {
+			Services::Error()->set(500, 'Extension not found');
+		}
+
+		return parent::__construct();
 	}
 
 	/**
@@ -114,7 +127,7 @@ class ComponentIncluder extends Includer
 
 		/** Source */
 		$this->loadMediaPlus('/source/'  . Services::Registry()->get('Parameters', 'extension_title')
-				. Services::Registry()->get('Include', 'content_id'),
+				. Services::Registry()->get('Parameters', 'content_id'),
 			Services::Registry()->get('Parameters', 'criteria_asset_priority_source', 900));
 
 		/** Component */
@@ -134,9 +147,10 @@ class ComponentIncluder extends Includer
 	 */
 	protected function loadMediaPlus($plus = '', $priority = 500)
 	{
+
 		/** Theme */
-		$file_path = EXTENSIONS_THEMES . '/' . Services::Registry()->get('Parameters', 'theme_title');
-		$url_path = EXTENSIONS_THEMES_URL . '/' . Services::Registry()->get('Parameters', 'theme_title');
+		$file_path = Services::Registry()->get('Parameters', 'theme_path');
+		$url_path = Services::Registry()->get('Parameters', 'theme_path_url');
 		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
