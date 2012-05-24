@@ -435,13 +435,13 @@ Class ParseService
 					$replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
 					/** 6. initialize registry */
+					Services::Registry()->createRegistry('Parameters');
+
 					if ($first && $includeName == 'request') {
-						Services::Registry()->createRegistry('Parameters');
 						Services::Registry()->copy('RouteParameters', 'Parameters');
 						Services::Registry()->set('Parameters', 'extension_primary', true);
 						$first = false;
 					} else {
-						Services::Registry()->createRegistry('Parameters');
 						Services::Registry()->set('Parameters', 'extension_primary', false);
 					}
 

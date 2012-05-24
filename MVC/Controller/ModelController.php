@@ -155,13 +155,13 @@ Class ModelController extends Controller
 	{
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
+			echo 'ERROR IN ModelController for $query_object: ' . $query_object . ' defaulting to loadObjectList';
 			$query_object = 'loadObjectList';
 		}
 
 		try {
 			/** Sometimes, only the data is requested */
 			if ($view_requested == true) {
-				$this->parameters['query_object'] = $query_object;
 				return $this->display();
 
 			} else {
