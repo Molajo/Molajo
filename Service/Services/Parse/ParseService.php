@@ -164,7 +164,7 @@ Class ParseService
 		}
 
 		/** Before Event */
-		Services::Event()->schedule('onBeforeRender');
+//Services::Event()->schedule('onBeforeRender');
 
 		$this->final = false;
 
@@ -218,7 +218,7 @@ Class ParseService
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
-		$body = Services::Event()->schedule('onAfterRender', $body);
+		Services::Event()->schedule('onAfterRender', $body);
 
 		return $body;
 	}
@@ -237,7 +237,6 @@ Class ParseService
 		if ($body == null) {
 			$first = true;
 			ob_start();
-			echo Services::Registry()->get('Parameters', 'theme_path_include');
 			require Services::Registry()->get('Parameters', 'theme_path_include');
 			$body = ob_get_contents();
 			ob_end_clean();
@@ -262,20 +261,16 @@ Class ParseService
 			/** When no other <include /> statements are found, end recursive processing */
 			if (count($this->include_request) == 0) {
 				break;
-
 			}
 
 			/** Render output for each discovered <include /> statement */
-
 			$body = $this->callIncluder($first, $body);
-
-echo $body;
-			die;
+			$first = false;
 
 			/**
-			 *	Rendered output will be parsed until no more <include /> statements are discovered.
-			 *	An endless loop could be created if frontend developers include a template that
-			 *	includes the same template. This is a stop-gap measure to prevent that from happening.
+			 *    Rendered output will be parsed until no more <include /> statements are discovered.
+			 *    An endless loop could be created if frontend developers include a template that
+			 *    includes the same template. This is a stop-gap measure to prevent that from happening.
 			 */
 			if ($loop > STOP_LOOP) {
 				break;
@@ -329,10 +324,10 @@ echo $body;
 				$includeStatement = str_replace($replace, '', $includeStatement);
 
 				$value = substr(trim($includeStatement),
-					strpos(trim($includeStatement), '{{{') + 3,
-					strpos(trim($includeStatement), '}}}') - 3);
+					strpos(trim($includeStatement), '{'),
+					strpos(trim($includeStatement), '}') + 1);
 
-				$replace = '{{{' . $value . '}}}';
+				$replace = $value;
 				$includeStatement = str_replace($replace, '', $includeStatement);
 
 				$this->include_request[$i]['name'] = 'wrap';
@@ -345,7 +340,16 @@ echo $body;
 				$includerType = '{}{}{}{do not reprocess}{}{}{}';
 			}
 
-			$parts = explode(' ', $includeStatement);
+			$parts = array();
+			$temp = explode(' ', $includeStatement);
+			if (count($temp) > 0) {
+				foreach ($temp as $item) {
+					if (trim($item) == '') {
+					} else {
+						$parts[] = $item;
+					}
+				}
+			}
 
 			$countAttributes = 0;
 
@@ -369,7 +373,7 @@ echo $body;
 						/** Associative array of attributes */
 						$pair = array();
 						$pair = explode('=', $attributes);
-						if($pair[0] == $includerType) {
+						if ($pair[0] == $includerType) {
 						} else {
 							$countAttributes++;
 
@@ -457,15 +461,17 @@ echo $body;
 					$replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
 					/** 6. initialize registry */
-					if ($first) {
+					if ($first && $includeName == 'request') {
+						Services::Registry()->createRegistry('Parameters');
+						Services::Registry()->copy('RouteParameters', 'Parameters');
 						Services::Registry()->set('Parameters', 'extension_primary', true);
+						$first = false;
 					} else {
 						Services::Registry()->createRegistry('Parameters');
 						Services::Registry()->set('Parameters', 'extension_primary', false);
 					}
 
 					/** 7. call the includer class */
-					$first = false;
 					$class = 'Molajo\\Extension\\Includer\\';
 					$class .= ucfirst($includerType) . 'Includer';
 

@@ -39,7 +39,6 @@ Class ModuleIncluder extends Includer
 		return parent::__construct($name, $type);
 	}
 
-
 	/**
 	 * getExtension
 	 *
@@ -59,42 +58,13 @@ Class ModuleIncluder extends Includer
 
 		$response = Helpers::Extension()->getExtension(
 			Services::Registry()->get('Parameters', 'extension_instance_id'),
-			'Modules',
-			'Table'
+			ucfirst(strtolower(Services::Registry()->get('Parameters', 'extension_title'))),
+			'Module'
 		);
 
 		if ($response === false) {
 			Services::Error()->set(500, 'Extension not found');
 		}
-		return;
-	}
-
-
-	/**
-	 * setRenderCriteria
-	 *
-	 * Use the view and/or wrap criteria ife specified on the <include statement
-	 * Retrieve View and wrap criteria and path information
-	 *
-	 * @return  bool
-	 * @since   1.0
-	 */
-	protected function setRenderCriteria()
-	{
-
-		Services::Registry()->merge('Configuration', 'Parameters', true);
-
-		/** Template  */
-		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
-
-		/** Wrap  */
-		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
-
-		Services::Registry()->delete('Parameters', 'item*');
-		Services::Registry()->delete('Parameters', 'list*');
-		Services::Registry()->delete('Parameters', 'form*');
-
-		Services::Registry()->sort('Parameters');
 
 		return;
 	}

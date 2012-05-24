@@ -356,15 +356,47 @@ Class RegistryService
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function copy($copyThis, $intoThis)
+	public function copy($copyThis, $intoThis, $value = null)
 	{
 		/** Get (or create) the Registry that will be copied */
 		$copy = $this->getRegistry($copyThis);
 
-		/** Merge */
+		/** Copy all */
+		if ($value == null) {
+			if (count($copy) > 0) {
+				foreach ($copy as $key => $value) {
+					$this->set($intoThis, $key, $value);
+				}
+			}
+			return $this;
+		}
+
+		/** Copy a single item or prefix copy */
+		$searchfor = '';
+		if ($value == '*' || strpos($value, '*')) {
+			$searchfor = substr($value, 0, strrpos($value, '*'));
+			$exactMatch = false;
+		} else {
+			$searchfor = $value;
+			$exactMatch = true;
+		}
+
 		if (count($copy > 0)) {
 			foreach ($copy as $key => $value) {
-				$this->set($intoThis, $key, $value);
+				$use = false;
+				$test = substr($key, 0, strlen($searchfor));
+				if (strtolower($test) == strtolower($searchfor)) {
+					if ($exactMatch == true) {
+						if (strtolower($key) == strtolower($searchfor)) {
+							$use = true;
+						}
+					} else {
+						$use = true;
+					}
+				}
+				if ($use == true) {
+					$this->set($intoThis, $key, $value);
+				}
 			}
 		}
 
