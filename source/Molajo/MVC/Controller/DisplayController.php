@@ -22,7 +22,6 @@ defined('MOLAJO') or die;
  */
 class DisplayController extends ModelController
 {
-
 	/**
 	 * Add action is used to render view output for a form used to create new content
 	 *
@@ -59,7 +58,6 @@ class DisplayController extends ModelController
 	 */
 	public function display()
 	{
-
 		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
 		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Content');
 		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
@@ -80,7 +78,11 @@ class DisplayController extends ModelController
 			$this->connect($model_name, $model_type);
 
 			$this->query_results = $this->getData($model_query_object);
-			//var_dump($this->query_results);
+/**
+echo '<pre>';
+var_dump($this->query_results);
+echo '</pre>';
+ */
 		}
 
 		$this->pagination = array();
@@ -105,7 +107,7 @@ class DisplayController extends ModelController
 		if (strtolower($model_name) == 'wraps') {
 			$renderedOutput = $model_query_object;
 
-			/** Template View */
+		/** Template View */
 		} else {
 			$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
 			$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');

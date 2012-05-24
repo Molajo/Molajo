@@ -768,7 +768,7 @@ Class RegistryService
 
 		/** Retrieve Parameter Registry */
 		$parameters = $this->registry['Parameters'];
-		sort($parameters);
+		ksort($parameters);
 
 		/** Simulate a recordset */
 		$row = new \stdClass();
