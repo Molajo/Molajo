@@ -18,9 +18,8 @@ $current_year = Services::Date()
 	->format('Y');
 ?>
 <p>
-	<?php echo '&#169;' . $current_year . ' '. Services::Registry()->get('Configuration', 'site_title'); ?>
-	<a href="<?php echo Services::Registry()->get('Parameters', 'link'); ?>">
-		<?php echo Services::Registry()->get('Parameters', 'linked_text'); ?> v.<?php echo MOLAJOVERSION; ?></a>
-	<?php echo ' ' . Services::Registry()->get('Parameters', 'remaining_text'); ?>.
-
+	<?php echo '&#169;' . $current_year . ' ' . Services::Registry()->get('Configuration', 'site_title'); ?>
+	<a href="<?php echo $this->row->link; ?>">
+		<?php echo $this->row->linked_text; ?> v.<?php echo MOLAJOVERSION; ?></a>
+	<?php echo ' ' . $this->row->remaining_text; ?>.
 </p>

@@ -6,11 +6,9 @@
  */
 namespace Molajo\Extension\Includer;
 
-use Molajo\Application;
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
 use Molajo\Extension\Includer;
-use Molajo\MVC\Controller\DisplayController;
 
 defined('MOLAJO') or die;
 
@@ -81,26 +79,12 @@ Class HeadIncluder extends Includer
 			Services::Registry()->set('Parameters', 'defer', 0);
 		}
 
-		Services::Registry()->set('Parameters', 'model_name', 'Assets');
-		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
-
-		/** Final Template and Wrap selections */
-		Services::Registry()->merge('Configuration', 'Parameters', true);
-
-		Helpers::Extension()->finalizeParameters(
-			Services::Registry()->get('Parameters', 'content_id', 0),
-			Services::Registry()->get('Parameters', 'request_action', 'display')
-		);
-
 		/* Yes, this is done before, too. Get over it or fix it. */
-		Services::Registry()->set('Parameters', 'model_name', 'Assets');
+		Services::Registry()->set('Parameters', 'model_name', 'dboAssets');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
 		Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
 
-		/** Sort */
-		Services::Registry()->sort('Include');
-		Services::Registry()->sort('Parameters');
+		parent::setRenderCriteria();
 
 		return;
 	}
