@@ -47,6 +47,7 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
+
 		$this->query->clear();
 
 		/** Base query */
@@ -194,10 +195,13 @@ class ItemModel extends Model
 	 */
 	protected function runLoadQuery()
 	{
-if (Services::Registry()->get('Parameters', 'source_id') > 0) {
-echo '<br /><br />'.$this->query->__toString().'<br /><br />';
-		}
 
+/**
+        if ($this->table_registry_name == 'ArticlesItem') {
+            echo '<br /><br />'.$this->query->__toString().'<br /><br />';
+            die;
+        };
+*/
 		/** Run the query */
 		$this->db->setQuery($this->query->__toString());
 
