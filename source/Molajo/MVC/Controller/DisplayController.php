@@ -63,11 +63,11 @@ class DisplayController extends ModelController
 		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-/**
+		/**
 		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type
-			. 'Table Registry Name '. $table_registry_name
-			. ' Model query_object: ' . $model_query_object . '<br />';
-*/
+		. 'Table Registry Name '. $table_registry_name
+		. ' Model query_object: ' . $model_query_object . '<br />';
+		 */
 		if (strtolower($model_name) == 'wraps') {
 			$this->query_results = $model_query_object;
 
@@ -79,10 +79,12 @@ class DisplayController extends ModelController
 
 			$this->query_results = $this->getData($model_query_object);
 /**
-echo '<pre>';
-var_dump($this->query_results);
-echo '</pre>';
- */
+			echo $model_name.'<br />';
+			echo Services::Registry()->get('Parameters', 'display_view_on_no_results').'<br />';
+			echo '<pre>';
+			var_dump($this->query_results);
+			echo '</pre>';
+*/
 		}
 
 		$this->pagination = array();
@@ -99,7 +101,7 @@ echo '</pre>';
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& Services::Registry()->get('Parameters', 'display_view_on_no_results', 0) == 0
+			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 0
 		) {
 			return '';
 		}
@@ -107,7 +109,7 @@ echo '</pre>';
 		if (strtolower($model_name) == 'wraps') {
 			$renderedOutput = $model_query_object;
 
-		/** Template View */
+			/** Template View */
 		} else {
 			$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
 			$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');

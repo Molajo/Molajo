@@ -7,12 +7,11 @@
  *
  * <include:module name=Mainmenu wrap=Nav />
  * <include:module name=Sidebar template=Sidebar wrap=div/>
- *
- * <include:head/>
- * <include:defer/>
  */
 defined('MOLAJO') or die; ?>
-<include:module name=Adminheader display_view_on_no_results=1/>
+<include:head/>
+<include:module name=Adminheader/>
 <include:module name=Systemmessages/>
-<include:request template_class=red non_standard_attributes=ignored/>
+<include:request/>
 <include:module name=Adminfooter/>
+<include:defer/>

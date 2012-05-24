@@ -27,7 +27,7 @@ elseif ($this->row->type == 'css'):
 <?php
 elseif ($this->row->type == 'js'):
 ?>
-    <script src="<?php echo $this->row->url; ?>"<?php if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if ((int)$this->row->defer == 1): ?> defer="defer"<?php endif; ?><?php if ((int)$this->row->async == 1): ?> async="async"<?php endif; ?>></script><?php echo chr(10) . chr(13); ?>
+    <script src="<?php echo $this->row->url; ?>"<?php if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?><?php if ((int)$this->row->defer == 1): ?> defer="defer"<?php endif; ?><?php if ((int)$this->row->async == 1): ?> async="async"<?php endif; ?>></script><?php echo chr(10); ?>
 <?php
 elseif ($this->row->type == 'css_declarations'):
 ?>
@@ -36,13 +36,13 @@ elseif ($this->row->type == 'css_declarations'):
 else : ?>
 <![CDATA[
 <?php endif;
-echo $this->row->content . chr(10) . chr(13);
+echo $this->row->content . chr(10);
 if ($page_mimetype == 'text/html') :
 else : ?>
 ]]>
 <?php
 endif; ?>
-     </style><?php echo chr(10) . chr(13); ?>
+     </style><?php echo chr(10); ?>
 <?php
 elseif ($this->row->type == 'js_declarations'): ?>
 <script<?php if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
@@ -52,12 +52,12 @@ else : ?>
 <![CDATA[
 <?php
 endif;
-echo '    ' . trim($this->row->content) . chr(10) . chr(13);
+echo '    ' . trim($this->row->content) . chr(10);
 if ($page_mimetype == 'text/html') :
 else : ?>
 ]]>
 <?php
 endif; ?>
-</script><?php echo chr(10) . chr(13); ?>
+</script><?php echo chr(10); ?>
 <?php
 endif;

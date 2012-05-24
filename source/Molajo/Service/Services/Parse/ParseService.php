@@ -392,32 +392,6 @@ Class ParseService
 	}
 
 	/**
-	 * parseRemoveQuotes   NOT USED
-	 *
-	 * Removes value from enclosed double or single quotes
-	 *
-	 * @param   string
-	 *
-	 * @return  string rendered output
-	 * @since   1.0
-	 */
-	protected function parseRemoveQuotes($value = null)
-	{
-		if (substr(trim($value), 0, 1) == '"'
-			&& substr(trim($value), strlen(trim($value)) - 1, 1) == '"'
-		) {
-			return substr(trim($value), 1, strlen(trim($value)) - 2);
-
-		} else if (substr(trim($value), 0, 1) == "'"
-			&& substr(trim($value), strlen(trim($value)) - 1, 1) == "'"
-		) {
-			return substr(trim($value), 1, strlen(trim($value)) - 2);
-		}
-
-		return $value;
-	}
-
-	/**
 	 * callIncluder
 	 *
 	 * Invoke extension-specific includer for include statement
@@ -485,7 +459,7 @@ Class ParseService
 					}
 
 					/** 8. render output and store results as "replace with" */
-					$with[] = $rc->process($attributes);
+					$with[] = trim($rc->process($attributes));
 
 					Services::Registry()->deleteRegistry('Parameters');
 				}
