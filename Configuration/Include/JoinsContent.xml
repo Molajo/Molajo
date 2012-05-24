@@ -13,8 +13,3 @@
       select="id,name"
       jointo="id"
       joinwith="extension_instances.extension_id"/>
-<join table="#__catalog"
-      alias="catalog"
-      select="id,view_group_id"
-      jointo="source_id,catalog_type_id"
-      joinwith="id,catalog_type_id"/>
