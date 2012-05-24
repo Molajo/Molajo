@@ -338,14 +338,14 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
-
+/**
 		echo '<br /><br /><br />';
 		echo Services::Registry()->get('Parameters', 'extension_title');
 		echo '<br />';
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->get('Parameters', '*');
 		echo '<br /><br /><br />';
-
+**/
 		$controller = new DisplayController();
 		$results = $controller->Display();
 

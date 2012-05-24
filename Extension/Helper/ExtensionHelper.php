@@ -98,7 +98,13 @@ Class ExtensionHelper
 				Services::Registry()->deleteRegistry($row['table_registry_name'] . $customFieldName);
 			}
 		}
-
+/**
+echo '<br /><br /><br />';
+echo 'In getExtension ROW <br />';
+echo '<pre>';
+var_dump($row);
+echo '</pre>';
+*/
 		return true;
 	}
 
