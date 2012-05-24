@@ -60,38 +60,17 @@ class DisplayController extends ModelController
 	public function display()
 	{
 
-		/**
-		echo '<br /><br />Route<br /><pre>';
-		var_dump(Services::Registry()->get('Parameters'));
-
-		echo '<br />Parameters (RouteParameters)<br />';
-		var_dump(Services::Registry()->get('Parameters'));
-		echo '</pre>';
-		 */
-		/**
-		 ["model_name"]=>
-string(13) "dboParameters"
-["model_query_object"]=>
-string(13) "getParameters"
-["model_type"]=>
-string(6) "Module"
-copy theme and page
-		*/
-		$template_view_type = Services::Registry()->get('Parameters', 'template_view', '');
-
 		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
 		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Content');
 		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-		//echo $table_registry_name.'<br />';
-//Services::Registry()->get($table_registry_name, 'id', Services::Registry()->get('Parameters', 'content_id'));
 /**
 		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type
 			. 'Table Registry Name '. $table_registry_name
 			. ' Model query_object: ' . $model_query_object . '<br />';
 */
-		if ($model_name == 'Wraps') {
+		if (strtolower($model_name) == 'wraps') {
 			$this->query_results = $model_query_object;
 
 		} else if ($model_name == '') {
@@ -120,12 +99,11 @@ copy theme and page
 		if (count($this->query_results) == 0
 			&& Services::Registry()->get('Parameters', 'display_view_on_no_results', 0) == 0
 		) {
-			//return '';
+			return '';
 		}
 
-		if ($model_name == 'Wraps') {
+		if (strtolower($model_name) == 'wraps') {
 			$renderedOutput = $model_query_object;
-			echo 'Wrap : ' . Services::Registry()->get('Parameters', 'wrap_view_title');
 
 			/** Template View */
 		} else {

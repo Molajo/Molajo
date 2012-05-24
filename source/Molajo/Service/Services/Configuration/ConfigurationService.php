@@ -306,11 +306,7 @@ Class ConfigurationService
 
 		} elseif (strtolower($type) == 'module') {
 
-			if (file_exists(EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml')) {
-				$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml';
-			} else {
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-			}
+			$path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml';
 
 		} else {
 			$path_and_file = $type . '/' . $file . '.xml';
@@ -444,7 +440,6 @@ Class ConfigurationService
 
 		/** Model */
 		if (isset($xml->config->include['model'])) {
-
 			$include = (string)$xml->config->include['model'];
 
 			if ($xml_string == '') {
@@ -464,27 +459,114 @@ Class ConfigurationService
 		ConfigurationService::setModelRegistry($registryName, $xml->config->model);
 		Services::Registry()->set($registryName, 'model_name', $registryName);
 
-		/** Parameters - Include Code */
-		if (isset($xml->config->parameters->include['parameters'])) {
+		/** Fields  */
+		$known = array('name', 'type', 'null', 'default', 'length', 'customtype', 'file', 'char',
+			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
 
-			$include = (string)$xml->config->parameters->include['parameters'];
+		$include = '';
+		if (isset($xml->config->fields->include['name'])) {
+			$include = (string)$xml->config->fields->include['name'];
+		}
+		if ($include == '') {
+		} else {
 
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
 
-			$replace_this = '<include parameters="' . $include . '"/>';
+			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $file, $replace_this, $xml_string
 			);
-
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		/** Fields  */
-		$known = array('name', 'type', 'null', 'default', 'length', 'customtype', 'file', 'char',
-			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
+		if (isset($xml->config->fields->field)) {
+
+			$fields = $xml->config->fields->field;
+			$fieldArray = array();
+
+			foreach ($fields as $field) {
+
+				$attributes = get_object_vars($field);
+				$fieldAttributes = ($attributes["@attributes"]);
+				$fieldAttributesArray = array();
+
+				while (list($key, $value) = each($fieldAttributes)) {
+
+					if (in_array($key, $known)) {
+					} else {
+						echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
+					}
+					$fieldAttributesArray[$key] = $value;
+				}
+				$fieldArray[] = $fieldAttributesArray;
+			}
+
+			Services::Registry()->set($registryName, 'fields', $fieldArray);
+		}
+
+		/** Joins */
+
+		$include = '';
+		if (isset($xml->config->joins->include['name'])) {
+			$include = (string)$xml->config->joins->include['name'];
+		}
+		if ($include == '') {
+		} else {
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $replace_this, $xml_string
+			);
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		if (isset($xml->config->joins->join)) {
+			$jXML = $xml->config->joins->join;
+
+			$jArray = array();
+			foreach ($jXML as $joinItem) {
+
+				$joinVars = get_object_vars($joinItem);
+				$joinAttributes = ($joinVars["@attributes"]);
+				$joinAttributesArray = array();
+
+				$joinAttributesArray['table'] = (string)$joinAttributes['table'];
+				$joinAttributesArray['alias'] = (string)$joinAttributes['alias'];
+				$joinAttributesArray['select'] = (string)$joinAttributes['select'];
+				$joinAttributesArray['jointo'] = (string)$joinAttributes['jointo'];
+				$joinAttributesArray['joinwith'] = (string)$joinAttributes['joinwith'];
+
+				$jArray[] = $joinAttributesArray;
+			}
+
+			Services::Registry()->set($registryName, 'Joins', $jArray);
+		}
+
+		/** Parameters  */
+		$include = '';
+		if (isset($xml->config->parameters->include['name'])) {
+			$include = (string)$xml->config->parameters->include['name'];
+		}
+		if ($include == '') {
+		} else {
+
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $file, $replace_this, $xml_string
+			);
+			$xml = simplexml_load_string($xml_string);
+		}
 
 		/** Retrieve Field Attributes for each field */
 		$fieldArray = array();
@@ -512,8 +594,6 @@ Class ConfigurationService
 		Services::Registry()->set($registryName, 'Parameters', $fieldArray);
 
 		Services::Registry()->set($registryName, 'CustomFieldGroups', array('Parameters'));
-
-		//Services::Registry()->get($registryName, '*');
 
 		return $registryName;
 	}

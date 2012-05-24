@@ -8,15 +8,16 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org/</author_url>
     <version>1.0</version>
-    <description>MODULE_ADMINFOOTER_DESCRIPTION</description>
+    <description>MODULE_ADMINHEADER_DESCRIPTION</description>
     <config>
-        <include model="dboParameters"/>
+        <include model="ModelModule"/>
         <parameters>
             <field name="site_name" type="char" null="0" default="Molajo" values=""/>
             <field name="link" type="char" null="1" default="http://Molajo.org" values=""/>
             <field name="linked_text" type="char" null="0" default="Molajo" values=""/>
             <field name="remaining_text" type="char" null="0" default=" is Free Software" values=""/>
-            <include parameters="ParametersModule"/>
+            <include name="ParametersModule"/>
         </parameters>
     </config>
 </extension>
+

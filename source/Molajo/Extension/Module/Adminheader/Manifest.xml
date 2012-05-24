@@ -10,9 +10,9 @@
     <version>1.0</version>
     <description>MODULE_ADMINHEADER_DESCRIPTION</description>
     <config>
-        <include model="dboParameters"/>
+        <include model="ModelModule"/>
         <parameters>
-            <include parameters="ModuleParameters"/>
+            <include name="ParametersModule"/>
         </parameters>
     </config>
 </extension>

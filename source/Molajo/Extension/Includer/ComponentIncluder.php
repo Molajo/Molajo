@@ -104,7 +104,18 @@ class ComponentIncluder extends Includer
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 			return;
 		}
-		return parent::setRenderCriteria();
+
+		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		Helpers::Extension()->setTemplateWrapModel();
+
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
+
+		Services::Registry()->sort('Parameters');
+
+		return;
 	}
 
 		/**

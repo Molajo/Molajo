@@ -110,7 +110,6 @@ Class ModelController extends Controller
 			$this->model = new $modelClass();
 		}
 		catch (\Exception $e) {
-
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
 
@@ -121,10 +120,6 @@ Class ModelController extends Controller
 		$this->model->set('primary_key', Services::Registry()->get($this->table_registry_name, 'primary_key'));
 		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
 		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
-
-		if ($this->table_registry_name == 'DboparametersModule')  {
-			Services::Registry()->set($this->table_registry_name, 'data_source', 'Registry');
-		}
 
 		/** 4. Set DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
@@ -158,7 +153,6 @@ Class ModelController extends Controller
 	 */
 	public function getData($query_object = 'loadObjectList', $view_requested = false)
 	{
-
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
 			$query_object = 'loadObjectList';
@@ -167,18 +161,14 @@ Class ModelController extends Controller
 		try {
 			/** Sometimes, only the data is requested */
 			if ($view_requested == true) {
-
 				$this->parameters['query_object'] = $query_object;
-
 				return $this->display();
 
 			} else {
-
 				return $this->model->$query_object();
 			}
 
 		} catch (\Exception $e) {
-
 			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
 		}
 	}
