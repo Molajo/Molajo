@@ -194,7 +194,9 @@ class ItemModel extends Model
 	 */
 	protected function runLoadQuery()
 	{
-//echo $this->query->__toString();
+if (Services::Registry()->get('Parameters', 'source_id') > 0) {
+echo '<br /><br />'.$this->query->__toString().'<br /><br />';
+		}
 
 		/** Run the query */
 		$this->db->setQuery($this->query->__toString());
