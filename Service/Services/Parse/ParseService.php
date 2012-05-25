@@ -373,11 +373,13 @@ Class ParseService
 						/** Associative array of attributes */
 						$pair = array();
 						$pair = explode('=', $attributes);
-						if ($pair[0] == $includerType) {
-						} else {
-							$countAttributes++;
+						if (count($pair) == 2) {
+							if ($pair[0] == $includerType) {
+							} else {
+								$countAttributes++;
 
-							$this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
+								$this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
+							}
 						}
 					}
 				}

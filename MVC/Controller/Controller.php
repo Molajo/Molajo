@@ -74,8 +74,11 @@ class Controller
 	 *
 	 * @var    object
 	 * @since  1.0
+	 *
+	 * Consider: Item, Load, List, Value -- what else might be needed?
 	 */
 	protected $query_objects = array(
+		'item',
 		'load',
 		'loadResult',
 		'loadResultArray',
