@@ -8,8 +8,8 @@
  */
 defined('MOLAJO') or die; ?>
 <article>
-	<include:wrap name=Header wrap_class=blue {<h2><?php echo $this->row->title; ?></h2>} />
-	<include:wrap name=Aside {This is aside text lorem ipsum dolor sit amet consectetur adipisicing} />
+	<h2><?php echo $this->row->title; ?></h2>
+	<Aside>This is aside text lorem ipsum dolor sit amet consectetur adipisicing</Aside>
 	<?php echo $this->row->content_text; ?>
-	<include:wrap name=Footer {<h2>Posted August 22, 2011</h2>} />
+	<Footer><h2>Posted August 22, 2011</h2></Footer>
 </article>

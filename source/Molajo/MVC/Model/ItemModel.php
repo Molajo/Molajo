@@ -36,6 +36,36 @@ class ItemModel extends Model
 	}
 
 	/**
+	 * item
+	 *
+	 * Single item returned as a single row instead of as a set of named pairs like load
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	public function item()
+	{
+		$this->load();
+
+		/** Retrieve Parameter Registry */
+		$results = $this->query_results;
+		$this->query_results = array();
+
+		/** Simulate a recordset */
+		$row = new \stdClass();
+
+		/** Process all parameters as fields */
+		foreach ($results as $key => $value) {
+			$row->$key = $value;
+		}
+
+		/** Place all fields into a row */
+		$this->query_results[] = $row;
+
+		return $this->query_results;
+	}
+
+	/**
 	 * load
 	 *
 	 * Method to load a specific item from a specific model.
