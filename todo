@@ -63,6 +63,8 @@ INSERT INTO `molajo`.`molajo_extensions` ( `id` , `extension_site_id` , `catalog
 
 INSERT INTO `molajo`.`molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`) VALUES (NULL, '246', '1200', 'Search', 'templates', '', '', '1', '0', '0', '1', '2011-11-11 11:11:11', '0000-00-00 00:00:00', '1', '0', '0', '2011-11-11 11:11:11', '0', '2011-11-11 11:11:11', '0', '0000-00-00 00:00:00', '0', '{}', '', NULL, 'en-GB', '0', '41');
 
+INSERT INTO `molajo`.`molajo_site_extension_instances` (`extension_instance_id`, `site_id`) VALUES ('246', '1');
+
 INSERT INTO `molajo`.`molajo_application_extension_instances` (`extension_instance_id`, `application_id`) VALUES ('246', '1'), ('246', '2');
 
 INSERT INTO `molajo`.`molajo_catalog` ( `id` , `catalog_type_id` , `source_id` , `routable` , `sef_request` , `redirect_to_id` , `view_group_id` , `primary_category_id` , `tinyurl` ) VALUES ( NULL ,  '1200',  '246',  '1',  'extensions/views/246',  '0',  '1',  '0',  '');

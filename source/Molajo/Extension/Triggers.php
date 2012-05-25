@@ -102,16 +102,16 @@ Class Triggers
 	{
 		$triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
 
-		$triggerClass = 'Molajo\\Extension\\Trigger\\Trigger\\Trigger';
-		$method = 'getInstance';
-		$connection = $triggerClass::$method();
-		$this->set('Trigger', $connection, true);
+//		$triggerClass = 'Molajo\\Extension\\Trigger\\Trigger\\Trigger';
+//		$method = 'getInstance';
+//		$connection = $triggerClass::$method();
+//		$this->set('Trigger', $connection, true);
 
-		$triggerClass = 'Molajo\\Extension\\Trigger\\Content\\ContentTrigger';
-		$method = 'getInstance';
-		$connection = $triggerClass::$method();
+//		$triggerClass = 'Molajo\\Extension\\Trigger\\Content\\ContentTrigger';
+//		$method = 'getInstance';
+//		$connection = $triggerClass::$method();
 
-		$this->set('ContentTrigger', $connection, true);
+//		$this->set('ContentTrigger', $connection, true);
 
 		foreach ($triggers as $folder) {
 

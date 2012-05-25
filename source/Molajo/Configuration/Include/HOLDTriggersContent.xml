@@ -1,0 +1,11 @@
+<trigger name="Alias"/>
+<trigger name="Author"/>
+<trigger name="ContentText"/>
+<trigger name="Smileys"/>
+<trigger name="DateFormats"/>
+<trigger name="UserFields"/>
+<trigger name="Status"/>
+<trigger name="Customfields"/>
+<trigger name="Metadata"/>
+<trigger name="Parameters"/>
+<trigger name="ViewAccess"/>

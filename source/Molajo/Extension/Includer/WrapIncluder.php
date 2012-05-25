@@ -102,7 +102,6 @@ Class WrapIncluder extends Includer
 	 */
 	protected function loadViewMedia()
 	{
-
 		$priority = Services::Registry()->get('Parameters', 'criteria_media_priority_other_extension', 400);
 
 		$file_path = Services::Registry()->get('Parameters', 'wrap_view_path');

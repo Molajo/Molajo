@@ -42,21 +42,6 @@ class CheckoutTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Pre-read processing
-	 *
-	 * @param   $data
-	 * @param   $model
-	 *
-	 * @return  $data
-	 * @since   1.0
-	 */
-	public function onBeforeRead($data, $model)
-	{
-		// dirty read?
-		return $data;
-	}
-
-	/**
 	 * Pre-update processing
 	 *
 	 * @param   $data
