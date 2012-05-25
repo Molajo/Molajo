@@ -43,7 +43,7 @@ class ContentTextTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Pre-read processing
+	 * After-read processing
 	 *
 	 * splits the content_text field into intro and full text on readmore
 	 *
@@ -53,7 +53,7 @@ class ContentTextTrigger extends ContentTrigger
 	 * @return  $data
 	 * @since   1.0
 	 */
-	public function onBeforeRead($data, $model)
+	public function onAfterRead($data, $model)
 	{
 		if (isset($data->content_text)) {
 		} else {

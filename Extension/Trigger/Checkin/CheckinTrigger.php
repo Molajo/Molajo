@@ -43,7 +43,7 @@ class CheckinTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Pre-update processing
+	 * After-update processing
 	 *
 	 * @param   $data
 	 * @param   $model
@@ -51,7 +51,7 @@ class CheckinTrigger extends ContentTrigger
 	 * @return  $data
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onAfterUpdate($data, $model)
 	{
 		// make certain the correct person is in checkout
 		// if so, checkin by zeroing otu that value and the date

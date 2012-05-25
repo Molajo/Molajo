@@ -188,7 +188,7 @@ Class TextService
 }
 
 /**
- * @package   Molajo
+ * @package    Molajo
  * @subpackage  Platform
  * @copyright   Copyright (c) 2009, Mathew Tinsley (tinsley@tinsology.net) All rights reserved.
  */
