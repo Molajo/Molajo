@@ -145,7 +145,11 @@ class Controller
 	 */
 	public function get($key, $default = null)
 	{
-		return $this->parameters[$key];
+		if (isset($this->parameters[$key])) {
+			return $this->parameters[$key];
+		}
+
+		return $default;
 	}
 
 	/**
