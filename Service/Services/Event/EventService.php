@@ -27,6 +27,14 @@ Class EventService
 	protected static $instance;
 
 	/**
+	 * Trigger Connections
+	 *
+	 * @var   object
+	 * @since 1.0
+	 */
+	protected $trigger_connection;
+
+	/**
 	 * @static
 	 * @return  bool|object
 	 * @since   1.0
@@ -40,12 +48,24 @@ Class EventService
 	}
 
 	/**
+	 * Class constructor.
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+		Services::Registry()->createRegistry('Events');
+		$this->registerInstalledTriggers();
+	}
+
+	/**
 	 * application and controller schedule events with the event manager
 	 *
 	 * the event manager then fires off triggers which have registered for the event
 	 *
 	 * Usage:
-	 * Services::Event()->schedule('onAfterDelete', $parameters);
+	 * Services::Event()->schedule('onAfterDelete', $parameters, $selections);
 	 *
 	 * @param   string  $event
 	 * @param   array   $parameters
@@ -54,77 +74,217 @@ Class EventService
 	 *
 	 * @since   1.0
 	 */
-	public function schedule($event, $parameters = array())
+	public function schedule($event, $arguments = array(), $selections = array())
 	{
-		return $this;
+		/** Does Event (with registration) exist? */
+		$exists = Services::Registry()->exists('Events', $event);
+		if ($exists === false) {
+			return false;
+		}
 
 		/** Retrieve Event Registrations */
-		$exists = Services::Registry()->exists('Events', $event);
-
-		if ($exists === true) {
-			$registrations = Services::Registry()->get('Events', $event);
-		} else {
-			$registrations = array();
+		$registrations = Services::Registry()->get($event);
+		if (count($registrations) == 0) {
+			return false;
 		}
 
-		if (is_array($registrations)) {
+		/** Prepare selections */
+		if (is_array($selections)) {
 		} else {
-			if (trim($registrations) == '') {
-				$registrations = array();
+			if (trim($selections) == '') {
+				$selections = array();
 			} else {
-				$temp = $registrations;
-				$registrations = array();
-				$registrations[] = $temp;
+				$temp = trim($selections);
+				$selections = array();
+				$selections[] = $temp;
 			}
 		}
 
-		if (count($registrations) > 0) {
-			foreach ($registrations as $registration) {
-				Services::Debug()->set('Event: ' . $event . ' fired registration by Trigger ' . $registration);
+		if (count($selections) > 0) {
+		} else {
+			/** default to all events */
+			$selections = array();
+			if (count($registrations) > 0) {
+				foreach ($registrations as $key => $value) {
+					$selections[$key] = $value;
+				}
 			}
 		}
-		return $parameters;
+
+		/** Process each trigger */
+		foreach ($selections as $selection) {
+
+			$key = strtolower($selection) . 'trigger';
+
+			if (isset($registrations[$key])) {
+
+				if (method_exists($registrations[$key], $event)) {
+
+					/** Retrieve Stored Connection for the Trigger */
+					$connection = $this->trigger_connection[$registrations[$key]];
+
+					/** Set Properties for Trigger Class */
+					if (count($arguments) > 0) {
+						foreach ($arguments as $key => $value) {
+							$connection->set($key, $value);
+						}
+					}
+
+					/** Execute the Trigger Method */
+					$results = $connection->$event();
+
+					if ($results === false) {
+					} else {
+
+						/** Retrieve Properties from Trigger Class */
+						if (count($arguments) > 0) {
+							foreach ($arguments as $key => $value) {
+								$arguments[$key] = $connection->get($key, $value);
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+
+		return $arguments;
 	}
 
 	/**
-	 * triggers register for events
+	 * Triggers register for events.
+	 *
+	 * Installed triggers are registered during Application startup.
+	 * Other triggers can be created and dynamically registered using this method
 	 *
 	 * Usage:
-	 * Services::Event()->register('onAfterRead', 'Author');
+	 * Services::Event()->register('AliasTrigger', 'Molajo\\Extension\\Trigger\\Alias\\AliasTrigger', 'OnBeforeUpdate');
 	 *
-	 * @return  null
-	 *
+	 * @return  object
 	 * @since   1.0
 	 */
-	public function register($event, $trigger)
+	public function register($trigger, $triggerPath, $event)
 	{
-		return $this;
-
-		/** Retrieve Event Registrations */
+		/** Register Event (if not already registered) */
 		$exists = Services::Registry()->exists('Events', $event);
 
-		if ($exists === true) {
-			$registrations = Services::Registry()->get('Events', $event);
+		/** Retrieve number of registrations or register new event*/
+		if ($exists == true) {
+			$count = Services::Registry()->get('Events', $event, 0);
+			$count++;
 		} else {
-			$registrations = array();
+			$exists = Services::Registry()->set('Events', $event, 0);
+			Services::Registry()->createRegistry($event);
+			$count = 1;
 		}
 
-		if (is_array($registrations)) {
-		} else {
-			if (trim($registrations) == '') {
-				$registrations = array();
+		/** Register the event (can be used to override installed events) */
+		Services::Registry()->set($event, $trigger, $triggerPath);
+
+		/** Update Event Totals */
+		Services::Registry()->set('Events', $event, $count);
+
+		return $this;
+	}
+
+	/**
+	 * loads all triggers in the triggers folder
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	protected function registerInstalledTriggers()
+	{
+		$triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
+
+		/** Load Parent Classes first */
+		$triggerClass = 'Molajo\\Extension\\Trigger\\Trigger\\Trigger';
+		$method = 'getInstance';
+		$triggerClass::$method();
+
+		$triggerClass = 'Molajo\\Extension\\Trigger\\Content\\ContentTrigger';
+		$method = 'getInstance';
+		$triggerClass::$method();
+
+		foreach ($triggers as $folder) {
+
+			/** class name */
+			if ($folder == 'Trigger'
+				|| $folder == 'Content'
+				|| substr(strtolower($folder), 0, 4) == 'hold'
+			) {
+
 			} else {
-				$temp = $registrations;
-				$registrations = array();
-				$registrations[] = $temp;
+				$this->process_events($folder);
 			}
 		}
 
-		$registrations[] = $trigger;
+		return $this;
+	}
 
-		Services::Registry()->set('Events', $event, $registrations);
+	/**
+	 * Connect to the trigger and register it for events
+	 *
+	 * @param  $folder
+	 *
+	 * @return object
+	 * @since  1.0
+	 */
+	protected function process_events($folder)
+	{
+		$try = true;
+		$connection = '';
 
-		Services::Debug()->set('Trigger:' . $trigger . ' registered for Event: ' . $event);
+		$trigger = $folder . 'Trigger';
+		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $folder . '\\' . $trigger;
+
+		/** method name */
+		$method = 'getInstance';
+
+		/** trap errors for missing class or method */
+		if (class_exists($triggerClass)) {
+			if (method_exists($triggerClass, $method)) {
+			} else {
+				$try = false;
+				$connection = $triggerClass . '::' . $method . ' Class does not exist';
+				//errpr
+			}
+		} else {
+			$try = false;
+			$connection = $triggerClass . ' Class does not exist';
+			//error
+		}
+
+		/** make helper connection */
+		if ($try === false) {
+			return false;
+		}
+
+		try {
+			$connection = $triggerClass::$method();
+
+		} catch (\Exception $e) {
+			$connection = 'Fatal Error: ' . $e->getMessage();
+		}
+
+		/** Save connection */
+		$this->trigger_connection[$triggerClass] = $connection;
+
+		/** Retrieve all Event Methods in the Trigger */
+		$events = get_class_methods($triggerClass);
+
+		if (count($events) > 0) {
+			foreach ($events as $event) {
+				if (substr($event, 0, 2) == 'on') {
+					$reflectionMethod = new \ReflectionMethod(new $triggerClass, $event);
+					$results = $reflectionMethod->getDeclaringClass();
+					if ($results->name == $triggerClass) {
+						$this->register($trigger, $triggerClass, $event);
+					}
+				}
+			}
+		}
 
 		return $this;
 	}

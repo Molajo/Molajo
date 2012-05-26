@@ -67,6 +67,12 @@
         "criteria_image_folder":"",
         "criteria_thumb_folder":"",
 
+        "criteria_use_gravatar":"1",
+        "criteria_gravatar_size":"26",
+        "criteria_gravatar_type":"monsterid",
+        "criteria_gravatar_rating":"pg",
+        "criteria_gravatar_image":"1",
+
         "item_theme_id":"",
         "item_page_view_id":"",
         "item_page_view_css_id":"",
@@ -193,6 +199,12 @@
         "criteria_image_xlarge":"500",
         "criteria_image_folder":"images",
         "criteria_thumb_folder":"thumbs",
+
+        "criteria_use_gravatar":"1",
+        "criteria_gravatar_size":"26",
+        "criteria_gravatar_type":"monsterid",
+        "criteria_gravatar_rating":"pg",
+        "criteria_gravatar_image":"1",
 
         "item_theme_id":"119",
         "item_page_view_id":"55",

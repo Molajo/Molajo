@@ -126,15 +126,15 @@ Class RegistryService
 			return false;
 		}
 
+		/** Namespace check that makes it to this point is true */
 		if ($key === null) {
-			return false;
+			return true;
 		}
 
 		/** Look for the key value requested */
 		$key = strtolower($key);
 		if (isset($thisNamespace[$key])) {
 			return true;
-
 		} else {
 			return false;
 		}
@@ -221,7 +221,6 @@ Class RegistryService
 	{
 		if ($namespace == 'db') {
 			return $this;
-
 		}
 
 		if ($namespace == '*') {

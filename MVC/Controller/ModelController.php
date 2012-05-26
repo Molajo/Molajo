@@ -89,7 +89,7 @@ Class ModelController extends Controller
 //echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 
 		if ($table === '') {
-			$this->dataSource = $this->default_dataSource;
+			$this->dataSource = $this->default_data_source;
 
 		} else {
 
@@ -115,16 +115,26 @@ Class ModelController extends Controller
 
 		/** 3. Model Properties         */
 		$this->model->set('table_registry_name', $this->table_registry_name);
+
 		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
 		$this->model->set('table_name', Services::Registry()->get($this->table_registry_name, 'table_name'));
 		$this->model->set('primary_key', Services::Registry()->get($this->table_registry_name, 'primary_key'));
-		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
 		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
+		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
+		$this->model->set('get_customfields',
+			Services::Registry()->get($this->table_registry_name, 'get_customfields'));
+		$this->model->set('get_item_children',
+			Services::Registry()->get($this->table_registry_name, 'get_item_children'));
+		$this->model->set('use_special_joins',
+			Services::Registry()->get($this->table_registry_name, 'use_special_joins'));
+		$this->model->set('check_view_level_access',
+			Services::Registry()->get($this->table_registry_name, 'check_view_level_access'));
+		$this->model->set('check_published',
+			Services::Registry()->get($this->table_registry_name, 'check_published'));
+		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', $this->default_data_source);
+		$this->model->set('db', Services::$dbo()->get('db'));
 
 		/** 4. Set DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
-		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source');
-
-		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
 		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
 
@@ -155,7 +165,8 @@ Class ModelController extends Controller
 	{
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
-			echo 'ERROR IN ModelController for $query_object: ' . $query_object . ' defaulting to loadObjectList';
+			echo 'ERROR IN ModelController WILL DIE for $query_object: ' . $query_object . ' defaulting to loadObjectList';
+			die;
 			$query_object = 'loadObjectList';
 		}
 

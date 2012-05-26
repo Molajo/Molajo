@@ -77,24 +77,23 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
-
 		$this->query->clear();
 
 		/** Base query */
 		$this->setLoadQuery();
 
 		/** Add ACL Checking */
-		if (Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0) == 1) {
+		if ((int) $this->check_view_level_access == 1) {
 			$this->addACLCheck();
 		}
 
 		/** Check Published */
-		if (Services::Registry()->get($this->table_registry_name, 'check_published', 0) == 1) {
+		if ((int) $this->check_published == 1) {
 			$this->addPublishedCheck();
 		}
 
 		/** Joins */
-		if (Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0) == 1) {
+		if ((int) $this->use_special_joins == 1) {
 			$this->useSpecialJoins();
 		}
 
@@ -102,13 +101,13 @@ class ItemModel extends Model
 		$this->runLoadQuery();
 
 		/** Load Special Fields in Registry */
-		if (Services::Registry()->get($this->table_registry_name, 'get_customfields', 0) == 0) {
+		if ((int) $this->get_customfields == 0) {
 		} else {
 			$this->addCustomFields();
 		}
 
 		/** Retrieve Child Objects  */
-		if (Services::Registry()->get($this->table_registry_name, 'get_item_children', 0) == 1) {
+		if ((int) $this->get_item_children == 1) {
 			$this->addItemChildren();
 		}
 
@@ -127,7 +126,6 @@ class ItemModel extends Model
 	protected function setLoadQuery()
 	{
 		if ($this->query->select == null) {
-
 			$columns = Services::Registry()->get($this->table_registry_name, 'Fields');
 
 			foreach ($columns as $column) {
@@ -225,9 +223,8 @@ class ItemModel extends Model
 	 */
 	protected function runLoadQuery()
 	{
-
 /**
-        if ($this->table_registry_name == 'ArticlesItem') {
+		if ($this->id == 100) {
             echo '<br /><br />'.$this->query->__toString().'<br /><br />';
             die;
         };
@@ -267,7 +264,7 @@ class ItemModel extends Model
 		if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
 			return $this;
 		}
-		$retrieval_method = Services::Registry()->get($this->table_registry_name, 'get_customfields');
+		$retrieval_method = (int) $this->get_customfields;
 
 		/** Process each field namespace  */
 		foreach ($customFieldTypes as $customFieldName) {

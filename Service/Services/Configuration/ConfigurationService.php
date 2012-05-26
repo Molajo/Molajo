@@ -182,7 +182,6 @@ Class ConfigurationService
 	 */
 	protected function getApplication()
 	{
-
 		if (APPLICATION == 'installation') {
 
 			Services::Registry()->set('Configuration', 'application_id', 0);

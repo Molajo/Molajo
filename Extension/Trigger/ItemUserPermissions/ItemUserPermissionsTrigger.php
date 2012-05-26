@@ -51,14 +51,14 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		if (isset($data->catalog_id)) {
+		if (isset($this->query_results->catalog_id)) {
 		} else {
-			return $data;
+			return false;
 		}
 
 		/** Component Buttons */
@@ -68,13 +68,13 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 
 		/** User Permissions */
 		$permissions = Services::Authorisation()
-			->authoriseTaskList($actionsArray, $data->catalog_id);
+			->authoriseTaskList($actionsArray, $this->query_results->catalog_id);
 
 		/** Append onto row */
 		foreach ($actionsArray as $action) {
 			if ($permissions[$action] === true) {
 				$field = $action . 'Permission';
-				$data->$field = $permissions[$action];
+				$this->query_results->$field = $permissions[$action];
 			}
 		}
 

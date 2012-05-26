@@ -174,7 +174,7 @@ Class UserService
 /**
 		echo '<pre>';
 		echo 'User<br />';
-		var_dump(Services::Registry()->get('User'));
+		Services::Registry()->get('User', '*');
 		echo '</pre>';
 
 		echo '<pre>';

@@ -48,13 +48,13 @@ class CatalogTypeIdTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate($data, $model)
+	public function onBeforeCreate()
 	{
 		// catalog_type_id foreign key
-		return $data;
+		return false;
 	}
 
 	/**
@@ -63,12 +63,12 @@ class CatalogTypeIdTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onBeforeUpdate()
 	{
-		return $data;
+		return false;
 		// save it
 	}
 
@@ -78,13 +78,13 @@ class CatalogTypeIdTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterUpdate($data, $model)
+	public function onAfterUpdate()
 	{
 		// cannot change value
 		// foreign key must exist
-		return $data;
+		return false;
 	}
 }

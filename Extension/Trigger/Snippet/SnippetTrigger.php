@@ -50,24 +50,24 @@ class SnippetTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		if (isset($data->content_text)) {
+		if (isset($this->query_results->content_text)) {
 		} else {
-			$data->snippet = '';
-			return $data;
+			$this->query_results->snippet = '';
+			return false;
 		}
 
-		$data->snippet =
+		$this->query_results->snippet =
 			substr(
-				strip_tags($data->content_text),
+				strip_tags($this->query_results->content_text),
 				0,
 				Services::getRegistry()->get('ExtensionParameters', 'snippet_length', 200)
 			);
 
-		return $data;
+		return false;
 	}
 }

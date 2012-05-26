@@ -50,41 +50,41 @@ class ItemDateFormatsTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		if (isset($data->created_by)
-			&& (int)$data->created_by > 0
+		if (isset($this->query_results->created_by)
+			&& (int)$this->query_results->created_by > 0
 		) {
 		} else {
 			return;
 		}
 
-		if (isset($data->created_datetime)) {
-			if ($data->created_datetime == '0000-00-00 00:00:00') {
+		if (isset($this->query_results->created_datetime)) {
+			if ($this->query_results->created_datetime == '0000-00-00 00:00:00') {
 			} else {
 				$data = $this->itemDateRoutine('created_datetime', $data);
 			}
 		}
 
-		if (isset($data->modified_datetime)) {
-			if ($data->modified_datetime == '0000-00-00 00:00:00') {
+		if (isset($this->query_results->modified_datetime)) {
+			if ($this->query_results->modified_datetime == '0000-00-00 00:00:00') {
 			} else {
 				$data = $this->itemDateRoutine('modified_datetime', $data);
 			}
 		}
 
-		if (isset($data->start_publishing_datetime)) {
-			if ($data->start_publishing_datetime == '0000-00-00 00:00:00') {
+		if (isset($this->query_results->start_publishing_datetime)) {
+			if ($this->query_results->start_publishing_datetime == '0000-00-00 00:00:00') {
 			} else {
 				$data = $this->start_publishing_datetime('created_datetime', $data);
 			}
 		}
 
-		if (isset($data->stop_publishing_datetime)) {
-			if ($data->stop_publishing_datetime == '0000-00-00 00:00:00') {
+		if (isset($this->query_results->stop_publishing_datetime)) {
+			if ($this->query_results->stop_publishing_datetime == '0000-00-00 00:00:00') {
 			} else {
 				$data = $this->itemDateRoutine('stop_publishing_datetime', $data);
 			}
@@ -106,21 +106,21 @@ class ItemDateFormatsTrigger extends ContentTrigger
 	 */
 	protected function itemDateRoutine($field, $data)
 	{
-		if ($data->$field == '0000-00-00 00:00:00') {
-			return $data;
+		if ($this->query_results->$field == '0000-00-00 00:00:00') {
+			return false;
 		}
 
 		$newField = $field . '_ccyymmdd';
-		$data->$newField = Services::Date()->convertCCYYMMDD($data->$field);
+		$this->query_results->$newField = Services::Date()->convertCCYYMMDD($this->query_results->$field);
 
-		$data->$newField = str_replace('-', '', $data->$newField);
+		$this->query_results->$newField = str_replace('-', '', $this->query_results->$newField);
 
 		$newField = $field . '_n_days_ago';
-		$data->$newField = Services::Date()->differenceDays(date('Y-m-d'), $data->$field);
+		$this->query_results->$newField = Services::Date()->differenceDays(date('Y-m-d'), $this->query_results->$field);
 
 		$newField = $field . '_pretty_date';
-		$data->$newField = Services::Date()->prettydate($data->$field);
+		$this->query_results->$newField = Services::Date()->prettydate($this->query_results->$field);
 
-		return $data;
+		return false;
 	}
 }

@@ -50,32 +50,32 @@ class ItemURLTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		if (isset($data->url)
-			&& $data->url !== null
-			&& $data->url !== ''
+		if (isset($this->query_results->url)
+			&& $this->query_results->url !== null
+			&& $this->query_results->url !== ''
 		) {
 			return;
 		}
 
-		if (isset($data->catalog_id)
-			&& (int)$data->catalog_id > 0
+		if (isset($this->query_results->catalog_id)
+			&& (int)$this->query_results->catalog_id > 0
 		) {
 
-		} else if (isset($data->catalog_type_id) && (int)$data->catalog_type_id > 0
-			&& isset($data->id) && (int)$data->id > 0
+		} else if (isset($this->query_results->catalog_type_id) && (int)$this->query_results->catalog_type_id > 0
+			&& isset($this->query_results->id) && (int)$this->query_results->id > 0
 		) {
-			$data->catalog_id = Helpers::Catalog()->getID($data->catalog_type_id, $data->id);
+			$this->query_results->catalog_id = Helpers::Catalog()->getID($this->query_results->catalog_type_id, $this->query_results->id);
 		}
 
-		if (isset($data->catalog_id)
-			&& (int)$data->catalog_id > 0
+		if (isset($this->query_results->catalog_id)
+			&& (int)$this->query_results->catalog_id > 0
 		) {
-			$data->url = Helpers::Catalog()->getURL($data->catalog_id);
+			$this->query_results->url = Helpers::Catalog()->getURL($this->query_results->catalog_id);
 			return;
 		}
 

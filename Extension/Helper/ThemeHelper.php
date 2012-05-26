@@ -104,6 +104,7 @@ Class ThemeHelper
 			}
 		}
 
+		Services::Registry()->set('Parameters', 'theme_title', $row['title']);
 		Services::Registry()->set('Parameters', 'theme_translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Parameters', 'theme_language', $row['language']);
 		Services::Registry()->set('Parameters', 'theme_view_group_id', $row['view_group_id']);

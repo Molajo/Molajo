@@ -28,3 +28,7 @@
 <field name="criteria_list_order_by_direction2" type="char" null="1" default="DESC" values="ASC,DESC"/>
 <field name="criteria_list_order_by_field3" type="field_list" null="1" default=""/>
 <field name="criteria_list_order_by_direction3" type="char" null="1" default="DESC" values="ASC,DESC"/>
+
+<field name="criteria_mustache" type="binary" null="1" default="0" values="0,1"/>
+
+<include name="ParametersGravatar"/>

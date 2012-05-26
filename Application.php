@@ -41,14 +41,6 @@ Class Application
 	protected static $helpers = null;
 
 	/**
-	 * Application::Triggers
-	 *
-	 * @var    object Helper
-	 * @since  1.0
-	 */
-	protected static $triggers = null;
-
-	/**
 	 * Application::Request
 	 *
 	 * @var    object Request
@@ -226,12 +218,6 @@ Class Application
 
 		/** Connect Helpers */
 		$continue = Application::Helpers()->connect();
-		if ($continue == false) {
-			return false;
-		}
-
-		/** Connect Triggers */
-		$continue = Application::Triggers()->connect();
 		if ($continue == false) {
 			return false;
 		}
@@ -857,29 +843,6 @@ Class Application
 			}
 		}
 		return self::$helpers;
-	}
-
-	/**
-	 * Application::Triggers
-	 *
-	 * @static
-	 * @return  Triggers
-	 * @throws  \RuntimeException
-	 * @since   1.0
-	 */
-	public static function Triggers()
-	{
-		if (self::$triggers) {
-		} else {
-			try {
-				self::$triggers = Triggers::getInstance();
-			}
-			catch (\Exception $e) {
-				echo 'Instantiate Triggers Exception : ', $e->getMessage(), "\n";
-				die;
-			}
-		}
-		return self::$triggers;
 	}
 
 	/**

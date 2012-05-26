@@ -347,6 +347,16 @@ class Includer
 		echo '<br /><br /><br />';
 **/
 		$controller = new DisplayController();
+
+		/** Set Parameters */
+		Services::Registry()->sort('Parameters');
+		$parms = Services::Registry()->getArray('Parameters');
+		if (count($parms) > 0) {
+			foreach ($parms as $key => $value) {
+				$controller->set($key, $value);
+			}
+		}
+
 		$results = $controller->Display();
 
 		return $results;

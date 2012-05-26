@@ -48,12 +48,12 @@ class AliasTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate($data, $model)
+	public function onBeforeCreate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -62,12 +62,11 @@ class AliasTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onBeforeUpdate()
 	{
-		return $data;
+		return false;
 	}
-
 }
