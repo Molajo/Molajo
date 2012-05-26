@@ -90,9 +90,7 @@ Class TextService
 	}
 
 	/**
-	 * smilies
-	 *
-	 * change text smiley values into icons
+	 * smilies - change text smiley values into icons
 	 *
 	 * @param  string $text
 	 * @return string
@@ -150,14 +148,13 @@ Class TextService
 		if (count($smile) > 0) {
 			foreach ($smile as $key => $val) {
 				$text = str_ireplace($key,
-					'<span><img src="' .
-						SITES_MEDIA_URL .
-						'/images/smilies/'
+					'<span><img src="' . SITES_MEDIA_URL . '/images/smilies/'
 						. $val
 						. '" alt="smiley" class="smiley-class" /></span>',
 					$text);
 			}
 		}
+
 		return $text;
 	}
 

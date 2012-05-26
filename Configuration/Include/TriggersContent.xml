@@ -1,2 +1,3 @@
 <trigger name="Author"/>
 <trigger name="ContentText"/>
+<trigger name="Smilies"/>
