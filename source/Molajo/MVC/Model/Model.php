@@ -50,28 +50,12 @@ class Model
 	protected $table_name = '';
 
 	/**
-	 * Used internally to retrieve and use names of table fields
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $fields = '';
-
-	/**
 	 * Primary key for the database table
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $primary_key = '';
-
-	/**
-	 * Value for the primary key
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $id = 0;
+	protected $primary_key = 'id';
 
 	/**
 	 * Name key (if existing) for the database table
@@ -79,15 +63,7 @@ class Model
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $name_key = '';
-
-	/**
-	 * Value for the name key
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $id_name = '';
+	protected $name_key = 'title';
 
 	/**
 	 * Primary Prefix
@@ -95,7 +71,47 @@ class Model
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $primary_prefix;
+	protected $primary_prefix = 'a';
+
+	/**
+	 * Get Custom Fields Indicator
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $get_customfields = 0;
+
+	/**
+	 * Get Item Children Indicator
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $get_item_children = 0;
+
+	/**
+	 * Use Special Joins Indicator
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $use_special_joins = 0;
+
+	/**
+	 * Check View Level Access Indicator
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $check_view_level_access = 1;
+
+	/**
+	 * Check Published Indicator
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $check_published = 0;
 
 	/**
 	 * Database connection
@@ -136,6 +152,30 @@ class Model
 	 * @since  1.0
 	 */
 	public $now;
+
+	/**
+	 * Used internally to retrieve and use names of table fields from model definition
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $fields = '';
+
+	/**
+	 * Value for the primary key
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $id = 0;
+
+	/**
+	 * Value for the name key
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $id_name = '';
 
 	/**
 	 * Results from queries
@@ -834,7 +874,7 @@ class Model
 		$this->setQueryDefaults();
 
 		/** Joins */
-		if (Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0) == 1) {
+		if ((int) $this->use_special_joins == 1) {
 			$this->useSpecialJoins();
 		}
 

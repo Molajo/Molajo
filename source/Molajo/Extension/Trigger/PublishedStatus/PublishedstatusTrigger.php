@@ -48,14 +48,14 @@ class PublishedstatusTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate($data, $model)
+	public function onBeforeCreate()
 	{
 		// if published or greater status
 		// make certain published start date is today or later
-		return $data;
+		return false;
 	}
 
 	/**
@@ -63,13 +63,13 @@ class PublishedstatusTrigger extends ContentTrigger
 	 *
 	 * @param $data, $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterCreate($data, $model)
+	public function onAfterCreate()
 	{
 		// if it is published, notify
-		return $data;
+		return false;
 	}
 
 	/**
@@ -78,10 +78,10 @@ class PublishedstatusTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeRead($data, $model)
+	public function onBeforeRead()
 	{
 		$model->query->where(
 			$model->db->qn($model->primary_prefix)
@@ -130,14 +130,14 @@ class PublishedstatusTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onBeforeUpdate()
 	{
 		// hold status
 		// if it is published (or greater) make certain published dates are ok
-		return $data;
+		return false;
 	}
 
 	/**
@@ -146,20 +146,20 @@ class PublishedstatusTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterUpdate($data, $model)
+	public function onAfterUpdate()
 	{
 		// if it wasn't published and now is
 
 		// is email notification enabled? are people subscribed?
 		// tweets
 		// pings
-		return $data;
+		return false;
 	}
 
-	public function notify($data, $model)
+	public function notify()
 	{
 		// is email notification enabled? are people subscribed?
 		// tweets

@@ -1,0 +1,5 @@
+<field name="criteria_use_gravatar" type="boolean" null="1" default="0" values="0,1"/>
+<field name="criteria_gravatar_size" type="integer" null="1" default="80" values=""/>
+<field name="criteria_gravatar_type" type="char" null="1" default="monsterid" values="404,mm,identicon,monsterid,wavatar"/>
+<field name="criteria_gravatar_rating" type="char" null="1" default="pg" values="g,pg,r,x"/>
+<field name="criteria_gravatar_image" type="integer" null="1" default="0" values="0,1"/>

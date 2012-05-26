@@ -28,6 +28,38 @@ class ContentTrigger extends Trigger
 	protected static $instance;
 
 	/**
+	 * Table Registry Name - can be used to retrieve table parameters
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $table_registry_name;
+
+	/**
+	 * Parameters set by the Includer and used in the MVC to generate include output
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $parameters;
+
+	/**
+	 * Model object
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $model;
+
+	/**
+	 * Query Results
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $query_results;
+
+	/**
 	 * getInstance
 	 *
 	 * @static
@@ -43,17 +75,41 @@ class ContentTrigger extends Trigger
 	}
 
 	/**
+	 * get the class property following the trigger method execution
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function get($key, $value)
+	{
+		return $this->$key;
+	}
+
+	/**
+	 * set the class property before the trigger method executes
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function set($key, $value)
+	{
+		$this->$key = $value;
+
+		return $this;
+	}
+
+	/**
 	 * Pre-create processing
 	 *
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate($data, $model)
+	public function onBeforeCreate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -61,12 +117,12 @@ class ContentTrigger extends Trigger
 	 *
 	 * @param $data, $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterCreate($data, $model)
+	public function onAfterCreate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -75,12 +131,12 @@ class ContentTrigger extends Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeRead($data, $model)
+	public function onBeforeRead()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -89,12 +145,12 @@ class ContentTrigger extends Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -103,12 +159,12 @@ class ContentTrigger extends Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onBeforeUpdate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -117,12 +173,12 @@ class ContentTrigger extends Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterUpdate($data, $model)
+	public function onAfterUpdate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -131,12 +187,12 @@ class ContentTrigger extends Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeDelete($data, $model)
+	public function onBeforeDelete()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -145,11 +201,11 @@ class ContentTrigger extends Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterDelete($data, $model)
+	public function onAfterDelete()
 	{
-		return $data;
+		return false;
 	}
 }

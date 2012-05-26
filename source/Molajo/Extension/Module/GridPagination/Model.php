@@ -31,7 +31,7 @@ Class ModuleGridPaginationModel extends DisplayModel
 	{
 		$this->name = get_class($this);
 		$this->table = '';
-		Services::Registry()->get($this->table_registry_name, 'primary_key') = '';
+		$this->primary_key = '';
 
 		return parent::__construct($table, $id, $path);
 	}

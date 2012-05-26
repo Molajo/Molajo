@@ -67,7 +67,7 @@ class Controller
 	 *
 	 * @var string
 	 */
-	protected $default_dataSource = 'JDatabase';
+	protected $default_data_source = 'JDatabase';
 
 	/**
 	 * Valid Query Object values
@@ -133,6 +133,35 @@ class Controller
 		$this->parameters = array();
 	}
 
+
+	/**
+	 * Get the current value (or default) of the specified Model property
+	 *
+	 * @param   string  $key      Property
+	 * @param   mixed   $default  Value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function get($key, $default = null)
+	{
+		return $this->parameters[$key];
+	}
+
+	/**
+	 * Set the value of a Model property
+	 *
+	 * @param   string  $key    Property
+	 * @param   mixed   $value  Value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	public function set($key, $value = null)
+	{
+		return $this->parameters[$key] = $value;
+	}
+
 	/**
 	 * display
 	 *
@@ -164,7 +193,7 @@ class Controller
 	 */
 	public function checkinItem()
 	{
-		if (Services::Registry()->get('Parameters', 'id') == 0) {
+		if ($this->get('id') == 0) {
 			return true;
 		}
 
@@ -173,7 +202,7 @@ class Controller
 			return true;
 		}
 
-		$results = $this->model->checkin(Services::Registry()->get('Parameters', 'id'));
+		$results = $this->model->checkin($this->get('id'));
 
 		if ($results === false) {
 			// redirect
@@ -192,7 +221,7 @@ class Controller
 	 */
 	public function verifyCheckout()
 	{
-		if (Services::Registry()->get('Parameters', 'id') == 0) {
+		if ($this->get('id') == 0) {
 			return true;
 		}
 
@@ -221,7 +250,7 @@ class Controller
 	 */
 	public function checkoutItem()
 	{
-		if (Services::Registry()->get('Parameters', 'id') == 0) {
+		if ($this->get('id') == 0) {
 			return true;
 		}
 
@@ -230,7 +259,7 @@ class Controller
 			return true;
 		}
 
-		$results = $this->model->checkout(Services::Registry()->get('Parameters', 'id'));
+		$results = $this->model->checkout($this->get('id'));
 		if ($results === false) {
 			// redirect error
 			return false;
@@ -248,25 +277,25 @@ class Controller
 	 */
 	public function createVersion()
 	{
-		if (Services::Registry()->get('Parameters', 'version_management', 1) == 1) {
+		if ($this->get('version_management', 1) == 1) {
 		} else {
 			return true;
 		}
 
 		/** create **/
-		if ((int)Services::Registry()->get('Parameters', 'id') == 0) {
+		if ((int)$this->get('id') == 0) {
 			return true;
 		}
 
 		/** versions deleted with delete **/
-		if (Services::Registry()->get('Parameters', 'action') == 'delete'
-			&& Services::Registry()->get('Parameters', 'retain_versions_after_delete', 1) == 0
+		if ($this->get('action') == 'delete'
+			&& $this->get('retain_versions_after_delete', 1) == 0
 		) {
 			return true;
 		}
 
 		/** create version **/
-		$versionKey = $this->model->createVersion(Services::Registry()->get('Parameters', 'id'));
+		$versionKey = $this->model->createVersion($this->get('id'));
 
 		/** error processing **/
 		if ($versionKey === false) {
@@ -288,28 +317,28 @@ class Controller
 	 */
 	public function maintainVersionCount()
 	{
-		if (Services::Registry()->get('Parameters', 'version_management', 1) == 1) {
+		if ($this->get('version_management', 1) == 1) {
 		} else {
 			return true;
 		}
 
 		/** no versions to delete for create **/
-		if ((int)Services::Registry()->get('Parameters', 'id') == 0) {
+		if ((int)$this->get('id') == 0) {
 			return true;
 		}
 
 		/** versions deleted with delete **/
-		if (Services::Registry()->get('Parameters', 'action') == 'delete'
-			&& Services::Registry()->get('Parameters', 'retain_versions_after_delete', 1) == 0
+		if ($this->get('action') == 'delete'
+			&& $this->get('retain_versions_after_delete', 1) == 0
 		) {
 			$maintainVersions = 0;
 		} else {
 			/** retrieve versions desired **/
-			$maintainVersions = Services::Registry()->get('Parameters', 'maintain_version_count', 5);
+			$maintainVersions = $this->get('maintain_version_count', 5);
 		}
 
 		/** delete extra versions **/
-		$results = $this->model->maintainVersionCount(Services::Registry()->get('Parameters', 'id'), $maintainVersions);
+		$results = $this->model->maintainVersionCount($this->get('id'), $maintainVersions);
 
 		/** version delete failed **/
 		if ($results === false) {
@@ -329,7 +358,7 @@ class Controller
 	 */
 	public function cleanCache()
 	{
-//        $cache = Molajo::getCache(Services::Registry()->get('Parameters', 'extension_title'));
+//        $cache = Molajo::getCache($this->get('extension_title'));
 //        $cache->clean();
 	}
 }

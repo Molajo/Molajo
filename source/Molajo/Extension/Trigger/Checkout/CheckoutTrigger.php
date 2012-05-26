@@ -47,15 +47,15 @@ class CheckoutTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onBeforeUpdate()
 	{
 		// verify user has rights to update
 		// and that no one else has it updated
 		// if so, check checkout date and user
-		return $data;
+		return false;
 	}
 
 	/**
@@ -64,14 +64,14 @@ class CheckoutTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeDelete($data, $model)
+	public function onBeforeDelete()
 	{
 		// verify user has rights to delete
 		// and that no one else has it checked out
 		// if so, allow, else cancel
-		return $data;
+		return false;
 	}
 }

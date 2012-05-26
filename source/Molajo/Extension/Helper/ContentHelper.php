@@ -45,6 +45,23 @@ Class ContentHelper
 		return self::$instance;
 	}
 
+
+	/**
+	 * Retrieves the Menu Item Route information
+	 *
+	 * Various registries used to store data definitions. For example: ArticlesContent (and ArticlesCustomfieldsContent,
+	 * ArticlesContentMetadata, ArticlesContentParameters), ArticlesComponent (etc.)
+	 *
+	 * These registries are reused, not rebuilt
+	 *
+	 * @return    boolean
+	 * @since    1.0
+	 */
+	public function getMenuItem()
+	{
+
+	}
+
 	/**
 	 * Retrieve Route information for a specific Content Item
 	 *

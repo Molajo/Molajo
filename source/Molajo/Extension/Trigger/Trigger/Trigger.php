@@ -52,12 +52,12 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate($data, $model)
+	public function onBeforeCreate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -65,12 +65,12 @@ class Trigger
 	 *
 	 * @param $data, $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterCreate($data, $model)
+	public function onAfterCreate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -79,12 +79,12 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeRead($data, $model)
+	public function onBeforeRead()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -93,12 +93,12 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -107,12 +107,12 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate($data, $model)
+	public function onBeforeUpdate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -121,12 +121,12 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterUpdate($data, $model)
+	public function onAfterUpdate()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -135,12 +135,12 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeDelete($data, $model)
+	public function onBeforeDelete()
 	{
-		return $data;
+		return false;
 	}
 
 	/**
@@ -149,11 +149,11 @@ class Trigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterDelete($data, $model)
+	public function onAfterDelete()
 	{
-		return $data;
+		return false;
 	}
 }

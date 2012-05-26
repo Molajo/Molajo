@@ -48,13 +48,13 @@ class CheckinTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterUpdate($data, $model)
+	public function onAfterUpdate()
 	{
 		// make certain the correct person is in checkout
 		// if so, checkin by zeroing otu that value and the date
-		return $data;
+		return false;
 	}
 }

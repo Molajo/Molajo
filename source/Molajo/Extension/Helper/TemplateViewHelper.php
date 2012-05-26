@@ -94,6 +94,7 @@ Class TemplateViewHelper
 			}
 		}
 
+		Services::Registry()->set('Parameters', 'template_view_title', $row['title']);
 		Services::Registry()->set('Parameters', 'template_view_translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Parameters', 'template_view_language', $row['language']);
 		Services::Registry()->set('Parameters', 'template_view_view_group_id', $row['view_group_id']);

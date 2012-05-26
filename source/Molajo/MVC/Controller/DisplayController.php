@@ -58,17 +58,18 @@ class DisplayController extends ModelController
 	 */
 	public function display()
 	{
-		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
-		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Content');
-		$model_query_object = Services::Registry()->get('Parameters', 'model_query_object', 'load');
+		$model_name = $this->get('model_name', '');
+		$model_type = $this->get('model_type', 'Content');
+		$model_query_object = $this->get('model_query_object', 'load');
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-/**
+
+		/**
 		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type
 		. 'Table Registry Name '. $table_registry_name
 		. ' Model query_object: ' . $model_query_object . '<br />';
-		Services::Registry()->get('Parameters', '*');
-*/
+		$this->get('*');
+		 */
 		if (strtolower($model_name) == 'wraps') {
 			$this->query_results = $model_query_object;
 
@@ -77,16 +78,25 @@ class DisplayController extends ModelController
 
 		} else {
 			$this->connect($model_name, $model_type);
-			if ($model_type == 'Item') {
-				$this->model->set('id', Services::Registry()->get('Parameters', 'content_id', 0));
-			}
+
+			//Services::Registry()->get($table_registry_name, '*');
+
+			/** Retrieve Triggers */
+			$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
+
+			/** Schedule onBeforeRead Event */
+			$this->onBeforeReadEvent($triggers);
+
+			/** Run Query */
 			$this->query_results = $this->getData($model_query_object);
+
+			/** Schedule onAfterRead Event */
+			$this->onAfterReadEvent($triggers);
 /**
-			echo $model_name.'<br />';
-			echo Services::Registry()->get('Parameters', 'display_view_on_no_results').'<br />';
 			echo '<pre>';
 			var_dump($this->query_results);
 			echo '</pre>';
+			die;
 */
 		}
 
@@ -97,14 +107,14 @@ class DisplayController extends ModelController
 		 *      save query results in the Request object for reuse by other
 		 *      extensions. MolajoRequestModel retrieves data.
 		 */
-		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
+		if ($this->get('extension_primary') === true) {
 			Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
 			Services::Registry()->set('Parameters', 'query_pagination', $this->pagination);
 		}
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 0
+			&& $this->get('display_view_on_no_results') == 0
 		) {
 			return '';
 		}
@@ -114,19 +124,97 @@ class DisplayController extends ModelController
 
 			/** Template View */
 		} else {
-			$this->view_path = Services::Registry()->get('Parameters', 'template_view_path');
-			$this->view_path_url = Services::Registry()->get('Parameters', 'template_view_path_url');
+			$this->view_path = $this->get('template_view_path');
+			$this->view_path_url = $this->get('template_view_path_url');
 
-			$renderedOutput = $this->renderView(Services::Registry()->get('Parameters', 'template_view_title'));
+			$renderedOutput = $this->renderView($this->get('template_view_title'));
 
 			/** Mustache */
-			if (Services::Registry()->get('Parameters', 'mustache', 0) == 1) {
+			if ($this->get('criteria_mustache', 0) == 1) {
 				$renderedOutput = $this->processRenderedOutput($renderedOutput);
 			}
 		}
 
 		/** Wrap template view results */
-		return $this->wrapView(Services::Registry()->get('Parameters', 'wrap_view_title'), $renderedOutput);
+		return $this->wrapView($this->get('wrap_view_title'), $renderedOutput);
+	}
+
+	/**
+	 * Schedule onBeforeRead Event
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function onBeforeReadEvent($triggers)
+	{
+		/** Prepare input */
+		if ($this->get('model_type', 'Content') == 'Item') {
+			$this->model->set('id', $this->get('content_id', 0));
+		}
+
+		/** Schedule onBeforeRead Event */
+		$argument = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'model' => $this->model
+		);
+
+		Services::Event()->schedule('onBeforeRead', $argument, $triggers);
+
+		/** Process results */
+		$this->parameters = $argument['parameters'];
+		$this->model = $argument['model'];
+
+		return;
+	}
+
+	/**
+	 * Schedule onAfterRead Event
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function onAfterReadEvent($triggers)
+	{
+		/** Prepare input */
+		if (strtolower($this->get('model_type', 'Content')) == 'item') {
+			$temp_query = $this->query_results[0];
+
+		} else {
+			echo 'IN MVC (PROCESS WILL DIE) -- define model_type: ' . $this->parameters->model_type;
+
+			echo 'Model Name ' . $this->get('model_name') . '  $model_type:  ' . $this->get('model_type', 'Content')
+				. 'Table Registry Name ' . $this->table_registry_name
+				. ' Model query_object: ' . $this->query_results . '<br />';
+
+			echo '<pre>';
+			var_dump($this->parameters);
+			echo '</pre>';
+
+			die;
+		}
+
+		if ($this->get('model_type', 'Content') == 'Item') {
+			$this->model->set('id', $this->get('content_id', 0));
+		}
+
+		/** Schedule onAfterRead Event */
+		$argument = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'model' => $this->model,
+			'query_results' => $temp_query
+		);
+
+		Services::Event()->schedule('onAfterRead', $argument, $triggers);
+
+		/** Process results */
+		$this->parameters = $argument['parameters'];
+		$this->model = $argument['model'];
+		$this->query_results = array();
+		$this->query_results[] = $argument['query_results'];
+
+		return;
 	}
 
 	/**
@@ -143,18 +231,18 @@ class DisplayController extends ModelController
 		$this->query_results = array();
 
 		$temp = new \stdClass();
-		$temp->wrap_view_css_id = Services::Registry()->get('Parameters', 'wrap_view_css_id');
-		$temp->wrap_view_css_class = Services::Registry()->get('Parameters', 'wrap_view_css_class');
+		$temp->wrap_view_css_id = $this->get('wrap_view_css_id');
+		$temp->wrap_view_css_class = $this->get('wrap_view_css_class');
 		$temp->content = $renderedOutput;
 
 		$this->query_results[] = $temp;
 
 		/** paths */
-		$this->view_path = Services::Registry()->get('Parameters', 'wrap_view_path');
-		$this->view_path_url = Services::Registry()->get('Parameters', 'wrap_view_path_url');
+		$this->view_path = $this->get('wrap_view_path');
+		$this->view_path_url = $this->get('wrap_view_path_url');
 
 		/** render wrap */
-		return $this->renderView(Services::Registry()->get('Parameters', 'wrap_view_title'), 'Wrap');
+		return $this->renderView($this->get('wrap_view_title'), 'Wrap');
 	}
 
 	/**
@@ -334,5 +422,5 @@ class DisplayController extends ModelController
 
 //$this->configuration;
 //Parameters (Includes Global Options, Menu Item, Item);
-//Services::Registry()->get('Parameters', 'view_show_page_view_heading', 1);
-//Services::Registry()->get('Parameters', 'view_page_view_class_suffix', '');
+//$this->get('view_show_page_view_heading', 1);
+//$this->get('view_page_view_class_suffix', '');

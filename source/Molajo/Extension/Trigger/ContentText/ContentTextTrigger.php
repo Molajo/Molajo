@@ -47,35 +47,30 @@ class ContentTextTrigger extends ContentTrigger
 	 *
 	 * splits the content_text field into intro and full text on readmore
 	 *
-	 * @param   $data
-	 * @param   $model
-	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
-		if (isset($data->content_text)) {
+		if (isset($this->query_results->content_text)) {
 		} else {
-			$data->introtext = '';
-			$data->fulltext = '';
-			return $data;
+			return false;
 		}
 
 		$pattern = '#<hr\s+id=("|\')system-readmore("|\')\s*\/*>#i';
 
-		$tagPos = preg_match($pattern, $data->content_text);
+		$tagPos = preg_match($pattern, $this->query_results->content_text);
 
 		if ($tagPos == 0) {
-			$introtext = $data->content_text;
+			$introtext = $this->query_results->content_text;
 			$fulltext = '';
 		} else {
-			list($introtext, $fulltext) = preg_split($pattern, $data->content_text, 2);
+			list($introtext, $fulltext) = preg_split($pattern, $this->query_results->content_text, 2);
 		}
 
-		$data->introtext = $introtext;
-		$data->fulltext = $fulltext;
+		$this->query_results->introtext = $introtext;
+		$this->query_results->fulltext = $fulltext;
 
-		return $data;
+		return true;
 	}
 }

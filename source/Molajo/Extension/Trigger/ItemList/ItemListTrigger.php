@@ -51,10 +51,10 @@ class ItemListTrigger extends ContentTrigger
 	 * @param   $data
 	 * @param   $model
 	 *
-	 * @return  $data
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead($data, $model)
+	public function onAfterRead()
 	{
 		$lists = Services::Registry()->get('ExtensionParameters', 'Lists');
 
@@ -82,7 +82,7 @@ class ItemListTrigger extends ContentTrigger
 
 				$m = Application::Controller()->connect($table);
 
-				$m->model->set('id', $data->created_by);
+				$m->model->set('id', $this->query_results->created_by);
 
 				$m->model->set('get_customfields', 0);
 				$m->model->set('use_special_joins', false);

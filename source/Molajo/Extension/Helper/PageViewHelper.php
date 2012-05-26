@@ -95,6 +95,7 @@ Class PageViewHelper
 			}
 		}
 
+		Services::Registry()->set('Parameters', 'page_view_title', $row['title']);
 		Services::Registry()->set('Parameters', 'page_view_translation_of_id', (int)$row['translation_of_id']);
 		Services::Registry()->set('Parameters', 'page_view_language', $row['language']);
 		Services::Registry()->set('Parameters', 'page_view_view_group_id', $row['view_group_id']);
