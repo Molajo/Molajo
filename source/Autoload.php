@@ -94,6 +94,7 @@ $s->registerNamespace('Joomla\\utilities', VENDOR);
 /** Other */
 $s->registerNamespace('TwitterOAuth', VENDOR);
 $s->registerNamespace('Mustache', VENDOR);
+$s->registerNamespace('LoremIpsumGenerator', VENDOR);
 $s->registerNamespace('ChromePHP', VENDOR);
 $s->registerNamespace('FirePHP', VENDOR);
 $s->registerNamespace('PhpConsole', VENDOR);
