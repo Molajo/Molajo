@@ -7,6 +7,7 @@
 namespace Molajo\Extension\Trigger\Snippet;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -47,7 +48,7 @@ class SnippetTrigger extends ContentTrigger
 	 *
 	 * Parses the Content Text into a snippet, stripped of HTML tags
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -62,10 +63,8 @@ class SnippetTrigger extends ContentTrigger
 		}
 
 		$this->query_results->snippet =
-			substr(
-				strip_tags($this->query_results->content_text),
-				0,
-				Services::getRegistry()->get('ExtensionParameters', 'snippet_length', 200)
+			substr(strip_tags($this->query_results->content_text), 0,
+				Services::Registry()->get('Parameters', 'criteria_snippet_length', 200)
 			);
 
 		return false;

@@ -29,6 +29,9 @@
 <field name="criteria_asset_priority_source" type="integer" null="1" default="800" values=""/>
 <field name="criteria_asset_priority_theme" type="integer" null="1" default="900" values=""/>
 
+<field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
+
+
 <field name="item_theme_id" type="integer" null="1" default="" values=""/>
 <field name="item_page_view_id" type="integer" null="1" default="" values=""/>
 <field name="item_page_view_css_id" type="char" null="1" default="" values=""/>

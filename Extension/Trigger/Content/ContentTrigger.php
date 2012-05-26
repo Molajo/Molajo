@@ -101,7 +101,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -115,7 +115,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Post-create processing
 	 *
-	 * @param $data, $model
+	 * @param $this->query_results, $model
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -128,7 +128,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Pre-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -142,7 +142,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -156,7 +156,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -170,7 +170,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -184,7 +184,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -198,7 +198,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

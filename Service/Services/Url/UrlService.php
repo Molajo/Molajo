@@ -130,6 +130,23 @@ Class UrlService
 	}
 
 	/**
+	 * obfuscate Email
+	 *
+	 * @param $email_address
+	 *
+	 * @return string
+	 * @since  1.0
+	 */
+	function obfuscateEmail($email_address)
+	{
+		$obfuscate_email = "";
+		for ($i = 0; $i < strlen($email_address); $i++){
+			$obfuscate_email .= "&#" . ord($email_address[$i]) . ";";
+		}
+		return $obfuscate_email;
+	}
+
+	/**
 	 * addLinks
 	 * @param string $option_Text
 	 * @return string

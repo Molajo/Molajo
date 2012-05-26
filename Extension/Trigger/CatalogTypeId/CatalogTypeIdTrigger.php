@@ -45,7 +45,7 @@ class CatalogTypeIdTrigger extends ContentTrigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -60,7 +60,7 @@ class CatalogTypeIdTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -75,7 +75,7 @@ class CatalogTypeIdTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

@@ -48,7 +48,7 @@ class ItemListTrigger extends ContentTrigger
 	 *
 	 * Retrieves Author Information for Item
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

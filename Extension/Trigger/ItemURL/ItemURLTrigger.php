@@ -47,7 +47,7 @@ class ItemURLTrigger extends ContentTrigger
 	 *
 	 * Retrieves the URL for the Item
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

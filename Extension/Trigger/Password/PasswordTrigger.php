@@ -45,7 +45,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -59,7 +59,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Post-create processing
 	 *
-	 * @param $data, $model
+	 * @param $this->query_results, $model
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -72,7 +72,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Pre-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -86,7 +86,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -100,7 +100,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -114,7 +114,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -128,7 +128,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -142,7 +142,7 @@ class PasswordTrigger extends ContentTrigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

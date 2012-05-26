@@ -4,9 +4,10 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\DateFormats;
+namespace Molajo\Extension\Trigger\Dateformats;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -17,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class ItemDateFormatsTrigger extends ContentTrigger
+class DateformatsTrigger extends ContentTrigger
 {
 	/**
 	 * Static instance
@@ -37,7 +38,7 @@ class ItemDateFormatsTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new ItemDateFormatsTrigger();
+			self::$instance = new DateformatsTrigger();
 		}
 		return self::$instance;
 	}
@@ -45,48 +46,39 @@ class ItemDateFormatsTrigger extends ContentTrigger
 	/**
 	 * After-read processing
 	 *
-	 * Adds formatted dates to $data
-	 *
-	 * @param   $data
-	 * @param   $model
+	 * Adds formatted dates to $this->query_results
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onAfterRead()
 	{
-		if (isset($this->query_results->created_by)
-			&& (int)$this->query_results->created_by > 0
-		) {
-		} else {
-			return;
-		}
 
 		if (isset($this->query_results->created_datetime)) {
 			if ($this->query_results->created_datetime == '0000-00-00 00:00:00') {
 			} else {
-				$data = $this->itemDateRoutine('created_datetime', $data);
+				$this->itemDateRoutine('created_datetime');
 			}
 		}
 
 		if (isset($this->query_results->modified_datetime)) {
 			if ($this->query_results->modified_datetime == '0000-00-00 00:00:00') {
 			} else {
-				$data = $this->itemDateRoutine('modified_datetime', $data);
+				$this->itemDateRoutine('modified_datetime');
 			}
 		}
 
 		if (isset($this->query_results->start_publishing_datetime)) {
 			if ($this->query_results->start_publishing_datetime == '0000-00-00 00:00:00') {
 			} else {
-				$data = $this->start_publishing_datetime('created_datetime', $data);
+				$this->itemDateRoutine('start_publishing_datetime');
 			}
 		}
 
 		if (isset($this->query_results->stop_publishing_datetime)) {
 			if ($this->query_results->stop_publishing_datetime == '0000-00-00 00:00:00') {
 			} else {
-				$data = $this->itemDateRoutine('stop_publishing_datetime', $data);
+				$this->itemDateRoutine('stop_publishing_datetime');
 			}
 		}
 
@@ -99,13 +91,15 @@ class ItemDateFormatsTrigger extends ContentTrigger
 	 * Creates formatted date fields based on a named field
 	 *
 	 * @param $field
-	 * @param $data
+	 * @param $this->query_results
 	 *
 	 * @return array
 	 * @since 1.0
 	 */
-	protected function itemDateRoutine($field, $data)
+	protected function itemDateRoutine($field)
 	{
+		return false;
+
 		if ($this->query_results->$field == '0000-00-00 00:00:00') {
 			return false;
 		}

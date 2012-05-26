@@ -45,7 +45,7 @@ class CheckinTrigger extends ContentTrigger
 	/**
 	 * After-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

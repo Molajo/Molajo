@@ -48,7 +48,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 	 * Use with Grid to determine permissions for buttons and items
 	 * Validate action-level user permissions on each row - relies upon catalog_id
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

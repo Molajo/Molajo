@@ -90,6 +90,7 @@ Class EventService
 
 		/** Prepare selections */
 		if (is_array($selections)) {
+
 		} else {
 			if (trim($selections) == '') {
 				$selections = array();
@@ -138,11 +139,13 @@ Class EventService
 
 						/** Retrieve Properties from Trigger Class */
 						if (count($arguments) > 0) {
-							foreach ($arguments as $key => $value) {
-								$arguments[$key] = $connection->get($key, $value);
+							foreach ($arguments as $key2 => $value2) {
+								$arguments[$key2] = $connection->get($key2, $value2);
 							}
 						}
 					}
+				} else {
+					echo 'does not exist '.$registrations[$key].' '. $event.'<br />';
 				}
 			}
 		}

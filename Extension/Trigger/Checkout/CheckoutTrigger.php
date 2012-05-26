@@ -44,7 +44,7 @@ class CheckoutTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -61,7 +61,7 @@ class CheckoutTrigger extends ContentTrigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
