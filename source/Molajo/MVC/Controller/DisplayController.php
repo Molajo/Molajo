@@ -86,7 +86,7 @@ class DisplayController extends ModelController
 			$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
 			if (is_array($triggers)) {
 			} else {
-				if ($triggers == '' || $triggers == false || triggers == null) {
+				if ($triggers == '' || $triggers == false || $triggers == null) {
 					$triggers = array();
 				} else {
 					$temp = $triggers;
