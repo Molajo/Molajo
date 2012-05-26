@@ -45,7 +45,7 @@ class PaginationTrigger extends ContentTrigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

@@ -1,3 +1,5 @@
 <trigger name="Author"/>
 <trigger name="ContentText"/>
 <trigger name="Smilies"/>
+<trigger name="Dateformats"/>
+<trigger name="Snippet"/>

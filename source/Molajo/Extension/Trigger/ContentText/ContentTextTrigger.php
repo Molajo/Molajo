@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\ContentText;
+namespace Molajo\Extension\Trigger\Contenttext;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class ContentTextTrigger extends ContentTrigger
+class ContenttextTrigger extends ContentTrigger
 {
 	/**
 	 * Static instance
@@ -37,7 +37,7 @@ class ContentTextTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new ContentTextTrigger();
+			self::$instance = new ContenttextTrigger();
 		}
 		return self::$instance;
 	}

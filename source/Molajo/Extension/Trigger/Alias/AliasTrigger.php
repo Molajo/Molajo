@@ -45,7 +45,7 @@ class AliasTrigger extends ContentTrigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -59,7 +59,7 @@ class AliasTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

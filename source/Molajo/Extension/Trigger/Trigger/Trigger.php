@@ -49,7 +49,7 @@ class Trigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -63,7 +63,7 @@ class Trigger
 	/**
 	 * Post-create processing
 	 *
-	 * @param $data, $model
+	 * @param $this->query_results, $model
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -76,7 +76,7 @@ class Trigger
 	/**
 	 * Pre-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -90,7 +90,7 @@ class Trigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -104,7 +104,7 @@ class Trigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -118,7 +118,7 @@ class Trigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -132,7 +132,7 @@ class Trigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean
@@ -146,7 +146,7 @@ class Trigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $data
+	 * @param   $this->query_results
 	 * @param   $model
 	 *
 	 * @return  boolean

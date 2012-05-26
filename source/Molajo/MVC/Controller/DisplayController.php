@@ -107,12 +107,12 @@ class DisplayController extends ModelController
 			if (count($triggers > 0)) {
 				$this->onAfterReadEvent($triggers);
 			}
-/**
+
 			echo '<pre>';
 			var_dump($this->query_results);
 			echo '</pre>';
 			die;
-*/
+
 		}
 
 		$this->pagination = array();
