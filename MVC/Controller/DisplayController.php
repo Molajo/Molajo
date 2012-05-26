@@ -65,11 +65,14 @@ class DisplayController extends ModelController
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
 		/**
+		echo 'Table Registry Name '.$table_registry_name.'<br />';
+
 		echo 'Model Name ' . $model_name . '  $model_type:  ' . $model_type
 		. 'Table Registry Name '. $table_registry_name
 		. ' Model query_object: ' . $model_query_object . '<br />';
 		$this->get('*');
 		 */
+
 		if (strtolower($model_name) == 'wraps') {
 			$this->query_results = $model_query_object;
 
@@ -79,19 +82,31 @@ class DisplayController extends ModelController
 		} else {
 			$this->connect($model_name, $model_type);
 
-			//Services::Registry()->get($table_registry_name, '*');
-
 			/** Retrieve Triggers */
 			$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
+			if (is_array($triggers)) {
+			} else {
+				if ($triggers == '' || $triggers == false || triggers == null) {
+					$triggers = array();
+				} else {
+					$temp = $triggers;
+					$triggers = array();
+					$triggers[] = $temp;
+				}
+			}
 
 			/** Schedule onBeforeRead Event */
-			$this->onBeforeReadEvent($triggers);
+			if (count($triggers > 0)) {
+				$this->onBeforeReadEvent($triggers);
+			}
 
 			/** Run Query */
 			$this->query_results = $this->getData($model_query_object);
 
 			/** Schedule onAfterRead Event */
-			$this->onAfterReadEvent($triggers);
+			if (count($triggers > 0)) {
+				$this->onAfterReadEvent($triggers);
+			}
 /**
 			echo '<pre>';
 			var_dump($this->query_results);
@@ -145,9 +160,13 @@ class DisplayController extends ModelController
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function onBeforeReadEvent($triggers)
+	protected function onBeforeReadEvent($triggers = array())
 	{
 		/** Prepare input */
+		if (count($triggers) == 0) {
+			return false;
+		}
+
 		if ($this->get('model_type', 'Content') == 'Item') {
 			$this->model->set('id', $this->get('content_id', 0));
 		}
@@ -174,9 +193,13 @@ class DisplayController extends ModelController
 	 * @return  null
 	 * @since   1.0
 	 */
-	protected function onAfterReadEvent($triggers)
+	protected function onAfterReadEvent($triggers = array())
 	{
 		/** Prepare input */
+		if (count($triggers) == 0) {
+			return false;
+		}
+
 		if (strtolower($this->get('model_type', 'Content')) == 'item') {
 			$temp_query = $this->query_results[0];
 
@@ -186,6 +209,10 @@ class DisplayController extends ModelController
 			echo 'Model Name ' . $this->get('model_name') . '  $model_type:  ' . $this->get('model_type', 'Content')
 				. 'Table Registry Name ' . $this->table_registry_name
 				. ' Model query_object: ' . $this->query_results . '<br />';
+
+			echo '<pre>';
+			var_dump($triggers);
+			echo '</pre>';
 
 			echo '<pre>';
 			var_dump($this->parameters);
