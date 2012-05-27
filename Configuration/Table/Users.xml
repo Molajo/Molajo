@@ -38,10 +38,10 @@
             </foreignkeys>
 
             <children>
-                <child name="UserActivity" join="id:user_id"/>
-                <child name="UserApplications" join="id:user_id"/>
-                <child name="UserGroups" join="id:user_id"/>
-                <child name="UserViewGroups" join="id:user_id"/>
+                <child name="UserActivity" join="user_id"/>
+                <child name="UserApplications" join="user_id"/>
+                <child name="UserGroups" join="user_id"/>
+                <child name="UserViewGroups" join="user_id"/>
             </children>
 
             <triggers>

@@ -119,18 +119,18 @@ Class ConfigurationService
 		$m = Application::Controller()->connect('Sites', 'Table');
 		$m->set('id', (int)SITE_ID);
 
-		$items = $m->getData('load');
+		$item = $m->getData('item');
 
-		if ($items === false) {
+		if ($item === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
 
-		Services::Registry()->set('Configuration', 'site_id', (int)$items['id']);
-		Services::Registry()->set('Configuration', 'site_catalog_type_id', (int)$items['catalog_type_id']);
-		Services::Registry()->set('Configuration', 'site_name', $items['name']);
-		Services::Registry()->set('Configuration', 'site_path', $items['path']);
-		Services::Registry()->set('Configuration', 'site_base_url', $items['base_url']);
-		Services::Registry()->set('Configuration', 'site_description', $items['description']);
+		Services::Registry()->set('Configuration', 'site_id', (int)$item->id);
+		Services::Registry()->set('Configuration', 'site_catalog_type_id', (int)$item->catalog_type_id);
+		Services::Registry()->set('Configuration', 'site_name', $item->name);
+		Services::Registry()->set('Configuration', 'site_path', $item->path);
+		Services::Registry()->set('Configuration', 'site_base_url', $item->base_url);
+		Services::Registry()->set('Configuration', 'site_description', $item->description);
 
 		return true;
 	}
@@ -213,17 +213,18 @@ Class ConfigurationService
 				$m = Application::Controller()->connect('Applications');
 				$m->model->set('id_name', APPLICATION);
 
-				$items = $m->getData('load');
-				if ($items === false) {
+				$item = $m->getData('item');
+
+				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
 				}
 
-				Services::Registry()->set('Configuration', 'application_id', (int)$items['id']);
+				Services::Registry()->set('Configuration', 'application_id', (int)$item->id);
 				Services::Registry()->set('Configuration', 'application_catalog_type_id',
-					(int)$items['catalog_type_id']);
-				Services::Registry()->set('Configuration', 'application_name', $items['name']);
-				Services::Registry()->set('Configuration', 'application_path', $items['path']);
-				Services::Registry()->set('Configuration', 'application_description', $items['description']);
+					(int)$item->catalog_type_id);
+				Services::Registry()->set('Configuration', 'application_name', $item->name);
+				Services::Registry()->set('Configuration', 'application_path', $item->path);
+				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
 				/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->get('ApplicationsParameters');
@@ -258,8 +259,8 @@ Class ConfigurationService
 	 */
 	protected function getActions()
 	{
-		$m = Application::Controller()->connect('Actions', 'Table');
-		$items = $m->getData('loadObjectList');
+		$m = Application::Controller()->connect('Actions');
+		$items = $m->getData('list');
 
 		if ($items === false) {
 			throw new \RuntimeException ('Application getApplication() getActions Query failed');

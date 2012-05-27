@@ -70,31 +70,6 @@ class Controller
 	protected $default_data_source = 'JDatabase';
 
 	/**
-	 * Valid Query Object values
-	 *
-	 * @var    object
-	 * @since  1.0
-	 *
-	 * Consider: Item, Load, List, Value -- what else might be needed?
-	 */
-	protected $query_objects = array(
-		'item',
-		'load',
-		'loadResult',
-		'loadResultArray',
-		'loadRow',
-		'loadAssoc',
-		'loadObject',
-		'loadRowList',
-		'loadAssocList',
-		'loadObjectList',
-		'getAssets',
-		'getMessages',
-		'getParameters',
-		'none'
-	);
-
-	/**
 	 * $query_results
 	 *
 	 * @var    object

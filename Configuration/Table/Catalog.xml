@@ -27,8 +27,8 @@
                       joinwith="catalog_type_id"/>
             </joins>
             <children>
-                <child name="CatalogActivity" join="id:catalog_id"/>
-                <child name="CatalogCategories" join="id:catalog_id"/>
+                <child name="CatalogActivity" join="catalog_id"/>
+                <child name="CatalogCategories" join="catalog_id"/>
             </children>
             <foreignkeys>
                 <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

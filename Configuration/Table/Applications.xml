@@ -30,11 +30,11 @@
             </foreignkeys>
 
             <children>
-                <child name="SiteApplications" join="id:application_id"/>
-                <child name="ApplicationExtensionInstances" join="id:application_id"/>
-                <child name="UserApplications" join="id:application_id"/>
-                <child name="Sessions" join="id:application_id"/>
-                <child name="ApplicationExtensionInstances" join="id:application_id"/>
+                <child name="SiteApplications" join="application_id"/>
+                <child name="ApplicationExtensionInstances" join="application_id"/>
+                <child name="UserApplications" join="application_id"/>
+                <child name="Sessions" join="application_id"/>
+                <child name="ApplicationExtensionInstances" join="application_id"/>
             </children>
 
             <triggers>
