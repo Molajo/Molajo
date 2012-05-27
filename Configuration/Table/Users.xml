@@ -3,12 +3,14 @@
         name="Users"
         table="#__users"
         primary_key="id"
+        id_name="username"
         primary_prefix="a"
         get_customfields="1"
         get_item_children="1"
         use_special_joins="0"
         check_view_level_access="0"
-        check_published="1"
+        check_published="0"
+        process_triggers="1"
         data_source="JDatabase">
     <table>
         <item>
@@ -19,16 +21,16 @@
                 <field name="first_name" type="char" null="0" default=""/>
                 <field name="last_name" type="char" null="0" default=""/>
                 <field name="content_text" type="text" null="1" default=""/>
-                <field name="email" type="char" null="0" default=" "/>
-                <field name="password" type="char" null="0" default=" "/>
+                <field name="email" type="email" null="0" default=""/>
+                <field name="password" type="password" null="0" default=""/>
                 <field name="block" type="boolean" null="0" default="0"/>
                 <field name="activation" type="boolean" null="0" default="0"/>
                 <field name="send_email" type="boolean" null="0" default="0"/>
                 <field name="register_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
                 <field name="last_visit_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-                <field name="customfields" type="" null="1" default=""/>
-                <field name="parameters" type="" null="1" default=""/>
-                <field name="metadata" type="" null="1" default=""/>
+                <field name="customfields" type="customfield" null="1" default=""/>
+                <field name="parameters" type="customfield" null="1" default=""/>
+                <field name="metadata" type="customfield" null="1" default=""/>
             </fields>
 
             <foreignkeys>
@@ -83,6 +85,7 @@
                     <field name="editor" type="int" null="0" default="1"/>
                     <field name="language" type="char" null="0" default="en-GB" values="en-GB"/>
                     <field name="date_of_birth" type="date" null="1" default=""/>
+                    <field name="personal_email" type="email" null="0" default=""/>
                 </customfield>
 
                 <customfield name="metadata">

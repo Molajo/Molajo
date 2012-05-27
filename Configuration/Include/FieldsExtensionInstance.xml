@@ -20,9 +20,9 @@
 <field name="modified_by" type="int" null="0" default="0"/>
 <field name="checked_out_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
 <field name="checked_out_by" type="int" null="0" default="0"/>
-<field name="customfields" type="customfield" null="1" default=""/>
-<field name="parameters" type="customfield" null="1" default=""/>
-<field name="metadata" type="customfield" null="1" default=""/>
+<field name="customfields" type="customfield"/>
+<field name="parameters" type="customfield"/>
+<field name="metadata" type="customfield"/>
 <field name="language" type="char" null="1" default=""/>
 <field name="translation_of_id" type="int" null="0" default="0"/>
 <field name="ordering" type="int" null="0" default="0"/>

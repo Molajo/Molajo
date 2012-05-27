@@ -104,11 +104,6 @@ class AuthorTrigger extends ContentTrigger
 		if (isset($this->query_results->author_email)
 			&& $this->query_results->author_email !== ''
 		) {
-			$results = Services::Url()->obfuscateEmail($this->query_results->author_email);
-			if ($results == false) {
-			} else {
-				$this->query_results->author_obfuscate_email = $results;
-			}
 
 			if (Services::Registry()->get('Parameters', 'criteria_use_gravatar', 0) == 1) {
 

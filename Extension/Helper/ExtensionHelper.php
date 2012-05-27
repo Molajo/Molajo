@@ -119,7 +119,10 @@ echo '</pre>';
 	public function get($extension_id, $model = 'ExtensionInstances', $type = 'Table')
 	{
 		$m = Application::Controller()->connect($model, $type);
+
 		$m->model->set('id', (int)$extension_id);
+		$m->model->set('process_triggers', 0);
+
 		$row = $m->getData('load');
 
 		$row['table_registry_name'] = $m->model->table_registry_name;
@@ -148,6 +151,8 @@ echo '</pre>';
 	{
 		$m = Application::Controller()->connect('ExtensionInstances');
 
+		$m->model->set('process_triggers', 0);
+
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('title') . ' = ' . $m->model->db->q($title));
 		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
@@ -169,6 +174,8 @@ echo '</pre>';
 	{
 		$m = Application::Controller()->connect('ExtensionInstances');
 
+		$m->model->set('process_triggers', 0);
+
 		$m->model->query->select($m->model->db->qn('title'));
 		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$extension_instance_id);
 
@@ -189,6 +196,8 @@ echo '</pre>';
 	public function getExtensionNode($extension_instance_id)
 	{
 		$m = Application::Controller()->connect();
+
+		$m->model->set('process_triggers', 0);
 
 		$m->model->query->select($m->model->db->qn('a.name'));
 

@@ -27,9 +27,9 @@
 <field name="rgt" type="int" null="0" default="0"/>
 <field name="lvl" type="int" null="0" default="0"/>
 <field name="home" type="int" null="0" default="0"/>
-<field name="customfields" customtype="1"/>
-<field name="parameters" customtype="1"/>
-<field name="metadata" customtype="1"/>
+<field name="customfields" type="customfield"/>
+<field name="parameters" type="customfield"/>
+<field name="metadata" type="customfield"/>
 <field name="language" type="char" null="1" default=""/>
 <field name="translation_of_id" type="int" null="0" default="0"/>
 <field name="ordering" type="int" null="0" default="0"/>

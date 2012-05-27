@@ -1,5 +1,6 @@
 <trigger name="Author"/>
-<trigger name="ContentText"/>
+<trigger name="Email"/>
+<trigger name="Readmore"/>
 <trigger name="Smilies"/>
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>

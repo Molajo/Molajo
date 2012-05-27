@@ -73,58 +73,6 @@ class PublishedstatusTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Pre-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
-		$model->query->where(
-			$model->db->qn($model->primary_prefix)
-				. '.'
-				. $model->db->qn('status')
-				. ' > '
-				. (int)STATUS_UNPUBLISHED
-		);
-
-		$model->query->where('('
-				. $model->db->qn($model->primary_prefix)
-				. '.'
-				. $model->db->qn('start_publishing_datetime')
-				. ' = '
-				. $model->db->q($model->nullDate)
-				. ' OR '
-				. $model->db->qn($model->primary_prefix)
-				. '.'
-				. $model->db->qn('start_publishing_datetime')
-				. ' <= '
-				. $model->db->q($model->now)
-				. ')'
-		);
-
-		$model->query->where('('
-				. $model->db->qn($model->primary_prefix)
-				. '.'
-				. $model->db->qn('stop_publishing_datetime')
-				. ' = '
-				. $model->db->q($model->nullDate)
-				. ' OR '
-				. $model->db->qn($model->primary_prefix)
-				. '.'
-				. $model->db->qn('stop_publishing_datetime')
-				. ' >= '
-				. $model->db->q($model->now)
-				. ')'
-		);
-
-		return $this;
-	}
-
-	/**
 	 * Pre-update processing
 	 *
 	 * @param   $this->query_results

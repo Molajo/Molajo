@@ -57,47 +57,6 @@ class UsernameTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Post-create processing
-	 *
-	 * @param $this->query_results, $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		return false;
-	}
-
-	/**
 	 * Pre-update processing
 	 *
 	 * @param   $this->query_results
@@ -121,34 +80,6 @@ class UsernameTrigger extends ContentTrigger
 	 * @since   1.0
 	 */
 	public function onAfterUpdate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterDelete()
 	{
 		return false;
 	}

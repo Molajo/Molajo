@@ -57,33 +57,6 @@ class MetadataTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Post-create processing
-	 *
-	 * @param $this->query_results, $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
-		return false;
-	}
-
-	/**
 	 * Post-read processing
 	 *
 	 * @param   $this->query_results

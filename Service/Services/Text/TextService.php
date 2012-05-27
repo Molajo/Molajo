@@ -90,6 +90,32 @@ Class TextService
 	}
 
 	/**
+	 * splitReadMoreText - search for the system-readmore break and split the text at that point into two text fields
+	 *
+	 * @param  $text
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public function splitReadMoreText ($text)
+	{
+		$pattern = '#<hr\s+id=("|\')system-readmore("|\')\s*\/*>#i';
+
+		$tagPos = preg_match($pattern, $text);
+
+		$introductory_text = '';
+		$fulltext = '';
+
+		if ($tagPos == 0) {
+			$introductory_text = $text;
+		} else {
+			list($introductory_text, $fulltext) = preg_split($pattern, $text, 2);
+		}
+
+		return (array($introductory_text, $fulltext));
+	}
+
+	/**
 	 * smilies - change text smiley values into icons
 	 *
 	 * @param  string $text

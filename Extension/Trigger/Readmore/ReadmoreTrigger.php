@@ -4,9 +4,11 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\Contenttext;
+namespace Molajo\Extension\Trigger\Readmore;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -17,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class ContenttextTrigger extends ContentTrigger
+class ReadmoreTrigger extends ContentTrigger
 {
 	/**
 	 * Static instance
@@ -37,7 +39,7 @@ class ContenttextTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new ContenttextTrigger();
+			self::$instance = new ReadmoreTrigger();
 		}
 		return self::$instance;
 	}
@@ -52,24 +54,32 @@ class ContenttextTrigger extends ContentTrigger
 	 */
 	public function onAfterRead()
 	{
-		if (isset($this->query_results->content_text)) {
-		} else {
-			return false;
+		$fields = $this->retrieveFieldsByType('text');
+echo '<pre>';
+var_dump($fields);
+		die;
+//todo deal with custom field names !
+
+		if (is_array($fields) && count($fields) > 0) {
+
+			foreach ($fields as $field) {
+
+				$name = $field->name;
+
+				$results = Services::Text()->splitReadMoreText($this->query_results->$name);
+
+				if ($results == false) {
+				} else {
+					$newname = $name . '_' . 'introductory';
+					$this->query_results->$newname = $results[0];
+					$newname = $name . '_' . 'fulltext';
+					$this->query_results->$newname = $results[1];
+				}
+				echo '<pre>';
+				var_dump($this->query_results);
+				die;
+			}
 		}
-
-		$pattern = '#<hr\s+id=("|\')system-readmore("|\')\s*\/*>#i';
-
-		$tagPos = preg_match($pattern, $this->query_results->content_text);
-
-		if ($tagPos == 0) {
-			$introtext = $this->query_results->content_text;
-			$fulltext = '';
-		} else {
-			list($introtext, $fulltext) = preg_split($pattern, $this->query_results->content_text, 2);
-		}
-
-		$this->query_results->introtext = $introtext;
-		$this->query_results->fulltext = $fulltext;
 
 		return true;
 	}

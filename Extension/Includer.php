@@ -348,9 +348,13 @@ class Includer
 **/
 		$controller = new DisplayController();
 
+		$controller->set('id', (int) Services::Registry()->get('Parameters', 'source_id'));
+
 		/** Set Parameters */
 		Services::Registry()->sort('Parameters');
+
 		$parms = Services::Registry()->getArray('Parameters');
+
 		if (count($parms) > 0) {
 			foreach ($parms as $key => $value) {
 				$controller->set($key, $value);
@@ -364,7 +368,9 @@ class Includer
 
 	/**
 	 * postMVCProcessing
-	 * @return bool
+	 *
+	 * @return  string
+	 * @since   1.0
 	 */
 	protected function postMVCProcessing($rendered_output)
 	{

@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\CustomFields;
+namespace Molajo\Extension\Trigger\Customfields;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -52,33 +52,6 @@ class CustomfieldsTrigger extends ContentTrigger
 	 * @since   1.0
 	 */
 	public function onBeforeCreate()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-create processing
-	 *
-	 * @param $this->query_results, $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
 	{
 		return false;
 	}
