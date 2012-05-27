@@ -94,11 +94,10 @@ Class UserService
 			}
 		}
 
-		$results = $m->getData('load');
+		$results = $m->getData('item');
 
 		echo 'User <pre>';
 		var_dump($results);
-		die;
 
 		if ($results === false) {
 			throw new \RuntimeException ('User load() query problem');
@@ -106,15 +105,15 @@ Class UserService
 
 		/** User Applications */
 		$applications = array();
-		$x = $results['Userapplications'];
+		$x = $results->Userapplications;
 		foreach ($x as $app) {
 			$applications[] = $app->application_id;
 		}
-		unset($results['Userapplications']);
+		unset($results->Userapplications);
 
 		/** User Groups */
 		$groups = array();
-		$x = $results['Usergroups'];
+		$x = $results->Usergroups;
 		foreach ($x as $group) {
 			$groups[] = $group->group_id;
 		}
@@ -132,11 +131,11 @@ Class UserService
 				$groups[] = SYSTEM_GROUP_REGISTERED;
 			}
 		}
-		unset($results['Usergroups']);
+		unset($results->Usergroups);
 
 		/** User View Groups */
 		$viewGroups = array();
-		$x = $results['Userviewgroups'];
+		$x = $results->Userviewgroups;
 		foreach ($x as $vg) {
 			$viewGroups[] = $vg->view_group_id;
 		}
@@ -144,11 +143,11 @@ Class UserService
 		if (count($viewGroups) == 0) {
 			$viewGroups = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
-		unset($results['Userviewgroups']);
+		unset($results->Userviewgroups);
 
 		/** User Activity */
-		$activity = $results['Useractivity'];
-		unset($results['Useractivity']);
+		$activity = $results->Useractivity;
+		unset($results->Useractivity);
 
 		/** User Object */
 		$first_name = '';
@@ -193,7 +192,7 @@ Class UserService
 		Services::Registry()->rename('UsersParameters', 'UserParameters');
 		Services::Registry()->rename('UsersMetadata', 'UserMetadata');
 
-/**
+
 		echo '<pre>';
 		echo 'User<br />';
 		Services::Registry()->get('User', '*');
@@ -213,7 +212,7 @@ Class UserService
 		echo 'User Metadata<br />';
 		var_dump(Services::Registry()->get('UserMetadata'));
 		echo '</pre>';
-*/
+die;
 		return $this;
 	}
 }

@@ -17,7 +17,7 @@
         "wrap_view_css_id":"",
         "wrap_view_css_class":"",
 
-        "model_name":"dboParameters",
+        "model_name":"dboRegistry",
         "model_type":"Module",
         "model_query_object":"getParameters",
 

@@ -16,7 +16,7 @@
         <foreignkey name="catalog_type_id" source_id="id" source_model="Site" required="1"/>
     </foreignkeys>
     <children>
-        <child name="ExtensionInstances" join="id:extension_id"/>
+        <child name="ExtensionInstances" join="extension_id"/>
     </children>
 </model>
 
