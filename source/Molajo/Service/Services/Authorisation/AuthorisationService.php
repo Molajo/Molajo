@@ -80,10 +80,11 @@ Class AuthorisationService
 		}
 
 		/** retrieve action key pairs */
-		$items = Application::Controller()->connect('Actions')->getData('loadObjectList');
-		foreach ($items as $item) {
-			Services::Registry()->set('action_to_action_id', $item->title, (int)$item->id);
+		$items = Services::Registry()->get('Actions');
+		while (list($title, $id) = each($items)) {
+			Services::Registry()->set('action_to_action_id', $title, (int)$id);
 		}
+		Services::Registry()->get('action_to_action_id', '*');
 
 		return;
 	}
@@ -187,7 +188,8 @@ Class AuthorisationService
 		if (in_array(Services::Registry()->get('Parameters', 'catalog_view_group_id'),
 			Services::Registry()->get('User', 'ViewGroups'))
 			&& in_array(Services::Registry()->get('Parameters', 'extension_view_group_id'),
-				Services::Registry()->get('User', 'ViewGroups'))) {
+				Services::Registry()->get('User', 'ViewGroups'))
+		) {
 
 			Services::Registry()->set('Parameters', 'status_authorised', true);
 

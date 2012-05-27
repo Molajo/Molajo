@@ -3,6 +3,7 @@
     <service>Error</service>
     <service>Version</service>
     <service>Registry</service>
+    <service>Client</service>
     <service>Filesystem</service>
     <service>Event</service>
     <service>Message</service>

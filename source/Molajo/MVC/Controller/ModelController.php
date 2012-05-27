@@ -86,7 +86,8 @@ Class ModelController extends Controller
 		if ($type == null) {
 			$type = 'Table';
 		}
-//echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
+
+echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 
 		if ($table === '') {
 			$this->dataSource = $this->default_data_source;
@@ -116,11 +117,16 @@ Class ModelController extends Controller
 		/** 3. Model Properties         */
 		$this->model->set('table_registry_name', $this->table_registry_name);
 
-		$this->model->set('model_name', Services::Registry()->get($this->table_registry_name, 'model_name'));
-		$this->model->set('table_name', Services::Registry()->get($this->table_registry_name, 'table_name'));
-		$this->model->set('primary_key', Services::Registry()->get($this->table_registry_name, 'primary_key'));
-		$this->model->set('name_key', Services::Registry()->get($this->table_registry_name, 'name_key'));
-		$this->model->set('primary_prefix', Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
+		$this->model->set('model_name',
+			Services::Registry()->get($this->table_registry_name, 'model_name'));
+		$this->model->set('table_name',
+			Services::Registry()->get($this->table_registry_name, 'table_name'));
+		$this->model->set('primary_key',
+			Services::Registry()->get($this->table_registry_name, 'primary_key'));
+		$this->model->set('name_key',
+			Services::Registry()->get($this->table_registry_name, 'name_key'));
+		$this->model->set('primary_prefix',
+			Services::Registry()->get($this->table_registry_name, 'primary_prefix'));
 		$this->model->set('get_customfields',
 			Services::Registry()->get($this->table_registry_name, 'get_customfields'));
 		$this->model->set('get_item_children',
@@ -131,6 +137,9 @@ Class ModelController extends Controller
 			Services::Registry()->get($this->table_registry_name, 'check_view_level_access'));
 		$this->model->set('check_published',
 			Services::Registry()->get($this->table_registry_name, 'check_published'));
+		$this->model->set('process_triggers',
+			Services::Registry()->get($this->table_registry_name, 'process_triggers'));
+
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', $this->default_data_source);
 		$this->model->set('db', Services::$dbo()->get('db'));
 
@@ -161,7 +170,7 @@ Class ModelController extends Controller
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function getData($query_object = 'loadObjectList', $view_requested = false)
+	public function getData($query_object = 'loadObjectList')
 	{
 		if (in_array($query_object, $this->query_objects)) {
 		} else {
@@ -171,16 +180,137 @@ Class ModelController extends Controller
 		}
 
 		try {
-			/** Sometimes, only the data is requested */
-			if ($view_requested == true) {
-				return $this->display();
+			/** Set ID */
+			$this->model->set('id', (int) $this->get('id', 0));
 
+			/** Retrieve Triggers */
+			if ((int) Services::Registry()->get($this->table_registry_name, 'process_triggers') == 1) {
+				$triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
+
+				if (is_array($triggers)) {
+				} else {
+					if ($triggers == '' || $triggers == false || $triggers == null) {
+						$triggers = array();
+					} else {
+						$temp = $triggers;
+						$triggers = array();
+						$triggers[] = $temp;
+					}
+				}
 			} else {
-				return $this->model->$query_object();
+				$triggers = array();
 			}
 
+			/** Schedule onBeforeRead Event */
+			if (count($triggers) > 0) {
+				$this->onBeforeReadEvent($triggers);
+			}
+
+			/** Run Query */
+			$this->query_results = $this->model->$query_object();
+			echo '<pre>';
+			var_dump($this->query_results);
+			echo '</pre>';
+
+			/** Schedule onAfterRead Event */
+			if (count($triggers) > 0) {
+				$this->onAfterReadEvent($triggers);
+			}
+
+			return $this->query_results;
+
 		} catch (\Exception $e) {
-			throw new \RuntimeException('Model query failed for ' . $query_object . ' Error: ' . $e->getMessage());
+			throw new \RuntimeException('ModelController query failed for ' . $query_object . ' Error: ' . $e->getMessage());
+			die;
 		}
+	}
+
+	/**
+	 * Schedule onBeforeRead Event
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function onBeforeReadEvent($triggers = array())
+	{
+		/** Prepare input */
+		if (count($triggers) == 0) {
+			return false;
+		}
+
+		/** Schedule onBeforeRead Event */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'model' => $this->model
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $triggers);
+		if ($arguments == false) {
+			return false;
+		}
+
+		/** Process results */
+		$this->parameters = $arguments['parameters'];
+		$this->model = $arguments['model'];
+
+		return;
+	}
+
+	/**
+	 * Schedule onAfterRead Event
+	 *
+	 * @return  null
+	 * @since   1.0
+	 */
+	protected function onAfterReadEvent($triggers = array())
+	{
+		/** Prepare input */
+		if (count($triggers) == 0) {
+			return false;
+		}
+
+		if (strtolower($this->get('model_type', 'Content')) == 'item') {
+			if (isset($this->query_results[0])) {
+				$this->query_results = $this->query_results[0];
+			}
+
+		} else {
+			echo 'IN MVC (PROCESS WILL DIE) -- define model_type: ' . $this->parameters->model_type;
+
+			echo 'Model Name ' . $this->get('model_name') . '  $model_type:  ' . $this->get('model_type', 'Content')
+				. 'Table Registry Name ' . $this->table_registry_name
+				. ' Model query_object: ' . $this->query_results . '<br />';
+
+			echo '<pre>';
+			var_dump($triggers);
+			echo '</pre>';
+
+			echo '<pre>';
+			var_dump($this->parameters);
+			echo '</pre>';
+
+		}
+
+		/** Schedule onAfterRead Event */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'model' => $this->model,
+			'query_results' => $this->query_results
+		);
+
+		$arguments = Services::Event()->schedule('onAfterRead', $arguments, $triggers);
+		if ($arguments == false) {
+			return false;
+		}
+
+		/** Process results */
+		$this->parameters = $arguments['parameters'];
+		$this->model = $arguments['model'];
+		$this->query_results = array();
+		$this->query_results[] = $arguments['query_results'];
+
+		return true;
 	}
 }

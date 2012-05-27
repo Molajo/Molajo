@@ -180,6 +180,7 @@ Class ContentHelper
 
 		$m = Application::Controller()->connect($datasource, $type);
 		$m->model->set('id', (int)$id);
+		$m->model->set('process_triggers', 0);
 		$row = $m->getData('load');
 
 		$row['table_registry_name'] = $m->model->table_registry_name;

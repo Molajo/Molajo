@@ -42,6 +42,10 @@ class Trigger
 		return self::$instance;
 	}
 
+	public function __construct()
+	{
+
+	}
 	/**
 	 *     From Data Trigger
 	 */
@@ -57,7 +61,7 @@ class Trigger
 	 */
 	public function onBeforeCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -70,7 +74,7 @@ class Trigger
 	 */
 	public function onAfterCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -84,7 +88,7 @@ class Trigger
 	 */
 	public function onBeforeRead()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -98,7 +102,7 @@ class Trigger
 	 */
 	public function onAfterRead()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -112,7 +116,7 @@ class Trigger
 	 */
 	public function onBeforeUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -126,7 +130,7 @@ class Trigger
 	 */
 	public function onAfterUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -140,7 +144,7 @@ class Trigger
 	 */
 	public function onBeforeDelete()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -154,6 +158,6 @@ class Trigger
 	 */
 	public function onAfterDelete()
 	{
-		return false;
+		return true;
 	}
 }

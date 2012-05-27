@@ -56,6 +56,7 @@ Class EventService
 	public function __construct()
 	{
 		Services::Registry()->createRegistry('Events');
+
 		$this->registerInstalledTriggers();
 	}
 
@@ -76,19 +77,20 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
+
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
-		if ($exists === false) {
+		if ($exists == false) {
 			return false;
 		}
 
 		/** Retrieve Event Registrations */
 		$registrations = Services::Registry()->get($event);
 		if (count($registrations) == 0) {
-			return false;
+			return $arguments;
 		}
 
-		/** Prepare selections */
+		/** Filter for specified triggers or use all triggers registered for event */
 		if (is_array($selections)) {
 
 		} else {
@@ -129,12 +131,14 @@ Class EventService
 						foreach ($arguments as $key => $value) {
 							$connection->set($key, $value);
 						}
+						$connection->setFields();
 					}
 
 					/** Execute the Trigger Method */
 					$results = $connection->$event();
 
-					if ($results === false) {
+					if ($results == false) {
+
 					} else {
 
 						/** Retrieve Properties from Trigger Class */
@@ -150,16 +154,15 @@ Class EventService
 			}
 		}
 
-
-
 		return $arguments;
 	}
 
 	/**
-	 * Triggers register for events.
+	 * Triggers register for events. When the event is scheduled, the trigger will be executed.
 	 *
 	 * Installed triggers are registered during Application startup.
-	 * Other triggers can be created and dynamically registered using this method
+	 * Other triggers can be created and dynamically registered using this method.
+	 * Triggers can be overridden by registering after the installed triggers.
 	 *
 	 * Usage:
 	 * Services::Event()->register('AliasTrigger', 'Molajo\\Extension\\Trigger\\Alias\\AliasTrigger', 'OnBeforeUpdate');
@@ -192,7 +195,7 @@ Class EventService
 	}
 
 	/**
-	 * loads all triggers in the triggers folder
+	 * Automatically registers all Triggers in the Extension Trigger folder
 	 *
 	 * @return  object
 	 * @since   1.0
@@ -227,9 +230,9 @@ Class EventService
 	}
 
 	/**
-	 * Connect to the trigger and register it for events
+	 * Instantiate the trigger class, register it for event(s), and save the connection
 	 *
-	 * @param  $folder
+	 * @param  $folder location of the trigger
 	 *
 	 * @return object
 	 * @since  1.0

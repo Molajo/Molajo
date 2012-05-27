@@ -77,6 +77,7 @@ class ItemModel extends Model
 	 */
 	public function load()
 	{
+		echo 'in load';
 		$this->query->clear();
 
 		/** Base query */
@@ -223,6 +224,9 @@ class ItemModel extends Model
 	 */
 	protected function runLoadQuery()
 	{
+
+		echo $this->id;
+		echo '<br /><br />'.$this->query->__toString().'<br /><br />';
 /**
 		if ($this->id == 100) {
             echo '<br /><br />'.$this->query->__toString().'<br /><br />';

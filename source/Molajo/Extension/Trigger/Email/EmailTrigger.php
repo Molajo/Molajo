@@ -4,20 +4,21 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\Parameters;
+namespace Molajo\Extension\Trigger\Email;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Parameters
+ * Email
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class ParametersTrigger extends ContentTrigger
+class EmailTrigger extends ContentTrigger
 {
 	/**
 	 * Static instance
@@ -37,7 +38,7 @@ class ParametersTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new ParametersTrigger();
+			self::$instance = new EmailTrigger();
 		}
 		return self::$instance;
 	}
@@ -57,17 +58,33 @@ class ParametersTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Post-read processing
+	 * After-read processing
 	 *
-	 * @param   $this->query_results
-	 * @param   $model
+	 * Retrieves Author Information for Item
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onAfterRead()
 	{
-		return false;
+		$fields = $this->retrieveFieldsByType('email');
+
+		if (is_array($fields) && count($fields) > 0) {
+
+			foreach ($fields as $field) {
+
+				$name = $field->name;
+				$results = Services::Text()->obfuscateEmail($this->query_results->$name);
+
+				if ($results == false) {
+				} else {
+					$newname = $name . '_' . 'obfuscated';
+					$this->query_results->$newname = $results;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -80,48 +97,6 @@ class ParametersTrigger extends ContentTrigger
 	 * @since   1.0
 	 */
 	public function onBeforeUpdate()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterDelete()
 	{
 		return false;
 	}

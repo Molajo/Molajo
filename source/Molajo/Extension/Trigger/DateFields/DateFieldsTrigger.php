@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\DateFields;
+namespace Molajo\Extension\Trigger\Datefields;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class DateFieldsTrigger extends ContentTrigger
+class DatefieldsTrigger extends ContentTrigger
 {
 	/**
 	 * Static instance
@@ -37,7 +37,7 @@ class DateFieldsTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new DateFieldsTrigger();
+			self::$instance = new DatefieldsTrigger();
 		}
 		return self::$instance;
 	}
@@ -57,47 +57,6 @@ class DateFieldsTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Post-create processing
-	 *
-	 * @param $this->query_results, $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		return false;
-	}
-
-	/**
 	 * Pre-update processing
 	 *
 	 * @param   $this->query_results
@@ -112,20 +71,6 @@ class DateFieldsTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Post-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		return false;
-	}
-
-	/**
 	 * Pre-delete processing
 	 *
 	 * @param   $this->query_results
@@ -135,20 +80,6 @@ class DateFieldsTrigger extends ContentTrigger
 	 * @since   1.0
 	 */
 	public function onBeforeDelete()
-	{
-		return false;
-	}
-
-	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterDelete()
 	{
 		return false;
 	}

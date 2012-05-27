@@ -82,31 +82,8 @@ class DisplayController extends ModelController
 		} else {
 			$this->connect($model_name, $model_type);
 
-			/** Retrieve Triggers */
-			$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
-			if (is_array($triggers)) {
-			} else {
-				if ($triggers == '' || $triggers == false || $triggers == null) {
-					$triggers = array();
-				} else {
-					$temp = $triggers;
-					$triggers = array();
-					$triggers[] = $temp;
-				}
-			}
-
-			/** Schedule onBeforeRead Event */
-			if (count($triggers > 0)) {
-				$this->onBeforeReadEvent($triggers);
-			}
-
 			/** Run Query */
 			$this->query_results = $this->getData($model_query_object);
-
-			/** Schedule onAfterRead Event */
-			if (count($triggers > 0)) {
-				$this->onAfterReadEvent($triggers);
-			}
 
 			echo '<pre>';
 			var_dump($this->query_results);
@@ -152,96 +129,6 @@ class DisplayController extends ModelController
 
 		/** Wrap template view results */
 		return $this->wrapView($this->get('wrap_view_title'), $renderedOutput);
-	}
-
-	/**
-	 * Schedule onBeforeRead Event
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function onBeforeReadEvent($triggers = array())
-	{
-		/** Prepare input */
-		if (count($triggers) == 0) {
-			return false;
-		}
-
-		if ($this->get('model_type', 'Content') == 'Item') {
-			$this->model->set('id', $this->get('content_id', 0));
-		}
-
-		/** Schedule onBeforeRead Event */
-		$argument = array(
-			'table_registry_name' => $this->table_registry_name,
-			'parameters' => $this->parameters,
-			'model' => $this->model
-		);
-
-		Services::Event()->schedule('onBeforeRead', $argument, $triggers);
-
-		/** Process results */
-		$this->parameters = $argument['parameters'];
-		$this->model = $argument['model'];
-
-		return;
-	}
-
-	/**
-	 * Schedule onAfterRead Event
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function onAfterReadEvent($triggers = array())
-	{
-		/** Prepare input */
-		if (count($triggers) == 0) {
-			return false;
-		}
-
-		if (strtolower($this->get('model_type', 'Content')) == 'item') {
-			$temp_query = $this->query_results[0];
-
-		} else {
-			echo 'IN MVC (PROCESS WILL DIE) -- define model_type: ' . $this->parameters->model_type;
-
-			echo 'Model Name ' . $this->get('model_name') . '  $model_type:  ' . $this->get('model_type', 'Content')
-				. 'Table Registry Name ' . $this->table_registry_name
-				. ' Model query_object: ' . $this->query_results . '<br />';
-
-			echo '<pre>';
-			var_dump($triggers);
-			echo '</pre>';
-
-			echo '<pre>';
-			var_dump($this->parameters);
-			echo '</pre>';
-
-			die;
-		}
-
-		if ($this->get('model_type', 'Content') == 'Item') {
-			$this->model->set('id', $this->get('content_id', 0));
-		}
-
-		/** Schedule onAfterRead Event */
-		$argument = array(
-			'table_registry_name' => $this->table_registry_name,
-			'parameters' => $this->parameters,
-			'model' => $this->model,
-			'query_results' => $temp_query
-		);
-
-		Services::Event()->schedule('onAfterRead', $argument, $triggers);
-
-		/** Process results */
-		$this->parameters = $argument['parameters'];
-		$this->model = $argument['model'];
-		$this->query_results = array();
-		$this->query_results[] = $argument['query_results'];
-
-		return;
 	}
 
 	/**

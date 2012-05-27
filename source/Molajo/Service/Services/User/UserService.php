@@ -75,8 +75,30 @@ Class UserService
 
 		/** Retrieve User Data  */
 		$m = Application::Controller()->connect('Users');
-		$m->model->set('id', $this->id);
+
+		$m->set('id', $this->id);
+
+		Services::Registry()->createRegistry('Parameters');
+		Services::Registry()->copy('Configuration', 'UserParams');
+
+		Services::Registry()->set('UserParams', 'model_name', 'User');
+		Services::Registry()->set('UserParams', 'model_type', 'Item');
+		Services::Registry()->set('UserParams', 'model_query_object', 'Load');
+
+		Services::Registry()->sort('UserParams');
+
+		$parms = Services::Registry()->getArray('UserParams');
+		if (count($parms) > 0) {
+			foreach ($parms as $key => $value) {
+				$m->set($key, $value);
+			}
+		}
+
 		$results = $m->getData('load');
+
+		echo 'User <pre>';
+		var_dump($results);
+		die;
 
 		if ($results === false) {
 			throw new \RuntimeException ('User load() query problem');

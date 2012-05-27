@@ -149,7 +149,9 @@ class Controller
 			return $this->parameters[$key];
 		}
 
-		return $default;
+		$this->parameters[$key] = $default;
+
+		return $this->parameters[$key];
 	}
 
 	/**
@@ -163,7 +165,9 @@ class Controller
 	 */
 	public function set($key, $value = null)
 	{
-		return $this->parameters[$key] = $value;
+		$this->parameters[$key] = $value;
+
+		return $this;
 	}
 
 	/**

@@ -43,54 +43,6 @@ Class UrlService
 	}
 
 	/**
-	 * __construct
-	 *
-	 * Class constructor.
-	 *
-	 * @return boolean
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-
-	}
-
-	/**
-	 * get
-	 *
-	 * Returns a property of the Input object
-	 * or the default value if the property is not set.
-	 *
-	 * @param   string  $key      The name of the property.
-	 * @param   mixed   $default  The default value (optional) if none is set.
-	 *
-	 * @return  mixed   The value of the configuration.
-	 *
-	 * @since   1.0
-	 */
-	public function get($key, $default = null)
-	{
-		return $this->input->get($key, $default);
-	}
-
-	/**
-	 * set
-	 *
-	 * Modifies a property of the Input object, creating it if it does not already exist.
-	 *
-	 * @param   string  $key    The name of the property.
-	 * @param   mixed   $value  The value of the property to set (optional).
-	 *
-	 * @return  mixed   Previous value of the property
-	 *
-	 * @since   1.0
-	 */
-	public function set($key, $value = null)
-	{
-		return $this->input->set($key, $value);
-	}
-
-	/**
 	 * Get either a Gravatar URL or complete image tag for a specified email address.
 	 *
 	 * @param  string   $email
@@ -140,103 +92,118 @@ Class UrlService
 	function obfuscateEmail($email_address)
 	{
 		$obfuscate_email = "";
+
 		for ($i = 0; $i < strlen($email_address); $i++){
 			$obfuscate_email .= "&#" . ord($email_address[$i]) . ";";
 		}
+
 		return $obfuscate_email;
 	}
 
 	/**
-	 * addLinks
-	 * @param string $option_Text
+	 * Add links to a generic text field when URLs are found
+	 *
+	 * @param string $text_field
+	 *
 	 * @return string
 	 */
-	function addLinks($option_Text)
+	function addLinks($text_field)
 	{
 		$pattern = "/(((http[s]?:\/\/)|(www\.))?(([a-z][-a-z0-9]+\.)?[a-z][-a-z0-9]+\.[a-z]+(\.[a-z]{2,2})?)\/?[a-z0-9._\/~#&=;%+?-]+[a-z0-9\/#=?]{1,1})/is";
-		$option_Text = preg_replace($pattern, " <a href='$1'>$1</a>", $option_Text);
+
+		$text_field = preg_replace($pattern, " <a href='$1'>$1</a>", $text_field);
+
 		// fix URLs without protocols
-		$option_Text = preg_replace("/href=\"www/", "href=\"http://www", $option_Text);
-		return $option_Text;
+		$text_field = preg_replace("/href=\"www/", "href=\"http://www", $text_field);
+
+		return $text_field;
+	}
+
+
+	/**
+	 * createWebLinks - marks up a link into an <a href link
+	 *
+	 * todo: pick one of these two (previous and this one)
+	 *
+	 * @param string $url_field
+	 *
+	 * @return linked value
+	 */
+	function createWebLinks($url_field)
+	{
+		return preg_replace('#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is', '\\1<a href="\\2">\\2</a>', $url_field);
 	}
 
 	/**
 	 * checkURLExternal - determines if it is a local site or external link
-	 * @param string $option_URL
+	 *
+	 * @param string $url_field
+	 *
 	 * @return boolean
 	 */
-	function checkURLExternal($option_URL)
+	function checkURLExternal($url_field)
 	{
-		if (substr($option_URL, 0, strlen(BASE_FOLDER)) == BASE_FOLDER) {
+		if (substr($url_field, 0, strlen(BASE_FOLDER)) == BASE_FOLDER) {
 			return false;
-		} elseif ((strtolower(substr($option_URL, 0, 3)) == 'www')
-			&& (substr($option_URL, 3, strlen(BASE_FOLDER)) == BASE_FOLDER)
+
+		} elseif ((strtolower(substr($url_field, 0, 3)) == 'www')
+			&& (substr($url_field, 3, strlen(BASE_FOLDER)) == BASE_FOLDER)
 		) {
 			return false;
+
 		} else {
 			return true;
 		}
 	}
 
 	/**
-	 * checkURLValidity - determines if the URL is properly formed
-	 * @param string $option_URL
-	 * @return boolean
-	 */
-	function checkURLValidity($option_URL)
-	{
-		return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $option_URL);
-	}
-
-	/**
-	 * createWebLinks - marks up a link into an <a href link
-	 * @param string $option_URL
-	 * @return linked value
-	 */
-	function createWebLinks($option_URL)
-	{
-		return preg_replace('#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is', '\\1<a href="\\2">\\2</a>', $option_URL);
-	}
-
-	/**
 	 * getHost - retrieves host from the URL
-	 * @param string $option_URL
+	 *
+	 * @param string $url_field
+	 *
 	 * @return boolean
 	 */
-	function getHost($option_URL)
+	function getHost($url_field)
 	{
-		$hostArray = parse_url($option_URL);
+		$hostArray = parse_url($url_field);
+
 		return $hostArray['scheme'] . '://' . $hostArray['host'];
 	}
 
 	/**
 	 * retrieveURLContents - issues request with link via curl
-	 * @param string $option_URL
+	 *
+	 * @param string $url_field
+	 *
 	 * @return boolean
 	 */
-	function retrieveURLContents($option_URL)
+	function retrieveURLContents($url_field)
 	{
-		return curl::processCurl($option_URL);
+		return curl::processCurl($url_field);
 	}
 
 	/**
 	 * addTrailingSlash
-	 * @param object $option_Text
-	 * $url = ConfigurationURL::encode_link_text ($option_InputText);
+	 *
+	 * @param object $url_field
+	 *
+	 * $url = Services::Url()->addTrailingSlash ($url_field);
 	 */
-	function addTrailingSlash($option_InputText)
+	function addTrailingSlash($url_field)
 	{
-		return untrailingslashit($option_InputText) . '/';
+		return untrailingslashit($url_field) . '/';
 	}
 
 	/**
 	 * removeTrailingSlash
-	 * @param object $option_Text
-	 * $url = ConfigurationURL::removeTrailingSlash ($option_InputText);
+	 *
+	 * @param object $url_field
+	 *
+	 * $url = Services::Url()->removeTrailingSlash ($url_field);
 	 */
-	function removeTrailingSlash($option_InputText)
+	function removeTrailingSlash($url_field)
 	{
-		return rtrim($option_InputText, '/');
+		return rtrim($url_field, '/');
 	}
 
 	/**

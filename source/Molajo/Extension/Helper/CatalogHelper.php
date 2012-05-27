@@ -135,6 +135,7 @@ Class CatalogHelper
 
 		$m = Application::Controller()->connect('Catalog', 'Table');
 		$m->model->set('id', (int)$catalog_id);
+		$m->model->set('process_triggers', 0);
 		$row = $m->getData('load');
 
 		if (count($row) == 0) {

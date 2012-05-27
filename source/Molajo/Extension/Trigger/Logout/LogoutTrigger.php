@@ -4,20 +4,20 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\Dates;
+namespace Molajo\Extension\Trigger\Logout;
 
-use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Extension\Trigger\Trigger\Trigger;
 
 defined('MOLAJO') or die;
 
 /**
- * Dates
+ * Logout
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class DatesTrigger extends ContentTrigger
+class LogoutTrigger extends Trigger
 {
 	/**
 	 * Static instance
@@ -37,49 +37,29 @@ class DatesTrigger extends ContentTrigger
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new DatesTrigger();
+			self::$instance = new LogoutTrigger();
 		}
 		return self::$instance;
 	}
 
 	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
+	 * Before Authenticating the Logout Process
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate()
+	public function onBeforeLogout()
 	{
 		return false;
 	}
 
 	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
+	 * After Authenticating the Logout Process
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeUpdate()
-	{
-		return false;
-	}
-
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
+	public function onAfterLogout()
 	{
 		return false;
 	}

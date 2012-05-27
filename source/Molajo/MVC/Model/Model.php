@@ -114,6 +114,14 @@ class Model
 	protected $check_published = 0;
 
 	/**
+	 * Process Triggers Indicator
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $process_triggers = 0;
+
+	/**
 	 * Database connection
 	 *
 	 * Public to access db quoting on query parts
@@ -245,27 +253,6 @@ class Model
 	public function set($key, $value = null)
 	{
 		return $this->$key = $value;
-	}
-
-	/**
-	 * Return code given message
-	 *
-	 * @param   string  $code  Numeric value associated with message
-	 *
-	 * @return  mixed  Array or String
-	 * @since   1.0
-	 */
-	public function getMessageCode($message = null)
-	{
-		$messageArray = self::get(0);
-
-		$code = array_search($message, $messageArray);
-
-		if ((int)$code == 0) {
-			$code = self::DEFAULT_CODE;
-		}
-
-		return $code;
 	}
 
 	/**

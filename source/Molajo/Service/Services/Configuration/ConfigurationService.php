@@ -29,6 +29,14 @@ Class ConfigurationService
 	protected static $instance;
 
 	/**
+	 * Valid Field Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_field_attributes;
+
+	/**
 	 * getInstance
 	 *
 	 * @static
@@ -52,6 +60,10 @@ Class ConfigurationService
 	 */
 	public function __construct($configuration_file = null)
 	{
+		/** Initialize list of valid field attributes */
+		self::$valid_field_attributes = array('name', 'type', 'default', 'file', 'identity', 'length',
+			'minimum', 'maximum', 'null', 'required', 'shape', 'size', 'unique', 'values');
+
 		/** Retrieve Site Data */
 		$this->getSite($configuration_file);
 
@@ -60,6 +72,9 @@ Class ConfigurationService
 
 		/** Defines, etc., with site paths */
 		$this->setSitePaths();
+
+		/** Retrieves and stores Action Table pairs in Registry */
+		$this->getActions();
 
 		/** return */
 		return $this;
@@ -102,9 +117,10 @@ Class ConfigurationService
 
 		/** Retrieve Sites Data from DB */
 		$m = Application::Controller()->connect('Sites', 'Table');
-		$m->model->set('id', (int)SITE_ID);
+		$m->set('id', (int)SITE_ID);
 
 		$items = $m->getData('load');
+
 		if ($items === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
@@ -234,6 +250,29 @@ Class ConfigurationService
 		return $this;
 	}
 
+	/**
+	 * Get action ids and values to load into registry (to save a read on various triggers)
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	protected function getActions()
+	{
+		$m = Application::Controller()->connect('Actions', 'Table');
+		$items = $m->getData('loadObjectList');
+
+		if ($items === false) {
+			throw new \RuntimeException ('Application getApplication() getActions Query failed');
+		}
+
+		Services::Registry()->createRegistry('Actions');
+
+		foreach ($items as $item) {
+			Services::Registry()->set('Actions', $item->title, (int) $item->id);
+		}
+
+		return;
+	}
 	/**
 	 * getFile processes all XML configuration files for the application
 	 *
@@ -383,27 +422,35 @@ Class ConfigurationService
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'get_item_children', $value, '0');
+		Services::Registry()->set($registryName, 'get_item_children', $value);
 
 		$value = (int)$xml['use_special_joins'];
 		if ($value == 0) {
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'use_special_joins', $value, '0');
+		Services::Registry()->set($registryName, 'use_special_joins', $value);
 
 		$value = (int)$xml['check_view_level_access'];
 		if ($value == 0) {
 		} else {
 			$value = 1;
 		}
-		Services::Registry()->set($registryName, 'check_view_level_access', $value, '1');
+		Services::Registry()->set($registryName, 'check_view_level_access', $value);
 
+		$value = (int)$xml['check_published'];
 		if ($value == 1) {
 		} else {
 			$value = 0;
 		}
-		Services::Registry()->set($registryName, 'check_published', $value, '1');
+		Services::Registry()->set($registryName, 'check_published', $value);
+
+		$value = (int)$xml['process_triggers'];
+		if ($value == 1) {
+		} else {
+			$value = 0;
+		}
+		Services::Registry()->set($registryName, 'process_triggers', $value);
 
 		$value = (string)$xml['data_source'];
 		if ($value == '') {
@@ -459,9 +506,6 @@ Class ConfigurationService
 		Services::Registry()->set($registryName, 'model_name', $registryName);
 
 		/** Fields  */
-		$known = array('name', 'type', 'null', 'default', 'length', 'customtype', 'file', 'char',
-			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
-
 		$include = '';
 		if (isset($xml->config->fields->include['name'])) {
 			$include = (string)$xml->config->fields->include['name'];
@@ -494,7 +538,7 @@ Class ConfigurationService
 
 				while (list($key, $value) = each($fieldAttributes)) {
 
-					if (in_array($key, $known)) {
+					if (in_array($key, self::$valid_field_attributes)) {
 					} else {
 						echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
 					}
@@ -579,7 +623,7 @@ Class ConfigurationService
 
 				while (list($key2, $value2) = each($fieldAttributes)) {
 
-					if (in_array($key2, $known)) {
+					if (in_array($key2, self::$valid_field_attributes)) {
 					} else {
 						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
 					}
@@ -656,9 +700,6 @@ Class ConfigurationService
 		}
 
 		/** Fields  */
-		$known = array('name', 'type', 'null', 'default', 'length', 'customtype', 'file', 'char',
-			'minimum', 'maximum', 'identity', 'shape', 'size', 'unique', 'values');
-
 		$include = '';
 		if (isset($xml->table->item->fields->include['name'])) {
 			$include = (string)$xml->table->item->fields->include['name'];
@@ -691,7 +732,7 @@ Class ConfigurationService
 
 				while (list($key, $value) = each($fieldAttributes)) {
 
-					if (in_array($key, $known)) {
+					if (in_array($key, self::$valid_field_attributes)) {
 					} else {
 						echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
 					}
@@ -889,7 +930,6 @@ Class ConfigurationService
 			ConfigurationService::getCustomFields(
 				$xml->table->item->customfields,
 				$file,
-				$known,
 				$registryName
 			);
 		}
@@ -928,7 +968,6 @@ Class ConfigurationService
 			ConfigurationService::getCustomFields(
 				$xml->table->component->customfields,
 				$file,
-				$known,
 				$registryName
 			);
 		}
@@ -972,14 +1011,13 @@ Class ConfigurationService
 	 * @static
 	 * @param $xml
 	 * @param $file
-	 * @param $known - list of valid field attributes
 	 * @param $registryName
 	 *
 	 * @return  object
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public static function getCustomFields($xml, $file, $known, $registryName)
+	public static function getCustomFields($xml, $file, $registryName)
 	{
 		$i = 0;
 		$continue = true;
@@ -1011,7 +1049,7 @@ Class ConfigurationService
 
 				while (list($key2, $value2) = each($fieldAttributes)) {
 
-					if (in_array($key2, $known)) {
+					if (in_array($key2, self::$valid_field_attributes)) {
 					} else {
 						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
 					}
