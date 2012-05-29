@@ -54,11 +54,8 @@ class ReadmoreTrigger extends ContentTrigger
 	 */
 	public function onAfterRead()
 	{
+
 		$fields = $this->retrieveFieldsByType('text');
-echo '<pre>';
-var_dump($fields);
-		die;
-//todo deal with custom field names !
 
 		if (is_array($fields) && count($fields) > 0) {
 
@@ -66,18 +63,25 @@ var_dump($fields);
 
 				$name = $field->name;
 
-				$results = Services::Text()->splitReadMoreText($this->query_results->$name);
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
 
-				if ($results == false) {
+				if ($fieldValue == false) {
 				} else {
-					$newname = $name . '_' . 'introductory';
-					$this->query_results->$newname = $results[0];
-					$newname = $name . '_' . 'fulltext';
-					$this->query_results->$newname = $results[1];
+
+					$newFields = Services::Text()->splitReadMoreText($fieldValue);
+
+					if ($newFields == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$introductory_name = $name . '_' . 'introductory';
+						$fieldValue = $this->addField($field, $introductory_name, $newFields[0]);
+
+						$fulltext_name = $name . '_' . 'fulltext';
+						$fieldValue = $this->addField($field, $fulltext_name, $newFields[1]);
+					}
 				}
-				echo '<pre>';
-				var_dump($this->query_results);
-				die;
 			}
 		}
 

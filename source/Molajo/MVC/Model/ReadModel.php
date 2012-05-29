@@ -142,41 +142,6 @@ class ReadModel extends Model
 	}
 
 	/**
-	 *
-	 * //todo move this into a trigger since it has specific column names
-	 * // modify it so that ACL extends status codes that are visible
-	 *
-	 * addPublishedCheck
-	 *
-	 * Standard Publish check on primary content
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function addPublishedCheck($primary_prefix)
-	{
-		$this->query->where($this->db->qn($primary_prefix)
-			. '.' . $this->db->qn('status')
-			. ' > ' . STATUS_UNPUBLISHED);
-
-		$this->query->where('(' . $this->db->qn($primary_prefix)
-				. '.' . $this->db->qn('start_publishing_datetime')
-				. ' = ' . $this->db->q($this->nullDate)
-				. ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
-				. ' <= ' . $this->db->q($this->now) . ')'
-		);
-
-		$this->query->where('(' . $this->db->qn($primary_prefix)
-				. '.' . $this->db->qn('stop_publishing_datetime')
-				. ' = ' . $this->db->q($this->nullDate)
-				. ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
-				. ' >= ' . $this->db->q($this->now) . ')'
-		);
-
-		return $this;
-	}
-
-	/**
 	 * useSpecialJoins
 	 *
 	 * Use joins defined in table xml to extend model
@@ -186,8 +151,6 @@ class ReadModel extends Model
 	 */
 	public function useSpecialJoins($joins, $primary_prefix)
 	{
-		echo 'joins'.$joins;
-		var_dump($joins);
 		foreach ($joins as $join) {
 
 			$join_table = $join['table'];
@@ -305,8 +268,6 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($columns)
 	{
-		echo '<br /><br />' . $this->query->__toString() . '<br /><br />';
-
 		/**
 		if ($id == 100) {
 		echo '<br /><br />'.$this->query->__toString().'<br /><br />';
@@ -340,8 +301,6 @@ class ReadModel extends Model
 	 */
 	public function addCustomFields($model_name, $customFieldName, $fields, $retrieval_method, $query_results)
 	{
-		//todo: get rid of array logic when result, item, and items work is done
-
 		/** Prepare Registry Name */
 		$customFieldName = strtolower($customFieldName);
 		$useRegistryName = $model_name . ucfirst($customFieldName);
@@ -354,9 +313,8 @@ class ReadModel extends Model
 			$data = json_decode($jsonData);
 
 			/** test for application-specific values */
-			if (count($data) > 0
-				&& (defined('APPLICATION_ID'))
-			) {
+			if (count($data) > 0 && (defined('APPLICATION_ID')) ) {
+
 				foreach ($data as $key => $value) {
 
 					if ($key == APPLICATION_ID) {
@@ -366,7 +324,7 @@ class ReadModel extends Model
 				}
 			}
 
-			/** Place queryresults data for custom field group into named pair array */
+			/** Inject data for custom field group into named pairs array */
 			$lookup = array();
 
 			if (count($data) > 0) {
@@ -378,6 +336,8 @@ class ReadModel extends Model
 			if (is_object($query_results) && isset($query_results->$customFieldName)) {
 				unset($query_results->$customFieldName);
 			}
+
+		/** No data in query results for this specific custom field */
 
 		} else {
 
@@ -410,10 +370,11 @@ class ReadModel extends Model
 			/** Filter Input and Save the Registry */
 			//$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
+			/** Option 2: Make each custom field a "regular" field in query results */
 			if ($retrieval_method == 2) {
 				$query_results->$name = $setValue;
 			} else {
-//echo $useRegistryName.' '. $name.' '.$setValue.'<br /> ';
+				/** Option 1: all custom field pairs are saved in Registry */
 				Services::Registry()->set($useRegistryName, $name, $setValue);
 			}
 		}
@@ -437,10 +398,12 @@ class ReadModel extends Model
 			$name = (string)$child['name'];
 			$name = ucfirst(strtolower($name));
 
-			$m = Application::Controller()->connect($name, 'Table');
+			$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+			$m = new $controllerClass();
+			$m->connect($name);
 
 			$join = (string)$child['join'];
-			$this->query->where($this->db->qn($join) . ' = ' . (int)$id);
+			$m->model->query->where($m->model->db->qn($join) . ' = ' . (int)$id);
 
 			$results = $m->getData('list');
 
@@ -449,47 +412,5 @@ class ReadModel extends Model
 
 		/** return array containing primary query and additional data elements */
 		return $query_results;
-	}
-
-	/**
-	 * store
-	 *
-	 * Method to store a row (insert: no PK; update: PK) in the database.
-	 *
-	 * @param   boolean True to update fields even if they are null.
-	 *
-	 * @return  boolean  True on success.
-	 * @since   1.0
-	 */
-	public function store($id, $table_name, $primary_key)
-	{
-		/**
-		echo '<pre>';
-		var_dump($this->row);
-		echo '</pre>';
-		 */
-		if ((int)$id == 0) {
-			$stored = $this->db->insertObject(
-				$table_name, $this->row, $primary_key);
-		} else {
-			$stored = $this->db->updateObject(
-				$table_name, $this->row, $primary_key);
-		}
-
-		if ($stored) {
-
-		} else {
-
-//			throw new \Exception(
-//				. ' '. $this->db->getErrorMsg()
-//			);
-		}
-		/**
-		if ($this->_locked) {
-		$this->_unlock();
-		}
-		 */
-
-		return true;
 	}
 }

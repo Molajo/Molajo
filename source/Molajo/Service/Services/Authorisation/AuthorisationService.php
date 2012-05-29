@@ -100,7 +100,9 @@ Class AuthorisationService
 	 */
 	public function authoriseSiteApplication()
 	{
-		$m = Application::Controller()->connect('SiteApplications');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('SiteApplications');
 
 		$m->model->query->select($m->model->db->qn('application_id'));
 		$m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int)SITE_ID);
@@ -259,7 +261,9 @@ Class AuthorisationService
 		/** check for permission */
 		$action_id = 3;
 
-		$m = Application::Controller()->connect('GroupPermissions');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('GroupPermissions');
 
 		$m->model->query->where($m->model->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
 		$m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int)$action_id);
@@ -303,7 +307,9 @@ Class AuthorisationService
 			return false;
 		}
 
-		$m = Application::Controller()->connect('UserApplications');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('UserApplications');
 
 		$m->model->query->where('application_id = ' . (int)APPLICATION_ID);
 		$m->model->query->where('user_id = ' . (int)$user_id);

@@ -67,7 +67,8 @@ Class ModelController extends Controller
 	 */
 	public function __construct()
 	{
-		return parent::__construct();
+		parent::__construct();
+		return $this;
 	}
 
 	/**
@@ -89,7 +90,7 @@ Class ModelController extends Controller
 
 echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 
-		if ($table === '') {
+		if ($table == '') {
 			$this->dataSource = $this->default_data_source;
 
 		} else {
@@ -128,29 +129,10 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 			$this->model->set('now', $now);
 		}
 
-// it's a new instance - this should not be needed=>Services::$dbo()->getQuery()->clear();
+		Services::$dbo()->getQuery()->clear();
 
 		return $this;
 	}
-
-	/**
-	protected $query_objects = array(
-	'result',
-	'item',
-	'list',
-	'loadResultArray',
-	'loadRow',
-	'loadAssoc',
-	'loadObject',
-	'loadRowList',
-	'loadAssocList',
-	'loadObjectList',
-	'getAssets',
-	'getMessages',
-	'getParameters',
-	'none'
-	);
-	 */
 
 	/**
 	 * Method to execute a model method which interacts with the data source and returns results
@@ -168,19 +150,14 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 		} else {
 			$query_object = 'list';
 		}
-echo $query_object.'<br />';
 
 		/** Retrieve list of potential $triggers for this model (result type does not use events) */
 		$triggers = $this->getTriggerList($query_object);
 
 		/** Schedule onBeforeRead Event */
 		if (count($triggers) > 0) {
-			$this->onBeforeReadEvent($triggers);
+			//$this->onBeforeReadEvent($triggers);
 		}
-
-		/** Execute Read Query */
-		/** clear previous db activity */
-		//$this->model->query->clear();
 
 		/** Base query */
 		if ($query_object == 'item') {
@@ -192,6 +169,7 @@ echo $query_object.'<br />';
 			$name_key = '';
 		}
 
+		/** Establishes the Field values (if not already set) and the primary from table */
 		$this->model->setBaseQuery(
 			Services::Registry()->get($this->table_registry_name, 'Fields'),
 			Services::Registry()->get($this->table_registry_name, 'table_name'),
@@ -202,7 +180,7 @@ echo $query_object.'<br />';
 			Services::Registry()->get($this->table_registry_name, 'id_name')
 		);
 
-		/** Add ACL Checking */
+		/** Passes query object to Authorisation Services to append ACL query elements */
 		if ((int)Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0) == 1) {
 			$this->model->addACLCheck(
 				Services::Registry()->get($this->table_registry_name, 'primary_prefix'),
@@ -210,12 +188,7 @@ echo $query_object.'<br />';
 			);
 		}
 
-		/** Check Published */
-		if ((int)Services::Registry()->get($this->table_registry_name, 'check_published', 0) == 1) {
-			$this->model->addPublishedCheck();
-		}
-
-		/** Joins */
+		/** Adds Select, From and Where query elements for Joins */
 		if ((int)Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0) == 1) {
 			$joins = Services::Registry()->get($this->table_registry_name, 'Joins');
 			if (count($joins) > 0) {
@@ -226,23 +199,25 @@ echo $query_object.'<br />';
 			}
 		}
 
-		/** Execute Query */
+		/** Executes Query */
 		$this->model->getQueryResults(Services::Registry()->get($this->table_registry_name, 'Fields'));
 
-		/** Return Query Results */
+		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
-		$this->query_results = array();
-
 		if (count($query_results) > 0) {
 		} else {
-			return;
+			return false;
 		}
+
+		/** Iterate thru results to process special fields and requests for additional queries for child objects */
+		$q = array();
 
 		foreach ($query_results as $results) {
 
 			/** Load Special Fields */
-			if (((int) Services::Registry()->get($this->table_registry_name, 'get_customfields', 0) == 0)
-				|| ((int)Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups') == 0)) {
+			if (((int)Services::Registry()->get($this->table_registry_name, 'get_customfields', 0) == 0)
+				|| ((int)Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups') == 0)
+			) {
 
 			} else {
 
@@ -253,7 +228,6 @@ echo $query_object.'<br />';
 
 					/** Process each field namespace  */
 					foreach ($customFieldTypes as $customFieldName) {
-
 						$results =
 							$this->model->addCustomFields(
 								Services::Registry()->get($this->table_registry_name, 'model_name'),
@@ -272,19 +246,18 @@ echo $query_object.'<br />';
 
 					if (count($children) > 0) {
 						$results = $this->model->addItemChildren(
-								$children,
-								(int)$this->get('id', 0),
-								$results
+							$children,
+							(int)$this->get('id', 0),
+							$results
 						);
 					}
 				}
-				$this->query_results[] = $results;
 			}
+
+			$q[] = $results;
 		}
 
-		echo '<pre>';
-		var_dump($this->query_results);
-		echo '</pre>';
+		$this->query_results = $q;
 
 		/** Schedule onAfterRead Event */
 		if (count($triggers) > 0) {
@@ -292,10 +265,13 @@ echo $query_object.'<br />';
 		}
 
 		/** Return Results */
-		if ($query_object == 'list') {;
+		if ($query_object == 'list') {
+			;
 			return $this->query_results;
+
 		} else if ($query_object == 'item') {
 			return $this->query_results[0];
+
 		} else {
 			return $result;
 		}
@@ -344,15 +320,19 @@ echo $query_object.'<br />';
 	protected function onBeforeReadEvent($triggers = array())
 	{
 		/** Prepare input */
-		if (count($triggers) == 0) {
-			return false;
+		if (count($triggers) == 0
+			|| (int)Services::Registry()->get($this->table_registry_name, 'process_triggers', 0) == 0
+		) {
+			return true;
 		}
 
 		/** Schedule onBeforeRead Event */
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'parameters' => $this->parameters,
-			'model' => $this->model
+			'query' => $this->model->query,
+			'db' => $this->model->db,
+			'model_name' => Services::Registry()->get($this->table_registry_name, 'model_name')
 		);
 
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $triggers);
@@ -362,7 +342,7 @@ echo $query_object.'<br />';
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
-		$this->model = $arguments['model'];
+		$this->model->query = $arguments['query'];
 
 		return true;
 	}
@@ -375,8 +355,11 @@ echo $query_object.'<br />';
 	 */
 	protected function onAfterReadEvent($triggers = array())
 	{
-		if (count($triggers) == 0) {
-			return false;
+		/** Prepare input */
+		if (count($triggers) == 0
+			|| (int)Services::Registry()->get($this->table_registry_name, 'process_triggers', 0) == 0
+		) {
+			return true;
 		}
 
 		/** Process each item, on at a time */
@@ -388,8 +371,8 @@ echo $query_object.'<br />';
 			$arguments = array(
 				'table_registry_name' => $this->table_registry_name,
 				'parameters' => $this->parameters,
-				'model' => $this->model,
-				'query_results' => $item
+				'query_results' => $item,
+				'model_name' => Services::Registry()->get($this->table_registry_name, 'model_name')
 			);
 
 			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $triggers);

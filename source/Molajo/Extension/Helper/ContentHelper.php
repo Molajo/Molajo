@@ -178,10 +178,14 @@ Class ContentHelper
 			$type = 'Content';
 		}
 
-		$m = Application::Controller()->connect($datasource, $type);
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect($datasource, $type);
+
 		$m->model->set('id', (int)$id);
 		$m->model->set('process_triggers', 0);
-		$row = $m->getData('load');
+
+		$row = $m->getData('item');
 
 		$row['table_registry_name'] = $m->model->table_registry_name;
 		$row['model_name'] = $m->model->model_name;

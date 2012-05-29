@@ -118,7 +118,9 @@ echo '</pre>';
 	 */
 	public function get($extension_id, $model = 'ExtensionInstances', $type = 'Table')
 	{
-		$m = Application::Controller()->connect($model, $type);
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect($model, $type);
 
 		$m->model->set('id', (int)$extension_id);
 		$m->model->set('process_triggers', 0);
@@ -149,7 +151,9 @@ echo '</pre>';
 	 */
 	public function getInstanceID($catalog_type_id, $title)
 	{
-		$m = Application::Controller()->connect('ExtensionInstances');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('ExtensionInstances');
 
 		$m->model->set('process_triggers', 0);
 
@@ -172,7 +176,9 @@ echo '</pre>';
 	 */
 	public function getInstanceTitle($extension_instance_id)
 	{
-		$m = Application::Controller()->connect('ExtensionInstances');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('ExtensionInstances');
 
 		$m->model->set('process_triggers', 0);
 
@@ -195,7 +201,9 @@ echo '</pre>';
 	 */
 	public function getExtensionNode($extension_instance_id)
 	{
-		$m = Application::Controller()->connect();
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect();
 
 		$m->model->set('process_triggers', 0);
 

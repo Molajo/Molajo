@@ -74,46 +74,28 @@ Class UserService
 		Services::Registry()->deleteRegistry('User');
 
 		/** Retrieve User Data  */
-		$m = Application::Controller()->connect('Users');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('Users');
 
 		$m->set('id', $this->id);
+		$item = $m->getData('item');
 
-		Services::Registry()->createRegistry('Parameters');
-		Services::Registry()->copy('Configuration', 'UserParams');
-
-		Services::Registry()->set('UserParams', 'model_name', 'User');
-		Services::Registry()->set('UserParams', 'model_type', 'Item');
-		Services::Registry()->set('UserParams', 'model_query_object', 'Load');
-
-		Services::Registry()->sort('UserParams');
-
-		$parms = Services::Registry()->getArray('UserParams');
-		if (count($parms) > 0) {
-			foreach ($parms as $key => $value) {
-				$m->set($key, $value);
-			}
-		}
-
-		$results = $m->getData('item');
-
-		echo 'User <pre>';
-		var_dump($results);
-
-		if ($results === false) {
+		if ($item == false || count($item) == 0) {
 			throw new \RuntimeException ('User load() query problem');
 		}
 
 		/** User Applications */
 		$applications = array();
-		$x = $results->Userapplications;
+		$x = $item->Userapplications;
 		foreach ($x as $app) {
 			$applications[] = $app->application_id;
 		}
-		unset($results->Userapplications);
+		unset($item->Userapplications);
 
 		/** User Groups */
 		$groups = array();
-		$x = $results->Usergroups;
+		$x = $item->Usergroups;
 		foreach ($x as $group) {
 			$groups[] = $group->group_id;
 		}
@@ -131,11 +113,11 @@ Class UserService
 				$groups[] = SYSTEM_GROUP_REGISTERED;
 			}
 		}
-		unset($results->Usergroups);
+		unset($item->Usergroups);
 
 		/** User View Groups */
 		$viewGroups = array();
-		$x = $results->Userviewgroups;
+		$x = $item->Userviewgroups;
 		foreach ($x as $vg) {
 			$viewGroups[] = $vg->view_group_id;
 		}
@@ -143,29 +125,25 @@ Class UserService
 		if (count($viewGroups) == 0) {
 			$viewGroups = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
 		}
-		unset($results->Userviewgroups);
+		unset($item->Userviewgroups);
 
 		/** User Activity */
-		$activity = $results->Useractivity;
-		unset($results->Useractivity);
+		$activity = $item->Useractivity;
+		unset($item->Useractivity);
 
 		/** User Object */
-		$first_name = '';
-		$last_name = '';
-
-		while (list($name, $value) = each($results)) {
-
-			Services::Registry()->set('User', $name, $value);
-
-			if ($name == 'first_name') {
-				$first_name = $value;
-
-			} elseif ($name == 'last_name') {
-				$last_name = $value;
-			}
-		}
-
-		Services::Registry()->set('User', 'name', $first_name . ' ' . $last_name);
+		Services::Registry()->set('User', 'id', $item->id);
+		Services::Registry()->set('User', 'catalog_type_id', $item->catalog_type_id);
+		Services::Registry()->set('User', 'username', $item->username);
+		Services::Registry()->set('User', 'first_name', $item->first_name);
+		Services::Registry()->set('User', 'last_name', $item->last_name);
+		Services::Registry()->set('User', 'content_text', $item->content_text);
+		Services::Registry()->set('User', 'email', $item->email);
+		Services::Registry()->set('User', 'block', $item->block);
+		Services::Registry()->set('User', 'activation', $item->activation);
+		Services::Registry()->set('User', 'send_email', $item->send_email);
+		Services::Registry()->set('User', 'register_datetime', $item->register_datetime);
+		Services::Registry()->set('User', 'last_visit_datetime', $item->last_visit_datetime);
 
 		if ($this->id == 0) {
 			Services::Registry()->set('User', 'public', 1);
@@ -191,8 +169,7 @@ Class UserService
 		Services::Registry()->rename('UsersCustomfields', 'UserCustomfields');
 		Services::Registry()->rename('UsersParameters', 'UserParameters');
 		Services::Registry()->rename('UsersMetadata', 'UserMetadata');
-
-
+/**
 		echo '<pre>';
 		echo 'User<br />';
 		Services::Registry()->get('User', '*');
@@ -213,6 +190,7 @@ Class UserService
 		var_dump(Services::Registry()->get('UserMetadata'));
 		echo '</pre>';
 die;
+*/
 		return $this;
 	}
 }

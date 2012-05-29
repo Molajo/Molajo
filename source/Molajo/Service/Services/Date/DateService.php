@@ -131,6 +131,7 @@ Class DateService
 	 */
 	public function prettydate($source_date)
 	{
+		return false;
 		/** user time zone */
 		$source_date = $this->getUTCDate(
 			$source_date, 'system'

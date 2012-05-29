@@ -116,25 +116,33 @@ class Model
 	}
 
 	/**
-	 * retrieves messages (only available for the Message dbo
+	 * retrieves messages
 	 *
 	 * @return  mixed  Array or String or Null
 	 * @since   1.0
 	 */
 	public function getMessages()
 	{
-		return $this->db->getMessages();
+		if ($this->db == 'Messages') {
+			return $this->db->getMessages();
+		} else {
+			// throw error
+		}
 	}
 
 	/**
-	 * retrieves parameters (only available for the Parameters dbo
+	 * retrieves parameters
 	 *
 	 * @return  mixed  Array or String or Null
 	 * @since   1.0
 	 */
 	public function getParameters()
 	{
-		return $this->db->getParameters();
+		if ($this->db == 'Registry') {
+			return $this->db->getParameteters();
+		} else {
+			// throw error
+		}
 	}
 
 	/**
@@ -145,7 +153,11 @@ class Model
 	 */
 	public function getAssets()
 	{
-		return $this->db->getAssets();
+		if ($this->db == 'Assets') {
+			return $this->db->getAssets();
+		} else {
+			// throw error
+		}
 	}
 
 	/**
@@ -210,6 +222,7 @@ class Model
 		if (empty($this->query_results)) {
 			return false;
 		}
+
 		$this->processQueryResults('loadResult');
 
 		return $this->query_results;
@@ -224,5 +237,47 @@ class Model
 	public function getPagination()
 	{
 		return $this->pagination;
+	}
+
+	/**
+	 * store
+	 *
+	 * Method to store a row (insert: no PK; update: PK) in the database.
+	 *
+	 * @param   boolean True to update fields even if they are null.
+	 *
+	 * @return  boolean  True on success.
+	 * @since   1.0
+	 */
+	public function store($id, $table_name, $primary_key)
+	{
+		/**
+		echo '<pre>';
+		var_dump($this->row);
+		echo '</pre>';
+		 */
+		if ((int)$id == 0) {
+			$stored = $this->db->insertObject(
+				$table_name, $this->row, $primary_key);
+		} else {
+			$stored = $this->db->updateObject(
+				$table_name, $this->row, $primary_key);
+		}
+
+		if ($stored) {
+
+		} else {
+
+//			throw new \Exception(
+//				. ' '. $this->db->getErrorMsg()
+//			);
+		}
+		/**
+		if ($this->_locked) {
+		$this->_unlock();
+		}
+		 */
+
+		return true;
 	}
 }

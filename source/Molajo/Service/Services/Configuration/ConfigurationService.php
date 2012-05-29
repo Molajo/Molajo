@@ -116,11 +116,12 @@ Class ConfigurationService
 		}
 
 		/** Retrieve Sites Data from DB */
-		$m = Application::Controller()->connect('Sites', 'Table');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('Sites');
+
 		$m->set('id', (int)SITE_ID);
-
 		$item = $m->getData('item');
-
 		if ($item === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
@@ -210,7 +211,10 @@ Class ConfigurationService
 
 			try {
 
-				$m = Application::Controller()->connect('Applications');
+				$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+				$m = new $controllerClass();
+				$m->connect('Applications');
+
 				$m->model->set('id_name', APPLICATION);
 
 				$item = $m->getData('item');
@@ -259,7 +263,10 @@ Class ConfigurationService
 	 */
 	protected function getActions()
 	{
-		$m = Application::Controller()->connect('Actions');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('Actions');
+
 		$items = $m->getData('list');
 
 		if ($items === false) {

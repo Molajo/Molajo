@@ -107,7 +107,9 @@ Class MenuitemHelper
 	 */
 	public function get($menu_item_id)
 	{
-		$m = Application::Controller()->connect('Content');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('Content');
 
 		/**
 		 *  a. Content Table
