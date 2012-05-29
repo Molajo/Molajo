@@ -137,7 +137,6 @@ Class Services
 			/** make service connection */
 			if ($connectionSucceeded == true) {
 				try {
-//echo $serviceClass.' '.$serviceMethod.'<br />';
 					$connection = $serviceClass::$serviceMethod();
 
 				} catch (\Exception $e) {

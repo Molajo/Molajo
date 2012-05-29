@@ -108,7 +108,6 @@ class Controller
 		$this->parameters = array();
 	}
 
-
 	/**
 	 * Get the current value (or default) of the specified Model property
 	 *

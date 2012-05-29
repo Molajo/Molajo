@@ -45,12 +45,20 @@ class ContentTrigger extends Trigger
 	protected $parameters;
 
 	/**
-	 * Model object
+	 * Query Object from Model
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $model;
+	protected $query;
+
+	/**
+	 * db object (for escaping fields)
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $db;
 
 	/**
 	 * Query Results
@@ -129,7 +137,7 @@ class ContentTrigger extends Trigger
 		$this->fields = array();
 
 		/** process normal fields */
-		$fields = Services::Registry()->get($this->table_registry_name, '');
+		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
 
 		/** Common processing */
 		if (is_array($fields) && count($fields) > 0) {
@@ -165,7 +173,7 @@ class ContentTrigger extends Trigger
 	public function processFieldType($type, $fields)
 	{
 		foreach ($fields as $key => $value) {
-			echo $key.' '.$value.'<br />';
+
 			$row = new \stdClass();
 
 			/** Name */
@@ -178,7 +186,6 @@ class ContentTrigger extends Trigger
 			/** Datatype */
 			if (isset($fields[$key]['type'])) {
 				$row->type = $fields[$key]['type'];
-				echo $row->type.'<br />';
 			} else {
 				$row->type = 'char';
 			}
@@ -297,6 +304,56 @@ class ContentTrigger extends Trigger
 	}
 
 	/**
+	 * getFieldValue retrieves the actual field value from the 'normal' or special field
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function getFieldValue($field)
+	{
+		$name = $field->name;
+
+		if (isset($this->query_results->$name)) {
+			return $this->query_results->$name;
+
+		} else if ($field->customfield == '') {
+			return true;
+
+		} else if (Services::Registry()->get($this->model_name . $field->customfield, $name, '') > '') {
+			return Services::Registry()->get($this->model_name . $field->customfield, $name, '');
+		}
+
+		return true;
+	}
+
+	/**
+	 * addField adds a field to the 'normal' or special field group
+	 *
+	 * @param $field
+	 * @param $new_field_name
+	 * @param $value
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function addField($field, $new_field_name, $value)
+	{
+		$name = $field->name;
+
+		if (isset($this->query_results->$name)) {
+			$this->query_results->$new_field_name = $value;
+			return true;
+
+		} else if ($field->customfield == '') {
+			return true;
+
+		} else if (Services::Registry()->get($this->model_name . $field->customfield, $name, '') > '') {
+			Services::Registry()->set($this->model_name . $field->customfield, $new_field_name, $value);
+			return true;
+		}
+	}
+
+	/**
 	 * Pre-create processing
 	 *
 	 * @param   $this->query_results
@@ -307,7 +364,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onBeforeCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -320,7 +377,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onAfterCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -334,7 +391,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onBeforeRead()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -348,7 +405,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onAfterRead()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -362,7 +419,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onBeforeUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -376,7 +433,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onAfterUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -390,7 +447,7 @@ class ContentTrigger extends Trigger
 	 */
 	public function onBeforeDelete()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -404,6 +461,6 @@ class ContentTrigger extends Trigger
 	 */
 	public function onAfterDelete()
 	{
-		return false;
+		return true;
 	}
 }

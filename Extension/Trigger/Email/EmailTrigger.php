@@ -74,12 +74,22 @@ class EmailTrigger extends ContentTrigger
 			foreach ($fields as $field) {
 
 				$name = $field->name;
-				$results = Services::Text()->obfuscateEmail($this->query_results->$name);
+				$new_name = $name . '_' . 'obfuscated';
 
-				if ($results == false) {
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
+
+				if ($fieldValue == false) {
 				} else {
-					$newname = $name . '_' . 'obfuscated';
-					$this->query_results->$newname = $results;
+
+					$newFieldValue = Services::Url()->obfuscateEmail($fieldValue);
+
+					if ($newFieldValue == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
+					}
 				}
 			}
 		}

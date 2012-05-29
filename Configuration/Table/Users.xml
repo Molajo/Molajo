@@ -9,7 +9,6 @@
         get_item_children="1"
         use_special_joins="0"
         check_view_level_access="0"
-        check_published="0"
         process_triggers="1"
         data_source="JDatabase">
     <table>
@@ -48,11 +47,10 @@
                 <trigger name="Username"/>
                 <trigger name="Email"/>
                 <trigger name="Password"/>
-                <trigger name="ContentText"/>
-                <trigger name="DateFields"/>
-                <trigger name="Customfields"/>
-                <trigger name="Metadata"/>
-                <trigger name="Parameters"/>
+                <trigger name="Readmore"/>
+                <trigger name="Datefields"/>
+                <trigger name="Dateformats"/>
+                <trigger name="Publishedstatus"/>
             </triggers>
 
             <customfields>

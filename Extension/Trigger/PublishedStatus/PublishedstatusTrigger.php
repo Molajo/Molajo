@@ -43,6 +43,48 @@ class PublishedstatusTrigger extends ContentTrigger
 	}
 
 	/**
+	 * Pre-read processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function onBeforeRead()
+	{
+
+		if (isset($this->query_results->status)
+			&& isset($this->query_results->start_publishing_datetime)
+			&& isset($this->query_results->stop_publishing_datetime) ) {
+		} else {
+			return $this;
+		}
+
+		$primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
+
+		$this->query->where($this->db->qn($primary_prefix)
+			. '.' . $this->db->qn('status')
+			. ' > ' . STATUS_UNPUBLISHED);
+
+		$this->query->where('(' . $this->db->qn($primary_prefix)
+				. '.' . $this->db->qn('start_publishing_datetime')
+				. ' = ' . $this->db->q($this->nullDate)
+				. ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
+				. ' <= ' . $this->db->q($this->now) . ')'
+		);
+
+		$this->query->where('(' . $this->db->qn($primary_prefix)
+				. '.' . $this->db->qn('stop_publishing_datetime')
+				. ' = ' . $this->db->q($this->nullDate)
+				. ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
+				. ' >= ' . $this->db->q($this->now) . ')'
+		);
+
+		return $this;
+	}
+
+	/**
 	 * Pre-create processing
 	 *
 	 * @param   $this->query_results
@@ -55,7 +97,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	{
 		// if published or greater status
 		// make certain published start date is today or later
-		return false;
+		return true;
 	}
 
 	/**
@@ -69,7 +111,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	public function onAfterCreate()
 	{
 		// if it is published, notify
-		return false;
+		return true;
 	}
 
 	/**
@@ -85,7 +127,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	{
 		// hold status
 		// if it is published (or greater) make certain published dates are ok
-		return false;
+		return true;
 	}
 
 	/**
@@ -104,7 +146,7 @@ class PublishedstatusTrigger extends ContentTrigger
 		// is email notification enabled? are people subscribed?
 		// tweets
 		// pings
-		return false;
+		return true;
 	}
 
 	public function notify()

@@ -80,7 +80,9 @@ class ItemListTrigger extends ContentTrigger
 
 			if (trim($trigger) == '') {
 
-				$m = Application::Controller()->connect($table);
+				$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+				$m = new $controllerClass();
+				$m->connect($table);
 
 				$m->model->set('id', $this->query_results->created_by);
 

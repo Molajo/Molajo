@@ -62,7 +62,9 @@ class AuthorTrigger extends ContentTrigger
 		}
 
 		/** Get Author Profile Data */
-		$m = Application::Controller()->connect('Users', 'Table');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('Users');
 
 		$m->model->set('id', $this->query_results->created_by);
 		$m->model->set('get_customfields', 2);

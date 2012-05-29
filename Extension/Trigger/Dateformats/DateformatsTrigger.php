@@ -46,43 +46,66 @@ class DateformatsTrigger extends ContentTrigger
 	/**
 	 * After-read processing
 	 *
-	 * Adds formatted dates to $this->query_results
+	 * Adds formatted dates to 'normal' or special fields recordset
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onAfterRead()
 	{
+		$fields = $this->retrieveFieldsByType('date');
 
-		if (isset($this->query_results->created_datetime)) {
-			if ($this->query_results->created_datetime == '0000-00-00 00:00:00') {
-			} else {
-				$this->itemDateRoutine('created_datetime');
+		if (is_array($fields) && count($fields) > 0) {
+
+			foreach ($fields as $field) {
+
+				$name = $field->name;
+
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
+
+				if ($fieldValue == false
+					|| $fieldValue == '0000-00-00 00:00:00') {
+				} else {
+
+					/** formats the date for CCYYMMDD */
+					$newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
+
+					if ($newFieldValue == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$new_name = $name . '_ccyymmdd';
+						$newFieldValue = str_replace('-', '', $newFieldValue);
+						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
+					}
+
+					/** NN days ago */
+					$newFieldValue = Services::Date()->differenceDays(date('Y-m-d'), $fieldValue);
+
+					if ($newFieldValue == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$new_name = $name . '_n_days_ago';
+						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
+					}
+
+					/** Pretty Date */
+					$newFieldValue = Services::Date()->prettydate($fieldValue);
+
+					if ($newFieldValue == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$new_name = $name . '_pretty_date';
+						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
+					}
+				}
 			}
 		}
 
-		if (isset($this->query_results->modified_datetime)) {
-			if ($this->query_results->modified_datetime == '0000-00-00 00:00:00') {
-			} else {
-				$this->itemDateRoutine('modified_datetime');
-			}
-		}
-
-		if (isset($this->query_results->start_publishing_datetime)) {
-			if ($this->query_results->start_publishing_datetime == '0000-00-00 00:00:00') {
-			} else {
-				$this->itemDateRoutine('start_publishing_datetime');
-			}
-		}
-
-		if (isset($this->query_results->stop_publishing_datetime)) {
-			if ($this->query_results->stop_publishing_datetime == '0000-00-00 00:00:00') {
-			} else {
-				$this->itemDateRoutine('stop_publishing_datetime');
-			}
-		}
-
-		return;
+		return true;
 	}
 
 	/**
@@ -98,23 +121,6 @@ class DateformatsTrigger extends ContentTrigger
 	 */
 	protected function itemDateRoutine($field)
 	{
-		return false;
-
-		if ($this->query_results->$field == '0000-00-00 00:00:00') {
-			return false;
-		}
-
-		$newField = $field . '_ccyymmdd';
-		$this->query_results->$newField = Services::Date()->convertCCYYMMDD($this->query_results->$field);
-
-		$this->query_results->$newField = str_replace('-', '', $this->query_results->$newField);
-
-		$newField = $field . '_n_days_ago';
-		$this->query_results->$newField = Services::Date()->differenceDays(date('Y-m-d'), $this->query_results->$field);
-
-		$newField = $field . '_pretty_date';
-		$this->query_results->$newField = Services::Date()->prettydate($this->query_results->$field);
-
 		return false;
 	}
 }

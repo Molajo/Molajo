@@ -4,6 +4,9 @@
     <service>Version</service>
     <service>Registry</service>
     <service>Client</service>
+    <service>Url</service>
+    <service>Text</service>
+    <service>Mail</service>
     <service>Filesystem</service>
     <service>Event</service>
     <service>Message</service>
@@ -16,17 +19,14 @@
     <service>Session</service>
     <service>Response</service>
     <service>Redirect</service>
-    <service>User</service>
     <service>Language</service>
     <service>Date</service>
+    <service>User</service>
     <service>Debug</service>
     <service>Document</service>
     <service>Authorisation</service>
     <service>Asset</service>
     <service>Image</service>
-    <service>Url</service>
-    <service>Text</service>
-    <service>Mail</service>
     <service>Filter</service>
     <service>Parse</service>
     <service>Password</service>

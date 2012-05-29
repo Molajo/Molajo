@@ -89,7 +89,7 @@ Class UrlService
 	 * @return string
 	 * @since  1.0
 	 */
-	function obfuscateEmail($email_address)
+	public function obfuscateEmail($email_address)
 	{
 		$obfuscate_email = "";
 
