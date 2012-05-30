@@ -6,7 +6,6 @@
  */
 namespace Molajo\MVC\Model;
 
-use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -24,428 +23,434 @@ defined('MOLAJO') or die;
  */
 class DisplayModel extends ItemModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param   $id
-	 * @since   1.0
-	 */
-	public function __construct()
-	{
-		return parent::__construct();
-	}
+    /**
+     * Constructor.
+     *
+     * @param   $id
+     * @since   1.0
+     */
+    public function __construct()
+    {
+        return parent::__construct();
+    }
 
-	/**
-	 * getData
-	 *
-	 * Used for most view access queries for any model.
-	 *
-	 * Use load for retrieving a specific item with intent to update.
-	 *
-	 * Method to establish query criteria, formulate a database query,
-	 * run the database query, allow for the addition of more data, and
-	 * return the integrated data
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function getData()
-	{
-		$this->setQuery();
+    /**
+     * getData
+     *
+     * Used for most view access queries for any model.
+     *
+     * Use load for retrieving a specific item with intent to update.
+     *
+     * Method to establish query criteria, formulate a database query,
+     * run the database query, allow for the addition of more data, and
+     * return the integrated data
+     *
+     * @return object
+     * @since   1.0
+     */
+    public function getData()
+    {
+        $this->setQuery();
 
-		$this->query_results = $this->runQuery();
+        $this->query_results = $this->runQuery();
 
-		if (empty($this->query_results)) {
-			return false;
-		}
+        if (empty($this->query_results)) {
+            return false;
+        }
 
-		$this->query_results = $this->getAdditionalData();
+        $this->query_results = $this->getAdditionalData();
 
-		return $this->query_results;
-	}
+        return $this->query_results;
+    }
 
-	/**
-	 * setQuery
-	 *
-	 * Method to create a query object
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	protected function setQuery()
-	{
+    /**
+     * setQuery
+     *
+     * Method to create a query object
+     *
+     * @return object
+     * @since   1.0
+     */
+    protected function setQuery()
+    {
 
-		/** collect unique parameter defined query methods and run at end */
-		$methods = array();
+        /** collect unique parameter defined query methods and run at end */
+        $methods = array();
 
-		/**
-		 *  Parameters: merged in Render
-		 */
-		if (is_object(Application::Request()->parameters)) {
-			$parameterArray = Application::Request()->parameters->toArray();
-		} else {
-			$parameterArray = array();
-		}
+        /**
+         *  Parameters: merged in Render
+         */
+        if (is_object(Application::Request()->parameters)) {
+            $parameterArray = Application::Request()->parameters->toArray();
+        } else {
+            $parameterArray = array();
+        }
 
-		/** Primary table field names and prefix */
-		$this->fields = $this->getFieldDatatypes();
+        /** Primary table field names and prefix */
+        $this->fields = $this->getFieldDatatypes();
 
-		/**
-		 *  Select
-		 */
-		$selectArray = array();
-		if (isset($parameterArray['select'])) {
-			$temp = explode(',', $parameterArray['select']);
-			foreach ($temp as $select) {
-				$selectArray[] = trim($select);
-			}
-		}
-		if (count($selectArray) > 0) {
-		} else {
-			/** default to all primary table fields */
-			while (list($name, $value) = each($this->fields)) {
-				$selectArray[] = $name;
-			}
-		}
+        /**
+         *  Select
+         */
+        $selectArray = array();
+        if (isset($parameterArray['select'])) {
+            $temp = explode(',', $parameterArray['select']);
+            foreach ($temp as $select) {
+                $selectArray[] = trim($select);
+            }
+        }
+        if (count($selectArray) > 0) {
+        } else {
+            /** default to all primary table fields */
+            while (list($name, $value) = each($this->fields)) {
+                $selectArray[] = $name;
+            }
+        }
 
-		foreach ($selectArray as $select) {
-			$method = 'query' . ucfirst(strtolower($select));
-			if (method_exists($helperClass, $method)) {
-				if (in_array($method, $methods)) {
-				} else {
-					$methods[] = $method;
-				}
-			} else {
-				if (isset($this->fields[$select])) {
-					$this->query->select(
-						$this->db->qn($this->primary_prefix)
-							. '.'
-							. $this->db->qn($select));
-				}
-			}
-		}
+        foreach ($selectArray as $select) {
+            $method = 'query' . ucfirst(strtolower($select));
+            if (method_exists($helperClass, $method)) {
+                if (in_array($method, $methods)) {
+                } else {
+                    $methods[] = $method;
+                }
+            } else {
+                if (isset($this->fields[$select])) {
+                    $this->query->select(
+                        $this->db->qn($this->primary_prefix)
+                            . '.'
+                            . $this->db->qn($select));
+                }
+            }
+        }
 
-		/**
-		 *  From
-		 */
-		$this->query->from(
-			$this->db->qn($this->table_name)
-				. ' as '
-				. $this->db->qn($this->primary_prefix)
-		);
+        /**
+         *  From
+         */
+        $this->query->from(
+            $this->db->qn($this->table_name)
+                . ' as '
+                . $this->db->qn($this->primary_prefix)
+        );
 
-		if (isset($parameterArray['disable_view_access_check'])
-			&& $parameterArray['disable_view_access_check'] == 0
-		) {
-			Services::Authorisation()->setQueryViewAccess(
-				$this->query,
-				$this->db,
-				array('join_to_prefix' => $this->primary_prefix,
-					'join_to_primary_key' => $this->primary_key,
-					'catalog_prefix' => $this->primary_prefix . '_catalog',
-					'select' => true
-				)
-			);
-		}
+        if (isset($parameterArray['disable_view_access_check'])
+            && $parameterArray['disable_view_access_check'] == 0
+        ) {
+            Services::Authorisation()->setQueryViewAccess(
+                $this->query,
+                $this->db,
+                array('join_to_prefix' => $this->primary_prefix,
+                    'join_to_primary_key' => $this->primary_key,
+                    'catalog_prefix' => $this->primary_prefix . '_catalog',
+                    'select' => true
+                )
+            );
+        }
 
-		/**
-		 *  Where
-		 */
-		while (list($name, $value) = each($parameterArray)) {
+        /**
+         *  Where
+         */
+        while (list($name, $value) = each($parameterArray)) {
 
-			if (substr($name, 0, strlen('criteria_')) == 'criteria_') {
+            if (substr($name, 0, strlen('criteria_')) == 'criteria_') {
 
-				$field = trim(substr($name, strlen('criteria_'), 999));
+                $field = trim(substr($name, strlen('criteria_'), 999));
 
-				if (isset($this->fields[$field])) {
-					$method = 'query' . ucfirst(strtolower($field));
+                if (isset($this->fields[$field])) {
+                    $method = 'query' . ucfirst(strtolower($field));
 
-					if (method_exists($helperClass, $method)) {
-						if (in_array($method, $methods)) {
-						} else {
-							$methods[] = $method;
-						}
-					} else {
+                    if (method_exists($helperClass, $method)) {
+                        if (in_array($method, $methods)) {
+                        } else {
+                            $methods[] = $method;
+                        }
+                    } else {
 
-						if (trim($value) == '') {
-							//todo: amy $value = user session field;
-						}
+                        if (trim($value) == '') {
+                            //todo: amy $value = user session field;
+                        }
 
-						if (trim($value == '')) {
-						} else {
-							$dataType = explode(',', $this->fields[$field]);
-							if ($dataType[0] == 'int') {
-								$v = (int)$value;
-							} else {
-								$v = $this->db->q($value);
-							}
-							$this->query->where(
-								$this->db->qn($this->primary_prefix)
-									. '.'
-									. $this->db->qn($field)
-									. ' = '
-									. $v
-							);
-						}
-					}
-				}
-			}
-		}
+                        if (trim($value == '')) {
+                        } else {
+                            $dataType = explode(',', $this->fields[$field]);
+                            if ($dataType[0] == 'int') {
+                                $v = (int) $value;
+                            } else {
+                                $v = $this->db->q($value);
+                            }
+                            $this->query->where(
+                                $this->db->qn($this->primary_prefix)
+                                    . '.'
+                                    . $this->db->qn($field)
+                                    . ' = '
+                                    . $v
+                            );
+                        }
+                    }
+                }
+            }
+        }
 
-		/** Specific criteria */
-		if (isset($parameterArray[$this->primary_key])
-			&& (int)$parameterArray[$this->primary_key] > 0
-		) {
-			$this->query->where(
-				$this->db->qn($this->primary_prefix)
-					. '.'
-					. $this->db->qn($this->primary_key)
-					. ' = '
-					. (int)$parameterArray[$this->primary_key]
-			);
-		}
+        /** Specific criteria */
+        if (isset($parameterArray[$this->primary_key])
+            && (int) $parameterArray[$this->primary_key] > 0
+        ) {
+            $this->query->where(
+                $this->db->qn($this->primary_prefix)
+                    . '.'
+                    . $this->db->qn($this->primary_key)
+                    . ' = '
+                    . (int) $parameterArray[$this->primary_key]
+            );
+        }
 
-		if (isset($parameterArray['catalog_type_id'])
-			&& (int)$parameterArray['catalog_type_id'] > 0
-		) {
-			$this->query->where(
-				$this->db->qn($this->primary_prefix)
-					. '.'
-					. $this->db->qn('catalog_type_id')
-					. ' = '
-					. (int)$parameterArray['catalog_type_id']
-			);
-		}
+        if (isset($parameterArray['catalog_type_id'])
+            && (int) $parameterArray['catalog_type_id'] > 0
+        ) {
+            $this->query->where(
+                $this->db->qn($this->primary_prefix)
+                    . '.'
+                    . $this->db->qn('catalog_type_id')
+                    . ' = '
+                    . (int) $parameterArray['catalog_type_id']
+            );
+        }
 
-		//todo: amy category id
+        //todo: amy category id
 
-		/**
-		 *  Ordering
-		 */
-		if (isset($parameterArray['ordering'])) {
-			$this->query->ordering(trim($parameterArray['ordering']));
-		}
+        /**
+         *  Ordering
+         */
+        if (isset($parameterArray['ordering'])) {
+            $this->query->ordering(trim($parameterArray['ordering']));
+        }
 
-		/**
-		 *  Helper Methods requested by parameters
-		 */
-		foreach ($methods as $method) {
-			$this->query = $h->$method(
-				$this->query,
-				$this->primary_prefix,
-				$this->db
-			);
-		}
+        /**
+         *  Helper Methods requested by parameters
+         */
+        foreach ($methods as $method) {
+            $this->query = $h->$method(
+                $this->query,
+                $this->primary_prefix,
+                $this->db
+            );
+        }
 
-		/**
-		$this->db->setQuery(
-		$query,
-		$this->getStart(),
-		$this->getState('list.limit')
-		);
-		 */
-		return;
-	}
+        /**
+        $this->db->setQuery(
+        $query,
+        $this->getStart(),
+        $this->getState('list.limit')
+        );
+         */
 
-	/**
-	 * runQuery
-	 *
-	 * Method to execute a prepared and set query statement,
-	 * returning the results
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function runQuery()
-	{
-		return $this->loadObjectList();
-	}
+        return;
+    }
 
-	/**
-	 * getAdditionalData
-	 *
-	 * Method to append additional data elements, as needed
-	 *
-	 * @param array $this->query_results
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	protected function getAdditionalData()
-	{
-		$rowCount = 1;
-		if (count($this->query_results) == 0) {
-			return $this->query_results;
-		}
+    /**
+     * runQuery
+     *
+     * Method to execute a prepared and set query statement,
+     * returning the results
+     *
+     * @return object
+     * @since   1.0
+     */
+    public function runQuery()
+    {
+        return $this->loadObjectList();
+    }
 
-		/**
-		 *  Model Helper: MolajoExtensionModelHelper extends ModelHelper
-		 */
-		$extensionName = ExtensionHelper::formatNameForClass(
-			$this->get('extension_instance_name')
-		);
+    /**
+     * getAdditionalData
+     *
+     * Method to append additional data elements, as needed
+     *
+     * @param array $this->query_results
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function getAdditionalData()
+    {
+        $rowCount = 1;
+        if (count($this->query_results) == 0) {
+            return $this->query_results;
+        }
 
-		$helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . 'ModelHelper';
-		if (class_exists($helperClass)) {
-		} else {
-			$helperClass = 'ModelHelper';
-		}
-		$h = new $helperClass();
+        /**
+         *  Model Helper: MolajoExtensionModelHelper extends ModelHelper
+         */
+        $extensionName = ExtensionHelper::formatNameForClass(
+            $this->get('extension_instance_name')
+        );
 
-		if (is_object(Application::Request()->parameters)) {
-			$parameterArray = Application::Request()->parameters->toArray();
-		} else {
-			$parameterArray = array();
-		}
+        $helperClass = 'Molajo\\Extension\\Component\\' . $extensionName . 'ModelHelper';
+        if (class_exists($helperClass)) {
+        } else {
+            $helperClass = 'ModelHelper';
+        }
+        $h = new $helperClass();
 
-		$methodArray = array();
-		if (isset($parameterArray['item_methods'])) {
-			$temp = explode(',', $parameterArray['item_methods']);
-			foreach ($temp as $method) {
-				$methodArray[] = trim($method);
-			}
-		}
+        if (is_object(Application::Request()->parameters)) {
+            $parameterArray = Application::Request()->parameters->toArray();
+        } else {
+            $parameterArray = array();
+        }
 
-		/**
-		 *  Loop through query results
-		 */
-		foreach ($this->query_results as $item) {
-			$keep = true;
+        $methodArray = array();
+        if (isset($parameterArray['item_methods'])) {
+            $temp = explode(',', $parameterArray['item_methods']);
+            foreach ($temp as $method) {
+                $methodArray[] = trim($method);
+            }
+        }
 
-			if (count($methodArray) > 0) {
-				foreach ($methodArray as $method) {
-					if (method_exists($helperClass, $method)) {
-						$item = $h->$method($item, $this->parameters);
-					}
-				}
-			}
-			// Services::Event()->schedule('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
+        /**
+         *  Loop through query results
+         */
+        foreach ($this->query_results as $item) {
+            $keep = true;
 
-			// Services::Event()->schedule('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
+            if (count($methodArray) > 0) {
+                foreach ($methodArray as $method) {
+                    if (method_exists($helperClass, $method)) {
+                        $item = $h->$method($item, $this->parameters);
+                    }
+                }
+            }
+            // Services::Event()->schedule('queryBeforeItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
-			/** process content triggers */
-			//                Services::Event()->schedule('contentPrepare', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
-			//$item->event = new \stdClass();
+            // Services::Event()->schedule('queryAfterItem', array(&$this->status, &$item, &$this->parameters, &$keep));
 
-			//                $results = Services::Event()->schedule(
-			//                    'contentBeforeDisplay',
-			//                    array($this->context,
-			//                        &$item,
-			//                        &$this->parameters,
-			//                        $this->getState('list.start')
-			//                   )
-			//                );
-			//$item->event->beforeDisplayContent = trim(implode("\n", $results));
+            /** process content triggers */
+            //                Services::Event()->schedule('contentPrepare', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
+            //$item->event = new \stdClass();
 
-			//                $results = Services::Event()->schedule('contentAfterDisplay', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
-			//$item->event->afterDisplayContent = trim(implode("\n", $results));
+            //                $results = Services::Event()->schedule(
+            //                    'contentBeforeDisplay',
+            //                    array($this->context,
+            //                        &$item,
+            //                        &$this->parameters,
+            //                        $this->getState('list.start')
+            //                   )
+            //                );
+            //$item->event->beforeDisplayContent = trim(implode("\n", $results));
 
-			/** remove items so marked **/
-			if ($keep === true) {
-				$item->row_count = $rowCount++;
-			} else {
-				unset($item);
-			}
-		}
-		return $this->query_results;
-	}
+            //                $results = Services::Event()->schedule('contentAfterDisplay', array($this->context, &$item, &$this->parameters, $this->getState('list.start')));
+            //$item->event->afterDisplayContent = trim(implode("\n", $results));
 
-	/**
-	 * getPagination
-	 *
-	 * Method to get a JPagination object for the data set.
-	 *
-	 * @return    object    A JPagination object for the data set.
-	 * @since    1.0
-	 */
-	public function getPagination()
-	{
-		/** get pagination id **/
-		$store = $this->getStoreId('getPagination');
+            /** remove items so marked **/
+            if ($keep === true) {
+                $item->row_count = $rowCount++;
+            } else {
+                unset($item);
+            }
+        }
 
-		/** if available, load from cache **/
-		if (empty($this->cache[$store])) {
-		} else {
-			return $this->cache[$store];
-		}
+        return $this->query_results;
+    }
 
-		/** pagination object **/
-		$limit = (int)$this->getState('list.limit') - (int)$this->getState('list.links');
+    /**
+     * getPagination
+     *
+     * Method to get a JPagination object for the data set.
+     *
+     * @return object A JPagination object for the data set.
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        /** get pagination id **/
+        $store = $this->getStoreId('getPagination');
+
+        /** if available, load from cache **/
+        if (empty($this->cache[$store])) {
+        } else {
+            return $this->cache[$store];
+        }
+
+        /** pagination object **/
+        $limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
 //        $page = new JPagination($this->getTotal(), $this->getStart(), $limit);
-		$page = '';
-		/** load cache **/
-		$this->cache[$store] = $page;
+        $page = '';
+        /** load cache **/
+        $this->cache[$store] = $page;
 
-		/** return from cache **/
-		return $this->cache[$store];
-	}
+        /** return from cache **/
 
-	/**
-	 * getTotal
-	 *
-	 * Method to get the total number of items for the data set.
-	 *
-	 * @return    integer
-	 * @since    1.0
-	 */
-	public function getTotal()
-	{
-		/** cache **/
-		$store = $this->getStoreId('getTotal');
-		if (empty($this->cache[$store])) {
+        return $this->cache[$store];
+    }
 
-		} else {
-			return $this->cache[$store];
-		}
+    /**
+     * getTotal
+     *
+     * Method to get the total number of items for the data set.
+     *
+     * @return integer
+     * @since    1.0
+     */
+    public function getTotal()
+    {
+        /** cache **/
+        $store = $this->getStoreId('getTotal');
+        if (empty($this->cache[$store])) {
 
-		/** get total of items returned from the last query **/
-		$this->db->setQuery($this->queryStatement);
-		$this->db->query();
+        } else {
+            return $this->cache[$store];
+        }
 
-		$total = (int)$this->db->getNumRows();
+        /** get total of items returned from the last query **/
+        $this->db->setQuery($this->queryStatement);
+        $this->db->query();
 
-		if ($this->db->getErrorNum()) {
-			$this->setError($this->db->getErrorMsg());
-			return false;
-		}
+        $total = (int) $this->db->getNumRows();
 
-		/** load cache **/
-		$this->cache[$store] = $total;
+        if ($this->db->getErrorNum()) {
+            $this->setError($this->db->getErrorMsg());
 
-		/** return from cache **/
-		return $this->cache[$store];
-	}
+            return false;
+        }
 
-	/**
-	 * getStart
-	 *
-	 * Method to get the starting number of items for the data set.
-	 *
-	 * @return    integer
-	 * @since    1.0
-	 */
-	public function getStart()
-	{
-		/** cache **/
-		$store = $this->getStoreId('getStart');
-		if (empty($this->cache[$store])) {
+        /** load cache **/
+        $this->cache[$store] = $total;
 
-		} else {
-			return $this->cache[$store];
-		}
+        /** return from cache **/
 
-		/** get list object **/
-		$start = $this->getState('list.start');
-		$limit = $this->getState('list.limit');
-		$total = $this->getTotal();
-		if ($start > $total - $limit) {
-			$start = max(0, (int)(ceil($total / $limit) - 1) * $limit);
-		}
+        return $this->cache[$store];
+    }
 
-		/** load cache **/
-		$this->cache[$store] = $start;
+    /**
+     * getStart
+     *
+     * Method to get the starting number of items for the data set.
+     *
+     * @return integer
+     * @since    1.0
+     */
+    public function getStart()
+    {
+        /** cache **/
+        $store = $this->getStoreId('getStart');
+        if (empty($this->cache[$store])) {
 
-		/** return from cache **/
-		return $this->cache[$store];
-	}
+        } else {
+            return $this->cache[$store];
+        }
+
+        /** get list object **/
+        $start = $this->getState('list.start');
+        $limit = $this->getState('list.limit');
+        $total = $this->getTotal();
+        if ($start > $total - $limit) {
+            $start = max(0, (int) (ceil($total / $limit) - 1) * $limit);
+        }
+
+        /** load cache **/
+        $this->cache[$store] = $start;
+
+        /** return from cache **/
+
+        return $this->cache[$store];
+    }
 }

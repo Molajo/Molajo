@@ -19,233 +19,234 @@ defined('MOLAJO') or die;
  */
 Class UrlService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new UrlService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new UrlService();
+        }
 
-	/**
-	 * Get either a Gravatar URL or complete image tag for a specified email address.
-	 *
-	 * @param  string   $email
-	 * @param  string   $size        Size in pixels, defaults to 80px [ 1 - 512 ]
-	 * @param  string   $type        Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * @param  string   $rating      Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param  boolean  $image       True to return a complete IMG tag False for just the URL
-	 * @param  array    $attributes  Optional, additional key/value attributes to include in the IMG tag
-	 *
-	 * @return Linked image or URL
-	 *
-	 * @source http://gravatar.com/site/implement/images/php/
-	 */
-	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g', $image = false, $attributes = array())
-	{
+        return self::$instance;
+    }
 
-		if ((int)$size == 0) {
-			$size = Services::Registry()->get('Configuration', 'gravatar_size', 80);
-			$type = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
-			$rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
-			$image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
-		}
+    /**
+     * Get either a Gravatar URL or complete image tag for a specified email address.
+     *
+     * @param string  $email
+     * @param string  $size       Size in pixels, defaults to 80px [ 1 - 512 ]
+     * @param string  $type       Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+     * @param string  $rating     Maximum rating (inclusive) [ g | pg | r | x ]
+     * @param boolean $image      True to return a complete IMG tag False for just the URL
+     * @param array   $attributes Optional, additional key/value attributes to include in the IMG tag
+     *
+     * @return Linked image or URL
+     *
+     * @source http://gravatar.com/site/implement/images/php/
+     */
+    public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g', $image = false, $attributes = array())
+    {
 
-		$url = 'http://www.gravatar.com/avatar/';
-		$url .= md5(strtolower(trim($email)));
-		$url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
-		if ($image) {
-			$url = '<img src="' . $url . '"';
-			if (count($attributes) > 0) {
-				foreach ($attributes as $key => $val) {
-					$url .= ' ' . $key . '="' . $val . '"';
-				}
-			}
-			$url .= ' />';
-		}
-		return $url;
-	}
+        if ((int) $size == 0) {
+            $size = Services::Registry()->get('Configuration', 'gravatar_size', 80);
+            $type = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
+            $rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
+            $image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
+        }
 
-	/**
-	 * obfuscate Email
-	 *
-	 * @param $email_address
-	 *
-	 * @return string
-	 * @since  1.0
-	 */
-	public function obfuscateEmail($email_address)
-	{
-		$obfuscate_email = "";
+        $url = 'http://www.gravatar.com/avatar/';
+        $url .= md5(strtolower(trim($email)));
+        $url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
+        if ($image) {
+            $url = '<img src="' . $url . '"';
+            if (count($attributes) > 0) {
+                foreach ($attributes as $key => $val) {
+                    $url .= ' ' . $key . '="' . $val . '"';
+                }
+            }
+            $url .= ' />';
+        }
 
-		for ($i = 0; $i < strlen($email_address); $i++){
-			$obfuscate_email .= "&#" . ord($email_address[$i]) . ";";
-		}
+        return $url;
+    }
 
-		return $obfuscate_email;
-	}
+    /**
+     * obfuscate Email
+     *
+     * @param $email_address
+     *
+     * @return string
+     * @since  1.0
+     */
+    public function obfuscateEmail($email_address)
+    {
+        $obfuscate_email = "";
 
-	/**
-	 * Add links to a generic text field when URLs are found
-	 *
-	 * @param string $text_field
-	 *
-	 * @return string
-	 */
-	function addLinks($text_field)
-	{
-		$pattern = "/(((http[s]?:\/\/)|(www\.))?(([a-z][-a-z0-9]+\.)?[a-z][-a-z0-9]+\.[a-z]+(\.[a-z]{2,2})?)\/?[a-z0-9._\/~#&=;%+?-]+[a-z0-9\/#=?]{1,1})/is";
+        for ($i = 0; $i < strlen($email_address); $i++) {
+            $obfuscate_email .= "&#" . ord($email_address[$i]) . ";";
+        }
 
-		$text_field = preg_replace($pattern, " <a href='$1'>$1</a>", $text_field);
+        return $obfuscate_email;
+    }
 
-		// fix URLs without protocols
-		$text_field = preg_replace("/href=\"www/", "href=\"http://www", $text_field);
+    /**
+     * Add links to a generic text field when URLs are found
+     *
+     * @param string $text_field
+     *
+     * @return string
+     */
+    public function addLinks($text_field)
+    {
+        $pattern = "/(((http[s]?:\/\/)|(www\.))?(([a-z][-a-z0-9]+\.)?[a-z][-a-z0-9]+\.[a-z]+(\.[a-z]{2,2})?)\/?[a-z0-9._\/~#&=;%+?-]+[a-z0-9\/#=?]{1,1})/is";
 
-		return $text_field;
-	}
+        $text_field = preg_replace($pattern, " <a href='$1'>$1</a>", $text_field);
 
+        // fix URLs without protocols
+        $text_field = preg_replace("/href=\"www/", "href=\"http://www", $text_field);
 
-	/**
-	 * createWebLinks - marks up a link into an <a href link
-	 *
-	 * todo: pick one of these two (previous and this one)
-	 *
-	 * @param string $url_field
-	 *
-	 * @return linked value
-	 */
-	function createWebLinks($url_field)
-	{
-		return preg_replace('#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is', '\\1<a href="\\2">\\2</a>', $url_field);
-	}
+        return $text_field;
+    }
 
-	/**
-	 * checkURLExternal - determines if it is a local site or external link
-	 *
-	 * @param string $url_field
-	 *
-	 * @return boolean
-	 */
-	function checkURLExternal($url_field)
-	{
-		if (substr($url_field, 0, strlen(BASE_FOLDER)) == BASE_FOLDER) {
-			return false;
+    /**
+     * createWebLinks - marks up a link into an <a href link
+     *
+     * todo: pick one of these two (previous and this one)
+     *
+     * @param string $url_field
+     *
+     * @return linked value
+     */
+    public function createWebLinks($url_field)
+    {
+        return preg_replace('#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is', '\\1<a href="\\2">\\2</a>', $url_field);
+    }
 
-		} elseif ((strtolower(substr($url_field, 0, 3)) == 'www')
-			&& (substr($url_field, 3, strlen(BASE_FOLDER)) == BASE_FOLDER)
-		) {
-			return false;
+    /**
+     * checkURLExternal - determines if it is a local site or external link
+     *
+     * @param string $url_field
+     *
+     * @return boolean
+     */
+    public function checkURLExternal($url_field)
+    {
+        if (substr($url_field, 0, strlen(BASE_FOLDER)) == BASE_FOLDER) {
+            return false;
 
-		} else {
-			return true;
-		}
-	}
+        } elseif ((strtolower(substr($url_field, 0, 3)) == 'www')
+            && (substr($url_field, 3, strlen(BASE_FOLDER)) == BASE_FOLDER)
+        ) {
+            return false;
 
-	/**
-	 * getHost - retrieves host from the URL
-	 *
-	 * @param string $url_field
-	 *
-	 * @return boolean
-	 */
-	function getHost($url_field)
-	{
-		$hostArray = parse_url($url_field);
+        } else {
+            return true;
+        }
+    }
 
-		return $hostArray['scheme'] . '://' . $hostArray['host'];
-	}
+    /**
+     * getHost - retrieves host from the URL
+     *
+     * @param string $url_field
+     *
+     * @return boolean
+     */
+    public function getHost($url_field)
+    {
+        $hostArray = parse_url($url_field);
 
-	/**
-	 * retrieveURLContents - issues request with link via curl
-	 *
-	 * @param string $url_field
-	 *
-	 * @return boolean
-	 */
-	function retrieveURLContents($url_field)
-	{
-		return curl::processCurl($url_field);
-	}
+        return $hostArray['scheme'] . '://' . $hostArray['host'];
+    }
 
-	/**
-	 * addTrailingSlash
-	 *
-	 * @param object $url_field
-	 *
-	 * $url = Services::Url()->addTrailingSlash ($url_field);
-	 */
-	function addTrailingSlash($url_field)
-	{
-		return untrailingslashit($url_field) . '/';
-	}
+    /**
+     * retrieveURLContents - issues request with link via curl
+     *
+     * @param string $url_field
+     *
+     * @return boolean
+     */
+    public function retrieveURLContents($url_field)
+    {
+        return curl::processCurl($url_field);
+    }
 
-	/**
-	 * removeTrailingSlash
-	 *
-	 * @param object $url_field
-	 *
-	 * $url = Services::Url()->removeTrailingSlash ($url_field);
-	 */
-	function removeTrailingSlash($url_field)
-	{
-		return rtrim($url_field, '/');
-	}
+    /**
+     * addTrailingSlash
+     *
+     * @param object $url_field
+     *
+     * $url = Services::Url()->addTrailingSlash ($url_field);
+     */
+    public function addTrailingSlash($url_field)
+    {
+        return untrailingslashit($url_field) . '/';
+    }
 
-	/**
-	 * urlShortener
-	 * $longurl
-	 * @param object $longurl
-	 * 1 Local Shortened
-	 * 2 TinyURL
-	 * 3 is.gd
-	 * 4 bit.ly
-	 * 5 tr.im
-	 * @return
-	 */
-	function urlShortener($longurl, $username, $apikey, $username, $apikey)
-	{
-		$shortener = 1;
+    /**
+     * removeTrailingSlash
+     *
+     * @param object $url_field
+     *
+     * $url = Services::Url()->removeTrailingSlash ($url_field);
+     */
+    public function removeTrailingSlash($url_field)
+    {
+        return rtrim($url_field, '/');
+    }
 
-		if ($shortener == '1') {
-			return $longurl; // todo: create local short url
+    /**
+     * urlShortener
+     * $longurl
+     * @param object $longurl
+     * 1 Local Shortened
+     * 2 TinyURL
+     * 3 is.gd
+     * 4 bit.ly
+     * 5 tr.im
+     * @return
+     */
+    public function urlShortener($longurl, $username, $apikey, $username, $apikey)
+    {
+        $shortener = 1;
 
-		} else if ($shortener == '2') {
-			return (implode('', file('http://tinyurl.com/api-create.php?url=' . urlencode($longurl))));
+        if ($shortener == '1') {
+            return $longurl; // todo: create local short url
 
-		} else if ($shortener == '3') {
-			return (implode('', file('http://is.gd/api.php?longurl=' . urlencode($longurl))));
+        } elseif ($shortener == '2') {
+            return (implode('', file('http://tinyurl.com/api-create.php?url=' . urlencode($longurl))));
 
-		} else if ($shortener == '4') {
+        } elseif ($shortener == '3') {
+            return (implode('', file('http://is.gd/api.php?longurl=' . urlencode($longurl))));
 
-			$bitlyURL = file_get_contents("http://api.bit.ly/v3/shorten" . "&login=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode($longurl) . "&format=json");
-			$bitlyContent = json_decode($bitlyURL, true);
-			$bitlyError = $bitlyContent["errorCode"];
-			if ($bitlyError == 0) {
-				return $bitlyContent["results"][$longurl]["shortUrl"];
-			} else {
-				return $bitlyError;
-			}
+        } elseif ($shortener == '4') {
 
-		} else if ($shortener == '5') {
-			return (implode('', file('http://api.tr.im/api/trim_simple?url=' . urlencode($longurl))));
+            $bitlyURL = file_get_contents("http://api.bit.ly/v3/shorten" . "&login=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode($longurl) . "&format=json");
+            $bitlyContent = json_decode($bitlyURL, true);
+            $bitlyError = $bitlyContent["errorCode"];
+            if ($bitlyError == 0) {
+                return $bitlyContent["results"][$longurl]["shortUrl"];
+            } else {
+                return $bitlyError;
+            }
 
-		} else {
-			return $longurl;
-		}
-	}
+        } elseif ($shortener == '5') {
+            return (implode('', file('http://api.tr.im/api/trim_simple?url=' . urlencode($longurl))));
+
+        } else {
+            return $longurl;
+        }
+    }
 }

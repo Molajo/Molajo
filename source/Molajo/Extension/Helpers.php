@@ -21,165 +21,166 @@ defined('MOLAJO') or die;
  */
 Class Helpers
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * Service Connections
-	 *
-	 * @var   object
-	 * @since 1.0
-	 */
-	protected $helper_connection;
+    /**
+     * Service Connections
+     *
+     * @var   object
+     * @since 1.0
+     */
+    protected $helper_connection;
 
-	/**
-	 * Messages
-	 *
-	 * @var   object
-	 * @since 1.0
-	 */
-	protected $message;
+    /**
+     * Messages
+     *
+     * @var   object
+     * @since 1.0
+     */
+    protected $message;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new Helpers();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new Helpers();
+        }
 
-	/**
-	 * __construct
-	 *
-	 * @return null
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		$this->helper_connection = array();
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * Retrieves helper key value pair
-	 *
-	 * @param  string  $key
-	 * @param  string  $default
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function get($key, $default = null)
-	{
-		if (isset($this->helper_connection[$key])) {
-			return $this->helper_connection[$key];
-		} else {
-			//error
-		}
-	}
+    /**
+     * __construct
+     *
+     * @return null
+     * @since  1.0
+     */
+    public function __construct()
+    {
+        $this->helper_connection = array();
+    }
 
-	/**
-	 * Used to connect to helpers
-	 *
-	 * @static
-	 * @param  $name
-	 * @param  $arguments
-	 */
-	public static function __callStatic($name, $arguments)
-	{
-		return Application::Helpers()->get($name . 'Helper');
-	}
+    /**
+     * Retrieves helper key value pair
+     *
+     * @param string $key
+     * @param string $default
+     *
+     * @return mixed
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        if (isset($this->helper_connection[$key])) {
+            return $this->helper_connection[$key];
+        } else {
+            //error
+        }
+    }
 
-	/**
-	 * loads all helpers in the helpers folder
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function connect()
-	{
-		$helpers = Services::Filesystem()->folderFiles(EXTENSIONS_HELPERS);
+    /**
+     * Used to connect to helpers
+     *
+     * @static
+     * @param  $name
+     * @param  $arguments
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        return Application::Helpers()->get($name . 'Helper');
+    }
 
-		foreach ($helpers as $filename) {
-			$try = true;
-			$connection = '';
+    /**
+     * loads all helpers in the helpers folder
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function connect()
+    {
+        $helpers = Services::Filesystem()->folderFiles(EXTENSIONS_HELPERS);
 
-			/** class name */
-			if (substr($filename, 0, 4) == 'hold') {
-				break;
-			}
-			$entry = substr($filename, 0, strlen($filename) - 4);
-			$helperClass = 'Molajo\\Extension\\Helper\\' . $entry;
+        foreach ($helpers as $filename) {
+            $try = true;
+            $connection = '';
 
-			/** method name */
-			$helperMethod = 'getInstance';
+            /** class name */
+            if (substr($filename, 0, 4) == 'hold') {
+                break;
+            }
+            $entry = substr($filename, 0, strlen($filename) - 4);
+            $helperClass = 'Molajo\\Extension\\Helper\\' . $entry;
 
-			/** trap errors for missing class or method */
-			if (class_exists($helperClass)) {
-				if (method_exists($helperClass, $helperMethod)) {
-				} else {
-					$try = false;
-					$connection = $helperClass . '::' . $helperMethod . ' Class does not exist';
-				}
-			} else {
-				$try = false;
-				$connection = $helperClass . ' Class does not exist';
-			}
+            /** method name */
+            $helperMethod = 'getInstance';
 
-			/** make helper connection */
-			if ($try === true) {
-				try {
-					$connection = $helperClass::$helperMethod();
+            /** trap errors for missing class or method */
+            if (class_exists($helperClass)) {
+                if (method_exists($helperClass, $helperMethod)) {
+                } else {
+                    $try = false;
+                    $connection = $helperClass . '::' . $helperMethod . ' Class does not exist';
+                }
+            } else {
+                $try = false;
+                $connection = $helperClass . ' Class does not exist';
+            }
 
-				} catch (\Exception $e) {
-					$connection = 'Fatal Error: ' . $e->getMessage();
-				}
-			}
+            /** make helper connection */
+            if ($try === true) {
+                try {
+                    $connection = $helperClass::$helperMethod();
 
-			/** store connection or error message */
-			$this->set($entry, $connection, $try);
-		}
+                } catch (\Exception $e) {
+                    $connection = 'Fatal Error: ' . $e->getMessage();
+                }
+            }
 
-		foreach ($this->message as $message) {
-			Services::Debug()->set($message);
-		}
+            /** store connection or error message */
+            $this->set($entry, $connection, $try);
+        }
 
-		return true;
-	}
+        foreach ($this->message as $message) {
+            Services::Debug()->set($message);
+        }
 
-	/**
-	 * set
-	 *
-	 * Stores the helper connection
-	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	private function set($key, $value = null, $try = true)
-	{
-		$i = count($this->message);
+        return true;
+    }
 
-		if ($value == null || $try == false) {
-			$this->message[$i] = 'Trigger: ' . $key . ' FAILED' . $value;
+    /**
+     * set
+     *
+     * Stores the helper connection
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return mixed
+     * @since   1.0
+     */
+    private function set($key, $value = null, $try = true)
+    {
+        $i = count($this->message);
 
-		} else {
-			$this->helper_connection[$key] = $value;
-			$this->message[$i] = 'Trigger: ' . $key . ' started successfully. ';
-		}
-	}
+        if ($value == null || $try == false) {
+            $this->message[$i] = 'Trigger: ' . $key . ' FAILED' . $value;
+
+        } else {
+            $this->helper_connection[$key] = $value;
+            $this->message[$i] = 'Trigger: ' . $key . ' started successfully. ';
+        }
+    }
 }

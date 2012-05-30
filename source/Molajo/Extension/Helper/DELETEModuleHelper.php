@@ -19,59 +19,61 @@ defined('MOLAJO') or die;
  */
 Class ModuleHelper
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new ModuleHelper();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new ModuleHelper();
+        }
 
-	/**
-	 * get
-	 *
-	 * Retrieve module data
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function get($name)
-	{
-		$row = Helpers::Extension()->getInstanceID(
-			CATALOG_TYPE_EXTENSION_MODULE,
-			$name
-		);
-		if (count($row) == 0) {
-			return array();
-		}
-		return $row;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * getPath
-	 *
-	 * Return path for selected Module
-	 *
-	 * @return bool|string
-	 * @since 1.0
-	 */
-	public function getPath($name)
-	{
-		return EXTENSIONS_MODULES . '/' . $name;
-	}
+    /**
+     * get
+     *
+     * Retrieve module data
+     *
+     * @return array
+     * @since   1.0
+     */
+    public function get($name)
+    {
+        $row = Helpers::Extension()->getInstanceID(
+            CATALOG_TYPE_EXTENSION_MODULE,
+            $name
+        );
+        if (count($row) == 0) {
+            return array();
+        }
+
+        return $row;
+    }
+
+    /**
+     * getPath
+     *
+     * Return path for selected Module
+     *
+     * @return bool|string
+     * @since 1.0
+     */
+    public function getPath($name)
+    {
+        return EXTENSIONS_MODULES . '/' . $name;
+    }
 }

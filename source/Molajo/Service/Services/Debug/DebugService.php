@@ -19,190 +19,190 @@ defined('MOLAJO') or die;
  */
 Class DebugService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * $on Switch
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $on;
+    /**
+     * $on Switch
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $on;
 
-	/**
-	 * Log Type
-	 *
-	 * @var   string
-	 * @since 1.0
-	 */
-	const log_type = 'debugservice';
+    /**
+     * Log Type
+     *
+     * @var   string
+     * @since 1.0
+     */
+    const log_type = 'debugservice';
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new DebugService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new DebugService();
+        }
 
-	/**
-	 * Class constructor.
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function __construct()
-	{
-		/** Set debugging on or off */
-		$this->on = Services::Registry()->get('Configuration', 'Debug', 0);
+        return self::$instance;
+    }
 
-		if ($this->on == 0) {
-			Services::Registry()->set('DebugService', 'on', false);
-			return false;
-		} else {
-			Services::Registry()->set('DebugService', 'on', true);
-		}
+    /**
+     * Class constructor.
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function __construct()
+    {
+        /** Set debugging on or off */
+        $this->on = Services::Registry()->get('Configuration', 'Debug', 0);
 
-		/** Valid Logger Options */
-		$loggerOptions = array();
-		$loggerOptions[] = 'echo';
-		$loggerOptions[] = 'formattedtext';
-		$loggerOptions[] = 'database';
-		$loggerOptions[] = 'email';
-		$loggerOptions[] = 'chromephp';
-		$loggerOptions[] = 'firephp';
-		$loggerOptions[] = 'messages';
+        if ($this->on == 0) {
+            Services::Registry()->set('DebugService', 'on', false);
 
-		/** @var $options */
-		$options = array();
+            return false;
+        } else {
+            Services::Registry()->set('DebugService', 'on', true);
+        }
 
-		/** Logger Type */
-		$options['logger'] = Services::Registry()->get('Configuration', 'debug_logger', 'echo');
+        /** Valid Logger Options */
+        $loggerOptions = array();
+        $loggerOptions[] = 'echo';
+        $loggerOptions[] = 'formattedtext';
+        $loggerOptions[] = 'database';
+        $loggerOptions[] = 'email';
+        $loggerOptions[] = 'chromephp';
+        $loggerOptions[] = 'firephp';
+        $loggerOptions[] = 'messages';
 
-		if (in_array($options['logger'], $loggerOptions)) {
-		} else {
-			$options['logger'] = 'echo';
-		}
+        /** @var $options */
+        $options = array();
 
-		/** Email */
-		if ($options['logger'] == 'email') {
+        /** Logger Type */
+        $options['logger'] = Services::Registry()->get('Configuration', 'debug_logger', 'echo');
 
-			$options['mailer'] = Services::Mail();
+        if (in_array($options['logger'], $loggerOptions)) {
+        } else {
+            $options['logger'] = 'echo';
+        }
 
-			$options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
-			$options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
-			$options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
-			$options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
-		}
+        /** Email */
+        if ($options['logger'] == 'email') {
 
-		/** Formatted Text */
-		if ($options['logger'] == 'formattedtext') {
-			$options['logger'] = 'formattedtext';
+            $options['mailer'] = Services::Mail();
 
-			$options['text_file'] = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
+            $options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
+            $options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
+            $options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
+            $options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
+        }
 
-			$temp = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
+        /** Formatted Text */
+        if ($options['logger'] == 'formattedtext') {
+            $options['logger'] = 'formattedtext';
 
-			if ($temp == 'SITE_LOGS_FOLDER') {
-				$options['text_file_path'] = SITE_LOGS_FOLDER;
+            $options['text_file'] = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
 
-			} else {
-				$options['text_file_path'] = $temp;
-			}
+            $temp = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
 
-			if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $options['text_file'])) {
+            if ($temp == 'SITE_LOGS_FOLDER') {
+                $options['text_file_path'] = SITE_LOGS_FOLDER;
 
-				$options['text_file_no_php']
-					= (int)Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
-				$loggerSelected = true;
+            } else {
+                $options['text_file_path'] = $temp;
+            }
 
-			} else {
-				$options = array();
-				$options['logger'] = 'echo';
-			}
-		}
+            if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $options['text_file'])) {
 
-		/** Database: This interface to Joomla's logger is not designed to use Molajo's
-		ModelService approach to interacting with the DB
-		 */
-		if ($options['logger'] == 'database') {
+                $options['text_file_no_php']
+                    = (int) Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
+                $loggerSelected = true;
 
-			$options['dbo'] = Services::JDatabase()->get('db');
-			$options['db_table']
-				= Services::Registry()
-				->get('Configuration', 'debug_database_table', '#__log');
+            } else {
+                $options = array();
+                $options['logger'] = 'echo';
+            }
+        }
 
-			$loggerSelected = true;
-		}
+        /** Database: This interface to Joomla's logger is not designed to use Molajo's
+        ModelService approach to interacting with the DB
+         */
+        if ($options['logger'] == 'database') {
 
-		/** Messages */
-		if ($options['logger'] == 'messages') {
-			$options['messages_namespace']
-				= Services::Registry()
-				->get('Configuration', 'debug_messages_namespace', 'debug');
+            $options['dbo'] = Services::JDatabase()->get('db');
+            $options['db_table']
+                = Services::Registry()
+                ->get('Configuration', 'debug_database_table', '#__log');
 
-			$loggerSelected = true;
-		}
+            $loggerSelected = true;
+        }
 
-		/** Chrome Console */
-		if ($options['logger'] == 'chromephp') {
-		}
+        /** Messages */
+        if ($options['logger'] == 'messages') {
+            $options['messages_namespace']
+                = Services::Registry()
+                ->get('Configuration', 'debug_messages_namespace', 'debug');
 
-		/** Echo */
-		if ($options['logger'] == 'echo') {
-			$options['logger'] = 'echo';
-			$options['line_separator']
-				= Services::Registry()
-				->get('Configuration', 'debug_line_separator', '<br />');
-		}
+            $loggerSelected = true;
+        }
 
-		/** Establish log for activated debug option */
-		Services::Log()->setLog($options, LOG_TYPE_DEBUG, self::log_type);
+        /** Chrome Console */
+        if ($options['logger'] == 'chromephp') {
+        }
 
-		return $this;
-	}
+        /** Echo */
+        if ($options['logger'] == 'echo') {
+            $options['logger'] = 'echo';
+            $options['line_separator']
+                = Services::Registry()
+                ->get('Configuration', 'debug_line_separator', '<br />');
+        }
 
-	/**
-	 * Modifies a property of the Request Parameter object
-	 *
-	 * @param   string  $message
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function set($message)
-	{
-		if ((int)$this->on == 0) {
-			return true;
-		}
+        /** Establish log for activated debug option */
+        Services::Log()->setLog($options, LOG_TYPE_DEBUG, self::log_type);
 
-		try {
-			Services::Log()
-				->addEntry(
-				$message,
-				LOG_TYPE_DEBUG,
-				self::log_type,
-				Services::Date()->getDate('now')
-			);
-		}
+        return $this;
+    }
 
-		catch (\Exception $e) {
-			throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
-		}
+    /**
+     * Modifies a property of the Request Parameter object
+     *
+     * @param string $message
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function set($message)
+    {
+        if ((int) $this->on == 0) {
+            return true;
+        }
 
-		return true;
-	}
+        try {
+            Services::Log()
+                ->addEntry(
+                $message,
+                LOG_TYPE_DEBUG,
+                self::log_type,
+                Services::Date()->getDate('now')
+            );
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
+        }
+
+        return true;
+    }
 }

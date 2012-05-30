@@ -21,75 +21,76 @@ defined('MOLAJO') or die;
  */
 Class RequestService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * Request Connection
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $connection;
+    /**
+     * Request Connection
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $connection;
 
-	/**
-	 * Request
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $request;
+    /**
+     * Request
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $request;
 
-	/**
-	 * Parameters
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $parameters;
+    /**
+     * Parameters
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameters;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new RequestService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new RequestService();
+        }
 
-	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
+        return self::$instance;
+    }
 
-		/** Request */
-		$class = 'Symfony\\Component\\HttpFoundation\\Request';
-		$this->connection = new $class();
-		$this->request = $this->connection->createFromGlobals();
+    /**
+     * Class constructor.
+     *
+     * @since  1.0
+     */
+    public function __construct()
+    {
 
-		/** Request */
-		$class2 = 'Symfony\\Component\\HttpFoundation\\ParameterBag';
-		$this->connection2 = new $class2();
+        /** Request */
+        $class = 'Symfony\\Component\\HttpFoundation\\Request';
+        $this->connection = new $class();
+        $this->request = $this->connection->createFromGlobals();
 
-		return $this;
-	}
+        /** Request */
+        $class2 = 'Symfony\\Component\\HttpFoundation\\ParameterBag';
+        $this->connection2 = new $class2();
 
-	public function get($key)
-	{
-		return $this->$key;
-	}
+        return $this;
+    }
+
+    public function get($key)
+    {
+        return $this->$key;
+    }
 }

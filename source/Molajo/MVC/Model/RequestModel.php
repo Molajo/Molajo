@@ -22,57 +22,60 @@ defined('MOLAJO') or die;
  */
 Class RequestModel extends DisplayModel
 {
-	/**
-	 * __construct
-	 *
-	 * Constructor.
-	 *
-	 * @param  $id
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-	}
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $id
+     * @since  1.0
+     */
+    public function __construct()
+    {
+    }
 
-	/**
-	 * getData
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getData()
-	{
-		/** input for events is stored in the action request object */
-		$this->query_results = Services::Registry()->get('Request', 'query_resultset');
-		return $this->query_results;
-	}
+    /**
+     * getData
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getData()
+    {
+        /** input for events is stored in the action request object */
+        $this->query_results = Services::Registry()->get('Request', 'query_resultset');
 
-	/**
-	 * getPagination
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getPagination()
-	{
-		/** input for events is stored in the action request object */
-		$this->pagination = Services::Registry()->get('Request', 'query_pagination');
-		return $this->pagination;
-	}
+        return $this->query_results;
+    }
 
-	/**
-	 * getState
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getState()
-	{
-		/** input for events is stored in the action request object */
-		$this->state = Services::Registry()->get('Request', 'query_state');
-		return $this->state;
-	}
+    /**
+     * getPagination
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getPagination()
+    {
+        /** input for events is stored in the action request object */
+        $this->pagination = Services::Registry()->get('Request', 'query_pagination');
+
+        return $this->pagination;
+    }
+
+    /**
+     * getState
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getState()
+    {
+        /** input for events is stored in the action request object */
+        $this->state = Services::Registry()->get('Request', 'query_state');
+
+        return $this->state;
+    }
 }

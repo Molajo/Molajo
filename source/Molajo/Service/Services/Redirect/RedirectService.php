@@ -23,96 +23,98 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 Class RedirectService
 {
-	/**
-	 * Instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * $url
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $url = null;
+    /**
+     * $url
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $url = null;
 
-	/**
-	 * $code
-	 *
-	 * @var    integer
-	 * @since  1.0
-	 */
-	public $code = 0;
+    /**
+     * $code
+     *
+     * @var    integer
+     * @since  1.0
+     */
+    public $code = 0;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return object
-	 *
-	 * @since  1.0
-	 */
-	public static function getInstance($content = '', $status = 200, $headers = array())
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new RedirectService($content, $status, $headers);
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return object
+     *
+     * @since  1.0
+     */
+    public static function getInstance($content = '', $status = 200, $headers = array())
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new RedirectService($content, $status, $headers);
+        }
 
-	/**
-	 * Set the Redirect URL and Code
-	 *
-	 * @param  null $url
-	 *
-	 * @param  $code
-	 *
-	 * @return mixed
-	 *
-	 * @since  1.0
-	 */
-	public function set($url = null, $code = 302)
-	{
-		/** Installation redirect */
-		if ($code == 999) {
-			$code = 302;
-			$this->url = $url;
-			$this->code = $code;
-			return;
-		}
+        return self::$instance;
+    }
 
-		/** Configuration Service is available */
-		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+    /**
+     * Set the Redirect URL and Code
+     *
+     * @param null $url
+     *
+     * @param  $code
+     *
+     * @return mixed
+     *
+     * @since  1.0
+     */
+    public function set($url = null, $code = 302)
+    {
+        /** Installation redirect */
+        if ($code == 999) {
+            $code = 302;
+            $this->url = $url;
+            $this->code = $code;
 
-			if (Services::Registry()->get('Configuration', 'url_sef_rewrite', 0) == 0) {
-				$url = BASE_URL . APPLICATION_URL_PATH . 'index.php/' . $url;
-			} else {
-				$url = BASE_URL . APPLICATION_URL_PATH . $url;
-			}
+            return;
+        }
 
-			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 0) == 1) {
-				$url .= '.html';
-			}
-		}
+        /** Configuration Service is available */
+        if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-		Services::Debug()->set('RedirectServices::set URL: ' . $this->url . ' Status Code: ' . $this->code);
+            if (Services::Registry()->get('Configuration', 'url_sef_rewrite', 0) == 0) {
+                $url = BASE_URL . APPLICATION_URL_PATH . 'index.php/' . $url;
+            } else {
+                $url = BASE_URL . APPLICATION_URL_PATH . $url;
+            }
 
-		return;
-	}
+            if ((int) Services::Registry()->get('Configuration', 'url_sef_suffix', 0) == 1) {
+                $url .= '.html';
+            }
+        }
 
-	/**
-	 * redirect
-	 *
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
-	 * @since  1.0
-	 */
-	public function redirect()
-	{
-		Services::Debug()->set('RedirectServices::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
+        Services::Debug()->set('RedirectServices::set URL: ' . $this->url . ' Status Code: ' . $this->code);
 
-		return new RedirectResponse($this->url, $this->code);
-	}
+        return;
+    }
+
+    /**
+     * redirect
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @since  1.0
+     */
+    public function redirect()
+    {
+        Services::Debug()->set('RedirectServices::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
+
+        return new RedirectResponse($this->url, $this->code);
+    }
 }

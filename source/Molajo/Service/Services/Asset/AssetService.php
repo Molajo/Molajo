@@ -19,277 +19,278 @@ defined('MOLAJO') or die;
  */
 Class AssetService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * Assets
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $assets = array();
+    /**
+     * Assets
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $assets = array();
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new AssetService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new AssetService();
+        }
 
-	/**
-	 * Set the system asset.
-	 *
-	 * @param  string  $asset
-	 * @param  string  $type      asset, notice, warning, and error
-	 * @param  integer $code
-	 *
-	 * @return  bool
-	 * @since   1.0
-	 */
-	public function set()
-	{
-		return true;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * get application assets
-	 *
-	 * @return  array  Application assets
-	 *
-	 * @since   1.0
-	 */
-	public function get($option = null)
-	{
-		if ($option == 'db') {
-			return $this;
+    /**
+     * Set the system asset.
+     *
+     * @param string  $asset
+     * @param string  $type  asset, notice, warning, and error
+     * @param integer $code
+     *
+     * @return bool
+     * @since   1.0
+     */
+    public function set()
+    {
+        return true;
+    }
 
-		} else if ($option == 'count') {
-			return count($this->assets);
+    /**
+     * get application assets
+     *
+     * @return array Application assets
+     *
+     * @since   1.0
+     */
+    public function get($option = null)
+    {
+        if ($option == 'db') {
+            return $this;
 
-		} else {
-			return $this;
-		}
-	}
+        } elseif ($option == 'count') {
+            return count($this->assets);
 
-	/**
-	 *     Dummy functions to pass service off as a DBO to interact with model
-	 */
-	public function getNullDate()
-	{
-		return $this;
-	}
+        } else {
+            return $this;
+        }
+    }
 
-	public function getQuery()
-	{
-		return $this;
-	}
+    /**
+     *     Dummy functions to pass service off as a DBO to interact with model
+     */
+    public function getNullDate()
+    {
+        return $this;
+    }
 
-	public function toSql()
-	{
-		return $this;
-	}
+    public function getQuery()
+    {
+        return $this;
+    }
 
-	public function clear()
-	{
-		return $this;
-	}
+    public function toSql()
+    {
+        return $this;
+    }
 
-	/**
-	 * getData
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getAssets()
-	{
-		$query_results = array();
+    public function clear()
+    {
+        return $this;
+    }
 
-		$defer = (int)Services::Registry()->get('Parameters', 'defer', 0);
+    /**
+     * getData
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getAssets()
+    {
+        $query_results = array();
 
-		/** get metadata (part used in base) */
-		if ($defer == 1) {
-		} else {
-			$metadata = Services::Registry()->get('Metadata');
+        $defer = (int) Services::Registry()->get('Parameters', 'defer', 0);
 
-			if (count($metadata) > 0) {
+        /** get metadata (part used in base) */
+        if ($defer == 1) {
+        } else {
+            $metadata = Services::Registry()->get('Metadata');
 
-				$row = new \stdClass();
-				$row->type = 'base';
+            if (count($metadata) > 0) {
 
-				/** Title */
-				$title = $metadata['title'];
-				if (trim($title) == '') {
-					$title = Services::Registry()->get('Configuration', 'title', 'Molajo');
-				}
-				$row->title = Services::Filter()->escape_text($title);
+                $row = new \stdClass();
+                $row->type = 'base';
 
-				/** Mimetype */
-				$mimetype = Services::Document()->get_mime_encoding();
-				if (trim($mimetype) == '') {
-					$mimetype = 'text/html';
-				}
-				$row->mimetype = Services::Filter()->escape_text($mimetype);
+                /** Title */
+                $title = $metadata['title'];
+                if (trim($title) == '') {
+                    $title = Services::Registry()->get('Configuration', 'title', 'Molajo');
+                }
+                $row->title = Services::Filter()->escape_text($title);
 
-				/** Base URL for Site */
-				$row->base = Services::Registry()->get('Configuration', 'site_base_url');
+                /** Mimetype */
+                $mimetype = Services::Document()->get_mime_encoding();
+                if (trim($mimetype) == '') {
+                    $mimetype = 'text/html';
+                }
+                $row->mimetype = Services::Filter()->escape_text($mimetype);
 
-				/** Last Modified Date */
-				$last_modified = Services::Registry()->get('Parameters', 'modified_datetime');
-				if (trim($last_modified) == '') {
-					$last_modified = Services::Date()->getDate();
-				}
-				$row->last_modified = Services::Filter()->escape_text($last_modified);
+                /** Base URL for Site */
+                $row->base = Services::Registry()->get('Configuration', 'site_base_url');
 
-				$query_results[] = $row;
-			}
+                /** Last Modified Date */
+                $last_modified = Services::Registry()->get('Parameters', 'modified_datetime');
+                if (trim($last_modified) == '') {
+                    $last_modified = Services::Date()->getDate();
+                }
+                $row->last_modified = Services::Filter()->escape_text($last_modified);
 
-			/** metadata */
-			if (count($metadata) > 0) {
+                $query_results[] = $row;
+            }
 
-				foreach ($metadata as $name => $content) {
+            /** metadata */
+            if (count($metadata) > 0) {
 
-						//				if ($type == 'http-equiv') {
-						//					$content .= '; charset=' . $document->getCharset();
-						//					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
-						//				} else {
-						if (trim($content) == '') {
-						} else {
-							$row = new \stdClass();
-							$row->type = 'metadata';
-							$row->name = Services::Filter()->escape_text($name);
-							$row->content = Services::Filter()->escape_text($content);
-							$query_results[] = $row;
-						}
-						//				}
-					}
-				}
+                foreach ($metadata as $name => $content) {
 
-		}
+                        //				if ($type == 'http-equiv') {
+                        //					$content .= '; charset=' . $document->getCharset();
+                        //					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
+                        //				} else {
+                        if (trim($content) == '') {
+                        } else {
+                            $row = new \stdClass();
+                            $row->type = 'metadata';
+                            $row->name = Services::Filter()->escape_text($name);
+                            $row->content = Services::Filter()->escape_text($content);
+                            $query_results[] = $row;
+                        }
+                        //				}
+                    }
+                }
 
-		/** type: links */
-		if ($defer == 1) {
-		} else {
-			$row = new \stdClass();
+        }
 
-			$row->type = 'links';
-			$row->url = Services::Registry()->get('Theme', 'favicon');
-			$row->relation = 'shortcut icon';
-			$row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
-			$query_results[] = $row;
+        /** type: links */
+        if ($defer == 1) {
+        } else {
+            $row = new \stdClass();
 
-			$list = Services::Document()->get_links();
+            $row->type = 'links';
+            $row->url = Services::Registry()->get('Theme', 'favicon');
+            $row->relation = 'shortcut icon';
+            $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
+            $query_results[] = $row;
 
-			if (count($list) > 0) {
-				foreach ($list as $item) {
-					$row = new \stdClass();
+            $list = Services::Document()->get_links();
 
-					$row->type = 'links';
-					$row->url = $item['url'];
-					$row->relation = Services::Filter()->escape_text(
-						$item['relation']
-					);
-					$row->relation_type = Services::Filter()->escape_text(
-						$item['relation_type']
-					);
+            if (count($list) > 0) {
+                foreach ($list as $item) {
+                    $row = new \stdClass();
 
-					$row->attributes = '';
-					$temp = $item['attributes'];
-					if (trim($temp) == '') {
-					} else if (count($temp) == 1) {
-						$temp = array($temp);
-					}
-					if (is_array($temp) && count($temp) > 0) {
-						foreach ($temp as $pair) {
-							$split = explode(',', $pair);
-							$row->attributes .= ' ' . $split[0]
-								. '="'
-								. Services::Filter()->escape_text($split[1])
-								. '"';
-						}
-					}
-					$query_results[] = $row;
-				}
-			}
-		}
+                    $row->type = 'links';
+                    $row->url = $item['url'];
+                    $row->relation = Services::Filter()->escape_text(
+                        $item['relation']
+                    );
+                    $row->relation_type = Services::Filter()->escape_text(
+                        $item['relation_type']
+                    );
 
-		/** type: css */
-		if ($defer == 1) {
-		} else {
-			$list = Services::Document()->get_css();
+                    $row->attributes = '';
+                    $temp = $item['attributes'];
+                    if (trim($temp) == '') {
+                    } elseif (count($temp) == 1) {
+                        $temp = array($temp);
+                    }
+                    if (is_array($temp) && count($temp) > 0) {
+                        foreach ($temp as $pair) {
+                            $split = explode(',', $pair);
+                            $row->attributes .= ' ' . $split[0]
+                                . '="'
+                                . Services::Filter()->escape_text($split[1])
+                                . '"';
+                        }
+                    }
+                    $query_results[] = $row;
+                }
+            }
+        }
 
-			if (count($list) > 0) {
-				foreach ($list as $item) {
-					$row = new \stdClass();
+        /** type: css */
+        if ($defer == 1) {
+        } else {
+            $list = Services::Document()->get_css();
 
-					$row->type = 'css';
-					$row->url = $item['url'];
-					$row->mimetype = $item['mimetype'];
-					$row->media = $item['media'];
-					$row->attributes = $item['attributes'];
-					$row->priority = $item['priority'];
+            if (count($list) > 0) {
+                foreach ($list as $item) {
+                    $row = new \stdClass();
 
-					$query_results[] = $row;
-				}
-			}
+                    $row->type = 'css';
+                    $row->url = $item['url'];
+                    $row->mimetype = $item['mimetype'];
+                    $row->media = $item['media'];
+                    $row->attributes = $item['attributes'];
+                    $row->priority = $item['priority'];
 
-			/** type: css_declarations */
-			$list = Services::Document()->get_css_declarations();
+                    $query_results[] = $row;
+                }
+            }
 
-			foreach ($list as $item) {
-				$row = new \stdClass();
+            /** type: css_declarations */
+            $list = Services::Document()->get_css_declarations();
 
-				$row->type = 'css_declarations';
-				$row->mimetype = $item['mimetype'];
-				$row->content = $item['content'];
+            foreach ($list as $item) {
+                $row = new \stdClass();
 
-				$query_results[] = $row;
-			}
-		}
+                $row->type = 'css_declarations';
+                $row->mimetype = $item['mimetype'];
+                $row->content = $item['content'];
 
-		/** type: js */
-		$list = Services::Document()->get_js($defer);
+                $query_results[] = $row;
+            }
+        }
 
-		foreach ($list as $item) {
-			$row = new \stdClass();
+        /** type: js */
+        $list = Services::Document()->get_js($defer);
 
-			$row->type = 'js';
-			$row->url = $item['url'];
-			$row->mimetype = $item['mimetype'];
-			$row->defer = 0;
-			$row->async = $item['async'];
-			$row->priority = $item['priority'];
+        foreach ($list as $item) {
+            $row = new \stdClass();
 
-			$query_results[] = $row;
-		}
+            $row->type = 'js';
+            $row->url = $item['url'];
+            $row->mimetype = $item['mimetype'];
+            $row->defer = 0;
+            $row->async = $item['async'];
+            $row->priority = $item['priority'];
 
-		/** type: js_declarations */
-		$list = Services::Document()->get_js_declarations($defer);
+            $query_results[] = $row;
+        }
 
-		foreach ($list as $item) {
-			$row = new \stdClass();
+        /** type: js_declarations */
+        $list = Services::Document()->get_js_declarations($defer);
 
-			$row->type = 'js_declarations';
-			$row->mimetype = $item['mimetype'];
-			$row->content = $item['content'];
+        foreach ($list as $item) {
+            $row = new \stdClass();
 
-			$query_results[] = $row;
-		}
+            $row->type = 'js_declarations';
+            $row->mimetype = $item['mimetype'];
+            $row->content = $item['content'];
 
-		return $query_results;
-	}
+            $query_results[] = $row;
+        }
+
+        return $query_results;
+    }
 }

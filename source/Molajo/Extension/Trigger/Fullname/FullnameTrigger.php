@@ -7,7 +7,6 @@
 namespace Molajo\Extension\Trigger\Fullname;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
-use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -20,77 +19,78 @@ defined('MOLAJO') or die;
  */
 class FullnameTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new FullnameTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new FullnameTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Adds formatted dates to 'normal' or special fields recordset
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
+        return self::$instance;
+    }
 
-		$name = 'Fullname';
+    /**
+     * After-read processing
+     *
+     * Adds formatted dates to 'normal' or special fields recordset
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
 
-		/** Retrieves the actual field value */
-		$fieldValue1 = $this->getFieldValue('first_name');
-		$fieldValue2 = $this->getFieldValue('last_name');
+        $name = 'Fullname';
 
-		if ($fieldValue1 == false && $fieldValue2 == false) {
+        /** Retrieves the actual field value */
+        $fieldValue1 = $this->getFieldValue('first_name');
+        $fieldValue2 = $this->getFieldValue('last_name');
 
-		} else {
+        if ($fieldValue1 == false && $fieldValue2 == false) {
 
-			/** Concatenate first and last name */
-			$newFieldValue = $fieldValue1 . ' ' . $fieldValue2;
+        } else {
 
-			if ($newFieldValue == false) {
-			} else {
+            /** Concatenate first and last name */
+            $newFieldValue = $fieldValue1 . ' ' . $fieldValue2;
 
-				/** Creates the new 'normal' or special field and populates the value */
-				$this->addField('last_name', 'fullname', $newFieldValue);
-			}
-		}
+            if ($newFieldValue == false) {
+            } else {
 
-		return true;
-	}
+                /** Creates the new 'normal' or special field and populates the value */
+                $this->addField('last_name', 'fullname', $newFieldValue);
+            }
+        }
 
-	/**
-	 * itemDateRoutine
-	 *
-	 * Creates formatted date fields based on a named field
-	 *
-	 * @param $field
-	 * @param $this->query_results
-	 *
-	 * @return array
-	 * @since 1.0
-	 */
-	protected function itemDateRoutine($field)
-	{
-		return false;
-	}
+        return true;
+    }
+
+    /**
+     * itemDateRoutine
+     *
+     * Creates formatted date fields based on a named field
+     *
+     * @param $field
+     * @param $this->query_results
+     *
+     * @return array
+     * @since 1.0
+     */
+    protected function itemDateRoutine($field)
+    {
+        return false;
+    }
 }

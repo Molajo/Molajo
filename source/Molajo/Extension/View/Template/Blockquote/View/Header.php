@@ -9,6 +9,6 @@
  */
 defined('MOLAJO') or die; ?>
 <header>
-	<h2><?php echo $this->row->title; ?></h2>
+    <h2><?php echo $this->row->title; ?></h2>
 </header>
 

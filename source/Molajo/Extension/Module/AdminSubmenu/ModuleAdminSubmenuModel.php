@@ -20,41 +20,41 @@ defined('MOLAJO') or die;
  */
 Class ModuleAdminSubmenuModel extends DisplayModel
 {
-	/**
-	 * __construct
-	 *
-	 * Constructor.
-	 *
-	 * @param  $config
-	 * @since  1.0
-	 */
-	public function __construct($table = null, $id = null, $path = null)
-	{
-		$this->name = get_class($this);
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $config
+     * @since  1.0
+     */
+    public function __construct($table = null, $id = null, $path = null)
+    {
+        $this->name = get_class($this);
 
-		return parent::__construct($table, $id, $path);
-	}
+        return parent::__construct($table, $id, $path);
+    }
 
-	/**
-	 * getData
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getData()
-	{
-		$links =
-			Services::Parameter()
-				->get('submenu_items', 'Request');
+    /**
+     * getData
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getData()
+    {
+        $links =
+            Services::Parameter()
+                ->get('submenu_items', 'Request');
 
-		$linksArray = explode(',', $links);
+        $linksArray = explode(',', $links);
 
-		$this->data = array();
-		foreach ($linksArray as $link) {
-			$this->data[] = $link;
-		}
+        $this->data = array();
+        foreach ($linksArray as $link) {
+            $this->data[] = $link;
+        }
 
-		return $this->data;
-	}
+        return $this->data;
+    }
 }

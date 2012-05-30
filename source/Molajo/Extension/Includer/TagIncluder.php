@@ -6,8 +6,6 @@
  */
 namespace Molajo\Extension\Includer;
 
-use Molajo\Extension\Helpers;
-use Molajo\Service\Services;
 use Molajo\Extension\Includer;
 
 defined('MOLAJO') or die;
@@ -21,36 +19,37 @@ defined('MOLAJO') or die;
  */
 Class TagIncluder extends Includer
 {
-	/**
-	 * process
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	public function process($attributes = array())
-	{
-		return '';
-	}
+    /**
+     * process
+     *
+     * @return mixed
+     * @since   1.0
+     */
+    public function process($attributes = array())
+    {
+        return '';
+    }
 
-	/**
-	 * Renders multiple modules script and returns the results as a string
-	 *
-	 * @param   string  $position  The position of the modules to render
-	 * @param   array   $params    Associative array of values
-	 * @param   string  $content   Module content
-	 *
-	 * @return  string  The output of the script
-	 *
-	 * @since   11.1
-	 */
-	public function render($position, $params = array(), $content = null)
-	{
-		$renderer = $this->_doc->loadIncluder('module');
-		$buffer = '';
+    /**
+     * Renders multiple modules script and returns the results as a string
+     *
+     * @param string $position The position of the modules to render
+     * @param array  $params   Associative array of values
+     * @param string $content  Module content
+     *
+     * @return string The output of the script
+     *
+     * @since   11.1
+     */
+    public function render($position, $params = array(), $content = null)
+    {
+        $renderer = $this->_doc->loadIncluder('module');
+        $buffer = '';
 
-		foreach (JModuleHelper::getModules($position) as $mod) {
-			$buffer .= $renderer->render($mod, $params, $content);
-		}
-		return $buffer;
-	}
+        foreach (JModuleHelper::getModules($position) as $mod) {
+            $buffer .= $renderer->render($mod, $params, $content);
+        }
+
+        return $buffer;
+    }
 }

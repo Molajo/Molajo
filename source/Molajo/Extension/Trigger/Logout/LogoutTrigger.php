@@ -19,48 +19,49 @@ defined('MOLAJO') or die;
  */
 class LogoutTrigger extends Trigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new LogoutTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new LogoutTrigger();
+        }
 
-	/**
-	 * Before Authenticating the Logout Process
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeLogout()
-	{
-		return false;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * After Authenticating the Logout Process
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterLogout()
-	{
-		return false;
-	}
+    /**
+     * Before Authenticating the Logout Process
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeLogout()
+    {
+        return false;
+    }
+
+    /**
+     * After Authenticating the Logout Process
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterLogout()
+    {
+        return false;
+    }
 }

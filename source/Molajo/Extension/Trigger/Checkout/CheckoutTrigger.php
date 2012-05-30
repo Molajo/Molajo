@@ -18,60 +18,61 @@ defined('MOLAJO') or die;
  */
 class CheckoutTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new CheckoutTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new CheckoutTrigger();
+        }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		// verify user has rights to update
-		// and that no one else has it updated
-		// if so, check checkout date and user
-		return false;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
-	{
-		// verify user has rights to delete
-		// and that no one else has it checked out
-		// if so, allow, else cancel
-		return false;
-	}
+    /**
+     * Pre-update processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        // verify user has rights to update
+        // and that no one else has it updated
+        // if so, check checkout date and user
+        return false;
+    }
+
+    /**
+     * Pre-delete processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeDelete()
+    {
+        // verify user has rights to delete
+        // and that no one else has it checked out
+        // if so, allow, else cancel
+        return false;
+    }
 }

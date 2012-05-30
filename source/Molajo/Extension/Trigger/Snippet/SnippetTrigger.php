@@ -20,53 +20,55 @@ defined('MOLAJO') or die;
  */
 class SnippetTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new SnippetTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new SnippetTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Parses the Content Text into a snippet, stripped of HTML tags
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		if (isset($this->query_results->content_text)) {
-		} else {
-			$this->query_results->snippet = '';
-			return false;
-		}
+        return self::$instance;
+    }
 
-		$this->query_results->snippet =
-			substr(strip_tags($this->query_results->content_text), 0,
-				Services::Registry()->get('Parameters', 'criteria_snippet_length', 200)
-			);
+    /**
+     * After-read processing
+     *
+     * Parses the Content Text into a snippet, stripped of HTML tags
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        if (isset($this->query_results->content_text)) {
+        } else {
+            $this->query_results->snippet = '';
 
-		return false;
-	}
+            return false;
+        }
+
+        $this->query_results->snippet =
+            substr(strip_tags($this->query_results->content_text), 0,
+                Services::Registry()->get('Parameters', 'criteria_snippet_length', 200)
+            );
+
+        return false;
+    }
 }

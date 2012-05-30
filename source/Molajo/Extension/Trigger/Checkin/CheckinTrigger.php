@@ -19,42 +19,43 @@ defined('MOLAJO') or die;
  */
 class CheckinTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new CheckinTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new CheckinTrigger();
+        }
 
-	/**
-	 * After-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		// make certain the correct person is in checkout
-		// if so, checkin by zeroing otu that value and the date
-		return false;
-	}
+        return self::$instance;
+    }
+
+    /**
+     * After-update processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterUpdate()
+    {
+        // make certain the correct person is in checkout
+        // if so, checkin by zeroing otu that value and the date
+        return false;
+    }
 }

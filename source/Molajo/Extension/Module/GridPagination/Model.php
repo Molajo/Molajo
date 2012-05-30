@@ -19,33 +19,34 @@ defined('MOLAJO') or die;
  */
 Class ModuleGridPaginationModel extends DisplayModel
 {
-	/**
-	 * __construct
-	 *
-	 * Constructor.
-	 *
-	 * @param  $config
-	 * @since  1.0
-	 */
-	public function __construct($table = null, $id = null, $path = null)
-	{
-		$this->name = get_class($this);
-		$this->table = '';
-		$this->primary_key = '';
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param  $config
+     * @since  1.0
+     */
+    public function __construct($table = null, $id = null, $path = null)
+    {
+        $this->name = get_class($this);
+        $this->table = '';
+        $this->primary_key = '';
 
-		return parent::__construct($table, $id, $path);
-	}
+        return parent::__construct($table, $id, $path);
+    }
 
-	/**
-	 * getData
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getData()
-	{
-		$this->items = array();
-		return $this->items;
-	}
+    /**
+     * getData
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getData()
+    {
+        $this->items = array();
+
+        return $this->items;
+    }
 }

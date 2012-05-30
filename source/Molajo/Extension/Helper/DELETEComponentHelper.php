@@ -19,58 +19,59 @@ defined('MOLAJO') or die;
  */
 Class ComponentHelper
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new ComponentHelper();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new ComponentHelper();
+        }
 
-	/**
-	 * Get Component ID with the Name
-	 *
-	 * @param $name
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function get($name)
-	{
-		$row = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_COMPONENT, $name);
+        return self::$instance;
+    }
 
-		if (count($row) == 0) {
-			return array();
-		}
+    /**
+     * Get Component ID with the Name
+     *
+     * @param $name
+     *
+     * @return array
+     * @since   1.0
+     */
+    public function get($name)
+    {
+        $row = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_COMPONENT, $name);
 
-		return $row;
-	}
+        if (count($row) == 0) {
+            return array();
+        }
 
-	/**
-	 * getPath
-	 *
-	 * Return path for selected Component
-	 *
-	 * @return bool|string
-	 * @since 1.0
-	 */
-	public function getPath($name)
-	{
-		return EXTENSIONS_COMPONENTS . '/' . $name;
-	}
+        return $row;
+    }
+
+    /**
+     * getPath
+     *
+     * Return path for selected Component
+     *
+     * @return bool|string
+     * @since 1.0
+     */
+    public function getPath($name)
+    {
+        return EXTENSIONS_COMPONENTS . '/' . $name;
+    }
 }

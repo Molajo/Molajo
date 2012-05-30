@@ -8,11 +8,11 @@
 
 defined('MOLAJO') or die; ?>
 <div class="column">
-	<include:module name=portlet1 wrap=div wrap_view_class=portlet/>
+    <include:module name=portlet1 wrap=div wrap_view_class=portlet/>
 </div>
 <div class="column">
-	<include:module name=portlet4 wrap=div wrap_view_class=portlet/>
+    <include:module name=portlet4 wrap=div wrap_view_class=portlet/>
 </div>
 <div class="column">
-	<include:module name=portlet7 wrap=div wrap_view_class=portlet/>
+    <include:module name=portlet7 wrap=div wrap_view_class=portlet/>
 </div>
