@@ -19,68 +19,69 @@ defined('MOLAJO') or die;
  */
 class DatesTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new DatesTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new DatesTrigger();
+        }
 
-	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		return false;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return false;
-	}
+    /**
+     * Pre-create processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeCreate()
+    {
+        return false;
+    }
 
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
-	{
-		return false;
-	}
+    /**
+     * Pre-update processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        return false;
+    }
+
+    /**
+     * Pre-delete processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeDelete()
+    {
+        return false;
+    }
 }

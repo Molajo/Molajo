@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die; ?>
 <ul class="cf">
-	<li><a class="alt" href="#">nav item</a></li>
-	<li><a class="alt" href="#">nav item</a></li>
-	<li><a class="alt" href="#">nav item</a></li>
+    <li><a class="alt" href="#">nav item</a></li>
+    <li><a class="alt" href="#">nav item</a></li>
+    <li><a class="alt" href="#">nav item</a></li>
 </ul>

@@ -20,107 +20,108 @@ defined('MOLAJO') or die;
  */
 class DateformatsTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new DateformatsTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new DateformatsTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Adds formatted dates to 'normal' or special fields recordset
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$fields = $this->retrieveFieldsByType('date');
+        return self::$instance;
+    }
 
-		if (is_array($fields) && count($fields) > 0) {
+    /**
+     * After-read processing
+     *
+     * Adds formatted dates to 'normal' or special fields recordset
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $fields = $this->retrieveFieldsByType('date');
 
-			foreach ($fields as $field) {
+        if (is_array($fields) && count($fields) > 0) {
 
-				$name = $field->name;
+            foreach ($fields as $field) {
 
-				/** Retrieves the actual field value from the 'normal' or special field */
-				$fieldValue = $this->getFieldValue($field);
+                $name = $field->name;
 
-				if ($fieldValue == false
-					|| $fieldValue == '0000-00-00 00:00:00') {
-				} else {
+                /** Retrieves the actual field value from the 'normal' or special field */
+                $fieldValue = $this->getFieldValue($field);
 
-					/** formats the date for CCYYMMDD */
-					$newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
+                if ($fieldValue == false
+                    || $fieldValue == '0000-00-00 00:00:00') {
+                } else {
 
-					if ($newFieldValue == false) {
-					} else {
+                    /** formats the date for CCYYMMDD */
+                    $newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$new_name = $name . '_ccyymmdd';
-						$newFieldValue = str_replace('-', '', $newFieldValue);
-						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
-					}
+                    if ($newFieldValue == false) {
+                    } else {
 
-					/** NN days ago */
-					$newFieldValue = Services::Date()->differenceDays(date('Y-m-d'), $fieldValue);
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $new_name = $name . '_ccyymmdd';
+                        $newFieldValue = str_replace('-', '', $newFieldValue);
+                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                    }
 
-					if ($newFieldValue == false) {
-					} else {
+                    /** NN days ago */
+                    $newFieldValue = Services::Date()->differenceDays(date('Y-m-d'), $fieldValue);
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$new_name = $name . '_n_days_ago';
-						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
-					}
+                    if ($newFieldValue == false) {
+                    } else {
 
-					/** Pretty Date */
-					$newFieldValue = Services::Date()->prettydate($fieldValue);
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $new_name = $name . '_n_days_ago';
+                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                    }
 
-					if ($newFieldValue == false) {
-					} else {
+                    /** Pretty Date */
+                    $newFieldValue = Services::Date()->prettydate($fieldValue);
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$new_name = $name . '_pretty_date';
-						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
-					}
-				}
-			}
-		}
+                    if ($newFieldValue == false) {
+                    } else {
 
-		return true;
-	}
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $new_name = $name . '_pretty_date';
+                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                    }
+                }
+            }
+        }
 
-	/**
-	 * itemDateRoutine
-	 *
-	 * Creates formatted date fields based on a named field
-	 *
-	 * @param $field
-	 * @param $this->query_results
-	 *
-	 * @return array
-	 * @since 1.0
-	 */
-	protected function itemDateRoutine($field)
-	{
-		return false;
-	}
+        return true;
+    }
+
+    /**
+     * itemDateRoutine
+     *
+     * Creates formatted date fields based on a named field
+     *
+     * @param $field
+     * @param $this->query_results
+     *
+     * @return array
+     * @since 1.0
+     */
+    protected function itemDateRoutine($field)
+    {
+        return false;
+    }
 }

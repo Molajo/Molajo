@@ -21,70 +21,71 @@ defined('MOLAJO') or die;
  */
 class ReadmoreTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new ReadmoreTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new ReadmoreTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * splits the content_text field into intro and full text on readmore
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
+        return self::$instance;
+    }
 
-		$fields = $this->retrieveFieldsByType('text');
+    /**
+     * After-read processing
+     *
+     * splits the content_text field into intro and full text on readmore
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
 
-		if (is_array($fields) && count($fields) > 0) {
+        $fields = $this->retrieveFieldsByType('text');
 
-			foreach ($fields as $field) {
+        if (is_array($fields) && count($fields) > 0) {
 
-				$name = $field->name;
+            foreach ($fields as $field) {
 
-				/** Retrieves the actual field value from the 'normal' or special field */
-				$fieldValue = $this->getFieldValue($field);
+                $name = $field->name;
 
-				if ($fieldValue == false) {
-				} else {
+                /** Retrieves the actual field value from the 'normal' or special field */
+                $fieldValue = $this->getFieldValue($field);
 
-					$newFields = Services::Text()->splitReadMoreText($fieldValue);
+                if ($fieldValue == false) {
+                } else {
 
-					if ($newFields == false) {
-					} else {
+                    $newFields = Services::Text()->splitReadMoreText($fieldValue);
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$introductory_name = $name . '_' . 'introductory';
-						$fieldValue = $this->addField($field, $introductory_name, $newFields[0]);
+                    if ($newFields == false) {
+                    } else {
 
-						$fulltext_name = $name . '_' . 'fulltext';
-						$fieldValue = $this->addField($field, $fulltext_name, $newFields[1]);
-					}
-				}
-			}
-		}
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $introductory_name = $name . '_' . 'introductory';
+                        $fieldValue = $this->addField($field, $introductory_name, $newFields[0]);
 
-		return true;
-	}
+                        $fulltext_name = $name . '_' . 'fulltext';
+                        $fieldValue = $this->addField($field, $fulltext_name, $newFields[1]);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }

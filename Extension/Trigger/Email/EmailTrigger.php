@@ -20,94 +20,95 @@ defined('MOLAJO') or die;
  */
 class EmailTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new EmailTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new EmailTrigger();
+        }
 
-	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		return false;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * After-read processing
-	 *
-	 * Retrieves Author Information for Item
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$fields = $this->retrieveFieldsByType('email');
+    /**
+     * Pre-create processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeCreate()
+    {
+        return false;
+    }
 
-		if (is_array($fields) && count($fields) > 0) {
+    /**
+     * After-read processing
+     *
+     * Retrieves Author Information for Item
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $fields = $this->retrieveFieldsByType('email');
 
-			foreach ($fields as $field) {
+        if (is_array($fields) && count($fields) > 0) {
 
-				$name = $field->name;
-				$new_name = $name . '_' . 'obfuscated';
+            foreach ($fields as $field) {
 
-				/** Retrieves the actual field value from the 'normal' or special field */
-				$fieldValue = $this->getFieldValue($field);
+                $name = $field->name;
+                $new_name = $name . '_' . 'obfuscated';
 
-				if ($fieldValue == false) {
-				} else {
+                /** Retrieves the actual field value from the 'normal' or special field */
+                $fieldValue = $this->getFieldValue($field);
 
-					$newFieldValue = Services::Url()->obfuscateEmail($fieldValue);
+                if ($fieldValue == false) {
+                } else {
 
-					if ($newFieldValue == false) {
-					} else {
+                    $newFieldValue = Services::Url()->obfuscateEmail($fieldValue);
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$fieldValue = $this->addField($field, $new_name, $newFieldValue);
-					}
-				}
-			}
-		}
+                    if ($newFieldValue == false) {
+                    } else {
 
-		return true;
-	}
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                    }
+                }
+            }
+        }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return false;
-	}
+        return true;
+    }
+
+    /**
+     * Pre-update processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        return false;
+    }
 }

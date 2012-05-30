@@ -19,65 +19,66 @@ defined('MOLAJO') or die;
  */
 class ItemUserPermissionsTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new ItemUserPermissionsTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new ItemUserPermissionsTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Use with Grid to determine permissions for buttons and items
-	 * Validate action-level user permissions on each row - relies upon catalog_id
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		if (isset($this->query_results->catalog_id)) {
-		} else {
-			return false;
-		}
+        return self::$instance;
+    }
 
-		/** Component Buttons */
-		$actions = Services::Registry() - get('ExtensionParameters', 'toolbar_buttons');
+    /**
+     * After-read processing
+     *
+     * Use with Grid to determine permissions for buttons and items
+     * Validate action-level user permissions on each row - relies upon catalog_id
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        if (isset($this->query_results->catalog_id)) {
+        } else {
+            return false;
+        }
 
-		$actionsArray = explode(',', $actions);
+        /** Component Buttons */
+        $actions = Services::Registry() - get('ExtensionParameters', 'toolbar_buttons');
 
-		/** User Permissions */
-		$permissions = Services::Authorisation()
-			->authoriseTaskList($actionsArray, $this->query_results->catalog_id);
+        $actionsArray = explode(',', $actions);
 
-		/** Append onto row */
-		foreach ($actionsArray as $action) {
-			if ($permissions[$action] === true) {
-				$field = $action . 'Permission';
-				$this->query_results->$field = $permissions[$action];
-			}
-		}
+        /** User Permissions */
+        $permissions = Services::Authorisation()
+            ->authoriseTaskList($actionsArray, $this->query_results->catalog_id);
 
-		return true;
-	}
+        /** Append onto row */
+        foreach ($actionsArray as $action) {
+            if ($permissions[$action] === true) {
+                $field = $action . 'Permission';
+                $this->query_results->$field = $permissions[$action];
+            }
+        }
+
+        return true;
+    }
 }

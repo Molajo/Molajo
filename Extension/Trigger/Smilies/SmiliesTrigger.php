@@ -18,47 +18,48 @@ defined('MOLAJO') or die;
  */
 class SmiliesTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new SmiliesTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new SmiliesTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Replaces text with emotion images
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		if (isset($this->query_results->content_text)) {
-		} else {
-			return false;
-		}
+        return self::$instance;
+    }
 
-		$this->query_results->content_text =
-			Services::Text()->smilies($this->query_results->content_text);
+    /**
+     * After-read processing
+     *
+     * Replaces text with emotion images
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        if (isset($this->query_results->content_text)) {
+        } else {
+            return false;
+        }
 
-		return true;
-	}
+        $this->query_results->content_text =
+            Services::Text()->smilies($this->query_results->content_text);
+
+        return true;
+    }
 }

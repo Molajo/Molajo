@@ -20,420 +20,423 @@ defined('MOLAJO') or die;
  */
 Class AuthorisationService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * Registry specific to the AuthorisationService class
-	 *
-	 * @var    Registry
-	 * @since  1.0
-	 */
-	protected $registry;
+    /**
+     * Registry specific to the AuthorisationService class
+     *
+     * @var    Registry
+     * @since  1.0
+     */
+    protected $registry;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new AuthorisationService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new AuthorisationService();
+        }
 
-	/**
-	 * Class constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		$this->initialise();
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * Load ACL-related data for use with Authorisation
-	 *
-	 * @return null
-	 * @since  1.0
-	 */
-	protected function initialise()
-	{
-		$actions = Services::Configuration()->getFile('actions', 'Application');
-		if (count($actions) == 0) {
-			return;
-		}
+    /**
+     * Class constructor.
+     *
+     * @since  1.0
+     */
+    public function __construct()
+    {
+        $this->initialise();
+    }
 
-		foreach ($actions->action as $t) {
-			Services::Registry()->set('action_to_action', (string)$t['name'], (string)$t['action']);
-			Services::Registry()->set('action_to_controller', (string)$t['action'], (string)$t['controller']);
-		}
+    /**
+     * Load ACL-related data for use with Authorisation
+     *
+     * @return null
+     * @since  1.0
+     */
+    protected function initialise()
+    {
+        $actions = Services::Configuration()->getFile('actions', 'Application');
+        if (count($actions) == 0) {
+            return;
+        }
 
-		/** retrieve action key pairs */
-		$items = Services::Registry()->get('Actions');
-		while (list($title, $id) = each($items)) {
-			Services::Registry()->set('action_to_action_id', $title, (int)$id);
-		}
-		Services::Registry()->get('action_to_action_id', '*');
+        foreach ($actions->action as $t) {
+            Services::Registry()->set('action_to_action', (string) $t['name'], (string) $t['action']);
+            Services::Registry()->set('action_to_controller', (string) $t['action'], (string) $t['controller']);
+        }
 
-		return;
-	}
+        /** retrieve action key pairs */
+        $items = Services::Registry()->get('Actions');
+        while (list($title, $id) = each($items)) {
+            Services::Registry()->set('action_to_action_id', $title, (int) $id);
+        }
+        Services::Registry()->get('action_to_action_id', '*');
 
-	/**
-	 * Check if the site is authorised for this application
-	 *
-	 * Usage:
-	 * $results = Services::Authorisation()->authoriseSiteApplication();
-	 *
-	 * @param  mixed $application_id if valid, or false
-	 * @return boolean
-	 */
-	public function authoriseSiteApplication()
-	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-		$m = new $controllerClass();
-		$m->connect('SiteApplications');
+        return;
+    }
 
-		$m->model->query->select($m->model->db->qn('application_id'));
-		$m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int)SITE_ID);
-		$m->model->query->where($m->model->db->qn('application_id') . ' = ' . (int)APPLICATION_ID);
+    /**
+     * Check if the site is authorised for this application
+     *
+     * Usage:
+     * $results = Services::Authorisation()->authoriseSiteApplication();
+     *
+     * @param  mixed   $application_id if valid, or false
+     * @return boolean
+     */
+    public function authoriseSiteApplication()
+    {
+        $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+        $m = new $controllerClass();
+        $m->connect('SiteApplications');
 
-		$application_id = $m->getData('loadResult');
+        $m->model->query->select($m->model->db->qn('application_id'));
+        $m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int) SITE_ID);
+        $m->model->query->where($m->model->db->qn('application_id') . ' = ' . (int) APPLICATION_ID);
 
-		if ($application_id === false) {
-			//todo: finish the response action/test
+        $application_id = $m->getData('loadResult');
 
-			Services::Response()->setHeader('Status', '403 Not Authorised', 'true');
+        if ($application_id === false) {
+            //todo: finish the response action/test
 
-			Services::Message()->set(
-				Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
-				MESSAGE_TYPE_ERROR,
-				403
-			);
-		}
+            Services::Response()->setHeader('Status', '403 Not Authorised', 'true');
 
-		return $application_id;
-	}
+            Services::Message()->set(
+                Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
+                MESSAGE_TYPE_ERROR,
+                403
+            );
+        }
 
-	/**
-	 * Using the Request Task, retrieve the Controller
-	 *
-	 * Example usage:
-	 * $controller = Services::Authorisation()->getTaskController($action);
-	 *
-	 * @param $action
-	 *
-	 * @return string
-	 * @since  1.0
-	 */
-	public function getTaskController($action)
-	{
-		$action = $this->request->get('action_to_action', $action);
-		$controller = $this->request->get('action_to_controller', $action);
+        return $application_id;
+    }
 
-		return $controller;
-	}
+    /**
+     * Using the Request Task, retrieve the Controller
+     *
+     * Example usage:
+     * $controller = Services::Authorisation()->getTaskController($action);
+     *
+     * @param $action
+     *
+     * @return string
+     * @since  1.0
+     */
+    public function getTaskController($action)
+    {
+        $action = $this->request->get('action_to_action', $action);
+        $controller = $this->request->get('action_to_controller', $action);
 
-	/**
-	 * For the list of actions (actions), determine if the user is authorised for the specific catalog id;
-	 * Useful for button bars, links, and other User Interface Presentation Logic
-	 *
-	 * Example usage:
-	 * $permissions = Services::Authorisation()->authoriseTaskList($actionsArray, $item->catalog_id);
-	 *
-	 * @param  array   $actionlist
-	 * @param  string  $catalog_id
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function authoriseTaskList($actionlist = array(), $catalog_id = 0)
-	{
-		if (count($actionlist) == 0) {
-			return false;
-		}
-		if ($catalog_id == 0) {
-			return false;
-		}
+        return $controller;
+    }
 
-		$actionPermissions = array();
+    /**
+     * For the list of actions (actions), determine if the user is authorised for the specific catalog id;
+     * Useful for button bars, links, and other User Interface Presentation Logic
+     *
+     * Example usage:
+     * $permissions = Services::Authorisation()->authoriseTaskList($actionsArray, $item->catalog_id);
+     *
+     * @param array  $actionlist
+     * @param string $catalog_id
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function authoriseTaskList($actionlist = array(), $catalog_id = 0)
+    {
+        if (count($actionlist) == 0) {
+            return false;
+        }
+        if ($catalog_id == 0) {
+            return false;
+        }
 
-		foreach ($actionlist as $action) {
-			$actionPermissions[$action] = $this->authoriseTask($action, $catalog_id);
-		}
+        $actionPermissions = array();
 
-		return $actionPermissions;
-	}
+        foreach ($actionlist as $action) {
+            $actionPermissions[$action] = $this->authoriseTask($action, $catalog_id);
+        }
 
-	/**
-	 * Verify user authorization for the Request Action and Catalog ID
-	 *
-	 * Example usage:
-	 * $permissions = Services::Authorisation()->authoriseAction();
-	 *
-	 * @return   boolean
-	 * @since    1.0
-	 */
-	public function authoriseAction()
-	{
-		/** 403: authoriseTask handles redirecting to error page */
-		if (in_array(Services::Registry()->get('Parameters', 'catalog_view_group_id'),
-			Services::Registry()->get('User', 'ViewGroups'))
-			&& in_array(Services::Registry()->get('Parameters', 'extension_view_group_id'),
-				Services::Registry()->get('User', 'ViewGroups'))
-		) {
+        return $actionPermissions;
+    }
 
-			Services::Registry()->set('Parameters', 'status_authorised', true);
+    /**
+     * Verify user authorization for the Request Action and Catalog ID
+     *
+     * Example usage:
+     * $permissions = Services::Authorisation()->authoriseAction();
+     *
+     * @return boolean
+     * @since    1.0
+     */
+    public function authoriseAction()
+    {
+        /** 403: authoriseTask handles redirecting to error page */
+        if (in_array(Services::Registry()->get('Parameters', 'catalog_view_group_id'),
+            Services::Registry()->get('User', 'ViewGroups'))
+            && in_array(Services::Registry()->get('Parameters', 'extension_view_group_id'),
+                Services::Registry()->get('User', 'ViewGroups'))
+        ) {
 
-		} else {
-			return Services::Registry()->set('Parameters', 'status_authorised', false);
-		}
+            Services::Registry()->set('Parameters', 'status_authorised', true);
 
-		/** display view verified in getCatalog */
-		if (Services::Registry()->get('Parameters', 'request_action', 'display') == 'display'
-			&& Services::Registry()->get('Parameters', 'status_authorised') == true
-		) {
-			return true;
-		}
+        } else {
+            return Services::Registry()->set('Parameters', 'status_authorised', false);
+        }
 
-		/** verify other actions */
-		$authorised = $this->authoriseTask(
-			Services::Registry()->get('Parameters', 'request_action'),
-			Services::Registry()->get('Parameters', 'request_catalog_id')
-		);
+        /** display view verified in getCatalog */
+        if (Services::Registry()->get('Parameters', 'request_action', 'display') == 'display'
+            && Services::Registry()->get('Parameters', 'status_authorised') == true
+        ) {
+            return true;
+        }
 
-		Services::Registry()->set('Parameters', 'status_authorised', $authorised);
+        /** verify other actions */
+        $authorised = $this->authoriseTask(
+            Services::Registry()->get('Parameters', 'request_action'),
+            Services::Registry()->get('Parameters', 'request_catalog_id')
+        );
 
-		if (Services::Registry()->get('Parameters', 'status_authorised') === true) {
-			return true;
+        Services::Registry()->set('Parameters', 'status_authorised', $authorised);
 
-		} else {
-			Services::Error()->set(403);
-			return false;
-		}
-	}
+        if (Services::Registry()->get('Parameters', 'status_authorised') === true) {
+            return true;
 
-	/**
-	 * Verifies permission for a user to perform a specific action on a specific catalog number
-	 * Could be used to determine if an "Edit Article" link is warranted.
-	 *
-	 * Example usage:
-	 * Services::Authorisation()->authoriseTask($action, $catalog_id);
-	 *
-	 * @param  string  $action
-	 * @param  string  $catalog_id
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function authoriseTask($action, $catalog_id)
-	{
+        } else {
+            Services::Error()->set(403);
 
-		if ($action == 'login') {
-			return $this->authoriseLogin('login', $catalog_id);
-		}
+            return false;
+        }
+    }
 
-		/** Retrieve ACL Action for this Task */
-		$action = Services::Registry()->get('action_to_action', $action);
-		$action_id = Services::Registry()->get('action_to_action_id', $action);
+    /**
+     * Verifies permission for a user to perform a specific action on a specific catalog number
+     * Could be used to determine if an "Edit Article" link is warranted.
+     *
+     * Example usage:
+     * Services::Authorisation()->authoriseTask($action, $catalog_id);
+     *
+     * @param string $action
+     * @param string $catalog_id
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function authoriseTask($action, $catalog_id)
+    {
 
-		if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-			Services::Debug()->set(
-				'AuthorisationServices::authoriseTask '
-					. ' Task: ' . $action
-					. ' Action: ' . $action
-					. ' Action ID: ' . $action_id
-			);
-		}
+        if ($action == 'login') {
+            return $this->authoriseLogin('login', $catalog_id);
+        }
 
-		//todo: amy fill database with real sample action permissions
+        /** Retrieve ACL Action for this Task */
+        $action = Services::Registry()->get('action_to_action', $action);
+        $action_id = Services::Registry()->get('action_to_action_id', $action);
 
-		/** check for permission */
-		$action_id = 3;
+        if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
+            Services::Debug()->set(
+                'AuthorisationServices::authoriseTask '
+                    . ' Task: ' . $action
+                    . ' Action: ' . $action
+                    . ' Action ID: ' . $action_id
+            );
+        }
 
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-		$m = new $controllerClass();
-		$m->connect('GroupPermissions');
+        //todo: amy fill database with real sample action permissions
 
-		$m->model->query->where($m->model->db->qn('catalog_id') . ' = ' . (int)$catalog_id);
-		$m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int)$action_id);
-		$m->model->query->where($m->model->db->qn('group_id')
-				. ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
-		);
+        /** check for permission */
+        $action_id = 3;
 
-		$count = $m->model->getData('loadResult');
+        $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+        $m = new $controllerClass();
+        $m->connect('GroupPermissions');
 
-		if ($count > 0) {
-			return true;
+        $m->model->query->where($m->model->db->qn('catalog_id') . ' = ' . (int) $catalog_id);
+        $m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int) $action_id);
+        $m->model->query->where($m->model->db->qn('group_id')
+                . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
+        );
 
-		} else {
-			Services::Debug()->set(
-				'AuthorisationServices::authoriseTask No Query Results  '
-					. ' Task: ' . $action
-					. ' Action: ' . $action
-					. ' Action ID: ' . $action_id
-			);
-			return false;
-		}
-	}
+        $count = $m->model->getData('loadResult');
 
-	/**
-	 * authoriseLogin
-	 *
-	 * Verifies permission for a user to logon to a specific application
-	 *
-	 * Example usage:
-	 * Services::Authorisation()->authoriseLogin('login', $catalog_id);
-	 *
-	 * @param $key
-	 * @param $action
-	 *
-	 * @param null $catalog
-	 * @return bool
-	 */
-	public function authoriseLogin($user_id)
-	{
-		if ((int)$user_id == 0) {
-			return false;
-		}
+        if ($count > 0) {
+            return true;
 
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-		$m = new $controllerClass();
-		$m->connect('UserApplications');
+        } else {
+            Services::Debug()->set(
+                'AuthorisationServices::authoriseTask No Query Results  '
+                    . ' Task: ' . $action
+                    . ' Action: ' . $action
+                    . ' Action ID: ' . $action_id
+            );
 
-		$m->model->query->where('application_id = ' . (int)APPLICATION_ID);
-		$m->model->query->where('user_id = ' . (int)$user_id);
+            return false;
+        }
+    }
 
-		$count = $m->model->getData('loadResult');
+    /**
+     * authoriseLogin
+     *
+     * Verifies permission for a user to logon to a specific application
+     *
+     * Example usage:
+     * Services::Authorisation()->authoriseLogin('login', $catalog_id);
+     *
+     * @param $key
+     * @param $action
+     *
+     * @param  null $catalog
+     * @return bool
+     */
+    public function authoriseLogin($user_id)
+    {
+        if ((int) $user_id == 0) {
+            return false;
+        }
 
-		if ($count > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+        $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+        $m = new $controllerClass();
+        $m->connect('UserApplications');
 
-	/**
-	 *
-	 * Used by queries to append criteria needed to implement view access
-	 *
-	 * Example usage:
-	 *  Services::Authorisation()->setQueryViewAccess(
-	 *     $this->query,
-	 *     $this->db,
-	 *     array('join_to_prefix' => $this->primary_prefix,
-	 *         'join_to_primary_key' => Services::Registry()->get($this->table_registry_name, 'primary_key'),
-	 *         'catalog_prefix' => $this->primary_prefix . '_catalog',
-	 *         'select' => true
-	 *     )
-	 * );
-	 *
-	 * @param  array       $query
-	 * $param  array       $db
-	 * @param  Registry  $parameters
-	 *
-	 * @return     boolean
-	 * @since      1.0
-	 */
-	public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
-	{
-		if ($parameters['select'] === true) {
-			$query->select(
-				$db->qn($parameters['catalog_prefix']) .
-					'.' .
-					$db->qn('view_group_id')
-			);
+        $m->model->query->where('application_id = ' . (int) APPLICATION_ID);
+        $m->model->query->where('user_id = ' . (int) $user_id);
 
-			$query->select(
-				$db->qn($parameters['catalog_prefix']) .
-					'.' .
-					$db->qn('id') .
-					' as ' .
-					$db->qn('catalog_id')
-			);
-		}
+        $count = $m->model->getData('loadResult');
 
-		$query->from(
-			$db->qn('#__catalog') .
-				' as ' .
-				$db->qn($parameters['catalog_prefix'])
-		);
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		$query->where(
-			$db->qn($parameters['catalog_prefix']) .
-				'.' .
-				$db->qn('source_id') .
-				' = ' .
-				$db->qn($parameters['join_to_prefix']) .
-				'.' .
-				$db->qn($parameters['join_to_primary_key'])
-		);
+    /**
+     *
+     * Used by queries to append criteria needed to implement view access
+     *
+     * Example usage:
+     *  Services::Authorisation()->setQueryViewAccess(
+     *     $this->query,
+     *     $this->db,
+     *     array('join_to_prefix' => $this->primary_prefix,
+     *         'join_to_primary_key' => Services::Registry()->get($this->table_registry_name, 'primary_key'),
+     *         'catalog_prefix' => $this->primary_prefix . '_catalog',
+     *         'select' => true
+     *     )
+     * );
+     *
+     * @param array $query
+     * $param  array       $db
+     * @param Registry $parameters
+     *
+     * @return boolean
+     * @since      1.0
+     */
+    public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
+    {
+        if ($parameters['select'] === true) {
+            $query->select(
+                $db->qn($parameters['catalog_prefix']) .
+                    '.' .
+                    $db->qn('view_group_id')
+            );
 
-		$query->where(
-			$db->qn($parameters['catalog_prefix']) .
-				'.' . $db->qn('catalog_type_id') .
-				' = ' .
-				$db->qn($parameters['join_to_prefix']) .
-				'.' .
-				$db->qn('catalog_type_id')
-		);
+            $query->select(
+                $db->qn($parameters['catalog_prefix']) .
+                    '.' .
+                    $db->qn('id') .
+                    ' as ' .
+                    $db->qn('catalog_id')
+            );
+        }
 
-		$vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
+        $query->from(
+            $db->qn('#__catalog') .
+                ' as ' .
+                $db->qn($parameters['catalog_prefix'])
+        );
 
-		$query->where(
-			$db->qn($parameters['catalog_prefix']) .
-				'.' .
-				$db->qn('view_group_id') . ' IN (' . $vg . ')'
-		);
+        $query->where(
+            $db->qn($parameters['catalog_prefix']) .
+                '.' .
+                $db->qn('source_id') .
+                ' = ' .
+                $db->qn($parameters['join_to_prefix']) .
+                '.' .
+                $db->qn($parameters['join_to_primary_key'])
+        );
 
-		$query->where(
-			$db->qn($parameters['catalog_prefix']) .
-				'.' .
-				$db->qn('redirect_to_id') .
-				' = 0');
+        $query->where(
+            $db->qn($parameters['catalog_prefix']) .
+                '.' . $db->qn('catalog_type_id') .
+                ' = ' .
+                $db->qn($parameters['join_to_prefix']) .
+                '.' .
+                $db->qn('catalog_type_id')
+        );
 
-		return $query;
-	}
+        $vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
 
-	/**
-	 * setHTMLFilter
-	 *
-	 * Returns false if there is one group that the user belongs to
-	 *  authorized to save content without an HTML filter, otherwise
-	 *  it returns true
-	 *
-	 * Example usage:
-	 * $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
-	 *
-	 * @return bool
-	 * @since  1.0
-	 */
-	public function setHTMLFilter()
-	{
-		$groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
+        $query->where(
+            $db->qn($parameters['catalog_prefix']) .
+                '.' .
+                $db->qn('view_group_id') . ' IN (' . $vg . ')'
+        );
 
-		$groupArray = explode(',', $groups);
+        $query->where(
+            $db->qn($parameters['catalog_prefix']) .
+                '.' .
+                $db->qn('redirect_to_id') .
+                ' = 0');
 
-		$userGroups = Services::Registry()->get('User', 'groups');
+        return $query;
+    }
 
-		foreach ($groupArray as $single) {
+    /**
+     * setHTMLFilter
+     *
+     * Returns false if there is one group that the user belongs to
+     *  authorized to save content without an HTML filter, otherwise
+     *  it returns true
+     *
+     * Example usage:
+     * $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
+     *
+     * @return bool
+     * @since  1.0
+     */
+    public function setHTMLFilter()
+    {
+        $groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
 
-			if (in_array($single, $userGroups)) {
-				return false;
-				break;
-			}
-		}
+        $groupArray = explode(',', $groups);
 
-		return true;
-	}
+        $userGroups = Services::Registry()->get('User', 'groups');
+
+        foreach ($groupArray as $single) {
+
+            if (in_array($single, $userGroups)) {
+                return false;
+                break;
+            }
+        }
+
+        return true;
+    }
 }

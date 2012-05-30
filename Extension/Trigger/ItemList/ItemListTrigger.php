@@ -6,7 +6,6 @@
  */
 namespace Molajo\Extension\Trigger\ItemList;
 
-use Molajo\Application;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
 defined('MOLAJO') or die;
@@ -20,120 +19,121 @@ defined('MOLAJO') or die;
  */
 class ItemListTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new ItemListTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new ItemListTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Retrieves Author Information for Item
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$lists = Services::Registry()->get('ExtensionParameters', 'Lists');
+        return self::$instance;
+    }
 
-		if ($lists === null || count($lists) == 0) {
-			return;
-		}
+    /**
+     * After-read processing
+     *
+     * Retrieves Author Information for Item
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $lists = Services::Registry()->get('ExtensionParameters', 'Lists');
 
-		foreach ($lists as $item) {
+        if ($lists === null || count($lists) == 0) {
+            return;
+        }
 
-			$list = Services::Configuration()->getFile($item, 'Table');
+        foreach ($lists as $item) {
 
-			$name = (string)$list->name;
-			$table = (string)$list->table;
-			$key = (string)$list->key;
-			$value = (string)$list->value;
-			$published = (string)$list->published;
-			$catalog_type_id = (string)$list->catalog_type_id;
-			$view_access = (string)$list->view_access;
-			$registry = (string)$list->registry;
-			$created_by = (string)$list->created_by;
+            $list = Services::Configuration()->getFile($item, 'Table');
 
-			$trigger = (string)$list->trigger;
+            $name = (string) $list->name;
+            $table = (string) $list->table;
+            $key = (string) $list->key;
+            $value = (string) $list->value;
+            $published = (string) $list->published;
+            $catalog_type_id = (string) $list->catalog_type_id;
+            $view_access = (string) $list->view_access;
+            $registry = (string) $list->registry;
+            $created_by = (string) $list->created_by;
 
-			if (trim($trigger) == '') {
+            $trigger = (string) $list->trigger;
 
-				$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-				$m = new $controllerClass();
-				$m->connect($table);
+            if (trim($trigger) == '') {
 
-				$m->model->set('id', $this->query_results->created_by);
+                $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+                $m = new $controllerClass();
+                $m->connect($table);
 
-				$m->model->set('get_customfields', 0);
-				$m->model->set('use_special_joins', false);
-				$m->model->set('check_view_level_access', false);
-				$m->model->set('get_item_children', false);
+                $m->model->set('id', $this->query_results->created_by);
 
-				$m->model->query->select($m->model->db->qn('a.' . $key));
-				$m->model->query->select($m->model->db->qn('a.' . $value));
-				$m->model->query->order($m->model->db->qn('a.' . $value));
+                $m->model->set('get_customfields', 0);
+                $m->model->set('use_special_joins', false);
+                $m->model->set('check_view_level_access', false);
+                $m->model->set('get_item_children', false);
 
-				if ((int)$catalog_type_id > 0) {
-					$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' > ' . $catalog_type_id);
-				}
+                $m->model->query->select($m->model->db->qn('a.' . $key));
+                $m->model->query->select($m->model->db->qn('a.' . $value));
+                $m->model->query->order($m->model->db->qn('a.' . $value));
 
-				if ((int)$published == 1) {
-					$m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
+                if ((int) $catalog_type_id > 0) {
+                    $m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' > ' . $catalog_type_id);
+                }
 
-					$m->model->query->where('(a.start_publishing_datetime = ' .
-							$m->model->db->q($m->model->nullDate) .
-							' OR a.start_publishing_datetime <= ' . $m->model->db->q($m->model->now) . ')'
-					);
-					$m->model->query->where('(a.stop_publishing_datetime = ' .
-							$m->model->db->q($m->model->nullDate) .
-							' OR a.stop_publishing_datetime >= ' . $m->model->db->q($m->model->now) . ')'
-					);
-				}
+                if ((int) $published == 1) {
+                    $m->model->query->where($m->model->db->qn('a.status') . ' > ' . STATUS_UNPUBLISHED);
 
-				if ((int)$view_access == 1) {
-					Services::Authorisation()
-						->setQueryViewAccess(
-						$m->model->query,
-						$m->model->db,
-						array('join_to_prefix' => 'a',
-							'join_to_primary_key' => 'id',
-							'catalog_prefix' => 'b_catalog',
-							'select' => true
-						)
-					);
-				}
-				$results = $m->getData('loadRowList');
+                    $m->model->query->where('(a.start_publishing_datetime = ' .
+                            $m->model->db->q($m->model->nullDate) .
+                            ' OR a.start_publishing_datetime <= ' . $m->model->db->q($m->model->now) . ')'
+                    );
+                    $m->model->query->where('(a.stop_publishing_datetime = ' .
+                            $m->model->db->q($m->model->nullDate) .
+                            ' OR a.stop_publishing_datetime >= ' . $m->model->db->q($m->model->now) . ')'
+                    );
+                }
 
-			} else {
-				$results = Services::Trigger()->get($trigger);
-			}
+                if ((int) $view_access == 1) {
+                    Services::Authorisation()
+                        ->setQueryViewAccess(
+                        $m->model->query,
+                        $m->model->db,
+                        array('join_to_prefix' => 'a',
+                            'join_to_primary_key' => 'id',
+                            'catalog_prefix' => 'b_catalog',
+                            'select' => true
+                        )
+                    );
+                }
+                $results = $m->getData('loadRowList');
 
-			Services::Registry()->set('Lists', $registry, $results);
+            } else {
+                $results = Services::Trigger()->get($trigger);
+            }
 
-		}
+            Services::Registry()->set('Lists', $registry, $results);
 
-		return;
-	}
+        }
+
+        return;
+    }
 }

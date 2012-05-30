@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 <footer>
-	<?php echo $this->row->start_publishing_datetime; ?>
+    <?php echo $this->row->start_publishing_datetime; ?>
 </footer>

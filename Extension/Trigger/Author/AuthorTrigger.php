@@ -6,7 +6,6 @@
  */
 namespace Molajo\Extension\Trigger\Author;
 
-use Molajo\Application;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 use Molajo\Service\Services;
 
@@ -21,109 +20,110 @@ defined('MOLAJO') or die;
  */
 class AuthorTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new AuthorTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new AuthorTrigger();
+        }
 
-	/**
-	 * After-read processing
-	 *
-	 * Retrieves Author Information for Item
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		if (isset($this->query_results->created_by)
-			&& (int)$this->query_results->created_by > 0
-		) {
-		} else {
-			return false;
-		}
+        return self::$instance;
+    }
 
-		/** Get Author Profile Data */
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-		$m = new $controllerClass();
-		$m->connect('Users');
+    /**
+     * After-read processing
+     *
+     * Retrieves Author Information for Item
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        if (isset($this->query_results->created_by)
+            && (int) $this->query_results->created_by > 0
+        ) {
+        } else {
+            return false;
+        }
 
-		$m->model->set('id', $this->query_results->created_by);
-		$m->model->set('get_customfields', 2);
-		$m->model->set('get_item_children', 0);
-		$m->model->set('check_view_level_access', 1);
-		$m->model->set('check_published', 0);
+        /** Get Author Profile Data */
+        $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+        $m = new $controllerClass();
+        $m->connect('Users');
 
-		$results = $m->getData('item');
+        $m->model->set('id', $this->query_results->created_by);
+        $m->model->set('get_customfields', 2);
+        $m->model->set('get_item_children', 0);
+        $m->model->set('check_view_level_access', 1);
+        $m->model->set('check_published', 0);
 
-		if ($results == false) {
-			return false;
-		}
+        $results = $m->getData('item');
 
-		/** Add new fields to query_results */
-		$first_name = '';
-		$last_name = '';
+        if ($results == false) {
+            return false;
+        }
 
-		while (list($name, $value) = each($results)) {
+        /** Add new fields to query_results */
+        $first_name = '';
+        $last_name = '';
 
-			if ($name == 'first_name') {
-				$first_name = $value;
-			}
-			if ($name == 'last_name') {
-				$last_name = $value;
-			}
+        while (list($name, $value) = each($results)) {
 
-			if (substr($name, 0, strlen('item_')) == 'item_'
-				|| substr($name, 0, strlen('form_')) == 'form_'
-				|| substr($name, 0, strlen('list_')) == 'list_'
-				|| substr($name, 0, strlen('password')) == 'password') {
-			} else {
-				$field = 'author_' . strtolower($name);
-				$this->query_results->$field = $value;
-			}
-		}
+            if ($name == 'first_name') {
+                $first_name = $value;
+            }
+            if ($name == 'last_name') {
+                $last_name = $value;
+            }
 
-		$this->query_results->author_full_name = $first_name . ' ' . $last_name;
+            if (substr($name, 0, strlen('item_')) == 'item_'
+                || substr($name, 0, strlen('form_')) == 'form_'
+                || substr($name, 0, strlen('list_')) == 'list_'
+                || substr($name, 0, strlen('password')) == 'password') {
+            } else {
+                $field = 'author_' . strtolower($name);
+                $this->query_results->$field = $value;
+            }
+        }
 
-		if (isset($this->query_results->author_email)
-			&& $this->query_results->author_email !== ''
-		) {
+        $this->query_results->author_full_name = $first_name . ' ' . $last_name;
 
-			if (Services::Registry()->get('Parameters', 'criteria_use_gravatar', 0) == 1) {
+        if (isset($this->query_results->author_email)
+            && $this->query_results->author_email !== ''
+        ) {
 
-				$size = Services::Registry()->get('Parameters', 'criteria_gravatar_size', 80);
-				$type = Services::Registry()->get('Parameters', 'criteria_gravatar_type', 'mm');
-				$rating = Services::Registry()->get('Parameters', 'criteria_gravatar_rating', 'pg');
-				$image = Services::Registry()->get('Parameters', 'criteria_gravatar_image', 0);
+            if (Services::Registry()->get('Parameters', 'criteria_use_gravatar', 0) == 1) {
 
-				$this->query_results->author_gravatar = Services::Url()->getGravatar(
-					$this->query_results->author_email,
-					$size,
-					$type,
-					$rating,
-					$image
-				);
-			}
-		}
+                $size = Services::Registry()->get('Parameters', 'criteria_gravatar_size', 80);
+                $type = Services::Registry()->get('Parameters', 'criteria_gravatar_type', 'mm');
+                $rating = Services::Registry()->get('Parameters', 'criteria_gravatar_rating', 'pg');
+                $image = Services::Registry()->get('Parameters', 'criteria_gravatar_image', 0);
 
-		return true;
-	}
+                $this->query_results->author_gravatar = Services::Url()->getGravatar(
+                    $this->query_results->author_email,
+                    $size,
+                    $type,
+                    $rating,
+                    $image
+                );
+            }
+        }
+
+        return true;
+    }
 }

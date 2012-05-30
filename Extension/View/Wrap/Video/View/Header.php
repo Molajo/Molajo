@@ -7,4 +7,4 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="video-wrapper">
-	<div class="video-container">
+    <div class="video-container">

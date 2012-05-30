@@ -19,115 +19,116 @@ defined('MOLAJO') or die;
  */
 class UseractivityTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new UseractivityTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new UseractivityTrigger();
+        }
 
-	/**
-	 * onAfterRead
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_read', 0) == 1) {
-			return $this->setUserActivityLog();
-		}
+        return self::$instance;
+    }
 
-		return;
-	}
+    /**
+     * onAfterRead
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_read', 0) == 1) {
+            return $this->setUserActivityLog();
+        }
 
-	/**
-	 * onAfterCreate
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_create', 0) == 1) {
-			return $this->setUserActivityLog();
-		}
+        return;
+    }
 
-		return;
-	}
+    /**
+     * onAfterCreate
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterCreate()
+    {
+        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_create', 0) == 1) {
+            return $this->setUserActivityLog();
+        }
 
-	/**
-	 * onAfterUpdate
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_update', 0) == 1) {
-			return $this->setUserActivityLog();
-		}
+        return;
+    }
 
-		return;
-	}
+    /**
+     * onAfterUpdate
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterUpdate()
+    {
+        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_update', 0) == 1) {
+            return $this->setUserActivityLog();
+        }
 
-	/**
-	 * onAfterDelete
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterDelete()
-	{
-		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_delete', 0) == 1) {
-			return $this->setUserActivityLog();
-		}
-	}
+        return;
+    }
 
-	/**
-	 * onAfterRead
-	 *
-	 * User Activity
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function setUserActivityLog()
-	{
-		/** Retrieve Key for Action  */
-		$action_id = Services::Registry()->get(
-			'Actions',
-			Services::Registry()->get('Parameters', 'action', 'display')
-		);
+    /**
+     * onAfterDelete
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterDelete()
+    {
+        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_delete', 0) == 1) {
+            return $this->setUserActivityLog();
+        }
+    }
 
-		/** Retrieve User Data  */
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-		$m = new $controllerClass();
-		$m->connect('UserActivity');
+    /**
+     * onAfterRead
+     *
+     * User Activity
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function setUserActivityLog()
+    {
+        /** Retrieve Key for Action  */
+        $action_id = Services::Registry()->get(
+            'Actions',
+            Services::Registry()->get('Parameters', 'action', 'display')
+        );
 
-		$m->set('user_id', Services::Registry()->set('User', 'id'));
-		$m->set('action_id', $action_id);
-		$m->set('catalog_id', $this->query_results->catalog_id);
-		$m->set('activity_datetime', null);
+        /** Retrieve User Data  */
+        $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+        $m = new $controllerClass();
+        $m->connect('UserActivity');
 
-		$results = $m->getData('create');
+        $m->set('user_id', Services::Registry()->set('User', 'id'));
+        $m->set('action_id', $action_id);
+        $m->set('catalog_id', $this->query_results->catalog_id);
+        $m->set('activity_datetime', null);
 
-		return true;
-	}
+        $results = $m->getData('create');
+
+        return true;
+    }
 }

@@ -54,95 +54,95 @@ defined('MOLAJO') or die;
  */
 class FilesystemService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new FilesystemService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new FilesystemService();
+        }
 
-	/**
-	 * Magic method __call intercepts calls and act as a proxy to
-	 * Joomla JFile, JFolder, and JPath Classes
-	 *
-	 * @param $name
-	 * @param $arguments
-	 *
-	 * @return mixed
-	 * @since 1.0
-	 */
-	public function __call($name, $arguments)
-	{
-		return $this->processCall($name, $arguments);
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * Magic method __callStatic intercepts calls and act as a proxy to
-	 * Joomla JFile, JFolder, and JPath Classes
-	 *
-	 * @static
-	 * @param $name
-	 * @param $arguments
-	 *
-	 * @return mixed
-	 * @since 1.0
-	 */
-	public static function __callStatic($name, $arguments)
-	{
-		return Services::Filesystem()->processCall($name, $arguments);
-	}
+    /**
+     * Magic method __call intercepts calls and act as a proxy to
+     * Joomla JFile, JFolder, and JPath Classes
+     *
+     * @param $name
+     * @param $arguments
+     *
+     * @return mixed
+     * @since 1.0
+     */
+    public function __call($name, $arguments)
+    {
+        return $this->processCall($name, $arguments);
+    }
 
-	/**
-	 * proxy to JFile, JFolder, and JPath Classes
-	 *
-	 * @param $name
-	 * @param $arguments
-	 * @return bool|mixed
-	 */
-	public function processCall($name, $arguments)
-	{
-		if (strtolower(substr($name, 0, 4)) == 'file') {
-			$class = 'Joomla\\filesystem\\JFile';
-			$method = substr($name, 4, strlen($name) - 4);
+    /**
+     * Magic method __callStatic intercepts calls and act as a proxy to
+     * Joomla JFile, JFolder, and JPath Classes
+     *
+     * @static
+     * @param $name
+     * @param $arguments
+     *
+     * @return mixed
+     * @since 1.0
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        return Services::Filesystem()->processCall($name, $arguments);
+    }
 
-		}
-		elseif (strtolower(substr($name, 0, 6)) == 'folder') {
-			$class = 'Joomla\\filesystem\\JFolder';
-			$method = substr($name, 6, strlen($name) - 6);
+    /**
+     * proxy to JFile, JFolder, and JPath Classes
+     *
+     * @param $name
+     * @param $arguments
+     * @return bool|mixed
+     */
+    public function processCall($name, $arguments)
+    {
+        if (strtolower(substr($name, 0, 4)) == 'file') {
+            $class = 'Joomla\\filesystem\\JFile';
+            $method = substr($name, 4, strlen($name) - 4);
 
-		}
-		elseif (strtolower(substr($name, 0, 4)) == 'path') {
-			$class = 'Joomla\\filesystem\\JPath';
-			$method = substr($name, 4, strlen($name) - 4);
+        } elseif (strtolower(substr($name, 0, 6)) == 'folder') {
+            $class = 'Joomla\\filesystem\\JFolder';
+            $method = substr($name, 6, strlen($name) - 6);
 
-		} else {
-			Services::Debug()->set('Invalid Filesystem Class: ' . $name);
-			return false;
-		}
+        } elseif (strtolower(substr($name, 0, 4)) == 'path') {
+            $class = 'Joomla\\filesystem\\JPath';
+            $method = substr($name, 4, strlen($name) - 4);
 
-		$method = strtolower($method);
-		if (method_exists($class, $method)) {
-			return call_user_func_array(array($class, $method), $arguments);
-		}
+        } else {
+            Services::Debug()->set('Invalid Filesystem Class: ' . $name);
 
-		Services::Debug()->set('Invalid Filesystem Method: ' . $name);
+            return false;
+        }
 
-		return false;
-	}
+        $method = strtolower($method);
+        if (method_exists($class, $method)) {
+            return call_user_func_array(array($class, $method), $arguments);
+        }
+
+        Services::Debug()->set('Invalid Filesystem Method: ' . $name);
+
+        return false;
+    }
 }

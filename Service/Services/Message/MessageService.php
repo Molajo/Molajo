@@ -19,141 +19,142 @@ defined('MOLAJO') or die;
  */
 Class MessageService
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * Messages
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $messages = array();
+    /**
+     * Messages
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $messages = array();
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new MessageService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new MessageService();
+        }
 
-	/**
-	 * Set the system message.
-	 *
-	 * @param  string  $message
-	 * @param  string  $type      message, notice, warning, and error
-	 * @param  integer $code
-	 *
-	 * @return  bool
-	 * @since   1.0
-	 */
-	public function set($message = null, $type = 'message', $code = null)
-	{
-		if ($message == null && $code == null) {
-			return false;
-		}
+        return self::$instance;
+    }
 
-		$type = strtolower($type);
+    /**
+     * Set the system message.
+     *
+     * @param string  $message
+     * @param string  $type    message, notice, warning, and error
+     * @param integer $code
+     *
+     * @return bool
+     * @since   1.0
+     */
+    public function set($message = null, $type = 'message', $code = null)
+    {
+        if ($message == null && $code == null) {
+            return false;
+        }
 
-		if ($type == MESSAGE_TYPE_NOTICE
-			|| $type == MESSAGE_TYPE_WARNING
-			|| $type == MESSAGE_TYPE_ERROR
-		) {
-		} else {
-			$type = MESSAGE_TYPE_MESSAGE;
-		}
+        $type = strtolower($type);
 
-		$count = count($this->messages);
+        if ($type == MESSAGE_TYPE_NOTICE
+            || $type == MESSAGE_TYPE_WARNING
+            || $type == MESSAGE_TYPE_ERROR
+        ) {
+        } else {
+            $type = MESSAGE_TYPE_MESSAGE;
+        }
 
-		$this->messages[$count]['message'] = $message;
-		$this->messages[$count]['type'] = $type;
-		$this->messages[$count]['code'] = $code;
+        $count = count($this->messages);
 
-		return true;
-	}
+        $this->messages[$count]['message'] = $message;
+        $this->messages[$count]['type'] = $type;
+        $this->messages[$count]['code'] = $code;
 
-	/**
-	 * get application messages
-	 *
-	 * @return  array  Application messages
-	 *
-	 * @since   1.0
-	 */
-	public function get($option = null)
-	{
-		if ($option == 'db') {
-			return $this;
+        return true;
+    }
 
-		} else if ($option == 'count') {
-			return count($this->messages);
+    /**
+     * get application messages
+     *
+     * @return array Application messages
+     *
+     * @since   1.0
+     */
+    public function get($option = null)
+    {
+        if ($option == 'db') {
+            return $this;
 
-		} else {
-			return $this->messages;
-		}
+        } elseif ($option == 'count') {
+            return count($this->messages);
 
-	}
+        } else {
+            return $this->messages;
+        }
 
-	/**
-	 *     Dummy functions to pass service off as a DBO to interact with model
-	 */
-	public function getNullDate()
-	{
-		return $this;
-	}
+    }
 
-	public function getQuery()
-	{
-		return $this;
-	}
+    /**
+     *     Dummy functions to pass service off as a DBO to interact with model
+     */
+    public function getNullDate()
+    {
+        return $this;
+    }
 
-	public function toSql()
-	{
-		return $this;
-	}
+    public function getQuery()
+    {
+        return $this;
+    }
 
-	public function clear()
-	{
-		return $this;
-	}
+    public function toSql()
+    {
+        return $this;
+    }
 
-	/**
-	 * getData
-	 *
-	 * @return    array
-	 *
-	 * @since    1.0
-	 */
-	public function getMessages()
-	{
-		$query_results = array();
+    public function clear()
+    {
+        return $this;
+    }
 
-		$messages = $this->get();
-		if (count($messages) == 0) {
-			return array();
-		}
+    /**
+     * getData
+     *
+     * @return array
+     *
+     * @since    1.0
+     */
+    public function getMessages()
+    {
+        $query_results = array();
 
-		foreach ($messages as $message) {
-			$row = new \stdClass();
-			$row->content_text = $message['message'];
-			$row->title = $message['type'];
-			$row->code = $message['code'];
+        $messages = $this->get();
+        if (count($messages) == 0) {
+            return array();
+        }
 
-			$query_results[] = $row;
-		}
+        foreach ($messages as $message) {
+            $row = new \stdClass();
+            $row->content_text = $message['message'];
+            $row->title = $message['type'];
+            $row->code = $message['code'];
 
-		return $query_results;
-	}
+            $query_results[] = $row;
+        }
+
+        return $query_results;
+    }
 }

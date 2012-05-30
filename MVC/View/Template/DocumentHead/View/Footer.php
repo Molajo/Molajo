@@ -6,21 +6,21 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-$defer = (int)Services::Registry()->get('Parameters', 'defer');
+$defer = (int) Services::Registry()->get('Parameters', 'defer');
 if ($defer == 1) {
-	?>
+    ?>
 </body>
 </html>
 <?php
 } else {
-	?>
+    ?>
 </head>
 <?php
-	$bodyClassSuffix = Services::Registry()->get('Parameters', 'body_class_suffix');
-	if (trim(Services::Registry()->get('Parameters', 'body_class_suffix', '')) == '') {
-		$bodyElement = '<body>';
-	} else {
-		$bodyElement = '<body ' . ' class="' . htmlspecialchars(Services::Registry()->get('Parameters', 'body_class_suffix')) . '">';
-	}
-	echo $bodyElement;
+    $bodyClassSuffix = Services::Registry()->get('Parameters', 'body_class_suffix');
+    if (trim(Services::Registry()->get('Parameters', 'body_class_suffix', '')) == '') {
+        $bodyElement = '<body>';
+    } else {
+        $bodyElement = '<body ' . ' class="' . htmlspecialchars(Services::Registry()->get('Parameters', 'body_class_suffix')) . '">';
+    }
+    echo $bodyElement;
 }

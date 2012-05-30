@@ -18,557 +18,564 @@ defined('MOLAJO') or die;
  */
 Class LanguageService
 {
-	/**
-	 * Instance of each specific language
-	 *
-	 * $languages
-	 *
-	 * @var array
-	 * @since 1.0
-	 */
-	protected static $languages = array();
+    /**
+     * Instance of each specific language
+     *
+     * $languages
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected static $languages = array();
 
-	/**
-	 * Language
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $language;
+    /**
+     * Language
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $language;
 
-	/**
-	 * Name
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $name;
+    /**
+     * Name
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $name;
 
-	/**
-	 * Tag
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $tag;
+    /**
+     * Tag
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $tag;
 
-	/**
-	 * rtl
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $rtl;
+    /**
+     * rtl
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $rtl;
 
-	/**
-	 * direction
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $direction;
+    /**
+     * direction
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $direction;
 
-	/**
-	 * locale
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $locale;
+    /**
+     * locale
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $locale;
 
-	/**
-	 * first_day
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $first_day;
+    /**
+     * first_day
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $first_day;
 
-	/**
-	 * Loaded Language Files
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $loaded_files;
+    /**
+     * Loaded Language Files
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $loaded_files;
 
-	/**
-	 * Loaded Translation Strings
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $loaded_strings;
+    /**
+     * Loaded Translation Strings
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $loaded_strings;
 
-	/**
-	 * :paOverrides loaded
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $loaded_override_strings;
+    /**
+     * :paOverrides loaded
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $loaded_override_strings;
 
-	/**
-	 * getInstance
-	 *
-	 * Returns a language object
-	 *
-	 * @param   string   $language
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public static function getInstance($language = null)
-	{
-		if (isset(self::$languages[$language])) {
-		} else {
-			self::$languages[$language] = new LanguageService($language);
-		}
-		return self::$languages[$language];
- 	}
+    /**
+     * getInstance
+     *
+     * Returns a language object
+     *
+     * @param string $language
+     *
+     * @return object
+     * @since   1.0
+     */
+    public static function getInstance($language = null)
+    {
+        if (isset(self::$languages[$language])) {
+        } else {
+            self::$languages[$language] = new LanguageService($language);
+        }
 
-	/**
-	 * __construct
-	 *
-	 * @param   string  $language
-	 *
-	 * @return  null
-	 * @since   1.0
-	 */
-	protected function __construct($language = null)
-	{
-		if ($language == null || $language == '') {
-			$language = $this->getDefault();
-		}
+        return self::$languages[$language];
+     }
 
-		$this->language = $language;
-		$this->loaded_override_strings = array();
-		$this->loaded_strings = array();
-		$this->loaded_files = array();
+    /**
+     * __construct
+     *
+     * @param string $language
+     *
+     * @return null
+     * @since   1.0
+     */
+    protected function __construct($language = null)
+    {
+        if ($language == null || $language == '') {
+            $language = $this->getDefault();
+        }
 
-		return $this->load_core_files();
-	}
+        $this->language = $language;
+        $this->loaded_override_strings = array();
+        $this->loaded_strings = array();
+        $this->loaded_files = array();
 
-	/**
-	 * load_core_files
-	 *
-	 * Loads metadata from XML File for Language
-	 *
-	 * Loads core standard language strings
-	 */
-	protected function load_core_files()
-	{
-		/** load metadata */
-		$metadata = Services::Configuration()
-			->getFile(SITE_LANGUAGES . '/' . $this->language, 'Language');
+        return $this->load_core_files();
+    }
 
-		if (isset($metadata['name'])) {
-			$this->name = $metadata['name'];
-		}
-		if (isset($metadata['tag'])) {
-			$this->tag = $metadata['tag'];
-		}
-		if (isset($metadata['rtl'])) {
-			$this->rtl = $metadata['rtl'];
-			if ((int)$this->rtl == 0) {
-				$this->direction = 'ltr';
-			} else {
-				$this->direction = 'rtl';
-			}
-		}
-		if (isset($metadata['locale'])) {
-			$locale = str_replace(' ', '', $metadata['locale']);
-			$this->locale = explode(',', $metadata['locale']);
-		}
-		if (isset($metadata['first_day'])) {
-			$this->first_day = $metadata['first_day'];
-		}
+    /**
+     * load_core_files
+     *
+     * Loads metadata from XML File for Language
+     *
+     * Loads core standard language strings
+     */
+    protected function load_core_files()
+    {
+        /** load metadata */
+        $metadata = Services::Configuration()
+            ->getFile(SITE_LANGUAGES . '/' . $this->language, 'Language');
 
-		/** load language strings */
-		$path = SITE_LANGUAGES . '/' . $this->language;
-		$this->load($path);
+        if (isset($metadata['name'])) {
+            $this->name = $metadata['name'];
+        }
+        if (isset($metadata['tag'])) {
+            $this->tag = $metadata['tag'];
+        }
+        if (isset($metadata['rtl'])) {
+            $this->rtl = $metadata['rtl'];
+            if ((int) $this->rtl == 0) {
+                $this->direction = 'ltr';
+            } else {
+                $this->direction = 'rtl';
+            }
+        }
+        if (isset($metadata['locale'])) {
+            $locale = str_replace(' ', '', $metadata['locale']);
+            $this->locale = explode(',', $metadata['locale']);
+        }
+        if (isset($metadata['first_day'])) {
+            $this->first_day = $metadata['first_day'];
+        }
 
-		return;
-	}
+        /** load language strings */
+        $path = SITE_LANGUAGES . '/' . $this->language;
+        $this->load($path);
 
-	/**
-	 * load
-	 *
-	 * Loads the requested language file. If not successful, loads the default language.
-	 *
-	 * @param   string   $path
-	 * @param   string   $language
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function load($path)
-	{
-		$loaded = $this->loadLanguage($path, $this->language . '.ini');
-		if ($loaded == false) {
+        return;
+    }
+
+    /**
+     * load
+     *
+     * Loads the requested language file. If not successful, loads the default language.
+     *
+     * @param string $path
+     * @param string $language
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function load($path)
+    {
+        $loaded = $this->loadLanguage($path, $this->language . '.ini');
+        if ($loaded == false) {
 //			Services::Debug()->set('LanguageServices: cannot load file: '
-				echo 'cannot load language file ' . $path . '/' . $this->language . '.ini';
-		} else {
-			return true;
-		}
+                echo 'cannot load language file ' . $path . '/' . $this->language . '.ini';
+        } else {
+            return true;
+        }
 
-		$default = $this->getDefault();
-		if ($this->language == $default) {
-			return false;
-		}
+        $default = $this->getDefault();
+        if ($this->language == $default) {
+            return false;
+        }
 
-		$loaded = $this->loadLanguage($path, $default . '.ini');
-		if ($loaded === false) {
-			Services::Debug()->set('LanguageServices 2: cannot load default language file: '
-				. $path . '/' . $default . '.ini');
-			return false;
-		}
-		return $loaded;
-	}
+        $loaded = $this->loadLanguage($path, $default . '.ini');
+        if ($loaded === false) {
+            Services::Debug()->set('LanguageServices 2: cannot load default language file: '
+                . $path . '/' . $default . '.ini');
 
-	/**
-	 * get
-	 *
-	 * @param  string  $key
-	 * @param  string  $default
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function get($key, $default = null)
-	{
-		if (isset($this->$key)) {
-			return $this->$key;
-		} else {
-			return $default;
-		}
-	}
+            return false;
+        }
 
-	/**
-	 * set
-	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	public function set($key, $value = null)
-	{
-		return $this->$key = $value;
-	}
+        return $loaded;
+    }
 
-	/**
-	 * _
-	 *
-	 * Replaces Language Key with translation
-	 *
-	 * @param  $key
-	 *
-	 * @return mixed
-	 * @since  1.0
-	 */
-	public function translate($key)
-	{
-		if (isset($this->loaded_strings[$key])) {
-			return $this->loaded_strings[$key];
+    /**
+     * get
+     *
+     * @param string $key
+     * @param string $default
+     *
+     * @return mixed
+     *
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        if (isset($this->$key)) {
+            return $this->$key;
+        } else {
+            return $default;
+        }
+    }
 
-		} else {
-			Services::Debug()->set('MolajoLanguage: Missing language key: ' . $key);
-			return $key;
-		}
-	}
+    /**
+     * set
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        return $this->$key = $value;
+    }
 
-	/**
-	 * loadLanguage
-	 *
-	 * Parses standard and override language files and merges strings
-	 *
-	 * @param   string   $filename
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	protected function loadLanguage($path, $file)
-	{
-		$filename = $path . '/' . $file;
+    /**
+     * _
+     *
+     * Replaces Language Key with translation
+     *
+     * @param  $key
+     *
+     * @return mixed
+     * @since  1.0
+     */
+    public function translate($key)
+    {
+        if (isset($this->loaded_strings[$key])) {
+            return $this->loaded_strings[$key];
 
-		/** standard file */
-		if (isset($this->loaded_files[$filename])) {
-			return true;
-		}
+        } else {
+            Services::Debug()->set('MolajoLanguage: Missing language key: ' . $key);
 
-		if (file_exists($filename)) {
-			$strings = $this->parse($filename);
-			$this->loaded_files[$filename] = true;
-		} else {
-			$strings = array();
-			$this->loaded_files[$filename] = false;
-		}
+            return $key;
+        }
+    }
 
-		/** overrides */
-		$filename = $path . '/' . $this->language . '.override.ini';
+    /**
+     * loadLanguage
+     *
+     * Parses standard and override language files and merges strings
+     *
+     * @param string $filename
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected function loadLanguage($path, $file)
+    {
+        $filename = $path . '/' . $file;
 
-		if (file_exists($filename)) {
-			$override_strings = $this->parse($filename);
-			$this->loaded_files[$filename] = true;
-		} else {
-			$override_strings = array();
-			$this->loaded_files[$filename] = false;
-		}
+        /** standard file */
+        if (isset($this->loaded_files[$filename])) {
+            return true;
+        }
 
-		/** merge */
-		if (is_array($strings)
-			&& count($strings) > 0
-		) {
+        if (file_exists($filename)) {
+            $strings = $this->parse($filename);
+            $this->loaded_files[$filename] = true;
+        } else {
+            $strings = array();
+            $this->loaded_files[$filename] = false;
+        }
 
-			$this->loaded_strings =
-				array_merge(
-					$this->loaded_strings,
-					$strings
-				);
-		}
+        /** overrides */
+        $filename = $path . '/' . $this->language . '.override.ini';
 
-		if (is_array($override_strings)
-			&& count($override_strings) > 0
-		) {
+        if (file_exists($filename)) {
+            $override_strings = $this->parse($filename);
+            $this->loaded_files[$filename] = true;
+        } else {
+            $override_strings = array();
+            $this->loaded_files[$filename] = false;
+        }
 
-			$this->loaded_override_strings =
-				array_merge(
-					$this->loaded_override_strings,
-					$override_strings
-				);
+        /** merge */
+        if (is_array($strings)
+            && count($strings) > 0
+        ) {
 
-			$this->loaded_strings =
-				array_merge(
-					$this->loaded_strings,
-					$override_strings
-				);
-		}
-		/**
-		echo '<pre>';
-		var_dump($this->loaded_strings);
-		echo '</pre>';
-		 */
-		return true;
-	}
+            $this->loaded_strings =
+                array_merge(
+                    $this->loaded_strings,
+                    $strings
+                );
+        }
 
-	/**
-	 * parse
-	 *
-	 * Parses a language file.
-	 *
-	 * @param   string  $filename  The name of the file.
-	 *
-	 * @return  array  The array of parsed strings.
-	 * @since   1.0
-	 */
-	protected function parse($filename)
-	{
-		/** capture php errors during parsing */
-		$track_errors = ini_get('track_errors');
-		if ($track_errors === false) {
-			ini_set('track_errors', true);
-		}
+        if (is_array($override_strings)
+            && count($override_strings) > 0
+        ) {
 
-		$contents = file_get_contents($filename);
+            $this->loaded_override_strings =
+                array_merge(
+                    $this->loaded_override_strings,
+                    $override_strings
+                );
 
-		if ($contents) {
-			$contents = str_replace('"', '', $contents);
-			$contents = str_replace(LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
-			$strings = parse_ini_string($contents);
-		} else {
-			$strings = array();
-		}
+            $this->loaded_strings =
+                array_merge(
+                    $this->loaded_strings,
+                    $override_strings
+                );
+        }
+        /**
+        echo '<pre>';
+        var_dump($this->loaded_strings);
+        echo '</pre>';
+         */
 
-		/** restore previous error tracking */
-		if ($track_errors === false) {
-			ini_set('track_errors', false);
-		}
+        return true;
+    }
 
-		return $strings;
-	}
+    /**
+     * parse
+     *
+     * Parses a language file.
+     *
+     * @param string $filename The name of the file.
+     *
+     * @return array The array of parsed strings.
+     * @since   1.0
+     */
+    protected function parse($filename)
+    {
+        /** capture php errors during parsing */
+        $track_errors = ini_get('track_errors');
+        if ($track_errors === false) {
+            ini_set('track_errors', true);
+        }
 
-	/**
-	 * getDefault
-	 *
-	 * Tries to detect the language.
-	 *
-	 * @return  string  locale or null if not found
-	 * @since   1.0
-	 */
-	public function getDefault()
-	{
-		/** Installed Languages */
-		$languages = $this->getLanguages(SITE_LANGUAGES);
+        $contents = file_get_contents($filename);
 
-		$installed = array();
-		foreach ($languages as $language) {
-			$installed[] = $language->subtitle;
-		}
+        if ($contents) {
+            $contents = str_replace('"', '', $contents);
+            $contents = str_replace(LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
+            $strings = parse_ini_string($contents);
+        } else {
+            $strings = array();
+        }
 
-		$language = false;
+        /** restore previous error tracking */
+        if ($track_errors === false) {
+            ini_set('track_errors', false);
+        }
 
-		/** 1. if there is just one, take it */
-		if (count($installed) == 1) {
-			return $installed[0];
-		}
+        return $strings;
+    }
 
-		/** 2. user  */
-		$language = Services::Registry()->get('User', 'language');
-		if ($language === false) {
-		} elseif (in_array($language, $installed)) {
-			return $language;
-		}
+    /**
+     * getDefault
+     *
+     * Tries to detect the language.
+     *
+     * @return string locale or null if not found
+     * @since   1.0
+     */
+    public function getDefault()
+    {
+        /** Installed Languages */
+        $languages = $this->getLanguages(SITE_LANGUAGES);
 
-		/** 3. language of browser */
-		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-		} else {
-			return null;
-		}
-		foreach ($browserLanguages as $language) {
-			if (in_array(strtolower($language), $installed)) {
-				return $language;
-			}
-		}
+        $installed = array();
+        foreach ($languages as $language) {
+            $installed[] = $language->subtitle;
+        }
 
-		/** 4. Application configuration */
-		$language = $this->get('tag', 'en-GB');
-		if (in_array($language, $installed)) {
-			return $language;
-		}
+        $language = false;
 
-		/** 5. default */
-		return 'en-GB';
-	}
+        /** 1. if there is just one, take it */
+        if (count($installed) == 1) {
+            return $installed[0];
+        }
 
-	/**
-	 * createLanguageList
-	 *
-	 * Builds a list of the languages installed for core or an extension
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function createLanguageList($path = null)
-	{
-		if (APPLICATION_ID == 0) {
-			$path = EXTENSIONS_COMPONENTS . '/' . 'installer';
+        /** 2. user  */
+        $language = Services::Registry()->get('User', 'language');
+        if ($language === false) {
+        } elseif (in_array($language, $installed)) {
+            return $language;
+        }
 
-		} else {
-			if ($path == null) {
-				$path = SITE_LANGUAGES;
-			}
-		}
+        /** 3. language of browser */
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        } else {
+            return null;
+        }
+        foreach ($browserLanguages as $language) {
+            if (in_array(strtolower($language), $installed)) {
+                return $language;
+            }
+        }
 
-		/** for selected item determination */
-		$currentLanguage = $this->get('tag');
-		if ($currentLanguage === false || $currentLanguage == null) {
-			$currentLanguage = 'en-GB';
-		}
+        /** 4. Application configuration */
+        $language = $this->get('tag', 'en-GB');
+        if (in_array($language, $installed)) {
+            return $language;
+        }
 
-		/** retrieve language list */
-		$languages = $this->getLanguages($path);
+        /** 5. default */
 
-		$list = array();
-		foreach ($languages as $language) {
-			$listItem = new \stdClass();
+        return 'en-GB';
+    }
 
-			$listItem->key = $language->title;
-			$listItem->value = $language->subtitle;
+    /**
+     * createLanguageList
+     *
+     * Builds a list of the languages installed for core or an extension
+     *
+     * @return array
+     * @since   1.0
+     */
+    public function createLanguageList($path = null)
+    {
+        if (APPLICATION_ID == 0) {
+            $path = EXTENSIONS_COMPONENTS . '/' . 'installer';
 
-			$list[] = $listItem;
-		}
+        } else {
+            if ($path == null) {
+                $path = SITE_LANGUAGES;
+            }
+        }
 
-		return $list;
-	}
+        /** for selected item determination */
+        $currentLanguage = $this->get('tag');
+        if ($currentLanguage === false || $currentLanguage == null) {
+            $currentLanguage = 'en-GB';
+        }
 
-	/**
-	 * getLanguages
-	 *
-	 * Returns languages for core or a specific extension
-	 *
-	 * @param   string  $path
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function getLanguages($path = SITE_LANGUAGES)
-	{
-		if ($path == SITE_LANGUAGES) {
-			return $this->getLanguagesCore();
-		}
+        /** retrieve language list */
+        $languages = $this->getLanguages($path);
 
-		$languages = array();
+        $list = array();
+        foreach ($languages as $language) {
+            $listItem = new \stdClass();
 
-		$files = Services::Filesystem()->folderFiles($path . '/language', '\.ini', false, false);
-		if (count($files) == 0) {
-			return false;
-		}
+            $listItem->key = $language->title;
+            $listItem->value = $language->subtitle;
 
-		foreach ($files as $file) {
-			$language = new \stdClass();
+            $list[] = $listItem;
+        }
 
-			$language->value = substr($file, 0, strlen($file) - 4);
-			$language->key = substr($file, 0, strlen($file) - 4);
+        return $list;
+    }
 
-			$languages[] = $language;
-		}
+    /**
+     * getLanguages
+     *
+     * Returns languages for core or a specific extension
+     *
+     * @param string $path
+     *
+     * @return object
+     * @since   1.0
+     */
+    public function getLanguages($path = SITE_LANGUAGES)
+    {
+        if ($path == SITE_LANGUAGES) {
+            return $this->getLanguagesCore();
+        }
 
-		return $languages;
-	}
+        $languages = array();
 
-	/**
-	 * getLanguagesCore
-	 *
-	 * During Service Initiation, the language service is started before
-	 * the Date Service. This routine is used at that time in lieu of
-	 * ability to query where date comparisons are needed.
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public function getLanguagesCore()
-	{
-		$subfolders = Services::Filesystem()->folderFolders(SITE_LANGUAGES);
-		$languages = array();
+        $files = Services::Filesystem()->folderFiles($path . '/language', '\.ini', false, false);
+        if (count($files) == 0) {
+            return false;
+        }
 
-		foreach ($subfolders as $path) {
-			$language = new \stdClass();
+        foreach ($files as $file) {
+            $language = new \stdClass();
 
-			$language->title = $path;
-			$language->subtitle = $path;
+            $language->value = substr($file, 0, strlen($file) - 4);
+            $language->key = substr($file, 0, strlen($file) - 4);
 
-			$languages[] = $language;
-		}
-		return $languages;
-	}
+            $languages[] = $language;
+        }
 
-	/**
-	 * get_metadata
-	 *
-	 * Read Language Manifest XML file for metadata
-	 *
-	 * @param   string  $path
-	 *
-	 * @return  array  array
-	 * @since   1.0
-	 */
-	public function get_metadata($file)
-	{
-		$xml = Services::Configuration()->getFile($file, 'Language');
-		if ($xml) {
-		} else {
-			return true;
-		}
+        return $languages;
+    }
 
-		$metadata = array();
-		foreach ($xml->metadata->children() as $child) {
-			$metadata[$child->getName()] = (string)$child;
-		}
+    /**
+     * getLanguagesCore
+     *
+     * During Service Initiation, the language service is started before
+     * the Date Service. This routine is used at that time in lieu of
+     * ability to query where date comparisons are needed.
+     *
+     * @return array
+     * @since  1.0
+     */
+    public function getLanguagesCore()
+    {
+        $subfolders = Services::Filesystem()->folderFolders(SITE_LANGUAGES);
+        $languages = array();
 
-		return $metadata;
-	}
+        foreach ($subfolders as $path) {
+            $language = new \stdClass();
+
+            $language->title = $path;
+            $language->subtitle = $path;
+
+            $languages[] = $language;
+        }
+
+        return $languages;
+    }
+
+    /**
+     * get_metadata
+     *
+     * Read Language Manifest XML file for metadata
+     *
+     * @param string $path
+     *
+     * @return array array
+     * @since   1.0
+     */
+    public function get_metadata($file)
+    {
+        $xml = Services::Configuration()->getFile($file, 'Language');
+        if ($xml) {
+        } else {
+            return true;
+        }
+
+        $metadata = array();
+        foreach ($xml->metadata->children() as $child) {
+            $metadata[$child->getName()] = (string) $child;
+        }
+
+        return $metadata;
+    }
 }

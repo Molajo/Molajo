@@ -19,140 +19,141 @@ defined('MOLAJO') or die;
  */
 class PublishedstatusTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Static instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new PublishedstatusTrigger();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return bool|object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new PublishedstatusTrigger();
+        }
 
-	/**
-	 * Pre-read processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
+        return self::$instance;
+    }
 
-		if (isset($this->query_results->status)
-			&& isset($this->query_results->start_publishing_datetime)
-			&& isset($this->query_results->stop_publishing_datetime) ) {
-		} else {
-			return $this;
-		}
+    /**
+     * Pre-read processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeRead()
+    {
 
-		$primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
+        if (isset($this->query_results->status)
+            && isset($this->query_results->start_publishing_datetime)
+            && isset($this->query_results->stop_publishing_datetime) ) {
+        } else {
+            return $this;
+        }
 
-		$this->query->where($this->db->qn($primary_prefix)
-			. '.' . $this->db->qn('status')
-			. ' > ' . STATUS_UNPUBLISHED);
+        $primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
 
-		$this->query->where('(' . $this->db->qn($primary_prefix)
-				. '.' . $this->db->qn('start_publishing_datetime')
-				. ' = ' . $this->db->q($this->nullDate)
-				. ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
-				. ' <= ' . $this->db->q($this->now) . ')'
-		);
+        $this->query->where($this->db->qn($primary_prefix)
+            . '.' . $this->db->qn('status')
+            . ' > ' . STATUS_UNPUBLISHED);
 
-		$this->query->where('(' . $this->db->qn($primary_prefix)
-				. '.' . $this->db->qn('stop_publishing_datetime')
-				. ' = ' . $this->db->q($this->nullDate)
-				. ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
-				. ' >= ' . $this->db->q($this->now) . ')'
-		);
+        $this->query->where('(' . $this->db->qn($primary_prefix)
+                . '.' . $this->db->qn('start_publishing_datetime')
+                . ' = ' . $this->db->q($this->nullDate)
+                . ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
+                . ' <= ' . $this->db->q($this->now) . ')'
+        );
 
-		return $this;
-	}
+        $this->query->where('(' . $this->db->qn($primary_prefix)
+                . '.' . $this->db->qn('stop_publishing_datetime')
+                . ' = ' . $this->db->q($this->nullDate)
+                . ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
+                . ' >= ' . $this->db->q($this->now) . ')'
+        );
 
-	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		// if published or greater status
-		// make certain published start date is today or later
-		return true;
-	}
+        return $this;
+    }
 
-	/**
-	 * Post-create processing
-	 *
-	 * @param $this->query_results, $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		// if it is published, notify
-		return true;
-	}
+    /**
+     * Pre-create processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeCreate()
+    {
+        // if published or greater status
+        // make certain published start date is today or later
+        return true;
+    }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		// hold status
-		// if it is published (or greater) make certain published dates are ok
-		return true;
-	}
+    /**
+     * Post-create processing
+     *
+     * @param $this->query_results, $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterCreate()
+    {
+        // if it is published, notify
+        return true;
+    }
 
-	/**
-	 * Post-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		// if it wasn't published and now is
+    /**
+     * Pre-update processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        // hold status
+        // if it is published (or greater) make certain published dates are ok
+        return true;
+    }
 
-		// is email notification enabled? are people subscribed?
-		// tweets
-		// pings
-		return true;
-	}
+    /**
+     * Post-update processing
+     *
+     * @param   $this->query_results
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterUpdate()
+    {
+        // if it wasn't published and now is
 
-	public function notify()
-	{
-		// is email notification enabled? are people subscribed?
-		// tweets
-		// pings
-	}
+        // is email notification enabled? are people subscribed?
+        // tweets
+        // pings
+        return true;
+    }
+
+    public function notify()
+    {
+        // is email notification enabled? are people subscribed?
+        // tweets
+        // pings
+    }
 }

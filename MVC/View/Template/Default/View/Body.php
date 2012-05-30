@@ -6,12 +6,12 @@
  */
 defined('MOLAJO') or die; ?>
 <h2>
-	<?php if (isset($this->row->title)) {
-	echo $this->row->title;
+    <?php if (isset($this->row->title)) {
+    echo $this->row->title;
 }?>
 </h2>
 <?php
 if (isset($this->row->text)) {
-	echo $this->row->text;
+    echo $this->row->text;
 }
 

@@ -7,4 +7,4 @@
  */
 defined('MOLAJO') or die; ?>
 <ul role="toolbar">
-	<li><strong><?php echo $this->row->title; ?></strong></li>
+    <li><strong><?php echo $this->row->title; ?></strong></li>

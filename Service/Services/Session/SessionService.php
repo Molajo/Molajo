@@ -27,83 +27,85 @@ defined('MOLAJO') or die;
  */
 Class SessionService
 {
-	/**
-	 * Response instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
+    /**
+     * Response instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected static $instance;
 
-	/**
-	 * Session
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $session;
+    /**
+     * Session
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $session;
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new SessionService();
-		}
-		return self::$instance;
-	}
+    /**
+     * getInstance
+     *
+     * @static
+     * @return object
+     * @since  1.0
+     */
+    public static function getInstance()
+    {
+        if (empty(self::$instance)) {
+            self::$instance = new SessionService();
+        }
 
-	protected function __construct()
-	{
-		$session = new Session();
-		$session->start();
+        return self::$instance;
+    }
 
-		// set and get session attributes
-		$session->set('name', 'Drak');
-		$session->get('name');
+    protected function __construct()
+    {
+        $session = new Session();
+        $session->start();
 
-		// set flash messages
-		$session->getFlashBag()->add('notice', 'Profile updated');
+        // set and get session attributes
+        $session->set('name', 'Drak');
+        $session->get('name');
 
-		// retrieve messages
-		/*
-		foreach ($session->getFlashBag()->get('notice', array()) as $message) {
-		echo "<div class='flash-notice'>$message</div>";
-			die;
-		}
-		*/
-	}
+        // set flash messages
+        $session->getFlashBag()->add('notice', 'Profile updated');
 
-	/**
-	 * getSession
-	 *
-	 */
-	public function getSession()
-	{
-		$storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
-		$session = new Session($storage);
-		//var_dump($session);
-	}
+        // retrieve messages
+        /*
+        foreach ($session->getFlashBag()->get('notice', array()) as $message) {
+        echo "<div class='flash-notice'>$message</div>";
+            die;
+        }
+        */
+    }
 
-	/**
-	 * setSessionStorageData
-	 *
-	 * @return NativeFileSessionStorage
-	 */
-	public function setSessionStorageData()
-	{
-		$save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache');
-		$options = array();
-		$options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
-		$options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration', 'cookie_domain', '');
-		$options['cookie_path'] = $cookie_path = Services::Registry()->get('Configuration', 'cookie_path', '');
+    /**
+     * getSession
+     *
+     */
+    public function getSession()
+    {
+        $storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
+        $session = new Session($storage);
+        //var_dump($session);
+    }
 
-		$sessionStorage = new NativeFileSessionStorage ($save_path, $options);
-		return $sessionStorage;
-	}
+    /**
+     * setSessionStorageData
+     *
+     * @return NativeFileSessionStorage
+     */
+    public function setSessionStorageData()
+    {
+        $save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache');
+        $options = array();
+        $options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
+        $options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration', 'cookie_domain', '');
+        $options['cookie_path'] = $cookie_path = Services::Registry()->get('Configuration', 'cookie_path', '');
+
+        $sessionStorage = new NativeFileSessionStorage ($save_path, $options);
+
+        return $sessionStorage;
+    }
 }
