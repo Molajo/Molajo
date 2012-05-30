@@ -72,7 +72,7 @@ class AuthorTrigger extends ContentTrigger
 		$m->model->set('check_view_level_access', 1);
 		$m->model->set('check_published', 0);
 
-		$results = $m->getData('load');
+		$results = $m->getData('item');
 
 		if ($results == false) {
 			return false;

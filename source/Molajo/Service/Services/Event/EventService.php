@@ -179,6 +179,7 @@ Class EventService
 		if ($exists == true) {
 			$count = Services::Registry()->get('Events', $event, 0);
 			$count++;
+
 		} else {
 			$exists = Services::Registry()->set('Events', $event, 0);
 			Services::Registry()->createRegistry($event);

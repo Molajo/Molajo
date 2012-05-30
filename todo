@@ -1,22 +1,13 @@
 * * * * Model / DB interaction * * * *
 
-DBO for:
+Migrate Module models Model Service and above DBO's
 
-a. Messages
-b. Head data (CSS/JS)
-c. Registry (Parameters - like head and footer and the grid)
+Includers - update for new formats (create new tag, formfields)
 
-2. Migrate Module models Model Service and above DBO's
+Triggers - get data access triggers working
 
-3. Includers - update for new formats (create new tag, formfields)
+Constants - reduce - Application class
 
-4. Controller - update for new formats - first Display, later Updates
-Controllers => EntryController, DisplayController, ListController, ItemController, and Controller
-
-5. Model - update for new formats - first Display, later updates
-Models => EntryModel, DisplayModel, ItemModel, and Model
-
-6. Triggers - get all data access triggers working
 
 
 
@@ -112,3 +103,12 @@ WHERE a.`catalog_type_id` in (100, 120)
   AND a.id = b.group_id
   AND b.view_group_id = c.view_group_id
   AND d.title = 'view'
+
+
+QUIT FORGETTING THIS SYNTAX:
+
+while (list($name, $value) = each($results)) {
+    if ($name == 'x') {
+        $this = $value;
+    }
+}

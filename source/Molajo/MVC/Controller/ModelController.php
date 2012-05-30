@@ -14,22 +14,48 @@ defined('MOLAJO') or die;
 /**
  * Model Controller
  *
- * The class merely allows all model instantiation as a common gateway
+ * Interacts with the ReadModel using these indicators serialized in $this->table_registry_indicators
  *
- * There are two basic process flows to the Model within the Molajo Application:
+ * model_name
+ *     Ex., Articles, used with custom fields to create registry with data, ex. ArticlesParameters
  *
- * 1. The first is directly related to processing the request and using the MVC
- *     architecture to either render output or execute the action action.
+ * table_name
+ *     Ex., #__content, used in the physical database query
  *
- *   -> For rendering, the Parser and Includer gather data needed and execute
- *         the Controller action to activate the MVC.
+ * primary_key
+ *     Ex., id, used to indicate single item requests
  *
- *   -> For action actions, the Controller action is initiated in the Application class.
+ * name_key
+ *     Ex., title or username, used to retrieve single item by unique value, not primary key
  *
- *  The Controller then interacts with the Model for data requests.
+ * primary_prefix
+ *     Ex. "a", used in query development
  *
- * 2. The second logic flow routes support queries originating in Service and Helper
- *  classes and pass through this Controller to invoke the Model, as needed.
+ * Indicators:
+ *
+ * get_customfields
+ *     0: do not retrieve custom fields
+ *     1: retrieve fields
+ *     2: retrieve and return as "normal" columns
+ *
+ * get_item_children
+ *     0: no
+ *     1: yes - executes a new read for additional data, query results return as column
+ *
+ * use_special_joins
+ *     0: no
+ *     1: yes - adds joins defined by model
+ *
+ * check_view_level_access
+ *     0: no
+ *     1: yes - adds joins to catalog and primary table, verifies view access
+ *
+ * process_triggers
+ *     0: no
+ *     1: yes - list of specific database triggers for this data source
+ *
+ * db
+ *     typically 'JDatabase', but can be other data sources, like Messages, Registry, and Assets
  *
  * @package     Molajo
  * @subpackage  Model
@@ -105,6 +131,28 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 			}
 		}
 
+		/** Serialize Model Options */
+		$this->table_registry_indicators['model_name']
+			= Services::Registry()->get($this->table_registry_name, 'model_name', '');
+		$this->table_registry_indicators['table_name']
+			= Services::Registry()->get($this->table_registry_name, 'table_name', '#__content');
+		$this->table_registry_indicators['primary_key']
+			= Services::Registry()->get($this->table_registry_name, 'primary_key', 'id');
+		$this->table_registry_indicators['name_key']
+			= Services::Registry()->get($this->table_registry_name, 'name_key', 'title');
+		$this->table_registry_indicators['primary_prefix']
+			= Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
+		$this->table_registry_indicators['get_customfields']
+			= Services::Registry()->get($this->table_registry_name, 'get_customfields', 0);
+		$this->table_registry_indicators['get_item_children']
+			= Services::Registry()->get($this->table_registry_name, 'get_item_children', 0);
+		$this->table_registry_indicators['use_special_joins']
+			= Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0);
+		$this->table_registry_indicators['check_view_level_access']
+			= Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0);
+		$this->table_registry_indicators['process_triggers']
+			= Services::Registry()->get($this->table_registry_name, 'process_triggers', 0);
+
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\MVC\\Model\\ReadModel';
 
@@ -162,48 +210,56 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 		/** Base query */
 		if ($query_object == 'item') {
 			$id_key = (int)$this->get('id', 0);
-			$name_key = (string)$this->get('name_key');
+			$name_key_value = (string)$this->get('name_key_value');
 
 		} else {
 			$id_key = 0;
-			$name_key = '';
+			$name_key_value = '';
 		}
 
 		/** Establishes the Field values (if not already set) and the primary from table */
 		$this->model->setBaseQuery(
 			Services::Registry()->get($this->table_registry_name, 'Fields'),
-			Services::Registry()->get($this->table_registry_name, 'table_name'),
-			Services::Registry()->get($this->table_registry_name, 'primary_prefix'),
-			Services::Registry()->get($this->table_registry_name, 'primary_key'),
+			$this->table_registry_indicators['table_name'],
+			$this->table_registry_indicators['primary_prefix'],
+			$this->table_registry_indicators['primary_key'],
 			$id_key,
-			$name_key,
-			Services::Registry()->get($this->table_registry_name, 'id_name')
+			$this->table_registry_indicators['name_key'],
+			$name_key_value
 		);
 
 		/** Passes query object to Authorisation Services to append ACL query elements */
-		if ((int)Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0) == 1) {
+		if ((int)$this->table_registry_indicators['check_view_level_access'] == 1) {
 			$this->model->addACLCheck(
-				Services::Registry()->get($this->table_registry_name, 'primary_prefix'),
-				Services::Registry()->get($this->table_registry_name, 'primary_key')
+				$this->table_registry_indicators['primary_prefix'],
+				$this->table_registry_indicators['primary_key']
 			);
 		}
 
 		/** Adds Select, From and Where query elements for Joins */
-		if ((int)Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0) == 1) {
+		if ((int)$this->table_registry_indicators['use_special_joins'] == 1) {
 			$joins = Services::Registry()->get($this->table_registry_name, 'Joins');
 			if (count($joins) > 0) {
 				$this->model->useSpecialJoins(
 					$joins,
-					Services::Registry()->get($this->table_registry_name, 'primary_prefix')
+					$this->table_registry_indicators['primary_prefix']
 				);
 			}
 		}
 
+		echo '<br /><br />'.$this->model->query->__toString().'<br /><br />';
+
 		/** Executes Query */
-		$this->model->getQueryResults(Services::Registry()->get($this->table_registry_name, 'Fields'));
+		$this->model->getQueryResults(
+			Services::Registry()->get($this->table_registry_name, 'Fields')
+		);
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
+echo '<pre>';
+var_dump($query_results);
+echo '</pre>';
+
 		if (count($query_results) > 0) {
 		} else {
 			return false;
@@ -215,7 +271,7 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 		foreach ($query_results as $results) {
 
 			/** Load Special Fields */
-			if (((int)Services::Registry()->get($this->table_registry_name, 'get_customfields', 0) == 0)
+			if (((int)$this->table_registry_indicators['get_customfields'] == 0)
 				|| ((int)Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups') == 0)
 			) {
 
@@ -230,17 +286,17 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 					foreach ($customFieldTypes as $customFieldName) {
 						$results =
 							$this->model->addCustomFields(
-								Services::Registry()->get($this->table_registry_name, 'model_name'),
+								$this->table_registry_indicators['model_name'],
 								$customFieldName,
 								Services::Registry()->get($this->table_registry_name, $customFieldName),
-								Services::Registry()->get($this->table_registry_name, 'get_customfields'),
+								$this->table_registry_indicators['get_customfields'],
 								$results
 							);
 					}
 				}
 
 				/** Retrieve Child Objects  */
-				if ((int)Services::Registry()->get($this->table_registry_name, 'get_item_children') == 1) {
+				if ((int)$this->table_registry_indicators['get_item_children'] == 1) {
 
 					$children = Services::Registry()->get($this->table_registry_name, 'Children');
 
@@ -266,14 +322,13 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 
 		/** Return Results */
 		if ($query_object == 'list') {
-			;
 			return $this->query_results;
 
 		} else if ($query_object == 'item') {
 			return $this->query_results[0];
 
 		} else {
-			return $result;
+			//todo: return $result;
 		}
 	}
 
@@ -289,7 +344,7 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 			return array();
 		}
 
-		if ((int)Services::Registry()->get($this->table_registry_name, 'process_triggers') == 1) {
+		if ((int)$this->table_registry_indicators['process_triggers'] == 1) {
 
 			$triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
 
@@ -321,7 +376,7 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 	{
 		/** Prepare input */
 		if (count($triggers) == 0
-			|| (int)Services::Registry()->get($this->table_registry_name, 'process_triggers', 0) == 0
+			|| (int)$this->table_registry_indicators['process_triggers'] == 0
 		) {
 			return true;
 		}
@@ -332,7 +387,7 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 			'parameters' => $this->parameters,
 			'query' => $this->model->query,
 			'db' => $this->model->db,
-			'model_name' => Services::Registry()->get($this->table_registry_name, 'model_name')
+			'model_name' => $this->table_registry_indicators['model_name']
 		);
 
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $triggers);
@@ -357,7 +412,7 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 	{
 		/** Prepare input */
 		if (count($triggers) == 0
-			|| (int)Services::Registry()->get($this->table_registry_name, 'process_triggers', 0) == 0
+			|| (int)$this->table_registry_indicators['process_triggers'] == 0
 		) {
 			return true;
 		}
@@ -372,7 +427,7 @@ echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
 				'table_registry_name' => $this->table_registry_name,
 				'parameters' => $this->parameters,
 				'query_results' => $item,
-				'model_name' => Services::Registry()->get($this->table_registry_name, 'model_name')
+				'model_name' => $this->table_registry_indicators['model_name']
 			);
 
 			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $triggers);

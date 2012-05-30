@@ -215,7 +215,7 @@ Class ConfigurationService
 				$m = new $controllerClass();
 				$m->connect('Applications');
 
-				$m->model->set('id_name', APPLICATION);
+				$m->set('name_key_value', APPLICATION);
 
 				$item = $m->getData('item');
 

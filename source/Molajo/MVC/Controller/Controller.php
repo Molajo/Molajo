@@ -52,6 +52,14 @@ class Controller
 	protected $table_registry_name;
 
 	/**
+	 * Yes/No indicators used for Model decision making
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $table_registry_indicators;
+
+	/**
 	 * Valid DB Options
 	 *
 	 * @var    object
@@ -106,6 +114,7 @@ class Controller
 	public function __construct()
 	{
 		$this->parameters = array();
+		$this->table_registry_indicators = array();
 	}
 
 	/**

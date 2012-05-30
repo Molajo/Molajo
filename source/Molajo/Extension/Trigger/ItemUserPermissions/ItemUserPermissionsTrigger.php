@@ -78,6 +78,6 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 			}
 		}
 
-		return;
+		return true;
 	}
 }

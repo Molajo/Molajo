@@ -9,7 +9,6 @@ namespace Molajo;
 use Molajo\Service\Services\Request\RequestService;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Extension\Helpers;
-use Molajo\Extension\Triggers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -82,15 +81,21 @@ Class Application
 		/** Initialise Sets the Configuration Registry  */
 		$continue = $this->initialise();
 
+		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Registry()->set('Override', 'url_request', $override_url_request);
+		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
+		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
+		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
 		if ($continue == false) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Initialise failed');
 			return;
 		} else {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Initialise succeeded');
 		}
 
@@ -98,9 +103,11 @@ Class Application
 		$continue = $this->route();
 
 		if ($continue == false) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Route failed');
 			return;
 		} else {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Route succeeded');
 		}
 //Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
@@ -110,9 +117,11 @@ Class Application
 		$continue = $this->authorise();
 
 		if ($continue === false) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Authorise failed');
 			return;
 		} else {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Authorise succeeded');
 		}
 
@@ -120,9 +129,11 @@ Class Application
 		$continue = $this->execute();
 
 		if ($continue == false) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Execute failed');
 			return;
 		} else {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Execute succeeded');
 		}
 
@@ -130,9 +141,11 @@ Class Application
 		$continue = $this->response();
 
 		if ($continue == false) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Response failed');
 			return;
 		} else {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application Response succeeded');
 		}
 
@@ -187,8 +200,6 @@ Class Application
 			return false;
 		}
 
-		$this->base_url = Services::Registry()->get('Configuration', 'site_base_url');
-
 		/** SSL Check */
 		$continue = $this->sslCheck();
 		if ($continue == false) {
@@ -234,12 +245,16 @@ Class Application
 	 */
 	protected function route()
 	{
+		/** @noinspection PhpUndefinedMethodInspection */
+		/** @noinspection PhpUndefinedMethodInspection */
 		$results = Services::Route()->process();
 
 		if ($results == false) {
 			return false;
 
-		} else if (Services::Redirect()->url === null && (int)Services::Redirect()->code == 0) {
+		} else /** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
+			if (Services::Redirect()->url === null && (int)Services::Redirect()->code == 0) {
 			return true;
 
 		} else {
@@ -255,6 +270,7 @@ Class Application
 	 */
 	protected function authorise()
 	{
+		/** @noinspection PhpUndefinedMethodInspection */
 		return Services::Authorisation()->authoriseAction();
 	}
 
@@ -266,6 +282,7 @@ Class Application
 	 */
 	protected function execute()
 	{
+		/** @noinspection PhpUndefinedMethodInspection */
 		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 
 		/** Display Action */
@@ -274,10 +291,12 @@ Class Application
 			$continue = $this->display();
 
 			if ($continue == false) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				Services::Debug()->set('Application execute Display failed');
 				return false;
 
 			} else {
+				/** @noinspection PhpUndefinedMethodInspection */
 				Services::Debug()->set('Application execute Display succeeded');
 				return true;
 			}
@@ -287,10 +306,12 @@ Class Application
 		$continue = $this->action();
 
 		if ($continue == false) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application execute ' . $action . ' failed');
 			return false;
 
 		} else {
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set('Application execute ' . $action . ' succeeded');
 			return true;
 		}
@@ -321,6 +342,7 @@ Class Application
 	 */
 	protected function display()
 	{
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->rendered_output = Services::Parse()->process();
 		return $this;
 	}
@@ -332,7 +354,7 @@ Class Application
 	 */
 	protected function action()
 	{
-		/** Action: Database action */
+		/** Action: Database action
 		$temp = Services::Registry()->initialise();
 		$temp->loadArray($this->parameters);
 		$this->parameters = $temp;
@@ -352,10 +374,10 @@ Class Application
 		Services::Registry()->set('Parameters', 'request_action', $action);
 		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
 		$controller = new $cc($this->page_request, $this->parameters);
-
-		/** execute action: non-display, edit, or add action */
+		*/
+		/** execute action: non-display, edit, or add action
 		$continue = $controller->$action();
-
+		 */
 		//redirect
 
 		return true;
@@ -369,12 +391,18 @@ Class Application
 	 */
 	protected function response()
 	{
+		/** @noinspection PhpUndefinedMethodInspection */
+		/** @noinspection PhpUndefinedMethodInspection */
 		if (Services::Redirect()->url === null
-			&& (int)Services::Redirect()->code == 0) {
+			&& (int)Services::Redirect()->code == 0
+		) {
 
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()
 				->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200');
 
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Response()
 				->setContent($this->rendered_output)
 				->setStatusCode(200)
@@ -383,15 +411,24 @@ Class Application
 
 		} else {
 
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()
 				->set('Services::Redirect()->redirect()->send() for '
 				. Services::Redirect()->url . ' Code: ' . Services::Redirect()->code);
 
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Redirect()
 				->redirect()
 				->send();
 		}
 
+		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Debug()
 			->set('Application response End');
 
@@ -409,6 +446,7 @@ Class Application
 	 */
 	protected function setBaseURL()
 	{
+		/** @noinspection PhpUndefinedMethodInspection */
 		$baseURL = Application::Request()->get('request')->getScheme()
 			. '://'
 			. Application::Request()->get('request')->getHttpHost()
@@ -416,6 +454,9 @@ Class Application
 
 		if (defined('BASE_URL')) {
 		} else {
+			/**
+			 * BASE_URL - root of the website with a trailing slash
+			 */
 			define('BASE_URL', $baseURL . '/');
 		}
 
@@ -446,6 +487,7 @@ Class Application
 
 		/** Override Hint */
 		if (file_exists(BASE_FOLDER . '/defines.php')) {
+			/** @noinspection PhpIncludeInspection */
 			include_once BASE_FOLDER . '/defines.php';
 		}
 
@@ -742,11 +784,13 @@ Class Application
 	 */
 	protected function sslCheck()
 	{
-
+		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Registry()->get('ApplicationsParameters');
 
+		/** @noinspection PhpUndefinedMethodInspection */
 		if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
+			/** @noinspection PhpUndefinedMethodInspection */
 			if ((Services::Request()->get('connection')->isSecure() === true)) {
 
 			} else {
@@ -798,12 +842,12 @@ Class Application
 		} else {
 			try {
 				self::$services = Services::getInstance();
-			}
-			catch (\RuntimeException $e) {
+			} catch (\RuntimeException $e) {
 				echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
 				die;
 			}
 		}
+
 		return self::$services;
 	}
 
@@ -821,20 +865,20 @@ Class Application
 		} else {
 			try {
 				self::$helpers = Helpers::getInstance();
-			}
-			catch (\Exception $e) {
+			} catch (\Exception $e) {
 				echo 'Instantiate Helpers Exception : ', $e->getMessage(), "\n";
 				die;
 			}
 		}
+
 		return self::$helpers;
 	}
 
 	/**
-	 * Application::Request
+	 * Application::RequestService
 	 *
 	 * @static
-	 * @return  Request
+	 * @return  RequestService
 	 * @since   1.0
 	 */
 	public static function Request()
@@ -843,8 +887,7 @@ Class Application
 		} else {
 			try {
 				self::$request = RequestService::getInstance();
-			}
-			catch (\Exception $e) {
+			} catch (\Exception $e) {
 				echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";
 				die;
 			}

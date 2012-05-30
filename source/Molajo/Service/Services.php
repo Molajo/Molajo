@@ -28,6 +28,14 @@ Class Services
 	protected static $instance;
 
 	/**
+	 * Stores messages locally until the Message Service has been activated
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $message;
+
+	/**
 	 * Service Connections
 	 *
 	 * @var   object
@@ -51,41 +59,14 @@ Class Services
 	}
 
 	/**
-	 * __construct
-	 *
-	 * @return null
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		$this->service_connection = array();
-	}
-
-	/**
-	 * Retrieves service key value pair
-	 *
-	 * @param  string  $key
-	 * @param  string  $default
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function get($key, $default = null)
-	{
-		if (isset($this->service_connection[$key])) {
-			return $this->service_connection[$key];
-		} else {
-			//error
-		}
-	}
-
-	/**
 	 * Used to connect to services
 	 *
 	 * @static
 	 * @param  $name
 	 * @param  $arguments
+	 *
+	 * @return object
+	 * @since  1.0
 	 */
 	public static function __callStatic($name, $arguments)
 	{
@@ -100,6 +81,9 @@ Class Services
 	 */
 	public function startServices()
 	{
+		/** store service connections for use, as needed, by the application */
+		$this->service_connection = array();
+
 		/** store connection messages */
 		$this->message = array();
 
@@ -147,13 +131,15 @@ Class Services
 
 			/** store connection or error message */
 			if ($connectionSucceeded == false) {
-				echo 'service failed for '. $entry.'<br />';
+				echo 'service failed for ' . $entry . '<br />';
 			}
 			$this->set($entry, $connection, $connectionSucceeded);
 
 		}
 
 		foreach ($this->message as $message) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			/** @noinspection PhpUndefinedMethodInspection */
 			Services::Debug()->set($message);
 		}
 
@@ -161,12 +147,30 @@ Class Services
 	}
 
 	/**
-	 * set
-	 *
-	 * Stores the service connection
+	 * Retrieves service key value pair
 	 *
 	 * @param  string  $key
-	 * @param  mixed   $value
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 *
+	 * @throws \BadMethodCallException
+	 */
+	protected function get($key)
+	{
+		if (isset($this->service_connection[$key])) {
+			return $this->service_connection[$key];
+		}
+
+		throw new \BadMethodCallException('Service ' . $key . ' is not available');
+	}
+
+	/**
+	 * Stores the service connection
+	 *
+	 * @param $key
+	 * @param null $value
+	 * @param bool $connectionSucceeded
 	 *
 	 * @return  mixed
 	 * @since   1.0

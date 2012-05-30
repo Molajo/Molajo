@@ -351,6 +351,8 @@ class ContentTrigger extends Trigger
 			Services::Registry()->set($this->model_name . $field->customfield, $new_field_name, $value);
 			return true;
 		}
+
+		return false;
 	}
 
 	/**

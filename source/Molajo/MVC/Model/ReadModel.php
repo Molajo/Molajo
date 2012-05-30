@@ -15,53 +15,6 @@ defined('MOLAJO') or die;
 /**
  * ReadModel
  *
- * Properties set in the ModelController used in query development:
- *
- * model_name
- *     Ex., Articles, used with custom fields to create registry with data, ex. ArticlesParameters
- *
- * table_name
- *     Ex., #__content, used in the physical database query
- *
- * primary_key
- *     Ex., id, used to indicate single item requests
- *
- * name_key
- *     Ex., title or username, used to retrieve single item by unique value, not primary key
- *
- * primary_prefix
- *     Ex. "a", used in query development
- *
- * Indicators:
- *
- * get_customfields
- *     0: do not retrieve custom fields
- *     1: retrieve fields
- *     2: retrieve and return as "normal" columns
- *
- * get_item_children
- *     0: no
- *     1: yes - executes a new read for additional data, query results return as column
- *
- * use_special_joins
- *     0: no
- *     1: yes - adds joins defined by model
- *
- * check_view_level_access
- *     0: no
- *     1: yes - adds joins to catalog and primary table, verifies view access
- *
- * check_published
- *     0: no
- *     1: yes - adds check for published dates and status field
- *
- * process_triggers
- *     0: no
- *     1: yes - list of specific database triggers for this data source
- *
- * db
- *     typically 'JDatabase', but can be other data sources, like Messages, Registry, and Assets
- *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0
@@ -89,12 +42,12 @@ class ReadModel extends Model
 	 * @param  $primary_key
 	 * @param  $id
 	 * @param  $name_key
-	 * @param  $id_name
+	 * @param  $name_key_value
 	 *
 	 * @return ReadModel
 	 * @since  1.0
 	 */
-	public function setBaseQuery($columns, $table_name, $primary_prefix, $primary_key, $id, $name_key, $id_name)
+	public function setBaseQuery($columns, $table_name, $primary_prefix, $primary_key, $id, $name_key, $name_key_value)
 	{
 		if ($this->query->select == null) {
 			foreach ($columns as $column) {
@@ -108,10 +61,14 @@ class ReadModel extends Model
 
 		if ($this->query->where == null) {
 			if ((int)$id > 0) {
-				$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key) . ' = ' . $this->db->q($id));
-			} else if (trim($id_name) == '') {
+				$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
+					. ' = ' . $this->db->q($id));
+
+			} else if (trim($name_key_value) == '') {
+
 			} else {
-				$this->query->where($this->db->qn($primary_prefix . '.' . $name_key) . ' = ' . $this->db->q($id_name));
+				$this->query->where($this->db->qn($primary_prefix . '.' . $name_key)
+					. ' = ' . $this->db->q($name_key_value));
 			}
 		}
 
@@ -268,13 +225,6 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($columns)
 	{
-		/**
-		if ($id == 100) {
-		echo '<br /><br />'.$this->query->__toString().'<br /><br />';
-		die;
-		};
-		 */
-		/** Run the query */
 		$this->db->setQuery($this->query->__toString());
 
 		$this->query_results = $this->db->loadObjectList();

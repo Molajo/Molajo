@@ -107,9 +107,9 @@ Class WrapIncluder extends Includer
 		$file_path = Services::Registry()->get('Parameters', 'wrap_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'wrap_view_path_url');
 
-		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+		Services::Document()->add_css_folder($file_path, $url_path, $priority);
+		Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
+		Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
 		return $this;
 	}
