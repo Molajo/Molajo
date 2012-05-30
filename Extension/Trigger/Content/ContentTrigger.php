@@ -304,6 +304,24 @@ class ContentTrigger extends Trigger
         return $results;
     }
 
+	/**
+	 * getField by name
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function getField($name)
+	{
+		foreach ($this->fields as $field) {
+
+			if ($field->name == $name) {
+				return $field;
+			}
+		}
+
+		return false;
+	}
+
     /**
      * getFieldValue retrieves the actual field value from the 'normal' or special field
      *

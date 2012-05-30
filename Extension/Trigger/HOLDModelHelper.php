@@ -335,7 +335,8 @@ class ModelHelper
                 $registry->loadString($item->$name);
                 $fields = $registry->toArray();
 
-                while (list($jsonfield, $jsonfieldvalue) = each($fields)) {
+				/** @noinspection PhpAssignmentInConditionInspection */
+				while (list($jsonfield, $jsonfieldvalue) = each($fields)) {
                     if (property_exists($item, $jsonfield)) {
                     } else {
                         $item->$jsonfield = $jsonfieldvalue;

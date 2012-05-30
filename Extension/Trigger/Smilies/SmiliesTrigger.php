@@ -52,14 +52,33 @@ class SmiliesTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-        if (isset($this->query_results->content_text)) {
-        } else {
-            return false;
-        }
+		$fields = $this->retrieveFieldsByType('text');
 
-        $this->query_results->content_text =
-            Services::Text()->smilies($this->query_results->content_text);
+		if (is_array($fields) && count($fields) > 0) {
 
-        return true;
+			/** @noinspection PhpWrongForeachArgumentTypeInspection */
+			foreach ($fields as $field) {
+
+				$name = $field->name;
+
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
+
+				if ($fieldValue == false) {
+				} else {
+
+					$value = Services::Text()->smilies($fieldValue);
+
+					if ($value == false) {
+					} else {
+						/** Creates the new 'normal' or special field and populates the value */
+						$fieldValue = $this->addField($field, $name, $value);
+					}
+				}
+
+			}
+		}
+
+		return true;
     }
 }

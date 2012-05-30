@@ -134,10 +134,10 @@ Class ImageService
         } else {
             $this->size = 0;
         }
-        if ($this->type = 'exact'
-            || $this->type = 'portrait'
-                || $this->type = 'landscape'
-                    || $this->type = 'auto'
+        if ($this->type == 'exact'
+            || $this->type == 'portrait'
+                || $this->type == 'landscape'
+                    || $this->type == 'auto'
         ) {
         } else {
             $this->type = 'crop';

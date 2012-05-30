@@ -265,42 +265,49 @@ Class DateService
                 } else {
                     Services::Language()->translate('DATE_MONDAY');
                 }
+				break;
             case 2:
                 if ($abbreviation === true) {
                     Services::Language()->translate('DATE_TUE');
                 } else {
                     Services::Language()->translate('DATE_TUESDAY');
                 }
+				break;
             case 3:
                 if ($abbreviation === true) {
                     Services::Language()->translate('DATE_WED');
                 } else {
                     Services::Language()->translate('DATE_WEDNESDAY');
                 }
+				break;
             case 4:
                 if ($abbreviation === true) {
                     Services::Language()->translate('DATE_THU');
                 } else {
                     Services::Language()->translate('DATE_THURSDAY');
                 }
+				break;
             case 5:
                 if ($abbreviation === true) {
                     Services::Language()->translate('DATE_FRI');
                 } else {
                     Services::Language()->translate('DATE_FRIDAY');
                 }
+				break;
             case 6:
                 if ($abbreviation === true) {
                     Services::Language()->translate('DATE_SAT');
                 } else {
                     Services::Language()->translate('DATE_SATURDAY');
                 }
+				break;
             default:
                 if ($abbreviation === true) {
                     Services::Language()->translate('DATE_SUN');
                 } else {
                     Services::Language()->translate('DATE_SUNDAY');
                 }
+				break;
         }
     }
 

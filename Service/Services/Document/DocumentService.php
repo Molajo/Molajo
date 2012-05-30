@@ -163,7 +163,8 @@ Class DocumentService
     {
         $count = count($this->links);
         if ($count > 0) {
-            foreach ($this->links as $link) {
+			/** @noinspection PhpWrongForeachArgumentTypeInspection */
+			foreach ($this->links as $link) {
                 if ($link['url'] == $url) {
                     return;
                 }

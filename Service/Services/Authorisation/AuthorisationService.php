@@ -82,7 +82,8 @@ Class AuthorisationService
 
         /** retrieve action key pairs */
         $items = Services::Registry()->get('Actions');
-        while (list($title, $id) = each($items)) {
+		/** @noinspection PhpAssignmentInConditionInspection */
+		while (list($title, $id) = each($items)) {
             Services::Registry()->set('action_to_action_id', $title, (int) $id);
         }
         Services::Registry()->get('action_to_action_id', '*');

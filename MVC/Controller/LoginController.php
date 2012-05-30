@@ -41,7 +41,8 @@ class LoginController extends Controller
         $options = array('action' => 'login');
 
         /** security check: internal URL only */
-        if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
+		$return = JRequest::getVar('return', '', 'method', 'base64');
+        if ($return = true) {
             $return = base64_decode($return);
             if (JURI::isInternal($return)) {
             } else {

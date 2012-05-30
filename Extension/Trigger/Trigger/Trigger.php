@@ -43,14 +43,6 @@ class Trigger
         return self::$instance;
     }
 
-    public function __construct()
-    {
-
-    }
-    /**
-     *     From Data Trigger
-     */
-
     /**
      * Pre-create processing
      *

@@ -319,7 +319,7 @@ class ReadModel extends Model
             //$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
             /** Option 2: Make each custom field a "regular" field in query results */
-            if ($retrieval_method == 2) {
+            if ($retrieval_method == 2 && strtolower($customFieldName) == 'customfields') {
                 $query_results->$name = $setValue;
             } else {
                 /** Option 1: all custom field pairs are saved in Registry */
