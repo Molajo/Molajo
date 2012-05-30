@@ -116,7 +116,7 @@ Class ThemeIncluder extends Includer
 		$file_path = Services::Registry()->get('Parameters', 'theme_path');
 		$url_path = Services::Registry()->get('Parameters', 'theme_path_url');
 
-		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
+		Services::Document()->add_css_folder($file_path, $url_path, $priority);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
 		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 

@@ -139,7 +139,7 @@ Class CatalogHelper
 
 		$m->model->set('id', (int)$catalog_id);
 		$m->model->set('process_triggers', 0);
-		$row = $m->getData('load');
+		$row = $m->getData('item');
 
 		if (count($row) == 0) {
 			return array();
@@ -167,11 +167,12 @@ Class CatalogHelper
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$m->connect('Catalog', 'Table');
+		$m->set('use_special_joins', 0);
 
 		$m->model->query->select($m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($url_sef_request));
 
-		return $m->getData('loadResult');
+		return $m->getData('item');
 	}
 
 	/**

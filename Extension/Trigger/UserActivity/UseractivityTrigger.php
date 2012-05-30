@@ -53,6 +53,8 @@ class UseractivityTrigger extends ContentTrigger
 		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_read', 0) == 1) {
 			return $this->setUserActivityLog();
 		}
+
+		return;
 	}
 
 	/**
@@ -66,6 +68,8 @@ class UseractivityTrigger extends ContentTrigger
 		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_create', 0) == 1) {
 			return $this->setUserActivityLog();
 		}
+
+		return;
 	}
 
 	/**
@@ -78,7 +82,9 @@ class UseractivityTrigger extends ContentTrigger
 	{
 		if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_update', 0) == 1) {
 			return $this->setUserActivityLog();
-		} ;
+		}
+
+		return;
 	}
 
 	/**
