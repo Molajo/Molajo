@@ -600,7 +600,8 @@ Class RegistryService
         /** retrieve existing keys */
         $existing = $this->registryKeys;
         $keep = array();
-        while (list($key, $value) = each($existing)) {
+		/** @noinspection PhpAssignmentInConditionInspection */
+		while (list($key, $value) = each($existing)) {
 
             if ($value === $namespace) {
                 $deleted = true;
@@ -653,7 +654,8 @@ Class RegistryService
 
         /* Key only */
         $keyArray = array();
-        while (list($key, $value) = each($array)) {
+		/** @noinspection PhpAssignmentInConditionInspection */
+		while (list($key, $value) = each($array)) {
             $keyArray[] = $key;
         }
 

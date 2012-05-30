@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\Email;
+namespace Molajo\Extension\Trigger\Gravatar;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 use Molajo\Service\Services;
@@ -12,13 +12,13 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Email
+ * Gravatar
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class EmailTrigger extends ContentTrigger
+class GravatarTrigger extends ContentTrigger
 {
     /**
      * Static instance
@@ -38,24 +38,10 @@ class EmailTrigger extends ContentTrigger
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new EmailTrigger();
+            self::$instance = new GravatarTrigger();
         }
 
         return self::$instance;
-    }
-
-    /**
-     * Pre-create processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeCreate()
-    {
-        return false;
     }
 
     /**
@@ -72,44 +58,38 @@ class EmailTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
+			if (Services::Registry()->get('Parameters', 'criteria_use_gravatar', 1) == 1) {
+				$size = Services::Registry()->get('Parameters', 'criteria_gravatar_size', 80);
+				$type = Services::Registry()->get('Parameters', 'criteria_gravatar_type', 'mm');
+				$rating = Services::Registry()->get('Parameters', 'criteria_gravatar_rating', 'pg');
+				$image = Services::Registry()->get('Parameters', 'criteria_gravatar_image', 0);
+
+			} else {
+				return true;
+			}
+
 			/** @noinspection PhpWrongForeachArgumentTypeInspection */
 			foreach ($fields as $field) {
 
                 $name = $field->name;
-                $new_name = $name . '_' . 'obfuscated';
+                $new_name = $name . '_' . 'gravatar';
 
                 /** Retrieves the actual field value from the 'normal' or special field */
                 $fieldValue = $this->getFieldValue($field);
 
                 if ($fieldValue == false) {
+					return true;
                 } else {
+					$results = Services::Url()->getGravatar($fieldValue, $size, $type, $rating, $image);
+				}
 
-                    $newFieldValue = Services::Url()->obfuscateEmail($fieldValue);
-
-                    if ($newFieldValue == false) {
-                    } else {
-
-                        /** Creates the new 'normal' or special field and populates the value */
-                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
-                    }
-                }
+				if ($results == false) {
+				} else {
+					$fieldValue = $this->addField($field, $new_name, $results);
+				}
             }
         }
 
         return true;
-    }
-
-    /**
-     * Pre-update processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
-        return false;
     }
 }

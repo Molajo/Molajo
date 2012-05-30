@@ -44,53 +44,40 @@ class FullnameTrigger extends ContentTrigger
     }
 
     /**
-     * After-read processing
-     *
-     * Adds formatted dates to 'normal' or special fields recordset
+     * Adds full_name to recordset containing first_name and last_name
      *
      * @return boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
+		$first_name_field = $this->getField('first_name');
+		if ($first_name_field == false) {
+			return false;
+		}
+		$first_name = $this->getFieldValue($first_name_field);
 
-        $name = 'Fullname';
+		$last_name_field = $this->getField('last_name');
+		if ($last_name_field == false) {
+			return false;
+		}
+		$last_name = $this->getFieldValue($last_name_field);
 
-        /** Retrieves the actual field value */
-        $fieldValue1 = $this->getFieldValue('first_name');
-        $fieldValue2 = $this->getFieldValue('last_name');
+		if ($first_name == false && $last_name == false) {
+			return false;
 
-        if ($fieldValue1 == false && $fieldValue2 == false) {
+		} else {
 
-        } else {
+			$newFieldValue = $first_name. ' '.$last_name;
 
-            /** Concatenate first and last name */
-            $newFieldValue = $fieldValue1 . ' ' . $fieldValue2;
+			if ($newFieldValue == false) {
+			} else {
 
-            if ($newFieldValue == false) {
-            } else {
-
-                /** Creates the new 'normal' or special field and populates the value */
-                $this->addField('last_name', 'fullname', $newFieldValue);
-            }
-        }
+				/** Creates the new 'normal' or special field and populates the value */
+				$fieldValue = $this->addField($first_name_field, 'full_name', $newFieldValue);
+			}
+		}
 
         return true;
-    }
-
-    /**
-     * itemDateRoutine
-     *
-     * Creates formatted date fields based on a named field
-     *
-     * @param $field
-     * @param $this->query_results
-     *
-     * @return array
-     * @since 1.0
-     */
-    protected function itemDateRoutine($field)
-    {
-        return false;
     }
 }

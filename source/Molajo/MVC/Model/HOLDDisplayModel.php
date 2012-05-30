@@ -102,7 +102,8 @@ class DisplayModel extends ItemModel
         if (count($selectArray) > 0) {
         } else {
             /** default to all primary table fields */
-            while (list($name, $value) = each($this->fields)) {
+			/** @noinspection PhpAssignmentInConditionInspection */
+			while (list($name, $value) = each($this->fields)) {
                 $selectArray[] = $name;
             }
         }
@@ -150,7 +151,8 @@ class DisplayModel extends ItemModel
         /**
          *  Where
          */
-        while (list($name, $value) = each($parameterArray)) {
+		/** @noinspection PhpAssignmentInConditionInspection */
+		while (list($name, $value) = each($parameterArray)) {
 
             if (substr($name, 0, strlen('criteria_')) == 'criteria_') {
 

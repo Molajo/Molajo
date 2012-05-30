@@ -31,4 +31,6 @@
 
 <field name="criteria_mustache" type="binary" null="1" default="0" values="0,1"/>
 
+<field name="criteria_snippet_length" type="int" null="0" default="200"/>
+
 <include name="ParametersGravatar"/>

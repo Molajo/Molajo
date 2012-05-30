@@ -58,7 +58,9 @@ class DateformatsTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-            foreach ($fields as $field) {
+			/** @noinspection PhpWrongForeachArgumentTypeInspection */
+			/** @noinspection PhpWrongForeachArgumentTypeInspection */
+			foreach ($fields as $field) {
 
                 $name = $field->name;
 

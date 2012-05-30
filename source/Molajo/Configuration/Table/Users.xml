@@ -5,7 +5,7 @@
         primary_key="id"
         name_key="username"
         primary_prefix="a"
-        get_customfields="1"
+        get_customfields="2"
         get_item_children="1"
         use_special_joins="0"
         check_view_level_access="0"
@@ -45,12 +45,15 @@
 
             <triggers>
                 <trigger name="Username"/>
+                <trigger name="Fullname"/>
                 <trigger name="Email"/>
+                <trigger name="Gravatar"/>
                 <trigger name="Password"/>
-                <trigger name="Readmore"/>
                 <trigger name="Datefields"/>
                 <trigger name="Dateformats"/>
-                <trigger name="Publishedstatus"/>
+                <trigger name="Smilies"/>
+                <trigger name="Snippet"/>
+                <trigger name="Readmore"/>
             </triggers>
 
             <customfields>

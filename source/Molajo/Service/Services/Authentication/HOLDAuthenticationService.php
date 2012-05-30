@@ -127,7 +127,7 @@ Class AuthenticationService
      * @param array $credentials Array holding the user credentials
      * @param array $options     Array holding user options
      *
-     * @return MolajoAuthenticationResponse Response object with status variable filled
+     * @return AuthenticationService Response object with status variable filled
      *                                 in for last trigger or first successful trigger
      * @see     MolajoAuthenticationResponse
      * @since   1.0

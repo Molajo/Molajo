@@ -56,19 +56,35 @@ class SnippetTrigger extends ContentTrigger
      * @since   1.0
      */
     public function onAfterRead()
-    {
-        if (isset($this->query_results->content_text)) {
-        } else {
-            $this->query_results->snippet = '';
+   {
+		$fields = $this->retrieveFieldsByType('text');
 
-            return false;
-        }
+		if (is_array($fields) && count($fields) > 0) {
 
-        $this->query_results->snippet =
-            substr(strip_tags($this->query_results->content_text), 0,
-                Services::Registry()->get('Parameters', 'criteria_snippet_length', 200)
-            );
+			/** @noinspection PhpWrongForeachArgumentTypeInspection */
+			foreach ($fields as $field) {
 
-        return false;
+				$name = $field->name;
+
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
+
+				if ($fieldValue == false) {
+				} else {
+
+					$newField = Services::Text()->snippet($fieldValue);
+
+					if ($newField == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$newFieldName = $name . '_' . 'snippet';
+						$fieldValue = $this->addField($field, $newFieldName, $newField);
+					}
+				}
+			}
+		}
+
+		return true;
     }
 }

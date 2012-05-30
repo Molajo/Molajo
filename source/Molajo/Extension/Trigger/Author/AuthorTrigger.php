@@ -82,7 +82,8 @@ class AuthorTrigger extends ContentTrigger
         $first_name = '';
         $last_name = '';
 
-        while (list($name, $value) = each($results)) {
+		/** @noinspection PhpAssignmentInConditionInspection */
+		while (list($name, $value) = each($results)) {
 
             if ($name == 'first_name') {
                 $first_name = $value;

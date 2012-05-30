@@ -545,7 +545,8 @@ Class ConfigurationService
                 $fieldAttributes = ($attributes["@attributes"]);
                 $fieldAttributesArray = array();
 
-                while (list($key, $value) = each($fieldAttributes)) {
+				/** @noinspection PhpAssignmentInConditionInspection */
+				while (list($key, $value) = each($fieldAttributes)) {
 
                     if (in_array($key, self::$valid_field_attributes)) {
                     } else {
@@ -630,7 +631,8 @@ Class ConfigurationService
                 $fieldAttributes = ($attributes["@attributes"]);
                 $fieldAttributesArray = array();
 
-                while (list($key2, $value2) = each($fieldAttributes)) {
+				/** @noinspection PhpAssignmentInConditionInspection */
+				while (list($key2, $value2) = each($fieldAttributes)) {
 
                     if (in_array($key2, self::$valid_field_attributes)) {
                     } else {
@@ -739,7 +741,8 @@ Class ConfigurationService
                 $fieldAttributes = ($attributes["@attributes"]);
                 $fieldAttributesArray = array();
 
-                while (list($key, $value) = each($fieldAttributes)) {
+				/** @noinspection PhpAssignmentInConditionInspection */
+				while (list($key, $value) = each($fieldAttributes)) {
 
                     if (in_array($key, self::$valid_field_attributes)) {
                     } else {
@@ -1057,7 +1060,8 @@ Class ConfigurationService
                 $fieldAttributes = ($attributes["@attributes"]);
                 $fieldAttributesArray = array();
 
-                while (list($key2, $value2) = each($fieldAttributes)) {
+				/** @noinspection PhpAssignmentInConditionInspection */
+				while (list($key2, $value2) = each($fieldAttributes)) {
 
                     if (in_array($key2, self::$valid_field_attributes)) {
                     } else {

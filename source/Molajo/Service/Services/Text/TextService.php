@@ -46,18 +46,6 @@ Class TextService
     }
 
     /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * addLineBreaks
      *
      * changes line breaks to br tags
@@ -73,6 +61,8 @@ Class TextService
 
     /**
      * replaceBuffer
+	 *
+	 * todo: add event after rendering and change this approach
      *
      * Change a value in the buffer
      *
@@ -100,7 +90,7 @@ Class TextService
      */
     public function splitReadMoreText ($text)
     {
-        $pattern = '#<hr\s+id=("|\')system-readmore("|\')\s*\/*>#i';
+		$pattern = '#{readmore}#';
 
         $tagPos = preg_match($pattern, $text);
 
@@ -115,6 +105,19 @@ Class TextService
 
         return (array($introductory_text, $fulltext));
     }
+
+	/**
+	 * snippet - strip HTML and return a short value of text field
+	 *
+	 * @param  $text
+	 *
+	 * @return array
+	 * @since   1.0
+	 */
+	public function snippet ($text)
+	{
+		return substr(strip_tags($text), 0, Services::Registry()->get('Parameters', 'criteria_snippet_length', 200));
+	}
 
     /**
      * smilies - change text smiley values into icons
