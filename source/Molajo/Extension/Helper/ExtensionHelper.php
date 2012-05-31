@@ -166,9 +166,9 @@ Class ExtensionHelper
 
 		$m->set('process_triggers', 0);
 
-		$m->model->query->select($m->model->db->qn('id'));
-		$m->model->query->where($m->model->db->qn('title') . ' = ' . $m->model->db->q($title));
-		$m->model->query->where($m->model->db->qn('catalog_type_id') . ' = ' . (int)$catalog_type_id);
+		$m->model->query->select($m->model->db->qn('a.id'));
+		$m->model->query->where($m->model->db->qn('a.title') . ' = ' . $m->model->db->q($title));
+		$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
 
 		return $m->getData('result');
 	}
@@ -191,8 +191,8 @@ Class ExtensionHelper
 
 		$m->set('process_triggers', 0);
 
-		$m->model->query->select($m->model->db->qn('title'));
-		$m->model->query->where($m->model->db->qn('id') . ' = ' . (int)$extension_instance_id);
+		$m->model->query->select($m->model->db->qn('a.title'));
+		$m->model->query->where($m->model->db->qn('a.id') . ' = ' . (int)$extension_instance_id);
 
 		return $m->getData('result');
 	}

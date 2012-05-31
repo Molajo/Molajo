@@ -759,26 +759,27 @@ Class RegistryService
         return $this;
     }
 
-    /**
-     * getParameters - simulates DBO - interacts with the Model getParameters method
-     *
-     * @return array
-     *
-     * @since    1.0
-     */
-    public function getParameters()
+	/**
+	 * getParameters - simulates DBO - interacts with the Model getParameters method
+	 *
+	 * @param $registry
+	 *
+	 * @return array
+	 * @since    1.0
+	 */
+	public function getData($registry)
     {
         $query_results = array();
 
         /** Retrieve Parameter Registry */
-        $parameters = $this->registry['Parameters'];
-        ksort($parameters);
+        $results = $this->getArray('Parameters');
+        ksort($results);
 
         /** Simulate a recordset */
         $row = new \stdClass();
 
         /** Process all parameters as fields */
-        foreach ($parameters as $key => $value) {
+        foreach ($results as $key => $value) {
             $row->$key = $value;
         }
 
@@ -786,7 +787,6 @@ Class RegistryService
         $query_results[] = $row;
 
         /** Return results to Model */
-
         return $query_results;
     }
 }

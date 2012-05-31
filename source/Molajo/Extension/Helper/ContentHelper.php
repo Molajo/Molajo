@@ -84,6 +84,10 @@ Class ContentHelper
 			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
 
+		/** Save for primary view */
+		Services::Registry()->createRegistry('Content');
+		Services::Registry()->set('Content', 'query_results', $item);
+
 		/** Route Registry */
 		Services::Registry()->set('Parameters', 'content_id', (int)$item->id);
 		Services::Registry()->set('Parameters', 'content_title', $item->title);
@@ -106,6 +110,11 @@ Class ContentHelper
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
 			Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
+
+			/** Save for primary view */
+			$array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
+			Services::Registry()->set('Content', $customFieldName, $array);
+
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}
 
@@ -133,10 +142,9 @@ Class ContentHelper
 			'Categories'
 		);
 
-		/** 404 */
-		if (count($item) == 0) {
-			return Services::Registry()->set('Parameters', 'status_found', false);
-		}
+		/** Save for primary view */
+		Services::Registry()->createRegistry('Category');
+		Services::Registry()->set('Category', 'query_results', $item);
 
 		/** Route Registry with Category Data */
 		Services::Registry()->set('Parameters', 'category_id', (int)$item->id);
@@ -152,6 +160,11 @@ Class ContentHelper
 
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
+
+			/** Save for primary view */
+			$array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
+			Services::Registry()->set('Category', $customFieldName, $array);
+
 			Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}

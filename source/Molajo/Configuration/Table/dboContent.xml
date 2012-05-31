@@ -1,5 +1,5 @@
 <model
-        name="dboRegistry"
+        name="dboContent"
         table="#__dummy"
         primary_key=""
         primary_prefix=""

@@ -131,7 +131,8 @@ Class ClientService
             'gecko', 'navigator', 'mosaic', 'lynx', 'amaya',
             'omniweb', 'avant', 'camino', 'flock', 'aol');
 
-
+		$browser = '';
+		$browser_version = '';
         foreach ($browsers as $browser) {
 
             if (preg_match("#($browser)[/ ]?([0-9.]*)#", $user_agent, $match)) {
