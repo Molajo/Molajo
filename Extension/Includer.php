@@ -102,18 +102,19 @@ class Includer
 		$this->attributes = $attributes;
 
 		$this->getAttributes();
-
+		/**
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 		} else {
 Services::Registry()->copy('RouteParameters', 'Parameters', 'theme*');
 Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 		}
-		/**
+		 */
+
 		echo 'Includer Extension: ' . $this->name . ' Type: ' . $this->type . '<br />';
 		echo 'Attributes from Parsing<pre>';
 		var_dump($this->attributes);
 		echo '</pre>';
-		 */
+
 		/** retrieve the extension that will be used to generate the MVC request */
 		$this->getExtension();
 

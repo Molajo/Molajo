@@ -164,7 +164,7 @@ Class ModelController extends Controller
 		}
 
 		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
-		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', $this->default_data_source);
+		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
@@ -194,6 +194,13 @@ Class ModelController extends Controller
 	 */
 	public function getData($query_object = 'list')
 	{
+		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
+		if (Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase') == 'JDatabase') {
+		} else {
+			$this->query_results = $this->model->$query_object();
+			return $this->query_results;
+		}
+
 		if (in_array($query_object, array('result', 'item', 'list'))) {
 		} else {
 			$query_object = 'list';

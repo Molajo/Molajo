@@ -59,7 +59,7 @@ class DisplayController extends ModelController
     {
         $model_name = $this->get('model_name', '');
         $model_type = $this->get('model_type', 'Content');
-        $model_query_object = $this->get('model_query_object', 'load');
+        $model_query_object = $this->get('model_query_object', 'item');
 
         $table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
@@ -83,12 +83,6 @@ class DisplayController extends ModelController
 
             /** Run Query */
             $this->query_results = $this->getData($model_query_object);
-
-            echo '<pre>';
-            var_dump($this->query_results);
-            echo '</pre>';
-            die;
-
         }
 
         $this->pagination = array();

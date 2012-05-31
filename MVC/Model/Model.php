@@ -138,12 +138,19 @@ class Model
      */
     public function getParameters()
     {
-        if ($this->db == 'Registry') {
-            return $this->db->getParameteters();
-        } else {
-            // throw error
-        }
+		return $this->db->getData('Parameters');
     }
+
+	/**
+	 * retrieves parameters
+	 *
+	 * @return mixed Array or String or Null
+	 * @since   1.0
+	 */
+	public function getContent()
+	{
+		return $this->db->getData('Content');
+	}
 
     /**
      * retrieves JS and CSS assets, metadata for head
@@ -153,11 +160,7 @@ class Model
      */
     public function getAssets()
     {
-        if ($this->db == 'Assets') {
-            return $this->db->getAssets();
-        } else {
-            // throw error
-        }
+		return $this->db->getAssets();
     }
 
     /**
