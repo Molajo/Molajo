@@ -102,7 +102,7 @@ Class ModelController extends Controller
 	/**
 	 * Prepares data needed for the model using an XML table definition
 	 *
-	 * @param string $table
+	 * @param string $file
 	 * @param string $type
 	 *
 	 * @return object
@@ -110,21 +110,21 @@ Class ModelController extends Controller
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($table, $type = null)
+	public function connect($file, $type = null)
 	{
 		if ($type == null) {
 			$type = 'Table';
 		}
 
-		echo 'In connect: ' . $table . ' type: ' . $type . '<br />';
+//echo 'In connect: ' . $file . ' type: ' . $type . '<br />';
 
-		$table_registry_name = ucfirst(strtolower($table)) . ucfirst(strtolower($type));
+		$table_registry_name = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
 
 		if (Services::Registry()->exists($table_registry_name) == true) {
 			$this->table_registry_name = $table_registry_name;
 
 		} else {
-			$this->table_registry_name = ConfigurationService::getFile($table, $type);
+			$this->table_registry_name = ConfigurationService::getFile($file, $type);
 		}
 
 		/** Serialize Model Options */
@@ -233,9 +233,6 @@ Class ModelController extends Controller
 				$query_object
 			);
 		}
-		if ($this->get('table_name') == '#__catalog') {
-			echo $this->get('use_special_joins') . '<br />';
-		}
 
 		/** Adds Select, From and Where query elements for Joins */
 		if ((int)$this->get('use_special_joins') == 1) {
@@ -257,9 +254,6 @@ Class ModelController extends Controller
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
-echo '<pre>';
-var_dump($query_results);
-echo '</pre>';
 
 		if (count($query_results) > 0) {
 
@@ -327,6 +321,10 @@ echo '</pre>';
 		if (count($triggers) > 0) {
 			$this->onAfterReadEvent($triggers);
 		}
+
+		echo '<pre>';
+		var_dump($query_results);
+		echo '</pre>';
 
 		/** Return List */
 		if ($query_object == 'list') {
