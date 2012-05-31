@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License version 2 or later; see LICENSE
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 
@@ -20,157 +20,159 @@ defined('MOLAJO') or die;
  */
 Class WrapViewHelper
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new WrapViewHelper();
-        }
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new WrapViewHelper();
+		}
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
 
-    /**
-     * get
-     *
-     * Get requested wrap_view data
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function get($wrap_view_id = 0)
-    {
-        Services::Registry()->set('Parameters', 'wrap_view_id', (int) $wrap_view_id);
+	/**
+	 * get - Get requested wrap_view data
+	 *
+	 * @param int $wrap_view_id
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function get($wrap_view_id = 0)
+	{
+		Services::Registry()->set('Parameters', 'wrap_view_id', (int)$wrap_view_id);
 
-        $node = Helpers::Extension()->getExtensionNode((int) $wrap_view_id);
+		$node = Helpers::Extension()->getExtensionNode((int)$wrap_view_id);
 
-        Services::Registry()->set('Parameters', 'wrap_view_path_node', $node);
+		Services::Registry()->set('Parameters', 'wrap_view_path_node', $node);
 
-        Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node, 'Parameters'));
-        Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node, 'Parameters'));
+		Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node, 'Parameters'));
+		Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node, 'Parameters'));
 
-        /** Retrieve the query results */
-        $row = Helpers::Extension()->get($wrap_view_id, 'WrapViews', 'Table');
+		/** Retrieve the query results */
+		$item = Helpers::Extension()->get($wrap_view_id, 'WrapViews', 'Table');
 
-        /** 500: not found */
-        if (count($row) == 0) {
+		/** 500: not found */
+		if (count($item) == 0) {
 
-            /** System Default */
-            $wrap_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'Default');
+			/** System Default */
+			$wrap_view_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'Default');
 
-            /** System default */
-            Services::Registry()->set('Parameters', 'wrap_view_id', (int) $wrap_view_id);
+			/** System default */
+			Services::Registry()->set('Parameters', 'wrap_view_id', (int)$wrap_view_id);
 
-            $node = Helpers::Extension()->getExtensionNode((int) $wrap_view_id);
+			$node = Helpers::Extension()->getExtensionNode((int)$wrap_view_id);
 
-            Services::Registry()->set('Parameters', 'wrap_view_path_node', $node);
+			Services::Registry()->set('Parameters', 'wrap_view_path_node', $node);
 
-            Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node, 'Parameters'));
-            Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node, 'Parameters'));
+			Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node, 'Parameters'));
+			Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node, 'Parameters'));
 
-            $row = Helpers::Extension()->get($wrap_view_id, 'WrapView');
+			$item = Helpers::Extension()->get($wrap_view_id, 'WrapView');
 
-            if (count($row) == 0) {
-                Services::Error()->set(500, 'View not found');
+			if (count($item) == 0) {
+				Services::Error()->set(500, 'View not found');
 
-                return false;
-            }
-        }
+				return false;
+			}
+		}
 
-        Services::Registry()->set('Parameters', 'wrap_view_title', $row['title']);
-        Services::Registry()->set('Parameters', 'wrap_view_translation_of_id', (int) $row['translation_of_id']);
-        Services::Registry()->set('Parameters', 'wrap_view_language', $row['language']);
-        Services::Registry()->set('Parameters', 'wrap_view_view_group_id', $row['view_group_id']);
-        Services::Registry()->set('Parameters', 'wrap_view_catalog_id', $row['catalog_id']);
-        Services::Registry()->set('Parameters', 'wrap_view_catalog_type_id', (int) $row['catalog_type_id']);
-        Services::Registry()->set('Parameters', 'wrap_view_catalog_type_title', $row['catalog_types_title']);
+		Services::Registry()->set('Parameters', 'wrap_view_title', $item->title);
+		Services::Registry()->set('Parameters', 'wrap_view_translation_of_id', (int)$item->translation_of_id);
+		Services::Registry()->set('Parameters', 'wrap_view_language', $item->language);
+		Services::Registry()->set('Parameters', 'wrap_view_view_group_id', $item->view_group_id);
+		Services::Registry()->set('Parameters', 'wrap_view_catalog_id', $item->catalog_id);
+		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_id', (int)$item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_title', $item->catalog_types_title);
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * getPath
-     *
-     * Return path for selected Template View
-     *
-     * Expects known path for Theme and Extension
-     *
-     * @param $node
-     * @return bool|string
-     */
-    public function getPath($node)
-    {
-        $plus = '/View/Wrap/' . ucfirst(strtolower($node));
+	/**
+	 * getPath
+	 *
+	 * Return path for selected Template View
+	 *
+	 * Expects known path for Theme and Extension
+	 *
+	 * @param $node
+	 *
+	 * @return bool|string
+	 * @since  1.0
+	 */
+	public function getPath($node)
+	{
+		$plus = '/View/Wrap/' . ucfirst(strtolower($node));
 
-        /** 1. Theme */
-        if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
-            return Services::Registry()->get('Parameters', 'theme_path') . $plus;
-        }
+		/** 1. Theme */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
+		}
 
-        /** 2. Extension */
-        if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
-                return Services::Registry()->get('Parameters', 'extension_path') . $plus;
-        }
+		/** 2. Extension */
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'extension_path') . $plus;
+		}
 
-        /** 3. View */
-        if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
-            return EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node));
-        }
+		/** 3. View */
+		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
+			return EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node));
+		}
 
-        /** 4. MVC */
-        if (file_exists(MVC . $plus . '/Manifest.xml')) {
-            return MVC . $plus;
-        }
+		/** 4. MVC */
+		if (file_exists(MVC . $plus . '/Manifest.xml')) {
+			return MVC . $plus;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * getURLPath
-     *
-     * Return URL path for selected Template View
-     *
-     * @return bool|string
-     * @since 1.0
-     */
-    public function getPathURL($node = false)
-    {
-        $plus = '/View/Wrap/' . ucfirst(strtolower($node));
+	/**
+	 * getURLPath - Return URL path for selected Template View
+	 *
+	 * @param $node
+	 *
+	 * @return bool|string
+	 * @since 1.0
+	 */
+	public function getPathURL($node = false)
+	{
+		$plus = '/View/Wrap/' . ucfirst(strtolower($node));
 
-        /** 1. Theme */
-        if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
-            return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
-        }
+		/** 1. Theme */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
+		}
 
-        /** 2. Extension */
-        if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
-            return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
-        }
+		/** 2. Extension */
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+			return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
+		}
 
-        /** 3. View */
-        if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
-            return EXTENSIONS_VIEWS_URL . '/Wrap/' . ucfirst(strtolower($node));
-        }
+		/** 3. View */
+		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
+			return EXTENSIONS_VIEWS_URL . '/Wrap/' . ucfirst(strtolower($node));
+		}
 
-        /** 4. MVC */
-        if (file_exists(MVC . $plus . '/Manifest.xml')) {
-            return MVC_URL . $plus;
-        }
+		/** 4. MVC */
+		if (file_exists(MVC . $plus . '/Manifest.xml')) {
+			return MVC_URL . $plus;
+		}
 
-        return false;
-    }
+		return false;
+	}
 }
