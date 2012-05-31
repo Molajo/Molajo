@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\MVC\Model;
 
@@ -20,16 +20,6 @@ defined('MOLAJO') or die;
  */
 class ReadModel extends Model
 {
-	/**
-	 * Constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		return parent::__construct();
-	}
-
 	/**
 	 * setBaseQuery
 	 *
@@ -94,7 +84,11 @@ class ReadModel extends Model
 	 *
 	 * Add ACL checking to the Query
 	 *
-	 * @return object
+	 * @param  $primary_prefix
+	 * @param  $primary_key
+	 * @param  $query_object
+	 *
+	 * @return  ReadModel
 	 * @since   1.0
 	 */
 	public function addACLCheck($primary_prefix, $primary_key, $query_object)
@@ -121,11 +115,11 @@ class ReadModel extends Model
 	/**
 	 * useSpecialJoins - Use joins defined in table xml to extend model
 	 *
-	 * @param $joins
-	 * @param $primary_prefix
-	 * @param $query_object
+	 * @param  $joins
+	 * @param  $primary_prefix
+	 * @param  $query_object
 	 *
-	 * @return ReadModel
+	 * @return  ReadModel
 	 * @since   1.0
 	 */
 	public function useSpecialJoins($joins, $primary_prefix, $query_object)
@@ -138,8 +132,6 @@ class ReadModel extends Model
 			$select = $join['select'];
 			$joinTo = $join['jointo'];
 			$joinWith = $join['joinwith'];
-
-//echo  'JOIN: ' . $join_table . ' ' . $alias . ' ' . $select . ' ' . $joinTo . ' ' . $joinWith . '<br />';
 
 			/* Join to table */
 			if (trim($alias) == '') {
@@ -242,11 +234,12 @@ class ReadModel extends Model
 	}
 
 	/**
-	 * getQueryResults
+	 * getQueryResults - Execute query and returns an associative array of data elements
 	 *
-	 * Execute query and returns an associative array of data elements
+	 * @param $columns
+	 * @param $query_object
 	 *
-	 * @return array
+	 * @return ReadModel
 	 * @since   1.0
 	 */
 	public function getQueryResults($columns, $query_object)
@@ -262,7 +255,7 @@ class ReadModel extends Model
 		if (empty($this->query_results)) {
 
 			$this->query_results = array();
-//todo decide how to handle empty recordsets
+//todo decide how to handle empty recordsets (maybe just new/edit?)
 			foreach ($columns as $column) {
 				$this->query_results[$column['name']] = '';
 			}
@@ -272,11 +265,15 @@ class ReadModel extends Model
 	}
 
 	/**
-	 * addCustomFields
+	 * addCustomFields - Populate the custom fields defined by the Table xml with query results
 	 *
-	 * Populate the custom fields defined by the Table xml with query results
+	 * @param $model_name
+	 * @param $customFieldName
+	 * @param $fields
+	 * @param $retrieval_method
+	 * @param $query_results
 	 *
-	 * @return object
+	 * @return mixed
 	 * @since   1.0
 	 */
 	public function addCustomFields($model_name, $customFieldName, $fields, $retrieval_method, $query_results)
@@ -363,12 +360,14 @@ class ReadModel extends Model
 	}
 
 	/**
-	 * addItemChildren
+	 * addItemChildren - Method to append additional data elements needed to the
+	 * 	standard array of elements provided by the data source
 	 *
-	 * Method to append additional data elements needed to the standard
-	 * array of elements provided by the data source
+	 * @param $children
+	 * @param $id
+	 * @param $query_results
+	 * @return mixed
 	 *
-	 * @return array
 	 * @since  1.0
 	 */
 	public function addItemChildren($children, $id, $query_results)
@@ -391,7 +390,6 @@ class ReadModel extends Model
 		}
 
 		/** return array containing primary query and additional data elements */
-
 		return $query_results;
 	}
 }

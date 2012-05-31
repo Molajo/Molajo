@@ -88,18 +88,6 @@ Class ModelController extends Controller
 	}
 
 	/**
-	 * Constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-
-		return $this;
-	}
-
-	/**
 	 * Prepares data needed for the model using an XML table definition
 	 *
 	 * @param string $file
@@ -335,13 +323,14 @@ Class ModelController extends Controller
 
 		/** Schedule onAfterRead Event */
 		if (count($triggers) > 0) {
+			echo 'going into triggers'.'<br />';
 			$this->onAfterReadEvent($triggers);
 		}
-
-		echo '<pre>';
-		var_dump($query_results);
-		echo '</pre>';
-
+/**
+echo '<pre>';
+var_dump($query_results);
+echo '</pre>';
+*/
 		/** Return List */
 		if ($query_object == 'list') {
 			return $this->query_results;
