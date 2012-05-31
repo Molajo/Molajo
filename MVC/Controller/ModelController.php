@@ -110,7 +110,7 @@ Class ModelController extends Controller
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($file, $type = null)
+	public function connect($file = null, $type = null)
 	{
 		if ($type == null) {
 			$type = 'Table';
@@ -118,36 +118,52 @@ Class ModelController extends Controller
 
 //echo 'In connect: ' . $file . ' type: ' . $type . '<br />';
 
-		$table_registry_name = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
+		if ($file == null) {
+			$this->table_registry_name = null;
 
-		if (Services::Registry()->exists($table_registry_name) == true) {
-			$this->table_registry_name = $table_registry_name;
+			$this->set('model_name', '');
+			$this->set('table_name', '#__content');
+			$this->set('primary_key', 'a');
+			$this->set('name_key', 'title');
+			$this->set('primary_prefix', 'a');
+			$this->set('get_customfields', 0);
+			$this->set('get_item_children', 0);
+			$this->set('use_special_joins', 0);
+			$this->set('check_view_level_access', 0);
+			$this->set('process_triggers', 0);
 
 		} else {
-			$this->table_registry_name = ConfigurationService::getFile($file, $type);
-		}
+			$table_registry_name = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
 
-		/** Serialize Model Options */
-		$this->set('model_name',
-			Services::Registry()->get($this->table_registry_name, 'model_name', ''));
-		$this->set('table_name',
-			Services::Registry()->get($this->table_registry_name, 'table_name', '#__content'));
-		$this->set('primary_key',
-			Services::Registry()->get($this->table_registry_name, 'primary_key', 'id'));
-		$this->set('name_key',
-			Services::Registry()->get($this->table_registry_name, 'name_key', 'title'));
-		$this->set('primary_prefix',
-			Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a'));
-		$this->set('get_customfields',
-			Services::Registry()->get($this->table_registry_name, 'get_customfields', 0));
-		$this->set('get_item_children',
-			Services::Registry()->get($this->table_registry_name, 'get_item_children', 0));
-		$this->set('use_special_joins',
-			Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0));
-		$this->set('check_view_level_access',
-			Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
-		$this->set('process_triggers',
-			Services::Registry()->get($this->table_registry_name, 'process_triggers', 0));
+			if (Services::Registry()->exists($table_registry_name) == true) {
+				$this->table_registry_name = $table_registry_name;
+
+			} else {
+				$this->table_registry_name = ConfigurationService::getFile($file, $type);
+			}
+
+			/** Serialize Model Options */
+			$this->set('model_name',
+				Services::Registry()->get($this->table_registry_name, 'model_name', ''));
+			$this->set('table_name',
+				Services::Registry()->get($this->table_registry_name, 'table_name', '#__content'));
+			$this->set('primary_key',
+				Services::Registry()->get($this->table_registry_name, 'primary_key', 'id'));
+			$this->set('name_key',
+				Services::Registry()->get($this->table_registry_name, 'name_key', 'title'));
+			$this->set('primary_prefix',
+				Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a'));
+			$this->set('get_customfields',
+				Services::Registry()->get($this->table_registry_name, 'get_customfields', 0));
+			$this->set('get_item_children',
+				Services::Registry()->get($this->table_registry_name, 'get_item_children', 0));
+			$this->set('use_special_joins',
+				Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0));
+			$this->set('check_view_level_access',
+				Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
+			$this->set('process_triggers',
+				Services::Registry()->get($this->table_registry_name, 'process_triggers', 0));
+		}
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\MVC\\Model\\ReadModel';
