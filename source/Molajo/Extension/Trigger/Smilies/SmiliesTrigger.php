@@ -72,7 +72,7 @@ class SmiliesTrigger extends ContentTrigger
 					if ($value == false) {
 					} else {
 						/** Creates the new 'normal' or special field and populates the value */
-						$fieldValue = $this->addField($field, $name, $value);
+						$fieldValue = $this->saveField($field, $name, $value);
 					}
 				}
 

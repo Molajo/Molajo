@@ -79,7 +79,7 @@ class SnippetTrigger extends ContentTrigger
 
 						/** Creates the new 'normal' or special field and populates the value */
 						$newFieldName = $name . '_' . 'snippet';
-						$fieldValue = $this->addField($field, $newFieldName, $newField);
+						$fieldValue = $this->saveField($field, $newFieldName, $newField);
 					}
 				}
 			}

@@ -90,7 +90,7 @@ class EmailTrigger extends ContentTrigger
                     } else {
 
                         /** Creates the new 'normal' or special field and populates the value */
-                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
                     }
                 }
             }

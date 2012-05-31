@@ -66,11 +66,11 @@ class AuthorTrigger extends ContentTrigger
         $m = new $controllerClass();
         $m->connect('Users');
 
-        $m->model->set('id', $this->query_results->created_by);
-        $m->model->set('get_customfields', 2);
-        $m->model->set('get_item_children', 0);
-        $m->model->set('check_view_level_access', 1);
-        $m->model->set('check_published', 0);
+        $m->set('id', $this->query_results->created_by);
+        $m->set('get_customfields', 2);
+        $m->set('get_item_children', 0);
+        $m->set('check_view_level_access', 1);
+        $m->set('check_published', 0);
 
         $results = $m->getData('item');
 

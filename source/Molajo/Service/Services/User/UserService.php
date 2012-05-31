@@ -80,6 +80,7 @@ Class UserService
 		$m->connect('Users');
 
 		$m->set('id', $this->id);
+
 		$item = $m->getData('item');
 		if ($item == false || count($item) == 0) {
 			throw new \RuntimeException ('User load() query problem');
@@ -160,7 +161,7 @@ Class UserService
 
 		Services::Registry()->rename('UsersParameters', 'UserParameters');
 		Services::Registry()->rename('UsersMetadata', 'UserMetadata');
-
+/**
 		echo 'User<br />';
 		Services::Registry()->get('User', '*');
 
@@ -170,7 +171,7 @@ Class UserService
 		echo '<br />User Metadata<br />';
 		Services::Registry()->get('UserMetadata', '*');
 		die;
-
+*/
 		return $this;
 	}
 }

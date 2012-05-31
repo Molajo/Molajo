@@ -179,8 +179,8 @@ Class ContentHelper
         $m = new $controllerClass();
         $m->connect($datasource, $type);
 
-        $m->model->set('id', (int) $id);
-        $m->model->set('process_triggers', 0);
+        $m->set('id', (int) $id);
+        $m->set('process_triggers', 0);
 
         $row = $m->getData('item');
 

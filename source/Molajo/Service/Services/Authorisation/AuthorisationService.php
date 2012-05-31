@@ -72,7 +72,7 @@ Class AuthorisationService
     {
         $actions = Services::Configuration()->getFile('actions', 'Application');
         if (count($actions) == 0) {
-            return;
+            //error
         }
 
         foreach ($actions->action as $t) {
@@ -86,7 +86,6 @@ Class AuthorisationService
 		while (list($title, $id) = each($items)) {
             Services::Registry()->set('action_to_action_id', $title, (int) $id);
         }
-        Services::Registry()->get('action_to_action_id', '*');
 
         return;
     }
