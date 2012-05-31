@@ -56,10 +56,12 @@ class Controller
 	/**
 	 * Registry containing Table Configuration from XML
 	 *
+	 * Public as it is extracted by the Helper functions
+	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $table_registry_name;
+	public $table_registry_name;
 
 	/**
 	 * Yes/No indicators used for Model decision making
