@@ -123,8 +123,8 @@ echo '</pre>';
         $m = new $controllerClass();
         $m->connect($model, $type);
 
-        $m->model->set('id', (int) $extension_id);
-        $m->model->set('process_triggers', 0);
+        $m->set('id', (int) $extension_id);
+        $m->set('process_triggers', 0);
 
         $row = $m->getData('load');
 
@@ -156,7 +156,7 @@ echo '</pre>';
         $m = new $controllerClass();
         $m->connect('ExtensionInstances');
 
-        $m->model->set('process_triggers', 0);
+        $m->set('process_triggers', 0);
 
         $m->model->query->select($m->model->db->qn('id'));
         $m->model->query->where($m->model->db->qn('title') . ' = ' . $m->model->db->q($title));
@@ -181,7 +181,7 @@ echo '</pre>';
         $m = new $controllerClass();
         $m->connect('ExtensionInstances');
 
-        $m->model->set('process_triggers', 0);
+        $m->set('process_triggers', 0);
 
         $m->model->query->select($m->model->db->qn('title'));
         $m->model->query->where($m->model->db->qn('id') . ' = ' . (int) $extension_instance_id);
@@ -206,7 +206,7 @@ echo '</pre>';
         $m = new $controllerClass();
         $m->connect();
 
-        $m->model->set('process_triggers', 0);
+        $m->set('process_triggers', 0);
 
         $m->model->query->select($m->model->db->qn('a.name'));
 

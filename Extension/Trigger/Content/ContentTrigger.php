@@ -346,7 +346,7 @@ class ContentTrigger extends Trigger
     }
 
     /**
-     * addField adds a field to the 'normal' or special field group
+     * saveField adds a field to the 'normal' or special field group
      *
      * @param $field
      * @param $new_field_name
@@ -355,7 +355,7 @@ class ContentTrigger extends Trigger
      * @return boolean
      * @since  1.0
      */
-    public function addField($field, $new_field_name, $value)
+    public function saveField($field, $new_field_name, $value)
     {
         $name = $field->name;
 

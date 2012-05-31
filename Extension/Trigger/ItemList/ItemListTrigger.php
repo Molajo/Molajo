@@ -84,12 +84,12 @@ class ItemListTrigger extends ContentTrigger
                 $m = new $controllerClass();
                 $m->connect($table);
 
-                $m->model->set('id', $this->query_results->created_by);
+                $m->set('id', $this->query_results->created_by);
 
-                $m->model->set('get_customfields', 0);
-                $m->model->set('use_special_joins', false);
-                $m->model->set('check_view_level_access', false);
-                $m->model->set('get_item_children', false);
+                $m->set('get_customfields', 0);
+                $m->set('use_special_joins', false);
+                $m->set('check_view_level_access', false);
+                $m->set('get_item_children', false);
 
                 $m->model->query->select($m->model->db->qn('a.' . $key));
                 $m->model->query->select($m->model->db->qn('a.' . $value));

@@ -78,12 +78,12 @@ class ReadmoreTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $introductory_name = $name . '_' . 'introductory';
-                        $fieldValue = $this->addField($field, $introductory_name, $newFields[0]);
+                        $fieldValue = $this->saveField($field, $introductory_name, $newFields[0]);
 
                         $fulltext_name = $name . '_' . 'fulltext';
-                        $fieldValue = $this->addField($field, $fulltext_name, $newFields[1]);
+                        $fieldValue = $this->saveField($field, $fulltext_name, $newFields[1]);
 
-						$fieldValue = $this->addField($field, $name, trim($newFields[0]).' '.trim($newFields[1]));
+						$fieldValue = $this->saveField($field, $name, trim($newFields[0]).' '.trim($newFields[1]));
                     }
                 }
             }

@@ -80,7 +80,7 @@ class DateformatsTrigger extends ContentTrigger
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_ccyymmdd';
                         $newFieldValue = str_replace('-', '', $newFieldValue);
-                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
                     }
 
                     /** NN days ago */
@@ -91,7 +91,7 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_n_days_ago';
-                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
                     }
 
                     /** Pretty Date */
@@ -102,7 +102,7 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_pretty_date';
-                        $fieldValue = $this->addField($field, $new_name, $newFieldValue);
+                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
                     }
                 }
             }
