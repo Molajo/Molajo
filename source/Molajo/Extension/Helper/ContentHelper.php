@@ -180,7 +180,7 @@ Class ContentHelper
 		$m->connect($datasource, $type);
 
 		$m->set('id', (int)$id);
-		$m->set('process_triggers', 0);
+		$m->set('process_triggers', 1);
 
 		$item = $m->getData('item');
 

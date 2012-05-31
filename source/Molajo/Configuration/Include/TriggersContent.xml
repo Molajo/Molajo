@@ -1,6 +1,8 @@
-<trigger name="Author"/>
+<trigger name="Createdby"/>
 <trigger name="Email"/>
 <trigger name="Readmore"/>
 <trigger name="Smilies"/>
+<trigger name="Datefields"/>
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
+<trigger name="Readmore"/>

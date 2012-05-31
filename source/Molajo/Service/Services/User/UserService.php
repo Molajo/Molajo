@@ -71,9 +71,6 @@ Class UserService
 	 */
 	protected function load()
 	{
-		/** Initialize */
-		Services::Registry()->deleteRegistry('User');
-
 		/** Retrieve User Data  */
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
@@ -131,6 +128,9 @@ Class UserService
 		/** User Activity */
 		$activity = $item->Useractivity;
 		unset($item->Useractivity);
+
+        /** Initialize */
+		Services::Registry()->deleteRegistry('User');
 
 		/** Retrieve each field */
 		foreach (get_object_vars($item) as $key => $value) {

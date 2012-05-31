@@ -447,13 +447,6 @@ echo 'File: ' . $file . ' Type: ' . $type . '<br />';
         }
         Services::Registry()->set($registryName, 'check_view_level_access', $value);
 
-        $value = (int) $xml['check_published'];
-        if ($value == 1) {
-        } else {
-            $value = 0;
-        }
-        Services::Registry()->set($registryName, 'check_published', $value);
-
         $value = (int) $xml['process_triggers'];
         if ($value == 1) {
         } else {
