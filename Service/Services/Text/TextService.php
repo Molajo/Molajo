@@ -126,7 +126,11 @@ Class TextService
 
 			/** add wrap for each */
 			foreach ($matches[1] as $match) {
-				$pullquote[] = strip_tags($match);
+				$temp = strip_tags($match);
+				if (trim($temp) == '') {
+				} else {
+					$pullquote[] = $temp;
+				}
 			}
 		}
 

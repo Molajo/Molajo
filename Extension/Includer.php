@@ -78,6 +78,9 @@ class Includer
 
 		Services::Registry()->createRegistry('Include');
 
+		Services::Registry()->set('Parameters', 'includer_name', $this->name);
+		Services::Registry()->set('Parameters', 'includer_type', $this->type);
+
 		return;
 	}
 
@@ -153,76 +156,80 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 	protected function getAttributes()
 	{
 		if (count($this->attributes) > 0) {
+		} else {
+			return;
+		}
 
-			//todo filter input appropriately
-			foreach ($this->attributes as $name => $value) {
+		//todo filter input appropriately
+		foreach ($this->attributes as $name => $value) {
 
-				/** Name used by includer for extension */
-				if ($name == 'name' || $name == 'title') {
-					Services::Registry()->set('Parameters', 'extension_title', $value);
+			/** Name used by includer for extension */
+			if ($name == 'name' || $name == 'title') {
+				Services::Registry()->set('Parameters', 'extension_title', $value);
 
-					/** Used to extract a list of extensions for inclusion */
-				} elseif ($name == 'tag') {
-					$this->tag = $value;
+				/** Used to extract a list of extensions for inclusion */
+			} elseif ($name == 'tag') {
+				$this->tag = $value;
 
-					/** Template */
-				} elseif ($name == 'template' || $name == 'template_view_title'
-					|| $name == 'template_view' || $name == 'template_view'
-				) {
+				/** Template */
+			} elseif ($name == 'template' || $name == 'template_view_title'
+				|| $name == 'template_view' || $name == 'template_view'
+			) {
 
-					$template_id = Helpers::Extension()
-						->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
+				$template_id = Helpers::Extension()
+					->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
 
-					if ((int)$template_id == 0) {
-					} else {
-						Services::Registry()->set('Parameters', 'template_view_id', $template_id);
-					}
-
-				} elseif ($name == 'template_view_css_id' || $name == 'template_css_id'
-					|| $name == 'template_id'
-				) {
-
-					Services::Registry()->set('Parameters', 'template_view_css_id', $value);
-
-				} elseif ($name == 'template_view_css_class' || $name == 'template_css_class'
-					|| $name == 'template_class'
-				) {
-
-					Services::Registry()->set('Parameters', 'template_view_css_class', $value);
-
-					/** Wrap */
-				} elseif ($name == 'wrap' || $name == 'wrap_view_title'
-					|| $name == 'wrap_view' || $name == 'wrap_view'
-				) {
-
-					$wrap_id = Helpers::Extension()
-						->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
-
-					if ((int)$wrap_id == 0) {
-					} else {
-						Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
-					}
-
-				} elseif ($name == 'wrap_view_css_id' || $name == 'wrap_css_id'
-					|| $name == 'wrap_id'
-				) {
-
-					Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
-
-				} elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class'
-					|| $name == 'wrap_class'
-				) {
-
-					Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
-
-					/** Model */
-				} elseif ($name == 'model_name' || $name == 'model_type' || $name == "model_query_object") {
-					Services::Registry()->set('Parameters', $name, $value);
-
+				if ((int)$template_id == 0) {
 				} else {
-					/** For security reasons, other parameters must override and match defined parameter values */
-					Services::Registry()->set('Parameters', $name, $value, true);
+					Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 				}
+
+			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id'
+				|| $name == 'template_id'
+			) {
+
+				Services::Registry()->set('Parameters', 'template_view_css_id', $value);
+
+			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class'
+				|| $name == 'template_class'
+			) {
+
+				Services::Registry()->set('Parameters', 'template_view_css_class', $value);
+
+				/** Wrap */
+			} elseif ($name == 'wrap' || $name == 'wrap_view_title'
+				|| $name == 'wrap_view' || $name == 'wrap_view'
+			) {
+				$wrap_id = Helpers::Extension()
+					->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
+
+				if ((int)$wrap_id == 0) {
+				} else {
+					Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
+				}
+
+			} elseif ($name == 'wrap_view_css_id' || $name == 'wrap_css_id'
+				|| $name == 'wrap_id'
+			) {
+
+				Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
+
+			} elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class'
+				|| $name == 'wrap_class'
+			) {
+
+				Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
+
+				/** Model */
+			} elseif ($name == 'value') {
+				Services::Registry()->set('Parameters', 'model_parameter', $value);
+
+			} elseif ($name == 'model_name' || $name == 'model_type' || $name == "model_query_object") {
+				Services::Registry()->set('Parameters', $name, $value);
+
+			} else {
+				/** For security reasons, other parameters must override and match defined parameter values */
+				Services::Registry()->set('Parameters', $name, $value, true);
 			}
 		}
 	}

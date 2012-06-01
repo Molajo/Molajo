@@ -122,6 +122,7 @@ Class ModelController extends Controller
 			$this->set('process_triggers', 0);
 
 		} else {
+
 			$table_registry_name = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
 
 			if (Services::Registry()->exists($table_registry_name) == true) {
@@ -200,12 +201,12 @@ Class ModelController extends Controller
 
 		if (Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase') == 'JDatabase') {
 		} else {
-			$type = null;
-			if ($this->get('model_type') == 'Table') {
+			$model_parameter = null;
+			if ($this->get('model_parameter') == '') {
 			} else {
-				$type = $this->get('model_type');
+				$model_parameter = $this->get('model_parameter');
 			}
-			$this->query_results = $this->model->$query_object($type);
+			$this->query_results = $this->model->$query_object($model_parameter);
 			return $this->query_results;
 		}
 
