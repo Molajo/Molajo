@@ -334,7 +334,7 @@ Class ParseService
                 $this->include_request[$i]['replace'] = $entireIncludeStatement;
 
                 $this->include_request[$i]['attributes']['wrap_view'] = $name;
-                $this->include_request[$i]['attributes']['wrap_model_query_object'] = $value;
+                $this->include_request[$i]['attributes']['model_query_object'] = $value;
 
                 /** process any remaining parameters pairs in normal processing below */
                 $includerType = '{}{}{}{do not reprocess}{}{}{}';

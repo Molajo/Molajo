@@ -107,6 +107,35 @@ Class TextService
     }
 
 	/**
+	 * pullquotes - searches for and returns pullquotes
+	 *
+	 * @param  $text
+	 *
+	 * @return array
+	 * @since   1.0
+	 */
+	public function pullquotes ($text)
+	{
+		$pattern = '/{pullquote}(.*){\/pullquote}/';
+
+		preg_match_all($pattern, $text, $matches);
+
+		$pullquote = array();
+		if (count($matches) == 0) {
+		} else {
+
+			/** add wrap for each */
+			foreach ($matches[1] as $match) {
+				$pullquote[] = strip_tags($match);
+			}
+		}
+
+		$text = str_replace($matches[0], $matches[1], $text);
+
+		return array($pullquote, $text);
+	}
+
+	/**
 	 * snippet - strip HTML and return a short value of text field
 	 *
 	 * @param  $text

@@ -53,22 +53,15 @@ Class WrapIncluder extends Includer
     {
         Services::Registry()->set('Parameters', 'extension_title', 'Wrap');
 
-        $wrap_this = Services::Registry()->get('Parameters', 'wrap_model_query_object');
-        if (substr(trim($wrap_this), 0, 1) == '{'
-            && substr(trim($wrap_this), strlen(trim($wrap_this)) - 1, 1) == '}'
-        ) {
-            $value = trim(substr(trim($wrap_this), 1, strlen(trim($wrap_this)) - 2));
-            $wrap_this = $value;
-        }
-
         Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
 
         Services::Registry()->merge('Configuration', 'Parameters', true);
 
-        /* Yes, this is done before, too. Get over it or fix it. */
-        Services::Registry()->set('Parameters', 'model_name', 'Wraps');
-        Services::Registry()->set('Parameters', 'model_type', 'Table');
-        Services::Registry()->set('Parameters', 'model_query_object', $wrap_this);
+        /* Set Model parameters */
+        Services::Registry()->set('Parameters', 'model_name', 'dboTriggerdata');
+		$model = Services::Registry()->get('Parameters', 'model', '');
+        Services::Registry()->set('Parameters', 'model_type', $model);
+        Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
 
         /** Wrap  */
         Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));

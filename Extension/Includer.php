@@ -98,23 +98,23 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
-//		/** attributes from <include:type */
+		/** attributes from <include:type */
 		$this->attributes = $attributes;
 
 		$this->getAttributes();
-		/**
+/**
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 		} else {
 Services::Registry()->copy('RouteParameters', 'Parameters', 'theme*');
 Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 		}
-		 */
+
 
 		echo 'Includer Extension: ' . $this->name . ' Type: ' . $this->type . '<br />';
 		echo 'Attributes from Parsing<pre>';
 		var_dump($this->attributes);
 		echo '</pre>';
-
+*/
 		/** retrieve the extension that will be used to generate the MVC request */
 		$this->getExtension();
 
@@ -214,9 +214,6 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 				) {
 
 					Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
-
-				} elseif ($name == 'wrap_model_query_object') {
-					Services::Registry()->set('Parameters', 'wrap_model_query_object', $value);
 
 					/** Model */
 				} elseif ($name == 'model_name' || $name == 'model_type' || $name == "model_query_object") {

@@ -1,5 +1,7 @@
 <trigger name="Createdby"/>
 <trigger name="Email"/>
+<trigger name="Video"/>
+<trigger name="Pullquote"/>
 <trigger name="Readmore"/>
 <trigger name="Smilies"/>
 <trigger name="Datefields"/>
