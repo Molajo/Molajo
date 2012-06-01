@@ -70,29 +70,35 @@ class PullquoteTrigger extends ContentTrigger
 
 					/** search for pullquotes statements, remove from text */
 					$results = Services::Text()->pullquotes($fieldValue);
-					if ($results == false) {
-						return true;
-					}
 
-					/** Save new pullquote array */
-					$pullquote = $results[0];
-					$newName = $name . '_pullquote';
-					$this->saveField($field, $newName, $pullquote);
+					if ($results == false || $results == '') {
+					} else {
 
-					/** Save to Registry - pullquote */
-					$temp = '';
-					foreach ($pullquote as $quote) {
+						/** Save new pullquote array */
+						$pullquote = $results[0];
+
+						$newName = $name . '_pullquote';
+						$this->saveField($field, $newName, $pullquote);
+
+						/** Save to Registry - pullquote */
+						$temp = '';
+						foreach ($pullquote as $quote) {
+							if ($temp == '') {
+							} else {
+								$temp .= '<br />';
+							}
+							$temp .= $quote;
+						}
+
 						if ($temp == '') {
 						} else {
-							$temp .= '<br />';
-						}
-						$temp .= $quote;
-					}
-					Services::Registry()->set('Trigger', 'Pullquote', $temp);
+							Services::Registry()->set('Trigger', $newName, $temp);
 
-					/** Replace existing text */
-					$fieldValue = $results[1];
-					$this->saveField($field, $name, $fieldValue);
+							/** Replace existing text */
+							$fieldValue = $results[1];
+							$this->saveField($field, $name, $fieldValue);
+						}
+					}
 				}
             }
         }

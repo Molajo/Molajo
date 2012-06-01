@@ -74,11 +74,13 @@ class VideoTrigger extends ContentTrigger
 					if (count($matches) == 0) {
 					} else {
 
-						/** add wrap for each */
+						/** add wrap for each video and save video in trigger registry */
+						$i = 0;
+
 						foreach ($matches[0] as $iframe) {
-							$video = '<include:wrap name=Video {'
-								. $iframe
-								. '} />';
+							$element = 'Video'.$i++;
+							$video = '<include:wrap name=Video value='.$element.'/>';
+							Services::Registry()->set('Trigger', $element, $iframe);
 							$fieldValue = str_replace($iframe, $video, $fieldValue);
                     	}
 

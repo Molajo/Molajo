@@ -40,15 +40,35 @@ Class ParseService
      */
     protected $sequence = array();
 
-    /**
-     * $final
+	/**
+	 * $final
+	 *
+	 * Final include types -- used to for final iteration of parsing
+	 *
+	 * @var array
+	 * @since 1.0
+	 */
+	protected $final = array();
+
+	/**
+	 * $exclude_until_final
+	 *
+	 * Used to exclude from parsing for all iterations except the final processing
+	 *
+	 * @var array
+	 * @since 1.0
+	 */
+	protected $exclude_until_final = array();
+
+	/**
+     * $final_indicator
      *
      * Indicator of final processing for includes
      *
      * @var boolean
      * @since 1.0
      */
-    protected $final = false;
+    protected $final_indicator = false;
 
     /**
      * $include_request
@@ -146,27 +166,46 @@ Class ParseService
     public function process()
     {
         /** Retrieve overrides */
-        $sequenceXML = Services::Registry()->get('Override', 'sequence_xml', false);
-        $finalXML = Services::Registry()->get('Override', 'final_xml', false);
+        $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
+        $overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
 
         /**
          *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
-        if ($finalXML === false) {
+        if ($overrideIncludesPageXML === false) {
             $sequence = Services::Configuration()->getFile('includes-page', 'Application');
         } else {
-            $sequence = $sequenceXML;
+            $sequence = $overrideIncludesPageXML;
         }
 
         foreach ($sequence->include as $next) {
             $this->sequence[] = (string) $next;
         }
 
-        /** Before Event */
-//Services::Event()->schedule('onBeforeRender');
+		/** Load final xml in order to remove from search for loop during initial runs */
+		if ($overrideIncludesFinalXML === false) {
+			$final = Services::Configuration()->getFile('includes-final', 'Application');
+		} else {
+			$final = $overrideIncludesFinalXML;
+		}
+		foreach ($final->include as $next) {
+			$sequence = (string) $next;
+			$this->final[] = (string) $next;
 
-        $this->final = false;
+			if (stripos($sequence, ':')) {
+				$includeName = substr($sequence, 0, strpos($sequence, ':'));
+			} else {
+				$includeName = $sequence;
+			}
+
+			$this->exclude_until_final[] = $includeName;
+		}
+
+        /** Before Event */
+		Services::Event()->schedule('onBeforeRender');
+
+        $this->final_indicator = false;
 
         /** Save parameters for the primary route so that Includer / MVC can use Parameters Registry */
         Services::Registry()->copy('Parameters', 'RouteParameters');
@@ -178,25 +217,22 @@ Class ParseService
          *  Final Includers: Now, the theme, head, messages, and defer includes run
          *      This process also removes <include values not found
          */
-        if ($finalXML === false) {
-            $sequence = Services::Configuration()->getFile('includes-final', 'Application');
-        } else {
-            $sequence = $finalXML;
-        }
-
         $this->sequence = array();
 
-        foreach ($sequence->include as $next) {
+        foreach ($this->final as $next) {
             if ($next == 'message') {
                 $messages = Services::Message()->get('count');
                 if ((int) $messages == 0) {
                 } else {
-                    $this->sequence[] = (string) $next;
+                    $this->sequence[] = $next;
                 }
             } else {
-                $this->sequence[] = (string) $next;
+                $this->sequence[] = $next;
             }
         }
+
+		/** initialize so it is no longer used to exclude this set of include values */
+		$this->exclude_until_final = array();
 
         /** Saved during class entry */
         Services::Registry()->copy('RouteParameters', 'Parameters');
@@ -213,7 +249,7 @@ Class ParseService
             // ERROR
         }
 
-        $this->final = true;
+        $this->final_indicator = true;
 
         $body = $this->renderLoop($body);
 
@@ -301,44 +337,14 @@ Class ParseService
 
         preg_match_all('#<include:(.*)\/>#iU', $body, $matches);
 
+		$skipped_final_include_type = false;
+
         if (count($matches) == 0) {
             return;
         }
 
         foreach ($matches[1] as $includeStatement) {
-
-            $parts = array();
-            $found_one = false;
             $includerType = '';
-
-            $entireIncludeStatement = $includeStatement;
-
-            if (strtolower(substr(trim($includeStatement), 0, 4)) == 'wrap') {
-
-                $includeStatement = substr(trim($includeStatement), 4, 99999);
-
-                $temp = substr(trim($includeStatement), strpos(trim($includeStatement), 'name=') + 5, 99999);
-                $name = substr(trim($temp), 0, strpos(trim($temp), ' '));
-
-                $replace = 'name=' . $name;
-                $includeStatement = str_replace($replace, '', $includeStatement);
-
-                $value = substr(trim($includeStatement),
-                    strpos(trim($includeStatement), '{'),
-                    strpos(trim($includeStatement), '}') + 1);
-
-                $replace = $value;
-                $includeStatement = str_replace($replace, '', $includeStatement);
-
-                $this->include_request[$i]['name'] = 'wrap';
-                $this->include_request[$i]['replace'] = $entireIncludeStatement;
-
-                $this->include_request[$i]['attributes']['wrap_view'] = $name;
-                $this->include_request[$i]['attributes']['model_query_object'] = $value;
-
-                /** process any remaining parameters pairs in normal processing below */
-                $includerType = '{}{}{}{do not reprocess}{}{}{}';
-            }
 
             $parts = array();
             $temp = explode(' ', $includeStatement);
@@ -354,40 +360,54 @@ Class ParseService
             $countAttributes = 0;
 
             if (count($parts) > 0) {
+
+				$includerType = '';
                 foreach ($parts as $part) {
 
                     /** 1st part is the Includer Command */
                     if ($includerType == '') {
                         $includerType = $part;
 
-                        $this->include_request[$i]['name'] = $includerType;
-                        $this->include_request[$i]['replace'] = $entireIncludeStatement;
-                    }
+						/** Exclude the final include types */
+						if (in_array($part, $this->exclude_until_final)) {
+							$skipped_final_include_type = true;
 
-                    /** Includer Attributes */
-                    $attributes = str_replace('"', '', $part);
+						} else {
+							$this->include_request[$i]['name'] = $includerType;
+							$this->include_request[$i]['replace'] = $includeStatement;
+							$skipped_final_include_type = false;
+						}
 
-                    if (trim($attributes) == '') {
-                    } else {
+                    } elseif ($skipped_final_include_type == false) {
 
-                        /** Associative array of attributes */
-                        $pair = array();
-                        $pair = explode('=', $attributes);
-                        if (count($pair) == 2) {
-                            if ($pair[0] == $includerType) {
-                            } else {
-                                $countAttributes++;
+						/** Includer Attributes */
+						$attributes = str_replace('"', '', $part);
 
-                                $this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
-                            }
-                        }
-                    }
+						if (trim($attributes) == '') {
+						} else {
+
+							/** Associative array of attributes */
+							$pair = array();
+							$pair = explode('=', $attributes);
+
+							$countAttributes++;
+
+							$this->include_request[$i]['attributes'][$pair[0]] = $pair[1];
+						}
+					}
                 }
-                if ($countAttributes == 0) {
-                    $this->include_request[$i]['attributes'] = array();
-                }
+
+				if ($skipped_final_include_type == false) {
+
+					/** Add empty array entry when no attributes */
+					if ($countAttributes == 0) {
+						$this->include_request[$i]['attributes'] = array();
+					}
+
+					/** Increment count for next */
+					$i++;
+				}
             }
-            $i++;
         }
 
         return;

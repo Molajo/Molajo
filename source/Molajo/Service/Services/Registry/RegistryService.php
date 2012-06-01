@@ -778,9 +778,6 @@ Class RegistryService
 			return $this->get($registry, $key);
 		}
 
-
-//echo 'Registry: '.$registry.' Key: '.$key.'<br />';
-
 		/** Retrieve registry and return as a recordset */
 		if ($key == null) {
 			$results = $this->get($registry);

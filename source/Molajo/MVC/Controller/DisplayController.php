@@ -57,21 +57,27 @@ class DisplayController extends ModelController
 	 */
 	public function display()
 	{
+		$includer_type = $this->get('includer_type', '');
+		$includer_name = $this->get('includer_name', '');
+
 		$model_name = $this->get('model_name', '');
-		$model_type = $this->get('model_type', 'Content');
+		$model_type = $this->get('model_type', '');
+		$model_parameter = $this->get('model_parameter', '');
 		$model_query_object = $this->get('model_query_object', 'item');
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 /**
-		echo 'Table Registry Name ' . $table_registry_name . '<br />';
+echo 'Table Registry Name ' . $table_registry_name . '<br />';
 
-		echo 'Model Name ' . $model_name . '<br />'
-			. 'Model Type:  ' . $model_type . '<br />'
-			. 'Table Registry Name ' . $table_registry_name . '<br />'
-			. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
-		$this->get('*');
+echo 'Includer Type '. $includer_type .'<br />';
+echo 'Includer Name '. $includer_name .'<br />';
+
+echo 'Model Name ' . $model_name . '<br />'
+	. 'Model Type:  ' . $model_type . '<br />'
+	. 'Table Registry Name ' . $table_registry_name . '<br />'
+	. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
+$this->get('*');
 */
-
 		if ($model_name == '') {
 			$this->query_results = array();
 
@@ -106,8 +112,8 @@ echo '</pre>';
 			return '';
 		}
 
-		if (strtolower($model_name) == 'wraps') {
-			$renderedOutput = $model_query_object;
+		if (strtolower($includer_name) == 'wrap') {
+			$renderedOutput = $this->query_results;
 
 			/** Template View */
 		} else {
