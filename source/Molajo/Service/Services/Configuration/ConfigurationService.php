@@ -294,7 +294,7 @@ Class ConfigurationService
      */
     public static function getFile($file, $type = 'Application')
     {
-echo 'File: ' . $file . ' Type: ' . $type . '<br />';
+//echo 'File: ' . $file . ' Type: ' . $type . '<br />';
 
         if ($type == 'Application' || $type == 'Language') {
 

@@ -760,22 +760,35 @@ Class RegistryService
     }
 
 	/**
-	 * getParameters - simulates DBO - interacts with the Model getParameters method
+	 * getData - simulates DBO - interacts with the Model getParameters method
 	 *
 	 * @param $registry
+	 * @param $element
+	 * @param $single_result
 	 *
 	 * @return array
 	 * @since    1.0
 	 */
-	public function getData($registry)
+	public function getData($registry, $key = null, $single_result = false)
     {
         $query_results = array();
 
-        /** Retrieve Parameter Registry */
-        $results = $this->getArray('Parameters');
-        ksort($results);
+        /** Retrieve Parameter Registry and return as a result */
+		if ($single_result == true) {
+			return $this->get($registry, $key);
+		}
 
-        /** Simulate a recordset */
+
+//echo 'Registry: '.$registry.' Key: '.$key.'<br />';
+
+		/** Retrieve registry and return as a recordset */
+		if ($key == null) {
+			$results = $this->get($registry);
+		} else {
+			$results = $this->get($registry, $key);
+		}
+
+		/** Simulate a recordset */
         $row = new \stdClass();
 
         /** Process all parameters as fields */

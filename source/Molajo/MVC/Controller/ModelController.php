@@ -110,6 +110,7 @@ Class ModelController extends Controller
 			$this->table_registry_name = null;
 
 			$this->set('model_name', '');
+			$this->set('model_type', $type);
 			$this->set('table_name', '#__content');
 			$this->set('primary_key', 'a');
 			$this->set('name_key', 'title');
@@ -130,9 +131,10 @@ Class ModelController extends Controller
 				$this->table_registry_name = ConfigurationService::getFile($file, $type);
 			}
 
-			/** Serialize Model Options */
+			/** Serialize Options */
 			$this->set('model_name',
 				Services::Registry()->get($this->table_registry_name, 'model_name', ''));
+			$this->set('model_type', $type);
 			$this->set('table_name',
 				Services::Registry()->get($this->table_registry_name, 'table_name', '#__content'));
 			$this->set('primary_key',
@@ -195,9 +197,15 @@ Class ModelController extends Controller
 	public function getData($query_object = 'list')
 	{
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
+
 		if (Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase') == 'JDatabase') {
 		} else {
-			$this->query_results = $this->model->$query_object();
+			$type = null;
+			if ($this->get('model_type') == 'Table') {
+			} else {
+				$type = $this->get('model_type');
+			}
+			$this->query_results = $this->model->$query_object($type);
 			return $this->query_results;
 		}
 
@@ -211,7 +219,7 @@ Class ModelController extends Controller
 
 		/** Schedule onBeforeRead Event */
 		if (count($triggers) > 0) {
-			//$this->onBeforeReadEvent($triggers);
+			$this->onBeforeReadEvent($triggers);
 		}
 
 		/** Base query */
@@ -330,7 +338,6 @@ Class ModelController extends Controller
 
 		/** Schedule onAfterRead Event */
 		if (count($triggers) > 0) {
-			echo 'going into triggers'.'<br />';
 			$this->onAfterReadEvent($triggers);
 		}
 /**

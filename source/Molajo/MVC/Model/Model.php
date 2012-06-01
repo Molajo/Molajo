@@ -116,49 +116,66 @@ class Model
     }
 
     /**
-     * retrieves messages
+     * retrieves messages from Messages dbo
+	 *
+	 * @param null $model_type
      *
      * @return mixed Array or String or Null
      * @since   1.0
      */
-    public function getMessages()
+    public function getMessages($model_type = null)
     {
-        if ($this->db == 'Messages') {
-            return $this->db->getMessages();
-        } else {
-            // throw error
-        }
+		return $this->db->getMessages();
     }
 
     /**
-     * retrieves parameters
+     * retrieves parameters from Registry DBO
+	 *
+	 * @param null $model_type
      *
      * @return mixed Array or String or Null
      * @since   1.0
      */
-    public function getParameters()
+    public function getParameters($model_type = null)
     {
-		return $this->db->getData('Parameters');
+		return $this->db->getData('Parameters', $model_type);
     }
 
 	/**
-	 * retrieves parameters
+	 * retrieves saved content query_results from Content Registry
+	 *
+	 * @param null $model_type
 	 *
 	 * @return mixed Array or String or Null
 	 * @since   1.0
 	 */
-	public function getContent()
+	public function getContent($model_type = 'query_results')
 	{
-		return $this->db->getData('Content');
+		return $this->db->getData('Content', 'query_results');
+	}
+
+	/**
+	 * retrieves result (single element) from Trigger Registry
+	 *
+	 * @param null $model_type
+	 *
+	 * @return mixed Array or String or Null
+	 * @since   1.0
+	 */
+	public function getTriggerdata($model_type = null)
+	{
+		return $this->db->getData('Trigger', $model_type, true);
 	}
 
     /**
-     * retrieves JS and CSS assets, metadata for head
+     * retrieves JS and CSS assets, metadata for head from Asset Registry
+	 *
+	 * @param null $model_type
      *
      * @return mixed Array or String or Null
      * @since   1.0
      */
-    public function getAssets()
+    public function getAssets($model_type = null)
     {
 		return $this->db->getAssets();
     }
