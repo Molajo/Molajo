@@ -1,6 +1,6 @@
 {
     "1":{
-        "display_view_on_no_results":"",
+        "criteria_display_view_on_no_results":"",
         "catalog_type_id":"",
 
         "criteria_enable_draft_save":"",
@@ -60,7 +60,7 @@
         "form_model_query_object":""
     },
     "2":{
-        "display_view_on_no_results":"",
+        "criteria_display_view_on_no_results":"",
         "catalog_type_id":"",
 
         "criteria_enable_draft_save":"",

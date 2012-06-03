@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<list
-        name="application"
-        table="Applications"
-        key="id"
-        value="name"
-        view_access="0"
-        registry="ListApplications"
-        />

@@ -1,4 +1,4 @@
-<field name="display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
+<field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
 
 <field name="criteria_asset_priority" type="integer" null="1" default="400" values=""/>
 

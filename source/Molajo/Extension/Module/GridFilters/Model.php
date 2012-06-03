@@ -42,39 +42,5 @@ Class ModuleGridFiltersModel extends Model
      */
     public function getData()
     {
-        /**
-         *  Retrieve Filters from Parameters for Component
-         */
-        $filters = Services::Registry()->get('ExtensionParameters', 'filters');
-
-        $filterArray = explode(',', $filters);
-
-        /**
-         *  Model Helper: MolajoExtensionModelHelper extends ModelHelper
-         */
-        $extensionName = Application::Helper()->formatNameForClass($this->get('extension_instance_name'));
-        $helperClass = 'Molajo' . $extensionName . 'ModelHelper';
-        if (class_exists($helperClass)) {
-        } else {
-            $helperClass = 'ModelHelper';
-        }
-        $h = new $helperClass();
-
-        /**
-         *  Get list and return results
-         */
-        $this->data = array();
-        foreach ($filterArray as $filter) {
-
-            $row = new \stdClass();
-
-            $row->name = $filter;
-            $row->list = $h->getList($filter);
-            $row->selected = ''; //get from user state
-
-            $this->data[] = $row;
-        }
-
-        return $this->data;
     }
 }

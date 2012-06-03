@@ -35,7 +35,7 @@
         "error_404_message":"Page not found",
         "error_403_message":"Not authorised",
 
-        "display_view_on_no_results":"1",
+        "criteria_display_view_on_no_results":"1",
         "catalog_type_id":"10000",
         "extension_catalog_type_id":"1050",
 
@@ -168,7 +168,7 @@
         "error_404_message":"Page not found",
         "error_403_message":"Not authorised",
 
-        "display_view_on_no_results":"1",
+        "criteria_display_view_on_no_results":"1",
         "catalog_type_id":"10000",
         "extension_catalog_type_id":"1050",
 

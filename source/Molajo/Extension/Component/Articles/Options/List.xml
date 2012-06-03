@@ -1,7 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <model
         name="ArticlesList"
-        table="#__extension_instances"
+        catalog_type_id="10000"
+        table="#__content"
         primary_key="id"
+        name_key="title"
         primary_prefix="a"
         get_customfields="1"
         get_item_children="0"
@@ -11,33 +14,32 @@
     <table>
         <item>
             <fields>
-                <include name="FieldsExtensionInstance"/>
+                <include name="FieldsContent"/>
             </fields>
             <joins>
-                <include name="JoinsExtensionInstance"/>
+                <include name="JoinsContent"/>
             </joins>
             <foreignkeys>
-                <include name="ForeignKeysExtensionInstance"/>
+                <include name="ForeignkeysContent"/>
             </foreignkeys>
             <children>
-                <include name="ChildrenExtensionInstance"/>
+                <include name="ChildrenContent"/>
             </children>
             <triggers>
-                <include name="TriggersExtensionInstance"/>
+                <include name="TriggersContent"/>
             </triggers>
             <customfields>
                 <customfield name="customfields">
-                    <field name="example_of_article_only_field" type="int" null="1" default="1"/>
+                    <include name="CustomfieldsContent"/>
+                    <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                 </customfield>
                 <customfield name="metadata">
                     <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
                     <include name="ParametersItem"/>
-                    <include name="ParametersList"/>
                 </customfield>
             </customfields>
         </item>
     </table>
 </model>
-

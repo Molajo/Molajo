@@ -90,27 +90,24 @@ Class ModelController extends Controller
 	/**
 	 * Prepares data needed for the model using an XML table definition
 	 *
-	 * @param string $file
-	 * @param string $type
+	 * @param string $model_name
+	 * @param string $model_type
 	 *
 	 * @return object
 	 *
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($file = null, $type = null)
+	public function connect($model_name = null, $model_type = 'Table')
 	{
-		if ($type == null) {
-			$type = 'Table';
-		}
 
-//echo 'In connect: ' . $file . ' type: ' . $type . '<br />';
+//echo 'In connect: File: ' . $model_name . ' type: ' . $model_type . '<br />';
 
-		if ($file == null) {
+		if ($model_name == null) {
 			$this->table_registry_name = null;
 
 			$this->set('model_name', '');
-			$this->set('model_type', $type);
+			$this->set('model_type', $model_type);
 			$this->set('table_name', '#__content');
 			$this->set('primary_key', 'a');
 			$this->set('name_key', 'title');
@@ -123,19 +120,19 @@ Class ModelController extends Controller
 
 		} else {
 
-			$table_registry_name = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
+			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
 			if (Services::Registry()->exists($table_registry_name) == true) {
 				$this->table_registry_name = $table_registry_name;
 
 			} else {
-				$this->table_registry_name = ConfigurationService::getFile($file, $type);
+				$this->table_registry_name = ConfigurationService::getFile($model_name, $model_type);
 			}
 
 			/** Serialize Options */
 			$this->set('model_name',
 				Services::Registry()->get($this->table_registry_name, 'model_name', ''));
-			$this->set('model_type', $type);
+			$this->set('model_type', $model_type);
 			$this->set('table_name',
 				Services::Registry()->get($this->table_registry_name, 'table_name', '#__content'));
 			$this->set('primary_key',
@@ -154,6 +151,8 @@ Class ModelController extends Controller
 				Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
 			$this->set('process_triggers',
 				Services::Registry()->get($this->table_registry_name, 'process_triggers', 0));
+			$this->set('filter_catalog_type_id',
+				Services::Registry()->get($this->table_registry_name, 'filter_catalog_type_id', 0));
 		}
 
 		/* 2. Instantiate Model Class */
@@ -206,11 +205,12 @@ Class ModelController extends Controller
 			} else {
 				$model_parameter = $this->get('model_parameter');
 			}
+
 			$this->query_results = $this->model->$query_object($model_parameter);
-			return $this->query_results;
+			return;   // $this->query_results;
 		}
 
-		if (in_array($query_object, array('result', 'item', 'list'))) {
+		if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
 		} else {
 			$query_object = 'list';
 		}
@@ -278,7 +278,7 @@ Class ModelController extends Controller
 		if (count($query_results) > 0) {
 
 			/** Return result (single value) */
-			if ($query_object == 'result') {
+			if ($query_object == 'result' || $query_object == 'distinct') {
 				return $query_results;
 			}
 

@@ -1,4 +1,5 @@
-<trigger name="Createdby"/>
+<trigger name="Readmore"/>
+<trigger name="Author"/>
 <trigger name="Smilies"/>
 <trigger name="Email"/>
 <trigger name="Video"/>
@@ -8,3 +9,4 @@
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
 <trigger name="Readmore"/>
+<trigger name="Gridfilters"/>
