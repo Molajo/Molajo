@@ -102,11 +102,6 @@ class ComponentIncluder extends Includer
     {
         /** Include and Parameter Registries are already loaded for Primary Component */
         if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
-
-			Services::Registry()->set('Parameters', 'model_name', 'dboContent');
-			Services::Registry()->set('Parameters', 'model_type', '');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getContent');
-
             return;
         }
 
@@ -215,7 +210,6 @@ class ComponentIncluder extends Includer
         }
 
         /** nothing was loaded */
-
         return true;
     }
 }

@@ -15,7 +15,7 @@
         </field>
         <field name="parameters" registry="ThemeParameters">
             <element name="display_title" filter="char" null="0" default=""/>
-            <element name="display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>
+            <element name="criteria_display_view_on_no_results" filter="binary" null="1" default="1" values="0,1"/>
             <element name="catalog_type_id" filter="integer" null="1" default="10000" values="10000" hidden="1"/>
             <element name="default_theme_id" filter="integer" null="1" default="" values=""/>
             <element name="default_page_view_id" filter="integer" null="1" default="" values=""/>

@@ -51,9 +51,16 @@ class ReadModel extends Model
 					$this->query->where($this->db->qn($primary_prefix . '.' . $name_key)
 						. ' = ' . $this->db->q($name_key_value));
 				}
+
 			} else {
+				$first = true;
 				foreach ($columns as $column) {
-					$this->query->select($this->db->qn($primary_prefix . '.' . $column['name']));
+					if ($first == true && $query_object == 'distinct') {
+						$first = false;
+						$this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
+					} else {
+						$this->query->select($this->db->qn($primary_prefix . '.' . $column['name']));
+					}
 				}
 
 			}
@@ -244,6 +251,9 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($columns, $query_object)
 	{
+
+//echo $this->query->__toString();
+
 		$this->db->setQuery($this->query->__toString());
 
 		if ($query_object == 'result') {
@@ -361,7 +371,7 @@ class ReadModel extends Model
 
 	/**
 	 * addItemChildren - Method to append additional data elements needed to the
-	 * 	standard array of elements provided by the data source
+	 *     standard array of elements provided by the data source
 	 *
 	 * @param $children
 	 * @param $id

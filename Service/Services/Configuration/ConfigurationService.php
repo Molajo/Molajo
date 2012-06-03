@@ -292,76 +292,79 @@ Class ConfigurationService
      * @since   1.0
      * @throws \RuntimeException
      */
-    public static function getFile($file, $type = 'Application')
+    public static function getFile($model_name, $model_type = 'Application')
     {
-//echo 'File: ' . $file . ' Type: ' . $type . '<br />';
+//echo 'File: ' . $model_name . ' Type: ' . $model_type . '<br />';
 
-        if ($type == 'Application' || $type == 'Language') {
+        if ($model_type == 'Application' || $model_type == 'Language') {
 
         } else {
-            $registryName = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
+            $registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
             $exists = Services::Registry()->exists($registryName);
             if ($exists === true) {
                 return $registryName;
             }
         }
 
-        if (strtolower($type) == 'application') {
-            $path_and_file = CONFIGURATION_FOLDER . '/Application/' . $file . '.xml';
+        if (strtolower($model_type) == 'application') {
+            $path_and_file = CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
 
-        } elseif (strtolower($type) == 'language') {
-            $path_and_file = $file . '/' . 'Manifest.xml';
+        } elseif (strtolower($model_type) == 'language') {
+            $path_and_file = $model_name . '/' . 'Manifest.xml';
 
-        } elseif (strtolower($type) == 'table') {
+		} elseif (strtolower($model_type) == 'listbox') {
+			$path_and_file = CONFIGURATION_FOLDER . '/Listbox/' . $model_name . '.xml';
 
-            if (file_exists(EXTENSIONS_COMPONENTS . '/options/' . $file . '.xml')) {
-                $path_and_file = EXTENSIONS_COMPONENTS . '/Options/' . $file . '.xml';
+        } elseif (strtolower($model_type) == 'table') {
 
-            } elseif ($file == 'Themes') {
+            if (file_exists(EXTENSIONS_COMPONENTS . '/options/' . $model_name . '.xml')) {
+                $path_and_file = EXTENSIONS_COMPONENTS . '/Options/' . $model_name . '.xml';
+
+            } elseif ($model_name == 'Themes') {
 
                 if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
                     $path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
                 } else {
-                    $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+                    $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
                 }
 
-            } elseif ($file == 'PageViews' || $file == 'TemplateViews' || $file == 'WrapViews') {
+            } elseif ($model_name == 'PageViews' || $model_name == 'TemplateViews' || $model_name == 'WrapViews') {
 
-                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-
-            } else {
-
-                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-            }
-
-        } elseif (strtolower($type) == 'item') { // Primary Component Data
-
-            if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Item.xml')) {
-                $path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/Item.xml';
-            } else {
-                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
-            }
-
-        } elseif (strtolower($type) == 'list') {
-
-            if (file_exists(EXTENSIONS_COMPONENTS . '/' . $file . '/Options/List.xml')) {
-                $path_and_file = EXTENSIONS_COMPONENTS . '/' . $file . '/Options/List.xml';
+                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
 
             } else {
-                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $file . '.xml';
+
+                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
             }
 
-        } elseif (strtolower($type) == 'module') {
+        } elseif (strtolower($model_type) == 'item') { // Primary Component Data
 
-            $path_and_file = EXTENSIONS_MODULES . '/' . $file . '/Manifest.xml';
+            if (file_exists(EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Item.xml')) {
+                $path_and_file = EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Item.xml';
+            } else {
+                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
+            }
+
+        } elseif (strtolower($model_type) == 'list') {
+
+            if (file_exists(EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/List.xml')) {
+                $path_and_file = EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/List.xml';
+
+            } else {
+                $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
+            }
+
+        } elseif (strtolower($model_type) == 'module') {
+
+            $path_and_file = EXTENSIONS_MODULES . '/' . $model_name . '/Manifest.xml';
 
         } else {
-            $path_and_file = $type . '/' . $file . '.xml';
+            $path_and_file = $model_type . '/' . $model_name . '.xml';
         }
 
         if (file_exists($path_and_file)) {
         } else {
-            echo 'DOES NOT EXIST ' . $file . ' ' . $type . '<br />' . $path_and_file . '<br />';
+            echo 'DOES NOT EXIST ' . $model_name . ' ' . $model_type . '<br />' . $path_and_file . '<br />';
             echo 'File not found: ' . $path_and_file;
             throw new \RuntimeException('File not found: ' . $path_and_file);
         }
@@ -373,18 +376,18 @@ Class ConfigurationService
             throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
         }
 
-        if (strtolower($type) == 'application') {
+        if (strtolower($model_type) == 'application') {
             return $xml;
 
-        } elseif (strtolower($type) == 'language') {
+        } elseif (strtolower($model_type) == 'language') {
             return $xml;
 
-        } elseif (strtolower($type) == 'module') {
-            return ConfigurationService::processModuleTable($file, $type, $path_and_file, $xml);
+        } elseif (strtolower($model_type) == 'module') {
+            return ConfigurationService::processModuleTable($model_name, $model_type, $path_and_file, $xml);
 
         } else {
             //error ?
-            return ConfigurationService::processTableFile($file, $type, $path_and_file, $xml);
+            return ConfigurationService::processTableFile($model_name, $model_type, $path_and_file, $xml);
         }
     }
 
@@ -454,21 +457,25 @@ Class ConfigurationService
         }
         Services::Registry()->set($registryName, 'process_triggers', $value);
 
-        $value = (string) $xml['data_source'];
-        if ($value == '') {
-            $value = 'JDatabase';
-        }
-        Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
+		/** Filters */
+		$value = (string) $xml['filter_catalog_type_id'];
+		Services::Registry()->set($registryName, 'filter_catalog_type_id', $value);
 
-        return;
+		$value = (string) $xml['data_source'];
+		if ($value == '') {
+			$value = 'JDatabase';
+		}
+		Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
+
+		return;
     }
 
     /**
      * processModuleTable extracts XML configuration data for Modules and populates Registry
      *
      * @static
-     * @param $file
-     * @param string $type
+     * @param $model_name
+     * @param $model_type
      * @param $path_and_file
      * @param $xml
      *
@@ -476,10 +483,10 @@ Class ConfigurationService
      * @since   1.0
      * @throws \RuntimeException
      */
-    public static function processModuleTable($file, $type = 'Module', $path_and_file, $xml)
+    public static function processModuleTable($model_name, $model_type = 'Module', $path_and_file, $xml)
     {
         $xml_string = '';
-        $registryName = ucfirst(strtolower($file)) . ucfirst(strtolower($type));
+        $registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
         $exists = Services::Registry()->exists($registryName);
         if ($exists === true) {
@@ -497,7 +504,7 @@ Class ConfigurationService
             $replace_this = '<include model="' . $include . '"/>';
 
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
 
             $xml = simplexml_load_string($xml_string);
@@ -522,7 +529,7 @@ Class ConfigurationService
             $replace_this = '<include name="' . $include . '"/>';
 
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -543,7 +550,7 @@ Class ConfigurationService
 
                     if (in_array($key, self::$valid_field_attributes)) {
                     } else {
-                        echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
+                        echo 'Field attribute not known ' . $key . ' for ' . $model_name . '<br />';
                     }
                     $fieldAttributesArray[$key] = $value;
                 }
@@ -568,7 +575,7 @@ Class ConfigurationService
             $replace_this = '<include name="' . $include . '"/>';
 
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -609,7 +616,7 @@ Class ConfigurationService
             $replace_this = '<include name="' . $include . '"/>';
 
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -629,7 +636,7 @@ Class ConfigurationService
 
                     if (in_array($key2, self::$valid_field_attributes)) {
                     } else {
-                        echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
+                        echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_name . '<br />';
                     }
                     $fieldAttributesArray[$key2] = $value2;
                 }
@@ -656,8 +663,8 @@ Class ConfigurationService
      * This does not works: <include name="ThisSucks" />
      *
      * @static
-     * @param $file
-     * @param string $type
+     * @param $model_name
+     * @param string $model_type
      * @param $path_and_file
      * @param $xml
      *
@@ -665,12 +672,12 @@ Class ConfigurationService
      * @since   1.0
      * @throws \RuntimeException
      */
-    public static function processTableFile($file, $type = 'Table', $path_and_file, $xml)
+    public static function processTableFile($model_name, $model_type = 'Table', $path_and_file, $xml)
     {
         /** Table only: Process Include Code */
         $xml_string = '';
 
-        $registryName = ucfirst(strtolower($file)) . $type;
+        $registryName = ucfirst(strtolower($model_name)) . $model_type;
 
 //echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
 
@@ -698,7 +705,7 @@ Class ConfigurationService
                 $xml_string = file_get_contents($path_and_file);
             }
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -718,7 +725,7 @@ Class ConfigurationService
             $replace_this = '<include name="' . $include . '"/>';
 
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -739,7 +746,7 @@ Class ConfigurationService
 
                     if (in_array($key, self::$valid_field_attributes)) {
                     } else {
-                        echo 'Field attribute not known ' . $key . ' for ' . $file . '<br />';
+                        echo 'Field attribute not known ' . $key . ' for ' . $model_name . '<br />';
                     }
                     $fieldAttributesArray[$key] = $value;
                 }
@@ -764,7 +771,7 @@ Class ConfigurationService
             $replace_this = '<include name="' . $include . '"/>';
 
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -804,7 +811,7 @@ Class ConfigurationService
             }
             $replace_this = '<include name="' . $include . '"/>';
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -842,7 +849,7 @@ Class ConfigurationService
             }
             $replace_this = '<include name="' . $include . '"/>';
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -878,7 +885,7 @@ Class ConfigurationService
             }
             $replace_this = '<include name="' . $include . '"/>';
             $xml_string = ConfigurationService::replaceIncludeStatement(
-                $include, $file, $replace_this, $xml_string
+                $include, $model_name, $replace_this, $xml_string
             );
             $xml = simplexml_load_string($xml_string);
         }
@@ -919,7 +926,7 @@ Class ConfigurationService
                     $replace_this = '<include name="' . $include . '"/>';
 
                     $xml_string = ConfigurationService::replaceIncludeStatement(
-                        $include, $file, $replace_this, $xml_string
+                        $include, $model_name, $replace_this, $xml_string
                     );
 
                     $xml = simplexml_load_string($xml_string);
@@ -934,7 +941,7 @@ Class ConfigurationService
         if (isset($xml->table->item->customfields)) {
             ConfigurationService::getCustomFields(
                 $xml->table->item->customfields,
-                $file,
+                $model_name,
                 $registryName
             );
         }
@@ -961,7 +968,7 @@ Class ConfigurationService
                 $replace_this = '<include name="' . $include . '"/>';
 
                 $xml_string = ConfigurationService::replaceIncludeStatement(
-                    $include, $file, $replace_this, $xml_string
+                    $include, $model_name, $replace_this, $xml_string
                 );
 
                 $xml = simplexml_load_string($xml_string);
@@ -972,7 +979,7 @@ Class ConfigurationService
         if (isset($xml->table->component->customfields)) {
             ConfigurationService::getCustomFields(
                 $xml->table->component->customfields,
-                $file,
+                $model_name,
                 $registryName
             );
         }
@@ -989,9 +996,9 @@ Class ConfigurationService
      * @since   1.0
      * @throws \RuntimeException
      */
-    public static function replaceIncludeStatement($include, $file, $replace_this, $xml_string)
+    public static function replaceIncludeStatement($include, $model_name, $replace_this, $xml_string)
     {
-//echo 'In replace: ' . $include . ' ' . $file . ' ' . $replace_this . ' ' . $xml_string . ' <br />';
+//echo 'In replace: ' . $include . ' ' . $model_name . ' ' . $replace_this . ' ' . $xml_string . ' <br />';
         $path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
 
         if (file_exists($path_and_file)) {
@@ -1016,14 +1023,14 @@ Class ConfigurationService
      *
      * @static
      * @param $xml
-     * @param $file
+     * @param $model_name
      * @param $registryName
      *
      * @return object
      * @since   1.0
      * @throws \RuntimeException
      */
-    public static function getCustomFields($xml, $file, $registryName)
+    public static function getCustomFields($xml, $model_name, $registryName)
     {
         $i = 0;
         $continue = true;
@@ -1058,7 +1065,7 @@ Class ConfigurationService
 
                     if (in_array($key2, self::$valid_field_attributes)) {
                     } else {
-                        echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $file . '<br />';
+                        echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_name . '<br />';
                     }
 
                     $fieldAttributesArray[$key2] = $value2;

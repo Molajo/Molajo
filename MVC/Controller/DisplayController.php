@@ -76,21 +76,20 @@ echo 'Model Name ' . $model_name . '<br />'
 	. 'Model Type:  ' . $model_type . '<br />'
 	. 'Table Registry Name ' . $table_registry_name . '<br />'
 	. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
-$this->get('*');
 */
 		if ($model_name == '') {
 			$this->query_results = array();
 
 		} else {
 			$this->connect($model_name, $model_type);
-
+			               die;
 			/** Run Query */
-			$this->query_results = $this->getData($model_query_object);
-/**
+			$this->getData($model_query_object);
+
 echo '<pre>';
 var_dump($this->query_results);
 echo '</pre>';
-*/
+		die;
 		}
 
 		$this->pagination = array();
@@ -107,7 +106,7 @@ echo '</pre>';
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& $this->get('display_view_on_no_results') == 0
+			&& $this->get('criteria_display_view_on_no_results') == 0
 		) {
 			return '';
 		}
@@ -129,7 +128,6 @@ echo '</pre>';
 		}
 
 		/** Wrap template view results */
-
 		return $this->wrapView($this->get('wrap_view_title'), $renderedOutput);
 	}
 

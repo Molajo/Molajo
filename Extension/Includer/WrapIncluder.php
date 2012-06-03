@@ -65,7 +65,7 @@ Class WrapIncluder extends Includer
 		/** Standard parameters (overwrite extension title with Wrap */
         Services::Registry()->set('Parameters', 'extension_title', 'Wrap');
 
-        Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
+        Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
 		/** Set parameters and merge in configuration values */
 		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));

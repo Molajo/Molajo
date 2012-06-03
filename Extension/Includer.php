@@ -132,8 +132,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 
 		/** only load media if there was rendered output */
 		if ($rendered_output == ''
-			&& Services::Registry()->get('Parameters', 'display_view_on_no_results') == 0
-		) {
+			&& Services::Registry()->get('Parameters', 'criteria_display_view_on_no_results') == 0) {
 		} else {
 			$this->loadMedia();
 			$this->loadViewMedia();
@@ -175,7 +174,6 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 			} elseif ($name == 'template' || $name == 'template_view_title'
 				|| $name == 'template_view' || $name == 'template_view'
 			) {
-
 				$template_id = Helpers::Extension()
 					->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
 
@@ -187,13 +185,11 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id'
 				|| $name == 'template_id'
 			) {
-
 				Services::Registry()->set('Parameters', 'template_view_css_id', $value);
 
 			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class'
 				|| $name == 'template_class'
 			) {
-
 				Services::Registry()->set('Parameters', 'template_view_css_class', $value);
 
 				/** Wrap */
@@ -211,13 +207,11 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 			} elseif ($name == 'wrap_view_css_id' || $name == 'wrap_css_id'
 				|| $name == 'wrap_id'
 			) {
-
 				Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 
 			} elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class'
 				|| $name == 'wrap_class'
 			) {
-
 				Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
 
 				/** Model */
@@ -342,14 +336,14 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 	 */
 	protected function invokeMVC()
 	{
-		/**
-		echo '<br /><br /><br />';
-		echo Services::Registry()->get('Parameters', 'extension_title');
-		echo '<br />';
-		Services::Registry()->sort('Parameters');
-		Services::Registry()->get('Parameters', '*');
-		echo '<br /><br /><br />';
-		 **/
+
+echo '<br /><br /><br />';
+echo Services::Registry()->get('Parameters', 'extension_title');
+echo '<br />';
+Services::Registry()->sort('Parameters');
+Services::Registry()->get('Parameters', '*');
+echo '<br /><br /><br />';
+
 		$controller = new DisplayController();
 
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));

@@ -6,4 +6,5 @@
     <include>tag</include>
     <include>component</include>
     <include>wrap</include>
+    <include>template</include>
 </sequence>

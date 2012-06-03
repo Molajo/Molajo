@@ -6,19 +6,14 @@
  */
 use Molajo\Service\Services;
 
-//echo '<pre>';
-//var_dump($this->row);
-//echo '</pre>';
-//
-// <include:this name=Author wrap_class=blue />
 defined('MOLAJO') or die;
 
-Services::Registry()->set('Trigger', 'content_heading', '<h2>' . $this->row->title. '</h2>');
-Services::Registry()->set('Trigger', 'content_footer', '<h2>' . 'Posted August 22, 2011'. '</h2>');
+Services::Registry()->set('Trigger', 'post_header', '<h2>' . $this->row->title . '</h2>');
 ?>
 <article>
-    <include:wrap name=Header wrap_class=blue value=content_heading/>
+	<include:wrap name=Header value=post_header/>
 	<include:wrap name=Aside value=content_text_pullquote/>
-    <?php echo $this->row->content_text; ?>
-	<include:wrap name=Footer value=content_footer/>
+	<?php echo $this->row->content_text; ?>
+	<include:wrap name=Footer value=post_footer/>
+	<include:template name=Author wrap=Section value=author*/>
 </article>

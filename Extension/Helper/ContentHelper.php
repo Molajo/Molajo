@@ -54,8 +54,110 @@ Class ContentHelper
 	 * @return boolean
 	 * @since    1.0
 	 */
-	public function getMenuItem()
+	public function getMenuItemRoute()
 	{
+		/** Retrieve the query results */
+		$item = $this->get(
+			Services::Registry()->get('Parameters', 'catalog_source_id'),
+			'Menuitems',
+			'Item',
+			'item'
+		);
+
+		/** 404  */
+		if (count($item) == 0) {
+			return Services::Registry()->set('Parameters', 'status_found', false);
+		}
+
+		/** Route Registry */
+		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
+		Services::Registry()->set('Parameters', 'menuitem_title', $item->title);
+		Services::Registry()->set('Parameters', 'menuitem_translation_of_id', (int)$item->translation_of_id);
+		Services::Registry()->set('Parameters', 'menuitem_language', $item->language);
+		Services::Registry()->set('Parameters', 'menuitem_catalog_type_id', (int)$item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'menuitem_catalog_type_title', $item->catalog_types_title);
+		Services::Registry()->set('Parameters', 'menuitem_modified_datetime', $item->modified_datetime);
+
+		/** Menu Extension */
+		Services::Registry()->set('Parameters', 'menu_extension_instance_id', (int)$item->extension_instances_id);
+		Services::Registry()->set('Parameters', 'menu_extension_title', $item->extension_instances_title);
+		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
+		Services::Registry()->set('Parameters', 'menu_extension_name_path_node', $item->extensions_name);
+		Services::Registry()->set('Parameters', 'menu_extension_catalog_type_id',
+			(int)$item->extension_instances_catalog_type_id);
+
+		/** Process each field namespace  */
+		$customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+
+		$parmName = $item->table_registry_name . 'Parameters';
+
+		/** Content Extension and Source */
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Services::Registry()->get($parmName, 'menuitem_extension_instance_id'));
+		Services::Registry()->set('Parameters', 'menuitem_source_id',
+			Services::Registry()->get($parmName, 'menuitem_source_id'));
+
+		/** Theme, Page, Template and Wrap Views */
+		if ((int)Services::Registry()->get('Parameters', 'menuitem_source_id') > 0) {
+			if (strtolower(Services::Registry()->get($parmName, 'request_action')) == 'display') {
+				$type = 'item';
+			} else {
+				$type = 'form';
+			}
+		} else {
+			$type = 'list';
+		}
+
+		/** Theme */
+		Services::Registry()->set('Parameters', $type . '_theme_id',
+			Services::Registry()->get($parmName, 'menuitem_theme_id'));
+
+		/** Page */
+		Services::Registry()->set('Parameters', $type . '_page_view_id',
+			Services::Registry()->get($parmName, 'page_view_id'));
+		Services::Registry()->set('Parameters', $type . '_page_view_css_id',
+			Services::Registry()->get($parmName, 'page_view_css_id'));
+		Services::Registry()->set('Parameters', $type . '_page_view_css_class',
+			Services::Registry()->get($parmName, 'page_view_css_class'));
+
+		/** Template */
+		Services::Registry()->set('Parameters', $type . '_template_view_id',
+			Services::Registry()->get($parmName, 'template_view_id'));
+		Services::Registry()->set('Parameters', $type . '_template_view_css_id',
+			Services::Registry()->get($parmName, 'template_view_css_id'));
+		Services::Registry()->set('Parameters', $type . '_template_view_css_class',
+			Services::Registry()->get($parmName, 'template_view_css_class'));
+
+		/** Wrap */
+		Services::Registry()->set('Parameters', $type . '_wrap_view_id',
+			Services::Registry()->get($parmName, 'wrap_view_id'));
+		Services::Registry()->set('Parameters', $type . '_wrap_view_css_id',
+			Services::Registry()->get($parmName, 'wrap_view_css_id'));
+		Services::Registry()->set('Parameters', $type . '_wrap_view_css_class',
+			Services::Registry()->get($parmName, 'wrap_view_css_class'));
+
+		/** Model */
+		Services::Registry()->set('Parameters', $type . '_model_name',
+			Services::Registry()->get($parmName, 'menuitem_model_name'));
+		Services::Registry()->set('Parameters', $type . '_model_type',
+			Services::Registry()->get($parmName, 'menuitem_model_type'));
+		Services::Registry()->set('Parameters', $type . '_model_query_object',
+			Services::Registry()->get($parmName, 'menuitem_model_query_object'));
+
+		/** Remaining Parameters */
+		Services::Registry()->copy($parmName, 'Parameters', 'criteria*');
+
+		foreach ($customFieldTypes as $customFieldName) {
+			$customFieldName = ucfirst(strtolower($customFieldName));
+
+			if ($customFieldName == 'Parameters') {
+			} else {
+				Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
+			}
+			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
+		}
+
+		return true;
 
 	}
 
@@ -70,14 +172,10 @@ Class ContentHelper
 	 * @return boolean
 	 * @since    1.0
 	 */
-	public function getRoute()
+	public function getRouteContent($id, $model_name, $model_type, $model_query_object)
 	{
 		/** Retrieve the query results */
-		$item = $this->get(
-			Services::Registry()->get('Parameters', 'catalog_source_id'),
-			'Item',
-			ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_type')))
-		);
+		$item = $this->get($id, $model_name, $model_type, $model_query_object);
 
 		/** 404  */
 		if (count($item) == 0) {
@@ -85,8 +183,8 @@ Class ContentHelper
 		}
 
 		/** Save for primary view */
-		Services::Registry()->createRegistry('Content');
-		Services::Registry()->set('Content', 'query_results', $item);
+		Services::Registry()->createRegistry('RequestContent');
+		Services::Registry()->set('RequestContent', 'query_results', $item);
 
 		/** Route Registry */
 		Services::Registry()->set('Parameters', 'content_id', (int)$item->id);
@@ -113,7 +211,7 @@ Class ContentHelper
 
 			/** Save for primary view */
 			$array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
-			Services::Registry()->set('Content', $customFieldName, $array);
+			Services::Registry()->set('RequestContent', $customFieldName, $array);
 
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}
@@ -138,13 +236,14 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_category_id'),
+			'Categories',
 			'Item',
-			'Categories'
+			'item'
 		);
 
-		/** Save for primary view */
-		Services::Registry()->createRegistry('Category');
-		Services::Registry()->set('Category', 'query_results', $item);
+		/** Save for views */
+		Services::Registry()->createRegistry('RequestCategory');
+		Services::Registry()->set('RequestCategory', 'query_results', $item);
 
 		/** Route Registry with Category Data */
 		Services::Registry()->set('Parameters', 'category_id', (int)$item->id);
@@ -163,7 +262,7 @@ Class ContentHelper
 
 			/** Save for primary view */
 			$array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
-			Services::Registry()->set('Category', $customFieldName, $array);
+			Services::Registry()->set('RequestCategory', $customFieldName, $array);
 
 			Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
@@ -176,28 +275,29 @@ Class ContentHelper
 	 * Get data for content
 	 *
 	 * @param $id
-	 * @param null $type
-	 * @param null $datasource
+	 * @param $model_name
+	 * @param $model_type
+	 * @param $model_query_object
 	 *
 	 * @return  array An object containing an array of data
 	 * @since   1.0
 	 */
-	public function get($id, $type = null, $datasource = null)
+	public function get($id = 0, $model_name = 'Content', $model_type = 'List', $model_query_object = 'list')
 	{
-		if ($type == null) {
-			$type = 'Content';
-		}
+
+//echo '<br />' . $id . ' Name: ' . $model_name . ' Type: ' . $model_type . ' query_object: ' . $model_query_object . '<br />';
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect($datasource, $type);
+		$m->connect($model_name, $model_type);
 
 		$m->set('id', (int)$id);
 		$m->set('process_triggers', 1);
 
-		$item = $m->getData('item');
+		$item = $m->getData($model_query_object);
 
 		$item->table_registry_name = $m->table_registry_name;
+
 		$item->model_name = $m->get('model_name');
 
 		if (count($item) == 0) {

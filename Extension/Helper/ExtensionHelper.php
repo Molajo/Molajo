@@ -54,16 +54,16 @@ Class ExtensionHelper
 	 * Merges into Route and Parameters Registries
 	 *
 	 * @param $extension_id
-	 * @param string $model
-	 * @param string $type
+	 * @param string $model_name
+	 * @param string $model_type
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function getExtension($extension_id, $model = 'ExtensionInstances', $type = 'Table')
+	public function getExtension($extension_id, $model_name = 'ExtensionInstances', $model_type = 'Table')
 	{
 		/** Retrieve the query results */
-		$item = Helpers::Extension()->get($extension_id, $model, $type);
+		$item = Helpers::Extension()->get($extension_id, $model_name, $model_type);
 
 		/** 500: not found */
 		if (count($item) == 0) {
@@ -102,6 +102,7 @@ Class ExtensionHelper
 				Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 			}
 		}
+
 		/**
 		echo '<br /><br /><br />';
 		echo 'In getExtension ROW <br />';
@@ -119,17 +120,21 @@ Class ExtensionHelper
 	 * Merges into Parameter Registry
 	 *
 	 * @param $extension_id
-	 * @param string $model
-	 * @param string $type
+	 * @param string $model_name
+	 * @param string $model_type
 	 *
 	 * @return array
 	 * @since   1.0
 	 */
-	public function get($extension_id, $model = 'ExtensionInstances', $type = 'Table')
+	public function get($extension_id, $model_name = 'ExtensionInstances', $model_type = 'Table')
 	{
+
+//echo '<br />' . $extension_id . ' Name: ' . $model_name . ' Type: ' . $model_type . '<br />';
+	//. ' query_object: ' . $model_query_object . '<br />';
+
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect($model, $type);
+		$m->connect($model_name, $model_type);
 
 		$m->set('id', (int)$extension_id);
 		$m->set('process_triggers', 0);

@@ -7,6 +7,7 @@
 namespace Molajo\Extension\Trigger\Publishedstatus;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 

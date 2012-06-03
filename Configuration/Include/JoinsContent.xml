@@ -13,3 +13,13 @@
       select="id,name"
       jointo="id"
       joinwith="extension_instances.extension_id"/>
+<join table="#__application_extension_instances"
+      alias="application_extension_instances"
+      select=""
+      jointo="extension_instance_id,application_id"
+      joinwith="extension_instance_id,APPLICATION_ID"/>
+<join table="#__site_extension_instances"
+      alias="site_extension_instances"
+      select=""
+      jointo="extension_instance_id,site_id"
+      joinwith="extension_instance_id,SITE_ID"/>

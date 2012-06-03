@@ -63,7 +63,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
         }
 
         /** Component Buttons */
-        $actions = Services::Registry() - get('ExtensionParameters', 'toolbar_buttons');
+        $actions = Services::Registry()->get('Parameters', 'toolbar_buttons');
 
         $actionsArray = explode(',', $actions);
 

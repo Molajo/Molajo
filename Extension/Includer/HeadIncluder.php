@@ -62,7 +62,7 @@ Class HeadIncluder extends Includer
      */
     protected function setRenderCriteria()
     {
-        Services::Registry()->set('Parameters', 'display_view_on_no_results', 1);
+        Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
         if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
             Services::Registry()->set('Parameters', 'template_view_id',

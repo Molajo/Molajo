@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<access component="dashboard">
-    <section name="component">
-        <action name="admin" title="ADMIN" description="ADMINISTER_DESC"/>
-        <action name="view" title="VIEW" description="VIEW_DESC"/>
-    </section>
-</access>
