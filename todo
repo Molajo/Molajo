@@ -1,6 +1,6 @@
-* * * * Model / DB interaction * * * *
+* * * * To do * * * *
 
-Migrate Module models Model Service and above DBO's
+Migrate Module models to Model Service and DBO's
 
 Includers - update for new formats (create new tag, formfields)
 
@@ -8,32 +8,48 @@ Triggers - get data access triggers working - Display triggers in place
 
 Constants - reduce - Application class
 
-Text Filters - get text filters hooked up to groups and the filter class
+Text Filters - get text filters hooked up to groups and separate HTMLPurifier as an add on option
+
+Registry - "lock" a registry
+
+Events - currently, static connection to all, change to dynamic
+
+Install - core, extensions, packages - do this last
+
+Dates - hookup UTC with user and date routines
+
+Sessions - connect to Symfony's
+
+Cache - one of the last things - SIMPLE approach, first using files, then add adapters,
+    solution should work for file xml, templates, queries, registries, pages, assets
+
+
+* * * Not part of Core / Part of "sample" install * * *
+
+Molajito Theme -
+
+Create a Responsive package (separate from Core since new solutions emerge quickly in this area, don't lock in)
+
+1. Images - http://adaptive-images.com/
+
+2. Video - IFrame trigger
+
+3. Layout Grid
+
+4. Gmaps - http://hpneo.github.com/gmaps/examples/geolocation.html
+
+5. RESS - Server side detection http://www.brettjankord.com/2012/02/29/hrwd-hybrid-responsive-web-design/
+
+6. Client side detection - Modernizer
+
+Mustache package
+
+Twig Package
 
 
 
 
-
-
-* * * * Services Layer (Middleware) * * * *
-
-
-
-
-* * * * DOUBLE-CHECK * * * *
-
-Manifest.xml => Parameters
-
-Remove all specifically coded paths from code - instead of FileSystem use the Asset, Configuration API, etc
-
-Bring in the php spl priority
-
-Registry - prevent updates
-
-Events - until 1st succeeds; until 1st fails; all
-
-
-* * * * Useful during development * * * *
+* * * * Database Code useful during development * * * *
 
 1. Review
 

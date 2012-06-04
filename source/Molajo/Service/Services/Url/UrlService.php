@@ -7,6 +7,7 @@
 namespace Molajo\Service\Services\Url;
 
 use Molajo\Service\Services;
+use Molajo\Extension\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -83,7 +84,20 @@ Class UrlService
         return $url;
     }
 
-    /**
+	/**
+	 * getURL Retrieves URL based on Catalog ID
+	 *
+	 * @param integer $catalog_id
+	 *
+	 * @return string
+	 * @since  1.0
+	 */
+	public function getURL($catalog_id)
+	{
+		return Helpers::Catalog()->getURL($catalog_id);
+	}
+
+	/**
      * obfuscate Email
      *
      * @param $email_address

@@ -43,44 +43,46 @@ class ItemURLTrigger extends ContentTrigger
         return self::$instance;
     }
 
-    /**
-     * After-read processing
-     *
-     * Retrieves the URL for the Item
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        if (isset($this->query_results->url)
-            && $this->query_results->url !== null
-            && $this->query_results->url !== ''
-        ) {
-            return;
-        }
+	/**
+	 * After-read processing
+	 *
+	 * Provides the URL for any catalog_id field in the recordset
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		$fields = $this->retrieveFieldsByType('catalog_id');
 
-        if (isset($this->query_results->catalog_id)
-            && (int) $this->query_results->catalog_id > 0
-        ) {
+		if (is_array($fields) && count($fields) > 0) {
 
-        } elseif (isset($this->query_results->catalog_type_id) && (int) $this->query_results->catalog_type_id > 0
-            && isset($this->query_results->id) && (int) $this->query_results->id > 0
-        ) {
-            $this->query_results->catalog_id = Helpers::Catalog()->getID($this->query_results->catalog_type_id, $this->query_results->id);
-        }
+			foreach ($fields as $field) {
 
-        if (isset($this->query_results->catalog_id)
-            && (int) $this->query_results->catalog_id > 0
-        ) {
-            $this->query_results->url = Helpers::Catalog()->getURL($this->query_results->catalog_id);
+				$name = $field->name;
 
-            return;
-        }
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
 
-        return;
-    }
+				if ($fieldValue == false) {
+				} else {
+
+					$newField = Services::Url()->getURL($fieldValue);
+
+					if ($newField == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$newFieldName = $name . '_' . 'url';
+						$fieldValue = $this->saveField($field, $newFieldName, $newField);
+					}
+				}
+			}
+		}
+
+		return true;
+	}
 }

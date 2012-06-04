@@ -189,6 +189,7 @@ Class ParseService
 		} else {
 			$final = $overrideIncludesFinalXML;
 		}
+
 		foreach ($final->include as $next) {
 			$sequence = (string) $next;
 			$this->final[] = (string) $next;

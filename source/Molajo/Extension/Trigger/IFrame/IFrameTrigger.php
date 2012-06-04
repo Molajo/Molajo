@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\Video;
+namespace Molajo\Extension\Trigger\IFrame;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 use Molajo\Service\Services;
@@ -12,13 +12,13 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Video
+ * IFrame
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class VideoTrigger extends ContentTrigger
+class IFrameTrigger extends ContentTrigger
 {
     /**
      * Static instance
@@ -38,7 +38,7 @@ class VideoTrigger extends ContentTrigger
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance = new VideoTrigger();
+            self::$instance = new IFrameTrigger();
         }
 
         return self::$instance;
@@ -47,7 +47,9 @@ class VideoTrigger extends ContentTrigger
     /**
      * After-read processing
      *
-     * Retrieves Author Information for Item
+     * Locates IFrame statements in text, replacing with an <include:wrap statement for Responsive Treatment
+	 *
+	 * Primarily for treatment of Video, but useful for an IFrame embed
      *
      * @return boolean
      * @since   1.0
@@ -58,7 +60,6 @@ class VideoTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-			/** @noinspection PhpWrongForeachArgumentTypeInspection */
 			foreach ($fields as $field) {
 
 				/** retrieve each text field */
@@ -74,17 +75,17 @@ class VideoTrigger extends ContentTrigger
 					if (count($matches) == 0) {
 					} else {
 
-						/** add wrap for each video and save video in trigger registry */
+						/** add wrap for each Iframe and saves data Trigger Registry */
 						$i = 0;
 
 						foreach ($matches[0] as $iframe) {
-							$element = 'Video'.$i++;
-							$video = '<include:wrap name=Video value='.$element.'/>';
+							$element = 'IFrame'.$i++;
+							$video = '<include:wrap name=IFrame value='.$element.'/>';
 							Services::Registry()->set('Trigger', $element, $iframe);
 							$fieldValue = str_replace($iframe, $video, $fieldValue);
                     	}
 
-						/** Update field for all video replacements */
+						/** Update field for all Iframe replacements */
 						$fieldValue = $this->saveField($field, $name, $fieldValue);
                 	}
 				}
