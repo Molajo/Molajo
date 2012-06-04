@@ -101,7 +101,7 @@ Class ModelController extends Controller
 	public function connect($model_name = null, $model_type = 'Table')
 	{
 
-echo 'In connect: File: ' . $model_name . ' type: ' . $model_type . '<br />';
+//echo 'In connect: File: ' . $model_name . ' type: ' . $model_type . '<br />';
 
 		if ($model_name == null) {
 			$this->table_registry_name = null;

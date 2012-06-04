@@ -52,14 +52,12 @@ class ListsTrigger extends ContentTrigger
 	 */
 	public function onBeforeRead()
 	{
-		Services::Registry()->get('Parameters', '*');
-
 		/** Initialize Filter Registry */
 		Services::Registry()->createRegistry('Lists');
 
 		/** Retrieve Filters from Parameters for Component */
 		$parameters = $this->get('parameters');
-		$createLists = explode(',', $parameters['criteria_view_lists']);
+		$createLists = explode(',', $parameters['grid_lists']);
 		$lists = array();
 
 		if (is_array($createLists) && count($createLists) > 0) {
@@ -100,7 +98,6 @@ class ListsTrigger extends ContentTrigger
 		}
 
 		Services::Registry()->set('Lists', 'list', $lists);
-		Services::Registry()->get('Lists', '*');
 
 		return true;
 	}

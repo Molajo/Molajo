@@ -144,9 +144,9 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', $type . '_model_query_object',
 			Services::Registry()->get($parmName, 'menuitem_model_query_object'));
 
-		/** Remaining Parameters */
-		Services::Registry()->copy($parmName, 'Parameters', 'criteria*');
+		Services::Registry()->copy($parmName, 'Parameters');
 
+		/** Remaining Parameters */
 		foreach ($customFieldTypes as $customFieldName) {
 			$customFieldName = ucfirst(strtolower($customFieldName));
 

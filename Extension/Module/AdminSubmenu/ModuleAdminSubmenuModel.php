@@ -45,8 +45,7 @@ Class ModuleAdminSubmenuModel extends DisplayModel
     public function getData()
     {
         $links =
-            Services::Parameter()
-                ->get('submenu_items', 'Request');
+            Services::Registry()->get('Parameters', 'grid_submenu_items');
 
         $linksArray = explode(',', $links);
 

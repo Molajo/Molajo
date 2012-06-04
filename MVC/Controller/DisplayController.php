@@ -91,11 +91,12 @@ echo '<br />';
 			/** Run Query */
 			$this->getData($model_query_object);
 
+			Services::Registry()->get('Parameters', 'template*');
+/**
 echo '<pre>';
 var_dump($this->query_results);
 echo '</pre>';
-
-	   die;
+*/
 		}
 
 		$this->pagination = array();
@@ -125,7 +126,7 @@ echo '</pre>';
 			$this->view_path = $this->get('template_view_path');
 			$this->view_path_url = $this->get('template_view_path_url');
 
-			$renderedOutput = $this->renderView($this->get('template_view_title'));
+			$renderedOutput = $this->renderView();
 
 			/** Mustache */
 			if ($this->get('criteria_mustache', 0) == 1) {
@@ -162,7 +163,7 @@ echo '</pre>';
 		$this->view_path_url = $this->get('wrap_view_path_url');
 
 		/** render wrap */
-		return $this->renderView($this->get('wrap_view_title'), 'Wrap');
+		return $this->renderView();
 	}
 
 	/**
@@ -178,7 +179,7 @@ echo '</pre>';
 	 * @return string
 	 * @since 1.0
 	 */
-	protected function renderView($view)
+	protected function renderView()
 	{
 		/** @var $rowCount */
 		$rowCount = 1;
@@ -199,10 +200,6 @@ echo '</pre>';
 				/** header: before any rows are processed */
 				if ($rowCount == 1) {
 
-					if (isset($this->row->event->beforeRenderView)) {
-						echo $this->row->event->beforeRenderView;
-					}
-
 					if (file_exists($this->view_path . '/View/Header.php')) {
 						include $this->view_path . '/View/Header.php';
 					}
@@ -212,16 +209,8 @@ echo '</pre>';
 				if ($this->row == null) {
 				} else {
 
-					if (isset($this->row->event->beforeRenderViewItem)) {
-						echo $this->row->event->beforeRenderViewItem;
-					}
-
 					if (file_exists($this->view_path . '/View/Body.php')) {
 						include $this->view_path . '/View/Body.php';
-					}
-
-					if (isset($this->row->event->afterRenderViewItem)) {
-						echo $this->row->event->afterRenderViewItem;
 					}
 
 					$rowCount++;
@@ -233,10 +222,6 @@ echo '</pre>';
 
 				if (file_exists($this->view_path . '/View/Footer.php')) {
 					include $this->view_path . '/View/Footer.php';
-
-					if (isset($this->row->event->afterRenderView)) {
-						echo $this->row->event->afterRenderView;
-					}
 				}
 			}
 		}
@@ -244,6 +229,8 @@ echo '</pre>';
 		/** collect and return rendered output */
 		$output = ob_get_contents();
 		ob_end_clean();
+		echo $output;
+		die;
 
 		return $output;
 	}

@@ -42,7 +42,7 @@
                     <field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
                     <include name="ParametersItem"/>
                     <include name="ParametersList"/>
-                    <include name="ParametersMenu"/>
+                    <include name="ParametersMenuitem"/>
                     <include name="ParametersImage"/>
                     <include name="ParametersGravatar"/>
                     <include name="ParametersAsset"/>

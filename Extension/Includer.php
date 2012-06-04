@@ -336,14 +336,14 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 	 */
 	protected function invokeMVC()
 	{
-
+/**
 echo '<br /><br /><br />';
 echo Services::Registry()->get('Parameters', 'extension_title');
 echo '<br />';
 Services::Registry()->sort('Parameters');
 Services::Registry()->get('Parameters', '*');
 echo '<br /><br /><br />';
-		 die;
+*/
 		$controller = new DisplayController();
 
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));
