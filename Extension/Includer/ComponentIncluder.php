@@ -60,7 +60,7 @@ class ComponentIncluder extends Includer
     /**
      * getExtension - Used for non-primary Component to set Parameter Values
      *
-     * @return null
+     * @return void
      * @since  1.0
      */
     protected function getExtension()
@@ -130,20 +130,20 @@ class ComponentIncluder extends Includer
     {
         /** Primary Category */
         $this->loadMediaPlus('/category' . Services::Registry()->get('Parameters', 'catalog_category_id'),
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_category', 700));
+            Services::Registry()->get('Parameters', 'asset_priority_category', 700));
 
         /** Menu Item */
         $this->loadMediaPlus('/menuitem' . Services::Registry()->get('Parameters', 'menu_item_id'),
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_menu_item', 800));
+            Services::Registry()->get('Parameters', 'asset_priority_menu_item', 800));
 
         /** Source */
         $this->loadMediaPlus('/source/'  . Services::Registry()->get('Parameters', 'extension_title')
                 . Services::Registry()->get('Parameters', 'content_id'),
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_source', 900));
+            Services::Registry()->get('Parameters', 'asset_priority_source', 900));
 
         /** Component */
         $this->loadMediaPlus('/component/' . Services::Registry()->get('Parameters', 'extension_title'),
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_extension', 900));
+            Services::Registry()->get('Parameters', 'asset_priority_extension', 900));
 
         return true;
     }

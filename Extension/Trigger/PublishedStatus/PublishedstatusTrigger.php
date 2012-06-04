@@ -56,13 +56,7 @@ class PublishedstatusTrigger extends ContentTrigger
     public function onBeforeRead()
     {
 
-        if (isset($this->query_results->status)
-            && isset($this->query_results->start_publishing_datetime)
-            && isset($this->query_results->stop_publishing_datetime) ) {
-        } else {
-            return $this;
-        }
-
+		//return;
         $primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
 
         $this->query->where($this->db->qn($primary_prefix)

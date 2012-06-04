@@ -343,7 +343,7 @@ echo '<br />';
 Services::Registry()->sort('Parameters');
 Services::Registry()->get('Parameters', '*');
 echo '<br /><br /><br />';
-
+		 die;
 		$controller = new DisplayController();
 
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));

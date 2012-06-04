@@ -11,6 +11,7 @@
         check_view_level_access="0"
         process_triggers="0"
         filter_catalog_type_id="130"
+        filter_check_published_status="1"
         data_source="JDatabase">
     <table>
         <item>

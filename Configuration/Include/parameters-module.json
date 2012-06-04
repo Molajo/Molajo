@@ -7,7 +7,7 @@
 
         "criteria_display_view_on_no_results":"1",
 
-        "criteria_asset_priority":"1",
+        "asset_priority":"1",
 
         "template_view_id":"41",
         "template_view_css_id":"",

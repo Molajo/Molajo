@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="AuthorListbox"
+        name="CreatedbyListbox"
         table="#__content"
         primary_key="id"
         name_key="title"
@@ -11,6 +11,7 @@
         check_view_level_access="0"
         process_triggers="0"
         filter_catalog_type_id="10000"
+        filter_check_published_status="1"
         data_source="JDatabase">
     <table>
         <item>

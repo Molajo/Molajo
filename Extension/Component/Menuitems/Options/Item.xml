@@ -22,22 +22,27 @@
             <foreignkeys>
                 <include name="ForeignkeysContent"/>
             </foreignkeys>
-            <children>
-                <include name="ChildrenContent"/>
-            </children>
             <triggers>
-                <include name="TriggersContent"/>
+                <trigger name="Datefields"/>
             </triggers>
             <customfields>
                 <customfield name="customfields">
                     <include name="CustomfieldsContent"/>
-                    <field name="example_of_content_only_field" type="int" null="1" default="1"/>
                 </customfield>
                 <customfield name="metadata">
                     <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
+                    <field name="criteria_title" type="char" null="1" default=""/>
+                    <field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="criteria_catalog_type_id" type="int" null="1" default="2000"
+                           values="2000,2100,2200,2300"/>
+                    <field name="criteria_snippet_length" type="int" null="0" default="200"/>
                     <include name="ParametersMenuitem"/>
+                    <include name="ParametersGrid"/>
+                    <include name="ParametersImage"/>
+                    <include name="ParametersGravatar"/>
+                    <include name="ParametersAsset"/>
                 </customfield>
             </customfields>
         </item>

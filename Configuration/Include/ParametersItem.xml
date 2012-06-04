@@ -1,36 +1,12 @@
-<field name="display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-<field name="catalog_type_id" type="int" null="1" default="10000" values="10000"/>
-
-<field name="criteria_enable_draft_save" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_version_history" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_maximum_version_count" type="integer" null="1" default="5" minimum="0" maximum="20"/>
-<field name="criteria_enable_hit_counts" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_comments" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_ratings" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_notifications" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_tweets" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_ping" type="binary" null="1" default="1" values="0,1"/>
-
-<field name="criteria_image_xsmall" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_small" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_medium" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_large" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_xlarge" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_folder" type="folder" null="1" default="" values=""/>
-<field name="criteria_thumb_folder" type="folder" null="1" default="" values=""/>
-
-<field name="criteria_asset_priority_site" type="integer" null="1" default="100" values=""/>
-<field name="criteria_asset_priority_application" type="integer" null="1" default="200" values=""/>
-<field name="criteria_asset_priority_user" type="integer" null="1" default="300" values=""/>
-<field name="criteria_asset_priority_extension" type="integer" null="1" default="400" values=""/>
-<field name="criteria_asset_priority_request" type="integer" null="1" default="500" values=""/>
-<field name="criteria_asset_priority_category" type="integer" null="1" default="600" values=""/>
-<field name="criteria_asset_priority_menu_item" type="integer" null="1" default="700" values=""/>
-<field name="criteria_asset_priority_source" type="integer" null="1" default="800" values=""/>
-<field name="criteria_asset_priority_theme" type="integer" null="1" default="900" values=""/>
-
-<field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
-
+<field name="enable_draft_save" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_version_history" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_maximum_version_count" type="integer" null="1" default="5" minimum="0" maximum="20"/>
+<field name="enable_hit_counts" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_comments" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_ratings" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_notifications" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_tweets" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_ping" type="binary" null="1" default="1" values="0,1"/>
 
 <field name="item_theme_id" type="integer" null="1" default="" values=""/>
 <field name="item_page_view_id" type="integer" null="1" default="" values=""/>

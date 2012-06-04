@@ -1,51 +1,3 @@
-<field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-<field name="catalog_type_id" type="int" null="1" default="10000" values="10000"/>
-
-<field name="criteria_enable_draft_save" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_version_history" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_maximum_version_count" type="integer" null="1" default="5" minimum="0" maximum="20"/>
-<field name="criteria_enable_hit_counts" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_comments" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_ratings" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_notifications" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_tweets" type="binary" null="1" default="1" values="0,1"/>
-<field name="criteria_enable_ping" type="binary" null="1" default="1" values="0,1"/>
-
-<field name="criteria_image_xsmall" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_small" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_medium" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_large" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_xlarge" type="integer" null="1" default="" values=""/>
-<field name="criteria_image_folder" type="folder" null="1" default="" values=""/>
-<field name="criteria_thumb_folder" type="folder" null="1" default="" values=""/>
-
-<field name="criteria_asset_priority_site" type="integer" null="1" default="100" values=""/>
-<field name="criteria_asset_priority_application" type="integer" null="1" default="200" values=""/>
-<field name="criteria_asset_priority_user" type="integer" null="1" default="300" values=""/>
-<field name="criteria_asset_priority_extension" type="integer" null="1" default="400" values=""/>
-<field name="criteria_asset_priority_request" type="integer" null="1" default="500" values=""/>
-<field name="criteria_asset_priority_category" type="integer" null="1" default="600" values=""/>
-<field name="criteria_asset_priority_menu_item" type="integer" null="1" default="700" values=""/>
-<field name="criteria_asset_priority_source" type="integer" null="1" default="800" values=""/>
-<field name="criteria_asset_priority_theme" type="integer" null="1" default="900" values=""/>
-
-<field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
-
-<field name="item_theme_id" type="integer" null="1" default="" values=""/>
-<field name="item_page_view_id" type="integer" null="1" default="" values=""/>
-<field name="item_page_view_css_id" type="char" null="1" default="" values=""/>
-<field name="item_page_view_css_class" type="char" null="1" default="" values=""/>
-<field name="item_template_view_id" type="integer" null="1" default="" values=""/>
-<field name="item_template_view_css_id" type="char" null="1" default="" values=""/>
-<field name="item_template_view_css_class" type="char" null="1" default="" values=""/>
-<field name="item_wrap_view_id" type="integer" null="1" default="0" values=""/>
-<field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
-<field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
-<field name="item_model_name" type="char" null="1" default="" values=""/>
-<field name="item_model_type" type="char" null="1" default="" values="Table,Component,Module"/>
-<field name="item_model_query_object" type="char" null="1" default="" values=""/>
-
-
 <field name="list_theme_id" type="integer" null="1" default="" values=""/>
 <field name="list_page_view_id" type="integer" null="1" default="" values=""/>
 <field name="list_page_view_css_id" type="char" null="1" default="" values=""/>
@@ -60,25 +12,14 @@
 <field name="list_model_type" type="char" null="1" default="" values="Table,Component,Module"/>
 <field name="list_model_query_object" type="char" null="1" default="" values=""/>
 
-<field name="criteria_list_display_archived_content" type="integer" null="1" default="1" values="0,1,2"/>
-<field name="criteria_list_display_featured_content" type="integer" null="1" default="1" values="0,1,2"/>
-<field name="criteria_list_display_stickied_content" type="integer" null="1" default="1" values="0,1,2"/>
-<field name="criteria_list_display_published_date_begin" type="date" null="1" default=""/>
-<field name="criteria_list_display_published_date_end" type="date" null="1" default=""/>
-<field name="criteria_list_display_category_list" type="categorylist" null="1" default=""/>
-<field name="criteria_list_display_tag_list" type="taglist" null="1" default=""/>
-<field name="criteria_list_display_author_list" type="authorlist" null="1" default=""/>
-<field name="criteria_list_begin" type="integer" default="1"/>
-<field name="criteria_list_length" type="integer" default="5" minimum="0" maximum="20"/>
-<field name="criteria_list_order_by_field1" type="field_list" null="1" default="start_publishing_datetime"/>
-<field name="criteria_list_order_by_direction1" type="char" null="1" default="DESC" values="ASC,DESC"/>
-<field name="criteria_list_order_by_field2" type="field_list" null="1" default=""/>
-<field name="criteria_list_order_by_direction2" type="char" null="1" default="DESC" values="ASC,DESC"/>
-<field name="criteria_list_order_by_field3" type="field_list" null="1" default=""/>
-<field name="criteria_list_order_by_direction3" type="char" null="1" default="DESC" values="ASC,DESC"/>
-
-<field name="criteria_mustache" type="binary" null="1" default="0" values="0,1"/>
-
-<field name="criteria_snippet_length" type="int" null="0" default="200"/>
-
-<include name="ParametersGravatar"/>
+<field name="list_include_archived_content" type="binary" null="1" default="1" values="0,1"/>
+<field name="list_include_featured_content" type="binary" null="1" default="1" values="0,1"/>
+<field name="list_include_stickied_content" type="binary" null="1" default="1" values="0,1"/>
+<field name="list_include_published_date_begin" type="date" null="1" default="" values=""/>
+<field name="list_include_published_date_end" type="date" null="1" default="" values=""/>
+<field name="list_include_category_list" type="char" null="1" default="" values=""/>
+<field name="list_include_tag_list" type="char" null="1" default="" values=""/>
+<field name="list_include_created_by_list" type="char" null="1" default="" values=""/>
+<field name="list_order_by_field" type="char" null="0" default="a.start_publishing_datetime" values=""/>
+<field name="list_order_by_direction" type="char" null="0" default="ASC" values="ASC,DESC"/>
+<field name="list_length" type="int" null="0" default="5" values=""/>

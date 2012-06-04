@@ -78,11 +78,20 @@ class Model
 	protected $pagination;
 
 	/**
+	 * Parameters
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $parameters = array();
+
+	/**
 	 * @return object
 	 * @since   1.0
 	 */
 	public function __construct()
 	{
+		$this->parameters = array();
 		$this->query_results = array();
 		$this->pagination = array();
 	}
@@ -98,7 +107,21 @@ class Model
 	 */
 	public function get($key, $default = null)
 	{
-		return $this->$key;
+		$value = null;
+
+		if (in_array($key, array('db', 'query', 'nullDate', 'now', 'query_results', 'pagination'))) {
+			$value = $this->$key;
+		} else {
+			if (isset($this->parameters[$key])) {
+				$value = $this->parameters[$key];
+			}
+		}
+
+		if ($value === null) {
+			return $default;
+		}
+
+		return $value;
 	}
 
 	/**
@@ -112,7 +135,13 @@ class Model
 	 */
 	public function set($key, $value = null)
 	{
-		return $this->$key = $value;
+		if (in_array($key, array('db', 'query', 'nullDate', 'now', 'query_results', 'pagination'))) {
+			$this->$key = $value;
+		} else {
+			$this->parameters[$key] = $value;
+		}
+
+		return;
 	}
 
 	/**
@@ -169,6 +198,19 @@ class Model
 		}
 
 		return $this->db->getData('Trigger', $model_type, true);
+	}
+
+	/**
+	 * retrieves lists of non-table based data from Text Service DB
+	 *
+	 * @param null $model_type
+	 *
+	 * @return mixed Array or String or Null
+	 * @since   1.0
+	 */
+	public function getListdata($model_type = null)
+	{
+		return $this->db->getData($model_type);
 	}
 
 	/**

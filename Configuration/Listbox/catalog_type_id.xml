@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="ApplicationsListbox"
-        table="#__applications"
+        name="catalog_type_id"
+        table="#__catalog_types"
         primary_key="id"
-        name_key="name"
+        name_key="title"
         primary_prefix="a"
         get_customfields="0"
         get_item_children="0"
@@ -15,8 +15,8 @@
     <table>
         <item>
             <fields>
-                <field name="id" type="int" null="1" default="0" identity="1"/>
-                <field name="name" type="char" null="0" default="" unique="1"/>
+                <field name="id" type="int" null="1" default="0"/>
+                <field name="title" type="char" null="0" default=" " unique="1"/>
             </fields>
         </item>
     </table>

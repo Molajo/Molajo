@@ -31,7 +31,7 @@ defined('MOLAJO') or die;
  * primary_prefix
  *     Ex. "a", used in query development
  *
- * Indicators:
+ * Processing Indicators:
  *
  * get_customfields
  *     0: do not retrieve custom fields
@@ -101,7 +101,7 @@ Class ModelController extends Controller
 	public function connect($model_name = null, $model_type = 'Table')
 	{
 
-//echo 'In connect: File: ' . $model_name . ' type: ' . $model_type . '<br />';
+echo 'In connect: File: ' . $model_name . ' type: ' . $model_type . '<br />';
 
 		if ($model_name == null) {
 			$this->table_registry_name = null;
@@ -153,6 +153,10 @@ Class ModelController extends Controller
 				Services::Registry()->get($this->table_registry_name, 'process_triggers', 0));
 			$this->set('filter_catalog_type_id',
 				Services::Registry()->get($this->table_registry_name, 'filter_catalog_type_id', 0));
+			$this->set('filter_check_published_status',
+				Services::Registry()->get($this->table_registry_name, 'filter_check_published_status', 0));
+			$this->set('data_source',
+				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
 		}
 
 		/* 2. Instantiate Model Class */
@@ -179,8 +183,6 @@ Class ModelController extends Controller
 			$this->model->set('now', $now);
 		}
 
-		Services::$dbo()->getQuery()->clear();
-
 		return $this;
 	}
 
@@ -205,11 +207,11 @@ Class ModelController extends Controller
 			} else {
 				$model_parameter = $this->get('model_parameter');
 			}
-
 			$this->query_results = $this->model->$query_object($model_parameter);
-			return;   // $this->query_results;
+			return $this->query_results;  //must directly return for non-DisplayController calls
 		}
 
+		/** Only JDatabase queries follow */
 		if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
 		} else {
 			$query_object = 'list';
@@ -402,7 +404,6 @@ echo '</pre>';
 	 */
 	protected function onBeforeReadEvent($triggers = array())
 	{
-		/** Prepare input */
 		if (count($triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
 		) {
@@ -415,6 +416,8 @@ echo '</pre>';
 			'parameters' => $this->parameters,
 			'query' => $this->model->query,
 			'db' => $this->model->db,
+			'nullDate' => $this->model->nullDate,
+			'now' => $this->model->now,
 			'model_name' => $this->get('model_name')
 		);
 
