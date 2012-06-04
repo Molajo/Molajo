@@ -4,9 +4,11 @@ Migrate Module models Model Service and above DBO's
 
 Includers - update for new formats (create new tag, formfields)
 
-Triggers - get data access triggers working
+Triggers - get data access triggers working - Display triggers in place
 
 Constants - reduce - Application class
+
+Text Filters - get text filters hooked up to groups and the filter class
 
 
 

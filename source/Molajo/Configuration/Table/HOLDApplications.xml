@@ -70,9 +70,6 @@
                     <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
                     <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>
 
-                    <field name="message_template_view_id" type="integer" null="1" default="" values=""/>
-                    <field name="message_wrap_view_id" type="integer" null="1" default="" values=""/>
-
                     <field name="offline_theme_id" type="integer" null="1" default="" values=""/>
                     <field name="offline_page_view_id" type="integer" null="1" default="" values=""/>
                     <field name="offline" type="binary" null="1" default="1" values="0,1"/>
@@ -83,16 +80,16 @@
                     <field name="error_404_message" type="char" null="1" default="" values=""/>
                     <field name="error_403_message" type="char" null="1" default="" values=""/>
 
-                    <field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="criteria_snippet_length" type="int" null="0" default="200"/>
+                    <field name="system_caching" type="binary" null="0" default="1" values="0,1"/>
+                    <field name="system_cache_time" type="integer" null="0" default="15" values=""/>
+                    <field name="system_cache_handler" type="char" null="0" default="" values=""/>
 
-                    <include name="ParametersMenuitem"/>
-                    <include name="ParametersList"/>
+                    <field name="criteria_log_user_activity_create" type="binary" null="1" default="0" values="0,1"/>
+                    <field name="criteria_log_user_activity_read" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="criteria_log_user_activity_update" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="criteria_log_user_activity_delete" type="binary" null="1" default="1" values="0,1"/>
+
                     <include name="ParametersItem"/>
-
-                    <include name="ParametersCache"/>
-                    <include name="ParametersLog"/>
-
                     <include name="ParametersList"/>
                 </customfield>
 

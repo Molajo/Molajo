@@ -82,14 +82,20 @@ echo 'Model Name ' . $model_name . '<br />'
 
 		} else {
 			$this->connect($model_name, $model_type);
-			               die;
+/**
+echo '<br /><br /><br />';
+echo 'In DisplayController: ' . $this->get('extension_title');
+echo '<br />';
+ */
+//Services::Registry()->get($table_registry_name, '*');
 			/** Run Query */
 			$this->getData($model_query_object);
 
 echo '<pre>';
 var_dump($this->query_results);
 echo '</pre>';
-		die;
+
+	   die;
 		}
 
 		$this->pagination = array();

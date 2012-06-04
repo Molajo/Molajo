@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="ArticlesList"
+        name="ArticlesComponent"
         catalog_type_id="10000"
         table="#__content"
         primary_key="id"
@@ -10,6 +10,7 @@
         get_item_children="0"
         use_special_joins="1"
         check_view_level_access="1"
+        process_triggers="1"
         data_source="JDatabase">
     <table>
         <item>
@@ -26,7 +27,7 @@
                 <include name="ChildrenContent"/>
             </children>
             <triggers>
-                <include name="TriggersContent"/>
+                <include name="TriggersContentList"/>
             </triggers>
             <customfields>
                 <customfield name="customfields">
@@ -37,7 +38,17 @@
                     <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
+                    <field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
                     <include name="ParametersItem"/>
+                    <include name="ParametersList"/>
+                    <include name="ParametersMenu"/>
+                    <include name="ParametersImage"/>
+                    <include name="ParametersGravatar"/>
+                    <include name="ParametersAsset"/>
+                    <include name="ParametersMustache"/>
+                    <include name="ParametersCache"/>
+                    <include name="ParametersLog"/>
                 </customfield>
             </customfields>
         </item>

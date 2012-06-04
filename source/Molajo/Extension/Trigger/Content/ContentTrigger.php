@@ -68,7 +68,23 @@ class ContentTrigger extends Trigger
      */
     protected $query_results;
 
-    /**
+	/**
+	 * nullDate
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $nullDate;
+
+	/**
+	 * now
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $now;
+
+	/**
      * Fields - name and type
      *
      * @var    object
@@ -106,7 +122,7 @@ class ContentTrigger extends Trigger
      * @return mixed
      * @since  1.0
      */
-    public function get($key, $value)
+    public function get($key, $value = array())
     {
         return $this->$key;
     }

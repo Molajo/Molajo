@@ -89,15 +89,15 @@ Class ThemeIncluder extends Includer
     {
         /**  Site */
         $this->loadMediaPlus('',
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_site', 100));
+            Services::Registry()->get('Parameters', 'asset_priority_site', 100));
 
         /** Application */
         $this->loadMediaPlus('/application' . APPLICATION,
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_application', 200));
+            Services::Registry()->get('Parameters', 'asset_priority_application', 200));
 
         /** User */
         $this->loadMediaPlus('/user' . Services::Registry()->get('User', 'id'),
-            Services::Registry()->get('Parameters', 'criteria_asset_priority_user', 300));
+            Services::Registry()->get('Parameters', 'asset_priority_user', 300));
 
         /** Load custom Theme Helper Media, if exists */
         $helperClass = 'Molajo\\Extension\\Theme\\'
@@ -112,7 +112,7 @@ Class ThemeIncluder extends Includer
         }
 
         /** Theme */
-        $priority = Services::Registry()->get('Parameters', 'criteria_asset_priority_theme', 600);
+        $priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
         $file_path = Services::Registry()->get('Parameters', 'theme_path');
         $url_path = Services::Registry()->get('Parameters', 'theme_path_url');
 
@@ -121,7 +121,7 @@ Class ThemeIncluder extends Includer
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Page */
-        $priority = Services::Registry()->get('Parameters', 'criteria_asset_priority_theme', 600);
+        $priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
         $file_path = Services::Registry()->get('Parameters', 'page_view_path');
         $url_path = Services::Registry()->get('Parameters', 'page_view_path_url');
 
@@ -130,7 +130,7 @@ Class ThemeIncluder extends Includer
         $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
 
         /** Catalog ID specific */
-        $this->loadMediaPlus('', Services::Registry()->get('Parameters', 'criteria_asset_priority_site', 100));
+        $this->loadMediaPlus('', Services::Registry()->get('Parameters', 'asset_priority_site', 100));
 
         return;
     }

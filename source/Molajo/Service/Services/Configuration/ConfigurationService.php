@@ -345,10 +345,10 @@ Class ConfigurationService
                 $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
             }
 
-        } elseif (strtolower($model_type) == 'list') {
+        } elseif (strtolower($model_type) == 'component') {
 
-            if (file_exists(EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/List.xml')) {
-                $path_and_file = EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/List.xml';
+            if (file_exists(EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Component.xml')) {
+                $path_and_file = EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Component.xml';
 
             } else {
                 $path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
@@ -460,6 +460,13 @@ Class ConfigurationService
 		/** Filters */
 		$value = (string) $xml['filter_catalog_type_id'];
 		Services::Registry()->set($registryName, 'filter_catalog_type_id', $value);
+
+		$value = (string) $xml['filter_check_published_status'];
+		if ($value == 1) {
+		} else {
+			$value = 0;
+		}
+		Services::Registry()->set($registryName, 'filter_check_published_status', $value);
 
 		$value = (string) $xml['data_source'];
 		if ($value == '') {

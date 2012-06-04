@@ -37,7 +37,19 @@
                     <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
-                    <include name="ParametersItem"/>
+                    <field name="criteria_title" type="char" null="0" default="Molajo Menu Item" values=""/>
+                    <field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
+                    <field name="criteria_catalog_type_id" type="integer" null="1" default="10000" values=""/>
+                    <field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
+
+                    <include name="ParametersMenuitem"/>
+                    <include name="ParametersGrid"/>
+                    <include name="ParametersImage"/>
+                    <include name="ParametersGravatar"/>
+                    <include name="ParametersAsset"/>
+                    <include name="ParametersMustache"/>
+                    <include name="ParametersCache"/>
+                    <include name="ParametersLog"/>
                 </customfield>
             </customfields>
         </item>

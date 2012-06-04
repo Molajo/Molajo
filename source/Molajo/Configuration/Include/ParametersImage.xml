@@ -1,0 +1,7 @@
+<field name="image_xsmall" type="integer" null="1" default="" values=""/>
+<field name="image_small" type="integer" null="1" default="" values=""/>
+<field name="image_medium" type="integer" null="1" default="" values=""/>
+<field name="image_large" type="integer" null="1" default="" values=""/>
+<field name="image_xlarge" type="integer" null="1" default="" values=""/>
+<field name="image_folder" type="folder" null="1" default="" values=""/>
+<field name="image_thumb_folder" type="folder" null="1" default="" values=""/>

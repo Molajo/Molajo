@@ -1,0 +1,4 @@
+<field name="log_user_activity_create" type="binary" null="1" default="0" values="0,1"/>
+<field name="log_user_activity_read" type="binary" null="1" default="1" values="0,1"/>
+<field name="log_user_activity_update" type="binary" null="1" default="1" values="0,1"/>
+<field name="log_user_activity_delete" type="binary" null="1" default="1" values="0,1"/>

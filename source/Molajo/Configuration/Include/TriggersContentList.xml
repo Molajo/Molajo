@@ -1,11 +1,7 @@
-<trigger name="Author"/>
+<trigger name="Readmore"/>
 <trigger name="Smilies"/>
-<trigger name="Email"/>
 <trigger name="Video"/>
-<trigger name="Pullquote"/>
-<trigger name="Datefields"/>
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
 <trigger name="Publishedstatus"/>
-<trigger name="Readmore"/>
 <trigger name="Lists"/>
