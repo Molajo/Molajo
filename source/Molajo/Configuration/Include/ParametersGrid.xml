@@ -8,3 +8,4 @@
 <field name="grid_ordering_direction" type="char" null="0" default="ASC" values="ASC,DESC"/>
 <field name="grid_pagination" type="char" null="0" default="5" values=""/>
 <field name="grid_batch" type="char" null="0" default="5" values=""/>
+

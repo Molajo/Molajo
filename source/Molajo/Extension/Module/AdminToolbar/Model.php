@@ -43,7 +43,7 @@ Class ModuleAdminToolbarModel extends DisplayModel
     public function getData()
     {
         /** Component Buttons */
-        $buttons = Services::Registry()->get('ExtensionParameters', 'toolbar_buttons');
+        $buttons = Services::Registry()->get('Parameters', 'grid_toolbar_buttons');
         $buttonArray = explode(',', $buttons);
 
         /** User Permissions */
@@ -61,11 +61,9 @@ Class ModuleAdminToolbarModel extends DisplayModel
 
                 $row = new \stdClass();
 
-                $row->title = Services::Registry()->get('ExtensionParameters', 'display_title');
+                $row->title = Services::Registry()->get('Parameters', 'criteria_title');
 
                 $row->name = Services::Language()->translate(strtoupper('TASK_' . $buttonname . '_BUTTON'));
-
-                $row->option = Services::Registry()->get('ExtensionParameters', 'display_extension_option');
 
                 $row->action = $buttonname;
 
