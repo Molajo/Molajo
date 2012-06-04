@@ -1,6 +1,6 @@
 <trigger name="Readmore"/>
 <trigger name="Smilies"/>
-<trigger name="Video"/>
+<trigger name="IFrame"/>
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
 <trigger name="Publishedstatus"/>
