@@ -229,9 +229,6 @@ echo '</pre>';
 		/** collect and return rendered output */
 		$output = ob_get_contents();
 		ob_end_clean();
-		echo $output;
-		die;
-
 		return $output;
 	}
 

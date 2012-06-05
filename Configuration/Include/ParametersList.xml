@@ -11,6 +11,10 @@
 <field name="list_model_name" type="char" null="1" default="" values=""/>
 <field name="list_model_type" type="char" null="1" default="" values="Table,Component,Module"/>
 <field name="list_model_query_object" type="char" null="1" default="" values=""/>
+<field name="list_model_ordering" type="char" null="1" default="" values=""/>
+<field name="list_model_direction" type="char" null="1" default="" values=""/>
+<field name="list_model_offset" type="int" null="0" default="0" values=""/>
+<field name="list_model_count" type="int" null="0" default="5" values=""/>
 
 <field name="list_include_archived_content" type="binary" null="1" default="1" values="0,1"/>
 <field name="list_include_featured_content" type="binary" null="1" default="1" values="0,1"/>

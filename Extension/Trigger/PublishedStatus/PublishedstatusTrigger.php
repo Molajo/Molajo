@@ -55,8 +55,6 @@ class PublishedstatusTrigger extends ContentTrigger
      */
     public function onBeforeRead()
     {
-
-		//return;
         $primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
 
         $this->query->where($this->db->qn($primary_prefix)
@@ -65,14 +63,14 @@ class PublishedstatusTrigger extends ContentTrigger
 
         $this->query->where('(' . $this->db->qn($primary_prefix)
                 . '.' . $this->db->qn('start_publishing_datetime')
-                . ' = ' . $this->db->q($this->nullDate)
+                . ' = ' . $this->db->q($this->null_date)
                 . ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
                 . ' <= ' . $this->db->q($this->now) . ')'
         );
 
         $this->query->where('(' . $this->db->qn($primary_prefix)
                 . '.' . $this->db->qn('stop_publishing_datetime')
-                . ' = ' . $this->db->q($this->nullDate)
+                . ' = ' . $this->db->q($this->null_date)
                 . ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
                 . ' >= ' . $this->db->q($this->now) . ')'
         );

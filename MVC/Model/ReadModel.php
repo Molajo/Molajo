@@ -257,12 +257,14 @@ class ReadModel extends Model
 	 * @return ReadModel
 	 * @since   1.0
 	 */
-	public function getQueryResults($columns, $query_object)
+	public function getQueryResults($columns, $query_object, $offset = 0, $count = 5)
 	{
-
-//echo $this->query->__toString();
-
-		$this->db->setQuery($this->query->__toString());
+/**
+echo '<br /><br /><br />';
+echo $this->query->__toString();
+echo '<br /><br /><br />';
+*/
+		$this->db->setQuery($this->query->__toString(), $offset, $count);
 
 		if ($query_object == 'result') {
 			$this->query_results = $this->db->loadResult();

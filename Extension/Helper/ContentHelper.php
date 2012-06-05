@@ -114,27 +114,27 @@ Class ContentHelper
 
 		/** Page */
 		Services::Registry()->set('Parameters', $type . '_page_view_id',
-			Services::Registry()->get($parmName, 'page_view_id'));
+			Services::Registry()->get($parmName, 'menuitem_page_view_id'));
 		Services::Registry()->set('Parameters', $type . '_page_view_css_id',
-			Services::Registry()->get($parmName, 'page_view_css_id'));
+			Services::Registry()->get($parmName, 'menuitem_page_view_css_id'));
 		Services::Registry()->set('Parameters', $type . '_page_view_css_class',
-			Services::Registry()->get($parmName, 'page_view_css_class'));
+			Services::Registry()->get($parmName, 'menuitem_page_view_css_class'));
 
 		/** Template */
 		Services::Registry()->set('Parameters', $type . '_template_view_id',
-			Services::Registry()->get($parmName, 'template_view_id'));
+			Services::Registry()->get($parmName, 'menuitem_template_view_id'));
 		Services::Registry()->set('Parameters', $type . '_template_view_css_id',
-			Services::Registry()->get($parmName, 'template_view_css_id'));
+			Services::Registry()->get($parmName, 'menuitem_template_view_css_id'));
 		Services::Registry()->set('Parameters', $type . '_template_view_css_class',
-			Services::Registry()->get($parmName, 'template_view_css_class'));
+			Services::Registry()->get($parmName, 'menuitem_template_view_css_class'));
 
 		/** Wrap */
 		Services::Registry()->set('Parameters', $type . '_wrap_view_id',
-			Services::Registry()->get($parmName, 'wrap_view_id'));
+			Services::Registry()->get($parmName, 'menuitem_wrap_view_id'));
 		Services::Registry()->set('Parameters', $type . '_wrap_view_css_id',
-			Services::Registry()->get($parmName, 'wrap_view_css_id'));
+			Services::Registry()->get($parmName, 'menuitem_wrap_view_css_id'));
 		Services::Registry()->set('Parameters', $type . '_wrap_view_css_class',
-			Services::Registry()->get($parmName, 'wrap_view_css_class'));
+			Services::Registry()->get($parmName, 'menuitem_wrap_view_css_class'));
 
 		/** Model */
 		Services::Registry()->set('Parameters', $type . '_model_name',
@@ -143,6 +143,12 @@ Class ContentHelper
 			Services::Registry()->get($parmName, 'menuitem_model_type'));
 		Services::Registry()->set('Parameters', $type . '_model_query_object',
 			Services::Registry()->get($parmName, 'menuitem_model_query_object'));
+
+		Services::Registry()->delete($parmName, 'menuitem_theme*');
+		Services::Registry()->delete($parmName, 'menuitem_page*');
+		Services::Registry()->delete($parmName, 'menuitem_template*');
+		Services::Registry()->delete($parmName, 'menuitem_wrap*');
+		Services::Registry()->delete($parmName, 'menuitem_model*');
 
 		Services::Registry()->copy($parmName, 'Parameters');
 

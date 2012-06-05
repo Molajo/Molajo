@@ -318,14 +318,14 @@ Class TextService
 
 		$m->model->query->where('(' . $m->model->db->qn($primary_prefix)
 				. '.' . $m->model->db->qn('start_publishing_datetime')
-				. ' = ' . $m->model->db->q($m->model->nullDate)
+				. ' = ' . $m->model->db->q($m->model->null_date)
 				. ' OR ' . $m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('start_publishing_datetime')
 				. ' <= ' . $m->model->db->q($m->model->now) . ')'
 		);
 
 		$m->model->query->where('(' . $m->model->db->qn($primary_prefix)
 				. '.' . $m->model->db->qn('stop_publishing_datetime')
-				. ' = ' . $m->model->db->q($m->model->nullDate)
+				. ' = ' . $m->model->db->q($m->model->null_date)
 				. ' OR ' . $m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('stop_publishing_datetime')
 				. ' >= ' . $m->model->db->q($m->model->now) . ')'
 		);

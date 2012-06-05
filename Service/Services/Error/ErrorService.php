@@ -77,8 +77,9 @@ Class ErrorService
 
         } else {
 
-            Services::Response()
-                ->setHeader('Status', '500 Internal server error', true);
+			Services::Response()
+                ->setStatusCode(500)
+				->send('500 Error');
 
             Services::Message()
                 ->set($message, MESSAGE_TYPE_ERROR, 500);

@@ -82,7 +82,6 @@ Class AuthorisationService
 
         /** retrieve action key pairs */
         $items = Services::Registry()->get('Actions');
-		/** @noinspection PhpAssignmentInConditionInspection */
 		while (list($title, $id) = each($items)) {
             Services::Registry()->set('action_to_action_id', $title, (int) $id);
         }
@@ -267,13 +266,14 @@ Class AuthorisationService
         $m = new $controllerClass();
         $m->connect('GroupPermissions');
 
-        $m->model->query->where($m->model->db->qn('catalog_id') . ' = ' . (int) $catalog_id);
-        $m->model->query->where($m->model->db->qn('action_id') . ' = ' . (int) $action_id);
-        $m->model->query->where($m->model->db->qn('group_id')
+		$m->model->query->select($m->model->db->qn('a.id'));
+        $m->model->query->where($m->model->db->qn('a.catalog_id') . ' = ' . (int) $catalog_id);
+        $m->model->query->where($m->model->db->qn('a.action_id') . ' = ' . (int) $action_id);
+        $m->model->query->where($m->model->db->qn('a.group_id')
                 . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
         );
 
-        $count = $m->model->getData('loadResult');
+        $count = $m->getData('result');
 
         if ($count > 0) {
             return true;

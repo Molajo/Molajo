@@ -42,7 +42,7 @@ class ContentTrigger extends Trigger
      * @var    object
      * @since  1.0
      */
-    protected $parameters;
+    protected $parameters = array();
 
     /**
      * Query Object from Model
@@ -69,12 +69,12 @@ class ContentTrigger extends Trigger
     protected $query_results;
 
 	/**
-	 * nullDate
+	 * null_date
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $nullDate;
+	protected $null_date;
 
 	/**
 	 * now
@@ -116,29 +116,59 @@ class ContentTrigger extends Trigger
         return self::$instance;
     }
 
-    /**
-     * get the class property following the trigger method execution
-     *
-     * @return mixed
-     * @since  1.0
-     */
-    public function get($key, $value = array())
-    {
-        return $this->$key;
-    }
 
-    /**
-     * set the class property before the trigger method executes
-     *
-     * @return mixed
-     * @since  1.0
-     */
-    public function set($key, $value)
-    {
-        $this->$key = $value;
+	/**
+	 * Get the current value (or default) of the specified Model property
+	 *
+	 * @param string $key     Property
+	 * @param mixed  $default Value
+	 *
+	 * @return mixed
+	 * @since   1.0
+	 */
+	public function get($key, $default = null)
+	{
+		$value = null;
 
-        return $this;
-    }
+		if (in_array($key, array('table_registry_name', 'query', 'db',
+				'query_results', 'null_date', 'now', 'parameters', 'fields',
+				'customfieldgroups'))) {
+			$value = $this->$key;
+
+		} else {
+			if (isset($this->parameters[$key])) {
+				$value = $this->parameters[$key];
+			}
+		}
+
+		if ($value === null) {
+			return $default;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Set the value of a Model property
+	 *
+	 * @param string $key   Property
+	 * @param mixed  $value Value
+	 *
+	 * @return mixed
+	 * @since   1.0
+	 */
+	public function set($key, $value = null)
+	{
+		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
+			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups'))) {
+
+			$this->$key = $value;
+		} else {
+			$this->parameters[$key] = $value;
+		}
+
+		return;
+	}
 
     /**
      * Unload fields for trigger use
@@ -354,8 +384,9 @@ class ContentTrigger extends Trigger
         } elseif ($field->customfield == '') {
             return true;
 
-        } elseif (Services::Registry()->get($this->model_name . $field->customfield, $name, '') > '') {
-            return Services::Registry()->get($this->model_name . $field->customfield, $name, '');
+		} elseif (Services::Registry()->get($this->get('model_name') . $field->customfield, $name, '') > '') {
+            return Services::Registry()->get($this->get('model_name'). $field->customfield, $name, '');
+
         }
 
         return true;
@@ -383,8 +414,8 @@ class ContentTrigger extends Trigger
         } elseif ($field->customfield == '') {
             return true;
 
-        } elseif (Services::Registry()->get($this->model_name . $field->customfield, $name, '') > '') {
-            Services::Registry()->set($this->model_name . $field->customfield, $new_field_name, $value);
+        } elseif (Services::Registry()->get($this->get('model_name') . $field->customfield, $name, '') > '') {
+            Services::Registry()->set($this->get('model_name') . $field->customfield, $new_field_name, $value);
 
             return true;
         }

@@ -45,28 +45,91 @@ class AdmingridTrigger extends ContentTrigger
 	/**
 	 * Before-read processing
 	 *
-	 * Prepares the filter selections for the Grid Query
+	 * Prepares data for the Administrator Grid  - position AdmingridTrigger last
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
 	public function onBeforeRead()
 	{
-
 		/** Is this an Administrative Grid Request?  */
+		if ($this->get('template_view_title') == 'Grid') {
+		} else {
+			return true;
+		}
 
-		/** Initialize Filter Registry */
-		Services::Registry()->createRegistry('Admingrid');
+		/** Initialization */
+		$primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
 
-		/** Retrieve Filters from Parameters for Component */
-		$parameters = $this->get('parameters');
-		$createAdmingrid = explode(',', $parameters['grid_lists']);
+		/** 1. Prepare Submenu Data */
+		$grid_submenu_items = explode(',', $this->get('grid_submenu_items', 'items,categories,drafts'));
+		$query_results = array();
+
+		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
+			$url = $this->get('catalog_url_request');
+		} else {
+			$url = $this->get('catalog_url_sef_request');
+		}
+
+		if (count($grid_submenu_items) == 0 || $grid_submenu_items == null) {
+		} else {
+
+			foreach ($grid_submenu_items as $submenu) {
+				$row = new \stdClass();
+				$row->link = $url . '&submenu=' . $submenu;
+				$row->link_text = Services::Language()->translate('SUBMENU_' . strtoupper($submenu));
+				$query_results[] = $row;
+			}
+		}
+		Services::Registry()->set('Trigger', 'AdminSubmenu', $query_results);
+
+		/** 2. Toolbar Data */
+		$grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
+				'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')
+		);
+
+		$permissions = Services::Authorisation()->authoriseTaskList(
+			$grid_toolbar_buttons,
+			$this->get('extension_catalog_id')
+		);
+
+		$query_results = array();
+
+		foreach ($grid_toolbar_buttons as $buttonname) {
+
+			if ($permissions[$buttonname] == true) {
+
+				$row = new \stdClass();
+				$row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON'));
+				$row->action = $buttonname;
+				$row->link = $url . '&action=' . $row->action;
+
+				$query_results[] = $row;
+			}
+		}
+
+		if (Services::Registry()->get('Trigger', 'grid_search', 1) == 1) {
+			$row = new \stdClass();
+			$row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
+			$row->action = 'search';
+			$row->link = $url . '&action=search';
+
+			$query_results[] = $row;
+		}
+
+		Services::Registry()->set('Trigger', 'AdminToolbar', $query_results);
+
+		/** 3. Filter Lists */
+		$grid_list = explode(',', $this->get(
+				'grid_list', 'catalog_type_id,created_by,featured,status')
+		);
+
 		$lists = array();
 
-		if (is_array($createAdmingrid) && count($createAdmingrid) > 0) {
+		if (is_array($grid_list) && count($grid_list) > 0) {
 
 			/** Build each list and store in registry along with current selection */
-			foreach ($createAdmingrid as $list) {
+			foreach ($grid_list as $list) {
 
 				$fieldValue = Services::Text()->getList($list, $this->parameters);
 
@@ -75,32 +138,62 @@ class AdmingridTrigger extends ContentTrigger
 
 					ksort($fieldValue);
 
-					Services::Registry()->set('Admingrid', 'list_' . $list, $fieldValue);
+					Services::Registry()->set('Trigger', 'list_' . $list, $fieldValue);
 
 					/** todo: Retrieves the user selected field from the session */
-					$selectedValue = null;
+					$selectedValue = '';
+					Services::Registry()->set('Trigger', 'list_' . $list . '_selected', $selectedValue);
 
-					if (strtolower($list) == 'created_by') {
-						$selectedValue = 100;
-
-					} elseif (strtolower($list) == 'catalog_type_id') {
-						$selectedValue = 10000;
-
-					} elseif (strtolower($list) == 'featured') {
-						$selectedValue = 1;
-
-					} elseif (strtolower($list) == 'protected') {
-						$selectedValue = 1;
+					if ($selectedValue == '') {
+					} else {
+						$this->query->where($this->db->qn($primary_prefix)
+							. '.' . $this->db->qn($list)
+							. ' = ' . $this->db->q($selectedValue));
 					}
 
-					Services::Registry()->set('Admingrid', 'list_' . $list . '_selected', $selectedValue);
-
+        			/** Store the name of each filter list in an array */
 					$lists[] = strtolower($list);
 				}
 			}
 		}
 
-		Services::Registry()->set('Admingrid', 'list', $lists);
+		Services::Registry()->set('Trigger', 'GridFilters', $lists);
+
+		/** 4. Grid Options */
+		$grid_columns = explode(',', $this->get('grid_columns',
+				'id,featured,title,created_by,start_publishing_datetime,ordering')
+		);
+		Services::Registry()->set('Trigger', 'GridTableColumns', $grid_columns);
+
+		foreach ($grid_columns as $column) {
+			$this->query->select($this->db->qn($primary_prefix)	. '.' . $this->db->qn($column));
+		}
+
+		Services::Registry()->set('Trigger', 'GridTableRows', $this->get('grid_rows', 5));
+
+		$ordering = $this->get('grid_ordering', 'start_publishing_datetime');
+		Services::Registry()->set('Trigger', 'GridTableOrdering', $ordering);
+		$this->set('model_ordering', $ordering);
+
+		$direction = $this->get('grid_ordering_direction', 'DESC');
+		Services::Registry()->set('Trigger', 'GridTableOrderingDirection', $direction);
+		$this->set('model_direction', $direction);
+
+		$this->query->order($this->db->qn($primary_prefix) . '.' . $this->db->qn($ordering) . ' ' . $direction);
+
+		/** 5. Grid Pagination */
+		Services::Registry()->set('Trigger', 'GridPagination', $this->get('grid_pagination', 1));
+
+		$offset = $this->get('grid_offset', 0);
+		Services::Registry()->set('Trigger', 'GridPaginationOffset', $direction);
+		$this->set('model_offset', $offset);
+
+		$count = $this->get('grid_count', 5);
+		Services::Registry()->set('Trigger', 'GridPaginationCount', $count);
+		$this->set('model_count', $count);
+
+		/** 6. Grid Batch */
+		Services::Registry()->set('Trigger', 'GridBatch', $this->get('grid_batch', 1));
 
 		return true;
 	}

@@ -7,6 +7,7 @@
 namespace Molajo\Extension\Trigger\Useractivity;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -51,7 +52,7 @@ class UseractivityTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_read', 0) == 1) {
+        if ($this->get('criteria_log_user_activity_read', 0) == 1) {
             return $this->setUserActivityLog();
         }
 
@@ -66,7 +67,7 @@ class UseractivityTrigger extends ContentTrigger
      */
     public function onAfterCreate()
     {
-        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_create', 0) == 1) {
+        if ($this->get('criteria_log_user_activity_create', 0) == 1) {
             return $this->setUserActivityLog();
         }
 
@@ -81,7 +82,7 @@ class UseractivityTrigger extends ContentTrigger
      */
     public function onAfterUpdate()
     {
-        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_update', 0) == 1) {
+        if ($this->get('criteria_log_user_activity_update', 0) == 1) {
             return $this->setUserActivityLog();
         }
 
@@ -96,7 +97,7 @@ class UseractivityTrigger extends ContentTrigger
      */
     public function onAfterDelete()
     {
-        if (Services::Registry()->get('Parameters', 'criteria_log_user_activity_delete', 0) == 1) {
+        if ($this->get('criteria_log_user_activity_delete', 0) == 1) {
             return $this->setUserActivityLog();
         }
     }
@@ -114,7 +115,7 @@ class UseractivityTrigger extends ContentTrigger
         /** Retrieve Key for Action  */
         $action_id = Services::Registry()->get(
             'Actions',
-            Services::Registry()->get('Parameters', 'action', 'display')
+            $this->get('action', 'display')
         );
 
         /** Retrieve User Data  */

@@ -349,6 +349,9 @@ echo '<br /><br /><br />';
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));
 
 		/** Set Parameters */
+		Services::Registry()->get('model_offset', 0);
+		Services::Registry()->get('model_count', 5);
+
 		Services::Registry()->sort('Parameters');
 
 		$parms = Services::Registry()->getArray('Parameters');
