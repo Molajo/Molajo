@@ -56,8 +56,8 @@ class ListsTrigger extends ContentTrigger
 		Services::Registry()->createRegistry('Lists');
 
 		/** Retrieve Filters from Parameters for Component */
-		$parameters = $this->get('parameters');
-		$createLists = explode(',', $parameters['grid_lists']);
+		$createLists = explode(',', $this->get('grid_lists'));
+
 		$lists = array();
 
 		if (is_array($createLists) && count($createLists) > 0) {

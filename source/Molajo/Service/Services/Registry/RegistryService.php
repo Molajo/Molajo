@@ -600,7 +600,6 @@ Class RegistryService
 		/** retrieve existing keys */
 		$existing = $this->registryKeys;
 		$keep = array();
-		/** @noinspection PhpAssignmentInConditionInspection */
 		while (list($key, $value) = each($existing)) {
 
 			if ($value === $namespace) {

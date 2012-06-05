@@ -174,7 +174,7 @@ Class ModelController extends Controller
 
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
-		$this->model->set('nullDate', Services::$dbo()->get('db')->getNullDate());
+		$this->model->set('null_date', Services::$dbo()->get('db')->getNullDate());
 
 		if ($dbo == 'JDatabase') {
 			$dateClass = 'Joomla\\date\\JDate';
@@ -271,7 +271,9 @@ Class ModelController extends Controller
 		/** Executes Query */
 		$this->model->getQueryResults(
 			Services::Registry()->get($this->table_registry_name, 'Fields'),
-			$query_object
+			$query_object,
+			$this->get('model_offset', 0),
+			$this->get('model_count', 5)
 		);
 
 		/** Retrieve query results from Model */
@@ -413,11 +415,11 @@ echo '</pre>';
 		/** Schedule onBeforeRead Event */
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
-			'parameters' => $this->parameters,
-			'query' => $this->model->query,
 			'db' => $this->model->db,
-			'nullDate' => $this->model->nullDate,
+			'query' => $this->model->query,
+			'null_date' => $this->model->null_date,
 			'now' => $this->model->now,
+			'parameters' => $this->parameters,
 			'model_name' => $this->get('model_name')
 		);
 

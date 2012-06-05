@@ -176,14 +176,14 @@ Class ImageService
             ->format('Y-m-d-H-i-s');
 
         $now = $date->toSql();
-        $nullDate = $db->getNullDate();
+        $null_date = $db->getNullDate();
 
         $query->select($db->qn('path'));
         $query->from($db->qn('#__content') . 'as a');
         $query->where('a.' . $db->qn('status') . ' = 1');
-        $query->where('(a.' . $db->qn('start_publishing_datetime') . ' = ' . $db->q($nullDate) .
+        $query->where('(a.' . $db->qn('start_publishing_datetime') . ' = ' . $db->q($null_date) .
             ' OR a.' . $db->qn('start_publishing_datetime') . ' <= ' . $db->q($now) . ')');
-        $query->where('(a.' . $db->qn('stop_publishing_datetime') . ' = ' . $db->q($nullDate) .
+        $query->where('(a.' . $db->qn('stop_publishing_datetime') . ' = ' . $db->q($null_date) .
             ' OR a.' . $db->qn('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')');
         $query->where('a.id = ' . (int) $this->id);
 

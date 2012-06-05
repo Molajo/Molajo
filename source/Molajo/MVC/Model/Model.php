@@ -49,7 +49,7 @@ class Model
 	 * @var    object
 	 * @since  1.0
 	 */
-	public $nullDate;
+	public $null_date;
 
 	/**
 	 * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
@@ -109,7 +109,7 @@ class Model
 	{
 		$value = null;
 
-		if (in_array($key, array('db', 'query', 'nullDate', 'now', 'query_results', 'pagination'))) {
+		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results', 'pagination'))) {
 			$value = $this->$key;
 		} else {
 			if (isset($this->parameters[$key])) {
@@ -135,7 +135,7 @@ class Model
 	 */
 	public function set($key, $value = null)
 	{
-		if (in_array($key, array('db', 'query', 'nullDate', 'now', 'query_results', 'pagination'))) {
+		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results', 'pagination'))) {
 			$this->$key = $value;
 		} else {
 			$this->parameters[$key] = $value;

@@ -208,14 +208,16 @@ Class ParseService
 
 		$this->final_indicator = false;
 
-		/** Save parameters for the primary route so that Includer / MVC can use Parameters Registry */
-		Services::Registry()->copy('Parameters', 'RouteParameters');
-
 		/** Start parsing and processing page include for Theme */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
+		} else {
 			Services::Error()->set(500, 'Theme not found');
 			return false;
 		}
+
+		/** Save parameters for the primary route so that Includer / MVC can use Parameters Registry */
+		Services::Registry()->copy('Parameters', 'RouteParameters');
+
 		$body = $this->renderLoop();
 
 		/**

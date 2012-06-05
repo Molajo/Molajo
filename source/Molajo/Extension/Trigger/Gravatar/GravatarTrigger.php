@@ -58,11 +58,11 @@ class GravatarTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-			if (Services::Registry()->get('Parameters', 'criteria_use_gravatar', 1) == 1) {
-				$size = Services::Registry()->get('Parameters', 'criteria_gravatar_size', 80);
-				$type = Services::Registry()->get('Parameters', 'criteria_gravatar_type', 'mm');
-				$rating = Services::Registry()->get('Parameters', 'criteria_gravatar_rating', 'pg');
-				$image = Services::Registry()->get('Parameters', 'criteria_gravatar_image', 0);
+			if ($this->get('gravatar', 0) == 1) {
+				$size = $this->get('gravatar_size', 80);
+				$type = $this->get('gravatar_type', 'mm');
+				$rating = $this->get('gravatar_rating', 'pg');
+				$image = $this->get('gravatar_image', 0);
 
 			} else {
 				return true;
