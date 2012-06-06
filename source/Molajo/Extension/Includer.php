@@ -80,6 +80,9 @@ class Includer
 
 		Services::Registry()->set('Parameters', 'includer_name', $this->name);
 		Services::Registry()->set('Parameters', 'includer_type', $this->type);
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'Request*');
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'Theme*');
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'Page*');
 
 		return;
 	}

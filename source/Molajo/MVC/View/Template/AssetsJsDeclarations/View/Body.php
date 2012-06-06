@@ -4,17 +4,19 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-use Molajo\Service\Services;
-defined('MOLAJO') or die; ?>
-<script<?php if ((int) Services::Registry()->get('Parameters', 'criteria_html5', 1) == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
+defined('MOLAJO') or die;
+$html5 = $this->row->html5;
+$end = $this->row->end;
+?>
+<script<?php if ((int) $html5 == 0): ?> type="<?php echo $this->row->mimetype; ?>"<?php endif; ?>>
 	<?php
-	if ($page_mimetype == 'text/html') :
+	if ($this->row->page_mime_type == 'text/html') :
 	else : ?>
 	<![CDATA[
 		<?php
 	endif;
 	echo '    ' . trim($this->row->content) . chr(10);
-	if ($page_mimetype == 'text/html') :
+	if ($this->row->page_mime_type == 'text/html') :
 	else : ?>
 	]]>
 		<?php

@@ -69,9 +69,7 @@ Class AssetService
 	}
 
 	/**
-	 * addLink
-	 *
-	 * Adds <link> tags to the head of the document
+	 * addLink - Adds <link> tags to the head of the document
 	 *
 	 * Usage:
 	 *
@@ -92,7 +90,8 @@ Class AssetService
 	 * @param  $relation_type
 	 * @param  $attributes
 	 *
-	 * @return mixed
+	 * @return object
+	 * @since  1.0
 	 */
 	public function addLink($url, $relation, $relation_type = 'rel', $attributes = array())
 	{
@@ -103,7 +102,7 @@ Class AssetService
 		$row->url = $url;
 		$row->relation = Services::Filter()->escape_text($relation);
 		$row->relation_type = Services::Filter()->escape_text($relation_type);
-
+	    $row->attributes = '';
 		$temp = trim(implode(' ', $attributes));
 		if (trim($temp) == '') {
 		} elseif (count($temp) == 1) {
@@ -123,13 +122,11 @@ Class AssetService
 
 		Services::Registry()->set('Assets', 'Links', $links);
 
-		return;
+		return $this;
 	}
 
 	/**
-	 * addCssFolder
-	 *
-	 * Loads the CS located within the folder, as specified by the filepath
+	 * addCssFolder - Loads the CS located within the folder, as specified by the filepath
 	 *
 	 * Usage:
 	 * Services::Asset()->addCssFolder($file_path, $url_path, $priority);
@@ -138,14 +135,14 @@ Class AssetService
 	 * @param string  $url_path
 	 * @param integer $priority
 	 *
-	 * @return void
+	 * @return object
 	 * @since  1.0
 	 */
 	public function addCssFolder($file_path, $url_path, $priority = 500)
 	{
 		if (Services::Filesystem()->folderExists($file_path . '/css')) {
 		} else {
-			return;
+			return $this;
 		}
 
 		$files = Services::Filesystem()->folderFiles($file_path . '/css', '\.css$', false, false);
@@ -161,12 +158,12 @@ Class AssetService
 				}
 			}
 		}
+
+		return $this;
 	}
 
 	/**
-	 * addCss
-	 *
-	 * Adds a linked stylesheet to the page
+	 * addCss - Adds a linked stylesheet to the page
 	 *
 	 * Usage:
 	 * Services::Asset()->addCss($url_path . '/template.css');
@@ -216,9 +213,7 @@ Class AssetService
 	}
 
 	/**
-	 * addCssDeclaration
-	 *
-	 * Adds a css declaration to the array for later rendering
+	 * addCssDeclaration - Adds a css declaration to the array for later rendering
 	 *
 	 * Usage:
 	 * Services::Asset()->addCssDeclaration($css_in_here, 'text/css');
@@ -246,9 +241,7 @@ Class AssetService
 	}
 
 	/**
-	 * addJsFolder
-	 *
-	 * Loads the JS Files located within the folder specified by the filepath
+	 * addJsFolder - Loads the JS Files located within the folder specified by the filepath
 	 *
 	 * Usage:
 	 * Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
@@ -290,9 +283,7 @@ Class AssetService
 	}
 
 	/**
-	 * addJs
-	 *
-	 * Adds a linked script to the page
+	 * addJs - Adds a linked script to the page
 	 *
 	 * Usage:
 	 * Services::Asset()->addJs('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
@@ -321,13 +312,14 @@ Class AssetService
 		$row->priority = $priority;
 		$row->mimetype = $mimetype;
 		$row->async = $async;
+		$row->defer = $defer;
 
 		$js[] = $row;
 
 		if ($defer == 1) {
-			Services::Registry()->set('Assets', 'JsDefer', array());
+			Services::Registry()->set('Assets', 'JsDefer', $js);
 		} else {
-			Services::Registry()->set('Assets', 'Js', array());
+			Services::Registry()->set('Assets', 'Js', $js);
 		}
 
 		/** Order priorities for later use rendering links */
@@ -346,9 +338,7 @@ Class AssetService
 	}
 
 	/**
-	 * addJSDeclarations
-	 *
-	 * Adds a js declaration to an array for later rendering
+	 * addJSDeclarations - Adds a js declaration to an array for later rendering
 	 *
 	 * Usage:
 	 * Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
@@ -386,11 +376,7 @@ Class AssetService
 	}
 
 	/**
-	 * get application assets
-	 *
-	 * @return array Application assets
-	 *
-	 * @since   1.0
+	 *     Dummy functions to use service as a DBO to interact with model
 	 */
 	public function get($option = null)
 	{
@@ -405,9 +391,6 @@ Class AssetService
 		}
 	}
 
-	/**
-	 *     Dummy functions to pass service off as a DBO to interact with model
-	 */
 	public function getNullDate()
 	{
 		return $this;
@@ -437,6 +420,31 @@ Class AssetService
 	 */
 	public function getAssets($type)
 	{
-		return Services::Registry()->get('Assets', $type, array());
+		$rows = Services::Registry()->get('Assets', $type);
+
+		if (is_array($rows)) {
+		} else {
+			return array();
+		}
+
+		if (count($rows) > 0) {
+		} else {
+			return array();
+		}
+
+		$html5 = Services::Registry()->get('Configuration', 'html5', 1);
+		if ((int) Services::Registry()->get('Configuration', 'html5', 1) == 1) {
+			$end = '>' . chr(10);
+		} else {
+			$end = '/>' . chr(10);
+		}
+
+		foreach ($rows as $row) {
+			$row->html5 = $html5;
+			$row->end = $end;
+			$row->page_mime_type = Services::Registry()->get('Metadata', 'mimetype');
+		}
+
+		return $rows;
 	}
 }

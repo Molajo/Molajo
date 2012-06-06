@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\MVC\Model;
 
@@ -214,6 +214,19 @@ class Model
 	}
 
 	/**
+	 * retrieves head and metadata from Metadata registry
+	 *
+	 * @param null $model_type
+	 *
+	 * @return mixed Array or String or Null
+	 * @since   1.0
+	 */
+	public function getMetadata($model_type = null)
+	{
+		return $this->db->getMetadata($model_type);
+	}
+
+	/**
 	 * retrieves JS and CSS assets, metadata for head from Asset Registry
 	 *
 	 * @param null $model_type
@@ -223,7 +236,7 @@ class Model
 	 */
 	public function getAssets($model_type = null)
 	{
-		return $this->db->getAssets();
+		return $this->db->getAssets($model_type);
 	}
 
 	/**
@@ -292,6 +305,7 @@ class Model
 		$this->processQueryResults('loadResult');
 
 		return $this->query_results;
+
 	}
 
 	/**
@@ -323,19 +337,16 @@ class Model
 		echo '</pre>';
 		 */
 		if ((int)$id == 0) {
-			$stored = $this->db->insertObject(
-				$table_name, $this->row, $primary_key);
+			$stored = $this->db->insertObject($table_name, $this->row, $primary_key);
 		} else {
-			$stored = $this->db->updateObject(
-				$table_name, $this->row, $primary_key);
+			$stored = $this->db->updateObject($table_name, $this->row, $primary_key);
 		}
 
 		if ($stored) {
 
 		} else {
 
-//			throw new \Exception(
-//				. ' '. $this->db->getErrorMsg()
+//			throw new \Exception($this->db->getErrorMsg()
 //			);
 		}
 		/**

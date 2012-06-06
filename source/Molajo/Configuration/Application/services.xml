@@ -23,9 +23,9 @@
     <service>Date</service>
     <service>User</service>
     <service>Debug</service>
-    <service>Document</service>
     <service>Authorisation</service>
     <service>Asset</service>
+    <service>Metadata</service>
     <service>Image</service>
     <service>Filter</service>
     <service>Parse</service>

@@ -139,8 +139,6 @@ Class Services
         }
 
         foreach ($this->message as $message) {
-            /** @noinspection PhpUndefinedMethodInspection */
-            /** @noinspection PhpUndefinedMethodInspection */
             Services::Debug()->set($message);
         }
 
