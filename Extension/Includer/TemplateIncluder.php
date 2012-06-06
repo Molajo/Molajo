@@ -64,8 +64,8 @@ Class TemplateIncluder extends Includer
 
 		/** Standard parameters (overwrite extension title with Template */
 		Services::Registry()->set('Parameters', 'extension_title', 'Template');
-
-		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
+//todo: figure out a better way to communicate display on no results for templates and wraps
+		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 0);
 
 		/** Template  */
 		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
@@ -79,9 +79,21 @@ Class TemplateIncluder extends Includer
 		/* Set other model parameters: model_parameter is set in Attributes */
 		$value = Services::Registry()->get('Parameters', 'model_parameter', '');
 
-		Services::Registry()->set('Parameters', 'model_name', 'dboTriggerdata');
-		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+		if ($this->type == 'asset') {
+			Services::Registry()->set('Parameters', 'model_name', 'dboAssets');
+			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
+
+		} elseif ($this->type == 'metadata') {
+			Services::Registry()->set('Parameters', 'model_name', 'dboMetadata');
+			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
+
+		} else {
+			Services::Registry()->set('Parameters', 'model_name', 'dboTriggerdata');
+			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+		}
 
 		/** Cleanup */
 		Services::Registry()->delete('Parameters', 'item*');
@@ -108,11 +120,16 @@ Class TemplateIncluder extends Includer
     /**
      * Loads Media CSS and JS files for Template and Template Views
      *
-     * @return null
+     * @return  object
      * @since   1.0
      */
     protected function loadViewMedia()
     {
+
+		if ($this->type == 'asset' || $this->type == 'metadata') {
+			return $this;
+		}
+
         $priority = Services::Registry()->get('Parameters', 'criteria_media_priority_other_extension', 400);
 
         $file_path = Services::Registry()->get('Parameters', 'template_view_path');

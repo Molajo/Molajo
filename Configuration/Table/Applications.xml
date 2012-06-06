@@ -69,6 +69,8 @@
 
                     <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
                     <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>
+                    <field name="defer_template_view_id" type="integer" null="1" default="" values=""/>
+                    <field name="defer_wrap_view_id" type="integer" null="1" default="" values=""/>
 
                     <field name="message_template_view_id" type="integer" null="1" default="" values=""/>
                     <field name="message_wrap_view_id" type="integer" null="1" default="" values=""/>

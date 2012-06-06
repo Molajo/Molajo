@@ -35,7 +35,6 @@ Class HeadIncluder extends Includer
     {
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
         parent::__construct($name, $type);
-
         return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
     }
 
@@ -64,25 +63,34 @@ Class HeadIncluder extends Includer
     {
         Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
-        if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
-            Services::Registry()->set('Parameters', 'template_view_id',
-                Services::Registry()->get('Configuration', 'head_template_view_id'));
-        }
-        if ((int) Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
-            Services::Registry()->set('Parameters', 'wrap_view_id',
-                Services::Registry()->get('Configuration', 'head_wrap_view_id'));
-        }
-
         if ($this->type == 'defer') {
-            Services::Registry()->set('Parameters', 'defer', 1);
-        } else {
-            Services::Registry()->set('Parameters', 'defer', 0);
-        }
+			if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+				Services::Registry()->set('Parameters', 'template_view_id',
+					Services::Registry()->get('Configuration', 'defer_template_view_id'));
+			}
+			if ((int) Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+				Services::Registry()->set('Parameters', 'wrap_view_id',
+					Services::Registry()->get('Configuration', 'defer_wrap_view_id'));
+			}
+			Services::Registry()->set('Parameters', 'model_name', 'dboMetadata');
+			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
+			Services::Registry()->set('Parameters', 'model_parameter', 'defer');
 
-        /* Yes, this is done before, too. Get over it or fix it. */
-        Services::Registry()->set('Parameters', 'model_name', 'dboAssets');
-        Services::Registry()->set('Parameters', 'model_type', 'Table');
-        Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
+        } else {
+			if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+				Services::Registry()->set('Parameters', 'template_view_id',
+					Services::Registry()->get('Configuration', 'head_template_view_id'));
+			}
+			if ((int) Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+				Services::Registry()->set('Parameters', 'wrap_view_id',
+					Services::Registry()->get('Configuration', 'head_wrap_view_id'));
+			}
+			Services::Registry()->set('Parameters', 'model_name', 'dboMetadata');
+			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
+			Services::Registry()->set('Parameters', 'model_parameter', 'head');
+        }
 
         parent::setRenderCriteria();
 
