@@ -101,12 +101,12 @@ Class ThemeIncluder extends Includer
 
         /** Load custom Theme Helper Media, if exists */
         $helperClass = 'Molajo\\Extension\\Theme\\'
-            . ucfirst(Services::Registry()->get('Theme', 'title')) . '\\Helper\\'
-            . 'Theme' . ucfirst(Services::Registry()->get('Theme', 'title')) . 'Helper';
+            . ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . '\\Helper\\'
+            . 'Theme' . ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . 'Helper';
 
-        if (\class_exists($helperClass)) {
+        if (class_exists($helperClass)) {
             $load = new $helperClass();
-            if (\method_exists($load, 'loadMedia')) {
+            if (method_exists($load, 'loadMedia')) {
                 $load->loadMedia();
             }
         }
@@ -116,18 +116,26 @@ Class ThemeIncluder extends Includer
         $file_path = Services::Registry()->get('Parameters', 'theme_path');
         $url_path = Services::Registry()->get('Parameters', 'theme_path_url');
 
-        Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         /** Page */
         $priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
         $file_path = Services::Registry()->get('Parameters', 'page_view_path');
         $url_path = Services::Registry()->get('Parameters', 'page_view_path_url');
 
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+
+		/** Site Favicon */
+		Services::Asset()->addLink(
+			$url = Services::Registry()->get('Parameters', 'theme_favicon'),
+			$relation = 'shortcut icon',
+			$relation_type = 'image/x-icon',
+			$attributes = array()
+		);
 
         /** Catalog ID specific */
         $this->loadMediaPlus('', Services::Registry()->get('Parameters', 'asset_priority_site', 100));
@@ -149,33 +157,33 @@ Class ThemeIncluder extends Includer
         $file_path = SITE_MEDIA_FOLDER . '/' . $plus;
         $url_path = SITE_MEDIA_URL . '/' . $plus;
 
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
 
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, false);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
 
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
 
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         return;
     }

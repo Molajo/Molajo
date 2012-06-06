@@ -82,6 +82,7 @@ echo 'Model Name ' . $model_name . '<br />'
 
 		} else {
 			$this->connect($model_name, $model_type);
+
 /**
 echo '<br /><br /><br />';
 echo 'In DisplayController: ' . $this->get('extension_title');
@@ -91,12 +92,12 @@ echo '<br />';
 			/** Run Query */
 			$this->getData($model_query_object);
 
-			Services::Registry()->get('Parameters', 'template*');
-/**
-echo '<pre>';
-var_dump($this->query_results);
-echo '</pre>';
-*/
+
+
+//echo '<pre>';
+//var_dump($this->query_results);
+//echo '</pre>';
+
 		}
 
 		$this->pagination = array();
@@ -115,7 +116,7 @@ echo '</pre>';
 		if (count($this->query_results) == 0
 			&& $this->get('criteria_display_view_on_no_results') == 0
 		) {
-			return '';
+			//return '';
 		}
 
 		if (strtolower($includer_name) == 'wrap') {
@@ -152,8 +153,10 @@ echo '</pre>';
 		$this->query_results = array();
 
 		$temp = new \stdClass();
+
 		$temp->wrap_view_css_id = $this->get('wrap_view_css_id');
 		$temp->wrap_view_css_class = $this->get('wrap_view_css_class');
+
 		$temp->content = $renderedOutput;
 
 		$this->query_results[] = $temp;
@@ -199,7 +202,6 @@ echo '</pre>';
 
 				/** header: before any rows are processed */
 				if ($rowCount == 1) {
-
 					if (file_exists($this->view_path . '/View/Header.php')) {
 						include $this->view_path . '/View/Header.php';
 					}
@@ -208,18 +210,15 @@ echo '</pre>';
 				/** body: once for each row */
 				if ($this->row == null) {
 				} else {
-
 					if (file_exists($this->view_path . '/View/Body.php')) {
 						include $this->view_path . '/View/Body.php';
 					}
-
 					$rowCount++;
 				}
 			}
 
 			/** footer: after all rows are processed */
 			if ($rowCount > $totalRows) {
-
 				if (file_exists($this->view_path . '/View/Footer.php')) {
 					include $this->view_path . '/View/Footer.php';
 				}
@@ -258,8 +257,8 @@ echo '</pre>';
 
 		/** Theme Specific Mustache Helper or Molajo Mustache Helper */
 		$helperClass = 'Molajo\\Extension\\Theme\\'
-			. ucfirst(Services::Registry()->get('Theme', 'title')) . '\\Helper\\'
-			. 'Theme' . ucfirst(Services::Registry()->get('Theme', 'title')) . 'Helper';
+			. ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . '\\Helper\\'
+			. 'Theme' . ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . 'Helper';
 
 		if (\class_exists($helperClass)) {
 			$h = new $helperClass();

@@ -224,19 +224,7 @@ Class ParseService
 		 *  Final Includers: Now, the theme, head, messages, and defer includes run
 		 *      This process also removes <include values not found
 		 */
-		$this->sequence = array();
-
-		foreach ($this->final as $next) {
-			if ($next == 'message') {
-				$messages = Services::Message()->get('count');
-				if ((int)$messages == 0) {
-				} else {
-					$this->sequence[] = $next;
-				}
-			} else {
-				$this->sequence[] = $next;
-			}
-		}
+		$this->sequence = $this->final;
 
 		/** initialize so it is no longer used to exclude this set of include values */
 		$this->exclude_until_final = array();

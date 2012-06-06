@@ -41,17 +41,17 @@ Class TemplateIncluder extends Includer
         return $this;
     }
 
-    /**
-     * setRenderCriteria
-     *
-     * Retrieve default values, if not provided by extension
-     *
-     * @return bool
-     * @since   1.0
-     */
-    protected function setRenderCriteria()
-    {
-		/** For template and wrap types - extension name is was set to the name of the template in the getAttributes method */
+	/**
+	 * setRenderCriteria
+	 *
+	 * Retrieve default values, if not provided by extension
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	protected function setRenderCriteria()
+	{
+		/**  Extension name set to the name of the template in the getAttributes method */
 		$template_title = Services::Registry()->get('Parameters', 'extension_title');
 
 		$template_id = Helpers::Extension()
@@ -63,9 +63,9 @@ Class TemplateIncluder extends Includer
 		}
 
 		/** Standard parameters (overwrite extension title with Template */
-        Services::Registry()->set('Parameters', 'extension_title', 'Template');
+		Services::Registry()->set('Parameters', 'extension_title', 'Template');
 
-        Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
+		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
 		/** Template  */
 		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
@@ -74,23 +74,25 @@ Class TemplateIncluder extends Includer
 		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
 
 		/** Merge Configuration in */
-        Services::Registry()->merge('Configuration', 'Parameters', true);
+		Services::Registry()->merge('Configuration', 'Parameters', true);
 
-        /* Set other model parameters: model_parameter is set in Attributes */
+		/* Set other model parameters: model_parameter is set in Attributes */
+		$value = Services::Registry()->get('Parameters', 'model_parameter', '');
+
 		Services::Registry()->set('Parameters', 'model_name', 'dboTriggerdata');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
-        Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+		Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
 
 		/** Cleanup */
-        Services::Registry()->delete('Parameters', 'item*');
-        Services::Registry()->delete('Parameters', 'list*');
-        Services::Registry()->delete('Parameters', 'form*');
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
 
-        /** Sort */
-        Services::Registry()->sort('Parameters');
+		/** Sort */
+		Services::Registry()->sort('Parameters');
 
-        return true;
-    }
+		return true;
+	}
 
     /**
      * Loads Language Files for extension
@@ -116,9 +118,9 @@ Class TemplateIncluder extends Includer
         $file_path = Services::Registry()->get('Parameters', 'template_view_path');
         $url_path = Services::Registry()->get('Parameters', 'template_view_path_url');
 
-        Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
     }

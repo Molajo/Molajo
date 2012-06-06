@@ -103,8 +103,6 @@ Class Application
         } else {
             Services::Debug()->set('Application Route succeeded');
         }
-//Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
-//Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
 
         /** Authorise: Services::Registry()->get('Parameters', 'status_authorised') */
         $continue = $this->authorise();
@@ -323,8 +321,10 @@ Class Application
      */
     protected function display()
     {
-		Services::Registry()->get('Parameters', '*');
-		die;
+		//Services::Registry()->get('Parameters', '*');
+		Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
+		Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
+
         $this->rendered_output = Services::Parse()->process();
         return $this;
     }
@@ -414,7 +414,6 @@ Class Application
      */
     protected function setBaseURL()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $baseURL = Application::Request()->get('request')->getScheme()
             . '://'
             . Application::Request()->get('request')->getHttpHost()

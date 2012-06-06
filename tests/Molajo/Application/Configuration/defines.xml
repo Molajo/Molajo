@@ -66,8 +66,8 @@
     <define name="STATUS_DRAFT" value="-5"/>
     <define name="STATUS_VERSION" value="-10"/>
 
-    <define name="MESSAGE_TYPE_MESSAGE" value="message"/>
-    <define name="MESSAGE_TYPE_NOTICE" value="notice"/>
+    <define name="MESSAGE_TYPE_SUCCESS" value="message"/>
+    <define name="MESSAGE_TYPE_INFORMATION" value="notice"/>
     <define name="MESSAGE_TYPE_WARNING" value="warning"/>
     <define name="MESSAGE_TYPE_ERROR" value="error"/>
 
