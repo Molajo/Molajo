@@ -57,18 +57,14 @@ Class ThemeMolajitoHelper extends MustacheHelper
 		$theme = Services::Registry()->get('Parameters', 'theme_path_node');
 
 		/** IE */
-		Services::Registry()->set(
-			'Metadata', 'X-UA-Compatible', 'IE=EmulateIE7; IE=EmulateIE9'
-		);
-
-		/** Content Type */
-		Services::Registry()->set(
-			'Metadata', 'Content-Type', 'text/html; charset=utf-8'
-		);
+		Services::Metadata()->set('X-UA-Compatible', 'IE=EmulateIE7; IE=EmulateIE9', 'http-equiv');
 
 		/** Mobile Specific Meta */
-        Services::Registry()->set(
-			'Metadata', 'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+		Services::Metadata()->set('Content-Type', 'text/html; charset=utf-8', 'http-equiv');
+
+		/** Mobile Specific Meta */
+		Services::Metadata()->set(
+			'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
 		);
 
 		/** Media Queries to load CSS */
@@ -77,6 +73,15 @@ Class ThemeMolajitoHelper extends MustacheHelper
 			$priority=1000,
 			$mimetype='test/css',
 			$media='all',
+			$conditional='',
+			$attributes=array());
+
+		Services::Asset()->addCss(
+			$url=EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/720_grid.css',
+			$priority=1000,
+			$mimetype='test/css',
+			$media='',
+			$conditional='lt IE 9',
 			$attributes=array());
 
 		Services::Asset()->addCss(
@@ -84,29 +89,22 @@ Class ThemeMolajitoHelper extends MustacheHelper
 			$priority=1000,
 			$mimetype='test/css',
 			$media='screen and (min-width: 720px)',
-			$conditional='lt IE 9',
+			$conditional='',
 			$attributes=array());
 
-		Services::Asset()->addCss(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . $theme
-				. '/' . 'css/grid/720_grid.css',
-			$media='screen and (min-width: 720px)',
-			$priority=1000);
-
-		Services::Asset()->addCss(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . $theme
-				. '/' . 'css/grid/986_grid.css',
+		Services::Asset()->addCss($url = EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/986_grid.css',
+			$priority=1000,
+			$mimetype='test/css',
 			$media='screen and (min-width: 986px)',
-			$priority=1000);
+			$conditional='',
+			$attributes=array());
 
-		Services::Asset()->addCss(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . $theme
-				. '/' . 'css/grid/1236_grid.css',
+		Services::Asset()->addCss($url = EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/1236_grid.css',
+			$priority=1000,
+			$mimetype='test/css',
 			$media='screen and (min-width: 1236px)',
-			$priority=1000);
+			$conditional='',
+			$attributes=array());
 
         /** jQuery CDN and fallback */
         Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1000);
@@ -114,9 +112,7 @@ Class ThemeMolajitoHelper extends MustacheHelper
         /** Modernizer */
         Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1000);
 
-        $url = EXTENSIONS_THEMES_URL
-            . '/' . $theme
-            . '/' . 'js/fallback/jquery-1.7.1.min.js';
+        $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.1.min.js';
 
         $fallback = "
         if (typeof jQuery == 'undefined') {
@@ -128,30 +124,24 @@ Class ThemeMolajitoHelper extends MustacheHelper
 
 		/** Favicons */
 		Services::Asset()->addLink(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . $theme
-				. '/' . 'images/apple-touch-icon.png',
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'images/apple-touch-icon.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
 			$attributes = array()
 		);
 		Services::Asset()->addLink(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . $theme
-				. '/' . 'images/apple-touch-icon-72x72.png',
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'images/apple-touch-icon-72x72.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
 			$attributes = array('sizes,72x72')
 		);
 		Services::Asset()->addLink(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . $theme
-				. '/' . 'images/apple-touch-icon-114x114.png',
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'images/apple-touch-icon-114x114.png',
 			$relation = 'apple-touch-icon-precomposed',
 			$relation_type = 'rel',
 			$attributes = array('sizes,114x114')
 		);
 
-
+		return;
     }
 }
