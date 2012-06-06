@@ -14,15 +14,15 @@ if ((int) $html5 == 1): ?>
 <?php else : ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php endif; ?>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo $this->query_results[0]->language_direction; ?>" lang="<?php echo $this->query_results[0]->language; ?>">
+<html<?php if ((int) $html5 == 0) : ?> xmlns="http://www.w3.org/1999/xhtml"<?php endif; ?><?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>">
 <head>
-<base href="<?php echo $this->query_results[0]->base_url . '"' . $end; ?>
+	<title><?php echo $this->query_results[0]->title; ?></title>
+	<base href="<?php echo $this->query_results[0]->base_url . '"' . $end; ?>
 <?php if ((int) $html5 == 1): ?>
     <meta charset="utf-8"<?php echo $end; ?>
 <?php else : ?>
     <meta http-equiv="Content-Type" content="<?php echo $this->query_results[0]->mimetype; ?>; charset=utf-8"<?php echo $end; ?>
 	<?php endif; ?>
-	<title><?php echo $this->query_results[0]->title; ?></title>
 	<include:asset name=Assetslinks wrap=None value=Links/>
 	<include:metadata name=Metadata wrap=None value=Metadata/>
 	<include:asset name=Assetscss wrap=None value=Css/>

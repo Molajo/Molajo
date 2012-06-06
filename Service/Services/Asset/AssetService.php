@@ -178,7 +178,7 @@ Class AssetService
 	 * @return mixed
 	 * @since  1.0
 	 */
-	public function addCss($url, $priority = 500, $mimetype = 'text/css', $media = null,
+	public function addCss($url, $priority = 500, $mimetype = 'text/css', $media = '',
 						   $conditional = '', $attributes = array())
 	{
 		/** Save new CSS entry */

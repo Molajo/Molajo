@@ -46,14 +46,6 @@ Class MetadataService
 
 
 	/**
-	 *     Dummy functions to pass service off as a DBO to interact with model
-	 */
-	public function set()
-	{
-		return true;
-	}
-
-	/**
 	 * get application Metadata
 	 *
 	 * @return array Application Metadata
@@ -91,6 +83,21 @@ Class MetadataService
 	public function clear()
 	{
 		return $this;
+	}
+
+	/**
+	 * getMetadata - retrieve header and metadata information
+	 *
+	 * @param  $model_type - head, defer, metadata
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public function set($name, $content, $label = 'name')
+	{
+		Services::Registry()->set('Metadata', $name, array($content, $label));
+
+		return;
 	}
 
 	/**
@@ -151,6 +158,11 @@ Class MetadataService
 
 			/** Language */
 			$row->language_direction = 'lft';
+			if ($row->language_direction == 'lft') {
+				$row->language_direction = '';
+			} else {
+				$row->language_direction = ' dir="rtl"';
+			}
 			$row->language = 'en';
 
 			/** HTML5 */
@@ -166,13 +178,20 @@ Class MetadataService
 
 				foreach ($metadata as $name => $content) {
 
-					if (trim($content) == '') {
+					if ($content == '') {
 					} else {
 						$row = new \stdClass();
 
 						/** Metadata */
 						$row->name = Services::Filter()->escape_text($name);
-						$row->content = Services::Filter()->escape_text($content);
+
+						if (is_array($content))  {
+							$row->content = Services::Filter()->escape_text($content[0]);
+							$row->label = $content[1];
+						} else {
+							$row->content = Services::Filter()->escape_text($content);
+							$row->label = 'name';
+						}
 
 						/** HTML5 */
 						$row->html5 = $html5;
