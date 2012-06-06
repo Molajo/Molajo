@@ -119,8 +119,7 @@ Class ThemeMolajitoHelper extends MustacheHelper
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
 
-        Services::Asset()->addJSDeclarations
-        ($fallback, 'text/javascript', 1000);
+        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
 
 		/** Favicons */
 		Services::Asset()->addLink(
@@ -141,6 +140,11 @@ Class ThemeMolajitoHelper extends MustacheHelper
 			$relation_type = 'rel',
 			$attributes = array('sizes,114x114')
 		);
+
+		/** jQuery CDN and fallback */
+		Services::Asset()->addJs('http://use.typekit.com/fti4bos.js', 1000);
+		$fallback = "try{Typekit.load();}catch(e){}";
+		Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
 
 		return;
     }
