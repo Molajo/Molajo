@@ -291,8 +291,6 @@ Class ContentHelper
 	public function get($id = 0, $model_name = 'Content', $model_type = 'List', $model_query_object = 'list')
 	{
 
-//echo '<br />' . $id . ' Name: ' . $model_name . ' Type: ' . $model_type . ' query_object: ' . $model_query_object . '<br />';
-
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$m->connect($model_name, $model_type);

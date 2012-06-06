@@ -19,278 +19,424 @@ defined('MOLAJO') or die;
  */
 Class AssetService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * Assets
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $assets = array();
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new AssetService();
+		}
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new AssetService();
-        }
+		return self::$instance;
+	}
 
-        return self::$instance;
-    }
+	/**
+	 * Class constructor.
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function __construct()
+	{
+		Services::Registry()->createRegistry('Assets');
 
-    /**
-     * Set the system asset.
-     *
-     * @param string  $asset
-     * @param string  $type  asset, notice, warning, and error
-     * @param integer $code
-     *
-     * @return bool
-     * @since   1.0
-     */
-    public function set()
-    {
-        return true;
-    }
+		Services::Registry()->set('Assets', 'Links', array());
 
-    /**
-     * get application assets
-     *
-     * @return array Application assets
-     *
-     * @since   1.0
-     */
-    public function get($option = null)
-    {
-        if ($option == 'db') {
-            return $this;
+		Services::Registry()->set('Assets', 'Css', array());
+		Services::Registry()->set('Assets', 'CssPriorities', array());
+		Services::Registry()->set('Assets', 'CssDeclarations', array());
 
-        } elseif ($option == 'count') {
-            return count($this->assets);
+		Services::Registry()->set('Assets', 'Js', array());
+		Services::Registry()->set('Assets', 'JsPriorities', array());
+		Services::Registry()->set('Assets', 'JsPrioritiesDefer', array());
+		Services::Registry()->set('Assets', 'JsDeclarations', array());
+		Services::Registry()->set('Assets', 'JsDeclarationsDefer', array());
 
-        } else {
-            return $this;
-        }
-    }
+		return;
+	}
 
-    /**
-     *     Dummy functions to pass service off as a DBO to interact with model
-     */
-    public function getNullDate()
-    {
-        return $this;
-    }
+	/**
+	 * addLink
+	 *
+	 * Adds <link> tags to the head of the document
+	 *
+	 * Usage:
+	 *
+	 * Services::Asset()->addLink(
+	 *   $url = EXTENSIONS_THEMES_URL
+	 *      . '/' . Services::Registry()->get('Parameters', 'theme_path_node')
+	 *      . '/' . 'images/apple-touch-icon-114x114.png',
+	 *   $relation = 'apple-touch-icon-precomposed',
+	 *   $relation_type = 'rel',
+	 *   $attributes = array('sizes,114x114')
+	 *  );
+	 *
+	 * Produces:
+	 * <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
+	 *
+	 * @param  $url
+	 * @param  $relation
+	 * @param  $relation_type
+	 * @param  $attributes
+	 *
+	 * @return mixed
+	 */
+	public function addLink($url, $relation, $relation_type = 'rel', $attributes = array())
+	{
+		$links = Services::Registry()->get('Assets', 'Links', array());
 
-    public function getQuery()
-    {
-        return $this;
-    }
+		$row = new \stdClass();
 
-    public function toSql()
-    {
-        return $this;
-    }
+		$row->url = $url;
+		$row->relation = Services::Filter()->escape_text($relation);
+		$row->relation_type = Services::Filter()->escape_text($relation_type);
 
-    public function clear()
-    {
-        return $this;
-    }
+		$temp = trim(implode(' ', $attributes));
+		if (trim($temp) == '') {
+		} elseif (count($temp) == 1) {
+			$temp = array($temp);
+		}
+		if (is_array($temp) && count($temp) > 0) {
+			foreach ($temp as $pair) {
+				$split = explode(',', $pair);
+				$row->attributes .= ' ' . $split[0]
+					. '="'
+					. Services::Filter()->escape_text($split[1])
+					. '"';
+			}
+		}
 
-    /**
-     * getData
-     *
-     * @return array
-     *
-     * @since    1.0
-     */
-    public function getAssets()
-    {
-        $query_results = array();
+		$links[] = $row;
 
-        $defer = (int) Services::Registry()->get('Parameters', 'defer', 0);
+		Services::Registry()->set('Assets', 'Links', $links);
 
-        /** get metadata (part used in base) */
-        if ($defer == 1) {
-        } else {
-            $metadata = Services::Registry()->get('Metadata');
+		return;
+	}
 
-            if (count($metadata) > 0) {
+	/**
+	 * addCssFolder
+	 *
+	 * Loads the CS located within the folder, as specified by the filepath
+	 *
+	 * Usage:
+	 * Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+	 *
+	 * @param string  $file_path
+	 * @param string  $url_path
+	 * @param integer $priority
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	public function addCssFolder($file_path, $url_path, $priority = 500)
+	{
+		if (Services::Filesystem()->folderExists($file_path . '/css')) {
+		} else {
+			return;
+		}
 
-                $row = new \stdClass();
-                $row->type = 'base';
+		$files = Services::Filesystem()->folderFiles($file_path . '/css', '\.css$', false, false);
 
-                /** Title */
-                $title = $metadata['title'];
-                if (trim($title) == '') {
-                    $title = Services::Registry()->get('Configuration', 'title', 'Molajo');
-                }
-                $row->title = Services::Filter()->escape_text($title);
+		if (count($files) > 0) {
+			foreach ($files as $file) {
+				if (substr($file, 0, 4) == 'rtl_') {
+					if (Services::Language()->get('direction') == 'rtl') {
+						$this->addCss($url_path . '/css/' . $file, $priority);
+					}
+				} else {
+					$this->addCss($url_path . '/css/' . $file, $priority);
+				}
+			}
+		}
+	}
 
-                /** Mimetype */
-                $mimetype = Services::Document()->get_mime_encoding();
-                if (trim($mimetype) == '') {
-                    $mimetype = 'text/html';
-                }
-                $row->mimetype = Services::Filter()->escape_text($mimetype);
+	/**
+	 * addCss
+	 *
+	 * Adds a linked stylesheet to the page
+	 *
+	 * Usage:
+	 * Services::Asset()->addCss($url_path . '/template.css');
+	 *
+	 * @param string $url
+	 * @param int    $priority
+	 * @param string $mimetype
+	 * @param string $media
+	 * @param string $conditional
+	 * @param array  $attributes
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function addCss($url, $priority = 500, $mimetype = 'text/css', $media = null,
+						   $conditional = '', $attributes = array())
+	{
+		/** Save new CSS entry */
+		$css = Services::Registry()->get('Assets', 'Css', array());
 
-                /** Base URL for Site */
-                $row->base = Services::Registry()->get('Configuration', 'site_base_url');
+		$row = new \stdClass();
 
-                /** Last Modified Date */
-                $last_modified = Services::Registry()->get('Parameters', 'modified_datetime');
-                if (trim($last_modified) == '') {
-                    $last_modified = Services::Date()->getDate();
-                }
-                $row->last_modified = Services::Filter()->escape_text($last_modified);
+		$row->url = $url;
+		$row->priority = $priority;
+		$row->mimetype = $mimetype;
+		$row->media = $media;
+		$row->conditional = $conditional;
+		$row->attributes = trim(implode(' ', $attributes));
 
-                $query_results[] = $row;
-            }
+		$css[] = $row;
 
-            /** metadata */
-            if (count($metadata) > 0) {
+		Services::Registry()->set('Assets', 'Css', $css);
 
-                foreach ($metadata as $name => $content) {
+		/** Order priorities for later use in rendered links in head */
+		$priorities = Services::Registry()->get('Assets', 'CssPriorities', array());
 
-                        //				if ($type == 'http-equiv') {
-                        //					$content .= '; charset=' . $document->getCharset();
-                        //					$buffer .= $tab . '<meta http-equiv="' . $name . '" content="' . htmlspecialchars($content) . '" />' . $lnEnd;
-                        //				} else {
-                        if (trim($content) == '') {
-                        } else {
-                            $row = new \stdClass();
-                            $row->type = 'metadata';
-                            $row->name = Services::Filter()->escape_text($name);
-                            $row->content = Services::Filter()->escape_text($content);
-                            $query_results[] = $row;
-                        }
-                        //				}
-                    }
-                }
+		if (in_array($priority, $priorities)) {
+		} else {
+			$priorities[] = $priority;
+		}
 
-        }
+		ksort($priorities);
 
-        /** type: links */
-        if ($defer == 1) {
-        } else {
-            $row = new \stdClass();
+		Services::Registry()->set('Assets', 'CssPriorities', $priorities);
 
-            $row->type = 'links';
-            $row->url = Services::Registry()->get('Theme', 'favicon');
-            $row->relation = 'shortcut icon';
-            $row->attributes = ' type="' . 'image/vnd.microsoft.icon' . '"';
-            $query_results[] = $row;
+		return $this;
+	}
 
-            $list = Services::Document()->get_links();
+	/**
+	 * addCssDeclaration
+	 *
+	 * Adds a css declaration to the array for later rendering
+	 *
+	 * Usage:
+	 * Services::Asset()->addCssDeclaration($css_in_here, 'text/css');
+	 *
+	 * @param string $content
+	 * @param string $mimetype
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	public function addCssDeclaration($content, $mimetype = 'text/css')
+	{
+		$css = Services::Registry()->get('Assets', 'CssDeclarations', array());
 
-            if (count($list) > 0) {
-                foreach ($list as $item) {
-                    $row = new \stdClass();
+		$row = new \stdClass();
 
-                    $row->type = 'links';
-                    $row->url = $item['url'];
-                    $row->relation = Services::Filter()->escape_text(
-                        $item['relation']
-                    );
-                    $row->relation_type = Services::Filter()->escape_text(
-                        $item['relation_type']
-                    );
+		$row->mimetype = $mimetype;
+		$row->content = $content;
 
-                    $row->attributes = '';
-                    $temp = $item['attributes'];
-                    if (trim($temp) == '') {
-                    } elseif (count($temp) == 1) {
-                        $temp = array($temp);
-                    }
-                    if (is_array($temp) && count($temp) > 0) {
-                        foreach ($temp as $pair) {
-                            $split = explode(',', $pair);
-                            $row->attributes .= ' ' . $split[0]
-                                . '="'
-                                . Services::Filter()->escape_text($split[1])
-                                . '"';
-                        }
-                    }
-                    $query_results[] = $row;
-                }
-            }
-        }
+		$css[] = $row;
 
-        /** type: css */
-        if ($defer == 1) {
-        } else {
-            $list = Services::Document()->get_css();
+		Services::Registry()->set('Assets', 'CssDeclarations', $css);
 
-            if (count($list) > 0) {
-                foreach ($list as $item) {
-                    $row = new \stdClass();
+		return $this;
+	}
 
-                    $row->type = 'css';
-                    $row->url = $item['url'];
-                    $row->mimetype = $item['mimetype'];
-                    $row->media = $item['media'];
-                    $row->attributes = $item['attributes'];
-                    $row->priority = $item['priority'];
+	/**
+	 * addJsFolder
+	 *
+	 * Loads the JS Files located within the folder specified by the filepath
+	 *
+	 * Usage:
+	 * Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+	 *
+	 * @param  $file_path
+	 * @param  $url_path
+	 * @return void
+	 * @since  1.0
+	 */
+	public function addJsFolder($file_path, $url_path, $priority = 500, $defer = 0)
+	{
+		if ($defer == 1) {
+			$extra = '/js/defer';
+		} else {
+			$extra = '/js';
+			$defer = 0;
+		}
 
-                    $query_results[] = $row;
-                }
-            }
+		if (Services::Filesystem()->folderExists($file_path . $extra)) {
+		} else {
+			return;
+		}
 
-            /** type: css_declarations */
-            $list = Services::Document()->get_css_declarations();
+		$files = Services::Filesystem()->folderFiles($file_path . $extra, '\.js$', false, false);
 
-            foreach ($list as $item) {
-                $row = new \stdClass();
+		if (count($files) > 0) {
+			foreach ($files as $file) {
+				$this->addJs(
+					$url_path . $extra . '/' . $file,
+					$priority,
+					$defer,
+					'text/javascript',
+					0
+				);
+			}
+		}
 
-                $row->type = 'css_declarations';
-                $row->mimetype = $item['mimetype'];
-                $row->content = $item['content'];
+		return;
+	}
 
-                $query_results[] = $row;
-            }
-        }
+	/**
+	 * addJs
+	 *
+	 * Adds a linked script to the page
+	 *
+	 * Usage:
+	 * Services::Asset()->addJs('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
+	 *
+	 * @param string $url
+	 * @param int    $priority
+	 * @param bool   $defer
+	 * @param string $mimetype
+	 * @param bool   $async
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function addJs($url, $priority = 500, $defer = 0, $mimetype = "text/javascript", $async = false)
+	{
+		if ($defer == 1) {
+			$js = Services::Registry()->get('Assets', 'JsDefer', array());
+		} else {
+			$js = Services::Registry()->get('Assets', 'Js', array());
+		}
 
-        /** type: js */
-        $list = Services::Document()->get_js($defer);
+		/** Save new entry */
+		$row = new \stdClass();
 
-        foreach ($list as $item) {
-            $row = new \stdClass();
+		$row->url = $url;
+		$row->priority = $priority;
+		$row->mimetype = $mimetype;
+		$row->async = $async;
 
-            $row->type = 'js';
-            $row->url = $item['url'];
-            $row->mimetype = $item['mimetype'];
-            $row->defer = 0;
-            $row->async = $item['async'];
-            $row->priority = $item['priority'];
+		$js[] = $row;
 
-            $query_results[] = $row;
-        }
+		if ($defer == 1) {
+			Services::Registry()->set('Assets', 'JsDefer', array());
+		} else {
+			Services::Registry()->set('Assets', 'Js', array());
+		}
 
-        /** type: js_declarations */
-        $list = Services::Document()->get_js_declarations($defer);
+		/** Order priorities for later use rendering links */
+		$priorities = Services::Registry()->get('Assets', 'JsPriorities', array());
 
-        foreach ($list as $item) {
-            $row = new \stdClass();
+		if (in_array($priority, $priorities)) {
+		} else {
+			$priorities[] = $priority;
+		}
 
-            $row->type = 'js_declarations';
-            $row->mimetype = $item['mimetype'];
-            $row->content = $item['content'];
+		ksort($priorities);
 
-            $query_results[] = $row;
-        }
+		Services::Registry()->set('Assets', 'JsPriorities', $priorities);
 
-        return $query_results;
-    }
+		return $this;
+	}
+
+	/**
+	 * addJSDeclarations
+	 *
+	 * Adds a js declaration to an array for later rendering
+	 *
+	 * Usage:
+	 * Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
+	 *
+	 * @param string $content
+	 * @param string $mimetype
+	 * @param string $defer
+	 *
+	 * @return object
+	 * @since  1.0
+	 */
+	public function addJSDeclarations($content, $mimetype = 'text/javascript', $defer = 0)
+	{
+		if ($defer == 1) {
+			$js = Services::Registry()->get('Assets', 'JsDeclarationsDefer', array());
+		} else {
+			$js = Services::Registry()->get('Assets', 'JsDeclarations', array());
+		}
+
+		$row = new \stdClass();
+
+		$row->content = $content;
+		$row->mimetype = $mimetype;
+		$row->defer = $defer;
+
+		$js[] = $row;
+
+		if ($defer == 1) {
+			Services::Registry()->set('Assets', 'JsDeclarationsDefer', $js);
+		} else {
+			Services::Registry()->set('Assets', 'JsDeclarations', $js);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * get application assets
+	 *
+	 * @return array Application assets
+	 *
+	 * @since   1.0
+	 */
+	public function get($option = null)
+	{
+		if ($option == 'db') {
+			return $this;
+
+		} elseif ($option == 'count') {
+			return count($this);
+
+		} else {
+			return $this;
+		}
+	}
+
+	/**
+	 *     Dummy functions to pass service off as a DBO to interact with model
+	 */
+	public function getNullDate()
+	{
+		return $this;
+	}
+
+	public function getQuery()
+	{
+		return $this;
+	}
+
+	public function toSql()
+	{
+		return $this;
+	}
+
+	public function clear()
+	{
+		return $this;
+	}
+
+	/**
+	 * getData
+	 *
+	 * @return array
+	 *
+	 * @since    1.0
+	 */
+	public function getAssets($type)
+	{
+		return Services::Registry()->get('Assets', $type, array());
+	}
 }

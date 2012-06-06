@@ -53,83 +53,69 @@ Class ThemeMolajitoHelper extends MustacheHelper
      */
     public function loadMedia()
     {
-        /** Mobile Specific Meta */
-        Services::Registry()->set('Metadata', 'viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+		/** Theme Folder */
+		$theme = Services::Registry()->get('Parameters', 'theme_path_node');
 
 		/** IE */
-		Services::Registry()->set('Metadata', 'X-UA-Compatible', 'IE=EmulateIE7; IE=EmulateIE9');
+		Services::Registry()->set(
+			'Metadata', 'X-UA-Compatible', 'IE=EmulateIE7; IE=EmulateIE9'
+		);
 
-		/** Favicons */
-		Services::Document()->add_link(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Theme', 'title')
-				. '/' . 'images/apple-touch-icon.png',
-			$relation = 'apple-touch-icon-precomposed',
-			$relation_type = 'rel',
-			$attributes = array()
+		/** Content Type */
+		Services::Registry()->set(
+			'Metadata', 'Content-Type', 'text/html; charset=utf-8'
 		);
-		Services::Document()->add_link(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Theme', 'title')
-				. '/' . 'images/apple-touch-icon-72x72.png',
-			$relation = 'apple-touch-icon-precomposed',
-			$relation_type = 'rel',
-			$attributes = array('sizes,72x72')
-		);
-		Services::Document()->add_link(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Theme', 'title')
-				. '/' . 'images/apple-touch-icon-114x114.png',
-			$relation = 'apple-touch-icon-precomposed',
-			$relation_type = 'rel',
-			$attributes = array('sizes,114x114')
+
+		/** Mobile Specific Meta */
+        Services::Registry()->set(
+			'Metadata', 'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
 		);
 
 		/** Media Queries to load CSS */
-		Services::Document()->add_css(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Parameters', 'theme_folder_node')
-				. '/' . 'css/grid/base.css',
+		Services::Asset()->addCss(
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'css/grid/base.css',
+			$priority=1000,
+			$mimetype='test/css',
 			$media='all',
-			$priority=1000);
+			$attributes=array());
 
-		Services::Document()->add_css(
+		Services::Asset()->addCss(
+			$url=EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/720_grid.css',
+			$priority=1000,
+			$mimetype='test/css',
+			$media='screen and (min-width: 720px)',
+			$conditional='lt IE 9',
+			$attributes=array());
+
+		Services::Asset()->addCss(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Parameters', 'theme_folder_node')
+				. '/' . $theme
 				. '/' . 'css/grid/720_grid.css',
 			$media='screen and (min-width: 720px)',
-			$conditional='lt IE 9', // Molajo <!--[if lt IE 9 ]> CSS LINE <![endif]-->
 			$priority=1000);
 
-		Services::Document()->add_css(
+		Services::Asset()->addCss(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Parameters', 'theme_folder_node')
-				. '/' . 'css/grid/720_grid.css',
-			$media='screen and (min-width: 720px)',
-			$priority=1000);
-
-		Services::Document()->add_css(
-			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Parameters', 'theme_folder_node')
+				. '/' . $theme
 				. '/' . 'css/grid/986_grid.css',
 			$media='screen and (min-width: 986px)',
 			$priority=1000);
 
-		Services::Document()->add_css(
+		Services::Asset()->addCss(
 			$url = EXTENSIONS_THEMES_URL
-				. '/' . Services::Registry()->get('Parameters', 'theme_folder_node')
+				. '/' . $theme
 				. '/' . 'css/grid/1236_grid.css',
 			$media='screen and (min-width: 1236px)',
 			$priority=1000);
 
         /** jQuery CDN and fallback */
-        Services::Document()->add_js('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1000);
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1000);
 
         /** Modernizer */
-        Services::Document()->add_js('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1000);
+        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1000);
 
         $url = EXTENSIONS_THEMES_URL
-            . '/' . Services::Registry()->get('Theme', 'title')
+            . '/' . $theme
             . '/' . 'js/fallback/jquery-1.7.1.min.js';
 
         $fallback = "
@@ -137,16 +123,35 @@ Class ThemeMolajitoHelper extends MustacheHelper
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
 
-        Services::Document()->add_js_declaration
+        Services::Asset()->addJSDeclarations
         ($fallback, 'text/javascript', 1000);
 
-        $image_breakpoint = "
-        var rwd_images = {
-            //set the width breakpoint to 600px instead of 480px
-            widthBreakPoint: 600
-         }";
+		/** Favicons */
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL
+				. '/' . $theme
+				. '/' . 'images/apple-touch-icon.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array()
+		);
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL
+				. '/' . $theme
+				. '/' . 'images/apple-touch-icon-72x72.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array('sizes,72x72')
+		);
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL
+				. '/' . $theme
+				. '/' . 'images/apple-touch-icon-114x114.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array('sizes,114x114')
+		);
 
-        Services::Document()->add_js_declaration
-        ('rwd_images', 'text/javascript', 1000);
+
     }
 }

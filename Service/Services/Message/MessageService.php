@@ -69,12 +69,12 @@ Class MessageService
 
         $type = strtolower($type);
 
-        if ($type == MESSAGE_TYPE_NOTICE
+        if ($type == MESSAGE_TYPE_INFORMATION
             || $type == MESSAGE_TYPE_WARNING
             || $type == MESSAGE_TYPE_ERROR
         ) {
         } else {
-            $type = MESSAGE_TYPE_MESSAGE;
+            $type = MESSAGE_TYPE_SUCCESS;
         }
 
         $count = count($this->messages);
@@ -147,9 +147,11 @@ Class MessageService
         }
 
         foreach ($messages as $message) {
+
             $row = new \stdClass();
-            $row->content_text = $message['message'];
-            $row->title = $message['type'];
+
+            $row->message = $message['message'];
+            $row->type = $message['type'];
             $row->code = $message['code'];
 
             $query_results[] = $row;

@@ -33,7 +33,7 @@ Class HeadIncluder extends Includer
      */
     public function __construct($name = null, $type = null)
     {
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
         parent::__construct($name, $type);
 
         return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);

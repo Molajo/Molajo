@@ -218,7 +218,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 			} elseif ($name == 'value') {
 				Services::Registry()->set('Parameters', 'model_parameter', $value);
 
-			} elseif ($name == 'model_name' || $name == 'model_type' || $name == "model_query_object") {
+			} elseif ($name == 'model_name' || $name == 'model_type' || $name == 'model_query_object') {
 				Services::Registry()->set('Parameters', $name, $value);
 
 			} else {
@@ -279,10 +279,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 	 */
 	protected function loadLanguage()
 	{
-		return Helpers::Extension()->loadLanguage(
-			Services::Registry()->get(
-				'Parameters', 'extension_path')
-		);
+		return Helpers::Extension()->loadLanguage(Services::Registry()->get('Parameters', 'extension_path'));
 	}
 
 	/**
@@ -313,16 +310,16 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 		$file_path = Services::Registry()->get('Parameters', 'template_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'template_view_path_url');
 
-		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+		$css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+		$js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+		$defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
 		$file_path = Services::Registry()->get('Parameters', 'wrap_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'wrap_view_path_url');
 
-		$css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-		$js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-		$defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+		$css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+		$js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+		$defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
 		return $this;
 	}
@@ -336,6 +333,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 	 */
 	protected function invokeMVC()
 	{
+
 /**
 echo '<br /><br /><br />';
 echo Services::Registry()->get('Parameters', 'extension_title');
@@ -349,9 +347,6 @@ echo '<br /><br /><br />';
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));
 
 		/** Set Parameters */
-		Services::Registry()->get('model_offset', 0);
-		Services::Registry()->get('model_count', 5);
-
 		Services::Registry()->sort('Parameters');
 
 		$parms = Services::Registry()->getArray('Parameters');

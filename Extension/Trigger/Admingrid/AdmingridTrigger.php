@@ -52,6 +52,7 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	public function onBeforeRead()
 	{
+
 		/** Is this an Administrative Grid Request?  */
 		if ($this->get('template_view_title') == 'Grid') {
 		} else {

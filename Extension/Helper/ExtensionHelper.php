@@ -311,11 +311,7 @@ Class ExtensionHelper
 
 		if (Services::Filesystem()->folderExists($path)) {
 		} else {
-			echo 'does not exist' . $path . '<br />';
-			echo '<pre>';
-			var_dump(Services::Registry()->get('Parameters'));
-
-			return false;
+			return true;
 		}
 
 		Services::Language()->load($path, Services::Language()->get('tag'), false, false);

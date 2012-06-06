@@ -162,9 +162,9 @@ class ComponentIncluder extends Includer
         /** Theme */
         $file_path = Services::Registry()->get('Parameters', 'theme_path');
         $url_path = Services::Registry()->get('Parameters', 'theme_path_url');
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -172,9 +172,9 @@ class ComponentIncluder extends Includer
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . APPLICATION . $plus;
         $url_path = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -182,9 +182,9 @@ class ComponentIncluder extends Includer
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, false);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, false);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -192,9 +192,9 @@ class ComponentIncluder extends Includer
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -202,9 +202,9 @@ class ComponentIncluder extends Includer
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
-        $css = Services::Document()->add_css_folder($file_path, $url_path, $priority);
-        $js = Services::Document()->add_js_folder($file_path, $url_path, $priority, 0);
-        $defer = Services::Document()->add_js_folder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

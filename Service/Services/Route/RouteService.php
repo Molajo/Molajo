@@ -122,7 +122,7 @@ Class RouteService
 		if ((int)Services::Registry()->get('Parameters', 'redirect_to_id', 0) == 0) {
 		} else {
 			Services::Response()->redirect(
-				Helper::Catalog()->getURL(
+				Helpers::Catalog()->getURL(
 					Services::Registry()->get('Parameters', 'redirect_to_id', 0)
 				), 301
 			);
@@ -391,13 +391,15 @@ Class RouteService
 		}
 
 		/**  Extension */
-		$response = Helpers::Extension()->getExtension(
-			Services::Registry()->get('Parameters', 'extension_instance_id'),
-			'ExtensionInstances',
-			'Table'
-		);
-		if ($response === false) {
-			Services::Error()->set(500, 'Extension not found');
+		if ((int) Services::Registry()->get('Parameters', 'extension_instance_id', 0) > 0) {
+			$response = Helpers::Extension()->getExtension(
+				Services::Registry()->get('Parameters', 'extension_instance_id'),
+				'ExtensionInstances',
+				'Table'
+			);
+			if ($response === false) {
+				Services::Error()->set(500, 'Extension not found');
+			}
 		}
 
 		/**  Merge in matching Configuration data  */

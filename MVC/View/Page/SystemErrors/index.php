@@ -7,8 +7,8 @@
  * <include:module name=logon template=logon wrap=div/>
  */
 defined('MOLAJO') or die; ?>
-<include:head/>
-<include:module name=PageHeader template=PageHeader wrap=Head/>
-    <include:message/>
-    <include:module name=PageFooter template=PageFooter wrap=Footer/>
-        <include:defer/>
+	<include:head/>
+	<include:module name=PageHeader template=PageHeader wrap=Head/>
+		<include:message/>
+		<include:module name=PageFooter template=PageFooter wrap=Footer/>
+			<include:defer/>
