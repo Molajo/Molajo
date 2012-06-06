@@ -54,16 +54,25 @@ Class AssetService
 		Services::Registry()->createRegistry('Assets');
 
 		Services::Registry()->set('Assets', 'Links', array());
+		Services::Registry()->set('Assets', 'LinksPriorities', array());
 
 		Services::Registry()->set('Assets', 'Css', array());
 		Services::Registry()->set('Assets', 'CssPriorities', array());
+
 		Services::Registry()->set('Assets', 'CssDeclarations', array());
+		Services::Registry()->set('Assets', 'CssDeclarationsPriorities', array());
 
 		Services::Registry()->set('Assets', 'Js', array());
 		Services::Registry()->set('Assets', 'JsPriorities', array());
-		Services::Registry()->set('Assets', 'JsPrioritiesDefer', array());
+
+		Services::Registry()->set('Assets', 'JsDefer', array());
+		Services::Registry()->set('Assets', 'JsDeferPriorities', array());
+
 		Services::Registry()->set('Assets', 'JsDeclarations', array());
+		Services::Registry()->set('Assets', 'JsDeferPriorities', array());
+
 		Services::Registry()->set('Assets', 'JsDeclarationsDefer', array());
+		Services::Registry()->set('Assets', 'JsDeclarationsDeferPriorities', array());
 
 		return;
 	}
@@ -89,11 +98,12 @@ Class AssetService
 	 * @param  $relation
 	 * @param  $relation_type
 	 * @param  $attributes
+	 * @param  $prioritu
 	 *
 	 * @return object
 	 * @since  1.0
 	 */
-	public function addLink($url, $relation, $relation_type = 'rel', $attributes = array())
+	public function addLink($url, $relation, $relation_type = 'rel', $attributes = array(), $priority = 500)
 	{
 		$links = Services::Registry()->get('Assets', 'Links', array());
 
@@ -117,10 +127,23 @@ Class AssetService
 					. '"';
 			}
 		}
+		$row->url = $url;
 
-		$links[] = $row;
+		$links[] = $priority;
 
 		Services::Registry()->set('Assets', 'Links', $links);
+
+		/** Order priorities for later use in rendered links in head */
+		$priorities = Services::Registry()->get('Assets', 'LinksPriorities', array());
+
+		if (in_array($priority, $priorities)) {
+		} else {
+			$priorities[] = $priority;
+		}
+
+		sort($priorities);
+
+		Services::Registry()->set('Assets', 'LinksPriorities', $priorities);
 
 		return $this;
 	}
@@ -184,6 +207,13 @@ Class AssetService
 		/** Save new CSS entry */
 		$css = Services::Registry()->get('Assets', 'Css', array());
 
+		/** Do not load the same file multiple times */
+		foreach ($css as $item) {
+			if ($item->url == $url) {
+				return $this;
+			}
+		}
+
 		$row = new \stdClass();
 
 		$row->url = $url;
@@ -205,7 +235,7 @@ Class AssetService
 			$priorities[] = $priority;
 		}
 
-		ksort($priorities);
+		sort($priorities);
 
 		Services::Registry()->set('Assets', 'CssPriorities', $priorities);
 
@@ -224,18 +254,39 @@ Class AssetService
 	 * @return  object
 	 * @since   1.0
 	 */
-	public function addCssDeclaration($content, $mimetype = 'text/css')
+	public function addCssDeclaration($content, $mimetype = 'text/css', $priority = 500)
 	{
 		$css = Services::Registry()->get('Assets', 'CssDeclarations', array());
 
+		/** Do not load the same file multiple times */
+		foreach ($css as $item) {
+			if ($item->content == $content) {
+				return $this;
+			}
+		}
+
+		/** Load new row */
 		$row = new \stdClass();
 
 		$row->mimetype = $mimetype;
 		$row->content = $content;
+		$row->priority = $priority;
 
 		$css[] = $row;
 
 		Services::Registry()->set('Assets', 'CssDeclarations', $css);
+
+		/** Order priorities for later use in rendered links in head */
+		$priorities = Services::Registry()->get('Assets', 'CssDeclarationsPriorities', array());
+
+		if (in_array($priority, $priorities)) {
+		} else {
+			$priorities[] = $priority;
+		}
+
+		sort($priorities);
+
+		Services::Registry()->set('Assets', 'CssDeclarationsPriorities', $priorities);
 
 		return $this;
 	}
@@ -305,6 +356,13 @@ Class AssetService
 			$js = Services::Registry()->get('Assets', 'Js', array());
 		}
 
+		/** Do not load the same file multiple times */
+		foreach ($js as $item) {
+			if ($item->url == $url) {
+				return $this;
+			}
+		}
+
 		/** Save new entry */
 		$row = new \stdClass();
 
@@ -322,17 +380,25 @@ Class AssetService
 			Services::Registry()->set('Assets', 'Js', $js);
 		}
 
-		/** Order priorities for later use rendering links */
-		$priorities = Services::Registry()->get('Assets', 'JsPriorities', array());
+		/** Order priorities for rendering */
+		if ($defer == 1) {
+			$priorities = Services::Registry()->get('Assets', 'JsDeferPriorities', $js);
+		} else {
+			$priorities = Services::Registry()->get('Assets', 'JsPriorities', $js);
+		}
 
 		if (in_array($priority, $priorities)) {
 		} else {
 			$priorities[] = $priority;
 		}
 
-		ksort($priorities);
+		sort($priorities);
 
-		Services::Registry()->set('Assets', 'JsPriorities', $priorities);
+		if ($defer == 1) {
+			Services::Registry()->set('Assets', 'JsDeferPriorities', $priorities);
+		} else {
+			Services::Registry()->set('Assets', 'JsPriorities', $priorities);
+		}
 
 		return $this;
 	}
@@ -350,7 +416,7 @@ Class AssetService
 	 * @return object
 	 * @since  1.0
 	 */
-	public function addJSDeclarations($content, $mimetype = 'text/javascript', $defer = 0)
+	public function addJSDeclarations($content, $mimetype = 'text/javascript', $defer = 0, $priority = 500)
 	{
 		if ($defer == 1) {
 			$js = Services::Registry()->get('Assets', 'JsDeclarationsDefer', array());
@@ -358,11 +424,19 @@ Class AssetService
 			$js = Services::Registry()->get('Assets', 'JsDeclarations', array());
 		}
 
+		/** Do not load the same file multiple times */
+		foreach ($js as $item) {
+			if ($item->content == $content) {
+				return $this;
+			}
+		}
+
 		$row = new \stdClass();
 
 		$row->content = $content;
 		$row->mimetype = $mimetype;
 		$row->defer = $defer;
+		$row->priority = $priority;
 
 		$js[] = $row;
 
@@ -371,6 +445,32 @@ Class AssetService
 		} else {
 			Services::Registry()->set('Assets', 'JsDeclarations', $js);
 		}
+
+		/** Order priorities for rendering */
+		if ($defer == 1) {
+			$priorities = Services::Registry()->get('Assets', 'JsDeclarationsDeferPriorities', array());
+		} else {
+			$priorities = Services::Registry()->get('Assets', 'JsDeclarationsPriorities', array());
+		}
+
+		if (is_array($priorities)) {
+		} else {
+			$priorities = array();
+		}
+
+		if (in_array($priority, $priorities)) {
+		} else {
+			$priorities[] = $priority;
+		}
+
+		sort($priorities);
+
+		if ($defer == 1) {
+			Services::Registry()->set('Assets', 'JsDeclarationsDeferPriorities', $priorities);
+		} else {
+			Services::Registry()->set('Assets', 'JsDeclarationsPriorities', $priorities);
+		}
+
 
 		return $this;
 	}
@@ -420,14 +520,10 @@ Class AssetService
 	 */
 	public function getAssets($type)
 	{
+		$priorityType = $type . 'Priorities';
+
 		$rows = Services::Registry()->get('Assets', $type);
-
-		if (is_array($rows)) {
-		} else {
-			return array();
-		}
-
-		if (count($rows) > 0) {
+		if (is_array($rows) && count($rows) > 0) {
 		} else {
 			return array();
 		}
@@ -439,12 +535,32 @@ Class AssetService
 			$end = '/>' . chr(10);
 		}
 
-		foreach ($rows as $row) {
-			$row->html5 = $html5;
-			$row->end = $end;
-			$row->page_mime_type = Services::Registry()->get('Metadata', 'mimetype');
+		/** Retrieve unique array of $priorities  */
+		$priorities = Services::Registry()->get('Assets', $priorityType);
+		sort($priorities);
+
+		$query_results = array();
+
+		foreach ($priorities as $priority) {
+
+			foreach ($rows as $row) {
+				$include = false;
+
+				if (isset($row->priority)) {
+					if ($row->priority == $priority) {
+						$include = true;
+					}
+				}
+				if ($include == false) {
+				} else {
+					$row->html5 = $html5;
+					$row->end = $end;
+					$row->page_mime_type = Services::Registry()->get('Metadata', 'mimetype');
+					$query_results[] = $row;
+				}
+			}
 		}
 
-		return $rows;
+		return $query_results;
 	}
 }

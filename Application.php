@@ -119,7 +119,6 @@ Class Application
 
         if ($continue == false) {
             Services::Debug()->set('Application Execute failed');
-
             return;
         } else {
             Services::Debug()->set('Application Execute succeeded');
@@ -130,7 +129,6 @@ Class Application
 
         if ($continue == false) {
             Services::Debug()->set('Application Response failed');
-
             return;
         } else {
             Services::Debug()->set('Application Response succeeded');
@@ -239,10 +237,9 @@ Class Application
 
         } elseif (Services::Redirect()->url === null && (int) Services::Redirect()->code == 0) {
 	        return true;
-
-        } else {
-            return false;
         }
+
+		return false;
     }
 
     /**
@@ -273,12 +270,10 @@ Class Application
 
             if ($continue == false) {
                 Services::Debug()->set('Application execute Display failed');
-
                 return false;
 
             } else {
                 Services::Debug()->set('Application execute Display succeeded');
-
                 return true;
             }
         }
@@ -322,8 +317,8 @@ Class Application
     protected function display()
     {
 		//Services::Registry()->get('Parameters', '*');
-		Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
-		Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
+		//Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
+		//Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
 
         $this->rendered_output = Services::Parse()->process();
         return $this;

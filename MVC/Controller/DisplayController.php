@@ -116,7 +116,7 @@ echo '<br />';
 		if (count($this->query_results) == 0
 			&& $this->get('criteria_display_view_on_no_results') == 0
 		) {
-			//return '';
+			return '';
 		}
 
 		if (strtolower($includer_name) == 'wrap') {
