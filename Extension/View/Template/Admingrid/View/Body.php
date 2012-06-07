@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   Molajo
- * @subpackage  Views
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+use Molajo\Service\Services;
 defined('MOLAJO') or die;
-$result = $this->row->row_count % 2;
-if ($result == 0) {
+$rowCount = Services::Registry()->get('Trigger', 'GridTableRows') % 2;
+if ($rowCount == 0) {
     $rowClass = ' class="even"';
 } else {
     $rowClass = ' class="odd"';
@@ -16,8 +16,7 @@ if ($result == 0) {
 <tr<?php echo $rowClass ?>>
     <?php
     $columnCount = 1;
-    $columns = Application::Request()->parameters->get('columns');
-    $columnArray = explode(',', $columns);
+	$columnArray = Services::Registry()->get('Trigger', 'GridTableColumns');
     foreach ($columnArray as $column) {
         $extraClass = '';
         if ($columnCount == 1) {

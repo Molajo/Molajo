@@ -262,8 +262,12 @@ Class TextService
 		if ($m->get('data_source', 'JDatabase') == 'JDatabase') {
 
 			$primary_prefix = $m->get('primary_prefix');
+			$primary_key = $m->get('primary_key');
+			$name_key = $m->get('name_key');
 
 			$filter_check_published_status = $m->get('filter_check_published_status');
+			$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id ');
+			$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $name_key) . ' as value ');
 
 			if ((int)$m->get('filter_catalog_type_id') > 0) {
 				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'catalog_type_id')

@@ -13,7 +13,7 @@ use Molajo\Extension\Includer;
 defined('MOLAJO') or die;
 
 /**
- * Template
+ * Message
  *
  * @package     Molajo
  * @subpackage  Includer
@@ -21,36 +21,34 @@ defined('MOLAJO') or die;
  */
 Class MessageIncluder extends Includer
 {
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @param string $name
-     * @param string $type
-     *
-     * @return null
-     * @since   1.0
-     */
-    public function __construct($name = null, $type = null)
-    {
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
-        parent::__construct($name, $type);
-        Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
+	/**
+	 * Class constructor.
+	 *
+	 * @param string $name
+	 * @param string $type
+	 *
+	 * @return null
+	 * @since   1.0
+	 */
+	public function __construct($name = null, $type = null)
+	{
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
+		parent::__construct($name, $type);
+		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * setRenderCriteria
-     *
-     * Retrieve default values, if not provided by extension
-     *
-     * @return bool
-     * @since   1.0
-     */
-    protected function setRenderCriteria()
-    {
+	/**
+	 * setRenderCriteria
+	 *
+	 * Retrieve default values, if not provided by extension
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	protected function setRenderCriteria()
+	{
 		Services::Registry()->set('Parameters', 'model_name', 'dboMessages');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
 		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
@@ -60,7 +58,7 @@ Class MessageIncluder extends Includer
 		Services::Registry()->set('Parameters', 'wrap_view_id',
 			Services::Registry()->get('Configuration', 'message_wrap_view_id'));
 
-        Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 0);
+		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 0);
 
 		/** Template  */
 		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
@@ -69,16 +67,16 @@ Class MessageIncluder extends Includer
 		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
 
 		/** Merge Configuration in */
-        Services::Registry()->merge('Configuration', 'Parameters', true);
+		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/** Cleanup */
-        Services::Registry()->delete('Parameters', 'item*');
-        Services::Registry()->delete('Parameters', 'list*');
-        Services::Registry()->delete('Parameters', 'form*');
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
 
-        /** Sort */
-        Services::Registry()->sort('Parameters');
+		/** Sort */
+		Services::Registry()->sort('Parameters');
 
-        return true;
-    }
+		return true;
+	}
 }

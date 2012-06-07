@@ -112,7 +112,7 @@ Class AssetService
 		$row->url = $url;
 		$row->relation = Services::Filter()->escape_text($relation);
 		$row->relation_type = Services::Filter()->escape_text($relation_type);
-	    $row->attributes = '';
+		$row->attributes = '';
 		$temp = trim(implode(' ', $attributes));
 		if (trim($temp) == '') {
 		} elseif (count($temp) == 1) {
@@ -209,7 +209,10 @@ Class AssetService
 
 		/** Do not load the same file multiple times */
 		foreach ($css as $item) {
-			if ($item->url == $url) {
+			if ($item->url == $url
+				&& $item->mimetype == $mimetype
+				&& $item->media == $media
+				&& $item->conditional == $conditional) {
 				return $this;
 			}
 		}
@@ -471,6 +474,116 @@ Class AssetService
 			Services::Registry()->set('Assets', 'JsDeclarationsPriorities', $priorities);
 		}
 
+		return $this;
+	}
+
+	/**
+	 * setPriority - use to override the priority of a specific file
+	 *
+	 * Usage:
+	 * Services::Asset()->setPriority('Css', 'http://example.com/media/1236_grid.css', 1);
+	 *
+	 * @param $type
+	 * @param $url
+	 * @param $priority
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	public function setPriority($type, $url, $priority)
+	{
+
+		$rows = Services::Registry()->get('Assets', $type);
+		if (is_array($rows) && count($rows) > 0) {
+		} else {
+			return array();
+		}
+
+		$update = false;
+		$query_results = array();
+		foreach ($rows as $row) {
+			if (isset($row->url)) {
+				if ($row->url == $url) {
+					echo $priority;
+					$row->priority = $priority;
+					$update = true;
+				}
+			}
+			$query_results[] = $row;
+		}
+
+		if ($update == true) {
+			Services::Registry()->set('Assets', $type, $query_results);
+
+			$priorityType = $type . 'Priorities';
+
+			/** Reload priorities to (possibly) remove the replaced one and add the new one */
+			$priorities = array();
+			foreach ($rows as $row) {
+				if (in_array($row->priority, $priorities)) {
+				} else {
+					$priorities[] = $row->priority;
+				}
+			}
+
+			sort($priorities);
+			Services::Registry()->set('Assets', $priorityType, $priorities);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * remove - use to remove a specific Asset
+	 *
+	 * Usage:
+	 * Services::Asset()->remove('Css', 'http://example.com/media/1236_grid.css');
+	 *
+	 * @param $type
+	 * @param $url
+	 * @param $priority
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	public function remove($type, $url)
+	{
+
+		$rows = Services::Registry()->get('Assets', $type);
+		if (is_array($rows) && count($rows) > 0) {
+		} else {
+			return array();
+		}
+
+		$update = false;
+		$query_results = array();
+		foreach ($rows as $row) {
+			if (isset($row->url)) {
+				if ($row->url == $url) {
+					$update = true;
+				} else {
+					$query_results[] = $row;
+				}
+			}
+		}
+
+		if ($update == true) {
+			Services::Registry()->set('Assets', $type, $query_results);
+
+			$priorityType = $type . 'Priorities';
+
+			/** Reload priorities to (possibly) remove the replaced one and add the new one */
+			$priorities = array();
+			foreach ($rows as $row) {
+				if (in_array($row->priority, $priorities)) {
+				} else {
+					$priorities[] = $row->priority;
+				}
+			}
+
+			sort($priorities);
+			Services::Registry()->set('Assets', $priorityType, $priorities);
+		}
 
 		return $this;
 	}
@@ -529,7 +642,7 @@ Class AssetService
 		}
 
 		$html5 = Services::Registry()->get('Configuration', 'html5', 1);
-		if ((int) Services::Registry()->get('Configuration', 'html5', 1) == 1) {
+		if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
 			$end = '>' . chr(10);
 		} else {
 			$end = '/>' . chr(10);

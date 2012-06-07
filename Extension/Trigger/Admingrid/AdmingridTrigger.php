@@ -54,7 +54,7 @@ class AdmingridTrigger extends ContentTrigger
 	{
 
 		/** Is this an Administrative Grid Request?  */
-		if ($this->get('template_view_title') == 'Grid') {
+		if (strtolower($this->get('template_view_title')) == 'admingrid') {
 		} else {
 			return true;
 		}
@@ -122,7 +122,7 @@ class AdmingridTrigger extends ContentTrigger
 
 		/** 3. Filter Lists */
 		$grid_list = explode(',', $this->get(
-				'grid_list', 'catalog_type_id,created_by,featured,status')
+			'grid_list', 'catalog_type_id,created_by,featured,status')
 		);
 
 		$lists = array();

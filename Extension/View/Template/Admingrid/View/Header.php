@@ -1,19 +1,23 @@
 <?php
 /**
- * @package   Molajo
- * @subpackage  Views
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+use Molajo\Service\Services;
+echo '<pre>';
+var_dump(Services::Registry()->get('Trigger', '*'));
+echo '</pre>';
+
 defined('MOLAJO') or die; ?>
 <table class="gridlist">
     <thead>
     <tr>
         <?php
         $count = 1;
-        $columns = Application::Request()->parameters->get('columns');
-        $columnArray = explode(',', $columns);
+		$columnArray = Services::Registry()->get('Trigger', 'GridTableColumns');
         foreach ($columnArray as $column) {
+			echo $column;
             $extraClass = '';
             if ($count == 1) {
                 $extraClass .= 'first';
