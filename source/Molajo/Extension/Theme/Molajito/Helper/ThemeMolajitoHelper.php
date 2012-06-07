@@ -27,16 +27,8 @@ Class ThemeMolajitoHelper extends MustacheHelper
     public $parameters;
 
     /**
-     * loadMedia
-     *
-     * If exists, automatically called in the Theme Rendering process
-     * Use this method to load external media, special metadata or links
-     *
-     * http://weblogs.asp.net/jgalloway/archive/2010/01/21/
-     *  using-cdn-hosted-jquery-with-a-local-fall-back-copy.aspx
-     *
-     * Uses https://github.com/filamentgroup/Responsive-Images
-     * Need image service to <img src="small.jpg?full=large.jpg" >
+     * loadMedia - automatically loaded in the Theme Rendering process
+     * Method can be used to load external media, special metadata or links
      *
      * http://coding.smashingmagazine.com/2012/01/16/resolution-independence-with-svg/
      *
@@ -60,11 +52,8 @@ Class ThemeMolajitoHelper extends MustacheHelper
 		Services::Metadata()->set('X-UA-Compatible', 'IE=EmulateIE7; IE=EmulateIE9', 'http-equiv');
 
 		/** Mobile Specific Meta */
-		Services::Metadata()->set('Content-Type', 'text/html; charset=utf-8', 'http-equiv');
-
-		/** Mobile Specific Meta */
 		Services::Metadata()->set(
-			'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+			'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', 'name'
 		);
 
 		/** Media Queries to load CSS */
@@ -107,19 +96,19 @@ Class ThemeMolajitoHelper extends MustacheHelper
 			$attributes=array());
 
         /** jQuery CDN and fallback */
-        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1000);
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 10000);
 
         /** Modernizer */
-        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1000);
+        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
 
-        $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.1.min.js';
+        $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.2.min.js';
 
         $fallback = "
         if (typeof jQuery == 'undefined') {
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
 
-        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
+        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
 
 		/** Favicons */
 		Services::Asset()->addLink(
@@ -140,11 +129,6 @@ Class ThemeMolajitoHelper extends MustacheHelper
 			$relation_type = 'rel',
 			$attributes = array('sizes,114x114')
 		);
-
-		/** jQuery CDN and fallback */
-		Services::Asset()->addJs('http://use.typekit.com/fti4bos.js', 1000);
-		$fallback = "try{Typekit.load();}catch(e){}";
-		Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
 
 		return;
     }

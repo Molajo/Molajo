@@ -4,10 +4,10 @@ use Molajo\Service\Services;
  * @package     Molajito
  * @copyright   2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
- * <include:request/>
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
+	am i in here?
 <div class="banner-wrap">
 	<div class="banner">
 		<h1 id="logo"><span class="logo"><b>Simple</b>Grid</span></h1>
@@ -49,28 +49,7 @@ defined('MOLAJO') or die; ?>
 		</div>
 	</div>
 	<hr/>
-	<div class="row">
-		<div class="slot-0-1 feature">
-			<h2>Molajito</h2>
-			<p><span class="logo"><b>S</b>G</span> is prepared for 4 distinct ranges of screen size: screens 720px,
-				screens 720px, screens than 985px, and screens than 1235px. This means that people visiting your site
-				will receive a layout that's tuned to the size of their browser window. Say goodbye to horizontal
-				scrollbars.</p>
-		</div>
-		<div class="slot-2-3 feature">
-			<h2>Self-Aware</h2>
-			<p>Most grid systems use one class for all units of a single size, leaving units oblivious to where they fit
-				into the grid. That leaves you with <code>.first</code> and <code>.last</code> classes. With <span
-					class="logo"><b>S</b>G</span> each slot knows whether it's first, middle, or last in its respective
-				row; no extra classes needed.</p>
-		</div>
-		<div class="slot-4-5 feature">
-			<h2>Sensible</h2>
-			<p>Creating the code for your grid should be the least of your problems when building a site. That's why
-				<span class="logo"><b>S</b>G</span> keeps things simple and straightforward with as little markup and
-				classes as possible. Even nesting grid slots doesn't require extra classes.</p>
-		</div>
-	</div>
+	<include:request/>
 	<hr/>
 	<!-- / .example-grids -->
 	<div class="row footer">

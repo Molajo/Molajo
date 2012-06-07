@@ -4,18 +4,24 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die; ?>
-<select name="filter_<?php echo $this->row->name; ?>" class="inputbox">
-    <option value=""><?php echo Services::Language()->translate('SELECT_' . strtoupper($this->row->name)); ?></option>
+use Molajo\Service\Services;
+defined('MOLAJO') or die;
+
+$name = $this->row;
+$listname = 'list_' . $name;
+$list = Services::Registry()->get('Trigger', $listname);
+?>
+<select name="<?php echo $listname; ?>" class="inputbox">
+    <option value=""><?php echo Services::Language()->translate('SELECT_' . strtoupper($name)); ?></option>
     <?php
     $currentSelection = Services::Registry()->get('User', 'username');
-    foreach ($this->row->list as $l) {
-        if ($currentSelection == $l->value) {
+    foreach ($list as $l) {
+        if ($currentSelection == $l->id) {
             $selected = ' selected="selected"';
         } else {
             $selected = '';
         }
         ?>
-        <option value="<?php echo $l->key; ?>"<?php echo $selected; ?>><?php echo $l->value; ?></option>
+        <option value="<?php echo $l->id; ?>"<?php echo $selected; ?>><?php echo $l->value; ?></option>
         <?php } ?>
 </select>

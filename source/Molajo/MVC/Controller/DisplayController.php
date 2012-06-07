@@ -82,7 +82,7 @@ echo 'Model Name ' . $model_name . '<br />'
 
 		} else {
 			$this->connect($model_name, $model_type);
-
+//Services::Registry()->get('Parameters', '*');
 /**
 echo '<br /><br /><br />';
 echo 'In DisplayController: ' . $this->get('extension_title');
@@ -91,13 +91,11 @@ echo '<br />';
 //Services::Registry()->get($table_registry_name, '*');
 			/** Run Query */
 			$this->getData($model_query_object);
-
-
-
-//echo '<pre>';
-//var_dump($this->query_results);
-//echo '</pre>';
-
+/**
+echo '<pre>';
+var_dump($this->query_results);
+echo '</pre>';
+*/
 		}
 
 		$this->pagination = array();
@@ -114,7 +112,7 @@ echo '<br />';
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& $this->get('criteria_display_view_on_no_results') == 0
+			//&& (int) $this->get('criteria_display_view_on_no_results', 0) == 0
 		) {
 			return '';
 		}
@@ -198,29 +196,32 @@ echo '<br />';
 
 			/** 2. controller manages loop and event processing */
 			$totalRows = count($this->query_results);
-			foreach ($this->query_results as $this->row) {
+			if ($totalRows == 0) {
+			} else {
+				foreach ($this->query_results as $this->row) {
 
-				/** header: before any rows are processed */
-				if ($rowCount == 1) {
-					if (file_exists($this->view_path . '/View/Header.php')) {
-						include $this->view_path . '/View/Header.php';
+					/** header: before any rows are processed */
+					if ($rowCount == 1) {
+						if (file_exists($this->view_path . '/View/Header.php')) {
+							include $this->view_path . '/View/Header.php';
+						}
+					}
+
+					/** body: once for each row */
+					if ($this->row == null) {
+					} else {
+						if (file_exists($this->view_path . '/View/Body.php')) {
+							include $this->view_path . '/View/Body.php';
+						}
+						$rowCount++;
 					}
 				}
 
-				/** body: once for each row */
-				if ($this->row == null) {
-				} else {
-					if (file_exists($this->view_path . '/View/Body.php')) {
-						include $this->view_path . '/View/Body.php';
+				/** footer: after all rows are processed */
+				if ($rowCount > $totalRows) {
+					if (file_exists($this->view_path . '/View/Footer.php')) {
+						include $this->view_path . '/View/Footer.php';
 					}
-					$rowCount++;
-				}
-			}
-
-			/** footer: after all rows are processed */
-			if ($rowCount > $totalRows) {
-				if (file_exists($this->view_path . '/View/Footer.php')) {
-					include $this->view_path . '/View/Footer.php';
 				}
 			}
 		}
