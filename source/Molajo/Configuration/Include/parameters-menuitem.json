@@ -26,7 +26,7 @@
         "criteria_view_ordering":"a.start_publishing_datetime DESC",
         "criteria_view_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
         "criteria_view_submenu_items":"items,categories,drafts",
-        "criteria_view_columns":"id,featured,title,created_by_name,start_publishing_datetime,ordering",
+        "criteria_view_columns":"id,featured,title,created_by,start_publishing_datetime,ordering",
         "criteria_view_pagination":"",
         "criteria_view_batch":"",
 

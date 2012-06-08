@@ -257,7 +257,10 @@ Class TextService
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect($filter, 'Listbox');
+		$results = $m->connect($filter, 'Listbox');
+		if ($results == false) {
+			return false;
+		}
 
 		if ($m->get('data_source', 'JDatabase') == 'JDatabase') {
 
@@ -383,71 +386,71 @@ Class TextService
 
 		if (strtolower($list) == 'featured') {
 			$row = new \stdClass();
-			$row->key = 1;
+			$row->id = 1;
 			$row->value = Services::Language()->translate('FEATURED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = 0;
+			$row->id = 0;
 			$row->value = Services::Language()->translate('NOT_FEATURED');
 			$query_results[] = $row;
 
 		} elseif (strtolower($list) == 'stickied') {
 			$row = new \stdClass();
-			$row->key = 1;
+			$row->id = 1;
 			$row->value = Services::Language()->translate('STICKIED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = 0;
+			$row->id = 0;
 			$row->value = Services::Language()->translate('NOT_STICKIED');
 			$query_results[] = $row;
 
 		} elseif (strtolower($list) == 'protected') {
 			$row = new \stdClass();
-			$row->key = 1;
+			$row->id = 1;
 			$row->value = Services::Language()->translate('PROTECTED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = 0;
+			$row->id = 0;
 			$row->value = Services::Language()->translate('REMOVEABLE');
 			$query_results[] = $row;
 
 		} elseif (strtolower($list) == 'status') {
 
 			$row = new \stdClass();
-			$row->key = STATUS_ARCHIVED;
+			$row->id = STATUS_ARCHIVED;
 			$row->value = Services::Language()->translate('STATUS_ARCHIVED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = STATUS_PUBLISHED;
+			$row->id = STATUS_PUBLISHED;
 			$row->value = Services::Language()->translate('STATUS_PUBLISHED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = STATUS_UNPUBLISHED;
+			$row->id = STATUS_UNPUBLISHED;
 			$row->value = Services::Language()->translate('STATUS_UNPUBLISHED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = STATUS_TRASHED;
+			$row->id = STATUS_TRASHED;
 			$row->value = Services::Language()->translate('STATUS_TRASHED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = STATUS_SPAMMED;
+			$row->id = STATUS_SPAMMED;
 			$row->value = Services::Language()->translate('STATUS_SPAMMED');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = STATUS_DRAFT;
+			$row->id = STATUS_DRAFT;
 			$row->value = Services::Language()->translate('STATUS_DRAFT');
 			$query_results[] = $row;
 
 			$row = new \stdClass();
-			$row->key = STATUS_VERSION;
+			$row->id = STATUS_VERSION;
 			$row->value = Services::Language()->translate('STATUS_VERSION');
 			$query_results[] = $row;
 		}

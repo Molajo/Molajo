@@ -74,7 +74,10 @@ Class UserService
 		/** Retrieve User Data  */
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('Users');
+		$results = $m->connect('Users');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('id', $this->id);
 

@@ -12,7 +12,7 @@ defined('MOLAJO') or die; ?>
 <include:template name=Adminsubmenu wrap=Section value=AdminSubmenu/>
 <include:template name=Admingridfilters wrap=Section value=GridFilters/>
 <include:request/>
-<include:template name=Admingridpagination wrap=Section value=GridPagination/>
+<include:template name=Admingridpagination wrap=Nav wrap_class=page value=GridPagination/>
 <include:template name=Admingridbatch wrap=Section value=GridBatch/>
 <include:module name=Adminfooter/>
 <include:defer/>

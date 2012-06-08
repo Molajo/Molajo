@@ -41,7 +41,9 @@ class ReadModel extends Model
 								 $id, $name_key, $name_key_value, $query_object)
 	{
 		if ($this->query->select == null) {
+
 			if ($query_object == 'result') {
+
 				if ((int)$id > 0) {
 					$this->query->select($this->db->qn($primary_prefix . '.' . $name_key));
 					$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
@@ -53,13 +55,20 @@ class ReadModel extends Model
 				}
 
 			} else {
+
 				$first = true;
-				foreach ($columns as $column) {
-					if ($first == true && $query_object == 'distinct') {
-						$first = false;
-						$this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
-					} else {
-						$this->query->select($this->db->qn($primary_prefix . '.' . $column['name']));
+
+				if (count($columns) == 0) {
+					$this->query->select($this->db->qn($primary_prefix) . '.' . '*');
+
+				} else {
+					foreach ($columns as $column) {
+						if ($first == true && $query_object == 'distinct') {
+							$first = false;
+							$this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
+						} else {
+							$this->query->select($this->db->qn($primary_prefix . '.' . $column['name']));
+						}
 					}
 				}
 
@@ -70,7 +79,9 @@ class ReadModel extends Model
 			$this->query->from($this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix));
 		}
 
+
 		if ($this->query->where == null) {
+
 			if ((int)$id > 0) {
 				$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
 					. ' = ' . $this->db->q($id));
@@ -259,9 +270,11 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($columns, $query_object, $offset = 0, $count = 5)
 	{
-//echo '<br /><br /><br />';
-//echo $this->query->__toString();
-//echo '<br /><br /><br />';
+		/**
+		echo '<br /><br /><br />';
+		echo $this->query->__toString();
+		echo '<br /><br /><br />';
+		 */
 		$this->db->setQuery($this->query->__toString(), $offset, $count);
 
 		if ($query_object == 'result') {
@@ -397,7 +410,10 @@ class ReadModel extends Model
 
 			$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 			$m = new $controllerClass();
-			$m->connect($name);
+			$results = $m->connect($name);
+			if ($results == false) {
+				return false;
+			}
 
 			$join = (string)$child['join'];
 			$m->model->query->where($m->model->db->qn($join) . ' = ' . (int)$id);

@@ -7,10 +7,10 @@
 use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
 <fieldset class="batch">
-    <legend><?php echo Services::Language()->translate('GRID_BATCH_OPTIONS');?></legend>
-    <?php echo "change acl";?>
+    <legend><?php //echo Services::Language()->translate('GRID_BATCH_OPTIONS');?></legend>
+    <?php //echo "change acl";?>
 
-    <?php echo "change categories"; ?>
+    <?php //echo "change categories"; ?>
 
     <button type="submit">
         <?php echo Services::Language()->translate('GRID_SUBMIT'); ?>

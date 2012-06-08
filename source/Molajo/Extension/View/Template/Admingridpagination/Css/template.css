@@ -1,0 +1,29 @@
+/*
+@package     Molajo
+@copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+nav.page ul {
+    text-align: center;
+}
+nav.page ul li {
+    display: inline;
+    margin: 0 4px 0 0;
+}
+nav.page ul li a {
+    padding: 3px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+}
+nav.page ul li a:hover,
+nav.page ul li a:focus {
+    background: #f0f0f0;
+    border-color: #ccc;
+}
+nav.page ul li a:active {
+    background: #fff;
+    border-color: #ddd;
+}

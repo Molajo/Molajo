@@ -5,19 +5,16 @@
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 use Molajo\Service\Services;
-echo '<pre>';
-var_dump(Services::Registry()->get('Trigger', '*'));
-echo '</pre>';
-
+defined('MOLAJO') or die;
+$rowCount = Services::Registry()->get('Trigger', 'GridTableRows');
 defined('MOLAJO') or die; ?>
 <table class="gridlist">
-    <thead>
+<thead>
     <tr>
         <?php
         $count = 1;
 		$columnArray = Services::Registry()->get('Trigger', 'GridTableColumns');
         foreach ($columnArray as $column) {
-			echo $column;
             $extraClass = '';
             if ($count == 1) {
                 $extraClass .= 'first';
@@ -35,10 +32,5 @@ defined('MOLAJO') or die; ?>
             $count++;
         } ?>
     </tr>
-    </thead>
-    <tfoot>
-    <tr>
-        <td colspan="<?php echo $count + 1; ?>"><?php //echo $this->pagination->getListFooter(); ?></td>
-    </tr>
-    </tfoot>
-    <tbody>
+</thead>
+<tbody>

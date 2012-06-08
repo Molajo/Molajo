@@ -38,8 +38,7 @@
                     <include name="Metadata"/>
                 </customfield>
                 <customfield name="parameters">
-                    <field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
+                    <include name="ParametersCommon"/>
                     <include name="ParametersItem"/>
                     <include name="ParametersImage"/>
                     <include name="ParametersGravatar"/>

@@ -4,7 +4,6 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $html5 = $this->row->html5;
@@ -14,7 +13,7 @@ if ($this->row->conditional == '' || $this->row->conditional === null) {
 	$begin_conditional = '';
 	$end_conditional = '';
 } else {
-	if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
+	if ((int)$html5 == 1) {
 		$end = '>';
 	} else {
 		$end = '/>';

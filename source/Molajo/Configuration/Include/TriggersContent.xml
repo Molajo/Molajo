@@ -1,6 +1,7 @@
 <trigger name="Author"/>
 <trigger name="Smilies"/>
 <trigger name="Email"/>
+<trigger name="Gravatar"/>
 <trigger name="IFrame"/>
 <trigger name="Pullquote"/>
 <trigger name="Datefields"/>

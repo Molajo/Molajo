@@ -6,4 +6,7 @@ use Molajo\Service\Services;
  * @license   	GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-<h1><?php echo Services::Registry()->get('Configuration', 'site_title', 'Molajo'); ?></h1>
+<div class="banner">
+	<h1 id="logo"><span class="logo"><?php echo Services::Registry()->get('Configuration', 'site_title', 'Molajo'); ?></span></h1>
+	<p class="intro">Intro. <?php echo Services::Registry()->get('Parameters', 'criteria_title'); ?> stuff..</p>
+</div>

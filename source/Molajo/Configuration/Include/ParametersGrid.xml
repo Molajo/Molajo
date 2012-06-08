@@ -2,7 +2,7 @@
 <field name="grid_submenu_items" type="char" null="0" default="items,categories,drafts" values="items,categories,drafts"/>
 <field name="grid_search" type="binary" null="1" default="1" values="0,1"/>
 <field name="grid_lists" type="char" null="0" default="" values=""/>
-<field name="grid_columns" type="char" null="0" default="id,title,content_text,featured,Primarycategory,Author,start_publishing_datetime,ordering,language" values=""/>
+<field name="grid_columns" type="char" null="0" default="id,title,content_text,featured,start_publishing_datetime,ordering,language" values=""/>
 <field name="grid_rows" type="char" null="0" default="5" values=""/>
 <field name="grid_ordering" type="char" null="0" default="a.title" values=""/>
 <field name="grid_ordering_direction" type="char" null="0" default="ASC" values="ASC,DESC"/>

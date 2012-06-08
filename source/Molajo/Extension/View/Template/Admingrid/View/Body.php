@@ -13,25 +13,27 @@ if ($rowCount == 0) {
     $rowClass = ' class="odd"';
 }
 ?>
-<tr<?php echo $rowClass ?>>
-    <?php
-    $columnCount = 1;
-	$columnArray = Services::Registry()->get('Trigger', 'GridTableColumns');
-    foreach ($columnArray as $column) {
-        $extraClass = '';
-        if ($columnCount == 1) {
-            $extraClass .= 'first';
-        }
-        if ($columnCount == count($columnArray)) {
-            $extraClass .= 'last';
-        }
-        if ($extraClass == '') {
-        } else {
-            $extraClass = ' class="' . trim($extraClass) . '"';
-        }
-        ?>
-        <td<?php echo $extraClass; ?>><?php echo $this->row->$column; ?></td>
-        <?php
-        $columnCount++;
-    } ?>
-</tr>
+	<tr<?php echo $rowClass ?>>
+		<?php
+		$columnCount = 1;
+		$columnArray = Services::Registry()->get('Trigger', 'GridTableColumns');
+		foreach ($columnArray as $column) {
+			$extraClass = '';
+			if ($columnCount == 1) {
+				$extraClass .= 'first';
+			}
+			if ($columnCount == count($columnArray)) {
+				$extraClass .= 'last';
+			}
+			if ($extraClass == '') {
+			} else {
+				$extraClass = ' class="' . trim($extraClass) . '"';
+			}
+			?>
+			<td<?php echo $extraClass; ?>>
+				<?php echo $this->row->$column; ?>
+			</td>
+			<?php
+			$columnCount++;
+		} ?>
+	</tr>

@@ -52,7 +52,6 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	public function onBeforeRead()
 	{
-
 		/** Is this an Administrative Grid Request?  */
 		if (strtolower($this->get('template_view_title')) == 'admingrid') {
 		} else {
@@ -66,18 +65,23 @@ class AdmingridTrigger extends ContentTrigger
 		$grid_submenu_items = explode(',', $this->get('grid_submenu_items', 'items,categories,drafts'));
 		$query_results = array();
 
+		$url = Services::Registry()->get('Configuration', 'application_base_url');
 		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			$url = $this->get('catalog_url_request');
+			$url .= '/' . $this->get('catalog_url_sef_request');
+			$connector = '?';
 		} else {
-			$url = $this->get('catalog_url_sef_request');
+			$url .= '/' . $this->get('catalog_url_request');
+			$connector = '&';
 		}
+		Services::Registry()->set('Trigger', 'PageURL', $url);
+		Services::Registry()->set('Trigger', 'PageURLConnector', $connector);
 
 		if (count($grid_submenu_items) == 0 || $grid_submenu_items == null) {
 		} else {
 
 			foreach ($grid_submenu_items as $submenu) {
 				$row = new \stdClass();
-				$row->link = $url . '&submenu=' . $submenu;
+				$row->link = $url . $connector. 'submenu=' . $submenu;
 				$row->link_text = Services::Language()->translate('SUBMENU_' . strtoupper($submenu));
 				$query_results[] = $row;
 			}
@@ -182,8 +186,33 @@ class AdmingridTrigger extends ContentTrigger
 
 		$this->query->order($this->db->qn($primary_prefix) . '.' . $this->db->qn($ordering) . ' ' . $direction);
 
+		$current = 5;
+
 		/** 5. Grid Pagination */
-		Services::Registry()->set('Trigger', 'GridPagination', $this->get('grid_pagination', 1));
+		$query_results = array();
+
+		$row = new \stdClass();
+		$row->link = $url.$connector.'&start='.$current + 5;
+		$row->class = ' page-prev';
+		$row->link_text = ' Prev';
+
+		$query_results[] = $row;
+
+		$row = new \stdClass();
+		$row->link = $url.$connector.'&start='.$current + 10;
+		$row->class = '';
+		$row->link_text = ' 2';
+
+		$query_results[] = $row;
+
+		$row = new \stdClass();
+		$row->link = $url.$connector.'&start='.$current + 15;
+		$row->class = ' page-next';
+		$row->link_text = ' Next';
+
+		$query_results[] = $row;
+
+		Services::Registry()->set('Trigger', 'GridPagination', $query_results);
 
 		$offset = $this->get('grid_offset', 0);
 		Services::Registry()->set('Trigger', 'GridPaginationOffset', $direction);
