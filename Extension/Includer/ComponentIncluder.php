@@ -47,7 +47,7 @@ class ComponentIncluder extends Includer
      * @return null
      * @since   1.0
      */
-    protected function getAttributes()
+    protected function getAttribute()
     {
         /** Include and Parameter Registries are already loaded for Primary Component */
         if (Services::Registry()->get('Parameters', 'extension_primary') == true) {

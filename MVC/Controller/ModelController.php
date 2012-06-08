@@ -109,7 +109,7 @@ Class ModelController extends Controller
 			$this->set('model_name', '');
 			$this->set('model_type', $model_type);
 			$this->set('table_name', '#__content');
-			$this->set('primary_key', 'a');
+			$this->set('primary_key', 'id');
 			$this->set('name_key', 'title');
 			$this->set('primary_prefix', 'a');
 			$this->set('get_customfields', 0);
@@ -127,6 +127,10 @@ Class ModelController extends Controller
 
 			} else {
 				$this->table_registry_name = ConfigurationService::getFile($model_name, $model_type);
+				if ($this->table_registry_name == false) {
+					echo '<br />ModelController: Table registry: ' . $this->table_registry_name . ' could not be defined. <br />';
+					return false;
+				}
 			}
 
 			/** Serialize Options */
@@ -171,6 +175,10 @@ Class ModelController extends Controller
 
 		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
+		if ($dbo == false) {
+			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
+			return false;
+		}
 
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
@@ -220,11 +228,6 @@ Class ModelController extends Controller
 		/** Retrieve list of potential $triggers for this model (result type does not use events) */
 		$triggers = $this->getTriggerList($query_object);
 
-		/** Schedule onBeforeRead Event */
-		if (count($triggers) > 0) {
-			$this->onBeforeReadEvent($triggers);
-		}
-
 		/** Base query */
 		if ($query_object == 'item') {
 			$id_key = (int)$this->get('id', 0);
@@ -266,6 +269,11 @@ Class ModelController extends Controller
 					$query_object
 				);
 			}
+		}
+
+		/** Schedule onBeforeRead Event */
+		if (count($triggers) > 0) {
+			$this->onBeforeReadEvent($triggers);
 		}
 
 		/** Executes Query */
@@ -346,6 +354,7 @@ Class ModelController extends Controller
 			$this->onAfterReadEvent($triggers);
 		}
 /**
+echo $query_object.'<br />';
 echo '<pre>';
 var_dump($query_results);
 echo '</pre>';

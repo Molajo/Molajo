@@ -175,6 +175,7 @@ Class RegistryService
 
 		/** Log it */
 		if ($this->exists('DebugService')) {
+		} else {
 
 			if (Services::Registry()->get('DebugService', 'on') === true) {
 
@@ -270,8 +271,8 @@ Class RegistryService
 		if (isset($this->registry[$namespace])) {
 		} else {
 			//todo: throw error
-			echo $namespace . ' Blow up in RegistryService';
-			die;
+			echo '<br />Registry: '. $namespace . ' could not be created.';
+			return false;
 		}
 
 		/** Retrieve the registry for the namespace */
@@ -804,8 +805,10 @@ Class RegistryService
 		$row = new \stdClass();
 
 		/** Process all parameters as fields */
-		foreach ($results as $key => $value) {
-			$row->$key = $value;
+		if (count($results) > 0) {
+			foreach ($results as $key => $value) {
+				$row->$key = $value;
+			}
 		}
 
 		/** Place all fields into a row */

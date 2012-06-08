@@ -383,11 +383,11 @@ Class RouteService
 				Services::Error()->set(500, 'Content Item not found');
 			}
 
-			/**  Category  */
+			/**  Category
 			if ((int)Services::Registry()->get('Parameters', 'catalog_category_id') == 0) {
 			} else {
 				Helpers::Content()->getRouteCategory();
-			}
+			}  */
 		}
 
 		/**  Extension */
@@ -415,6 +415,8 @@ Class RouteService
 
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
+
+		//Services::Registry()->get('Parameters', '*');
 
 		return;
 	}

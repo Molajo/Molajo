@@ -6,7 +6,8 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-$action = 'index.php?option=' . Services::Registry()->get('display_extension_option');
+
+$action = Services::Registry()->get('Trigger', 'PageURL');
 ?>
 <form action="<?php echo $action; ?>" method="post" name="managerForm">
     <fieldset id="filter-bar">

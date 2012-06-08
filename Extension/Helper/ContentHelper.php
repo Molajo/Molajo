@@ -290,10 +290,12 @@ Class ContentHelper
 	 */
 	public function get($id = 0, $model_name = 'Content', $model_type = 'List', $model_query_object = 'list')
 	{
-
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect($model_name, $model_type);
+		$results = $m->connect($model_name, $model_type);
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('id', (int)$id);
 		$m->set('process_triggers', 1);

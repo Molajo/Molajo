@@ -137,7 +137,10 @@ Class CatalogHelper
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('Catalog');
+		$results = $m->connect('Catalog');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('id', (int)$catalog_id);
 		$m->set('use_special_joins', 1);
@@ -169,7 +172,10 @@ Class CatalogHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('Catalog');
+		$results = $m->connect('Catalog');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($url_sef_request));
@@ -190,7 +196,10 @@ Class CatalogHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('Catalog');
+		$results = $m->connect('Catalog');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('catalog_type_id')
@@ -213,7 +222,10 @@ Class CatalogHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('Catalog');
+		$results = $m->connect('Catalog');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id'));
 		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int)$catalog_id);
@@ -245,7 +257,10 @@ Class CatalogHelper
 
 			$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 			$m = new $controllerClass();
-			$m->connect('Catalog');
+			$results = $m->connect('Catalog');
+			if ($results == false) {
+				return false;
+			}
 
 			$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request'));
 			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int)$catalog_id);

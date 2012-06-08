@@ -104,15 +104,16 @@ class Includer
 	 */
 	public function process($attributes = array())
 	{
+
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 
 		$this->getAttributes();
-/**
+		/**
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
 		} else {
-Services::Registry()->copy('RouteParameters', 'Parameters', 'theme*');
-Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'theme*');
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 		}
 
 
@@ -120,7 +121,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 		echo 'Attributes from Parsing<pre>';
 		var_dump($this->attributes);
 		echo '</pre>';
-*/
+		 */
 		/** retrieve the extension that will be used to generate the MVC request */
 		$this->getExtension();
 
@@ -135,7 +136,8 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 
 		/** only load media if there was rendered output */
 		if ($rendered_output == ''
-			&& Services::Registry()->get('Parameters', 'criteria_display_view_on_no_results') == 0) {
+			&& Services::Registry()->get('Parameters', 'criteria_display_view_on_no_results') == 0
+		) {
 		} else {
 			$this->loadMedia();
 			$this->loadViewMedia();
@@ -193,7 +195,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class'
 				|| $name == 'template_class'
 			) {
-				Services::Registry()->set('Parameters', 'template_view_css_class', $value);
+				Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
 				/** Wrap */
 			} elseif ($name == 'wrap' || $name == 'wrap_view_title'
@@ -215,7 +217,7 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 			} elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class'
 				|| $name == 'wrap_class'
 			) {
-				Services::Registry()->set('Parameters', 'wrap_view_css_class', $value);
+				Services::Registry()->set('Parameters', 'wrap_view_css_class', str_replace(',', ' ', $value));
 
 				/** Model */
 			} elseif ($name == 'value') {
@@ -337,14 +339,14 @@ Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
 	protected function invokeMVC()
 	{
 
-/**
-echo '<br /><br /><br />';
-echo Services::Registry()->get('Parameters', 'extension_title');
-echo '<br />';
-Services::Registry()->sort('Parameters');
-Services::Registry()->get('Parameters', '*');
-echo '<br /><br /><br />';
-*/
+		/**
+		echo '<br /><br /><br />';
+		echo Services::Registry()->get('Parameters', 'extension_title');
+		echo '<br />';
+		Services::Registry()->sort('Parameters');
+		Services::Registry()->get('Parameters', '*');
+		echo '<br /><br /><br />';
+		 */
 		$controller = new DisplayController();
 
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));

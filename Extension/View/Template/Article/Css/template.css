@@ -14,8 +14,9 @@ article header h2 {
 }
 article aside {
     float: left;
-    width: 20%;
-    margin-left: -25%;
+    width: 80%;
+    margin-top: 20%;
+    margin-left: 5%;
     font-size: 12px;
     line-height: 1.8;
     color: #999;

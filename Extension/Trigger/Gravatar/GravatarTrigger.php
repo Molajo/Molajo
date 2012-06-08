@@ -58,7 +58,7 @@ class GravatarTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-			if ($this->get('gravatar', 0) == 1) {
+			if ($this->get('gravatar', 1) == 1) {
 				$size = $this->get('gravatar_size', 80);
 				$type = $this->get('gravatar_type', 'mm');
 				$rating = $this->get('gravatar_rating', 'pg');

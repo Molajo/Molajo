@@ -66,7 +66,7 @@ Class ExtensionHelper
 		$item = Helpers::Extension()->get($extension_id, $model_name, $model_type);
 
 		/** 500: not found */
-		if (count($item) == 0) {
+		if (count($item) == 0 || $item == false) {
 			return false;
 		}
 
@@ -134,7 +134,10 @@ Class ExtensionHelper
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect($model_name, $model_type);
+		$results = $m->connect($model_name, $model_type);
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('id', (int)$extension_id);
 		$m->set('process_triggers', 0);
@@ -167,7 +170,10 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('ExtensionInstances');
+		$results = $m->connect('ExtensionInstances');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('process_triggers', 0);
 
@@ -192,7 +198,10 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('ExtensionInstances');
+		$results = $m->connect('ExtensionInstances');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('process_triggers', 0);
 
@@ -216,7 +225,10 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect();
+		$results = $m->connect();
+		if ($results == false) {
+			return false;
+		}
 
 		$m->set('process_triggers', 0);
 

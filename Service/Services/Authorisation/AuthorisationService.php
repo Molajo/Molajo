@@ -102,7 +102,11 @@ Class AuthorisationService
     {
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-        $m->connect('SiteApplications');
+
+		$results = $m->connect('SiteApplications');
+		if ($results == false) {
+			return false;
+		}
 
         $m->model->query->select($m->model->db->qn('application_id'));
         $m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int) SITE_ID);
@@ -264,7 +268,10 @@ Class AuthorisationService
 
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-        $m->connect('GroupPermissions');
+		$results = $m->connect('GroupPermissions');
+		if ($results == false) {
+			return false;
+		}
 
 		$m->model->query->select($m->model->db->qn('a.id'));
         $m->model->query->where($m->model->db->qn('a.catalog_id') . ' = ' . (int) $catalog_id);
@@ -312,7 +319,10 @@ Class AuthorisationService
 
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-        $m->connect('UserApplications');
+		$results = $m->connect('UserApplications');
+		if ($results == false) {
+			return false;
+		}
 
         $m->model->query->where('application_id = ' . (int) APPLICATION_ID);
         $m->model->query->where('user_id = ' . (int) $user_id);

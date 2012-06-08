@@ -60,6 +60,7 @@ class DisplayController extends ModelController
 		$includer_type = $this->get('includer_type', '');
 		$includer_name = $this->get('includer_name', '');
 
+
 		$model_name = $this->get('model_name', '');
 		$model_type = $this->get('model_type', '');
 		$model_parameter = $this->get('model_parameter', '');
@@ -75,6 +76,7 @@ echo 'Includer Name '. $includer_name .'<br />';
 echo 'Model Name ' . $model_name . '<br />'
 	. 'Model Type:  ' . $model_type . '<br />'
 	. 'Table Registry Name ' . $table_registry_name . '<br />'
+	. 'Model Parameter '. $model_parameter .'<br />'
 	. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
 */
 		if ($model_name == '') {
@@ -82,20 +84,15 @@ echo 'Model Name ' . $model_name . '<br />'
 
 		} else {
 			$this->connect($model_name, $model_type);
-//Services::Registry()->get('Parameters', '*');
-/**
-echo '<br /><br /><br />';
-echo 'In DisplayController: ' . $this->get('extension_title');
-echo '<br />';
- */
-//Services::Registry()->get($table_registry_name, '*');
+
+			if ((int) $this->get('content_id') == 0) {
+			} else {
+				$this->set('id', $this->get('content_id'));
+				$model_query_object = 'item';
+			}
+
 			/** Run Query */
 			$this->getData($model_query_object);
-/**
-echo '<pre>';
-var_dump($this->query_results);
-echo '</pre>';
-*/
 		}
 
 		$this->pagination = array();
@@ -112,7 +109,7 @@ echo '</pre>';
 
 		/** no results */
 		if (count($this->query_results) == 0
-			//&& (int) $this->get('criteria_display_view_on_no_results', 0) == 0
+			&& (int) $this->get('criteria_display_view_on_no_results', 0) == 0
 		) {
 			return '';
 		}
@@ -163,7 +160,6 @@ echo '</pre>';
 		$this->view_path = $this->get('wrap_view_path');
 		$this->view_path_url = $this->get('wrap_view_path_url');
 
-		/** render wrap */
 		return $this->renderView();
 	}
 
@@ -182,9 +178,6 @@ echo '</pre>';
 	 */
 	protected function renderView()
 	{
-		/** @var $rowCount */
-		$rowCount = 1;
-
 		/** start collecting output */
 		ob_start();
 
@@ -196,32 +189,27 @@ echo '</pre>';
 
 			/** 2. controller manages loop and event processing */
 			$totalRows = count($this->query_results);
-			if ($totalRows == 0) {
-			} else {
+			if (count($this->query_results) > 0) {
+
+				$first = true;
 				foreach ($this->query_results as $this->row) {
 
 					/** header: before any rows are processed */
-					if ($rowCount == 1) {
+					if ($first == true) {
+						$first = false;
 						if (file_exists($this->view_path . '/View/Header.php')) {
 							include $this->view_path . '/View/Header.php';
 						}
 					}
 
-					/** body: once for each row */
-					if ($this->row == null) {
-					} else {
-						if (file_exists($this->view_path . '/View/Body.php')) {
-							include $this->view_path . '/View/Body.php';
-						}
-						$rowCount++;
+					if (file_exists($this->view_path . '/View/Body.php')) {
+						include $this->view_path . '/View/Body.php';
 					}
 				}
 
 				/** footer: after all rows are processed */
-				if ($rowCount > $totalRows) {
-					if (file_exists($this->view_path . '/View/Footer.php')) {
-						include $this->view_path . '/View/Footer.php';
-					}
+				if (file_exists($this->view_path . '/View/Footer.php')) {
+					include $this->view_path . '/View/Footer.php';
 				}
 			}
 		}

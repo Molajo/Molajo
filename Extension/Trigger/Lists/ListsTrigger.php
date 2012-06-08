@@ -52,6 +52,8 @@ class ListsTrigger extends ContentTrigger
 	 */
 	public function onBeforeRead()
 	{
+
+		return true;
 		/** Initialize Filter Registry */
 		Services::Registry()->createRegistry('Lists');
 

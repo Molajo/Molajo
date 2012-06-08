@@ -114,6 +114,18 @@ Class Application
             Services::Debug()->set('Application Authorise succeeded');
         }
 
+
+		/** Start parsing and processing page include for Theme */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
+			&& file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))
+		) {
+		} else {
+			Services::Error()->set(500, 'Theme and/or Page View Not found');
+			echo 'Theme and/or Page View Not found - application stopped before parse. Parameters follow:';
+			Services::Registry()->get('Parameters', '*');
+			die;
+		}
+
         /** Execute */
         $continue = $this->execute();
 

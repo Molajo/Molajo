@@ -121,7 +121,10 @@ class UseractivityTrigger extends ContentTrigger
         /** Retrieve User Data  */
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-        $m->connect('UserActivity');
+		$results = $m->connect('UserActivity');
+		if ($results == false) {
+			return false;
+		}
 
         $m->set('user_id', Services::Registry()->set('User', 'id'));
         $m->set('action_id', $action_id);
