@@ -1,6 +1,2 @@
-<trigger name="CatalogTypeId"/>
-<trigger name="ContentText"/>
-<trigger name="DateFields"/>
 <trigger name="Publishedstatus"/>
-<trigger name="UserFields"/>
-<trigger name="Status"/>
+

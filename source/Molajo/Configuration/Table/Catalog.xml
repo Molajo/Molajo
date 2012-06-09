@@ -10,32 +10,35 @@
         check_view_level_access="0"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <field name="id" type="int" null="1" default="0"/>
-                <field name="catalog_type_id" type="int" null="0" default="" values=""/>
-                <field name="source_id" type="int" null="0" default="" values=""/>
-                <field name="routable" type="boolean" null="0" default="0"/>
-                <field name="sef_request" type="char" null="0" default=" "/>
-                <field name="redirect_to_id" type="int" null="1" default=""/>
-                <field name="view_group_id" type="int" null="1" default=""/>
-                <field name="primary_category_id" type="int" null="1" default=""/>
-            </fields>
-            <joins>
-                <join table="#__catalog_types" alias="b" select="title,source_table" jointo="id"
-                      joinwith="catalog_type_id"/>
-            </joins>
-            <children>
-                <child name="CatalogActivity" join="catalog_id"/>
-                <child name="CatalogCategories" join="catalog_id"/>
-            </children>
-            <foreignkeys>
-                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-                <foreignkey name="source_id" source_id="id" source_model="Content" required="1"/>
-                <foreignkey name="redirect_to_id" source_id="id" source_model="Catalog" required="1"/>
-                <foreignkey name="view_group_id" source_id="id" source_model="GroupViewGroups" required="1"/>
-                <foreignkey name="primary_category_id" source_id="id" source_model="CatalogCategories" required="1"/>
-            </foreignkeys>
-        </item>
+
+        <fields>
+            <field name="id" type="int" null="1" default="0"/>
+            <field name="catalog_type_id" type="int" null="0" default="" values=""/>
+            <field name="source_id" type="int" null="0" default="" values=""/>
+            <field name="routable" type="boolean" null="0" default="0"/>
+            <field name="sef_request" type="char" null="0" default=" "/>
+            <field name="redirect_to_id" type="int" null="1" default=""/>
+            <field name="view_group_id" type="int" null="1" default=""/>
+            <field name="primary_category_id" type="int" null="1" default=""/>
+        </fields>
+
+        <joins>
+            <join table="#__catalog_types" alias="b" select="title,source_table" jointo="id"
+                  joinwith="catalog_type_id"/>
+        </joins>
+
+        <children>
+            <child name="CatalogActivity" join="catalog_id"/>
+            <child name="CatalogCategories" join="catalog_id"/>
+        </children>
+
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            <foreignkey name="source_id" source_id="id" source_model="Content" required="1"/>
+            <foreignkey name="redirect_to_id" source_id="id" source_model="Catalog" required="1"/>
+            <foreignkey name="view_group_id" source_id="id" source_model="GroupViewGroups" required="1"/>
+            <foreignkey name="primary_category_id" source_id="id" source_model="CatalogCategories" required="1"/>
+        </foreignkeys>
+
     </table>
 </model>

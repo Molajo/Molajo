@@ -174,7 +174,7 @@ Class ParseService
 		 *      for the set of includes defined in the includes-page.xml
 		 */
 		if ($overrideIncludesPageXML === false) {
-			$sequence = Services::Configuration()->getFile('includes-page', 'Application');
+			$sequence = Services::Configuration()->getFile('Application', 'Includespage');
 		} else {
 			$sequence = $overrideIncludesPageXML;
 		}
@@ -185,7 +185,7 @@ Class ParseService
 
 		/** Load final xml in order to remove from search for loop during initial runs */
 		if ($overrideIncludesFinalXML === false) {
-			$final = Services::Configuration()->getFile('includes-final', 'Application');
+			$final = Services::Configuration()->getFile('Application', 'Includesfinal');
 		} else {
 			$final = $overrideIncludesFinalXML;
 		}
@@ -214,9 +214,6 @@ Class ParseService
 			Services::Error()->set(500, 'Theme not found');
 			return false;
 		}
-
-		/** Save parameters for the primary route so that Includer / MVC can use Parameters Registry */
-		Services::Registry()->copy('Parameters', 'RouteParameters');
 
 		$body = $this->renderLoop();
 

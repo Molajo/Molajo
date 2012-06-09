@@ -1,0 +1,15 @@
+<fields>
+    <include name="FieldsExtensionInstance"/>
+</fields>
+<joins>
+    <include name="JoinsExtensionInstance"/>
+</joins>
+<foreignkeys>
+    <include name="ForeignKeysExtensionInstance"/>
+</foreignkeys>
+<children>
+    <include name="ChildrenExtensionInstance"/>
+</children>
+<triggers>
+    <include name="TriggersExtensionInstance"/>
+</triggers>

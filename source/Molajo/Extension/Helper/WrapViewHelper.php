@@ -64,7 +64,7 @@ Class WrapViewHelper
 		Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node, 'Parameters'));
 
 		/** Retrieve the query results */
-		$item = Helpers::Extension()->get($wrap_view_id, 'WrapViews', 'Table');
+		$item = Helpers::Extension()->get($wrap_view_id, 'Table', 'WrapViews');
 
 		/** 500: not found */
 		if (count($item) == 0) {
@@ -82,7 +82,7 @@ Class WrapViewHelper
 			Services::Registry()->set('Parameters', 'wrap_view_path', $this->getPath($node, 'Parameters'));
 			Services::Registry()->set('Parameters', 'wrap_view_path_url', $this->getPathURL($node, 'Parameters'));
 
-			$item = Helpers::Extension()->get($wrap_view_id, 'WrapView');
+			$item = Helpers::Extension()->get($wrap_view_id, 'Table', 'WrapViews');
 
 			if (count($item) == 0) {
 				Services::Error()->set(500, 'View not found');

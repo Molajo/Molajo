@@ -66,7 +66,7 @@ Class PageViewHelper
 		Services::Registry()->set('Parameters', 'page_view_path_url', $this->getPathURL($node));
 
 		/** Retrieve the query results */
-		$item = Helpers::Extension()->get($page_view_id, 'PageViews', 'Table');
+		$item = Helpers::Extension()->get($page_view_id, 'Table', 'PageViews');
 
 		/** 500: not found */
 		if (count($item) == 0) {
@@ -86,7 +86,7 @@ Class PageViewHelper
 				$this->getPath($node) . '/index.php');
 			Services::Registry()->set('Parameters', 'page_view_path_url', $this->getPathURL($node));
 
-			$item = Helpers::Extension()->get($page_view_id, 'PageView');
+			$item = Helpers::Extension()->get($page_view_id, 'Table', 'PageViews');
 
 			if (count($item) == 0) {
 				Services::Error()->set(500, 'View not found');

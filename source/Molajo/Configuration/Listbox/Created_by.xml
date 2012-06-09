@@ -14,17 +14,17 @@
         filter_check_published_status="1"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <field name="created_by" type="int" null="1" default="0" identity="1"/>
-            </fields>
-            <joins>
-                <join table="#__users"
-                      alias="users"
-                      select="username"
-                      jointo="id"
-                      joinwith="created_by"/>
-            </joins>
-        </item>
+
+        <fields>
+            <field name="created_by" type="int" null="1" default="0" identity="1"/>
+        </fields>
+        <joins>
+            <join table="#__users"
+                  alias="users"
+                  select="username"
+                  jointo="id"
+                  joinwith="created_by"/>
+        </joins>
+
     </table>
 </model>

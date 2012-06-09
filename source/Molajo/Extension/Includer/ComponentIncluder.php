@@ -79,8 +79,8 @@ class ComponentIncluder extends Includer
 
         $response = Helpers::Extension()->getExtension(
             Services::Registry()->get('Parameters', 'extension_instance_id'),
-            'ExtensionInstances',
-            'Table'
+            'Table',
+			'ExtensionInstances'
         );
         if ($response === false) {
             Services::Error()->set(500, 'Extension not found');

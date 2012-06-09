@@ -1,5 +1,5 @@
 <model
-        name="ModulesTable"
+        name="Modules"
         catalog_type_id="1350"
         table="#__extension_instances"
         primary_key="id"
@@ -10,7 +10,6 @@
         check_view_level_access="1"
         data_source="JDatabase">
     <table>
-        <item>
         <fields>
             <include name="FieldsExtensionInstance"/>
         </fields>
@@ -26,11 +25,10 @@
         <triggers>
             <include name="TriggersExtensionInstance"/>
         </triggers>
-        <customfields>
-            <customfield name="parameters">
-                <include name="ParametersModule"/>
-            </customfield>
-        </customfields>
-    </item>
     </table>
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersModule"/>
+        </customfield>
+    </customfields>
 </model>

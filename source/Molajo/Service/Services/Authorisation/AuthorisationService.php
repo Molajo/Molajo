@@ -70,8 +70,9 @@ Class AuthorisationService
      */
     protected function initialise()
     {
-        $actions = Services::Configuration()->getFile('actions', 'Application');
+        $actions = Services::Configuration()->getFile('Application', 'Actions');
         if (count($actions) == 0) {
+            echo '<br />Error in AuthorisationService -- Application Actions table returned no rows <br />';
             //error
         }
 
@@ -82,7 +83,7 @@ Class AuthorisationService
 
         /** retrieve action key pairs */
         $items = Services::Registry()->get('Actions');
-		while (list($title, $id) = each($items)) {
+		foreach ($items as $title => $id) {
             Services::Registry()->set('action_to_action_id', $title, (int) $id);
         }
 
@@ -103,16 +104,16 @@ Class AuthorisationService
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
 
-		$results = $m->connect('SiteApplications');
+		$results = $m->connect('Table', 'SiteApplications');
 		if ($results == false) {
 			return false;
 		}
 
-        $m->model->query->select($m->model->db->qn('application_id'));
-        $m->model->query->where($m->model->db->qn('site_id') . ' = ' . (int) SITE_ID);
-        $m->model->query->where($m->model->db->qn('application_id') . ' = ' . (int) APPLICATION_ID);
+        $m->model->query->select($m->model->db->qn('a.application_id'));
+        $m->model->query->where($m->model->db->qn('a.site_id') . ' = ' . (int) SITE_ID);
+        $m->model->query->where($m->model->db->qn('a.application_id') . ' = ' . (int) APPLICATION_ID);
 
-        $application_id = $m->getData('loadResult');
+        $application_id = $m->getData('result');
 
         if ($application_id === false) {
             //todo: finish the response action/test
@@ -268,7 +269,7 @@ Class AuthorisationService
 
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-		$results = $m->connect('GroupPermissions');
+		$results = $m->connect('Table', 'GroupPermissions');
 		if ($results == false) {
 			return false;
 		}
@@ -319,15 +320,15 @@ Class AuthorisationService
 
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-		$results = $m->connect('UserApplications');
+		$results = $m->connect('Table', 'UserApplications');
 		if ($results == false) {
 			return false;
 		}
 
-        $m->model->query->where('application_id = ' . (int) APPLICATION_ID);
-        $m->model->query->where('user_id = ' . (int) $user_id);
+        $m->model->query->where('a.application_id = ' . (int) APPLICATION_ID);
+        $m->model->query->where('a.user_id = ' . (int) $user_id);
 
-        $count = $m->model->getData('loadResult');
+        $count = $m->model->getData('result');
 
         if ($count > 0) {
             return true;

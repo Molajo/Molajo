@@ -11,21 +11,19 @@
         process_triggers="0"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <field name="id" type="int" null="1" default="0" identity="1"/>
-                <field name="catalog_type_id" type="int" null="0" default="10" values="10"/>
-                <field name="name" type="char" null="0" default="" unique="1"/>
-                <field name="path" type="char" null="0" default=""/>
-                <field name="base_url" type="url" null="0" default=""/>
-                <field name="description" type="text" null="1" default=""/>
-            </fields>
-            <foreignkeys>
-                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-            </foreignkeys>
-            <triggers>
-                <trigger name="Sites"/>
-            </triggers>
-        </item>
+        <fields>
+            <field name="id" type="int" null="1" default="0" identity="1"/>
+            <field name="catalog_type_id" type="int" null="0" default="10" values="10"/>
+            <field name="name" type="char" null="0" default="" unique="1"/>
+            <field name="path" type="char" null="0" default=""/>
+            <field name="base_url" type="url" null="0" default=""/>
+            <field name="description" type="text" null="1" default=""/>
+        </fields>
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        </foreignkeys>
+        <triggers>
+            <trigger name="Sites"/>
+        </triggers>
     </table>
 </model>

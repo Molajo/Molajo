@@ -257,7 +257,7 @@ Class TextService
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect($filter, 'Listbox');
+		$results = $m->connect('Listbox', $filter);
 		if ($results == false) {
 			return false;
 		}
@@ -269,6 +269,7 @@ Class TextService
 			$name_key = $m->get('name_key');
 
 			$filter_check_published_status = $m->get('filter_check_published_status');
+
 			$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id ');
 			$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $name_key) . ' as value ');
 

@@ -77,7 +77,6 @@ Class ConfigurationService
 		$this->getActions();
 
 		/** return */
-
 		return $this;
 	}
 
@@ -92,7 +91,6 @@ Class ConfigurationService
 	 */
 	public function getSite($configuration_file = null)
 	{
-		/** File Configuration */
 		if ($configuration_file === null) {
 			$configuration_file = SITE_FOLDER_PATH . '/configuration.php';
 		}
@@ -119,13 +117,15 @@ Class ConfigurationService
 		/** Retrieve Sites Data from DB */
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Sites');
+		$results = $m->connect('Table', 'Sites');
 		if ($results == false) {
 			return false;
 		}
 
 		$m->set('id', (int)SITE_ID);
+
 		$item = $m->getData('item');
+
 		if ($item === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
@@ -217,7 +217,7 @@ Class ConfigurationService
 
 				$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 				$m = new $controllerClass();
-				$results = $m->connect('Applications');
+				$results = $m->connect('Table', 'Applications');
 				if ($results == false) {
 					return false;
 				}
@@ -272,7 +272,7 @@ Class ConfigurationService
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Actions');
+		$results = $m->connect('Table', 'Actions');
 		if ($results == false) {
 			return false;
 		}
@@ -296,91 +296,52 @@ Class ConfigurationService
 	 * getFile processes all XML configuration files for the application
 	 *
 	 * Usage:
-	 * Services::Configuration()->getFile('defines', 'Application');
+	 * Services::Configuration()->getFile('Application', 'defines');
 	 *
-	 * @return mixed object or void
-	 * @since   1.0
+	 * or - in classes where usage can happen before the service is activated:
+	 *
+	 * ConfigurationService::getFile($model_type, $model_name);
+	 *
+	 * @static
+	 * @param $model_name
+	 * @param string $model_type - Application, Table, Module, Theme, Page, Template, Wrap
+	 *
+	 * @return object $xml
+	 * @since  1.0
+	 *
 	 * @throws \RuntimeException
 	 */
-	public static function getFile($model_name, $model_type = 'Application')
+	public static function getFile($model_type, $model_name)
 	{
-//echo 'File: ' . $model_name . ' Type: ' . $model_type . '<br />';
+//echo '<br /> Model Type:' . $model_type . ' Model Name: ' . $model_name;
+		/** Use existing registry values, if existing */
+		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
 
-		if ($model_type == 'Application' || $model_type == 'Language') {
-
+		/** Return registry, if existing */
+		if ($registry == false) {
 		} else {
-			$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-			$exists = Services::Registry()->exists($registryName);
-			if ($exists === true) {
-				return $registryName;
-			}
+			echo '<br />Registry already available ' . $registry . '<br />';
+			return $registry;
 		}
 
-		if (strtolower($model_type) == 'application') {
-			$path_and_file = CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
+		/** Using application location structure, locate file */
+		$results = ConfigurationService::locateFile($model_type, $model_name);
 
-		} elseif (strtolower($model_type) == 'language') {
-			$path_and_file = $model_name . '/' . 'Manifest.xml';
-
-		} elseif (strtolower($model_type) == 'listbox') {
-			$path_and_file = CONFIGURATION_FOLDER . '/Listbox/' . $model_name . '.xml';
-
-		} elseif (strtolower($model_type) == 'table') {
-
-			if (file_exists(EXTENSIONS_COMPONENTS . '/Options/' . $model_name . '.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/Options/' . $model_name . '.xml';
-
-			} elseif ($model_name == 'Themes') {
-
-				if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml')) {
-					$path_and_file = Services::Registry()->get('Parameters', 'theme_path') . '/Options/Theme.xml';
-				} else {
-					$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
-				}
-
-			} elseif ($model_name == 'PageViews' || $model_name == 'TemplateViews' || $model_name == 'WrapViews') {
-
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
-
-			} else {
-
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
-			}
-
-		} elseif (strtolower($model_type) == 'item') { // Primary Component Data
-
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Item.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Item.xml';
-			} else {
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
-			}
-
-		} elseif (strtolower($model_type) == 'component') {
-
-			if (file_exists(EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Component.xml')) {
-				$path_and_file = EXTENSIONS_COMPONENTS . '/' . $model_name . '/Options/Component.xml';
-
-			} else {
-				$path_and_file = CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
-			}
-
-		} elseif (strtolower($model_type) == 'module') {
-
-			$path_and_file = EXTENSIONS_MODULES . '/' . $model_name . '/Manifest.xml';
-
+		if (file_exists($results)) {
+			$path_and_file = $results;
 		} else {
-			$path_and_file = $model_type . '/' . $model_name . '.xml';
-		}
+			echo 'Error in ConfigurationService. File not found for '
+				. ' Model Type:' . $model_type
+				. ' Model Name: ' . $model_name;
+			echo ' Existing parameters follow: <br />';
 
-		if (file_exists($path_and_file)) {
-		} else {
-			echo '<br />ConfigurationService: Model Name:' . $model_name
-				. ' Type: ' . $model_type
-				. ' File not found:' . $path_and_file;
+			Services::Registry()->get('Parameters', '*');
+
 			return false;
 			//throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
 
+		/** Read XML file */
 		try {
 			$xml = simplexml_load_file($path_and_file);
 
@@ -388,23 +349,145 @@ Class ConfigurationService
 			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 
-		if (strtolower($model_type) == 'application') {
+		/** now process it. */
+		if (strtolower($model_type) == 'application'
+			|| strtolower($model_type) == 'language'
+		) {
 			return $xml;
-
-		} elseif (strtolower($model_type) == 'language') {
-			return $xml;
-
-		} elseif (strtolower($model_type) == 'module') {
-			return ConfigurationService::processModuleTable($model_name, $model_type, $path_and_file, $xml);
-
-		} elseif (strtolower($model_type) == 'menuitem') {
-			return ConfigurationService::processModuleTable($model_name, $model_type, $path_and_file, $xml);
-
-
-		} else {
-			//error ?
-			return ConfigurationService::processTableFile($model_name, $model_type, $path_and_file, $xml);
 		}
+
+		/** Create and Populate Registry */
+		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+		Services::Registry()->createRegistry($model_name);
+
+		ConfigurationService::setModelRegistry($registryName, $xml);
+
+		$xmlArray = ConfigurationService::setTableRegistry(
+			$registryName, $xml, '', $path_and_file, $model_name);
+
+		ConfigurationService::setSpecialFieldsRegistry(
+			$registryName, $xml, '', $path_and_file, $model_name);
+
+		return $registryName;
+	}
+
+	/**
+	 * Determine if data already exists in the registry, if so, reuse
+	 *
+	 * @static
+	 * @param $model_name
+	 * @param $model_type
+	 *
+	 * @return bool|string
+	 * @since  1.0
+	 */
+	public static function checkRegistryExists($model_type, $model_name)
+	{
+		if (strtolower($model_type) == 'application'
+			|| strtolower($model_type) == 'language'
+		) {
+			return false;
+		}
+
+		if (class_exists('RegistryServices')) {
+			$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+			$exists = Services::Registry()->exists($registryName);
+			if ($exists === true) {
+				return $registryName;
+			}
+		}
+		return false;
+
+	}
+
+	/**
+	 * locateFile uses override and default locations to find the file requested
+	 *
+	 * Usage:
+	 * Services::Configuration()->locateFile('Application', 'defines');
+	 *
+	 * @return mixed object or void
+	 * @since   1.0
+	 * @throws \RuntimeException
+	 */
+	public static function locateFile($model_type, $model_name)
+	{
+		$model_type = trim(ucfirst(strtolower($model_type)));
+		$model_name = trim(ucfirst(strtolower($model_name)));
+
+		if ($model_type == 'Language') {
+			return $model_name . '/' . 'Manifest.xml';
+		}
+
+		if ($model_type == 'Application') {
+			return CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
+		}
+
+		/** Validate Model Types */
+		$array = explode(',', 'Table,Listbox,Menuitems,Module,Theme,Page,Template,Wrap,Trigger');
+		if (in_array($model_type, $array)) {
+		} else {
+			echo 'Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
+			return false;
+		}
+
+		/** 1. Current Extension */
+		$extension_path = false;
+		if (Services::Registry()->exists('Parameters', 'extension_path')) {
+			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
+		} else {
+			if (Services::Registry()->exists('Parameters', 'catalog_type')) {
+				$catalog_type = Services::Registry()->get('Parameters', 'catalog_type');
+				$extension_path = EXTENSIONS_COMPONENTS . '/' . ucfirst(strtolower($catalog_type));
+			}
+		}
+
+		/** Extension path not available until after the first content read - use Catalog data */
+		if ($extension_path == false) {
+		} else {
+			if (file_exists($extension_path . '/' . $model_type . '/' . $model_name . '.xml')) {
+				return $extension_path . '/' . $model_type . '/' . $model_name . '.xml';
+			}
+		}
+
+		/** 2. Primary Component (if not current extension) */
+		if (Services::Registry()->exists('RouteParameters')) {
+			$primary_extension_path = Services::Parameters()->get('RouteParameters', 'extension_path', '');
+			if ($primary_extension_path == $extension_path
+				|| $primary_extension_path == ''
+			) {
+			} else {
+				if (file_exists($primary_extension_path . '/' . $model_type . '/' . $model_name . '.xml')) {
+					return $primary_extension_path . '/' . $model_type . '/' . $model_name . '.xml';
+				}
+			}
+		}
+
+		/** 3. The Manifest for the model type/name itself */
+		if ($model_type == 'Module' || $model_type == 'Theme' || $model_type == 'Page'
+			|| $model_type == 'Template' || $model_type == 'Wrap' || $model_type == 'Trigger'
+		) {
+
+			if ($model_type == 'Page' || $model_type == 'Template' || $model_type == 'Wrap') {
+				$path_parameter = strtolower($model_type) . '_view_path';
+			} else {
+				$path_parameter = strtolower($model_type) . '_path';
+			}
+
+			if (Services::Registry()->exists('Parameters', $path_parameter)) {
+				$extension_path = Services::Registry()->get('Parameters', $path_parameter);
+				if (file_exists($extension_path . '/' . 'Manifest.xml')) {
+					return $extension_path . '/' . 'Manifest.xml';
+				}
+			}
+		}
+
+		/** 4. Application Configuration folder is the last chance */
+		if (file_exists(CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml')) {
+			return CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+		}
+
+		return false;
 	}
 
 	/**
@@ -418,129 +501,33 @@ Class ConfigurationService
 	public static function setModelRegistry($registryName, $xml)
 	{
 		Services::Registry()->set($registryName, 'model_name', (string)$xml['name']);
-		Services::Registry()->set($registryName, 'table_name', (string)$xml['table']);
 
-		$value = (string)$xml['primary_key'];
-		if ($value == '') {
-			$value = 'id';
+		foreach ($xml->attributes() as $key => $value) {
+			Services::Registry()->set($registryName, $key, (string)$value);
 		}
-		Services::Registry()->set($registryName, 'primary_key', $value);
-
-		$value = (string)$xml['name_key'];
-		if ($value == '') {
-			$value = 'title';
-		}
-		Services::Registry()->set($registryName, 'name_key', $value);
-
-		$value = (string)$xml['primary_prefix'];
-		if ($value == '') {
-			$value = 'a';
-		}
-		Services::Registry()->set($registryName, 'primary_prefix', $value);
-
-		$value = (int)$xml['get_customfields'];
-		if ($value == 0 || $value == 1 || $value == 2) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'get_customfields', $value);
-
-		$value = (int)$xml['get_item_children'];
-		if ($value == 0) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'get_item_children', $value);
-
-		$value = (int)$xml['use_special_joins'];
-		if ($value == 0) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'use_special_joins', $value);
-
-		$value = (int)$xml['check_view_level_access'];
-		if ($value == 0) {
-		} else {
-			$value = 1;
-		}
-		Services::Registry()->set($registryName, 'check_view_level_access', $value);
-
-		$value = (int)$xml['process_triggers'];
-		if ($value == 1) {
-		} else {
-			$value = 0;
-		}
-		Services::Registry()->set($registryName, 'process_triggers', $value);
-
-		/** Filters */
-		$value = (string)$xml['filter_catalog_type_id'];
-		Services::Registry()->set($registryName, 'filter_catalog_type_id', $value);
-
-		$value = (string)$xml['filter_check_published_status'];
-		if ($value == 1) {
-		} else {
-			$value = 0;
-		}
-		Services::Registry()->set($registryName, 'filter_check_published_status', $value);
-
-		$value = (string)$xml['data_source'];
-		if ($value == '') {
-			$value = 'JDatabase';
-		}
-		Services::Registry()->set($registryName, 'data_source', $value, 'JDatabase');
 
 		return;
 	}
 
 	/**
-	 * processModuleTable extracts XML configuration data for Modules and populates Registry
+	 * Processes Table attributes: fields, joins, foriegn keys, children and triggers
 	 *
 	 * @static
-	 * @param $model_name
-	 * @param $model_type
-	 * @param $path_and_file
+	 * @param $registryName
 	 * @param $xml
-	 *
-	 * @return string Name of registry
-	 * @since   1.0
-	 * @throws \RuntimeException
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
 	 */
-	public static function processModuleTable($model_name, $model_type = 'Module', $path_and_file, $xml)
+	public static function setTableRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
 	{
-		$xml_string = '';
-		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
-		$exists = Services::Registry()->exists($registryName);
-		if ($exists === true) {
-			return $registryName;
-		}
-
-		/** Model */
-		if (isset($xml->config->include['model'])) {
-			$include = (string)$xml->config->include['model'];
-
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
-			}
-
-			$replace_this = '<include model="' . $include . '"/>';
-
-			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
-			);
-
-			$xml = simplexml_load_string($xml_string);
-		}
-
-		/** Set Model Properties */
-		ConfigurationService::setModelRegistry($registryName, $xml->config->model);
-		Services::Registry()->set($registryName, 'model_name', $registryName);
-
-		/** Fields  */
+		/** Process table includes */
 		$include = '';
-		if (isset($xml->config->fields->include['name'])) {
-			$include = (string)$xml->config->fields->include['name'];
+
+		if (isset($xml->table->include['name'])) {
+			$include = (string)$xml->table->include['name'];
 		}
 		if ($include == '') {
 		} else {
@@ -554,189 +541,52 @@ Class ConfigurationService
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $model_name, $replace_this, $xml_string
 			);
+
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		if (isset($xml->config->fields->field)) {
+		/** Process each type */
+		$xmlArray = ConfigurationService::setTableFieldsRegistry(
+			$registryName, $xml, $xml_string, $path_and_file, $model_name
+		);
 
-			$fields = $xml->config->fields->field;
-			$fieldArray = array();
+		$xmlArray = ConfigurationService::setTableJoinsRegistry(
+			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
+		);
 
-			foreach ($fields as $field) {
+		$xmlArray = ConfigurationService::setTableForeignKeysRegistry(
+			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
+		);
 
-				$attributes = get_object_vars($field);
-				$fieldAttributes = ($attributes["@attributes"]);
-				$fieldAttributesArray = array();
+		$xmlArray = ConfigurationService::setTableChildrenRegistry(
+			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
+		);
 
-				/** @noinspection PhpAssignmentInConditionInspection */
-				while (list($key, $value) = each($fieldAttributes)) {
+		$xmlArray = ConfigurationService::setTableTriggersRegistry(
+			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
+		);
 
-					if (in_array($key, self::$valid_field_attributes)) {
-					} else {
-						echo 'Field attribute not known ' . $key . ' for ' . $model_name . '<br />';
-					}
-					$fieldAttributesArray[$key] = $value;
-				}
-				$fieldArray[] = $fieldAttributesArray;
-			}
-
-			Services::Registry()->set($registryName, 'fields', $fieldArray);
-		}
-
-		/** Joins */
-
-		$include = '';
-		if (isset($xml->config->joins->include['name'])) {
-			$include = (string)$xml->config->joins->include['name'];
-		}
-		if ($include == '') {
-		} else {
-
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
-			}
-			$replace_this = '<include name="' . $include . '"/>';
-
-			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
-			);
-			$xml = simplexml_load_string($xml_string);
-		}
-
-		if (isset($xml->config->joins->join)) {
-			$jXML = $xml->config->joins->join;
-
-			$jArray = array();
-			foreach ($jXML as $joinItem) {
-
-				$joinVars = get_object_vars($joinItem);
-				$joinAttributes = ($joinVars["@attributes"]);
-				$joinAttributesArray = array();
-
-				$joinAttributesArray['table'] = (string)$joinAttributes['table'];
-				$joinAttributesArray['alias'] = (string)$joinAttributes['alias'];
-				$joinAttributesArray['select'] = (string)$joinAttributes['select'];
-				$joinAttributesArray['jointo'] = (string)$joinAttributes['jointo'];
-				$joinAttributesArray['joinwith'] = (string)$joinAttributes['joinwith'];
-
-				$jArray[] = $joinAttributesArray;
-			}
-
-			Services::Registry()->set($registryName, 'Joins', $jArray);
-		}
-
-		/** Parameters  */
-		$include = '';
-		if (isset($xml->config->parameters->include['name'])) {
-			$include = (string)$xml->config->parameters->include['name'];
-		}
-		if ($include == '') {
-		} else {
-
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
-			}
-			$replace_this = '<include name="' . $include . '"/>';
-
-			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
-			);
-			$xml = simplexml_load_string($xml_string);
-		}
-
-		/** Retrieve Field Attributes for each field */
-		$fieldArray = array();
-
-		if (isset($xml->config->parameters->field)) {
-			foreach ($xml->config->parameters->field as $key1 => $value1) {
-
-				$attributes = get_object_vars($value1);
-				$fieldAttributes = ($attributes["@attributes"]);
-				$fieldAttributesArray = array();
-
-				/** @noinspection PhpAssignmentInConditionInspection */
-				while (list($key2, $value2) = each($fieldAttributes)) {
-
-					if (in_array($key2, self::$valid_field_attributes)) {
-					} else {
-						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_name . '<br />';
-					}
-					$fieldAttributesArray[$key2] = $value2;
-				}
-
-				$fieldArray[] = $fieldAttributesArray;
-			}
-		}
-
-		Services::Registry()->set($registryName, 'Parameters', $fieldArray);
-
-		Services::Registry()->set($registryName, 'CustomFieldGroups', array('Parameters'));
-
-		return $registryName;
+		return $xmlArray;
 	}
 
 	/**
-	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
-	 * Returns the name of the registry
-	 *
-	 * NOTE: Until this gets fixed, right now, the replacement does not take place for includes
-	 * if there is a space following the name value.
-	 *
-	 * This works: <include name="ThisRocks"/>
-	 * This does not works: <include name="ThisSucks" />
+	 * setTableFieldsRegistry
 	 *
 	 * @static
-	 * @param $model_name
-	 * @param string $model_type
-	 * @param $path_and_file
+	 * @param $registryName
 	 * @param $xml
-	 *
-	 * @return string
-	 * @since   1.0
-	 * @throws \RuntimeException
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
 	 */
-	public static function processTableFile($model_name, $model_type = 'Table', $path_and_file, $xml)
+	public static function setTableFieldsRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
 	{
-		/** Table only: Process Include Code */
-		$xml_string = '';
-
-		$registryName = ucfirst(strtolower($model_name)) . $model_type;
-
-//echo 'In processTableFile creating Registry: ' . $registryName . ' for file: ' . $path_and_file . '<br />';
-
-		/** If the registry already exists, return it, otherwise create it */
-		$exists = Services::Registry()->exists($registryName);
-		if ($exists === true) {
-			return $registryName;
-		}
-
-		Services::Registry()->createRegistry($registryName);
-
-		/** Set Model Properties */
-		ConfigurationService::setModelRegistry($registryName, $xml);
-
-		/** Body - No registry */
-
 		$include = '';
-		if (isset($xml->model->body->include['name'])) {
-			$include = (string)$xml->model->body->include['name'];
-		}
-		if ($include == '') {
-		} else {
-			$replace_this = '<include name="' . $include . '"/>';
-			if ($xml_string == '') {
-				$xml_string = file_get_contents($path_and_file);
-			}
-			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
-			);
-			$xml = simplexml_load_string($xml_string);
-		}
 
-		/** Fields  */
-		$include = '';
-		if (isset($xml->table->item->fields->include['name'])) {
-			$include = (string)$xml->table->item->fields->include['name'];
+		if (isset($xml->table->fields->include['name'])) {
+			$include = (string)$xml->table->fields->include['name'];
 		}
 		if ($include == '') {
 		} else {
@@ -753,9 +603,9 @@ Class ConfigurationService
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		if (isset($xml->table->item->fields->field)) {
+		if (isset($xml->table->fields->field)) {
 
-			$fields = $xml->table->item->fields->field;
+			$fields = $xml->table->fields->field;
 			$fieldArray = array();
 
 			foreach ($fields as $field) {
@@ -764,8 +614,7 @@ Class ConfigurationService
 				$fieldAttributes = ($attributes["@attributes"]);
 				$fieldAttributesArray = array();
 
-				/** @noinspection PhpAssignmentInConditionInspection */
-				while (list($key, $value) = each($fieldAttributes)) {
+				foreach ($fieldAttributes as $key => $value) {
 
 					if (in_array($key, self::$valid_field_attributes)) {
 					} else {
@@ -779,11 +628,29 @@ Class ConfigurationService
 			Services::Registry()->set($registryName, 'fields', $fieldArray);
 		}
 
-		/** Joins */
+		return array($xml, $xml_string);
+	}
+
+	/**
+	 * setTableJoinsRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	public static function setTableJoinsRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
 
 		$include = '';
-		if (isset($xml->table->item->joins->include['name'])) {
-			$include = (string)$xml->table->item->joins->include['name'];
+		if (isset($xml->table->joins->include['name'])) {
+			$include = (string)$xml->table->joins->include['name'];
 		}
 		if ($include == '') {
 		} else {
@@ -799,8 +666,8 @@ Class ConfigurationService
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		if (isset($xml->table->item->joins->join)) {
-			$jXML = $xml->table->item->joins->join;
+		if (isset($xml->table->joins->join)) {
+			$jXML = $xml->table->joins->join;
 
 			$jArray = array();
 			foreach ($jXML as $joinItem) {
@@ -820,29 +687,47 @@ Class ConfigurationService
 
 			Services::Registry()->set($registryName, 'Joins', $jArray);
 		}
+		return array($xml, $xml_string);
+	}
 
-		/** Foreign Keys */
-
+	/**
+	 * setTableForeignKeysRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
+	 * @since  1.0
+	 */
+	public static function setTableForeignKeysRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
 		$include = '';
-		if (isset($xml->table->item->foreignkeys->include['name'])) {
-			$include = (string)$xml->table->item->foreignkeys->include['name'];
+		if (isset($xml->table->foreignkeys->include['name'])) {
+			$include = (string)$xml->table->foreignkeys->include['name'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
+
 			$replace_this = '<include name="' . $include . '"/>';
+
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $model_name, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		if (isset($xml->table->item->foreignkeys->foreignkey)) {
+		if (isset($xml->table->foreignkeys->foreignkey)) {
 
-			$fks = $xml->table->item->foreignkeys->foreignkey;
+			$fks = $xml->table->foreignkeys->foreignkey;
 			$fkArray = array();
+
 			foreach ($fks as $fk) {
 
 				$attributes = get_object_vars($fk);
@@ -859,27 +744,44 @@ Class ConfigurationService
 			Services::Registry()->set($registryName, 'foreignkeys', $fkArray);
 		}
 
-		/** Children */
+		return array($xml, $xml_string);
+	}
 
+	/**
+	 * setTableChildrenRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
+	 */
+	public static function setTableChildrenRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
 		$include = '';
-		if (isset($xml->table->item->children->include['name'])) {
-			$include = (string)$xml->table->item->children->include['name'];
+		if (isset($xml->table->children->include['name'])) {
+			$include = (string)$xml->table->children->include['name'];
 		}
 		if ($include == '') {
 		} else {
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
+
 			$replace_this = '<include name="' . $include . '"/>';
+
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $model_name, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		if (isset($xml->table->item->children->child)) {
+		if (isset($xml->table->children->child)) {
 
-			$cs = $xml->table->item->children->child;
+			$cs = $xml->table->children->child;
 			$csArray = array();
 			foreach ($cs as $c) {
 
@@ -895,10 +797,27 @@ Class ConfigurationService
 			Services::Registry()->set($registryName, 'children', $csArray);
 		}
 
-		/** Triggers */
+		return array($xml, $xml_string);
+	}
+
+	/**
+	 * setTableTriggersRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
+	 * @since  1.0
+	 */
+	public static function setTableTriggersRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
 		$include = '';
-		if (isset($xml->table->item->triggers->include['name'])) {
-			$include = (string)$xml->table->item->triggers->include['name'];
+		if (isset($xml->table->triggers->include['name'])) {
+			$include = (string)$xml->table->triggers->include['name'];
 		}
 
 		if ($include == '') {
@@ -906,15 +825,17 @@ Class ConfigurationService
 			if ($xml_string == '') {
 				$xml_string = file_get_contents($path_and_file);
 			}
+
 			$replace_this = '<include name="' . $include . '"/>';
+
 			$xml_string = ConfigurationService::replaceIncludeStatement(
 				$include, $model_name, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
 
-		if (isset($xml->table->item->triggers->trigger)) {
-			$triggers = $xml->table->item->triggers->trigger;
+		if (isset($xml->table->triggers->trigger)) {
+			$triggers = $xml->table->triggers->trigger;
 			$triggersArray = array();
 			foreach ($triggers as $trigger) {
 				$t = get_object_vars($trigger);
@@ -924,12 +845,29 @@ Class ConfigurationService
 			Services::Registry()->set($registryName, 'triggers', $triggersArray);
 		}
 
-		/** Customfields */
+		return array($xml, $xml_string);
+	}
+
+	/**
+	 * Retrieves base Model Registry data and stores it to the datasource registry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return mixed
+	 */
+	public static function setSpecialFieldsRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
 		$fieldTypes = 0;
+
 		while ($fieldTypes < 99) {
 
 			/** Process one field type at a time ex. parameters, metadata, customfield */
-			if (isset($xml->table->item->customfields->customfield[$fieldTypes])) {
+			if (isset($xml->customfields->customfield[$fieldTypes])) {
 			} else {
 				$fieldTypes = 9999;
 				break;
@@ -939,8 +877,8 @@ Class ConfigurationService
 			while ($done == false) {
 
 				/** Process one include code statement at a time per fieldtype */
-				if (isset($xml->table->item->customfields->customfield[$fieldTypes]->include['name'])) {
-					$include = (string)$xml->table->item->customfields->customfield[$fieldTypes]->include['name'];
+				if (isset($xml->customfields->customfield[$fieldTypes]->include['name'])) {
+					$include = (string)$xml->customfields->customfield[$fieldTypes]->include['name'];
 
 					if ($xml_string == '') {
 						$xml_string = file_get_contents($path_and_file);
@@ -961,84 +899,15 @@ Class ConfigurationService
 		}
 
 		/** Now that all include code has been retrieved, process custom fields */
-		if (isset($xml->table->item->customfields)) {
+		if (isset($xml->customfields)) {
 			ConfigurationService::getCustomFields(
-				$xml->table->item->customfields,
+				$xml->customfields,
 				$model_name,
 				$registryName
 			);
 		}
 
-		/** I THINK THIS WILL BE REMOVED Component Customfields (OR WE'LL USE THIS FOR QUERIES) */
-
-		$include = 'x';
-		$i = 0;
-		while ($i < 99) {
-
-			if (isset($xml->table->component->customfields->customfield[$i])) {
-			} else {
-				$i = 9999;
-				break;
-			}
-
-			if (isset($xml->table->component->customfields->customfield[$i]->include['name'])) {
-				$include = (string)$xml->table->component->customfields->customfield[$i]->include['name'];
-
-				if ($xml_string == '') {
-					$xml_string = file_get_contents($path_and_file);
-				}
-
-				$replace_this = '<include name="' . $include . '"/>';
-
-				$xml_string = ConfigurationService::replaceIncludeStatement(
-					$include, $model_name, $replace_this, $xml_string
-				);
-
-				$xml = simplexml_load_string($xml_string);
-			}
-			$i++;
-		}
-
-		if (isset($xml->table->component->customfields)) {
-			ConfigurationService::getCustomFields(
-				$xml->table->component->customfields,
-				$model_name,
-				$registryName
-			);
-		}
-
-		return $registryName;
-	}
-
-	/**
-	 * replaceIncludeStatement retrieves the specified include file and substitutes the contents
-	 * for the include statement
-	 *
-	 * @static
-	 * @return object
-	 * @since   1.0
-	 * @throws \RuntimeException
-	 */
-	public static function replaceIncludeStatement($include, $model_name, $replace_this, $xml_string)
-	{
-//echo 'In replace: ' . $include . ' ' . $model_name . ' ' . $replace_this . ' ' . $xml_string . ' <br />';
-		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
-
-		if (file_exists($path_and_file)) {
-		} else {
-			throw new \RuntimeException('Include file not found: ' . $path_and_file);
-		}
-
-		try {
-			$with_this = file_get_contents($path_and_file);
-
-			return str_replace($replace_this, $with_this, $xml_string);
-
-		} catch (\Exception $e) {
-			throw new \RuntimeException (
-				'Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage()
-			);
-		}
+		return;
 	}
 
 	/**
@@ -1053,7 +922,8 @@ Class ConfigurationService
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public static function getCustomFields($xml, $model_name, $registryName)
+	public static function getCustomFields(
+		$xml, $model_name, $registryName)
 	{
 		$i = 0;
 		$continue = true;
@@ -1083,12 +953,12 @@ Class ConfigurationService
 				$fieldAttributes = ($attributes["@attributes"]);
 				$fieldAttributesArray = array();
 
-				/** @noinspection PhpAssignmentInConditionInspection */
-				while (list($key2, $value2) = each($fieldAttributes)) {
+				foreach ($fieldAttributes as $key2 => $value2) {
 
 					if (in_array($key2, self::$valid_field_attributes)) {
 					} else {
-						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_name . '<br />';
+						echo 'Field attribute not known ' . $key2 . ':' . $value2
+							. ' for ' . $model_name . '<br />';
 					}
 
 					$fieldAttributesArray[$key2] = $value2;
@@ -1128,4 +998,39 @@ Class ConfigurationService
 
 		return;
 	}
+
+	/**
+	 * replaceIncludeStatement
+	 *
+	 * @static
+	 * @param $include
+	 * @param $model_name
+	 * @param $replace_this
+	 * @param $xml_string
+	 * @return mixed
+	 * @throws \RuntimeException
+	 */
+	public static function replaceIncludeStatement(
+		$include, $model_name, $replace_this, $xml_string)
+	{
+//echo 'In replace: ' . $include . ' ' . $model_name . ' ' . $replace_this . ' ' . $xml_string . ' <br />';
+		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
+
+		if (file_exists($path_and_file)) {
+		} else {
+			throw new \RuntimeException('Include file not found: ' . $path_and_file);
+		}
+
+		try {
+			$with_this = file_get_contents($path_and_file);
+
+			return str_replace($replace_this, $with_this, $xml_string);
+
+		} catch (\Exception $e) {
+			throw new \RuntimeException (
+				'Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage()
+			);
+		}
+	}
+
 }

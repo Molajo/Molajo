@@ -171,19 +171,6 @@ class Model
 	}
 
 	/**
-	 * retrieves saved content query_results from Content Registry
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getContent($model_type = 'query_results')
-	{
-		return $this->db->getData('RequestContent', 'query_results');
-	}
-
-	/**
 	 * retrieves result (single element) from Trigger Registry
 	 *
 	 * @param null $model_type

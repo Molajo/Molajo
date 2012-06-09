@@ -1,5 +1,5 @@
 <model
-        name="ExtensioninstancesTable"
+        name="ExtensionInstances"
         table="#__extension_instances"
         primary_key="id"
         primary_prefix="a"
@@ -9,31 +9,16 @@
         check_view_level_access="1"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <include name="FieldsExtensionInstance"/>
-            </fields>
-            <joins>
-                <include name="JoinsExtensionInstance"/>
-            </joins>
-            <foreignkeys>
-                <include name="ForeignKeysExtensionInstance"/>
-            </foreignkeys>
-            <children>
-                <include name="ChildrenExtensionInstance"/>
-            </children>
-            <triggers>
-                <include name="TriggersExtensionInstance"/>
-            </triggers>
-            <customfields>
-                <customfield name="metadata">
-                    <include name="Metadata"/>
-                </customfield>
-                <customfield name="parameters">
-                    <include name="ParametersItem"/>
-                    <include name="ParametersList"/>
-                </customfield>
-            </customfields>
-        </item>
+        <include name="TableExtensionInstance"/>
     </table>
+    <customfields>
+        <customfield name="metadata">
+            <include name="Metadata"/>
+        </customfield>
+        <customfield name="parameters">
+            <include name="ParametersCommon"/>
+            <include name="ParametersExtensionInstance"/>
+            <field name="see_if_this_appears" type="integer" null="1" default="100" values=""/>
+        </customfield>
+    </customfields>
 </model>

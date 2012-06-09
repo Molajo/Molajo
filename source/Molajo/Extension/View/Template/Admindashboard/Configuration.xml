@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="view" group="template">
+<name>VIEW_TEMPLATE_DASHBOARD_NAME</name>
+<author>Amy Stephen</author>
+<create_date>June 2012</create_date>
+<copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+<license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+<author_email>collaborate@molajo.org</author_email>
+<author_url>http://molajo.org</author_url>
+<version>1.0</version>
+<description>VIEW_TEMPLATE_DASHBOARD_DESCRIPTION</description>
+<config>
+    <parameters>
+        <field name="dashboard_toolbar_buttons" type="char" null="0" default="new,edit,publish,feature,archive,checkin,restore,delete,trash,options" values="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"/>
+        <field name="dashboard_submenu_items" type="char" null="0" default="items,categories,drafts" values="items,categories,drafts"/>
+        <field name="dashboard_search" type="binary" null="1" default="1" values="0,1"/>
+        <field name="dashboard_lists" type="char" null="0" default="" values=""/>
+        <field name="dashboard_columns" type="char" null="0" default="id,title,content_text,featured,start_publishing_datetime,ordering,language" values=""/>
+        <field name="dashboard_rows" type="char" null="0" default="5" values=""/>
+        <field name="dashboard_ordering" type="char" null="0" default="a.title" values=""/>
+        <field name="dashboard_ordering_direction" type="char" null="0" default="ASC" values="ASC,DESC"/>
+        <field name="dashboard_pagination" type="char" null="0" default="5" values=""/>
+        <field name="dashboard_batch" type="char" null="0" default="5" values=""/>
+        <field name="dashboard_offset" type="int" null="0" default="0" values=""/>
+        <field name="dashboard_count" type="int" null="0" default="5" values=""/>
+    </parameters>
+</config>
+</extension>
+
+
+
+

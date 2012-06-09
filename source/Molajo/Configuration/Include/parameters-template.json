@@ -1,0 +1,14 @@
+{
+    "2":{
+        "criteria_display_view_on_no_results":"1",
+        "criteria_snippet_length":"200",
+        "criteria_extension_instance_id":"200",
+        "criteria_catalog_type_id":"1200",
+
+        "cache":"",
+        "cache_time":"",
+        "cache_handler":"",
+
+        "template_specific_value":"cow"
+    }
+}

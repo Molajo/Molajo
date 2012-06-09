@@ -54,7 +54,7 @@ Class RegistryService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new RegistryService(true);
+			self::$instance = new RegistryService();
 		}
 
 		return self::$instance;
@@ -66,39 +66,13 @@ Class RegistryService
 	 * @return  object
 	 * @since   1.0
 	 */
-	public function __construct($global = false)
+	public function __construct()
 	{
 		/** store all registries in this object  */
 		$this->registry = array();
 		$this->registryKeys = array();
 
-		if ($global == true) {
-			$this->createGlobalRegistry();
-		}
-
 		return $this;
-	}
-
-	/**
-	 * Global
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public function createGlobalRegistry()
-	{
-		/** initialise known namespaces for application */
-		$xml = CONFIGURATION_FOLDER . '/Application/registry.xml';
-		if (is_file($xml)) {
-		} else {
-			return false;
-		}
-
-		$list = simplexml_load_file($xml);
-
-		foreach ($list->registry as $item) {
-			$reg = $this->createRegistry((string)$item);
-		}
 	}
 
 	/**
@@ -118,13 +92,31 @@ Class RegistryService
 		}
 
 		/** Keys array */
-//		$i = count($this->registryKeys);
 		$this->registryKeys[] = $namespace;
 
 		/** Namespace array */
 		$this->registry[$namespace] = array();
 
 		return $this->registry[$namespace];
+	}
+
+	/**
+	 * Returns the entire registry for the specified namespace
+	 *
+	 * Usage:
+	 * Services::Registry()->getRegistry('namespace');
+	 *
+	 * @param $namespace
+	 *
+	 * @return array
+	 */
+	public function getRegistry($namespace)
+	{
+		if (in_array($namespace, $this->registryKeys)) {
+			return $this->registry[$namespace];
+		}
+
+		return $this->createRegistry($namespace);
 	}
 
 	/**
@@ -147,25 +139,6 @@ Class RegistryService
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Returns the entire registry for the specified namespace
-	 *
-	 * Usage:
-	 * Services::Registry()->getRegistry('namespace');
-	 *
-	 * @param $namespace
-	 *
-	 * @return array
-	 */
-	public function getRegistry($namespace)
-	{
-		if (in_array($namespace, $this->registryKeys)) {
-			return $this->registry[$namespace];
-		} else {
-			return $this->createRegistry($namespace);
-		}
 	}
 
 	/**
@@ -213,7 +186,7 @@ Class RegistryService
 
 		/** Is there a match? */
 		$found = false;
-		while (list($existingKey, $existingValue) = each($array)) {
+		foreach($array as $existingKey => $existingValue) {
 			if (strtolower($existingKey) == strtolower($key)) {
 				$found = true;
 				break;
@@ -339,6 +312,37 @@ Class RegistryService
 	}
 
 	/**
+	 * Retrieves a list of namespaced registries and optionally keys/values
+	 *
+	 * Usage:
+	 * Services::Registry()->listRegistry(1);
+	 *
+	 * @param   boolean $all true - returns the entire list and each registry
+	 *                         false - returns a list of registry names, only
+	 *
+	 * @return  mixed|boolean or array
+	 * @since   1.0
+	 *
+	 *
+	 */
+	public function listRegistry($include_entries = false)
+	{
+		if ($include_entries == false) {
+			return $this->registryKeys;
+		}
+
+		$nsArray = array();
+
+		while (list($nsName, $nsValue) = each($this->registryKeys)) {
+			$nsArray['namespace'] = $nsValue;
+			$nsArray['registry'] = $this->registry[$nsValue];
+		}
+
+		return $nsArray;
+	}
+
+
+	/**
 	 * Loads JSON data from a field given the field xml definition
 	 *     (can be used for fields like registry, custom fields, metadata, etc.)
 	 *
@@ -353,7 +357,7 @@ Class RegistryService
 	 * @return null
 	 * @since  1.0
 	 */
-	public function loadField($namespace, $field_name, $data, $xml)
+	public function DELETEloadField($namespace, $field_name, $data, $xml)
 	{
 		/** Get the Registry that will be copied */
 		$this->getRegistry($namespace);
@@ -405,67 +409,6 @@ Class RegistryService
 	}
 
 	/**
-	 * Retrieves a list of namespaced registries and optionally keys/values
-	 *
-	 * Usage:
-	 * Services::Registry()->listRegistry(1);
-	 *
-	 * @param   boolean $all true - returns the entire list and each registry
-	 *                         false - returns a list of registry names, only
-	 *
-	 * @return  mixed|boolean or array
-	 * @since   1.0
-	 *
-	 *
-	 */
-	public function listRegistry($include_entries = false)
-	{
-		if ($include_entries == false) {
-			return $this->registryKeys;
-		}
-
-		$nsArray = array();
-
-		while (list($nsName, $nsValue) = each($this->registryKeys)) {
-			$nsArray['namespace'] = $nsValue;
-			$nsArray['registry'] = $this->registry[$nsValue];
-		}
-
-		return $nsArray;
-	}
-
-	/**
-	 * getFile
-	 *
-	 * add php spl priority for loading
-	 *
-	 * @return  object
-	 * @since   1.0
-	 * @throws  \RuntimeException
-	 */
-	public static function getFile($file, $type = 'Application')
-	{
-		if ($type == 'Application' || $type == 'Table') {
-			$path_and_file = CONFIGURATION_FOLDER . '/' . $type . '/' . $file . '.xml';
-		} else {
-			$path_and_file = $type . '/' . $file . '.xml';
-		}
-
-		if (file_exists($path_and_file)) {
-		} else {
-			throw new \RuntimeException('File not found: ' . $path_and_file);
-		}
-
-		try {
-			return simplexml_load_file($path_and_file);
-
-		} catch (\Exception $e) {
-
-			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
-		}
-	}
-
-	/**
 	 * filterInput
 	 *
 	 * @param   string  $name         Name of input field
@@ -477,7 +420,7 @@ Class RegistryService
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	protected function filterInput(
+	protected function DELETEfilterInput(
 		$name, $value, $dataType, $null = null, $default = null)
 	{
 

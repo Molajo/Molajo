@@ -1,0 +1,4 @@
+<model
+        name="Messages"
+        data_source="Message">
+</model>

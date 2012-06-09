@@ -121,7 +121,7 @@ class UseractivityTrigger extends ContentTrigger
         /** Retrieve User Data  */
         $controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
         $m = new $controllerClass();
-		$results = $m->connect('UserActivity');
+		$results = $m->connect('Table', 'UserActivity');
 		if ($results == false) {
 			return false;
 		}
