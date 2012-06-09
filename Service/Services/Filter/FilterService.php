@@ -111,7 +111,7 @@ Class FilterService
         }
 
         /** Configured Options */
-        $options = Services::Configuration()->getFile('htmlpurifier', 'Application');
+        $options = Services::Configuration()->getFile('Application', 'htmlpurifier');
         $options = array();
         if (count($options) > 0) {
             foreach ($options->option as $o) {

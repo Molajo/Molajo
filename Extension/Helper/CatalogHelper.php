@@ -137,7 +137,7 @@ Class CatalogHelper
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Catalog');
+		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
 			return false;
 		}
@@ -172,7 +172,7 @@ Class CatalogHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Catalog');
+		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
 			return false;
 		}
@@ -196,7 +196,7 @@ Class CatalogHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Catalog');
+		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
 			return false;
 		}
@@ -222,7 +222,7 @@ Class CatalogHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Catalog');
+		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
 			return false;
 		}
@@ -257,7 +257,7 @@ Class CatalogHelper
 
 			$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 			$m = new $controllerClass();
-			$results = $m->connect('Catalog');
+			$results = $m->connect('Table', 'Catalog');
 			if ($results == false) {
 				return false;
 			}

@@ -14,37 +14,35 @@
         filter_catalog_type_id="10000"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <field name="id" type="int" null="1" default="0" identity="1"/>
-                <field name="title" type="char" null="0" default="" unique="1"/>
-            </fields>
-            <joins>
-                <join table="#__catalog_types"
-                      alias="catalog_types"
-                      select=""
-                      jointo="id"
-                      joinwith="catalog_type_id"/>
-                <join table="#__extension_instances"
-                      alias="extension_instances"
-                      select=""
-                      jointo="id"
-                      joinwith="extension_instance_id"/>
-                <join table="#__application_extension_instances"
-                      alias="application_extension_instances"
-                      select=""
-                      jointo="extension_instance_id,application_id"
-                      joinwith="extension_instances.id,APPLICATION_ID"/>
-                <join table="#__site_extension_instances"
-                      alias="site_extension_instances"
-                      select=""
-                      jointo="extension_instance_id,site_id"
-                      joinwith="extension_instances.id,SITE_ID"/>
-            </joins>
-            <triggers>
-                <trigger name="Publishedstatus"/>
-            </triggers>
-        </item>
+        <fields>
+            <field name="id" type="int" null="1" default="0" identity="1"/>
+            <field name="title" type="char" null="0" default="" unique="1"/>
+        </fields>
+        <joins>
+            <join table="#__catalog_types"
+                  alias="catalog_types"
+                  select=""
+                  jointo="id"
+                  joinwith="catalog_type_id"/>
+            <join table="#__extension_instances"
+                  alias="extension_instances"
+                  select=""
+                  jointo="id"
+                  joinwith="extension_instance_id"/>
+            <join table="#__application_extension_instances"
+                  alias="application_extension_instances"
+                  select=""
+                  jointo="extension_instance_id,application_id"
+                  joinwith="extension_instances.id,APPLICATION_ID"/>
+            <join table="#__site_extension_instances"
+                  alias="site_extension_instances"
+                  select=""
+                  jointo="extension_instance_id,site_id"
+                  joinwith="extension_instances.id,SITE_ID"/>
+        </joins>
+        <triggers>
+            <trigger name="Publishedstatus"/>
+        </triggers>
     </table>
 </model>
 

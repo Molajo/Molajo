@@ -12,93 +12,92 @@
         process_triggers="0"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <field name="id" type="int" null="1" default="0" identity="1"/>
-                <field name="catalog_type_id" type="int" null="0" default="50" values="50"/>
-                <field name="name" type="char" null="0" default="" unique="1"/>
-                <field name="path" type="char" null="0" default=""/>
-                <field name="description" type="text" null="1" default=""/>
-                <field name="customfields" type="customfield" null="1" default=""/>
-                <field name="parameters" type="customfield" null="1" default=""/>
-                <field name="metadata" type="customfield" null="1" default=""/>
-            </fields>
+        <fields>
+            <field name="id" type="int" null="1" default="0" identity="1"/>
+            <field name="catalog_type_id" type="int" null="0" default="50" values="50"/>
+            <field name="name" type="char" null="0" default="" unique="1"/>
+            <field name="path" type="char" null="0" default=""/>
+            <field name="description" type="text" null="1" default=""/>
+            <field name="customfields" type="customfield" null="1" default=""/>
+            <field name="parameters" type="customfield" null="1" default=""/>
+            <field name="metadata" type="customfield" null="1" default=""/>
+        </fields>
 
-            <foreignkeys>
-                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-            </foreignkeys>
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        </foreignkeys>
 
-            <children>
-                <child name="SiteApplications" join="application_id"/>
-                <child name="ApplicationExtensionInstances" join="application_id"/>
-                <child name="UserApplications" join="application_id"/>
-                <child name="Sessions" join="application_id"/>
-                <child name="ApplicationExtensionInstances" join="application_id"/>
-            </children>
+        <children>
+            <child name="SiteApplications" join="application_id"/>
+            <child name="ApplicationExtensionInstances" join="application_id"/>
+            <child name="UserApplications" join="application_id"/>
+            <child name="Sessions" join="application_id"/>
+            <child name="ApplicationExtensionInstances" join="application_id"/>
+        </children>
 
-            <triggers>
-                <trigger name="Application"/>
-                <trigger name="Customfields"/>
-                <trigger name="Metadata"/>
-                <trigger name="Parameters"/>
-            </triggers>
+        <triggers>
+            <trigger name="Application"/>
+            <trigger name="Customfields"/>
+            <trigger name="Metadata"/>
+            <trigger name="Parameters"/>
+        </triggers>
 
-            <customfields>
-
-                <customfield name="parameters">
-
-                    <field name="application_name" type="char" null="1" default="Molajo Application" values=""/>
-                    <field name="application_home_catalog_id" type="integer" null="0" default="" values=""/>
-                    <field name="application_logon_requirement" type="binary" null="1" default="1" values="0,1"/>
-
-                    <field name="url_sef" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="url_sef_rewrite" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="url_sef_suffix" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="url_unicode_slugs" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="url_force_ssl" type="binary" null="1" default="0" values="0,1"/>
-
-                    <field name="language" type="char" null="1" default="en-GB" values=""/>
-                    <field name="language_direction" type="char" null="1" default="ltr" values="ltr,rtl"/>
-                    <field name="language_multilingual" type="binary" null="1" default="0" values="0,1"/>
-                    <field name="language_utc_offset" type="char" null="1" default="UTC" values=""/>
-                    <field name="language_utc_offset_user" type="char" null="1" default="UTC" values=""/>
-
-                    <field name="debug" type="boolean" null="1" default="0" values=""/>
-                    <field name="debug_log" type="text" null="0" default="echo"
-                           values="echo,formattedtext,database,email,messages"/>
-
-                    <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
-                    <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>
-
-                    <field name="offline_theme_id" type="integer" null="1" default="" values=""/>
-                    <field name="offline_page_view_id" type="integer" null="1" default="" values=""/>
-                    <field name="offline" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="offline_message" type="char" null="1" default="" values=""/>
-
-                    <field name="error_theme_id" type="integer" null="1" default="" values=""/>
-                    <field name="error_page_view_id" type="integer" null="1" default="" values=""/>
-                    <field name="error_404_message" type="char" null="1" default="" values=""/>
-                    <field name="error_403_message" type="char" null="1" default="" values=""/>
-
-                    <field name="system_caching" type="binary" null="0" default="1" values="0,1"/>
-                    <field name="system_cache_time" type="integer" null="0" default="15" values=""/>
-                    <field name="system_cache_handler" type="char" null="0" default="" values=""/>
-
-                    <field name="criteria_log_user_activity_create" type="binary" null="1" default="0" values="0,1"/>
-                    <field name="criteria_log_user_activity_read" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="criteria_log_user_activity_update" type="binary" null="1" default="1" values="0,1"/>
-                    <field name="criteria_log_user_activity_delete" type="binary" null="1" default="1" values="0,1"/>
-
-                    <include name="ParametersItem"/>
-                    <include name="ParametersList"/>
-                </customfield>
-
-                <customfield name="metadata">
-                    <include name="Metadata"/>
-                </customfield>
-
-            </customfields>
-
-        </item>
     </table>
+
+
+    <customfields>
+
+        <customfield name="parameters">
+
+            <field name="application_name" type="char" null="1" default="Molajo Application" values=""/>
+            <field name="application_home_catalog_id" type="integer" null="0" default="" values=""/>
+            <field name="application_logon_requirement" type="binary" null="1" default="1" values="0,1"/>
+
+            <field name="url_sef" type="binary" null="1" default="1" values="0,1"/>
+            <field name="url_sef_rewrite" type="binary" null="1" default="1" values="0,1"/>
+            <field name="url_sef_suffix" type="binary" null="1" default="1" values="0,1"/>
+            <field name="url_unicode_slugs" type="binary" null="1" default="1" values="0,1"/>
+            <field name="url_force_ssl" type="binary" null="1" default="0" values="0,1"/>
+
+            <field name="language" type="char" null="1" default="en-GB" values=""/>
+            <field name="language_direction" type="char" null="1" default="ltr" values="ltr,rtl"/>
+            <field name="language_multilingual" type="binary" null="1" default="0" values="0,1"/>
+            <field name="language_utc_offset" type="char" null="1" default="UTC" values=""/>
+            <field name="language_utc_offset_user" type="char" null="1" default="UTC" values=""/>
+
+            <field name="debug" type="boolean" null="1" default="0" values=""/>
+            <field name="debug_log" type="text" null="0" default="echo"
+                   values="echo,formattedtext,database,email,messages"/>
+
+            <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
+            <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>
+
+            <field name="offline_theme_id" type="integer" null="1" default="" values=""/>
+            <field name="offline_page_view_id" type="integer" null="1" default="" values=""/>
+            <field name="offline" type="binary" null="1" default="1" values="0,1"/>
+            <field name="offline_message" type="char" null="1" default="" values=""/>
+
+            <field name="error_theme_id" type="integer" null="1" default="" values=""/>
+            <field name="error_page_view_id" type="integer" null="1" default="" values=""/>
+            <field name="error_404_message" type="char" null="1" default="" values=""/>
+            <field name="error_403_message" type="char" null="1" default="" values=""/>
+
+            <field name="system_caching" type="binary" null="0" default="1" values="0,1"/>
+            <field name="system_cache_time" type="integer" null="0" default="15" values=""/>
+            <field name="system_cache_handler" type="char" null="0" default="" values=""/>
+
+            <field name="criteria_log_user_activity_create" type="binary" null="1" default="0" values="0,1"/>
+            <field name="criteria_log_user_activity_read" type="binary" null="1" default="1" values="0,1"/>
+            <field name="criteria_log_user_activity_update" type="binary" null="1" default="1" values="0,1"/>
+            <field name="criteria_log_user_activity_delete" type="binary" null="1" default="1" values="0,1"/>
+
+            <include name="ParametersItem"/>
+            <include name="ParametersList"/>
+        </customfield>
+
+        <customfield name="metadata">
+            <include name="Metadata"/>
+        </customfield>
+
+    </customfields>
 </model>

@@ -4,14 +4,16 @@
         table="#__user_group_permissions"
         primary_key="id"
         data_source="JDatabase">
-    <fields>
-        <field name="id" type="int" null="0" default=""/>
-        <field name="view_group_id" type="int" null="0" default=""/>
-        <field name="catalog_id" type="int" null="0" default=""/>
-        <field name="action_id" type="int" null="0" default=""/>
-    </fields>
-    <foreignkeys>
-        <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-        <foreignkey name="view_group_id" source_id="id" source_model="Content" required="1"/>
-    </foreignkeys>
+    <table>
+        <fields>
+            <field name="id" type="int" null="0" default=""/>
+            <field name="view_group_id" type="int" null="0" default=""/>
+            <field name="catalog_id" type="int" null="0" default=""/>
+            <field name="action_id" type="int" null="0" default=""/>
+        </fields>
+        <foreignkeys>
+            <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+            <foreignkey name="view_group_id" source_id="id" source_model="Content" required="1"/>
+        </foreignkeys>
+    </table>
 </model>

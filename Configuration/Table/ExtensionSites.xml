@@ -4,19 +4,21 @@
         table="#__extension_sites"
         primary_key="id"
         data_source="JDatabase">
-    <fields>
-        <field name="id" type="int" null="0" default=""/>
-        <field name="name" type="char" null="0" default="" unique="1"/>
-        <field name="enabled" type="boolean" null="0" default="0"/>
-        <field name="location" type="char" null="1" default=""/>
-        <field name="customfields" type="" null="1" default=""/>
-        <field name="parameters" type="" null="1" default=""/>
-        <field name="metadata" type="" null="1" default=""/>
-    </fields>
-    <triggers>
-        <trigger name="Customfields"/>
-        <trigger name="Metadata"/>
-        <trigger name="Parameters"/>
-    </triggers>
+    <table>
+        <fields>
+            <field name="id" type="int" null="0" default=""/>
+            <field name="name" type="char" null="0" default="" unique="1"/>
+            <field name="enabled" type="boolean" null="0" default="0"/>
+            <field name="location" type="char" null="1" default=""/>
+            <field name="customfields" type="" null="1" default=""/>
+            <field name="parameters" type="" null="1" default=""/>
+            <field name="metadata" type="" null="1" default=""/>
+        </fields>
+        <triggers>
+            <trigger name="Customfields"/>
+            <trigger name="Metadata"/>
+            <trigger name="Parameters"/>
+        </triggers>
+    </table>
 </model>
 

@@ -13,11 +13,9 @@
         filter_check_published_status="0"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <field name="id" type="int" null="1" default="0" identity="1"/>
-                <field name="title" type="char" null="0" default="" unique="1"/>
-            </fields>
-        </item>
+        <fields>
+            <field name="id" type="int" null="1" default="0" identity="1"/>
+            <field name="title" type="char" null="0" default="" unique="1"/>
+        </fields>
     </table>
 </model>

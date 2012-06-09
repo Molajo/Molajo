@@ -60,10 +60,10 @@ Class ExtensionHelper
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function getExtension($extension_id, $model_name = 'ExtensionInstances', $model_type = 'Table')
+	public function getExtension($extension_id, $model_type = 'Table',  $model_name = 'ExtensionInstances')
 	{
 		/** Retrieve the query results */
-		$item = Helpers::Extension()->get($extension_id, $model_name, $model_type);
+		$item = Helpers::Extension()->get($extension_id, $model_type, $model_name);
 
 		/** 500: not found */
 		if (count($item) == 0 || $item == false) {
@@ -115,26 +115,28 @@ Class ExtensionHelper
 	}
 
 	/**
-	 * Common query for all Extensions
-	 *
-	 * Merges into Parameter Registry
+	 * Common query for all Extensions - Merges into Parameter Registry
 	 *
 	 * @param $extension_id
-	 * @param string $model_name
 	 * @param string $model_type
+	 * @param string $model_name
+	 * @param string $query_object
 	 *
-	 * @return array
-	 * @since   1.0
+	 * @return bool
+	 * @since  1.0
 	 */
-	public function get($extension_id, $model_name = 'ExtensionInstances', $model_type = 'Table')
+	public function get(
+		$extension_id, $model_type = 'Table', $model_name = 'ExtensionInstances', $query_object = 'item')
 	{
 
-//echo '<br />' . $extension_id . ' Name: ' . $model_name . ' Type: ' . $model_type . '<br />';
-	//. ' query_object: ' . $model_query_object . '<br />';
+echo '<br />ID: ' . $extension_id
+	. ' Type: ' . $model_type
+	. ' Name: ' . $model_name
+	. ' Query object: '.$query_object. '<br />';
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect($model_name, $model_type);
+		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {
 			return false;
 		}
@@ -142,7 +144,7 @@ Class ExtensionHelper
 		$m->set('id', (int)$extension_id);
 		$m->set('process_triggers', 0);
 
-		$item = $m->getData('item');
+		$item = $m->getData($query_object);
 
 		$item->table_registry_name = $m->table_registry_name;
 		$item->model_name = $m->get('model_name');
@@ -170,7 +172,7 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('ExtensionInstances');
+		$results = $m->connect('Table', 'ExtensionInstances');
 		if ($results == false) {
 			return false;
 		}
@@ -198,7 +200,7 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('ExtensionInstances');
+		$results = $m->connect('Table', 'ExtensionInstances');
 		if ($results == false) {
 			return false;
 		}
@@ -225,6 +227,7 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
+
 		$results = $m->connect();
 		if ($results == false) {
 			return false;

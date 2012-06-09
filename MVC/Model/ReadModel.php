@@ -62,6 +62,7 @@ class ReadModel extends Model
 					$this->query->select($this->db->qn($primary_prefix) . '.' . '*');
 
 				} else {
+
 					foreach ($columns as $column) {
 						if ($first == true && $query_object == 'distinct') {
 							$first = false;
@@ -83,6 +84,7 @@ class ReadModel extends Model
 		if ($this->query->where == null) {
 
 			if ((int)$id > 0) {
+
 				$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
 					. ' = ' . $this->db->q($id));
 
@@ -270,11 +272,11 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($columns, $query_object, $offset = 0, $count = 5)
 	{
-		/**
+
 		echo '<br /><br /><br />';
 		echo $this->query->__toString();
 		echo '<br /><br /><br />';
-		 */
+
 		$this->db->setQuery($this->query->__toString(), $offset, $count);
 
 		if ($query_object == 'result') {
@@ -307,11 +309,12 @@ class ReadModel extends Model
 	 * @return mixed
 	 * @since   1.0
 	 */
-	public function addCustomFields($model_name, $customFieldName, $fields, $retrieval_method, $query_results)
+	public function addCustomFields(
+			$table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results)
 	{
 		/** Prepare Registry Name */
 		$customFieldName = strtolower($customFieldName);
-		$useRegistryName = $model_name . ucfirst($customFieldName);
+		$useRegistryName = $table_registry_name . ucfirst($customFieldName);
 
 		/** See if there are query results for this Custom Field Group */
 		if (is_object($query_results) && isset($query_results->$customFieldName)) {
@@ -410,13 +413,16 @@ class ReadModel extends Model
 
 			$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 			$m = new $controllerClass();
-			$results = $m->connect($name);
+			$results = $m->connect('Table', $name);
 			if ($results == false) {
 				return false;
 			}
 
 			$join = (string)$child['join'];
-			$m->model->query->where($m->model->db->qn($join) . ' = ' . (int)$id);
+			$joinPrimaryPrefix = $m->get('primary_prefix');
+
+			$m->model->query->where($m->model->db->qn($joinPrimaryPrefix . '.' . $join)
+				. ' = ' . (int)$id);
 
 			$results = $m->getData('list');
 

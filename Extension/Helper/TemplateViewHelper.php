@@ -61,12 +61,18 @@ Class TemplateViewHelper
 		Services::Registry()->set('Parameters', 'template_view_path_node', $node);
 
 		Services::Registry()->set('Parameters', 'template_view_path', $this->getPath($node));
-		Services::Registry()->set('Parameters', 'template_view_path_include',
-			$this->getPath($node) . '/index.php');
+		Services::Registry()->set('Parameters', 'template_view_path_include', $this->getPath($node) . '/index.php');
 		Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($node));
 
 		/** Retrieve the query results */
-		$item = Helpers::Extension()->get($template_view_id, 'TemplateViews', 'Table');
+		$item = Helpers::Extension()->get($template_view_id, 'Template', $node);
+
+echo '<pre>';
+var_dump($item);
+echo '</pre>';
+
+Services::Registry()->get('Parameters', '*');
+		die;
 
 		/** 500: not found */
 		if (count($item) == 0) {
@@ -86,11 +92,10 @@ Class TemplateViewHelper
 				$this->getPath($node) . '/index.php');
 			Services::Registry()->set('Parameters', 'template_view_path_url', $this->getPathURL($node));
 
-			$item = Helpers::Extension()->get($template_view_id, 'TemplateView');
+			$item = Helpers::Extension()->get($template_view_id, 'Template', $node);
 
 			if (count($item) == 0) {
 				Services::Error()->set(500, 'View not found');
-
 				return false;
 			}
 		}

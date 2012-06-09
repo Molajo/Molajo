@@ -60,21 +60,20 @@ class DisplayController extends ModelController
 		$includer_type = $this->get('includer_type', '');
 		$includer_name = $this->get('includer_name', '');
 
-
-		$model_name = $this->get('model_name', '');
 		$model_type = $this->get('model_type', '');
+		$model_name = $this->get('model_name', '');
 		$model_parameter = $this->get('model_parameter', '');
 		$model_query_object = $this->get('model_query_object', 'item');
 
-		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
 /**
 echo 'Table Registry Name ' . $table_registry_name . '<br />';
 
 echo 'Includer Type '. $includer_type .'<br />';
 echo 'Includer Name '. $includer_name .'<br />';
 
-echo 'Model Name ' . $model_name . '<br />'
-	. 'Model Type:  ' . $model_type . '<br />'
+echo 'Model Type: ' . $model_type . '<br />'
+	. 'Model Name:  ' . $model_name . '<br />'
 	. 'Table Registry Name ' . $table_registry_name . '<br />'
 	. 'Model Parameter '. $model_parameter .'<br />'
 	. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
@@ -83,7 +82,7 @@ echo 'Model Name ' . $model_name . '<br />'
 			$this->query_results = array();
 
 		} else {
-			$this->connect($model_name, $model_type);
+			$this->connect($model_type, $model_name);
 
 			if ((int) $this->get('content_id') == 0) {
 			} else {

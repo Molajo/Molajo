@@ -1,0 +1,15 @@
+<fields>
+    <include name="FieldsContent"/>
+</fields>
+<joins>
+    <include name="JoinsContent"/>
+</joins>
+<foreignkeys>
+    <include name="ForeignkeysContent"/>
+</foreignkeys>
+<children>
+    <include name="ChildrenContent"/>
+</children>
+<triggers>
+    <include name="TriggersContentList"/>
+</triggers>

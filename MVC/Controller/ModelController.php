@@ -98,16 +98,16 @@ Class ModelController extends Controller
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($model_name = null, $model_type = 'Table')
+	public function connect($model_type = 'Table', $model_name = null)
 	{
 
-//echo 'In connect: File: ' . $model_name . ' type: ' . $model_type . '<br />';
+//echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br />';
 
 		if ($model_name == null) {
 			$this->table_registry_name = null;
 
-			$this->set('model_name', '');
 			$this->set('model_type', $model_type);
+			$this->set('model_name', '');
 			$this->set('table_name', '#__content');
 			$this->set('primary_key', 'id');
 			$this->set('name_key', 'title');
@@ -120,13 +120,13 @@ Class ModelController extends Controller
 
 		} else {
 
-			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+			$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
 
 			if (Services::Registry()->exists($table_registry_name) == true) {
 				$this->table_registry_name = $table_registry_name;
 
 			} else {
-				$this->table_registry_name = ConfigurationService::getFile($model_name, $model_type);
+				$this->table_registry_name = ConfigurationService::getFile($model_type, $model_name);
 				if ($this->table_registry_name == false) {
 					echo '<br />ModelController: Table registry: ' . $this->table_registry_name . ' could not be defined. <br />';
 					return false;
@@ -134,11 +134,11 @@ Class ModelController extends Controller
 			}
 
 			/** Serialize Options */
+			$this->set('model_type', $model_type);
 			$this->set('model_name',
 				Services::Registry()->get($this->table_registry_name, 'model_name', ''));
-			$this->set('model_type', $model_type);
 			$this->set('table_name',
-				Services::Registry()->get($this->table_registry_name, 'table_name', '#__content'));
+				Services::Registry()->get($this->table_registry_name, 'table', '#__content'));
 			$this->set('primary_key',
 				Services::Registry()->get($this->table_registry_name, 'primary_key', 'id'));
 			$this->set('name_key',
@@ -231,7 +231,7 @@ Class ModelController extends Controller
 		/** Base query */
 		if ($query_object == 'item') {
 			$id_key = (int)$this->get('id', 0);
-			$name_key_value = (string)$this->get('name_key_value');
+			$name_key_value = (string)$this->get('name_key_value', '');
 
 		} else {
 			$id_key = 0;
@@ -286,7 +286,6 @@ Class ModelController extends Controller
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
-
 		if (count($query_results) > 0) {
 
 			/** Return result (single value) */
@@ -320,7 +319,7 @@ Class ModelController extends Controller
 					foreach ($customFieldTypes as $customFieldName) {
 						$results =
 							$this->model->addCustomFields(
-								$this->get('model_name'),
+								$this->table_registry_name,
 								$customFieldName,
 								Services::Registry()->get($this->table_registry_name, $customFieldName),
 								$this->get('get_customfields'),
@@ -353,12 +352,12 @@ Class ModelController extends Controller
 		if (count($triggers) > 0) {
 			$this->onAfterReadEvent($triggers);
 		}
-/**
+
 echo $query_object.'<br />';
 echo '<pre>';
 var_dump($query_results);
 echo '</pre>';
-*/
+
 		/** Return List */
 		if ($query_object == 'list') {
 			return $this->query_results;

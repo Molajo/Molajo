@@ -1,5 +1,5 @@
 <model
-        name="TemplateViewsTable"
+        name="TemplateViews"
         catalog_type_id="1200"
         table="#__extension_instances"
         primary_key="id"
@@ -10,22 +10,20 @@
         check_view_level_access="1"
         data_source="JDatabase">
     <table>
-        <item>
-            <fields>
-                <include name="FieldsExtensionInstance"/>
-            </fields>
-            <joins>
-                <include name="JoinsExtensionInstance"/>
-            </joins>
-            <foreignkeys>
-                <include name="ForeignkeysExtensionInstance"/>
-            </foreignkeys>
-            <children>
-                <include name="ChildrenExtensionInstance"/>
-            </children>
-            <triggers>
-                <include name="TriggersExtensionInstance"/>
-            </triggers>
-        </item>
-    </table>
+        <fields>
+            <include name="FieldsExtensionInstance"/>
+        </fields>
+        <joins>
+            <include name="JoinsExtensionInstance"/>
+        </joins>
+        <foreignkeys>
+            <include name="ForeignkeysExtensionInstance"/>
+        </foreignkeys>
+        <children>
+            <include name="ChildrenExtensionInstance"/>
+        </children>
+        <triggers>
+            <include name="TriggersExtensionInstance"/>
+        </triggers>
+    </item>
 </model>

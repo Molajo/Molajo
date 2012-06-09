@@ -114,18 +114,6 @@ Class Application
             Services::Debug()->set('Application Authorise succeeded');
         }
 
-
-		/** Start parsing and processing page include for Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
-			&& file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))
-		) {
-		} else {
-			Services::Error()->set(500, 'Theme and/or Page View Not found');
-			echo 'Theme and/or Page View Not found - application stopped before parse. Parameters follow:';
-			Services::Registry()->get('Parameters', '*');
-			die;
-		}
-
         /** Execute */
         $continue = $this->execute();
 
@@ -332,7 +320,22 @@ Class Application
 		//Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
 		//Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
 
-        $this->rendered_output = Services::Parse()->process();
+		/** Theme and Page must exist */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
+			&& file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))
+		) {
+		} else {
+			Services::Error()->set(500, 'Theme and/or Page View Not found');
+			echo 'Theme and/or Page View Not found - application stopped before parse. Parameters follow:';
+			Services::Registry()->get('Parameters', '*');
+			die;
+		}
+
+		/** Save Route Parameters */
+		Services::Registry()->copy('Parameters', 'RouteParameters');
+
+		$this->rendered_output = Services::Parse()->process();
+
         return $this;
     }
 
@@ -560,7 +563,7 @@ Class Application
         }
 
         /** Define PHP constants for application variables */
-        $defines = ConfigurationService::getFile('defines', 'Application');
+        $defines = ConfigurationService::getFile('Application', 'Defines');
         foreach ($defines->define as $item) {
             if (defined((string) $item['name'])) {
             } else {
@@ -625,7 +628,7 @@ Class Application
         if (defined('SITE_BASE_URL')) {
         } else {
 
-            $sites = ConfigurationService::getFile('sites', 'Application');
+            $sites = ConfigurationService::getFile('Application', 'Sites');
 
             foreach ($sites->site as $single) {
                 if (strtolower($single->base) == strtolower($siteBase)) {
@@ -682,7 +685,7 @@ Class Application
             /* to override - must also define PAGE_REQUEST */
         } else {
 
-            $apps = ConfigurationService::getFile('applications', 'Application');
+            $apps = ConfigurationService::getFile('Application', 'Applications');
 
             foreach ($apps->application as $app) {
 

@@ -154,13 +154,12 @@ class ItemController extends Controller
     {
         $valid = true;
 
-        $v = Services::Registry()->getFile(substr($this->model->table_name, 3, 99));
+        $v = Services::Registry()->getFile('Table', substr($this->model->table_name, 3, 99));
         if (count($v) == 0) {
             return true;
         }
 
         /** filters and defaults */
-
         $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
 
         $valid = true;

@@ -59,6 +59,7 @@ Class RouteService
 		/** Route Registry */
 		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->createRegistry('Metadata');
+		Services::Registry()->deleteRegistry('Trigger');
 
 		Services::Registry()->set('Parameters', 'status_found', '');
 		Services::Registry()->set('Parameters', 'status_authorised', '');
@@ -245,7 +246,7 @@ Class RouteService
 		$use = array();
 
 		/** XML with system defined nonroutable pairs */
-		$list = Services::Configuration()->getFile('nonroutable', 'Application');
+		$list = Services::Configuration()->getFile('Application', 'Nonroutable');
 
 		foreach ($list->parameter as $item) {
 
@@ -373,12 +374,15 @@ Class RouteService
 
 		} else {
 			$id = Services::Registry()->get('Parameters', 'catalog_source_id');
+
+			$model_type = 'Table';
 			$model_name= ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_type')));
-			$model_type = 'Item';
-			$model_query_object = 'item'; // todo: list (extension_id)
+			$model_query_object = 'item';
 
 			/**  Content (with or without a menu item) */
-			$response = Helpers::Content()->getRouteContent($id, $model_name, $model_type, $model_query_object);
+			$response = Helpers::Content()->getRouteContent(
+				$id, $model_type, $model_name, $model_query_object
+			);
 			if ($response === false) {
 				Services::Error()->set(500, 'Content Item not found');
 			}
@@ -394,8 +398,8 @@ Class RouteService
 		if ((int) Services::Registry()->get('Parameters', 'extension_instance_id', 0) > 0) {
 			$response = Helpers::Extension()->getExtension(
 				Services::Registry()->get('Parameters', 'extension_instance_id'),
-				'ExtensionInstances',
-				'Table'
+				'Table',
+				'ExtensionInstances'
 			);
 			if ($response === false) {
 				Services::Error()->set(500, 'Extension not found');

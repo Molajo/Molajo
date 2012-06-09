@@ -161,7 +161,7 @@ Class Services
             return $this->service_connection[$key];
         }
 
-        throw new \BadMethodCallException('Service ' . $key . ' is not available');
+		throw new \BadMethodCallException('Service ' . $key . ' is not available');
     }
 
     /**

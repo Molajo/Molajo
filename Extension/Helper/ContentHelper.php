@@ -59,8 +59,8 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
+			'Table',
 			'Menuitems',
-			'Item',
 			'item'
 		);
 
@@ -164,7 +164,6 @@ Class ContentHelper
 		}
 
 		return true;
-
 	}
 
 	/**
@@ -178,19 +177,23 @@ Class ContentHelper
 	 * @return boolean
 	 * @since    1.0
 	 */
-	public function getRouteContent($id, $model_name, $model_type, $model_query_object)
+	public function getRouteContent($id, $model_type, $model_name, $model_query_object)
 	{
 		/** Retrieve the query results */
-		$item = $this->get($id, $model_name, $model_type, $model_query_object);
+		$item = $this->get(
+			$id, $model_type, $model_name, $model_query_object
+		);
+
+		/** Save Content in Trigger Registry */
+		Services::Registry()->set('Trigger', $item->table_registry_name . 'query_results', $item);
 
 		/** 404  */
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
 
-		/** Save for primary view */
-		Services::Registry()->createRegistry('RequestContent');
-		Services::Registry()->set('RequestContent', 'query_results', $item);
+		/** Save in Trigger Registry for primary view */
+		Services::Registry()->set('Trigger', $item->table_registry_name . 'query_results', $item);
 
 		/** Route Registry */
 		Services::Registry()->set('Parameters', 'content_id', (int)$item->id);
@@ -212,13 +215,15 @@ Class ContentHelper
 		$customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
 
 		foreach ($customFieldTypes as $customFieldName) {
+
 			$customFieldName = ucfirst(strtolower($customFieldName));
 			Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
 
 			/** Save for primary view */
 			$array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
-			Services::Registry()->set('RequestContent', $customFieldName, $array);
+			Services::Registry()->set('Trigger', $item->table_registry_name . $customFieldName, $array);
 
+			/** Delete */
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}
 
@@ -242,14 +247,13 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_category_id'),
+			'Table',
 			'Categories',
-			'Item',
 			'item'
 		);
 
-		/** Save for views */
-		Services::Registry()->createRegistry('RequestCategory');
-		Services::Registry()->set('RequestCategory', 'query_results', $item);
+		/** Save Content in Trigger Registry */
+		Services::Registry()->set('Trigger', 'RequestCategory' . 'query_results', $item);
 
 		/** Route Registry with Category Data */
 		Services::Registry()->set('Parameters', 'category_id', (int)$item->id);
@@ -281,18 +285,18 @@ Class ContentHelper
 	 * Get data for content
 	 *
 	 * @param $id
-	 * @param $model_name
 	 * @param $model_type
+	 * @param $model_name
 	 * @param $model_query_object
 	 *
 	 * @return  array An object containing an array of data
 	 * @since   1.0
 	 */
-	public function get($id = 0, $model_name = 'Content', $model_type = 'List', $model_query_object = 'list')
+	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect($model_name, $model_type);
+		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {
 			return false;
 		}

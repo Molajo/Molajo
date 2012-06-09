@@ -58,8 +58,8 @@ Class ModuleIncluder extends Includer
 
         $response = Helpers::Extension()->getExtension(
             Services::Registry()->get('Parameters', 'extension_instance_id'),
-            ucfirst(strtolower(Services::Registry()->get('Parameters', 'extension_title'))),
-            'Module'
+            'Module',
+			ucfirst(strtolower(Services::Registry()->get('Parameters', 'extension_title')))
         );
 
         if ($response === false) {
