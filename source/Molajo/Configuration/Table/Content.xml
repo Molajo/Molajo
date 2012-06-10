@@ -13,7 +13,21 @@
         data_source="JDatabase">
 
     <table>
-        <include name="TableContent"/>
+        <fields>
+            <include name="FieldsContent"/>
+        </fields>
+        <joins>
+            <include name="JoinsContent"/>
+        </joins>
+        <foreignkeys>
+            <include name="ForeignkeysContent"/>
+        </foreignkeys>
+        <children>
+            <include name="ChildrenContent"/>
+        </children>
+        <triggers>
+            <include name="TriggersContentList"/>
+        </triggers>
     </table>
 
     <customfields>
@@ -24,7 +38,7 @@
             <include name="Metadata"/>
         </customfield>
         <customfield name="parameters">
-            <include name="ParametersCustomfieldsContent"/>
+            <include name="ParametersContent"/>
         </customfield>
     </customfields>
 </model>

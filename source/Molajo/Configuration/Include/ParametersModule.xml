@@ -1,6 +1,4 @@
-<field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-
-<field name="asset_priority" type="integer" null="1" default="400" values=""/>
+<include name="ParametersCommon"/>
 
 <field name="template_view_id" type="integer" null="1" default="" values=""/>
 <field name="template_view_css_id" type="char" null="1" default="" values=""/>
@@ -14,6 +12,4 @@
 <field name="model_type" type="char" null="0" default="" values="Module"/>
 <field name="model_query_object" type="char" null="0" default="" values=""/>
 
-<field name="caching" type="binary" null="1" default="1" values="0,1"/>
-<field name="cache_time" type="integer" null="1" default="15" values=""/>
-<field name="cache_handler" type="char" null="1" default="" values=""/>
+<include name="ParametersCache"/>

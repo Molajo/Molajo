@@ -352,12 +352,12 @@ Class ModelController extends Controller
 		if (count($triggers) > 0) {
 			$this->onAfterReadEvent($triggers);
 		}
-
+/**
 echo $query_object.'<br />';
 echo '<pre>';
 var_dump($query_results);
 echo '</pre>';
-
+*/
 		/** Return List */
 		if ($query_object == 'list') {
 			return $this->query_results;

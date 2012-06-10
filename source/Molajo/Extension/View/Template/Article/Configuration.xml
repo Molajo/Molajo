@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="view" group="template">
+<extension type="View" group="Template" version="1.0" extends="TemplateView">
     <name>VIEW_TEMPLATE_ARTICLE_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
-    <author_email>collaborate@molajo.org</author_email>
+    <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ARTICLE_DESCRIPTION</description>
-    <model
-            name="Article"
-            table="#__extension_instances"
-            primary_key="id"
-            primary_prefix="a"
-            get_customfields="1"
-            get_item_children="0"
-            use_special_joins="1"
-            check_view_level_access="1"
-            catalog_type_id="1200"
-            data_source="JDatabase">
-        <table>
-            <include name="TableExtensionInstance"/>
-        </table>
-        <customfields>
-            <customfield name="parameters">
-                <field name="template_specific_value" type="char" null="1" default="dog" values="dog,cow"/>
-                <include name="ParametersCommon"/>
-                <include name="ParametersExtensionInstance"/>
-            </customfield>
-        </customfields>
-    </model>
+    <model name="Article"/>
 </extension>

@@ -1,0 +1,5 @@
+<extension type="Component" version="1.0" extends="Content">
+<model
+        name="SeparatorMenuItem"
+        catalog_type_id="2300">
+</model>

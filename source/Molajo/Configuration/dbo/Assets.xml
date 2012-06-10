@@ -1,4 +1,4 @@
-<model
-        name="Assets"
-        data_source="Asset">
-</model>
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Component" version="1.0" extends="Groups">
+    <model name="Groups" />
+</extension>

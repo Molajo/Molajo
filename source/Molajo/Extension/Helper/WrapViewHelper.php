@@ -119,22 +119,22 @@ Class WrapViewHelper
 		$plus = '/View/Wrap/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
 			return Services::Registry()->get('Parameters', 'theme_path') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Configuration.xml')) {
 			return Services::Registry()->get('Parameters', 'extension_path') . $plus;
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
+		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
 			return EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node));
 		}
 
 		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/Manifest.xml')) {
+		if (file_exists(MVC . $plus . '/Configuration.xml')) {
 			return MVC . $plus;
 		}
 
@@ -154,22 +154,22 @@ Class WrapViewHelper
 		$plus = '/View/Wrap/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
-		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Manifest.xml')) {
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
 			return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
 		}
 
 		/** 2. Extension */
-		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Manifest.xml')) {
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Configuration.xml')) {
 			return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
 		}
 
 		/** 3. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Manifest.xml')) {
+		if (file_exists(EXTENSIONS_VIEWS . '/Wrap/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
 			return EXTENSIONS_VIEWS_URL . '/Wrap/' . ucfirst(strtolower($node));
 		}
 
 		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/Manifest.xml')) {
+		if (file_exists(MVC . $plus . '/Configuration.xml')) {
 			return MVC_URL . $plus;
 		}
 

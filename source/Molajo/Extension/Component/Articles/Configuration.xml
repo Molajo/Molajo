@@ -1,40 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.0">
+<extension type="Component" version="1.0" extends="Content">
     <name>COMPONENT_ARTICLES_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <author_email>collaborate@molajo.org</author_email>
+    <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_ARTICLES_DESCRIPTION</description>
-    <model
-            name="Articles"
-            catalog_type_id="10000"
-            table="#__content"
-            primary_key="id"
-            name_key="title"
-            primary_prefix="a"
-            get_customfields="1"
-            get_item_children="0"
-            use_special_joins="1"
-            check_view_level_access="1"
-            process_triggers="1"
-            data_source="JDatabase">
-        <table>
-            <include name="TableContent"/>
-        </table>
+    <model name="Articles" catalog_type_id="10000">
         <customfields>
-            <customfield name="customfields">
-                <include name="CustomfieldsContent"/>
-                <field name="example_of_content_only_field" type="int" null="1" default="1"/>
-            </customfield>
-            <customfield name="metadata">
-                <include name="Metadata"/>
-            </customfield>
             <customfield name="parameters">
-                <include name="ParametersCustomfieldsContent"/>
+                <field name="this_is_how_you_do_it" type="boolean" null="0" default="1"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="anything_can_be_added" type="image" null="1" default="" values=""/>
+                <field name="or_overridden" type="image" null="1" default="" values=""/>
             </customfield>
         </customfields>
     </model>
