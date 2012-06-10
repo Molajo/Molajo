@@ -1,8 +1,10 @@
 <field name="enable_draft_save" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_version_history" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_retain_versions_after_delete" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_maximum_version_count" type="integer" null="1" default="5" minimum="0" maximum="20"/>
 <field name="enable_hit_counts" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_comments" type="binary" null="1" default="1" values="0,1"/>
+<field name="enable_spam_protection" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_ratings" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_notifications" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_tweets" type="binary" null="1" default="1" values="0,1"/>

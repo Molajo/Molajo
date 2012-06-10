@@ -1,15 +1,21 @@
 <field name="menuitem_source_id" type="integer" null="1" default="" values=""/>
+
 <field name="menuitem_extension_instance_id" type="char" null="0" default="2" values=""/>
+
 <field name="menuitem_theme_id" type="integer" null="1" default="" values=""/>
+
 <field name="menuitem_page_view_id" type="integer" null="1" default="122" values=""/>
 <field name="menuitem_page_view_css_id" type="char" null="1" default="" values=""/>
 <field name="menuitem_page_view_css_class" type="char" null="1" default="" values=""/>
+
 <field name="menuitem_template_view_id" type="integer" null="1" default="33" values=""/>
 <field name="menuitem_template_view_css_id" type="char" null="1" default="" values=""/>
 <field name="menuitem_template_view_css_class" type="char" null="1" default="" values=""/>
+
 <field name="menuitem_wrap_view_id" type="integer" null="1" default="61" values=""/>
 <field name="menuitem_wrap_view_css_id" type="char" null="1" default="" values=""/>
 <field name="menuitem_wrap_view_css_class" type="char" null="1" default="" values=""/>
+
 <field name="menuitem_model_name" type="char" null="1" default="" values="Articles"/>
 <field name="menuitem_model_type" type="char" null="1" default="" values="List"/>
 <field name="menuitem_model_query_object" type="char" null="1" default="" values="list"/>
