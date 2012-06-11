@@ -291,6 +291,7 @@ Class ModelController extends Controller
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
+
 		if (count($query_results) > 0) {
 
 			/** Return result (single value) */
@@ -320,6 +321,7 @@ Class ModelController extends Controller
 
 					/** Process each field namespace  */
 					foreach ($customFieldTypes as $customFieldName) {
+
 						$results =
 							$this->model->addCustomFields(
 								$this->table_registry_name,

@@ -9,5 +9,13 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ADMINHEADER_DESCRIPTION</description>
-    <model name="Adminheader"/>
+    <model name="Adminheader">
+        <customfields>
+            <customfield name="parameters">
+                <field name="display_site_name" type="char" null="0" default="Molajo" values=""/>
+                <field name="display_site_description" type="text" null="1" default="This little site of mine." values=""/>
+                <field name="model_name" type="char" null="0" default="Parameters" values=""/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

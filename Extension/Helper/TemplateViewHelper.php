@@ -45,8 +45,6 @@ Class TemplateViewHelper
 	}
 
 	/**
-	 * get
-	 *
 	 * Get requested template_view data
 	 *
 	 * @return boolean
@@ -67,7 +65,7 @@ Class TemplateViewHelper
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($template_view_id, 'Template', $node);
 
-		/** 500: not found */
+		/** Not found: get system default */
 		if (count($item) == 0) {
 
 			/** System Default */
@@ -100,6 +98,19 @@ Class TemplateViewHelper
 		Services::Registry()->set('Parameters', 'template_view_catalog_id', $item->catalog_id);
 		Services::Registry()->set('Parameters', 'template_view_catalog_type_id', (int)$item->catalog_type_id);
 		Services::Registry()->set('Parameters', 'template_view_catalog_type_title', $item->catalog_types_title);
+
+		Services::Registry()->set('Parameters', 'template_table_registry_name', $item->table_registry_name);
+
+		/** Merge in each custom field namespace  */
+		$customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+
+		if (count($customFieldTypes) > 0) {
+			foreach ($customFieldTypes as $customFieldName) {
+				$customFieldName = ucfirst(strtolower($customFieldName));
+				Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
+				Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
+			}
+		}
 
 		return true;
 	}

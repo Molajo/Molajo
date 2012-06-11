@@ -28,8 +28,6 @@
         </triggers>
     </table>
     <customfields>
-        <customfield name="customfields">
-        </customfield>
         <customfield name="metadata">
             <include name="Metadata"/>
         </customfield>

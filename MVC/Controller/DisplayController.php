@@ -66,18 +66,20 @@ class DisplayController extends ModelController
 		$model_query_object = $this->get('model_query_object', 'item');
 
 		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
-		/**
-		echo 'Table Registry Name ' . $table_registry_name . '<br />';
 
-		echo 'Includer Type '. $includer_type .'<br />';
-		echo 'Includer Name '. $includer_name .'<br />';
+if ($table_registry_name == 'XYZ') {
+echo '<br /><br />' . $model_name . '<br /><br />';
+echo 'Table Registry Name ' . $table_registry_name . '<br />';
 
-		echo 'Model Type: ' . $model_type . '<br />'
-		. 'Model Name:  ' . $model_name . '<br />'
-		. 'Table Registry Name ' . $table_registry_name . '<br />'
-		. 'Model Parameter '. $model_parameter .'<br />'
-		. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
-		 */
+echo 'Includer Type ' . $includer_type . '<br />';
+echo 'Includer Name ' . $includer_name . '<br />';
+
+echo 'Model Type: ' . $model_type . '<br />'
+. 'Model Name:  ' . $model_name . '<br />'
+. 'Table Registry Name ' . $table_registry_name . '<br />'
+. 'Model Parameter ' . $model_parameter . '<br />'
+. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
+}
 
 		if ($model_name == '') {
 			$this->query_results = array();
