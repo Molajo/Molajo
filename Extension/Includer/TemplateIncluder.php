@@ -66,10 +66,10 @@ Class TemplateIncluder extends Includer
 		Services::Registry()->set('Parameters', 'extension_title', 'Template');
 
 		/** Template  */
-		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
 
 		/** Wrap  */
-		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
 
 		/** Merge Configuration in */
 		Services::Registry()->merge('Configuration', 'Parameters', true);

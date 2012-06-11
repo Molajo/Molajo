@@ -68,7 +68,7 @@ Class WrapIncluder extends Includer
         Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
 		/** Set parameters and merge in configuration values */
-		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
 
         Services::Registry()->merge('Configuration', 'Parameters', true);
 

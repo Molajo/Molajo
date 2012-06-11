@@ -254,13 +254,13 @@ Class ExtensionHelper
 	public function getPath($catalog_type_id, $node)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			return Helpers::PageView()->getPath($node);
+			return Helpers::View()->getPath($node, 'Page');
 
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
-			return Helpers::Template()->getPath($node);
+			return Helpers::View()->getPath($node, 'Template');
 
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			return Helpers::WrapView()->getPath($node);
+			return Helpers::View()->getPath($node, 'Wrap');
 
 		}
 
@@ -283,13 +283,13 @@ Class ExtensionHelper
 	public function getPathURL($catalog_type_id, $node)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			return Helpers::PageView()->getPathURL($node);
+			return Helpers::View()->getPathURL($node, 'Page');
 
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
-			return Helpers::Template()->getPathURL($node);
+			return Helpers::View()->getPathURL($node, 'Template');
 
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-			return Helpers::WrapView()->getPathURL($node);
+			return Helpers::View()->getPathURL($node, 'Wrap');
 
 		} else {
 			$type = Helpers::Extension()->getType($catalog_type_id);
@@ -372,15 +372,13 @@ Class ExtensionHelper
 		Helpers::Theme()->get($theme_id);
 
 		/** Page  */
-		Helpers::PageView()->get($page_view_id);
+		Helpers::View()->get($page_view_id, 'Page');
 
 		return true;
 	}
 
 	/**
-	 *  setThemePageView
-	 *
-	 *  Determine the default theme value, given system default sequence
+	 *  setTemplateWrapModel - Determine the default Template and Wrap values
 	 *
 	 * @return string
 	 * @since   1.0
@@ -452,10 +450,10 @@ Class ExtensionHelper
 		Services::Registry()->set('Parameters', 'model_query_object', $model_query_object);
 
 		/** Template  */
-		Helpers::TemplateView()->get($template_view_id);
+		Helpers::View()->get($template_view_id, 'Template');
 
 		/** Wrap  */
-		Helpers::WrapView()->get($wrap_view_id);
+		Helpers::View()->get($wrap_view_id, 'Wrap');
 
 		return;
 	}

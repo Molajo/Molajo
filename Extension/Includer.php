@@ -262,10 +262,10 @@ class Includer
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/** Template  */
-		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
 
 		/** Wrap  */
-		Helpers::WrapView()->get(Services::Registry()->get('Parameters', 'wrap_view_id'));
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
 
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
