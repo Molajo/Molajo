@@ -67,13 +67,6 @@ Class TemplateViewHelper
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($template_view_id, 'Template', $node);
 
-echo '<pre>';
-var_dump($item);
-echo '</pre>';
-
-Services::Registry()->get('Parameters', '*');
-		die;
-
 		/** 500: not found */
 		if (count($item) == 0) {
 

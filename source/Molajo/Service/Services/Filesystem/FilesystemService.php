@@ -118,6 +118,7 @@ class FilesystemService
      */
     public function processCall($name, $arguments)
     {
+
         if (strtolower(substr($name, 0, 4)) == 'file') {
             $class = 'Joomla\\filesystem\\JFile';
             $method = substr($name, 4, strlen($name) - 4);

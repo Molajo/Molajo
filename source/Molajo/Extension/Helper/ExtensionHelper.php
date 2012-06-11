@@ -47,17 +47,11 @@ Class ExtensionHelper
 	/**
 	 * Retrieve Route information for a specific Extension
 	 *
-	 * Creates the following Registries (ex. Articles component) containing datasource information for this component.
+	 * @param  $extension_id
+	 * @param  string $model_type
+	 * @param  string $model_name
 	 *
-	 * ArticlesComponent, ArticlesComponentCustomfields, ArticlesComponentMetadata, ArticlesComponentParameters
-	 *
-	 * Merges into Route and Parameters Registries
-	 *
-	 * @param $extension_id
-	 * @param string $model_name
-	 * @param string $model_type
-	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function getExtension($extension_id, $model_type = 'Table',  $model_name = 'ExtensionInstances')
@@ -65,8 +59,9 @@ Class ExtensionHelper
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($extension_id, $model_type, $model_name);
 
-		/** 500: not found */
-		if (count($item) == 0 || $item == false) {
+		/** 404: routeRequest handles redirecting to error page */
+		if (count($item) == 0) {
+			Services::Registry()->set('Parameters', 'status_found', false);
 			return false;
 		}
 
@@ -121,40 +116,36 @@ Class ExtensionHelper
 	 * @param string $model_type
 	 * @param string $model_name
 	 * @param string $query_object
+	 * @param string $catalog_type_id
 	 *
 	 * @return bool
 	 * @since  1.0
 	 */
 	public function get(
-		$extension_id, $model_type = 'Table', $model_name = 'ExtensionInstances', $query_object = 'item')
+		$extension_id = 0, $model_type = 'Table', $model_name = 'ExtensionInstances',
+		$query_object = 'item', $catalog_type_id = null)
 	{
-
-echo '<br />ID: ' . $extension_id
-	. ' Type: ' . $model_type
-	. ' Name: ' . $model_name
-	. ' Query object: '.$query_object. '<br />';
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$m = new $controllerClass();
+
 		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {
 			return false;
 		}
 
 		$m->set('id', (int)$extension_id);
-		$m->set('process_triggers', 0);
+		$m->set('catalog_type_id', (int)$catalog_type_id);
+//		$m->set('process_triggers', 0);
 
-		$item = $m->getData($query_object);
+		$query_results = $m->getData($query_object);
 
-		$item->table_registry_name = $m->table_registry_name;
-		$item->model_name = $m->get('model_name');
-
-		/** 404: routeRequest handles redirecting to error page */
-		if (count($item) == 0) {
-			return Services::Registry()->set('Parameters', 'status_found', false);
+		if ($query_object == 'item') {
+			$query_results->table_registry_name = $m->table_registry_name;
+			$query_results->model_name = $m->get('model_name');
 		}
 
-		return $item;
+		return $query_results;
 	}
 
 	/**
@@ -322,14 +313,8 @@ echo '<br />ID: ' . $extension_id
 		if ($path == null) {
 			$path = Services::Registry()->get('Parameters', 'extension_path');
 		}
-		$path .= '/Language';
 
-		if (Services::Filesystem()->folderExists($path)) {
-		} else {
-			return true;
-		}
-
-		Services::Language()->load($path, Services::Language()->get('tag'), false, false);
+		Services::Language()->load($path);
 
 		return true;
 	}

@@ -101,7 +101,7 @@ Class ModelController extends Controller
 	public function connect($model_type = 'Table', $model_name = null)
 	{
 
-//echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br />';
+echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br />';
 
 		if ($model_name == null) {
 			$this->table_registry_name = null;
@@ -304,9 +304,7 @@ Class ModelController extends Controller
 		foreach ($query_results as $results) {
 
 			/** Load Special Fields */
-			if (((int)$this->get('get_customfields') == 0)
-				|| ((int)Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups') == 0)
-			) {
+			if ((int)$this->get('get_customfields') == 0) {
 
 			} else {
 

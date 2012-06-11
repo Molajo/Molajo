@@ -49,7 +49,7 @@ Class MessageIncluder extends Includer
 	 */
 	protected function setRenderCriteria()
 	{
-		Services::Registry()->set('Parameters', 'model_name', 'dboMessages');
+		Services::Registry()->set('Parameters', 'model_name', 'Messages');
 		Services::Registry()->set('Parameters', 'model_type', 'Table');
 		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
 
