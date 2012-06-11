@@ -64,16 +64,19 @@ Class HeadIncluder extends Includer
         Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
         if ($this->type == 'defer') {
+
 			if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'template_view_id',
 					Services::Registry()->get('Configuration', 'defer_template_view_id'));
 			}
+
 			if ((int) Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Services::Registry()->get('Configuration', 'defer_wrap_view_id'));
 			}
+
 			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
-			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_type', 'dbo');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 			Services::Registry()->set('Parameters', 'model_parameter', 'defer');
 
@@ -87,7 +90,7 @@ Class HeadIncluder extends Includer
 					Services::Registry()->get('Configuration', 'head_wrap_view_id'));
 			}
 			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
-			Services::Registry()->set('Parameters', 'model_type', 'Table');
+			Services::Registry()->set('Parameters', 'model_type', 'dbo');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 			Services::Registry()->set('Parameters', 'model_parameter', 'head');
         }

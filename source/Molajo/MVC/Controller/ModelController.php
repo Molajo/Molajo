@@ -100,8 +100,7 @@ Class ModelController extends Controller
 	 */
 	public function connect($model_type = 'Table', $model_name = null)
 	{
-
-echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br />';
+//echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br />';
 
 		if ($model_name == null) {
 			$this->table_registry_name = null;
@@ -175,6 +174,7 @@ echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br /
 
 		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
+
 		if ($dbo == false) {
 			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
 			return false;
@@ -215,8 +215,13 @@ echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br /
 			} else {
 				$model_parameter = $this->get('model_parameter');
 			}
+			/**
+			echo 'DBO '.$dbo.'<br />';
+			echo $query_object.'<br />';
+			echo $model_parameter.'<br />';
+			 */
 			$this->query_results = $this->model->$query_object($model_parameter);
-			return $this->query_results;  //must directly return for non-DisplayController calls
+			return $this->query_results; //must directly return for non-DisplayController calls
 		}
 
 		/** Only JDatabase queries follow */
@@ -350,12 +355,12 @@ echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br /
 		if (count($triggers) > 0) {
 			$this->onAfterReadEvent($triggers);
 		}
-/**
-echo $query_object.'<br />';
-echo '<pre>';
-var_dump($query_results);
-echo '</pre>';
-*/
+		/**
+		echo $query_object.'<br />';
+		echo '<pre>';
+		var_dump($query_results);
+		echo '</pre>';
+		 */
 		/** Return List */
 		if ($query_object == 'list') {
 			return $this->query_results;

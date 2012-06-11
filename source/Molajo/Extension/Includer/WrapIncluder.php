@@ -76,7 +76,7 @@ Class WrapIncluder extends Includer
 		$value = Services::Registry()->get('Parameters', 'model_parameter', '');
 
 		Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
-		Services::Registry()->set('Parameters', 'model_type', 'Table');
+		Services::Registry()->set('Parameters', 'model_type', 'dbo');
         Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
 
 		/** Cleanup */

@@ -239,7 +239,7 @@ Class ConfigurationService
 				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
 				/** Combine Application and Site Parameters into Configuration */
-				$parameters = Services::Registry()->get('ApplicationsParameters');
+				$parameters = Services::Registry()->get('ApplicationsTableParameters');
 				foreach ($parameters as $key => $value) {
 					Services::Registry()->set('Configuration', $key, $value);
 				}
@@ -321,7 +321,6 @@ Class ConfigurationService
 		/** Return registry, if existing */
 		if ($registry == false) {
 		} else {
-			echo '<br />Registry already available ' . $registry . '<br />';
 			return $registry;
 		}
 
@@ -330,7 +329,6 @@ Class ConfigurationService
 
 		if (file_exists($results)) {
 			$path_and_file = $results;
-//echo '<br /> Model Type:' . $model_type . ' Model Name: ' . $model_name . ' ' . $path_and_file;
 		} else {
 			echo 'Error in ConfigurationService. File not found for '
 				. ' Model Type:' . $model_type
@@ -398,13 +396,11 @@ Class ConfigurationService
 			return false;
 		}
 
-		if (class_exists('RegistryServices')) {
-			$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-			$exists = Services::Registry()->exists($registryName);
-			if ($exists === true) {
-				echo 'GOOD the registry already exists - reuse: ' . $registryName . '<br />';
-				return $registryName;
-			}
+		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+		$exists = Services::Registry()->exists($registryName);
+
+		if ($exists === true) {
+			return $registryName;
 		}
 
 		return false;
@@ -434,8 +430,12 @@ Class ConfigurationService
 			return CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
 		}
 
+		if ($model_type == 'Dbo') {
+			return CONFIGURATION_FOLDER . '/Dbo/' . $model_name . '.xml';
+		}
+
 		/** Validate Model Types */
-		$array = explode(',', 'Table,Listbox,Menuitem,Module,Theme,Page,Template,Wrap,Trigger');
+		$array = explode(',', 'Table,Dbo,listbox,Menuitem,Module,Theme,Page,Template,Wrap,Trigger');
 		if (in_array($model_type, $array)) {
 		} else {
 			echo 'Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
@@ -447,7 +447,8 @@ Class ConfigurationService
 		$extension_name = '';
 		if (Services::Registry()->exists('Parameters', 'extension_path')) {
 			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
-			$extension_name = Services::Registry()->get('Parameters', 'extension_node_title');
+			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
+
 		} else {
 			/** Extension path not available until after the first content read - use Catalog data */
 			if (Services::Registry()->exists('Parameters', 'catalog_type')) {
@@ -474,8 +475,8 @@ Class ConfigurationService
 
 		/** 2. Primary Component (if not current extension) */
 		if (Services::Registry()->exists('RouteParameters')) {
-			$primary_extension_path = Services::Parameters()->get('RouteParameters', 'extension_path', '');
-			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_node_title');
+			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
+			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
 			if ($primary_extension_path == $extension_path
 				|| $primary_extension_path == ''
 			) {

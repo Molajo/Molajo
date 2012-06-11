@@ -84,6 +84,9 @@ class Includer
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Theme*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Page*');
 
+//		echo 'Includer name '. $this->name.' type: '.$this->type.'<br />';
+//		Services::Registry()->get('Parameters', '*');
+
 		return;
 	}
 

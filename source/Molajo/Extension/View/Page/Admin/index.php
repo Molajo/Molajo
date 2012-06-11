@@ -7,8 +7,8 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:module name=Adminheader wrap=Header wrap_class=banner-wrap/>
+<include:template name=Adminheader wrap=Header wrap_class=banner-wrap/>
 <include:message/>
 <include:request/>
-<include:module name=Adminfooter wrap=Footer wrap_class=row,footer/>
+<include:template name=Adminfooter wrap=Footer wrap_class=row,footer/>
 <include:defer/>
