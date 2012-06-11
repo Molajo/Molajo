@@ -66,7 +66,7 @@ Class WrapViewHelper
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($wrap_view_id, 'Wrap', $node);
 
-		/** 500: not found */
+		/** Not found: get system default */
 		if (count($item) == 0) {
 
 			/** System Default */
@@ -97,6 +97,19 @@ Class WrapViewHelper
 		Services::Registry()->set('Parameters', 'wrap_view_catalog_id', $item->catalog_id);
 		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_id', (int)$item->catalog_type_id);
 		Services::Registry()->set('Parameters', 'wrap_view_catalog_type_title', $item->catalog_types_title);
+
+		Services::Registry()->set('Parameters', 'wrap_view_table_registry_name', $item->table_registry_name);
+
+		/** Merge in each custom field namespace  */
+		$customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+
+		if (count($customFieldTypes) > 0) {
+			foreach ($customFieldTypes as $customFieldName) {
+				$customFieldName = ucfirst(strtolower($customFieldName));
+				Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
+				Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
+			}
+		}
 
 		return true;
 	}

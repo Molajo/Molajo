@@ -6,15 +6,24 @@ use Molajo\Service\Services;
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-return;
+
 $date = Services::Date()->getDate()->format('Y-m-d-H-i-s');
 $current_year = Services::Date()->getDate()->format('Y');
-echo '<pre>';
-var_dump($this->row);
-echo '</pre>';
+$first_year = $this->row->copyright_first_year;
+
+if ($first_year == null || $first_year == '') {
+	$ccDateSpan = $current_year;
+
+} elseif ($first_year == $current_year) {
+	$ccDateSpan = $first_year;
+
+} else {
+	$ccDateSpan = $first_year . '-' . $current_year;
+}
+
 ?>
 <p>
-	<?php echo '&#169;' . ' ' . $current_year . ' ' . Services::Registry()->get('Configuration', 'site_title'); ?>
+	<?php echo '&#169;' . ' ' . $ccDateSpan . ' ' . $this->row->copyright_holder; ?>
     <a href="<?php echo $this->row->link; ?>">
         <?php echo $this->row->linked_text; ?> v.<?php echo MOLAJOVERSION; ?></a>
     <?php echo ' ' . $this->row->remaining_text; ?>.

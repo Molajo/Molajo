@@ -64,8 +64,6 @@ Class TemplateIncluder extends Includer
 
 		/** Standard parameters (overwrite extension title with Template */
 		Services::Registry()->set('Parameters', 'extension_title', 'Template');
-//todo: figure out a better way to communicate display on no results for templates and wraps
-		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 0);
 
 		/** Template  */
 		Helpers::TemplateView()->get(Services::Registry()->get('Parameters', 'template_view_id'));
@@ -77,9 +75,12 @@ Class TemplateIncluder extends Includer
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/* Set other model parameters: model_parameter is set in Attributes */
-		$value = Services::Registry()->get('Parameters', 'model_parameter', '');
+		if (Services::Registry()->get('Parameters', 'model_name') == 'Parameters') {
+			Services::Registry()->set('Parameters', 'model_type', 'dbo');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getParameters');
+			Services::Registry()->set('Parameters', 'model_parameter', '');
 
-		if ($this->type == 'asset') {
+		} elseif ($this->type == 'asset') {
 			Services::Registry()->set('Parameters', 'model_name', 'Assets');
 			Services::Registry()->set('Parameters', 'model_type', 'dbo');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
