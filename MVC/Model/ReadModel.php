@@ -8,6 +8,7 @@ namespace Molajo\MVC\Model;
 
 use Molajo\Application;
 use Molajo\Service\Services;
+use Molajo\Service\Services\Authorisation\AuthorisationService;
 
 defined('MOLAJO') or die;
 
@@ -37,8 +38,9 @@ class ReadModel extends Model
 	 * @return ReadModel
 	 * @since  1.0
 	 */
-	public function setBaseQuery($columns, $table_name, $primary_prefix, $primary_key,
-								 $id, $name_key, $name_key_value, $query_object)
+	public function setBaseQuery($columns, $table_name, $primary_prefix,
+								 $primary_key, $id, $name_key, $name_key_value,
+								 $query_object)
 	{
 		if ($this->query->select == null) {
 
@@ -104,6 +106,8 @@ class ReadModel extends Model
 	 *
 	 * Add ACL checking to the Query
 	 *
+	 * Note: When Language query runs, Authorisation Service is not yet available.
+	 *
 	 * @param  $primary_prefix
 	 * @param  $primary_key
 	 * @param  $query_object
@@ -113,12 +117,14 @@ class ReadModel extends Model
 	 */
 	public function addACLCheck($primary_prefix, $primary_key, $query_object)
 	{
+
 		if ($query_object == 'result') {
 			$select = false;
 		} else {
 			$select = true;
 		}
 
+// when language query runs, Services is not yet defined
 		Services::Authorisation()->setQueryViewAccess(
 			$this->query,
 			$this->db,

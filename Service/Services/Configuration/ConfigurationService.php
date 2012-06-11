@@ -61,8 +61,9 @@ Class ConfigurationService
 	public function __construct($configuration_file = null)
 	{
 		/** Initialize list of valid field attributes */
-		self::$valid_field_attributes = array('name', 'type', 'default', 'file', 'identity', 'length',
-			'minimum', 'maximum', 'null', 'required', 'shape', 'size', 'unique', 'values');
+		self::$valid_field_attributes = array('name', 'type', 'default', 'file',
+			'identity', 'length', 'minimum', 'maximum', 'null', 'required',
+			'shape', 'size', 'unique', 'values');
 
 		/** Retrieve Site Data */
 		$this->getSite($configuration_file);
@@ -351,9 +352,7 @@ Class ConfigurationService
 		}
 
 		/** now process it. */
-		if (strtolower($model_type) == 'application'
-			|| strtolower($model_type) == 'language'
-		) {
+		if (strtolower($model_type) == 'application') {
 			return $xml;
 		}
 
@@ -380,7 +379,7 @@ Class ConfigurationService
 		ConfigurationService::setSpecialFieldsRegistry(
 			$registryName, $xml, '', $path_and_file, $model_name);
 
-			return $registryName;
+		return $registryName;
 	}
 
 	/**
@@ -395,9 +394,7 @@ Class ConfigurationService
 	 */
 	public static function checkRegistryExists($model_type, $model_name)
 	{
-		if (strtolower($model_type) == 'application'
-			|| strtolower($model_type) == 'language'
-		) {
+		if (strtolower($model_type) == 'application') {
 			return false;
 		}
 
@@ -405,6 +402,7 @@ Class ConfigurationService
 			$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 			$exists = Services::Registry()->exists($registryName);
 			if ($exists === true) {
+				echo 'GOOD the registry already exists - reuse: ' . $registryName . '<br />';
 				return $registryName;
 			}
 		}
@@ -562,9 +560,9 @@ Class ConfigurationService
 		$type = '';
 		foreach ($xml->attributes() as $key => $value) {
 			if ($key == 'extends') {
-				$extends = (string) $value;
+				$extends = (string)$value;
 			} elseif ($key == 'type') {
-				$type = (string) $value;
+				$type = (string)$value;
 			}
 		}
 
@@ -573,19 +571,16 @@ Class ConfigurationService
 			return;
 		}
 
-		/** Load the parent, if not already existing in the registry */
-		if (strtolower($type) == 'component') {
-			$type = 'table';
-		}
+		/** Can only inherit a Table definition */
+		$parentRegistryName = strtolower($extends . 'Table');
 
-		$parentRegistryName = strtolower($extends . $type);
-
+		/** Load the file and build registry - IF - the registry is not already loaded */
 		if (Services::Registry()->exists($parentRegistryName) == true) {
 		} else {
 			//if not, load it.
 			$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 			$m = new $controllerClass();
-			$results = $m->connect($type, $extends);
+			$results = $m->connect('Table', $extends);
 			if ($results == false) {
 				return false;
 			}
@@ -1041,7 +1036,7 @@ Class ConfigurationService
 			$inheritFields = array();
 			if (count($inherit) > 0) {
 				foreach ($inherit as $row) {
-					foreach($row as $field => $fieldvalue) {
+					foreach ($row as $field => $fieldvalue) {
 						if ($field == 'name') {
 							$inheritFields[] = $fieldvalue;
 						}

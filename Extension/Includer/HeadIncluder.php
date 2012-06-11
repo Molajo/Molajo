@@ -72,7 +72,7 @@ Class HeadIncluder extends Includer
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Services::Registry()->get('Configuration', 'defer_wrap_view_id'));
 			}
-			Services::Registry()->set('Parameters', 'model_name', 'dboMetadata');
+			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
 			Services::Registry()->set('Parameters', 'model_type', 'Table');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 			Services::Registry()->set('Parameters', 'model_parameter', 'defer');
@@ -86,7 +86,7 @@ Class HeadIncluder extends Includer
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Services::Registry()->get('Configuration', 'head_wrap_view_id'));
 			}
-			Services::Registry()->set('Parameters', 'model_name', 'dboMetadata');
+			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
 			Services::Registry()->set('Parameters', 'model_type', 'Table');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 			Services::Registry()->set('Parameters', 'model_parameter', 'head');

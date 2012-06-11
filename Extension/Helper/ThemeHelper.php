@@ -70,7 +70,7 @@ Class ThemeHelper
 		Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
 
 		/** Retrieve the query results */
-		$item = Helpers::Extension()->get($theme_id, 'Table', 'Themes');
+		$item = Helpers::Extension()->get($theme_id, 'Theme', $node);
 
 		/** 500: not found */
 		if (count($item) == 0) {
@@ -97,7 +97,7 @@ Class ThemeHelper
 			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
 			Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
 
-			$item = Helpers::Extension()->get($theme_id, 'Table', 'Themes');
+			$item = Helpers::Extension()->get($theme_id, 'Theme', $node);
 
 			if (count($item) == 0) {
 				Services::Error()->set(500, 'Theme not found');

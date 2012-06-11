@@ -55,7 +55,7 @@ class PublishedstatusTrigger extends ContentTrigger
      */
     public function onBeforeRead()
     {
-        $primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
+        $primary_prefix = $this->get('primary_prefix');
 
         $this->query->where($this->db->qn($primary_prefix)
             . '.' . $this->db->qn('status')

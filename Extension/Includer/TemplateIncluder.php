@@ -80,17 +80,17 @@ Class TemplateIncluder extends Includer
 		$value = Services::Registry()->get('Parameters', 'model_parameter', '');
 
 		if ($this->type == 'asset') {
-			Services::Registry()->set('Parameters', 'model_name', 'dboAssets');
+			Services::Registry()->set('Parameters', 'model_name', 'Assets');
 			Services::Registry()->set('Parameters', 'model_type', 'Table');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
 
 		} elseif ($this->type == 'metadata') {
-			Services::Registry()->set('Parameters', 'model_name', 'dboMetadata');
+			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
 			Services::Registry()->set('Parameters', 'model_type', 'Table');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 
 		} else {
-			Services::Registry()->set('Parameters', 'model_name', 'dboTriggerdata');
+			Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
 			Services::Registry()->set('Parameters', 'model_type', 'Table');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
 		}

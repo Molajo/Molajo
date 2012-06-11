@@ -197,13 +197,13 @@ Class Application
             return false;
         }
 
-        /** Connect Helpers */
-        $continue = Application::Helpers()->connect();
-        if ($continue == false) {
-            return false;
-        }
+		/** Connect Helpers */
+		$continue = Application::Helpers()->connect();
+		if ($continue == false) {
+			return false;
+		}
 
-        /** Session */
+		/** Session */
         //Services::Session()->create(
         //        Services::Session()->getHash(get_class($this))
         //  );
@@ -505,8 +505,12 @@ Class Application
         } else {
             define('EXTENSIONS_VIEWS', EXTENSIONS . '/View');
         }
+		if (defined('EXTENSIONS_LANGUAGES')) {
+		} else {
+			define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
+		}
 
-        if (defined('EXTENSIONS_URL')) {
+		if (defined('EXTENSIONS_URL')) {
         } else {
             define('EXTENSIONS_URL', BASE_URL . 'Molajo/Extension');
         }
@@ -518,7 +522,8 @@ Class Application
         } else {
             define('EXTENSIONS_FORMFIELDS_URL', BASE_URL . 'Molajo/Extension/Formfield');
         }
-        if (defined('EXTENSIONS_MODULES_URL')) {
+
+		if (defined('EXTENSIONS_MODULES_URL')) {
         } else {
             define('EXTENSIONS_MODULES_URL', BASE_URL . 'Molajo/Extension/Module');
         }
@@ -601,11 +606,6 @@ Class Application
         if (defined('SITES_MEDIA_FOLDER')) {
         } else {
             define('SITES_MEDIA_FOLDER', SITES . '/media');
-        }
-
-        if (defined('SITE_LANGUAGES')) {
-        } else {
-            define('SITE_LANGUAGES', SITES_MEDIA_FOLDER . '/Language');
         }
 
         if (defined('SITES_MEDIA_URL')) {

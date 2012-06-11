@@ -59,7 +59,7 @@ class AdmingridTrigger extends ContentTrigger
 		}
 
 		/** Initialization */
-		$primary_prefix = Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a');
+		$primary_prefix = $this->get('primary_prefix');
 
 		/** 1. Prepare Submenu Data */
 		$grid_submenu_items = explode(',', $this->get('grid_submenu_items', 'items,categories,drafts'));

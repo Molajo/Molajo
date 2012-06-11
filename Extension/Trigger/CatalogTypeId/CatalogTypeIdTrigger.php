@@ -43,6 +43,30 @@ class CatalogtypeIdTrigger extends ContentTrigger
         return self::$instance;
     }
 
+
+	/**
+	 * onBeforeRead
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeRead()
+	{
+
+		$catalog_type_id = (int) $this->get('catalog_type_id', 0);
+		if ($catalog_type_id == 0) {
+			return true;
+		}
+
+		$primary_prefix = $this->get('primary_prefix');
+
+		$this->query->where($this->db->qn($primary_prefix)
+			. '.' . $this->db->qn('catalog_type_id')
+			. ' = ' . $catalog_type_id);
+
+		return $this;
+	}
+
     /**
      * Pre-create processing
      *

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="view" group="page">
-    <name>PAGE_VIEW_SYSTEM_ERRORS_NAME</name>
+<extension type="View" group="Page" version="1.0" extends="ExtensionInstances">
+    <name>VIEW_PAGE_SYSTEMERRORS_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
-    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>PAGE_VIEW_SYSTEM_ERRORS_DESCRIPTION</description>
-    <files>
-        <folder>language</folder>
-        <folder>views</folder>
-    </files>
+    <description>VIEW_PAGE_SYSTEMERRORS_DESCRIPTION</description>
+    <model name="Systemerrors" catalog_type_id="1150" />
 </extension>

@@ -57,14 +57,13 @@ class AuthorTrigger extends ContentTrigger
 		/** Retrieve created_by field definition */
 		$field = $this->getField('created_by');
 		if ($field == false) {
-			echo 'nope in <br />';
-			return;
+			return true;
 		}
 
 		/** Retrieve the current value for created by field */
 		$fieldValue = $this->getFieldValue($field);
 		if ((int)$fieldValue == 0) {
-			return;
+			return true;
 		}
 
 		/** Author information already available */
