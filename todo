@@ -21,8 +21,6 @@ Sessions - connect to Symfony's
 Cache - one of the last things - SIMPLE approach, first using files, then add adapters,
     solution should work for file xml, templates, queries, registries, pages, assets
 
-Helpers - collapse Page, Template, and Wrap Helpers into one.
-
 * * * Not part of Core / Part of "sample" install * * *
 
 Molajito Theme -
