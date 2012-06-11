@@ -319,7 +319,7 @@ Class ModelController extends Controller
 				if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
 				} else {
 
-					/** Process each field namespace  */
+					/** Process each field namespace */
 					foreach ($customFieldTypes as $customFieldName) {
 
 						$results =
@@ -333,7 +333,7 @@ Class ModelController extends Controller
 					}
 				}
 
-				/** Retrieve Child Objects  */
+				/** Retrieve Child Objects */
 				if ((int)$this->get('get_item_children') == 1) {
 
 					$children = Services::Registry()->get($this->table_registry_name, 'Children');

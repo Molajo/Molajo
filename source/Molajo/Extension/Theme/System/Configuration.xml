@@ -9,14 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>THEME_SYSTEM_DESCRIPTION</description>
-    <model name="Themes" catalog_type_id="1500">
-        <customfields>
-            <customfield name="parameters">
-                <field name="criteria_display_view_on_no_results" type="binary" null="1" default="1" values="0,1"/>
-                <field name="criteria_snippet_length" type="integer" null="1" default="200" values=""/>
-                <field name="criteria_extension_instance_id" type="integer" null="1" default="1" values=""/>
-                <field name="criteria_catalog_type_id" type="integer" null="1" default="1" values=""/>
-            </customfield>
-        </customfields>
-    </model>
+    <model name="Themes" catalog_type_id="1500" />
 </extension>

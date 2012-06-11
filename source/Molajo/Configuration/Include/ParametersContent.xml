@@ -1,7 +1,6 @@
 <include name="ParametersCommon"/>
 <include name="ParametersItem"/>
 <include name="ParametersList"/>
-<include name="ParametersMenuitem"/>
 <include name="ParametersImage"/>
 <include name="ParametersGravatar"/>
 <include name="ParametersAsset"/>
