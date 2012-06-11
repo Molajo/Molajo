@@ -70,8 +70,6 @@ Class Application
      *  3. Execute (Display or Action)
      *  4. Response
      *
-     * todo: Add events
-     *
      * @return mixed
      * @since   1.0
      */

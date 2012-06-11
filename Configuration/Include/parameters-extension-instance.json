@@ -109,25 +109,3 @@
         "log_user_activity_delete":"0"
     }
 }
-
-{
-"2":{
-
-"site_name":"Molajo",
-"link":"http://Molajo.org",
-"linked_text":"Molajo",
-"remaining_text":" is Free Software.",
-"model_name":"Parameters",
-"model_type":"dbo",
-"model_parameter":"AdminfooterDboParameter",
-"model_query_object":"getParameters",
-
-"criteria_display_view_on_no_results":"",
-"criteria_snippet_length":"",
-"criteria_extension_instance_id":"",
-"criteria_catalog_type_id":"",
-
-"cache":"",
-"cache_time":"",
-"cache_handler":""
-}  }

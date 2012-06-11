@@ -59,8 +59,8 @@ Class ContentHelper
 		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
-			'Table',
-			'Menuitems',
+			'Menuitem',
+			Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
 			'item'
 		);
 
@@ -149,6 +149,8 @@ Class ContentHelper
 		Services::Registry()->delete($parmName, 'menuitem_template*');
 		Services::Registry()->delete($parmName, 'menuitem_wrap*');
 		Services::Registry()->delete($parmName, 'menuitem_model*');
+		Services::Registry()->delete($parmName, 'item*');
+		Services::Registry()->delete($parmName, 'list*');
 
 		Services::Registry()->copy($parmName, 'Parameters');
 

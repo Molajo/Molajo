@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Service\Services\Configuration;
 
@@ -435,14 +435,19 @@ Class ConfigurationService
 		}
 
 		/** Validate Model Types */
-		$array = explode(',', 'Table,Dbo,listbox,Menuitem,Module,Theme,Page,Template,Wrap,Trigger');
+		$array = explode(',', 'Table,Dbo,Listbox,Menuitem,Theme,Page,Template,Wrap,Trigger');
 		if (in_array($model_type, $array)) {
 		} else {
 			echo 'Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
 			return false;
 		}
 
-		/** 1. Current Extension */
+		/** 1. Menu Item */
+		if ($model_type == 'Menuitem') {
+			return ConfigurationService::locateFileMenuitem($model_type, $model_name);
+		}
+
+		/** 2. Current Extension */
 		$extension_path = false;
 		$extension_name = '';
 		if (Services::Registry()->exists('Parameters', 'extension_path')) {
@@ -473,7 +478,7 @@ Class ConfigurationService
 			}
 		}
 
-		/** 2. Primary Component (if not current extension) */
+		/** 3. Primary Component (if not current extension) */
 		if (Services::Registry()->exists('RouteParameters')) {
 			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
 			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
@@ -496,7 +501,7 @@ Class ConfigurationService
 			}
 		}
 
-		/** 3. The Manifest for the model type/name itself */
+		/** 4. The Manifest for the model type/name itself */
 		if ($model_type == 'Menuitem' || $model_type == 'Module' || $model_type == 'Trigger'
 			|| $model_type == 'Theme' || $model_type == 'Page'
 			|| $model_type == 'Template' || $model_type == 'Wrap'
@@ -516,12 +521,74 @@ Class ConfigurationService
 			}
 		}
 
-		/** 4. Application Configuration folder is the last */
+		/** 5. Application Configuration folder is the last */
 		if (file_exists(CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml')) {
 			return CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
 		}
 
 		return false;
+	}
+
+	/**
+	 * locateFileMenuitem uses override and default locations to find the file requested
+	 *
+	 * Usage:
+	 * Services::Configuration()->locateFileMenuitem('Menuitem', 'grid');
+	 *
+	 * @return mixed object or void
+	 * @since   1.0
+	 * @throws \RuntimeException
+	 */
+	public static function locateFileMenuitem($model_type, $model_name)
+	{
+
+		$model_type = trim(ucfirst(strtolower($model_type)));
+		$model_name = trim(ucfirst(strtolower($model_name)));
+		$model_name_type = $model_name . $model_type;
+
+		/** 1. Current Extension */
+		$extension_path = false;
+		$extension_name = '';
+		if (Services::Registry()->exists('Parameters', 'extension_path')) {
+			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
+			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
+
+			/** ex. Component/Article/GridMenuitem.xml */
+			if (file_exists($extension_path . '/' . $model_name_type . '.xml')
+			) {
+				return $extension_path . '/' . $model_name_type . '.xml';
+			}
+		}
+
+		/** 2. Primary Component (if not current extension) */
+		if (Services::Registry()->exists('RouteParameters')) {
+			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
+			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
+			if ($primary_extension_path == $extension_path
+				|| $primary_extension_path == ''
+			) {
+			} else {
+				/** ex. Component/Article/GridMenuitem.xml */
+				if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
+				) {
+					return $primary_extension_path . '/' . $model_name_type . '.xml';
+				}
+			}
+		}
+
+		/** 3. Override within Menuitem folder ex. GridMenuitem.xml */
+		if (file_exists(EXTENSIONS_COMPONENTS . '/Menuitems/' . $model_name_type . '.xml')) {
+			return EXTENSIONS_COMPONENTS . '/Menuitems/' . $model_name_type . '.xml';
+		}
+
+		/** 4. Menuitem Core Configuration folder ex. Grid.xml */
+		if (file_exists(CONFIGURATION_FOLDER . '/Menuitemtype/' . $model_name . '.xml')) {
+			return CONFIGURATION_FOLDER . '/Menuitemtype/' . $model_name . '.xml';
+		}
+
+		/** 5. Menuitem Configuration - default to Menuitems Component Configuration.xml file */
+		return EXTENSIONS_COMPONENTS . '/' . ucfirst(strtolower($model_name)) . '/Configuration.xml';
+
 	}
 
 	/**
