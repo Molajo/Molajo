@@ -18,7 +18,7 @@ Services::Registry()->set('Trigger', 'post_header', '<h2>' . $this->row->title .
 			<include:wrap name=Header value=post_header/>
 				<?php echo $this->row->content_text; ?>
 				<include:wrap name=Footer value=post_footer/>
-				<include:template name=Author wrap=Section value=author/>
+
 		</div>
 	</div>
 </div>

@@ -49,9 +49,6 @@ Class MessageIncluder extends Includer
 	 */
 	protected function setRenderCriteria()
 	{
-		Services::Registry()->set('Parameters', 'model_name', 'Messages');
-		Services::Registry()->set('Parameters', 'model_type', 'Table');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
 
 		Services::Registry()->set('Parameters', 'template_view_id',
 			Services::Registry()->get('Configuration', 'message_template_view_id'));
@@ -68,6 +65,11 @@ Class MessageIncluder extends Includer
 
 		/** Merge Configuration in */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		/** DBO  */
+		Services::Registry()->set('Parameters', 'model_name', 'Messages');
+		Services::Registry()->set('Parameters', 'model_type', 'dbo');
+		Services::Registry()->set('Parameters', 'model_query_object', 'getMessages');
 
 		/** Cleanup */
 		Services::Registry()->delete('Parameters', 'item*');

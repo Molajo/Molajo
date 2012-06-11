@@ -302,8 +302,12 @@ Class LanguageService
 
 				/** load the corresponding override */
 				$filename = $path . '/' . $language . '.override.ini';
-				$override_strings = $this->parse($filename);
-				$loadedFiles[] = $filename;
+				if (Services::Filesystem()->fileExists($filename)) {
+					$override_strings = $this->parse($filename);
+					$loadedFiles[] = $filename;
+				} else {
+					$override_strings = array();
+				}
 
 				/** Save strings in an array */
 				$loadedStrings = array_merge($strings, $override_strings);
@@ -319,8 +323,6 @@ Class LanguageService
 	}
 
 	/**
-	 * parse
-	 *
 	 * Parses a language file.
 	 *
 	 * @param string $filename The name of the file.
@@ -365,6 +367,9 @@ Class LanguageService
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
 		$installed = $helper->get(0, 'Table', 'Languages', 'list', 1100);
+		if ($installed == false || count($installed) < 1) {
+			return false;
+		}
 
 		$languageList = array();
 		foreach ($installed as $language) {
@@ -397,7 +402,7 @@ Class LanguageService
 			return $language;
 		}
 
-		/** Determine if language requested is installed */
+		/** Determine if language requested is actually installed */
 		$languagesInstalled = Services::Registry()->get('Languages', 'installed');
 
 		$id = 0;
@@ -407,7 +412,6 @@ Class LanguageService
 				break;
 			}
 		}
-
 		if ($id == 0) {
 			return false;
 		}
@@ -420,6 +424,7 @@ Class LanguageService
 		}
 
 		Services::Registry()->createRegistry($language);
+		Services::Registry()->set($language, 'id', $id);
 
 		$parameters = Services::Registry()->get('LanguagesTableParameters');
 		foreach ($parameters as $key => $value) {

@@ -104,7 +104,8 @@ class AuthorTrigger extends ContentTrigger
 			if (substr($key, 0, strlen('item_')) == 'item_'
 				|| substr($key, 0, strlen('form_')) == 'form_'
 				|| substr($key, 0, strlen('list_')) == 'list_'
-				|| substr($key, 0, strlen('password')) == 'password') {
+				|| substr($key, 0, strlen('password')) == 'password'
+			) {
 
 			} else {
 

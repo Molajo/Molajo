@@ -633,6 +633,7 @@ Class AssetService
 	 */
 	public function getAssets($type)
 	{
+
 		$priorityType = $type . 'Priorities';
 
 		$rows = Services::Registry()->get('Assets', $type);

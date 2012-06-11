@@ -6,9 +6,12 @@ use Molajo\Service\Services;
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
+return;
 $date = Services::Date()->getDate()->format('Y-m-d-H-i-s');
 $current_year = Services::Date()->getDate()->format('Y');
+echo '<pre>';
+var_dump($this->row);
+echo '</pre>';
 ?>
 <p>
 	<?php echo '&#169;' . ' ' . $current_year . ' ' . Services::Registry()->get('Configuration', 'site_title'); ?>

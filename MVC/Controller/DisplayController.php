@@ -66,25 +66,29 @@ class DisplayController extends ModelController
 		$model_query_object = $this->get('model_query_object', 'item');
 
 		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
-/**
-echo 'Table Registry Name ' . $table_registry_name . '<br />';
+		/**
+		echo 'Table Registry Name ' . $table_registry_name . '<br />';
 
-echo 'Includer Type '. $includer_type .'<br />';
-echo 'Includer Name '. $includer_name .'<br />';
+		echo 'Includer Type '. $includer_type .'<br />';
+		echo 'Includer Name '. $includer_name .'<br />';
 
-echo 'Model Type: ' . $model_type . '<br />'
-	. 'Model Name:  ' . $model_name . '<br />'
-	. 'Table Registry Name ' . $table_registry_name . '<br />'
-	. 'Model Parameter '. $model_parameter .'<br />'
-	. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
-*/
+		echo 'Model Type: ' . $model_type . '<br />'
+		. 'Model Name:  ' . $model_name . '<br />'
+		. 'Table Registry Name ' . $table_registry_name . '<br />'
+		. 'Model Parameter '. $model_parameter .'<br />'
+		. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
+		 */
+
 		if ($model_name == '') {
 			$this->query_results = array();
 
 		} else {
 			$this->connect($model_type, $model_name);
 
-			if ((int) $this->get('content_id') == 0) {
+			if ((int)$this->get('content_id') == 0) {
+
+			} elseif (strtolower($model_type) == 'dbo') {
+
 			} else {
 				$this->set('id', $this->get('content_id'));
 				$model_query_object = 'item';
@@ -108,7 +112,7 @@ echo 'Model Type: ' . $model_type . '<br />'
 
 		/** no results */
 		if (count($this->query_results) == 0
-			&& (int) $this->get('criteria_display_view_on_no_results', 0) == 0
+			&& (int)$this->get('criteria_display_view_on_no_results', 0) == 0
 		) {
 			return '';
 		}
@@ -278,7 +282,6 @@ echo 'Model Type: ' . $model_type . '<br />'
 					}
 
 					$new_query_results[] = $item;
-
 				}
 			}
 
