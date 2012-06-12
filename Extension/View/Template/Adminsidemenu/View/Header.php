@@ -7,6 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 <header>
-    <h2><?php echo $this->row->title; ?></h2>
+    <h2>Heading</h2>
 </header>
-<include:module name=pullquote template=pullquote wrap=aside/>

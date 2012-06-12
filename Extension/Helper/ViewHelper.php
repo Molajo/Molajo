@@ -192,7 +192,7 @@ Class ViewHelper
 			return false;
 		}
 
-		$plus = '/View/' . '/' . $type . '/' . ucfirst(strtolower($node));
+		$plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
 		/** 1. Theme */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
