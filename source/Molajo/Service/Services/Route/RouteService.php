@@ -420,8 +420,6 @@ Class RouteService
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-		//Services::Registry()->get('Parameters', '*');
-
 		return;
 	}
 }
