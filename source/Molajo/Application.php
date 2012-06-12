@@ -103,7 +103,7 @@ Class Application
         }
 
 		/** onAfterRoute: */
-		Services::Event()->schedule('onAfterRoute', array(Services::Registry()->get('Parameters')));
+		Services::Event()->schedule('onAfterRoute', array('parameters' => Services::Registry()->get('Parameters')));
 
         /** Authorise: Services::Registry()->get('Parameters', 'status_authorised') */
         $continue = $this->authorise();

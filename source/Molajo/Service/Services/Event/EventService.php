@@ -79,7 +79,6 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
-
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
 		if ($exists == false) {

@@ -94,11 +94,7 @@ Class LanguageService
 		if ($language == null) {
 			$language = Services::Registry()->get('Languages', 'Current');
 		}
-		return Services::Registry()->get(
-			$language,
-			$string,
-			$string
-		);
+		return Services::Registry()->get($language . 'translate', $string, $string);
 	}
 
 	/**
@@ -287,6 +283,8 @@ Class LanguageService
 			return true;
 		}
 
+		$loadedStrings = Services::Registry()->getArray($language . 'translate');
+
 		/** Process each file, loading the language strings and override strings */
 		foreach ($loadFiles as $file) {
 
@@ -310,14 +308,21 @@ Class LanguageService
 				}
 
 				/** Save strings in an array */
-				$loadedStrings = array_merge($strings, $override_strings);
+				$new = array_merge($strings, $override_strings);
 			}
 		}
+
+		$loadedStrings = array_merge($loadedStrings, $new);
 
 		/** Update registry for work accomplished */
 		Services::Registry()->set($language, 'LoadedPaths', $loadedPaths);
 		Services::Registry()->set($language, 'LoadedFiles', $loadedFiles);
 		Services::Registry()->set($language, 'LoadedStrings', $loadedStrings);
+
+		foreach($loadedStrings as $key => $value) {
+			Services::Registry()->set($language.'translate', $key, $value);
+		}
+		Services::Registry()->sort($language.'translate');
 
 		return true;
 	}

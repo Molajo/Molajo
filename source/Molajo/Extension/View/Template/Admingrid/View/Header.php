@@ -6,8 +6,7 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-$rowCount = Services::Registry()->get('Trigger', 'GridTableRows');
-defined('MOLAJO') or die; ?>
+$rowCount = Services::Registry()->get('Trigger', 'GridTableRows'); ?>
 <table class="gridlist">
 <thead>
     <tr>

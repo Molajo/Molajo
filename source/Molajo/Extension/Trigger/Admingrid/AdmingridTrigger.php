@@ -52,19 +52,32 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	public function onAfterRoute()
 	{
-		echo 'Admingridxyz'.$this->get('template_view_path_node');
-
 		/** Is this an Administrative Grid Request?  */
 		if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
 		} else {
 			return true;
 		}
+		$model_type = $this->get('model_type');
+		$model_name = $this->get('model_name');
 
+		//todo: move this query out of here, into the ModelController
 		/** Initialization */
-		$primary_prefix = $this->get('primary_prefix');
+		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$results = $m->connect($model_type, $model_name);
+		if ($results == false) {
+			return false;
+		}
+
+		$table_name = $m->get('table_name');
+
+		$primary_prefix = $m->get('primary_prefix');
+		$primary_key = $m->get('primary_key');
+		$name_key = $m->get('name_key');
 
 		/** 1. Prepare Submenu Data */
 		$grid_submenu_items = explode(',', $this->get('grid_submenu_items', 'items,categories,drafts'));
+
 		$query_results = array();
 
 		$url = Services::Registry()->get('Configuration', 'application_base_url');
@@ -153,9 +166,9 @@ class AdmingridTrigger extends ContentTrigger
 
 					if ($selectedValue == '') {
 					} else {
-						$this->query->where($this->db->qn($primary_prefix)
-							. '.' . $this->db->qn($list)
-							. ' = ' . $this->db->q($selectedValue));
+						$m->model->query->where($m->model->db->qn($primary_prefix)
+							. '.' . $m->model->db->qn($list)
+							. ' = ' . $m->model->db->q($selectedValue));
 					}
 
         			/** Store the name of each filter list in an array */
@@ -173,7 +186,7 @@ class AdmingridTrigger extends ContentTrigger
 		Services::Registry()->set('Trigger', 'GridTableColumns', $grid_columns);
 
 		foreach ($grid_columns as $column) {
-			$this->query->select($this->db->qn($primary_prefix)	. '.' . $this->db->qn($column));
+			$m->model->query->select($m->model->db->qn($primary_prefix)	. '.' . $m->model->db->qn($column));
 		}
 
 		Services::Registry()->set('Trigger', 'GridTableRows', $this->get('grid_rows', 5));
@@ -186,12 +199,13 @@ class AdmingridTrigger extends ContentTrigger
 		Services::Registry()->set('Trigger', 'GridTableOrderingDirection', $direction);
 		$this->set('model_direction', $direction);
 
-		$this->query->order($this->db->qn($primary_prefix) . '.' . $this->db->qn($ordering) . ' ' . $direction);
-
-		$current = 5;
+		$m->model->query->from($m->model->db->qn($table_name) . ' as ' . $m->model->db->qn($primary_prefix));
+		$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . $this->get('criteria_catalog_type_id'));
+		//$m->model->query->order($m->model->db->qn($ordering));
 
 		/** 5. Grid Pagination */
 		$query_results = array();
+		$current = 0;
 
 		$row = new \stdClass();
 		$row->link = $url.$connector.'&start='.$current + 5;
@@ -227,6 +241,18 @@ class AdmingridTrigger extends ContentTrigger
 		/** 6. Grid Batch */
 		Services::Registry()->set('Trigger', 'GridBatch', $this->get('grid_batch', 1));
 
+		/** Run the query and store results */
+		$m->model->db->setQuery($m->model->query->__toString(), $offset, $count);
+
+		$query_results = $m->model->db->loadObjectList();
+		Services::Registry()->set('Trigger', 'GridQueryResults', $query_results);
+
+		Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
+		Services::Registry()->set('Parameters', 'model_type', 'dbo');
+		Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+		Services::Registry()->set('Parameters', 'model_parameter', 'GridQueryResults');
+
+		Services::Registry()->set('Trigger', '*');
 
 		return true;
 	}
