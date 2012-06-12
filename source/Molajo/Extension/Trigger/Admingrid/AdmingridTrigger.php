@@ -210,7 +210,7 @@ class AdmingridTrigger extends ContentTrigger
 		$row = new \stdClass();
 		$row->link = $url.$connector.'&start='.$current + 5;
 		$row->class = ' page-prev';
-		$row->link_text = ' Prev';
+		$row->link_text = ' 1';
 
 		$query_results[] = $row;
 
@@ -224,7 +224,7 @@ class AdmingridTrigger extends ContentTrigger
 		$row = new \stdClass();
 		$row->link = $url.$connector.'&start='.$current + 15;
 		$row->class = ' page-next';
-		$row->link_text = ' Next';
+		$row->link_text = ' 3';
 
 		$query_results[] = $row;
 
