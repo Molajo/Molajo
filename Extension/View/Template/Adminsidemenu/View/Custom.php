@@ -5,35 +5,16 @@
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-<header>
-	<h2>Heading</h2>
-</header>
-<div>
-   <h3><a href="#">Section 1</a></h3>
-   <div>
-       <ul>
-		   <li>Item 1</li>
-		   <li>Item 2</li>
-		   <li>Item 3</li>
-       </ul>
-    </div>
-   <h3><a href="#">Section 2</a></h3>
-	<div>
-		<ul>
-			<li>Item 1</li>
-			<li>Item 2</li>
-			<li>Item 3</li>
-		</ul>
-	</div>
-   <h3><a href="#">Section 3</a></h3>
-	<div>
-		<ul>
-			<li>Item 1</li>
-			<li>Item 2</li>
-			<li>Item 3</li>
-		</ul>
-	</div>
-</div>
-<footer>
-	<h3>Footer Note</h3>
-</footer>
+
+<dl class="nice contained tabs">
+	<dd><a href="#nice1" class="active">Hierarchy</a></dd>
+	<dd><a href="#nice2">Tasks</a></dd>
+	<dd><a href="#nice3">Profile</a></dd>
+</dl>
+
+<ul class="nice tabs-content contained">
+	<li class="active" id="nice1Tab">This is nice tab 1's content. Pretty neat, huh?</li>
+	<li id="nice2Tab">This is nice tab 2's content. Now you see it!</li>
+	<li id="nice3Tab">This is nice tab 3's content. It's, you know...okay.</li>
+</ul>
+

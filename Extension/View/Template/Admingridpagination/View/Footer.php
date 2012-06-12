@@ -5,4 +5,5 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
+	<li class="unavailable"><a href="">&raquo;</a></li>
 </ul>

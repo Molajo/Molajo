@@ -1,35 +1,47 @@
 <?php
 use Molajo\Service\Services;
+
 /**
-* @package     Molajito
-* @copyright   2012 Amy Stephen. All rights reserved.
-* @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
-*/
+ * @package     Molajito
+ * @copyright   2012 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:template name=Adminheader wrap=Header wrap_class=banner-wrap/>
-<include:message/>
-<div class="grid">
+<div class="container">
 	<div class="row">
-		<div class="slot-6">
-			<include:template name=Adminnavigationbar wrap=Nav Value=GridBatch/>
-		</div>
-		<div class="slot-7-8-9">
-			<include:template name=Adminsubmenu wrap=Section value=AdminSubmenu/>
-			<include:template name=Admintoolbar wrap=Section value=Admintoolbar/>
-			<include:template name=Admingridfilters wrap=Section value=GridFilters/>
+		<div class=".twelve.columns (last)">
+			<include:template name=Adminheader wrap=None/>
+			<include:message/>
 		</div>
 	</div>
+
 	<div class="row">
-		<div class="slot-6">
+		<div class=".four.columns">
+			<include:template name=Adminnavigationbar wrap=None Value=GridBatch/>
+		</div>
+		<div class=".eight.columns (last)">
+			<include:template name=Adminsubmenu wrap=None value=AdminSubmenu/><br />
+			<include:template name=Admintoolbar wrap=None value=Admintoolbar/><br />
+			<include:template name=Admingridfilters wrap=None value=GridFilters/><br />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class=".four.columns">
 			<include:template name=Adminsidemenu wrap=Nav value=GridBatch/>
 		</div>
-		<div class="slot-7-8-9">
+		<div class=".eight.columns (last)">
 			<include:request/>
-			<include:template name=Admingridpagination wrap=Nav wrap_class=page value=GridPagination/>
-			<include:template name=Admingridbatch wrap=Section value=GridBatch/>
+			<include:template name=Admingridpagination wrap=None value=GridPagination/>
+			<include:template name=Admingridbatch wrap=None value=GridBatch/>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class=".twelve.columns (last)">
+			<include:template name=Adminfooter wrap=Footer wrap_class=row,footer/>
 		</div>
 	</div>
 </div>
-<include:template name=Adminfooter wrap=Footer wrap_class=row,footer/>
 <include:defer/>
