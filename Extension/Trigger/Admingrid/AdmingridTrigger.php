@@ -50,10 +50,12 @@ class AdmingridTrigger extends ContentTrigger
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function onBeforeRead()
+	public function onAfterRoute()
 	{
+		echo 'Admingridxyz'.$this->get('template_view_path_node');
+
 		/** Is this an Administrative Grid Request?  */
-		if (strtolower($this->get('template_view_title')) == 'admingrid') {
+		if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
 		} else {
 			return true;
 		}
@@ -224,6 +226,7 @@ class AdmingridTrigger extends ContentTrigger
 
 		/** 6. Grid Batch */
 		Services::Registry()->set('Trigger', 'GridBatch', $this->get('grid_batch', 1));
+
 
 		return true;
 	}

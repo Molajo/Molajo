@@ -221,6 +221,7 @@ Class ModelController extends Controller
 			echo $model_parameter.'<br />';
 			 */
 			$this->query_results = $this->model->$query_object($model_parameter);
+
 			return $this->query_results; //must directly return for non-DisplayController calls
 		}
 

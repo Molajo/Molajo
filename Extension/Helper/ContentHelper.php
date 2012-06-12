@@ -149,8 +149,6 @@ Class ContentHelper
 		Services::Registry()->delete($parmName, 'menuitem_template*');
 		Services::Registry()->delete($parmName, 'menuitem_wrap*');
 		Services::Registry()->delete($parmName, 'menuitem_model*');
-		Services::Registry()->delete($parmName, 'item*');
-		Services::Registry()->delete($parmName, 'list*');
 
 		Services::Registry()->copy($parmName, 'Parameters');
 

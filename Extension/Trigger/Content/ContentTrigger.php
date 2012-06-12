@@ -478,6 +478,17 @@ class ContentTrigger extends Trigger
         return true;
     }
 
+	/**
+	 * On after route
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRoute()
+	{
+		return true;
+	}
+
     /**
      * Pre-update processing
      *
@@ -521,7 +532,7 @@ class ContentTrigger extends Trigger
     }
 
     /**
-     * Post-read processing
+     * Post-delete processing
      *
      * @param   $this->query_results
      * @param   $model

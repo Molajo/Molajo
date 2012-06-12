@@ -79,6 +79,7 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
+
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
 		if ($exists == false) {
@@ -91,7 +92,7 @@ Class EventService
 			return $arguments;
 		}
 
-		/** Filter for specified triggers or use all triggers registered for event */
+		/** Filter for specified triggers (Query triggers) or use all triggers registered for event */
 		if (is_array($selections)) {
 
 		} else {
@@ -110,7 +111,8 @@ Class EventService
 			$selections = array();
 			if (count($registrations) > 0) {
 				foreach ($registrations as $key => $value) {
-					$selections[$key] = $value;
+					$temp = substr($key, 0, strlen($key) - strlen('Trigger'));
+					$selections[] = $temp;
 				}
 			}
 		}
@@ -143,6 +145,7 @@ Class EventService
 						$connection->setFields();
 					}
 					/** Execute the Trigger Method */
+
 					$results = $connection->$event();
 
 					if ($results == false) {
