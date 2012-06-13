@@ -150,7 +150,6 @@ Class RouteService
 		$this->getRouteParameters();
 
 		/**   Return to Application Object */
-
 		return $this;
 	}
 
@@ -254,10 +253,14 @@ Class RouteService
 
 			$filter = (string)$item['filter'];
 			if ($filter === null) {
-				$filter = 'char';
+				$filter = 'int';
 			}
 
-			$value = Services::Request()->get('request')->get($key);
+			if ($key == '#') {
+				$value = null;
+			} else {
+				$value = Services::Request()->get('request')->get($key);
+			}
 
 			if ($value === null) {
 			} else {

@@ -111,8 +111,16 @@ Class RedirectService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @since  1.0
      */
-    public function redirect()
+    public function redirect($url = null, $code = null)
     {
+		if ($url == null) {
+		} else {
+			$this->url = $url;
+		}
+		if ($code == null) {
+		} else {
+			$this->code = $code;
+		}
         Services::Debug()->set('RedirectServices::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
 
         return new RedirectResponse($this->url, $this->code);
