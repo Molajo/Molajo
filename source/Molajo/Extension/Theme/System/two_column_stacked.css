@@ -1,0 +1,58 @@
+body{	
+  background: #EEE;
+  color: #555;
+  background-color: #F4F4F4;
+  margin: 20px 0;
+}
+
+@media only screen and (min-device-width: 481px){
+
+  .shadowed {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+  }
+
+  .rounded-top-corners {
+    -webkit-border-top-left-radius: 5px;
+    -khtml-border-radius-topleft: 5px;	
+    -moz-border-radius-topleft: 5px;
+    border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -khtml-border-radius-topright: 5px;	
+    -moz-border-radius-topright: 5px;
+    border-top-right-radius: 5px;
+  }
+
+
+  .rounded-bottom-corners {
+    -webkit-border-bottom-left-radius: 5px;
+    -khtml-border-radius-bottomleft: 5px;	
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -khtml-border-radius-bottomright: 5px;	
+    -moz-border-radius-bottomright: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+.row {
+  background-color: #FEFEFE;
+}
+
+nav {
+  background-color: #EEE;
+}
+
+#banner { border-top: solid 20px #00A5FF; }
+#banner h1, h4 { padding: 0 20px; }
+#search { margin: 10px; }
+
+footer {  border-top: solid 4px #EEE;  }
+footer h6 { padding: 10px 20px;}
+
+article h3, p { padding: 5px 20px; }
+aside h4, p { padding: 5px 20px; }
+
+

@@ -5,10 +5,12 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-<dl class="sub-nav">
-	<dt>Quick list</dt>
-	<dd class="active"><a href="#">Home</a></dd>
-	<dd><a href="#about">About</a></dd>
-	<dd><a href="#contact">Contact</a></dd>
-</dl>
+<ul class="nav-section">
+	<li><a href="admin">Home</a></li>
+	<li><a href="admin/content">Content</a></li>
+	<li><a href="admin/access">Access</a></li>
+	<li><a href="admin/build">Build</a></li>
+	<li><a href="admin/configure">Configure</a></li>
+	<li><a href="admin/install">Install</a></li>
+</ul>
 
