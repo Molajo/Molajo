@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <list>
+    <parameter name="#" filter="int"/>
+    <parameter name="filter" filter="char"/>
+    <parameter name="submenu" filter="char"/>
     <parameter name="action" filter="char"/>
     <parameter name="author" filter="char"/>
     <parameter name="category" filter="char"/>

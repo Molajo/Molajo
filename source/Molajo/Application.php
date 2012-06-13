@@ -265,7 +265,7 @@ Class Application
 		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 
 		/** Display Action */
-		if ($action == 'display') {
+		if ($action == 'display' || $action == 'edit' || $action == 'add') {
 
 			$continue = $this->display();
 
@@ -347,33 +347,20 @@ Class Application
 	 */
 	protected function action()
 	{
-		/** Action: Database action
-		$temp = Services::Registry()->initialise();
-		$temp->loadArray($this->parameters);
-		$this->parameters = $temp;
+		$redirect_url = BASE_URL . APPLICATION_URL_PATH;
 
-		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 0) {
-		$link = $this->page_request->get('url_request_sef');
-		} else {
-		$link = $this->page_request->get('url_request');
+		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+			$redirect_url .= Services::Registry()->get('Parameters', 'catalog_url_sef_request');
+			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1) {
+				$redirect_url .= '.html';
+			}
+		}  else {
+			$redirect_url .= Services::Registry()->get('Parameters', 'catalog_url_request');
 		}
-		Services::Registry()->set('Request', 'redirect_on_failure', $link);
 
-		Services::Registry()->set('Request', 'model',
-		ucfirst(trim(Services::Registry()->get('Request', 'mvc_model'))) . 'Model');
-		$cc = 'Molajo' . ucfirst(Services::Registry()->get('Request', 'mvc_controller')) . 'Controller';
-		Services::Registry()->set('Request', 'controller', $cc);
-		$action = Services::Registry()->get('Parameters', 'request_action');
-		Services::Registry()->set('Parameters', 'request_action', $action);
-		Services::Registry()->set('Request', 'id', Services::Registry()->get('Request', 'mvc_id'));
-		$controller = new $cc($this->page_request, $this->parameters);
-		 */
-		/** execute action: non-display, edit, or add action
-		$continue = $controller->$action();
-		 */
-		//redirect
+		Services::Redirect()->redirect($redirect_url, '301')->send();
 
-		return true;
+		exit(0);
 	}
 
 	/**
