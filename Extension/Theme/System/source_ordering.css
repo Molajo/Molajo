@@ -1,0 +1,19 @@
+header.row {
+  border-bottom: solid 1px #E6E6E6;
+}
+footer.row {
+  border-top: solid 1px #E6E6E6;
+  padding-top: 20px;
+}
+
+@media only screen and (min-device-width: 800){
+  #side {
+    border-right: solid 1px #EEE;
+  }
+}
+
+#main p,
+#side p {
+  padding: 20px 10px 0 10px;
+}
+

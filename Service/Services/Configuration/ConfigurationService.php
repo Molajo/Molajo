@@ -577,8 +577,8 @@ Class ConfigurationService
 		}
 
 		/** 3. Override within Menuitem folder ex. GridMenuitem.xml */
-		if (file_exists(EXTENSIONS_COMPONENTS . '/Menuitems/' . $model_name_type . '.xml')) {
-			return EXTENSIONS_COMPONENTS . '/Menuitems/' . $model_name_type . '.xml';
+		if (file_exists(EXTENSIONS . '/Menuitems/' . $model_name_type . '.xml')) {
+			return EXTENSIONS . '/Menuitems/' . $model_name_type . '.xml';
 		}
 
 		/** 4. Menuitem Core Configuration folder ex. Grid.xml */
@@ -587,7 +587,7 @@ Class ConfigurationService
 		}
 
 		/** 5. Menuitem Configuration - default to Menuitems Component Configuration.xml file */
-		return EXTENSIONS_COMPONENTS . '/' . ucfirst(strtolower($model_name)) . '/Configuration.xml';
+		return EXTENSIONS . '/' . ucfirst(strtolower($model_name)) . '/Configuration.xml';
 
 	}
 

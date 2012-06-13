@@ -7,7 +7,7 @@
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
 $rowCount = Services::Registry()->get('Trigger', 'GridTableRows'); ?>
-<table class="gridlist">
+<table class="responsive">
 <thead>
     <tr>
         <?php
