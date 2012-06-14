@@ -541,7 +541,6 @@ Class ConfigurationService
 	 */
 	public static function locateFileMenuitem($model_type, $model_name)
 	{
-
 		$model_type = trim(ucfirst(strtolower($model_type)));
 		$model_name = trim(ucfirst(strtolower($model_name)));
 		$model_name_type = $model_name . $model_type;

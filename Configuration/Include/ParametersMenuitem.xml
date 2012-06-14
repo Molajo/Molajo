@@ -2,8 +2,7 @@
 
 <field name="menuitem_source_id" type="integer" null="1" default="" values=""/>
 <field name="menuitem_source_catalog_type_id" type="integer" null="1" default="" values=""/>
-<field name="menuitem_extension_instance_id" type="char" null="0" default="2" values=""/>
-<field name="menuitem_specific_include_file" type="char" null="0" default="" values=""/>
+<field name="menuitem_extension_instance_id" type="char" null="0" default="" values=""/>
 
 <field name="menuitem_theme_id" type="integer" null="1" default="" values=""/>
 

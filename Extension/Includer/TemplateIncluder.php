@@ -69,6 +69,15 @@ Class TemplateIncluder extends Includer
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
 
 		/** Wrap  */
+		$wrap_id = (int) Services::Registry()->get('Parameters', 'wrap_view_id');
+		if ((int) $wrap_id == 0) {
+			$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node', '');
+			if ($wrap_title == '') {
+				Services::Registry()->set('Parameters', 'wrap_view_id',
+					Helpers::Extension()
+					->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None'));
+			}
+		}
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
 
 		/** Merge Configuration in */
@@ -90,10 +99,14 @@ Class TemplateIncluder extends Includer
 			Services::Registry()->set('Parameters', 'model_type', 'dbo');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 
-		} else {
+		} elseif ($this->type == 'triggerdata') {
 			Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
 			Services::Registry()->set('Parameters', 'model_type', 'dbo');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+		} else {
+			Services::Registry()->set('Parameters', 'model_name', 'Dummy');
+			Services::Registry()->set('Parameters', 'model_type', 'dbo');
+			Services::Registry()->set('Parameters', 'model_query_object', 'dummy');
 		}
 
 		/** Cleanup */

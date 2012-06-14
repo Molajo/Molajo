@@ -96,10 +96,12 @@ Class ThemeMolajitoHelper extends MustacheHelper
 			$attributes=array());
 
         /** jQuery CDN and fallback */
-        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 10000);
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
 
         /** Modernizer */
         Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
+		/** HTML5 Shiv */
+		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 10000);
 
         $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.2.min.js';
 

@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 $action = Services::Registry()->get('Trigger', 'PageURL');
 ?>
-<form action="<?php echo $action; ?>" method="post" name="managerForm">
+<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
     <fieldset id="filter-bar">
         <?php if (Services::Registry()->get('search', 1) == 1) { ?>
         <div class="filter-search fltlft">

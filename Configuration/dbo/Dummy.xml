@@ -1,4 +1,4 @@
 <model
         name="Dummy"
-        data_source="Dummy">
+        data_source="Registry">
 </model>

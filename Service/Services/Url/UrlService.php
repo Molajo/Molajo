@@ -98,6 +98,49 @@ Class UrlService
 	}
 
 	/**
+	 * getCatalogID Retrieves Catalog ID for the SEF URL
+	 *
+	 * @param integer $catalog_id
+	 *
+	 * @return string
+	 * @since  1.0
+	 */
+	public function getCatalogID($url)
+	{
+		return Helpers::Catalog()->getIDUsingSEFURL($url);
+	}
+
+	/**
+	 * getApplicationURL - pass in non-application, non-base URL portion, returns full URL
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public function getApplicationURL ($path = '')
+	{
+		$url = BASE_URL . APPLICATION_URL_PATH;
+
+		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+
+			$url .= $path;
+
+			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1) {
+				$url .= '.html';
+			}
+
+			if ((int)Services::Registry()->get('Configuration', 'url_sef_rewrite', 0) == 1) {
+				$url .= 'index.php/' . $url;
+			}
+
+		}  else {
+			$url .= $path;
+		}
+
+		return $url;
+
+	}
+
+	/**
      * obfuscate Email
      *
      * @param $email_address

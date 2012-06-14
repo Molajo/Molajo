@@ -7,7 +7,6 @@ use Molajo\Service\Services;
  */
 
 defined('MOLAJO') or die; ?>
-<div class="banner">
-	<h1 id="logo"><span class="logo"><?php echo $this->row->display_site_name; ?></span></h1>
-	<p class="intro"><?php echo $this->row->display_site_description; ?></p>
-</div>
+	<section class="twelve columns">
+		<h1><?php echo $this->row->display_site_name; ?></h1>
+	</section>

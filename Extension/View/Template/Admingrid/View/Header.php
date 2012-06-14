@@ -6,6 +6,7 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
+$checked = '';
 $rowCount = Services::Registry()->get('Trigger', 'GridTableRows'); ?>
 <table class="responsive">
 <thead>
@@ -30,6 +31,9 @@ $rowCount = Services::Registry()->get('Trigger', 'GridTableRows'); ?>
             <?php
             $count++;
         } ?>
+		<th width="1%">
+			<input type="checkbox" class="checkall"><?php echo Services::Language()->translate('GRID_CHECK_ALL'); ?>
+		</th>
     </tr>
 </thead>
 <tbody>

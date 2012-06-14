@@ -9,11 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>THEME_MOLAJITO_DESCRIPTION</description>
-    <model name="Themes" catalog_type_id="1500">
-        <customfields>
-            <customfield name="parameters">
-                <field name="molajito" type="boolean" null="0" default="1"/>
-            </customfield>
-        </customfields>
-    </model>
+    <model name="Themes" catalog_type_id="1500" />
 </extension>

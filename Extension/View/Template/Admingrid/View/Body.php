@@ -22,9 +22,6 @@ if ($rowCount == 0) {
 			if ($columnCount == 1) {
 				$extraClass .= 'first';
 			}
-			if ($columnCount == count($columnArray)) {
-				$extraClass .= 'last';
-			}
 			if ($extraClass == '') {
 			} else {
 				$extraClass = ' class="' . trim($extraClass) . '"';
@@ -36,4 +33,7 @@ if ($rowCount == 0) {
 			<?php
 			$columnCount++;
 		} ?>
+		<td class="center last">
+			<input type=checkbox value="<?php echo $checked; ?>">
+		</td>
 	</tr>

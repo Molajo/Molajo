@@ -52,6 +52,9 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	public function onAfterRoute()
 	{
+
+		echo 'in AdmingridTrigger';
+		die;
 		/** Is this an Administrative Grid Request?  */
 		if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
 		} else {
@@ -75,6 +78,9 @@ class AdmingridTrigger extends ContentTrigger
 		$primary_key = $m->get('primary_key');
 		$name_key = $m->get('name_key');
 
+		/** 1. Navigation Bar  */
+
+		/** 2. Submen */
 		/** 1. Prepare Submenu Data */
 		$grid_submenu_items = explode(',', $this->get('grid_submenu_items', 'items,categories,drafts'));
 

@@ -53,7 +53,9 @@ Class CatalogHelper
 	public function getRouteCatalog()
 	{
 
-		/** Retrieve the query results */
+		Services::Registry()->set('Query', 'Current', 'Catalog getRouteCatalog');
+
+			/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'request_catalog_id'),
 			Services::Registry()->get('Parameters', 'request_url_query')

@@ -100,8 +100,7 @@ Class ModelController extends Controller
 	 */
 	public function connect($model_type = 'Table', $model_name = null)
 	{
-//echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. '<br />';
-
+//echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. ' Query '.Services::Registry()->get('Query', 'Current') . '<br />';
 		if ($model_name == null) {
 			$this->table_registry_name = null;
 
@@ -220,7 +219,11 @@ Class ModelController extends Controller
 			echo $query_object.'<br />';
 			echo $model_parameter.'<br />';
 			 */
-			$this->query_results = $this->model->$query_object($model_parameter);
+			if (strtolower($query_object) == 'dummy') {
+				$this->query_results = array();
+			} else {
+				$this->query_results = $this->model->$query_object($model_parameter);
+			}
 
 			return $this->query_results; //must directly return for non-DisplayController calls
 		}
