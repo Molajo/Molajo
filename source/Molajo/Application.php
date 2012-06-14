@@ -347,18 +347,14 @@ Class Application
 	 */
 	protected function action()
 	{
-		$redirect_url = BASE_URL . APPLICATION_URL_PATH;
-
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
-			$redirect_url .= Services::Registry()->get('Parameters', 'catalog_url_sef_request');
-			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 1) == 1) {
-				$redirect_url .= '.html';
-			}
+			$url = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
+
 		}  else {
-			$redirect_url .= Services::Registry()->get('Parameters', 'catalog_url_request');
+			$url = Services::Registry()->get('Parameters', 'catalog_url_request');
 		}
 
-		Services::Redirect()->redirect($redirect_url, '301')->send();
+		Services::Redirect()->redirect(Services::Url()->getApplicationURL($url), '301')->send();
 
 		exit(0);
 	}

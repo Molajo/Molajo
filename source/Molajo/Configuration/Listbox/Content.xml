@@ -11,7 +11,7 @@
         check_view_level_access="0"
         process_triggers="0"
         filter_check_published_status="1"
-        filter_catalog_type_id="10000"
+        filter_catalog_type_id=""
         data_source="JDatabase">
     <table>
         <fields>

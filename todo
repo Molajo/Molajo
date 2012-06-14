@@ -123,3 +123,13 @@ WHERE a.`catalog_type_id` in (100, 120)
   AND a.id = b.group_id
   AND b.view_group_id = c.view_group_id
   AND d.title = 'view'
+
+Administrator Menu Items
+SELECT `id`, `title`, `alias`,
+`root`, `parent_id`, `lft`, `rgt`, `lvl`,
+`ordering`
+
+FROM `molajo_content`
+
+where `extension_instance_id` = 100
+order by parent_id, id

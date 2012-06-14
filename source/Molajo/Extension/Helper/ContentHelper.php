@@ -56,6 +56,8 @@ Class ContentHelper
 	 */
 	public function getMenuItemRoute()
 	{
+		Services::Registry()->set('Query', 'Current', 'Content getMenuItemRoute');
+
 		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
@@ -63,6 +65,8 @@ Class ContentHelper
 			Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
 			'item'
 		);
+
+
 
 		/** 404  */
 		if (count($item) == 0) {
@@ -179,6 +183,9 @@ Class ContentHelper
 	 */
 	public function getRouteContent($id, $model_type, $model_name, $model_query_object)
 	{
+
+		Services::Registry()->set('Query', 'Current', 'Content getRouteContent');
+
 		/** Retrieve the query results */
 		$item = $this->get(
 			$id, $model_type, $model_name, $model_query_object
@@ -244,6 +251,8 @@ Class ContentHelper
 	 */
 	public function getRouteCategory()
 	{
+		Services::Registry()->set('Query', 'Current', 'Content getRouteCategory');
+
 		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_category_id'),

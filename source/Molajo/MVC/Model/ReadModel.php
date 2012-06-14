@@ -278,11 +278,10 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($columns, $query_object, $offset = 0, $count = 5)
 	{
-/**
-		echo '<br /><br /><br />';
-		echo $this->query->__toString();
-		echo '<br /><br /><br />';
-*/
+//echo '<br /><br /><br />';
+//echo $this->query->__toString();
+//echo '<br /><br /><br />';
+
 		$this->db->setQuery($this->query->__toString(), $offset, $count);
 
 		if ($query_object == 'result') {

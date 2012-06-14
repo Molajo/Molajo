@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>THEME_SYSTEM_DESCRIPTION</description>
-    <model name="Themes" catalog_type_id="1500" />
+    <model name="Themes" catalog_type_id="1500"/>
 </extension>
