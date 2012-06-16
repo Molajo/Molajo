@@ -66,8 +66,6 @@ Class ContentHelper
 			'item'
 		);
 
-
-
 		/** 404  */
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
@@ -75,6 +73,7 @@ Class ContentHelper
 
 		/** Route Registry */
 		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
+		Services::Registry()->set('Parameters', 'menuitem_lvl', (int)$item->lvl);
 		Services::Registry()->set('Parameters', 'menuitem_title', $item->title);
 		Services::Registry()->set('Parameters', 'menuitem_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', 'menuitem_language', $item->language);
@@ -167,6 +166,11 @@ Class ContentHelper
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}
 
+		/** Save the Trigger for Route */
+		Services::Registry()->set('Parameters', 'Triggers',
+			Services::Registry()->get($item->table_registry_name, 'triggers', array())
+		);
+
 		return true;
 	}
 
@@ -233,6 +237,11 @@ Class ContentHelper
 			/** Delete */
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}
+
+		/** Save the Trigger for Route */
+		Services::Registry()->set('Parameters', 'Triggers',
+			Services::Registry()->get($item->table_registry_name, 'triggers', array())
+		);
 
 		return true;
 	}

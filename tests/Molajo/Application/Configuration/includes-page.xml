@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<sequence>
-    <include>request:component</include>
-    <include>formfield</include>
-    <include>module</include>
-    <include>tag</include>
-    <include>component</include>
-</sequence>

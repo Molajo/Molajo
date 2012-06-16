@@ -151,6 +151,11 @@ Class ConfigurationService
 	 */
 	public function setSitePaths()
 	{
+		/** Base URLs for Site and Application */
+		Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
+		$path = Services::Registry()->get('Configuration', 'application_path', '');
+		Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
+
 		if (defined('SITE_NAME')) {
 		} else {
 			define('SITE_NAME',
@@ -244,11 +249,6 @@ Class ConfigurationService
 					Services::Registry()->set('Configuration', $key, $value);
 				}
 
-				/** Dynamic configuration info: base URLs for Site and Application */
-				Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
-				$path = Services::Registry()->get('Configuration', 'application_path', '');
-				Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
-
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
 				die;
@@ -333,10 +333,6 @@ Class ConfigurationService
 			echo 'Error in ConfigurationService. File not found for '
 				. ' Model Type:' . $model_type
 				. ' Model Name: ' . $model_name;
-			echo ' Existing parameters follow: <br />';
-
-			Services::Registry()->get('Parameters', '*');
-
 			return false;
 			//throw new \RuntimeException('File not found: ' . $path_and_file);
 		}

@@ -102,8 +102,11 @@ Class Application
 			Services::Debug()->set('Application Route succeeded');
 		}
 
-		/** onAfterRoute: */
-		Services::Event()->schedule('onAfterRoute', array('parameters' => Services::Registry()->get('Parameters')));
+		/** onAfterRoute using Primary Route Content (Menu Item or Content) Triggers */;
+		Services::Event()->schedule('onAfterRoute',
+			array('parameters' => Services::Registry()->get('Parameters')),
+			Services::Registry()->get('Parameters', 'Triggers')
+		);
 
 		/** Authorise: Services::Registry()->get('Parameters', 'status_authorised') */
 		$continue = $this->authorise();

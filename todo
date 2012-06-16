@@ -133,3 +133,22 @@ FROM `molajo_content`
 
 where `extension_instance_id` = 100
 order by parent_id, id
+
+
+Menu items
+SELECT  `id`, `catalog_type_id`, `title`, `subtitle`, `path`, `alias`, `root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`, `parameters`, `ordering`
+
+FROM `molajo_content`
+where extension_instance_id = 100
+order by lft
+
+breadcrumbs
+
+SELECT  a.`id`, a.`catalog_type_id`, a.`title`, a.`subtitle`, a.`path`, a.`alias`, a.`root`, a.`parent_id`, a.`lft`, a.`rgt`, a.`lvl`, a.`home`, a.`parameters`, a.`ordering`
+
+FROM `molajo_content` a,
+molajo_content b
+where b.id = 136
+and b.lft > a.lft
+and b.rgt < a.rgt
+order by lft

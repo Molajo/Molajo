@@ -128,7 +128,10 @@ class Includer
 		$this->getExtension();
 
 		/** initialises and populates the MVC request */
-		$this->setRenderCriteria();
+		$results = $this->setRenderCriteria();
+		//if ($results == false) {
+		//	return '';
+		//}
 
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
@@ -273,7 +276,7 @@ class Includer
 
 		Services::Registry()->sort('Parameters');
 
-		return;
+		return true;
 	}
 
 	/**

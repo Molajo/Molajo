@@ -47,46 +47,38 @@ class AdmingridTrigger extends ContentTrigger
 	 *
 	 * Prepares data for the Administrator Grid  - position AdmingridTrigger last
 	 *
-	 * @return boolean
+	 * @return  void
 	 * @since   1.0
 	 */
 	public function onAfterRoute()
 	{
-
-		echo 'in AdmingridTrigger';
-		die;
 		/** Is this an Administrative Grid Request?  */
 		if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
 		} else {
 			return true;
 		}
+
+		/** Data Source Connection */
 		$model_type = $this->get('model_type');
 		$model_name = $this->get('model_name');
 
-		//todo: move this query out of here, into the ModelController
-		/** Initialization */
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
-		$m = new $controllerClass();
-		$results = $m->connect($model_type, $model_name);
+		$connect = new $controllerClass();
+
+		$results = $connect->connect($model_type, $model_name);
 		if ($results == false) {
 			return false;
 		}
 
-		$table_name = $m->get('table_name');
+		$table_name = $connect->get('table_name');
 
-		$primary_prefix = $m->get('primary_prefix');
-		$primary_key = $m->get('primary_key');
-		$name_key = $m->get('name_key');
+		$primary_prefix = $connect->get('primary_prefix');
+		$primary_key = $connect->get('primary_key');
+		$name_key = $connect->get('name_key');
 
-		/** 1. Navigation Bar  */
-
-		/** 2. Submen */
-		/** 1. Prepare Submenu Data */
-		$grid_submenu_items = explode(',', $this->get('grid_submenu_items', 'items,categories,drafts'));
-
-		$query_results = array();
-
+		/** URL */
 		$url = Services::Registry()->get('Configuration', 'application_base_url');
+
 		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
 			$url .= '/' . $this->get('catalog_url_sef_request');
 			$connector = '?';
@@ -94,22 +86,147 @@ class AdmingridTrigger extends ContentTrigger
 			$url .= '/' . $this->get('catalog_url_request');
 			$connector = '&';
 		}
+
 		Services::Registry()->set('Trigger', 'PageURL', $url);
 		Services::Registry()->set('Trigger', 'PageURLConnector', $connector);
 
-		if (count($grid_submenu_items) == 0 || $grid_submenu_items == null) {
-		} else {
+		/** Create Admin Menus, verifying ACL */
+		$this->setMenuBreadcrumbIds();
+		$this->setNavigationalBar();
+		$this->setSectionMenu();
+		$this->setSubmenu();
 
-			foreach ($grid_submenu_items as $submenu) {
-				$row = new \stdClass();
-				$row->link = $url . $connector. 'submenu=' . $submenu;
-				$row->link_text = Services::Language()->translate('SUBMENU_' . strtoupper($submenu));
-				$query_results[] = $row;
-			}
-		}
-		Services::Registry()->set('Trigger', 'AdminSubmenu', $query_results);
+		/**  Create Toolbar Registry, including links, button names, and ACL verification */
+		$this->setToolbar($url, $connector);
 
-		/** 2. Toolbar Data */
+		/**  Create Filter lists and store in Triggerdata registry */
+		$this->setFilter($connect, $primary_prefix);
+
+		/**  Create Grid Query and save results in Triggerdata registry */
+		$this->setGrid($connect, $primary_prefix, $table_name);
+
+		/**  Create Pagination data and store in Triggerdata registry */
+		$this->setPagination($url, $connector);
+
+		return true;
+	}
+
+	/**
+	 * Retrieve an array of values that represent the active menuitem ids for a specific menu
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function setMenuBreadcrumbIds()
+	{
+
+		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
+
+		$query_results = Services::Menu()->getMenuBreadcrumbIds($extension_instance_id);
+
+		Services::Registry()->set('Trigger', 'AdminNavigationBar', $query_results);
+
+//		echo 'Navigation: <pre>';
+//		var_dump(Services::Registry()->get('Trigger', 'AdminNavigationBar'));
+//		echo '</pre>';
+
+		return;
+	}
+
+	/**
+	 * Create Navigational Bar items, including links, based on User's Access Settings
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function setNavigationalBar()
+	{
+
+		$start_lvl = 2;
+		$end_lvl = 2;
+		$catalog_type_id = 0;
+		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
+		$parent_id = 0;
+
+		$query_results = Services::Menu()->runMenuQuery(
+			$extension_instance_id, $start_lvl, $end_lvl, $parent_id, $catalog_type_id
+		);
+
+		Services::Registry()->set('Trigger', 'AdminNavigationBar', $query_results);
+
+//		echo 'Navigation: <pre>';
+//		var_dump(Services::Registry()->get('Trigger', 'AdminNavigationBar'));
+//		echo '</pre>';
+
+		return;
+	}
+
+	/**
+	 * Create Section Menu (ex. Articles, Comments, Contacts, etc), including links,
+	 * based on User's Access Settings
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function setSectionMenu()
+	{
+		$start_lvl = 3;
+		$end_lvl = 3;
+		$catalog_type_id = 0;
+		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
+		$parent_id = 0;
+
+		$query_results = Services::Menu()->runMenuQuery(
+			$extension_instance_id, $start_lvl, $end_lvl, $parent_id, $catalog_type_id
+		);
+
+		Services::Registry()->set('Trigger', 'AdminSectionMenu', $query_results);
+
+//		echo 'Section Menu: <pre>';
+//		var_dump(Services::Registry()->get('Trigger', 'AdminSectionMenu'));
+//		echo '</pre>';
+
+		return;
+	}
+
+	/**
+	 * Create Sub menu items (ex. List, New, Drafts, etc.), including links,
+	 * based on User's Access Settings
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function setSubmenu()
+	{
+		$start_lvl = 4;
+		$end_lvl = $start_lvl;
+		$catalog_type_id = 0;
+		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
+		$parent_id = Services::Registry()->get('Parameters', 'menuitem_source_id');
+
+		$query_results = Services::Menu()->runMenuQuery(
+			$extension_instance_id, $start_lvl, $end_lvl, $parent_id, $catalog_type_id
+		);
+
+		Services::Registry()->set('Trigger', 'AdminSubMenu', $query_results);
+
+
+//		echo 'Sub Menu: <pre>';
+//		var_dump(Services::Registry()->get('Trigger', 'AdminSubMenu'));
+//		echo '</pre>';
+
+		return;
+	}
+
+	/**
+	 * Create Toolbar Registry, including links and button names, based on User's Access Settings
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	protected function setToolbar($url, $connector)
+	{
+
 		$grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
 				'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')
 		);
@@ -145,9 +262,23 @@ class AdmingridTrigger extends ContentTrigger
 
 		Services::Registry()->set('Trigger', 'AdminToolbar', $query_results);
 
-		/** 3. Filter Lists */
+		return true;
+	}
+
+	/**
+	 * Creates and stores Filters in Trigger registry
+	 * Sets where clauses for selected values for primary grid query
+	 *
+	 * @param   $connect
+	 * @param   $primary_prefix
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	protected function setFilter($connect, $primary_prefix)
+	{
 		$grid_list = explode(',', $this->get(
-			'grid_list', 'catalog_type_id,created_by,featured,status')
+				'grid_list', 'catalog_type_id,created_by,featured,status')
 		);
 
 		$lists = array();
@@ -166,18 +297,18 @@ class AdmingridTrigger extends ContentTrigger
 
 					Services::Registry()->set('Trigger', 'list_' . $list, $fieldValue);
 
-					/** todo: Retrieves the user selected field from the session */
+					/** todo: Retrieve selected field from request */
 					$selectedValue = '';
 					Services::Registry()->set('Trigger', 'list_' . $list . '_selected', $selectedValue);
 
 					if ($selectedValue == '') {
 					} else {
-						$m->model->query->where($m->model->db->qn($primary_prefix)
-							. '.' . $m->model->db->qn($list)
-							. ' = ' . $m->model->db->q($selectedValue));
+						$connect->model->query->where($connect->model->db->qn($primary_prefix)
+							. '.' . $connect->model->db->qn($list)
+							. ' = ' . $connect->model->db->q($selectedValue));
 					}
 
-        			/** Store the name of each filter list in an array */
+					/** Store the name of each filter list in an array */
 					$lists[] = strtolower($list);
 				}
 			}
@@ -185,80 +316,152 @@ class AdmingridTrigger extends ContentTrigger
 
 		Services::Registry()->set('Trigger', 'GridFilters', $lists);
 
-		/** 4. Grid Options */
+		return true;
+	}
+
+	/**
+	 * Create Batch lists and store in Triggerdata registry, given ACL checks
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	protected function setBatch($connect, $primary_prefix)
+	{
+
+		$grid_list = Services::Registry()->set('Trigger', 'GridFilters');
+
+		$batch_list = explode(',', 'status,categories,tags,access');
+
+		$lists = array();
+
+		if (is_array($batch_list) && count($batch_list) > 0) {
+
+			/** Build each list and store in registry along with current selection */
+			foreach ($batch_list as $list) {
+
+				$fieldValue = Services::Text()->getList($list, $this->parameters);
+
+				if ($fieldValue == false) {
+				} else {
+
+					ksort($fieldValue);
+
+					Services::Registry()->set('Trigger', 'batch_' . $list, $fieldValue);
+
+					/** todo: Retrieve selected field from request */
+					$selectedValue = '';
+					Services::Registry()->set('Trigger', 'batch_' . $list . '_selected', $selectedValue);
+
+					if ($selectedValue == '') {
+					} else {
+						$connect->model->query->where($connect->model->db->qn($primary_prefix)
+							. '.' . $connect->model->db->qn($list)
+							. ' = ' . $connect->model->db->q($selectedValue));
+					}
+
+					/** Store the name of each filter list in an array */
+					$lists[] = strtolower($list);
+				}
+			}
+		}
+
+		Services::Registry()->set('Trigger', 'GridBatch', $lists);
+
+		return true;
+	}
+
+	/**
+	 * Create Grid Query and save results in Triggerdata registry
+	 *
+	 * @param   $connect
+	 * @param   $primary_prefix
+	 * @param   $table_name
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function setGrid($connect, $primary_prefix, $table_name)
+	{
+		/** Select */
 		$grid_columns = explode(',', $this->get('grid_columns',
 				'id,featured,title,created_by,start_publishing_datetime,ordering')
 		);
 		Services::Registry()->set('Trigger', 'GridTableColumns', $grid_columns);
-
 		foreach ($grid_columns as $column) {
-			$m->model->query->select($m->model->db->qn($primary_prefix)	. '.' . $m->model->db->qn($column));
+			$connect->model->query->select(
+				$connect->model->db->qn($primary_prefix) . '.' . $connect->model->db->qn($column)
+			);
 		}
 
-		Services::Registry()->set('Trigger', 'GridTableRows', $this->get('grid_rows', 5));
+		/** From */
+		$connect->model->query->from($connect->model->db->qn($table_name)
+			. ' as ' . $connect->model->db->qn($primary_prefix));
 
+		/** Where (filter values already set) */
+		$connect->model->query->where($connect->model->db->qn('a.catalog_type_id')
+			. ' = ' . $this->get('menuitem_source_catalog_type_id'));
+
+		/** Ordering */
 		$ordering = $this->get('grid_ordering', 'start_publishing_datetime');
 		Services::Registry()->set('Trigger', 'GridTableOrdering', $ordering);
-		$this->set('model_ordering', $ordering);
+		$connect->model->query->order($connect->model->db->qn($ordering));
 
-		$direction = $this->get('grid_ordering_direction', 'DESC');
-		Services::Registry()->set('Trigger', 'GridTableOrderingDirection', $direction);
-		$this->set('model_direction', $direction);
+		/** Run the query and store results */
+		$connect->model->db->setQuery(
+			$connect->model->query->__toString(),
+			$this->get('grid_offset', 0),
+			$this->get('grid_count', 5)
+		);
 
-		$m->model->query->from($m->model->db->qn($table_name) . ' as ' . $m->model->db->qn($primary_prefix));
-		$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . $this->get('criteria_catalog_type_id'));
-		//$m->model->query->order($m->model->db->qn($ordering));
+		$query_results = $connect->model->db->loadObjectList();
 
-		/** 5. Grid Pagination */
+		Services::Registry()->set('Trigger', 'GridQueryResults', $query_results);
+
+		/** Set Model Properties for use with Template View */
+		Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
+		Services::Registry()->set('Parameters', 'model_type', 'dbo');
+		Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+
+		Services::Registry()->set('Parameters', 'model_parameter', 'GridQueryResults');
+
+		return true;
+	}
+
+	/**
+	 * Create Pagination data and store in Triggerdata registry
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	protected function setPagination($url, $connector)
+	{
 		$query_results = array();
 		$current = 0;
 
 		$row = new \stdClass();
-		$row->link = $url.$connector.'&start='.$current + 5;
+		$row->link = $url . $connector . '&start=' . $current + 5;
 		$row->class = ' page-prev';
 		$row->link_text = ' 1';
 
 		$query_results[] = $row;
 
 		$row = new \stdClass();
-		$row->link = $url.$connector.'&start='.$current + 10;
+		$row->link = $url . $connector . '&start=' . $current + 10;
 		$row->class = '';
 		$row->link_text = ' 2';
 
 		$query_results[] = $row;
 
 		$row = new \stdClass();
-		$row->link = $url.$connector.'&start='.$current + 15;
+		$row->link = $url . $connector . '&start=' . $current + 15;
 		$row->class = ' page-next';
 		$row->link_text = ' 3';
 
 		$query_results[] = $row;
 
 		Services::Registry()->set('Trigger', 'GridPagination', $query_results);
-
-		$offset = $this->get('grid_offset', 0);
-		Services::Registry()->set('Trigger', 'GridPaginationOffset', $direction);
-		$this->set('model_offset', $offset);
-
-		$count = $this->get('grid_count', 5);
-		Services::Registry()->set('Trigger', 'GridPaginationCount', $count);
-		$this->set('model_count', $count);
-
-		/** 6. Grid Batch */
-		Services::Registry()->set('Trigger', 'GridBatch', $this->get('grid_batch', 1));
-
-		/** Run the query and store results */
-		$m->model->db->setQuery($m->model->query->__toString(), $offset, $count);
-
-		$query_results = $m->model->db->loadObjectList();
-		Services::Registry()->set('Trigger', 'GridQueryResults', $query_results);
-
-		Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
-		Services::Registry()->set('Parameters', 'model_type', 'dbo');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
-		Services::Registry()->set('Parameters', 'model_parameter', 'GridQueryResults');
-
-		Services::Registry()->set('Trigger', '*');
+		Services::Registry()->set('Trigger', 'GridPaginationOffset', $this->get('grid_offset', 0));
+		Services::Registry()->set('Trigger', 'GridPaginationCount', $this->get('grid_count', 5));
 
 		return true;
 	}

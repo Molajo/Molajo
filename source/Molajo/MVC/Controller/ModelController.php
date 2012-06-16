@@ -296,14 +296,13 @@ Class ModelController extends Controller
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 
+		/** Return result (single value) */
+		if ($query_object == 'result' || $query_object == 'distinct') {
+			return $query_results;
+		}
+
+		/** No results */
 		if (count($query_results) > 0) {
-
-			/** Return result (single value) */
-			if ($query_object == 'result' || $query_object == 'distinct') {
-				return $query_results;
-			}
-
-			/** No results */
 		} else {
 			return false;
 		}

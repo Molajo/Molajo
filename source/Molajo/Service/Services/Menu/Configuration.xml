@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="trigger">
-    <name>ADMINNAVIGATION_TRIGGER_NAME</name>
+<extension version="1.0" type="service">
+    <name>SERVICE_MENU_NAME</name>
     <author>Amy Stephen</author>
     <create_date>May 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,6 +8,5 @@
     <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>ADMINNAVIGATION_TRIGGER_DESCRIPTION</description>
+    <description>SERVICE_MENU_DESCRIPTION</description>
 </extension>
-

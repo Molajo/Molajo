@@ -423,6 +423,7 @@ Class RouteService
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-		return;
+		return true;
+
 	}
 }
