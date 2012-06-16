@@ -9,12 +9,11 @@ defined('MOLAJO') or die;
 $columns = Services::Registry()->get('Trigger', 'GridTableColumns');
 $columnCount = count($columns) + 1; ?>
 </tbody>
-<tfoot>
-<tr>
-	<td colspan="<?php echo $columnCount; ?>">
-		<include:template name=Admingridpagination wrap=None value=GridPagination/>
-	</td>
-</tr>
-</tfoot>
+	<tfoot>
+		<tr>
+			<td colspan="<?php echo $columnCount; ?>">
+				<include:template name=Admingridpagination wrap=None value=GridPagination/>
+			</td>
+		</tr>
+	</tfoot>
 </table>
-<include:template name=Admingridbatch wrap=None value=GridBatch/>

@@ -87,7 +87,7 @@ Class WrapIncluder extends Includer
         /** Sort */
         Services::Registry()->sort('Parameters');
 
-        return;
+        return true;
     }
 
     /**

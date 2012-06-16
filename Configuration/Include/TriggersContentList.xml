@@ -4,5 +4,3 @@
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
 <trigger name="Publishedstatus"/>
-<trigger name="Adminmenus"/>
-<trigger name="Admingrid"/>

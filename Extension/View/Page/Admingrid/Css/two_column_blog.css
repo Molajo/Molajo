@@ -1,0 +1,4 @@
+	/* these styles should be moved to an external stylesheet */
+
+	header.row { margin-bottom:20px; border-bottom: solid 1px #E6E6E6; margin-left: 10px}
+	footer.row { margin-top: 40px; border-top: solid 1px #E6E6E6; padding-top: 20px; }

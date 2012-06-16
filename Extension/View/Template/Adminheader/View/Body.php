@@ -7,6 +7,6 @@ use Molajo\Service\Services;
  */
 
 defined('MOLAJO') or die; ?>
-	<section class="twelve columns">
-		<h1><?php echo $this->row->display_site_name; ?></h1>
-	</section>
+<section class="twelve columns">
+	<h1><?php echo $this->row->criteria_title; ?></h1>
+</section>

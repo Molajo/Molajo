@@ -54,57 +54,41 @@ Class ViewHelper
 	 */
 	public function get($id = 0, $type)
 	{
-
 		$type = ucfirst(strtolower($type));
 		if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
 		} else {
 			return false;
 		}
 
+		if ($id == 0) {
+			$id = $this->getDefault($type);
+			if ((int)$id == 0) {
+				return false;
+			}
+		}
+
+		/** Retrieve Node and verify the view exists */
+		$node = Helpers::Extension()->getExtensionNode((int)$id);
+		if ($node == false || $node == '') {
+			$id = $this->getDefault($type);
+			$node = Helpers::Extension()->getExtensionNode((int)$id);
+			if ($node == false || $node == '') {
+				return false;
+			}
+		}
+
 		Services::Registry()->set('Parameters', $type . '_view_id', (int)$id);
 
-		$node = Helpers::Extension()->getExtensionNode((int)$id);
-
 		Services::Registry()->set('Parameters', $type . '_view_path_node', $node);
-
 		Services::Registry()->set('Parameters', $type . '_view_path', $this->getPath($node, $type));
-		Services::Registry()->set('Parameters', $type . '_view_path_include', $this->getPath($node, $type) . '/index.php');
+		Services::Registry()->set('Parameters', $type . '_view_path_include',
+			$this->getPath($node, $type) . '/index.php');
 		Services::Registry()->set('Parameters', $type . '_view_path_url', $this->getPathURL($node, $type));
 
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($id, $type, $node);
-
-		/** Not found: get system default */
-		if (count($item) == 0) {
-
-			/** System Default */
-			if ($type == 'Page') {
-				$catalog_type_id = CATALOG_TYPE_EXTENSION_PAGE_VIEW;
-			} elseif ($type == 'Template') {
-				$catalog_type_id = CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW;
-			} else {
-				$catalog_type_id = CATALOG_TYPE_EXTENSION_WRAP_VIEW;
-			}
-
-			$id = Helpers::Extension()->getInstanceID($catalog_type_id, 'Default');
-
-			Services::Registry()->set('Parameters', $type . '_view_id', (int)$id);
-
-			$node = Helpers::Extension()->getExtensionNode((int)$id);
-
-			Services::Registry()->set('Parameters', $type . '_view_path_node', $node);
-
-			Services::Registry()->set('Parameters', $type . '_view_path', $this->getPath($node, $type));
-			Services::Registry()->set('Parameters', $type . '_view_path_include',
-				$this->getPath($node, $type) . '/index.php');
-			Services::Registry()->set('Parameters', $type . '_view_path_url', $this->getPathURL($node));
-
-			$item = Helpers::Extension()->get($id, $type, $node);
-
-			if (count($item) == 0) {
-				Services::Error()->set(500, 'Default ' . $type . ' View not found');
-				return false;
-			}
+		if (count($item) == 0 || $item == false) {
+			return false;
 		}
 
 		Services::Registry()->set('Parameters', $type . '_view_title', $item->title);
@@ -129,6 +113,25 @@ Class ViewHelper
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get default for View Type
+	 *
+	 * @param $type
+	 * @return mixed
+	 */
+	public function getDefault($type)
+	{
+		if ($type == 'Page') {
+			$catalog_type_id = CATALOG_TYPE_EXTENSION_PAGE_VIEW;
+		} elseif ($type == 'Template') {
+			$catalog_type_id = CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW;
+		} else {
+			$catalog_type_id = CATALOG_TYPE_EXTENSION_WRAP_VIEW;
+		}
+
+		return Helpers::Extension()->getInstanceID($catalog_type_id, 'Default');
 	}
 
 	/**

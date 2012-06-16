@@ -1,3 +1,8 @@
+<join table="#__content"
+      alias="current_menuitem"
+      select=""
+      jointo="lft,rgt"
+      joinwith="&gt;=lft,&lt;=rgt"/>
 <join table="#__catalog"
       alias="catalog"
       select="id,sef_request"

@@ -34,4 +34,5 @@
     <service>Search</service>
     <service>Cache</service>
     <service>Install</service>
+    <service>Menu</service>
 </services>

@@ -105,6 +105,7 @@ Class EventService
 		}
 
 		if (count($selections) > 0) {
+
 		} else {
 			/** default to all events */
 			$selections = array();

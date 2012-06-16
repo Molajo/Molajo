@@ -354,7 +354,7 @@ Example:
 
 3. How can Joomla's JHtml function be used in a view to format dates?
 
-        $date	= JHtml::_('date', $this->row->created,      Services::Languages()->translate('DATE_FORMAT_LC1'));
+        $date	= JHtml::_('date', $this->row->created,      Services::Language()->translate('DATE_FORMAT_LC1'));
         $time	= JHtml::_('date', $this->row->checked_out_time, 'H:i');
 
 Options:

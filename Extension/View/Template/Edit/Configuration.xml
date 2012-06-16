@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="View" group="Template" version="1.0" extends="ExtensionInstances">
+<extension type="View" group="Template" version="1.0" extends="Templates">
     <name>VIEW_TEMPLATE_EDIT_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>

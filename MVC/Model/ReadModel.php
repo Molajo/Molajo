@@ -231,6 +231,24 @@ class ReadModel extends Model
 					/** join this to THAT */
 					$with = $joinWithArray[$i];
 
+					$operator = '=';
+					if (substr($with, 0, 2) == '>=') {
+						$operator = '>=';
+						$with = substr($with, 2, strlen($with) - 2);
+
+					} elseif (substr($with, 0, 1) == '>') {
+						$operator = '>';
+						$with = substr($with, 0, strlen($with) - 1);
+
+					} elseif (substr($with, 0, 2) == '<=') {
+						$operator = '<=';
+						$with = substr($with, 2, strlen($with) - 2);
+
+					} elseif (substr($with, 0, 1) == '<') {
+						$operator = '<';
+						$with = substr($with, 0, strlen($with) - 1);
+					}
+
 					if ($with == 'APPLICATION_ID') {
 						$whereRight = APPLICATION_ID;
 
@@ -257,7 +275,7 @@ class ReadModel extends Model
 					}
 
 					/** put the where together */
-					$this->query->where($whereLeft . ' = ' . $whereRight);
+					$this->query->where($whereLeft . $operator . $whereRight);
 
 					$i++;
 				}
@@ -290,15 +308,16 @@ class ReadModel extends Model
 			$this->query_results = $this->db->loadObjectList();
 		}
 
+		/** no
 		if (empty($this->query_results)) {
 
-			$this->query_results = array();
-//todo decide how to handle empty recordsets (maybe just new/edit?)
-			foreach ($columns as $column) {
-				$this->query_results[$column['name']] = '';
-			}
+		$this->query_results = array();
+		//todo decide how to handle empty recordsets (maybe just new/edit?)
+		foreach ($columns as $column) {
+		$this->query_results[$column['name']] = '';
 		}
-
+		}
+		 */
 		return $this;
 	}
 
@@ -315,7 +334,7 @@ class ReadModel extends Model
 	 * @since   1.0
 	 */
 	public function addCustomFields(
-			$table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results)
+		$table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results)
 	{
 		/** Prepare Registry Name */
 		$customFieldName = strtolower($customFieldName);
