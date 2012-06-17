@@ -749,7 +749,6 @@ Class RegistryService
 	 */
 	public function listRegistry($include_entries = false)
 	{
-
 		if ($include_entries == true) {
 			echo '<pre>';
 			var_dump($this->registryKeys);
@@ -823,13 +822,17 @@ Class RegistryService
 
 				} else {
 					$key = substr($key, 0, strlen($key) - 1);
-					$results = $this->get($namespace, $key);
+					return $this->get($namespace, $key);
 				}
-
 
 			} else {
 				$results = $this->get($namespace, $key);
 			}
+		}
+
+		if (is_object($results)) {
+			$query_results = $results;
+			return $query_results;
 		}
 
 		/** Simulate a recordset */

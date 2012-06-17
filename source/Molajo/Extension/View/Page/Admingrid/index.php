@@ -1,6 +1,10 @@
 <?php
 use Molajo\Service\Services;
 /**
+ *
+ *
+ *
+ * <include:template name=Admingridbatch/>
  * @package     Molajito
  * @copyright   2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -12,7 +16,6 @@ defined('MOLAJO') or die; ?>
 <section class="row">
 	<nav class="four columns">
 		<include:template name=Adminnavigationbar/>
-		<include:template name=Adminsidemenu/>
 		<include:template name=Adminsubmenu/>
 		<include:template name=Adminsectionmenu/>
 	</nav>
@@ -21,11 +24,10 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Admingridfilters/>
 		<include:template name=Search/>
 		<include:request/>
-		<include:template name=Admingridbatch/>
 	</section>
 </section>
 <footer class="row">
 	<div class="four columns"></div>
-	<include:template name=Adminfooter wrap=div wrap_class=eight,columns/>
+	<div class="eight columns"><include:template name=Adminfooter wrap=none/></div>
 </footer>
 <include:defer/>

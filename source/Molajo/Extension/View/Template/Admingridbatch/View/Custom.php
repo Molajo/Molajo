@@ -6,8 +6,6 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-$pageUrl = Services::Registry()->get('Trigger', 'PageURL');
-echo 'PAGEURL '. $pageUrl;
 ?>
 	<dl class="nice vertical tabs">
 		<dd><a href="<?php echo $pageUrl; ?>#batch1" class="active">Status</a></dd>

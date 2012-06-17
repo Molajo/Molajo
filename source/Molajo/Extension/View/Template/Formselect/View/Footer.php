@@ -4,7 +4,6 @@
  * @copyright 2012 Amy Stephen. All rights reserved.
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die; ?>
-<input type="submit" class="submit button small nice" name="submit" id="searchsubmit" value="Filter">
-</form>
-
+defined('MOLAJO') or die;
+?>
+</select>

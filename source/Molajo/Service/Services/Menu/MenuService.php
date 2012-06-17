@@ -64,15 +64,10 @@ Class MenuService
 	 * @return  array|bool
 	 * @since   1.0
 	 */
-	public function runMenuQuery($extension_instance_id, $start_lvl = 0, $end_lvl = 0, $parent_id = 0, $catalog_type_id = 0)
+	public function runMenuQuery(
+		$extension_instance_id, $start_lvl = 0, $end_lvl = 0, $parent_id = 0,
+		$catalog_type_id = 0, $active_catalog_ids = array())
 	{
-
-		echo ' <br /><br /><br />'
-			.'Menu ID  '. $extension_instance_id
-			. ' Lvl '.  $start_lvl . ' - ' . $end_lvl
-			. ' Parent '.  $parent_id
-			. ' Catalog Type ID: ' . $catalog_type_id . ' <br /><br /><br />';
-
 		if ($extension_instance_id == 0) {
 			return false;
 		}
@@ -86,26 +81,41 @@ Class MenuService
 			return false;
 		}
 
+		/** Select */
+		$m->model->query->select($m->model->db->qn('a.id'));
+		$m->model->query->select($m->model->db->qn('a.catalog_type_id'));
+		$m->model->query->select($m->model->db->qn('a.title'));
+		$m->model->query->select($m->model->db->qn('a.subtitle'));
+		$m->model->query->select($m->model->db->qn('a.path'));
+		$m->model->query->select($m->model->db->qn('a.alias'));
+		$m->model->query->select($m->model->db->qn('a.root'));
+		$m->model->query->select($m->model->db->qn('a.parent_id'));
+		$m->model->query->select($m->model->db->qn('a.lft'));
+		$m->model->query->select($m->model->db->qn('a.rgt'));
+		$m->model->query->select($m->model->db->qn('a.home'));
+		$m->model->query->select($m->model->db->qn('a.parameters'));
+		$m->model->query->select($m->model->db->qn('a.ordering'));
+
 		/** Set Criteria */
 		if ($end_lvl == 0) {
 			$end_lvl = 999999;
 		}
 		if ($start_lvl == 0 && $end_lvl == 999999) {
 		} else {
-			$m->model->query->where($m->model->db->qn('a.lvl') . ' >= ' . (int) $start_lvl
-				. ' AND ' . $m->model->db->qn('a.lvl') . ' <= ' . (int) $end_lvl);
+			$m->model->query->where($m->model->db->qn('a.lvl') . ' >= ' . (int)$start_lvl
+				. ' AND ' . $m->model->db->qn('a.lvl') . ' <= ' . (int)$end_lvl);
 		}
 
 		if ($catalog_type_id == 0) {
 		} else {
-			$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int) $catalog_type_id);
+			$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
 		}
 
-		$m->model->query->where($m->model->db->qn('a.extension_instance_id') . ' = ' . (int) $extension_instance_id);
+		$m->model->query->where($m->model->db->qn('a.extension_instance_id') . ' = ' . (int)$extension_instance_id);
 
-		if ((int) $parent_id == 0) {
+		if ((int)$parent_id == 0) {
 		} else {
-			$m->model->query->where($m->model->db->qn('a.parent_id') . ' = ' . (int) $parent_id);
+			$m->model->query->where($m->model->db->qn('a.parent_id') . ' = ' . (int)$parent_id);
 		}
 
 		$m->model->query->order('a.ordering');
@@ -113,28 +123,39 @@ Class MenuService
 		/** Execute query */
 		$query_results = $m->getData('list');
 
-//		echo '<br /><br /><br />';
-//		echo $m->model->query->__toString();
-//		echo '<br /><br /><br />';
-
 		if ($query_results === false) {
 			return array();
 		}
 
 		/** Add in URL */
 		foreach ($query_results as $item) {
-			if  ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+
+			if ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+
+				if (in_array($item->catalog_id, $active_catalog_ids)) {
+					$item->css_class = 'active';
+				} else {
+					$item->css_class = '';
+				}
+
 				if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 					$item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
 				} else {
-					$item->url = Services::Url()->getApplicationURL('index.php?id='.(int) $item->id);
+					$item->url = Services::Url()->getApplicationURL('index.php?id=' . (int)$item->id);
 				}
+
+				if (trim($item->subtitle) == '') {
+					$item->link_text = $item->title;
+				} else {
+					$item->link_text = $item->subtitle;
+				}
+
+				$item->link = $item->url;
 			}
 		}
 
 		return $query_results;
 	}
-
 
 	/**
 	 * Retrieves an array of active menuitems, including the current menuitem and its parents
@@ -146,15 +167,9 @@ Class MenuService
 	 */
 	public function getMenuBreadcrumbIds($extension_instance_id)
 	{
-
-		echo ' <br /><br /><br />'
-			.'Get Current Menuitem IDs  '. $extension_instance_id
-			. ' <br /><br /><br />';
-
 		if ($extension_instance_id == 0) {
 			return false;
 		}
-		Services::Registry()->get('Parameters', '*');
 
 		/** Current */
 		$current_menu_item_url = Services::Registry()->get('Configuration', 'application_base_url');
@@ -165,7 +180,7 @@ Class MenuService
 			$current_menu_item_url .= '/' . Services::Registry()->get('Parameters', 'catalog_url_request');
 		}
 
-		$current_menuitem_id =  Services::Registry()->get('Parameters', 'catalog_source_id');
+		$current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
 
 		/** Query Connection */
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
@@ -176,88 +191,25 @@ Class MenuService
 			return false;
 		}
 
-		$m->model->query->where($m->model->db->qn('current_menuitem.id') . ' = ' . (int) $current_menuitem_id);
+		$m->model->query->where($m->model->db->qn('current_menuitem.id') . ' = ' . (int)$current_menuitem_id);
 
 		$m->model->query->order('a.lft');
 
 		/** Execute query */
 		$query_results = $m->getData('list');
-/**
-		echo '<br /><br /><br />';
-		echo $m->model->query->__toString();
-		echo '<br /><br /><br />';
 
-		echo '<br /><br /><br /><pre>';
-		var_dump($query_results);
-		echo '</pre><br /><br /><br />';
-		die;
-		if ($query_results === false) {
-			return array();
-		}
-*/
 		/** Add in URL */
 		foreach ($query_results as $item) {
-			if  ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+
+			if ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
 				if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 					$item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
 				} else {
-					$item->url = Services::Url()->getApplicationURL('index.php?id='.(int) $item->id);
+					$item->url = Services::Url()->getApplicationURL('index.php?id=' . (int)$item->id);
 				}
 			}
 		}
 
-//echo '<br /><br /><br /><pre>';
-//var_dump($query_results);
-//echo '</pre><br /><br /><br />';
-
-		return $query_results;
-	}
-
-	/**
-	 *     Dummy functions to pass service off as a DBO to interact with model
-	 */
-	public function get($option = null)
-	{
-		if ($option == 'db') {
-			return $this;
-		}
-	}
-
-	public function getNullDate()
-	{
-		return $this;
-	}
-
-	public function getQuery()
-	{
-		return $this;
-	}
-
-	public function toSql()
-	{
-		return $this;
-	}
-
-	public function clear()
-	{
-		return $this;
-	}
-
-	/**
-	 * getData - simulates DBO - interacts with the Model getMenulist method
-	 *
-	 * @param $registry
-	 * @param $element
-	 * @param $single_result
-	 *
-	 * @return array
-	 * @since    1.0
-	 */
-	public function getData($menu, $menu_item)
-	{
-		$query_results = array();
-
-		/** Return results to Model */
 		return $query_results;
 	}
 }

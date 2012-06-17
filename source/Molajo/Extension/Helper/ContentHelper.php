@@ -75,6 +75,7 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
 		Services::Registry()->set('Parameters', 'menuitem_lvl', (int)$item->lvl);
 		Services::Registry()->set('Parameters', 'menuitem_title', $item->title);
+		Services::Registry()->set('Parameters', 'menuitem_parent_id', $item->parent_id);
 		Services::Registry()->set('Parameters', 'menuitem_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', 'menuitem_language', $item->language);
 		Services::Registry()->set('Parameters', 'menuitem_catalog_type_id', (int)$item->catalog_type_id);
@@ -187,7 +188,6 @@ Class ContentHelper
 	 */
 	public function getRouteContent($id, $model_type, $model_name, $model_query_object)
 	{
-
 		Services::Registry()->set('Query', 'Current', 'Content getRouteContent');
 
 		/** Retrieve the query results */
