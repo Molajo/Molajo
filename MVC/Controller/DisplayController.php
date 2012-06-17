@@ -2,6 +2,21 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
+ *
+ *
+if ($table_registry_name == 'XYZ') {
+echo '<br /><br />' . $model_name . '<br /><br />';
+echo 'Table Registry Name ' . $table_registry_name . '<br />';
+
+echo 'Includer Type ' . $includer_type . '<br />';
+echo 'Includer Name ' . $includer_name . '<br />';
+
+echo 'Model Type: ' . $model_type . '<br />'
+. 'Model Name:  ' . $model_name . '<br />'
+. 'Table Registry Name ' . $table_registry_name . '<br />'
+. 'Model Parameter ' . $model_parameter . '<br />'
+. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
+}
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\MVC\Controller;
@@ -67,20 +82,6 @@ class DisplayController extends ModelController
 
 		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
 
-if ($table_registry_name == 'XYZ') {
-echo '<br /><br />' . $model_name . '<br /><br />';
-echo 'Table Registry Name ' . $table_registry_name . '<br />';
-
-echo 'Includer Type ' . $includer_type . '<br />';
-echo 'Includer Name ' . $includer_name . '<br />';
-
-echo 'Model Type: ' . $model_type . '<br />'
-. 'Model Name:  ' . $model_name . '<br />'
-. 'Table Registry Name ' . $table_registry_name . '<br />'
-. 'Model Parameter ' . $model_parameter . '<br />'
-. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
-}
-
 		if ($model_name == '') {
 			$this->query_results = array();
 
@@ -107,7 +108,7 @@ echo 'Model Type: ' . $model_type . '<br />'
 		 *      save query results in the Request object for reuse by other
 		 *      extensions. MolajoRequestModel retrieves data.
 		 */
-		if ($this->get('extension_primary') === true) {
+		if ($this->get('extension_primary') == true) {
 			Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
 			Services::Registry()->set('Parameters', 'query_pagination', $this->pagination);
 		}
@@ -122,15 +123,21 @@ echo 'Model Type: ' . $model_type . '<br />'
 		if (strtolower($includer_name) == 'wrap') {
 			$renderedOutput = $this->query_results;
 
-			/** Template View */
 		} else {
+
+			/** Template View */
+			$this->set('view_css_id', $this->get('template_view_css_id'));
+			$this->set('view_css_class', $this->get('template_view_css_class'));
+
 			$this->view_path = $this->get('template_view_path');
 			$this->view_path_url = $this->get('template_view_path_url');
 
 			$renderedOutput = $this->renderView();
 
+			//todo make this a scheduled event so that twig/mustache, etc can be used
+
 			/** Mustache */
-			if ($this->get('criteria_mustache', 0) == 1) {
+			if ($this->get('mustache', 0) == 1) {
 				$renderedOutput = $this->processRenderedOutput($renderedOutput);
 			}
 		}
@@ -154,8 +161,8 @@ echo 'Model Type: ' . $model_type . '<br />'
 
 		$temp = new \stdClass();
 
-		$temp->wrap_view_css_id = $this->get('wrap_view_css_id');
-		$temp->wrap_view_css_class = $this->get('wrap_view_css_class');
+		$this->set('view_css_id', $this->get('wrap_view_css_id'));
+		$this->set('view_css_class', $this->get('wrap_view_css_class'));
 
 		$temp->content = $renderedOutput;
 
@@ -198,6 +205,42 @@ echo 'Model Type: ' . $model_type . '<br />'
 
 				$first = true;
 				foreach ($this->query_results as $this->row) {
+
+					/** @var $css_class */
+					$class = '';
+					if (isset($this->row->css_class)) {
+						$class = $this->row->css_class;
+					}
+					$class .= ' ' . $this->get('view_css_class', '');
+					if (trim($class) == '') {
+						$class = '';
+					} else {
+						$class = ' class="' . htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . '"';
+					}
+
+					if (is_object($this->row)) {
+						$this->row->css_class = $class;
+					} else {
+						$this->row['css_class'] = $class;
+					}
+
+					/** @var $css_id */
+					$id = '';
+					if (isset($this->row->css_id)) {
+						$id = $this->row->css_id;
+					}
+					$id .= ' ' . $this->get('view_css_id', '');
+					if (trim($id) == '') {
+						$id = trim($id);
+					} else {
+						$id = ' id="' . htmlspecialchars(trim($id), ENT_NOQUOTES, 'UTF-8') . '"';
+					}
+
+					if (is_object($this->row)) {
+						$this->row->css_id = $id;
+					} else {
+						$this->row['css_id'] = $id;
+					}
 
 					/** header: before any rows are processed */
 					if ($first == true) {
@@ -303,22 +346,3 @@ echo 'Model Type: ' . $model_type . '<br />'
 		return $output;
 	}
 }
-
-//Navigation
-//$this->navigation->get('form_return_to_link')
-//$this->navigation->get('previous')
-//$this->navigation->get('next')
-//
-// Pagination
-//$this->navigation->get('pagination_start')
-//$this->navigation->get('pagination_limit')
-//$this->navigation->get('pagination_links')
-//$this->navigation->get('pagination_ordering')
-//$this->navigation->get('pagination_direction')
-//$this->breadcrumbs
-//$total = $this->getTotal();
-
-//$this->configuration;
-//Parameters (Includes Global Options, Menu Item, Item);
-//$this->get('view_show_page_view_heading', 1);
-//$this->get('view_page_view_class_suffix', '');

@@ -1,4 +1,5 @@
 <trigger name="Datefields"/>
 <trigger name="Publishedstatus"/>
-<trigger name="Adminmenus"/>
+<trigger name="Adminmenu"/>
+<trigger name="Admindashboard"/>
 <trigger name="Admingrid"/>

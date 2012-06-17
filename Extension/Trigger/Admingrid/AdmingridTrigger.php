@@ -90,132 +90,19 @@ class AdmingridTrigger extends ContentTrigger
 		Services::Registry()->set('Trigger', 'PageURL', $url);
 		Services::Registry()->set('Trigger', 'PageURLConnector', $connector);
 
-		/** Create Admin Menus, verifying ACL */
-		$this->setMenuBreadcrumbIds();
-		$this->setNavigationalBar();
-		$this->setSectionMenu();
-		$this->setSubmenu();
-
 		/**  Create Toolbar Registry, including links, button names, and ACL verification */
 		$this->setToolbar($url, $connector);
 
-		/**  Create Filter lists and store in Triggerdata registry */
+		/**  Create Filter lists and store in Trigger registry */
 		$this->setFilter($connect, $primary_prefix);
 
-		/**  Create Grid Query and save results in Triggerdata registry */
+		/**  Create Grid Query and save results in Trigger registry */
 		$this->setGrid($connect, $primary_prefix, $table_name);
 
-		/**  Create Pagination data and store in Triggerdata registry */
+		/**  Create Pagination data and store in Trigger registry */
 		$this->setPagination($url, $connector);
 
 		return true;
-	}
-
-	/**
-	 * Retrieve an array of values that represent the active menuitem ids for a specific menu
-	 *
-	 * @return void
-	 * @since  1.0
-	 */
-	protected function setMenuBreadcrumbIds()
-	{
-
-		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
-
-		$query_results = Services::Menu()->getMenuBreadcrumbIds($extension_instance_id);
-
-		Services::Registry()->set('Trigger', 'AdminNavigationBar', $query_results);
-
-//		echo 'Navigation: <pre>';
-//		var_dump(Services::Registry()->get('Trigger', 'AdminNavigationBar'));
-//		echo '</pre>';
-
-		return;
-	}
-
-	/**
-	 * Create Navigational Bar items, including links, based on User's Access Settings
-	 *
-	 * @return void
-	 * @since  1.0
-	 */
-	protected function setNavigationalBar()
-	{
-
-		$start_lvl = 2;
-		$end_lvl = 2;
-		$catalog_type_id = 0;
-		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
-		$parent_id = 0;
-
-		$query_results = Services::Menu()->runMenuQuery(
-			$extension_instance_id, $start_lvl, $end_lvl, $parent_id, $catalog_type_id
-		);
-
-		Services::Registry()->set('Trigger', 'AdminNavigationBar', $query_results);
-
-//		echo 'Navigation: <pre>';
-//		var_dump(Services::Registry()->get('Trigger', 'AdminNavigationBar'));
-//		echo '</pre>';
-
-		return;
-	}
-
-	/**
-	 * Create Section Menu (ex. Articles, Comments, Contacts, etc), including links,
-	 * based on User's Access Settings
-	 *
-	 * @return void
-	 * @since  1.0
-	 */
-	protected function setSectionMenu()
-	{
-		$start_lvl = 3;
-		$end_lvl = 3;
-		$catalog_type_id = 0;
-		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
-		$parent_id = 0;
-
-		$query_results = Services::Menu()->runMenuQuery(
-			$extension_instance_id, $start_lvl, $end_lvl, $parent_id, $catalog_type_id
-		);
-
-		Services::Registry()->set('Trigger', 'AdminSectionMenu', $query_results);
-
-//		echo 'Section Menu: <pre>';
-//		var_dump(Services::Registry()->get('Trigger', 'AdminSectionMenu'));
-//		echo '</pre>';
-
-		return;
-	}
-
-	/**
-	 * Create Sub menu items (ex. List, New, Drafts, etc.), including links,
-	 * based on User's Access Settings
-	 *
-	 * @return void
-	 * @since  1.0
-	 */
-	protected function setSubmenu()
-	{
-		$start_lvl = 4;
-		$end_lvl = $start_lvl;
-		$catalog_type_id = 0;
-		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
-		$parent_id = Services::Registry()->get('Parameters', 'menuitem_source_id');
-
-		$query_results = Services::Menu()->runMenuQuery(
-			$extension_instance_id, $start_lvl, $end_lvl, $parent_id, $catalog_type_id
-		);
-
-		Services::Registry()->set('Trigger', 'AdminSubMenu', $query_results);
-
-
-//		echo 'Sub Menu: <pre>';
-//		var_dump(Services::Registry()->get('Trigger', 'AdminSubMenu'));
-//		echo '</pre>';
-
-		return;
 	}
 
 	/**
@@ -286,30 +173,42 @@ class AdmingridTrigger extends ContentTrigger
 		if (is_array($grid_list) && count($grid_list) > 0) {
 
 			/** Build each list and store in registry along with current selection */
-			foreach ($grid_list as $list) {
+			foreach ($grid_list as $requested_listname) {
 
-				$fieldValue = Services::Text()->getList($list, $this->parameters);
+				$fieldValue = Services::Text()->getList($requested_listname, $this->parameters);
 
 				if ($fieldValue == false) {
 				} else {
 
 					ksort($fieldValue);
 
-					Services::Registry()->set('Trigger', 'list_' . $list, $fieldValue);
-
 					/** todo: Retrieve selected field from request */
-					$selectedValue = '';
-					Services::Registry()->set('Trigger', 'list_' . $list . '_selected', $selectedValue);
+					$selected = '';
 
-					if ($selectedValue == '') {
-					} else {
-						$connect->model->query->where($connect->model->db->qn($primary_prefix)
-							. '.' . $connect->model->db->qn($list)
-							. ' = ' . $connect->model->db->q($selectedValue));
+					$query_results = array();
+					foreach ($fieldValue as $item) {
+
+						$row = new \stdClass();
+
+						$row->listname = $requested_listname;
+						$row->id = $item->id;
+						$row->value = $item->value;
+
+						if ($row->id == $selected) {
+							$row->selected = ' selected="selected"';
+						} else {
+							$row->selected = '';
+						}
+
+						$query_results[] = $row;
 					}
 
+					Services::Registry()->set('Trigger', 'list_'. $requested_listname, $query_results);
+
 					/** Store the name of each filter list in an array */
-					$lists[] = strtolower($list);
+					$row = new \stdClass();
+					$row->listname = $requested_listname;
+					$lists[] = $row;
 				}
 			}
 		}
@@ -320,7 +219,7 @@ class AdmingridTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Create Batch lists and store in Triggerdata registry, given ACL checks
+	 * Create Batch lists and store in Trigger registry, given ACL checks
 	 *
 	 * @return boolean
 	 * @since  1.0
@@ -371,7 +270,7 @@ class AdmingridTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Create Grid Query and save results in Triggerdata registry
+	 * Create Grid Query and save results in Trigger registry
 	 *
 	 * @param   $connect
 	 * @param   $primary_prefix
@@ -428,7 +327,7 @@ class AdmingridTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Create Pagination data and store in Triggerdata registry
+	 * Create Pagination data and store in Trigger registry
 	 *
 	 * @return boolean
 	 * @since  1.0
