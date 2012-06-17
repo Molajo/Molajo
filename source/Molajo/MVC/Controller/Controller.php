@@ -114,6 +114,14 @@ class Controller
 	protected $pagination;
 
 	/**
+	 * $triggers
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $triggers;
+
+	/**
 	 * __construct
 	 *
 	 * Constructor.
@@ -125,6 +133,7 @@ class Controller
 	 */
 	public function __construct()
 	{
+		$this->triggers = array();
 		$this->parameters = array();
 		$this->table_registry_indicators = array();
 	}

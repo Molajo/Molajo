@@ -269,7 +269,6 @@ Class Application
 
 		/** Display Action */
 		if ($action == 'display' || $action == 'edit' || $action == 'add') {
-
 			$continue = $this->display();
 
 			if ($continue == false) {
@@ -321,9 +320,10 @@ Class Application
 	protected function display()
 	{
 		//Services::Registry()->get('Parameters', '*');
-		//Services::Message()->set('Test message', MESSAGE_TYPE_WARNING, 111);
-		//Services::Message()->set('Test message', MESSAGE_TYPE_ERROR, 999);
-
+//Services::Message()->set('Test message', MESSAGE_TYPE_INFORMATION);
+//Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
+//Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);
+//Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
 		/** Theme and Page must exist */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
 			&& file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))

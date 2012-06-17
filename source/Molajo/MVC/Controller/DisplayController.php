@@ -82,6 +82,8 @@ class DisplayController extends ModelController
 
 		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
 
+		$this->getTriggerList($model_query_object);
+
 		if ($model_name == '') {
 			$this->query_results = array();
 
@@ -103,16 +105,6 @@ class DisplayController extends ModelController
 
 		$this->pagination = array();
 
-		/**
-		 *  For primary content (the extension determined in Application::Request),
-		 *      save query results in the Request object for reuse by other
-		 *      extensions. MolajoRequestModel retrieves data.
-		 */
-		if ($this->get('extension_primary') == true) {
-			Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
-			Services::Registry()->set('Parameters', 'query_pagination', $this->pagination);
-		}
-
 		/** no results */
 		if (count($this->query_results) == 0
 			&& (int)$this->get('criteria_display_view_on_no_results', 0) == 0
@@ -132,14 +124,26 @@ class DisplayController extends ModelController
 			$this->view_path = $this->get('template_view_path');
 			$this->view_path_url = $this->get('template_view_path_url');
 
+			/** Trigger Pre-View Render Event */
+			$this->onBeforeViewRender();
+
+			/**
+			 *  For primary content (the extension determined in Application::Request),
+			 *      save query results in the Request object for reuse by other
+			 *      extensions.
+			 *
+			 * todo: simplify all of the various dbo's into 'long term' and one view storage
+			 */
+			if ($this->get('extension_primary') == true) {
+				Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
+				Services::Registry()->set('Parameters', 'query_pagination', $this->pagination);
+			}
+
+			/** Render View */
 			$renderedOutput = $this->renderView();
 
-			//todo make this a scheduled event so that twig/mustache, etc can be used
-
-			/** Mustache */
-			if ($this->get('mustache', 0) == 1) {
-				$renderedOutput = $this->processRenderedOutput($renderedOutput);
-			}
+			/** Trigger After-View Render Event */
+			$this->onAfterViewRender($renderedOutput);
 		}
 
 		/** Wrap template view results */
@@ -176,6 +180,37 @@ class DisplayController extends ModelController
 	}
 
 	/**
+	 * Schedule onBeforeViewRender Event - could update query_results objects
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	protected function onBeforeViewRender()
+	{
+		if ((int)$this->get('process_triggers') == 0) {
+			return true;
+		}
+
+		/** Process the entire query_results set */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'query_results' => $this->query_results,
+			'model_name' => $this->get('model_name')
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+
+		if ($arguments == false) {
+			return false;
+		}
+
+		$this->query_results = $arguments['query_results'];
+
+		return true;
+	}
+
+	/**
 	 * renderView
 	 *
 	 * Depending on the files within view/view-type/view-name/View/*.*:
@@ -183,13 +218,19 @@ class DisplayController extends ModelController
 	 * 1. Include a single Custom.php file to process all query results in $this->query_results
 	 *
 	 * 2. Include Header.php, Body.php, and/or Footer.php views for Molajo to
-	 *  perform the looping, sending $row into the views
+	 *  perform the looping, injecting $row into each of the three views
+	 *
+	 * On no query results
 	 *
 	 * @return string
 	 * @since 1.0
 	 */
 	protected function renderView()
 	{
+//todo think about empty queryresults processing when parameter set to true (custom and footer?)
+//todo think about the result, item, and list processing - get dbo's in shape, triggers
+//todo when close to done - do encoding - bring in filters - how?
+
 		/** start collecting output */
 		ob_start();
 
@@ -206,42 +247,6 @@ class DisplayController extends ModelController
 				$first = true;
 				foreach ($this->query_results as $this->row) {
 
-					/** @var $css_class */
-					$class = '';
-					if (isset($this->row->css_class)) {
-						$class = $this->row->css_class;
-					}
-					$class .= ' ' . $this->get('view_css_class', '');
-					if (trim($class) == '') {
-						$class = '';
-					} else {
-						$class = ' class="' . htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . '"';
-					}
-
-					if (is_object($this->row)) {
-						$this->row->css_class = $class;
-					} else {
-						$this->row['css_class'] = $class;
-					}
-
-					/** @var $css_id */
-					$id = '';
-					if (isset($this->row->css_id)) {
-						$id = $this->row->css_id;
-					}
-					$id .= ' ' . $this->get('view_css_id', '');
-					if (trim($id) == '') {
-						$id = trim($id);
-					} else {
-						$id = ' id="' . htmlspecialchars(trim($id), ENT_NOQUOTES, 'UTF-8') . '"';
-					}
-
-					if (is_object($this->row)) {
-						$this->row->css_id = $id;
-					} else {
-						$this->row['css_id'] = $id;
-					}
-
 					/** header: before any rows are processed */
 					if ($first == true) {
 						$first = false;
@@ -250,6 +255,7 @@ class DisplayController extends ModelController
 						}
 					}
 
+					/** body: once for each row */
 					if (file_exists($this->view_path . '/View/Body.php')) {
 						include $this->view_path . '/View/Body.php';
 					}
@@ -266,6 +272,44 @@ class DisplayController extends ModelController
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
+	}
+
+	/**
+	 * Schedule onAfterViewRender Event - can update rendered results
+	 *
+	 * Position where mustache and Twig can process on rendered results
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	protected function onAfterViewRender($renderedOutput)
+	{
+		if ((int)$this->get('process_triggers') == 0) {
+			return true;
+		}
+
+/** Mustache */
+//		if ($this->get('mustache', 0) == 1) {
+//			$renderedOutput = $this->processRenderedOutput($renderedOutput);
+//		}
+
+		/** Process the entire query_results set */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'rendered_output' => $renderedOutput,
+			'model_name' => $this->get('model_name')
+		);
+
+		$arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
+
+		if ($arguments == false) {
+			return false;
+		}
+
+		$renderedOutput = $arguments['renderedOutput'];
+
+		return $renderedOutput;
 	}
 
 	/**

@@ -20,7 +20,6 @@ if ($first_year == null || $first_year == '') {
 } else {
 	$ccDateSpan = $first_year . '-' . $current_year;
 }
-
 ?>
 <p>
 	<?php echo '&#169;' . ' ' . $ccDateSpan . ' ' . $this->row->copyright_holder; ?>

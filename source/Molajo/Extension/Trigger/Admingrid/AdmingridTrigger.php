@@ -279,6 +279,7 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	protected function setGrid($connect, $primary_prefix, $table_name)
 	{
+
 		/** Select */
 		$grid_columns = explode(',', $this->get('grid_columns',
 				'id,featured,title,created_by,start_publishing_datetime,ordering')
@@ -318,7 +319,6 @@ class AdmingridTrigger extends ContentTrigger
 		Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
 		Services::Registry()->set('Parameters', 'model_type', 'dbo');
 		Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
-
 		Services::Registry()->set('Parameters', 'model_parameter', 'GridQueryResults');
 
 		return true;
