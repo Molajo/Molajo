@@ -47,7 +47,7 @@ class AdminmenuTrigger extends ContentTrigger
 	 *
 	 * Prepares data for the Administrator Grid  - position AdminmenuTrigger last
 	 *
-	 * @return  void
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onAfterRoute()

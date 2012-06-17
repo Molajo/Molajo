@@ -219,7 +219,7 @@ Class ModelController extends Controller
 			echo $query_object.'<br />';
 			echo $model_parameter.'<br />';
 			 */
-			if (strtolower($query_object) == 'dummy') {
+			if (strtolower($query_object) == 'getdummy') {
 				$this->query_results = array();
 			} else {
 				$this->query_results = $this->model->$query_object($model_parameter);

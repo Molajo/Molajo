@@ -47,7 +47,7 @@ class AdmingridTrigger extends ContentTrigger
 	 *
 	 * Prepares data for the Administrator Grid  - position AdmingridTrigger last
 	 *
-	 * @return  void
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onAfterRoute()
@@ -113,7 +113,6 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	protected function setToolbar($url, $connector)
 	{
-
 		$grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
 				'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')
 		);
@@ -226,7 +225,6 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	protected function setBatch($connect, $primary_prefix)
 	{
-
 		$grid_list = Services::Registry()->set('Trigger', 'GridFilters');
 
 		$batch_list = explode(',', 'status,categories,tags,access');

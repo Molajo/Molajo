@@ -45,6 +45,7 @@ Class TemplateIncluder extends Includer
 	 */
 	protected function setRenderCriteria()
 	{
+
 		/**  Extension name set to the name of the template in the getAttributes method */
 		$template_title = Services::Registry()->get('Parameters', 'extension_title');
 
@@ -66,6 +67,30 @@ Class TemplateIncluder extends Includer
 			return false;
 		}
 
+		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
+		if ($model_name === null) {
+			$model_name = '';
+		}
+		$model_parameter = Services::Registry()->get('Parameters', 'model_parameter', '');
+		if ($model_parameter === null) {
+			$model_parameter = '';
+		}
+
+		if (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
+			$model_name = 'Dummy';
+
+		} elseif (strtolower($this->type) == 'asset') {
+			$model_name = 'Assets';
+
+		} elseif (strtolower($this->type) == 'metadata') {
+			$model_name = 'Metadata';
+
+		} elseif (strtolower($this->type) == 'template' && $model_name == '') {
+			$model_name = 'triggerdata';
+		}
+		Services::Registry()->set('Parameters', 'model_name', $model_name);
+
+
 		/** Wrap  */
 		$wrap_id = (int)Services::Registry()->get('Parameters', 'wrap_view_id');
 		if ((int)$wrap_id == 0) {
@@ -82,36 +107,11 @@ Class TemplateIncluder extends Includer
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/* Set other model parameters: model_parameter is set in Attributes */
-		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
+
 		$model_parameter = Services::Registry()->get('Parameters', 'model_parameter', '');
 
-		if (strtolower($this->type) == 'asset') {
-			Services::Registry()->set('Parameters', 'model_name', 'Assets');
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
-
-		} elseif (strtolower($this->type) == 'metadata') {
-			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
-
-		} elseif (($model_name == '' || strtolower($model_name) == 'dummy')
-					&& ($model_parameter == '')) {
-			Services::Registry()->set('Parameters', 'model_name', 'Dummy');
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'dummy');
-
-		} elseif (strtolower($model_name) == 'parameters') {
-			Services::Registry()->set('Parameters', 'model_name', 'Parameters');
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getParameters');
-			Services::Registry()->set('Parameters', 'model_parameter', '');
-
-		} else {
-			Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
-		}
+		Services::Registry()->set('Parameters', 'model_type', 'dbo');
+		Services::Registry()->set('Parameters', 'model_query_object', 'get' . strtolower(ucfirst($model_name)));
 
 		/** Cleanup */
 		Services::Registry()->delete('Parameters', 'item*');
@@ -126,7 +126,7 @@ echo 'Final test view: '. Services::Registry()->get('Parameters', 'template_view
 echo 'View ' . Services::Registry()->get('Parameters', 'template_view_title') . '<br />';
 echo 'Model '.$model_name .'<br />';
 Services::Registry()->get('Parameters', 'model*');
- */
+*/
 
 		/** Was a View selected? */
 		if (Services::Registry()->get('Parameters', 'template_view_title', '') == '') {
