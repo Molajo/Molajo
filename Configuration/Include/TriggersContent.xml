@@ -1,3 +1,4 @@
+<trigger name="Rownumber"/>
 <trigger name="Author"/>
 <trigger name="Smilies"/>
 <trigger name="Email"/>

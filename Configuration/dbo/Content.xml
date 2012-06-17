@@ -1,4 +1,5 @@
 <model
         name="Content"
+        process_triggers="1"
         data_source="Registry">
 </model>

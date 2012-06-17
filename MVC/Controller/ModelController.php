@@ -234,8 +234,8 @@ Class ModelController extends Controller
 			$query_object = 'list';
 		}
 
-		/** Retrieve list of potential $triggers for this model (result type does not use events) */
-		$triggers = $this->getTriggerList($query_object);
+		/** Retrieve list of potential $this->triggers for this model (result type does not use events) */
+		$this->getTriggerList($query_object);
 
 		/** Base query */
 		if ($query_object == 'item') {
@@ -281,8 +281,8 @@ Class ModelController extends Controller
 		}
 
 		/** Schedule onBeforeRead Event */
-		if (count($triggers) > 0) {
-			$this->onBeforeReadEvent($triggers);
+		if (count($this->triggers) > 0) {
+			$this->onBeforeReadEvent();
 		}
 
 		/** Executes Query */
@@ -357,8 +357,8 @@ Class ModelController extends Controller
 		$this->query_results = $q;
 
 		/** Schedule onAfterRead Event */
-		if (count($triggers) > 0) {
-			$this->onAfterReadEvent($triggers);
+		if (count($this->triggers) > 0) {
+			$this->onAfterReadEvent();
 		}
 		/**
 		echo $query_object.'<br />';
@@ -381,48 +381,47 @@ Class ModelController extends Controller
 	 *
 	 * @param $query_object
 	 *
-	 * @return array
+	 * @return  void
 	 * @since   1.0
 	 */
 	protected function getTriggerList($query_object)
 	{
 		if ($query_object == 'result') {
-			return array();
+			$this->triggers = array();
+			return;
 		}
 
 		if ((int)$this->get('process_triggers') == 1) {
 
-			$triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
+			$this->triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
 
-			if (is_array($triggers)) {
+			if (is_array($this->triggers)) {
 			} else {
-				if ($triggers == '' || $triggers == false || $triggers == null) {
-					$triggers = array();
+				if ($this->triggers == '' || $this->triggers == false || $this->triggers == null) {
+					$this->triggers = array();
 				} else {
-					$temp = $triggers;
-					$triggers = array();
-					$triggers[] = $temp;
+					$temp = $this->triggers;
+					$this->triggers = array();
+					$this->triggers[] = $temp;
 				}
 			}
 
 		} else {
-			$triggers = array();
+			$this->triggers = array();
 		}
 
-		return $triggers;
+		return;
 	}
 
 	/**
 	 * Schedule onBeforeRead Event - could update model and parameter objects
 	 *
-	 * @param array $triggers
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
-	protected function onBeforeReadEvent($triggers = array())
+	protected function onBeforeReadEvent()
 	{
-		if (count($triggers) == 0
+		if (count($this->triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
 		) {
 			return true;
@@ -439,7 +438,7 @@ Class ModelController extends Controller
 			'model_name' => $this->get('model_name')
 		);
 
-		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $triggers);
+		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
 		if ($arguments == false) {
 			return false;
 		}
@@ -454,15 +453,13 @@ Class ModelController extends Controller
 	/**
 	 * Schedule onAfterRead Event - could update parameters and query_results objects
 	 *
-	 * @param array $triggers
-	 *
 	 * @return bool
 	 * @since   1.0
 	 */
-	protected function onAfterReadEvent($triggers = array())
+	protected function onAfterReadEvent()
 	{
 		/** Prepare input */
-		if (count($triggers) == 0
+		if (count($this->triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
 		) {
 			return true;
@@ -481,7 +478,7 @@ Class ModelController extends Controller
 				'model_name' => $this->get('model_name')
 			);
 
-			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $triggers);
+			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
 
 			if ($arguments == false) {
 				return false;

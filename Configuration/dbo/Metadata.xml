@@ -1,4 +1,5 @@
 <model
         name="Metadata"
+        process_triggers="0"
         data_source="Metadata">
 </model>

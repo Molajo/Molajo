@@ -426,9 +426,6 @@ class ContentTrigger extends Trigger
     /**
      * Pre-create processing
      *
-     * @param   $this->query_results
-     * @param   $model
-     *
      * @return boolean
      * @since   1.0
      */
@@ -439,8 +436,6 @@ class ContentTrigger extends Trigger
 
     /**
      * Post-create processing
-     *
-     * @param $this->query_results, $model
      *
      * @return boolean
      * @since   1.0
@@ -453,9 +448,6 @@ class ContentTrigger extends Trigger
     /**
      * Pre-read processing
      *
-     * @param   $this->query_results
-     * @param   $model
-     *
      * @return boolean
      * @since   1.0
      */
@@ -466,9 +458,6 @@ class ContentTrigger extends Trigger
 
     /**
      * Post-read processing
-     *
-     * @param   $this->query_results
-     * @param   $model
      *
      * @return boolean
      * @since   1.0
@@ -485,6 +474,17 @@ class ContentTrigger extends Trigger
 	 * @since   1.0
 	 */
 	public function onAfterRoute()
+	{
+		return true;
+	}
+
+	/**
+	 * Before the Query results are injected into the View
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeViewRender()
 	{
 		return true;
 	}

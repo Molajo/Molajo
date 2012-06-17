@@ -1,4 +1,5 @@
 <model
         name="Messages"
+        process_triggers="1"
         data_source="Message">
 </model>

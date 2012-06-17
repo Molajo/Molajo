@@ -1,4 +1,5 @@
 <model
         name="Menus"
+        process_triggers="1"
         data_source="Menu">
 </model>

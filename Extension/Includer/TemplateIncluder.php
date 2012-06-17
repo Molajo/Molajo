@@ -45,7 +45,6 @@ Class TemplateIncluder extends Includer
 	 */
 	protected function setRenderCriteria()
 	{
-
 		/**  Extension name set to the name of the template in the getAttributes method */
 		$template_title = Services::Registry()->get('Parameters', 'extension_title');
 
@@ -89,7 +88,6 @@ Class TemplateIncluder extends Includer
 			$model_name = 'triggerdata';
 		}
 		Services::Registry()->set('Parameters', 'model_name', $model_name);
-
 
 		/** Wrap  */
 		$wrap_id = (int)Services::Registry()->get('Parameters', 'wrap_view_id');
