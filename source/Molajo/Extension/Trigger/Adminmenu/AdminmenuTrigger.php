@@ -56,7 +56,7 @@ class AdminmenuTrigger extends ContentTrigger
 		$model_type = $this->get('model_type');
 		$model_name = $this->get('model_name');
 
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$connect = new $controllerClass();
 
 		$results = $connect->connect($model_type, $model_name);
@@ -147,7 +147,7 @@ class AdminmenuTrigger extends ContentTrigger
 	 *
 	 * @param   int $extension_instance_id - menu
 	 *
-	 * @return  array|bool
+	 * @return  object
 	 * @since   1.0
 	 */
 	public function setPageTitle()
@@ -160,5 +160,7 @@ class AdminmenuTrigger extends ContentTrigger
 		}
 
 		Services::Registry()->set('Trigger', 'AdminTitle', $title);
+
+		return $this;
 	}
 }

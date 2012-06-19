@@ -28,23 +28,24 @@ $s->register();
 /** Molajo namespaces */
 $s->registerNamespace('Molajo', BASE_FOLDER);
 
-$s->registerNamespace('Molajo\\MVC', BASE_FOLDER);
-$s->registerNamespace('Molajo\\MVC\\Model', BASE_FOLDER);
-$s->registerNamespace('Molajo\\MVC\\View', BASE_FOLDER);
-$s->registerNamespace('Molajo\\MVC\\Controller', BASE_FOLDER);
-
-$s->registerNamespace('Molajo\\Service', BASE_FOLDER);
-$s->registerNamespace('Molajo\\Service\\Services', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Controller', BASE_FOLDER);
 
 $s->registerNamespace('Molajo\\Extension', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Component', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Formfield', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Helper', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Includer', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Language', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Extension\\Menuitems', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Module', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Theme', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\Trigger', BASE_FOLDER);
 $s->registerNamespace('Molajo\\Extension\\View', BASE_FOLDER);
+
+$s->registerNamespace('Molajo\\Model', BASE_FOLDER);
+
+$s->registerNamespace('Molajo\\Service', BASE_FOLDER);
+$s->registerNamespace('Molajo\\Service\\Services', BASE_FOLDER);
 
 /** Symfony namespaces */
 $s->registerNamespace('Symfony\\Component\\HttpFoundation', VENDOR);

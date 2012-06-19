@@ -79,7 +79,7 @@ class AuthorTrigger extends ContentTrigger
 		}
 
 		/** Using the created_by value, retrieve the Author Profile Data */
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Users');
 		if ($results == false) {
