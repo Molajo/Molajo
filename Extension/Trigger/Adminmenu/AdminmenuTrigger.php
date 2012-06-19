@@ -100,6 +100,12 @@ class AdminmenuTrigger extends ContentTrigger
 	protected function setMenu()
 	{
 		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
+		if ((int) $extension_instance_id == 0) {
+			$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
+			if ((int) $catalog_type_id == 10000) {
+				$extension_instance_id = 100;
+			}
+		}
 
 		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($extension_instance_id);
 

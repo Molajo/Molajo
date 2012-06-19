@@ -7,7 +7,6 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$date = Services::Date()->getDate()->format('Y-m-d-H-i-s');
 $current_year = Services::Date()->getDate()->format('Y');
 $first_year = $this->row->copyright_first_year;
 

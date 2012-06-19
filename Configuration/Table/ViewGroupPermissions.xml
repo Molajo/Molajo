@@ -8,7 +8,7 @@
         <fields>
             <field name="id" type="int" null="0" default=""/>
             <field name="view_group_id" type="int" null="0" default=""/>
-            <field name="catalog_id" type="int" null="0" default=""/>
+            <field name="catalog_id" type="catalog_id" null="0" default=""/>
             <field name="action_id" type="int" null="0" default=""/>
         </fields>
         <foreignkeys>

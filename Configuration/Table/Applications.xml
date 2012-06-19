@@ -50,7 +50,7 @@
         <customfield name="parameters">
 
             <field name="application_name" type="char" null="1" default="Molajo Application" values=""/>
-            <field name="application_home_catalog_id" type="integer" null="0" default="" values=""/>
+            <field name="application_home_catalog_id" type="catalog_id" null="0" default="" values=""/>
             <field name="application_logon_requirement" type="binary" null="1" default="1" values="0,1"/>
 
             <field name="url_sef" type="binary" null="1" default="1" values="0,1"/>
@@ -63,7 +63,6 @@
             <field name="language_direction" type="char" null="1" default="ltr" values="ltr,rtl"/>
             <field name="language_multilingual" type="binary" null="1" default="0" values="0,1"/>
             <field name="language_utc_offset" type="char" null="1" default="UTC" values=""/>
-            <field name="language_utc_offset_user" type="char" null="1" default="UTC" values=""/>
 
             <field name="debug" type="boolean" null="1" default="0" values=""/>
             <field name="debug_log" type="text" null="0" default="echo"

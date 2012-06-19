@@ -58,8 +58,6 @@ class DateformatsTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-			/** @noinspection PhpWrongForeachArgumentTypeInspection */
-			/** @noinspection PhpWrongForeachArgumentTypeInspection */
 			foreach ($fields as $field) {
 
                 $name = $field->name;
@@ -69,6 +67,7 @@ class DateformatsTrigger extends ContentTrigger
 
                 if ($fieldValue == false
                     || $fieldValue == '0000-00-00 00:00:00') {
+
                 } else {
 
                     /** formats the date for CCYYMMDD */
@@ -79,19 +78,19 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_ccyymmdd';
-                        $newFieldValue = str_replace('-', '', $newFieldValue);
-                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
+                        $this->saveField($field, $new_name, $newFieldValue);
+						$fieldValue = $newFieldValue;
                     }
 
-                    /** NN days ago */
-                    $newFieldValue = Services::Date()->differenceDays(date('Y-m-d'), $fieldValue);
+                    /** Using newly formatted date, calculate NN days ago */
+					$newFieldValue = Services::Date()->differenceDays($fieldValue);
 
                     if ($newFieldValue == false) {
                     } else {
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_n_days_ago';
-                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
+                        $this->saveField($field, $new_name, $newFieldValue);
                     }
 
                     /** Pretty Date */
@@ -102,7 +101,7 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_pretty_date';
-                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
+                        $this->saveField($field, $new_name, $newFieldValue);
                     }
                 }
             }

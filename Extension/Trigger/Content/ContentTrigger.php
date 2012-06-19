@@ -36,6 +36,14 @@ class ContentTrigger extends Trigger
      */
     protected $table_registry_name;
 
+	/**
+	 * Model name
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $model_name;
+
     /**
      * Parameters set by the Includer and used in the MVC to generate include output
      *
@@ -100,6 +108,14 @@ class ContentTrigger extends Trigger
      */
     protected $customfieldgroups;
 
+	/**
+	 * Used in post-render View triggers, contains output rendered from view
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $rendered_output;
+
     /**
      * getInstance
      *
@@ -130,9 +146,9 @@ class ContentTrigger extends Trigger
 	{
 		$value = null;
 
-		if (in_array($key, array('table_registry_name', 'query', 'db',
-				'query_results', 'null_date', 'now', 'parameters', 'fields',
-				'customfieldgroups'))) {
+		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
+			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
+			'model_name', 'rendered_output'))) {
 			$value = $this->$key;
 
 		} else {
@@ -160,7 +176,8 @@ class ContentTrigger extends Trigger
 	public function set($key, $value = null)
 	{
 		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
-			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups'))) {
+			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
+			'model_name', 'rendered_output'))) {
 
 			$this->$key = $value;
 		} else {
@@ -186,11 +203,12 @@ class ContentTrigger extends Trigger
         /** process normal fields */
         $fields = Services::Registry()->get($this->table_registry_name, 'fields');
 
-        /** Common processing */
+        /** "Normal" fields */
         if (is_array($fields) && count($fields) > 0) {
             $this->processFieldType($type = '', $fields);
         }
 
+		/** "Custom" fields */
         $this->customfieldgroups = Services::Registry()->get($this->table_registry_name, 'customfieldgroups', array());
 
         if (is_array($this->customfieldgroups) && count($this->customfieldgroups) > 0) {
@@ -207,6 +225,14 @@ class ContentTrigger extends Trigger
                 $this->processFieldType($customFieldName, $fields);
             }
         }
+
+		/** join fields */
+		$joinfields = Services::Registry()->get($this->table_registry_name, 'JoinFields');
+
+		/** "Normal" fields */
+		if (is_array($joinfields) && count($joinfields) > 0) {
+			$this->processFieldType('JoinFields', $joinfields);
+		}
 
         return $this;
     }
@@ -230,7 +256,21 @@ class ContentTrigger extends Trigger
                 $row->name = 'Unknown';
             }
 
-            /** Datatype */
+			/** As Name */
+			if (isset($fields[$key]['as_name'])) {
+				$row->name = $fields[$key]['as_name'];
+			} else {
+				$row->name = '';
+			}
+
+			/** Alias */
+			if (isset($fields[$key]['alias'])) {
+				$row->type = $fields[$key]['alias'];
+			} else {
+				$row->type = '';
+			}
+
+			/** Datatype */
             if (isset($fields[$key]['type'])) {
                 $row->type = $fields[$key]['type'];
             } else {
@@ -307,7 +347,14 @@ class ContentTrigger extends Trigger
                 $row->size = '0';
             }
 
-            /** Unique */
+			/** Table */
+			if (isset($fields[$key]['table'])) {
+				$row->size = $fields[$key]['table'];
+			} else {
+				$row->table = '';
+			}
+
+			/** Unique */
             if (isset($fields[$key]['unique'])) {
                 $row->unique = $fields[$key]['unique'];
             } else {
@@ -331,7 +378,7 @@ class ContentTrigger extends Trigger
     }
 
     /**
-     * processFieldType processes an array of fields, populating the class property
+     * retrieveFieldsByType processes an array of fields, populating the class property
      *
      * @return boolean
      * @since  1.0

@@ -286,11 +286,20 @@ Class ModelController extends Controller
 		}
 
 		/** Executes Query */
+		if ($query_object == 'distinct') {
+			$offset = 0;
+			$count = 999999;
+
+		} else {
+			$offset = $this->get('model_offset', 0);
+			$count = $this->get('model_count', 5);
+		}
+
 		$this->model->getQueryResults(
 			Services::Registry()->get($this->table_registry_name, 'Fields'),
 			$query_object,
-			$this->get('model_offset', 0),
-			$this->get('model_count', 5)
+			$offset,
+			$count
 		);
 
 		/** Retrieve query results from Model */

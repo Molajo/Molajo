@@ -12,7 +12,7 @@
     <table>
 
         <fields>
-            <field name="id" type="int" null="1" default="0"/>
+            <field name="id" type="catalog_id" null="1" default="0"/>
             <field name="catalog_type_id" type="int" null="0" default="" values=""/>
             <field name="source_id" type="int" null="0" default="" values=""/>
             <field name="routable" type="boolean" null="0" default="0"/>
@@ -25,7 +25,7 @@
         </fields>
 
         <joins>
-            <join table="#__catalog_types" alias="b" select="title,source_table" jointo="id"
+            <join model="CatalogTypes" alias="b" select="title,source_table" jointo="id"
                   joinwith="catalog_type_id"/>
         </joins>
 

@@ -23,7 +23,6 @@ namespace Molajo\MVC\Controller;
 
 use Molajo\Application;
 use Molajo\Service\Services;
-use Mustache\Mustache;
 
 defined('MOLAJO') or die;
 
@@ -82,8 +81,6 @@ class DisplayController extends ModelController
 
 		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
 
-		$this->getTriggerList($model_query_object);
-
 		if ($model_name == '') {
 			$this->query_results = array();
 
@@ -91,7 +88,7 @@ class DisplayController extends ModelController
 			$this->connect($model_type, $model_name);
 
 			if ((int)$this->get('content_id') == 0) {
-
+//todo dbo should be result, item, list too - add parameter for specific query, don't hijack.
 			} elseif (strtolower($model_type) == 'dbo') {
 
 			} else {
@@ -103,6 +100,7 @@ class DisplayController extends ModelController
 			$this->getData($model_query_object);
 		}
 
+//todo - move this into a trigger?
 		$this->pagination = array();
 
 		/** no results */
@@ -113,7 +111,7 @@ class DisplayController extends ModelController
 		}
 
 		if (strtolower($includer_name) == 'wrap') {
-			$renderedOutput = $this->query_results;
+			$rendered_output = $this->query_results;
 
 		} else {
 
@@ -140,27 +138,28 @@ class DisplayController extends ModelController
 			}
 
 			/** Render View */
-			$renderedOutput = $this->renderView();
+			$rendered_output = $this->renderView();
 
 			/** Trigger After-View Render Event */
-			$this->onAfterViewRender($renderedOutput);
+			$rendered_output = $this->onAfterViewRender($rendered_output);
 		}
 
 		/** Wrap template view results */
-		return $this->wrapView($this->get('wrap_view_title'), $renderedOutput);
+		return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
 	}
 
 	/**
 	 * wrapView
 	 *
 	 * @param $view
-	 * @param $renderedOutput
+	 * @param $rendered_output
 	 *
 	 * @return string
 	 * @since 1.0
 	 */
-	public function wrapView($view, $renderedOutput)
+	public function wrapView($view, $rendered_output)
 	{
+//todo: decide if not passing wraps thru view triggers will come back and bite us in the ass.
 		$this->query_results = array();
 
 		$temp = new \stdClass();
@@ -168,7 +167,7 @@ class DisplayController extends ModelController
 		$this->set('view_css_id', $this->get('wrap_view_css_id'));
 		$this->set('view_css_class', $this->get('wrap_view_css_class'));
 
-		$temp->content = $renderedOutput;
+		$temp->content = $rendered_output;
 
 		$this->query_results[] = $temp;
 
@@ -222,8 +221,8 @@ class DisplayController extends ModelController
 	 *
 	 * On no query results
 	 *
-	 * @return string
-	 * @since 1.0
+	 * @return  string
+	 * @since   1.0
 	 */
 	protected function renderView()
 	{
@@ -282,22 +281,17 @@ class DisplayController extends ModelController
 	 * @return bool
 	 * @since   1.0
 	 */
-	protected function onAfterViewRender($renderedOutput)
+	protected function onAfterViewRender($rendered_output)
 	{
 		if ((int)$this->get('process_triggers') == 0) {
-			return true;
+			return $rendered_output;
 		}
-
-/** Mustache */
-//		if ($this->get('mustache', 0) == 1) {
-//			$renderedOutput = $this->processRenderedOutput($renderedOutput);
-//		}
 
 		/** Process the entire query_results set */
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'parameters' => $this->parameters,
-			'rendered_output' => $renderedOutput,
+			'rendered_output' => $rendered_output,
 			'model_name' => $this->get('model_name')
 		);
 
@@ -307,86 +301,8 @@ class DisplayController extends ModelController
 			return false;
 		}
 
-		$renderedOutput = $arguments['renderedOutput'];
+		$rendered_output = $arguments['rendered_output'];
 
-		return $renderedOutput;
-	}
-
-	/**
-	 * todo: create a trigger action here to invoke template tools, like mustache.
-	 *
-	 * processRenderedOutput
-	 *
-	 * Passes the rendered output and the entire resultset into the
-	 * Theme Helper and Mustache for processing.
-	 *
-	 * @param $template
-	 *
-	 * @return string rendered output
-	 * @since  1.0
-	 */
-	protected function processRenderedOutput($template)
-	{
-		/** quick check for mustache commands */
-		if (stripos($template, '}}') > 0) {
-		} else {
-			return $template;
-		}
-
-		/** Instantiate Mustache before Theme Helper */
-		$m = new Mustache;
-
-		/** Theme Specific Mustache Helper or Molajo Mustache Helper */
-		$helperClass = 'Molajo\\Extension\\Theme\\'
-			. ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . '\\Helper\\'
-			. 'Theme' . ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . 'Helper';
-
-		if (\class_exists($helperClass)) {
-			$h = new $helperClass();
-
-		} else {
-			$helperClass = 'Molajo\\Extension\\Helper\\MustacheHelper';
-			$h = new $helperClass();
-		}
-
-		/** Push in Parameters */
-		$h->parameters = $this->parameters;
-		$h->items = $this->query_results;
-		/** Push in model results */
-		$totalRows = count($this->query_results);
-
-		if (($this->query_results) == false) {
-			$totalRows = 0;
-		}
-
-		if (is_object($this->query_results)) {
-
-			if ($totalRows > 0) {
-				foreach ($this->query_results as $this->row) {
-
-					$item = new \stdClass ();
-					$pairs = get_object_vars($this->row);
-					foreach ($pairs as $key => $value) {
-						$item->$key = $value;
-					}
-
-					$new_query_results[] = $item;
-				}
-			}
-
-			/** Load -- Associative Array */
-		} else {
-			$new_query_results = $this->query_results;
-		}
-
-		/** Pass in Rendered Output and Helper Class Instance */
-		ob_start();
-		echo $h->render($template);
-		$output = ob_get_contents();
-		ob_end_clean();
-
-		/** Return processed output */
-
-		return $output;
+		return $rendered_output;
 	}
 }

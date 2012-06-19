@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="TagsListbox"
+        name="Tags"
         table="#__content"
         primary_key="id"
         name_key="title"
@@ -18,5 +18,8 @@
             <field name="id" type="int" null="1" default="0" identity="1"/>
             <field name="title" type="char" null="0" default="" unique="1"/>
         </fields>
+        <triggers>
+            <trigger name="Publishedstatus"/>
+        </triggers>
     </table>
 </model>
