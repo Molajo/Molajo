@@ -61,9 +61,9 @@ Class ConfigurationService
 	public function __construct($configuration_file = null)
 	{
 		/** Initialize list of valid field attributes */
-		self::$valid_field_attributes = array('name', 'type', 'default', 'file',
+		self::$valid_field_attributes = array('name', 'asname', 'alias', 'type', 'default', 'file',
 			'identity', 'length', 'minimum', 'maximum', 'null', 'required',
-			'shape', 'size', 'unique', 'values');
+			'shape', 'size', 'table', 'unique', 'values');
 
 		/** Retrieve Site Data */
 		$this->getSite($configuration_file);
@@ -815,6 +815,8 @@ Class ConfigurationService
 		if (isset($xml->table->joins->join)) {
 			$jXML = $xml->table->joins->join;
 
+			$join_fields_select = array();
+
 			$jArray = array();
 			foreach ($jXML as $joinItem) {
 
@@ -822,9 +824,49 @@ Class ConfigurationService
 				$joinAttributes = ($joinVars["@attributes"]);
 				$joinAttributesArray = array();
 
-				$joinAttributesArray['table'] = (string)$joinAttributes['table'];
-				$joinAttributesArray['alias'] = (string)$joinAttributes['alias'];
-				$joinAttributesArray['select'] = (string)$joinAttributes['select'];
+				$joinModel = (string)$joinAttributes['model'];
+
+				$joinFields = array();
+
+				/** Load Registry for Table Joined too -- so that field attributes can be used */
+				$joinRegistry = strtolower($joinModel . 'Table');
+
+				/** Load the file and build registry - IF - the registry is not already loaded */
+				if (Services::Registry()->exists($joinRegistry) == true) {
+				} else {
+					//if not, load it.
+					$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+					$m = new $controllerClass();
+					$results = $m->connect('Table', $joinModel);
+				}
+
+				/** Load inherited definitions */
+				$tempFields = Services::Registry()->get($joinRegistry, 'fields', array());
+				$table = Services::Registry()->get($joinRegistry, 'table');
+				$joinAttributesArray['table'] = $table;
+
+				$alias = (string)$joinAttributes['alias'];
+				if (trim($alias) == '') {
+					$alias = substr($table, 3, strlen($table));
+				}
+				$joinAttributesArray['alias'] = trim($alias);
+
+				$select = (string)$joinAttributes['select'];
+				$joinAttributesArray['select'] = $select;
+				$selectArray = explode(',', $select);
+
+				foreach ($selectArray as $x) {
+
+					foreach($tempFields as $t) {
+						if ($t['name'] == $x) {
+							$t['as_name'] = trim($alias) . '_' . trim($x);
+							$t['alias'] = $alias;
+							$t['table'] = $table;
+							$join_fields_select[] = $t;
+						}
+					}
+				}
+
 				$joinAttributesArray['jointo'] = (string)$joinAttributes['jointo'];
 				$joinAttributesArray['joinwith'] = (string)$joinAttributes['joinwith'];
 
@@ -832,7 +874,10 @@ Class ConfigurationService
 			}
 
 			Services::Registry()->set($registryName, 'Joins', $jArray);
+
+			Services::Registry()->set($registryName, 'JoinFields', $join_fields_select);
 		}
+
 		return array($xml, $xml_string);
 	}
 

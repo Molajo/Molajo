@@ -1,4 +1,5 @@
 <trigger name="Rownumber"/>
+<trigger name="Itemurl"/>
 <trigger name="Author"/>
 <trigger name="Smilies"/>
 <trigger name="Email"/>
@@ -11,3 +12,4 @@
 <trigger name="Publishedstatus"/>
 <trigger name="Readmore"/>
 <trigger name="Lists"/>
+<trigger name="Adminmenu"/>

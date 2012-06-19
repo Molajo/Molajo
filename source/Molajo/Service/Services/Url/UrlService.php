@@ -94,7 +94,7 @@ Class UrlService
 	 */
 	public function getURL($catalog_id)
 	{
-		return Helpers::Catalog()->getURL($catalog_id);
+		return $this->getApplicationURL(Helpers::Catalog()->getURL($catalog_id));
 	}
 
 	/**

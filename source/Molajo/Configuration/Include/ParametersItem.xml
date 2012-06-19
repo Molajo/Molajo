@@ -1,3 +1,5 @@
+<field name="parent_menuitem" type="int" null="1" default="" values=""/>
+
 <field name="enable_draft_save" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_version_history" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_retain_versions_after_delete" type="binary" null="1" default="1" values="0,1"/>

@@ -423,7 +423,9 @@ class JDate extends \DateTime
 		if ($dbo === null) {
 			$dbo = JFactory::getDbo();
 		}
-		return $this->format($dbo->getDateFormat(), $local, false);
+
+		return $this->format('Y-m-d H:i:s', $local, false);
+//Amy. Still does not work without deprecated classes since it always the same damn thing, just return it.return $this->format($dbo->getDateFormat(), $local, false);
 	}
 
 	/**

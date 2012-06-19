@@ -268,22 +268,91 @@ Class TextService
 			$primary_key = $m->get('primary_key');
 			$name_key = $m->get('name_key');
 
-			$filter_check_published_status = $m->get('filter_check_published_status');
+			$m->model->set('model_offset', 0);
+			$m->model->set('model_count', 999999);
 
-			$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id ');
-			$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $name_key) . ' as value ');
+			/** Select */
+			$fields = Services::Registry()->get($filter.'Listbox', 'Fields');
 
-			if ((int)$m->get('filter_catalog_type_id') > 0) {
+			$first = true;
+
+			if (count($fields) < 2) {
+
+				$m->model->query->select('DISTINCT '. $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
+				$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $name_key) . ' as value');
+				$m->model->query->order($m->model->db->qn($primary_prefix . '.' . $name_key) . ' ASC');
+
+			} else {
+				foreach ($fields as $field) {
+
+					if (isset($field['alias'])) {
+						$alias = $field['alias'];
+					} else {
+						$alias = $primary_prefix;
+					}
+
+					$name = $field['name'];
+
+
+					if ($first) {
+						$first = false;
+						$as = 'id';
+						$distinct = 'DISTINCT';
+					} else {
+						$as = 'value';
+						$distinct = '';
+						$ordering = $alias.'.'.$name;
+					}
+
+					$m->model->query->select($distinct . ' ' . $m->model->db->qn($alias . '.' . $name) . ' as '. $as);
+				}
+				$m->model->query->order($m->model->db->qn($ordering) . ' ASC');
+			}
+
+			/** Where: Catalog Type */
+			$filter_catalog_type = $m->get('filter_catalog_type_id');
+
+			if (is_array($filter_catalog_type)) {
+				$a = explode(',', $filter_catalog_type);
+				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'catalog_type_id')
+					. ' IN (' . $a . ')');
+
+			} elseif ((int)$m->get('filter_catalog_type_id') == 0) {
+
+			} else {
 				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'catalog_type_id')
 					. ' = ' . (int)$m->get('filter_catalog_type_id'));
 			}
 
-			if ((int)$filter_check_published_status == 0) {
+			/** Where: Published Status */
+			$filter_check_published_status = $m->get('filter_check_published_status');
+
+			if (is_array($filter_catalog_type)) {
+				$a = explode(',', $filter_check_published_status);
+				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'status')
+					. ' IN (' . $a . ')');
+
+			} elseif ((int)$filter_check_published_status == 0) {
+
 			} else {
 				$this->publishedStatus($m);
 			}
 
-			/** Menu ID */
+			/** Where: Extension Instance ID */
+			$filter_extension_instance_id = $m->get('filter_extension_instance_id');
+			if (is_array($filter_extension_instance_id)) {
+				$a = explode(',', filter_extension_instance_id);
+				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'extension_instance_id')
+					. ' IN (' . $a . ')');
+
+			} elseif ((int)$filter_extension_instance_id == 0) {
+
+			} else {
+				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'extension_instance_id')
+					. ' = ' . (int)$m->get('filter_extension_instance_id'));
+			}
+
+			/** Where: Menu ID */
 			$menu_id = null;
 			if (isset($parameters['menu_extension_catalog_type_id'])
 				&& (int) $parameters['menu_extension_catalog_type_id'] == 1300) {
@@ -306,8 +375,19 @@ Class TextService
 			$query_object = 'getListdata';
 		}
 
-		return $m->getData($query_object);
 
+		$query_results = $m->getData($query_object);
+
+	    /**
+		echo '<br /><br /><br />';
+		echo $m->model->query->__toString($query_object);
+		echo '<pre>';
+		var_dump($query_results);
+		echo '</pre>';
+		echo '<br /><br /><br />';
+		**/
+
+		return $query_results;
 	}
 
 	/**

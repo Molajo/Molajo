@@ -82,7 +82,7 @@ class CssclassandidsTrigger extends ContentTrigger
 				if (trim($class) == '') {
 					$class = '';
 				} else {
-					$class = htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . ' class="' . '"';
+					$class = ' class="' . htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . '"';
 				}
 
 				/** @var $css_id */

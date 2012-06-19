@@ -59,8 +59,8 @@ class AdmingridTrigger extends ContentTrigger
 		}
 
 		/** Data Source Connection */
-		$model_type = $this->get('model_type');
-		$model_name = $this->get('model_name');
+		$model_type = $this->parameters['model_type'];
+		$model_name = $this->parameters['model_name'];
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
 		$connect = new $controllerClass();
@@ -71,19 +71,19 @@ class AdmingridTrigger extends ContentTrigger
 		}
 
 		$table_name = $connect->get('table_name');
-
 		$primary_prefix = $connect->get('primary_prefix');
-		$primary_key = $connect->get('primary_key');
 		$name_key = $connect->get('name_key');
+
+		$connect->set('use_special_joins', 1);
 
 		/** URL */
 		$url = Services::Registry()->get('Configuration', 'application_base_url');
 
 		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			$url .= '/' . $this->get('catalog_url_sef_request');
+			$url .= '/' . $this->parameters['catalog_url_sef_request'];
 			$connector = '?';
 		} else {
-			$url .= '/' . $this->get('catalog_url_request');
+			$url .= '/' . $this->parameters['catalog_url_request'];
 			$connector = '&';
 		}
 
@@ -101,6 +101,9 @@ class AdmingridTrigger extends ContentTrigger
 
 		/**  Create Pagination data and store in Trigger registry */
 		$this->setPagination($url, $connector);
+
+		/**  Create data for batch work area  */
+		$this->setBatch($connect, $primary_prefix);
 
 		return true;
 	}
@@ -163,9 +166,25 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	protected function setFilter($connect, $primary_prefix)
 	{
-		$grid_list = explode(',', $this->get(
-				'grid_list', 'catalog_type_id,created_by,featured,status')
-		);
+		$grid_list = explode(',', $this->get('grid_list', 'CatalogType,Author,Featured,Status'));
+
+		/** Add lists needed for Batch Updates */
+		if (in_array('Status', $grid_list)) {
+		} else {
+			$grid_list[] = 'Status';
+		}
+		if (in_array('Categories', $grid_list)) {
+		} else {
+			$grid_list[] = 'Categories';
+		}
+		if (in_array('Tags', $grid_list)) {
+		} else {
+			$grid_list[] = 'Tags';
+		}
+		if (in_array('Groups', $grid_list)) {
+		} else {
+			$grid_list[] = 'Groups';
+		}
 
 		$lists = array();
 
@@ -218,56 +237,6 @@ class AdmingridTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Create Batch lists and store in Trigger registry, given ACL checks
-	 *
-	 * @return boolean
-	 * @since  1.0
-	 */
-	protected function setBatch($connect, $primary_prefix)
-	{
-		$grid_list = Services::Registry()->set('Trigger', 'GridFilters');
-
-		$batch_list = explode(',', 'status,categories,tags,access');
-
-		$lists = array();
-
-		if (is_array($batch_list) && count($batch_list) > 0) {
-
-			/** Build each list and store in registry along with current selection */
-			foreach ($batch_list as $list) {
-
-				$fieldValue = Services::Text()->getList($list, $this->parameters);
-
-				if ($fieldValue == false) {
-				} else {
-
-					ksort($fieldValue);
-
-					Services::Registry()->set('Trigger', 'batch_' . $list, $fieldValue);
-
-					/** todo: Retrieve selected field from request */
-					$selectedValue = '';
-					Services::Registry()->set('Trigger', 'batch_' . $list . '_selected', $selectedValue);
-
-					if ($selectedValue == '') {
-					} else {
-						$connect->model->query->where($connect->model->db->qn($primary_prefix)
-							. '.' . $connect->model->db->qn($list)
-							. ' = ' . $connect->model->db->q($selectedValue));
-					}
-
-					/** Store the name of each filter list in an array */
-					$lists[] = strtolower($list);
-				}
-			}
-		}
-
-		Services::Registry()->set('Trigger', 'GridBatch', $lists);
-
-		return true;
-	}
-
-	/**
 	 * Create Grid Query and save results in Trigger registry
 	 *
 	 * @param   $connect
@@ -279,25 +248,16 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	protected function setGrid($connect, $primary_prefix, $table_name)
 	{
-
-		/** Select */
+		/** Present these columns in the list */
 		$grid_columns = explode(',', $this->get('grid_columns',
-				'id,featured,title,created_by,start_publishing_datetime,ordering')
+				'title,created_by,start_publishing_datetime,ordering')
 		);
 		Services::Registry()->set('Trigger', 'GridTableColumns', $grid_columns);
-		foreach ($grid_columns as $column) {
-			$connect->model->query->select(
-				$connect->model->db->qn($primary_prefix) . '.' . $connect->model->db->qn($column)
-			);
-		}
-
-		/** From */
-		$connect->model->query->from($connect->model->db->qn($table_name)
-			. ' as ' . $connect->model->db->qn($primary_prefix));
 
 		/** Where (filter values already set) */
 		$connect->model->query->where($connect->model->db->qn('a.catalog_type_id')
 			. ' = ' . $this->get('menuitem_source_catalog_type_id'));
+		$connect->model->query->where($connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
 		/** Ordering */
 		$ordering = $this->get('grid_ordering', 'start_publishing_datetime');
@@ -305,13 +265,7 @@ class AdmingridTrigger extends ContentTrigger
 		$connect->model->query->order($connect->model->db->qn($ordering));
 
 		/** Run the query and store results */
-		$connect->model->db->setQuery(
-			$connect->model->query->__toString(),
-			$this->get('grid_offset', 0),
-			$this->get('grid_count', 5)
-		);
-
-		$query_results = $connect->model->db->loadObjectList();
+		$query_results = $connect->getData('list');
 
 		Services::Registry()->set('Trigger', 'GridQueryResults', $query_results);
 
@@ -359,6 +313,56 @@ class AdmingridTrigger extends ContentTrigger
 		Services::Registry()->set('Trigger', 'GridPagination', $query_results);
 		Services::Registry()->set('Trigger', 'GridPaginationOffset', $this->get('grid_offset', 0));
 		Services::Registry()->set('Trigger', 'GridPaginationCount', $this->get('grid_count', 5));
+
+		return true;
+	}
+
+	/**
+	 * Create Batch lists and store in Trigger registry, given ACL checks
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	protected function setBatch($connect, $primary_prefix)
+	{
+		$grid_list = Services::Registry()->set('Trigger', 'GridFiltersxx');
+
+		$batch_list = explode(',', 'status,categories,tags,access');
+
+		$lists = array();
+
+		if (is_array($batch_list) && count($batch_list) > 0) {
+
+			/** Build each list and store in registry along with current selection */
+			foreach ($batch_list as $list) {
+
+				$fieldValue = Services::Text()->getList($list, $this->parameters);
+
+				if ($fieldValue == false) {
+				} else {
+
+					ksort($fieldValue);
+
+					Services::Registry()->set('Trigger', 'batch_' . $list, $fieldValue);
+
+					/** todo: Retrieve selected field from request */
+					$selectedValue = '';
+					Services::Registry()->set('Trigger', 'batch_' . $list . '_selected', $selectedValue);
+
+					if ($selectedValue == '') {
+					} else {
+						$connect->model->query->where($connect->model->db->qn($primary_prefix)
+							. '.' . $connect->model->db->qn($list)
+							. ' = ' . $connect->model->db->q($selectedValue));
+					}
+
+					/** Store the name of each filter list in an array */
+					$lists[] = strtolower($list);
+				}
+			}
+		}
+
+		Services::Registry()->set('Trigger', 'GridBatchxx', $lists);
 
 		return true;
 	}

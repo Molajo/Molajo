@@ -111,6 +111,7 @@ class Model
 
 		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results', 'pagination'))) {
 			$value = $this->$key;
+
 		} else {
 			if (isset($this->parameters[$key])) {
 				$value = $this->parameters[$key];

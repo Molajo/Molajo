@@ -10,35 +10,16 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_triggers="0"
-        filter_catalog_type_id="100"
         filter_check_published_status="1"
+        filter_catalog_type_id="100,110,120"
         data_source="JDatabase">
     <table>
         <fields>
             <field name="id" type="int" null="1" default="0" identity="1"/>
             <field name="title" type="char" null="0" default="" unique="1"/>
         </fields>
-        >
-        <joins>
-            <join table="#__extension_instances"
-                  alias="extension_instances"
-                  select=""
-                  jointo="id"
-                  joinwith="extension_instance_id"/>
-            <join table="#__application_extension_instances"
-                  alias="application_extension_instances"
-                  select=""
-                  jointo="extension_instance_id,application_id"
-                  joinwith="id,APPLICATION_ID"/>
-            <join table="#__site_extension_instances"
-                  alias="site_extension_instances"
-                  select=""
-                  jointo="extension_instance_id,site_id"
-                  joinwith="id,SITE_ID"/>
-        </joins>
         <triggers>
             <trigger name="Publishedstatus"/>
         </triggers>
     </table>
 </model>
-

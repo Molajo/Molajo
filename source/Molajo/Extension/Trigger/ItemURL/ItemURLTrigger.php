@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Trigger\Itemurl;
 
+use Molajo\Service\Services;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
 defined('MOLAJO') or die;
@@ -76,7 +77,7 @@ class ItemurlTrigger extends ContentTrigger
 					} else {
 
 						/** Creates the new 'normal' or special field and populates the value */
-						$newFieldName = $name . '_' . 'Url';
+						$newFieldName = $name . '_' . 'url';
 						$fieldValue = $this->saveField($field, $newFieldName, $newField);
 					}
 				}

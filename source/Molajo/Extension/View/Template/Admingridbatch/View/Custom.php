@@ -6,32 +6,48 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
+
+$action = Services::Registry()->get('Trigger', 'PageURL');
 ?>
-	<dl class="nice vertical tabs">
-		<dd><a href="<?php echo $pageUrl; ?>#batch1" class="active">Status</a></dd>
-		<dd><a href="<?php echo $pageUrl; ?>#batch2">Categories</a></dd>
-		<dd><a href="<?php echo $pageUrl; ?>#batch3">Tags</a></dd>
-		<dd><a href="<?php echo $pageUrl; ?>#batch4">Access</a></dd>
-	</dl>
+<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
+	<section class="row">
+		<section class="three columns">
+			<dl class="nice vertical tabs">
+				<dd><a href="<?php echo $pageUrl; ?>#batchStatus" class="active">Status</a></dd>
+				<dd><a href="<?php echo $pageUrl; ?>#batchCategories">Categories</a></dd>
+				<dd><a href="<?php echo $pageUrl; ?>#batchTags">Tags</a></dd>
+				<dd><a href="<?php echo $pageUrl; ?>#batchPermissions">Permissions</a></dd>
+			</dl>
+		</section>
+		<section class="nine columns">
+			<ul class="nice tabs-content vertical">
+				<li class="active" id="batchStatusTab">
+					<div class="panel">
+						<h4>Status</h4>
 
-	<ul class="nice tabs-content vertical">
-		<li class="active" id="batch1Tab">
-			<fieldset class="batch">
-				<legend><?php echo Services::Language()->translate('GRID_BATCH_OPTIONS');?></legend>
-					<p><?php echo Services::Language()->translate('Change the status of selected items to this value.');?></p>
+						<p>Change the items selected, above to the specified status.</p>
+					</div>
+				</li>
+				<li id="batchCategoriesTab">
+					<div class="panel">
+						<h4>Categories</h4>
 
-				<button type="submit">
-					<?php echo Services::Language()->translate('GRID_SUBMIT'); ?>
-				</button>
+						<p>Seriously, just look at this sweet panel.</p>
+					</div>
+				</li>
+				<li id="batchTagsTab">
+					<div class="panel">
+						<h4>Tags</h4>
 
-				<button type="button">
-					<?php echo Services::Language()->translate('GRID_CLEAR'); ?>
-				</button>
-
-			</fieldset>
-		</li>
-		<li id="batch2Tab">This is nice tab 2's content. Now you see it!</li>
-		<li id="batch3Tab">This is nice tab 3's content. It's, you know...okay.</li>
-	</ul>
-
+						<p>Seriously, just look at this sweet panel.</p>
+					</div>
+				</li>
+				<li id="batchPermissionsTab">
+					<div class="panel">
+						<h4>P</h4>
+					</div>
+				</li>
+			</ul>
+		</section>
+	</section>
 </form>

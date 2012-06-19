@@ -324,6 +324,7 @@ Class Application
 //Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
 //Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);
 //Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
+
 		/** Theme and Page must exist */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
 			&& file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))

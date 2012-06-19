@@ -45,7 +45,7 @@ class RownumberTrigger extends ContentTrigger
 	/**
 	 * Before the Query results are injected into the View
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onBeforeViewRender()
@@ -63,15 +63,15 @@ class RownumberTrigger extends ContentTrigger
 		foreach ($this->query_results as $item) {
 
 			if ($i == 1) {
-				$item->first_row = 1;
+				$item->first_row = 'first';
 			} else {
-				$item->first_row = 0;
+				$item->first_row = '';
 			}
 
 			if ($i == $count) {
-				$item->last_row = 1;
+				$item->last_row = 'last';
 			} else {
-				$item->last_row = 0;
+				$item->last_row = '';
 			}
 
 			$item->total_records = $count;
@@ -82,6 +82,10 @@ class RownumberTrigger extends ContentTrigger
 			} else {
 				$even_or_odd = 'odd';
 			}
+
+			$item->grid_row_class = ' class="' .
+				trim(trim($item->first_row) . ' ' . trim($item->even_or_odd_row) . ' ' . trim($item->last_row))
+				. '"';
 
 			$item->row_number = $i++;
 		}

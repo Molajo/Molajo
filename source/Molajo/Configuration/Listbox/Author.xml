@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="CreatedbyListbox"
+        name="Author"
         table="#__content"
         primary_key="id"
         name_key="title"
@@ -14,17 +14,16 @@
         filter_check_published_status="1"
         data_source="JDatabase">
     <table>
-
         <fields>
             <field name="created_by" type="int" null="1" default="0" identity="1"/>
+            <field alias="users" name="username" type="int" null="1" default="0" identity="1"/>
         </fields>
         <joins>
-            <join table="#__users"
+            <join model="Users"
                   alias="users"
-                  select="username"
+                  select=""
                   jointo="id"
                   joinwith="created_by"/>
         </joins>
-
     </table>
 </model>

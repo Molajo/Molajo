@@ -161,11 +161,6 @@ class ReadModel extends Model
 			$joinTo = $join['jointo'];
 			$joinWith = $join['joinwith'];
 
-			/* Join to table */
-			if (trim($alias) == '') {
-				$alias = substr($join_table, 3, strlen($join_table));
-			}
-
 			$this->query->from($this->db->qn($join_table) . ' as ' . $this->db->qn($alias));
 
 			/* Select fields */

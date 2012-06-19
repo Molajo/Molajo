@@ -14,26 +14,26 @@
             <field name="id" type="" null="0" default="" identity="1"/>
             <field name="user_id" type="int" null="0" default=""/>
             <field name="action_id" type="int" null="0" default=""/>
-            <field name="catalog_id" type="int" null="0" default=""/>
+            <field name="catalog_id" type="catalog_id" null="0" default=""/>
             <field name="activity_datetime" type="datetime" null="0" default=""/>
         </fields>
         <joins>
-            <join table="#__users"
+            <join model="Users"
                   alias="useractivity_to_users"
                   select="username,first_name,last_name"
                   jointo="id"
                   joinwith="user_id"/>
-            <join table="#__actions"
+            <join model="Actions"
                   alias="useractivity_to_actions"
                   select="title"
                   jointo="id"
                   joinwith="action_id"/>
-            <join table="#__catalog"
+            <join model="Catalog"
                   alias="useractivity_to_catalog"
                   select="catalog_type_id,source_id,sef_request,view_group_id"
                   jointo="id"
                   joinwith="catalog_id"/>
-            <join table="#__catalog_types"
+            <join model="CatalogTypes"
                   alias="useractivity_to_catalog_type"
                   select="title,source_table"
                   jointo="id"

@@ -6,8 +6,8 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-//todo - add first and last indicators in the row
-if ($this->row->title == 'Install') {
+
+if ($this->row->last_row == 1) {
 	$liclass = ' class="last-in-row"';
 } else {
 	$liclass = '';

@@ -181,6 +181,12 @@ Class MenuService
 		}
 
 		$current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
+		if ((int) $current_menuitem_id == 0) {
+			$current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuitem');
+		}
+		if ((int) $current_menuitem_id == 0) {
+			return false;
+		}
 
 		/** Query Connection */
 		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
@@ -207,6 +213,29 @@ Class MenuService
 				} else {
 					$item->url = Services::Url()->getApplicationURL('index.php?id=' . (int)$item->id);
 				}
+			}
+			if ($item->lvl == 1) {
+				$item->home = 1;
+				$item->section = 0;
+				$item->component = 0;
+				$item->submenu = 0;
+
+			} elseif ($item->lvl == 2) {
+				$item->home = 0;
+				$item->section = 1;
+				$item->component = 0;
+				$item->submenu = 0;
+
+			} elseif ($item->lvl == 3) {
+				$item->home = 0;
+				$item->section = 0;
+				$item->component = 1;
+				$item->submenu = 0;
+			} else {
+				$item->home = 0;
+				$item->section = 0;
+				$item->component = 0;
+				$item->submenu = 4;
 			}
 		}
 
