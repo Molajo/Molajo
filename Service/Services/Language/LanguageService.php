@@ -214,7 +214,7 @@ Class LanguageService
 		/** Retrieve valid list */
 		$installed = array();
 		foreach ($results as $language) {
-			$installed = $language->tag;
+			$installed[] = $language->tag;
 		}
 
 		/** 2. session */
