@@ -84,10 +84,11 @@ Class LanguageService
 	/**
 	 * Translate a specified string to the requested, or current, language
 	 *
-	 * @param string Value to be translated
+	 * @param $string value to be translated
+	 * @param null $language requested language (defaults to current or default)
 	 *
-	 * @return null
-	 * @since   1.0
+	 * @return mixed
+	 * @since  1.0
 	 */
 	public function translate($string, $language = null)
 	{
@@ -100,10 +101,12 @@ Class LanguageService
 	/**
 	 * retrieve a specified property for the current language
 	 *
-	 * @param string
+	 * @param  $property
+	 * @param  string $default
+	 * @param  null $language
 	 *
-	 * @return null
-	 * @since   1.0
+	 * @return mixed
+	 * @since  1.0
 	 */
 	public function get($property, $default = '', $language = null)
 	{
@@ -117,12 +120,10 @@ Class LanguageService
 		);
 	}
 
-
 	/**
-	 * Loads the requested language file. If not successful, loads the default language.
+	 * Loads the requested language file (as specified by path). If not successful, loads default language.
 	 *
 	 * @param string $path
-	 * @param string $language
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -132,7 +133,7 @@ Class LanguageService
 		/** Determine if the files have already been loaded */
 		$currentLanguage = Services::Registry()->get('Languages', 'Current');
 
-		/** Finish path depending on whether it's a request for core or extension files */
+		/** Path subfolder dependis on whether it's a request for core or extension files */
 		if ($path == EXTENSIONS_LANGUAGES) {
 			$path = $path . '/' . $currentLanguage;
 		} else {
@@ -165,12 +166,13 @@ Class LanguageService
 	/**
 	 * Retrieves the language requested, or the default language
 	 *
-	 * @return string locale or null if not found
-	 * @since   1.0
+	 * @param null $language string locale or null if not found
+	 *
+	 * @return bool
+	 * @since  1.0
 	 */
 	protected function getLanguage($language = null)
 	{
-		/** Load the requested language( or use the default) if not loaded */
 		if ($language == null) {
 			$language = $this->getDefaultLanguage();
 			Services::Registry()->set('Languages', 'Default', $language);
@@ -200,8 +202,6 @@ Class LanguageService
 	 */
 	protected function getDefaultLanguage()
 	{
-
-		$language = 0;
 
 		/** 1. if there is just one, take it */
 		$results = Services::Registry()->get('Languages', 'installed', array());

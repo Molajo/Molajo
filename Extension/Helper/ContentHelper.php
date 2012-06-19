@@ -312,7 +312,7 @@ Class ContentHelper
 	 */
 	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
 	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {

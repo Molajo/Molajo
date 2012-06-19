@@ -170,11 +170,6 @@ Class ViewHelper
 			return EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node));
 		}
 
-		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/Configuration.xml')) {
-			return MVC . $plus;
-		}
-
 		return false;
 	}
 
@@ -210,11 +205,6 @@ Class ViewHelper
 		/** 3. View */
 		if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
 			return EXTENSIONS_VIEWS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
-		}
-
-		/** 4. MVC */
-		if (file_exists(MVC . $plus . '/Configuration.xml')) {
-			return MVC_URL . $plus;
 		}
 
 		return '';

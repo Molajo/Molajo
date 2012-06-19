@@ -528,15 +528,6 @@ Class Application
 			define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Molajo/Extension/View');
 		}
 
-		if (defined('MVC')) {
-		} else {
-			define('MVC', APPLICATIONS . '/MVC');
-		}
-		if (defined('MVC_URL')) {
-		} else {
-			define('MVC_URL', BASE_URL . 'Molajo/MVC');
-		}
-
 		if (defined('SERVICES')) {
 		} else {
 			define('SERVICES', APPLICATIONS . '/Service');
