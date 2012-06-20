@@ -115,6 +115,8 @@ Class ModelController extends Controller
 			$this->set('use_special_joins', 0);
 			$this->set('check_view_level_access', 0);
 			$this->set('process_triggers', 0);
+			$this->get('model_offset', 0);
+			$this->get('model_count', 5);
 
 		} else {
 
@@ -159,6 +161,9 @@ Class ModelController extends Controller
 				Services::Registry()->get($this->table_registry_name, 'filter_check_published_status', 0));
 			$this->set('data_source',
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
+			$this->get('model_offset', 0);
+			$this->get('model_count', 5);
+
 		}
 
 		/* 2. Instantiate Model Class */
@@ -285,21 +290,11 @@ Class ModelController extends Controller
 			$this->onBeforeReadEvent();
 		}
 
-		/** Executes Query */
-		if ($query_object == 'distinct') {
-			$offset = 0;
-			$count = 999999;
-
-		} else {
-			$offset = $this->get('model_offset', 0);
-			$count = $this->get('model_count', 5);
-		}
-
 		$this->model->getQueryResults(
 			Services::Registry()->get($this->table_registry_name, 'Fields'),
 			$query_object,
-			$offset,
-			$count
+			$this->get('model_offset'),
+			$this->get('model_count')
 		);
 
 		/** Retrieve query results from Model */

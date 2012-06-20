@@ -54,11 +54,11 @@ class PullquoteTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
+
         $fields = $this->retrieveFieldsByType('text');
 
         if (is_array($fields) && count($fields) > 0) {
 
-			/** @noinspection PhpWrongForeachArgumentTypeInspection */
 			foreach ($fields as $field) {
 
 				/** retrieve each text field */

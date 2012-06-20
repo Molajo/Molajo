@@ -1,5 +1,0 @@
-<extension type="Component" version="1.0" extends="Categories">
-<model
-        name="TagCategories"
-        catalog_type_id="3500">
-</model>

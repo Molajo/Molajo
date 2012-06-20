@@ -7,7 +7,7 @@
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Trigger', 'PageURL');
+$pageUrl = Services::Registry()->get('Trigger', 'PageURL');
 ?>
 <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
 	<section class="row">

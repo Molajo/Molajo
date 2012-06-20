@@ -63,9 +63,12 @@ class ItemurlTrigger extends ContentTrigger
 
 			foreach ($fields as $field) {
 
-				$name = $field->name;
+				if ($field->as_name == '') {
+					$name = $field->name;
+				} else {
+					$name = $field->as_name;
+				}
 
-				/** Retrieves the actual field value from the 'normal' or special field */
 				$fieldValue = $this->getFieldValue($field);
 
 				if ($fieldValue == false) {

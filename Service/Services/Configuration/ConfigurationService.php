@@ -489,6 +489,7 @@ Class ConfigurationService
 				) {
 					return $primary_extension_path . '/Configuration.xml';
 				}
+
 				/** ex. Component/Article/ContentTable.xml or Component/Article/DefaultTemplate.xml */
 				if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
 				) {

@@ -146,6 +146,12 @@ class ContentTrigger extends Trigger
 	{
 		$value = null;
 
+
+		if ($key == 'ArticlesTable') {
+			var_dump($value);
+			die;
+		}
+
 		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
 			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
 			'model_name', 'rendered_output'))) {
@@ -203,7 +209,7 @@ class ContentTrigger extends Trigger
         /** process normal fields */
         $fields = Services::Registry()->get($this->table_registry_name, 'fields');
 
-        /** "Normal" fields */
+		/** "Normal" fields */
         if (is_array($fields) && count($fields) > 0) {
             $this->processFieldType($type = '', $fields);
         }
@@ -258,16 +264,16 @@ class ContentTrigger extends Trigger
 
 			/** As Name */
 			if (isset($fields[$key]['as_name'])) {
-				$row->name = $fields[$key]['as_name'];
+				$row->as_name = $fields[$key]['as_name'];
 			} else {
-				$row->name = '';
+				$row->as_name = '';
 			}
 
 			/** Alias */
 			if (isset($fields[$key]['alias'])) {
-				$row->type = $fields[$key]['alias'];
+				$row->alias = $fields[$key]['alias'];
 			} else {
-				$row->type = '';
+				$row->alias = '';
 			}
 
 			/** Datatype */
@@ -349,7 +355,7 @@ class ContentTrigger extends Trigger
 
 			/** Table */
 			if (isset($fields[$key]['table'])) {
-				$row->size = $fields[$key]['table'];
+				$row->table = $fields[$key]['table'];
 			} else {
 				$row->table = '';
 			}
@@ -407,8 +413,14 @@ class ContentTrigger extends Trigger
 	{
 		foreach ($this->fields as $field) {
 
-			if ($field->name == $name) {
-				return $field;
+			if ($field->as_name == '') {
+				if ($field->name == $name) {
+					return $field;
+				}
+			} else {
+				if ($field->as_name == $name) {
+					return $field;
+				}
 			}
 		}
 
@@ -423,7 +435,12 @@ class ContentTrigger extends Trigger
      */
     public function getFieldValue($field)
     {
-        $name = $field->name;
+
+		if ($field->as_name == '') {
+			$name = $field->name;
+		} else {
+			$name = $field->as_name;
+		}
 
         if (isset($this->query_results->$name)) {
             return $this->query_results->$name;
