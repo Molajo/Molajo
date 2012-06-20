@@ -351,6 +351,9 @@ Class Application
 	 */
 	protected function action()
 	{
+
+// -> sessions Services::Message()->set('Status updated', MESSAGE_TYPE_SUCCESS);
+
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 			$url = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
 

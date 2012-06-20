@@ -12,6 +12,8 @@
         process_triggers="0"
         filter_catalog_type_id="3000"
         filter_check_published_status="1"
+        multiple="1"
+        size="5"
         data_source="JDatabase">
     <table>
         <fields>

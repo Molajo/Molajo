@@ -5,8 +5,8 @@
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
 ul.nav-section { list-style: none; margin-left: 5px; overflow: hidden; margin-top: 0;}
-ul.nav-section li { float: left; margin-bottom: 10px; margin-right: 5px; color: #999;}
+ul.nav-section li { float: left; margin-bottom: 5px; margin-right: 5px; color: #999;}
 ul.nav-section li a { display: block; padding: 0 7px 4px; color: #555; }
 ul.nav-section li.current a, ul.nav-section li:hover a, ul.nav-section li a:focus { border-bottom: solid 2px #00a6fc; color: #141414; }
 ul.nav-section li.last-in-row { margin-right: 0; }
-ul.nav-section li span { font-size: 14px }
+ul.nav-section li span { font-size: 18px }

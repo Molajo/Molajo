@@ -13,8 +13,8 @@ defined('MOLAJO') or die; ?>
 <section class="row">
 	<nav class="three columns">
 		<include:template name=Adminnavigationbar/>
-		<include:template name=Admingridfilters/>
 		<include:template name=Adminsectionmenu/>
+		<include:template name=Admingridfilters/>
 	</nav>
 	<section class="nine columns">
 		<include:template name=Adminsubmenu/>

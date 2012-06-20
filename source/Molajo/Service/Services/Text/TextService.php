@@ -272,17 +272,20 @@ Class TextService
 			$m->model->set('model_count', 999999);
 
 			/** Select */
-			$fields = Services::Registry()->get($filter.'Listbox', 'Fields');
+			$fields = Services::Registry()->get($filter . 'Listbox', 'Fields');
 
 			$first = true;
 
 			if (count($fields) < 2) {
 
-				$m->model->query->select('DISTINCT '. $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
+				$m->model->query->select('DISTINCT ' . $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
 				$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $name_key) . ' as value');
 				$m->model->query->order($m->model->db->qn($primary_prefix . '.' . $name_key) . ' ASC');
 
 			} else {
+
+				$ordering = '';
+
 				foreach ($fields as $field) {
 
 					if (isset($field['alias'])) {
@@ -293,7 +296,6 @@ Class TextService
 
 					$name = $field['name'];
 
-
 					if ($first) {
 						$first = false;
 						$as = 'id';
@@ -301,70 +303,50 @@ Class TextService
 					} else {
 						$as = 'value';
 						$distinct = '';
-						$ordering = $alias.'.'.$name;
+						$ordering = $alias . '.' . $name;
 					}
 
-					$m->model->query->select($distinct . ' ' . $m->model->db->qn($alias . '.' . $name) . ' as '. $as);
+					$m->model->query->select($distinct . ' ' . $m->model->db->qn($alias . '.' . $name) . ' as ' . $as);
 				}
+
 				$m->model->query->order($m->model->db->qn($ordering) . ' ASC');
 			}
 
-			/** Where: Catalog Type */
-			$filter_catalog_type = $m->get('filter_catalog_type_id');
+			/** Where */
 
-			if (is_array($filter_catalog_type)) {
-				$a = explode(',', $filter_catalog_type);
-				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'catalog_type_id')
-					. ' IN (' . $a . ')');
+			$this->setWhereCriteria (
+				'catalog_type_id',
+				$m->get('filter_catalog_type_id'),
+				$primary_prefix,
+				$m
+			);
 
-			} elseif ((int)$m->get('filter_catalog_type_id') == 0) {
+			$this->setWhereCriteria (
+				'status',
+				$m->get('filter_check_published_status'),
+				$primary_prefix,
+				$m
+			);
 
-			} else {
-				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'catalog_type_id')
-					. ' = ' . (int)$m->get('filter_catalog_type_id'));
-			}
-
-			/** Where: Published Status */
-			$filter_check_published_status = $m->get('filter_check_published_status');
-
-			if (is_array($filter_catalog_type)) {
-				$a = explode(',', $filter_check_published_status);
-				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'status')
-					. ' IN (' . $a . ')');
-
-			} elseif ((int)$filter_check_published_status == 0) {
-
-			} else {
-				$this->publishedStatus($m);
-			}
-
-			/** Where: Extension Instance ID */
-			$filter_extension_instance_id = $m->get('filter_extension_instance_id');
-			if (is_array($filter_extension_instance_id)) {
-				$a = explode(',', filter_extension_instance_id);
-				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'extension_instance_id')
-					. ' IN (' . $a . ')');
-
-			} elseif ((int)$filter_extension_instance_id == 0) {
-
-			} else {
-				$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'extension_instance_id')
-					. ' = ' . (int)$m->get('filter_extension_instance_id'));
-			}
+			$this->setWhereCriteria (
+				'extension_instance_id',
+				$m->get('filter_extension_instance_id'),
+				$primary_prefix,
+				$m
+			);
 
 			/** Where: Menu ID */
 			$menu_id = null;
 			if (isset($parameters['menu_extension_catalog_type_id'])
-				&& (int) $parameters['menu_extension_catalog_type_id'] == 1300) {
-
-				$menu_id = (int)$parameters['menu_extension_instance_id'];
+				&& (int)$parameters['menu_extension_catalog_type_id'] == 1300
+			) {
+				$this->setWhereCriteria (
+					'menu_id',
+					$m->get('menu_extension_instance_id'),
+					$primary_prefix,
+					$m
+				);
 			}
-			$m->model->set('menu_id', $menu_id);
-
-			/** Catalog Type ID */
-			$catalog_type_id = null;
-			$catalog_type_id = (int)$parameters['catalog_type_id'];
-			$m->model->set('catalog_type_id', $catalog_type_id);
 
 			$query_object = 'distinct';
 
@@ -378,16 +360,34 @@ Class TextService
 
 		$query_results = $m->getData($query_object);
 
-	    /**
+		/**
 		echo '<br /><br /><br />';
 		echo $m->model->query->__toString($query_object);
 		echo '<pre>';
 		var_dump($query_results);
 		echo '</pre>';
 		echo '<br /><br /><br />';
-		**/
+		 **/
 
 		return $query_results;
+	}
+
+	protected function setWhereCriteria ($field, $value, $alias, $connection)
+	{
+		if (is_array($value)) {
+			$value_list = explode(',', $value);
+			$connection->model->query->where(
+				$connection->model->db->qn($alias . '.' . $field)
+				. ' IN (' . $value_list . ')'
+			);
+
+		} elseif ((int)$value == 0) {
+
+		} else {
+			$connection->model->query->where(
+				$connection->model->db->qn($alias . '.' . $field) . ' = ' . (int)$value
+				);
+		}
 	}
 
 	/**
@@ -420,6 +420,58 @@ Class TextService
 
 		return;
 	}
+
+	/**
+	 * buildSelectlist - build select list for insertion into webpage
+	 *
+	 * @param  $listname
+	 * @param  $items
+	 * @param  int $multiple
+	 * @param  int $size
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public function buildSelectlist($listname, $items, $multiple = 0, $size = 5)
+	{
+		ksort($items);
+
+		/** todo: Retrieve selected field from request */
+		$selected = '';
+
+		$query_results = array();
+		foreach ($items as $item) {
+
+			$row = new \stdClass();
+
+			$row->listname = $listname;
+
+			$row->id = $item->id;
+			$row->value = $item->value;
+
+			if ($row->id == $selected) {
+				$row->selected = ' selected ';
+			} else {
+				$row->selected = '';
+			}
+
+			$row->multiple = '';
+
+			if ($multiple == 1) {
+				$row->multiple = ' multiple ';
+				if ((int)$size == 0) {
+					$row->multiple .= 'size=5 ';
+				} else {
+					$row->multiple .= 'size=' . (int)$size;
+				}
+			}
+
+			$query_results[] = $row;
+		}
+
+		return $query_results;
+	}
+
 
 	/**
 	 *     Dummy functions to pass service off as a DBO to interact with model

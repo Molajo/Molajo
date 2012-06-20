@@ -173,42 +173,19 @@ class AdmingridTrigger extends ContentTrigger
 
 		if (is_array($grid_list) && count($grid_list) > 0) {
 
-			/** Build each list and store in registry along with current selection */
-			foreach ($grid_list as $requested_listname) {
+			foreach ($grid_list as $listname) {
 
-				$fieldValue = Services::Text()->getList($requested_listname, $this->parameters);
+				$items = Services::Text()->getList($listname, $this->parameters);
 
-				if ($fieldValue == false) {
+				if ($items == false) {
 				} else {
 
-					ksort($fieldValue);
+					$query_results = Services::Text()->buildSelectlist($listname, $items, 0, 5);
 
-					/** todo: Retrieve selected field from request */
-					$selected = '';
+					Services::Registry()->set('Trigger', 'list_' . $listname, $query_results);
 
-					$query_results = array();
-					foreach ($fieldValue as $item) {
-
-						$row = new \stdClass();
-
-						$row->listname = $requested_listname;
-						$row->id = $item->id;
-						$row->value = $item->value;
-
-						if ($row->id == $selected) {
-							$row->selected = ' selected="selected"';
-						} else {
-							$row->selected = '';
-						}
-
-						$query_results[] = $row;
-					}
-
-					Services::Registry()->set('Trigger', 'list_'. $requested_listname, $query_results);
-
-					/** Store the name of each filter list in an array */
 					$row = new \stdClass();
-					$row->listname = $requested_listname;
+					$row->listname = $listname;
 					$lists[] = $row;
 				}
 			}
@@ -335,52 +312,36 @@ class AdmingridTrigger extends ContentTrigger
 			$grid_list[] = 'Groups';
 		}
 
-		$lists = array();
+		$names_of_lists = array();
 
 		if (is_array($grid_list) && count($grid_list) > 0) {
 
-			/** Build each list and store in registry along with current selection */
-			foreach ($grid_list as $requested_listname) {
+			foreach ($grid_list as $listname) {
 
-				$fieldValue = Services::Text()->getList($requested_listname, $this->parameters);
+				$items = Services::Text()->getList($listname, $this->parameters);
 
-				if ($fieldValue == false) {
+				if ($items == false) {
 				} else {
 
-					ksort($fieldValue);
-
-					/** todo: Retrieve selected field from request */
-					$selected = '';
-
-					$query_results = array();
-					foreach ($fieldValue as $item) {
-
-						$row = new \stdClass();
-
-						$row->listname = $requested_listname;
-						$row->id = $item->id;
-						$row->value = $item->value;
-
-						if ($row->id == $selected) {
-							$row->selected = ' selected="selected"';
-						} else {
-							$row->selected = '';
-						}
-
-						$query_results[] = $row;
+					if ($listname == 'Status') {
+						$multiple = 0;
+						$size = 0;
+					} else {
+						$multiple = 1;
+						$size = 5;
 					}
+					$query_results = Services::Text()->buildSelectlist($listname, $items, $multiple, $size);
 
-					Services::Registry()->set('Trigger', 'list_'. $requested_listname, $query_results);
+					Services::Registry()->set('Trigger', 'gridbatch_' . $listname, $query_results);
 
-					/** Store the name of each filter list in an array */
 					$row = new \stdClass();
-					$row->listname = $requested_listname;
-					$lists[] = $row;
+					$row->listname = $listname;
+					$names_of_lists[] = $row;
 				}
 			}
 		}
 
-		Services::Registry()->set('Trigger', 'GridBatchLists', $lists);
+		Services::Registry()->set('Trigger', 'GridBatchFilters', $names_of_lists);
 
 		return true;
 	}
