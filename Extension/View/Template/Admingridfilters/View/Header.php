@@ -10,4 +10,6 @@ defined('MOLAJO') or die;
 $action = Services::Registry()->get('Trigger', 'PageURL');
 ?>
 <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
-	<include:template name=Search/>
+	<input type="submit" class="submit button small" name="submit" id="searchsubmit" value="Filter">
+	<input type="search" placeholder="Search..." name="s" >
+</form>
