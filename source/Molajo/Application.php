@@ -465,17 +465,25 @@ Class Application
 		} else {
 			define('EXTENSIONS', BASE_FOLDER . '/Molajo/Extension');
 		}
-		if (defined('EXTENSIONS_HELPERS')) {
-		} else {
-			define('EXTENSIONS_HELPERS', EXTENSIONS . '/Helper');
-		}
 		if (defined('EXTENSIONS_COMPONENTS')) {
 		} else {
 			define('EXTENSIONS_COMPONENTS', EXTENSIONS . '/Component');
 		}
+		if (defined('EXTENSIONS_LANGUAGES')) {
+		} else {
+			define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
+		}
 		if (defined('EXTENSIONS_FORMFIELDS')) {
 		} else {
 			define('EXTENSIONS_FORMFIELDS', EXTENSIONS . '/Formfield');
+		}
+		if (defined('EXTENSIONS_HELPERS')) {
+		} else {
+			define('EXTENSIONS_HELPERS', EXTENSIONS . '/Helper');
+		}
+		if (defined('EXTENSIONS_MENUITEMS')) {
+		} else {
+			define('EXTENSIONS_MENUITEMS', EXTENSIONS . '/Menuitems');
 		}
 		if (defined('EXTENSIONS_MODULES')) {
 		} else {
@@ -492,10 +500,6 @@ Class Application
 		if (defined('EXTENSIONS_VIEWS')) {
 		} else {
 			define('EXTENSIONS_VIEWS', EXTENSIONS . '/View');
-		}
-		if (defined('EXTENSIONS_LANGUAGES')) {
-		} else {
-			define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
 		}
 
 		if (defined('EXTENSIONS_URL')) {

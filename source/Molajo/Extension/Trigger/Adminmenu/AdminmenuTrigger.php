@@ -99,27 +99,37 @@ class AdminmenuTrigger extends ContentTrigger
 	 */
 	protected function setMenu()
 	{
-		$extension_instance_id = Services::Registry()->get('Parameters', 'menu_extension_instance_id');
-		if ((int) $extension_instance_id == 0) {
-			$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
-			if ((int) $catalog_type_id == 10000) {
-				$extension_instance_id = 100;
-			}
+		/** Detail rows are not defined as menu items but rather tied to a parent menuitem id */
+		$current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuitem', '0');
+
+		/** Normal menu item is current */
+		if ($current_menuitem_id == 0) {
+			$current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
+			$item_id = 0;
+		} else {
+			$item_id = Services::Registry()->get('Parameters', 'catalog_id');
 		}
 
-		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($extension_instance_id);
+		/** Breadcrumbs */
+		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id, $item_id);
 
 		$activeCatalogID = array();
 		foreach ($bread_crumbs as $item) {
 			$activeCatalogID[] = $item->catalog_id;
 		}
+		if ($item_id > 0) {
+			$activeCatalogID[] = $item_id;
+		}
 
 		Services::Registry()->get('Trigger', 'AdminBreadcrumbs', $bread_crumbs);
 
 		$menuArray = array();
+
+		// 1. Home
 		$menuArray[] = 'Adminnavigationbar';
 		$menuArray[] = 'Adminsectionmenu';
 		$menuArray[] = 'Adminsubmenu';
+		$menuArray[] = 'Adminitemmenu';
 
 		$i = 0;
 		foreach ($bread_crumbs as $item) {
@@ -129,12 +139,12 @@ class AdminmenuTrigger extends ContentTrigger
 			$parent_id = $item->id;
 
 			$query_results = Services::Menu()->runMenuQuery(
-				$extension_instance_id, $lvl, $lvl, $parent_id, 0, $activeCatalogID
+				$extension_instance_id, $lvl, $lvl, $parent_id, $activeCatalogID
 			);
 
 			Services::Registry()->set('Trigger', $menuArray[$i++], $query_results);
 
-			if ($i > 2) {
+			if ($i > 3) {
 				break;
 			}
 		}

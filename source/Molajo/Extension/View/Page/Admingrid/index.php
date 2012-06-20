@@ -18,7 +18,7 @@ defined('MOLAJO') or die; ?>
 	</nav>
 	<section class="nine columns">
 		<include:template name=Adminsubmenu/>
-		<include:request/>
+			<include:request/>
 		<include:template name=Admingridbatch/>
 	</section>
 </section>

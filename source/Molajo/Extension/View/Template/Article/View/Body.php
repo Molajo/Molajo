@@ -6,19 +6,18 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-
-Services::Registry()->set('Trigger', 'post_header', '<h2>' . $this->row->title . '</h2>');
 ?>
-<div class="grid">
-	<div class="row">
-		<div class="slot-6">
-			<include:wrap name=Aside value=content_text_pullquote/>
-		</div>
-		<div class="slot-7-8-9">
-			<include:wrap name=Header value=post_header/>
-				<?php echo $this->row->content_text; ?>
-				<include:wrap name=Footer value=post_footer/>
-				<include:template name=Author wrap=Section value=author/>
-		</div>
-	</div>
-</div>
+<section class="row">
+	<nav class="twelve columns">
+		<h2><?php echo $this->row->title; ?></h2>
+	</nav>
+</section>
+<section class="row">
+	<section class="nine columns">
+		<?php echo $this->row->content_text; ?>
+		<include:template name=Author wrap=Section value=author/>
+	</section>
+	<nav class="three columns">
+		<include:wrap name=Aside value=content_text_pullquote/>
+	</nav>
+</section>

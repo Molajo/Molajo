@@ -13,12 +13,9 @@ defined('MOLAJO') or die; ?>
 	<nav class="one columns">
 		<include:template name=Adminnavigationbar/>
 	</nav>
-	<section class="seven columns">
+	<section class="eleven columns">
 		<include:request/>
 	</section>
-	<nav class="four columns">
-		&nbsp;
-	</nav>
 </section>
 <footer class="row">
 	<div class="twelve columns"><include:template name=Adminfooter wrap=none/></div>

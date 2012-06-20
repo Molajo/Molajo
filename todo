@@ -1,7 +1,5 @@
 * * * * To do * * * *
 
-Migrate Module models to Model Service and DBO's
-
 Includers - update for new formats (create new tag, formfields)
 
 Triggers - get data access triggers working - Display triggers in place
@@ -14,12 +12,12 @@ Registry - "lock" a registry
 
 Install - core, extensions, packages - do this last
 
-Dates - hookup UTC with user and date routines
-
 Sessions - connect to Symfony's
 
 Cache - one of the last things - SIMPLE approach, first using files, then add adapters,
     solution should work for file xml, templates, queries, registries, pages, assets
+
+Modify the Includer logic so that the request object does not have to be first (and therefore can be embedded or not used)
 
 * * * Not part of Core / Part of "sample" install * * *
 

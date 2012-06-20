@@ -66,7 +66,7 @@ Class MenuService
 	 */
 	public function runMenuQuery(
 		$extension_instance_id, $start_lvl = 0, $end_lvl = 0, $parent_id = 0,
-		$catalog_type_id = 0, $active_catalog_ids = array())
+		$active_catalog_ids = array())
 	{
 		if ($extension_instance_id == 0) {
 			return false;
@@ -106,11 +106,6 @@ Class MenuService
 				. ' AND ' . $m->model->db->qn('a.lvl') . ' <= ' . (int)$end_lvl);
 		}
 
-		if ($catalog_type_id == 0) {
-		} else {
-			$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
-		}
-
 		$m->model->query->where($m->model->db->qn('a.extension_instance_id') . ' = ' . (int)$extension_instance_id);
 
 		if ((int)$parent_id == 0) {
@@ -119,6 +114,9 @@ Class MenuService
 		}
 
 		$m->model->query->order('a.ordering');
+
+		$m->set('model_offset', 0);
+		$m->set('model_count', 999999);
 
 		/** Execute query */
 		$query_results = $m->getData('list');
@@ -160,31 +158,14 @@ Class MenuService
 	/**
 	 * Retrieves an array of active menuitems, including the current menuitem and its parents
 	 *
-	 * @param   int $extension_instance_id - menu
+	 * @param   int $current_menuitem_id - menu
 	 *
 	 * @return  array|bool
 	 * @since   1.0
 	 */
-	public function getMenuBreadcrumbIds($extension_instance_id)
+	public function getMenuBreadcrumbIds($current_menuitem_id)
 	{
-		if ($extension_instance_id == 0) {
-			return false;
-		}
-
-		/** Current */
-		$current_menu_item_url = Services::Registry()->get('Configuration', 'application_base_url');
-
-		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			$current_menu_item_url .= '/' . Services::Registry()->get('Parameters', 'catalog_url_sef_request');
-		} else {
-			$current_menu_item_url .= '/' . Services::Registry()->get('Parameters', 'catalog_url_request');
-		}
-
-		$current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
-		if ((int) $current_menuitem_id == 0) {
-			$current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuitem');
-		}
-		if ((int) $current_menuitem_id == 0) {
+		if ($current_menuitem_id == 0) {
 			return false;
 		}
 
@@ -200,6 +181,9 @@ Class MenuService
 		$m->model->query->where($m->model->db->qn('current_menuitem.id') . ' = ' . (int)$current_menuitem_id);
 
 		$m->model->query->order('a.lft');
+
+		$m->set('model_offset', 0);
+		$m->set('model_count', 999999);
 
 		/** Execute query */
 		$query_results = $m->getData('list');
@@ -235,7 +219,7 @@ Class MenuService
 				$item->home = 0;
 				$item->section = 0;
 				$item->component = 0;
-				$item->submenu = 4;
+				$item->submenu = 1;
 			}
 		}
 

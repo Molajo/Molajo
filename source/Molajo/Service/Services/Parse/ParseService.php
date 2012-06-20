@@ -451,10 +451,11 @@ Class ParseService
 					/** 6. initialize registry */
 					Services::Registry()->createRegistry('Parameters');
 
-					if ($first && $includeName == 'request') {
+//					if ($first && $includeName == 'request') {
+					if ($includeName == 'request') {
 						Services::Registry()->copy('RouteParameters', 'Parameters');
 						Services::Registry()->set('Parameters', 'extension_primary', true);
-						$first = false;
+						//$first = false;
 					} else {
 						Services::Registry()->set('Parameters', 'extension_primary', false);
 					}
