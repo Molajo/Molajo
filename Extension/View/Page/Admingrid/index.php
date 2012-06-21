@@ -17,6 +17,7 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Admingridfilters/>
 	</nav>
 	<section class="nine columns">
+		<include:template name=Admingridsections/>
 		<include:template name=Adminsubmenu/>
 			<include:request/>
 		<include:template name=Admingridbatch/>

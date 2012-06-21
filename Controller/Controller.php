@@ -20,14 +20,6 @@ defined('MOLAJO') or die;
 class Controller
 {
 	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
-
-	/**
 	 * Stores various extension-specific key/value pairs
 	 *
 	 * @var    object
@@ -62,25 +54,6 @@ class Controller
 	 * @since  1.0
 	 */
 	public $table_registry_name;
-
-	/**
-	 * Yes/No indicators used for Model decision making
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $table_registry_indicators;
-
-	/**
-	 * Valid DB Options
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $db_options = array(
-		'JDatabase',
-		'Text'
-	);
 
 	/**
 	 * Default DB
@@ -135,7 +108,6 @@ class Controller
 	{
 		$this->triggers = array();
 		$this->parameters = array();
-		$this->table_registry_indicators = array();
 	}
 
 	/**
