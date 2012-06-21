@@ -92,6 +92,8 @@ Class Application
 			Services::Debug()->set('Application Initialise succeeded');
 		}
 
+//Services::Install()->installExtension('Adminsectionmenu', 1200, null, null);
+//die;
 		/** Route: Sets the Request, Catalog, and Menuitem Registry */
 		$continue = $this->route();
 

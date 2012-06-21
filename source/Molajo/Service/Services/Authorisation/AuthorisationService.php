@@ -282,7 +282,6 @@ Class AuthorisationService
         );
 
         $count = $m->getData('result');
-
         if ($count > 0) {
             return true;
 

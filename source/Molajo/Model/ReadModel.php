@@ -74,7 +74,6 @@ class ReadModel extends Model
 						}
 					}
 				}
-
 			}
 		}
 
@@ -82,11 +81,9 @@ class ReadModel extends Model
 			$this->query->from($this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix));
 		}
 
-
 		if ($this->query->where == null) {
 
 			if ((int)$id > 0) {
-
 				$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
 					. ' = ' . $this->db->q($id));
 

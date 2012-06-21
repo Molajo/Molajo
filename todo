@@ -14,6 +14,8 @@ Install - core, extensions, packages - do this last
 
 Sessions - connect to Symfony's
 
+Token - form tokens
+
 Cache - one of the last things - SIMPLE approach, first using files, then add adapters,
     solution should work for file xml, templates, queries, registries, pages, assets
 

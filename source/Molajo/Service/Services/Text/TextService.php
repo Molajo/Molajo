@@ -374,11 +374,11 @@ Class TextService
 
 	protected function setWhereCriteria ($field, $value, $alias, $connection)
 	{
-		if (is_array($value)) {
-			$value_list = explode(',', $value);
+
+		if (strrpos($value, ',') > 0) {
 			$connection->model->query->where(
 				$connection->model->db->qn($alias . '.' . $field)
-				. ' IN (' . $value_list . ')'
+				. ' IN (' . $value . ')'
 			);
 
 		} elseif ((int)$value == 0) {
