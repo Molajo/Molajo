@@ -20,29 +20,58 @@ defined('MOLAJO') or die;
  */
 class DateformatsTrigger extends ContentTrigger
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new DateformatsTrigger();
-        }
+	/**
+	 * Pre-create processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeCreate()
+	{
+		$fields = $this->retrieveFieldsByType('date');
 
-        return self::$instance;
-    }
+		if (is_array($fields) && count($fields) > 0) {
+
+			foreach ($fields as $field) {
+
+				$name = $field->name;
+
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
+				$newFieldValue = '';
+
+				if ($fieldValue == false
+					|| $fieldValue == '0000-00-00 00:00:00') {
+
+					if ($name == 'created_datetime'
+						|| $name == 'start_publishing_datetime') {
+
+						$newFieldValue  = $this->now;
+					} else {
+
+						$newFieldValue = $this->null_date;
+					}
+				} else {
+					if ($name == 'modified_datetime') {
+						$newFieldValue = $this->now;
+					}
+				}
+
+				if ($newFieldValue == '') {
+				} else {
+					$this->saveField($field, $name, $newFieldValue);
+					$fieldValue = $newFieldValue;
+				}
+			}
+		}
+
+		echo '<pre>';
+		var_dump($this->data);
+		echo '</pre>';
+		die;
+		return true;
+	}
 
     /**
      * After-read processing

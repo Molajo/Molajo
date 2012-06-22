@@ -48,7 +48,6 @@
             <trigger name="Email"/>
             <trigger name="Gravatar"/>
             <trigger name="Password"/>
-            <trigger name="Datefields"/>
             <trigger name="Dateformats"/>
             <trigger name="Smilies"/>
             <trigger name="Snippet"/>
