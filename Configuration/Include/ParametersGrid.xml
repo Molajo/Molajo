@@ -18,7 +18,7 @@
 <field name="grid_ordering" type="char" null="0" default="a.title" values=""/>
 
 <field name="grid_pagination" type="boolean" null="0" default="1" values="0,1"/>
-<field name="grid_offset" type="int" null="0" default="0" values=""/>
-<field name="grid_count" type="int" null="0" default="5" values=""/>
+<field name="grid_offset" type="integer" null="0" default="0" values=""/>
+<field name="grid_count" type="integer" null="0" default="5" values=""/>
 
 <field name="grid_batch" type="boolean" null="0" default="0" values="0,1"/>

@@ -13,17 +13,17 @@
 <field name="list_model_query_object" type="char" null="1" default="" values=""/>
 <field name="list_model_ordering" type="char" null="1" default="" values=""/>
 <field name="list_model_direction" type="char" null="1" default="" values=""/>
-<field name="list_model_offset" type="int" null="0" default="0" values=""/>
-<field name="list_model_count" type="int" null="0" default="5" values=""/>
+<field name="list_model_offset" type="integer" null="0" default="0" values=""/>
+<field name="list_model_count" type="integer" null="0" default="5" values=""/>
 
 <field name="list_include_archived_content" type="binary" null="1" default="1" values="0,1"/>
 <field name="list_include_featured_content" type="binary" null="1" default="1" values="0,1"/>
 <field name="list_include_stickied_content" type="binary" null="1" default="1" values="0,1"/>
-<field name="list_include_published_date_begin" type="date" null="1" default="" values=""/>
-<field name="list_include_published_date_end" type="date" null="1" default="" values=""/>
+<field name="list_include_published_date_begin" type="datetime" null="1" default="" values=""/>
+<field name="list_include_published_date_end" type="datetime" null="1" default="" values=""/>
 <field name="list_include_category_list" type="char" null="1" default="" values=""/>
 <field name="list_include_tag_list" type="char" null="1" default="" values=""/>
 <field name="list_include_created_by_list" type="char" null="1" default="" values=""/>
 <field name="list_order_by_field" type="char" null="0" default="a.start_publishing_datetime" values=""/>
 <field name="list_order_by_direction" type="char" null="0" default="ASC" values="ASC,DESC"/>
-<field name="list_length" type="int" null="0" default="5" values=""/>
+<field name="list_length" type="integer" null="0" default="5" values=""/>

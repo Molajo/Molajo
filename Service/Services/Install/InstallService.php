@@ -53,16 +53,17 @@ Class InstallService
 	 * @return bool
 	 * @since  1.0
 	 */
-	public function installExtension($extension_name, $extension_type, $source_path = null, $destination_path = null)
+	public function installExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
 	{
 		/** Create Extension Row */
 		$controller = new CreateController();
 
-		/** Set Field Values */
-		$controller->set('model_type', 'Table');
-		$controller->set('model_name', 'Extensions');
+		$data = new \stdClass();
+		$data->title = $extension_name;
+		$data->model_name = 'Templates';
 
-		$controller->setData('name', $extension_name);
+		$controller->data = $data;
+
 		$results = $controller->create();
 die;
 		return $results;
@@ -77,6 +78,7 @@ die;
 
 		/** Extension Instance */
 
+
 		/** Application Extension Instances */
 
 		/** Site Extension Instances */
@@ -88,6 +90,25 @@ die;
 		/** Permissions */
 
 		/** Complete */
+
+
+		/** Retrieve Extensions Catalog ID  */
+		$m = new ModelController();
+
+		/** Verify ACL for User to Create Extensions */
+		$connect = $m->connect('Table', 'Extensions');
+		if ($connect === false) {
+			return false;
+		}
+
+		$m->set('name_key_value', 'Extensions');
+
+		$results = $m->getData('item');
+		if ($results === false) {
+			//error
+			return false;
+		}
+
 	}
 
 	/**

@@ -176,45 +176,6 @@ Class ThemeIncluder extends Includer
 			'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', 'name'
 		);
 
-		/** Media Queries to load CSS */
-		Services::Asset()->addCss(
-			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'css/grid/base.css',
-			$priority=1000,
-			$mimetype='test/css',
-			$media='all',
-			$conditional='',
-			$attributes=array());
-
-		Services::Asset()->addCss(
-			$url=EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/720_grid.css',
-			$priority=1000,
-			$mimetype='test/css',
-			$media='',
-			$conditional='lt IE 9',
-			$attributes=array());
-
-		Services::Asset()->addCss(
-			$url=EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/720_grid.css',
-			$priority=1000,
-			$mimetype='test/css',
-			$media='screen and (min-width: 720px)',
-			$conditional='',
-			$attributes=array());
-
-		Services::Asset()->addCss($url = EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/986_grid.css',
-			$priority=1000,
-			$mimetype='test/css',
-			$media='screen and (min-width: 986px)',
-			$conditional='',
-			$attributes=array());
-
-		Services::Asset()->addCss($url = EXTENSIONS_THEMES_URL. '/' . $theme . '/' . 'css/grid/1236_grid.css',
-			$priority=1000,
-			$mimetype='test/css',
-			$media='screen and (min-width: 1236px)',
-			$conditional='',
-			$attributes=array());
-
 		/** jQuery CDN and fallback */
 		Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
 

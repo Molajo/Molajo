@@ -7,10 +7,10 @@
     <table>
         <fields>
             <field name="session_id" type="char" null="0" default=""/>
-            <field name="application_id" type="int" null="0" default=""/>
+            <field name="application_id" type="integer" null="0" default=""/>
             <field name="session_time" type="char" null="0" default=""/>
-            <field name="data" type="" null="1" default=""/>
-            <field name="user_id" type="int" null="0" default=""/>
+            <field name="data" type="text" null="1" default=""/>
+            <field name="user_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
             <foreignkey name="user_id" source_id="id" source_model="UsersModel" required="1"/>

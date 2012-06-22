@@ -20,110 +20,6 @@ defined('MOLAJO') or die;
  */
 class VersionTrigger extends ContentTrigger
 {
-    /**
-     * Table Registry Name - can be used to retrieve table parameters
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $table_registry_name;
-
-	/**
-	 * Model name
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $model_name;
-
-    /**
-     * Parameters set by the Includer and used in the MVC to generate include output
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $parameters = array();
-
-    /**
-     * Query Object from Model
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $query;
-
-    /**
-     * db object (for escaping fields)
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $db;
-
-    /**
-     * Query Results
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $query_results;
-
-	/**
-	 * null_date
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $null_date;
-
-	/**
-	 * now
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $now;
-
-	/**
-     * Fields - name and type
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $fields;
-
-    /**
-     * Custom Field Groups for this Data
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $customfieldgroups;
-
-	/**
-	 * Used in post-render View triggers, contains output rendered from view
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $rendered_output;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new VersionTrigger();
-        }
-
-        return self::$instance;
-    }
-
 
 	/**
 	 * Get the current value (or default) of the specified Model property
@@ -137,7 +33,6 @@ class VersionTrigger extends ContentTrigger
 	public function get($key, $default = null)
 	{
 		$value = null;
-
 
 		if ($key == 'ArticlesTable') {
 			var_dump($value);

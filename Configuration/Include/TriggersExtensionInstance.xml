@@ -1,3 +1,7 @@
+<trigger name="Extension"/>
+<trigger name="Datefields"/>
 <trigger name="CatalogTypeId"/>
 <trigger name="Publishedstatus"/>
+<trigger name="Version"/>
+<trigger name="Ordering"/>
 

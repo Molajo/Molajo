@@ -10,8 +10,8 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="user_id" type="int" null="0" default=""/>
-            <field name="application_id" type="int" null="0" default=""/>
+            <field name="user_id" type="integer" null="0" default=""/>
+            <field name="application_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
             <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>

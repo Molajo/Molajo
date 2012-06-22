@@ -11,8 +11,8 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="application_id" type="int" null="0" default=""/>
-            <field name="extension_instance_id" type="int" null="0" default=""/>
+            <field name="application_id" type="integer" null="0" default=""/>
+            <field name="extension_instance_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
             <foreignkey name="application_id" source_id="id" source_model="Applications" required="1"/>

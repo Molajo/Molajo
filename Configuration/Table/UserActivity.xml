@@ -11,9 +11,9 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="" null="0" default="" identity="1"/>
-            <field name="user_id" type="int" null="0" default=""/>
-            <field name="action_id" type="int" null="0" default=""/>
+            <field name="id" type="integer" null="0" default="" identity="1"/>
+            <field name="user_id" type="integer" null="0" default=""/>
+            <field name="action_id" type="integer" null="0" default=""/>
             <field name="catalog_id" type="catalog_id" null="0" default=""/>
             <field name="activity_datetime" type="datetime" null="0" default=""/>
         </fields>

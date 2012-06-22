@@ -86,14 +86,13 @@ Class Application
 
 		if ($continue == false) {
 			Services::Debug()->set('Application Initialise failed');
-
 			return;
 		} else {
 			Services::Debug()->set('Application Initialise succeeded');
 		}
 
-//Services::Install()->installExtension('Adminsectionmenu', 1200, null, null);
-//die;
+Services::Install()->installExtension('test', 'Templates', null, null);
+die;
 		/** Route: Sets the Request, Catalog, and Menuitem Registry */
 		$continue = $this->route();
 
@@ -271,6 +270,7 @@ Class Application
 
 		/** Display Action */
 		if ($action == 'display' || $action == 'edit' || $action == 'add') {
+
 			$continue = $this->display();
 
 			if ($continue == false) {

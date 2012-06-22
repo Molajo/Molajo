@@ -6,6 +6,7 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
+
 $checked = '';
 $rowCount = Services::Registry()->get('Trigger', 'GridTableRows'); ?>
 <table class="responsive">

@@ -12,7 +12,7 @@
     <table>
         <fields>
             <field name="catalog_id" type="catalog_id" null="0" default=""/>
-            <field name="category_id" type="int" null="0" default=""/>
+            <field name="category_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
             <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>

@@ -13,14 +13,14 @@
 
         <fields>
             <field name="id" type="catalog_id" null="1" default="0"/>
-            <field name="catalog_type_id" type="int" null="0" default="" values=""/>
-            <field name="source_id" type="int" null="0" default="" values=""/>
+            <field name="catalog_type_id" type="integer" null="0" default="" values=""/>
+            <field name="source_id" type="integer" null="0" default="" values=""/>
             <field name="routable" type="boolean" null="0" default="0"/>
             <field name="menuitem_type" type="char" null="1" default=""/>
             <field name="sef_request" type="char" null="0" default=" "/>
-            <field name="redirect_to_id" type="int" null="1" default=""/>
-            <field name="view_group_id" type="int" null="1" default=""/>
-            <field name="primary_category_id" type="int" null="1" default=""/>
+            <field name="redirect_to_id" type="integer" null="1" default=""/>
+            <field name="view_group_id" type="integer" null="1" default=""/>
+            <field name="primary_category_id" type="integer" null="1" default=""/>
             <field name="tinyurl" type="url" null="1" default=""/>
         </fields>
 

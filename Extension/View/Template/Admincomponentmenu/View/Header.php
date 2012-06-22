@@ -5,16 +5,22 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 use Molajo\Service\Services;
-$bread_crumbs = Services::Registry()->get('Trigger', 'AdminBreadcrumbs');
-if (count($bread_crumbs) > 0) {
-	foreach ($bread_crumbs as $crumb) {
+
+if (count(Services::Registry()->get('Trigger', 'AdminBreadcrumbs')) > 0) {
+	$class = '';
+	foreach (Services::Registry()->get('Trigger', 'AdminBreadcrumbs') as $crumb) {
 		if ($crumb->component == 1) {
+			$componentTitle = $crumb->title;
 			$component = $crumb->url;
+			if ($component == Services::Registry()->get('Trigger', 'PageURL')) {
+				$class = ' class="active" ';
+			}
 			break;
 		}
 	}
 }
 defined('MOLAJO') or die; ?>
+
 <dl class="sub-nav">
 	<dt><?php echo Services::Language()->translate('OPTIONS'); ?></dt>
-	<dd class="active"><a href="<?php echo $component; ?>"><?php echo Services::Language()->translate('ALL'); ?></a></dd>
+	<dd<?php echo $class; ?>><a href="<?php echo $component; ?>"><?php echo $componentTitle; ?></a></dd>
