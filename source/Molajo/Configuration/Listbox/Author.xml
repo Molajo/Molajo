@@ -15,8 +15,8 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="created_by" type="int" null="1" default="0" identity="1"/>
-            <field alias="users" name="username" type="int" null="1" default="0" identity="1"/>
+            <field name="created_by" type="integer" null="1" default="0" identity="1"/>
+            <field alias="users" name="username" type="integer" null="1" default="0" identity="1"/>
         </fields>
         <joins>
             <join model="Users"

@@ -98,7 +98,7 @@ Class ModelController extends Controller
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public function connect($model_type = 'Table', $model_name = null)
+	public function connect($model_type = 'Table', $model_name = null, $model_class = 'ReadModel')
 	{
 //echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. ' Query '.Services::Registry()->get('Query', 'Current') . '<br />';
 		if ($model_name == null) {
@@ -167,7 +167,7 @@ Class ModelController extends Controller
 		}
 
 		/* 2. Instantiate Model Class */
-		$modelClass = 'Molajo\\Model\\ReadModel';
+		$modelClass = 'Molajo\\Model\\' . $model_class;
 
 		try {
 			$this->model = new $modelClass();
@@ -187,6 +187,7 @@ Class ModelController extends Controller
 		$this->model->set('db', Services::$dbo()->get('db'));
 		$this->model->set('query', Services::$dbo()->getQuery());
 		$this->model->set('null_date', Services::$dbo()->get('db')->getNullDate());
+		$this->model->set('table_registry_name', $this->table_registry_name);
 
 		if ($dbo == 'JDatabase') {
 			$dateClass = 'Joomla\\date\\JDate';
@@ -243,7 +244,7 @@ Class ModelController extends Controller
 		$this->getTriggerList($query_object);
 
 		/** Base query */
-		if ($query_object == 'item') {
+		if ($query_object == 'item' || $query_object == 'result') {
 			$id_key = (int)$this->get('id', 0);
 			$name_key_value = (string)$this->get('name_key_value', '');
 

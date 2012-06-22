@@ -1,6 +1,6 @@
-<field name="id" type="int" null="1" default="" identity="1"/>
-<field name="extension_instance_id" type="int" null="0" default="0"/>
-<field name="catalog_type_id" type="int" null="0" default="0"/>
+<field name="id" type="integer" null="1" default="" identity="1"/>
+<field name="extension_instance_id" type="integer" null="0" default="0"/>
+<field name="catalog_type_id" type="integer" null="0" default="0"/>
 <field name="title" type="char" null="0" default=" "/>
 <field name="subtitle" type="char" null="1" default=" "/>
 <field name="path" type="char" null="1" default=" "/>
@@ -10,26 +10,26 @@
 <field name="featured" type="boolean" null="0" default="0"/>
 <field name="stickied" type="boolean" null="0" default="0"/>
 <field name="status" type="integer" null="0" default="0"/>
-<field name="start_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-<field name="stop_publishing_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-<field name="version" type="int" null="0" default="1"/>
-<field name="version_of_id" type="int" null="0" default="0"/>
-<field name="status_prior_to_version" type="int" null="0" default="0"/>
-<field name="created_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-<field name="created_by" type="int" null="0" default="0"/>
-<field name="modified_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-<field name="modified_by" type="int" null="0" default="0"/>
-<field name="checked_out_datetime" type="date" null="0" default="0000-00-00 00:00:00"/>
-<field name="checked_out_by" type="int" null="0" default="0"/>
-<field name="root" type="int" null="0" default="0"/>
-<field name="parent_id" type="int" null="0" default="0"/>
-<field name="lft" type="int" null="0" default="0"/>
-<field name="rgt" type="int" null="0" default="0"/>
-<field name="lvl" type="int" null="0" default="0"/>
-<field name="home" type="int" null="0" default="0"/>
+<field name="start_publishing_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+<field name="stop_publishing_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+<field name="version" type="integer" null="0" default="1"/>
+<field name="version_of_id" type="integer" null="0" default="0"/>
+<field name="status_prior_to_version" type="integer" null="0" default="0"/>
+<field name="created_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+<field name="created_by" type="integer" null="0" default="0"/>
+<field name="modified_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+<field name="modified_by" type="integer" null="0" default="0"/>
+<field name="checked_out_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+<field name="checked_out_by" type="integer" null="0" default="0"/>
+<field name="root" type="integer" null="0" default="0"/>
+<field name="parent_id" type="integer" null="0" default="0"/>
+<field name="lft" type="integer" null="0" default="0"/>
+<field name="rgt" type="integer" null="0" default="0"/>
+<field name="lvl" type="integer" null="0" default="0"/>
+<field name="home" type="integer" null="0" default="0"/>
 <field name="customfields" type="customfield"/>
 <field name="parameters" type="customfield"/>
 <field name="metadata" type="customfield"/>
 <field name="language" type="char" null="1" default=""/>
-<field name="translation_of_id" type="int" null="0" default="0"/>
-<field name="ordering" type="int" null="0" default="0"/>
+<field name="translation_of_id" type="integer" null="0" default="0"/>
+<field name="ordering" type="integer" null="0" default="0"/>

@@ -1,5 +1,5 @@
-<field name="parent_menuitem" type="int" null="1" default="" values=""/>
-<field name="menu_extension_instance_id" type="int" null="1" default="" values=""/>
+<field name="parent_menuitem" type="integer" null="1" default="" values=""/>
+<field name="menu_extension_instance_id" type="integer" null="1" default="" values=""/>
 
 <field name="enable_draft_save" type="binary" null="1" default="1" values="0,1"/>
 <field name="enable_version_history" type="binary" null="1" default="1" values="0,1"/>

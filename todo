@@ -21,6 +21,8 @@ Cache - one of the last things - SIMPLE approach, first using files, then add ad
 
 Modify the Includer logic so that the request object does not have to be first (and therefore can be embedded or not used)
 
+Custom field logic - consider combining the field processing logic in ContentTriger, Controller and CreateModel, etc. Field Class?
+
 * * * Not part of Core / Part of "sample" install * * *
 
 Molajito Theme -

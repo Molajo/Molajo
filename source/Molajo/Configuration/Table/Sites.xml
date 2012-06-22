@@ -12,8 +12,8 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="int" null="1" default="0" identity="1"/>
-            <field name="catalog_type_id" type="int" null="0" default="10" values="10"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
+            <field name="catalog_type_id" type="integer" null="0" default="10" values="10"/>
             <field name="name" type="char" null="0" default="" unique="1"/>
             <field name="path" type="char" null="0" default=""/>
             <field name="base_url" type="url" null="0" default=""/>

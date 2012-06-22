@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Controller;
 
@@ -19,37 +19,73 @@ defined('MOLAJO') or die;
  */
 class CreateController extends ModelController
 {
-    public function create()
-    {
+	/**
+	 * create new row
+	 *
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public function create()
+	{
 		/** tokens */
 
+		if (isset($this->data->model_name)) {
+		} else {
+			return false;
+		}
 
-		/**
-		 * Create - where is the data?
-		 * 1. it can be passed in from a class, like the installer
-		 * 2. it can be available on a form, like an editor
-		 * getting it into the controller is the only difference, processing same
-		 */
+		$this->connect('Table', $this->data->model_name, 'CreateModel');
+		if (isset($this->data->catalog_type_id) && (int)$this->data->catalog_type_id > 0) {
+		} else {
+			$this->data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
+		}
 
-		/** verify ACL */
 		$results = $this->checkPermissions();
 		if ($results === false) {
 			//error
 			//return false (not yet)
 		}
 
-		/** filter input, validate values and foreign keys */
-        $valid = $this->filterValidateInput();
-        if ($valid === true) {
-            $valid = $this->model->store();
-        }
+		$this->getTriggerList('create');
 
-		/** Foreign Key Validation */
+		$valid = $this->onBeforeCreateEvent();
+		if ($valid === false) {
+			return false;
+			//errror
+		}
+
+		$valid = $this->checkFields();
+		if ($valid === false) {
+			return false;
+			//errror
+		}
+
+		$value = $this->checkForeignKeys();
+
+		if ($valid === true) {
+
+			$fields = Services::Registry()->get($this->table_registry_name, 'fields');
+
+			if (count($fields) == 0 || $fields === null) {
+				return false;
+			}
+
+			$data = new \stdClass();
+			foreach ($fields as $f) {
+				foreach ($f as $key => $value) {
+					if ($key == 'name') {
+						$data->$value = $this->data->$value;
+					}
+				}
+			}
+
+			$valid = $this->model->create($data, $this->table_registry_name);
+		}
 
 		/** Set Model Values */
 
-        /** redirect */
-        if ($valid === true) {
+		/** redirect */
+		if ($valid === true) {
 			if ($this->get('redirect_on_success', '') == '') {
 
 			} else {
@@ -59,7 +95,7 @@ class CreateController extends ModelController
 			}
 
 		} else {
-			if ($this->get('redirect_on_success', '') == '') {
+			if ($this->get('redirect_on_failure', '') == '') {
 
 			} else {
 				Services::Redirect()->url
@@ -80,31 +116,14 @@ class CreateController extends ModelController
 	protected function checkPermissions()
 	{
 
-		/**
-		 * creating - need a catalog id - what are we creating?
-		 * test 1: is there a primary category in the input?
-		 * test 2: use the catalog_id for the component
-		 * --> when creating an extension, the catalog type id for that extension is used
-		 */
-
-		/** Retrieve Extensions Catalog ID  */
-		$m = new ModelController();
-
-		/** Verify ACL for User to Create Extensions */
-		$connect = $m->connect('Table', 'Extensions');
-		if ($connect === false) {
-			return false;
+		if (isset($this->data->primary_category_id)) {
+			$results = Services::Authorisation()->authoriseTask('Create', $this->data->primary_catagory_id);
+			if ($results === true) {
+				return true;
+			}
 		}
 
-		$m->set('name_key_value', 'Extensions');
-
-		$results = $m->getData('item');
-		if ($results === false) {
-			//error
-			return false;
-		}
-
-		$results = Services::Authorisation()->authoriseTask('Create', $results->catalog_id);
+		$results = Services::Authorisation()->authoriseTask('Create', $this->data->catalog_type_id);
 		if ($results === false) {
 			//error
 			//return false (not yet)
@@ -113,199 +132,303 @@ class CreateController extends ModelController
 		return true;
 	}
 
-    /**
-     * filterValidateInput
-     *
-     * Runs custom validation methods
-     *
-     * @return object
-     * @since   1.0
-     */
-    protected function filterValidateInput()
-    {
-		/** Model information */
-		$table_registry_name = ucfirst(strtolower($this->get('model_type', '')))
-			. ucfirst(strtolower($this->get('model_name', '')));
+	/**
+	 * checkFields
+	 *
+	 * Runs custom validation methods
+	 *
+	 * @return object
+	 * @since   1.0
+	 */
+	protected function checkFields()
+	{
+
+		$userHTMLFilter = Services::Authorisation()->setHTMLFilter();
+
+		/** Standard Field Group */
+		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
+		if (count($fields) == 0 || $fields === null) {
+			return false;
+		}
+
+		$valid = $this->processFieldGroup($fields, $userHTMLFilter, '');
+		if ($valid === true) {
+		} else {
+			return false;
+		}
+
+		/** Custom Field Groups */
+		$customfieldgroups = Services::Registry()->get(
+			$this->table_registry_name, 'customfieldgroups', array());
+
+		if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
+
+			foreach ($customfieldgroups as $customFieldName) {
+
+				/** For this Custom Field Group (ex. Parameters, metadata, etc.) */
+				$customFieldName = strtolower($customFieldName);
+
+				/** Retrieve Field Definitions from Registry (XML) */
+				$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
+
+				/** Shared processing  */
+				$valid = $this->processFieldGroup($fields, $userHTMLFilter);
+				if ($valid === true) {
+				} else {
+					return false;
+				}
+			}
+		}
 
 		$valid = true;
 
+		$this->processFieldGroup($fields, $userHTMLFilter);
+
+		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
+
+		return $valid;
+	}
+
+	/**
+	 * processFieldGroup - runs custom filtering, defaults, validation for a field group
+	 *
+	 * @param $fields
+	 * @param $userHTMLFilter
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	protected function processFieldGroup($fields, $userHTMLFilter, $customFieldName = '')
+	{
+
+		$valid = true;
+
+		foreach ($fields as $f) {
+
+			if (isset($f['name'])) {
+				$name = $f['name'];
+			} else {
+				return false;
+				//error
+			}
+
+			if (isset($f['type'])) {
+				$type = $f['type'];
+			} else {
+				$type = null;
+			}
+
+			if (isset($f['null'])) {
+				$null = $f['null'];
+			} else {
+				$null = null;
+			}
+
+			if (isset($f['default'])) {
+				$default = $f['default'];
+			} else {
+				$default = null;
+			}
+
+			/** Retrieve value from data */
+			if ($customFieldName == '') {
+				if (isset($this->data->$name)) {
+					$value = $this->data->$name;
+				} else {
+					$value = null;
+				}
+			} else {
+				if (isset($this->data->$customFieldName[$name])) {
+					$value = $this->data->$customFieldName[$name];
+				} else {
+					$value = null;
+				}
+			}
+
+			if ($type == null) {
+			} elseif ($type == 'html' && $userHTMLFilter === false) {
+
+			} else {
+
+				try {
+					/** Filters, sets defaults, and validates */
+					$value = Services::Filter()->filter($value, $type, $null, $default);
+
+					if ($customFieldName == '') {
+						$this->data->$name = $value;
+					} else {
+						$this->data->$customFieldName[$name] = $value;
+					}
+
+				} catch (Exception $e) {
+
+					echo 'CreateController::checkFields Filter Failed' . ' ' . $e->message;
+					die;
+				}
+			}
+		}
+
+		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
+
+		return $valid;
+	}
+
+	/**
+	 * checkForeignKeys - validates the existence of all foreign keys
+	 *
+	 * @return object
+	 * @since   1.0
+	 */
+	protected function checkForeignKeys()
+	{
+
+		$foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
+
+		echo '<pre>';
+		var_dump($foreignkeys);
+
+		if (count($foreignkeys) == 0 || $foreignkeys === null) {
+			return false;
+		}
+
+		$valid = true;
+
+		foreach ($foreignkeys as $fk) {
+
+			/** Retrieve Model Foreign Key Definitions */
+			if (isset($fk['name'])) {
+				$name = $fk['name'];
+			} else {
+				return false;
+				//error
+			}
+			if (isset($fk['source_id'])) {
+				$source_id = $fk['source_id'];
+			} else {
+				return false;
+				//error
+			}
+
+			if (isset($fk['source_model'])) {
+				$source_model = ucfirst(strtolower($fk['source_model']));
+			} else {
+				return false;
+				//error
+			}
+
+			if (isset($fk['required'])) {
+				$required = $fk['required'];
+			} else {
+				return false;
+				//error
+			}
+
+			/** Retrieve Model Foreign Key Definitions */
+			if (isset($this->data->$name)) {
+			} else {
+				if ((int)$required == 0) {
+					return true;
+				}
+				// error
+				return false;
+			}
+
+			if (isset($this->data->$name)) {
+
+				$controllerClass = 'Molajo\\Controller\\ModelController';
+				$m = new $controllerClass();
+				$results = $m->connect('Table', $source_model);
+				if ($results == false) {
+					return false;
+				}
+
+				$m->set('use_special_joins', 0);
+				$m->set($source_id, (int)$this->data->$name);
+
+				$value = $m->getData('result');
+
+				if (empty($value)) {
+					//error
+					return false;
+				}
+			} else {
+				if ($required == 0) {
+				} else {
+					return false;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Schedule onBeforeCreateEvent Event - could update model and data objects
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function onBeforeCreateEvent()
+	{
+		if (count($this->triggers) == 0
+			|| (int)$this->get('process_triggers') == 0
+		) {
+			return true;
+		}
+
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'db' => $this->model->db,
+			'data' => $this->data,
+			'null_date' => $this->model->null_date,
+			'now' => $this->model->now,
+			'parameters' => $this->parameters,
+			'model_name' => $this->get('model_name')
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
+		if ($arguments == false) {
+			return false;
+		}
+
+		/** Process results */
+		$this->parameters = $arguments['parameters'];
+		$this->data = $arguments['data'];
+
 		return true;
+	}
 
-        /** filters and defaults */
-        $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
 
-        $valid = true;
+	/**
+	 * Schedule onAfterCreateEvent Event
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function onAfterCreateEvent()
+	{
+		if (count($this->triggers) == 0
+			|| (int)$this->get('process_triggers') == 0
+		) {
+			return true;
+		}
 
-        if (isset($v->filters->filter)) {
+		/** Schedule onAfterCreate Event */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'db' => $this->model->db,
+			'data' => $this->data,
+			'parameters' => $this->parameters,
+			'model_name' => $this->get('model_name')
+		);
 
-            foreach ($v->filters->filter as $f) {
+		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
+		if ($arguments == false) {
+			return false;
+		}
 
-                $name = (string) $f['name'];
-                $dataType = (string) $f['filter'];
-                $null = (string) $f['null'];
-                $default = (string) $f['default'];
+		/** Process results */
+		$this->parameters = $arguments['parameters'];
+		$this->data = $arguments['data'];
 
-                if (isset($this->model->row->$name)) {
-                    $value = $this->model->row->$name;
-                } else {
-                    $value = null;
-                }
-
-                if ($dataType == null) {
-                    // no filter defined
-                } elseif ($dataType == 'html' && $userHTMLFilter === false) {
-                    // user does not require HTML filtering
-
-                } else {
-
-                    try {
-                        $value = Services::Filter()->filter($value, $dataType, $null, $default);
-
-                    } catch (Exception $e) {
-
-                        $valid = false;
-                        Services::Message()->set(
-                            $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                            $type = MESSAGE_TYPE_ERROR
-                        );
-
-                        Services::Debug()->set('CreateController::filterValidateInput Filter Failed' . ' ' . $message);
-                    }
-                }
-            }
-        }
-
-        Services::Debug()->set('CreateController::filterValidateInput Filter::Success: ' . $valid);
-
-        /** Helper Functions */
-        if (isset($v->helpers->helper)) {
-
-            foreach ($v->helpers->helper as $h) {
-
-                $name = (string) $h['name'];
-
-                try {
-                    $this->validateHelperFunction($name);
-
-                } catch (Exception $e) {
-
-                    $valid = false;
-                    Services::Message()->set(
-                        $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                        $type = MESSAGE_TYPE_ERROR
-                    );
-
-                    Services::Debug()->set('CreateController::filterValidateInput Helper Failed' . ' ' . $message);
-                }
-            }
-        }
-
-        Services::Debug()->set('CreateController::filterValidateInput Helper::Success: ' . $valid);
-
-        /** Foreign Keys */
-        if (isset($v->fks->fk)) {
-
-            foreach ($v->fks->fk as $f) {
-
-                $name = (string) $f['name'];
-                $source_id = (string) $f['source_id'];
-                $source_model = (string) $f['source_model'];
-                $required = (string) $f['required'];
-                $message = (string) $f['message'];
-
-                try {
-                    $this->validateForeignKey($name, $source_id, $source_model, $required, $message);
-
-                } catch (Exception $e) {
-
-                    $valid = false;
-                    Services::Message()->set(
-                        $message = Services::Language()->translate($e->getMessage()) . ' ' . $name,
-                        $type = MESSAGE_TYPE_ERROR
-                    );
-
-                    Services::Debug()->set('CreateController::filterValidateInput FKs Failed' . ' ' . $message);
-                }
-            }
-        }
-
-        Services::Debug()->set('CreateController::Validate FK::Success: ' . $valid);
-
-        return $valid;
-    }
-
-    /**
-     * validateForeignKey
-     *
-     * @param $name
-     * @param $source_id
-     * @param $source_table
-     * @param $required
-     * @param $message
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    protected function validateForeignKey($name, $source_id, $source_model, $required, $message)
-    {
-
-        Services::Debug()->set(
-            'CreateController::validateForeignKey Field: ' . $name
-            . ' Value: ' . $this->model->row->$name
-            . ' Source: ' . $source_id
-            . ' Model: ' . $source_model
-            . ' Required: ' . $required
-        );
-
-        if ($this->model->row->$name == 0 && $required == 0) {
-            return true;
-        }
-
-        if (isset($this->model->row->$name)) {
-
-            $m = new $source_model ();
-            $m->query->where($m->db->qn('id') . ' = ' . $m->db->q($this->model->row->$name));
-            $value = $m->loadResult();
-
-            if (empty($value)) {
-            } else {
-                return true;
-            }
-        } else {
-            if ($required == 0) {
-                return true;
-            }
-        }
-
-        throw new \Exception('VALIDATE_FOREIGN_KEY');
-    }
-
-    /**
-     * storeRelated
-     *
-     * Method to store a row in the related table
-     *
-     * @return boolean True on success.
-     *
-     * @return bool
-     * @since   1.0
-     */
-    private function storeRelated()
-    {
-        $catalog = new EntryModel('Catalog');
-
-        $catalog->catalog_type_id = $this->model->table_name->catalog_type_id;
-
-        $this->catalog_id = $catalog->save();
-
-        $catalog->load();
-
-        if ($catalog->getError()) {
-            $this->setError($catalog->getError());
-
-            return false;
-        }
-
-        return true;
-    }
+		return true;
+	}
 }

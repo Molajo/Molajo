@@ -48,7 +48,7 @@ class Controller
 	/**
 	 * Registry containing Table Configuration from XML
 	 *
-	 * Public as it is extracted by the Helper functions
+	 * Public as it is passed into triggered events
 	 *
 	 * @var    string
 	 * @since  1.0
@@ -87,6 +87,16 @@ class Controller
 	protected $pagination;
 
 	/**
+	 * $data
+	 *
+	 * Public as it is passed into triggered events
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $data;
+
+	/**
 	 * $triggers
 	 *
 	 * @var    object
@@ -108,6 +118,7 @@ class Controller
 	{
 		$this->triggers = array();
 		$this->parameters = array();
+		$this->data = array();
 	}
 
 	/**

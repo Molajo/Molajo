@@ -37,7 +37,7 @@
             <field name="tag" type="char" default="en-GB" null="0"/>
             <field name="rtl" type="char" default="0" null="0"/>
             <field name="locale" type="char" default="en_GB.utf8, en_GB.UTF-8, en_GB, eng_GB, en, english, english-uk, uk, gbr, britain, england, great britain, uk, united kingdom, united-kingdom" null="0"/>
-            <field name="first_day" type="int" default="0" null="0"/>
+            <field name="first_day" type="integer" default="0" null="0" values="1,2,3,4,5,6,7"/>
             <include name="ParametersCache"/>
         </customfield>
     </customfields>

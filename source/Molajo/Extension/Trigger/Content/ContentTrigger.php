@@ -146,15 +146,9 @@ class ContentTrigger extends Trigger
 	{
 		$value = null;
 
-
-		if ($key == 'ArticlesTable') {
-			var_dump($value);
-			die;
-		}
-
 		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
 			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-			'model_name', 'rendered_output'))) {
+			'data', 'model_name', 'rendered_output'))) {
 			$value = $this->$key;
 
 		} else {
@@ -183,7 +177,7 @@ class ContentTrigger extends Trigger
 	{
 		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
 			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-			'model_name', 'rendered_output'))) {
+			'data', 'model_name', 'rendered_output'))) {
 
 			$this->$key = $value;
 		} else {
