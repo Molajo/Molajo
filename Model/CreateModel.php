@@ -89,10 +89,15 @@ class CreateModel extends Model
 
 			$name = $f['name'];
 			$type = strtolower($f['type']);
+			if (isset($f['identity'])) {
+				$identity = strtolower($f['identity']);
+			} else {
+				$identity = 0;
+			}
 
 			$insertSQL .= $this->db->qn($name);
 
-			$valuesSQL .= $this->prepareFieldValues($name, $type, $identity = 0, $data);
+			$valuesSQL .= $this->prepareFieldValues($name, $type, $identity, $data);
 
 		}
 
@@ -123,9 +128,10 @@ echo '<br /><br /><br />';
 	 */
 	protected function prepareFieldValues($name, $type, $identity = 0, $data)
 	{
-		$value = NULL;
+		$value = '';
 
 		if (isset($identity) && (int) $identity == 1) {
+			$value = 'NULL';
 
 		} elseif ($type == 'integer'
 			|| $type == 'catalog_id'

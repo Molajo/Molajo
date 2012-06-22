@@ -6,7 +6,6 @@
 <trigger name="Gravatar"/>
 <trigger name="IFrame"/>
 <trigger name="Pullquote"/>
-<trigger name="Datefields"/>
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
 <trigger name="Publishedstatus"/>

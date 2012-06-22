@@ -49,7 +49,7 @@ class ExtensionTrigger extends ContentTrigger
 			return false;
 		}
 
-		$m->set('name_key_value', (int)$this->data->title);
+		$m->set('name_key_value', $this->data->title);
 		$m->set('use_special_joins', 0);
 
 		$id = $m->getData('result');
@@ -69,11 +69,12 @@ class ExtensionTrigger extends ContentTrigger
 
 		$controller->data = $data;
 
-		$results = $controller->create();
-echo $results;
-		die;
-		if ($results === false) {
+		$id = $controller->create();
+
+		if ($id === false) {
 			//error
+			return false;
+		} else {
 			$this->data->extension_id = $results;
 		}
 

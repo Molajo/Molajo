@@ -1,5 +1,5 @@
 <trigger name="Rownumber"/>
-<trigger name="Datefields"/>
+<trigger name="Dateformats"/>
 <trigger name="Publishedstatus"/>
 <trigger name="Adminmenu"/>
 <trigger name="Admindashboard"/>
