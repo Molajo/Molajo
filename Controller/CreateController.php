@@ -371,6 +371,7 @@ class CreateController extends ModelController
 					//error
 					return false;
 				}
+
 			} else {
 				if ($required == 0) {
 				} else {

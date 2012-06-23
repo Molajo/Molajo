@@ -21,30 +21,6 @@ defined('MOLAJO') or die;
 class PullquoteTrigger extends ContentTrigger
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new PullquoteTrigger();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * After-read processing
      *
      * Retrieves Author Information for Item

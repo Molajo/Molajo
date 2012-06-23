@@ -18,29 +18,6 @@ defined('MOLAJO') or die;
  */
 class AdmingridTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
-
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new AdmingridTrigger();
-		}
-
-		return self::$instance;
-	}
 
 	/**
 	 * Before-read processing
