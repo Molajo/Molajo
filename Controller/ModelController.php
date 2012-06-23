@@ -63,29 +63,6 @@ defined('MOLAJO') or die;
  */
 Class ModelController extends Controller
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
-
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new ModelController();
-		}
-
-		return self::$instance;
-	}
 
 	/**
 	 * Prepares data needed for the model using an XML table definition
@@ -220,11 +197,11 @@ Class ModelController extends Controller
 			} else {
 				$model_parameter = $this->get('model_parameter');
 			}
-			/**
-			echo 'DBO '.$dbo.'<br />';
-			echo $query_object.'<br />';
-			echo $model_parameter.'<br />';
-			 */
+/**
+echo 'DBO '.$dbo.'<br />';
+echo $query_object.'<br />';
+echo $model_parameter.'<br />';
+ */
 			if (strtolower($query_object) == 'getdummy') {
 				$this->query_results = array();
 			} else {
@@ -312,7 +289,7 @@ Class ModelController extends Controller
 echo '<pre>';
 var_dump($query_results);
 echo '</pre>';
-*/
+ */
 		/** Return result (single value) */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $query_results;

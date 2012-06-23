@@ -98,6 +98,7 @@ class CreateModel extends Model
 		$this->db->execute();
 
 		$id = $this->db->insertid();
+
 		return $id;
 	}
 
