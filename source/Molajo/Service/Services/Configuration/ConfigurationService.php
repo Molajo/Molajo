@@ -266,7 +266,7 @@ Class ConfigurationService
 	/**
 	 * Get action ids and values to load into registry (to save a read on various triggers)
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function getActions()
@@ -585,6 +585,37 @@ Class ConfigurationService
 		/** 5. Menuitem Configuration - default to Menuitems Component Configuration.xml file */
 		return EXTENSIONS . '/' . ucfirst(strtolower($model_name)) . '/Configuration.xml';
 
+	}
+
+	/**
+	 * Retrieves base Extension Registry data and stores it to the datasource registry
+	 *
+	 * @static
+	 * @param  $registryName
+	 * @param  $xml
+	 * @return mixed
+	 */
+	public static function seExtensionRegistry($registryName, $xml)
+	{
+		foreach ($xml->attributes() as $key => $value) {
+			echo $key .' ' .$value. '<br />';
+			Services::Registry()->set($registryName, 'extension_'. $key, (string)$value);
+		}
+
+/**
+$data['type'] = (string) $xml->type;
+$data['name'] = (string) $xml->name;
+$data['author'] = (string) $xml->author();
+$data['create_date'] = (string) $xml->create_date();
+$data['copyright'] = (string) $xml->copyright;
+$data['license'] = (string) $xml->license;
+$data['author_email'] = (string) $xml->author_email;
+$data['author_url'] = (string) $xml->author_url;
+$data['version'] = (string) $xml->version;
+$data['description'] = (string) $xml->description;
+ */
+
+		return;
 	}
 
 	/**

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 21, 2012 at 09:22 AM
+-- Generation Time: Jun 23, 2012 at 11:19 AM
 -- Server version: 5.5.9
 -- PHP Version: 5.3.6
 
@@ -159,7 +159,7 @@ INSERT INTO `molajo_application_extension_instances` VALUES(263, 1);
 INSERT INTO `molajo_application_extension_instances` VALUES(264, 1);
 INSERT INTO `molajo_application_extension_instances` VALUES(265, 1);
 INSERT INTO `molajo_application_extension_instances` VALUES(268, 1);
-INSERT INTO `molajo_application_extension_instances` VALUES(0, 2);
+INSERT INTO `molajo_application_extension_instances` VALUES(271, 1);
 INSERT INTO `molajo_application_extension_instances` VALUES(1, 2);
 INSERT INTO `molajo_application_extension_instances` VALUES(2, 2);
 INSERT INTO `molajo_application_extension_instances` VALUES(3, 2);
@@ -266,6 +266,7 @@ INSERT INTO `molajo_application_extension_instances` VALUES(263, 2);
 INSERT INTO `molajo_application_extension_instances` VALUES(264, 2);
 INSERT INTO `molajo_application_extension_instances` VALUES(265, 2);
 INSERT INTO `molajo_application_extension_instances` VALUES(268, 2);
+INSERT INTO `molajo_application_extension_instances` VALUES(271, 2);
 
 -- --------------------------------------------------------
 
@@ -287,7 +288,7 @@ CREATE TABLE `molajo_catalog` (
   PRIMARY KEY (`id`),
   KEY `sef_request` (`sef_request`(255)),
   KEY `index_catalog_catalog_types` (`catalog_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=220 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=222 ;
 
 --
 -- Dumping data for table `molajo_catalog`
@@ -455,6 +456,7 @@ INSERT INTO `molajo_catalog` VALUES(216, 2000, 134, 1, 'grid', 'articles/drafts'
 INSERT INTO `molajo_catalog` VALUES(217, 2000, 135, 1, 'grid', 'articles/trash', 0, 1, 0, '');
 INSERT INTO `molajo_catalog` VALUES(218, 2000, 136, 1, 'grid', 'articles/versions', 0, 1, 0, '');
 INSERT INTO `molajo_catalog` VALUES(219, 2000, 137, 1, 'grid', 'tags', 0, 1, 0, '');
+INSERT INTO `molajo_catalog` VALUES(220, 1200, 271, 0, '', 'extensions/views/271', 0, 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -527,7 +529,7 @@ INSERT INTO `molajo_catalog_types` VALUES(500, 'users', 1, '#__users');
 INSERT INTO `molajo_catalog_types` VALUES(1050, 'components', 1, '#__extension_instances');
 INSERT INTO `molajo_catalog_types` VALUES(1100, 'languages', 1, '#__extension_instances');
 INSERT INTO `molajo_catalog_types` VALUES(1150, 'page_view', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1200, 'template_view', 1, '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1200, 'Templates', 1, '#__extension_instances');
 INSERT INTO `molajo_catalog_types` VALUES(1250, 'wrap_view', 1, '#__extension_instances');
 INSERT INTO `molajo_catalog_types` VALUES(1300, 'menus', 1, '#__extension_instances');
 INSERT INTO `molajo_catalog_types` VALUES(1350, 'modules', 1, '#__extension_instances');
@@ -657,7 +659,7 @@ CREATE TABLE `molajo_extensions` (
   `name` varchar(255) NOT NULL DEFAULT ' ',
   PRIMARY KEY (`id`),
   KEY `extensions_extension_sites_index` (`extension_site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=261 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=325 ;
 
 --
 -- Dumping data for table `molajo_extensions`
@@ -700,7 +702,7 @@ INSERT INTO `molajo_extensions` VALUES(33, 1, 1200, 'Admingrid');
 INSERT INTO `molajo_extensions` VALUES(34, 1, 1200, 'Admingridbatch');
 INSERT INTO `molajo_extensions` VALUES(35, 1, 1200, 'Admingridfilters');
 INSERT INTO `molajo_extensions` VALUES(36, 1, 1200, 'Admingridpagination');
-INSERT INTO `molajo_extensions` VALUES(37, 1, 1200, 'Adminsubmenu');
+INSERT INTO `molajo_extensions` VALUES(37, 1, 1200, 'Admincomponentsubmenu');
 INSERT INTO `molajo_extensions` VALUES(38, 1, 1200, 'Formselect');
 INSERT INTO `molajo_extensions` VALUES(39, 1, 1200, 'News');
 INSERT INTO `molajo_extensions` VALUES(40, 1, 1200, 'Admintoolbar');
@@ -773,6 +775,7 @@ INSERT INTO `molajo_extensions` VALUES(257, 1, 1200, 'Assetslinks');
 INSERT INTO `molajo_extensions` VALUES(258, 1, 1200, 'Defer');
 INSERT INTO `molajo_extensions` VALUES(259, 1, 1200, 'Metadata');
 INSERT INTO `molajo_extensions` VALUES(260, 1, 1200, 'Comments');
+INSERT INTO `molajo_extensions` VALUES(271, 1, 1200, 'Admincomponentmenu');
 
 -- --------------------------------------------------------
 
@@ -811,7 +814,7 @@ CREATE TABLE `molajo_extension_instances` (
   `ordering` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Ordering',
   PRIMARY KEY (`id`),
   KEY `fk_extension_instances_extensions_index` (`extension_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=270 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=313 ;
 
 --
 -- Dumping data for table `molajo_extension_instances`
@@ -854,7 +857,7 @@ INSERT INTO `molajo_extension_instances` VALUES(33, 33, 1200, 'Admingrid', 'Temp
 INSERT INTO `molajo_extension_instances` VALUES(34, 34, 1200, 'Admingridbatch', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Admingridbatch",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"dbo",\r\n        "model_query_object":"getTriggerdata",\r\n        "model_parameter":"Admingridbatch",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 34);
 INSERT INTO `molajo_extension_instances` VALUES(35, 35, 1200, 'Admingridfilters', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Admingridfilters",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"dbo",\r\n        "model_query_object":"getTriggerdata",\r\n        "model_parameter":"GridFilters*",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 35);
 INSERT INTO `molajo_extension_instances` VALUES(36, 36, 1200, 'Admingridpagination', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Admingridpagination",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"dbo",\r\n        "model_query_object":"getTriggerdata",\r\n        "model_parameter":"GridPagination",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 36);
-INSERT INTO `molajo_extension_instances` VALUES(37, 37, 1200, 'Adminsubmenu', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Options",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"",\r\n        "model_query_object":"",\r\n        "model_parameter":"Adminsubmenu",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 37);
+INSERT INTO `molajo_extension_instances` VALUES(37, 37, 1200, 'Admincomponentsubmenu', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Options",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"",\r\n        "model_query_object":"",\r\n        "model_parameter":"Admincomponentsubmenu",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 37);
 INSERT INTO `molajo_extension_instances` VALUES(38, 38, 1200, 'Formselect', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 38);
 INSERT INTO `molajo_extension_instances` VALUES(39, 39, 1200, 'News', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 39);
 INSERT INTO `molajo_extension_instances` VALUES(40, 40, 1200, 'Admintoolbar', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Admintoolbar",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"dbo",\r\n        "model_query_object":"getTriggerdata",\r\n        "model_parameter":"AdminToolbar",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 40);
@@ -928,6 +931,7 @@ INSERT INTO `molajo_extension_instances` VALUES(264, 257, 1200, 'Assetslinks', '
 INSERT INTO `molajo_extension_instances` VALUES(265, 258, 1200, 'Defer', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 41);
 INSERT INTO `molajo_extension_instances` VALUES(268, 259, 1200, 'Metadata', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 41);
 INSERT INTO `molajo_extension_instances` VALUES(269, 260, 1200, 'Comments', 'templates', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 41);
+INSERT INTO `molajo_extension_instances` VALUES(271, 271, 1200, 'Admincomponentmenu', 'Template', '', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '{}', '{  \r\n    "2":{\r\n        "criteria_title":"Options",\r\n        "criteria_display_view_on_no_results":"1",\r\n        "criteria_snippet_length":"",\r\n\r\n        "template_view_css_id":"",\r\n        "template_view_css_class":"",\r\n\r\n        "wrap_view_id":"",\r\n        "wrap_view_css_id":"",\r\n        "wrap_view_css_class":"",\r\n \r\n        "model_name":"Triggerdata",\r\n        "model_type":"",\r\n        "model_query_object":"",\r\n        "model_parameter":"Admincomponentmenu",\r\n        \r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 37);
 
 -- --------------------------------------------------------
 
@@ -1107,7 +1111,6 @@ CREATE TABLE `molajo_site_extension_instances` (
 -- Dumping data for table `molajo_site_extension_instances`
 --
 
-INSERT INTO `molajo_site_extension_instances` VALUES(1, 0);
 INSERT INTO `molajo_site_extension_instances` VALUES(1, 1);
 INSERT INTO `molajo_site_extension_instances` VALUES(1, 2);
 INSERT INTO `molajo_site_extension_instances` VALUES(1, 3);
@@ -1215,6 +1218,7 @@ INSERT INTO `molajo_site_extension_instances` VALUES(1, 263);
 INSERT INTO `molajo_site_extension_instances` VALUES(1, 264);
 INSERT INTO `molajo_site_extension_instances` VALUES(1, 265);
 INSERT INTO `molajo_site_extension_instances` VALUES(1, 268);
+INSERT INTO `molajo_site_extension_instances` VALUES(1, 271);
 
 -- --------------------------------------------------------
 

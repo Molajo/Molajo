@@ -4,6 +4,5 @@
 <include name="ParametersImage"/>
 <include name="ParametersGravatar"/>
 <include name="ParametersAsset"/>
-<include name="ParametersMustache"/>
 <include name="ParametersCache"/>
 <include name="ParametersLog"/>
