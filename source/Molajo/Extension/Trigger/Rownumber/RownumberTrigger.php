@@ -29,9 +29,10 @@ class RownumberTrigger extends ContentTrigger
 	{
 		$count = count($this->query_results);
 
-		if ((int) $count == 0
+		if ((int)$count == 0
 			|| $this->query_results == false
-			|| $this->query_results == null) {
+			|| $this->query_results == null
+		) {
 			return true;
 		}
 

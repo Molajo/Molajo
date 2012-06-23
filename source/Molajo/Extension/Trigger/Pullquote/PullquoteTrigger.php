@@ -20,29 +20,29 @@ defined('MOLAJO') or die;
  */
 class PullquoteTrigger extends ContentTrigger
 {
-    /**
-     * After-read processing
-     *
-     * Retrieves Author Information for Item
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
+	/**
+	 * After-read processing
+	 *
+	 * Retrieves Author Information for Item
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
 
-        $fields = $this->retrieveFieldsByType('text');
+		$fields = $this->retrieveFieldsByType('text');
 
-        if (is_array($fields) && count($fields) > 0) {
+		if (is_array($fields) && count($fields) > 0) {
 
 			foreach ($fields as $field) {
 
 				/** retrieve each text field */
-                $name = $field->name;
-                $fieldValue = $this->getFieldValue($field);
+				$name = $field->name;
+				$fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
-                } else {
+				if ($fieldValue == false) {
+				} else {
 
 					/** search for pullquotes statements, remove from text */
 					$results = Services::Text()->pullquotes($fieldValue);
@@ -76,9 +76,9 @@ class PullquoteTrigger extends ContentTrigger
 						}
 					}
 				}
-            }
-        }
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

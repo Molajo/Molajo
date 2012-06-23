@@ -21,17 +21,17 @@ class PaginationTrigger extends ContentTrigger
 {
 
 
-    /**
-     * Post-read processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        return false;
-    }
+	/**
+	 * Post-read processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		return false;
+	}
 }

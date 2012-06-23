@@ -21,19 +21,20 @@ defined('MOLAJO') or die;
 class VersionTrigger extends ContentTrigger
 {
 
-    /**
-     * Pre-create processing
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeCreate()
-    {
+	/**
+	 * Pre-create processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeCreate()
+	{
 		$field = $this->getField('version');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
 		if ($fieldValue == false
-			|| $fieldValue == '') {
+			|| $fieldValue == ''
+		) {
 			$newFieldValue = 1;
 			$this->saveField($field, $name, $newFieldValue);
 		}
@@ -42,7 +43,8 @@ class VersionTrigger extends ContentTrigger
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
 		if ($fieldValue == false
-			|| $fieldValue == '') {
+			|| $fieldValue == ''
+		) {
 			$newFieldValue = 0;
 			$this->saveField($field, $name, $newFieldValue);
 		}
@@ -51,27 +53,29 @@ class VersionTrigger extends ContentTrigger
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
 		if ($fieldValue == false
-			|| $fieldValue == '') {
+			|| $fieldValue == ''
+		) {
 			$newFieldValue = 0;
 			$this->saveField($field, $name, $newFieldValue);
 		}
 
 		return true;
-    }
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
+	/**
+	 * Pre-update processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate()
+	{
 		$field = $this->getField('version');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
 		if ($fieldValue == false
-			|| $fieldValue == '') {
+			|| $fieldValue == ''
+		) {
 			$newFieldValue = 1 + 1;
 			$this->saveField($field, $name, $newFieldValue);
 		}
@@ -80,22 +84,23 @@ class VersionTrigger extends ContentTrigger
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
 		if ($fieldValue == false
-			|| $fieldValue == '') {
+			|| $fieldValue == ''
+		) {
 			$newFieldValue = $this->query_results->status;
 			$this->saveField($field, $name, $newFieldValue);
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * Post-update processing
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterUpdate()
-    {
-        return true;
-    }
+	/**
+	 * Post-update processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterUpdate()
+	{
+		return true;
+	}
 }

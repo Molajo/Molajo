@@ -50,10 +50,10 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->set('check_view_level_access', '0');
 
 		$m->model->query->select($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('id'));
-		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' .  $m->model->db->qn('title')
+		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('title')
 			. ' = ' . $m->model->db->q($this->query_results->title));
 		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('catalog_type_id')
-			. ' = ' . (int) $this->query_results->catalog_type_id);
+			. ' = ' . (int)$this->query_results->catalog_type_id);
 
 		$id = $m->getData('result');
 

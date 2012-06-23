@@ -19,31 +19,31 @@ defined('MOLAJO') or die;
  */
 class AliasTrigger extends ContentTrigger
 {
-    /**
-     * Pre-create processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeCreate()
-    {
-        return false;
-    }
+	/**
+	 * Pre-create processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeCreate()
+	{
+		return false;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
-        return false;
-    }
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate()
+	{
+		return false;
+	}
 }

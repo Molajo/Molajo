@@ -20,42 +20,42 @@ defined('MOLAJO') or die;
 class ItemUserPermissionsTrigger extends ContentTrigger
 {
 
-    /**
-     * After-read processing
-     *
-     * Use with Grid to determine permissions for buttons and items
-     * Validate action-level user permissions on each row - relies upon catalog_id
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        if (isset($this->query_results->catalog_id)) {
-        } else {
-            return false;
-        }
+	/**
+	 * After-read processing
+	 *
+	 * Use with Grid to determine permissions for buttons and items
+	 * Validate action-level user permissions on each row - relies upon catalog_id
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		if (isset($this->query_results->catalog_id)) {
+		} else {
+			return false;
+		}
 
-        /** Component Buttons */
-        $actions = $this->get('toolbar_buttons');
+		/** Component Buttons */
+		$actions = $this->get('toolbar_buttons');
 
-        $actionsArray = explode(',', $actions);
+		$actionsArray = explode(',', $actions);
 
-        /** User Permissions */
-        $permissions = Services::Authorisation()
-            ->authoriseTaskList($actionsArray, $this->query_results->catalog_id);
+		/** User Permissions */
+		$permissions = Services::Authorisation()
+			->authoriseTaskList($actionsArray, $this->query_results->catalog_id);
 
-        /** Append onto row */
-        foreach ($actionsArray as $action) {
-            if ($permissions[$action] === true) {
-                $field = $action . 'Permission';
-                $this->query_results->$field = $permissions[$action];
-            }
-        }
+		/** Append onto row */
+		foreach ($actionsArray as $action) {
+			if ($permissions[$action] === true) {
+				$field = $action . 'Permission';
+				$this->query_results->$field = $permissions[$action];
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

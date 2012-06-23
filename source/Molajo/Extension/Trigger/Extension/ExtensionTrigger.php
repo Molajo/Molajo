@@ -50,7 +50,7 @@ class ExtensionTrigger extends ContentTrigger
 			$fieldValue = $this->getFieldValue($field);
 		}
 
-		if ((int) $fieldValue > 0) {
+		if ((int)$fieldValue > 0) {
 			return true;
 		}
 
