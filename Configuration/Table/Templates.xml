@@ -5,12 +5,7 @@
         extends="ExtensionInstances">
     <customfields>
         <customfield name="parameters">
-
-            <field name="template_view_css_id" type="char" null="1" default="" values=""/>
-            <field name="template_view_css_class" type="char" null="1" default="" values=""/>
-
-            <field name="wrap_view_id" type="integer" null="1" default="" values=""/>
-
+            <include name="ParametersTemplate"/>
             <include name="ParametersWrap"/>
         </customfield>
     </customfields>

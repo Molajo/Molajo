@@ -29,7 +29,6 @@ class CreateModel extends Model
 	 */
 	public function create($data, $table_registry_name)
 	{
-
 		$table_name = Services::Registry()->get($table_registry_name, 'table');
 		$primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
 
@@ -45,7 +44,9 @@ class CreateModel extends Model
 				$customFieldName = strtolower($customFieldName);
 
 				/** Retrieve Field Definitions from Registry (XML) */
-				$fields = Services::Registry()->get(table_registry_name, $customFieldName);
+				$fields = Services::Registry()->get($table_registry_name, $customFieldName);
+
+				$temp = $data->$customFieldName;
 
 				/** Shared processing  */
 				foreach ($fields as $field) {
@@ -53,19 +54,14 @@ class CreateModel extends Model
 					$name = $field['name'];
 					$type = $field['type'];
 
-					$value = $this->prepareFieldValues($name, $type, $identity = 0, $data);
+					$value = $this->prepareFieldValues($type, $temp[$name]);
 					if ($value === false) {
 						$valid = false;
 						break;
 					}
 
 					/** data element for SQL insert */
-					$data->$customFieldName->$name = $value;
-				}
-
-				if ($valid === true) {
-				} else {
-					return false;
+					$data->$customFieldName[$name] = $value;
 				}
 			}
 		}
@@ -89,15 +85,10 @@ class CreateModel extends Model
 
 			$name = $f['name'];
 			$type = strtolower($f['type']);
-			if (isset($f['identity'])) {
-				$identity = strtolower($f['identity']);
-			} else {
-				$identity = 0;
-			}
 
 			$insertSQL .= $this->db->qn($name);
 
-			$valuesSQL .= $this->prepareFieldValues($name, $type, $identity, $data);
+			$valuesSQL .= $this->prepareFieldValues($type, $data->$name);
 
 		}
 
@@ -107,11 +98,6 @@ class CreateModel extends Model
 		$this->db->execute();
 
 		$id = $this->db->insertid();
-
-echo '<br /><br /><br />';
-echo $sql;
-echo '<br /><br /><br />';
-
 		return $id;
 	}
 
@@ -126,31 +112,32 @@ echo '<br /><br /><br />';
 	 * @return string - data element value
 	 * @since  1.0
 	 */
-	protected function prepareFieldValues($name, $type, $identity = 0, $data)
+	protected function prepareFieldValues($type, $input)
 	{
 		$value = '';
 
-		if (isset($identity) && (int) $identity == 1) {
+		if ($type == 'identity') {
 			$value = 'NULL';
 
 		} elseif ($type == 'integer'
+			|| $type == 'binary'
 			|| $type == 'catalog_id'
 			|| $type == 'boolean') {
 
-			$value = (int) $data->$name;
+			$value = (int) $input;
 
 		} elseif ($type == 'char'
-			|| $type = 'datetime'
-				|| $type = 'url'
-					|| $type = 'email'
+			|| $type == 'datetime'
+				|| $type == 'url'
+					|| $type == 'email'
 						|| $type == 'text') {
 
-			$value = $this->db->q($data->$name);
+			$value = $this->db->q($input);
 
 		} elseif ($type == 'password') {
 
 		} elseif ($type == 'customfield') {
-			$value = json_encode($data->$name);
+			$value = $this->db->q(json_encode($input));
 
 		} else {
 			echo 'UNKNOWN TYPE '. $type . ' in CreateModel::prepareFieldValues <br />';

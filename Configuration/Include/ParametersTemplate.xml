@@ -1,4 +1,4 @@
-<field name="template_view_css_id" type="char" null="1" default="" values=""/>
-<field name="template_view_css_class" type="char" null="1" default="" values=""/>
+<field name="template_view_css_id" type="char" null="0" default=" " values=""/>
+<field name="template_view_css_class" type="char" null="0" default=" " values=""/>
 
-<field name="wrap_view_id" type="integer" null="1" default="" values=""/>
+<field name="wrap_view_id" type="char" null="0" default=" " values=""/>

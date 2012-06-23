@@ -129,7 +129,7 @@ Class FilterService
      * Filter input, default value, edit
      *
      * @param string $field_value Value of input field
-     * @param string $dataType    Datatype of input field
+     * @param string $type    Datatype of input field
      * @param int    $null        0 or 1 - is null allowed
      * @param string $default     Default value, optional
      * @param array  $values      Set of values of which the field must contain
@@ -138,22 +138,22 @@ Class FilterService
      * @since   1.0
      */
     public function filter($field_value,
-                           $dataType = 'char',
+                           $type = 'char',
                            $null = 1,
                            $default = null,
                            $values = array())
     {
 
-        switch (strtolower($dataType)) {
-            case 'int':
+        switch (strtolower($type)) {
+            case 'integer':
             case 'boolean':
             case 'float':
                 return $this->filter_numeric(
-                    $field_value, $dataType, $null, $default
+                    $field_value, $type, $null, $default
                 );
                 break;
 
-            case 'date':
+            case 'datetime':
                 return $this->filter_date(
                     $field_value, $null, $default
                 );
@@ -224,7 +224,7 @@ Class FilterService
      * filter_numeric
      *
      * @param string $field_value Value of input field
-     * @param string $dataType    Datatype of input field
+     * @param string $type    Datatype of input field
      * @param int    $null        0 or 1 - is null allowed
      * @param string $default     Default value, optional
      *
@@ -232,7 +232,7 @@ Class FilterService
      * @since   1.0
      */
     public function filter_numeric($field_value,
-                                   $dataType = 'int',
+                                   $type = 'int',
                                    $null = 1,
                                    $default = null)
     {
@@ -243,7 +243,7 @@ Class FilterService
 
         if ($field_value == null) {
         } else {
-            switch ($dataType) {
+            switch ($type) {
 
                 case 'boolean':
                     $test = filter_var(
@@ -357,7 +357,9 @@ Class FilterService
     {
         if ($default == null) {
         } else {
-            $field_value = $default;
+			if ($field_value == null) {
+            	$field_value = $default;
+			}
         }
 
         if ($field_value == null) {
@@ -376,7 +378,7 @@ Class FilterService
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
-        return $field_value;
+        return trim($field_value);
     }
 
     /**

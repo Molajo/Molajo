@@ -20,27 +20,27 @@ defined('MOLAJO') or die;
  */
 Class InstallService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected static $instance;
 
-    /**
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new InstallService();
-        }
+	/**
+	 * @static
+	 * @return bool|object
+	 * @since  1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new InstallService();
+		}
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
 
 	/**
 	 * Install Extension
@@ -55,17 +55,29 @@ Class InstallService
 	 */
 	public function installExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
 	{
-		/** Create Extension Row */
+		/** Create Extension and Extension Instances Row */
 		$controller = new CreateController();
 
 		$data = new \stdClass();
 		$data->title = $extension_name;
-		$data->model_name = 'Templates';
+		$data->model_name = $model_name;
 
 		$controller->data = $data;
 
 		$results = $controller->create();
-die;
+
+		/** Create Extension and Extension Instances Row */
+		$controller = new CreateController();
+
+		$data = new \stdClass();
+		$data->title = $extension_name;
+		$data->model_name = $model_name;
+
+		$controller->data = $data;
+
+		$results = $controller->create();
+
+		die;
 		return $results;
 
 
