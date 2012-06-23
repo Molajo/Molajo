@@ -6,6 +6,9 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
+echo '<pre>';
+var_dump($this->row);
+echo '</pre>';
 ?>
 <tr<?php echo $this->row->grid_row_class; ?>><?php
 $columnCount = 1;

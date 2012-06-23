@@ -1,4 +1,4 @@
-<field name="id" type="identity" null="1" default="" identity="1"/>
+<field name="id" type="catalog_id" null="1" default="" identity="1"/>
 <field name="extension_instance_id" type="integer" null="0" default="0"/>
 <field name="catalog_type_id" type="integer" null="0" default="0"/>
 <field name="title" type="char" null="0" default=" "/>

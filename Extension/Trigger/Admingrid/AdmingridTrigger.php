@@ -30,6 +30,7 @@ class AdmingridTrigger extends ContentTrigger
 	public function onAfterRoute()
 	{
 		/** Is this an Administrative Grid Request?  */
+
 		if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
 		} else {
 			return true;

@@ -94,11 +94,11 @@ class ReadModel extends Model
 					. ' = ' . $this->db->q($name_key_value));
 			}
 		}
-/**
-echo '<br /><br /><br />';
-echo $this->query->__toString();
-echo '<br /><br /><br />';
-*/
+		/**
+		echo '<br /><br /><br />';
+		echo $this->query->__toString();
+		echo '<br /><br /><br />';
+		 */
 		return $this;
 	}
 

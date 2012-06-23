@@ -53,21 +53,13 @@ Class InstallService
 	 * @return bool
 	 * @since  1.0
 	 */
-	public function installExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
+	public function installExtension($extension_name, $model_name,
+									 $source_path = null, $destination_path = null)
 	{
 		/** Create Extension and Extension Instances Row */
 		$controller = new CreateController();
 
-		$data = new \stdClass();
-		$data->title = $extension_name;
-		$data->model_name = $model_name;
-
-		$controller->data = $data;
-
-		$results = $controller->create();
-
-		/** Create Extension and Extension Instances Row */
-		$controller = new CreateController();
+		$table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
 
 		$data = new \stdClass();
 		$data->title = $extension_name;
@@ -75,52 +67,68 @@ Class InstallService
 
 		$controller->data = $data;
 
-		$results = $controller->create();
-
-		die;
-		return $results;
-
-
-		/** Verify ACL for User to Create Extensions */
-		$connect = $m->connect('Table', 'Extensions');
-		if ($connect === false) {
+		$id = $controller->create();
+		if ($id === false) {
+			//install failed
 			return false;
 		}
 
+		/** Site Extension Instances */
+		$controller = new CreateController();
 
-		/** Extension Instance */
+		$data = new \stdClass();
+		$data->site_id = SITE_ID;
+		$data->extension_instance_id = $id;
+		$data->model_name = 'SiteExtensionInstances';
 
+		$controller->data = $data;
+
+		$results = $controller->create();
+		if ($results === false) {
+			//install failed
+			return false;
+		}
 
 		/** Application Extension Instances */
+		$controller = new CreateController();
 
-		/** Site Extension Instances */
+		$data = new \stdClass();
+		$data->application_id = APPLICATION_ID;
+		$data->extension_instance_id = $id;
+		$data->model_name = 'ApplicationExtensionInstances';
 
-		/** Catalog Entry */
+		$controller->data = $data;
+
+		$results = $controller->create();
+		if ($results === false) {
+			//install failed
+			return false;
+		}
+
+		/** Catalog */
+		$controller = new CreateController();
+
+		$data = new \stdClass();
+		$data->catalog_type_id = Services::Registry()->get($table_registry_name, 'catalog_type_id');
+		$data->source_id = $id;
+		$data->view_group_id = 3;
+		$data->extension_instance_id = $id;
+		$data->model_name = 'Catalog';
+
+		$controller->data = $data;
+
+		$catalog_id = $controller->create();
+		if ($results === false) {
+			//install failed
+			return false;
+		}
 
 		/** Catalog Activity */
 
 		/** Permissions */
 
 		/** Complete */
-
-
-		/** Retrieve Extensions Catalog ID  */
-		$m = new ModelController();
-
-		/** Verify ACL for User to Create Extensions */
-		$connect = $m->connect('Table', 'Extensions');
-		if ($connect === false) {
-			return false;
-		}
-
-		$m->set('name_key_value', 'Extensions');
-
-		$results = $m->getData('item');
-		if ($results === false) {
-			//error
-			return false;
-		}
-
+		return true;
 	}
 
 	/**

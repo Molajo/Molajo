@@ -66,7 +66,7 @@ Class TemplateIncluder extends Includer
 			return false;
 		}
 
-		$model_name = Services::Registry()->get('Parameters', 'model_name', '');
+		$model_name = trim(Services::Registry()->get('Parameters', 'model_name', ''));
 		if ($model_name === null) {
 			$model_name = '';
 		}

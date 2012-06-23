@@ -38,7 +38,7 @@ class DisplayController extends ModelController
 	/**
 	 * Add action is used to render view output for a form used to create new content
 	 *
-	 * @return string Rendered output
+	 * @return  string Rendered output
 	 * @since   1.0
 	 */
 	public function add()
@@ -49,7 +49,7 @@ class DisplayController extends ModelController
 	/**
 	 * Edit action is used to render view output for a form used to display existing content
 	 *
-	 * @return string Rendered output
+	 * @return  string Rendered output
 	 * @since   1.0
 	 */
 	public function edit()
@@ -66,7 +66,7 @@ class DisplayController extends ModelController
 	/**
 	 * Display action is used to render view output
 	 *
-	 * @return string Rendered output
+	 * @return  string Rendered output
 	 * @since   1.0
 	 */
 	public function display()
@@ -88,7 +88,7 @@ class DisplayController extends ModelController
 			$this->connect($model_type, $model_name);
 
 			if ((int)$this->get('content_id') == 0) {
-//todo dbo should be result, item, list too - add parameter for specific query, don't hijack.
+//todo end up with: 1. result, 2. item, 3. list(dbo needs to change - add parameter for specific query, don't hijack
 			} elseif (strtolower($model_type) == 'dbo') {
 
 			} else {
@@ -130,7 +130,7 @@ class DisplayController extends ModelController
 			 *      save query results in the Request object for reuse by other
 			 *      extensions.
 			 *
-			 * todo: simplify all of the various dbo's into 'long term' and one view storage
+			 * todo: simplify all of the various dbo's into application-wide and single-view storage
 			 */
 			if ($this->get('extension_primary') == true) {
 				Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
@@ -151,11 +151,11 @@ class DisplayController extends ModelController
 	/**
 	 * wrapView
 	 *
-	 * @param $view
-	 * @param $rendered_output
+	 * @param  $view
+	 * @param  $rendered_output
 	 *
 	 * @return string
-	 * @since 1.0
+	 * @since  1.0
 	 */
 	public function wrapView($view, $rendered_output)
 	{
@@ -182,7 +182,7 @@ class DisplayController extends ModelController
 	 * Schedule onBeforeViewRender Event - could update query_results objects
 	 *
 	 * @return bool
-	 * @since   1.0
+	 * @since  1.0
 	 */
 	protected function onBeforeViewRender()
 	{
@@ -283,6 +283,7 @@ class DisplayController extends ModelController
 	 */
 	protected function onAfterViewRender($rendered_output)
 	{
+		return $rendered_output;
 		if ((int)$this->get('process_triggers') == 0) {
 			return $rendered_output;
 		}

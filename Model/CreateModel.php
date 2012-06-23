@@ -123,15 +123,17 @@ class CreateModel extends Model
 		} elseif ($type == 'integer'
 			|| $type == 'binary'
 			|| $type == 'catalog_id'
-			|| $type == 'boolean') {
+			|| $type == 'boolean'
+		) {
 
-			$value = (int) $input;
+			$value = (int)$input;
 
 		} elseif ($type == 'char'
 			|| $type == 'datetime'
-				|| $type == 'url'
-					|| $type == 'email'
-						|| $type == 'text') {
+			|| $type == 'url'
+			|| $type == 'email'
+			|| $type == 'text'
+		) {
 
 			$value = $this->db->q($input);
 
@@ -141,7 +143,7 @@ class CreateModel extends Model
 			$value = $this->db->q(json_encode($input));
 
 		} else {
-			echo 'UNKNOWN TYPE '. $type . ' in CreateModel::prepareFieldValues <br />';
+			echo 'UNKNOWN TYPE ' . $type . ' in CreateModel::prepareFieldValues <br />';
 		}
 
 		return $value;

@@ -55,6 +55,7 @@ class MustacheTrigger extends ContentTrigger
 	 */
 	public function onAfterViewRender()
 	{
+		return true;
 		if ($this->rendered_output == '' || $this->rendered_output === null) {
 			return;
 		}

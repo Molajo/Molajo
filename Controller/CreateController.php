@@ -7,6 +7,7 @@
 namespace Molajo\Controller;
 
 use Molajo\Service\Services;
+use Molajo\Controller\ModelController;
 
 defined('MOLAJO') or die;
 
@@ -394,8 +395,6 @@ class CreateController extends ModelController
 		) {
 			return true;
 		}
-echo $this->table_registry_name;
-		var_dump($this->triggers);
 
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
@@ -409,8 +408,6 @@ echo $this->table_registry_name;
 
 		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
 		if ($arguments == false) {
-			echo 'yes';
-			die;
 			return false;
 		}
 
@@ -434,7 +431,7 @@ echo $this->table_registry_name;
 		) {
 			return true;
 		}
-var_dump($this->triggers);
+		var_dump($this->triggers);
 		/** Schedule onAfterCreate Event */
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
@@ -446,10 +443,10 @@ var_dump($this->triggers);
 
 		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
 		if ($arguments == false) {
-			echo 'yes' ;
+			echo 'yes';
 			return false;
 		}
-die;
+		die;
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
 		$this->data = $arguments['query_results'];

@@ -12,16 +12,16 @@
     <table>
 
         <fields>
-            <field name="id" type="catalog_id" null="1" default="0"/>
+            <field name="id" type="identity" null="0" default=""/>
             <field name="catalog_type_id" type="integer" null="0" default="" values=""/>
             <field name="source_id" type="integer" null="0" default="" values=""/>
             <field name="routable" type="boolean" null="0" default="0"/>
-            <field name="menuitem_type" type="char" null="1" default=""/>
+            <field name="menuitem_type" type="char" null="0" default=" "/>
             <field name="sef_request" type="char" null="0" default=" "/>
-            <field name="redirect_to_id" type="integer" null="1" default=""/>
-            <field name="view_group_id" type="integer" null="1" default=""/>
-            <field name="primary_category_id" type="integer" null="1" default=""/>
-            <field name="tinyurl" type="url" null="1" default=""/>
+            <field name="redirect_to_id" type="integer" null="0" default="0"/>
+            <field name="view_group_id" type="integer" null="0" default="0"/>
+            <field name="primary_category_id" type="integer" null="0" default="0"/>
+            <field name="tinyurl" type="char" null="0" default=" "/>
         </fields>
 
         <joins>
@@ -36,10 +36,6 @@
 
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-            <foreignkey name="source_id" source_id="id" source_model="Content" required="1"/>
-            <foreignkey name="redirect_to_id" source_id="id" source_model="Catalog" required="1"/>
-            <foreignkey name="view_group_id" source_id="id" source_model="GroupViewGroups" required="1"/>
-            <foreignkey name="primary_category_id" source_id="id" source_model="CatalogCategories" required="1"/>
         </foreignkeys>
 
     </table>

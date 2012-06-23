@@ -3,6 +3,7 @@
         name="Sites"
         table="#__sites"
         primary_key="id"
+        name_key="name"
         primary_prefix="a"
         get_customfields="0"
         get_item_children="0"
