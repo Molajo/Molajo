@@ -18,29 +18,6 @@ defined('MOLAJO') or die;
  */
 class AdmindashboardTrigger extends ContentTrigger
 {
-	/**
-	 * Static instance
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected static $instance;
-
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new AdmindashboardTrigger();
-		}
-
-		return self::$instance;
-	}
 
 	/**
 	 * Before-read processing
@@ -57,8 +34,6 @@ class AdmindashboardTrigger extends ContentTrigger
 		} else {
 			return true;
 		}
-
-
 
 		return true;
 	}

@@ -18,29 +18,6 @@ defined('MOLAJO') or die;
  */
 class CheckoutTrigger extends ContentTrigger
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new CheckoutTrigger();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Pre-update processing

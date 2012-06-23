@@ -20,29 +20,6 @@ defined('MOLAJO') or die;
  */
 class EmailTrigger extends ContentTrigger
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new EmailTrigger();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Pre-create processing

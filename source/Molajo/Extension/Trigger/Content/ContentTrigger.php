@@ -21,14 +21,6 @@ defined('MOLAJO') or die;
 class ContentTrigger extends Trigger
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Table Registry Name - can be used to retrieve table parameters
      *
      * @var    object
@@ -115,23 +107,6 @@ class ContentTrigger extends Trigger
 	 * @since  1.0
 	 */
 	protected $rendered_output;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ContentTrigger();
-        }
-
-        return self::$instance;
-    }
-
 
 	/**
 	 * Get the current value (or default) of the specified Model property
