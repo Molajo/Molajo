@@ -13,7 +13,7 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="identity" null="1" default="0" identity="1"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
             <field name="catalog_type_id" type="integer" null="0" default="500" values="500"/>
             <field name="username" type="char" null="0" default="" unique="1"/>
             <field name="first_name" type="char" null="0" default=""/>

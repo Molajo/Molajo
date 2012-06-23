@@ -240,6 +240,12 @@ class CreateController extends ModelController
 				$default = null;
 			}
 
+			if (isset($f['identity'])) {
+				$identity = $f['identity'];
+			} else {
+				$identity = 0;
+			}
+
 			/** Retrieve value from data */
 			if ($customFieldName == '') {
 
@@ -261,7 +267,7 @@ class CreateController extends ModelController
 
 			} elseif ($type == 'text' && $userHTMLFilter === false) {
 
-			} elseif ($type == 'identity') {
+			} elseif ($identity == '1') {
 
 			} else {
 

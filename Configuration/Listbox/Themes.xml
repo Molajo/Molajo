@@ -16,7 +16,7 @@
     <table>
 
         <fields>
-            <field name="id" type="identity" null="1" default="0" identity="1"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
             <field name="title" type="char" null="0" default="" unique="1"/>
         </fields>
         >

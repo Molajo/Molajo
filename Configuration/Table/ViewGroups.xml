@@ -6,7 +6,7 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="identity" null="1" default="" identity="1"/>
+            <field name="id" type="integer" null="1" default="" identity="1"/>
             <field name="view_group_name_list" type="char" null="0" default=""/>
             <field name="view_group_list" type="integer" null="0" default=""/>
         </fields>

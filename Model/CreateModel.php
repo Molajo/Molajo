@@ -54,6 +54,15 @@ class CreateModel extends Model
 					$name = $field['name'];
 					$type = $field['type'];
 
+					if (isset($field['identity'])) {
+						$identity = $field['identity'];
+					} else {
+						$identity = 0;
+					}
+					if ($identity == 1) {
+						$type = 'identity';
+					}
+
 					$value = $this->prepareFieldValues($type, $temp[$name]);
 					if ($value === false) {
 						$valid = false;

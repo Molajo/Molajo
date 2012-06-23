@@ -7,7 +7,3 @@
  */
 defined('MOLAJO') or die; ?>
 <include:module name=admin-toolbar/>
-    <?php
-    echo '<pre>';
-    var_dump($this->query_results);
-    echo '</pre>';
