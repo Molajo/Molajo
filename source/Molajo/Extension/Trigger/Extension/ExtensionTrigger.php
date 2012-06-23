@@ -34,28 +34,42 @@ class ExtensionTrigger extends ContentTrigger
 			return true;
 		}
 
-		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
+			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
 		} else {
+			return true;
+		}
+
+		$field = $this->getField('extension_id');
+
+		if ($field == false) {
+			$fieldValue = false;
+		} else {
+			$fieldValue = $this->getFieldValue($field);
+		}
+
+		if ((int) $fieldValue > 0) {
 			return true;
 		}
 
 		/** See if the Extension Root exists */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'Extensions');
-		if ($results == false) {
-			return false;
-		}
+		$m->connect('Table', 'Extensions');
 
-		$m->set('name_key_value', $this->data->title);
-		$m->set('use_special_joins', 0);
+		$titleField = $this->getField('title');
+		$titleValue = $this->getFieldValue($titleField);
+
+		$m->model->query->select($m->model->db->qn('a.id'));
+		$m->model->query->where($m->model->db->qn('a.name')
+			. ' = ' . $m->model->db->q($titleValue));
 
 		$id = $m->getData('result');
 
 		if ((int)$id > 0) {
-			$this->data->extension_id = (int)$id;
+			$newFieldValue = (int)$id;
+			$this->saveField($field, 'extension_id', $newFieldValue);
 			return true;
 		}
 
@@ -63,8 +77,8 @@ class ExtensionTrigger extends ContentTrigger
 		$controller = new CreateController();
 
 		$data = new \stdClass();
-		$data->name = $this->data->title;
-		$data->catalog_type_id = $this->data->catalog_type_id;
+		$data->name = $this->query_results->title;
+		$data->catalog_type_id = $this->query_results->catalog_type_id;
 		$data->model_name = 'Extensions';
 
 		$controller->data = $data;
@@ -75,7 +89,8 @@ class ExtensionTrigger extends ContentTrigger
 			//error
 			return false;
 		} else {
-			$this->data->extension_id = $results;
+			$newFieldValue = (int)$id;
+			$this->saveField($field, 'extension_id', $newFieldValue);
 		}
 
 		return true;

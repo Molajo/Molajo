@@ -20,54 +20,6 @@ defined('MOLAJO') or die;
 class CatalogtypeIdTrigger extends ContentTrigger
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new CatalogTypeIDTrigger();
-        }
-
-        return self::$instance;
-    }
-
-
-	/**
-	 * onBeforeRead
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
-
-		$catalog_type_id = (int) $this->get('catalog_type_id', 0);
-		if ($catalog_type_id == 0) {
-			return true;
-		}
-
-		$primary_prefix = $this->get('primary_prefix');
-
-		$this->query->where($this->db->qn($primary_prefix)
-			. '.' . $this->db->qn('catalog_type_id')
-			. ' = ' . $catalog_type_id);
-
-		return $this;
-	}
-
-    /**
      * Pre-create processing
      *
      * @param   $this->query_results
@@ -78,8 +30,8 @@ class CatalogtypeIdTrigger extends ContentTrigger
      */
     public function onBeforeCreate()
     {
-        // catalog_type_id foreign key
-        return false;
+        // for a new content component - create a row
+        return true;
     }
 
     /**
@@ -93,7 +45,7 @@ class CatalogtypeIdTrigger extends ContentTrigger
      */
     public function onBeforeUpdate()
     {
-        return false;
+        return true;
         // save it
     }
 
@@ -110,6 +62,6 @@ class CatalogtypeIdTrigger extends ContentTrigger
     {
         // cannot change value
         // foreign key must exist
-        return false;
+        return true;
     }
 }

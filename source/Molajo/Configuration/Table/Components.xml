@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Components"
+        catalog_type_id="10500"
+        extends="ExtensionInstances">
+    <table>
+        <triggers>
+            <trigger name="CatalogTypeId"/>
+        </triggers>
+    </table>
+</model>

@@ -429,7 +429,6 @@ class ContentTrigger extends Trigger
      */
     public function getFieldValue($field)
     {
-
 		if ($field->as_name == '') {
 			$name = $field->name;
 		} else {
@@ -440,14 +439,14 @@ class ContentTrigger extends Trigger
             return $this->query_results->$name;
 
         } elseif ($field->customfield == '') {
-            return true;
+            return false;
 
-		} elseif (Services::Registry()->get($this->get('model_name') . $field->customfield, $name, '') > '') {
-            return Services::Registry()->get($this->get('model_name'). $field->customfield, $name, '');
+		} elseif (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
+            return Services::Registry()->get($this->get('model_name'). $field->customfield, $name);
 
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -457,29 +456,27 @@ class ContentTrigger extends Trigger
      * @param $new_field_name
      * @param $value
      *
-     * @return boolean
+     * @return void
      * @since  1.0
      */
     public function saveField($field, $new_field_name, $value)
     {
         $name = $field->name;
 
+		/** Update existing field */
         if (isset($this->query_results->$name)) {
             $this->query_results->$new_field_name = $value;
 
-            return true;
-
+		/** Since there is no customfield, this must be a new query field */
         } elseif ($field->customfield == '') {
-            return true;
+			$this->query_results->$new_field_name = $value;
 
-        } elseif (Services::Registry()->get($this->get('model_name') . $field->customfield, $name, '') > '') {
-            Services::Registry()->set($this->get('model_name') . $field->customfield, $new_field_name, $value);
-
-            return true;
+        } elseif (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
+            Services::Registry()->set($this->get('model_name') . $field->customfield, $new_field_name);
         }
 
-        return false;
-    }
+        return;
+	}
 
     /**
      * Pre-create processing

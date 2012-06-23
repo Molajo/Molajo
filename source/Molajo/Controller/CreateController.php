@@ -377,7 +377,7 @@ class CreateController extends ModelController
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'db' => $this->model->db,
-			'data' => $this->data,
+			'query_results' => $this->data,
 			'null_date' => $this->model->null_date,
 			'now' => $this->model->now,
 			'parameters' => $this->parameters,
@@ -391,11 +391,15 @@ class CreateController extends ModelController
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
-		$this->data = $arguments['data'];
+		$this->data = $arguments['query_results'];
 
+		echo '<br /><br /><br />';
+		echo '<pre>';
+		var_dump($this->data);
+		echo '</pre>';
+		die;
 		return true;
 	}
-
 
 	/**
 	 * Schedule onAfterCreateEvent Event
@@ -415,7 +419,7 @@ class CreateController extends ModelController
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'db' => $this->model->db,
-			'data' => $this->data,
+			'query_results' => $this->data,
 			'parameters' => $this->parameters,
 			'model_name' => $this->get('model_name')
 		);
@@ -427,7 +431,7 @@ class CreateController extends ModelController
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
-		$this->data = $arguments['data'];
+		$this->data = $arguments['query_results'];
 
 		return true;
 	}
