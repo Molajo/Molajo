@@ -138,7 +138,6 @@ Class ExtensionHelper
 
 		$m->set('id', (int)$extension_id);
 		$m->set('catalog_type_id', (int)$catalog_type_id);
-//		$m->set('process_triggers', 0);
 
 		$query_results = $m->getData($query_object);
 

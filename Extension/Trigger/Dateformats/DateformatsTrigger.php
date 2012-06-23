@@ -20,7 +20,6 @@ defined('MOLAJO') or die;
  */
 class DateformatsTrigger extends ContentTrigger
 {
-
 	/**
 	 * Pre-create processing
 	 *
@@ -29,7 +28,7 @@ class DateformatsTrigger extends ContentTrigger
 	 */
 	public function onBeforeCreate()
 	{
-		$fields = $this->retrieveFieldsByType('date');
+		$fields = $this->retrieveFieldsByType('datetime');
 
 		if (is_array($fields) && count($fields) > 0) {
 
@@ -39,37 +38,55 @@ class DateformatsTrigger extends ContentTrigger
 
 				/** Retrieves the actual field value from the 'normal' or special field */
 				$fieldValue = $this->getFieldValue($field);
+
 				$newFieldValue = '';
 
-				if ($fieldValue == false
+				if ($name == 'modified_datetime') {
+
+					$newFieldValue  = $this->now;
+					$this->saveField($field, $name, $newFieldValue);
+					$fieldValue = $newFieldValue;
+
+					$modifiedByField = $this->getField('modified_by');
+					$modifiedByValue = $this->getFieldValue($modifiedByField);
+					if ($modifiedByValue == false) {
+						$modifiedByValue = Services::Registry()->get('User', 'id');
+						$this->saveField($modifiedByField, 'modified_by', $modifiedByValue);
+					}
+
+				} elseif ($fieldValue == false
 					|| $fieldValue == '0000-00-00 00:00:00') {
 
-					if ($name == 'created_datetime'
-						|| $name == 'start_publishing_datetime') {
+					if ($name == 'created_datetime') {
 
 						$newFieldValue  = $this->now;
+						$this->saveField($field, $name, $newFieldValue);
+						$fieldValue = $newFieldValue;
+
+						$createdByField = $this->getField('created_by');
+						$createdByValue = $this->getFieldValue($createdByField);
+						if ($createdByValue == false) {
+							$createdByValue = Services::Registry()->get('User', 'id');
+							$this->saveField($createdByField, 'created_by', $createdByValue);
+						}
+
+
+					} elseif ($name == 'start_publishing_datetime') {
+
+						$newFieldValue  = $this->now;
+						$this->saveField($field, $name, $newFieldValue);
+						$fieldValue = $newFieldValue;
+
 					} else {
 
 						$newFieldValue = $this->null_date;
+						$this->saveField($field, $name, $newFieldValue);
+						$fieldValue = $newFieldValue;
 					}
-				} else {
-					if ($name == 'modified_datetime') {
-						$newFieldValue = $this->now;
-					}
-				}
-
-				if ($newFieldValue == '') {
-				} else {
-					$this->saveField($field, $name, $newFieldValue);
-					$fieldValue = $newFieldValue;
 				}
 			}
 		}
 
-		echo '<pre>';
-		var_dump($this->data);
-		echo '</pre>';
-		die;
 		return true;
 	}
 
@@ -83,7 +100,12 @@ class DateformatsTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-        $fields = $this->retrieveFieldsByType('date');
+        $fields = $this->retrieveFieldsByType('datetime');
+
+		if (method_exists('DateService', 'convertCCYYMMDD')) {
+		} else {
+			return true;
+		}
 
         if (is_array($fields) && count($fields) > 0) {
 

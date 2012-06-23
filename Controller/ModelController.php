@@ -291,15 +291,27 @@ Class ModelController extends Controller
 			$this->onBeforeReadEvent();
 		}
 
+		if ($query_object == 'result') {
+			$offset = 0;
+			$count = 1;
+		} else {
+			$offset = $this->get('model_offset', 0);
+			$count = $this->get('model_count', 5);
+		}
+
 		$this->model->getQueryResults(
 			Services::Registry()->get($this->table_registry_name, 'Fields'),
 			$query_object,
-			$this->get('model_offset'),
-			$this->get('model_count')
+			$offset,
+			$count
 		);
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
+
+		echo '<pre>';
+		var_dump($query_results);
+		echo '</pre>';
 
 		/** Return result (single value) */
 		if ($query_object == 'result' || $query_object == 'distinct') {

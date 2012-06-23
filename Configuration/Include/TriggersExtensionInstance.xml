@@ -1,7 +1,5 @@
 <trigger name="Extension"/>
 <trigger name="Dateformats"/>
-<trigger name="CatalogTypeId"/>
 <trigger name="Publishedstatus"/>
 <trigger name="Version"/>
 <trigger name="Ordering"/>
-

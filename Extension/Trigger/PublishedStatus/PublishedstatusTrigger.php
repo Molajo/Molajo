@@ -79,22 +79,6 @@ class PublishedstatusTrigger extends ContentTrigger
     }
 
     /**
-     * Pre-create processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeCreate()
-    {
-        // if published or greater status
-        // make certain published start date is today or later
-        return true;
-    }
-
-    /**
      * Post-create processing
      *
      * @param $this->query_results, $model
