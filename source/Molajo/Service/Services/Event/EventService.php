@@ -13,6 +13,12 @@ defined('MOLAJO') or die;
 /**
  * Event
  *
+ * To list all Events:
+ * Services::Registry()->get('Events', '*');
+ *
+ * To see what Triggers fire for a specific event:
+ * Services::Registry()->get('onbeforeread', '*');
+ *
  * @package     Molajo
  * @subpackage  Service
  * @since       1.0
@@ -129,13 +135,13 @@ Class EventService
 
 					/** Retrieve Connection Information for the Trigger */
 					$triggerClass = $registrations[$key];
-					$method = 'getInstance';
 
 					try {
 						$connection = new $triggerClass();
 
 					} catch (\Exception $e) {
-						$connection = 'Could not Instantiate Trigger Class: ' . $triggerClass . $e->getMessage();
+						echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
+						return false;
 					}
 
 					/** Set Properties for Trigger Class */
@@ -145,15 +151,18 @@ Class EventService
 						}
 						$connection->setFields();
 					}
-					/** Execute the Trigger Method */
 
+					/** Execute the Trigger Method */
 					$results = $connection->$event();
 
 					if ($results == false) {
+						echo '<br />Trigger: ' . $triggerClass . ' Failed for Event ' . $event . ' ' . ' All other triggers aborted';
+						$arguments = false;
+						break;
 
 					} else {
 
-						/** Retrieve Properties from Trigger Class */
+						/** Retrieve Properties from Trigger Class to send back to Controller */
 						if (count($arguments) > 0) {
 							foreach ($arguments as $key2 => $value2) {
 								$arguments[$key2] = $connection->get($key2, $value2);
@@ -192,7 +201,7 @@ Class EventService
 		/** Register Event (if not already registered) */
 		$exists = Services::Registry()->exists('Events', $event);
 
-		/** Retrieve number of registrations or register new event*/
+		/** Retrieve number of registrations or register new event */
 		if ($exists == true) {
 			$count = Services::Registry()->get('Events', $event, 0);
 			$count++;
@@ -224,12 +233,10 @@ Class EventService
 
 		/** Load Parent Classes first */
 		$triggerClass = 'Molajo\\Extension\\Trigger\\Trigger\\Trigger';
-		$method = 'getInstance';
-		$triggerClass::$method();
+		$temp = new $triggerClass ();
 
 		$triggerClass = 'Molajo\\Extension\\Trigger\\Content\\ContentTrigger';
-		$method = 'getInstance';
-		$triggerClass::$method();
+		$temp = new $triggerClass ();
 
 		foreach ($triggers as $folder) {
 
@@ -262,38 +269,6 @@ Class EventService
 
 		$trigger = $folder . 'Trigger';
 		$triggerClass = 'Molajo\\Extension\\Trigger\\' . $folder . '\\' . $trigger;
-
-		/** method name */
-		$method = 'getInstance';
-
-		/** trap errors for missing class or method */
-		if (class_exists($triggerClass)) {
-			if (method_exists($triggerClass, $method)) {
-			} else {
-				$try = false;
-				$connection = $triggerClass . '::' . $method . ' Class does not exist';
-				//error
-			}
-		} else {
-			$try = false;
-			$connection = $triggerClass . ' Class does not exist';
-			//error
-		}
-
-		/** make helper connection */
-		if ($try === false) {
-			return false;
-		}
-
-		try {
-			$connection = $triggerClass::$method();
-
-		} catch (\Exception $e) {
-			$connection = 'Fatal Error: ' . $e->getMessage();
-		}
-
-		/** Save connection */
-		$this->trigger_connection[strtolower($trigger)] = $triggerClass;
 
 		/** Retrieve all Event Methods in the Trigger */
 		$events = get_class_methods($triggerClass);

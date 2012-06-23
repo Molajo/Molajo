@@ -308,11 +308,11 @@ Class ModelController extends Controller
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
-
-		echo '<pre>';
-		var_dump($query_results);
-		echo '</pre>';
-
+/**
+echo '<pre>';
+var_dump($query_results);
+echo '</pre>';
+*/
 		/** Return result (single value) */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $query_results;
@@ -377,12 +377,12 @@ Class ModelController extends Controller
 		if (count($this->triggers) > 0) {
 			$this->onAfterReadEvent();
 		}
-		/**
-		echo $query_object.'<br />';
-		echo '<pre>';
-		var_dump($query_results);
-		echo '</pre>';
-		 */
+/**
+echo $query_object.'<br />';
+echo '<pre>';
+var_dump($query_results);
+echo '</pre>';
+ */
 		/** Return List */
 		if ($query_object == 'list') {
 			return $this->query_results;

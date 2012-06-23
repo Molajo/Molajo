@@ -4,22 +4,21 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-namespace Molajo\Extension\Trigger\Extension;
+namespace Molajo\Extension\Trigger\Extensioninstance;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
-use Molajo\Controller\CreateController;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Extension
+ * Extension Instances
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class ExtensionTrigger extends ContentTrigger
+class ExtensioninstanceTrigger extends ContentTrigger
 {
 
 	/**
@@ -31,10 +30,6 @@ class ExtensionTrigger extends ContentTrigger
 	public function onBeforeCreate()
 	{
 
-		if ($this->table_registry_name == 'ExtensionsTable') {
-			return true;
-		}
-
 		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
 			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
@@ -42,56 +37,29 @@ class ExtensionTrigger extends ContentTrigger
 			return true;
 		}
 
-		$field = $this->getField('extension_id');
-
-		if ($field == false) {
-			$fieldValue = false;
-		} else {
-			$fieldValue = $this->getFieldValue($field);
-		}
-
-		if ((int) $fieldValue > 0) {
-			return true;
-		}
-
-		/** See if the Extension Root exists */
+		/** Ensure no other entry exists for this Name/Catalog Type */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
-		$m->connect('Table', 'Extensions');
+		$m->connect('Table', 'ExtensionInstances');
 
-		$titleField = $this->getField('title');
-		$titleValue = $this->getFieldValue($titleField);
+		$primary_prefix = $m->get('primary_prefix', 'a');
 
-		$m->model->query->select($m->model->db->qn('a.id'));
-		$m->model->query->where($m->model->db->qn('a.name')
-			. ' = ' . $m->model->db->q($titleValue));
+		$m->set('get_customfields', '0');
+		$m->set('get_item_children', '0');
+		$m->set('use_special_joins', '0');
+		$m->set('check_view_level_access', '0');
+
+		$m->model->query->select($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('id'));
+		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' .  $m->model->db->qn('title')
+			. ' = ' . $m->model->db->q($this->query_results->title));
+		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('catalog_type_id')
+			. ' = ' . (int) $this->query_results->catalog_type_id);
 
 		$id = $m->getData('result');
 
 		if ((int)$id > 0) {
-			$newFieldValue = (int)$id;
-			$this->saveField($field, 'extension_id', $newFieldValue);
-			return true;
-		}
-
-		/** Create Extension Row */
-		$controller = new CreateController();
-
-		$data = new \stdClass();
-		$data->name = $this->query_results->title;
-		$data->catalog_type_id = $this->query_results->catalog_type_id;
-		$data->model_name = 'Extensions';
-
-		$controller->data = $data;
-
-		$id = $controller->create();
-
-		if ($id === false) {
-			//error
+			//name already exists
 			return false;
-		} else {
-			$newFieldValue = (int)$id;
-			$this->saveField($field, 'extension_id', $newFieldValue);
 		}
 
 		return true;
@@ -137,17 +105,6 @@ class ExtensionTrigger extends ContentTrigger
 	 * @since   1.0
 	 */
 	public function onAfterRoute()
-	{
-		return true;
-	}
-
-	/**
-	 * Before the Query results are injected into the View
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeViewRender()
 	{
 		return true;
 	}
