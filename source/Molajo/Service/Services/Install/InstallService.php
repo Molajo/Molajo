@@ -111,7 +111,7 @@ Class InstallService
 		$data = new \stdClass();
 		$data->catalog_type_id = Services::Registry()->get($table_registry_name, 'catalog_type_id');
 		$data->source_id = $id;
-		$data->view_group_id = 3;
+		$data->view_group_id = 1;
 		$data->extension_instance_id = $id;
 		$data->model_name = 'Catalog';
 

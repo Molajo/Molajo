@@ -14,7 +14,7 @@
 
     <table>
         <fields>
-            <field name="id" type="identity" null="1" default="0" identity="1"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
             <field name="catalog_type_id" type="integer" null="0" default="50" values="50"/>
             <field name="name" type="char" null="0" default="" unique="1"/>
             <field name="path" type="char" null="0" default=""/>
