@@ -74,7 +74,11 @@ class CreateController extends ModelController
 			foreach ($fields as $f) {
 				foreach ($f as $key => $value) {
 					if ($key == 'name') {
-						$data->$value = $this->data->$value;
+						if (isset($this->data->$value)) {
+							$data->$value = $this->data->$value;
+						} else {
+							$data->$value = null;
+						}
 					}
 				}
 			}
@@ -145,6 +149,34 @@ class CreateController extends ModelController
 
 		$userHTMLFilter = Services::Authorisation()->setHTMLFilter();
 
+		/** Custom Field Groups */
+		$customfieldgroups = Services::Registry()->get(
+			$this->table_registry_name, 'customfieldgroups', array());
+
+		if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
+
+			foreach ($customfieldgroups as $customFieldName) {
+
+				/** For this Custom Field Group (ex. Parameters, metadata, etc.) */
+				$customFieldName = strtolower($customFieldName);
+				if (isset($this->data->$customFieldName)) {
+				} else {
+					$this->data->$customFieldName = '';
+				}
+
+				/** Retrieve Field Definitions from Registry (XML) */
+				$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
+
+				/** Shared processing  */
+				$valid = $this->processFieldGroup($fields, $userHTMLFilter, $customFieldName);
+
+				if ($valid === true) {
+				} else {
+					return false;
+				}
+			}
+		}
+
 		/** Standard Field Group */
 		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
 		if (count($fields) == 0 || $fields === null) {
@@ -156,33 +188,6 @@ class CreateController extends ModelController
 		} else {
 			return false;
 		}
-
-		/** Custom Field Groups */
-		$customfieldgroups = Services::Registry()->get(
-			$this->table_registry_name, 'customfieldgroups', array());
-
-		if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
-
-			foreach ($customfieldgroups as $customFieldName) {
-
-				/** For this Custom Field Group (ex. Parameters, metadata, etc.) */
-				$customFieldName = strtolower($customFieldName);
-
-				/** Retrieve Field Definitions from Registry (XML) */
-				$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
-
-				/** Shared processing  */
-				$valid = $this->processFieldGroup($fields, $userHTMLFilter);
-				if ($valid === true) {
-				} else {
-					return false;
-				}
-			}
-		}
-
-		$valid = true;
-
-		$this->processFieldGroup($fields, $userHTMLFilter);
 
 		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
 
@@ -200,8 +205,12 @@ class CreateController extends ModelController
 	 */
 	protected function processFieldGroup($fields, $userHTMLFilter, $customFieldName = '')
 	{
-
 		$valid = true;
+
+		if ($customFieldName == '') {
+		} else {
+			$fieldArray = array();
+		}
 
 		foreach ($fields as $f) {
 
@@ -232,11 +241,13 @@ class CreateController extends ModelController
 
 			/** Retrieve value from data */
 			if ($customFieldName == '') {
+
 				if (isset($this->data->$name)) {
 					$value = $this->data->$name;
 				} else {
 					$value = null;
 				}
+
 			} else {
 				if (isset($this->data->$customFieldName[$name])) {
 					$value = $this->data->$customFieldName[$name];
@@ -245,8 +256,11 @@ class CreateController extends ModelController
 				}
 			}
 
-			if ($type == null) {
-			} elseif ($type == 'html' && $userHTMLFilter === false) {
+			if ($type == null || $type == 'customfield') {
+
+			} elseif ($type == 'text' && $userHTMLFilter === false) {
+
+			} elseif ($type == 'identity') {
 
 			} else {
 
@@ -255,9 +269,11 @@ class CreateController extends ModelController
 					$value = Services::Filter()->filter($value, $type, $null, $default);
 
 					if ($customFieldName == '') {
-						$this->data->$name = $value;
+						$this->data->$name = trim($value);
+
 					} else {
-						$this->data->$customFieldName[$name] = $value;
+
+						$fieldArray[$name] = trim($value);
 					}
 
 				} catch (Exception $e) {
@@ -266,6 +282,13 @@ class CreateController extends ModelController
 					die;
 				}
 			}
+		}
+
+
+		if ($customFieldName == '') {
+		} else {
+			ksort($fieldArray);
+			$this->data->$customFieldName = $fieldArray;
 		}
 
 		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
@@ -283,9 +306,6 @@ class CreateController extends ModelController
 	{
 
 		$foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
-
-		echo '<pre>';
-		var_dump($foreignkeys);
 
 		if (count($foreignkeys) == 0 || $foreignkeys === null) {
 			return false;
@@ -393,11 +413,6 @@ class CreateController extends ModelController
 		$this->parameters = $arguments['parameters'];
 		$this->data = $arguments['query_results'];
 
-		echo '<br /><br /><br />';
-		echo '<pre>';
-		var_dump($this->data);
-		echo '</pre>';
-		die;
 		return true;
 	}
 

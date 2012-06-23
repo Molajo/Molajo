@@ -1,7 +1,7 @@
-<field name="wrap_view_css_id" type="char" null="1" default="" values=""/>
-<field name="wrap_view_css_class" type="char" null="1" default="" values=""/>
+<field name="wrap_view_css_id" type="char" null="0" default=" " values=""/>
+<field name="wrap_view_css_class" type="char" null="0" default=" " values=""/>
 
-<field name="model_name" type="char" null="1" default="" values=""/>
-<field name="model_type" type="char" null="1" default="" values=""/>
-<field name="model_query_object" type="char" null="1" default="" values=""/>
-<field name="model_parameter" type="char" null="1" default="" values=""/>
+<field name="model_name" type="char" null="0" default=" " values=""/>
+<field name="model_type" type="char" null="0" default=" " values=""/>
+<field name="model_query_object" type="char" null="0" default=" " values=""/>
+<field name="model_parameter" type="char" null="0" default=" " values=""/>
