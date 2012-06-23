@@ -21,19 +21,19 @@ defined('MOLAJO') or die;
 class GravatarTrigger extends ContentTrigger
 {
 
-    /**
-     * After-read processing
-     *
-     * Retrieves Author Information for Item
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        $fields = $this->retrieveFieldsByType('email');
+	/**
+	 * After-read processing
+	 *
+	 * Retrieves Author Information for Item
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		$fields = $this->retrieveFieldsByType('email');
 
-        if (is_array($fields) && count($fields) > 0) {
+		if (is_array($fields) && count($fields) > 0) {
 
 			if ($this->get('gravatar', 1) == 1) {
 				$size = $this->get('gravatar_size', 80);
@@ -48,15 +48,15 @@ class GravatarTrigger extends ContentTrigger
 			/** @noinspection PhpWrongForeachArgumentTypeInspection */
 			foreach ($fields as $field) {
 
-                $name = $field->name;
-                $new_name = $name . '_' . 'gravatar';
+				$name = $field->name;
+				$new_name = $name . '_' . 'gravatar';
 
-                /** Retrieves the actual field value from the 'normal' or special field */
-                $fieldValue = $this->getFieldValue($field);
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
+				if ($fieldValue == false) {
 					return true;
-                } else {
+				} else {
 					$results = Services::Url()->getGravatar($fieldValue, $size, $type, $rating, $image);
 				}
 
@@ -64,9 +64,9 @@ class GravatarTrigger extends ContentTrigger
 				} else {
 					$fieldValue = $this->saveField($field, $new_name, $results);
 				}
-            }
-        }
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

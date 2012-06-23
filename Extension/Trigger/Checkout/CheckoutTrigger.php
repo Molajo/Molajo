@@ -19,37 +19,37 @@ defined('MOLAJO') or die;
 class CheckoutTrigger extends ContentTrigger
 {
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
-        // verify user has rights to update
-        // and that no one else has it updated
-        // if so, check checkout date and user
-        return false;
-    }
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate()
+	{
+		// verify user has rights to update
+		// and that no one else has it updated
+		// if so, check checkout date and user
+		return false;
+	}
 
-    /**
-     * Pre-delete processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeDelete()
-    {
-        // verify user has rights to delete
-        // and that no one else has it checked out
-        // if so, allow, else cancel
-        return false;
-    }
+	/**
+	 * Pre-delete processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeDelete()
+	{
+		// verify user has rights to delete
+		// and that no one else has it checked out
+		// if so, allow, else cancel
+		return false;
+	}
 }

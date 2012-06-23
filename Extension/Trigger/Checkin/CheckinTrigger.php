@@ -20,19 +20,19 @@ defined('MOLAJO') or die;
 class CheckinTrigger extends ContentTrigger
 {
 
-    /**
-     * After-update processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterUpdate()
-    {
-        // make certain the correct person is in checkout
-        // if so, checkin by zeroing otu that value and the date
-        return false;
-    }
+	/**
+	 * After-update processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterUpdate()
+	{
+		// make certain the correct person is in checkout
+		// if so, checkin by zeroing otu that value and the date
+		return false;
+	}
 }

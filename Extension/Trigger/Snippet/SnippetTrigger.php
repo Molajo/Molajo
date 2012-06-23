@@ -21,19 +21,19 @@ defined('MOLAJO') or die;
 class SnippetTrigger extends ContentTrigger
 {
 
-    /**
-     * After-read processing
-     *
-     * Parses the Content Text into a snippet, stripped of HTML tags
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-   {
+	/**
+	 * After-read processing
+	 *
+	 * Parses the Content Text into a snippet, stripped of HTML tags
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
 		$fields = $this->retrieveFieldsByType('text');
 
 		if (is_array($fields) && count($fields) > 0) {
@@ -63,5 +63,5 @@ class SnippetTrigger extends ContentTrigger
 		}
 
 		return true;
-    }
+	}
 }

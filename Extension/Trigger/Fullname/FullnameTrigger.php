@@ -20,14 +20,14 @@ defined('MOLAJO') or die;
 class FullnameTrigger extends ContentTrigger
 {
 
-    /**
-     * Adds full_name to recordset containing first_name and last_name
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
+	/**
+	 * Adds full_name to recordset containing first_name and last_name
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
 		$first_name_field = $this->getField('first_name');
 		if ($first_name_field == false) {
 			return false;
@@ -45,7 +45,7 @@ class FullnameTrigger extends ContentTrigger
 
 		} else {
 
-			$newFieldValue = $first_name. ' '.$last_name;
+			$newFieldValue = $first_name . ' ' . $last_name;
 
 			if ($newFieldValue == false) {
 			} else {
@@ -55,6 +55,6 @@ class FullnameTrigger extends ContentTrigger
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 }

@@ -67,7 +67,7 @@ class ListsTrigger extends ContentTrigger
 
 					} elseif (strtolower($list) == 'protected') {
 						$selectedValue = 1;
-				}
+					}
 
 					Services::Registry()->set('Lists', 'list_' . $list . '_selected', $selectedValue);
 

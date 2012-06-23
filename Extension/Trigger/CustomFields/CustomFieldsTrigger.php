@@ -19,87 +19,87 @@ defined('MOLAJO') or die;
  */
 class CustomfieldsTrigger extends ContentTrigger
 {
-    /**
-     * Pre-create processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeCreate()
-    {
-        return false;
-    }
+	/**
+	 * Pre-create processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeCreate()
+	{
+		return false;
+	}
 
-    /**
-     * Post-read processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        return false;
-    }
+	/**
+	 * Post-read processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		return false;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
-        return false;
-    }
+	/**
+	 * Pre-update processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate()
+	{
+		return false;
+	}
 
-    /**
-     * Post-update processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterUpdate()
-    {
-        return false;
-    }
+	/**
+	 * Post-update processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterUpdate()
+	{
+		return false;
+	}
 
-    /**
-     * Pre-delete processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeDelete()
-    {
-        return false;
-    }
+	/**
+	 * Pre-delete processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeDelete()
+	{
+		return false;
+	}
 
-    /**
-     * Post-read processing
-     *
-     * @param   $this->query_results
-     * @param   $model
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterDelete()
-    {
-        return false;
-    }
+	/**
+	 * Post-read processing
+	 *
+	 * @param   $this->query_results
+	 * @param   $model
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterDelete()
+	{
+		return false;
+	}
 }
