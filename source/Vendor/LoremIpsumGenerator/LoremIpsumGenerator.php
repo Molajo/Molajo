@@ -221,6 +221,8 @@ class LoremIpsumGenerator
 	{
 		$format = strtolower($format);
 
+		echo $count .' '. $format .' '.$loremipsum.'<br />';
+
 		if ($count <= 0)
 			return '';
 
@@ -377,7 +379,7 @@ class LoremIpsumGenerator
 		foreach ($paragraphs as $p) {
 			$paragraphStr[] = "<p>\n" . $this->paragraphToString($p, true) . '</p>';
 		}
-
+		   echo 'dfadsf';
 		//add new lines for the sake of clean code
 		return implode("\n", $paragraphStr);
 	}

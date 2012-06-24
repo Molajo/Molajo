@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Wraps" extends="ExtensionInstances">
+<model name="Wrap" extends="ExtensionInstances">
     <customfields>
         <customfield name="parameters">
             <field name="wrap_view_css_id" type="char" null="1" default="" values=""/>

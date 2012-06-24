@@ -234,13 +234,7 @@ Class Application
 	protected function route()
 	{
 
-		//$results = Services::Install()->extension(
-		//	'Test', 'Templates', $source_path = null, $destination_path = null);
-		//
-		//echo $results;
-		//die;
-
-		$results = Services::Route()->process();
+     	$results = Services::Route()->process();
 
 		if ($results == false) {
 			return false;
@@ -483,10 +477,6 @@ Class Application
 		} else {
 			define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
 		}
-		if (defined('EXTENSIONS_FORMFIELDS')) {
-		} else {
-			define('EXTENSIONS_FORMFIELDS', EXTENSIONS . '/Formfield');
-		}
 		if (defined('EXTENSIONS_HELPERS')) {
 		} else {
 			define('EXTENSIONS_HELPERS', EXTENSIONS . '/Helper');
@@ -519,10 +509,6 @@ Class Application
 		if (defined('EXTENSIONS_COMPONENTS_URL')) {
 		} else {
 			define('EXTENSIONS_COMPONENTS_URL', BASE_URL . 'Molajo/Extension/Component');
-		}
-		if (defined('EXTENSIONS_FORMFIELDS_URL')) {
-		} else {
-			define('EXTENSIONS_FORMFIELDS_URL', BASE_URL . 'Molajo/Extension/Formfield');
 		}
 
 		if (defined('EXTENSIONS_MODULES_URL')) {

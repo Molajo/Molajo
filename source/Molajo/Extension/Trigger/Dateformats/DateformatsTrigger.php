@@ -35,66 +35,38 @@ class DateformatsTrigger extends ContentTrigger
 			foreach ($fields as $field) {
 
 				$name = $field->name;
-
-				/** Retrieves the actual field value from the 'normal' or special field */
 				$fieldValue = $this->getFieldValue($field);
-
-				$newFieldValue = '';
 
 				if ($name == 'modified_datetime') {
 
-					$newFieldValue = $this->now;
-					$this->saveField($field, $name, $newFieldValue);
-					$fieldValue = $newFieldValue;
+					$this->saveField($field, $name, $this->now);
 
 					$modifiedByField = $this->getField('modified_by');
 					$modifiedByValue = $this->getFieldValue($modifiedByField);
 					if ($modifiedByValue == false) {
-						$modifiedByValue = Services::Registry()->get('User', 'id');
-						$this->saveField($modifiedByField, 'modified_by', $modifiedByValue);
+						$this->saveField($modifiedByField, 'modified_by', Services::Registry()->get('User', 'id'));
 					}
 
 				} elseif ($fieldValue == false
 					|| $fieldValue == '0000-00-00 00:00:00'
 				) {
 
+					$this->saveField($field, $name, $this->now);
+
 					if ($name == 'created_datetime') {
-
-						$newFieldValue = $this->now;
-						$this->saveField($field, $name, $newFieldValue);
-						$fieldValue = $newFieldValue;
-
 						$createdByField = $this->getField('created_by');
 						$createdByValue = $this->getFieldValue($createdByField);
 						if ($createdByValue == false) {
-							$createdByValue = Services::Registry()->get('User', 'id');
-							$this->saveField($createdByField, 'created_by', $createdByValue);
+							$this->saveField($createdByField, 'created_by', Services::Registry()->get('User', 'id'));
 						}
 
 					} elseif ($name == 'activity_datetime') {
-
-						$newFieldValue = $this->now;
-						$this->saveField($field, $name, $newFieldValue);
-						$fieldValue = $newFieldValue;
-
 						$createdByField = $this->getField('user_id');
 						$createdByValue = $this->getFieldValue($createdByField);
 						if ($createdByValue == false) {
-							$createdByValue = Services::Registry()->get('User', 'id');
-							$this->saveField($createdByField, 'user_id', $createdByValue);
+							$this->saveField($createdByField, 'user_id', Services::Registry()->get('User', 'id'));
 						}
 
-					} elseif ($name == 'start_publishing_datetime') {
-
-						$newFieldValue = $this->now;
-						$this->saveField($field, $name, $newFieldValue);
-						$fieldValue = $newFieldValue;
-
-					} else {
-
-						$newFieldValue = $this->null_date;
-						$this->saveField($field, $name, $newFieldValue);
-						$fieldValue = $newFieldValue;
 					}
 				}
 			}
@@ -173,21 +145,5 @@ class DateformatsTrigger extends ContentTrigger
 		}
 
 		return true;
-	}
-
-	/**
-	 * itemDateRoutine
-	 *
-	 * Creates formatted date fields based on a named field
-	 *
-	 * @param $field
-	 * @param $this->query_results
-	 *
-	 * @return array
-	 * @since 1.0
-	 */
-	protected function itemDateRoutine($field)
-	{
-		return false;
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Components"
-        catalog_type_id="10500"
+        catalog_type_id="1050"
         extends="ExtensionInstances">
     <table>
         <triggers>

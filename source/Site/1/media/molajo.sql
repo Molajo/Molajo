@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 23, 2012 at 01:01 PM
+-- Generation Time: Jun 24, 2012 at 01:37 PM
 -- Server version: 5.5.9
 -- PHP Version: 5.3.6
 
@@ -63,7 +63,7 @@ CREATE TABLE `molajo_applications` (
 --
 
 INSERT INTO `molajo_applications` VALUES(1, 50, 'Site', '', 'Primary application for site visitors', '{}', '{\r\n        "application_name":"Molajo Site",\r\n        "application_home_catalog_id":"139",\r\n        "application_logon_requirement":"0",\r\n\r\n        "url_sef":"1",\r\n        "url_sef_rewrite":"1",\r\n        "url_sef_suffix":"0",\r\n        "url_unicode_slugs":"0",\r\n        "url_force_ssl":"0",\r\n\r\n        "language":"en-GB",\r\n        "language_direction":"ltr",\r\n        "language_multilingual":"0",\r\n        "language_utc_offset":"UTC",\r\n        "language_utc_offset_user":"UTC",\r\n\r\n        "debug":"0",\r\n        "debug_log":"echo",\r\n\r\n        "head_template_view_id":"23",\r\n        "head_wrap_view_id":"66",\r\n\r\n        "message_template_view_id":"56",\r\n        "message_wrap_view_id":"66",\r\n\r\n        "offline_theme_id":"99",\r\n        "offline_page_view_id":"57",\r\n        "offline":"0",\r\n        "offline_message":"This site is not available.<br /> Please check back again soon.",\r\n\r\n        "error_theme_id":"99",\r\n        "error_page_view_id":"56",\r\n        "error_404_message":"Page not found",\r\n        "error_403_message":"Not authorised",\r\n\r\n"criteria_log_user_activity_create":"0",\r\n"criteria_log_user_activity_read":"0",\r\n"criteria_log_user_activity_update":"0",\r\n"criteria_log_user_activity_delete":"0",\r\n\r\n        "display_view_on_no_results":"1",\r\n        "catalog_type_id":"10000",\r\n        "extension_catalog_type_id":"1050",\r\n\r\n        "criteria_enable_draft_save":"",\r\n        "criteria_enable_version_history":"",\r\n        "criteria_maximum_version_count":"",\r\n        "criteria_enable_hit_counts":"",\r\n        "criteria_enable_comments":"",\r\n        "criteria_enable_ratings":"",\r\n        "criteria_enable_notifications":"",\r\n        "criteria_enable_tweets":"",\r\n        "criteria_enable_ping":"",\r\n\r\n      "criteria_snippet_length":"200",  "criteria_asset_priority_site":"",\r\n        "criteria_asset_priority_application":"",\r\n        "criteria_asset_priority_user":"",\r\n        "criteria_asset_priority_extension":"",\r\n        "criteria_asset_priority_request":"",\r\n        "criteria_asset_priority_category":"",\r\n        "criteria_asset_priority_menu_item":"",\r\n        "criteria_asset_priority_source":"",\r\n        "criteria_asset_priority_theme":"",\r\n\r\n        "criteria_image_xsmall":"",\r\n        "criteria_image_small":"",\r\n        "criteria_image_medium":"",\r\n        "criteria_image_large":"",\r\n        "criteria_image_xlarge":"",\r\n        "criteria_image_folder":"",\r\n        "criteria_thumb_folder":"",\r\n\r\n\r\n        "criteria_use_gravatar":"1",\r\n        "criteria_gravatar_size":"26",\r\n        "criteria_gravatar_type":"monsterid",\r\n        "criteria_gravatar_rating":"pg",\r\n        "criteria_gravatar_image":"1",\r\n\r\n"criteria_snippet_length":"200",\r\n\r\n        "item_theme_id":"",\r\n        "item_page_view_id":"",\r\n        "item_page_view_css_id":"",\r\n        "item_page_view_css_class":"",\r\n        "item_template_view_id":"",\r\n        "item_template_view_css_id":"",\r\n        "item_template_view_css_class":"",\r\n        "item_wrap_view_id":"",\r\n        "item_wrap_view_css_id":"",\r\n        "item_wrap_view_css_class":"",\r\n        "item_model_name":"",\r\n        "item_model_type":"",\r\n        "item_model_query_object":"",\r\n\r\n        "form_theme_id":"",\r\n        "form_page_view_id":"",\r\n        "form_page_view_css_id":"",\r\n        "form_page_view_css_class":"",\r\n        "form_template_view_id":"",\r\n        "form_template_view_css_id":"",\r\n        "form_template_view_css_class":"",\r\n        "form_wrap_view_id":"",\r\n        "form_wrap_view_css_id":"",\r\n        "form_wrap_view_css_class":"",\r\n        "form_model_name":"",\r\n        "form_model_type":"",\r\n        "form_model_query_object":"",\r\n\r\n        "list_theme_id":"",\r\n        "list_page_view_id":"",\r\n        "list_page_view_css_id":"",\r\n        "list_page_view_css_class":"",\r\n        "list_template_view_id":"",\r\n        "list_template_view_css_id":"",\r\n        "list_template_view_css_class":"",\r\n        "list_wrap_view_id":"",\r\n        "list_wrap_view_css_id":"",\r\n        "list_wrap_view_css_class":"",\r\n        "list_model_name":"",\r\n        "list_model_type":"",\r\n        "list_model_query_object":"",\r\n\r\n        "criteria_list_display_archived_content":"1",\r\n        "criteria_list_display_featured_content":"0",\r\n        "criteria_list_display_stickied_content":"0",\r\n        "criteria_list_display_published_date_begin":"0",\r\n        "criteria_list_display_published_date_end":"1",\r\n        "criteria_list_display_category_list":"0",\r\n        "criteria_list_display_tag_list":"0",\r\n        "criteria_list_display_author_list":"0",\r\n        "criteria_list_begin":"1",\r\n        "criteria_list_length":"0",\r\n        "criteria_list_order_by_field1":"start_publishing_datetime",\r\n        "criteria_list_order_by_direction1":"DESC",\r\n        "criteria_list_order_by_field2":"",\r\n        "criteria_list_order_by_direction2":"",\r\n        "criteria_list_order_by_field3":"",\r\n        "criteria_list_order_by_direction3":""\r\n    }', '{"metadata_title":"Molajo Site Application", \r\n"metadata_description":"Welcome to the Molajo Site Application", \r\n"metadata_keywords":"molajo", \r\n"metadata_robots":"follow, index", \r\n"metadata_author":"Author Name", \r\n"metadata_content_rights":"CC"}        ');
-INSERT INTO `molajo_applications` VALUES(2, 50, 'Admin', 'admin', 'Administrative site area for site construction', '{}', '{\r\n  "application_name":"Integrated Data System",\r\n"application_home_catalog_id":"139",    "application_logon_requirement":"0",\r\n        "url_sef":"1",\r\n        "url_sef_rewrite":"1",\r\n        "url_sef_suffix":"0",\r\n        "url_unicode_slugs":"0",\r\n        "url_force_ssl":"0",\r\n\r\n        "language":"en-GB",\r\n        "language_direction":"ltr",\r\n        "language_multilingual":"0",\r\n        "language_utc_offset":"UTC",\r\n\r\n        "debug":"0",\r\n        "debug_log":"file",\r\n\r\n        "head_template_view_id":"23",\r\n        "head_wrap_view_id":"66",\r\n        "defer_template_view_id":"265",\r\n        "defer_wrap_view_id":"66",\r\n\r\n        "message_template_view_id":"44",\r\n        "message_wrap_view_id":"61",\r\n\r\n        "offline_theme_id":"99",\r\n        "offline_page_view_id":"57",\r\n        "offline":"0",\r\n        "offline_message":"This site is not available.<br /> Please check back again soon.",\r\n\r\n        "error_theme_id":"99",\r\n        "error_page_view_id":"56",\r\n        "error_404_message":"Page not found",\r\n        "error_403_message":"Not authorised",\r\n\r\n       "criteria_log_user_activity_create":"0",\r\n"criteria_log_user_activity_read":"0",\r\n"criteria_log_user_activity_update":"0",\r\n"criteria_log_user_activity_delete":"0",\r\n\r\n        "criteria_enable_draft_save":"1",\r\n        "criteria_enable_version_history":"1",\r\n        "criteria_maximum_version_count":"5",\r\n        "criteria_enable_hit_counts":"1",\r\n        "criteria_enable_comments":"1",\r\n        "criteria_enable_ratings":"1",\r\n        "criteria_enable_notifications":"1",\r\n        "criteria_enable_tweets":"1",\r\n        "criteria_enable_ping":"1",\r\n        "criteria_snippet_length":"200",\r\n        "criteria_asset_priority_site":"100",\r\n        "criteria_asset_priority_application":"200",\r\n        "criteria_asset_priority_user":"300",\r\n        "criteria_asset_priority_extension":"400",\r\n        "criteria_asset_priority_request":"500",\r\n        "criteria_asset_priority_category":"600",\r\n        "criteria_asset_priority_menu_item":"700",\r\n        "criteria_asset_priority_source":"800",\r\n        "criteria_asset_priority_theme":"900",\r\n\r\n        "criteria_image_xsmall":"50",\r\n        "criteria_image_small":"75",\r\n        "criteria_image_medium":"150",\r\n        "criteria_image_large":"300",\r\n        "criteria_image_xlarge":"500",\r\n        "criteria_image_folder":"images",\r\n        "criteria_thumb_folder":"thumbs",\r\n\r\n        "gravatar":"1",\r\n        "gravatar_size":"50",\r\n        "gravatar_type":"monsterid",\r\n        "gravatar_rating":"pg",\r\n        "gravatar_image":"1",\r\n\r\n"criteria_snippet_length":"200",\r\n\r\n        "item_theme_id":"98",\r\n        "item_page_view_id":"55",\r\n        "item_page_view_css_id":"",\r\n        "item_page_view_css_class":"",\r\n        "item_template_view_id":"21",\r\n        "item_template_view_css_id":"",\r\n        "item_template_view_css_class":"",\r\n        "item_wrap_view_id":"66",\r\n        "item_wrap_view_css_id":"",\r\n        "item_wrap_view_css_class":"",\r\n        "item_model_name":"Content",\r\n        "item_model_type":"Item",\r\n        "item_model_query_object":"Item",\r\n\r\n        "form_theme_id":"98",\r\n        "form_page_view_id":"55",\r\n        "form_page_view_css_id":"",\r\n        "form_page_view_css_class":"",\r\n        "form_template_view_id":"25",\r\n        "form_template_view_css_id":"",\r\n        "form_template_view_css_class":"",\r\n        "form_wrap_view_id":"66",\r\n        "form_wrap_view_css_id":"",\r\n        "form_wrap_view_css_class":"",\r\n        "form_model_name":"Content",\r\n        "form_model_type":"Item",\r\n        "form_model_query_object":"Edit",\r\n\r\n        "list_theme_id":"98",\r\n        "list_page_view_id":"55",\r\n        "list_page_view_css_id":"",\r\n        "list_page_view_css_class":"",\r\n        "list_template_view_id":"33",\r\n        "list_template_view_css_id":"",\r\n        "list_template_view_css_class":"",\r\n        "list_wrap_view_id":"",\r\n        "list_wrap_view_css_id":"",\r\n        "list_wrap_view_css_class":"",\r\n        "list_model_name":"Content",\r\n        "list_model_type":"List",\r\n        "list_model_query_object":"List",\r\n        "criteria_list_display_archived_content":"1",\r\n        "criteria_list_display_featured_content":"0",\r\n        "criteria_list_display_stickied_content":"0",\r\n        "criteria_list_display_published_date_begin":"0",\r\n        "criteria_list_display_published_date_end":"1",\r\n        "criteria_list_display_category_list":"0",\r\n        "criteria_list_display_tag_list":"0",\r\n        "criteria_list_display_author_list":"0",\r\n        "criteria_list_begin":"1",\r\n        "criteria_list_length":"0",\r\n        "criteria_list_order_by_field1":"start_publishing_datetime",\r\n        "criteria_list_order_by_direction1":"DESC",\r\n        "criteria_list_order_by_field2":"",\r\n        "criteria_list_order_by_direction2":"",\r\n        "criteria_list_order_by_field3":"",\r\n        "criteria_list_order_by_direction3":""\r\n    }', '{"title":"Integrated Data System", \r\n"description":"Welcome to the Integrated Data System Application", \r\n"keywords":"Integrated Data System", \r\n"robots":"follow, index", \r\n"author":"Author Name", \r\n"content_rights":"CC"}        ');
+INSERT INTO `molajo_applications` VALUES(2, 50, 'Admin', 'admin', 'Administrative site area for site construction', '{}', '{\r\n  "application_name":"Integrated Data System",\r\n"application_home_catalog_id":"139",    "application_logon_requirement":"0",\r\n\r\n "log_user_update_activity":"1",\r\n        "log_user_view_activity":"1",\r\n        "log_catalog_update_activity":"1",\r\n        "log_catalog_view_activity":"1",\r\n\r\n        "url_sef":"1",\r\n        "url_sef_rewrite":"1",\r\n        "url_sef_suffix":"0",\r\n        "url_unicode_slugs":"0",\r\n        "url_force_ssl":"0",\r\n\r\n        "language":"en-GB",\r\n        "language_direction":"ltr",\r\n        "language_multilingual":"0",\r\n        "language_utc_offset":"UTC",\r\n\r\n        "debug":"0",\r\n        "debug_log":"file",\r\n\r\n        "head_template_view_id":"23",\r\n        "head_wrap_view_id":"66",\r\n        "defer_template_view_id":"265",\r\n        "defer_wrap_view_id":"66",\r\n\r\n        "message_template_view_id":"44",\r\n        "message_wrap_view_id":"61",\r\n\r\n        "offline_theme_id":"99",\r\n        "offline_page_view_id":"57",\r\n        "offline":"0",\r\n        "offline_message":"This site is not available.<br /> Please check back again soon.",\r\n\r\n        "error_theme_id":"99",\r\n        "error_page_view_id":"56",\r\n        "error_404_message":"Page not found",\r\n        "error_403_message":"Not authorised",\r\n\r\n       "criteria_log_user_activity_create":"0",\r\n"criteria_log_user_activity_read":"0",\r\n"criteria_log_user_activity_update":"0",\r\n"criteria_log_user_activity_delete":"0",\r\n\r\n        "criteria_enable_draft_save":"1",\r\n        "criteria_enable_version_history":"1",\r\n        "criteria_maximum_version_count":"5",\r\n        "criteria_enable_hit_counts":"1",\r\n        "criteria_enable_comments":"1",\r\n        "criteria_enable_ratings":"1",\r\n        "criteria_enable_notifications":"1",\r\n        "criteria_enable_tweets":"1",\r\n        "criteria_enable_ping":"1",\r\n        "criteria_snippet_length":"200",\r\n        "criteria_asset_priority_site":"100",\r\n        "criteria_asset_priority_application":"200",\r\n        "criteria_asset_priority_user":"300",\r\n        "criteria_asset_priority_extension":"400",\r\n        "criteria_asset_priority_request":"500",\r\n        "criteria_asset_priority_category":"600",\r\n        "criteria_asset_priority_menu_item":"700",\r\n        "criteria_asset_priority_source":"800",\r\n        "criteria_asset_priority_theme":"900",\r\n\r\n        "criteria_image_xsmall":"50",\r\n        "criteria_image_small":"75",\r\n        "criteria_image_medium":"150",\r\n        "criteria_image_large":"300",\r\n        "criteria_image_xlarge":"500",\r\n        "criteria_image_folder":"images",\r\n        "criteria_thumb_folder":"thumbs",\r\n\r\n        "gravatar":"1",\r\n        "gravatar_size":"50",\r\n        "gravatar_type":"monsterid",\r\n        "gravatar_rating":"pg",\r\n        "gravatar_image":"1",\r\n\r\n"criteria_snippet_length":"200",\r\n\r\n        "item_theme_id":"98",\r\n        "item_page_view_id":"55",\r\n        "item_page_view_css_id":"",\r\n        "item_page_view_css_class":"",\r\n        "item_template_view_id":"21",\r\n        "item_template_view_css_id":"",\r\n        "item_template_view_css_class":"",\r\n        "item_wrap_view_id":"66",\r\n        "item_wrap_view_css_id":"",\r\n        "item_wrap_view_css_class":"",\r\n        "item_model_name":"Content",\r\n        "item_model_type":"Item",\r\n        "item_model_query_object":"Item",\r\n\r\n        "form_theme_id":"98",\r\n        "form_page_view_id":"55",\r\n        "form_page_view_css_id":"",\r\n        "form_page_view_css_class":"",\r\n        "form_template_view_id":"25",\r\n        "form_template_view_css_id":"",\r\n        "form_template_view_css_class":"",\r\n        "form_wrap_view_id":"66",\r\n        "form_wrap_view_css_id":"",\r\n        "form_wrap_view_css_class":"",\r\n        "form_model_name":"Content",\r\n        "form_model_type":"Item",\r\n        "form_model_query_object":"Edit",\r\n\r\n        "list_theme_id":"98",\r\n        "list_page_view_id":"55",\r\n        "list_page_view_css_id":"",\r\n        "list_page_view_css_class":"",\r\n        "list_template_view_id":"33",\r\n        "list_template_view_css_id":"",\r\n        "list_template_view_css_class":"",\r\n        "list_wrap_view_id":"",\r\n        "list_wrap_view_css_id":"",\r\n        "list_wrap_view_css_class":"",\r\n        "list_model_name":"Content",\r\n        "list_model_type":"List",\r\n        "list_model_query_object":"List",\r\n        "criteria_list_display_archived_content":"1",\r\n        "criteria_list_display_featured_content":"0",\r\n        "criteria_list_display_stickied_content":"0",\r\n        "criteria_list_display_published_date_begin":"0",\r\n        "criteria_list_display_published_date_end":"1",\r\n        "criteria_list_display_category_list":"0",\r\n        "criteria_list_display_tag_list":"0",\r\n        "criteria_list_display_author_list":"0",\r\n        "criteria_list_begin":"1",\r\n        "criteria_list_length":"0",\r\n        "criteria_list_order_by_field1":"start_publishing_datetime",\r\n        "criteria_list_order_by_direction1":"DESC",\r\n        "criteria_list_order_by_field2":"",\r\n        "criteria_list_order_by_direction2":"",\r\n        "criteria_list_order_by_field3":"",\r\n        "criteria_list_order_by_direction3":""\r\n    }', '{"title":"Integrated Data System", \r\n"description":"Welcome to the Integrated Data System Application", \r\n"keywords":"Integrated Data System", \r\n"robots":"follow, index", \r\n"author":"Author Name", \r\n"content_rights":"CC"}        ');
 
 -- --------------------------------------------------------
 
@@ -286,9 +286,9 @@ CREATE TABLE `molajo_catalog` (
   `primary_category_id` int(11) unsigned NOT NULL DEFAULT '0',
   `tinyurl` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `sef_request` (`sef_request`(255)),
-  KEY `index_catalog_catalog_types` (`catalog_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=222 ;
+  KEY `index_catalog_catalog_types` (`catalog_type_id`,`source_id`),
+  KEY `sef_request` (`sef_request`(255),`redirect_to_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=231 ;
 
 --
 -- Dumping data for table `molajo_catalog`
@@ -475,7 +475,7 @@ CREATE TABLE `molajo_catalog_activity` (
   `customfields` mediumtext,
   PRIMARY KEY (`id`),
   KEY `catalog_activity_catalog_index` (`catalog_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `molajo_catalog_activity`
@@ -511,41 +511,43 @@ CREATE TABLE `molajo_catalog_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key',
   `title` varchar(255) NOT NULL DEFAULT ' ',
   `protected` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `model_name` varchar(255) NOT NULL,
   `source_table` varchar(255) NOT NULL DEFAULT ' ',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60001 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60002 ;
 
 --
 -- Dumping data for table `molajo_catalog_types`
 --
 
-INSERT INTO `molajo_catalog_types` VALUES(1, 'system', 1, '');
-INSERT INTO `molajo_catalog_types` VALUES(10, 'Sites', 1, '#__sites');
-INSERT INTO `molajo_catalog_types` VALUES(50, 'Applications', 1, '#__applications');
-INSERT INTO `molajo_catalog_types` VALUES(100, 'system', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(120, 'User', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(130, 'friend', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(500, 'users', 1, '#__users');
-INSERT INTO `molajo_catalog_types` VALUES(1050, 'components', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1100, 'languages', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1150, 'page_view', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1200, 'Templates', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1250, 'wrap_view', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1300, 'menus', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1350, 'modules', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1450, 'triggers', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(1500, 'themes', 1, '#__extension_instances');
-INSERT INTO `molajo_catalog_types` VALUES(2000, 'component', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(2100, 'link', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(2200, 'module', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(2300, 'separator', 1, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(3000, 'list', 0, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(3500, 'tags', 0, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(10000, 'articles', 0, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(20000, 'contacts', 0, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(30000, 'comments', 0, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(50000, 'media', 0, '#__content');
-INSERT INTO `molajo_catalog_types` VALUES(60000, 'views', 0, '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(0, ' ', 0, '', ' ');
+INSERT INTO `molajo_catalog_types` VALUES(1, 'System', 1, '', '');
+INSERT INTO `molajo_catalog_types` VALUES(10, 'Sites', 1, 'Sites', '#__sites');
+INSERT INTO `molajo_catalog_types` VALUES(50, 'Applications', 1, 'Applications', '#__applications');
+INSERT INTO `molajo_catalog_types` VALUES(100, 'System Groups', 1, 'SystemGroups', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(110, 'Groups', 0, 'NormalGroups', ' ');
+INSERT INTO `molajo_catalog_types` VALUES(120, 'User Groups', 1, 'UserGroups', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(130, 'Friend Groups', 1, 'FriendGroups', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(500, 'Users', 1, 'Users', '#__users');
+INSERT INTO `molajo_catalog_types` VALUES(1050, 'Component', 1, 'Components', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1100, 'Language', 1, 'Languages', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1150, 'Page', 1, 'Page', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1200, 'Template', 1, 'Template', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1250, 'Wrap', 1, 'Wrap', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1300, 'Menu', 1, 'Menus', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1350, 'Module', 1, 'Modules', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1450, 'Trigger', 1, 'Triggers', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(1500, 'Theme', 1, 'Themes', '#__extension_instances');
+INSERT INTO `molajo_catalog_types` VALUES(2000, 'Component Menuitem', 1, 'ComponentMenuitem', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(2100, 'Link Menuitem', 1, 'LinkMenuitem', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(2200, 'Module Menuitem', 1, 'ModuleMenuitem', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(2300, 'Separator Menuitem', 1, 'SeparatorMenuitem', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(3000, 'Category List', 0, 'CategoryLists', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(3500, 'Category Tag', 0, 'CategoryTags', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(10000, 'Articles', 0, 'Articles', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(20000, 'Contacts', 0, 'Contacts', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(30000, 'Comments', 0, 'Comments', '#__content');
+INSERT INTO `molajo_catalog_types` VALUES(50000, 'Media', 0, 'Media', '#__content');
 
 -- --------------------------------------------------------
 
@@ -659,7 +661,7 @@ CREATE TABLE `molajo_extensions` (
   `name` varchar(255) NOT NULL DEFAULT ' ',
   PRIMARY KEY (`id`),
   KEY `extensions_extension_sites_index` (`extension_site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=325 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=340 ;
 
 --
 -- Dumping data for table `molajo_extensions`
@@ -814,7 +816,7 @@ CREATE TABLE `molajo_extension_instances` (
   `ordering` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Ordering',
   PRIMARY KEY (`id`),
   KEY `fk_extension_instances_extensions_index` (`extension_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=313 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=328 ;
 
 --
 -- Dumping data for table `molajo_extension_instances`
@@ -1268,18 +1270,17 @@ CREATE TABLE `molajo_user_activity` (
   `action_id` int(11) unsigned NOT NULL DEFAULT '0',
   `catalog_id` int(11) unsigned NOT NULL DEFAULT '0',
   `activity_datetime` datetime DEFAULT NULL,
+  `ip_address` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `user_activity_user_index` (`user_id`),
   KEY `user_activity_catalog_index` (`catalog_id`),
   KEY `user_activity_action_index` (`action_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `molajo_user_activity`
 --
 
-INSERT INTO `molajo_user_activity` VALUES(1, 42, 1, 3, '2012-05-01 00:03:01');
-INSERT INTO `molajo_user_activity` VALUES(2, 42, 3, 147, '2012-05-01 00:03:01');
 
 -- --------------------------------------------------------
 
@@ -1571,7 +1572,7 @@ ALTER TABLE `molajo_catalog`
 -- Constraints for table `molajo_catalog_activity`
 --
 ALTER TABLE `molajo_catalog_activity`
-  ADD CONSTRAINT `fk_catalog_activity_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`catalog_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_catalog_activity_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `molajo_catalog_categories`
@@ -1624,14 +1625,6 @@ ALTER TABLE `molajo_site_applications`
 ALTER TABLE `molajo_site_extension_instances`
   ADD CONSTRAINT `fk_site_extension_instances_extension_instances` FOREIGN KEY (`extension_instance_id`) REFERENCES `molajo_extension_instances` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_site_extension_instances_sites` FOREIGN KEY (`site_id`) REFERENCES `molajo_sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `molajo_user_activity`
---
-ALTER TABLE `molajo_user_activity`
-  ADD CONSTRAINT `fk_user_activity_stream_action_types_fk'` FOREIGN KEY (`action_id`) REFERENCES `molajo_actions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_activity_stream_catalog_fk` FOREIGN KEY (`catalog_id`) REFERENCES `molajo_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_applications_users_fk` FOREIGN KEY (`user_id`) REFERENCES `molajo_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `molajo_user_applications`

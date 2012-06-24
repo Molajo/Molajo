@@ -491,13 +491,13 @@ Class ExtensionHelper
 	{
 		if ((int)$catalog_type_id == 0) {
 
-			if ($catalog_type == 'Component') {
+			if ($catalog_type == 'Components') {
 				return CATALOG_TYPE_EXTENSION_COMPONENT;
 
-			} elseif ($catalog_type == 'Formfield') {
-				return CATALOG_TYPE_EXTENSION_FORMFIELDS;
+			} elseif ($catalog_type == 'Language') {
+				return CATALOG_TYPE_EXTENSION_LANGUAGE;
 
-			} elseif ($catalog_type_id == 'Module') {
+			} elseif ($catalog_type == 'Module') {
 				return CATALOG_TYPE_EXTENSION_MODULE;
 
 			} elseif ($catalog_type == 'Theme') {
@@ -506,13 +506,13 @@ Class ExtensionHelper
 			} elseif ($catalog_type == 'Trigger') {
 				return CATALOG_TYPE_EXTENSION_TRIGGER;
 
-			} elseif ($catalog_type == 'Pageview') {
+			} elseif ($catalog_type == 'Page') {
 				return CATALOG_TYPE_EXTENSION_PAGE_VIEW;
 
-			} elseif ($catalog_type == 'Templateview') {
+			} elseif ($catalog_type == 'Template') {
 				return CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW;
 
-			} elseif ($catalog_type == 'Wrapview') {
+			} elseif ($catalog_type == 'Wrap') {
 				return CATALOG_TYPE_EXTENSION_WRAP_VIEW;
 			}
 
@@ -521,8 +521,8 @@ Class ExtensionHelper
 			if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
 				return 'Component';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_FORMFIELDS) {
-				return 'Formfield';
+			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_LANGUAGE) {
+				return 'Language';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
 				return 'Module';
@@ -534,13 +534,13 @@ Class ExtensionHelper
 				return 'Trigger';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-				return 'Pageview';
+				return 'Page';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
-				return 'Templateview';
+				return 'Template';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
-				return 'Wrapview';
+				return 'Wrap';
 			}
 		}
 
