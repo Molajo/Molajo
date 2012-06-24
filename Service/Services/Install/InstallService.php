@@ -57,7 +57,6 @@ Class InstallService
 	 */
 	public function extension($extension_name, $model_name, $source_path = null, $destination_path = null)
 	{
-		/** Create Extension and Extension Instances Row */
 		$controller = new CreateController();
 		$table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
 

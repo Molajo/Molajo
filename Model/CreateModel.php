@@ -129,6 +129,9 @@ class CreateModel extends Model
 		if ($type == 'identity') {
 			$value = 'NULL';
 
+		} elseif ($input === null) {
+			$value = 'NULL';
+
 		} elseif ($type == 'integer'
 			|| $type == 'binary'
 			|| $type == 'catalog_id'

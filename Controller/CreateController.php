@@ -85,18 +85,19 @@ class CreateController extends ModelController
 				}
 			}
 
-			$valid = $this->model->create($data, $this->table_registry_name);
+			$results = $this->model->create($data, $this->table_registry_name);
 
-			if ($valid === true) {
-				$valid = $this->onBeforeCreateEvent();
-				if ($valid === false) {
+			if ($results === false) {
+			} else {
+				$data->id = $results;
+				$results = $this->onAfterCreateEvent($data);
+				if ($results === false) {
 					return false;
 					//errror
 				}
+				$results = $data->id;
 			}
 		}
-
-		/** Set Model Values */
 
 		/** redirect */
 		if ($valid === true) {
@@ -118,7 +119,7 @@ class CreateController extends ModelController
 			}
 		}
 
-		return $valid;
+		return $results;
 	}
 
 	/**
@@ -378,8 +379,16 @@ class CreateController extends ModelController
 					return false;
 				}
 
+				$m->model->query->select('COUNT(*)');
+				$m->model->query->from($m->model->db->qn($m->get('table_name')));
+				$m->model->query->where($m->model->db->qn($source_id)
+					. ' = ' . (int)$this->data->$name);
+
+				$m->set('get_customfields', 0);
+				$m->set('get_item_children', 0);
 				$m->set('use_special_joins', 0);
-				$m->set($source_id, (int)$this->data->$name);
+				$m->set('check_view_level_access', 0);
+				$m->set('process_triggers', 0);
 
 				$value = $m->getData('result');
 
@@ -439,7 +448,7 @@ class CreateController extends ModelController
 	 * @return boolean
 	 * @since   1.0
 	 */
-	protected function onAfterCreateEvent()
+	protected function onAfterCreateEvent($data)
 	{
 		if (count($this->triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
@@ -451,7 +460,7 @@ class CreateController extends ModelController
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'db' => $this->model->db,
-			'query_results' => $this->data,
+			'query_results' => $data,
 			'parameters' => $this->parameters,
 			'model_name' => $this->get('model_name')
 		);
@@ -463,8 +472,8 @@ class CreateController extends ModelController
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
-		$this->data = $arguments['query_results'];
+		$data = $arguments['query_results'];
 
-		return true;
+		return $data;
 	}
 }

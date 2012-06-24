@@ -79,6 +79,7 @@ Class ThemeMolajitoHelper extends Mustache
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
 
+
         Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
 
 		/** Favicons */

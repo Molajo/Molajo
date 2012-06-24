@@ -29,7 +29,6 @@
 
     <define name="CATALOG_TYPE_EXTENSION_BEGIN" value="1000"/>
     <define name="CATALOG_TYPE_EXTENSION_COMPONENT" value="1050"/>
-    <define name="CATALOG_TYPE_EXTENSION_FORMFIELDS" value="1075"/>
     <define name="CATALOG_TYPE_EXTENSION_LANGUAGE" value="1100"/>
     <define name="CATALOG_TYPE_EXTENSION_PAGE_VIEW" value="1150"/>
     <define name="CATALOG_TYPE_EXTENSION_SERVICES" value="1425"/>

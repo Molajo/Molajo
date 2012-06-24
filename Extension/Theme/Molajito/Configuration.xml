@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Theme" version="1.0" extends="ExtensionInstances">
+<extension type="Theme" version="1.0" extends="Theme">
     <name>THEME_MOLAJITO_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>THEME_MOLAJITO_DESCRIPTION</description>
-    <model name="Themes" catalog_type_id="1500" />
+    <model name="Molajito" catalog_type_id="1500" />
 </extension>

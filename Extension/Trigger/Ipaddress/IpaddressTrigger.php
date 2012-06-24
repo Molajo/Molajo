@@ -13,7 +13,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Ipaddress
+ * IP Address
  *
  * @package     Molajo
  * @subpackage  Trigger
@@ -21,7 +21,6 @@ defined('MOLAJO') or die;
  */
 class IpaddressTrigger extends ContentTrigger
 {
-
 	/**
 	 * Pre-create processing
 	 *
@@ -30,80 +29,26 @@ class IpaddressTrigger extends ContentTrigger
 	 */
 	public function onBeforeCreate()
 	{
-
 		$fields = $this->retrieveFieldsByType('ip_address');
 
 		if (is_array($fields) && count($fields) > 0) {
-
 			foreach ($fields as $field) {
-
-				$name = $field->name;
-
-				/** Retrieves the actual field value from the 'normal' or special field */
-				$fieldValue = $this->getFieldValue($field);
-
-				$newFieldValue = '';
-
-				$newFieldValue = Services::Registry()->get('Client', 'ip_address');
-				$this->saveField($field, $name, $newFieldValue);
-				$fieldValue = $newFieldValue;
+				$this->saveField($field, $field->name, Services::Registry()->get('Client', 'ip_address', ''));
 			}
 		}
+
+		return true;
 	}
 
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onBeforeUpdate()
 	{
-		return true;
-	}
-
-	/**
-	 * Post-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		return true;
-	}
-
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
-	{
-		return true;
-	}
-
-	/**
-	 * Post-delete processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterDelete()
-	{
-		return true;
+		// No updates allowed for activity
+		return false;
 	}
 }

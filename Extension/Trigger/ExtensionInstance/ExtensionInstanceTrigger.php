@@ -38,7 +38,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			return true;
 		}
 
-		/** Ensure no other entry exists for this Name/Catalog Type */
+		/** Ensure no other entry exists for this specific Extension Name/Catalog Type combination */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$m->connect('Table', 'ExtensionInstances');
@@ -63,6 +63,49 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			return false;
 		}
 
+		/** Next, see if the Extension base exists */
+		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect('Table', 'Extensions');
+
+		$m->model->query->select($m->model->db->qn('a.id'));
+		$m->model->query->where($m->model->db->qn('a.name')
+			. ' = ' . $m->model->db->q($this->query_results->title));
+		$m->model->query->where($m->model->db->qn('a.catalog_type_id')
+			. ' = ' . (int) $this->query_results->catalog_type_id);
+
+		$id = $m->getData('result');
+
+		if ((int)$id > 0) {
+			$field = $this->getField('extension_id');
+			$this->saveField($field, $field->name, $id);
+			return true;
+		}
+
+		/** If not existing, create  */
+		$controller = new CreateController();
+
+		$data = new \stdClass();
+		$data->name = $this->query_results->title;
+		$data->catalog_type_id = $this->query_results->catalog_type_id;
+		$data->model_name = 'Extensions';
+
+		$controller->data = $data;
+
+		$id = $controller->create();
+
+		if ($id === false) {
+			//error
+			return false;
+		} else {
+			if ((int)$id > 0) {
+				$field = $this->getField('extension_id');
+				$this->saveField($field, $field->name, $id);
+				var_dump($this->query_results);
+				return true;
+			}
+		}
+
 		return true;
 	}
 
@@ -74,6 +117,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 */
 	public function onAfterCreate()
 	{
+
 		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
 			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
@@ -83,6 +127,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		/** Extension ID */
 		$id = $this->query_results->id;
+
 		if ((int) $id == 0) {
 			return false;
 		}
@@ -137,9 +182,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			return false;
 		}
 
-		/** Catalog Activity */
-
-		/** Permissions */
+		return true;
 	}
 
 	/**

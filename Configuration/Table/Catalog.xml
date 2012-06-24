@@ -8,11 +8,12 @@
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
+        process_triggers="1"
         data_source="JDatabase">
     <table>
 
         <fields>
-            <field name="id" type="integer" null="0" default=""/>
+            <field name="id" type="catalog_id" null="0" default="" identity="1"/>
             <field name="catalog_type_id" type="integer" null="0" default="" values=""/>
             <field name="source_id" type="integer" null="0" default="" values=""/>
             <field name="routable" type="boolean" null="0" default="0"/>
@@ -37,6 +38,10 @@
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
         </foreignkeys>
+
+        <triggers>
+            <trigger name="Catalog"/>
+        </triggers>
 
     </table>
 </model>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Component" version="1.0" extends="Content">
-    <name>COMPONENT_ARTICLES_NAME</name>
+    <name>COMPONENT_SAMPLES_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,15 +8,15 @@
     <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>COMPONENT_ARTICLES_DESCRIPTION</description>
-    <model name="Articles" catalog_type_id="10000">
+    <description>COMPONENT_SAMPLES_DESCRIPTION</description>
+    <model name="Samples" catalog_type_id="10000">
         <customfields>
             <customfield name="parameters">
-                <field name="intro_text_image" type="file" null="0" default="1"/>
+                <field name="tags" type="tags" null="0" default="1"/>
             </customfield>
             <customfield name="customfields">
-                <field name="anything_can_be_added" type="image" null="1" default="" values=""/>
-                <field name="or_overridden" type="image" null="1" default="" values=""/>
+                <field name="intro_text_image" type="file" null="0" default="1"/>
+                <field name="full_text_image" type="file" null="0" default="1"/>
             </customfield>
         </customfields>
     </model>

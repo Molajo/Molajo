@@ -30,63 +30,66 @@ class CatalogTrigger extends ContentTrigger
 	 */
 	public function onAfterCreate()
 	{
-		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
-		) {
-		} else {
-			return true;
-		}
 
-		/** Catalog ID */
+		/** Just inserted UD */
 		$id = $this->query_results->id;
 		if ((int)$id == 0) {
 			return false;
 		}
 
-		/** Catalog Activity */
-		$controller = new CreateController();
-
-		$data = new \stdClass();
-		$data->catalog_id = $id;
-
-		$controller->data = $data;
-
-		$catalog_activity_id = $controller->create();
-
-		if ($catalog_activity_id === false) {
-			//install failed
-			return false;
+		/** Catalog Activity: fields populated by Catalog Activity triggers */
+		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+			$results = $this->logUserActivity($id, Services::Registry()->get('Actions', 'create'));
+			if ($results == false) {
+				return false;
+			}
+		}
+		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
+			$results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', 'create'));
+			if ($results == false) {
+				return false;
+			}
 		}
 
-		/** Permissions */
-	}
-
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
 		return true;
 	}
 
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
 	public function onAfterUpdate()
 	{
+
+		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+			$results = $this->logUserActivity($this->query_results->id,
+				Services::Registry()->get('Actions', 'delete'));
+			if ($results == false) {
+				return false;
+			}
+		}
+		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
+			$results = $this->logCatalogActivity($this->query_results->id,
+				Services::Registry()->get('Actions', 'delete'));
+			if ($results == false) {
+				return false;
+			}
+		}
+
 		return true;
+	}
+
+	/**
+	 * Pre-update processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate()
+	{
+		return true; // only redirect id
 	}
 
 	/**
@@ -106,14 +109,70 @@ class CatalogTrigger extends ContentTrigger
 	/**
 	 * Post-delete processing
 	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
 	public function onAfterDelete()
 	{
-		return true;
+		//how to get id - referential integrity?
+		/**
+		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+			$this->logUserActivity($id, Services::Registry()->get('Actions', 'delete'));
+		}
+		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
+			$this->logCatalogActivity($id, Services::Registry()->get('Actions', 'delete'));
+		}
+		 */
+	}
+
+	/**
+	 * Log user updates
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function logUserActivity($id, $action_id)
+	{
+		$data = new \stdClass();
+		$data->model_name = 'UserActivity';
+		$data->model_table = 'Table';
+		$data->catalog_id = $id;
+		$data->action_id = $action_id;
+
+		$controller = new CreateController();
+		$controller->data = $data;
+		$user_activity_id = $controller->create();
+		if ($user_activity_id === false) {
+			//install failed
+			return false;
+		}
+
+		return true; // only redirect id
+	}
+
+
+	/**
+	 * Pre-update processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function logCatalogActivity($id, $action_id)
+	{
+
+		$data = new \stdClass();
+		$data->model_name = 'CatalogActivity';
+		$data->model_table = 'Table';
+		$data->catalog_id = $id;
+		$data->action_id = $action_id;
+
+		$controller = new CreateController();
+		$controller->data = $data;
+		$catalog_activity_id = $controller->create();
+		if ($catalog_activity_id === false) {
+			//install failed
+			return false;
+		}
+		return true; // only redirect id
 	}
 }

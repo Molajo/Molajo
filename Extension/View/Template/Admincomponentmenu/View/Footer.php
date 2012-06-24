@@ -6,13 +6,8 @@
  */
 defined('MOLAJO') or die;
 use Molajo\Service\Services;
-?>
+$url = Services::Registry()->get('Trigger', 'PageURL'); ?>
 </dl>
-<button><?php echo Services::Language()->translate('BATCH'); ?></button>
-	<p>I am in a paragraph.</p>
-<div id="Filter">
-	<include:template name=Admingridfilters/>
-</div>
-<div id="Batch">
-	<include:template name=Admingridbatch/>
-</div>
+<a href="#" class="show_hide">Show/hide</a>
+<div class="slidingDiv">
+	Fill this space with really interesting content. <a href="#" class="show_hide">hide</a></div>

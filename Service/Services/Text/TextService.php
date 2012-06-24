@@ -222,29 +222,79 @@ Class TextService
 	}
 
 	/**
-	 * getPlaceHolderText
+	 * Add rows to model
 	 *
-	 * @param         $count
-	 * @param  array  $options
+	 * @param $extension_name
+	 * @param $model_name
+	 * @param $source_path
+	 * @param $destination_path
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	public function extension($model_name, $source_path = null, $destination_path = null)
+	{
+		$controller = new CreateController();
+
+		//http://www.youtube.com/watch?v=dRjE1JwdDLI
+		$table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
+
+		$data = new \stdClass();
+		$data->title = $extension_name;
+		$data->model_name = $model_name;
+		//http://placekitten.com/200/300
+		$controller->data = $data;
+
+		$id = $controller->create();
+		if ($id === false) {
+			//install failed
+			return false;
+		}
+	}
+
+	/**
+	 * Retrieves Lorem Ipsum text
+	 *
+	 * Usage:
+	 * Services::Text()->getPlaceHolderText(4, 20, 'html', 1);
+	 *
+	 * @param  int  $paragraph_word_count - number of words per paragraph
+	 * @param  int  $paragraph_count
+	 * @param  char $format
+	 * @param  $start_with_lorem_ipsum 0 or 1
+	 *
 	 * @return string
 	 * @since   1.0
 	 */
-	public function getPlaceHolderText($count, $options = array())
+	public function getPlaceHolderText($paragraph_word_count, $paragraph_count, $format, $start_with_lorem_ipsum)
 	{
-		$options = array_merge(
-			array(
-				'html' => false,
-				'lorem' => true
-			),
-			$options
-		);
+		$generator = new LoremIpsumGenerator($paragraph_word_count);
+		return ucfirst($generator->getContent($paragraph_word_count * $paragraph_count, $format, $start_with_lorem_ipsum));
+	}
 
-		$generator = new LoremIpsumGenerator;
+	/**
+	 * Add images to text
+	 *
+	 * Usage:
+	 * Services::Text()->addImages(2);
+	 *
+	 * @param  int  $image_count - number of images
+	 * @param  int  $width
+	 * @param  int  $height
+	 * @param  int  $type (box, cat)
+	 *
+	 * @return string
+	 * @since   1.0
+	 */
+	public function addImage($width, $height, $type)
+	{
+		if ($type == 'cat') {
+			$source = '<img src="http://placekitten.com/' . (int)$width . '/'. (int) $height . '"/>';
+		} else {
+			$source = '<img src="http://placehold.it/' . (int)$width . 'x'. (int) $height . '"/>';
+		}
+		return $source;
 
-		$html_format = $options['html'] ? 'plain' : 'html';
-		$start_with_lorem_ipsum = $options['lorem'];
-
-		return ucfirst($generator->getContent($count, $html_format, $start_with_lorem_ipsum));
 	}
 
 	/**
