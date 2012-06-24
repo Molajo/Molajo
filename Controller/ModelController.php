@@ -282,7 +282,11 @@ Class ModelController extends Controller
 			$offset,
 			$count
 		);
-
+/**
+		echo '<br /><br /><br />';
+		echo $this->model->query->__toString();
+		echo '<br /><br /><br />';
+**/
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 		/**
