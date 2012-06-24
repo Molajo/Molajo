@@ -74,9 +74,16 @@ Class LanguageService
 	 */
 	protected function __construct($language = null)
 	{
-		$this->setInstalledLanguageRegistry();
-
 		$language = $this->getLanguage($language);
+
+		Services::Registry()->set('Languages', 'Default', $language);
+
+		$language = $this->setLanguageRegistry($language);
+		if ($language == false) {
+			return false;
+		}
+
+		$this->load(EXTENSIONS_LANGUAGES, $language);
 
 		return $this;
 	}
@@ -128,14 +135,15 @@ Class LanguageService
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function load($path)
+	public function load($path, $language = null)
 	{
-		/** Determine if the files have already been loaded */
-		$currentLanguage = Services::Registry()->get('Languages', 'Current');
+		if ($language == null) {
+			$language = Services::Registry()->get('Languages', 'Current');
+		}
 
-		/** Path subfolder dependis on whether it's a request for core or extension files */
+		/** Core or extension files */
 		if ($path == EXTENSIONS_LANGUAGES) {
-			$path = $path . '/' . $currentLanguage;
+			$path = $path . '/' . $language;
 		} else {
 			$path = $path . '/Language';
 		}
@@ -146,7 +154,7 @@ Class LanguageService
 		}
 
 		/** Load files for current language */
-		$loaded = $this->loadPath($path, $currentLanguage);
+		$loaded = $this->loadPath($path, $language);
 		if ($loaded == false) {
 		} else {
 			return true;
@@ -154,100 +162,13 @@ Class LanguageService
 
 		/** If the requested language is not available, load the default */
 		$defaultLanguage = Services::Registry()->get('Languages', 'Default');
-		if ($currentLanguage == $defaultLanguage) {
+		if ($language == $defaultLanguage) {
 			return true;
 		}
 
 		$loaded = $this->loadPath($path, $defaultLanguage);
 
 		return $loaded;
-	}
-
-	/**
-	 * Retrieves the language requested, or the default language
-	 *
-	 * @param null $language string locale or null if not found
-	 *
-	 * @return bool
-	 * @since  1.0
-	 */
-	protected function getLanguage($language = null)
-	{
-		if ($language == null) {
-			$language = $this->getDefaultLanguage();
-			Services::Registry()->set('Languages', 'Default', $language);
-		}
-
-		/** Has the language already been loaded? */
-		if (Services::Registry()->exists($language) == true) {
-			return true;
-		}
-
-		$language = $this->setLanguageRegistry($language);
-		if ($language == false) {
-			return false;
-		}
-
-		/** load language strings */
-		$path = EXTENSIONS_LANGUAGES;
-		return $this->load($path);
-
-	}
-
-	/**
-	 * Get Default Language when no specific language is requested
-	 *
-	 * @return bool|null|string
-	 * @since  1.0
-	 */
-	protected function getDefaultLanguage()
-	{
-
-		/** 1. if there is just one, take it */
-		$results = Services::Registry()->get('Languages', 'installed', array());
-		if (count($results) == 1) {
-			foreach ($results as $language) {
-				return $language->tag;
-			}
-		}
-
-		/** Retrieve valid list */
-		$installed = array();
-		foreach ($results as $language) {
-			$installed[] = $language->tag;
-		}
-
-		/** 2. session */
-		//
-
-		/** 3. user  */
-		$language = Services::Registry()->get('User', 'language', false);
-		if ($language === false) {
-		} elseif (in_array($language, $installed)) {
-			return $language;
-		}
-
-		/** 4. language of browser */
-		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-		} else {
-			return null;
-		}
-
-		foreach ($browserLanguages as $language) {
-			if (in_array(strtolower($language), $installed)) {
-				return $language;
-			}
-		}
-
-		/** 5. Application configuration */
-		$language = Services::Registry()->get('Application', 'DefaultLanguage', '');
-		if (in_array($language, $installed)) {
-			return $language;
-		}
-
-		/** 6. default */
-		return 'en-GB';
 	}
 
 	/**
@@ -261,6 +182,9 @@ Class LanguageService
 	 */
 	protected function loadPath($path, $language)
 	{
+		/** Format language for use comparing to folders/files */
+		//$language = strtolower(substr($language, 0, 2)) . strtoupper(substr($language, 2, strlen($language) - 2));
+
 		/** Retrieve paths already loaded */
 		$loadedPaths = Services::Registry()->get($language, 'LoadedPaths', array());
 
@@ -274,15 +198,13 @@ Class LanguageService
 		/** Retrieve the list of files already loaded for this language */
 		$loadedFiles = Services::Registry()->get($language, 'LoadedFiles', array());
 
-		/** Retrieve the list of strings already loaded for this language */
-		$loadedStrings = Services::Registry()->get($language, 'LoadedStrings', array());
-
 		/** Retrieve the files that should now be loaded for this language */
 		$loadFiles = Services::Filesystem()->folderFiles($path, '.ini');
 		if ($loadFiles == false) {
 			return true;
 		}
 
+		/** Retrieve the list of strings already loaded for this language */
 		$loadedStrings = Services::Registry()->getArray($language . 'translate');
 
 		/** Process each file, loading the language strings and override strings */
@@ -362,36 +284,71 @@ Class LanguageService
 	}
 
 	/**
-	 * Retrieve a full list of installed languages for the application
+	 * Get Default Language when no specific language is requested
 	 *
-	 * @return bool
+	 * @return bool|null|string
 	 * @since  1.0
 	 */
-	protected function setInstalledLanguageRegistry()
+	protected function getLanguage($language = null)
 	{
-		/** During System Initialization Helper is not loaded yet, instantiate here */
-		$helper = new ExtensionHelper();
-		$installed = $helper->get(0, 'Table', 'Languages', 'list', 1100);
-		if ($installed == false || count($installed) < 1) {
-			return false;
+
+		/** Retrieve list of installed languages */
+		$installed = $this->getInstalledLanguages();
+
+		/** 1. Use language specified, if it is available */
+		if ($installed == false || count($installed) == 0) {
+		} else {
+			if (in_array($language, $installed)) {
+				return $language;
+			}
 		}
 
-		$languageList = array();
-		foreach ($installed as $language) {
-
-			$row = new \stdClass();
-
-			$row->id = $language->extension_id;
-			$row->title = $language->title;
-			$row->tag = $language->alias;
-
-			$languageList[] = $row;
+		/** 2. if there is only one language installed, use it */
+		if ($installed == false || count($installed) == 0) {
+		} elseif (count($installed) == 1) {
+			return $installed[0];
 		}
 
-		Services::Registry()->createRegistry('Languages');
-		Services::Registry()->set('Languages', 'installed', $languageList);
+		/** 3. session */
+		//
 
-		return;
+		/** 4. User specified value, it is is installed  */
+		$language = Services::Registry()->get('User', 'language', false);
+
+		if ($installed == false || count($installed) == 0) {
+		} else {
+			if (in_array($language, $installed)) {
+				return $language;
+			}
+		}
+
+		/** 5. language of browser */
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			if (count($browserLanguages) > 0) {
+				foreach ($browserLanguages as $language) {
+					if ($installed == false || count($installed) == 0) {
+					} else {
+						if (in_array($language, $installed)) {
+							return $language;
+						}
+					}
+				}
+			}
+		}
+
+		/** 5. Application configuration */
+		$language = Services::Registry()->get('Application', 'DefaultLanguage', '');
+		if (trim($language) == '') {
+		} elseif ($installed == false || count($installed) == 0) {
+		} else {
+			if (in_array($language, $installed)) {
+				return $language;
+			}
+		}
+
+		/** 6. default */
+		return 'en-GB';
 	}
 
 	/**
@@ -402,7 +359,7 @@ Class LanguageService
 	 */
 	protected function setLanguageRegistry($language)
 	{
-		/** Retrieve requested language */
+		/** If it's already loaded, move on */
 		if (Services::Registry()->exists($language)) {
 			return $language;
 		}
@@ -412,7 +369,7 @@ Class LanguageService
 
 		$id = 0;
 		foreach ($languagesInstalled as $installed) {
-			if ($installed->tag == $language) {
+			if ($installed->tag == trim($language)) {
 				$id = $installed->id;
 				break;
 			}
@@ -436,9 +393,9 @@ Class LanguageService
 			Services::Registry()->set($language, $key, $value);
 		}
 
-		$ltr = Services::Registry()->get($language, 'ltr');
-		if ($ltr == 'ltr') {
-			$direction = 'ltr';
+		$rtl = Services::Registry()->get($language, 'rtl');
+		if ($rtl == 'rtl') {
+			$direction = 'rtl';
 		} else {
 			$direction = '';
 		}
@@ -448,5 +405,45 @@ Class LanguageService
 		Services::Registry()->set('Languages', 'Current', $language);
 
 		return $language;
+	}
+
+	/**
+	 * Retrieve a full list of installed languages for the application
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	protected function getInstalledLanguages()
+	{
+		/** During System Initialization Helper is not loaded yet, instantiate here */
+		$helper = new ExtensionHelper();
+		$installed = $helper->get(0, 'Table', 'Languages', 'list', 1100);
+
+		if ($installed == false || count($installed) < 1) {
+			return false;
+		}
+
+		$languageList = array();
+		$tagArray = array();
+		foreach ($installed as $language) {
+
+			$row = new \stdClass();
+
+			$row->id = $language->extension_id;
+			$row->title = $language->title;
+			$row->tag = strtolower(substr($language->alias, 0, 2))
+				. strtoupper(substr($language->alias, 2, strlen($language->alias) - 2));
+
+			/** Format language for use comparing to folders/files */
+			$tagArray[] = $row->tag;
+
+			$languageList[] = $row;
+		}
+
+		Services::Registry()->createRegistry('Languages');
+		Services::Registry()->set('Languages', 'installed', $languageList);
+
+		return $tagArray;
+
 	}
 }

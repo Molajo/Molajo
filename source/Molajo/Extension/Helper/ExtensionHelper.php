@@ -54,9 +54,9 @@ Class ExtensionHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getExtension($extension_id, $model_type = 'Table',  $model_name = 'ExtensionInstances')
+	public function getExtension($extension_id, $model_type = 'Table', $model_name = 'ExtensionInstances')
 	{
-		Services::Registry()->set('Query', 'Current', 'Extension getExtension: '. $extension_id);
+		Services::Registry()->set('Query', 'Current', 'Extension getExtension: ' . $extension_id);
 
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($extension_id, $model_type, $model_name);
@@ -136,8 +136,26 @@ Class ExtensionHelper
 			return false;
 		}
 
-		$m->set('id', (int)$extension_id);
-		$m->set('catalog_type_id', (int)$catalog_type_id);
+		if ((int)$extension_id == 0) {
+		} else {
+			$m->set('id', (int)$extension_id);
+		}
+
+
+		if ((int)$catalog_type_id == 0) {
+		} else {
+			$primary_prefix = $m->get('primary_prefix');
+			$primary_key = $m->get('primary_key');
+
+			$m->model->query->where($m->model->db->qn($primary_prefix . '.' . 'catalog_type_id')
+				. ' = ' . (int)$catalog_type_id);
+		}
+
+		if ($query_object == 'list') {
+			$m->set('model_offset', 0);
+			$m->set('model_count', 999999);
+			$m->set('check_view_level_access', 0);
+		}
 
 		$query_results = $m->getData($query_object);
 
