@@ -71,6 +71,18 @@ class DateformatsTrigger extends ContentTrigger
 							$this->saveField($createdByField, 'created_by', $createdByValue);
 						}
 
+					} elseif ($name == 'activity_datetime') {
+
+						$newFieldValue = $this->now;
+						$this->saveField($field, $name, $newFieldValue);
+						$fieldValue = $newFieldValue;
+
+						$createdByField = $this->getField('user_id');
+						$createdByValue = $this->getFieldValue($createdByField);
+						if ($createdByValue == false) {
+							$createdByValue = Services::Registry()->get('User', 'id');
+							$this->saveField($createdByField, 'user_id', $createdByValue);
+						}
 
 					} elseif ($name == 'start_publishing_datetime') {
 

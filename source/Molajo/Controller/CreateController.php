@@ -23,6 +23,7 @@ class CreateController extends ModelController
 	/**
 	 * create new row
 	 *
+	 *
 	 * @return bool|object
 	 * @since  1.0
 	 */
@@ -85,6 +86,14 @@ class CreateController extends ModelController
 			}
 
 			$valid = $this->model->create($data, $this->table_registry_name);
+
+			if ($valid === true) {
+				$valid = $this->onBeforeCreateEvent();
+				if ($valid === false) {
+					return false;
+					//errror
+				}
+			}
 		}
 
 		/** Set Model Values */
@@ -437,7 +446,7 @@ class CreateController extends ModelController
 		) {
 			return true;
 		}
-		var_dump($this->triggers);
+
 		/** Schedule onAfterCreate Event */
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
@@ -449,10 +458,9 @@ class CreateController extends ModelController
 
 		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
 		if ($arguments == false) {
-			echo 'yes';
 			return false;
 		}
-		die;
+
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
 		$this->data = $arguments['query_results'];
