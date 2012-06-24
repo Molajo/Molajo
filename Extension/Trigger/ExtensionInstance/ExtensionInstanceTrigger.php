@@ -7,6 +7,7 @@
 namespace Molajo\Extension\Trigger\Extensioninstance;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Controller\CreateController;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -73,7 +74,72 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 */
 	public function onAfterCreate()
 	{
-		return true;
+		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
+			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		) {
+		} else {
+			return true;
+		}
+
+		/** Extension ID */
+		$id = $this->query_results->id;
+		if ((int) $id == 0) {
+			return false;
+		}
+
+		/** Site Extension Instances */
+		$controller = new CreateController();
+
+		$data = new \stdClass();
+		$data->site_id = SITE_ID;
+		$data->extension_instance_id = $id;
+		$data->model_name = 'SiteExtensionInstances';
+
+		$controller->data = $data;
+
+		$results = $controller->create();
+		if ($results === false) {
+			//install failed
+			return false;
+		}
+
+		/** Application Extension Instances */
+		$controller = new CreateController();
+
+		$data = new \stdClass();
+		$data->application_id = APPLICATION_ID;
+		$data->extension_instance_id = $id;
+		$data->model_name = 'ApplicationExtensionInstances';
+
+		$controller->data = $data;
+
+		$results = $controller->create();
+		if ($results === false) {
+			//install failed
+			return false;
+		}
+
+		/** Catalog */
+		$controller = new CreateController();
+
+		$data = new \stdClass();
+		$data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
+		$data->source_id = $id;
+		$data->view_group_id = 1;
+		$data->extension_instance_id = $id;
+		$data->model_name = 'Catalog';
+
+		$controller->data = $data;
+
+		$catalog_id = $controller->create();
+		if ($results === false) {
+			//install failed
+			return false;
+		}
+
+		/** Catalog Activity */
+
+		/** Permissions */
 	}
 
 	/**

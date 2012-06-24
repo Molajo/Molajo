@@ -6,8 +6,8 @@
  */
 namespace Molajo\Service\Services\Install;
 
-use Molajo\Service\Services;
 use Molajo\Controller\CreateController;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -45,20 +45,20 @@ Class InstallService
 	/**
 	 * Install Extension
 	 *
+	 * NOTE: This will become the Extensions Component
+	 *
 	 * @param $extension_name
-	 * @param $catalog_type_id
+	 * @param $model_name
 	 * @param $source_path
 	 * @param $destination_path
 	 *
 	 * @return bool
 	 * @since  1.0
 	 */
-	public function installExtension($extension_name, $model_name,
-									 $source_path = null, $destination_path = null)
+	public function extension($extension_name, $model_name, $source_path = null, $destination_path = null)
 	{
 		/** Create Extension and Extension Instances Row */
 		$controller = new CreateController();
-
 		$table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
 
 		$data = new \stdClass();
@@ -72,63 +72,6 @@ Class InstallService
 			//install failed
 			return false;
 		}
-
-		/** Site Extension Instances */
-		$controller = new CreateController();
-
-		$data = new \stdClass();
-		$data->site_id = SITE_ID;
-		$data->extension_instance_id = $id;
-		$data->model_name = 'SiteExtensionInstances';
-
-		$controller->data = $data;
-
-		$results = $controller->create();
-		if ($results === false) {
-			//install failed
-			return false;
-		}
-
-		/** Application Extension Instances */
-		$controller = new CreateController();
-
-		$data = new \stdClass();
-		$data->application_id = APPLICATION_ID;
-		$data->extension_instance_id = $id;
-		$data->model_name = 'ApplicationExtensionInstances';
-
-		$controller->data = $data;
-
-		$results = $controller->create();
-		if ($results === false) {
-			//install failed
-			return false;
-		}
-
-		/** Catalog */
-		$controller = new CreateController();
-
-		$data = new \stdClass();
-		$data->catalog_type_id = Services::Registry()->get($table_registry_name, 'catalog_type_id');
-		$data->source_id = $id;
-		$data->view_group_id = 1;
-		$data->extension_instance_id = $id;
-		$data->model_name = 'Catalog';
-
-		$controller->data = $data;
-
-		$catalog_id = $controller->create();
-		if ($results === false) {
-			//install failed
-			return false;
-		}
-
-		/** Catalog Activity */
-
-		/** Permissions */
-
-		/** Complete */
-		return true;
 	}
 
 	/**

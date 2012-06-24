@@ -142,6 +142,7 @@ class CreateModel extends Model
 			|| $type == 'url'
 			|| $type == 'email'
 			|| $type == 'text'
+			|| $type == 'ip_address'
 		) {
 
 			$value = $this->db->q($input);

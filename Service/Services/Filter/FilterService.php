@@ -212,6 +212,10 @@ Class FilterService
                 return $this->filter_header_injection_test($field_value);
                 break;
 
+			case 'ip_address':
+				return $this->filter_char($field_value, $null, $default);
+				break;
+
             default:
                 return $this->filter_char(
                     $field_value, $null, $default

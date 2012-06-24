@@ -17,18 +17,18 @@
             <field name="user_id" type="integer" null="0" default="0" values=""/>
             <field name="rating" type="integer" null="1" default="" values=""/>
             <field name="activity_datetime" type="datetime" null="0" default=""/>
-            <field name="ip_address" type="char" null="0" default=""/>
+            <field name="ip_address" type="ip_address" null="0" default=""/>
             <field name="customfields" type="customfield" null="1" default=""/>
         </fields>
 
         <triggers>
-            <trigger name="IPAddress"/>
-            <trigger name="Language"/>
+            <trigger name="Dateformats"/>
+            <trigger name="Ipaddress"/>
         </triggers>
 
         <foreignkeys>
             <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-            <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+            <foreignkey name="user_id" source_id="id" source_model="Users" required="0"/>
         </foreignkeys>
     </table>
 </model>

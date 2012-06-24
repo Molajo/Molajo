@@ -233,6 +233,13 @@ Class Application
 	 */
 	protected function route()
 	{
+
+		//$results = Services::Install()->extension(
+		//	'Test', 'Templates', $source_path = null, $destination_path = null);
+		//
+		//echo $results;
+		//die;
+
 		$results = Services::Route()->process();
 
 		if ($results == false) {
