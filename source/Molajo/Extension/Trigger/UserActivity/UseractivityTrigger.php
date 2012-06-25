@@ -105,7 +105,7 @@ class UseractivityTrigger extends ContentTrigger
 
 		$m->set('user_id', Services::Registry()->set('User', 'id'));
 		$m->set('action_id', $action_id);
-		$m->set('catalog_id', $this->query_results->catalog_id);
+		$m->set('catalog_id', $this->data->catalog_id);
 		$m->set('activity_datetime', null);
 
 		$results = $m->getData('create');

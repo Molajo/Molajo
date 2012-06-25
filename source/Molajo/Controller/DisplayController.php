@@ -179,37 +179,6 @@ class DisplayController extends ModelController
 	}
 
 	/**
-	 * Schedule onBeforeViewRender Event - could update query_results objects
-	 *
-	 * @return bool
-	 * @since  1.0
-	 */
-	protected function onBeforeViewRender()
-	{
-		if ((int)$this->get('process_triggers') == 0) {
-			return true;
-		}
-
-		/** Process the entire query_results set */
-		$arguments = array(
-			'table_registry_name' => $this->table_registry_name,
-			'parameters' => $this->parameters,
-			'query_results' => $this->query_results,
-			'model_name' => $this->get('model_name')
-		);
-
-		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
-
-		if ($arguments == false) {
-			return false;
-		}
-
-		$this->query_results = $arguments['query_results'];
-
-		return true;
-	}
-
-	/**
 	 * renderView
 	 *
 	 * Depending on the files within view/view-type/view-name/View/*.*:
@@ -271,6 +240,37 @@ class DisplayController extends ModelController
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
+	}
+
+	/**
+	 * Schedule onBeforeViewRender Event - could update query_results objects
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	protected function onBeforeViewRender()
+	{
+		if ((int)$this->get('process_triggers') == 0) {
+			return true;
+		}
+
+		/** Process the entire query_results set */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'data' => $this->query_results,
+			'model_name' => $this->get('model_name')
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+
+		if ($arguments == false) {
+			return false;
+		}
+
+		$this->query_results = $arguments['data'];
+
+		return true;
 	}
 
 	/**

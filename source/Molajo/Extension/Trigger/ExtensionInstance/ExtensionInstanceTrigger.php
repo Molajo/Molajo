@@ -31,8 +31,8 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	public function onBeforeCreate()
 	{
 
-		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
+			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
 		} else {
 			return true;
@@ -52,9 +52,9 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		$m->model->query->select($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('id'));
 		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('title')
-			. ' = ' . $m->model->db->q($this->query_results->title));
+			. ' = ' . $m->model->db->q($this->data->title));
 		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('catalog_type_id')
-			. ' = ' . (int)$this->query_results->catalog_type_id);
+			. ' = ' . (int)$this->data->catalog_type_id);
 
 		$id = $m->getData('result');
 
@@ -70,9 +70,9 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		$m->model->query->select($m->model->db->qn('a.id'));
 		$m->model->query->where($m->model->db->qn('a.name')
-			. ' = ' . $m->model->db->q($this->query_results->title));
+			. ' = ' . $m->model->db->q($this->data->title));
 		$m->model->query->where($m->model->db->qn('a.catalog_type_id')
-			. ' = ' . (int) $this->query_results->catalog_type_id);
+			. ' = ' . (int) $this->data->catalog_type_id);
 
 		$id = $m->getData('result');
 
@@ -86,8 +86,8 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$controller = new CreateController();
 
 		$data = new \stdClass();
-		$data->name = $this->query_results->title;
-		$data->catalog_type_id = $this->query_results->catalog_type_id;
+		$data->name = $this->data->title;
+		$data->catalog_type_id = $this->data->catalog_type_id;
 		$data->model_name = 'Extensions';
 
 		$controller->data = $data;
@@ -101,7 +101,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			if ((int)$id > 0) {
 				$field = $this->getField('extension_id');
 				$this->saveField($field, $field->name, $id);
-				var_dump($this->query_results);
+				var_dump($this->data);
 				return true;
 			}
 		}
@@ -118,19 +118,21 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	public function onAfterCreate()
 	{
 
-		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
+			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
 		} else {
 			return true;
 		}
 
 		/** Extension ID */
-		$id = $this->query_results->id;
+		$id = $this->data->id;
 
 		if ((int) $id == 0) {
 			return false;
 		}
+
+		/** Check ACL */
 
 		/** Site Extension Instances */
 		$controller = new CreateController();
@@ -221,7 +223,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -235,7 +237,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -249,7 +251,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -257,13 +259,40 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 */
 	public function onBeforeDelete()
 	{
+
+		// ACL
+		$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
+
+		// if there is content - no delete (must unpublish or trash)
+
+		// remove view group permissions
+
+		// remove group permissions
+
+		// remove catalog entries
+
+		// remove catalog categories
+
+		// remove orphan categories tht were associated with the catalog
+
+		// mremove catalog activity
+
+		// remove user activity
+
+		//remove application extension instances
+
+		// remove site extension instances
+
+		// then it can delete
+
+
 		return true;
 	}
 
 	/**
 	 * Post-delete processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -271,6 +300,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 */
 	public function onAfterDelete()
 	{
+		// remove teh extension node if there are no other extension instances for that extension
 		return true;
 	}
 }

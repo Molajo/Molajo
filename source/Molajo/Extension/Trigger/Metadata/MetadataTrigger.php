@@ -23,7 +23,7 @@ class MetadataTrigger extends ContentTrigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -37,7 +37,7 @@ class MetadataTrigger extends ContentTrigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -51,7 +51,7 @@ class MetadataTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -65,7 +65,7 @@ class MetadataTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -79,7 +79,7 @@ class MetadataTrigger extends ContentTrigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -93,7 +93,7 @@ class MetadataTrigger extends ContentTrigger
 	/**
 	 * Post-read processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean

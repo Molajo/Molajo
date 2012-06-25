@@ -19,49 +19,5 @@ defined('MOLAJO') or die;
  */
 class CatalogtypeIdTrigger extends ContentTrigger
 {
-	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		// for a new content component - create a row
-		return true;
-	}
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return true;
-		// save it
-	}
-
-	/**
-	 * Post-update processing
-	 *
-	 * @param   $this->query_results
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		// cannot change value
-		// foreign key must exist
-		return true;
-	}
 }

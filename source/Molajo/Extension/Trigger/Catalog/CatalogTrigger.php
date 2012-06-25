@@ -32,7 +32,7 @@ class CatalogTrigger extends ContentTrigger
 	{
 
 		/** Just inserted UD */
-		$id = $this->query_results->id;
+		$id = $this->data->id;
 		if ((int)$id == 0) {
 			return false;
 		}
@@ -64,14 +64,14 @@ class CatalogTrigger extends ContentTrigger
 	{
 
 		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
-			$results = $this->logUserActivity($this->query_results->id,
+			$results = $this->logUserActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
 			if ($results == false) {
 				return false;
 			}
 		}
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
-			$results = $this->logCatalogActivity($this->query_results->id,
+			$results = $this->logCatalogActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
 			if ($results == false) {
 				return false;
@@ -95,7 +95,7 @@ class CatalogTrigger extends ContentTrigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean

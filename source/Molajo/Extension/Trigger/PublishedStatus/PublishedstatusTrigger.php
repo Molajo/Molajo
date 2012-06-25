@@ -23,7 +23,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	/**
 	 * Pre-read processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -57,7 +57,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	/**
 	 * Post-create processing
 	 *
-	 * @param $this->query_results, $model
+	 * @param $this->data, $model
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -71,7 +71,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -87,7 +87,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean

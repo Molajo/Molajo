@@ -412,8 +412,8 @@ class ContentTrigger extends Trigger
 			$name = $field->as_name;
 		}
 
-		if (isset($this->query_results->$name)) {
-			return $this->query_results->$name;
+		if (isset($this->data->$name)) {
+			return $this->data->$name;
 
 		} elseif ($field->customfield == '') {
 			return false;
@@ -441,12 +441,12 @@ class ContentTrigger extends Trigger
 		$name = $field->name;
 
 		/** Update existing field */
-		if (isset($this->query_results->$name)) {
-			$this->query_results->$new_field_name = $value;
+		if (isset($this->data->$name)) {
+			$this->data->$new_field_name = $value;
 
 			/** Since there is no customfield, this must be a new query field */
 		} elseif ($field->customfield == '') {
-			$this->query_results->$new_field_name = $value;
+			$this->data->$new_field_name = $value;
 
 		} elseif (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
 			Services::Registry()->set($this->get('model_name') . $field->customfield, $new_field_name);
@@ -524,7 +524,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -538,7 +538,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -552,7 +552,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -566,7 +566,7 @@ class ContentTrigger extends Trigger
 	/**
 	 * Post-delete processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean

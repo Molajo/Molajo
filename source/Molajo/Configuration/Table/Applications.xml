@@ -102,8 +102,6 @@
 
             <include name="ParametersCache"/>
             <include name="ParametersLog"/>
-
-            <include name="ParametersList"/>
         </customfield>
 
         <customfield name="metadata">

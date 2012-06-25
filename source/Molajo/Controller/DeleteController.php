@@ -12,22 +12,21 @@ use Molajo\Controller\ModelController;
 defined('MOLAJO') or die;
 
 /**
- * Create
+ * Delete
  *
  * @package     Molajo
  * @subpackage  Controller
  * @since       1.0
  */
-class CreateController extends ModelController
+class DeleteController extends ModelController
 {
 	/**
-	 * create new row
-	 *
+	 * Delete row and trigger other delete actions
 	 *
 	 * @return bool|object
 	 * @since  1.0
 	 */
-	public function create()
+	public function delete()
 	{
 		/** tokens */
 
@@ -36,10 +35,10 @@ class CreateController extends ModelController
 			return false;
 		}
 
-		$this->connect('Table', $this->data->model_name, 'CreateModel');
-		if (isset($this->data->catalog_type_id) && (int)$this->data->catalog_type_id > 0) {
+		$this->connect('Table', $this->data->model_name, 'DeleteModel');
+		if (isset($this->data->id) && (int)$this->data->id > 0) {
 		} else {
-			$this->data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
+			$this->data->id = Services::Registry()->get($this->table_registry_name, 'id');
 		}
 
 		$results = $this->checkPermissions();
@@ -50,7 +49,7 @@ class CreateController extends ModelController
 
 		$this->getTriggerList('create');
 
-		$valid = $this->onBeforeCreateEvent();
+		$valid = $this->onBeforeDeleteEvent();
 		if ($valid === false) {
 			return false;
 			//errror
@@ -90,7 +89,7 @@ class CreateController extends ModelController
 			if ($results === false) {
 			} else {
 				$data->id = $results;
-				$results = $this->onAfterCreateEvent($data);
+				$results = $this->onAfterDeleteEvent($data);
 				if ($results === false) {
 					return false;
 					//errror
@@ -123,7 +122,7 @@ class CreateController extends ModelController
 	}
 
 	/**
-	 * checkPermissions for Create
+	 * checkPermissions for Delete
 	 *
 	 * @return bool
 	 * @since  1.0
@@ -131,14 +130,7 @@ class CreateController extends ModelController
 	protected function checkPermissions()
 	{
 
-		if (isset($this->data->primary_category_id)) {
-			$results = Services::Authorisation()->authoriseTask('Create', $this->data->primary_category_id);
-			if ($results === true) {
-				return true;
-			}
-		}
-
-		$results = Services::Authorisation()->authoriseTask('Create', $this->data->catalog_type_id);
+		$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
 		if ($results === false) {
 			//error
 			//return false (not yet)
@@ -200,7 +192,7 @@ class CreateController extends ModelController
 			return false;
 		}
 
-		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
+		Services::Debug()->set('DeleteController::checkFields Filter::Success: ' . $valid);
 
 		return $valid;
 	}
@@ -295,7 +287,7 @@ class CreateController extends ModelController
 
 				} catch (Exception $e) {
 
-					echo 'CreateController::checkFields Filter Failed' . ' ' . $e->message;
+					echo 'DeleteController::checkFields Filter Failed' . ' ' . $e->message;
 					die;
 				}
 			}
@@ -308,7 +300,7 @@ class CreateController extends ModelController
 			$this->data->$customFieldName = $fieldArray;
 		}
 
-		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
+		Services::Debug()->set('DeleteController::checkFields Filter::Success: ' . $valid);
 
 		return $valid;
 	}
@@ -407,12 +399,12 @@ class CreateController extends ModelController
 	}
 
 	/**
-	 * Schedule onBeforeCreateEvent Event - could update model and data objects
+	 * Schedule onBeforeDeleteEvent Event - could update model and data objects
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
-	protected function onBeforeCreateEvent()
+	protected function onBeforeDeleteEvent()
 	{
 		if (count($this->triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
@@ -430,7 +422,7 @@ class CreateController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
-		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
+		$arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
 		if ($arguments == false) {
 			return false;
 		}
@@ -443,12 +435,12 @@ class CreateController extends ModelController
 	}
 
 	/**
-	 * Schedule onAfterCreateEvent Event
+	 * Schedule onAfterDeleteEvent Event
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
-	protected function onAfterCreateEvent($data)
+	protected function onAfterDeleteEvent($data)
 	{
 		if (count($this->triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
@@ -456,7 +448,7 @@ class CreateController extends ModelController
 			return true;
 		}
 
-		/** Schedule onAfterCreate Event */
+		/** Schedule onAfterDelete Event */
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'db' => $this->model->db,
@@ -465,7 +457,7 @@ class CreateController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
-		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
+		$arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
 		if ($arguments == false) {
 			return false;
 		}

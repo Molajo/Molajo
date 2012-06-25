@@ -26,7 +26,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 	 * Use with Grid to determine permissions for buttons and items
 	 * Validate action-level user permissions on each row - relies upon catalog_id
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -34,7 +34,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 	 */
 	public function onAfterRead()
 	{
-		if (isset($this->query_results->catalog_id)) {
+		if (isset($this->data->catalog_id)) {
 		} else {
 			return false;
 		}
@@ -46,13 +46,13 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 
 		/** User Permissions */
 		$permissions = Services::Authorisation()
-			->authoriseTaskList($actionsArray, $this->query_results->catalog_id);
+			->authoriseTaskList($actionsArray, $this->data->catalog_id);
 
 		/** Append onto row */
 		foreach ($actionsArray as $action) {
 			if ($permissions[$action] === true) {
 				$field = $action . 'Permission';
-				$this->query_results->$field = $permissions[$action];
+				$this->data->$field = $permissions[$action];
 			}
 		}
 
