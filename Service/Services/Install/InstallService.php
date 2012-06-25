@@ -55,8 +55,17 @@ Class InstallService
 	 * @return bool
 	 * @since  1.0
 	 */
-	public function extension($extension_name, $model_name, $source_path = null, $destination_path = null)
+	public function extension()
 	{
+		$results = $this->testTrigger();
+	}
+
+	public function testCreateExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
+	{
+		/** Process results */
+
+
+		// ($extension_name, $model_name, $source_path = null, $destination_path = null)
 		$controller = new CreateController();
 		$table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
 
@@ -74,18 +83,46 @@ Class InstallService
 	}
 
 	/**
-	 * copyFiles
-	 *
-	 * @param $extension_name
-	 * @param $catalog_type_id
-	 * @param $source_path
-	 * @param $destination_path
+	 * testTrigger
 	 *
 	 * @return bool
-	 * @since  1.0
 	 */
-	public function copyFiles($extension_name, $extension_type, $source_path, $destination_path)
+	public function testTrigger()
 	{
-		return true;
+
+		$controller = new CreateController();
+		$table_registry_name = 'ArticlesTable';
+
+		$triggers = array();
+		$triggers[] = 'Create';
+
+		$query_results = array();
+		$data = new \stdClass();
+		$data->id = 333;
+		$data->title = 'Test';
+		$data->catalog_type_id = 1050;
+		$query_results[] = $data;
+
+		$parameters = array('create_extension' => 1,
+			'create_sample_data' => 1);
+
+		/** Schedule onAfterCreate Event */
+		$arguments = array(
+			'table_registry_name' => $table_registry_name,
+			'db' => '',
+			'query_results' => $query_results,
+			'parameters' => $parameters,
+			'model_name' => 'Articles'
+		);
+
+		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $triggers);
+
+		var_dump($arguments);
+		die;
+		if ($arguments == false) {
+			return false;
+		}
 	}
+
+
 }

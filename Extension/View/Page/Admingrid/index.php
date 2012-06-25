@@ -18,6 +18,7 @@ defined('MOLAJO') or die; ?>
 	</nav>
 	<section class="nine columns">
 		<include:template name=Admincomponentmenu/>
+			<include:template name=Admingridfilters/>
 			<include:request/>
 	</section>
 </section>

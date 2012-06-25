@@ -131,7 +131,6 @@ Class EventService
 			if (isset($registrations[$key])) {
 
 				if (method_exists($registrations[$key], $event)) {
-
 					/** Retrieve Connection Information for the Trigger */
 					$triggerClass = $registrations[$key];
 
@@ -246,6 +245,7 @@ Class EventService
 			) {
 
 			} else {
+
 				$this->process_events($folder);
 			}
 		}

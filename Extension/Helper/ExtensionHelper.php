@@ -491,7 +491,7 @@ Class ExtensionHelper
 	{
 		if ((int)$catalog_type_id == 0) {
 
-			if ($catalog_type == 'Components') {
+			if ($catalog_type == 'Component') {
 				return CATALOG_TYPE_EXTENSION_COMPONENT;
 
 			} elseif ($catalog_type == 'Language') {
