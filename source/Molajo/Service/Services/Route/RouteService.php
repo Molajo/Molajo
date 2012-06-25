@@ -237,10 +237,37 @@ Class RouteService
 			return true;
 		}
 
-		/** Retrieve ID */
+				/** Retrieve ID */
 		$value = (int)Services::Request()->get('request')->get('id');
 		Services::Registry()->set('Parameters', 'request_catalog_id', $value);
+/**
+		$request_url_query = Services::Registry()->get('Parameters', 'request_url_query');
+		$value = substr($request_url_query, strlen($request_url_query) - 12 , 12);
+		echo $value;
+		if ($value == '?action=edit') {
+			$request_url_query = substr($request_url_query, 0, strlen($request_url_query) - 12);
+			Services::Registry()->set('Parameters', 'action', 'edit');
+			Services::Registry()->set('Parameters', 'request_url_query', $request_url_query);
 
+		} else {
+
+			$request_url_query = Services::Registry()->get('Parameters', 'request_url_query');
+			$value = substr($request_url_query, strlen($request_url_query) - 14 , 14);
+
+			if ($value == '?action=create') {
+				$request_url_query = substr($request_url_query, 0, strlen($request_url_query) - 14);
+				Services::Registry()->set('Parameters', 'action', 'create');
+				Services::Registry()->set('Parameters', 'request_url_query', $request_url_query);
+			} else {
+				Services::Registry()->set('Parameters', 'action', 'display');
+			}
+		}
+
+		return true;
+
+		Services::Registry()->get('Parameters', '*');
+		die;
+ */
 		/** save non-routable parameter pairs in array */
 		$use = array();
 

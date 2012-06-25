@@ -44,6 +44,7 @@ class AliasTrigger extends ContentTrigger
 	 */
 	public function onBeforeUpdate()
 	{
+		//reserved words - /edit
 		return false;
 	}
 }
