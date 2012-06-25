@@ -8,7 +8,7 @@
 
 namespace Joomla;
 
-use Molajo\Application\Molajo;
+use Molajo\Application;
 
 use Molajo\Service\Services;
 

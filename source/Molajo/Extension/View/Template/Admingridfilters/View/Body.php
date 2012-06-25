@@ -9,4 +9,6 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $listname = 'list_' . $this->row->listname . '*'; ?>
-<include:template name=formselect wrap=div wrap-class=filter value=<?php echo $listname; ?>/>
+<li class="filter">
+	<include:template name=formselect wrap=div wrap-class=filter value=<?php echo $listname; ?>/>
+</li>

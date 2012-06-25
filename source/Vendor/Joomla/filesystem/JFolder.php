@@ -49,7 +49,7 @@ abstract class JFolder
 		@set_time_limit(ini_get('max_execution_time'));
 
 		// Initialise variables.
-		$FTPOptions = JClientHelper::getCredentials('ftp');
+		//$FTPOptions = JClientHelper::getCredentials('ftp');
 
 		if ($path) {
 			$src = JPath::clean($path . '/' . $src);
@@ -73,6 +73,7 @@ abstract class JFolder
 		}
 
 		// If we're using ftp and don't have streams enabled
+		$FTPOptions['enabled'] = 0;
 		if ($FTPOptions['enabled'] == 1 && !$use_streams) {
 			// Connect the FTP client
 			$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
@@ -154,7 +155,7 @@ abstract class JFolder
 	public static function create($path = '', $mode = 0755)
 	{
 		// Initialise variables.
-		$FTPOptions = JClientHelper::getCredentials('ftp');
+		//$FTPOptions = JClientHelper::getCredentials('ftp');
 		static $nested = 0;
 
 		// Check to make sure the path valid and clean
@@ -188,6 +189,7 @@ abstract class JFolder
 		}
 
 		// Check for safe mode
+		$FTPOptions['enabled'] = 0;
 		if ($FTPOptions['enabled'] == 1) {
 			// Connect the FTP client
 			$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
@@ -268,7 +270,7 @@ abstract class JFolder
 		}
 
 		// Initialise variables.
-		$FTPOptions = JClientHelper::getCredentials('ftp');
+		//$FTPOptions = JClientHelper::getCredentials('ftp');
 
 		// Check to make sure the path valid and clean
 		$path = JPath::clean($path);
@@ -344,7 +346,7 @@ abstract class JFolder
 	public static function move($src, $dest, $path = '', $use_streams = false)
 	{
 		// Initialise variables.
-		$FTPOptions = JClientHelper::getCredentials('ftp');
+		//$FTPOptions = JClientHelper::getCredentials('ftp');
 
 		if ($path) {
 			$src = JPath::clean($path . '/' . $src);

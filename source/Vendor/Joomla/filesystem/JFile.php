@@ -112,8 +112,8 @@ class JFile
 		}
 		else {
 			// Initialise variables.
-			$FTPOptions = JClientHelper::getCredentials('ftp');
-
+			//$FTPOptions = JClientHelper::getCredentials('ftp');
+			$FTPOptions['enabled'] = 0;
 			if ($FTPOptions['enabled'] == 1) {
 				// Connect the FTP client
 				$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
@@ -156,8 +156,8 @@ class JFile
 	public static function delete($file)
 	{
 		// Initialise variables.
-		$FTPOptions = JClientHelper::getCredentials('ftp');
-
+		//$FTPOptions = JClientHelper::getCredentials('ftp');
+		$FTPOptions['enabled'] = 0;
 		if (is_array($file)) {
 			$files = $file;
 		}
@@ -238,8 +238,8 @@ class JFile
 		}
 		else {
 			// Initialise variables.
-			$FTPOptions = JClientHelper::getCredentials('ftp');
-
+			//$FTPOptions = JClientHelper::getCredentials('ftp');
+			$FTPOptions['enabled'] = 0;
 			if ($FTPOptions['enabled'] == 1) {
 				// Connect the FTP client
 				$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
@@ -359,8 +359,8 @@ class JFile
 		}
 		else {
 			// Initialise variables.
-			$FTPOptions = JClientHelper::getCredentials('ftp');
-
+			//$FTPOptions = JClientHelper::getCredentials('ftp');
+			$FTPOptions['enabled'] = 0;
 			if ($FTPOptions['enabled'] == 1) {
 				// Connect the FTP client
 				$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
@@ -414,7 +414,8 @@ class JFile
 		}
 		else {
 			// Initialise variables.
-			$FTPOptions = JClientHelper::getCredentials('ftp');
+			//$FTPOptions = JClientHelper::getCredentials('ftp');
+			$FTPOptions['enabled'] = 0;
 			$ret = false;
 
 			if ($FTPOptions['enabled'] == 1) {

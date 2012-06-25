@@ -116,7 +116,7 @@ class FilesystemService
      * @param $arguments
      * @return bool|mixed
      */
-    public function processCall($name, $arguments)
+    public function processCall($name, &$arguments)
     {
 
         if (strtolower(substr($name, 0, 4)) == 'file') {
@@ -139,7 +139,8 @@ class FilesystemService
 
         $method = strtolower($method);
         if (method_exists($class, $method)) {
-            return call_user_func_array(array($class, $method), $arguments);
+            return call_user_func_array(array($class, &$method), &$arguments);
+
         }
 
         Services::Debug()->set('Invalid Filesystem Method: ' . $name);

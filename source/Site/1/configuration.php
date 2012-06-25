@@ -28,16 +28,15 @@ Class SiteConfiguration
 	public $media_url = 'media';
 
 	/* FTP Settings */
-	public $ftp_host = 'localhost';
-	public $ftp_port = '21';
-	public $ftp_user = 'admin';
-	public $ftp_pass = 'admin';
-	public $ftp_root = '/';
-	public $ftp_enable = '1';
+	public $ftp_host = '';
+	public $ftp_port = '';
+	public $ftp_user = '';
+	public $ftp_pass = '';
+	public $ftp_root = '';
 
 	/* Session settings */
 	public $lifetime = '15';
-	public $session_handler = 'database';
+	public $session_handler = 'file';
 	public $cookie_domain = '';
 	public $cookie_path = '';
 
