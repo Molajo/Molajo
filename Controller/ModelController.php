@@ -472,7 +472,7 @@ Class ModelController extends Controller
 			$arguments = array(
 				'table_registry_name' => $this->table_registry_name,
 				'parameters' => $this->parameters,
-				'query_results' => $item,
+				'data' => $item,
 				'model_name' => $this->get('model_name')
 			);
 
@@ -482,7 +482,7 @@ Class ModelController extends Controller
 				return false;
 			}
 
-			$this->query_results[] = $arguments['query_results'];
+			$this->query_results[] = $arguments['data'];
 		}
 
 		return true;

@@ -27,18 +27,18 @@ class CssclassandidsTrigger extends ContentTrigger
 	 */
 	public function onBeforeViewRender()
 	{
-		$count = count($this->query_results);
+		$count = count($this->data);
 
 		if ((int)$count == 0
-			|| $this->query_results == false
-			|| $this->query_results == null
+			|| $this->data == false
+			|| $this->data == null
 		) {
 			return true;
 		}
 
 		/** Add CSS info to each row */
 		$first = true;
-		foreach ($this->query_results as $item) {
+		foreach ($this->data as $item) {
 
 			if ($first) {
 

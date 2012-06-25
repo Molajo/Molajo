@@ -26,7 +26,7 @@ class ItemurlTrigger extends ContentTrigger
 	 *
 	 * Provides the Url for any catalog_id field in the recordset
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean

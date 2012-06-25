@@ -86,7 +86,7 @@ class VersionTrigger extends ContentTrigger
 		if ($fieldValue == false
 			|| $fieldValue == ''
 		) {
-			$newFieldValue = $this->query_results->status;
+			$newFieldValue = $this->data->status;
 			$this->saveField($field, $name, $newFieldValue);
 		}
 

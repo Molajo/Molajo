@@ -6,6 +6,7 @@
     <table>
         <triggers>
             <trigger name="CatalogTypeId"/>
+            <include name="TriggersExtensionInstance"/>
         </triggers>
     </table>
 </model>

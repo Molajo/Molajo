@@ -233,7 +233,7 @@ Class Application
 	 */
 	protected function route()
 	{
-
+//$results = Services::Install()->testCreateExtension('test', 'Components');
 //$results = Services::Install()->extension();
 //die;
 		$results = Services::Route()->process();

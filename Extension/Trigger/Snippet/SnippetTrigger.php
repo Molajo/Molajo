@@ -26,7 +26,7 @@ class SnippetTrigger extends ContentTrigger
 	 *
 	 * Parses the Content Text into a snippet, stripped of HTML tags
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean

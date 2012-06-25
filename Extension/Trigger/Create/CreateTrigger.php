@@ -29,13 +29,12 @@ class CreateTrigger extends ContentTrigger
 	 */
 	public function onAfterCreate()
 	{
-		if ($this->query_results->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-		AND $this->query_results->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
+			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
 		} else {
-		return true;
+			return true;
 		}
-
 
 		//if ($this->parameters->create_extension == 1) {
 
@@ -63,15 +62,17 @@ class CreateTrigger extends ContentTrigger
 	 */
 	protected function createExtension()
 	{
+
+		//// for a new content component - create a row
 		/**
-		$id = $this->query_results->id;
-		$extension_name = ucfirst(strtolower($this->query_results->title));
-		$catalog_type = Helpers::Extension()->getType($this->query_results->catalog_type_id);
+		$id = $this->data->id;
+		$extension_name = ucfirst(strtolower($this->data->title));
+		$catalog_type = Helpers::Extension()->getType($this->data->catalog_type_id);
 		 */
 		$sourceFolder = 'Samples';
 
-		$id = 5;
-		$extension_name = 'Test';
+		$id = $this->data->id;
+		$extension_name = $this->data->title;
 		$catalog_type = 'Component';
 
 		/** Determine Source Folder for files to copy */
@@ -141,7 +142,9 @@ class CreateTrigger extends ContentTrigger
 				return EXTENSIONS . '/' . $catalog_type . '/' . $extension_name;
 			}
 		} elseif (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views' . '/' . $catalog_type)) {
-			if (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views' . '/' . $catalog_type . '/' . $extension_name)) {
+			if (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views'
+				. '/' . $catalog_type . '/' . $extension_name)
+			) {
 				// error extension already exists
 				return false;
 			} else {

@@ -110,7 +110,7 @@ Class InstallService
 		$arguments = array(
 			'table_registry_name' => $table_registry_name,
 			'db' => '',
-			'query_results' => $query_results,
+			'data' => $query_results,
 			'parameters' => $parameters,
 			'model_name' => 'Articles'
 		);

@@ -92,19 +92,19 @@ class MustacheTrigger extends ContentTrigger
 		$h->parameters = $this->parameters;
 
 		/** Push in Query Results */
-		$h->items = $this->query_results;
+		$h->items = $this->data;
 
 		/** Push in model results */
-		$totalRows = count($this->query_results);
+		$totalRows = count($this->data);
 
-		if (($this->query_results) == false) {
+		if (($this->data) == false) {
 			$totalRows = 0;
 		}
 
-		if (is_object($this->query_results)) {
+		if (is_object($this->data)) {
 
 			if ($totalRows > 0) {
-				foreach ($this->query_results as $this->row) {
+				foreach ($this->data as $this->row) {
 
 					$item = new \stdClass ();
 					$pairs = get_object_vars($this->row);
@@ -118,7 +118,7 @@ class MustacheTrigger extends ContentTrigger
 
 			/** Load -- Associative Array */
 		} else {
-			$new_query_results = $this->query_results;
+			$new_query_results = $this->data;
 		}
 
 		/** Pass in Rendered Output and Helper Class Instance */

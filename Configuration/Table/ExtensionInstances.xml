@@ -33,6 +33,12 @@
         </customfield>
         <customfield name="parameters">
             <include name="ParametersCommon"/>
+            <include name="ParametersAsset"/>
+            <include name="ParametersMustache"/>
+            <include name="ParametersList"/>
+            <include name="ParametersItem"/>
+            <include name="ParametersLog"/>
+            <include name="ParametersCommon"/>
             <include name="ParametersCache"/>
         </customfield>
     </customfields>

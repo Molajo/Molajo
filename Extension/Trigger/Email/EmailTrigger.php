@@ -24,7 +24,7 @@ class EmailTrigger extends ContentTrigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
@@ -79,7 +79,7 @@ class EmailTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->query_results
+	 * @param   $this->data
 	 * @param   $model
 	 *
 	 * @return boolean
