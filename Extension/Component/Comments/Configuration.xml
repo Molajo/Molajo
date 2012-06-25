@@ -9,5 +9,16 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_COMMENTS_DESCRIPTION</description>
-    <model name="Comments" catalog_type_id="30000" />
+    <model name="Comments" catalog_type_id="20000"/>
+    <customfields>
+        <customfield name="parameters">
+            <field name="moderate_visitor_comments" type="boolean" null="0" default="1"/>
+            <field name="moderate_member_comments" type="boolean" null="0" default="0"/>
+        </customfield>
+        <customfield name="customfields">
+            <field name="visitor_name" type="char" null="0" default=" "/>
+            <field name="email_address" type="char" null="0" default=" "/>
+            <field name="website" type="url" null="0" default=" "/>
+        </customfield>
+    </customfields>
 </extension>

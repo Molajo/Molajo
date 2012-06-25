@@ -234,8 +234,8 @@ Class Application
 	protected function route()
 	{
 
-$results = Services::Install()->extension();
-die;
+//$results = Services::Install()->extension();
+//die;
 		$results = Services::Route()->process();
 
 		if ($results == false) {
